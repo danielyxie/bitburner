@@ -1,0 +1,73 @@
+/** This removes all padding and margins as well as 
+    setting a default font size and family for the page **/
+* { 
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-family: Calibri, Arial, Helvetica;
+}
+
+/* A border around the main container for the game */
+#container {
+    width: 800px;
+    height: 600px;
+    border: 1px solid black;
+}
+
+/* Progress bar */
+#idleprogress {
+    width: 100%;
+    height: 16px;
+    background-color: #444
+}
+
+#progressvalue {
+    /* Start at 0% */
+    width: 0%;
+    height: 16px;
+    background-color: #A1D490;
+}
+
+/* Style all the buttons */
+input[type=button] {
+    width: 100px;
+    height: 32px;
+    
+    background-color: #f4f4f4;
+    border: 1px solid #333333;
+    
+    /* Makes cursor a pointer when you put mouse over button */
+    cursor: pointer;
+}
+
+input[type=button]:hover {
+    /* When mouse is over the item, the background color becomes orange */
+    background-color: orange;
+}
+
+h1 {
+	padding: 8px;
+}
+#hackingskill {
+	font-size: 24px;
+	color: green;
+}
+#hackbutton {
+	margin-left: 8px;
+}
+
+/** add the same margin to the save button **/
+#save {
+	margin-left: 8px;
+}
+
+/** add the same margin to the left of the status box
+    but also make the text purple to make it stand out
+	a little bit **/
+#status {
+	margin-left: 8px;
+	color: red;
+    
+    /* text-shadow: px_from_left px_from_top px_blur color */
+    text-shadow: 2px 2px 8px #222
+}

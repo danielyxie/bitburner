@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Netburner</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <div id="container">
+        <!-- Progress Bar -->
+        <div id="idleprogress">
+            <!-- Another div to change the width of it without affecting the idleprogress container -->
+            <div id="progressvalue"></div>
+        </div>
+    
+        <h1>Hacking Skill: <span id="hackingskill">0</span></h1>
+        <input type="button" id="hackbutton" value="Hack Button" />
+        
+        <!-- Buttons for save, load and delete -->
+        <br /><br />
+        <input type="button" id="save" value="Save" /> 
+        <input type="button" id="load" value="Load" /> 
+        <input type="button" id="delete" value="Delete" />
+        
+        <!-- Status text area -->
+        <br /><br />
+        <div id="status"></div>
+    </div>
+    
+    <!-- We'll add in the jQuery library here - direct from
+     the Google CDN (Content Delivery Network). -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    <script src="engine.js"></script>
+  </body>
+</html>
