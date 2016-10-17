@@ -87,6 +87,7 @@ var Engine = {
     loadTerminalContent: function() {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.visibility = "visible";
+		post("Netburner v1.0");
     },
     
     loadCharacterContent: function() {
@@ -108,7 +109,8 @@ var Engine = {
                                                  'Strength: ' + Player.strength + '<br><br>' + 
                                                  'Defense: ' + Player.defense + '<br><br>' + 
                                                  'Dexterity: ' + Player.dexterity + '<br><br>' + 
-                                                 'Agility: ' + Player.agility + '<br><br>';
+                                                 'Agility: ' + Player.agility + '<br><br>' +
+												 'Servers owned: ' + Player.purchasedServers.length + <br><br>';
     },
 	
 	/* Main Event Loop */
@@ -139,24 +141,6 @@ var Engine = {
 	
     /* Initialization */
 	init: function() {
-        //Hacking button
-        //Engine.Clickables.hackButton = document.getElementById("hackbutton");
-        
-        //Event Listener for hacking button
-        //Engine.Clickables.hackButton.addEventListener("click", function() {
-        //    ++Player.hacking_skill;
-            
-            //Returns false so that once the code runs, the button won't try to do
-            //anything else
-        //    return false;
-        //});
-        
-        //Hacking Skill Display
-        //Engine.Display.hacking_skill = document.getElementById("hackingskill");
-        
-        //Status display
-        //Engine.Display.statusText = document.getElementById("status");
-        
         //Load, save, and delete buttons
         //Engine.Clickables.saveButton = document.getElementById("save");
 		//Engine.Clickables.saveButton.addEventListener("click", function() {
