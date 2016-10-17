@@ -3,34 +3,59 @@
   <head>
     <meta charset="utf-8">
     <title>Netburner</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="css/terminal.css" />
+   
   </head>
   <body>
-    <div id="container">
-        <!-- Progress Bar -->
-        <div id="idleprogress">
-            <!-- Another div to change the width of it without affecting the idleprogress container -->
-            <div id="progressvalue"></div>
-        </div>
-    
-        <h1>Hacking Skill: <span id="hackingskill">0</span></h1>
-        <input type="button" id="hackbutton" value="Hack Button" />
-        
-        <!-- Buttons for save, load and delete -->
-        <br /><br />
-        <input type="button" id="save" value="Save" /> 
-        <input type="button" id="load" value="Load" /> 
-        <input type="button" id="delete" value="Delete" />
-        
-        <!-- Status text area -->
-        <br /><br />
-        <div id="status"></div>
+    <div id="mainmenu-container">
+        <!-- Main menu -->
+        <ul class="mainmenu">
+            <li class="terminal-tab">
+                <a href="#" id="terminal-menu-link"> Terminal </a>
+            </li>
+            
+            <li class="character-tab">
+                <a href="#"  id="character-menu-link"> Character </a>
+            </li>
+            
+            <li class="gym-tab">
+                <a href=#Gym> Gym </a>
+            </li>
+        </ul>
     </div>
+    
+    <div id="terminal-container">
+        <!-- Terminal -->
+        <table id="terminal">
+           <tr id="terminal-input">
+                <td>$  <input type="text" class="terminal-input"/></td>
+           </tr>
+           
+        </table>  <!-- End terminal -->
+    </div>  <!-- End terminal-container -->
+    
+    <div id="character-container">
+        <p id="character-info"> </p>
+    </div>  <!-- End terminal-container -->
     
     <!-- We'll add in the jQuery library here - direct from
      the Google CDN (Content Delivery Network). -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Always keep the terminal in focus -->
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('.terminal-input').focus();
+    });
+    $(document).keydown(function() {
+        $('.terminal-input').focus();
+    })
+	</script>
     
-    <script src="engine.js"></script>
+    <script src="src/Terminal.js"></script>
+    <script src="src/Player.js"></script>
+    <script src="src/Server.js"></script>
+    <script src="src/engine.js"></script>
   </body>
 </html>

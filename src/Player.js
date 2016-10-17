@@ -1,6 +1,6 @@
 //Netburner Player class
 
-netburner.Player = {
+var Player = {
 	//Skills and stats
 	hacking_skill: 	1,
 	strength: 		1,
@@ -40,8 +40,8 @@ netburner.Player = {
 	lifetime_money:	0,
 	
 	//Servers
-	discoveredServers = [],
-	purchasedServers = 	[],
+	//discoveredServers = [],
+	//purchasedServers = 	[],
 	
 	//Achievements and achievement progress
 	

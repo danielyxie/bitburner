@@ -1,0 +1,32 @@
+#terminal-container {
+    position: fixed;
+    margin-left: 10%;
+    width: 99%;
+}
+
+#terminal {
+    padding-top: 10px;
+    padding-left: 10px;
+    height: auto;
+    font-size: 16px;
+}
+
+#terminal-input {
+    background-color: black;
+    color: #66ff33;
+    transition: height 1s;
+}
+
+.terminal-input {
+	display: table-cell;
+	padding: 0px !important;
+	margin: 0px !important;
+	border: 0px;
+	background-color: black;
+	font-size: 16px;
+	outline: none;
+    color: #66ff33;
+}
+
+
+
