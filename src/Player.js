@@ -41,7 +41,7 @@ var Player = {
 	
 	//Starting (home) computer
 	homeComputer = new Server();
-	startingServer.init("19.42.93.219", "home.pc", true, true, true, true, 2);
+	startingServer.init("19.42.93.219", "home", "Home PC", true, true, true, true, 2);
 	
 	//Servers
 	currentServer 		= homeComputer,	//Server currently being accessed through terminal

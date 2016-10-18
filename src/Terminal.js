@@ -12,13 +12,13 @@ $(document).keyup(function(event) {
 			post("> " + command);
             
 			//TODO Do i have to switch the order of these two?
-            executeCommand(command);
+            Terminal.executeCommand(command);
 			$('input[class=terminal-input]').val("");
 		}
 	}
 });
 
-var executeCommand = function(command) {
+var Terminal.executeCommand = function(command) {
     var commandArray = command.split();
     
     if (commandArray.length == 0) {
@@ -34,7 +34,7 @@ var executeCommand = function(command) {
 			//TODO
 			break;	
 		case "connect":
-			//TODO Disconnect from current server in terminal and connect to new one
+			//TODO Disconnect from current server in terminal and connect to new one..maybe rename this to telnet?
 			break;
 		case "df":
 			//TODO
@@ -65,6 +65,8 @@ var executeCommand = function(command) {
 		case "ls":
 			//TODO
 			break;
+		case "netstat":
+			//TODO Displays available network connections using TCP
 		case "ps":
 			//TODO
 			break;
@@ -77,9 +79,14 @@ var executeCommand = function(command) {
 		case "scan":
 			//TODO
 			break;
+		case "scp":
+			//TODO
+			break;
+		default:
+			
     }
 }
 
-var runProgram = function(programName) {
+var Terminal.runProgram = function(programName) {
 	
 }
