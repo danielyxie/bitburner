@@ -66,6 +66,7 @@ var Terminal.executeCommand = function(command) {
 			//TODO
 			break;
 		case "netstat":
+		case "scan":
 			//TODO Displays available network connections using TCP
 		case "ps":
 			//TODO
@@ -74,9 +75,6 @@ var Terminal.executeCommand = function(command) {
 			//TODO
 			break;
 		case "run":
-			//TODO
-			break;
-		case "scan":
 			//TODO
 			break;
 		case "scp":
