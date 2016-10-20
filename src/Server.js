@@ -1,5 +1,5 @@
 //Netburner Server class
-function Server() = {
+function Server() {
 	/* Properties */
 	//Connection information
 	this.ip					= 	"0.0.0.0";
@@ -66,7 +66,7 @@ Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvai
 }
 
 //Generate a random IP address. Used for the foreign servers
-createRandomIp = function() = {
+createRandomIp = function() {
 	var ip = randomByte() +'.' +
 			 randomByte() +'.' +
 			 randomByte() +'.' +
@@ -74,7 +74,7 @@ createRandomIp = function() = {
 	return ip;
 }
 
-createRandomByte = function() = {
+createRandomByte = function() {
 	return Math.round(Math.random()*256);
 }
 
@@ -297,7 +297,7 @@ ForeignServers = {
 		SigmaCosmetics.init(createRandomIp(), "sigma-cosmetics", "Sigma Cosmetics", true, false, false, false, 16);
 		SigmaCosmetics.setHackingParameters(5, 500000, 5, 10);
 		
-		JoesGuns.init(createRandomIp(), "joesguns", "Joe's Guns", true, false, false, false), 16);
+		JoesGuns.init(createRandomIp(), "joesguns", "Joe's Guns", true, false, false, false, 16);
 		JoesGuns.setHackingParameters(10, 200000, 20, 20);
 		
 		Zer0Nightclub.init(createRandomIp(), "zer0", "ZER0 Nightclub", true, false, false, false, 32);

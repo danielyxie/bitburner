@@ -40,15 +40,18 @@ var Player = {
 	lifetime_money:	0,
 	
 	//Starting (home) computer
-	homeComputer = new Server();
-	startingServer.init("19.42.93.219", "home", "Home PC", true, true, true, true, 2);
+	homeComputer: 	new Server(),
 	
 	//Servers
-	currentServer 		= homeComputer,	//Server currently being accessed through terminal
-	discoveredServers = [],
-	purchasedServers = 	[],
+	currentServer: 		null,	//Server currently being accessed through terminal
+	discoveredServers:	[],
+	purchasedServers:	[],
 	
 	//Achievements and achievement progress
 	
 	
+	init: function() {
+		homeComputer.init("19.42.93.219", "home", "Home PC", true, true, true, true, 1);
+		currentServer = Player.homeComputer;
+	}
 };

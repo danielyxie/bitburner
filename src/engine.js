@@ -110,7 +110,7 @@ var Engine = {
                                                  'Defense: ' + Player.defense + '<br><br>' + 
                                                  'Dexterity: ' + Player.dexterity + '<br><br>' + 
                                                  'Agility: ' + Player.agility + '<br><br>' +
-												 'Servers owned: ' + Player.purchasedServers.length + <br><br>';
+												 'Servers owned: ' + Player.purchasedServers.length + '<br><br>';
     },
 	
 	/* Main Event Loop */
