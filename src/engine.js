@@ -87,7 +87,7 @@ var Engine = {
     loadTerminalContent: function() {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.visibility = "visible";
-		post("Netburner v1.0");
+		postNetburnerText();
     },
     
     loadCharacterContent: function() {
@@ -141,6 +141,9 @@ var Engine = {
 	
     /* Initialization */
 	init: function() {
+		//Initialize Player objects
+		Player.init();
+		
         //Load, save, and delete buttons
         //Engine.Clickables.saveButton = document.getElementById("save");
 		//Engine.Clickables.saveButton.addEventListener("click", function() {
@@ -182,7 +185,7 @@ var Engine = {
         Engine.displayCharacterInfo();
         
         //Message at the top of terminal
-        post("Netburner v1.0");
+		postNetburnerText();
         
         //Run main loop
 		Engine.idleTimer();

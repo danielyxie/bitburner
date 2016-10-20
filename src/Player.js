@@ -51,7 +51,7 @@ var Player = {
 	
 	
 	init: function() {
-		homeComputer.init("19.42.93.219", "home", "Home PC", true, true, true, true, 1);
-		currentServer = Player.homeComputer;
+		Player.homeComputer.init("19.42.93.219", "home", "Home PC", true, true, true, true, 1);
+		Player.currentServer = Player.homeComputer;
 	}
 };

@@ -4,6 +4,10 @@ var post = function(input) {
 	window.scrollTo(0, document.body.scrollHeight);
 }
 
+var postNetburnerText = function() {
+	post("Netburner v1.0");
+}
+
 //command is checked on enter key press
 $(document).keyup(function(event) {
     if (event.keyCode == 13) {
@@ -32,13 +36,17 @@ var Terminal = {
 				break;
 			case "clear":
 			case "cls":
-				//TODO
+				console.log("cls/clear command called");
+				$("#terminal tr:not(:last)").remove();
+				postNetburnerText();
 				break;	
 			case "connect":
 				//TODO Disconnect from current server in terminal and connect to new one..maybe rename this to telnet?
 				break;
 			case "df":
-				//TODO
+				console.log("df command called");
+				var dfStr = Player.currentServer.ramUsed.toString() + " / " Player.currentServer.maxRam.toString() + "GB";
+				post(dfStr);
 				break;
 			case "hack":
 				//TODO Hack the current PC (usually for money)
