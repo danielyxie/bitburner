@@ -57,6 +57,14 @@ Server.prototype.init = function(ip, hostname, organizationName, onlineStatus, i
 	this.maxRam = maxRam;
 }
 
+//Hack a server. Return the amount of money hacked.
+//This assumes that the server being hacked is not purchased by the palyer, that the player's hacking skill is greater than the
+//required hacking skill and that the player has admin rights.
+Server.prototype.hack = function(hackingSkill) {
+	
+	
+}
+
 //Set the hacking properties of a server
 Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvailable, hackDifficulty, serverGrowth) {
 	this.requiredHackingSkill = requiredHackingSkill;

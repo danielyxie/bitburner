@@ -144,6 +144,9 @@ var Engine = {
 		//Initialize Player objects
 		Player.init();
 		
+		//Initialize foreign servers
+		ForeignServers.init();
+		
         //Load, save, and delete buttons
         //Engine.Clickables.saveButton = document.getElementById("save");
 		//Engine.Clickables.saveButton.addEventListener("click", function() {

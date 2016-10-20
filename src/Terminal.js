@@ -53,8 +53,12 @@ var Terminal = {
 				//You can't hack your home pc or servers you purchased
 				if (Player.currentServer.purchasedByPlayer) {
 					post("Cannot hack your own machines! You are currently connected to your home PC or one of your purchased servers");
+				} else if (Player.currentServer.hasAdminRights == false ) {
+					post("You do not have admin rights for this machine! Cannot hack");
+				} else if (Player.currentServer.requiredHackingSkill > Player.hacking_skill) {
+					post("Your hacking skill is not high enough to attempt hacking this machine");
 				} else {
-					
+					var hackResult = Player.currentServer.hack();
 				}
 				break;
 			case "help":
