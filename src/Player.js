@@ -54,4 +54,11 @@ var Player = {
 		Player.homeComputer.init("19.42.93.219", "home", "Home PC", true, true, true, true, 1);
 		Player.currentServer = Player.homeComputer;
 	}
+	
+	//Calculates hacking skill based on experience
+	//	At the maximum possible exp (MAX_INT = 9007199254740991), the hacking skill will by 1796
+	// 	Gets to level 1000 hacking skill at ~1,100,000,000 exp
+	calculateHackingSkill: function(exp) {
+		return Math.max(Math.floor(50 * log(9007199254740991+ 2.270) - 40), 1);
+	}
 };
