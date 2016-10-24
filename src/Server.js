@@ -360,6 +360,8 @@ ForeignServers = {
     
     /* Create a randomized network of all foreign servers */
     createNetwork: function() {
+        console.log("createNetwork() called");
+        
         //Groupings for creating a randomized network
         var NetworkGroup1 =     [ForeignServers.IronGym, ForeignServers.FoodNStuff, ForeignServers.SigmaCosmetics, ForeignServers.JoesGuns, ForeignServers.HongFangTeaHouse, ForeignServers.HaraKiriSushiBar];
         var NetworkGroup2 =     [ForeignServers.MaxHardware, ForeignServers.NectarNightclub, ForeignServers.Zer0Nightclub];

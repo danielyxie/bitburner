@@ -24,7 +24,7 @@ $(document).keyup(function(event) {
 
 var Terminal = {
 	executeCommand:  function(command) {
-		var commandArray = command.split();
+		var commandArray = command.split(" ");
 		
 		if (commandArray.length == 0) {
 			return;
@@ -51,15 +51,15 @@ var Terminal = {
                 var ip = commandArray[1];
                 
                 for (var i = 0; i < Player.currentServer.serversOnNetwork.length; i++) {
-                    if (Player.currentServer.serversOnNetwork[i].ip == ip) {
+                    if (Player.currentServer.serversOnNetwork[i].ip == ip || Player.currentServer.serversOnNetwork[i].hostname == ip) {
                         Player.currentServer.isConnectedTo = false;
                         Player.currentServer = Player.currentServer.serversOnNetwork[i];
-                        post("Connect to " + ip);
+                        post("Connected to " + ip);
                         return;
                     }
                 }
                 
-                post("IP not found"); 
+                post("Host not found"); 
 				break;
 			case "df":
 				console.log("df terminal command called");
