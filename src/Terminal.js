@@ -36,17 +36,36 @@ var Terminal = {
 				break;
 			case "clear":
 			case "cls":
-				console.log("cls/clear command called");
+				console.log("cls/clear terminal command called");
 				$("#terminal tr:not(:last)").remove();
 				postNetburnerText();
 				break;	
 			case "connect":
-				//TODO Disconnect from current server in terminal and connect to new one..maybe rename this to telnet?
+            case "telnet":
+				//Disconnect from current server in terminal and connect to new one..maybe rename this to telnet?
+                if (commandArray.length != 2) {
+                    post("Incorrect usage of connect/telnet command. Usage: connect/telnet [ip]");
+                    return;
+                }
+                
+                var ip = commandArray[1];
+                
+                for (var i = 0; i < Player.currentServer.serversOnNetwork.length; i++) {
+                    if (Player.currentServer.serversOnNetwork[i].ip == ip) {
+                        Player.currentServer.isConnectedTo = false;
+                        Player.currentServer = Player.currentServer.serversOnNetwork[i];
+                        post("Connect to " + ip);
+                        return;
+                    }
+                }
+                
+                post("IP not found"); 
 				break;
 			case "df":
-				console.log("df command called");
-				var dfStr = Player.currentServer.ramUsed.toString() + " / " Player.currentServer.maxRam.toString() + "GB";
-				post(dfStr);
+				console.log("df terminal command called");
+                post("Total: " + Player.currentServer.maxRam.toString() + " GB");
+                post("Used: " + Player.currentServer.ramUsed.toString() + " GB");
+                post("Available: " + (Player.currentServer.maxRam - Player.currentServer.ramUsed).toString() + " GB");
 				break;
 			case "hack":
 				//TODO Hack the current PC (usually for money)
@@ -80,7 +99,16 @@ var Terminal = {
 				break;
 			case "netstat":
 			case "scan":
-				//TODO Displays available network connections using TCP
+                if (commandArray.length != 1) {
+                    post("Incorrect usage of netstat/scan command. Usage: netstat/scan");
+                    return;
+                }
+				//Displays available network connections using TCP
+                console.log("netstat/scan terminal command called");
+                post("Hostname               IP");
+                for (var i = 0; i < Player.currentServer.serversOnNetwork.length; i++) {
+                    post(Player.currentServer.serversOnNetwork[i].hostname + " " + Player.currentServer.serversOnNetwork[i].ip);
+                }
 			case "ps":
 				//TODO
 				break;
@@ -94,7 +122,7 @@ var Terminal = {
 				//TODO
 				break;
 			default:
-				
+				post("Command not found");
 		}
 	},
 	

@@ -53,7 +53,12 @@ var Player = {
 	init: function() {
 		Player.homeComputer.init("19.42.93.219", "home", "Home PC", true, true, true, true, 1);
 		Player.currentServer = Player.homeComputer;
-	}
+        
+        var NetworkGroup1 = [ForeignServers.IronGym, ForeignServers.FoodNStuff, ForeignServers.SigmaCosmetics, ForeignServers.JoesGuns, ForeignServers.HongFangTeaHouse, ForeignServers.HaraKiriSushiBar];
+        for (var i = 0; i < NetworkGroup1.length; i++) {
+            Player.homeComputer.serversOnNetwork.push(NetworkGroup1[i]);
+        }
+	},
 	
 	//Calculates hacking skill based on experience
 	//	At the maximum possible exp (MAX_INT = 9007199254740991), the hacking skill will by 1796
