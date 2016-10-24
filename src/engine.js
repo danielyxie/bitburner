@@ -168,6 +168,7 @@ var Engine = {
 			//Update progress bar 
 			if (Engine._hackProgressBarCount * 2 < percent) {
 				Engine._hackProgressStr += '|';
+				Engine._ProgressBarCount += 1;
 				$('#hacking-progress-bar').html(Engine._hackProgressStr);
 			}
 			

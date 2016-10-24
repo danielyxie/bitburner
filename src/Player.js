@@ -96,7 +96,10 @@ var Player = {
 	//        hacking_skill                           
 	calculateHackingTime: function() {
 		var difficultyMult = Player.currentServer.requiredHackingSkill * Player.currentServer.difficulty;
+		console.log("difficultyMult: " + difficultyMult);
 		var skillFactor = difficultyMult / Player.hacking_skill;
+		console.log("skillFactor: " + skillFactor);
+		console.log("Player.hacking_speed_multiplier: " + Player.hacking_speed_multiplier);
 		return skillFactor * Player.hacking_speed_multiplier;
 	},
 	
