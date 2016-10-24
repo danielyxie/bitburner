@@ -44,7 +44,7 @@ var Terminal = {
             case "telnet":
 				//Disconnect from current server in terminal and connect to new one..maybe rename this to telnet?
                 if (commandArray.length != 2) {
-                    post("Incorrect usage of connect/telnet command. Usage: connect/telnet [ip]");
+                    post("Incorrect usage of connect/telnet command. Usage: connect/telnet [ip/hostname]");
                     return;
                 }
                 
@@ -75,9 +75,11 @@ var Terminal = {
 				} else if (Player.currentServer.hasAdminRights == false ) {
 					post("You do not have admin rights for this machine! Cannot hack");
 				} else if (Player.currentServer.requiredHackingSkill > Player.hacking_skill) {
-					post("Your hacking skill is not high enough to attempt hacking this machine");
+					post("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
 				} else {
-					var hackResult = Player.currentServer.hack();
+					post("<p id='hacking-progress'> Time left: </p>");
+					post("<p id='hacking-progress-bar'> | </p>");
+					var hackResult = Player.hack();
 				}
 				break;
 			case "help":
@@ -116,7 +118,22 @@ var Terminal = {
 				//TODO
 				break;
 			case "run":
-				//TODO
+				//Run a program or a script
+				if (commandArray.length == 1) {
+					post("No program specified to run. Usage: run [program/script]");
+				} else if (commandArray.length > 2) {
+					post("Too many arguments. Usage: run [program/script]");
+				} else {
+					var executableName = commandArray[1];
+					//Check if its a script or just a program/executable 
+					if (executableName.indexOf(".script") == -1) {
+						//Not a script
+						Terminal.runProgram(executableName);
+					} else {
+						//Script
+						Terminal.runScript(executableName);
+					}
+				}
 				break;
 			case "scp":
 				//TODO
@@ -127,7 +144,25 @@ var Terminal = {
 	},
 	
 	runProgram: function(programName) {
+		switch (programName) {
+			case "PortHack":
+				console.log("Running PortHack executable");
+				if (Player.currentServer.openPortCount >= Player.currentServer.numOpenPortsRequired) {
+					Player.currentServer.hasAdminRights = true;
+					post("PortHack successful! Gained root access to " + Player.currentServer.hostname);
+					//TODO Make this take time rather than be instant
+				} else {
+					post("PortHack unsuccessful. Not enough ports have been opened");
+				}
+				break;
+			default:
+				post("Executable not found");
+				return;
+		}
+	},
 	
+	runScript: function(scriptName) {
+		
 	}
 };
 

@@ -131,12 +131,56 @@ var Engine = {
         
         var idleTime = Engine._idleSpeed - timeDifference;
         
+		//Manual hack
+		if (Player.startHack = true) {
+			Engine._totalHackTime = Player.hackingTime;
+			Engine._hackTimeLeft = Player.hackingTime;
+			Engine._manualHackInProgress = true;
+			Engine._hackProgressBarCount = 0;
+			Engine._hackProgressStr = "[";
+			Engine._hackTimeStr = "Time left: ";
+			Player.startHack = false;
+		}
+		
+		Engine.updateHackProgress();
 		
 		// Once that entire "while loop" has run, we call the IdleTimer 
 		// function again, but this time with a timeout (delay) of 
 		// _idleSpeed minus timeDifference
 		setTimeout(Engine.idleTimer, idleTime);
 		
+	},
+	
+	/* Calculates the hack progress for a manual (non-scripted) hack and updates the progress bar/time accordingly */
+	_totalHackTime: 0,
+	_hackTimeLeft: 0,
+	_hackTimeStr: "Time left: ",
+	_hackProgressStr: "[",
+	_hackProgressBarCount: 0,
+	_manualHackInProgress: false,
+	updateHackProgress: function() {
+		if (Engine.manualHackInProgress) {
+			Engine._hackTimeLeft -= (_idleSpeed/ 1000);	//Substract idle speed (ms)
+		
+			//Calculate percent filled 
+			var percent = Math.floor((1 - Engine._hackTimeLeft / Engine.totalhackTime) * 100);
+			
+			//Update progress bar 
+			if (Engine._hackProgressBarCount * 2 < percent) {
+				Engine._hackProgressStr += '|';
+				$('#hacking-progress-bar').html(Engine._hackProgressStr);
+			}
+			
+			//Update hack time remaining
+			Engine._hackTimeStr = "Time left: " + Engine._hackTimeLeft.asString();
+			$('#hacking-progress').html(Engine._hackTimeStr);
+			
+			//Once percent is 100, the hack is completed
+			if (percent == 100) {
+				Engine.manualHackInProgress = false;
+				Player.finishHack = true;
+			}
+		}
 	},
 	
     /* Initialization */
