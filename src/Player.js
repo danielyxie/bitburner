@@ -8,7 +8,8 @@ var Player = {
 	dexterity: 		1,
 	agility: 		1, 
 	hacking_chance_multiplier:	2,	//Increase through ascensions/augmentations
-	hacking_speed_multiplier: 	5,	//Decrease through ascensions/augmentations
+	//hacking_speed_multiplier: 	5,	//Decrease through ascensions/augmentations
+    hacking_speed_multiplier:   1,  //Make it faster for debugging
 	
 	//Note: "Lifetime" refers to current ascension, "total" refers to the entire game history
 	//Accumulative  stats and skills
@@ -95,10 +96,8 @@ var Player = {
 	//  -------------------------------  *  hacking_speed_multiplier
 	//        hacking_skill                           
 	calculateHackingTime: function() {
-		var difficultyMult = Player.currentServer.requiredHackingSkill * Player.currentServer.difficulty;
-		console.log("difficultyMult: " + difficultyMult);
+		var difficultyMult = Player.currentServer.requiredHackingSkill * Player.currentServer.hackDifficulty;
 		var skillFactor = difficultyMult / Player.hacking_skill;
-		console.log("skillFactor: " + skillFactor);
 		console.log("Player.hacking_speed_multiplier: " + Player.hacking_speed_multiplier);
 		return skillFactor * Player.hacking_speed_multiplier;
 	},
@@ -111,11 +110,6 @@ var Player = {
 		console.log("Hacking time: " + Player.hackingTime);
 		//Set the startHack flag so the engine starts the hacking process
 		Player.startHack = true;
-		
-		while (Player.finishHack == false) {
-			//Waiting for hack to complete
-		}
-		Player.finishHack = false;
 		
 		//DEBUG
 		return 5;

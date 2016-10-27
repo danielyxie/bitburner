@@ -4,6 +4,17 @@ var post = function(input) {
 	window.scrollTo(0, document.body.scrollHeight);
 }
 
+//Same thing as post but the td cells have ids so they can be animated for the hack progress bar
+var hackProgressBarPost = function(input) {
+    $("#terminal-input").before('<tr class="posted"><td id="hack-progress-bar" style="color: #66ff33;">' + input + '</td></tr>');
+	window.scrollTo(0, document.body.scrollHeight);    
+}
+
+var hackProgressPost = function(input) {
+    $("#terminal-input").before('<tr class="posted"><td id="hack-progress" style="color: #66ff33;">' + input + '</td></tr>');
+	window.scrollTo(0, document.body.scrollHeight);    
+}
+
 var postNetburnerText = function() {
 	post("Netburner v1.0");
 }
@@ -77,8 +88,8 @@ var Terminal = {
 				} else if (Player.currentServer.requiredHackingSkill > Player.hacking_skill) {
 					post("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
 				} else {
-					post("<p id='hacking-progress'> Time left: </p>");
-					post("<p id='hacking-progress-bar'> | </p>");
+					hackProgressPost("Time left:");
+					hackProgressBarPost("[");
 					var hackResult = Player.hack();
 				}
 				break;

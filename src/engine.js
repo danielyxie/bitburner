@@ -87,7 +87,6 @@ var Engine = {
     loadTerminalContent: function() {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.visibility = "visible";
-		postNetburnerText();
     },
     
     loadCharacterContent: function() {
@@ -132,7 +131,8 @@ var Engine = {
         var idleTime = Engine._idleSpeed - timeDifference;
         
 		//Manual hack
-		if (Player.startHack = true) {
+		if (Player.startHack == true) {
+            console.log("Player.startHack flag was set to true");
 			Engine._totalHackTime = Player.hackingTime;
 			Engine._hackTimeLeft = Player.hackingTime;
 			Engine._manualHackInProgress = true;
@@ -159,25 +159,26 @@ var Engine = {
 	_hackProgressBarCount: 0,
 	_manualHackInProgress: false,
 	updateHackProgress: function() {
-		if (Engine.manualHackInProgress) {
-			Engine._hackTimeLeft -= (_idleSpeed/ 1000);	//Substract idle speed (ms)
+		if (Engine._manualHackInProgress == true) {
+            console.log("Manual Hack in Progress");
+			Engine._hackTimeLeft -= (Engine._idleSpeed/ 1000);	//Substract idle speed (ms)
 		
 			//Calculate percent filled 
 			var percent = Math.floor((1 - Engine._hackTimeLeft / Engine.totalhackTime) * 100);
+            console.log("Hack progress percent: " + percent);
 			
 			//Update progress bar 
 			if (Engine._hackProgressBarCount * 2 < percent) {
 				Engine._hackProgressStr += '|';
 				Engine._ProgressBarCount += 1;
-				$('#hacking-progress-bar').html(Engine._hackProgressStr);
+                document.getElementbyId("hack-progress-bar").innerHTML = Engine._hackProgressStr;
 			}
 			
 			//Update hack time remaining
-			Engine._hackTimeStr = "Time left: " + Engine._hackTimeLeft.asString();
-			$('#hacking-progress').html(Engine._hackTimeStr);
+			//Engine._hackTimeStr = "Time left: " + Engine._hackTimeLeft.asString();
 			
 			//Once percent is 100, the hack is completed
-			if (percent == 100) {
+			if (percent >= 100) {
 				Engine.manualHackInProgress = false;
 				Player.finishHack = true;
 			}
