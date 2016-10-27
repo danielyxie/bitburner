@@ -1,7 +1,10 @@
 #terminal-container {
     position: fixed;
     margin-left: 10%;
+	height: 100%;
     width: 99%;
+	overflow: auto;
+	overflow-y: scroll;
 }
 
 #terminal {
@@ -10,6 +13,8 @@
     height: auto;
     width: 100%;
     font-size: 16px;
+	overflow: auto;
+	overflow-y: scroll;
 }
 
 #terminal-input {

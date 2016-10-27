@@ -34,6 +34,37 @@ $(document).keyup(function(event) {
 });
 
 var Terminal = {
+	finishHack: function() {
+		console.log("Hack done. Determining success/failure of hack. Re-enabling terminal and changing the id of the hack progress bar");
+		
+		//Calculate whether hack was successful
+		var hackChance = Player.calculateHackingChance();
+		var rand = Math.random();
+		console.log("Hack success chance: " + hackChance +  ", rand: " + rand);
+		var expGainedOnSuccess = Player.calculateExpGain();
+		var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
+		if (rand < hackChance) {	//Success!
+			var moneyGained = Player.calculatePercentMoneyHacked();
+			moneyGained = Math.floor(Player.currentServer.moneyAvailable * moneyGained);
+			
+			Player.currentServer.moneyAvailable -= moneyGained;
+			Player.money += moneyGained;
+			
+			Player.hacking_exp += expGainedOnSuccess;
+			
+			post("Hack successful! Gained $" + moneyGained + "and " + expGainedOnSuccess + " hacking EXP");
+		} else {					//Failure
+			//Player only gains 25% exp for failure? TODO Can change this later to balance
+			Player.hacking_exp += expGainedOnFailure;
+			post("Failed to hack " + Player.currentServer.hostname + ". Gained " + expGainedOnFailure + " hacking EXP");
+		}
+		
+		$("#hack-progress-bar").attr('id', "old-hack-progress-bar");
+		$("#hack-progress").attr('id', "old-hack-progress");
+		document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" class="terminal-input"/>';
+		$('input[class=terminal-input]').prop('disabled', false);
+	},
+	
 	executeCommand:  function(command) {
 		var commandArray = command.split(" ");
 		
@@ -53,7 +84,7 @@ var Terminal = {
 				break;	
 			case "connect":
             case "telnet":
-				//Disconnect from current server in terminal and connect to new one..maybe rename this to telnet?
+				//Disconnect from current server in terminal and connect to new one
                 if (commandArray.length != 2) {
                     post("Incorrect usage of connect/telnet command. Usage: connect/telnet [ip/hostname]");
                     return;
@@ -79,7 +110,7 @@ var Terminal = {
                 post("Available: " + (Player.currentServer.maxRam - Player.currentServer.ramUsed).toString() + " GB");
 				break;
 			case "hack":
-				//TODO Hack the current PC (usually for money)
+				//Hack the current PC (usually for money)
 				//You can't hack your home pc or servers you purchased
 				if (Player.currentServer.purchasedByPlayer) {
 					post("Cannot hack your own machines! You are currently connected to your home PC or one of your purchased servers");
@@ -90,7 +121,12 @@ var Terminal = {
 				} else {
 					hackProgressPost("Time left:");
 					hackProgressBarPost("[");
-					var hackResult = Player.hack();
+					var timeToHack = Player.hack();
+					
+					//Disable terminal
+					console.log("Disabling terminal");
+					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
+					$('input[class=terminal-input]').prop('disabled', true);
 				}
 				break;
 			case "help":
@@ -108,7 +144,23 @@ var Terminal = {
 				//TODO
 				break;
 			case "ls":
-				//TODO
+				//Display all programs and scripts
+				var allFiles = []; 
+				
+				//Get all of the programs and scripts on the machine into one temporary array
+				for (var i = 0; i < Player.currentServer.programs.length; i++) {
+					allFiles.push(Player.currentServer.programs[i]); 
+				}
+				for (var i = 0; i < Player.currentServer.scripts.length; i++) {
+					allFiles.push(Player.currentServer.scripts[i]);
+				}
+				
+				//Sort the files alphabetically then print each
+				allFiles.sort();
+				
+				for (var i = 0; i < allFiles.length; i++) {
+					post(allFiles[i]);
+				}
 				break;
 			case "netstat":
 			case "scan":
@@ -154,16 +206,35 @@ var Terminal = {
 		}
 	},
 	
+	//First called when the "run [program]" command is called. Checks to see if you
+	//have the executable and, if you do, calls the executeProgram() function
 	runProgram: function(programName) {
+		//Check if you have the program on your computer. If you do, execute it, otherwise
+		//display an error message
+		for (var i = 0; i < Player.homeComputer.programs.length; i++) {
+			if (Player.homeComputer.programs[i] == programName) {
+				Terminal.executeProgram(programName);
+				return;
+			}
+		}
+		post("ERROR: No such executable");
+	},
+	
+	//Contains the implementations of all possible programs
+	executeProgram: function(programName) {
 		switch (programName) {
-			case "PortHack":
-				console.log("Running PortHack executable");
-				if (Player.currentServer.openPortCount >= Player.currentServer.numOpenPortsRequired) {
-					Player.currentServer.hasAdminRights = true;
-					post("PortHack successful! Gained root access to " + Player.currentServer.hostname);
-					//TODO Make this take time rather than be instant
+			case "PortHack.exe":
+				if (Player.currentServer.hasAdminRights) {
+					post("You already have root access to this computer. There is no reason to run PortHack.exe");
 				} else {
-					post("PortHack unsuccessful. Not enough ports have been opened");
+					console.log("Running PortHack executable");
+					if (Player.currentServer.openPortCount >= Player.currentServer.numOpenPortsRequired) {
+						Player.currentServer.hasAdminRights = true;
+						post("PortHack successful! Gained root access to " + Player.currentServer.hostname);
+						//TODO Make this take time rather than be instant
+					} else {
+						post("PortHack unsuccessful. Not enough ports have been opened");
+					}
 				}
 				break;
 			default:

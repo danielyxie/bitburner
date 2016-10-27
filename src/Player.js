@@ -10,6 +10,7 @@ var Player = {
 	hacking_chance_multiplier:	2,	//Increase through ascensions/augmentations
 	//hacking_speed_multiplier: 	5,	//Decrease through ascensions/augmentations
     hacking_speed_multiplier:   1,  //Make it faster for debugging
+	hacking_money_multiplier: 	.01,	//Increase through ascensions/augmentations. Can't go above 1
 	
 	//Note: "Lifetime" refers to current ascension, "total" refers to the entire game history
 	//Accumulative  stats and skills
@@ -55,7 +56,6 @@ var Player = {
 	
 	//Flag to let the engine know the player is starting a hack
 	startHack: false,
-	finishHack : false,
 	hackingTime: 0,
 	
 	
@@ -63,6 +63,9 @@ var Player = {
 		/* Initialize properties of Player's home computer */
 		Player.homeComputer.init("19.42.93.219", "home", "Home PC", true, true, true, true, 1);
 		Player.currentServer = Player.homeComputer;
+		
+		//FOR TESTING ONLY
+		Player.homeComputer.programs.push("PortHack.exe");
         
         var NetworkGroup1 = [ForeignServers.IronGym, ForeignServers.FoodNStuff, ForeignServers.SigmaCosmetics, ForeignServers.JoesGuns, ForeignServers.HongFangTeaHouse, ForeignServers.HaraKiriSushiBar];
         for (var i = 0; i < NetworkGroup1.length; i++) {
@@ -82,7 +85,7 @@ var Player = {
 	//The formula is:
 	//	(hacking_chance_multiplier * hacking_skill - requiredLevel)      100 - difficulty		
 	//  -----------------------------------------------------------  *  -----------------
-	//    hacking_chance_multiplier * hacking_skill)                          100
+	//        (hacking_chance_multiplier * hacking_skill)                      100
 	calculateHackingChance: function() {
 		var difficultyMult = (100 - Player.currentServer.hackDifficulty) / 100;
 		var skillMult = (Player.hacking_chance_multiplier * Player.hacking_skill);
@@ -98,22 +101,40 @@ var Player = {
 	calculateHackingTime: function() {
 		var difficultyMult = Player.currentServer.requiredHackingSkill * Player.currentServer.hackDifficulty;
 		var skillFactor = difficultyMult / Player.hacking_skill;
-		console.log("Player.hacking_speed_multiplier: " + Player.hacking_speed_multiplier);
 		return skillFactor * Player.hacking_speed_multiplier;
 	},
 	
-	//Hack a server. Return the amount of money hacked.
-	//This assumes that the server being hacked is not purchased by the palyer, that the player's hacking skill is greater than the
+	//Calculates the PERCENTAGE of a server's money that the player will hack from the server if successful
+	//The formula is:
+	//	(hacking_skill - (requiredLevel-1))      100 - difficulty		
+	//  --------------------------------------* -----------------------  *  hacking_money_multiplier
+	//         hacking_skill                        100
+	calculatePercentMoneyHacked: function() {
+		var difficultyMult = (100 - Player.currentServer.hackDifficulty) / 100;
+		var skillMult = (Player.hacking_skill - (Player.currentServer.requiredHackingSkill - 1)) / Player.hacking_skill;
+		var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_multiplier;
+		console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
+		return percentMoneyHacked;
+	},
+	
+	//Returns how much EXP the player gains on a successful hack
+	//The formula is:
+	//	difficulty * requiredLevel * hacking_multiplier
+	//
+	// Note: Keep it at an integer for now,
+	calculateExpGain: function() {
+		return Math.round(Player.currentServer.hackDifficulty * Player.currentServer.requiredHackingSkill * Player.hacking_exp_mult);
+	},
+	
+	//Hack a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for
+	//This assumes that the server being hacked is not purchased by the player, that the player's hacking skill is greater than the
 	//required hacking skill and that the player has admin rights.
-	hack: function(hackingSkill) {
+	hack: function() {
 		Player.hackingTime = Player.calculateHackingTime();
 		console.log("Hacking time: " + Player.hackingTime);
 		//Set the startHack flag so the engine starts the hacking process
 		Player.startHack = true;
 		
-		//DEBUG
-		return 5;
+		return Player.hackingTime;
 	}
-	
-
 };
