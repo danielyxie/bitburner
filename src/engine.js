@@ -144,7 +144,7 @@ var Engine = {
 			Engine._hackTimeStr = "Time left: ";
 			Player.startHack = false;
 			
-			document.getElementById("hack-progress-bar").style.whiteSpace = "pre";
+			//document.getElementById("hack-progress-bar").style.whiteSpace = "pre";
 		}
 		
 		Engine.updateHackProgress();

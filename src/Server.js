@@ -136,6 +136,7 @@ ForeignServers = {
 	LexoCorp: 					new Server(),   //Group6
 	RhoConstruction: 			new Server(),   //Group6
 	AlphaEnterprises: 			new Server(),   //Group6
+	NewerthPolice: 				new Server(),	//Group6	//NEW
 	RothmanUniversity:			new Server(),   //Group5
 	ZBInstituteOfTechnology: 	new Server(),   //Group5
 	SummitUniversity: 			new Server(),   //Group5
@@ -144,6 +145,7 @@ ForeignServers = {
 	TheHub: 					new Server(),   //Group4
 	CompuTek: 					new Server(),   //Group4
 	NetLinkTechnologies: 		new Server(),   //Group4
+	JohnsonOrthopedics: 		new Server(), 	//Group4	//nEW
 	
 	//"Low level" targets
 	FoodNStuff: 				new Server(),   //Group1
