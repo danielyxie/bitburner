@@ -1,6 +1,6 @@
 //Terminal
 var post = function(input) {
-    $("#terminal-input").before('<tr class="posted"><td style="color: #66ff33;">' + input + '</td></tr>');
+    $("#terminal-input").before('<tr class="posted"><td style="color: #66ff33;">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
 	window.scrollTo(0, document.body.scrollHeight);
 }
 
@@ -34,36 +34,92 @@ $(document).keyup(function(event) {
 });
 
 var Terminal = {
+    //Flags to determine whether the player is currently running a hack or an analyze
+    hackFlag:       false, 
+    analyzeFlag:    false, 
+    
+    finishAction: function() {
+        if (Terminal.hackFlag) {
+            Terminal.finishHack();
+        } else if (Terminal.analyzeFlag) {
+            Terminal.finishAnalyze();
+        }
+    },
+    
+    //Complete the hack/analyze command
 	finishHack: function() {
-		console.log("Hack done. Determining success/failure of hack. Re-enabling terminal and changing the id of the hack progress bar");
-		
-		//Calculate whether hack was successful
-		var hackChance = Player.calculateHackingChance();
-		var rand = Math.random();
-		console.log("Hack success chance: " + hackChance +  ", rand: " + rand);
-		var expGainedOnSuccess = Player.calculateExpGain();
-		var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
-		if (rand < hackChance) {	//Success!
-			var moneyGained = Player.calculatePercentMoneyHacked();
-			moneyGained = Math.floor(Player.currentServer.moneyAvailable * moneyGained);
-			
-			Player.currentServer.moneyAvailable -= moneyGained;
-			Player.money += moneyGained;
-			
-			Player.hacking_exp += expGainedOnSuccess;
-			
-			post("Hack successful! Gained $" + moneyGained + "and " + expGainedOnSuccess + " hacking EXP");
-		} else {					//Failure
-			//Player only gains 25% exp for failure? TODO Can change this later to balance
-			Player.hacking_exp += expGainedOnFailure;
-			post("Failed to hack " + Player.currentServer.hostname + ". Gained " + expGainedOnFailure + " hacking EXP");
-		}
-		
-		$("#hack-progress-bar").attr('id', "old-hack-progress-bar");
-		$("#hack-progress").attr('id', "old-hack-progress");
-		document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" class="terminal-input"/>';
-		$('input[class=terminal-input]').prop('disabled', false);
+        console.log("Hack done. Determining success/failure of hack. Re-enabling terminal and changing the id of the hack progress bar");
+        
+        //Calculate whether hack was successful
+        var hackChance = Player.calculateHackingChance();
+        var rand = Math.random();
+        console.log("Hack success chance: " + hackChance +  ", rand: " + rand);
+        var expGainedOnSuccess = Player.calculateExpGain();
+        var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
+        if (rand < hackChance) {	//Success!
+            var moneyGained = Player.calculatePercentMoneyHacked();
+            moneyGained = Math.floor(Player.currentServer.moneyAvailable * moneyGained);
+            
+            Player.currentServer.moneyAvailable -= moneyGained;
+            Player.money += moneyGained;
+            
+            Player.hacking_exp += expGainedOnSuccess;
+            
+            post("Hack successful! Gained $" + moneyGained + " and " + expGainedOnSuccess + " hacking EXP");
+        } else {					//Failure
+            //Player only gains 25% exp for failure? TODO Can change this later to balance
+            Player.hacking_exp += expGainedOnFailure;
+            post("Failed to hack " + Player.currentServer.hostname + ". Gained " + expGainedOnFailure + " hacking EXP");
+        }
+        
+        //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
+        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
+        $("#hack-progress").attr('id', "old-hack-progress");
+        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" class="terminal-input"/>';
+        $('input[class=terminal-input]').prop('disabled', false);      
+
+        Terminal.hackFlag = false;
 	},
+    
+    finishAnalyze: function() {
+        post(Player.currentServer.hostname + ": ");
+        post("Required hacking skill: " + Player.currentServer.requiredHackingSkill);
+        //TODO Make these actual estimates by adding a random offset to result?
+        //TODO Change the text to sound better
+        post("Estimated chance to hack: " + Math.round(Player.calculateHackingChance() * 100) + "%");
+        post("Estimated time to hack: " + Math.round(Player.calculateHackingTime()) + " seconds");
+        post("Required number of open ports for PortHack: " +Player.currentServer.numOpenPortsRequired);
+        if (Player.currentServer.sshPortOpen) {
+            post("SSH port: Open")
+        } else {
+            post("SSH port: Closed")
+        }
+        
+        if (Player.currentServer.ftpPortOpen) {
+            post("FTP port: Open")
+        } else {
+            post("FTP port: Closed")
+        }
+        
+        if (Player.currentServer.smtpPortOpen) {
+            post("SMTP port: Open")
+        } else {
+            post("SMTP port: Closed")
+        }
+        
+        if (Player.currentServer.httpPortOpen) {
+            post("HTTP port: Open")
+        } else {
+            post("HTTP port: Closed")
+        }
+        
+        if (Player.currentServer.sqlPortOpen) {
+            post("SQL port: Open")
+        } else {
+            post("SQL port: Closed")
+        }
+        Terminal.analyzeFlag = false;
+    }, 
 	
 	executeCommand:  function(command) {
 		var commandArray = command.split(" ");
@@ -74,7 +130,18 @@ var Terminal = {
 		
 		switch (commandArray[0]) {
 			case "analyze":
-				//TODO Analyze the system for ports
+                //Analyze the current server for information
+                console.log("analyze terminal command called");
+                Terminal.analyzeFlag = true;
+                post("Analyzing system...");
+                hackProgressPost("Time left:");
+                hackProgressBarPost("[");
+                Player.analyze();
+                
+                //Disable terminal
+                console.log("Disabling terminal");
+                document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
+                $('input[class=terminal-input]').prop('disabled', true);
 				break;
 			case "clear":
 			case "cls":
@@ -119,9 +186,10 @@ var Terminal = {
 				} else if (Player.currentServer.requiredHackingSkill > Player.hacking_skill) {
 					post("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
 				} else {
+                    Terminal.hackFlag = true;
 					hackProgressPost("Time left:");
 					hackProgressBarPost("[");
-					var timeToHack = Player.hack();
+					Player.hack();
 					
 					//Disable terminal
 					console.log("Disabling terminal");
@@ -170,9 +238,29 @@ var Terminal = {
                 }
 				//Displays available network connections using TCP
                 console.log("netstat/scan terminal command called");
-                post("Hostname               IP");
+                post("Hostname             IP                   Root Access");
                 for (var i = 0; i < Player.currentServer.serversOnNetwork.length; i++) {
-                    post(Player.currentServer.serversOnNetwork[i].hostname + " " + Player.currentServer.serversOnNetwork[i].ip);
+                    //Add hostname
+                    var entry = Player.currentServer.serversOnNetwork[i].hostname;
+                    
+                    //Calculate padding and add IP
+                    var numSpaces = 21 - entry.length;
+                    var spaces = Array(numSpaces+1).join(" ");
+                    entry += spaces;
+                    entry += Player.currentServer.serversOnNetwork[i].ip;
+                    
+                    //Calculate padding and add root access info
+                    var hasRoot;
+                    if (Player.currentServer.serversOnNetwork[i].hasAdminRights) {
+                        hasRoot = 'Y';
+                    } else {
+                        hasRoot = 'N';
+                    }
+                    numSpaces = 21 - Player.currentServer.serversOnNetwork[i].ip.length;
+                    spaces = Array(numSpaces+1).join(" ");
+                    entry += spaces;
+                    entry += hasRoot;
+                    post(entry);
                 }
 			case "ps":
 				//TODO

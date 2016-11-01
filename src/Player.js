@@ -55,8 +55,8 @@ var Player = {
 	
 	
 	//Flag to let the engine know the player is starting a hack
-	startHack: false,
-	hackingTime: 0,
+	startAction: false,
+	actionTime: 0,
 	
 	
 	init: function() {
@@ -126,15 +126,19 @@ var Player = {
 		return Math.round(Player.currentServer.hackDifficulty * Player.currentServer.requiredHackingSkill * Player.hacking_exp_mult);
 	},
 	
-	//Hack a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for
+	//Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for
 	//This assumes that the server being hacked is not purchased by the player, that the player's hacking skill is greater than the
 	//required hacking skill and that the player has admin rights.
 	hack: function() {
-		Player.hackingTime = Player.calculateHackingTime();
-		console.log("Hacking time: " + Player.hackingTime);
+		Player.actionTime = Player.calculateHackingTime();
+		console.log("Hacking time: " + Player.actionTime);
 		//Set the startHack flag so the engine starts the hacking process
-		Player.startHack = true;
-		
-		return Player.hackingTime;
-	}
+		Player.startAction = true;
+	},
+    
+    analyze: function() {
+        //TODO Analyze only takes 5 seconds for now..maybe change this in the future?
+        Player.actionTime = 5;
+        Player.startAction = true;
+    }
 };

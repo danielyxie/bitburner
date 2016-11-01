@@ -113,7 +113,8 @@ var Engine = {
                                                  'Defense: ' + Player.defense + '<br><br>' + 
                                                  'Dexterity: ' + Player.dexterity + '<br><br>' + 
                                                  'Agility: ' + Player.agility + '<br><br>' +
-												 'Servers owned: ' + Player.purchasedServers.length + '<br><br>';
+												 'Servers owned: ' + Player.purchasedServers.length + '<br><br>' +
+                                                 'Hacking Experience: ' + Player.hacking_exp + '<br><br>';
     },
 	
 	/* Main Event Loop */
@@ -135,14 +136,14 @@ var Engine = {
         var idleTime = Engine._idleSpeed - timeDifference;
         
 		//Manual hack
-		if (Player.startHack == true) {
-			Engine._totalHackTime = Player.hackingTime;
-			Engine._hackTimeLeft = Player.hackingTime;
-			Engine._manualHackInProgress = true;
-			Engine._hackProgressBarCount = 1;
-			Engine._hackProgressStr = "[                                                  ]";
-			Engine._hackTimeStr = "Time left: ";
-			Player.startHack = false;
+		if (Player.startAction == true) {
+			Engine._totalActionTime = Player.actionTime;
+			Engine._actionTimeLeft = Player.actionTime;
+			Engine._actionInProgress = true;
+			Engine._actionProgressBarCount = 1;
+			Engine._actionProgressStr = "[                                                  ]";
+			Engine._actionTimeStr = "Time left: ";
+			Player.startAction = false;
 			
 			//document.getElementById("hack-progress-bar").style.whiteSpace = "pre";
 		}
@@ -157,36 +158,36 @@ var Engine = {
 	},
 	
 	/* Calculates the hack progress for a manual (non-scripted) hack and updates the progress bar/time accordingly */
-	_totalHackTime: 0,
-	_hackTimeLeft: 0,
-	_hackTimeStr: "Time left: ",
-	_hackProgressStr: "[                                                  ]",
-	_hackProgressBarCount: 1,
-	_manualHackInProgress: false,
+	_totalActionTime: 0,
+	_actionTimeLeft: 0,
+	_actionTimeStr: "Time left: ",
+	_actionProgressStr: "[                                                  ]",
+	_actionProgressBarCount: 1,
+	_actionInProgress: false,
 	updateHackProgress: function() {
-		if (Engine._manualHackInProgress == true) {
-			Engine._hackTimeLeft -= (Engine._idleSpeed/ 1000);	//Substract idle speed (ms)
+		if (Engine._actionInProgress == true) {
+			Engine._actionTimeLeft -= (Engine._idleSpeed/ 1000);	//Substract idle speed (ms)
 		
 			//Calculate percent filled 
-			var percent = Math.round((1 - Engine._hackTimeLeft / Engine._totalHackTime) * 100);
+			var percent = Math.round((1 - Engine._actionTimeLeft / Engine._totalActionTime) * 100);
 			
 			//Update progress bar 
-			while (Engine._hackProgressBarCount * 2 <= percent) {
-				Engine._hackProgressStr = Engine._hackProgressStr.replaceAt(Engine._hackProgressBarCount, "|");
-				Engine._hackProgressBarCount += 1;
+			while (Engine._actionProgressBarCount * 2 <= percent) {
+				Engine._actionProgressStr = Engine._actionProgressStr.replaceAt(Engine._actionProgressBarCount, "|");
+				Engine._actionProgressBarCount += 1;
 			}
 			
 			//Update hack time remaining
-			Engine._hackTimeStr = "Time left: " + Math.max(0, Math.round(Engine._hackTimeLeft)).toString() + "s";
-			document.getElementById("hack-progress").innerHTML = Engine._hackTimeStr;
+			Engine._actionTimeStr = "Time left: " + Math.max(0, Math.round(Engine._actionTimeLeft)).toString() + "s";
+			document.getElementById("hack-progress").innerHTML = Engine._actionTimeStr;
 			
 			//Dynamically update progress bar
-			document.getElementById("hack-progress-bar").innerHTML = Engine._hackProgressStr.replace( / /g, "&nbsp;" );
+			document.getElementById("hack-progress-bar").innerHTML = Engine._actionProgressStr.replace( / /g, "&nbsp;" );
 			
 			//Once percent is 100, the hack is completed
 			if (percent >= 100) {
-				Engine._manualHackInProgress = false;
-				Terminal.finishHack();
+				Engine._actionInProgress = false;
+				Terminal.finishAction();
 			}
 
 		}
