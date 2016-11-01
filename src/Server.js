@@ -136,7 +136,7 @@ ForeignServers = {
 	LexoCorp: 					new Server(),   //Group6
 	RhoConstruction: 			new Server(),   //Group6
 	AlphaEnterprises: 			new Server(),   //Group6
-	NewerthPolice: 				new Server(),	//Group6	//NEW
+	NewerthPolice: 				new Server(),	//Group6
 	RothmanUniversity:			new Server(),   //Group5
 	ZBInstituteOfTechnology: 	new Server(),   //Group5
 	SummitUniversity: 			new Server(),   //Group5
@@ -145,7 +145,7 @@ ForeignServers = {
 	TheHub: 					new Server(),   //Group4
 	CompuTek: 					new Server(),   //Group4
 	NetLinkTechnologies: 		new Server(),   //Group4
-	JohnsonOrthopedics: 		new Server(), 	//Group4	//nEW
+	JohnsonOrthopedics: 		new Server(), 	//Group4
 	
 	//"Low level" targets
 	FoodNStuff: 				new Server(),   //Group1
@@ -315,6 +315,10 @@ ForeignServers = {
 		ForeignServers.AlphaEnterprises.setHackingParameters(550, 800000000, 60, 55);
 		ForeignServers.AlphaEnterprises.setPortProperties(4);
 		
+		ForeignServers.NewerthPolice.init(createRandomIp(), "newerth-police", "Newerth Police Network", true, false, false, false, 160);
+		ForeignServers.NewerthPolice.setHackingParameters(425, 100000000, 75, 40);
+		ForeignServers.NewerthPolice.setPortProperties(4);
+		
 		ForeignServers.RothmanUniversity.init(createRandomIp(), "rothman-uni", "Rothman University Network", true, false, false, false, 160);
 		ForeignServers.RothmanUniversity.setHackingParameters(400, 250000000, 50, 40);
 		ForeignServers.RothmanUniversity.setPortProperties(3);
@@ -346,6 +350,10 @@ ForeignServers = {
 		ForeignServers.NetLinkTechnologies.init(createRandomIp(), "netlink", "NetLink Technologies", true, false, false, false, 192);
 		ForeignServers.NetLinkTechnologies.setHackingParameters(400, 350000000, 70, 60);
 		ForeignServers.NetLinkTechnologies.setPortProperties(3);
+		
+		ForeignServers.JohnsonOrthopedics.init(createRandomIp(), "johnson-ortho", "Johnson Orthopedics", true, false, false, false, 128);
+		ForeignServers.JohnsonOrthopedics.setHackingParameters(275, 100000000, 50, 50);
+		ForeignServers.JohnsonOrthopedics.setPortProperties(2);
 		
 		//"Low level" targets
 		ForeignServers.FoodNStuff.init(createRandomIp(), "foodnstuff", "Food N Stuff Supermarket", true, false, false, false, 8);
@@ -429,9 +437,9 @@ ForeignServers = {
         var NetworkGroup1 =     [ForeignServers.IronGym, ForeignServers.FoodNStuff, ForeignServers.SigmaCosmetics, ForeignServers.JoesGuns, ForeignServers.HongFangTeaHouse, ForeignServers.HaraKiriSushiBar];
         var NetworkGroup2 =     [ForeignServers.MaxHardware, ForeignServers.NectarNightclub, ForeignServers.Zer0Nightclub];
         var NetworkGroup3 =     [ForeignServers.OmegaSoftware, ForeignServers.Phantasy, ForeignServers.SilverHelix, ForeignServers.NeoNightclub];
-        var NetworkGroup4 =     [ForeignServers.CrushFitnessGym, ForeignServers.NetLinkTechnologies, ForeignServers.CompuTek, ForeignServers.TheHub];
+        var NetworkGroup4 =     [ForeignServers.CrushFitnessGym, ForeignServers.NetLinkTechnologies, ForeignServers.CompuTek, ForeignServers.TheHub, ForeignServers.JohnsonOrthopedics];
         var NetworkGroup5 =     [ForeignServers.CatalystVentures, ForeignServers.SysCoreSecurities, ForeignServers.SummitUniversity, ForeignServers.ZBInstituteOfTechnology, ForeignServers.RothmanUniversity];
-        var NetworkGroup6 =     [ForeignServers.LexoCorp, ForeignServers.RhoConstruction, ForeignServers.AlphaEnterprises, ForeignServers.MilleniumFitnessGym];
+        var NetworkGroup6 =     [ForeignServers.LexoCorp, ForeignServers.RhoConstruction, ForeignServers.AlphaEnterprises, ForeignServers.NewerthPolice, ForeignServers.MilleniumFitnessGym];
         var NetworkGroup7 =     [ForeignServers.GlobalPharmaceuticals, ForeignServers.AeroCorp, ForeignServers.GalacticCybersystems, ForeignServers.SnapFitnessGym];
         var NetworkGroup8 =     [ForeignServers.DeltaOne, ForeignServers.UnitaLifeGroup, ForeignServers.OmniaCybersystems];
         var NetworkGroup9 =     [ForeignServers.ZeusMedical, ForeignServers.SolarisSpaceSystems, ForeignServers.UniversalEnergy, ForeignServers.IcarusMicrosystems, ForeignServers.DefComm];

@@ -74,10 +74,10 @@ var Player = {
         }
 	},
 	
-	//Calculates hacking skill based on experience
+	//Calculates skill level based on experience. The same formula will be used for every skill
 	//	At the maximum possible exp (MAX_INT = 9007199254740991), the hacking skill will by 1796
 	// 	Gets to level 1000 hacking skill at ~1,100,000,000 exp
-	calculateHackingSkill: function(exp) {
+	calculateSkill: function(exp) {
 		return Math.max(Math.floor(50 * log(9007199254740991+ 2.270) - 40), 1);
 	},
 	
