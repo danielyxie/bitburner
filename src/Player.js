@@ -3,10 +3,17 @@
 var Player = {
 	//Skills and stats
 	hacking_skill: 	1,
-	strength: 		1,
-	defense:		1,
-	dexterity: 		1,
-	agility: 		1, 
+	
+	//Fighting
+	strength: 		1,		//Damage dealt
+	defense:		1,		//Damage received
+	dexterity: 		1,		//Accuracy
+	agility: 		1, 		//Dodge %
+	
+	//Labor stats
+	charisma: 		1,
+	
+	//Hacking multipliers
 	hacking_chance_multiplier:	2,	//Increase through ascensions/augmentations
 	//hacking_speed_multiplier: 	5,	//Decrease through ascensions/augmentations
     hacking_speed_multiplier:   1,  //Make it faster for debugging
@@ -19,11 +26,13 @@ var Player = {
 	total_defense: 		1,
 	total_dexterity: 	1,
 	total_agility: 		1,
+	total_charisma: 	1,
 	lifetime_hacking: 	1,
 	lifetime_strength: 	1,
 	lifetime_defense: 	1,
 	lifetime_dexterity: 1,
 	lifetime_agility: 	1,
+	lifetime_charisma: 	1,
 	
 	//Experience and multipliers
 	hacking_exp: 	0,
@@ -31,12 +40,16 @@ var Player = {
 	defense_exp: 	0,
 	dexterity_exp: 	0,
 	agility_exp: 	0,
+	charisma_exp:	0,
 	
 	hacking_exp_mult: 	1,
 	strength_exp_mult: 	1,
 	defense_exp_mult: 	1,
 	dexterity_exp_mult: 1,
 	agility_exp_mult: 	1,
+	charisma_exp_mult: 	1,
+	
+	company_rep_mult: 	1,	//Multiplier for how fast the player gains reputation at a company
 	
 	//Money
 	money: 			0,
@@ -64,7 +77,6 @@ var Player = {
 		Player.homeComputer.init("19.42.93.219", "home", "Home PC", true, true, true, true, 1);
 		Player.currentServer = Player.homeComputer;
 		
-		//FOR TESTING ONLY
 		Player.homeComputer.programs.push("PortHack.exe");
         
         var NetworkGroup1 = [ForeignServers.IronGym, ForeignServers.FoodNStuff, ForeignServers.SigmaCosmetics, ForeignServers.JoesGuns, ForeignServers.HongFangTeaHouse, ForeignServers.HaraKiriSushiBar];

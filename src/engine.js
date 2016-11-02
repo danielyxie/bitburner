@@ -113,6 +113,7 @@ var Engine = {
                                                  'Defense: ' + Player.defense + '<br><br>' + 
                                                  'Dexterity: ' + Player.dexterity + '<br><br>' + 
                                                  'Agility: ' + Player.agility + '<br><br>' +
+												 'Charisma: ' + Player.charisma + '<br><br>' +
 												 'Servers owned: ' + Player.purchasedServers.length + '<br><br>' +
                                                  'Hacking Experience: ' + Player.hacking_exp + '<br><br>';
     },
