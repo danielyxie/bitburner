@@ -92,6 +92,11 @@ createRandomByte = function() {
 //Create all "foreign" servers that exist in the game. This does not include
 //servers that the player can purchase or the player's starting computer
 ForeignServers = {
+	//TODO add "secret" servers for factions and anything else? These are servers
+	//that do not get connected to anything in the createNetwork() function
+	//Secret Servers
+	
+	
 	//Megacorporations (each one forms its own faction?)
 	ECorp: 						new Server(),   //Group15
 	MegaCorp: 					new Server(),   //Group15
