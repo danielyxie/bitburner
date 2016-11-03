@@ -87,7 +87,7 @@ CompanyPosition.prototype.calculateJobPerformance(hacking, str, def, dex, agi, c
 	return (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio) / 100;
 }
 
-Positions = {
+CompanyPositions = {
 	//Constructor: CompanyPosition(name, reqHack, reqStr, reqDef, reqDex, reqAgi, reqCha, reqRep, salary)
 
 	//Software
@@ -128,7 +128,71 @@ Positions = {
 	HeadOfSecurity: 			new CompanyPosition("Head of Security", 50, 500, 500, 500, 500, 200, 20),
 	
 	init: function() {
+		//Argument order: hack, str, def, dex, agi, cha
+		//Software
+		SoftwareIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10);
+		SoftwareIntern.setExperienceGains(.1, 0, 0, 0, 0, .02);
+		JuniorDev.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+		JuniorDev.setExperienceGains(.2, 0, 0, 0, 0, .04);
+		SeniorDev.setPerformanceParameters(75, 0, 0, 0, 0, 25);
+		SeniorDev.setExperienceGains(.4, 0, 0, 0, 0, .08);
+		LeadDev.setPerformanceParameters(70, 0, 0, 0, 0, 30);
+		LeadDev.setExperienceGains(.5, 0, 0, 0, 0, .1);
 		
+		//Security
+		ITIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10);
+		ITIntern.setExperienceGains(.05, 0, 0, 0, 0, .01);
+		ITAnalyst.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+		ITAnalyst.setExperienceGains(.15, 0, 0, 0, 0, .02);
+		ITManager.setPerformanceParameters(75, 0, 0, 0, 0, 25);
+		ITManager.setExperienceGains(.4, 0, 0, 0, 0, .1);
+		SysAdmin.setPerformanceParameters(80, 0, 0, 0, 0, 20);
+		SysAdmin.setExperienceGains(.5, 0, 0, 0, 0, .05);
+		SecurityEngineer.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+		SecurityEngineer.setExperienceGains(0.4, 0, 0, 0, 0, .05);
+		NetworkEngineer.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+		NetworkEngineer.setExperienceGains(0.4, 0, 0, 0, 0, .05);
+		NetworkAdministrator.setPerformanceParameters(75, 0, 0, 0, 0, 25);
+		NetworkAdministrator.setExperienceGains(0.5, 0, 0, 0, 0, .1);
+		
+		//Technology management
+		HeadOfSoftware.setPerformanceParameters(65, 0, 0, 0, 0, 35);
+		HeadOfSoftware.setExperienceGains(1, 0, 0, 0, 0, .5);
+		HeadOfEngineering.setPerformanceParameters(60, 0, 0, 0, 0, 40);
+		HeadOfEngineering.setExperienceGains(1.1, 0, 0, 0, 0, .5);
+		VicePresident.setPerformanceParameters(60, 0, 0, 0, 0, 40);
+		VicePresident.setExperienceGains(1.2, 0, 0, 0, 0, .6);
+		CTO.setPerformanceParameters(50, 0, 0, 0, 0, 50);
+		CTO.setExperienceGains(1.5, 0, 0, 0, 1);
+		
+		//Business
+		BusinessIntern.setPerformanceParameters(10, 0, 0, 0, 0, 90);
+		BusinessIntern.setExperienceGains(.01, 0, 0, 0, 0, .1);
+		BusinessAnalyst.setPerformanceParameters(20, 0, 0, 0, 0, 80);
+		BusinessAnalyst.setExperienceGains(.02, 0, 0, 0, 0, .2);
+		BusinessManager.setPerformanceParameters(15, 0, 0, 0, 0, 85);
+		BusinessManager.setExperienceGains(.02, 0, 0, 0, 0, .4);
+		OperationsManager.setPerformanceParameters(15, 0, 0, 0, 0, 85);
+		OperationsManager.setExperienceGains(.02, 0, 0, 0, 0, .4);
+		CFO.setPerformanceParameters(10, 0, 0, 0, 0, 90);
+		CFO.setExperienceGains(.05, 0, 0, 0, 0, 1);
+		CEO.setPerformanceParameters(10, 0, 0, 0, 0, 90);
+		CEO.setExperienceGains(.1, 0, 0, 0, 0, 1.5);
+		
+		//Non-tech/management jobs
+		//TODO These parameters might need to be balanced
+		Waiter.setPerformanceParameters(0, 10, 0, 10, 10, 70);
+		Waiter.setExperienceGains(0, .01, 0, .01, .01, .05);
+		SecurityGuard.setPerformanceParameters(5, 20, 20, 20, 20, 15);
+		SecurityGuard.setExperienceGains(.01, .02, .02, .02, .02, .01);
+		PoliceOfficer.setPerformanceParameters(5, 20, 20, 20, 20, 15);
+		PoliceOfficer.setExperienceGains(.01, .04, .04, .04, .04, .02);
+		SecurityOfficer.setPerformanceParameters(10, 20, 20, 20, 20, 10);
+		SecurityOfficer.setExperienceGains(.02, .06, .06, .06, .06, .04);
+		SecuritySupervisor.setPerformanceParameters(10, 15, 15, 15, 15, 30);
+		SecuritySupervisor.setExperienceGains(.02, .06, .06, .06, .06, .08);
+		HeadOfSecurity.setPerformanceParameters(10, 15, 15, 15, 15, 30);
+		HeadOfSecurity.setExperienceGains(.05, .1, .1, .1, .1, .1);
 	}
 }
 

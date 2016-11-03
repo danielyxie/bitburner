@@ -196,11 +196,13 @@ var Engine = {
 	
     /* Initialization */
 	init: function() {
-		//Initialize Player objects
+		//Initialization functions
 		Player.init();
 		
-		//Initialize foreign servers
 		ForeignServers.init();
+		
+		Companies.init();
+		CompanyPositions.init();
 		
         //Load, save, and delete buttons
         //Engine.Clickables.saveButton = document.getElementById("save");
