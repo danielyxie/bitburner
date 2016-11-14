@@ -41,6 +41,7 @@ Factions = {
 	BlackHand: 				new Faction("The Black Hand");
 	NiteSec: 				new Faction("NiteSec");
 	
-	//City factions, essentially governments
-	Newerth: 				new Faction("Newerth");
+	//City factions, essentially governments and gangs
+	Aevum: 				    new Faction("Aevum");
+    Ishima:                 new Faction("Ishima");
 }

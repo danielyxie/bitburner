@@ -95,6 +95,8 @@ ForeignServers = {
 	//TODO add "secret" servers for factions and anything else? These are servers
 	//that do not get connected to anything in the createNetwork() function
 	//Secret Servers
+    world_daemon:               new Server(),   //Final server for 2nd tier prestige. Discover that the world is a simulation
+    
 	
 	
 	//Megacorporations (each one forms its own faction?)
@@ -141,7 +143,7 @@ ForeignServers = {
 	LexoCorp: 					new Server(),   //Group6
 	RhoConstruction: 			new Server(),   //Group6
 	AlphaEnterprises: 			new Server(),   //Group6
-	NewerthPolice: 				new Server(),	//Group6
+	AevumPolice: 				new Server(),	//Group6
 	RothmanUniversity:			new Server(),   //Group5
 	ZBInstituteOfTechnology: 	new Server(),   //Group5
 	SummitUniversity: 			new Server(),   //Group5
@@ -320,9 +322,9 @@ ForeignServers = {
 		ForeignServers.AlphaEnterprises.setHackingParameters(550, 800000000, 60, 55);
 		ForeignServers.AlphaEnterprises.setPortProperties(4);
 		
-		ForeignServers.NewerthPolice.init(createRandomIp(), "newerth-police", "Newerth Police Network", true, false, false, false, 160);
-		ForeignServers.NewerthPolice.setHackingParameters(425, 100000000, 75, 40);
-		ForeignServers.NewerthPolice.setPortProperties(4);
+		ForeignServers.AevumPolice.init(createRandomIp(), "aevum-police", "Aevum Police Network", true, false, false, false, 160);
+		ForeignServers.AevumPolice.setHackingParameters(425, 100000000, 75, 40);
+		ForeignServers.AevumPolice.setPortProperties(4);
 		
 		ForeignServers.RothmanUniversity.init(createRandomIp(), "rothman-uni", "Rothman University Network", true, false, false, false, 160);
 		ForeignServers.RothmanUniversity.setHackingParameters(400, 250000000, 50, 40);
@@ -444,7 +446,7 @@ ForeignServers = {
         var NetworkGroup3 =     [ForeignServers.OmegaSoftware, ForeignServers.Phantasy, ForeignServers.SilverHelix, ForeignServers.NeoNightclub];
         var NetworkGroup4 =     [ForeignServers.CrushFitnessGym, ForeignServers.NetLinkTechnologies, ForeignServers.CompuTek, ForeignServers.TheHub, ForeignServers.JohnsonOrthopedics];
         var NetworkGroup5 =     [ForeignServers.CatalystVentures, ForeignServers.SysCoreSecurities, ForeignServers.SummitUniversity, ForeignServers.ZBInstituteOfTechnology, ForeignServers.RothmanUniversity];
-        var NetworkGroup6 =     [ForeignServers.LexoCorp, ForeignServers.RhoConstruction, ForeignServers.AlphaEnterprises, ForeignServers.NewerthPolice, ForeignServers.MilleniumFitnessGym];
+        var NetworkGroup6 =     [ForeignServers.LexoCorp, ForeignServers.RhoConstruction, ForeignServers.AlphaEnterprises, ForeignServers.AevumPolice, ForeignServers.MilleniumFitnessGym];
         var NetworkGroup7 =     [ForeignServers.GlobalPharmaceuticals, ForeignServers.AeroCorp, ForeignServers.GalacticCybersystems, ForeignServers.SnapFitnessGym];
         var NetworkGroup8 =     [ForeignServers.DeltaOne, ForeignServers.UnitaLifeGroup, ForeignServers.OmniaCybersystems];
         var NetworkGroup9 =     [ForeignServers.ZeusMedical, ForeignServers.SolarisSpaceSystems, ForeignServers.UniversalEnergy, ForeignServers.IcarusMicrosystems, ForeignServers.DefComm];

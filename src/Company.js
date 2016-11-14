@@ -238,7 +238,7 @@ Companies = {
 	LexoCorp: 					new Company(),   
 	RhoConstruction: 			new Company(),   
 	AlphaEnterprises: 			new Company(),   
-	NewerthPolice: 				new Company(),	
+	AevumPolice: 				new Company(),	
 	SysCoreSecurities: 			new Company(),   
 	CompuTek: 					new Company(),   
 	NetLinkTechnologies: 		new Company(),
@@ -294,7 +294,7 @@ Companies = {
 		Companies.LexoCorp.init("LexoCorp", 1.4, 1.4);
 		Companies.RhoConstruction.init("Rho Construction", 1.3, 1.3);
 		Companies.AlphaEnterprises.init("Alpha Enterprises", 1.5, 1.5);
-		Companies.NewerthPolice.init("Newerth Police", 1.3, 1.3);
+		Companies.AevumPolice.init("Aevum Police", 1.3, 1.3);
 		Companies.SysCoreSecurities.init("SysCore Securities", 1.3, 1.3);
 		Companies.CompuTek.init("CompuTek", 1.2, 1.2);
 		Companies.NetLinkTechnologies.init("NetLink Technologies", 1.2, 1.2);
