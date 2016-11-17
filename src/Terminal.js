@@ -289,6 +289,19 @@ var Terminal = {
 			case "scp":
 				//TODO
 				break;
+				
+			case "test":
+				//TODO
+				//TESTED: print, for loops
+				//UNTESTED:
+				
+				var code = "i = 0; while (i < 100000000000) {print(i); i = i+1;}";
+				var ast = Parser(Tokenizer(InputStream(code)));
+				console.log("Printing AST below")
+				console.log(ast);
+				var globalEnv = new Environment();
+				evaluate(ast, globalEnv);
+				break;
 			default:
 				post("Command not found");
 		}

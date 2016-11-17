@@ -3,27 +3,19 @@
  * Tokens can be accessed with peek() and next().
  *
  *  Token types:
- *      {type: "punc", value: "(" }           // punctuation: parens, comma, semicolon etc.
- *      {type: "num", value: 5 }              // numbers
- *      {type: "str", value: "Hello World!" } // strings
- *      {type: "kw", value: "lambda" }        // keywords
- *      {type: "var", value: "a" }            // identifiers
- *      {type: "op", value: "!=" }            // operators
- *
- *
- *
- *
- *
- *
- *
- *
- *
+ *      {type: "punc", value: "(" }           	// punctuation: parens, comma, semicolon etc.
+ *      {type: "num", value: 5 }              	// numbers (including floats)
+ *      {type: "str", value: "Hello World!" } 	// strings
+ *      {type: "kw", value: "for/if/" }        	// keywords, see defs below
+ *      {type: "var", value: "a" }            	// identifiers/variables
+ *      {type: "op", value: "!=" }            	// operator characters
+ *		{type: "bool", value: "true" } 			// Booleans
  *
  */
  
 function Tokenizer(input) {
     var current = null;
-    var keywords = " if then else true false while for ";
+    var keywords = " if elif else true false while for ";
     
     return {
         next    : next,

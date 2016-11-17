@@ -12,17 +12,17 @@ function Company() {
 	
 };
 
-Company.prototype.init(name, salaryMult, expMult) {
+Company.prototype.init = function(name, salaryMult, expMult) {
 	this.companyName 	= name;
 	this.salaryMult 	= salaryMult;
 	this.expMult 		= expMult;
 }
 
-Company.prototype.addPosition(pos) {
+Company.prototype.addPosition = function(pos) {
 	this.companyPositions.push(pos);
 }
 
-Company.prototype.addPositions(positions) {
+Company.prototype.addPositions = function(positions) {
 	for (var i = 0; i < positions.length; i++) {
 		this.addPosition(positions[i]);
 	}
@@ -51,7 +51,7 @@ function CompanyPosition(name, reqHack, reqStr, reqDef, reqDex, reqAgi, reqCha, 
 //
 //NOTE: These parameters should total to 100, such that each parameter represents a "weighting" of how
 //		important that stat/skill is for the job
-CompanyPosition.prototype.setPerformanceParameters(hackEff, strEff, defEff, dexEff, agiEff, chaEff) {
+CompanyPosition.prototype.setPerformanceParameters = function(hackEff, strEff, defEff, dexEff, agiEff, chaEff) {
 	if (hackEff + strEff + defEff + dexEff + agiEff + chaEff != 100) {
 		console.log("CompanyPosition.setPerformanceParameters() arguments do not total to 100");
 		return;
@@ -66,7 +66,7 @@ CompanyPosition.prototype.setPerformanceParameters(hackEff, strEff, defEff, dexE
 
 //Set the stat/skill experience a Player should gain for working at a CompanyPosition. The experience is per game loop (200 ms)
 //These will be constant for a single position, but is affected by a company-specific multiplier
-CompanyPosition.prototype.setExperienceGains(hack, str, def, dex, agi, cha) {
+CompanyPosition.prototype.setExperienceGains = function(hack, str, def, dex, agi, cha) {
 	this.hackingExpGain 		= hack;
 	this.strengthExpGain 		= str;
 	this.defenseExpGain 		= def;
@@ -77,7 +77,7 @@ CompanyPosition.prototype.setExperienceGains(hack, str, def, dex, agi, cha) {
 
 //Calculate a player's effectiveness at a certain job. Returns the amount of job reputation
 //that should be gained every game loop (200 ms)
-CompanyPosition.prototype.calculateJobPerformance(hacking, str, def, dex, agi, cha) {
+CompanyPosition.prototype.calculateJobPerformance = function(hacking, str, def, dex, agi, cha) {
 	var hackRatio 	= this.hackingEffectiveness * hacking / CONSTANTS.MaxSkillLevel;
 	var strRatio  	= this.strengthEffectiveness * str / CONSTANTS.MaxSkillLevel;
 	var defRatio 	= this.defenseEffectiveness * def / CONSTANTS.MaxSkillLevel;
@@ -130,69 +130,69 @@ CompanyPositions = {
 	init: function() {
 		//Argument order: hack, str, def, dex, agi, cha
 		//Software
-		SoftwareIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10);
-		SoftwareIntern.setExperienceGains(.1, 0, 0, 0, 0, .02);
-		JuniorDev.setPerformanceParameters(85, 0, 0, 0, 0, 15);
-		JuniorDev.setExperienceGains(.2, 0, 0, 0, 0, .04);
-		SeniorDev.setPerformanceParameters(75, 0, 0, 0, 0, 25);
-		SeniorDev.setExperienceGains(.4, 0, 0, 0, 0, .08);
-		LeadDev.setPerformanceParameters(70, 0, 0, 0, 0, 30);
-		LeadDev.setExperienceGains(.5, 0, 0, 0, 0, .1);
+		CompanyPositions.SoftwareIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10);
+		CompanyPositions.SoftwareIntern.setExperienceGains(.1, 0, 0, 0, 0, .02);
+		CompanyPositions.JuniorDev.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+		CompanyPositions.JuniorDev.setExperienceGains(.2, 0, 0, 0, 0, .04);
+		CompanyPositions.SeniorDev.setPerformanceParameters(75, 0, 0, 0, 0, 25);
+		CompanyPositions.SeniorDev.setExperienceGains(.4, 0, 0, 0, 0, .08);
+		CompanyPositions.LeadDev.setPerformanceParameters(70, 0, 0, 0, 0, 30);
+		CompanyPositions.LeadDev.setExperienceGains(.5, 0, 0, 0, 0, .1);
 		
 		//Security
-		ITIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10);
-		ITIntern.setExperienceGains(.05, 0, 0, 0, 0, .01);
-		ITAnalyst.setPerformanceParameters(85, 0, 0, 0, 0, 15);
-		ITAnalyst.setExperienceGains(.15, 0, 0, 0, 0, .02);
-		ITManager.setPerformanceParameters(75, 0, 0, 0, 0, 25);
-		ITManager.setExperienceGains(.4, 0, 0, 0, 0, .1);
-		SysAdmin.setPerformanceParameters(80, 0, 0, 0, 0, 20);
-		SysAdmin.setExperienceGains(.5, 0, 0, 0, 0, .05);
-		SecurityEngineer.setPerformanceParameters(85, 0, 0, 0, 0, 15);
-		SecurityEngineer.setExperienceGains(0.4, 0, 0, 0, 0, .05);
-		NetworkEngineer.setPerformanceParameters(85, 0, 0, 0, 0, 15);
-		NetworkEngineer.setExperienceGains(0.4, 0, 0, 0, 0, .05);
-		NetworkAdministrator.setPerformanceParameters(75, 0, 0, 0, 0, 25);
-		NetworkAdministrator.setExperienceGains(0.5, 0, 0, 0, 0, .1);
+		CompanyPositions.ITIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10);
+		CompanyPositions.ITIntern.setExperienceGains(.05, 0, 0, 0, 0, .01);
+		CompanyPositions.ITAnalyst.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+		CompanyPositions.ITAnalyst.setExperienceGains(.15, 0, 0, 0, 0, .02);
+		CompanyPositions.ITManager.setPerformanceParameters(75, 0, 0, 0, 0, 25);
+		CompanyPositions.ITManager.setExperienceGains(.4, 0, 0, 0, 0, .1);
+		CompanyPositions.SysAdmin.setPerformanceParameters(80, 0, 0, 0, 0, 20);
+		CompanyPositions.SysAdmin.setExperienceGains(.5, 0, 0, 0, 0, .05);
+		CompanyPositions.SecurityEngineer.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+		CompanyPositions.SecurityEngineer.setExperienceGains(0.4, 0, 0, 0, 0, .05);
+		CompanyPositions.NetworkEngineer.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+		CompanyPositions.NetworkEngineer.setExperienceGains(0.4, 0, 0, 0, 0, .05);
+		CompanyPositions.NetworkAdministrator.setPerformanceParameters(75, 0, 0, 0, 0, 25);
+		CompanyPositions.NetworkAdministrator.setExperienceGains(0.5, 0, 0, 0, 0, .1);
 		
 		//Technology management
-		HeadOfSoftware.setPerformanceParameters(65, 0, 0, 0, 0, 35);
-		HeadOfSoftware.setExperienceGains(1, 0, 0, 0, 0, .5);
-		HeadOfEngineering.setPerformanceParameters(60, 0, 0, 0, 0, 40);
-		HeadOfEngineering.setExperienceGains(1.1, 0, 0, 0, 0, .5);
-		VicePresident.setPerformanceParameters(60, 0, 0, 0, 0, 40);
-		VicePresident.setExperienceGains(1.2, 0, 0, 0, 0, .6);
-		CTO.setPerformanceParameters(50, 0, 0, 0, 0, 50);
-		CTO.setExperienceGains(1.5, 0, 0, 0, 1);
+		CompanyPositions.HeadOfSoftware.setPerformanceParameters(65, 0, 0, 0, 0, 35);
+		CompanyPositions.HeadOfSoftware.setExperienceGains(1, 0, 0, 0, 0, .5);
+		CompanyPositions.HeadOfEngineering.setPerformanceParameters(60, 0, 0, 0, 0, 40);
+		CompanyPositions.HeadOfEngineering.setExperienceGains(1.1, 0, 0, 0, 0, .5);
+		CompanyPositions.VicePresident.setPerformanceParameters(60, 0, 0, 0, 0, 40);
+		CompanyPositions.VicePresident.setExperienceGains(1.2, 0, 0, 0, 0, .6);
+		CompanyPositions.CTO.setPerformanceParameters(50, 0, 0, 0, 0, 50);
+		CompanyPositions.CTO.setExperienceGains(1.5, 0, 0, 0, 1);
 		
 		//Business
-		BusinessIntern.setPerformanceParameters(10, 0, 0, 0, 0, 90);
-		BusinessIntern.setExperienceGains(.01, 0, 0, 0, 0, .1);
-		BusinessAnalyst.setPerformanceParameters(20, 0, 0, 0, 0, 80);
-		BusinessAnalyst.setExperienceGains(.02, 0, 0, 0, 0, .2);
-		BusinessManager.setPerformanceParameters(15, 0, 0, 0, 0, 85);
-		BusinessManager.setExperienceGains(.02, 0, 0, 0, 0, .4);
-		OperationsManager.setPerformanceParameters(15, 0, 0, 0, 0, 85);
-		OperationsManager.setExperienceGains(.02, 0, 0, 0, 0, .4);
-		CFO.setPerformanceParameters(10, 0, 0, 0, 0, 90);
-		CFO.setExperienceGains(.05, 0, 0, 0, 0, 1);
-		CEO.setPerformanceParameters(10, 0, 0, 0, 0, 90);
-		CEO.setExperienceGains(.1, 0, 0, 0, 0, 1.5);
+		CompanyPositions.BusinessIntern.setPerformanceParameters(10, 0, 0, 0, 0, 90);
+		CompanyPositions.BusinessIntern.setExperienceGains(.01, 0, 0, 0, 0, .1);
+		CompanyPositions.BusinessAnalyst.setPerformanceParameters(20, 0, 0, 0, 0, 80);
+		CompanyPositions.BusinessAnalyst.setExperienceGains(.02, 0, 0, 0, 0, .2);
+		CompanyPositions.BusinessManager.setPerformanceParameters(15, 0, 0, 0, 0, 85);
+		CompanyPositions.BusinessManager.setExperienceGains(.02, 0, 0, 0, 0, .4);
+		CompanyPositions.OperationsManager.setPerformanceParameters(15, 0, 0, 0, 0, 85);
+		CompanyPositions.OperationsManager.setExperienceGains(.02, 0, 0, 0, 0, .4);
+		CompanyPositions.CFO.setPerformanceParameters(10, 0, 0, 0, 0, 90);
+		CompanyPositions.CFO.setExperienceGains(.05, 0, 0, 0, 0, 1);
+		CompanyPositions.CEO.setPerformanceParameters(10, 0, 0, 0, 0, 90);
+		CompanyPositions.CEO.setExperienceGains(.1, 0, 0, 0, 0, 1.5);
 		
 		//Non-tech/management jobs
 		//TODO These parameters might need to be balanced
-		Waiter.setPerformanceParameters(0, 10, 0, 10, 10, 70);
-		Waiter.setExperienceGains(0, .01, 0, .01, .01, .05);
-		SecurityGuard.setPerformanceParameters(5, 20, 20, 20, 20, 15);
-		SecurityGuard.setExperienceGains(.01, .02, .02, .02, .02, .01);
-		PoliceOfficer.setPerformanceParameters(5, 20, 20, 20, 20, 15);
-		PoliceOfficer.setExperienceGains(.01, .04, .04, .04, .04, .02);
-		SecurityOfficer.setPerformanceParameters(10, 20, 20, 20, 20, 10);
-		SecurityOfficer.setExperienceGains(.02, .06, .06, .06, .06, .04);
-		SecuritySupervisor.setPerformanceParameters(10, 15, 15, 15, 15, 30);
-		SecuritySupervisor.setExperienceGains(.02, .06, .06, .06, .06, .08);
-		HeadOfSecurity.setPerformanceParameters(10, 15, 15, 15, 15, 30);
-		HeadOfSecurity.setExperienceGains(.05, .1, .1, .1, .1, .1);
+		CompanyPositions.Waiter.setPerformanceParameters(0, 10, 0, 10, 10, 70);
+		CompanyPositions.Waiter.setExperienceGains(0, .01, 0, .01, .01, .05);
+		CompanyPositions.SecurityGuard.setPerformanceParameters(5, 20, 20, 20, 20, 15);
+		CompanyPositions.SecurityGuard.setExperienceGains(.01, .02, .02, .02, .02, .01);
+		CompanyPositions.PoliceOfficer.setPerformanceParameters(5, 20, 20, 20, 20, 15);
+		CompanyPositions.PoliceOfficer.setExperienceGains(.01, .04, .04, .04, .04, .02);
+		CompanyPositions.SecurityOfficer.setPerformanceParameters(10, 20, 20, 20, 20, 10);
+		CompanyPositions.SecurityOfficer.setExperienceGains(.02, .06, .06, .06, .06, .04);
+		CompanyPositions.SecuritySupervisor.setPerformanceParameters(10, 15, 15, 15, 15, 30);
+		CompanyPositions.SecuritySupervisor.setExperienceGains(.02, .06, .06, .06, .06, .08);
+		CompanyPositions.HeadOfSecurity.setPerformanceParameters(10, 15, 15, 15, 15, 30);
+		CompanyPositions.HeadOfSecurity.setExperienceGains(.05, .1, .1, .1, .1, .1);
 	}
 }
 
@@ -242,7 +242,7 @@ Companies = {
 	SysCoreSecurities: 			new Company(),   
 	CompuTek: 					new Company(),   
 	NetLinkTechnologies: 		new Company(),
-	CarmichaelSecurity: 		new Company();	
+	CarmichaelSecurity: 		new Company(),
 	
 	//"Low level" companies
 	FoodNStuff: 				new Company(),   

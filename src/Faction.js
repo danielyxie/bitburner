@@ -9,11 +9,11 @@ function Faction(name) {
 };
 
 //TODO
-Faction.prototype.init() {
+Faction.prototype.init = function() {
 	
 }
 
-Faction.prototype.setAugmentations(augs) {
+Faction.prototype.setAugmentations = function(augs) {
 	for (var i = 0; i < augs.length; i++) {
 		this.augmentations.push(augs[i]);
 	}
@@ -22,33 +22,33 @@ Faction.prototype.setAugmentations(augs) {
 Factions = {
 	//TODO Saving this for later, IShima is a kinda cool name maybe use it for something
 	//Endgame
-	Illuminati: 			new Faction("Illuminati");
-	Daedalus: 				new Faction("Daedalus");
-	Covenant: 				new Faction("The Covenant");
+	Illuminati: 			new Faction("Illuminati"),
+	Daedalus: 				new Faction("Daedalus"),
+	Covenant: 				new Faction("The Covenant"),
 	
 	//Megacorporations, each forms its own faction
-	ECorp: 					new Faction("ECorp");
-	MegaCorp: 				new Faction("MegaCorp");
-	BachmanAndAssociates: 	new Faction("Bachman & Associates");
-	BladeIndustries: 		new Faction("Blade Industries");
-	NWO: 					new Faction("NWO");
-	ClarkeIncorporated: 	new Faction("Clarke Incorporated");
-	OmniTekIncorporated: 	new Faction("OmniTek Incorporated");
-	FourSigma: 				new Faction("Four Sigma");
-	KuaiGongInternational: 	new Faction("KuaiGong International");
+	ECorp: 					new Faction("ECorp"),
+	MegaCorp: 				new Faction("MegaCorp"),
+	BachmanAndAssociates: 	new Faction("Bachman & Associates"),
+	BladeIndustries: 		new Faction("Blade Industries"),
+	NWO: 					new Faction("NWO"),
+	ClarkeIncorporated: 	new Faction("Clarke Incorporated"),
+	OmniTekIncorporated: 	new Faction("OmniTek Incorporated"),
+	FourSigma: 				new Faction("Four Sigma"),
+	KuaiGongInternational: 	new Faction("KuaiGong International"),
 	
 	//Hacker groups
-	BitRunners: 			new Faction("BitRunners");
-	BlackHand: 				new Faction("The Black Hand");
-	NiteSec: 				new Faction("NiteSec");
+	BitRunners: 			new Faction("BitRunners"),
+	BlackHand: 				new Faction("The Black Hand"),
+	NiteSec: 				new Faction("NiteSec"),
 	
 	//City factions, essentially governments
-	Chongqing: 				new Faction("Chongqing");
-	Sector12: 				new Faction("Sector-12");
-	HongKong: 				new Faction("New Tokyo");
-	Aevum: 				    new Faction("Aevum");
-    Ishima:                 new Faction("Ishima");
-	Volhaven: 				new Faction("Volhaven");
+	Chongqing: 				new Faction("Chongqing"),
+	Sector12: 				new Faction("Sector-12"),
+	HongKong: 				new Faction("New Tokyo"),
+	Aevum: 				    new Faction("Aevum"),
+    Ishima:                 new Faction("Ishima"),
+	Volhaven: 				new Faction("Volhaven"),
 	
 	//Criminal Organizations/Gangs
 	

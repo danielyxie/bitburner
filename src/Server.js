@@ -19,6 +19,7 @@ function Server() {
 	
 	this.scripts 		= 	[];
 	this.runningScripts = 	[]; //Scripts currently being run
+	this.scriptEnvs		=	[];	//The environment for all of the running scripts. Matched by index number
 	this.programs 		= 	[];
 	
 	/* Hacking information (only valid for "foreign" aka non-purchased servers) */
