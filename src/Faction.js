@@ -20,6 +20,7 @@ Faction.prototype.setAugmentations(augs) {
 }
 
 Factions = {
+	//TODO Saving this for later, IShima is a kinda cool name maybe use it for something
 	//Endgame
 	Illuminati: 			new Faction("Illuminati");
 	Daedalus: 				new Faction("Daedalus");
@@ -43,4 +44,13 @@ Factions = {
 	
 	//City factions, essentially governments
 	Newerth: 				new Faction("Newerth");
+	Chongqing: 				new Faction("Chongqing");
+	Sector12: 				new Faction("Sector-12");
+	HongKong: 				new Faction("New Tokyo");
+	
+	//Criminal Organizations/Gangs
+	
+	//Earlygame factions - factions the player will prestige with early on that don't
+	//belong in other categories
+	
 }
