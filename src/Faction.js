@@ -43,10 +43,12 @@ Factions = {
 	NiteSec: 				new Faction("NiteSec");
 	
 	//City factions, essentially governments
-	Newerth: 				new Faction("Newerth");
 	Chongqing: 				new Faction("Chongqing");
 	Sector12: 				new Faction("Sector-12");
 	HongKong: 				new Faction("New Tokyo");
+	Aevum: 				    new Faction("Aevum");
+    Ishima:                 new Faction("Ishima");
+	Volhaven: 				new Faction("Volhaven");
 	
 	//Criminal Organizations/Gangs
 	
