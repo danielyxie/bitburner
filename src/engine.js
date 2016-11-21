@@ -38,10 +38,8 @@ var Engine = {
     },
 	
 	//Time variables (milliseconds unix epoch time)
-	_timeThen: new Date().getTime(),
-	_timeNow: new Date().getTime(),
+	_lastUpdate: new Date().getTime(),
 	
-	_ticks: 0,          //Total ticks
 	_idleSpeed: 200,    //Speed (in ms) at which the main loop is updated
     
     //Display a status update text
@@ -121,22 +119,24 @@ var Engine = {
 	/* Main Event Loop */
 	idleTimer: function() {
 		//Get time difference
-		Engine._timeNow = new Date().getTime();
-		var timeDifference = Engine._timeNow - Engine._timeThen - Engine._ticks;
+		var _thisUpdate = new Date().getTime();
+		var diff = _thisUpdate - Engine._lastUpdate;
+        
+        //Divide this by cycle time to determine how many cycles have elapsed since last update
+        diff = Math.round(diff / Engine._idleSpeed);
+        
+        if (diff > 0) {
+            //Update the game engine by the calculated number of cycles
+            Engine.updateGame(diff);
+            Engine._lastUpdate = _thisUpdate;
+        }       
 		
-		while (timeDifference >= Engine._idleSpeed) {			
-			//Engine.Display.hacking_skill.innerHTML = Player.hacking_skill;
-			
-			//Update timeDifference based on the idle speed
-			timeDifference -= Engine._idleSpeed;
-			
-			//Update the total tick counter
-			Engine._ticks += Engine._idleSpeed;
-		}
-        
-        var idleTime = Engine._idleSpeed - timeDifference;
-        
-		//Manual hack
+		window.requestAnimationFrame(Engine.idleTimer);
+	},
+    
+    //TODO Account for numCycles in Code, hasn't been done yet
+    updateGame: function(numCycles = 1) {
+        //Manual hack
 		if (Player.startAction == true) {
 			Engine._totalActionTime = Player.actionTime;
 			Engine._actionTimeLeft = Player.actionTime;
@@ -150,13 +150,7 @@ var Engine = {
 		}
 		
 		Engine.updateHackProgress();
-		
-		// Once that entire "while loop" has run, we call the IdleTimer 
-		// function again, but this time with a timeout (delay) of 
-		// _idleSpeed minus timeDifference
-		setTimeout(Engine.idleTimer, idleTime);
-		
-	},
+    },
 	
 	/* Calculates the hack progress for a manual (non-scripted) hack and updates the progress bar/time accordingly */
 	_totalActionTime: 0,

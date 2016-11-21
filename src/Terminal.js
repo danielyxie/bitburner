@@ -119,6 +119,12 @@ var Terminal = {
             post("SQL port: Closed")
         }
         Terminal.analyzeFlag = false;
+        
+        //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
+        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
+        $("#hack-progress").attr('id', "old-hack-progress");
+        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" class="terminal-input"/>';
+        $('input[class=terminal-input]').prop('disabled', false);      
     }, 
 	
 	executeCommand:  function(command) {
@@ -292,10 +298,11 @@ var Terminal = {
 				
 			case "test":
 				//TODO
-				//TESTED: print, for loops
-				//UNTESTED:
+				//TESTED: print, for loops, while loops, prog, 
+                //          basic ops, var, assign all seem fine
+				//UNTESTED: if, elif, else 
 				
-				var code = "i = 0; while (i < 100000000000) {print(i); i = i+1;}";
+				var code = "i = 0; while (i <= 20) {print(i); i = i+2; hack(); sleep();}";
 				var ast = Parser(Tokenizer(InputStream(code)));
 				console.log("Printing AST below")
 				console.log(ast);

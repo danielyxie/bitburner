@@ -13,7 +13,7 @@ function Server() {
 	this.purchasedByPlayer	=	false;
 	
 	//RAM, CPU speed and Scripts
-	this.maxRam			=	1; //GB 
+	this.maxRam			=	1;  //GB 
 	this.ramUsed		=	0;
 	this.cpuSpeed		= 	1;	//MHz
 	

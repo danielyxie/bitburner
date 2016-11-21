@@ -104,8 +104,12 @@ function Tokenizer(input) {
         return str;
     }
     
-    function read_string() {
-        return { type: "str", value: read_escaped('"') };
+    function read_string(ch) {
+        if (ch == '"') {
+            return { type: "str", value: read_escaped('"') };
+        } else if (ch == '\'') {
+            return { type: "str", value: read_escaped('\'') };
+        }
     }
     
     //Only supports single-line comments right now
@@ -130,7 +134,7 @@ function Tokenizer(input) {
             return read_next();
         }
         
-        if (ch == '"')          return read_string();
+        if (ch == '"' || ch == '\'')          return read_string(ch);
         if (is_digit(ch))       return read_number();
         if (is_id_start(ch))    return read_ident();    
         if (is_punc(ch)) return {

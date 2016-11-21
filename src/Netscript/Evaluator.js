@@ -51,7 +51,7 @@ function evaluate(exp, env) {
 				cond = evaluate(exp.cond, env);
 			}
 		
-			//TODO Return somethin?
+			//TODO I don't think I need to return anything..but I might be wrong
 			break;
 		case "while":
 			cond = evaluate(exp.cond, env);
@@ -61,7 +61,7 @@ function evaluate(exp, env) {
 				cond = evaluate(exp.cond, env);
 			}
 
-			//TODO DO i need to return anything?
+			//TODO I don't think I need to return anything..but I might be wrong
 			break;
 		case "prog":
 			var val = false;
@@ -85,7 +85,7 @@ function evaluate(exp, env) {
 			} else if (exp.func.value == "sleep") {
 				console.log("Execute sleep()");
 			} else if (exp.func.value == "print") {
-				console.log(evaluate(exp.args[0], env));
+                post(evaluate(exp.args[0], env).toString());
 			}
 			break;
 
