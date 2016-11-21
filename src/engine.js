@@ -39,20 +39,7 @@ var Engine = {
 	
 	//Time variables (milliseconds unix epoch time)
 	_lastUpdate: new Date().getTime(),
-	
 	_idleSpeed: 200,    //Speed (in ms) at which the main loop is updated
-    
-    //Display a status update text
-    _lastStatus: null,
-    displayStatusText: function(text) {
-        Engine.Display.statusText.innerHTML = text;
-        
-        clearTimeout(Engine._lastStatus);
-        //Wipe status message after 3 seconds
-        Engine._lastStatus = setTimeout(function() {
-            Engine.Display.statusText.innerHTML = "";
-        }, 3000);
-    },
     
     //Save function
     saveFile: function() {

@@ -7,9 +7,21 @@ function Script() {
     //is executed every second (this may change)
     this.functionQueue = [];
     
-    this.code = "";
-    this.ramUsage = 0;
+    this.code       = "";
+    this.ramUsage   = 0;
     
+    /* Properties to calculate offline progress. Only applies for infinitely looping scripts */
+    
+    //Time it takes to execute one iteration of the entire script
+    //Each function takes 1 second, plus hacking time plus and sleep commands
+    this.executionTimeMillis    = 0;
+    
+    //Number of instructions ("lines") in the code. Any call ending in a ; 
+    //is considered one instruction. Used to calculate executionTime
+    this.numInstructions        = 0;
+    
+    //Which servers are hacked in one iteration of the script. May contain duplicates
+    this.serversHacked          = [];
 }
 
 //Execute the next function in the Script's function queue
@@ -18,6 +30,10 @@ Script.prototype.executeNext() {
     
     //Shift the next element off ths function queue and then execute it
     (this.functionQueue.shift())();
+}
+
+Script.prototype.setCode(code) {
+    this.code = code;
 }
 
 /* Wrapper object that wraps a function with its arguments.
