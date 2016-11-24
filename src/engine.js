@@ -17,35 +17,52 @@ var Engine = {
         //Main menu buttons
         terminalMainMenuButton:     null,
         characterMainMenuButton:    null,
+		scriptEditorMainMenuButton: null,
     },
     
     //Display objects
     Display: {
         //Progress bar
-        progress:       null,
+        progress:       	null,
         
         //Display for status text (such as "Saved" or "Loaded")
-        statusText:     null,
+        statusText:     	null,
         
-        hacking_skill:   null,
-        
+        hacking_skill:   	null,
+		
         //Main menu content
-        terminalContent:    null,
-        characterContent:   null,
+        terminalContent:    	null,
+        characterContent:   	null,
+		scriptEditorContent: 	null,
         
         //Character info
-        characterInfo:      null,
+        characterInfo:      	null,
+		
+		//Script editor text
+		scriptEditorText: 		null,
     },
+	
+	//Current page status 
+	Page: {
+		Terminal: 			"Terminal",
+		CharacterInfo: 		"CharacterInfo",
+		ScriptEditor: 		"ScriptEditor",
+	},
+	currentPage:	null,
+
 	
 	//Time variables (milliseconds unix epoch time)
 	_lastUpdate: new Date().getTime(),
 	_idleSpeed: 200,    //Speed (in ms) at which the main loop is updated
     
     //Save function
-    saveFile: function() {
-        var tempSaveFile = JSON.stringify(Player);
+    saveGame: function() {
+        var PlayerSave 			= JSON.stringify(Player);
+		var ForeignServersSave 	= JSON.stringify(ForeignServers);
+		//TODO Add factions + companies here when they're done
         
-        window.localStorage.setItem("netburnerSave", tempSaveFile);
+        window.localStorage.setItem("netburnerPlayerSave", PlayerSave);
+		window.localStorage.setItem("netburnerForeignServersSave", ForeignServersSave)
         
         Engine.displayStatusText("Saved!");
     },
@@ -53,11 +70,16 @@ var Engine = {
     //Load saved game function
     loadSave: function() {
         //Check to see if file exists
-        if (!window.localStorage.getItem("netburnerSave")) {
-            Engine.displayStatusText("No save file present for load!");
-        } else {
-            var tempSaveFile = window.localStorage.getItem("netburnerSave");
-            Player = JSON.parse(tempSaveFile);
+        if (!window.localStorage.getItem("netburnerPlayerSave")) {
+			//TODO Add this displayStatusText function
+            Engine.displayStatusText("No Player save file present for load!");
+        } else if (!window.localStorage.getItem("netburnerForeignServersSave")) {
+			Engine.displayStatusText("No Foreign Serverssave file present for load!");
+		} else {
+            var PlayerSave 			= window.localStorage.getItem("netburnerPlayerSave");
+			var ForeignServersSave 	= window.localStorage.getItem("netburnerForeignServersSave");
+            Player = JSON.parse(PlayerSave);
+			ForeignServers = JSON.parse(ForeignServersSave);
             Engine.displayStatusText("Loaded successfully!");
         }
     },
@@ -76,18 +98,33 @@ var Engine = {
     loadTerminalContent: function() {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.visibility = "visible";
+		Engine.currentPage = Engine.Page.Terminal;
     },
     
     loadCharacterContent: function() {
         Engine.hideAllContent();
         Engine.Display.characterContent.style.visibility = "visible";
         Engine.displayCharacterInfo();
+		Engine.currentPage = Engine.Page.CharacterInfo;
     },
+	
+	loadScriptEditorContent: function(filename = "", code = "") {
+		Engine.hideAllContent();
+		Engine.Display.scriptEditorContent.style.visibility = "visible";
+		if (filename == "") {
+			document.getElementById("script-editor-filename").value = "untitled";
+		} else {
+			document.getElementById("script-editor-filename").value = filename;
+		}
+		document.getElementById("script-editor-text").value = code;
+		Engine.currentPage = Engine.Page.ScriptEditor;
+	},
     
     //Helper function that hides all content 
     hideAllContent: function() {
         Engine.Display.terminalContent.style.visibility = "hidden";
         Engine.Display.characterContent.style.visibility = "hidden";
+		Engine.Display.scriptEditorContent.style.visibility = "hidden";
     },
     
     /* Display character info */
@@ -178,6 +215,9 @@ var Engine = {
     /* Initialization */
 	init: function() {
 		//Initialization functions
+		//TODO Might need to move these into a new "BeginGame()" function. init() is called
+		//every time the window is opened and we don't want to do these init() functions every
+		//time
 		Player.init();
 		
 		ForeignServers.init();
@@ -216,14 +256,26 @@ var Engine = {
             Engine.loadCharacterContent();
             return false;
         });
+		
+		Engine.Clickables.scriptEditorMainMenuButton = document.getElementById("create-script-menu-link");
+		Engine.Clickables.scriptEditorMainMenuButton.addEventListener("click", function() {
+			Engine.loadScriptEditorContent();
+			return false;
+		});
         
         Engine.Display.terminalContent = document.getElementById("terminal-container");
+		Engine.currentPage = Engine.Page.Terminal;
         Engine.Display.characterContent = document.getElementById("character-container");
-        Engine.Display.characterContent.style.visibility = "hidden";
+		Engine.Display.characterContent.style.visibility = "hidden";
+		Engine.Display.scriptEditorContent = document.getElementById("script-editor-container");
+		Engine.Display.scriptEditorContent.style.visibility = "hidden";
         
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");
-        Engine.displayCharacterInfo();
+        //Engine.displayCharacterInfo(); - Don't think I need this
+		
+		//Script editor 
+		Engine.Display.scriptEditorText = document.getElementById("script-editor-text");
         
         //Message at the top of terminal
 		postNetburnerText();

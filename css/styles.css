@@ -13,6 +13,7 @@ p {
     color: #66ff33;
 }
 
+
 .mainmenu {
     list-style-type: none;
     margin: 0;
@@ -44,14 +45,6 @@ p {
 .mainmenu>li a:hover:not(.active) {
     background-color: #555;
     color: white;
-}
-
-#character-container {
-    position: fixed;
-    padding-top: 10px;
-    padding-left: 10px;
-    margin-left: 10%;
-    width: 99%;
 }
 
 /* Style all the buttons */

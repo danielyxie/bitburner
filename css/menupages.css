@@ -1,0 +1,68 @@
+/* CSS for different main menu pages, such as character info, script editor, etc (but excluding
+	terminal which has its own page) */
+	
+/* Character Info */
+#character-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-left: 10%;
+    width: 99%;
+}
+
+
+/* Script Editor */
+/* This temp element is used for auto adjusting filename field */
+.tmp-element {
+        visibility: hidden;
+        white-space: pre;
+}
+	  
+#script-editor-container {
+	position: fixed;
+	padding-top: 10px;
+	padding-left: 10px;
+	height: 100%;
+	margin-left: 10%;
+	width: 99%;
+	color: #66ff33;
+
+}
+
+#script-editor-filename-row-div {
+	color: #66ff33;
+}
+
+#script-editor-filename-tag {
+	float: left;
+}
+
+#script-editor-filename {	
+	float: left;
+	resize: none;
+	color: #66ff33;
+	width: 100%;
+	
+	border:	none;
+	outline: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+
+#script-editor-status {
+	float: left;
+	color: #ffffff;
+}
+
+#script-editor-text {
+	color: #66ff33;
+	width: 90%;
+	height: 100%;
+	
+	outline: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}

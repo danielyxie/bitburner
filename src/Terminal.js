@@ -19,19 +19,34 @@ var postNetburnerText = function() {
 	post("Netburner v1.0");
 }
 
-//command is checked on enter key press
+//Defines what happens when enter is pressed (keycode 13)
 $(document).keyup(function(event) {
-    if (event.keyCode == 13) {
-		var command = $('input[class=terminal-input]').val();
-		if (command.length > 0) {
-			post("> " + command);
-            
-			//TODO Do i have to switch the order of these two?
-            Terminal.executeCommand(command);
-			$('input[class=terminal-input]').val("");
+	//Terminal
+	if (Engine.currentPage == Engine.Page.Terminal) {
+		if (event.keyCode == 13) {
+			var command = $('input[class=terminal-input]').val();
+			if (command.length > 0) {
+				post("> " + command);
+				
+				//TODO Do i have to switch the order of these two?
+				Terminal.executeCommand(command);
+				$('input[class=terminal-input]').val("");
+			}
 		}
 	}
 });
+
+//Keep terminal in focus
+$(document).ready(function() {
+	if (Engine.currentPage == Engine.Page.Terminal) {
+		$('.terminal-input').focus();
+	}
+});
+$(document).keydown(function() {
+	if (Engine.currentPage == Engine.Page.Terminal) {
+		$('.terminal-input').focus();	
+	}
+})
 
 var Terminal = {
     //Flags to determine whether the player is currently running a hack or an analyze
@@ -136,6 +151,9 @@ var Terminal = {
 		
 		switch (commandArray[0]) {
 			case "analyze":
+				if (commandArray.length != 1) {
+					post("Incorrect usage of analyze command. Usage: analyze"); return;
+				}
                 //Analyze the current server for information
                 console.log("analyze terminal command called");
                 Terminal.analyzeFlag = true;
@@ -151,6 +169,9 @@ var Terminal = {
 				break;
 			case "clear":
 			case "cls":
+				if (commandArray.length != 1) {
+					post("Incorrect usage of clear/cls command. Usage: clear/cls"); return;
+				}
 				console.log("cls/clear terminal command called");
 				$("#terminal tr:not(:last)").remove();
 				postNetburnerText();
@@ -177,12 +198,18 @@ var Terminal = {
                 post("Host not found"); 
 				break;
 			case "df":
+				if (commandArray.length != 1) {
+					post("Incorrect usage of df command. Usage: df"); return;
+				}
 				console.log("df terminal command called");
                 post("Total: " + Player.currentServer.maxRam.toString() + " GB");
                 post("Used: " + Player.currentServer.ramUsed.toString() + " GB");
                 post("Available: " + (Player.currentServer.maxRam - Player.currentServer.ramUsed).toString() + " GB");
 				break;
 			case "hack":
+				if (commandArray.length != 1) {
+					post("Incorrect usage of hack command. Usage: hack"); return;
+				}
 				//Hack the current PC (usually for money)
 				//You can't hack your home pc or servers you purchased
 				if (Player.currentServer.purchasedByPlayer) {
@@ -207,10 +234,16 @@ var Terminal = {
 				//TODO
 				break;
 			case "hostname":
+				if (commandArray.length != 1) {
+					post("Incorrect usage of hostname command. Usage: hostname"); return;
+				}
 				//Print the hostname of current system
 				post(Player.currentServer.hostname);
 				break;
 			case "ifconfig":
+				if (commandArray.length != 1) {
+					post("Incorrect usage of ifconfig command. Usage: ifconfig"); return;
+				}
 				//Print the IP address of the current system
 				post(Player.currentServer.ip);
 				break;
@@ -218,6 +251,10 @@ var Terminal = {
 				//TODO
 				break;
 			case "ls":
+				if (commandArray.length != 1) {
+					post("Incorrect usage of ls command. Usage: ls"); return;
+				}
+				
 				//Display all programs and scripts
 				var allFiles = []; 
 				
@@ -226,7 +263,7 @@ var Terminal = {
 					allFiles.push(Player.currentServer.programs[i]); 
 				}
 				for (var i = 0; i < Player.currentServer.scripts.length; i++) {
-					allFiles.push(Player.currentServer.scripts[i]);
+					allFiles.push(Player.currentServer.scripts[i].filename);
 				}
 				
 				//Sort the files alphabetically then print each
@@ -236,11 +273,41 @@ var Terminal = {
 					post(allFiles[i]);
 				}
 				break;
+			case "nano":
+				if (commandArray.length != 2) {
+					post("Incorrect usage of nano command. Usage: nano [scriptname]"); return;
+				}
+				
+				var filename = commandArray[1];
+				
+				//Can only edit script files
+				if (filename.endsWith(".script") == false) {
+					post("Error: Only .script files are editable with nano (filename must end with .scrip)"); return;
+				}
+				
+				//Script name is the filename without the .script at the end
+				var scriptname = filename.substr(0, filename.indexOf(".script"));
+				
+				//Cannot edit scripts that are currently running
+				for (var i = 0; i < Player.currentServer.runningScripts.length; i++) {
+					if (filename == Player.currentServer.runningScripts[i].filename) {
+						post("Cannot open/edit scripts that are currently running!"); return;
+					}
+				}
+				
+				//Check if the script already exists
+				for (var i = 0; i < Player.currentServer.scripts.length; i++) {
+					if (filename == Player.currentServer.scripts[i].filename) {
+						Engine.loadScriptEditorContent(scriptname, Player.currentServer.scripts[i].code);
+						return;
+					}
+				}
+				Engine.loadScriptEditorContent(scriptname, "");
+				break;
 			case "netstat":
 			case "scan":
                 if (commandArray.length != 1) {
-                    post("Incorrect usage of netstat/scan command. Usage: netstat/scan");
-                    return;
+                    post("Incorrect usage of netstat/scan command. Usage: netstat/scan"); return;
                 }
 				//Displays available network connections using TCP
                 console.log("netstat/scan terminal command called");
@@ -268,6 +335,7 @@ var Terminal = {
                     entry += hasRoot;
                     post(entry);
                 }
+				break;
 			case "ps":
 				//TODO
 				break;

@@ -5,6 +5,7 @@
     <title>Netburner</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
     <link rel="stylesheet" type="text/css" href="css/terminal.css" />
+	<link rel="stylesheet" type="text/css" href="css/menupages.css" />
    
     <!-- We'll add in the jQuery library here - direct from
     the Google CDN (Content Delivery Network). -->
@@ -22,10 +23,10 @@
 	<script src="src/Faction.js"></script>
 	<script src="src/Company.js"></script>
 	<script src="src/Terminal.js"></script>
-	
-
+	<script src="src/Script.js"></script>
 	
     <script src="src/engine.js"></script>
+	
   </head>
   <body>
     <div id="mainmenu-container">
@@ -39,7 +40,7 @@
                 <a href="#"  id="character-menu-link"> Character </a>
             </li>
 			
-			<li class="create-script-tab" style="display:none">
+			<li class="create-script-tab">
                 <a href="#" id="create-script-menu-link"> Create Script </a>
             </li>
 			
@@ -57,29 +58,35 @@
         </ul>
     </div>
     
+	<!-- Terminal page -->
     <div id="terminal-container">
-        <!-- Terminal -->
         <table id="terminal">
            <tr id="terminal-input">
                 <td id="terminal-input-td">$  <input type="text" class="terminal-input"/></td>
            </tr>
            
-        </table>  <!-- End terminal -->
-    </div>  <!-- End terminal-container -->
+        </table>
+    </div>
     
+	<!-- Character Info page -->
     <div id="character-container">
         <p id="character-info"> </p>
-    </div>  <!-- End character-container -->        
+    </div>
+	
+	<!-- Script editor -->
+	<div id="script-editor-container">
+		<div id="script-editor-filename-row-div" >
+			<p id="script-editor-filename-tag"> Script name (edit below): </p>
+			<input id="script-editor-filename" type="text" maxlength="30"> </input>
+			<br>
+			<p id="script-editor-status"> </p>
+		</div>
+		<br><br>
+		<textarea id="script-editor-text" style="border: none" autofocus> 
+		</textarea>
+	</div>
 
-    <!-- Always keep the terminal in focus -->
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('.terminal-input').focus();
-    });
-    $(document).keydown(function() {
-        $('.terminal-input').focus();
-    })
-	</script>
+
     
 
   </body>
