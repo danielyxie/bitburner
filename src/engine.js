@@ -63,34 +63,40 @@ var Engine = {
         
         window.localStorage.setItem("netburnerPlayerSave", PlayerSave);
 		window.localStorage.setItem("netburnerForeignServersSave", ForeignServersSave)
-        
-        Engine.displayStatusText("Saved!");
+		console.log("Game saved to local storage");
     },
     
     //Load saved game function
     loadSave: function() {
         //Check to see if file exists
         if (!window.localStorage.getItem("netburnerPlayerSave")) {
-			//TODO Add this displayStatusText function
-            Engine.displayStatusText("No Player save file present for load!");
+			console.log("No Player save to load");
+			return false;
         } else if (!window.localStorage.getItem("netburnerForeignServersSave")) {
-			Engine.displayStatusText("No Foreign Serverssave file present for load!");
+			console.log("No ForeignServers save to load");
+			return false;
 		} else {
             var PlayerSave 			= window.localStorage.getItem("netburnerPlayerSave");
 			var ForeignServersSave 	= window.localStorage.getItem("netburnerForeignServersSave");
             Player = JSON.parse(PlayerSave);
 			ForeignServers = JSON.parse(ForeignServersSave);
-            Engine.displayStatusText("Loaded successfully!");
+			return true;
         }
     },
     
     //Delete saved game function
     deleteSave: function() {
-        if (!window.localStorage.getItem("netburnerSave")) {
-            Engine.displayStatusText("No save file present for deletion");
+        if (!window.localStorage.getItem("netburnerPlayerSave")) {
+            console.log("No Player Save to delete");
+			return false;
+		} else if (!window.localStorage.getItem("netburnerForeignServersSave")) {
+			console.log("No ForeignServers Save to delete");
+			return false;
         } else {
-            window.localStorage.removeItem("netburnerSave");
-            Engine.displayStatusText("Deleted successfully!");
+            window.localStorage.removeItem("netburnerPlayerSave");
+			window.localStorage.removeItem("netburnerForeignServersSave");
+			console.log("Deleted saves")
+            return true;
         }
     },
     
@@ -169,8 +175,6 @@ var Engine = {
 			Engine._actionProgressStr = "[                                                  ]";
 			Engine._actionTimeStr = "Time left: ";
 			Player.startAction = false;
-			
-			//document.getElementById("hack-progress-bar").style.whiteSpace = "pre";
 		}
 		
 		Engine.updateHackProgress();
@@ -185,6 +189,7 @@ var Engine = {
 	_actionInProgress: false,
 	updateHackProgress: function() {
 		if (Engine._actionInProgress == true) {
+			//TODO Do this calculation based on numCycles rather than idle speed
 			Engine._actionTimeLeft -= (Engine._idleSpeed/ 1000);	//Substract idle speed (ms)
 		
 			//Calculate percent filled 
@@ -215,15 +220,19 @@ var Engine = {
     /* Initialization */
 	init: function() {
 		//Initialization functions
-		//TODO Might need to move these into a new "BeginGame()" function. init() is called
-		//every time the window is opened and we don't want to do these init() functions every
-		//time
-		Player.init();
-		
-		ForeignServers.init();
-		
-		Companies.init();
-		CompanyPositions.init();
+		if (Engine.loadSave()) {
+			console.log("Loaded game from save");
+			Companies.init();
+			CompanyPositions.init();
+		} else {
+			//No save found, start new game
+			console.log("Initializing new game");
+			Player.init();
+			ForeignServers.init();
+			Companies.init();
+			CompanyPositions.init();
+		}
+
 		
         //Load, save, and delete buttons
         //Engine.Clickables.saveButton = document.getElementById("save");
