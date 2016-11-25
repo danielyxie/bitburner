@@ -112,6 +112,11 @@ Script.prototype.saveScript = function() {
 	}
 }
 
+Script.prototype.queueEvaluate = function(exp, env) {
+	var fooObj = functionObject(evaluate, this, [exp, env]);
+	this.functionQueue.push(fooObj);
+}
+
 /* Wrapper object that wraps a function with its arguments.
  *      These objects are pushed onto a Script object's function queue.
  *      The functions can be called with the standard () operator
