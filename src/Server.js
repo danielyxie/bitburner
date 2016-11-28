@@ -18,7 +18,7 @@ function Server() {
 	this.cpuSpeed		= 	1;	//MHz
 	
 	this.scripts 		= 	[];
-	this.runningScripts = 	[]; //Scripts currently being run
+	this.runningScripts = 	[]; 	//Names of scripts currently being run
 	this.programs 		= 	[];
 	
 	/* Hacking information (only valid for "foreign" aka non-purchased servers) */

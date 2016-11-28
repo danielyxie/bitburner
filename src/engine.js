@@ -147,19 +147,28 @@ var Engine = {
     },
 	
 	/* Main Event Loop */
+	_scriptUpdateStatusCounter: 0,
 	idleTimer: function() {
 		//Get time difference
 		var _thisUpdate = new Date().getTime();
 		var diff = _thisUpdate - Engine._lastUpdate;
-        
+		
         //Divide this by cycle time to determine how many cycles have elapsed since last update
         diff = Math.round(diff / Engine._idleSpeed);
+		
+		Engine._scriptUpdateStatusCounter += diff;
         
         if (diff > 0) {
             //Update the game engine by the calculated number of cycles
             Engine.updateGame(diff);
             Engine._lastUpdate = _thisUpdate;
         }       
+		
+		if (Engine._scriptUpdateStatusCounter >= 50) {
+			console.log("Updating Script Status");
+			Engine._scriptUpdateStatusCounter = 0;
+			Engine.updateScriptStatus();
+		}
 		
 		window.requestAnimationFrame(Engine.idleTimer);
 	},
@@ -217,6 +226,16 @@ var Engine = {
 		}
 	},
 	
+	/* NetScript Web Worker Stuff */
+	_scriptWebWorker: null,
+	updateScriptStatus: function() {
+		Engine._scriptWebWorker.postMessage(
+			{'type': "Status Update", 
+			 'buf1': JSON.stringify(ForeignServers), 
+			 'buf2': JSON.stringify(Player)}
+		)
+	},
+	
     /* Initialization */
 	init: function() {
 		//Initialization functions
@@ -233,6 +252,9 @@ var Engine = {
 			CompanyPositions.init();
 		}
 
+		if (window.Worker) {
+			Engine._scriptWebWorker = new Worker("netscript/NetscriptWorker.js");
+		}
 		
         //Load, save, and delete buttons
         //Engine.Clickables.saveButton = document.getElementById("save");

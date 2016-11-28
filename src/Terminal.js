@@ -393,7 +393,7 @@ var Terminal = {
 				return;
 			}
 		}
-		post("ERROR: No such executable");
+		post("ERROR: No such executable on home computer (Programs can only be run from home computer)");
 	},
 	
 	//Contains the implementations of all possible programs
@@ -420,7 +420,26 @@ var Terminal = {
 	},
 	
 	runScript: function(scriptName) {
+		//Check if this script is already running
+		for (var i = 0; i < Player.currentServer.runningScripts.length; i++) {
+			if (Player.currentServer.runningScripts[i] == scriptName) {
+				post("ERROR: This script is already running. Cannot run multiple instances");
+				return;
+			}
+		}
 		
+		//Check if the script exists and if it does run it
+		for (var i = 0; i < Player.currentServer.scripts.length; i++) {
+			if (Player.currentServer.scripts[i] == scriptName) {
+				if (Player.currentServer.hasAdminRights == false) {
+					post("Need root access to run script");
+				} else {
+					//TODO Run script here
+				}
+			}
+		}
+		
+		post("ERROR: No such script");
 	}
 };
 
