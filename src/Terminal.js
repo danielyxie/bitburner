@@ -430,11 +430,16 @@ var Terminal = {
 		
 		//Check if the script exists and if it does run it
 		for (var i = 0; i < Player.currentServer.scripts.length; i++) {
-			if (Player.currentServer.scripts[i] == scriptName) {
+			if (Player.currentServer.scripts[i].filename == scriptName) {
 				if (Player.currentServer.hasAdminRights == false) {
 					post("Need root access to run script");
 				} else {
 					//TODO Run script here
+					var s = new WorkerScript();
+					s.name = Player.currentServer.scripts[i].filename;
+					s.code = Player.currentServer.scripts[i].code;
+					workerScripts.push(s);
+					console.log("Pushed script onto workerScripts");
 				}
 			}
 		}

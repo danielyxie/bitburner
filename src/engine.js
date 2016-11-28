@@ -167,7 +167,7 @@ var Engine = {
 		if (Engine._scriptUpdateStatusCounter >= 50) {
 			console.log("Updating Script Status");
 			Engine._scriptUpdateStatusCounter = 0;
-			Engine.updateScriptStatus();
+			//Engine.updateScriptStatus();
 		}
 		
 		window.requestAnimationFrame(Engine.idleTimer);
@@ -252,9 +252,9 @@ var Engine = {
 			CompanyPositions.init();
 		}
 
-		if (window.Worker) {
-			Engine._scriptWebWorker = new Worker("netscript/NetscriptWorker.js");
-		}
+		//if (window.Worker) {
+		//	Engine._scriptWebWorker = new Worker("netscript/NetscriptWorker.js");
+		//}
 		
         //Load, save, and delete buttons
         //Engine.Clickables.saveButton = document.getElementById("save");
@@ -313,6 +313,8 @@ var Engine = {
         
         //Run main loop
 		Engine.idleTimer();
+		
+		runScriptsLoop();
 	}
 };
 

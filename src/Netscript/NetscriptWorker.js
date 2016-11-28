@@ -931,6 +931,10 @@ function runScriptsLoop() {
 		if (workerScripts[i].running == false) {
 			var ast = Parser(Tokenizer(InputStream(workerScripts[i].code)));
 			
+			console.log("Starting new script: " + workerScripts[i].name);
+			console.log("AST of new script:");
+			console.log(ast);
+			
 			evaluate(ast, workerScripts[i]);
 			workerScripts[i].running = true;
 		}
