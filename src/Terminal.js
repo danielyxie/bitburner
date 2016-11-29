@@ -434,10 +434,16 @@ var Terminal = {
 				if (Player.currentServer.hasAdminRights == false) {
 					post("Need root access to run script");
 				} else {
-					//TODO Run script here
+					var filename = Player.currentServer.scripts[i].filename;
+					
+					//Add to current server's runningScripts
+					Player.currentServer.runningScripts.push(filename)
+					
+					//Create WorkerScript
 					var s = new WorkerScript();
-					s.name = Player.currentServer.scripts[i].filename;
-					s.code = Player.currentServer.scripts[i].code;
+					s.name 		= filename;
+					s.code 		= Player.currentServer.scripts[i].code;
+					s.hostname 	= Player.currentServer.hostname;
 					workerScripts.push(s);
 					console.log("Pushed script onto workerScripts");
 					return;

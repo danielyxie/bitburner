@@ -1,13 +1,16 @@
 /* Worker code, contains Netscript scripts that are actually running */
+//TODO Need some way to stop scripts. Idea: Put a flag in the environment, we can setActive
+//this flag from outside. If the evaluate() function sees that flag it rejects the current
+// Promise. We can catch that rejection and stop the script.  
  
 /* Actual Worker Code */
 function WorkerScript() {
-	this.name 		= "";
-	this.running 	= false;
-	this.server 	= null;
-	this.code 		= "";
-	this.env 		= new Environment();
-	this.timeout	= null;
+	this.name 			= "";
+	this.running 		= false;
+	this.serverHostname = null;
+	this.code 			= "";
+	this.env 			= new Environment();
+	this.timeout		= null;
 }
 
 //Array containing all scripts that are running across all servers, to easily run them all
@@ -23,8 +26,8 @@ function runScriptsLoop() {
 			console.log("AST of new script:");
 			console.log(ast);
 			
-			evaluate(ast, workerScripts[i]);
 			workerScripts[i].running = true;
+			evaluate(ast, workerScripts[i]);
 		}
 	}
 	

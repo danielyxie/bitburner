@@ -1,4 +1,6 @@
 //Netburner Server class
+//TODO Make a map of all IPS in the game so far so that we don't accidentally
+//		get duplicate IPs..however unlikely it is
 function Server() {
 	/* Properties */
 	//Connection information
@@ -18,7 +20,7 @@ function Server() {
 	this.cpuSpeed		= 	1;	//MHz
 	
 	this.scripts 		= 	[];
-	this.runningScripts = 	[]; 	//Names of scripts currently being run
+	this.runningScripts = 	[]; 	//Names (and only names) of scripts being run
 	this.programs 		= 	[];
 	
 	/* Hacking information (only valid for "foreign" aka non-purchased servers) */
