@@ -440,6 +440,7 @@ var Terminal = {
 					s.code = Player.currentServer.scripts[i].code;
 					workerScripts.push(s);
 					console.log("Pushed script onto workerScripts");
+					return;
 				}
 			}
 		}
