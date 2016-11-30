@@ -1,3 +1,13 @@
+function TestObj() {
+	this.value = 1;
+}
+
+TestObj.prototype.setValue = function(val) {
+	this.value = val;
+}
+
+var testObj = new TestObj();
+
 //Terminal
 var post = function(input) {
     $("#terminal-input").before('<tr class="posted"><td style="color: #66ff33;">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
@@ -365,17 +375,30 @@ var Terminal = {
 				break;
 				
 			case "test":
-				//TODO
-				//TESTED: print, for loops, while loops, prog, 
-                //          basic ops, var, assign all seem fine
-				//UNTESTED: if, elif, else 
-				
-				var code = "i = 0; while (i <= 20) {print(i); i = i+2; hack(); sleep();}";
-				var ast = Parser(Tokenizer(InputStream(code)));
-				console.log("Printing AST below")
-				console.log(ast);
-				var globalEnv = new Environment();
-				evaluate(ast, globalEnv);
+				post(testObj.value.toString());
+				testObj.setValue(testObj.value + 1);
+				break;
+			case "testSave":
+				var testSave = JSONfn.stringify(testObj);
+				window.localStorage.setItem("netburnerTest", testSave);
+				console.log("Netburner TestSave saved");
+				break;
+			case "testLoad":
+				if (!window.localStorage.getItem("netburnerTest")) {
+					console.log("No TestSave file to load");
+				} else {
+					var testSave = window.localStorage.getItem("netburnerTest");
+					testObj = JSONfn.parse(testSave);
+					console.log("TestSave loaded");
+				}
+				break;
+			case "testDelete":
+				if (!window.localStorage.getItem("netburnetTest")) {
+					console.log("No TestSave file to delete");
+				} else {
+					window.localStorage.removeItem("netburnerTest");
+					console.log("TestSave deleted");
+				}
 				break;
 			default:
 				post("Command not found");

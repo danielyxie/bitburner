@@ -3,6 +3,8 @@
 //this flag from outside. If the evaluate() function sees that flag it rejects the current
 // Promise. We can catch that rejection and stop the script.  
  
+//TODO Tested For and while and generic call statements. Have not tested if statements 
+
 /* Actual Worker Code */
 function WorkerScript() {
 	this.name 			= "";
