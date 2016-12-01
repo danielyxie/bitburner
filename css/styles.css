@@ -37,49 +37,21 @@ p {
     text-decoration: none;
 }
 
-.mainmenu>li a.active {
-    background-color: #4CAF50;
-    color: white;
-}
-
 .mainmenu>li a:hover:not(.active) {
     background-color: #555;
     color: white;
 }
 
-/* Style all the buttons */
-input[type=button] {
-    width: 100px;
-    height: 32px;
-    
-    background-color: #f4f4f4;
-    border: 1px solid #333333;
-    
-    /* Makes cursor a pointer when you put mouse over button */
-    cursor: pointer;
+.mainmenu>li a:focus {
+    background-color: #555;
 }
 
-input[type=button]:hover {
-    /* When mouse is over the item, the background color becomes orange */
-    background-color: orange;
+.mainmenu>li a.active {
+    background-color: #555;
+    color: white;
 }
+
 
 h1 {
 	padding: 8px;
-}
-
-/** add the same margin to the save button **/
-#save {
-	margin-left: 8px;
-}
-
-/** add the same margin to the left of the status box
-    but also make the text purple to make it stand out
-	a little bit **/
-#status {
-	margin-left: 8px;
-	color: red;
-    
-    /* text-shadow: px_from_left px_from_top px_blur color */
-    text-shadow: 2px 2px 8px #222
 }
