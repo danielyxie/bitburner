@@ -16,17 +16,17 @@ $(document).keydown(function(e) {
 			filename += ".script";
 			
 			//If the current script matches one thats currently running, throw an error
-			for (var i = 0; i < Player.currentServer.runningScripts.length; i++) {
-				if (filename == Player.currentServer.runningScripts[i].filename) {
+			for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
+				if (filename == Player.getCurrentServer().runningScripts[i].filename) {
 					postScriptEditorStatus("Cannot write to script that is currently running!");
 					return;
 				}
 			}
 			
 			//If the current script already exists on the server, overwrite it
-			for (var i = 0; i < Player.currentServer.scripts.length; i++) {
-				if (filename == Player.currentServer.scripts[i].filename) {
-					Player.currentServer.scripts[i].saveScript();
+			for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
+				if (filename == Player.getCurrentServer().scripts[i].filename) {
+					Player.getCurrentServer().scripts[i].saveScript();
 					Engine.loadTerminalContent();
 					return;
 				}
@@ -35,7 +35,7 @@ $(document).keydown(function(e) {
 			//If the current script does NOT exist, create a new one
 			var script = new Script();
 			script.saveScript();
-			Player.currentServer.scripts.push(script);
+			Player.getCurrentServer().scripts.push(script);
 			Engine.loadTerminalContent();
         }
 	}
@@ -62,16 +62,11 @@ function postScriptEditorStatus(text) {
 	}, 3000);
 }
 
-function Script() {
-    //Function queue that holds the next functions to be
-    //executed in this script. A function from this queue
-    //is executed every second (this may change)
-    this.functionQueue = [];
-    
+function Script() {    
 	this.filename 	= "";
     this.code       = "";
     this.ramUsage   = 0;
-	this.server 	= null;	//Which server this script is on
+	this.server 	= null;	//IP of server this script is on
     
     /* Properties to calculate offline progress. Only applies for infinitely looping scripts */
     
@@ -110,30 +105,4 @@ Script.prototype.saveScript = function() {
 		
 		//TODO Calculate/update number of instructions, ram usage, execution time, etc. 
 	}
-}
-
-Script.prototype.queueEvaluate = function(exp, env) {
-	var fooObj = functionObject(evaluate, this, [exp, env]);
-	this.functionQueue.push(fooObj);
-}
-
-/* Wrapper object that wraps a function with its arguments.
- *      These objects are pushed onto a Script object's function queue.
- *      The functions can be called with the standard () operator
- *
- *  Example:
- *      //Define the function
- *      var fooFunc = function(a1, a2, a3) {
- *          return a1 + a2 + a3;
- *      }
- *      //Wrap the function in the wrapper object
- *      var fooObj = functionObject(fooFunc, this, [2, 3, 4]); 
- *      //Call the function 
- *      fooObj();   
- *
- */
-function functionObject(fn, context, params) {
-    return function() {
-        fn.apply(context, params);
-    }
 }

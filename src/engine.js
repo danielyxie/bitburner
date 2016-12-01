@@ -12,15 +12,12 @@ var Engine = {
     Clickables: {
         hackButton:     null,
         
-        //Load, save, and delete
-        saveButton:     null,
-        loadButton:     null,
-        deleteButton:   null,
-        
         //Main menu buttons
         terminalMainMenuButton:     null,
         characterMainMenuButton:    null,
 		scriptEditorMainMenuButton: null,
+        saveMainMenuButton:         null,
+        deleteMainMenuButton:       null,
     },
     
     //Display objects
@@ -61,11 +58,11 @@ var Engine = {
     //Save function
     saveGame: function() {
         var PlayerSave 			= JSON.stringify(Player);
-		var ForeignServersSave 	= JSON.stringify(ForeignServers);
+        var AllServersSave      = JSON.stringify(AllServers);
 		//TODO Add factions + companies here when they're done
         
         window.localStorage.setItem("netburnerPlayerSave", PlayerSave);
-		window.localStorage.setItem("netburnerForeignServersSave", ForeignServersSave)
+        window.localStorage.setItem("netburnerAllServersSave", AllServersSave);
 		console.log("Game saved to local storage");
     },
     
@@ -75,14 +72,14 @@ var Engine = {
         if (!window.localStorage.getItem("netburnerPlayerSave")) {
 			console.log("No Player save to load");
 			return false;
-        } else if (!window.localStorage.getItem("netburnerForeignServersSave")) {
-			console.log("No ForeignServers save to load");
-			return false;
+        } else if (!window.localStorage.getItem("netburnerAllServersSave")) {
+            console.log("No AllServers save to load");
+            return false;
 		} else {
             var PlayerSave 			= window.localStorage.getItem("netburnerPlayerSave");
-			var ForeignServersSave 	= window.localStorage.getItem("netburnerForeignServersSave");
-            Player = JSON.parse(PlayerSave);
-			ForeignServers = JSON.parse(ForeignServersSave);
+            var AllServersSave      = window.localStorage.getItem("netburnerAllServersSave");
+            Player = JSON.parse(PlayerSave, Reviver);
+            AllServers = JSON.parse(AllServersSave, Reviver);
 			return true;
         }
     },
@@ -92,12 +89,11 @@ var Engine = {
         if (!window.localStorage.getItem("netburnerPlayerSave")) {
             console.log("No Player Save to delete");
 			return false;
-		} else if (!window.localStorage.getItem("netburnerForeignServersSave")) {
-			console.log("No ForeignServers Save to delete");
-			return false;
+        } else if (!window.localStorage.getItem("netburnerAllServersSave")) {
+            console.log("No AllServers Save to delete");
         } else {
             window.localStorage.removeItem("netburnerPlayerSave");
-			window.localStorage.removeItem("netburnerForeignServersSave");
+            window.localStorage.removeItem("netburnerAllServersSave");
 			console.log("Deleted saves")
             return true;
         }
@@ -231,33 +227,12 @@ var Engine = {
 			//No save found, start new game
 			console.log("Initializing new game");
 			Player.init();
-			ForeignServers.init();
+			initForeignServers();
 			Companies.init();
 			CompanyPositions.init();
 		}
-
-		//if (window.Worker) {
-		//	Engine._scriptWebWorker = new Worker("netscript/NetscriptWorker.js");
-		//}
-		
-        //Load, save, and delete buttons
-        //Engine.Clickables.saveButton = document.getElementById("save");
-		//Engine.Clickables.saveButton.addEventListener("click", function() {
-		//	Engine.saveFile();
-		//	return false;
-		//});
-		
-		//Engine.Clickables.loadButton = document.getElementById("load");
-		//Engine.Clickables.loadButton.addEventListener("click", function() {
-		//	Engine.loadSave();
-		//	return false;
-		//});
-		
-		//Engine.Clickables.deleteButton = document.getElementById("delete");
-		//Engine.Clickables.deleteButton.addEventListener("click", function() {
-		//	Engine.deleteSave();
-		//	return false;
-		//});
+        
+        PrintAllServers();
         
         //Main menu buttons and content
         Engine.Clickables.terminalMainMenuButton = document.getElementById("terminal-menu-link");
@@ -277,6 +252,18 @@ var Engine = {
 			Engine.loadScriptEditorContent();
 			return false;
 		});
+        
+        Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
+        Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
+            Engine.saveGame();
+            return false;           
+        });
+        
+        Engine.Clickables.deleteMainMenuButton = document.getElementById("delete-game-link");
+        Engine.Clickables.deleteMainMenuButton.addEventListener("click", function() {
+            Engine.deleteSave();
+            return false;
+        });
         
         Engine.Display.terminalContent = document.getElementById("terminal-container");
 		Engine.currentPage = Engine.Page.Terminal;

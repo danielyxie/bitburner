@@ -6,18 +6,19 @@
 // constructor that has a `fromJSON` property on it, it hands
 // off to that `fromJSON` fuunction, passing in the value.
 function Reviver(key, value) {
-  var ctor;
-
-  if (typeof value === "object" &&
-      typeof value.ctor === "string" &&
-      typeof value.data !== "undefined") {
-    ctor = Reviver.constructors[value.ctor] || window[value.ctor];
-    if (typeof ctor === "function" &&
-        typeof ctor.fromJSON === "function") {
-      return ctor.fromJSON(value);
-    }
-  }
-  return value;
+	var ctor;
+	//console.log("Reviver called with key: " + key + ", and value: " + value);
+	if (typeof value === "object" &&
+		typeof value.ctor === "string" &&
+		typeof value.data !== "undefined") {
+			ctor = Reviver.constructors[value.ctor] || window[value.ctor];
+			if (typeof ctor === "function" &&
+				typeof ctor.fromJSON === "function") {
+					
+					return ctor.fromJSON(value);
+			}
+	}	
+	return value;
 }
 Reviver.constructors = {}; // A list of constructors the smart reviver should know about  
 
@@ -35,6 +36,7 @@ Reviver.constructors = {}; // A list of constructors the smart reviver should kn
 function Generic_toJSON(ctorName, obj, keys) {
   var data, index, key;
 
+	console.log("Generic_toJSON() called");
   if (!keys) {
     keys = Object.keys(obj); // Only "own" properties are included
   }

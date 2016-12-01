@@ -1,10 +1,22 @@
 function TestObj() {
-	this.value = 1;
+	this.num = 1;
 }
 
 TestObj.prototype.setValue = function(val) {
-	this.value = val;
+	this.num = val;
 }
+
+TestObj.prototype.toJSON = function() {
+	console.log("toJSON() called");
+	return Generic_toJSON("TestObj", this);
+}
+
+TestObj.fromJSON = function(value) {
+	console.log("fromJSON() called");
+	return Generic_fromJSON(TestObj, value.data);
+}
+
+Reviver.constructors.TestObj = TestObj;
 
 var testObj = new TestObj();
 
@@ -83,9 +95,9 @@ var Terminal = {
         var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
         if (rand < hackChance) {	//Success!
             var moneyGained = Player.calculatePercentMoneyHacked();
-            moneyGained = Math.floor(Player.currentServer.moneyAvailable * moneyGained);
+            moneyGained = Math.floor(Player.getCurrentServer().moneyAvailable * moneyGained);
             
-            Player.currentServer.moneyAvailable -= moneyGained;
+            Player.getCurrentServer().moneyAvailable -= moneyGained;
             Player.money += moneyGained;
             
             Player.hacking_exp += expGainedOnSuccess;
@@ -94,7 +106,7 @@ var Terminal = {
         } else {					//Failure
             //Player only gains 25% exp for failure? TODO Can change this later to balance
             Player.hacking_exp += expGainedOnFailure;
-            post("Failed to hack " + Player.currentServer.hostname + ". Gained " + expGainedOnFailure + " hacking EXP");
+            post("Failed to hack " + Player.getCurrentServer().hostname + ". Gained " + expGainedOnFailure + " hacking EXP");
         }
         
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
@@ -107,38 +119,38 @@ var Terminal = {
 	},
     
     finishAnalyze: function() {
-        post(Player.currentServer.hostname + ": ");
-        post("Required hacking skill: " + Player.currentServer.requiredHackingSkill);
+        post(Player.getCurrentServer().hostname + ": ");
+        post("Required hacking skill: " + Player.getCurrentServer().requiredHackingSkill);
         //TODO Make these actual estimates by adding a random offset to result?
         //TODO Change the text to sound better
         post("Estimated chance to hack: " + Math.round(Player.calculateHackingChance() * 100) + "%");
         post("Estimated time to hack: " + Math.round(Player.calculateHackingTime()) + " seconds");
-        post("Required number of open ports for PortHack: " +Player.currentServer.numOpenPortsRequired);
-        if (Player.currentServer.sshPortOpen) {
+        post("Required number of open ports for PortHack: " +Player.getCurrentServer().numOpenPortsRequired);
+        if (Player.getCurrentServer().sshPortOpen) {
             post("SSH port: Open")
         } else {
             post("SSH port: Closed")
         }
         
-        if (Player.currentServer.ftpPortOpen) {
+        if (Player.getCurrentServer().ftpPortOpen) {
             post("FTP port: Open")
         } else {
             post("FTP port: Closed")
         }
         
-        if (Player.currentServer.smtpPortOpen) {
+        if (Player.getCurrentServer().smtpPortOpen) {
             post("SMTP port: Open")
         } else {
             post("SMTP port: Closed")
         }
         
-        if (Player.currentServer.httpPortOpen) {
+        if (Player.getCurrentServer().httpPortOpen) {
             post("HTTP port: Open")
         } else {
             post("HTTP port: Closed")
         }
         
-        if (Player.currentServer.sqlPortOpen) {
+        if (Player.getCurrentServer().sqlPortOpen) {
             post("SQL port: Open")
         } else {
             post("SQL port: Closed")
@@ -196,10 +208,10 @@ var Terminal = {
                 
                 var ip = commandArray[1];
                 
-                for (var i = 0; i < Player.currentServer.serversOnNetwork.length; i++) {
-                    if (Player.currentServer.serversOnNetwork[i].ip == ip || Player.currentServer.serversOnNetwork[i].hostname == ip) {
-                        Player.currentServer.isConnectedTo = false;
-                        Player.currentServer = Player.currentServer.serversOnNetwork[i];
+                for (var i = 0; i < Player.getCurrentServer().serversOnNetwork.length; i++) {
+                    if (Player.getCurrentServer().getServerOnNetwork(i).ip == ip || Player.getCurrentServer().getServerOnNetwork(i).hostname == ip) {
+                        Player.getCurrentServer().isConnectedTo = false;
+                        Player.currentServer = Player.getCurrentServer().getServerOnNetwork(i).ip;
                         post("Connected to " + ip);
                         return;
                     }
@@ -207,14 +219,14 @@ var Terminal = {
                 
                 post("Host not found"); 
 				break;
-			case "df":
+			case "free":
 				if (commandArray.length != 1) {
 					post("Incorrect usage of df command. Usage: df"); return;
 				}
 				console.log("df terminal command called");
-                post("Total: " + Player.currentServer.maxRam.toString() + " GB");
-                post("Used: " + Player.currentServer.ramUsed.toString() + " GB");
-                post("Available: " + (Player.currentServer.maxRam - Player.currentServer.ramUsed).toString() + " GB");
+                post("Total: " + Player.getCurrentServer().maxRam.toString() + " GB");
+                post("Used: " + Player.getCurrentServer().ramUsed.toString() + " GB");
+                post("Available: " + (Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed).toString() + " GB");
 				break;
 			case "hack":
 				if (commandArray.length != 1) {
@@ -222,11 +234,11 @@ var Terminal = {
 				}
 				//Hack the current PC (usually for money)
 				//You can't hack your home pc or servers you purchased
-				if (Player.currentServer.purchasedByPlayer) {
+				if (Player.getCurrentServer().purchasedByPlayer) {
 					post("Cannot hack your own machines! You are currently connected to your home PC or one of your purchased servers");
-				} else if (Player.currentServer.hasAdminRights == false ) {
+				} else if (Player.getCurrentServer().hasAdminRights == false ) {
 					post("You do not have admin rights for this machine! Cannot hack");
-				} else if (Player.currentServer.requiredHackingSkill > Player.hacking_skill) {
+				} else if (Player.getCurrentServer().requiredHackingSkill > Player.hacking_skill) {
 					post("Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill");
 				} else {
                     Terminal.hackFlag = true;
@@ -248,14 +260,14 @@ var Terminal = {
 					post("Incorrect usage of hostname command. Usage: hostname"); return;
 				}
 				//Print the hostname of current system
-				post(Player.currentServer.hostname);
+				post(Player.getCurrentServer().hostname);
 				break;
 			case "ifconfig":
 				if (commandArray.length != 1) {
 					post("Incorrect usage of ifconfig command. Usage: ifconfig"); return;
 				}
 				//Print the IP address of the current system
-				post(Player.currentServer.ip);
+				post(Player.getCurrentServer().ip);
 				break;
 			case "kill":
 				//TODO
@@ -269,11 +281,11 @@ var Terminal = {
 				var allFiles = []; 
 				
 				//Get all of the programs and scripts on the machine into one temporary array
-				for (var i = 0; i < Player.currentServer.programs.length; i++) {
-					allFiles.push(Player.currentServer.programs[i]); 
+				for (var i = 0; i < Player.getCurrentServer().programs.length; i++) {
+					allFiles.push(Player.getCurrentServer().programs[i]); 
 				}
-				for (var i = 0; i < Player.currentServer.scripts.length; i++) {
-					allFiles.push(Player.currentServer.scripts[i].filename);
+				for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
+					allFiles.push(Player.getCurrentServer().scripts[i].filename);
 				}
 				
 				//Sort the files alphabetically then print each
@@ -299,16 +311,16 @@ var Terminal = {
 				var scriptname = filename.substr(0, filename.indexOf(".script"));
 				
 				//Cannot edit scripts that are currently running
-				for (var i = 0; i < Player.currentServer.runningScripts.length; i++) {
-					if (filename == Player.currentServer.runningScripts[i].filename) {
+				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
+					if (filename == Player.getCurrentServer().runningScripts[i].filename) {
 						post("Cannot open/edit scripts that are currently running!"); return;
 					}
 				}
 				
 				//Check if the script already exists
-				for (var i = 0; i < Player.currentServer.scripts.length; i++) {
-					if (filename == Player.currentServer.scripts[i].filename) {
-						Engine.loadScriptEditorContent(scriptname, Player.currentServer.scripts[i].code);
+				for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
+					if (filename == Player.getCurrentServer().scripts[i].filename) {
+						Engine.loadScriptEditorContent(scriptname, Player.getCurrentServer().scripts[i].code);
 						return;
 					}
 				}
@@ -322,24 +334,24 @@ var Terminal = {
 				//Displays available network connections using TCP
                 console.log("netstat/scan terminal command called");
                 post("Hostname             IP                   Root Access");
-                for (var i = 0; i < Player.currentServer.serversOnNetwork.length; i++) {
+                for (var i = 0; i < Player.getCurrentServer().serversOnNetwork.length; i++) {
                     //Add hostname
-                    var entry = Player.currentServer.serversOnNetwork[i].hostname;
+                    var entry = Player.getCurrentServer().getServerOnNetwork(i).hostname;
                     
                     //Calculate padding and add IP
                     var numSpaces = 21 - entry.length;
                     var spaces = Array(numSpaces+1).join(" ");
                     entry += spaces;
-                    entry += Player.currentServer.serversOnNetwork[i].ip;
+                    entry += Player.getCurrentServer().getServerOnNetwork(i).ip;
                     
                     //Calculate padding and add root access info
                     var hasRoot;
-                    if (Player.currentServer.serversOnNetwork[i].hasAdminRights) {
+                    if (Player.getCurrentServer().getServerOnNetwork(i).hasAdminRights) {
                         hasRoot = 'Y';
                     } else {
                         hasRoot = 'N';
                     }
-                    numSpaces = 21 - Player.currentServer.serversOnNetwork[i].ip.length;
+                    numSpaces = 21 - Player.getCurrentServer().getServerOnNetwork(i).ip.length;
                     spaces = Array(numSpaces+1).join(" ");
                     entry += spaces;
                     entry += hasRoot;
@@ -373,13 +385,15 @@ var Terminal = {
 			case "scp":
 				//TODO
 				break;
-				
+			case "top":
+				//TODO List each's script RAM usage
+				break;
 			case "test":
-				post(testObj.value.toString());
-				testObj.setValue(testObj.value + 1);
+				post(testObj.num.toString());
+				testObj.setValue(testObj.num + 1);
 				break;
 			case "testSave":
-				var testSave = JSONfn.stringify(testObj);
+				var testSave = JSON.stringify(testObj);
 				window.localStorage.setItem("netburnerTest", testSave);
 				console.log("Netburner TestSave saved");
 				break;
@@ -387,8 +401,9 @@ var Terminal = {
 				if (!window.localStorage.getItem("netburnerTest")) {
 					console.log("No TestSave file to load");
 				} else {
+					console.log("Here");
 					var testSave = window.localStorage.getItem("netburnerTest");
-					testObj = JSONfn.parse(testSave);
+					testObj = JSON.parse(testSave, Reviver);
 					console.log("TestSave loaded");
 				}
 				break;
@@ -410,8 +425,8 @@ var Terminal = {
 	runProgram: function(programName) {
 		//Check if you have the program on your computer. If you do, execute it, otherwise
 		//display an error message
-		for (var i = 0; i < Player.homeComputer.programs.length; i++) {
-			if (Player.homeComputer.programs[i] == programName) {
+		for (var i = 0; i < Player.getHomeComputer().programs.length; i++) {
+			if (Player.getHomeComputer().programs[i] == programName) {
 				Terminal.executeProgram(programName);
 				return;
 			}
@@ -423,13 +438,13 @@ var Terminal = {
 	executeProgram: function(programName) {
 		switch (programName) {
 			case "PortHack.exe":
-				if (Player.currentServer.hasAdminRights) {
+				if (Player.getCurrentServer().hasAdminRights) {
 					post("You already have root access to this computer. There is no reason to run PortHack.exe");
 				} else {
 					console.log("Running PortHack executable");
-					if (Player.currentServer.openPortCount >= Player.currentServer.numOpenPortsRequired) {
-						Player.currentServer.hasAdminRights = true;
-						post("PortHack successful! Gained root access to " + Player.currentServer.hostname);
+					if (Player.getCurrentServer().openPortCount >= Player.getCurrentServer().numOpenPortsRequired) {
+						Player.getCurrentServer().hasAdminRights = true;
+						post("PortHack successful! Gained root access to " + Player.getCurrentServer().hostname);
 						//TODO Make this take time rather than be instant
 					} else {
 						post("PortHack unsuccessful. Not enough ports have been opened");
@@ -444,29 +459,29 @@ var Terminal = {
 	
 	runScript: function(scriptName) {
 		//Check if this script is already running
-		for (var i = 0; i < Player.currentServer.runningScripts.length; i++) {
-			if (Player.currentServer.runningScripts[i] == scriptName) {
+		for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
+			if (Player.getCurrentServer().runningScripts[i] == scriptName) {
 				post("ERROR: This script is already running. Cannot run multiple instances");
 				return;
 			}
 		}
 		
 		//Check if the script exists and if it does run it
-		for (var i = 0; i < Player.currentServer.scripts.length; i++) {
-			if (Player.currentServer.scripts[i].filename == scriptName) {
-				if (Player.currentServer.hasAdminRights == false) {
+		for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
+			if (Player.getCurrentServer().scripts[i].filename == scriptName) {
+				if (Player.getCurrentServer().hasAdminRights == false) {
 					post("Need root access to run script");
 				} else {
-					var filename = Player.currentServer.scripts[i].filename;
+					var filename = Player.getCurrentServer().scripts[i].filename;
 					
 					//Add to current server's runningScripts
-					Player.currentServer.runningScripts.push(filename)
+					Player.getCurrentServer().runningScripts.push(filename)
 					
 					//Create WorkerScript
 					var s = new WorkerScript();
 					s.name 		= filename;
-					s.code 		= Player.currentServer.scripts[i].code;
-					s.hostname 	= Player.currentServer.hostname;
+					s.code 		= Player.getCurrentServer().scripts[i].code;
+					s.hostname 	= Player.getCurrentServer().hostname;
 					workerScripts.push(s);
 					console.log("Pushed script onto workerScripts");
 					return;
