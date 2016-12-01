@@ -71,7 +71,8 @@ function Script() {
     /* Properties to calculate offline progress. Only applies for infinitely looping scripts */
     
     //Time it takes to execute one iteration of the entire script
-    //Each function takes 1 second, plus hacking time plus and sleep commands
+    //Each function takes CONSTANTS.CodeInstructionRunTime seconds, 
+    //plus hacking time plus and sleep commands
     this.executionTimeMillis    = 0;
     
     //Number of instructions ("lines") in the code. Any call ending in a ; 
@@ -81,14 +82,6 @@ function Script() {
     //Which servers are hacked in one iteration of the script. May contain duplicates
     this.serversHacked          = [];
 };
-
-//Execute the next function in the Script's function queue
-Script.prototype.executeNext = function() {
-    if (this.functionQueue.length <= 0) {return;}
-    
-    //Shift the next element off ths function queue and then execute it
-    (this.functionQueue.shift())();
-}
 
 //Get the script data from the Script Editor and save it to the object
 Script.prototype.saveScript = function() {
@@ -106,3 +99,13 @@ Script.prototype.saveScript = function() {
 		//TODO Calculate/update number of instructions, ram usage, execution time, etc. 
 	}
 }
+
+Script.prototype.toJSON = function() {
+    return Generic_toJSON("Script", this);
+}
+
+Script.fromJSON = function(value) {
+    return Generic_fromJSON(Script, value.data);
+}
+
+Reviver.constructors.Script = Script;

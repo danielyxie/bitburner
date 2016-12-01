@@ -152,7 +152,7 @@ var Engine = {
 		var diff = _thisUpdate - Engine._lastUpdate;
 		
         //Divide this by cycle time to determine how many cycles have elapsed since last update
-        diff = Math.round(diff / Engine._idleSpeed);
+        diff = Math.floor(diff / Engine._idleSpeed);
 		        
         if (diff > 0) {
             //Update the game engine by the calculated number of cycles
