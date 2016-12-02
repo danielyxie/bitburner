@@ -9,10 +9,10 @@
 function WorkerScript() {
 	this.name 			= "";
 	this.running 		= false;
-	this.serverHostname = null;
+	this.serverIp 		= null;
 	this.code 			= "";
 	this.env 			= new Environment();
-	this.timeout		= null;
+	this.output			= "";
 }
 
 //Array containing all scripts that are running across all servers, to easily run them all

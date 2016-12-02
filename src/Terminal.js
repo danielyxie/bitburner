@@ -385,6 +385,8 @@ var Terminal = {
 			case "scp":
 				//TODO
 				break;
+			case "tail":
+				break;
 			case "top":
 				//TODO List each's script RAM usage
 				break;
@@ -481,7 +483,7 @@ var Terminal = {
 					var s = new WorkerScript();
 					s.name 		= filename;
 					s.code 		= Player.getCurrentServer().scripts[i].code;
-					s.hostname 	= Player.getCurrentServer().hostname;
+					s.serverIp 	= Player.getCurrentServer().ip;
 					workerScripts.push(s);
 					console.log("Pushed script onto workerScripts");
 					return;

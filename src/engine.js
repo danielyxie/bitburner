@@ -150,6 +150,7 @@ var Engine = {
 		//Get time difference
 		var _thisUpdate = new Date().getTime();
 		var diff = _thisUpdate - Engine._lastUpdate;
+        var offset = diff % Engine._idleSpeed;
 		
         //Divide this by cycle time to determine how many cycles have elapsed since last update
         diff = Math.floor(diff / Engine._idleSpeed);
@@ -157,11 +158,34 @@ var Engine = {
         if (diff > 0) {
             //Update the game engine by the calculated number of cycles
             Engine.updateGame(diff);
-            Engine._lastUpdate = _thisUpdate;
+            Engine._lastUpdate = _thisUpdate - offset;
         }       
 		
 		window.requestAnimationFrame(Engine.idleTimer);
 	},
+    
+    //Counters for the main event loop. Represent the number of game cycles are required
+    //for something to happen. 
+    Counters: {
+        autoSaveCounter:    300,
+    },
+    
+    decrementAllCounters: function(numCycles = 1) {
+        for (var counter in Engine.Counters) {
+            if (Engine.Counters.hasOwnProperty(counter)) {
+                Engine.Counters[counter] = Engine.Counters[counter] - numCycles;
+            }
+        }
+    },
+    
+    //Checks if any counters are 0 and if they are, executes whatever
+    //is necessary and then resets the counter
+    checkCounters: function() {
+        if (Engine.Counters.autoSaveCounter <= 0) {
+            Engine.saveGame();
+            Engine.Counters.autoSaveCounter = 300;
+        }
+    },
     
     //TODO Account for numCycles in Code, hasn't been done yet
     updateGame: function(numCycles = 1) {
@@ -175,8 +199,10 @@ var Engine = {
 			Engine._actionTimeStr = "Time left: ";
 			Player.startAction = false;
 		}
-		
-		Engine.updateHackProgress();
+		Engine.decrementAllCounters(numCycles);
+        Engine.checkCounters();
+        
+		Engine.updateHackProgress(numCycles);
     },
 	
 	/* Calculates the hack progress for a manual (non-scripted) hack and updates the progress bar/time accordingly */
@@ -186,10 +212,11 @@ var Engine = {
 	_actionProgressStr: "[                                                  ]",
 	_actionProgressBarCount: 1,
 	_actionInProgress: false,
-	updateHackProgress: function() {
+	updateHackProgress: function(numCycles = 1) {
 		if (Engine._actionInProgress == true) {
 			//TODO Do this calculation based on numCycles rather than idle speed
-			Engine._actionTimeLeft -= (Engine._idleSpeed/ 1000);	//Substract idle speed (ms)
+            var timeElapsedMilli = numCycles * Engine._idleSpeed;
+			Engine._actionTimeLeft -= (timeElapsedMilli/ 1000);	//Substract idle speed (ms)
 		
 			//Calculate percent filled 
 			var percent = Math.round((1 - Engine._actionTimeLeft / Engine._totalActionTime) * 100);
