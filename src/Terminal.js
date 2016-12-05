@@ -221,9 +221,9 @@ var Terminal = {
 				break;
 			case "free":
 				if (commandArray.length != 1) {
-					post("Incorrect usage of df command. Usage: df"); return;
+					post("Incorrect usage of free command. Usage: free"); return;
 				}
-				console.log("df terminal command called");
+				console.log("free terminal command called");
                 post("Total: " + Player.getCurrentServer().maxRam.toString() + " GB");
                 post("Used: " + Player.getCurrentServer().ramUsed.toString() + " GB");
                 post("Available: " + (Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed).toString() + " GB");
@@ -359,7 +359,12 @@ var Terminal = {
                 }
 				break;
 			case "ps":
-				//TODO
+				if (commandArray.length != 1) {
+					post("Incorrect usage of ps command. Usage: ps");
+				}
+				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
+					post(Player.getCurrentServer().runningScripts[i]);
+				}
 				break;
 			case "rm":
 				//TODO

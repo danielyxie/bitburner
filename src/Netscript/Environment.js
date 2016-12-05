@@ -44,5 +44,7 @@ Environment.prototype = {
 	//Creates (or overwrites) a variable in the current scope
     def: function(name, value) {
         return this.vars[name] = value;
-    }
+    },
+	
+	stopFlag: false
 };

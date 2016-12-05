@@ -1,6 +1,3 @@
-//TODO Saving only works with stirngs.key value pairs. Think of a system to do saves
-//		And everything with all the things I have
-
 //Replaces the character at an index with a new character
 String.prototype.replaceAt=function(index, character) {
     return this.substr(0, index) + character + this.substr(index+character.length);

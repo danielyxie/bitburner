@@ -36,7 +36,6 @@ Reviver.constructors = {}; // A list of constructors the smart reviver should kn
 function Generic_toJSON(ctorName, obj, keys) {
   var data, index, key;
 
-	console.log("Generic_toJSON() called");
   if (!keys) {
     keys = Object.keys(obj); // Only "own" properties are included
   }

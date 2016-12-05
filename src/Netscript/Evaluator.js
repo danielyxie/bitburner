@@ -11,11 +11,13 @@ function evaluate(exp, workerScript) {
 		case "str":
 		case "bool":
 			return new Promise(function(resolve, reject) {
+				if (env.stopFlag) {reject("Stopping script");}
 				resolve(exp.value);
 			});
 			break;
 		case "var":
 			return new Promise(function(resolve, reject) {
+				if (env.stopFlag) {reject("Stopping script");}
 				resolve(env.get(exp.value));
 			});
 			break;
@@ -23,6 +25,8 @@ function evaluate(exp, workerScript) {
 		case "assign":
 			console.log("Evaluating assign operation");
 			return new Promise(function(resolve, reject) {
+				if (env.stopFlag) {reject("Stopping script");}
+				
 				if (exp.left.type != "var")
 					throw new Error("Cannot assign to " + JSON.stringify(exp.left));
 				
@@ -31,6 +35,8 @@ function evaluate(exp, workerScript) {
 						var expRightPromise = evaluate(exp.right, workerScript);
 						expRightPromise.then(function(expRight) {
 							resolve(expRight);
+						}, function() {
+							reject("Stopping script");
 						});
 					}, CONSTANTS.CodeInstructionRunTime)
 				});
@@ -40,17 +46,23 @@ function evaluate(exp, workerScript) {
 					env.set(exp.left.value, expRight);
 					console.log("Assign operation finished");
 					resolve("assignFinished");
+				}, function() {
+					reject("Stopping script");
 				});
 			});
 			
 		case "binary":
 			console.log("Binary operation called");
 			return new Promise(function(resolve, reject) {
+				if (env.stopFlag) {reject("Stopping script");}
+				
 				var pLeft = new Promise(function(resolve, reject) {
 					setTimeout(function() {
 						var promise = evaluate(exp.left, workerScript);
 						promise.then(function(valLeft) {
 							resolve(valLeft);
+						}, function() {
+							reject("Stopping script");
 						});
 					}, CONSTANTS.CodeInstructionRunTime);
 				});
@@ -61,6 +73,8 @@ function evaluate(exp, workerScript) {
 							var promise = evaluate(exp.right, workerScript);
 							promise.then(function(valRight) {
 								resolve([valLeft, valRight]);
+							}, function() {
+								reject("Stopping script");
 							});
 						}, CONSTANTS.CodeInstructionRunTime);
 					});
@@ -68,7 +82,11 @@ function evaluate(exp, workerScript) {
 					pRight.then(function(args) {
 						console.log("Resolving binary operation");
 						resolve(apply_op(exp.operator, args[0], args[1]));
+					}, function() {
+						reject("Stopping script");
 					});
+				}, function() {
+					reject("Stopping script");
 				});
 			});
 			break;
@@ -92,12 +110,16 @@ function evaluate(exp, workerScript) {
 				
 		case "for":
 			return new Promise(function(resolve, reject) {
+				if (env.stopFlag) {reject("Stopping script");}
+				
 				console.log("for loop encountered in evaluator");
 				var pInit = new Promise(function(resolve, reject) {
 					setTimeout(function() {
 						var resInit = evaluate(exp.init, workerScript);
 						resInit.then(function(foo) {
 							resolve(resInit);
+						}, function() {
+							reject("Stopping script");
 						});
 					}, CONSTANTS.CodeInstructionRunTime);
 				});
@@ -106,24 +128,36 @@ function evaluate(exp, workerScript) {
 					var pForLoop = evaluateFor(exp, workerScript);
 					pForLoop.then(function(forLoopRes) {
 						resolve("forLoopDone");
+					}, function() {
+						reject("Stopping script");
 					});
+				}, function() {
+					reject("Stopping script");
 				});
 			});
 			break;
 		case "while":
 			console.log("Evaluating while loop");
 			return new Promise(function(resolve, reject) {
+				if (env.stopFlag) {reject("Stopping script");}
+				
 				var pEvaluateWhile = evaluateWhile(exp, workerScript);
 				pEvaluateWhile.then(function(whileLoopRes) {
 					resolve("whileLoopDone");
+				}, function() {
+					reject("Stopping script");
 				});
 			});
 			break;
 		case "prog":
 			return new Promise(function(resolve, reject) {
+				if (env.stopFlag) {reject("Stopping script");}
+				
 				var evaluateProgPromise = evaluateProg(exp, workerScript, 0);
 				evaluateProgPromise.then(function(res) {
 					resolve(res);
+				}, function() {
+					reject("Stopping script");
 				});
 			});
 			break;
@@ -141,19 +175,68 @@ function evaluate(exp, workerScript) {
 			//	return evaluate(arg, env);
 			//}));
 			return new Promise(function(resolve, reject) {
+				if (env.stopFlag) {reject("Stopping script");}
+				
 				setTimeout(function() {
 					if (exp.func.value == "hack") {
 						console.log("Execute hack()");
-						resolve("hackExecuted");
+						if (exp.args.length != 0) {
+							throw new Error("Hack() call has incorrect number of arguments. Takes no arguments");)
+						}
+						
+						var p = new Promise(function(resolve, reject) {
+							setTimeout(function() {
+								var hackChance = Player.calculateHackingChance();
+								var rand = Math.random();
+								var expGainedOnSuccess = Player.calculateExpGain();
+								var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
+								if (rand < hackChance) {	//Success!
+									var moneyGained = Player.calculatePercentMoneyHacked();
+									moneyGained = Math.floor(Player.getCurrentServer().moneyAvailable * moneyGained);
+									
+									Player.getCurrentServer().moneyAvailable -= moneyGained;
+									Player.money += moneyGained;
+									
+									Player.hacking_exp += expGainedOnSuccess;
+								} else {			
+									//Player only gains 25% exp for failure? TODO Can change this later to balance
+									Player.hacking_exp += expGainedOnFailure;
+								}
+							}, CONSTANTS.CodeInstructionRunTime);
+						});
+						
+						p.then(function(res) {
+							resolve("hackExecuted");
+						});
+						
 					} else if (exp.func.value == "sleep") {
 						console.log("Execute sleep()");
-						resolve("sleepExecuted");
+						if (exp.args.length != 1) {
+							throw new Error("Sleep() call has incorrect number of arguments. Takes 1 argument.");
+						}
+						
+						var p = new Promise(function(resolve, reject) {
+							setTimeout(function() {
+								resolve("foo");
+							}, exp.args[0]);
+						});
+						
+						p.then(function(res) {
+							resolve("sleepExecuted");
+						});
+						
 					} else if (exp.func.value == "print") {
+						if (exp.args.length != 1) {
+							throw new Error("Print() call has incorrect number of arguments. Takes 1 argument");
+						}
+						
 						var p = new Promise(function(resolve, reject) {
 							setTimeout(function() {
 								var evaluatePromise = evaluate(exp.args[0], workerScript);
 								evaluatePromise.then(function(res) {
 									resolve(res);
+								}, function() {
+									reject("Stopping script");
 								});
 							}, CONSTANTS.CodeInstructionRunTime);
 						});
@@ -162,6 +245,8 @@ function evaluate(exp, workerScript) {
 							post(res.toString());
 							console.log("Print call executed");
 							resolve("printExecuted");
+						}, function() {
+							reject("Stopping script");
 						});
 					}
 				}, CONSTANTS.CodeInstructionRunTime);
@@ -183,6 +268,8 @@ function evaluateFor(exp, workerScript) {
 				evaluatePromise.then(function(resCond) {
 					console.log("Conditional evaluated to: " + resCond);
 					resolve(resCond);
+				}, function() {
+					reject("Stopping script");
 				});
 			}, CONSTANTS.CodeInstructionRunTime);
 		});
@@ -197,6 +284,8 @@ function evaluateFor(exp, workerScript) {
 						evaluatePromise.then(function(resCode) {
 							console.log("Evaluated an iteration of for loop code");
 							resolve(resCode);
+						}, function() {
+							reject("Stopping script");
 						});
 					}, CONSTANTS.CodeInstructionRunTime);
 				});
@@ -209,6 +298,8 @@ function evaluateFor(exp, workerScript) {
 							evaluatePromise.then(function(foo) {
 								console.log("Evaluated for loop postloop");
 								resolve("postLoopFinished");
+							}, function() {
+								reject("Stopping script");
 							});
 						}, CONSTANTS.CodeInstructionRunTime);
 					});
@@ -217,14 +308,22 @@ function evaluateFor(exp, workerScript) {
 						var recursiveCall = evaluateFor(exp, workerScript);
 						recursiveCall.then(function(foo) {
 							resolve("endForLoop");
+						}, function() {
+							reject("Stopping script");
 						});
+					}, function() {
+						reject("Stopping script");
 					});
 
+				}, function() {
+					reject("Stopping script");
 				});
 			} else {
 				console.log("Cond is false, stopping for loop");
 				resolve("endForLoop");	//Doesn't need to resolve to any particular value
 			}
+		}, function() {
+			reject("Stopping script");
 		});
 	});
 }
@@ -238,6 +337,8 @@ function evaluateWhile(exp, workerScript) {
 				evaluatePromise.then(function(resCond) {
 					console.log("Conditional evaluated to: " + resCond);
 					resolve(resCond);
+				}, function() {
+					reject("Stopping script");	
 				});
 			}, CONSTANTS.CodeInstructionRunTime);
 		});
@@ -251,6 +352,8 @@ function evaluateWhile(exp, workerScript) {
 						evaluatePromise.then(function(resCode) {
 							console.log("Evaluated an iteration of while loop code");
 							resolve(resCode);
+						}, function() {
+							reject("Stopping script");
 						});
 					}, CONSTANTS.CodeInstructionRunTime);
 				});
@@ -260,12 +363,18 @@ function evaluateWhile(exp, workerScript) {
 					var recursiveCall = evaluateWhile(exp, workerScript);
 					recursiveCall.then(function(foo) {
 						resolve("endWhileLoop");
+					}, function() {
+						reject("Stopping script");
 					});
+				}, function() {
+					reject("Stopping script");
 				});
 			} else {
 				console.log("Cond is false, stopping while loop");
 				resolve("endWhileLoop");	//Doesn't need to resolve to any particular value
 			}
+		}, function() {
+			reject("Stopping script");
 		});
 	});
 }
@@ -283,6 +392,8 @@ function evaluateProg(exp, workerScript, index) {
 					var evaluatePromise = evaluate(exp.prog[index], workerScript); 
 					evaluatePromise.then(function(evalRes) {
 						resolve(evalRes);
+					}, function() {
+						reject("Stopping script");
 					});
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
@@ -292,7 +403,11 @@ function evaluateProg(exp, workerScript, index) {
 				var nextLine = evaluateProg(exp, workerScript, index + 1);
 				nextLine.then(function(nextLineRes) {
 					resolve("progDone");
+				}, function() {
+					reject("Stopping script");
 				});
+			}, function() {
+				reject("Stopping script");
 			});
 		}
 	});
