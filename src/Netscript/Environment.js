@@ -4,6 +4,7 @@
 function Environment(parent) {
     this.vars = Object.create(parent ? parent.vars : null);
     this.parent = parent;
+	this.stopFlag = false;
 }
 Environment.prototype = {
 	//Create a "subscope", which is a new new "sub-environment"
@@ -44,7 +45,5 @@ Environment.prototype = {
 	//Creates (or overwrites) a variable in the current scope
     def: function(name, value) {
         return this.vars[name] = value;
-    },
-	
-	stopFlag: false
+    }	
 };

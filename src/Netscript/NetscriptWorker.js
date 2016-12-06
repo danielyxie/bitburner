@@ -23,7 +23,7 @@ function runScriptsLoop() {
 	//Run any scripts that haven't been started
 	for (var i = 0; i < workerScripts.length; i++) {
 		//If it isn't running, start the script
-		if (workerScripts[i].running == false) {
+		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
 			var ast = Parser(Tokenizer(InputStream(workerScripts[i].code)));
 			
 			console.log("Starting new script: " + workerScripts[i].name);
@@ -32,13 +32,15 @@ function runScriptsLoop() {
 			
 			workerScripts[i].running = true;
 			var p = evaluate(ast, workerScripts[i]);
-			
+			var foo = workerScripts[i];
 			//Once the code finishes (either resolved or rejected, doesnt matter), set its
 			//running status to false
-			p.then(function(foo) {
-				workerScripts[i].running = false;
-			}, function() {
-				workerScripts[i].running = false;
+			p.then(function(w) {
+				w.running = false;
+				w.env.stopFlag = true;
+			}, function(w) {
+				w.running = false;
+				w.env.stopFlag = true;
 			});
 		}
 	}
@@ -47,12 +49,13 @@ function runScriptsLoop() {
 	//items fucks up the indexing
 	for (var i = workerScripts.length - 1; i >= 0; i--) {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
+			console.log("Deleting scripts");
 			//Delete script from the runningScripts array on its host serverIp
 			var ip = workerScripts[i].serverIp;
 			var name = workerScripts[i].name;
 			for (var j = 0; j < AllServers[ip].runningScripts.length; j++) {
 				if (AllServers[ip].runningScripts[j] == name) {
-					AllServers[i].runningScripts.splice(j, 1);
+					AllServers[ip].runningScripts.splice(j, 1);
 					break;
 				}
 			}

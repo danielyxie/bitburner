@@ -11,13 +11,13 @@ function evaluate(exp, workerScript) {
 		case "str":
 		case "bool":
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject("Stopping script");}
+				if (env.stopFlag) {reject(workerScript);}
 				resolve(exp.value);
 			});
 			break;
 		case "var":
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject("Stopping script");}
+				if (env.stopFlag) {reject(workerScript);}
 				resolve(env.get(exp.value));
 			});
 			break;
@@ -25,7 +25,7 @@ function evaluate(exp, workerScript) {
 		case "assign":
 			console.log("Evaluating assign operation");
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject("Stopping script");}
+				if (env.stopFlag) {reject(workerScript);}
 				
 				if (exp.left.type != "var")
 					throw new Error("Cannot assign to " + JSON.stringify(exp.left));
@@ -36,7 +36,7 @@ function evaluate(exp, workerScript) {
 						expRightPromise.then(function(expRight) {
 							resolve(expRight);
 						}, function() {
-							reject("Stopping script");
+							reject(workerScript);
 						});
 					}, CONSTANTS.CodeInstructionRunTime)
 				});
@@ -47,14 +47,14 @@ function evaluate(exp, workerScript) {
 					console.log("Assign operation finished");
 					resolve("assignFinished");
 				}, function() {
-					reject("Stopping script");
+					reject(workerScript);
 				});
 			});
 			
 		case "binary":
 			console.log("Binary operation called");
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject("Stopping script");}
+				if (env.stopFlag) {reject(workerScript);}
 				
 				var pLeft = new Promise(function(resolve, reject) {
 					setTimeout(function() {
@@ -62,7 +62,7 @@ function evaluate(exp, workerScript) {
 						promise.then(function(valLeft) {
 							resolve(valLeft);
 						}, function() {
-							reject("Stopping script");
+							reject(workerScript);
 						});
 					}, CONSTANTS.CodeInstructionRunTime);
 				});
@@ -74,7 +74,7 @@ function evaluate(exp, workerScript) {
 							promise.then(function(valRight) {
 								resolve([valLeft, valRight]);
 							}, function() {
-								reject("Stopping script");
+								reject(workerScript);
 							});
 						}, CONSTANTS.CodeInstructionRunTime);
 					});
@@ -83,10 +83,10 @@ function evaluate(exp, workerScript) {
 						console.log("Resolving binary operation");
 						resolve(apply_op(exp.operator, args[0], args[1]));
 					}, function() {
-						reject("Stopping script");
+						reject(workerScript);
 					});
 				}, function() {
-					reject("Stopping script");
+					reject(workerScript);
 				});
 			});
 			break;
@@ -110,7 +110,7 @@ function evaluate(exp, workerScript) {
 				
 		case "for":
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject("Stopping script");}
+				if (env.stopFlag) {reject(workerScript);}
 				
 				console.log("for loop encountered in evaluator");
 				var pInit = new Promise(function(resolve, reject) {
@@ -119,7 +119,7 @@ function evaluate(exp, workerScript) {
 						resInit.then(function(foo) {
 							resolve(resInit);
 						}, function() {
-							reject("Stopping script");
+							reject(workerScript);
 						});
 					}, CONSTANTS.CodeInstructionRunTime);
 				});
@@ -129,35 +129,35 @@ function evaluate(exp, workerScript) {
 					pForLoop.then(function(forLoopRes) {
 						resolve("forLoopDone");
 					}, function() {
-						reject("Stopping script");
+						reject(workerScript);
 					});
 				}, function() {
-					reject("Stopping script");
+					reject(workerScript);
 				});
 			});
 			break;
 		case "while":
 			console.log("Evaluating while loop");
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject("Stopping script");}
+				if (env.stopFlag) {reject(workerScript);}
 				
 				var pEvaluateWhile = evaluateWhile(exp, workerScript);
 				pEvaluateWhile.then(function(whileLoopRes) {
 					resolve("whileLoopDone");
 				}, function() {
-					reject("Stopping script");
+					reject(workerScript);
 				});
 			});
 			break;
 		case "prog":
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject("Stopping script");}
+				if (env.stopFlag) {reject(workerScript);}
 				
 				var evaluateProgPromise = evaluateProg(exp, workerScript, 0);
-				evaluateProgPromise.then(function(res) {
-					resolve(res);
+				evaluateProgPromise.then(function(w) {
+					resolve(workerScript);
 				}, function() {
-					reject("Stopping script");
+					reject(workerScript);
 				});
 			});
 			break;
@@ -175,14 +175,23 @@ function evaluate(exp, workerScript) {
 			//	return evaluate(arg, env);
 			//}));
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject("Stopping script");}
+				if (env.stopFlag) {reject(workerScript);}
 				
 				setTimeout(function() {
 					if (exp.func.value == "hack") {
 						console.log("Execute hack()");
 						if (exp.args.length != 0) {
-							throw new Error("Hack() call has incorrect number of arguments. Takes no arguments");)
+							throw new Error("Hack() call has incorrect number of arguments. Takes no arguments");
 						}
+						
+						//Calculate the hacking time 
+						var currentServer = AllServers[workerScript.serverIp];
+						var difficultyMult = currentServer.requiredHackingSkill * currentServer.hackDifficulty;
+						var skillFactor = difficultMult / Player.hacking_skill;
+						var hackingTime = skillFactor * Player.hacking_speed_multiplier; //This is in seconds
+						
+						//TODO Add a safeguard to prevent a script from hacking a Server that the player
+						//cannot hack
 						
 						var p = new Promise(function(resolve, reject) {
 							setTimeout(function() {
@@ -202,7 +211,7 @@ function evaluate(exp, workerScript) {
 									//Player only gains 25% exp for failure? TODO Can change this later to balance
 									Player.hacking_exp += expGainedOnFailure;
 								}
-							}, CONSTANTS.CodeInstructionRunTime);
+							}, hackingTime * 1000);
 						});
 						
 						p.then(function(res) {
@@ -236,7 +245,7 @@ function evaluate(exp, workerScript) {
 								evaluatePromise.then(function(res) {
 									resolve(res);
 								}, function() {
-									reject("Stopping script");
+									reject(workerScript);
 								});
 							}, CONSTANTS.CodeInstructionRunTime);
 						});
@@ -246,7 +255,7 @@ function evaluate(exp, workerScript) {
 							console.log("Print call executed");
 							resolve("printExecuted");
 						}, function() {
-							reject("Stopping script");
+							reject(workerScript);
 						});
 					}
 				}, CONSTANTS.CodeInstructionRunTime);
@@ -269,7 +278,7 @@ function evaluateFor(exp, workerScript) {
 					console.log("Conditional evaluated to: " + resCond);
 					resolve(resCond);
 				}, function() {
-					reject("Stopping script");
+					reject(workerScript);
 				});
 			}, CONSTANTS.CodeInstructionRunTime);
 		});
@@ -285,7 +294,7 @@ function evaluateFor(exp, workerScript) {
 							console.log("Evaluated an iteration of for loop code");
 							resolve(resCode);
 						}, function() {
-							reject("Stopping script");
+							reject(workerScript);
 						});
 					}, CONSTANTS.CodeInstructionRunTime);
 				});
@@ -299,7 +308,7 @@ function evaluateFor(exp, workerScript) {
 								console.log("Evaluated for loop postloop");
 								resolve("postLoopFinished");
 							}, function() {
-								reject("Stopping script");
+								reject(workerScript);
 							});
 						}, CONSTANTS.CodeInstructionRunTime);
 					});
@@ -309,21 +318,21 @@ function evaluateFor(exp, workerScript) {
 						recursiveCall.then(function(foo) {
 							resolve("endForLoop");
 						}, function() {
-							reject("Stopping script");
+							reject(workerScript);
 						});
 					}, function() {
-						reject("Stopping script");
+						reject(workerScript);
 					});
 
 				}, function() {
-					reject("Stopping script");
+					reject(workerScript);
 				});
 			} else {
 				console.log("Cond is false, stopping for loop");
 				resolve("endForLoop");	//Doesn't need to resolve to any particular value
 			}
 		}, function() {
-			reject("Stopping script");
+			reject(workerScript);
 		});
 	});
 }
@@ -338,7 +347,7 @@ function evaluateWhile(exp, workerScript) {
 					console.log("Conditional evaluated to: " + resCond);
 					resolve(resCond);
 				}, function() {
-					reject("Stopping script");	
+					reject(workerScript);	
 				});
 			}, CONSTANTS.CodeInstructionRunTime);
 		});
@@ -353,7 +362,7 @@ function evaluateWhile(exp, workerScript) {
 							console.log("Evaluated an iteration of while loop code");
 							resolve(resCode);
 						}, function() {
-							reject("Stopping script");
+							reject(workerScript);
 						});
 					}, CONSTANTS.CodeInstructionRunTime);
 				});
@@ -364,17 +373,17 @@ function evaluateWhile(exp, workerScript) {
 					recursiveCall.then(function(foo) {
 						resolve("endWhileLoop");
 					}, function() {
-						reject("Stopping script");
+						reject(workerScript);
 					});
 				}, function() {
-					reject("Stopping script");
+					reject(workerScript);
 				});
 			} else {
 				console.log("Cond is false, stopping while loop");
 				resolve("endWhileLoop");	//Doesn't need to resolve to any particular value
 			}
 		}, function() {
-			reject("Stopping script");
+			reject(workerScript);
 		});
 	});
 }
@@ -393,7 +402,7 @@ function evaluateProg(exp, workerScript, index) {
 					evaluatePromise.then(function(evalRes) {
 						resolve(evalRes);
 					}, function() {
-						reject("Stopping script");
+						reject(workerScript);
 					});
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
@@ -402,12 +411,12 @@ function evaluateProg(exp, workerScript, index) {
 			code.then(function(codeRes) {
 				var nextLine = evaluateProg(exp, workerScript, index + 1);
 				nextLine.then(function(nextLineRes) {
-					resolve("progDone");
+					resolve(workerScript);
 				}, function() {
-					reject("Stopping script");
+					reject(workerScript);
 				});
 			}, function() {
-				reject("Stopping script");
+				reject(workerScript);
 			});
 		}
 	});
