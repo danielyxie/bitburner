@@ -270,7 +270,19 @@ var Terminal = {
 				post(Player.getCurrentServer().ip);
 				break;
 			case "kill":
-				//TODO
+				if (commandArray.length != 2) {
+					post("Incorrect usage of kill command. Usage: kill [scriptname]"); return;
+				}
+				
+				var scriptName = commandArray[1];
+				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
+					if (Player.getCurrentServer().runningScripts[i] == scriptName) {
+						Player.getCurrentServer().runningScripts.splice(i, 1);
+						
+						killWorkerScript(scriptName, Player.getCurrentServer().ip); 
+					} 
+				}
+				post("No such script is running. Nothing to kill");
 				break;
 			case "ls":
 				if (commandArray.length != 1) {

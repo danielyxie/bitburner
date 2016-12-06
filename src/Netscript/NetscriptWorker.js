@@ -68,4 +68,15 @@ function runScriptsLoop() {
 	setTimeout(runScriptsLoop, 10000);
 }
 
+//Queues a script to be killed by settings its stop flag to true. Then, the code will reject
+//all of its promises recursively, and when it does so it will no longer be running.
+//The runScriptsLoop() will then delete the script from worker scripts
+function killWorkerScript(scriptName, serverIp) {
+	for (var i = 0; i < workerScripts.length; i++) {
+		if (workerScripts[i].name == scriptName && workerScripts[i].serverIp == serverIp) {
+			workerScripts[i].env.stopFlag = true;
+		}
+	}
+}
+
 runScriptsLoop();
