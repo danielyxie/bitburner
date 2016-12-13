@@ -180,43 +180,61 @@ function evaluate(exp, workerScript) {
 				setTimeout(function() {
 					if (exp.func.value == "hack") {
 						console.log("Execute hack()");
-						if (exp.args.length != 0) {
-							throw new Error("Hack() call has incorrect number of arguments. Takes no arguments");
+						if (exp.args.length != 1) {
+							throw new Error("Hack() call has incorrect number of arguments. Takes 1 argument");
 						}
 						
-						//Calculate the hacking time 
-						var currentServer = AllServers[workerScript.serverIp];
-						var difficultyMult = currentServer.requiredHackingSkill * currentServer.hackDifficulty;
-						var skillFactor = difficultMult / Player.hacking_skill;
-						var hackingTime = skillFactor * Player.hacking_speed_multiplier; //This is in seconds
+						//IP of server to hack
+						var ipPromise = evaluate(exp.args[0], workerScript);
 						
-						//TODO Add a safeguard to prevent a script from hacking a Server that the player
-						//cannot hack
-						
-						var p = new Promise(function(resolve, reject) {
-							setTimeout(function() {
-								var hackChance = Player.calculateHackingChance();
-								var rand = Math.random();
-								var expGainedOnSuccess = Player.calculateExpGain();
-								var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
-								if (rand < hackChance) {	//Success!
-									var moneyGained = Player.calculatePercentMoneyHacked();
-									moneyGained = Math.floor(Player.getCurrentServer().moneyAvailable * moneyGained);
-									
-									Player.getCurrentServer().moneyAvailable -= moneyGained;
-									Player.money += moneyGained;
-									
-									Player.hacking_exp += expGainedOnSuccess;
-								} else {			
-									//Player only gains 25% exp for failure? TODO Can change this later to balance
-									Player.hacking_exp += expGainedOnFailure;
-								}
-							}, hackingTime * 1000);
+						ipPromise.then(function(ip) {
+							//Calculate the hacking time 
+							var server = AllServers[ip];
+							var hackingTime = scriptCalculateHackingTime(server); //This is in seconds
+							
+							//TODO Add a safeguard to prevent a script from hacking a Server that the player
+							//cannot hack
+							if (server.hasAdminRights == false) {
+								console.log("Cannot hack server " + server.hostname);
+								resolve("Cannot hack");
+								//TODO LOG That it can't be hacked
+							}
+							
+							var p = new Promise(function(resolve, reject) {
+								console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds.");
+								setTimeout(function() {
+									var hackChance = scriptCalculateHackingChance(server);
+									var rand = Math.random();
+									var expGainedOnSuccess = scriptCalculateExpGain(server);
+									var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
+									if (rand < hackChance) {	//Success!
+										var moneyGained = scriptCalculatePercentMoneyHacked(server);
+										moneyGained = Math.floor(server.moneyAvailable * moneyGained);
+										
+										server.moneyAvailable -= moneyGained;
+										Player.money += moneyGained;
+										
+										Player.hacking_exp += expGainedOnSuccess;
+										console.log("Script successfully hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
+										resolve("Hack success");
+									} else {			
+										//Player only gains 25% exp for failure? TODO Can change this later to balance
+										Player.hacking_exp += expGainedOnFailure;
+										console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + "exp");
+										resolve("Hack failure");
+									}
+								}, hackingTime * 1000);
+							});
+							
+							p.then(function(res) {
+								resolve("hackExecuted");
+							}, function() {
+								reject(workerScript);
+							});
+						}, function() {
+							reject(workerScript)
 						});
-						
-						p.then(function(res) {
-							resolve("hackExecuted");
-						});
+
 						
 					} else if (exp.func.value == "sleep") {
 						console.log("Execute sleep()");
@@ -224,15 +242,24 @@ function evaluate(exp, workerScript) {
 							throw new Error("Sleep() call has incorrect number of arguments. Takes 1 argument.");
 						}
 						
-						var p = new Promise(function(resolve, reject) {
-							setTimeout(function() {
-								resolve("foo");
-							}, exp.args[0]);
-						});
+						var sleepTimePromise = evaluate(exp.args[0], workerScript);
+						sleepTimePromise.then(function(sleepTime) {
+							console.log("Sleep time: " + sleepTime);
+							var p = new Promise(function(resolve, reject) {
+								setTimeout(function() {
+									resolve("foo");
+								}, sleepTime);
+							});
 						
-						p.then(function(res) {
-							resolve("sleepExecuted");
+							p.then(function(res) {
+								resolve("sleepExecuted");
+							}, function() {
+								reject(workerScript);
+							});
+						}, function() {
+							reject(workerScript)
 						});
+
 						
 					} else if (exp.func.value == "print") {
 						if (exp.args.length != 1) {
@@ -449,4 +476,33 @@ function apply_op(op, a, b) {
       case "!=": return a !== b;
     }
     throw new Error("Can't apply operator " + op);
+} 
+
+//The same as Player's calculateHackingChance() function but takes in the server as an argument
+function scriptCalculateHackingChance(server) {
+	var difficultyMult = (100 - server.hackDifficulty) / 100;
+    var skillMult = (Player.hacking_chance_multiplier * Player.hacking_skill);
+    var skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
+    return (skillChance * difficultyMult);
+}
+
+//The same as Player's calculateHackingTime() function but takes in the server as an argument
+function scriptCalculateHackingTime(server) {
+	var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
+	var skillFactor = difficultyMult / Player.hacking_skill;
+	var hackingTime = skillFactor * Player.hacking_speed_multiplier; //This is in seconds
+}
+
+//The same as Player's calculateExpGain() function but takes in the server as an argument 
+function scriptCalculateExpGain(server) {
+	return Math.round(server.hackDifficulty * server.requiredHackingSkill * Player.hacking_exp_mult);
+}
+
+//The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument
+function scriptCalculatePercentMoneyHacked(server) {
+	var difficultyMult = (100 - server.hackDifficulty) / 100;
+    var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
+    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_multiplier;
+    console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
+    return percentMoneyHacked;
 } 

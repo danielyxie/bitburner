@@ -255,6 +255,9 @@ var Terminal = {
 			case "help":
 				//TODO
 				break;
+			case "home":
+				//TODO return to home computer
+				break;
 			case "hostname":
 				if (commandArray.length != 1) {
 					post("Incorrect usage of hostname command. Usage: hostname"); return;
@@ -276,10 +279,10 @@ var Terminal = {
 				
 				var scriptName = commandArray[1];
 				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
-					if (Player.getCurrentServer().runningScripts[i] == scriptName) {
-						Player.getCurrentServer().runningScripts.splice(i, 1);
-						
+					if (Player.getCurrentServer().runningScripts[i] == scriptName) {						
 						killWorkerScript(scriptName, Player.getCurrentServer().ip); 
+						post("Killing " + scriptName + ". May take a few seconds");
+						return;
 					} 
 				}
 				post("No such script is running. Nothing to kill");
@@ -403,6 +406,7 @@ var Terminal = {
 				//TODO
 				break;
 			case "tail":
+				//TODO
 				break;
 			case "top":
 				//TODO List each's script RAM usage
@@ -490,6 +494,7 @@ var Terminal = {
 			if (Player.getCurrentServer().scripts[i].filename == scriptName) {
 				if (Player.getCurrentServer().hasAdminRights == false) {
 					post("Need root access to run script");
+					return;
 				} else {
 					var filename = Player.getCurrentServer().scripts[i].filename;
 					

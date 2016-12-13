@@ -255,9 +255,7 @@ var Engine = {
 			Companies.init();
 			CompanyPositions.init();
 		}
-        
-        PrintAllServers();
-        
+                
         //Main menu buttons and content
         Engine.Clickables.terminalMainMenuButton = document.getElementById("terminal-menu-link");
         Engine.Clickables.terminalMainMenuButton.addEventListener("click", function() {

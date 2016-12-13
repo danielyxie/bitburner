@@ -507,86 +507,86 @@ initForeignServers = function() {
     
     for (var i = 0; i < NetworkGroup2.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup1[Math.floor(Math.random() * NetworkGroup1.length)];
-        NetworkGroup2[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup2[i].hostname);
+        NetworkGroup2[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup2[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup3.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup2[Math.floor(Math.random() * NetworkGroup2.length)];
-        NetworkGroup3[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup3[i].hostname);
+        NetworkGroup3[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup3[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup4.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup3[Math.floor(Math.random() * NetworkGroup3.length)];
-        NetworkGroup4[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup4[i].hostname);
+        NetworkGroup4[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup4[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup5.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup4[Math.floor(Math.random() * NetworkGroup4.length)];
-        NetworkGroup5[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup5[i].hostname);
+        NetworkGroup5[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup5[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup6.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup5[Math.floor(Math.random() * NetworkGroup5.length)];
-        NetworkGroup6[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup6[i].hostname);
+        NetworkGroup6[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup6[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup7.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup6[Math.floor(Math.random() * NetworkGroup6.length)];
-        NetworkGroup7[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup7[i].hostname);
+        NetworkGroup7[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup7[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup8.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup7[Math.floor(Math.random() * NetworkGroup7.length)];
-        NetworkGroup8[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup8[i].hostname);
+        NetworkGroup8[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup8[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup9.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup8[Math.floor(Math.random() * NetworkGroup8.length)];
-        NetworkGroup9[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup9[i].hostname);
+        NetworkGroup9[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup9[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup10.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup9[Math.floor(Math.random() * NetworkGroup9.length)];
-        NetworkGroup10[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup10[i].hostname);
+        NetworkGroup10[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup10[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup11.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup10[Math.floor(Math.random() * NetworkGroup10.length)];
-        NetworkGroup11[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup11[i].hostname);
+        NetworkGroup11[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup11[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup12.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup11[Math.floor(Math.random() * NetworkGroup11.length)];
-        NetworkGroup12[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup12[i].hostname);
+        NetworkGroup12[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup12[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup13.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup12[Math.floor(Math.random() * NetworkGroup12.length)];
-        NetworkGroup13[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup13[i].hostname);
+        NetworkGroup13[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup13[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup14.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup13[Math.floor(Math.random() * NetworkGroup13.length)];
-        NetworkGroup14[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup14[i].hostname);
+        NetworkGroup14[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup14[i].ip);
     }
     
     for (var i = 0; i < NetworkGroup15.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup14[Math.floor(Math.random() * NetworkGroup14.length)];
-        NetworkGroup15[i].serversOnNetwork.push(randomServerFromPrevGroup.hostname);
-        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup15[i].hostname);
+        NetworkGroup15[i].serversOnNetwork.push(randomServerFromPrevGroup.ip);
+        randomServerFromPrevGroup.serversOnNetwork.push(NetworkGroup15[i].ip);
     }
     
     //Connect the first tier of servers to the player's home computer

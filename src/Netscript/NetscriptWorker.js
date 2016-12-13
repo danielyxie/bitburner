@@ -49,7 +49,7 @@ function runScriptsLoop() {
 	//items fucks up the indexing
 	for (var i = workerScripts.length - 1; i >= 0; i--) {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
-			console.log("Deleting scripts");
+			console.log("Deleting script: " + workerScripts[i].name);
 			//Delete script from the runningScripts array on its host serverIp
 			var ip = workerScripts[i].serverIp;
 			var name = workerScripts[i].name;
@@ -72,6 +72,7 @@ function runScriptsLoop() {
 //all of its promises recursively, and when it does so it will no longer be running.
 //The runScriptsLoop() will then delete the script from worker scripts
 function killWorkerScript(scriptName, serverIp) {
+	console.log("killWorkerScript called for script " + scriptName + " on server " + serverIp);
 	for (var i = 0; i < workerScripts.length; i++) {
 		if (workerScripts[i].name == scriptName && workerScripts[i].serverIp == serverIp) {
 			workerScripts[i].env.stopFlag = true;
