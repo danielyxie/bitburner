@@ -10,10 +10,9 @@ TESTING TODO:
 	Script RAM Usage and corresponding terminal commands
 	If a server has no more money available it cannot be hacked anymore
 		Should work automatically...because your money gained percentage will be multiplied by 0
-	
+	When the game is loaded re-load all of the scripts in runningScripts
 Tasks TODO:
 	Script offline progress
-	When the game is loaded re-load all of the scripts in runningScripts
 	If a script has bad syntax...it fucks everything up when you try to run it so fix that
 	Scroll all the way down when something is post()ed
 	Scripts tab that shows script stats

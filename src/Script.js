@@ -127,9 +127,13 @@ Script.fromJSON = function(value) {
 Reviver.constructors.Script = Script;
 
 
-//TODO
 //Called when the game is loaded. Loads all running scripts (from all servers)
 //into worker scripts so that they will start running
 function loadAllRunningScripts() {
-	
+	for (var i = 0; i < AllServers.length; i++) {
+		var server = AllServers[i];
+		for (var j = 0; j < server.runningScripts.length; j++) {
+			addWorkerScript(server.runningScripts[j], server);
+		}
+	}
 }

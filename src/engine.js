@@ -247,6 +247,7 @@ var Engine = {
 			console.log("Loaded game from save");
 			Companies.init();
 			CompanyPositions.init();
+			loadAllRunningScripts();
 		} else {
 			//No save found, start new game
 			console.log("Initializing new game");
