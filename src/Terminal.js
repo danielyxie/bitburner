@@ -96,6 +96,9 @@ var Terminal = {
         if (rand < hackChance) {	//Success!
             var moneyGained = Player.calculatePercentMoneyHacked();
             moneyGained = Math.floor(Player.getCurrentServer().moneyAvailable * moneyGained);
+			
+			//Safety check
+			if (moneyGained <= 0) {moneyGained = 0;}
             
             Player.getCurrentServer().moneyAvailable -= moneyGained;
             Player.money += moneyGained;
@@ -125,6 +128,7 @@ var Terminal = {
         //TODO Change the text to sound better
         post("Estimated chance to hack: " + Math.round(Player.calculateHackingChance() * 100) + "%");
         post("Estimated time to hack: " + Math.round(Player.calculateHackingTime()) + " seconds");
+		post("Estimed total money available on server: $" + Player.getCurrentServer().moneyAvailable);
         post("Required number of open ports for PortHack: " +Player.getCurrentServer().numOpenPortsRequired);
         if (Player.getCurrentServer().sshPortOpen) {
             post("SSH port: Open")
@@ -481,33 +485,32 @@ var Terminal = {
 	},
 	
 	runScript: function(scriptName) {
+		var server = Player.getCurrentServer();
 		//Check if this script is already running
-		for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
-			if (Player.getCurrentServer().runningScripts[i] == scriptName) {
+		for (var i = 0; i < server.runningScripts.length; i++) {
+			if (server.runningScripts[i] == scriptName) {
 				post("ERROR: This script is already running. Cannot run multiple instances");
 				return;
 			}
 		}
 		
 		//Check if the script exists and if it does run it
-		for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
-			if (Player.getCurrentServer().scripts[i].filename == scriptName) {
-				if (Player.getCurrentServer().hasAdminRights == false) {
+		for (var i = 0; i < server.scripts.length; i++) {
+			if (server.scripts[i].filename == scriptName) {
+				//Check for admin rights and that there is enough RAM availble to run
+				var ramUsage = server.scripts[i].ramUsage;
+				var ramAvailable = server.maxRam - server.ramUsed;
+				
+				if (server.hasAdminRights == false) {
 					post("Need root access to run script");
 					return;
-				} else {
-					var filename = Player.getCurrentServer().scripts[i].filename;
-					
-					//Add to current server's runningScripts
-					Player.getCurrentServer().runningScripts.push(filename)
-					
-					//Create WorkerScript
-					var s = new WorkerScript();
-					s.name 		= filename;
-					s.code 		= Player.getCurrentServer().scripts[i].code;
-					s.serverIp 	= Player.getCurrentServer().ip;
-					workerScripts.push(s);
-					console.log("Pushed script onto workerScripts");
+				} else if (ramUsage > ramAvailable){
+					post("This machine does not have enough RAM to run this script. Script requires " + ramUsage + "GB of RAM");
+					return;
+				}else {
+					//Able to run script
+					var script = server.scripts[i];
+					addWorkerScript(script, server);
 					return;
 				}
 			}

@@ -188,10 +188,12 @@ function evaluate(exp, workerScript) {
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						
 						ipPromise.then(function(ip) {
+							console.log("Evaluated the ip, calculating hackingTime");
 							//Calculate the hacking time 
 							var server = AllServers[ip];
 							var hackingTime = scriptCalculateHackingTime(server); //This is in seconds
 							
+							console.log("Calculated hackingTime");
 							//TODO Add a safeguard to prevent a script from hacking a Server that the player
 							//cannot hack
 							if (server.hasAdminRights == false) {
@@ -201,6 +203,7 @@ function evaluate(exp, workerScript) {
 							}
 							
 							var p = new Promise(function(resolve, reject) {
+								if (env.stopFlag) {console.log("rejected"); reject(workerScript);}
 								console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds.");
 								setTimeout(function() {
 									var hackChance = scriptCalculateHackingChance(server);
@@ -210,6 +213,9 @@ function evaluate(exp, workerScript) {
 									if (rand < hackChance) {	//Success!
 										var moneyGained = scriptCalculatePercentMoneyHacked(server);
 										moneyGained = Math.floor(server.moneyAvailable * moneyGained);
+										
+										//Safety check
+										if (moneyGained <= 0) {moneyGained = 0;}
 										
 										server.moneyAvailable -= moneyGained;
 										Player.money += moneyGained;
@@ -228,14 +234,14 @@ function evaluate(exp, workerScript) {
 							
 							p.then(function(res) {
 								resolve("hackExecuted");
-							}, function() {
+							}, function(reason) {
+								console.log("rejected. reason: " + reason);
 								reject(workerScript);
 							});
 						}, function() {
-							reject(workerScript)
+							reject(workerScript);
 						});
 
-						
 					} else if (exp.func.value == "sleep") {
 						console.log("Execute sleep()");
 						if (exp.args.length != 1) {
@@ -491,6 +497,7 @@ function scriptCalculateHackingTime(server) {
 	var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
 	var skillFactor = difficultyMult / Player.hacking_skill;
 	var hackingTime = skillFactor * Player.hacking_speed_multiplier; //This is in seconds
+	return hackingTime;
 }
 
 //The same as Player's calculateExpGain() function but takes in the server as an argument 

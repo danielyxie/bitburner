@@ -16,7 +16,7 @@ function PlayerObject() {
     this.hacking_chance_multiplier   = 2;  //Increase through ascensions/augmentations
     //this.hacking_speed_multiplier  =     5;  //Decrease through ascensions/augmentations
     this.hacking_speed_multiplier    =  1;  //Make it faster for debugging
-    this.hacking_money_multiplier    = .01;    //Increase through ascensions/augmentations. Can't go above 1
+    this.hacking_money_multiplier    = .001;    //Increase through ascensions/augmentations. Can't go above 1
     
     //Note: "Lifetime" refers to current ascension, "total" refers to the entire game history
     //Accumulative  stats and skills
@@ -148,7 +148,7 @@ PlayerObject.prototype.calculateExpGain = function() {
 PlayerObject.prototype.hack = function() {
     this.actionTime = this.calculateHackingTime();
     console.log("Hacking time: " + this.actionTime);
-    //Set the startHack flag so the engine starts the hacking process
+    //Set the startAction flag so the engine starts the hacking process
     this.startAction = true;
 }
 PlayerObject.prototype.analyze = function() {

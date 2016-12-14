@@ -32,13 +32,14 @@ function runScriptsLoop() {
 			
 			workerScripts[i].running = true;
 			var p = evaluate(ast, workerScripts[i]);
-			var foo = workerScripts[i];
 			//Once the code finishes (either resolved or rejected, doesnt matter), set its
 			//running status to false
 			p.then(function(w) {
+				console.log("Stopping script " + w.name + " because it finished running naturally");
 				w.running = false;
 				w.env.stopFlag = true;
 			}, function(w) {
+				console.log("Stopping script" + w.name + " because it was manually stopped (rejected)")
 				w.running = false;
 				w.env.stopFlag = true;
 			});
@@ -78,6 +79,26 @@ function killWorkerScript(scriptName, serverIp) {
 			workerScripts[i].env.stopFlag = true;
 		}
 	}
+}
+
+//Queues a script to be run 
+function addWorkerScript(script, server) {
+	var filename = script.filename;
+	
+	//Add script onto server's runningScripts
+	server.runningScripts.push(filename);
+	
+	//Update server's ram usage
+	server.ramUsed += script.ramUsage;
+	
+	//Create and add workerScripts
+	var s = new WorkerScript();
+	s.name 		= filename;
+	s.code 		= script.code;
+	s.serverIp 	= server.ip;
+	workerScripts.push(s);
+	console.log("Pushed script onto workerScripts");
+	
 }
 
 runScriptsLoop();

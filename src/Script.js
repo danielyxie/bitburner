@@ -5,6 +5,7 @@
 //Define commands in script editor (ctrl x to close, etc.)
 $(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
+		//Ctrl + x
         if (e.keyCode == 88 && e.ctrlKey) {			
 			var filename = document.getElementById("script-editor-filename").value;
 			
@@ -97,7 +98,22 @@ Script.prototype.saveScript = function() {
 		this.server = Player.currentServer;
 		
 		//TODO Calculate/update number of instructions, ram usage, execution time, etc. 
+		this.updateNumInstructions();
+		this.updateRamUsage();
 	}
+}
+
+//Calculates the number of instructions, which is just determined by number of semicolons)
+Script.prototype.updateNumInstructions = function() {
+	var numSemicolons = this.code.split(";").length - 1;
+	this.numInstructions = numSemicolons;
+}
+
+//Updates how much RAM the script uses when it is running.
+//Right now, it is determined solely by the number of instructions
+//Ideally, I would want it to be based on instructions (e.g. hack() costs a lot but others dont)
+Script.prototype.updateRamUsage = function() {
+	this.ramUsage = this.numInstructions * .2;
 }
 
 Script.prototype.toJSON = function() {
@@ -109,3 +125,11 @@ Script.fromJSON = function(value) {
 }
 
 Reviver.constructors.Script = Script;
+
+
+//TODO
+//Called when the game is loaded. Loads all running scripts (from all servers)
+//into worker scripts so that they will start running
+function loadAllRunningScripts() {
+	
+}
