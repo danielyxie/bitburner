@@ -130,10 +130,15 @@ Reviver.constructors.Script = Script;
 //Called when the game is loaded. Loads all running scripts (from all servers)
 //into worker scripts so that they will start running
 function loadAllRunningScripts() {
+	var count = 0;
+	console.log("AllServers.length: " + AllServers.length);
 	for (var i = 0; i < AllServers.length; i++) {
 		var server = AllServers[i];
+		console.log("Loading scripts from server " + server.hostname);
 		for (var j = 0; j < server.runningScripts.length; j++) {
+			count++;
 			addWorkerScript(server.runningScripts[j], server);
 		}
 	}
+	console.log("Loaded " + count.toString() + " running scripts");
 }

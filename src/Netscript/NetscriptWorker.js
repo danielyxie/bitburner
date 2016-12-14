@@ -98,7 +98,6 @@ function addWorkerScript(script, server) {
 	s.serverIp 	= server.ip;
 	workerScripts.push(s);
 	console.log("Pushed script onto workerScripts");
-	
 }
 
 runScriptsLoop();

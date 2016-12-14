@@ -297,7 +297,6 @@ var Engine = {
         
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");
-        //Engine.displayCharacterInfo(); - Don't think I need this
 		
 		//Script editor 
 		Engine.Display.scriptEditorText = document.getElementById("script-editor-text");
