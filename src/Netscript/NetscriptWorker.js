@@ -24,7 +24,11 @@ function runScriptsLoop() {
 	for (var i = 0; i < workerScripts.length; i++) {
 		//If it isn't running, start the script
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
-			var ast = Parser(Tokenizer(InputStream(workerScripts[i].code)));
+			try {
+				var ast = Parser(Tokenizer(InputStream(workerScripts[i].code)));
+			} catch (e) {
+				post("Syntax error in " + workerScript[i].name + ": " + e);
+			}
 			
 			console.log("Starting new script: " + workerScripts[i].name);
 			console.log("AST of new script:");
@@ -39,9 +43,15 @@ function runScriptsLoop() {
 				w.running = false;
 				w.env.stopFlag = true;
 			}, function(w) {
-				console.log("Stopping script" + w.name + " because it was manually stopped (rejected)")
-				w.running = false;
-				w.env.stopFlag = true;
+				if (w instanceof Error) {
+					console.log("Script threw an Error during runtime.");
+					//TODO Get the script based on the error. Format: |serverip|scriptname|error message|
+					//TODO Post the script error and stop the script
+				} else {
+					console.log("Stopping script" + w.name + " because it was manually stopped (rejected)")
+					w.running = false;
+					w.env.stopFlag = true;
+				}
 			});
 		}
 	}

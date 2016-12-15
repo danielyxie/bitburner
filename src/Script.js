@@ -124,6 +124,8 @@ Script.prototype.updateRamUsage = function() {
 //Every instruction takes a flat time of X seconds (defined in Constants.js)
 //Every hack instructions takes an ADDITIONAl time of however long it takes to hack that server
 Script.prototype.updateExecutionTime = function() {
+	//TODO Maybe do this based on the average production/s of the script( which I'm adding in 
+	//as a property)
 	/*
 	var executionTime = 0;
 	

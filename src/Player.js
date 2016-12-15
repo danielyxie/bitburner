@@ -94,8 +94,17 @@ PlayerObject.prototype.getHomeComputer = function() {
 //  At the maximum possible exp (MAX_INT = 9007199254740991), the hacking skill will be 1796
 //  Gets to level 1000 hacking skill at ~1,100,000,000 exp
 PlayerObject.prototype.calculateSkill = function(exp) {
-    return Math.max(Math.floor(50 * log(9007199254740991+ 2.270) - 40), 1);
-},
+    return Math.max(Math.floor(50 * Math.log(9007199254740991+ 2.270) - 40), 1);
+}
+
+PlayerObject.prototype.updateSkillLevels = function() {
+	this.hacking_skill = this.calculateSkill(this.hacking_exp);
+	this.strength      = this.calculateSkill(this.strength_exp);
+    this.defense       = this.calculateSkill(this.defense_exp);
+    this.dexterity     = this.calculateSkill(this.dexterity_exp);
+    this.agility       = this.calculateSkill(this.agility_exp);
+    this.charisma      = this.calculateSkill(this.charisma_exp);
+}
 
 //Calculates the chance of hacking a server
 //The formula is:
@@ -107,7 +116,7 @@ PlayerObject.prototype.calculateHackingChance = function() {
     var skillMult = (this.hacking_chance_multiplier * this.hacking_skill);
     var skillChance = (skillMult - this.getCurrentServer().requiredHackingSkill) / skillMult;
     return (skillChance * difficultyMult);
-},
+}
 
 //Calculate the time it takes to hack a server in seconds. Returns the time
 //The formula is:
@@ -151,6 +160,7 @@ PlayerObject.prototype.hack = function() {
     //Set the startAction flag so the engine starts the hacking process
     this.startAction = true;
 }
+
 PlayerObject.prototype.analyze = function() {
     //TODO Analyze only takes 5 seconds for now..maybe change this in the future?
     this.actionTime = 5;

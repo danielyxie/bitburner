@@ -161,10 +161,29 @@ var Engine = {
 		window.requestAnimationFrame(Engine.idleTimer);
 	},
     
+	//TODO Account for numCycles in Code, hasn't been done yet
+    updateGame: function(numCycles = 1) {
+        //Manual hack
+		if (Player.startAction == true) {
+			Engine._totalActionTime = Player.actionTime;
+			Engine._actionTimeLeft = Player.actionTime;
+			Engine._actionInProgress = true;
+			Engine._actionProgressBarCount = 1;
+			Engine._actionProgressStr = "[                                                  ]";
+			Engine._actionTimeStr = "Time left: ";
+			Player.startAction = false;
+		}
+		Engine.decrementAllCounters(numCycles);
+        Engine.checkCounters();		
+		
+		Engine.updateHackProgress(numCycles);
+    },
+	
     //Counters for the main event loop. Represent the number of game cycles are required
     //for something to happen. 
     Counters: {
-        autoSaveCounter:    300,
+        autoSaveCounter:    300,			//Autosave every minute
+		updateSkillLevelsCounter: 10,		//Only update skill levels every 2 seconds. Might improve performance
     },
     
     decrementAllCounters: function(numCycles = 1) {
@@ -182,26 +201,13 @@ var Engine = {
             Engine.saveGame();
             Engine.Counters.autoSaveCounter = 300;
         }
+		
+		if (Engine.Counters.updateSkillLevelsCounter <= 0) {
+			Player.updateSkillLevels();
+			Engine.Counters.updateSkillLevelsCounter = 10;
+		}
     },
     
-    //TODO Account for numCycles in Code, hasn't been done yet
-    updateGame: function(numCycles = 1) {
-        //Manual hack
-		if (Player.startAction == true) {
-			Engine._totalActionTime = Player.actionTime;
-			Engine._actionTimeLeft = Player.actionTime;
-			Engine._actionInProgress = true;
-			Engine._actionProgressBarCount = 1;
-			Engine._actionProgressStr = "[                                                  ]";
-			Engine._actionTimeStr = "Time left: ";
-			Player.startAction = false;
-		}
-		Engine.decrementAllCounters(numCycles);
-        Engine.checkCounters();
-        
-		Engine.updateHackProgress(numCycles);
-    },
-	
 	/* Calculates the hack progress for a manual (non-scripted) hack and updates the progress bar/time accordingly */
 	_totalActionTime: 0,
 	_actionTimeLeft: 0,

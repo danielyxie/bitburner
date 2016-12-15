@@ -13,16 +13,24 @@ TESTING TODO:
 		Should work automatically...because your money gained percentage will be multiplied by 0
 	When the game is loaded re-load all of the scripts in runningScripts
 		- Seems to be working
+	Update skill level on cycle
+	If a script has bad syntax...it fucks everything up when you try to run it so fix that
+		Try catch for script?
+		Check that killing scripts still works fine (TESTED - LOoks to work fine)
+		Check that if script has bad syntax it wont run at all and everthing works normally
+		Check if script throws during runtime it shuts down correctly
+		
 Tasks TODO:
 	Script offline progress
-	If a script has bad syntax...it fucks everything up when you try to run it so fix that
+
+		
 	Scroll all the way down when something is post()ed
 	Scripts tab that shows script stats
 	Script logging functionality? Logs to internal "log file" (property of script itself)
-	Update skill level on cycle
 	Parse script firs tot see if there are any syntax errors, and tell user if there are (when user calls "run")
 	Tutorial and help
 	Server growth
 	Companies
 	Factions
 	Update CONSTANTS.HelpText
+	Account for Max possible int when gaining exp
