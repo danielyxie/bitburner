@@ -5,6 +5,9 @@ CONSTANTS = {
 	
 	//Time (ms) it takes to run one operation in Netscript.  
 	CodeInstructionRunTime:	1500, 
+	
+	//Time (seconds) it takes to run one operation in Netscript OFFLINE
+	CodeOfflineExecutionTime: 10,
     
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   "analyze                Get statistics and information about current machine\n" + 

@@ -85,9 +85,6 @@ function killWorkerScript(scriptName, serverIp) {
 function addWorkerScript(script, server) {
 	var filename = script.filename;
 	
-	//Add script onto server's runningScripts
-	server.runningScripts.push(filename);
-	
 	//Update server's ram usage
 	server.ramUsed += script.ramUsage;
 	
@@ -98,6 +95,7 @@ function addWorkerScript(script, server) {
 	s.serverIp 	= server.ip;
 	workerScripts.push(s);
 	console.log("Pushed script onto workerScripts");
+	return;
 }
 
 runScriptsLoop();

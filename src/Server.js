@@ -89,6 +89,17 @@ Server.prototype.getServerOnNetwork = function(i) {
     return AllServers[this.serversOnNetwork[i]];
 }
 
+//Given the name of the script, returns the corresponding
+//script object on the server (if it exists)
+Server.prototype.getScript = function(scriptName) {
+	for (var i = 0; i < this.scripts.length; i++) {
+		if (this.scripts[i].filename == scriptName) {
+			return this.scripts[i];
+		}
+	}
+	return null; 
+}
+
 //Functions for loading and saving a Server
 Server.prototype.toJSON = function() {
 	return Generic_toJSON("Server", this);
@@ -102,7 +113,7 @@ Reviver.constructors.Server = Server;
 
 
 
-world_daemon:               new Server(),   //Final server for 2nd tier prestige. Discover that the world is a simulation
+//world_daemon:               new Server(),   //Final server for 2nd tier prestige. Discover that the world is a simulation
 
 
 /* Initialization */
@@ -599,6 +610,14 @@ initForeignServers = function() {
 //List of all servers that exist in the game, indexed by their ip
 AllServers = {};
 
+SizeOfAllServers = function() {
+	var size = 0, key;
+	for (key in AllServers) {
+		if (AllServers.hasOwnProperty(key)) size++;
+	}
+	return size;
+}
+
 //Add a server onto the map of all servers in the game
 AddToAllServers = function(server) {
     var serverIp = server.ip;
@@ -610,6 +629,19 @@ AddToAllServers = function(server) {
         return;
     }
     AllServers[serverIp] = server;
+}
+
+//Returns server object with corresponding hostname
+//	Relatively slow, would rather not use this a lot
+GetServerByHostname = function(hostname) {
+	for (var ip in AllServers) {
+		if (AllServers.hasOwnProperty(ip)) {
+			if (AllServers[ip].hostname == hostname) {
+				return AllServers[i];
+			}
+		}
+	}
+	return null;
 }
 
 //Debugging tool

@@ -257,7 +257,11 @@ var Terminal = {
 				}
 				break;
 			case "help":
-				//TODO
+				if (commandArray.length != 1) {
+					post("Incorrect usage of help command. Usage: help"); return;
+				}
+				
+				post(CONSTANTS.HelpText);
 				break;
 			case "home":
 				//TODO return to home computer
@@ -510,6 +514,7 @@ var Terminal = {
 				}else {
 					//Able to run script
 					var script = server.scripts[i];
+					server.runningScripts.push(script.filename);	//Push onto runningScripts
 					addWorkerScript(script, server);
 					return;
 				}

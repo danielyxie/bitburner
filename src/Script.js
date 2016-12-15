@@ -100,10 +100,11 @@ Script.prototype.saveScript = function() {
 		//TODO Calculate/update number of instructions, ram usage, execution time, etc. 
 		this.updateNumInstructions();
 		this.updateRamUsage();
+		this.updateExecutionTime();
 	}
 }
 
-//Calculates the number of instructions, which is just determined by number of semicolons)
+//Calculates the number of instructions, which is just determined by number of semicolons
 Script.prototype.updateNumInstructions = function() {
 	var numSemicolons = this.code.split(";").length - 1;
 	this.numInstructions = numSemicolons;
@@ -111,9 +112,63 @@ Script.prototype.updateNumInstructions = function() {
 
 //Updates how much RAM the script uses when it is running.
 //Right now, it is determined solely by the number of instructions
-//Ideally, I would want it to be based on instructions (e.g. hack() costs a lot but others dont)
+//Ideally, I would want it to be based on type of instructions as well
+// 	(e.g. hack() costs a lot but others dont)
 Script.prototype.updateRamUsage = function() {
 	this.ramUsage = this.numInstructions * .2;
+}
+
+//Calculate the execution time of the script. This is used to calculate how much a script 
+//generates when the user is offline
+//This is calculated based on the number of instructions and any calls to hack().
+//Every instruction takes a flat time of X seconds (defined in Constants.js)
+//Every hack instructions takes an ADDITIONAl time of however long it takes to hack that server
+Script.prototype.updateExecutionTime = function() {
+	/*
+	var executionTime = 0;
+	
+	//Ever instruction takes CONSTANTS.CodeOfflineExecutionTime seconds
+	console.log("numInstructions: " + this.numInstructions.toString());
+	executionTime += (this.numInstrutions * CONSTANTS.CodeOfflineExecutionTime);
+	console.log("ExecutionTime after taking into account instructions: " + executionTime.toString());
+	
+	//Search the code's text for every occurrence of hack()
+	hackIndices = getIndicesOf('hack("', this.code, true);
+	for (var i = 0; i < hackIndices.length; ++i) {
+		//Get the full hack() call substring
+		var startIndex = hackIndices[i];
+		console.log("startIndex: " + startIndex.toString());
+		var endIndex = startIndex;
+	
+		while (this.code.substr(endIndex, 2) != ");") {
+			console.log("endIndex: " + endIndex.toString());
+			++endIndex;
+			if (endIndex == this.code.length - 1) {
+				//Bad code...
+				console.log("Could not find ending to hack call");
+				return;
+			}
+		}
+		++endIndex; // This puts endIndex at the semicolon
+		
+		var hackCall = this.code.substring(startIndex, endIndex);
+		console.log("hackCall: " + hackCall);
+		var argument = hackCall.match(/"([^']+)"/)[1];	//Extract the argument, which must be btw 2 quotes
+		
+		//Check if its an ip or a hostname. Then get the server and calculate hack time accordingly
+		var server = null;
+		if (isValidIPAddress(argument)) {
+			server = AllServers[argument];
+		} else {
+			server = GetServerByHostname(argument);
+		}
+		console.log("Server hostname: " + server.hostname);
+		executionTime += scriptCalculateHackingTime(server);
+	}
+	
+	this.executionTimeMillis = executionTime * 1000;
+	console.log("Script calculated to have an offline execution time of " + executionTime.toString() + "seconds");
+	*/
 }
 
 Script.prototype.toJSON = function() {
@@ -129,15 +184,18 @@ Reviver.constructors.Script = Script;
 
 //Called when the game is loaded. Loads all running scripts (from all servers)
 //into worker scripts so that they will start running
-function loadAllRunningScripts() {
+loadAllRunningScripts = function() {
 	var count = 0;
-	console.log("AllServers.length: " + AllServers.length);
-	for (var i = 0; i < AllServers.length; i++) {
-		var server = AllServers[i];
-		console.log("Loading scripts from server " + server.hostname);
-		for (var j = 0; j < server.runningScripts.length; j++) {
-			count++;
-			addWorkerScript(server.runningScripts[j], server);
+	for (var property in AllServers) {
+		if (AllServers.hasOwnProperty(property)) {
+			var server = AllServers[property];
+			for (var j = 0; j < server.runningScripts.length; ++j) {
+				count++;
+				//runningScripts array contains only names, so find the actual script object
+				var script = server.getScript(server.runningScripts[j]);
+				if (script == null) {continue;}
+				addWorkerScript(script, server);
+			}
 		}
 	}
 	console.log("Loaded " + count.toString() + " running scripts");

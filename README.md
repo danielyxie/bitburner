@@ -6,14 +6,13 @@ TESTING TODO:
 		hack() seems to be working
 			
 		Sleep() seems to be working
-	Creating the foreign server network doesn't seem to be  (Fixed it I think? Confirm later)
+	Creating the foreign server network doesn't seem to be working
+		--Seems to be fixed 
 	Script RAM Usage and corresponding terminal commands
 	If a server has no more money available it cannot be hacked anymore
 		Should work automatically...because your money gained percentage will be multiplied by 0
 	When the game is loaded re-load all of the scripts in runningScripts
-		- Does not seem to work. Although the addWorkerScript() function itself seems to work
-		- LOoks like its because AllServer is an object, so AllServers.length does not work. Have
-			to make a custom AllServers.size() function or something oogle it im too tired right now
+		- Seems to be working
 Tasks TODO:
 	Script offline progress
 	If a script has bad syntax...it fucks everything up when you try to run it so fix that
@@ -24,3 +23,6 @@ Tasks TODO:
 	Parse script firs tot see if there are any syntax errors, and tell user if there are (when user calls "run")
 	Tutorial and help
 	Server growth
+	Companies
+	Factions
+	Update CONSTANTS.HelpText

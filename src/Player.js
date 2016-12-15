@@ -55,12 +55,12 @@ function PlayerObject() {
     this.total_money     = 0;
     this.lifetime_money  = 0;
     
-    //Starting (home) computer
+    //IP Address of Starting (home) computer
     this.homeComputer = null;
     
     //Servers
-    this.currentServer       = null; //Server currently being accessed through terminal
-    this.discoveredServers   = [];   //Secret servers not in the network that you have discovered
+    this.currentServer       = null; //IP address of Server currently being accessed through terminal
+    this.discoveredServers   = [];   //IP addresses of secret servers not in the network that you have discovered
     this.purchasedServers    = [];
     
     //Achievements and achievement progress
