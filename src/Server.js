@@ -116,7 +116,7 @@ Reviver.constructors.Server = Server;
 //world_daemon:               new Server(),   //Final server for 2nd tier prestige. Discover that the world is a simulation
 
 
-/* Initialization */
+/* Initialization. Called only when loading a new game( no save file) */
 initForeignServers = function() {
     //MegaCorporations
     var ECorpServer = new Server();

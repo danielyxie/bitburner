@@ -18,7 +18,11 @@ function evaluate(exp, workerScript) {
 		case "var":
 			return new Promise(function(resolve, reject) {
 				if (env.stopFlag) {reject(workerScript);}
-				resolve(env.get(exp.value));
+				try {
+					resolve(env.get(exp.value));
+				} catch (e) {
+					throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
+				}
 			});
 			break;
 		//Can currently only assign to "var"s
@@ -43,7 +47,11 @@ function evaluate(exp, workerScript) {
 				
 				p.then(function(expRight) {
 					console.log("Right side of assign operation resolved with value: " + expRight);
-					env.set(exp.left.value, expRight);
+					try {
+						env.set(exp.left.value, expRight);
+					} catch (e) {
+						throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
+					}
 					console.log("Assign operation finished");
 					resolve("assignFinished");
 				}, function(e) {
@@ -192,12 +200,10 @@ function evaluate(exp, workerScript) {
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						
 						ipPromise.then(function(ip) {
-							console.log("Evaluated the ip, calculating hackingTime");
 							//Calculate the hacking time 
 							var server = AllServers[ip];
 							var hackingTime = scriptCalculateHackingTime(server); //This is in seconds
 							
-							console.log("Calculated hackingTime");
 							if (server.hasAdminRights == false) {
 								console.log("Cannot hack server " + server.hostname);
 								resolve("Cannot hack");
@@ -221,6 +227,7 @@ function evaluate(exp, workerScript) {
 										
 										server.moneyAvailable -= moneyGained;
 										Player.money += moneyGained;
+										workerScript.scriptRef.onlineMoneyMade += moneyGained;
 										
 										Player.hacking_exp += expGainedOnSuccess;
 										console.log("Script successfully hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");

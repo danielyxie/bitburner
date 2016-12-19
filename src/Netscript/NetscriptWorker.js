@@ -6,13 +6,20 @@
 //TODO Tested For and while and generic call statements. Have not tested if statements 
 
 /* Actual Worker Code */
-function WorkerScript() {
+function WorkerScript(script) {
 	this.name 			= "";
 	this.running 		= false;
 	this.serverIp 		= null;
 	this.code 			= "";
 	this.env 			= new Environment();
 	this.output			= "";
+	this.ramUsage		= 0;
+	this.scriptRef		= script;
+}
+
+//Returns the server on which the workerScript is running
+WorkerScript.prototype.getServer = function() {
+	return AllServers[this.serverIp];
 }
 
 //Array containing all scripts that are running across all servers, to easily run them all
@@ -28,6 +35,7 @@ function runScriptsLoop() {
 				var ast = Parser(Tokenizer(InputStream(workerScripts[i].code)));
 			} catch (e) {
 				post("Syntax error in " + workerScript[i].name + ": " + e);
+				continue;
 			}
 			
 			console.log("Starting new script: " + workerScripts[i].name);
@@ -44,9 +52,30 @@ function runScriptsLoop() {
 				w.env.stopFlag = true;
 			}, function(w) {
 				if (w instanceof Error) {
-					console.log("Script threw an Error during runtime.");
-					//TODO Get the script based on the error. Format: |serverip|scriptname|error message|
-					//TODO Post the script error and stop the script
+					//Error text format: |serverip|scriptname|error message
+					var errorText = w.toString();
+					var errorTextArray = errorText.split("|");
+					if (errorTextArray.length != 4) {
+						console.log("ERROR: Something wrong with Error text in evaluator...");
+						console.log("Error text: " + errorText);
+					}
+					var serverIp = errorTextArray[1];
+					var scriptName = errorTextArray[2];
+					var errorMsg = errorTextArray[3];
+					
+					//Post error message to terminal
+					//TODO Only post this if you're on the machine the script is running on?
+					post("Script runtime error: " + errorMsg);
+					
+					//Find the corresponding workerscript and set its flags to kill it
+					for (var i = 0; i < workerScripts.length; ++i) {
+						if (workerScripts[i].serverIp == serverIp && workerScripts[i].name == scriptName) {
+							workerScripts[i].running = false;
+							workerScripts[i].env.stopFlag = true;
+							return;
+						}
+					}
+					
 				} else {
 					console.log("Stopping script" + w.name + " because it was manually stopped (rejected)")
 					w.running = false;
@@ -61,7 +90,7 @@ function runScriptsLoop() {
 	for (var i = workerScripts.length - 1; i >= 0; i--) {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
 			console.log("Deleting script: " + workerScripts[i].name);
-			//Delete script from the runningScripts array on its host serverIp
+			//Delete script from the runningScripts array on its host serverIp 
 			var ip = workerScripts[i].serverIp;
 			var name = workerScripts[i].name;
 			for (var j = 0; j < AllServers[ip].runningScripts.length; j++) {
@@ -70,6 +99,9 @@ function runScriptsLoop() {
 					break;
 				}
 			}
+			
+			//Free RAM
+			AllServers[ip].ramUsed -= workerScripts[i].ramUsage;
 				
 			//Delete script from workerScripts
 			workerScripts.splice(i, 1);
@@ -98,14 +130,28 @@ function addWorkerScript(script, server) {
 	//Update server's ram usage
 	server.ramUsed += script.ramUsage;
 	
-	//Create and add workerScripts
-	var s = new WorkerScript();
+	//Create the WorkerScript
+	var s = new WorkerScript(script);
 	s.name 		= filename;
 	s.code 		= script.code;
 	s.serverIp 	= server.ip;
+	s.ramUsage 	= script.ramUsage;
+	
+	//Add the WorkerScript to the Active Scripts list
+	Engine.addActiveScriptsItem(s);
+	
+	//Add the WorkerScript
 	workerScripts.push(s);
 	console.log("Pushed script onto workerScripts");
 	return;
+}
+
+//Updates the online running time stat of all running scripts
+function updateOnlineScriptTimes(numCycles = 1) {
+	var time = (numCycles * Engine._idleSpeed) / 1000; //seconds
+	for (var i = 0; i < workerScripts.length; ++i) {
+		workerScripts[i].scriptRef.onlineRunningTime += time;
+	}
 }
 
 runScriptsLoop();

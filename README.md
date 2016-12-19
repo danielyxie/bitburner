@@ -17,20 +17,35 @@ TESTING TODO:
 	If a script has bad syntax...it fucks everything up when you try to run it so fix that
 		Try catch for script?
 		Check that killing scripts still works fine (TESTED - LOoks to work fine)
-		Check that if script has bad syntax it wont run at all and everthing works normally
-		Check if script throws during runtime it shuts down correctly
+		Check that if script has bad syntax it wont run at all and everthing works normally (Seems to work fine)
+		Check if script throws during runtime it shuts down correctly (seems to work fine)
+		
+	Adjust leveling formula. Goes up way too high at first
+		http://gamedev.stackexchange.com/questions/55151/rpg-logarithmic-leveling-formula
+		- might be too slow now? 
+		
+	Scripts tab that shows script stats
+		Seems to work, at least the basics (for online production)
 		
 Tasks TODO:
 	Script offline progress
-
-		
+	ctrl+C functionality for all running command like hack(), analyze(), and tail 
 	Scroll all the way down when something is post()ed
-	Scripts tab that shows script stats
 	Script logging functionality? Logs to internal "log file" (property of script itself)
-	Parse script firs tot see if there are any syntax errors, and tell user if there are (when user calls "run")
 	Tutorial and help
 	Server growth
-	Companies
+	
+	Hack time formula needs rebalancing I think
+	
 	Factions
+	Augmentations
 	Update CONSTANTS.HelpText
 	Account for Max possible int when gaining exp
+	Text in script editor that says ("ctrl + x" to save and quit)
+	
+	Companies
+		Add possible CompanyPositions for every Company
+		Applying/working for companies
+	
+	OPTIMIZATION
+		https://gamealchemist.wordpress.com/2013/05/01/lets-get-those-javascript-arrays-to-work-fast/

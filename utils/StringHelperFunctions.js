@@ -1,4 +1,4 @@
-//Netscript String helper functions
+//Netburner String helper functions
 
 //Searches for every occurence of searchStr within str and returns an array of the indices of
 //all these occurences

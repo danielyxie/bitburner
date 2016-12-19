@@ -15,6 +15,7 @@
 	<script src="utils/IPAddress.js"></script>
 	<script src="utils/JSONReviver.js"></script>
 	<script src="utils/StringHelperFunctions.js"></script>
+	<script src="utils/ObjectHelperFunctions.js"></script>
 	
 	<!-- Netscript -->
 	<script src="src/netscript/NetScriptWorker.js"></script>
@@ -48,12 +49,13 @@
                 <a href="#"  id="character-menu-link"> Character </a>
             </li>
 			
+			<!-- These scripts stuff should be hidden until level 2, but leave them visible for now to test -->
 			<li class="create-script-tab">
                 <a href="#" id="create-script-menu-link"> Create Script </a>
             </li>
 			
-			<li class="scripts-tab" style="visibility:hidden">
-                <a href="#" id="scripts-menu-link"> Scripts </a>
+			<li class="active-scripts-tab">
+                <a href="#" id="active-scripts-menu-link"> Active Scripts </a>
             </li>
 			
 			<li class="world-tab" style="visibility:hidden">
@@ -101,7 +103,12 @@
 		<textarea id="script-editor-text" style="border: none" autofocus> 
 		</textarea>
 	</div>
-
+	
+	<!-- Active scripts info page -->
+	<div id="active-scripts-container">
+		<ul class="active-scripts-list" id="active-scripts-list">
+		<ul>
+	</div>
 
     
 

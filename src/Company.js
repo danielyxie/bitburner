@@ -1,13 +1,15 @@
 //Netburner Company class
+//	Note: Company Positions can be loaded every time with init() but Company class needs
+//		  to be saved/loaded from localStorage
 function Company() {
 	this.companyName 		= "";
-    this.companyPositions 	= [];
+    this.companyPositions 	= [];	//Names (only name, not object) of all company positions
 	this.salaryMultiplier	= 1;	//Multiplier for base salary
 	this.expMultiplier 		= 1;	//Multiplier for base exp gain
     
     //Player-related properties for company
     this.isPlayerEmployed 	= false;
-    this.playerPosition 	= null;
+    this.playerPosition 	= "";	//Name (only name, not object) of the current position player holds
     this.playerReputation 	= 0;  //"Reputation" within company, gain reputation by working for company
 	
 };
@@ -27,6 +29,16 @@ Company.prototype.addPositions = function(positions) {
 		this.addPosition(positions[i]);
 	}
 }
+
+Company.prototype.toJSON = function() {
+	return Generic_toJSON("Company", this);
+}
+
+Company.fromJSON = function(value) {
+	return Generic_fromJSON(Company, value.data);
+}
+
+Reviver.constructors.Company = Company;
 
 //Object that defines a position within a Company and its requirements
 function CompanyPosition(name, reqHack, reqStr, reqDef, reqDex, reqAgi, reqCha, reqRep, salary) {
@@ -196,116 +208,176 @@ CompanyPositions = {
 	}
 }
 
-Companies = {
+/* Initialize all companies. Only called when creating new game. Otherwise companies are
+ * usually loaded from localStorage */
+initCompanies = function() {
 	/* Companies that also have servers */
 	//Megacorporations
-	ECorp: 						new Company(),  
-	MegaCorp: 					new Company(),  
-	BachmanAndAssociates: 		new Company(),  
-	BladeIndustries: 			new Company(),  
-	NWO: 						new Company(),  
-	ClarkeIncorporated: 		new Company(),  
-	OmniTekIncorporated: 		new Company(),  
-	FourSigma: 					new Company(),  
-	KuaiGongInternational: 		new Company(),  
+	var ECorp = new Company();
+	ECorp.init("ECorp", 3.0, 3.0);
+	AddToCompanies(ECorp);
 	
-	//Technology and communication companies ("Large" companies)
-	FulcrumTechnologies: 		new Company(),   
-	StormTechnologies: 			new Company(),   
-	DefComm: 					new Company(),   
-	HeliosLabs: 				new Company(),   
-	VitaLife: 					new Company(),   
-	IcarusMicrosystems: 		new Company(),   
-	UniversalEnergy: 			new Company(),   
-	GalacticCybersystems: 		new Company(),   
+	var MegaCorp = new Company();
+	MegaCorp.init("MegaCorp", 3.0, 3.0);
+	AddToCompanies(MegaCorp);
+	
+	var BachmanAndAssociates = new Company();
+	BachmanAndAssociates.init("Bachman & Associates", 2.6, 2.6);
+	AddToCompanies(BachmanAndAssociates);
+	
+	var BladeIndustries = new Company();
+	BladeIndustries.init("Blade Industries", 2.75, 2.75);		
+	AddToCompanies(BladeIndustries);
+	
+	var NWO = new Company();
+	NWO.init("NWO", 2.75, 2.75);
+	AddToCompanies(NWO);
+	
+	var ClarkeIncorporated = new Company();
+	ClarkeIncorporated.init("Clarke Incorporated", 2.25, 2.25);
+	AddToCompanies(ClarkeIncorporated);
+	
+	var OmniTekIncorporated = new Company();
+	OmniTekIncorporated.init("OmniTek Incorporated", 2.25, 2.25);
+	AddToCompanies(OmniTekIncorporated);
+	
+	var FourSigma = new Company();
+	FourSigma.init("Four Sigma", 2.5, 2.5);
+	AddToCompanies(FourSigma);
+	
+	var KuaiGongInternational = new Company();
+	KuaiGongInternational.init("KuaiGong International", 2.2, 2.2);
+	AddToCompanies(KuaiGongInternational);
+	
+	//Technology and communication companies ("Large" servers)
+	var FulcrumTechnologies = new Company();
+	FulcrumTechnologies.init("Fulcrum Technologies", 2.0, 2.0);
+	AddToCompanies(FulcrumTechnologies);
+	
+	var StormTechnologies = new Company();
+	StormTechnologies.init("Storm Technologies", 1.8, 1.8);
+	AddToCompanies(StormTechnologies);
+	
+	var DefComm = new Company();
+	DefComm.init("DefComm", 1.75, 1.75);
+	AddToCompanies(DefComm);
+	
+	var HeliosLabs =  new Company();
+	HeliosLabs.init("Helios Labs", 1.8, 1.8);
+	AddToCompanies(HeliosLabs); 
+	
+	var VitaLife = new Company();
+	VitaLife.init("VitaLife", 1.8, 1.8);
+	AddToCompanies(VitaLife);
+	
+	var IcarusMicrosystems = new Company();
+	IcarusMicrosystems.init("Icarus Microsystems", 1.9, 1.9);
+	AddToCompanies(IcarusMicrosystems);
+	
+	var UniversalEnergy = new Company();
+	UniversalEnergy.init("Universal Energy", 2.0, 2.0);
+	AddToCompanies(UniversalEnergy); 
+	
+	var GalacticCybersystems = new Company();
+	GalacticCybersystems.init("Galactic Cybersystems", 1.9, 1.9);
+	AddToCompanies(GalacticCybersystems);
 	
 	//Defense Companies ("Large" Companies)
-	AeroCorp: 					new Company(),   
-	OmniaCybersystems: 			new Company(),   
-	SolarisSpaceSystems: 		new Company(),   
-	DeltaOne: 					new Company(),   
+	var AeroCorp = new Company();
+	AeroCorp.init("AeroCorp", 1.7, 1.7);
+	AddToCompanies(AeroCorp);
 	
-	//Health, medicine, pharmaceutical companies ("Large" companies)
-	GlobalPharmaceuticals: 		new Company(),   
-	NovaMedical: 				new Company(),   
+	var OmniaCybersystems = new Company();
+	OmniaCybersystems.init("Omnia Cybersystems", 1.7, 1.7);
+	AddToCompanies(OmniaCybersystems);
 	
+	var SolarisSpaceSystems = new Company();
+	SolarisSpaceSystems.init("Solaris Space Systems", 1.7, 1.7);
+	AddToCompanies(SolarisSpaceSystems);
+	
+	var DeltaOne = new Company();
+	DeltaOne.init("Delta One", 1.6, 1.6);
+	AddToCompanies(DeltaOne);
+	
+	//Health, medicine, pharmaceutical companies ("Large" servers)
+	var GlobalPharmaceuticals = new Company();
+	GlobalPharmaceuticals.init("Global Pharmaceuticals", 1.8, 1.8);
+	AddToCompanies(GlobalPharmaceuticals);
+	
+	var NovaMedical = new Company();
+	NovaMedical.init("Nova Medical", 1.75, 1.75);
+	AddToCompanies(NovaMedical);
+
 	//Other large companies
-	CIA: 						new Company(),
-	NSA: 						new Company(),
-	WatchdogSecurity: 			new Company(),
+	var CIA = new Company(); 
+	CIA.init("Central Intelligence Agency", 2.0, 2.0);
+	AddToCompanies(CIA);
+	
+	var NSA = new Company();
+	NSA.init("National Security Agency", 2.0, 2.0);
+	AddToCompanies(NSA);
+	
+	var WatchdogSecurity = new Company();
+	WatchdogSecurity.init("Watchdog Security", 1.5, 1.5);
+	AddToCompanies(WatchdogSecurity);
 	
 	//"Medium level" companies
-	LexoCorp: 					new Company(),   
-	RhoConstruction: 			new Company(),   
-	AlphaEnterprises: 			new Company(),   
-	AevumPolice: 				new Company(),	
-	SysCoreSecurities: 			new Company(),   
-	CompuTek: 					new Company(),   
-	NetLinkTechnologies: 		new Company(),
-	CarmichaelSecurity: 		new Company(),
+	var LexoCorp = new Company();
+	LexoCorp.init("LexoCorp", 1.4, 1.4);
+	AddToCompanies(LexoCorp);
+	
+	var RhoConstruction = new Company();
+	RhoConstruction.init("Rho Construction", 1.3, 1.3);
+	AddToCompanies(RhoConstruction);
+	
+	var AlphaEnterprises = new Company();
+	AlphaEnterprises.init("Alpha Enterprises", 1.5, 1.5);
+	AddToCompanies(AlphaEnterprises);
+	
+	var AevumPolice = new Company();
+	AevumPolice.init("Aevum Police", 1.3, 1.3);
+	AddToCompanies(AevumPolice);
+	
+	var SysCoreSecurities = new Company();
+	SysCoreSecurities.init("SysCore Securities", 1.3, 1.3);
+	AddToCompanies(SysCoreSecurities);
+	
+	var CompuTek = new Company();
+	CompuTek.init("CompuTek", 1.2, 1.2);
+	AddToCompanies(CompuTek);
+	
+	var NetLinkTechnologies = new Company();
+	NetLinkTechnologies.init("NetLink Technologies", 1.2, 1.2);
+	AddToCompanies(NetLinkTechnologies);
+	
+	var CarmichaelSecurity = new Company();
+	CarmichaelSecurity.init("Carmichael Security", 1.2, 1.2);
+	AddToCompanies(CarmichaelSecurity);
 	
 	//"Low level" companies
-	FoodNStuff: 				new Company(),   
-	JoesGuns: 					new Company(),   
-	OmegaSoftware: 				new Company(),   
+	var FoodNStuff = new Company(); 
+	FoodNStuff.init("FoodNStuff", 1, 1);
+	AddToCompanies(FoodNStuff);
+	
+	var JoesGuns = new Company();
+	JoesGuns.init("Joe's Guns", 1, 1);
+	AddToCompanies(JoesGuns);
+	
+	var OmegaSoftware = new Company();
+	OmegaSoftware.init("Omega Software", 1.1, 1.1);
+	AddToCompanies(OmegaSoftware);
 	
 	/* Companies that do not have servers */
-	NoodleBar: 					new Company(), 
+	var NoodleBar = new Company();
+	NoodleBar.init("Noodle Bar", 1, 1);
+	AddToCompanies(NoodleBar);
+}
 
-	init: function() {
-		/* Companies that also have servers */
-		//Megacorporations
-		Companies.ECorp.init("ECorp", 3.0, 3.0);
-		Companies.MegaCorp.init("MegaCorp", 3.0, 3.0);
-		Companies.BachmanAndAssociates.init("Bachman & Associates", 2.6, 2.6);
-		Companies.BladeIndustries.init("Blade Industries", 2.75, 2.75);		
-		Companies.NWO.init("NWO", 2.75, 2.75);
-		Companies.ClarkeIncorporated.init("Clarke Incorporated", 2.25, 2.25);
-		Companies.OmniTekIncorporated.init("OmniTek Incorporated", 2.25, 2.25);
-		Companies.FourSigma.init("Four Sigma", 2.5, 2.5);
-		Companies.KuaiGongInternational.init("KuaiGong International", 2.2, 2.2);
-		
-		//Technology and communication companies ("Large" servers)
-		Companies.FulcrumTechnologies.init("Fulcrum Technologies", 2.0, 2.0);
-		Companies.StormTechnologies.init("Storm Technologies", 1.8, 1.8);
-		Companies.DefComm.init("DefComm", 1.75, 1.75);
-		Companies.HeliosLabs.init("Helios Labs", 1.8, 1.8);
-		Companies.VitaLife.init("VitaLife", 1.8, 1.8);
-		Companies.IcarusMicrosystems.init("Icarus Microsystems", 1.9, 1.9);
-		Companies.UniversalEnergy.init("Universal Energy", 2.0, 2.0);
-		Companies.GalacticCybersystems.init("Galactic Cybersystems", 1.9, 1.9);
-		
-		//Defense Companies ("Large" Companies)
-		Companies.AeroCorp.init("AeroCorp", 1.7, 1.7);
-		Companies.OmniaCybersystems.init("Omnia Cybersystems", 1.7, 1.7);
-		Companies.SolarisSpaceSystems.init("Solaris Space Systems", 1.7, 1.7);
-		Companies.DeltaOne.init("Delta One", 1.6, 1.6);
-		
-		//Health, medicine, pharmaceutical companies ("Large" servers)
-		Companies.GlobalPharmaceuticals.init("Global Pharmaceuticals", 1.8, 1.8);
-		Companies.NovaMedical.init("Nova Medical", 1.75, 1.75);
+//Map of all companies that exist in the game, indexed by their name
+Companies = {}
 
-		//Other large companies
-		Companies.CIA.init("Central Intelligence Agency", 2.0, 2.0);
-		Companies.NSA.init("National Security Agency", 2.0, 2.0);
-		Companies.WatchdogSecurity.init("Watchdog Security", 1.5, 1.5);
-		
-		//"Medium level" companies
-		Companies.LexoCorp.init("LexoCorp", 1.4, 1.4);
-		Companies.RhoConstruction.init("Rho Construction", 1.3, 1.3);
-		Companies.AlphaEnterprises.init("Alpha Enterprises", 1.5, 1.5);
-		Companies.AevumPolice.init("Aevum Police", 1.3, 1.3);
-		Companies.SysCoreSecurities.init("SysCore Securities", 1.3, 1.3);
-		Companies.CompuTek.init("CompuTek", 1.2, 1.2);
-		Companies.NetLinkTechnologies.init("NetLink Technologies", 1.2, 1.2);
-		Companies.CarmichaelSecurity.init("Carmichael Security", 1.2, 1.2);
-		
-		//"Low level" companies
-		Companies.FoodNStuff.init("FoodNStuff", 1, 1);
-		Companies.JoesGuns.init("Joe's Guns", 1, 1);
-		Companies.OmegaSoftware.init("Omega Software", 1.1, 1.1);
-		
-		/* Companies that do not have servers */
-		Companies.NoodleBar.init("Noodle Bar", 1, 1);
-	}
+//Add a Company object onto the map of all Companies in the game
+AddToCompanies = function (company) {
+	var name = company.companyName;
+	Companies[name] = company;
 }

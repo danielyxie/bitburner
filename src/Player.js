@@ -91,10 +91,10 @@ PlayerObject.prototype.getHomeComputer = function() {
 }
 
 //Calculates skill level based on experience. The same formula will be used for every skill
-//  At the maximum possible exp (MAX_INT = 9007199254740991), the hacking skill will be 1796
-//  Gets to level 1000 hacking skill at ~1,100,000,000 exp
+//  At the maximum possible exp (MAX_INT = 9007199254740991), the hacking skill will be 1796 TODO REcalculate this
+//  Gets to level 1000 hacking skill at (TODO Determine this)
 PlayerObject.prototype.calculateSkill = function(exp) {
-    return Math.max(Math.floor(50 * Math.log(9007199254740991+ 2.270) - 40), 1);
+    return Math.max(Math.floor(7.2 * Math.log(exp + 518.013) - 44), 1);
 }
 
 PlayerObject.prototype.updateSkillLevels = function() {

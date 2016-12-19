@@ -10,11 +10,12 @@ var Engine = {
         hackButton:     null,
         
         //Main menu buttons
-        terminalMainMenuButton:     null,
-        characterMainMenuButton:    null,
-		scriptEditorMainMenuButton: null,
-        saveMainMenuButton:         null,
-        deleteMainMenuButton:       null,
+        terminalMainMenuButton:     	null,
+        characterMainMenuButton:    	null,
+		scriptEditorMainMenuButton: 	null,
+		activeScriptsMainMenuButton: 	null,
+        saveMainMenuButton:         	null,
+        deleteMainMenuButton:       	null,
     },
     
     //Display objects
@@ -31,6 +32,7 @@ var Engine = {
         terminalContent:    	null,
         characterContent:   	null,
 		scriptEditorContent: 	null,
+		activeScriptsContent: 	null,
         
         //Character info
         characterInfo:      	null,
@@ -44,6 +46,7 @@ var Engine = {
 		Terminal: 			"Terminal",
 		CharacterInfo: 		"CharacterInfo",
 		ScriptEditor: 		"ScriptEditor",
+		ActiveScripts: 		"ActiveScripts",
 	},
 	currentPage:	null,
 
@@ -56,10 +59,12 @@ var Engine = {
     saveGame: function() {
         var PlayerSave 			= JSON.stringify(Player);
         var AllServersSave      = JSON.stringify(AllServers);
+		var CompaniesSave 		= JSON.stringify(Companies);
 		//TODO Add factions + companies here when they're done
         
         window.localStorage.setItem("netburnerPlayerSave", PlayerSave);
         window.localStorage.setItem("netburnerAllServersSave", AllServersSave);
+		window.localStorage.setItem("netburnerCompaniesSave", CompaniesSave);
 		console.log("Game saved to local storage");
     },
     
@@ -72,11 +77,16 @@ var Engine = {
         } else if (!window.localStorage.getItem("netburnerAllServersSave")) {
             console.log("No AllServers save to load");
             return false;
+		} else if (!window.localStorage.getItem("netburnerCompaniesSave")) {
+			console.log("No Companies save to load");
+			return false;
 		} else {
             var PlayerSave 			= window.localStorage.getItem("netburnerPlayerSave");
             var AllServersSave      = window.localStorage.getItem("netburnerAllServersSave");
+			var CompaniesSave 		= window.localStorage.getItem("netburnerCompaniesSave");
             Player = JSON.parse(PlayerSave, Reviver);
             AllServers = JSON.parse(AllServersSave, Reviver);
+			Companies = JSON.parse(CompaniesSave, Reviver);
 			return true;
         }
     },
@@ -88,9 +98,14 @@ var Engine = {
 			return false;
         } else if (!window.localStorage.getItem("netburnerAllServersSave")) {
             console.log("No AllServers Save to delete");
+			return false;
+		} else if (!window.localStorage.getItem("netburnerCompaniesSave")) {
+			console.log("No Companies Save to delete");
+			return false;
         } else {
             window.localStorage.removeItem("netburnerPlayerSave");
             window.localStorage.removeItem("netburnerAllServersSave");
+			window.localStorage.removeItem("netburnerCompaniesSave");
 			console.log("Deleted saves")
             return true;
         }
@@ -121,12 +136,20 @@ var Engine = {
 		document.getElementById("script-editor-text").value = code;
 		Engine.currentPage = Engine.Page.ScriptEditor;
 	},
+	
+	loadActiveScriptsContent: function() {
+		Engine.hideAllContent();
+		Engine.Display.activeScriptsContent.style.visibility = "visible";
+		
+		Engine.currentPage = Engine.Page.ActiveScripts;
+	},
     
     //Helper function that hides all content 
     hideAllContent: function() {
         Engine.Display.terminalContent.style.visibility = "hidden";
         Engine.Display.characterContent.style.visibility = "hidden";
 		Engine.Display.scriptEditorContent.style.visibility = "hidden";
+		Engine.Display.activeScriptsContent.style.visibility = "hidden";
     },
     
     /* Display character info */
@@ -141,6 +164,73 @@ var Engine = {
 												 'Servers owned: ' + Player.purchasedServers.length + '<br><br>' +
                                                  'Hacking Experience: ' + Player.hacking_exp + '<br><br>';
     },
+	
+	/* Functions used to update information on the Active Scripts page */
+	ActiveScriptsList: 			null,
+	
+	//Creates and adds the <li> object for a given workerScript
+	addActiveScriptsItem: function(workerscript) {
+		console.log("addActiveScriptsItem called");
+		var item = document.createElement("li");
+		
+		Engine.createActiveScriptsText(workerscript, item);
+		
+		//Add the li element onto the list
+		if (Engine.ActiveScriptsList == null) {
+			Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
+		}
+		Engine.ActiveScriptsList.appendChild(item);
+	},
+	
+	//Update the ActiveScriptsItems array
+	updateActiveScriptsItems: function() {
+		for (var i = 0; i < workerScripts.length; ++i) {
+			Engine.updateActiveScriptsItemContent(i, workerScripts[i]);
+		}
+	},
+	
+	//Updates the content of the given item in the Active Scripts list
+	updateActiveScriptsItemContent: function(i, workerscript) {
+		var list = Engine.ActiveScriptsList.getElementsByTagName("li");
+		if (i >= list.length) {
+			throw new Error("Trying to update an out-of-range Active Scripts Item");
+		}
+		
+		var item = list[i];
+		
+		//Clear the item
+		while (item.firstChild) {
+			item.removeChild(item.firstChild);
+		}
+		
+		//Add the updated text back
+		Engine.createActiveScriptsText(workerscript, item);
+	},
+	
+	createActiveScriptsText(workerscript, item) {
+		//Script name
+		var scriptName = document.createElement("h2");
+		scriptName.appendChild(document.createTextNode(workerscript.name));
+		item.appendChild(scriptName);
+		
+		var itemText = document.createElement("p");
+		
+		//Server ip/hostname
+		var hostname = workerscript.getServer().hostname;
+		var serverIpHostname = "Server: " + hostname + "(" + workerscript.serverIp + ")";
+		
+		//Online money/s
+		var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
+		var onlineMpsText = "Online production: $" + onlineMps.toFixed(2) + "/second";
+		
+		//Offline money/s
+		var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
+		var offlineMpsText = "Offline production: $" + offlineMps.toFixed(2) + "/second";
+		
+		itemText.innerHTML = serverIpHostname + "<br>" + onlineMpsText + "<br>" + offlineMpsText + "<br>";
+		
+		item.appendChild(itemText);
+	},
 	
 	/* Main Event Loop */
 	idleTimer: function() {
@@ -161,7 +251,6 @@ var Engine = {
 		window.requestAnimationFrame(Engine.idleTimer);
 	},
     
-	//TODO Account for numCycles in Code, hasn't been done yet
     updateGame: function(numCycles = 1) {
         //Manual hack
 		if (Player.startAction == true) {
@@ -173,10 +262,18 @@ var Engine = {
 			Engine._actionTimeStr = "Time left: ";
 			Player.startAction = false;
 		}
+		
+		//Counters
 		Engine.decrementAllCounters(numCycles);
         Engine.checkCounters();		
 		
+		//Manual hacks
 		Engine.updateHackProgress(numCycles);
+		
+		//Update the running time of all active scripts
+		updateOnlineScriptTimes(numCycles);
+		
+		
     },
 	
     //Counters for the main event loop. Represent the number of game cycles are required
@@ -184,6 +281,7 @@ var Engine = {
     Counters: {
         autoSaveCounter:    300,			//Autosave every minute
 		updateSkillLevelsCounter: 10,		//Only update skill levels every 2 seconds. Might improve performance
+		updateDisplays: 10,					//Update displays such as Active Scripts display and character display
     },
     
     decrementAllCounters: function(numCycles = 1) {
@@ -205,6 +303,16 @@ var Engine = {
 		if (Engine.Counters.updateSkillLevelsCounter <= 0) {
 			Player.updateSkillLevels();
 			Engine.Counters.updateSkillLevelsCounter = 10;
+		}
+		
+		if (Engine.Counters.updateDisplays <= 0) {
+			if (Engine.currentPage == Engine.Page.ActiveScripts) {
+				Engine.updateActiveScriptsItems();
+			} else if (Engine.currentPage == Engine.Page.CharacterInfo) {
+				Engine.displayCharacterInfo();
+			} 
+			
+			Engine.Counters.updateDisplays = 10;
 		}
     },
     
@@ -251,18 +359,15 @@ var Engine = {
 		//Initialization functions
 		if (Engine.loadSave()) {
 			console.log("Loaded game from save");
-			Companies.init();
 			CompanyPositions.init();
-			console.log("Calling loadAllRunningScripts()");
 			loadAllRunningScripts();
-			console.log("Finished calling loadAllRunningScripts()");
 		} else {
 			//No save found, start new game
 			console.log("Initializing new game");
 			Player.init();
 			initForeignServers();
-			Companies.init();
 			CompanyPositions.init();
+			initCompanies();
 		}
                 
         //Main menu buttons and content
@@ -283,7 +388,18 @@ var Engine = {
 			Engine.loadScriptEditorContent();
 			return false;
 		});
-        
+		
+		Engine.Clickables.activeScriptsMainMenuButton = document.getElementById("active-scripts-menu-link");
+        Engine.Clickables.activeScriptsMainMenuButton.addEventListener("click", function() {
+			Engine.loadActiveScriptsContent();
+			return false;
+		});
+		//Active scripts list
+		Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
+		
+		
+
+		
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
             Engine.saveGame();
@@ -302,6 +418,8 @@ var Engine = {
 		Engine.Display.characterContent.style.visibility = "hidden";
 		Engine.Display.scriptEditorContent = document.getElementById("script-editor-container");
 		Engine.Display.scriptEditorContent.style.visibility = "hidden";
+		Engine.Display.activeScriptsContent = document.getElementById("active-scripts-container");
+		Engine.Display.activeScriptsContent.style.visibility = "hidden";
         
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");

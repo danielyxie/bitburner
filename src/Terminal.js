@@ -1,25 +1,3 @@
-function TestObj() {
-	this.num = 1;
-}
-
-TestObj.prototype.setValue = function(val) {
-	this.num = val;
-}
-
-TestObj.prototype.toJSON = function() {
-	console.log("toJSON() called");
-	return Generic_toJSON("TestObj", this);
-}
-
-TestObj.fromJSON = function(value) {
-	console.log("fromJSON() called");
-	return Generic_fromJSON(TestObj, value.data);
-}
-
-Reviver.constructors.TestObj = TestObj;
-
-var testObj = new TestObj();
-
 //Terminal
 var post = function(input) {
     $("#terminal-input").before('<tr class="posted"><td style="color: #66ff33;">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
@@ -420,31 +398,8 @@ var Terminal = {
 				//TODO List each's script RAM usage
 				break;
 			case "test":
-				post(testObj.num.toString());
-				testObj.setValue(testObj.num + 1);
-				break;
-			case "testSave":
-				var testSave = JSON.stringify(testObj);
-				window.localStorage.setItem("netburnerTest", testSave);
-				console.log("Netburner TestSave saved");
-				break;
-			case "testLoad":
-				if (!window.localStorage.getItem("netburnerTest")) {
-					console.log("No TestSave file to load");
-				} else {
-					console.log("Here");
-					var testSave = window.localStorage.getItem("netburnerTest");
-					testObj = JSON.parse(testSave, Reviver);
-					console.log("TestSave loaded");
-				}
-				break;
-			case "testDelete":
-				if (!window.localStorage.getItem("netburnetTest")) {
-					console.log("No TestSave file to delete");
-				} else {
-					window.localStorage.removeItem("netburnerTest");
-					console.log("TestSave deleted");
-				}
+				post("test \n this post");
+				
 				break;
 			default:
 				post("Command not found");
@@ -513,6 +468,7 @@ var Terminal = {
 					return;
 				}else {
 					//Able to run script
+					post("Running script. May take a few seconds to start up the process...");
 					var script = server.scripts[i];
 					server.runningScripts.push(script.filename);	//Push onto runningScripts
 					addWorkerScript(script, server);

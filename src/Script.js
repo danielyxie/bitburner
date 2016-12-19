@@ -67,7 +67,7 @@ function Script() {
 	this.filename 	= "";
     this.code       = "";
     this.ramUsage   = 0;
-	this.server 	= null;	//IP of server this script is on
+	this.server 	= "";	//IP of server this script is on
     
     /* Properties to calculate offline progress. Only applies for infinitely looping scripts */
     
@@ -82,6 +82,13 @@ function Script() {
     
     //Which servers are hacked in one iteration of the script. May contain duplicates
     this.serversHacked          = [];
+	
+	//Stats to display on the Scripts menu, and used to determine offline progress
+	this.offlineRunningTime  	= 0;	//Seconds
+	this.offlineMoneyMade 		= 0;
+	this.onlineRunningTime 		= 0;	//Seconds
+	this.onlineMoneyMade 		= 0;
+	this.lastUpdate				= 0;
 };
 
 //Get the script data from the Script Editor and save it to the object
@@ -97,10 +104,11 @@ Script.prototype.saveScript = function() {
 		//Server
 		this.server = Player.currentServer;
 		
-		//TODO Calculate/update number of instructions, ram usage, execution time, etc. 
+		//Calculate/update number of instructions, ram usage, execution time, etc. 
 		this.updateNumInstructions();
 		this.updateRamUsage();
 		this.updateExecutionTime();
+		
 	}
 }
 
@@ -191,6 +199,10 @@ loadAllRunningScripts = function() {
 	for (var property in AllServers) {
 		if (AllServers.hasOwnProperty(property)) {
 			var server = AllServers[property];
+			
+			//Reset each server's RAM usage to 0
+			server.ramUsed = 0;
+			
 			for (var j = 0; j < server.runningScripts.length; ++j) {
 				count++;
 				//runningScripts array contains only names, so find the actual script object
