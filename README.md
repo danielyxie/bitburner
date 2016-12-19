@@ -26,9 +26,9 @@ TESTING TODO:
 		
 	Scripts tab that shows script stats
 		Seems to work, at least the basics (for online production)
-		
-Tasks TODO:
 	Script offline progress
+	
+Tasks TODO:
 	ctrl+C functionality for all running command like hack(), analyze(), and tail 
 	Scroll all the way down when something is post()ed
 	Script logging functionality? Logs to internal "log file" (property of script itself)

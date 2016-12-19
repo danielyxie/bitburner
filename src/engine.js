@@ -154,7 +154,7 @@ var Engine = {
     
     /* Display character info */
     displayCharacterInfo: function() {
-        Engine.Display.characterInfo.innerHTML = 'Money: $' + Player.money + '<br><br>' +
+        Engine.Display.characterInfo.innerHTML = 'Money: $' + Player.money.toFixed(2) + '<br><br>' +
                                                  'Hacking Level: ' + Player.hacking_skill + '<br><br>' + 
                                                  'Strength: ' + Player.strength + '<br><br>' + 
                                                  'Defense: ' + Player.defense + '<br><br>' + 
@@ -162,7 +162,7 @@ var Engine = {
                                                  'Agility: ' + Player.agility + '<br><br>' +
 												 'Charisma: ' + Player.charisma + '<br><br>' +
 												 'Servers owned: ' + Player.purchasedServers.length + '<br><br>' +
-                                                 'Hacking Experience: ' + Player.hacking_exp + '<br><br>';
+                                                 'Hacking Experience: ' + Player.hacking_exp.toFixed(4) + '<br><br>';
     },
 	
 	/* Functions used to update information on the Active Scripts page */
@@ -170,7 +170,6 @@ var Engine = {
 	
 	//Creates and adds the <li> object for a given workerScript
 	addActiveScriptsItem: function(workerscript) {
-		console.log("addActiveScriptsItem called");
 		var item = document.createElement("li");
 		
 		Engine.createActiveScriptsText(workerscript, item);
@@ -217,17 +216,22 @@ var Engine = {
 		
 		//Server ip/hostname
 		var hostname = workerscript.getServer().hostname;
-		var serverIpHostname = "Server: " + hostname + "(" + workerscript.serverIp + ")";
+		var serverIpHostname = "Server: " + hostname + " (" + workerscript.serverIp + ")";
 		
-		//Online money/s
+		//Online
 		var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
 		var onlineMpsText = "Online production: $" + onlineMps.toFixed(2) + "/second";
+		var onlineEps = workerscript.scriptRef.onlineExpGained / workerscript.scriptRef.onlineRunningTime;
+		var onlineEpsText = (Array(20).join(" ") + onlineEps.toFixed(4) + " exp/second").replace( / /g, "&nbsp;");
 		
-		//Offline money/s
+		//Offline
 		var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
 		var offlineMpsText = "Offline production: $" + offlineMps.toFixed(2) + "/second";
+		var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
+		var offlineEpsText = (Array(21).join(" ") + offlineEps.toFixed(4) +  " exp/second").replace( / /g, "&nbsp;");
 		
-		itemText.innerHTML = serverIpHostname + "<br>" + onlineMpsText + "<br>" + offlineMpsText + "<br>";
+		itemText.innerHTML = serverIpHostname + "<br>" + onlineMpsText + "<br>" + onlineEpsText + "<br>" +
+							offlineMpsText + "<br>" + offlineEpsText + "<br>";
 		
 		item.appendChild(itemText);
 	},
@@ -246,6 +250,7 @@ var Engine = {
             //Update the game engine by the calculated number of cycles
             Engine.updateGame(diff);
             Engine._lastUpdate = _thisUpdate - offset;
+			Player.lastUpdate = _thisUpdate - offset;
         }       
 		
 		window.requestAnimationFrame(Engine.idleTimer);
@@ -272,8 +277,6 @@ var Engine = {
 		
 		//Update the running time of all active scripts
 		updateOnlineScriptTimes(numCycles);
-		
-		
     },
 	
     //Counters for the main event loop. Represent the number of game cycles are required
@@ -360,7 +363,7 @@ var Engine = {
 		if (Engine.loadSave()) {
 			console.log("Loaded game from save");
 			CompanyPositions.init();
-			loadAllRunningScripts();
+			loadAllRunningScripts();	//This also takes care of offline production
 		} else {
 			//No save found, start new game
 			console.log("Initializing new game");
@@ -396,9 +399,6 @@ var Engine = {
 		});
 		//Active scripts list
 		Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
-		
-		
-
 		
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {

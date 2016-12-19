@@ -71,24 +71,18 @@ function Script() {
     
     /* Properties to calculate offline progress. Only applies for infinitely looping scripts */
     
-    //Time it takes to execute one iteration of the entire script
-    //Each function takes CONSTANTS.CodeInstructionRunTime seconds, 
-    //plus hacking time plus and sleep commands
-    this.executionTimeMillis    = 0;
-    
     //Number of instructions ("lines") in the code. Any call ending in a ; 
-    //is considered one instruction. Used to calculate executionTime
+    //is considered one instruction. Used to calculate ramUsage
     this.numInstructions        = 0;
-    
-    //Which servers are hacked in one iteration of the script. May contain duplicates
-    this.serversHacked          = [];
 	
 	//Stats to display on the Scripts menu, and used to determine offline progress
 	this.offlineRunningTime  	= 0;	//Seconds
 	this.offlineMoneyMade 		= 0;
+	this.offlineExpGained 		= 0;
 	this.onlineRunningTime 		= 0;	//Seconds
 	this.onlineMoneyMade 		= 0;
-	this.lastUpdate				= 0;
+	this.onlineExpGained 		= 0;
+	
 };
 
 //Get the script data from the Script Editor and save it to the object
@@ -107,8 +101,13 @@ Script.prototype.saveScript = function() {
 		//Calculate/update number of instructions, ram usage, execution time, etc. 
 		this.updateNumInstructions();
 		this.updateRamUsage();
-		this.updateExecutionTime();
 		
+		//Clear the stats when the script is updated
+		this.offlineRunningTime  	= 0;	//Seconds
+		this.offlineMoneyMade 		= 0;
+		this.onlineRunningTime 		= 0;	//Seconds
+		this.onlineMoneyMade 		= 0;
+		this.lastUpdate				= 0;
 	}
 }
 
@@ -124,61 +123,6 @@ Script.prototype.updateNumInstructions = function() {
 // 	(e.g. hack() costs a lot but others dont)
 Script.prototype.updateRamUsage = function() {
 	this.ramUsage = this.numInstructions * .2;
-}
-
-//Calculate the execution time of the script. This is used to calculate how much a script 
-//generates when the user is offline
-//This is calculated based on the number of instructions and any calls to hack().
-//Every instruction takes a flat time of X seconds (defined in Constants.js)
-//Every hack instructions takes an ADDITIONAl time of however long it takes to hack that server
-Script.prototype.updateExecutionTime = function() {
-	//TODO Maybe do this based on the average production/s of the script( which I'm adding in 
-	//as a property)
-	/*
-	var executionTime = 0;
-	
-	//Ever instruction takes CONSTANTS.CodeOfflineExecutionTime seconds
-	console.log("numInstructions: " + this.numInstructions.toString());
-	executionTime += (this.numInstrutions * CONSTANTS.CodeOfflineExecutionTime);
-	console.log("ExecutionTime after taking into account instructions: " + executionTime.toString());
-	
-	//Search the code's text for every occurrence of hack()
-	hackIndices = getIndicesOf('hack("', this.code, true);
-	for (var i = 0; i < hackIndices.length; ++i) {
-		//Get the full hack() call substring
-		var startIndex = hackIndices[i];
-		console.log("startIndex: " + startIndex.toString());
-		var endIndex = startIndex;
-	
-		while (this.code.substr(endIndex, 2) != ");") {
-			console.log("endIndex: " + endIndex.toString());
-			++endIndex;
-			if (endIndex == this.code.length - 1) {
-				//Bad code...
-				console.log("Could not find ending to hack call");
-				return;
-			}
-		}
-		++endIndex; // This puts endIndex at the semicolon
-		
-		var hackCall = this.code.substring(startIndex, endIndex);
-		console.log("hackCall: " + hackCall);
-		var argument = hackCall.match(/"([^']+)"/)[1];	//Extract the argument, which must be btw 2 quotes
-		
-		//Check if its an ip or a hostname. Then get the server and calculate hack time accordingly
-		var server = null;
-		if (isValidIPAddress(argument)) {
-			server = AllServers[argument];
-		} else {
-			server = GetServerByHostname(argument);
-		}
-		console.log("Server hostname: " + server.hostname);
-		executionTime += scriptCalculateHackingTime(server);
-	}
-	
-	this.executionTimeMillis = executionTime * 1000;
-	console.log("Script calculated to have an offline execution time of " + executionTime.toString() + "seconds");
-	*/
 }
 
 Script.prototype.toJSON = function() {
@@ -209,8 +153,53 @@ loadAllRunningScripts = function() {
 				var script = server.getScript(server.runningScripts[j]);
 				if (script == null) {continue;}
 				addWorkerScript(script, server);
+				
+				//Offline production
+				scriptCalculateOfflineProduction(script);
 			}
 		}
 	}
 	console.log("Loaded " + count.toString() + " running scripts");
+}
+
+scriptCalculateOfflineProduction = function(script) {
+	//The Player object stores the last update time from when we were online
+	var thisUpdate = new Date().getTime();
+	var lastUpdate = Player.lastUpdate;
+	var timePassed = (thisUpdate - lastUpdate) / 1000;	//Seconds
+	console.log("Offline for " + timePassed.toString() + " seconds");
+	
+	//Calculate the "confidence" rating of the script's true production. This is based
+	//entirely off of time. We will arbitrarily say that if a script has been running for
+	//120 minutes (7200 sec) then we are completely confident in its ability
+	var confidence = (script.onlineRunningTime) / 7200;
+	if (confidence >= 1) {confidence = 1;}
+	console.log("onlineRunningTime: " + script.onlineRunningTime.toString());
+	console.log("Confidence: " + confidence.toString());
+	
+	//A script's offline production will always be at most half of its online production.
+	var production = (1/2) * (script.onlineMoneyMade / script.onlineRunningTime) * timePassed;
+	production *= confidence; 
+	
+	var expGain = (1/2) * (script.onlineExpGained / script.onlineRunningTime) * timePassed;
+	expGain *= confidence;
+	
+	//Account for production in Player and server
+	Player.gainMoney(production);
+	Player.hacking_exp += expGain;
+	
+	var server = AllServers[script.server];
+	server.moneyAvailable -= production;
+	if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
+	
+	//Update script stats
+	script.offlineMoneyMade += production;
+	script.offlineRunningTime += timePassed;
+	script.offlineExpGained += expGain;
+	
+	//TODO EXP
+	
+	//DEBUG
+	var serverName = AllServers[script.server].hostname;
+	console.log(script.filename + " from server " + serverName + " generated $" + production.toString() + " while offline");
 }

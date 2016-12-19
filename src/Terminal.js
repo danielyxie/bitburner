@@ -16,7 +16,7 @@ var hackProgressPost = function(input) {
 }
 
 var postNetburnerText = function() {
-	post("Netburner v1.0");
+	post("Netburner v0.1");
 }
 
 //Defines what happens when enter is pressed (keycode 13)
@@ -37,14 +37,29 @@ $(document).keyup(function(event) {
 });
 
 //Keep terminal in focus
+terminalCtrlPressed = false;
 $(document).ready(function() {
 	if (Engine.currentPage == Engine.Page.Terminal) {
 		$('.terminal-input').focus();
 	}
 });
-$(document).keydown(function() {
+$(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.Terminal) {
-		$('.terminal-input').focus();	
+		if (e.which == 17) {
+			terminalCtrlPressed = true;
+		} else if (terminalCtrlPressed == true) {
+			//Don't focus
+		} else {
+			$('.terminal-input').focus();	
+			terminalCtrlPressed = false;
+		}
+	}
+})
+$(document).keyup(function(e) {
+	if (Engine.currentPage == Engine.Page.Terminal) {
+		if (e.which == 17) {
+			terminalCtrlPressed = false;
+		}
 	}
 })
 
@@ -79,7 +94,7 @@ var Terminal = {
 			if (moneyGained <= 0) {moneyGained = 0;}
             
             Player.getCurrentServer().moneyAvailable -= moneyGained;
-            Player.money += moneyGained;
+			Player.gainMoney(moneyGained);
             
             Player.hacking_exp += expGainedOnSuccess;
             

@@ -69,6 +69,9 @@ function PlayerObject() {
     //Flag to let the engine know the player is starting a hack
     this.startAction = false;
     this.actionTime = 0;
+	
+	//Used to store the last update time. 
+	this.lastUpdate = new Date().getTime();
 };
 
 PlayerObject.prototype.init = function() {
@@ -166,6 +169,12 @@ PlayerObject.prototype.analyze = function() {
     this.actionTime = 5;
     this.startAction = true;
 }    
+
+PlayerObject.prototype.gainMoney = function(money) {
+	this.money += money;
+	this.total_money += money;
+	this.lifetime_money += money;
+}
 
 //Functions for saving and loading the Player data
 PlayerObject.prototype.toJSON = function() {
