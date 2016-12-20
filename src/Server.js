@@ -32,11 +32,11 @@ function Server() {
 	//Total money available on this server. How much of this you hack will be determined
 	//by a formula related to hacking skill. The money available on a server will steadily increase
 	//over time, and it will decrease when you hack it
-	this.moneyAvailable 		= 500;
+	this.moneyAvailable 		= 0;
 	
 	//Parameters used in formulas that dictate how moneyAvailable and requiredHackingSkill change. 
 	this.hackDifficulty			= 1;	//Affects hack success rate and how the requiredHackingSkill increases over time (1-100)
-	this.serverGrowth			= 1;	//Affects how the moneyAvailable increases (1-100)
+	this.serverGrowth			= 0;	//Affects how the moneyAvailable increases (0-100)
 	this.timesHacked 			= 0;
 	
 	//The IP's of all servers reachable from this one (what shows up if you run scan/netstat)
@@ -111,10 +111,7 @@ Server.fromJSON = function(value) {
 
 Reviver.constructors.Server = Server;
 
-
-
 //world_daemon:               new Server(),   //Final server for 2nd tier prestige. Discover that the world is a simulation
-
 
 /* Initialization. Called only when loading a new game( no save file) */
 initForeignServers = function() {
@@ -607,6 +604,29 @@ initForeignServers = function() {
     }
 },
 
+
+//Server growth
+processServerGrowth = function(numCycles) {
+	var numServerGrowthCycles = Math.max(Math.floor(numCycles / 450), 0);
+	
+	for (var ip in AllServers) {
+		if (AllServers.hasOwnProperty(ip)) {
+			var server = AllServers[ip];
+			
+			//Get the number of server growth cycles that will be applied based on the
+			//server's serverGrowth property
+			var serverGrowthPercentage = server.serverGrowth / 100;
+			var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage;
+			
+			//Apply serverGrowth for the calculated number of growth cycles
+			var serverGrowth = Math.pow(1.0001, numServerGrowthCyclesAdjusted);
+			console.log("serverGrowth ratio: " + serverGrowth);
+			server.moneyAvailable *= serverGrowth;
+		}
+	}
+	console.log("Server growth processed for " + numServerGrowthCycles + " cycles");
+},
+
 //List of all servers that exist in the game, indexed by their ip
 AllServers = {};
 
@@ -637,7 +657,7 @@ GetServerByHostname = function(hostname) {
 	for (var ip in AllServers) {
 		if (AllServers.hasOwnProperty(ip)) {
 			if (AllServers[ip].hostname == hostname) {
-				return AllServers[i];
+				return AllServers[ip];
 			}
 		}
 	}

@@ -28,12 +28,21 @@ TESTING TODO:
 		Seems to work, at least the basics (for online production)
 	Script offline progress
 	
+	Delete a script from Active scripts when the WorkerScript is deleted
+		Seems to work
+		
+	Server growth
+		Implemented but it might need to be balance/formula readjusted
+
+		
 Tasks TODO:
 	ctrl+C functionality for all running command like hack(), analyze(), and tail 
 	Scroll all the way down when something is post()ed
 	Script logging functionality? Logs to internal "log file" (property of script itself)
 	Tutorial and help
-	Server growth
+	Secret Servers
+	
+	Purchasing Servers
 	
 	Hack time formula needs rebalancing I think
 	

@@ -196,9 +196,7 @@ scriptCalculateOfflineProduction = function(script) {
 	script.offlineMoneyMade += production;
 	script.offlineRunningTime += timePassed;
 	script.offlineExpGained += expGain;
-	
-	//TODO EXP
-	
+		
 	//DEBUG
 	var serverName = AllServers[script.server].hostname;
 	console.log(script.filename + " from server " + serverName + " generated $" + production.toString() + " while offline");

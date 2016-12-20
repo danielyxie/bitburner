@@ -181,6 +181,16 @@ var Engine = {
 		Engine.ActiveScriptsList.appendChild(item);
 	},
 	
+	deleteActiveScriptsItem: function(i) {
+		var list = Engine.ActiveScriptsList.querySelectorAll('#active-scripts-list li');
+		if (i >= list.length) {
+			throw new Error("Trying to delete an out-of-range Active Scripts item");
+		}
+		
+		var li = list[i];
+		li.parentNode.removeChild(li);
+	},
+	
 	//Update the ActiveScriptsItems array
 	updateActiveScriptsItems: function() {
 		for (var i = 0; i < workerScripts.length; ++i) {
@@ -216,7 +226,7 @@ var Engine = {
 		
 		//Server ip/hostname
 		var hostname = workerscript.getServer().hostname;
-		var serverIpHostname = "Server: " + hostname + " (" + workerscript.serverIp + ")";
+		var serverIpHostname = "Server: " + hostname + "(" + workerscript.serverIp + ")";
 		
 		//Online
 		var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
@@ -285,6 +295,7 @@ var Engine = {
         autoSaveCounter:    300,			//Autosave every minute
 		updateSkillLevelsCounter: 10,		//Only update skill levels every 2 seconds. Might improve performance
 		updateDisplays: 10,					//Update displays such as Active Scripts display and character display
+		serverGrowth: 450,					//Process server growth every minute and a half
     },
     
     decrementAllCounters: function(numCycles = 1) {
@@ -316,6 +327,12 @@ var Engine = {
 			} 
 			
 			Engine.Counters.updateDisplays = 10;
+		}
+		
+		if (Engine.Counters.serverGrowth <= 0) {
+			var numCycles = Math.floor((450 - Engine.Counters.serverGrowth));
+			processServerGrowth(numCycles);
+			Engine.Counters.serverGrowth = 450;
 		}
     },
     
@@ -363,7 +380,14 @@ var Engine = {
 		if (Engine.loadSave()) {
 			console.log("Loaded game from save");
 			CompanyPositions.init();
-			loadAllRunningScripts();	//This also takes care of offline production
+			
+			//Calculate the number of cycles have elapsed while offline
+			var thisUpdate = new Date().getTime();
+			var lastUpdate = Player.lastUpdate;
+			var numCyclesOffline = Math.floor((thisUpdate - lastUpdate) / Engine._idleSpeed);
+			
+			processServerGrowth(numCyclesOffline);	//Should be done before offline production for scripts
+			loadAllRunningScripts();	//This also takes care of offline production for those scripts
 		} else {
 			//No save found, start new game
 			console.log("Initializing new game");

@@ -19,6 +19,7 @@ Faction.prototype.setAugmentations = function(augs) {
 	}
 }
 
+Factions = {}
 Factions = {
 	//TODO Saving this for later, IShima is a kinda cool name maybe use it for something
 	//Endgame

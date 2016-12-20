@@ -105,6 +105,9 @@ function runScriptsLoop() {
 				
 			//Delete script from workerScripts
 			workerScripts.splice(i, 1);
+			
+			//Delete script from Active Scripts
+			Engine.deleteActiveScriptsItem(i);
 		}
 	}
 	
