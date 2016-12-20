@@ -19,37 +19,64 @@ Faction.prototype.setAugmentations = function(augs) {
 	}
 }
 
+//Map of factions indexed by faction name
 Factions = {}
-Factions = {
-	//TODO Saving this for later, IShima is a kinda cool name maybe use it for something
+
+AddToFactions = function(faction) {
+	var name = faction.name;
+	Factions[name] = faction;
+}
+
+initFactions = function() {
 	//Endgame
-	Illuminati: 			new Faction("Illuminati"),
-	Daedalus: 				new Faction("Daedalus"),
-	Covenant: 				new Faction("The Covenant"),
+	var Illuminati 				= new Faction("Illuminati");
+	AddToFactions(Illuminati);
+	var Daedalus 				= new Faction("Daedalus");
+	AddToFactions(Daedalus);
+	var Covenant 				= new Faction("The Covenant");
+	AddToFactions(Covenant);
 	
 	//Megacorporations, each forms its own faction
-	ECorp: 					new Faction("ECorp"),
-	MegaCorp: 				new Faction("MegaCorp"),
-	BachmanAndAssociates: 	new Faction("Bachman & Associates"),
-	BladeIndustries: 		new Faction("Blade Industries"),
-	NWO: 					new Faction("NWO"),
-	ClarkeIncorporated: 	new Faction("Clarke Incorporated"),
-	OmniTekIncorporated: 	new Faction("OmniTek Incorporated"),
-	FourSigma: 				new Faction("Four Sigma"),
-	KuaiGongInternational: 	new Faction("KuaiGong International"),
+	var ECorp 					= new Faction("ECorp");
+	AddToFactions(ECorp);
+	var MegaCorp 				= new Faction("MegaCorp");
+	AddToFactions(MegaCorp);
+	var BachmanAndAssociates 	= new Faction("Bachman & Associates");
+	AddToFactions(BachmanAndAssociates);
+	var BladeIndustries 		= new Faction("Blade Industries");
+	AddToFactions(BladeIndustries);
+	var NWO 					= new Faction("NWO");
+	AddToFactions(NWO);
+	var ClarkeIncorporated 		= new Faction("Clarke Incorporated");
+	AddToFactions(ClarkeIncorporated);
+	var OmniTekIncorporated 	= new Faction("OmniTek Incorporated");
+	AddToFactions(OmniTekIncorporated);
+	var FourSigma 				= new Faction("Four Sigma");
+	AddToFactions(FourSigma);
+	var KuaiGongInternational 	= new Faction("KuaiGong International");
+	AddToFactions(KuaiGongInternational);
 	
 	//Hacker groups
-	BitRunners: 			new Faction("BitRunners"),
-	BlackHand: 				new Faction("The Black Hand"),
-	NiteSec: 				new Faction("NiteSec"),
+	var BitRunners 				= new Faction("BitRunners");
+	AddToFactions(BitRunners);
+	var BlackHand				= new Faction("The Black Hand");
+	AddToFactions(BlackHand);
+	var NiteSec 				= new Faction("NiteSec");
+	AddToFactions(NiteSec);
 	
 	//City factions, essentially governments
-	Chongqing: 				new Faction("Chongqing"),
-	Sector12: 				new Faction("Sector-12"),
-	HongKong: 				new Faction("New Tokyo"),
-	Aevum: 				    new Faction("Aevum"),
-    Ishima:                 new Faction("Ishima"),
-	Volhaven: 				new Faction("Volhaven"),
+	var Chongqing 				= new Faction("Chongqing");
+	AddToFactions(Chongqing);
+	var Sector12 				= new Faction("Sector-12");
+	AddToFactions(Sector12);
+	var HongKong				= new Faction("New Tokyo");
+	AddToFactions(HongKong);
+	var Aevum 				    = new Faction("Aevum");
+	AddToFactions(Aevum);
+    var Ishima                 	= new Faction("Ishima");
+	AddToFactions(Ishima);
+	var Volhaven 				= new Faction("Volhaven");
+	AddToFactions(Volhaven);
 	
 	//Criminal Organizations/Gangs
 	
