@@ -8,16 +8,21 @@ function Faction(name) {
     this.playerReputation 	= 0;  		//"Reputation" within faction
 };
 
-//TODO
-Faction.prototype.init = function() {
-	
-}
-
 Faction.prototype.setAugmentations = function(augs) {
 	for (var i = 0; i < augs.length; i++) {
 		this.augmentations.push(augs[i]);
 	}
 }
+
+Faction.prototype.toJSON = function() {
+	return Generic_toJSON("Faction", this);
+}
+
+Faction.fromJSON = function(value) {
+	return Generic_fromJSON(Faction, value.data);
+}
+
+Reviver.constructors.Faction = Faction;
 
 //Map of factions indexed by faction name
 Factions = {}

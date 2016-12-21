@@ -37,9 +37,12 @@ TESTING TODO:
 	ctrl+C functionality for all running command like hack(), analyze(), and tail 
 		Implemented for hack() and analyze(). Seems to work
 
+	Saving/Loading factions
+		No errors thrown when saving/loading game at the start
 		
-Tasks TODO:
 	Scroll all the way down when something is post()ed
+
+Tasks TODO:
 	Script logging functionality? Logs to internal "log file" (property of script itself)
 	Tutorial and help
 	Secret Servers

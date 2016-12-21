@@ -55,11 +55,13 @@ var Engine = {
         var PlayerSave 			= JSON.stringify(Player);
         var AllServersSave      = JSON.stringify(AllServers);
 		var CompaniesSave 		= JSON.stringify(Companies);
+		var FactionsSave 		= JSON.stringify(Factions);
 		//TODO Add factions + companies here when they're done
         
         window.localStorage.setItem("netburnerPlayerSave", PlayerSave);
         window.localStorage.setItem("netburnerAllServersSave", AllServersSave);
 		window.localStorage.setItem("netburnerCompaniesSave", CompaniesSave);
+		window.localStorage.setItem("netburnerFactionsSave", FactionsSave);
 		console.log("Game saved to local storage");
     },
     
@@ -75,19 +77,26 @@ var Engine = {
 		} else if (!window.localStorage.getItem("netburnerCompaniesSave")) {
 			console.log("No Companies save to load");
 			return false;
+		} else if (!window.localStorage.getItem("netburnerFactionsSave")) {
+			console.log("No Factions save to load");
+			return false;
 		} else {
             var PlayerSave 			= window.localStorage.getItem("netburnerPlayerSave");
             var AllServersSave      = window.localStorage.getItem("netburnerAllServersSave");
 			var CompaniesSave 		= window.localStorage.getItem("netburnerCompaniesSave");
+			var FactionsSave 		= window.localStorage.getItem("netburnerFactionsSave");
             Player = JSON.parse(PlayerSave, Reviver);
             AllServers = JSON.parse(AllServersSave, Reviver);
 			Companies = JSON.parse(CompaniesSave, Reviver);
+			Factions = JSON.parse(FactionsSave, Reviver);
 			return true;
         }
     },
     
     //Delete saved game function
     deleteSave: function() {
+		//TODO if a save doesn't exist..maybe I shouldn't return? I just keep going
+		//or else nothing gets deleted. TODO Fix this
         if (!window.localStorage.getItem("netburnerPlayerSave")) {
             console.log("No Player Save to delete");
 			return false;
@@ -97,10 +106,14 @@ var Engine = {
 		} else if (!window.localStorage.getItem("netburnerCompaniesSave")) {
 			console.log("No Companies Save to delete");
 			return false;
+		} else if (!window.localStorage.getItem("netburnerFactionsSave")) {
+			console.log("No Factions Save to delete");
+			return false;
         } else {
             window.localStorage.removeItem("netburnerPlayerSave");
             window.localStorage.removeItem("netburnerAllServersSave");
 			window.localStorage.removeItem("netburnerCompaniesSave");
+			window.localStorage.removeItem("netburnerFactionsSave");
 			console.log("Deleted saves")
             return true;
         }
@@ -388,6 +401,7 @@ var Engine = {
 			initForeignServers();
 			CompanyPositions.init();
 			initCompanies();
+			initFactions();
 		}
                 
         //Main menu buttons and content

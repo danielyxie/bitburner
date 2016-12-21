@@ -1,18 +1,25 @@
 //Terminal
+
+/* Write text to terminal */
 var post = function(input) {
     $("#terminal-input").before('<tr class="posted"><td style="color: #66ff33;">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
-	window.scrollTo(0, document.body.scrollHeight);
+	updateTerminalScroll();
 }
 
 //Same thing as post but the td cells have ids so they can be animated for the hack progress bar
 var hackProgressBarPost = function(input) {
     $("#terminal-input").before('<tr class="posted"><td id="hack-progress-bar" style="color: #66ff33;">' + input + '</td></tr>');
-	window.scrollTo(0, document.body.scrollHeight);    
+	updateTerminalScroll();
 }
 
 var hackProgressPost = function(input) {
     $("#terminal-input").before('<tr class="posted"><td id="hack-progress" style="color: #66ff33;">' + input + '</td></tr>');
-	window.scrollTo(0, document.body.scrollHeight);    
+	updateTerminalScroll();    
+}
+
+function updateTerminalScroll() {
+	var element = document.getElementById("terminal-container");
+	element.scrollTop = element.scrollHeight;
 }
 
 var postNetburnerText = function() {
