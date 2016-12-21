@@ -33,10 +33,12 @@ TESTING TODO:
 		
 	Server growth
 		Implemented but it might need to be balance/formula readjusted
+		
+	ctrl+C functionality for all running command like hack(), analyze(), and tail 
+		Implemented for hack() and analyze(). Seems to work
 
 		
 Tasks TODO:
-	ctrl+C functionality for all running command like hack(), analyze(), and tail 
 	Scroll all the way down when something is post()ed
 	Script logging functionality? Logs to internal "log file" (property of script itself)
 	Tutorial and help

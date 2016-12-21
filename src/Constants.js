@@ -28,6 +28,12 @@ CONSTANTS = {
                 "run [script/program]   Execute a program or a script\n" + 
                 "scan                   See 'netstat' command\n" + 
                 "telnet [ip/hostname]   See 'connect' command\n" +
-                "top                    Display all running scripts and their RAM usage\n"
+                "top                    Display all running scripts and their RAM usage\n",
                 
+	//TutorialGettingStartedText:
+		
+	//TutorialServersText:
+	
+	//TutorialScriptText:
+	
 }

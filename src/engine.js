@@ -1,8 +1,3 @@
-//Replaces the character at an index with a new character
-String.prototype.replaceAt=function(index, character) {
-    return this.substr(0, index) + character + this.substr(index+character.length);
-}
-
 var Engine = {
 	
     //Clickable objects
@@ -283,7 +278,9 @@ var Engine = {
         Engine.checkCounters();		
 		
 		//Manual hacks
-		Engine.updateHackProgress(numCycles);
+		if (Engine._actionInProgress == true) {
+			Engine.updateHackProgress(numCycles);
+		}
 		
 		//Update the running time of all active scripts
 		updateOnlineScriptTimes(numCycles);
@@ -344,33 +341,29 @@ var Engine = {
 	_actionProgressBarCount: 1,
 	_actionInProgress: false,
 	updateHackProgress: function(numCycles = 1) {
-		if (Engine._actionInProgress == true) {
-			//TODO Do this calculation based on numCycles rather than idle speed
-            var timeElapsedMilli = numCycles * Engine._idleSpeed;
-			Engine._actionTimeLeft -= (timeElapsedMilli/ 1000);	//Substract idle speed (ms)
+		var timeElapsedMilli = numCycles * Engine._idleSpeed;
+		Engine._actionTimeLeft -= (timeElapsedMilli/ 1000);	//Substract idle speed (ms)
+	
+		//Calculate percent filled 
+		var percent = Math.round((1 - Engine._actionTimeLeft / Engine._totalActionTime) * 100);
 		
-			//Calculate percent filled 
-			var percent = Math.round((1 - Engine._actionTimeLeft / Engine._totalActionTime) * 100);
-			
-			//Update progress bar 
-			while (Engine._actionProgressBarCount * 2 <= percent) {
-				Engine._actionProgressStr = Engine._actionProgressStr.replaceAt(Engine._actionProgressBarCount, "|");
-				Engine._actionProgressBarCount += 1;
-			}
-			
-			//Update hack time remaining
-			Engine._actionTimeStr = "Time left: " + Math.max(0, Math.round(Engine._actionTimeLeft)).toString() + "s";
-			document.getElementById("hack-progress").innerHTML = Engine._actionTimeStr;
-			
-			//Dynamically update progress bar
-			document.getElementById("hack-progress-bar").innerHTML = Engine._actionProgressStr.replace( / /g, "&nbsp;" );
-			
-			//Once percent is 100, the hack is completed
-			if (percent >= 100) {
-				Engine._actionInProgress = false;
-				Terminal.finishAction();
-			}
-
+		//Update progress bar 
+		while (Engine._actionProgressBarCount * 2 <= percent) {
+			Engine._actionProgressStr = Engine._actionProgressStr.replaceAt(Engine._actionProgressBarCount, "|");
+			Engine._actionProgressBarCount += 1;
+		}
+		
+		//Update hack time remaining
+		Engine._actionTimeStr = "Time left: " + Math.max(0, Math.round(Engine._actionTimeLeft)).toString() + "s";
+		document.getElementById("hack-progress").innerHTML = Engine._actionTimeStr;
+		
+		//Dynamically update progress bar
+		document.getElementById("hack-progress-bar").innerHTML = Engine._actionProgressStr.replace( / /g, "&nbsp;" );
+		
+		//Once percent is 100, the hack is completed
+		if (percent >= 100) {
+			Engine._actionInProgress = false;
+			Terminal.finishAction();
 		}
 	},
 	

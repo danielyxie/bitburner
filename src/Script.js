@@ -2,7 +2,7 @@
  *  Script object
  */
 
-//Define commands in script editor (ctrl x to close, etc.)
+//Define key commands in script editor (ctrl x to close, etc.)
 $(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
 		//Ctrl + x

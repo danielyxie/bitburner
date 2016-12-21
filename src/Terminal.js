@@ -19,10 +19,11 @@ var postNetburnerText = function() {
 	post("Netburner v0.1");
 }
 
-//Defines what happens when enter is pressed (keycode 13)
+//Defines key commands in terminal
 $(document).keyup(function(event) {
 	//Terminal
 	if (Engine.currentPage == Engine.Page.Terminal) {
+		//Enter
 		if (event.keyCode == 13) {
 			var command = $('input[class=terminal-input]').val();
 			if (command.length > 0) {
@@ -32,6 +33,13 @@ $(document).keyup(function(event) {
 				Terminal.executeCommand(command);
 				$('input[class=terminal-input]').val("");
 			}
+		}
+		
+		//Ctrl + c when an "Action" is in progress
+		if (event.keyCode == 67 && event.ctrlKey && Engine._actionInProgress) {
+			post("Cancelling...");
+			Engine._actionInProgress = false;
+			Terminal.finishAction(true);
 		}
 	}
 });
@@ -68,42 +76,44 @@ var Terminal = {
     hackFlag:       false, 
     analyzeFlag:    false, 
     
-    finishAction: function() {
+    finishAction: function(cancelled = false) {
         if (Terminal.hackFlag) {
-            Terminal.finishHack();
+            Terminal.finishHack(cancelled);
         } else if (Terminal.analyzeFlag) {
-            Terminal.finishAnalyze();
+            Terminal.finishAnalyze(cancelled);
         }
     },
     
     //Complete the hack/analyze command
-	finishHack: function() {
-        console.log("Hack done. Determining success/failure of hack. Re-enabling terminal and changing the id of the hack progress bar");
-        
-        //Calculate whether hack was successful
-        var hackChance = Player.calculateHackingChance();
-        var rand = Math.random();
-        console.log("Hack success chance: " + hackChance +  ", rand: " + rand);
-        var expGainedOnSuccess = Player.calculateExpGain();
-        var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
-        if (rand < hackChance) {	//Success!
-            var moneyGained = Player.calculatePercentMoneyHacked();
-            moneyGained = Math.floor(Player.getCurrentServer().moneyAvailable * moneyGained);
+	finishHack: function(cancelled = false) {
+		if (cancelled == false) {
+			console.log("Hack done. Determining success/failure of hack. Re-enabling terminal and changing the id of the hack progress bar");
 			
-			//Safety check
-			if (moneyGained <= 0) {moneyGained = 0;}
-            
-            Player.getCurrentServer().moneyAvailable -= moneyGained;
-			Player.gainMoney(moneyGained);
-            
-            Player.hacking_exp += expGainedOnSuccess;
-            
-            post("Hack successful! Gained $" + moneyGained + " and " + expGainedOnSuccess + " hacking EXP");
-        } else {					//Failure
-            //Player only gains 25% exp for failure? TODO Can change this later to balance
-            Player.hacking_exp += expGainedOnFailure;
-            post("Failed to hack " + Player.getCurrentServer().hostname + ". Gained " + expGainedOnFailure + " hacking EXP");
-        }
+			//Calculate whether hack was successful
+			var hackChance = Player.calculateHackingChance();
+			var rand = Math.random();
+			console.log("Hack success chance: " + hackChance +  ", rand: " + rand);
+			var expGainedOnSuccess = Player.calculateExpGain();
+			var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
+			if (rand < hackChance) {	//Success!
+				var moneyGained = Player.calculatePercentMoneyHacked();
+				moneyGained = Math.floor(Player.getCurrentServer().moneyAvailable * moneyGained);
+				
+				//Safety check
+				if (moneyGained <= 0) {moneyGained = 0;}
+				
+				Player.getCurrentServer().moneyAvailable -= moneyGained;
+				Player.gainMoney(moneyGained);
+				
+				Player.hacking_exp += expGainedOnSuccess;
+				
+				post("Hack successful! Gained $" + moneyGained + " and " + expGainedOnSuccess + " hacking EXP");
+			} else {					//Failure
+				//Player only gains 25% exp for failure? TODO Can change this later to balance
+				Player.hacking_exp += expGainedOnFailure;
+				post("Failed to hack " + Player.getCurrentServer().hostname + ". Gained " + expGainedOnFailure + " hacking EXP");
+			}
+		}
         
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
@@ -114,44 +124,46 @@ var Terminal = {
         Terminal.hackFlag = false;
 	},
     
-    finishAnalyze: function() {
-        post(Player.getCurrentServer().hostname + ": ");
-        post("Required hacking skill: " + Player.getCurrentServer().requiredHackingSkill);
-        //TODO Make these actual estimates by adding a random offset to result?
-        //TODO Change the text to sound better
-        post("Estimated chance to hack: " + Math.round(Player.calculateHackingChance() * 100) + "%");
-        post("Estimated time to hack: " + Math.round(Player.calculateHackingTime()) + " seconds");
-		post("Estimed total money available on server: $" + Player.getCurrentServer().moneyAvailable);
-        post("Required number of open ports for PortHack: " +Player.getCurrentServer().numOpenPortsRequired);
-        if (Player.getCurrentServer().sshPortOpen) {
-            post("SSH port: Open")
-        } else {
-            post("SSH port: Closed")
-        }
-        
-        if (Player.getCurrentServer().ftpPortOpen) {
-            post("FTP port: Open")
-        } else {
-            post("FTP port: Closed")
-        }
-        
-        if (Player.getCurrentServer().smtpPortOpen) {
-            post("SMTP port: Open")
-        } else {
-            post("SMTP port: Closed")
-        }
-        
-        if (Player.getCurrentServer().httpPortOpen) {
-            post("HTTP port: Open")
-        } else {
-            post("HTTP port: Closed")
-        }
-        
-        if (Player.getCurrentServer().sqlPortOpen) {
-            post("SQL port: Open")
-        } else {
-            post("SQL port: Closed")
-        }
+    finishAnalyze: function(cancelled = false) {
+		if (cancelled == false) {
+			post(Player.getCurrentServer().hostname + ": ");
+			post("Required hacking skill: " + Player.getCurrentServer().requiredHackingSkill);
+			//TODO Make these actual estimates by adding a random offset to result?
+			//TODO Change the text to sound better
+			post("Estimated chance to hack: " + Math.round(Player.calculateHackingChance() * 100) + "%");
+			post("Estimated time to hack: " + Math.round(Player.calculateHackingTime()) + " seconds");
+			post("Estimed total money available on server: $" + Player.getCurrentServer().moneyAvailable);
+			post("Required number of open ports for PortHack: " +Player.getCurrentServer().numOpenPortsRequired);
+			if (Player.getCurrentServer().sshPortOpen) {
+				post("SSH port: Open")
+			} else {
+				post("SSH port: Closed")
+			}
+			
+			if (Player.getCurrentServer().ftpPortOpen) {
+				post("FTP port: Open")
+			} else {
+				post("FTP port: Closed")
+			}
+			
+			if (Player.getCurrentServer().smtpPortOpen) {
+				post("SMTP port: Open")
+			} else {
+				post("SMTP port: Closed")
+			}
+			
+			if (Player.getCurrentServer().httpPortOpen) {
+				post("HTTP port: Open")
+			} else {
+				post("HTTP port: Closed")
+			}
+			
+			if (Player.getCurrentServer().sqlPortOpen) {
+				post("SQL port: Open")
+			} else {
+				post("SQL port: Closed")
+			}
+		}
         Terminal.analyzeFlag = false;
         
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
@@ -411,10 +423,6 @@ var Terminal = {
 				break;
 			case "top":
 				//TODO List each's script RAM usage
-				break;
-			case "test":
-				post("test \n this post");
-				
 				break;
 			default:
 				post("Command not found");
