@@ -2,6 +2,7 @@
 function Faction(name) {
 	this.name 				= name;
     this.augmentations 		= [];
+	this.information 		= "";	//Introductory/informational text about the faction
     
     //Player-related properties for faction
 	this.isMember 			= false; 	//Whether player is member
@@ -12,6 +13,10 @@ Faction.prototype.setAugmentations = function(augs) {
 	for (var i = 0; i < augs.length; i++) {
 		this.augmentations.push(augs[i]);
 	}
+}
+
+Faction.prototype.setInformation(info) {
+	this.information = info;
 }
 
 Faction.prototype.toJSON = function() {
@@ -32,6 +37,7 @@ AddToFactions = function(faction) {
 	Factions[name] = faction;
 }
 
+//TODO Add faction information
 initFactions = function() {
 	//Endgame
 	var Illuminati 				= new Faction("Illuminati");
@@ -97,4 +103,13 @@ initFactions = function() {
 	AddToFactions(TianDiHui);
 	var CyberSec 				= new Faction("CyberSec");
 	AddToFactions(CyberSec);
+}
+
+//Displays the HTML content for this faction
+displayFactionContent = function(faction) {
+	if (faction.isMember) {
+		
+	} else {
+		console.log("Not a member of this faction, cannot display faction information");
+	}
 }
