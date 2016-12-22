@@ -26,6 +26,10 @@ AddToAugmentations = function(aug) {
 }
 
 //TODO Set descriptions for all 
+
+//TODO Something that decreases RAM usage of scripts
+//TODO SOmething that increases rate at which you gain faction respect
+//		Similarly. something that helps you gain company reputation
 initAugmentations = function() {
 	//Combat stat augmentations
 	var Targeting1 = new Augmentation("Targeting I");

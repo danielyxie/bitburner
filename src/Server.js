@@ -494,7 +494,29 @@ initForeignServers = function() {
     SnapFitnessGymServer.setHackingParameters(750, 1000000, 50, 45);
     SnapFitnessGymServer.setPortProperties(4);
     AddToAllServers(SnapFitnessGymServer);
-    
+	
+	//Faction servers, cannot hack money from these
+	var BitRunnersServer = new Server();
+	BitRunnersServer.init(createRandomIp(), "run4theh111z", "The Runners", true, false, false, false,  1);
+	BitRunnersServer.setPortProperties(4);
+	AddToAllServers(BitRunnersServer);
+	
+	var NiteSecServer = new Server();
+	NiteSecServer.init(createRandomIp(), "avmnite-02h", "NiteSec", true, false, false, false, 1);
+	NiteSecServer.setPortProperties(2);
+	AddToAllServers(NiteSecServer);
+	
+	var DarkArmyServer = new Server();
+    DarkArmyServer.init(createRandomIp(), ".", ".", true, false, false, false, 1);
+	DarkArmyServer.setPortProperties(5);
+	AddToAllServers(DarkArmyServer);
+	
+	var CyberSecServer = new Server();
+	CyberSecServer.init(createRandomIp(), "CSEC", "CyberSec", true, false, false, false, 1);
+	CyberSecServer.setPortProperties(2);
+	AddToAllServers(CyberSecServer);
+	
+	
     /* Create a randomized network for all the foreign servers */
     //Groupings for creating a randomized network
     var NetworkGroup1 =     [IronGymServer, FoodNStuffServer, SigmaCosmeticsServer, JoesGunsServer, HongFangTeaHouseServer, HaraKiriSushiBarServer];
@@ -502,14 +524,14 @@ initForeignServers = function() {
     var NetworkGroup3 =     [OmegaSoftwareServer, PhantasyServer, SilverHelixServer, NeoNightclubServer];
     var NetworkGroup4 =     [CrushFitnessGymServer, NetLinkTechnologiesServer, CompuTekServer, TheHubServer, JohnsonOrthopedicsServer];
     var NetworkGroup5 =     [CatalystVenturesServer, SysCoreSecuritiesServer, SummitUniversityServer, ZBInstituteOfTechnologyServer, RothmanUniversityServer];
-    var NetworkGroup6 =     [LexoCorpServer, RhoConstructionServer, AlphaEnterprisesServer, AevumPoliceServer, MilleniumFitnessGymServer];
+    var NetworkGroup6 =     [LexoCorpServer, RhoConstructionServer, AlphaEnterprisesServer, AevumPoliceServer, MilleniumFitnessGymServer, CyberSecServer, NiteSecServer];
     var NetworkGroup7 =     [GlobalPharmaceuticalsServer, AeroCorpServer, GalacticCyberSystemsServer, SnapFitnessGymServer];
     var NetworkGroup8 =     [DeltaOneServer, UnitaLifeGroupServer, OmniaCybersystemsServer];
     var NetworkGroup9 =     [ZeusMedicalServer, SolarisSpaceSystemsServer, UniversalEnergyServer, IcarusMicrosystemsServer, DefCommServer];
     var NetworkGroup10 =    [NovaMedicalServer, ZBDefenseServer, TaiYangDigitalServer, InfoCommServer];
-    var NetworkGroup11 =    [AppliedEnergeticsServer, MicrodyneTechnologiesServer, TitanLabsServer];
+    var NetworkGroup11 =    [AppliedEnergeticsServer, MicrodyneTechnologiesServer, TitanLabsServer, BitRunnersServer];
     var NetworkGroup12 =    [VitaLifeServer, HeliosLabsServer, StormTechnologiesServer, FulcrumTechnologiesServer];
-    var NetworkGroup13 =    [KuaiGongInternationalServer, FourSigmaServer, OmniTekIncorporatedServer];
+    var NetworkGroup13 =    [KuaiGongInternationalServer, FourSigmaServer, OmniTekIncorporatedServer, DarkArmyServer];
     var NetworkGroup14 =    [PowerhouseGymServer, ClarkeIncorporatedServer, NWOServer, BladeIndustriesServer, BachmanAndAssociatesServer];
     var NetworkGroup15 =    [FulcrumSecretTechnologiesServer, MegaCorpServer, ECorpServer];
     

@@ -84,7 +84,7 @@ initFactions = function() {
 	AddToFactions(Volhaven);
 	
 	//Criminal Organizations/Gangs
-	var SpeakersForTheDead		= new Faction("Speakers for the Dead");
+	var SpeakersForTheDead		= new Faction("Speakers for the Dead"); 
 	AddToFactions(SpeakersForTheDead);
 	var DarkArmy				= new Faction("The Dark Army");
 	AddToFactions(DarkArmy);
@@ -95,6 +95,6 @@ initFactions = function() {
 	//belong in other categories
 	var TianDiHui				= new Faction("Tian Di Hui");	//Society of the Heaven and Earth
 	AddToFactions(TianDiHui);
-	
-	
+	var CyberSec 				= new Faction("CyberSec");
+	AddToFactions(CyberSec);
 }
