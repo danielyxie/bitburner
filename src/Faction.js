@@ -84,8 +84,17 @@ initFactions = function() {
 	AddToFactions(Volhaven);
 	
 	//Criminal Organizations/Gangs
+	var SpeakersForTheDead		= new Faction("Speakers for the Dead");
+	AddToFactions(SpeakersForTheDead);
+	var DarkArmy				= new Faction("The Dark Army");
+	AddToFactions(DarkArmy);
+	var TheSyndicate 			= new Faction("The Syndicate");
+	AddToFactions(TheSyndicate);
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
+	var TianDiHui				= new Faction("Tian Di Hui");	//Society of the Heaven and Earth
+	AddToFactions(TianDiHui);
+	
 	
 }
