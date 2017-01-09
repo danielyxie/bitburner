@@ -107,8 +107,152 @@ initFactions = function() {
 
 //Displays the HTML content for this faction
 displayFactionContent = function(faction) {
+	var hackDiv 			= document.getElementById("faction-hack-div");
+	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
+	var securityWorkDiv 	= document.getElementById("faction-securitywork-div");
+	
+	var hackButton 			= document.getElementById("faction-hack-button");
+	var fieldWorkButton 	= document.getElementById("faction-fieldwork-button");
+	var securityWorkButton 	= document.getElementById("faction-securitywork-button");
+	
+	//TODO Add event listeners for the buttons
+	
 	if (faction.isMember) {
-		
+		switch(faction.name) {
+			case "Illuminati":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "hidden";
+				break;
+			case "Daedalus":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "hidden";
+				break;
+			case "The Covenant":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "hidden";
+				break;
+			case "ECorp":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "MegaCorp":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "Bachman & Associates":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "Blade Industries":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "NWO":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "Clarke Incorporated":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "OmniTek Incorporated":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "Four Sigma":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "KuaiGong International":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "BitRunners":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "hidden";
+				securityWorkDiv.style.visibility = "hidden";
+				break;
+			case "The Black Hand":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "hidden";
+				break;
+			case "NiteSec":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "hidden";
+				securityWorkDiv.style.visibility = "hidden";
+				break;
+			case "Chongqing":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "Sector-12":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "New Tokyo":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "Aevum":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "Ishima":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "Volhaven":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "Speakers for the Dead":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "The Dark Army":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "hidden";
+				break;
+			case "The Syndicate":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "visible";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "Tian Di Hui":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "hidden";
+				securityWorkDiv.style.visibility = "visible";
+				break;
+			case "CyberSec":
+				hackDiv.style.visibility = "visible";
+				fieldWorkDiv.style.visibility = "hidden";
+				securityWorkDiv.style.visibility = "hidden";
+				break;
+			default:
+				console.log("Faction does not exist");
+				break;
+		}
 	} else {
 		console.log("Not a member of this faction, cannot display faction information");
 	}

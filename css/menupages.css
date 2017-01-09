@@ -91,3 +91,14 @@
 }
 
 /* Factions */
+#faction-hack-button-div, #faction-hack-text-div {
+	display:inline-block;
+}
+
+#faction-fieldwork-button-div, #faction-fieldwork-text-div {
+	display:inline-block;
+}
+
+#faction-securitywork-button-div, #faction-securitywork-text-div {
+	display:inline-block;
+}

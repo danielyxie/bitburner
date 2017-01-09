@@ -68,7 +68,16 @@ initAugmentations = function() {
 	var GrapheneBoneLacings = new Augmentation("Graphene Bone Lacings");
 	AddToAugmentations(GrapheneBoneLacings);
 	
+	var BionicSpine = new Augmentation("Bionic Spine");
+	AddToAugmentations(BionicSpine);
+	
+	var GrapheneBionicSpine = new Augmentation("Graphene Bionic Spine");
+	AddToAugmentations(GrapheneBionicSpine);
+	
 	//Labor stat augmentations
+	var SpeechProcessor = new Augmentation("Speech Processor Implant");
+	AddToAugmentations(SpeechProcessor);
+	
 	var CASIE = new Augmentation("Computer Assisted Social Interaction Enhancement");
 	AddToAugmentations(CASIE);
 	
@@ -105,6 +114,9 @@ initAugmentations = function() {
 	
 	var ENMDMA = new Augmentation("Embedded Netburner Module Direct Memory Access Upgrade");
 	AddToAugmentations(ENMDMA);
+	
+	var Neuralstimulator = new Augmentation("Neuralstimulator");
+	AddToAugmentations(Neuralstimulator);
 	
 	//Misc augmentations
 }
@@ -146,10 +158,19 @@ applyAugmentations = function(aug) {
 		case "Graphene Bone Lacings":
 			//Strength defense 15%
 			break;
-
+		case "Bionic Spine":
+			//Everything 3%?
+			break;
+		case "Graphene Bionic Spine":
+			//Everything 5%
+			break;
+			
 		//Labor stats augmentations
 		case "Computer Assisted Social Interaction Enhancement":
 			//Charisma 10%
+			break;
+		case "Speech Processor Implant":
+			//Charisma 5%
 			break;
 
 		//Hacking augmentations
@@ -187,7 +208,9 @@ applyAugmentations = function(aug) {
 		case "Embedded Netburner Module Direct Memory Access Upgrade":
 			//Money hacked 20%
 			break;
-		
+		case "Neuralstimulator":
+			//Hacking speed, money gained, and exp gained 10%
+			break;
 		
 		default:
 			console.log("No such augmentation!");

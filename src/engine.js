@@ -1,14 +1,17 @@
 var Engine = {
 	
     //Clickable objects
-    Clickables: {
-        hackButton:     null,
-        
+    Clickables: {        
         //Main menu buttons
         terminalMainMenuButton:     	null,
         characterMainMenuButton:    	null,
 		scriptEditorMainMenuButton: 	null,
 		activeScriptsMainMenuButton: 	null,
+		worldMainMenuButton: 			null,
+		createProgramMainMenuButton: 	null,
+		factionsMainMenuButton: 		null,
+		augmentationsMainMenuButton: 	null,
+		tutorialMainMenuButton: 		null,
         saveMainMenuButton:         	null,
         deleteMainMenuButton:       	null,
     },
@@ -28,6 +31,11 @@ var Engine = {
         characterContent:   	null,
 		scriptEditorContent: 	null,
 		activeScriptsContent: 	null,
+		worldContent: 			null,
+		createProgramContent: 	null,
+		factionsContent: 		null,
+		augmentationsContent: 	null,
+		tutorialContent: 		null,
         
         //Character info
         characterInfo:      	null,
@@ -42,6 +50,11 @@ var Engine = {
 		CharacterInfo: 		"CharacterInfo",
 		ScriptEditor: 		"ScriptEditor",
 		ActiveScripts: 		"ActiveScripts",
+		World: 				"World",
+		CreateProgram: 		"CreateProgram",
+		Factions: 			"Factions",
+		Augmentations: 		"Augmentations",
+		Tutorial: 			"Tutorial",
 	},
 	currentPage:	null,
 
@@ -158,6 +171,11 @@ var Engine = {
         Engine.Display.characterContent.style.visibility = "hidden";
 		Engine.Display.scriptEditorContent.style.visibility = "hidden";
 		Engine.Display.activeScriptsContent.style.visibility = "hidden";
+		Engine.Display.worldContent.style.visiblity = "hidden";
+		Engine.Display.createProgramContent.style.visibility = "hidden";
+		Engine.Display.factionsContent.style.visibility = "hidden";
+		Engine.Display.augmentationsContent.style.visibility = "hidden";
+		Engine.Display.tutorialContent.style.visibility = "hidden";
     },
     
     /* Display character info */
@@ -428,6 +446,37 @@ var Engine = {
 			Engine.loadActiveScriptsContent();
 			return false;
 		});
+		
+		Engine.Clickables.worldMainMenuButton = document.getElementById("world-menu-link");
+		Engine.Clickables.worldMainMenuButton.addEventListener("click", function() {
+			Engine.loadWorldContent();
+			return false;
+		});
+		
+		Engine.Clickables.createProgramMainMenuButton = document.getElementById("create-program-menu-link");
+		Engine.Clickables.createProgramMainMenuButton.addEventListener("click", function() {
+			Engine.loadCreateProgramContent();
+			return false;
+		});
+		
+		Engine.Clickables.factionsMainMenuButton = document.getElementById("factions-menu-link");
+		Engine.Clickables.factionsMainMenuButton.addEventListener("click", function() {
+			Engine.loadFactionContent();
+			return false;
+		});
+		
+		Engine.Clickables.augmentationsMainMenuButton = document.getElementById("augmentations-menu-link");
+		Engine.Clickables.augmentationsMainMenuButton.addEventListener("click", function() {
+			Engine.loadAugmentationsContent();
+			return false;
+		});
+		
+		Engine.Clickables.tutorialMainMenuButton = document.getElementById("tutorial-menu-link");
+		Engine.Clickables.tutorialMainMenuButton.addEventListener("click", function() {
+			Engine.loadTutorialContent();
+			return false;
+		}
+		
 		//Active scripts list
 		Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
 		
@@ -445,12 +494,30 @@ var Engine = {
         
         Engine.Display.terminalContent = document.getElementById("terminal-container");
 		Engine.currentPage = Engine.Page.Terminal;
+		
         Engine.Display.characterContent = document.getElementById("character-container");
 		Engine.Display.characterContent.style.visibility = "hidden";
+		
 		Engine.Display.scriptEditorContent = document.getElementById("script-editor-container");
 		Engine.Display.scriptEditorContent.style.visibility = "hidden";
+		
 		Engine.Display.activeScriptsContent = document.getElementById("active-scripts-container");
 		Engine.Display.activeScriptsContent.style.visibility = "hidden";
+		
+		Engine.Display.worldContent = document.getElementById("world-container");
+		Engine.Display.worldContent.style.visibility = "hidden";
+		
+		Engine.Display.createProgramContent = document.getElementById("create-program-container");
+		Engine.Display.createProgramContent.style.visibility = "hidden";
+		
+		Engine.Display.factionsContent = document.getElementById("factions-container");
+		Engine.Display.factionsContent.style.visibility = "hidden";
+		
+		Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
+		Engine.Display.augmentationsContent.style.visiblity = "hidden";
+		
+		Engine.Display.tutorialContent = document.getElementById("tutorial-container");
+		Engine.Display.tutorialContent.style.visiblity = "hidden";
         
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");
