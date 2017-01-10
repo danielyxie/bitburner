@@ -105,8 +105,28 @@ initFactions = function() {
 	AddToFactions(CyberSec);
 }
 
+joinFaction = function(faction) {
+	faction.isMember = true;
+	
+	//Add the faction to the Factions page content
+	var item = document.createElement("li");
+	var aElem = document.createElement("a");
+	aElem.setAttribute("href", "#");
+	aElem.innerHTML = faction.name;
+	aElem.addEventListener("click", function() {
+		displayFactionContent(faction.name);
+		return false;
+	}
+	item.appendChild(aElem);
+				
+	var factionsList = document.getElementById("factions-list");
+	factionsList.appendChild(item);
+}
+
 //Displays the HTML content for this faction
-displayFactionContent = function(faction) {
+displayFactionContent = function(factionName) {
+	var faction = Factions[factionName];
+	
 	var hackDiv 			= document.getElementById("faction-hack-div");
 	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
 	var securityWorkDiv 	= document.getElementById("faction-securitywork-div");

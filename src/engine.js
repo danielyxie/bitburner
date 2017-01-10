@@ -164,6 +164,41 @@ var Engine = {
 		
 		Engine.currentPage = Engine.Page.ActiveScripts;
 	},
+	
+	loadWorldContent: function() {
+		Engine.hideAllContent();
+		Engine.Display.worldContent.style.visibility = "visible";
+		
+		Engine.currentPage = Engine.Page.World;
+	}
+	
+	loadCreateProgramContent: function() {
+		Engine.hideAllContent();
+		Engine.Display.createProgramContent.style.visibility = "visible";
+		
+		Engine.currentPage = Engine.Page.CreateProgram;
+	}
+	
+	loadFactionsContent: function() {
+		Engine.hideAllContent();
+		Engine.Display.factionsContent.style.visibility = "visible";
+		
+		Engine.currentPage = Engine.Page.Factions;
+	}
+	
+	loadAugmentationsContent: function() {
+		Engine.hideAllContent();
+		Engine.Display.augmentationsContent.style.visibility = "visible";
+		
+		Engine.currentPage = Engine.Page.Augmentations;
+	}
+	
+	loadTutorialContent: function() {
+		Engine.hideAllContent();
+		Engine.Display.tutorialContent.style.visibility = "visible";
+		
+		Engine.currentPage = Engine.Page.Tutorial;
+	}
     
     //Helper function that hides all content 
     hideAllContent: function() {
@@ -461,7 +496,7 @@ var Engine = {
 		
 		Engine.Clickables.factionsMainMenuButton = document.getElementById("factions-menu-link");
 		Engine.Clickables.factionsMainMenuButton.addEventListener("click", function() {
-			Engine.loadFactionContent();
+			Engine.loadFactionsContent();
 			return false;
 		});
 		
