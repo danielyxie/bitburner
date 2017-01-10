@@ -21,7 +21,7 @@ Company.prototype.init = function(name, salaryMult, expMult) {
 }
 
 Company.prototype.addPosition = function(pos) {
-	this.companyPositions.push(pos);
+	this.companyPositions.push(pos.name); //Company object holds only name of positions
 }
 
 Company.prototype.addPositions = function(positions) {
@@ -215,88 +215,244 @@ initCompanies = function() {
 	//Megacorporations
 	var ECorp = new Company();
 	ECorp.init("ECorp", 3.0, 3.0);
+	ECorp.addPositions([
+		CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+		CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
+		CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
+		CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
+		CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+		CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
+		CompanyPositions.CEO]);
 	AddToCompanies(ECorp);
 	
 	var MegaCorp = new Company();
 	MegaCorp.init("MegaCorp", 3.0, 3.0);
+	MegaCorp.addPositions([
+		CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+		CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
+		CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
+		CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
+		CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+		CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
+		CompanyPositions.CEO]);
 	AddToCompanies(MegaCorp);
 	
 	var BachmanAndAssociates = new Company();
 	BachmanAndAssociates.init("Bachman & Associates", 2.6, 2.6);
+	BachmanAndAssociates.addPositions([
+		CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+		CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
+		CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
+		CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
+		CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+		CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
+		CompanyPositions.CEO]);
 	AddToCompanies(BachmanAndAssociates);
 	
 	var BladeIndustries = new Company();
 	BladeIndustries.init("Blade Industries", 2.75, 2.75);		
+	BladeIndustries.addPositions([
+		CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+		CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
+		CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
+		CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
+		CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+		CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
+		CompanyPositions.CEO]);
 	AddToCompanies(BladeIndustries);
 	
 	var NWO = new Company();
 	NWO.init("NWO", 2.75, 2.75);
+	NWO.addPositions([
+		CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+		CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
+		CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
+		CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
+		CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+		CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
+		CompanyPositions.CEO]);
 	AddToCompanies(NWO);
 	
 	var ClarkeIncorporated = new Company();
 	ClarkeIncorporated.init("Clarke Incorporated", 2.25, 2.25);
+	ClarkeIncorporated.addPositions([
+		CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+		CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
+		CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
+		CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
+		CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+		CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
+		CompanyPositions.CEO]);
 	AddToCompanies(ClarkeIncorporated);
 	
 	var OmniTekIncorporated = new Company();
 	OmniTekIncorporated.init("OmniTek Incorporated", 2.25, 2.25);
+	OmniTekIncorporated.addPositions([
+		CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+		CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
+		CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
+		CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
+		CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+		CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
+		CompanyPositions.CEO]);
 	AddToCompanies(OmniTekIncorporated);
 	
 	var FourSigma = new Company();
 	FourSigma.init("Four Sigma", 2.5, 2.5);
+	FourSigma.addPositions([
+		CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+		CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
+		CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
+		CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
+		CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+		CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
+		CompanyPositions.CEO]);
 	AddToCompanies(FourSigma);
 	
 	var KuaiGongInternational = new Company();
 	KuaiGongInternational.init("KuaiGong International", 2.2, 2.2);
+	KuaiGongInternational.addPositions([
+		CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+		CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
+		CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
+		CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
+		CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+		CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
+		CompanyPositions.CEO]);
 	AddToCompanies(KuaiGongInternational);
 	
 	//Technology and communication companies ("Large" servers)
 	var FulcrumTechnologies = new Company();
 	FulcrumTechnologies.init("Fulcrum Technologies", 2.0, 2.0);
+	FulcrumTechnologies.addPositions([
+		CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+		CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
+		CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
+		CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
+		CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+		CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
+		CompanyPositions.CEO]);
 	AddToCompanies(FulcrumTechnologies);
 	
 	var StormTechnologies = new Company();
 	StormTechnologies.init("Storm Technologies", 1.8, 1.8);
+	StormTechnologies.addPositions([
+		CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+		CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
+		CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
+		CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
+		CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+		CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
+		CompanyPositions.CEO]);
 	AddToCompanies(StormTechnologies);
 	
 	var DefComm = new Company();
 	DefComm.init("DefComm", 1.75, 1.75);
+	DefComm.addPositions([
+		CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
+		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
+		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.CFO, CompanyPositions.CEO]);
 	AddToCompanies(DefComm);
 	
 	var HeliosLabs =  new Company();
 	HeliosLabs.init("Helios Labs", 1.8, 1.8);
+	HeliosLabs.addPositions([
+		CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
+		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
+		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.CFO, CompanyPositions.CEO]);
 	AddToCompanies(HeliosLabs); 
 	
 	var VitaLife = new Company();
 	VitaLife.init("VitaLife", 1.8, 1.8);
+	VitaLife.addPositions([
+		CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
+		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
+		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
+		CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
 	AddToCompanies(VitaLife);
 	
 	var IcarusMicrosystems = new Company();
 	IcarusMicrosystems.init("Icarus Microsystems", 1.9, 1.9);
+	IcarusMicrosystems.addPositions([
+		CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
+		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
+		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
+		CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
 	AddToCompanies(IcarusMicrosystems);
 	
 	var UniversalEnergy = new Company();
 	UniversalEnergy.init("Universal Energy", 2.0, 2.0);
+	UniversalEnergy.addPositions([
+		CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
+		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
+		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
+		CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
 	AddToCompanies(UniversalEnergy); 
 	
 	var GalacticCybersystems = new Company();
 	GalacticCybersystems.init("Galactic Cybersystems", 1.9, 1.9);
+	GalacticCybersystems.addPositions([
+		CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
+		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
+		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
+		CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
 	AddToCompanies(GalacticCybersystems);
 	
 	//Defense Companies ("Large" Companies)
 	var AeroCorp = new Company();
 	AeroCorp.init("AeroCorp", 1.7, 1.7);
+	AeroCorp.addPositions([
+		CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
+		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
+		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.CTO,
+		CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
 	AddToCompanies(AeroCorp);
 	
 	var OmniaCybersystems = new Company();
 	OmniaCybersystems.init("Omnia Cybersystems", 1.7, 1.7);
+	OmniaCybersystems.addPositions([
+		CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
+		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
+		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.CTO,
+		CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
 	AddToCompanies(OmniaCybersystems);
 	
 	var SolarisSpaceSystems = new Company();
 	SolarisSpaceSystems.init("Solaris Space Systems", 1.7, 1.7);
+	SolarisSpaceSystems.addPositions([
+		CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
+		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
+		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.CTO,
+		CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
 	AddToCompanies(SolarisSpaceSystems);
 	
 	var DeltaOne = new Company();
 	DeltaOne.init("Delta One", 1.6, 1.6);
+	DeltaOne.addPositions([
+		CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
+		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
+		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.CTO,
+		CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
 	AddToCompanies(DeltaOne);
 	
 	//Health, medicine, pharmaceutical companies ("Large" servers)
