@@ -168,6 +168,7 @@ var Engine = {
 	loadWorldContent: function() {
 		Engine.hideAllContent();
 		Engine.Display.worldContent.style.visibility = "visible";
+		Engine.displayWorldInfo();
 		
 		Engine.currentPage = Engine.Page.World;
 	}
@@ -225,6 +226,47 @@ var Engine = {
 												 'Servers owned: ' + Player.purchasedServers.length + '<br><br>' +
                                                  'Hacking Experience: ' + Player.hacking_exp.toFixed(4) + '<br><br>';
     },
+	
+	/* Display locations in the world*/
+	aevumLocationsList: 		null,
+	chongqingLocationsList: 	null,
+	sector12LocationsList: 		null, 
+	newTokyoLocationsList: 		null,
+	ishimaLocationsList: 		null,
+	volhavenLocationsList: 		null,
+	
+	displayWorldInfo: function() {
+		Engine.aevumLocationsList.style.display = "none";
+		Engine.chongqingLocationsList.style.display = "none";
+		Engine.sector12LocationsList.style.display = "none";
+		Engine.newTokyoLocationsList.style.display = "none";
+		Engine.ishimaLocationsList.style.display = "none";
+		Engine.volhavenLocationsList.style.display = "none";
+		
+		switch(Player.city) {
+			case "Aevum":
+				Engine.aevumLocationsList.style.display = "inline";
+				break;
+			case "ChongQing":
+				Engine.chongqingLocationsList.style.display = "inline";
+				break;
+			case "Sector-12":
+				Engine.sector12LocationsList.style.display = "inline";
+				break;
+			case "New Tokyo":
+				Engine.newTokyoLocationsList.style.display = "inline";
+				break;
+			case "Ishima":
+				Engine.ishimaLocationsList.style.display = "inline";
+				break;
+			case "Volhaven":
+				Engine.volhavenLocationsList.style.display = "inline";
+				break;
+			default:
+				console.log("Invalid city value in Player object!");
+				break;
+		}
+	}
 	
 	/* Functions used to update information on the Active Scripts page */
 	ActiveScriptsList: 			null,
@@ -557,6 +599,13 @@ var Engine = {
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");
 		
+		//Location lists
+		Engine.aevumLocationsList = document.getElementById("aevum-locations-list");
+		Engine.chongqingLocationsList = document.getElementById("chongqing-locations-list");
+		Engine.sector12LocationsList = document.getElementById("sector12-locations-list");
+		Engine.newTokyoLocationsList = document.getElementById("newtokyo-locations-list");
+		Engine.ishimaLocationsList = document.getElementById("ishima-locations-list");
+		Engine.volhavenLocationsList = document.getElementById("volhaven-locations-list");
 		//Script editor 
 		Engine.Display.scriptEditorText = document.getElementById("script-editor-text");
         

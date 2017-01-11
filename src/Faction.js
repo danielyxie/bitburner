@@ -80,8 +80,8 @@ initFactions = function() {
 	AddToFactions(Chongqing);
 	var Sector12 				= new Faction("Sector-12");
 	AddToFactions(Sector12);
-	var HongKong				= new Faction("New Tokyo");
-	AddToFactions(HongKong);
+	var NewTokyo				= new Faction("New Tokyo");
+	AddToFactions(NewTokyo);
 	var Aevum 				    = new Faction("Aevum");
 	AddToFactions(Aevum);
     var Ishima                 	= new Faction("Ishima");
@@ -140,134 +140,134 @@ displayFactionContent = function(factionName) {
 	if (faction.isMember) {
 		switch(faction.name) {
 			case "Illuminati":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "hidden";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "none";
 				break;
 			case "Daedalus":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "hidden";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "none";
 				break;
 			case "The Covenant":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "hidden";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "none";
 				break;
 			case "ECorp":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "MegaCorp":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "Bachman & Associates":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "Blade Industries":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "NWO":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "Clarke Incorporated":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "OmniTek Incorporated":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "Four Sigma":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "KuaiGong International":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "BitRunners":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "hidden";
-				securityWorkDiv.style.visibility = "hidden";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "none";
+				securityWorkDiv.style.display = "none";
 				break;
 			case "The Black Hand":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "hidden";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "none";
 				break;
 			case "NiteSec":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "hidden";
-				securityWorkDiv.style.visibility = "hidden";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "none";
+				securityWorkDiv.style.display = "none";
 				break;
 			case "Chongqing":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "Sector-12":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "New Tokyo":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "Aevum":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "Ishima":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "Volhaven":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "Speakers for the Dead":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "The Dark Army":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "hidden";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "none";
 				break;
 			case "The Syndicate":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "visible";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "inline";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "Tian Di Hui":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "hidden";
-				securityWorkDiv.style.visibility = "visible";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "none";
+				securityWorkDiv.style.display = "inline";
 				break;
 			case "CyberSec":
-				hackDiv.style.visibility = "visible";
-				fieldWorkDiv.style.visibility = "hidden";
-				securityWorkDiv.style.visibility = "hidden";
+				hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "none";
+				securityWorkDiv.style.display = "none";
 				break;
 			default:
 				console.log("Faction does not exist");

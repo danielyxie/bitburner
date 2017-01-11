@@ -11,6 +11,7 @@ function PlayerObject() {
     
     //Labor stats
     this.charisma        = 1;
+	//Intelligence, perhaps?
     
     //Hacking multipliers
     this.hacking_chance_multiplier   = 2;  //Increase through ascensions/augmentations
@@ -56,10 +57,14 @@ function PlayerObject() {
     this.lifetime_money  = 0;
     
     //IP Address of Starting (home) computer
-    this.homeComputer = null;
+    this.homeComputer = "";
+	
+	//Cities: Aevum, ChongQing, Sector12, New Tokyo, Ishima, Volhaven
+	this.city 			= "Aevum";
+	this.location 		= "";
     
     //Servers
-    this.currentServer       = null; //IP address of Server currently being accessed through terminal
+    this.currentServer       = ""; //IP address of Server currently being accessed through terminal
     this.discoveredServers   = [];   //IP addresses of secret servers not in the network that you have discovered
     this.purchasedServers    = [];
     
