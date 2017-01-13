@@ -60,7 +60,7 @@ function PlayerObject() {
     this.homeComputer = "";
 	
 	//Cities: Aevum, ChongQing, Sector12, New Tokyo, Ishima, Volhaven
-	this.city 			= "Aevum";
+	this.city 			= CONSTANTS.Aevum;
 	this.location 		= "";
     
     //Servers

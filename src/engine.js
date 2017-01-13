@@ -244,22 +244,22 @@ var Engine = {
 		Engine.volhavenLocationsList.style.display = "none";
 		
 		switch(Player.city) {
-			case "Aevum":
+			case CONSTANTS.Aevum:
 				Engine.aevumLocationsList.style.display = "inline";
 				break;
-			case "ChongQing":
+			case CONSTANTS.ChongQing:
 				Engine.chongqingLocationsList.style.display = "inline";
 				break;
-			case "Sector-12":
+			case CONSTANTS.Sector12:
 				Engine.sector12LocationsList.style.display = "inline";
 				break;
-			case "New Tokyo":
+			case CONSTANTS.NewTokyo:
 				Engine.newTokyoLocationsList.style.display = "inline";
 				break;
-			case "Ishima":
+			case CONSTANTS.Ishima:
 				Engine.ishimaLocationsList.style.display = "inline";
 				break;
-			case "Volhaven":
+			case CONSTANTS.Volhaven:
 				Engine.volhavenLocationsList.style.display = "inline";
 				break;
 			default:
