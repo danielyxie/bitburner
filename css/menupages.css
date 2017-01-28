@@ -90,7 +90,45 @@
     text-decoration: none;
 }
 
+/* World */
+#world-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+}
+
+/* Create program */
+#create-program-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+}
+
 /* Factions */
+#factions-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+}
+
+#faction-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 90%;
+}
+
 #faction-hack-button-div, #faction-hack-text-div {
 	display:inline-block;
 }
@@ -101,4 +139,25 @@
 
 #faction-securitywork-button-div, #faction-securitywork-text-div {
 	display:inline-block;
+}
+
+/* Augmentations */
+
+#augmentations-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+}
+
+/* Tutorial */
+#tutorial-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
 }

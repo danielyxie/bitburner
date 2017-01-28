@@ -15,13 +15,13 @@ function Company() {
 };
 
 Company.prototype.init = function(name, salaryMult, expMult) {
-	this.companyName 	= name;
-	this.salaryMult 	= salaryMult;
-	this.expMult 		= expMult;
+	this.companyName 	    = name;
+	this.salaryMultiplier 	= salaryMult;
+	this.expMultiplier 		= expMult;
 }
 
 Company.prototype.addPosition = function(pos) {
-	this.companyPositions.push(pos.name); //Company object holds only name of positions
+	this.companyPositions.push(pos.positionName); //Company object holds only name of positions
 }
 
 Company.prototype.addPositions = function(positions) {
@@ -133,15 +133,15 @@ CompanyPositions = {
 	
 	//Non-tech/management jobs
 	Waiter:						new CompanyPosition("Waiter", 1, 1, 1, 1, 1, 1, 0, .5),
-	Employee: 					new CompanyPosition("Employee", 1, 1, 1, 1, 1, 1, 0, .5);
+	Employee: 					new CompanyPosition("Employee", 1, 1, 1, 1, 1, 1, 0, .5),
 	SecurityGuard: 				new CompanyPosition("Security Guard", 1, 50, 50, 50, 50, 0, 3),
 	PoliceOfficer: 				new CompanyPosition("Police Officer", 10, 100, 100, 100, 100, 9000, 4),
 	SecurityOfficer: 			new CompanyPosition("Security Officer", 25, 150, 150, 150, 150, 9000, 6),
 	SecuritySupervisor: 		new CompanyPosition("Security Supervisor", 25, 250, 250, 250, 250, 36000, 12),
 	HeadOfSecurity: 			new CompanyPosition("Head of Security", 50, 500, 500, 500, 500, 72000, 20),
 	FieldAgent: 				new CompanyPosition("Field Agent", 100, 100, 100, 100, 100, 9000, 4),
-	SecretAgent: 				new CompanyPosition("Secret Agent", 200, 250, 250, 250, 250, 36000, 10);
-	SpecialOperative: 			new CompanyPosition("Special Operative", 250, 500, 500, 500, 500, 108000, 20);
+	SecretAgent: 				new CompanyPosition("Secret Agent", 200, 250, 250, 250, 250, 36000, 10),
+	SpecialOperative: 			new CompanyPosition("Special Operative", 250, 500, 500, 500, 500, 108000, 20),
 	
 	init: function() {
 		//Argument order: hack, str, def, dex, agi, cha
@@ -530,7 +530,7 @@ initCompanies = function() {
 		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
 		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
 		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
-		CompanyPositions.HeadOfEngineering, CompanyPositions.SecurityGuard, CompanyPositions, SecurityOfficer,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.SecurityGuard, CompanyPositions.SecurityOfficer,
 		CompanyPositions.SecuritySupervisor, CompanyPositions.HeadOfSecurity, CompanyPositions.FieldAgent,
 		CompanyPositions.SecretAgent, CompanyPositions.SpecialOperative]);
 	AddToCompanies(CIA);
@@ -542,7 +542,7 @@ initCompanies = function() {
 		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
 		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
 		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
-		CompanyPositions.HeadOfEngineering, CompanyPositions.SecurityGuard, CompanyPositions, SecurityOfficer,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.SecurityGuard, CompanyPositions.SecurityOfficer,
 		CompanyPositions.SecuritySupervisor, CompanyPositions.HeadOfSecurity, CompanyPositions.FieldAgent,
 		CompanyPositions.SecretAgent, CompanyPositions.SpecialOperative]);
 	AddToCompanies(NSA);
@@ -554,7 +554,7 @@ initCompanies = function() {
 		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
 		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
 		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
-		CompanyPositions.HeadOfEngineering, CompanyPositions.SecurityGuard, CompanyPositions, SecurityOfficer,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.SecurityGuard, CompanyPositions.SecurityOfficer,
 		CompanyPositions.SecuritySupervisor, CompanyPositions.HeadOfSecurity, CompanyPositions.FieldAgent,
 		CompanyPositions.SecretAgent, CompanyPositions.SpecialOperative]);
 	AddToCompanies(WatchdogSecurity);
@@ -632,7 +632,7 @@ initCompanies = function() {
 		CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
 		CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
 		CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
-		CompanyPositions.HeadOfEngineering, CompanyPositions.SecurityGuard, CompanyPositions, SecurityOfficer,
+		CompanyPositions.HeadOfEngineering, CompanyPositions.SecurityGuard, CompanyPositions.SecurityOfficer,
 		CompanyPositions.SecuritySupervisor, CompanyPositions.HeadOfSecurity, CompanyPositions.FieldAgent,
 		CompanyPositions.SecretAgent, CompanyPositions.SpecialOperative]);
 	AddToCompanies(CarmichaelSecurity);
@@ -640,7 +640,7 @@ initCompanies = function() {
 	//"Low level" companies
 	var FoodNStuff = new Company(); 
 	FoodNStuff.init("FoodNStuff", 1, 1);
-	FoodNStuff.addPositions([CompanyPositions.Employee]);)
+	FoodNStuff.addPositions([CompanyPositions.Employee]);
 	AddToCompanies(FoodNStuff);
 	
 	var JoesGuns = new Company();

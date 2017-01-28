@@ -34,6 +34,7 @@ var Engine = {
 		worldContent: 			null,
 		createProgramContent: 	null,
 		factionsContent: 		null,
+        factionContent:         null,
 		augmentationsContent: 	null,
 		tutorialContent: 		null,
         
@@ -53,6 +54,7 @@ var Engine = {
 		World: 				"World",
 		CreateProgram: 		"CreateProgram",
 		Factions: 			"Factions",
+        Faction:            "Faction",
 		Augmentations: 		"Augmentations",
 		Tutorial: 			"Tutorial",
 	},
@@ -171,35 +173,42 @@ var Engine = {
 		Engine.displayWorldInfo();
 		
 		Engine.currentPage = Engine.Page.World;
-	}
+	},
 	
 	loadCreateProgramContent: function() {
 		Engine.hideAllContent();
 		Engine.Display.createProgramContent.style.visibility = "visible";
 		
 		Engine.currentPage = Engine.Page.CreateProgram;
-	}
+	},
 	
 	loadFactionsContent: function() {
 		Engine.hideAllContent();
 		Engine.Display.factionsContent.style.visibility = "visible";
 		
 		Engine.currentPage = Engine.Page.Factions;
-	}
+	},
+    
+    loadFactionContent: function() {
+        Engine.hideAllContent();
+        Engine.Display.factionContent.style.visibility = "visible";
+        
+        Engine.currentPage = Engine.Page.Faction;
+    },
 	
 	loadAugmentationsContent: function() {
 		Engine.hideAllContent();
 		Engine.Display.augmentationsContent.style.visibility = "visible";
 		
 		Engine.currentPage = Engine.Page.Augmentations;
-	}
+	},
 	
 	loadTutorialContent: function() {
 		Engine.hideAllContent();
 		Engine.Display.tutorialContent.style.visibility = "visible";
 		
 		Engine.currentPage = Engine.Page.Tutorial;
-	}
+	},
     
     //Helper function that hides all content 
     hideAllContent: function() {
@@ -207,11 +216,26 @@ var Engine = {
         Engine.Display.characterContent.style.visibility = "hidden";
 		Engine.Display.scriptEditorContent.style.visibility = "hidden";
 		Engine.Display.activeScriptsContent.style.visibility = "hidden";
-		Engine.Display.worldContent.style.visiblity = "hidden";
+		Engine.Display.worldContent.style.visibility = "hidden";
 		Engine.Display.createProgramContent.style.visibility = "hidden";
 		Engine.Display.factionsContent.style.visibility = "hidden";
+        Engine.Display.factionContent.style.visibility = "hidden";
 		Engine.Display.augmentationsContent.style.visibility = "hidden";
 		Engine.Display.tutorialContent.style.visibility = "hidden";
+        
+        //Location lists
+        Engine.aevumLocationsList.style.display = "none";
+        Engine.aevumLocationsList.style.visibility = "hidden";
+		Engine.chongqingLocationsList.style.display = "none";
+        Engine.chongqingLocationsList.style.visibility = "hidden";
+		Engine.sector12LocationsList.style.display = "none";
+        Engine.sector12LocationsList.style.visibility = "hidden";
+		Engine.newTokyoLocationsList.style.display = "none";
+        Engine.newTokyoLocationsList.style.visibility = "hidden";
+		Engine.ishimaLocationsList.style.display = "none";
+        Engine.ishimaLocationsList.style.visibility = "hidden";
+		Engine.volhavenLocationsList.style.display = "none";
+        Engine.volhavenLocationsList.style.visibility = "hidden";
     },
     
     /* Display character info */
@@ -246,27 +270,33 @@ var Engine = {
 		switch(Player.city) {
 			case CONSTANTS.Aevum:
 				Engine.aevumLocationsList.style.display = "inline";
+                Engine.aevumLocationsList.style.visibility  = "visible";
 				break;
 			case CONSTANTS.ChongQing:
 				Engine.chongqingLocationsList.style.display = "inline";
+                Engine.chongqingLocationsList.style.visibility = "visible";
 				break;
 			case CONSTANTS.Sector12:
 				Engine.sector12LocationsList.style.display = "inline";
+                Engine.sector12LocationsList.style.visibility = "visible";
 				break;
 			case CONSTANTS.NewTokyo:
 				Engine.newTokyoLocationsList.style.display = "inline";
+                Engine.newTokyoLocationsList.style.visibility = "visible";
 				break;
 			case CONSTANTS.Ishima:
 				Engine.ishimaLocationsList.style.display = "inline";
+                Engine.ishimaLocationsList.style.visibility = "visible";
 				break;
 			case CONSTANTS.Volhaven:
 				Engine.volhavenLocationsList.style.display = "inline";
+                Engine.volhavenLocationsList.style.visibility = "visible";
 				break;
 			default:
 				console.log("Invalid city value in Player object!");
 				break;
 		}
-	}
+	},
 	
 	/* Functions used to update information on the Active Scripts page */
 	ActiveScriptsList: 			null,
@@ -481,7 +511,7 @@ var Engine = {
 		if (Engine.loadSave()) {
 			console.log("Loaded game from save");
 			CompanyPositions.init();
-			
+
 			//Calculate the number of cycles have elapsed while offline
 			var thisUpdate = new Date().getTime();
 			var lastUpdate = Player.lastUpdate;
@@ -494,9 +524,9 @@ var Engine = {
 			console.log("Initializing new game");
 			Player.init();
 			initForeignServers();
-			CompanyPositions.init();
 			initCompanies();
 			initFactions();
+            CompanyPositions.init();
 		}
                 
         //Main menu buttons and content
@@ -552,7 +582,7 @@ var Engine = {
 		Engine.Clickables.tutorialMainMenuButton.addEventListener("click", function() {
 			Engine.loadTutorialContent();
 			return false;
-		}
+		});
 		
 		//Active scripts list
 		Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
@@ -589,12 +619,16 @@ var Engine = {
 		
 		Engine.Display.factionsContent = document.getElementById("factions-container");
 		Engine.Display.factionsContent.style.visibility = "hidden";
+        
+        
+        Engine.Display.factionContent = document.getElementById("faction-container");
+        Engine.Display.factionContent.style.visibility = "hidden";
 		
 		Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
-		Engine.Display.augmentationsContent.style.visiblity = "hidden";
+		Engine.Display.augmentationsContent.style.visibility = "hidden";
 		
 		Engine.Display.tutorialContent = document.getElementById("tutorial-container");
-		Engine.Display.tutorialContent.style.visiblity = "hidden";
+		Engine.Display.tutorialContent.style.visibility = "hidden";
         
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");
@@ -606,6 +640,7 @@ var Engine = {
 		Engine.newTokyoLocationsList = document.getElementById("newtokyo-locations-list");
 		Engine.ishimaLocationsList = document.getElementById("ishima-locations-list");
 		Engine.volhavenLocationsList = document.getElementById("volhaven-locations-list");
+        
 		//Script editor 
 		Engine.Display.scriptEditorText = document.getElementById("script-editor-text");
         

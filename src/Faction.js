@@ -1,7 +1,7 @@
 //Netburner Faction class
 function Faction(name) {
 	this.name 				= name;
-    this.augmentations 		= [];
+    this.augmentations 		= [];   //Name of faction only
 	this.information 		= "";	//Introductory/informational text about the faction
     
     //Player-related properties for faction
@@ -15,7 +15,7 @@ Faction.prototype.setAugmentations = function(augs) {
 	}
 }
 
-Faction.prototype.setInformation(info) {
+Faction.prototype.setInformation = function(info) {
 	this.information = info;
 }
 
@@ -116,7 +116,7 @@ joinFaction = function(faction) {
 	aElem.addEventListener("click", function() {
 		displayFactionContent(faction.name);
 		return false;
-	}
+	});
 	item.appendChild(aElem);
 				
 	var factionsList = document.getElementById("factions-list");
