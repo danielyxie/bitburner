@@ -216,7 +216,7 @@ var Engine = {
     loadLocationContent: function() {
         Engine.hideAllContent();
         Engine.Display.locationContent.style.visibility = "visible";
-        displayLocationContent(Player.location);
+        displayLocationContent();
         
         Engine.currentPage = Engine.Page.Location;
     },
@@ -277,27 +277,27 @@ var Engine = {
         switch(Player.city) {
             case Locations.Aevum:
                 Engine.aevumLocationsList.style.display = "inline";
-                Engine.aevumLocationsList.style.visibility  = "visible";
+                //Engine.aevumLocationsList.style.visibility  = "visible";
                 break;
             case Locations.Chongqing:
                 Engine.chongqingLocationsList.style.display = "inline";
-                Engine.chongqingLocationsList.style.visibility = "visible";
+                //Engine.chongqingLocationsList.style.visibility = "visible";
                 break;
             case Locations.Sector12:
                 Engine.sector12LocationsList.style.display = "inline";
-                Engine.sector12LocationsList.style.visibility = "visible";
+                //Engine.sector12LocationsList.style.visibility = "visible";
                 break;
             case Locations.NewTokyo:
                 Engine.newTokyoLocationsList.style.display = "inline";
-                Engine.newTokyoLocationsList.style.visibility = "visible";
+                //Engine.newTokyoLocationsList.style.visibility = "visible";
                 break;
             case Locations.Ishima:
                 Engine.ishimaLocationsList.style.display = "inline";
-                Engine.ishimaLocationsList.style.visibility = "visible";
+                //Engine.ishimaLocationsList.style.visibility = "visible";
                 break;
             case Locations.Volhaven:
                 Engine.volhavenLocationsList.style.display = "inline";
-                Engine.volhavenLocationsList.style.visibility = "visible";
+                //Engine.volhavenLocationsList.style.visibility = "visible";
                 break;
             default:
                 console.log("Invalid city value in Player object!");
