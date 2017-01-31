@@ -3,6 +3,7 @@
 //		  to be saved/loaded from localStorage
 function Company() {
 	this.companyName 		= "";
+    this.info               = "";
     this.companyPositions 	= [];	//Names (only name, not object) of all company positions
 	this.salaryMultiplier	= 1;	//Multiplier for base salary
 	this.expMultiplier 		= 1;	//Multiplier for base exp gain
@@ -20,6 +21,10 @@ Company.prototype.init = function(name, salaryMult, expMult) {
 	this.expMultiplier 		= expMult;
 }
 
+Company.prototype.setInfo = function(inf) {
+    this.info = inf;
+}
+
 Company.prototype.addPosition = function(pos) {
 	this.companyPositions.push(pos.positionName); //Company object holds only name of positions
 }
@@ -28,6 +33,15 @@ Company.prototype.addPositions = function(positions) {
 	for (var i = 0; i < positions.length; i++) {
 		this.addPosition(positions[i]);
 	}
+}
+
+Company.prototype.hasPosition = function(pos) {
+    for (var i = 0; i < this.companyPositions.length; ++i) {
+        if (pos.name == this.companyPositions[i]) {
+            return true;
+        }
+    }
+    return false;
 }
 
 Company.prototype.toJSON = function() {
@@ -99,6 +113,76 @@ CompanyPosition.prototype.calculateJobPerformance = function(hacking, str, def, 
 	return (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio) / 100;
 }
 
+CompanyPosition.prototype.isSoftwareJob = function() {
+    if (this.positionName == "Software Engineering Intern" || 
+        this.positionName == "Junior Software Engineer" || 
+        this.positionName == "Senior Software Engineer" || 
+        this.positionName == "Lead Software Developer" || 
+        this.positionName == "Head of Software" ||
+        this.positionName == "Head of Engineering" || 
+        this.positionName == "Vice President of Technology" || 
+        this.positionName == "Chief Technology Officer") {
+            return true;
+    }
+    return false;
+}
+
+CompanyPosition.prototype.isITJob = function() {
+    if (this.positionName == "IT Intern" || 
+        this.positionName == "IT Analyst" || 
+        this.positionName == "IT Manager" || 
+        this.positionName == "Systems Administrator") {
+            return true;
+    }
+    return false;
+}
+
+CompanyPosition.prototype.isSecurityEngineerJob = function() {
+    if (this.positionName == "Security Engineer") {
+        return true;
+    }
+    return false;
+}
+
+CompanyPosition.prototype.isNetworkEngineerJob = function() {
+    if (this.positionName == "Network Engineer" || this.positionName == "Network Administrator") {
+        return true;
+    }
+    return false;
+}
+
+CompanyPosition.prototype.isBusinessJob = function() {
+    if (this.positionName == "Business Intern" ||
+        this.positionName == "Business Analyst" ||
+        this.positionName == "Business Manager" ||
+        this.positionName == "Operations Manager" ||
+        this.positionName == "Chief Financial Officer" ||
+        this.positionName == "Chief Executive Officer") {
+            return true;
+    }
+    return true;
+}
+
+CompanyPosition.prototype.isSecurityJob = function() {
+    if (this.positionName == "Security Guard" ||
+        this.positionName == "Police Officer" ||
+        this.positionName == "Security Officer" ||
+        this.positionName == "Security Supervisor" ||
+        this.positionName == "Head of Security") {
+            return true;
+    }
+    return false;
+}
+
+CompanyPosition.prototype.isAgentJob = function() {
+    if (this.positionName == "Field Agent" || 
+        this.positionName == "Secret Agent" || 
+        this.positionName == "Special Operative") {
+            return true;
+    }
+    return false;
+}
+
 CompanyPositions = {
 	//Constructor: CompanyPosition(name, reqHack, reqStr, reqDef, reqDex, reqAgi, reqCha, reqRep, salary)
 
@@ -108,7 +192,7 @@ CompanyPositions = {
 	SeniorDev: 					new CompanyPosition("Senior Software Engineer", 250, 1, 1, 1, 1, 50, 36000, 12),
 	LeadDev: 					new CompanyPosition("Lead Software Developer", 400, 1, 1, 1, 1, 100, 72000, 15),
 	
-	//Security
+	//IT
 	ITIntern: 					new CompanyPosition("IT Intern", 1, 1, 1, 1, 1, 1, 0, .8),
 	ITAnalyst:					new CompanyPosition("IT Analyst", 25, 1, 1, 1, 1, 1, 9000, 2),
 	ITManager:					new CompanyPosition("IT Manager", 150, 1, 1, 1, 1, 50, 36000, 8),

@@ -38,13 +38,7 @@ CONSTANTS = {
 	
 	
 	
-	//Location Definitions
-	Aevum: 			"Aevum",
-	ChongQing: 		"ChongQing",
-	Sector12: 		"Sector-12",
-	NewTokyo: 		"New Tokyo",
-	Ishima: 		"Ishima",
-	Volhaven: 		"Volhaven",
+
 	
 	
 }

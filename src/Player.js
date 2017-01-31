@@ -59,9 +59,13 @@ function PlayerObject() {
     //IP Address of Starting (home) computer
     this.homeComputer = "";
 	
-	//Cities: Aevum, ChongQing, Sector12, New Tokyo, Ishima, Volhaven
-	this.city 			= CONSTANTS.Aevum;
+	//Location information
+	this.city 			= Locations.Aevum;
 	this.location 		= "";
+    
+    //Company Information
+    this.companyName = "";
+    this.companyJob = "";
     
     //Servers
     this.currentServer       = ""; //IP address of Server currently being accessed through terminal
@@ -69,7 +73,6 @@ function PlayerObject() {
     this.purchasedServers    = [];
     
     //Achievements and achievement progress
-    
     
     //Flag to let the engine know the player is starting a hack
     this.startAction = false;

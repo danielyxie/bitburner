@@ -13,7 +13,11 @@ p {
     color: #66ff33;
 }
 
+h1 {
+    
+}
 
+/* Main menu */
 .mainmenu {
     list-style-type: none;
     margin: 0;
@@ -51,6 +55,14 @@ p {
     color: white;
 }
 
-h1 {
-	padding: 8px;
+/* Make html links ("a" elements) nice looking buttons with this class */
+.a-link-button {
+    text-decoration: none;
+    background-color: #555;
+    color: #FFFFFF;
+    padding: 4px 4px 4px 4px;
+    border-top: 1px solid #333333;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #333333;
 }

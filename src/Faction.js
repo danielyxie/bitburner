@@ -1,11 +1,12 @@
 //Netburner Faction class
 function Faction(name) {
 	this.name 				= name;
-    this.augmentations 		= [];   //Name of faction only
+    this.augmentations 		= [];   //Name of augmentation only
 	this.information 		= "";	//Introductory/informational text about the faction
     
     //Player-related properties for faction
 	this.isMember 			= false; 	//Whether player is member
+    this.isBanned           = false;    //Whether or not player is banned from joining this faction
     this.playerReputation 	= 0;  		//"Reputation" within faction
 };
 

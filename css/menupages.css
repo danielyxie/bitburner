@@ -100,6 +100,21 @@
     width: 99%;
 }
 
+/* Purchase servers */
+#purchase-servers-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+}
+
+#purchase-servers-input, #purchase-servers-gb-text {
+    display:inline-block;
+    color: #66ff33;
+}
+
 /* Create program */
 #create-program-container {
     position: fixed;
@@ -118,6 +133,7 @@
     height: 100%;
     margin-left: 10%;
     width: 99%;
+    color: #66ff33;
 }
 
 #faction-container {
@@ -139,6 +155,12 @@
 
 #faction-securitywork-button-div, #faction-securitywork-text-div {
 	display:inline-block;
+}
+
+/* World */
+#world-container li {
+    margin: 0 0 15px 0;
+    list-style-type: none;
 }
 
 /* Augmentations */
