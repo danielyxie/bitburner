@@ -651,6 +651,9 @@ var Engine = {
         //Location page (page that shows up when you visit a specific location in World)
         Engine.Display.locationContent = document.getElementById("location-container");
         Engine.Display.locationContent.style.visibility = "hidden";
+		
+		//Init Location buttons
+		initLocationButtons();
         
         //Script editor 
         Engine.Display.scriptEditorText = document.getElementById("script-editor-text");

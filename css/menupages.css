@@ -166,6 +166,7 @@
 /* Augmentations */
 
 #augmentations-container {
+	color: #66ff33;
     position: fixed;
     padding-top: 10px;
     padding-left: 10px;
@@ -176,10 +177,27 @@
 
 /* Tutorial */
 #tutorial-container {
+	color: #66ff33;
     position: fixed;
     padding-top: 10px;
     padding-left: 10px;
     height: 100%;
     margin-left: 10%;
     width: 99%;
+}
+
+/* Location */
+#location-container {
+	color: #66ff33;
+	position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+	padding: 20px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+}
+
+#location-container * {
+	margin: 10px 5px 10px 5px;
 }

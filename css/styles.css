@@ -53,6 +53,7 @@ h1 {
 .mainmenu>li a.active {
     background-color: #555;
     color: white;
+	
 }
 
 /* Make html links ("a" elements) nice looking buttons with this class */

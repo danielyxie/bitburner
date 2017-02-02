@@ -20,7 +20,7 @@ Locations = {
     AevumGalacticCybersystems:  "Galactic Cybersystems",
     AevumWatchdogSecurity:      "Watchdog Security",
     AevumRhoConstruction:       "Rho Construction",
-    AevumPolice:                "Aevum Police HQ", 
+    AevumPolice:                "Aevum Police Headquarters", 
     AevumNetLinkTechnologies:   "NetLink Technologies",
     AevumCrushFitnessGym:       "Crush Fitness Gym",
     AevumSnapFitnessGym:        "Snap Fitness Gym",
@@ -73,45 +73,59 @@ Locations = {
 }
 
 displayLocationContent = function() {
-    returnToWorld       = document.getElementById("location-return-to-world-button");
-    locationName        = document.getElementById("location-name");
-    locationInfo        = document.getElementById("location-info");
+	if (Engine.debug) {
+		console.log("displayLocationContent() called with location " + Player.location)
+	}
+	
+	var loc = Player.location;
+
+    var returnToWorld       = document.getElementById("location-return-to-world-button");
+	returnToWorld.addEventListener("click", function() {
+		Engine.loadWorldContent();
+	});
+	
+    var locationName        = document.getElementById("location-name");
+	locationName.innerHTML = loc;
+	locationName.style.display = "block";
+	
+    var locationInfo        = document.getElementById("location-info");
+	locationInfo.style.display = "block";
     
-    softwareJob         = document.getElementById("location-software-job");
-    itJob               = document.getElementById("location-it-job");
-    securityEngineerJob = document.getElementById("location-security-engineer-job");
-    networkEngineerJob  = document.getElementById("location-network-engineer-job");
-    businessJob         = document.getElementById("location-business-job");
-    securityJob         = document.getElementById("location-security-job");
-    agentJob            = document.getElementById("location-agent-job");
-    employeeJob         = document.getElementById("location-employee-job");
-    waiterJob           = document.getElementById("location-waiter-job");
+    var softwareJob         = document.getElementById("location-software-job");
+    var itJob               = document.getElementById("location-it-job");
+    var securityEngineerJob = document.getElementById("location-security-engineer-job");
+    var networkEngineerJob  = document.getElementById("location-network-engineer-job");
+    var businessJob         = document.getElementById("location-business-job");
+    var securityJob         = document.getElementById("location-security-job");
+    var agentJob            = document.getElementById("location-agent-job");
+    var employeeJob         = document.getElementById("location-employee-job");
+    var waiterJob           = document.getElementById("location-waiter-job");
     
-    work                = document.getElementById("location-work");
+    var work                = document.getElementById("location-work");
     
-    gymTrainStr         = document.getElementById("location-gym-train-str");
-    gymTrainDef         = document.getElementById("location-gym-train-def");
-    gymTrainDex         = document.getElementById("location-gym-train-dex");
-    gymTrainAgi         = document.getElementById("location-gym-train-agi");
-    
-    purchase1gb         = document.getElementById("location-purchase-1gb");
-    purchase2gb         = document.getElementById("location-purchase-2gb");
-    purchase4gb         = document.getElementById("location-purchase-4gb");
-    purchase8gb         = document.getElementById("location-purchase-8gb");
-    purchase16gb        = document.getElementById("location-purchase-16gb");
-    purchase32gb        = document.getElementById("location-purchase-32gb");
-    purchase64gb        = document.getElementById("location-purchase-64gb");
-    purchase128gb       = document.getElementById("location-purchase-128gb");
-    purchase256gb       = document.getElementById("location-purchase-256gb");
-    purchase512gb       = document.getElementById("location-purchase-512gb");
-    purchase1tb         = document.getElementById("location-purchase-1tb");
-    
-    travelToAevum       = document.getElementById("location-travel-to-aevum");
-    travelToChongqing   = document.getElementById("location-travel-to-chongqing");
-    travelToSector12    = document.getElementById("location-travel-to-sector12");
-    travelToNewTokyo    = document.getElementById("location-travel-to-newtokyo");
-    travelToIshima      = document.getElementById("location-travel-to-ishima");
-    travelToVolhaven    = document.getElementById("location-travel-to-volhaven");
+    var gymTrainStr         = document.getElementById("location-gym-train-str");
+    var gymTrainDef         = document.getElementById("location-gym-train-def");
+    var gymTrainDex         = document.getElementById("location-gym-train-dex");
+    var gymTrainAgi         = document.getElementById("location-gym-train-agi");
+
+    var purchase1gb         = document.getElementById("location-purchase-1gb");
+    var purchase2gb         = document.getElementById("location-purchase-2gb");
+    var purchase4gb         = document.getElementById("location-purchase-4gb");
+    var purchase8gb         = document.getElementById("location-purchase-8gb");
+    var purchase16gb        = document.getElementById("location-purchase-16gb");
+    var purchase32gb        = document.getElementById("location-purchase-32gb");
+    var purchase64gb        = document.getElementById("location-purchase-64gb");
+    var purchase128gb       = document.getElementById("location-purchase-128gb");
+    var purchase256gb       = document.getElementById("location-purchase-256gb");
+    var purchase512gb       = document.getElementById("location-purchase-512gb");
+    var purchase1tb         = document.getElementById("location-purchase-1tb");
+
+    var travelToAevum       = document.getElementById("location-travel-to-aevum");
+    var travelToChongqing   = document.getElementById("location-travel-to-chongqing");
+    var travelToSector12    = document.getElementById("location-travel-to-sector12");
+    var travelToNewTokyo    = document.getElementById("location-travel-to-newtokyo");
+    var travelToIshima      = document.getElementById("location-travel-to-ishima");
+    var travelToVolhaven    = document.getElementById("location-travel-to-volhaven");
     
     softwareJob.style.display = "none";
     itJob.style.display = "none";
@@ -149,301 +163,358 @@ displayLocationContent = function() {
     travelToIshima.style.display = "none";
     travelToVolhaven.style.display = "none";
     
-    switch (Player.location) {
+    switch (loc) {
         case Locations.AevumTravelAgency: 
-            travelToChongqing.style.display = "inline";
-            travelToSector12.style.display = "inline";
-            travelToNewTokyo.style.display = "inline";
-            travelToIshima.style.display = "inline";
-            travelToVolhaven.style.display = "inline";
+            travelToChongqing.style.display = "block";
+            travelToSector12.style.display = "block";
+            travelToNewTokyo.style.display = "block";
+            travelToIshima.style.display = "block";
+            travelToVolhaven.style.display = "block";
             break;
             
         case Locations.AevumECorp:  
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
         case Locations.AevumBachmanAndAssociates: 
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
         case Locations.AevumClarkeIncorporated:   
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+		
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
         case Locations.AevumFulcrumTechnologies:  
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
             break;
 
         case Locations.AevumAeroCorp:        
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
         case Locations.AevumGalacticCybersystems: 
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
             break;
 
         case Locations.AevumWatchdogSecurity:  
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            securityJob.style.display = "inline";
-            agentJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            securityJob.style.display = "block";
+            agentJob.style.display = "block";
             break;
 
         case Locations.AevumRhoConstruction: 
-            softwareJob.style.display = "inline";
-            businessJob.style.display = "inline";   
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            businessJob.style.display = "block";   
             break;
 
         case Locations.AevumPolice:     
-            softwareJob.style.display = "inline";
-            securityJob.style.display = "inline";        
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            securityJob.style.display = "block";        
             break;
 
         case Locations.AevumNetLinkTechnologies:  
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
             break;
 
         case Locations.AevumCrushFitnessGym:  
-            gymTrainStr.style.display = "inline";
-            gymTrainDef.style.display = "inline";
-            gymTrainDex.style.display = "inline";
-            gymTrainAgi.style.display = "inline";
+            gymTrainStr.style.display = "block";
+            gymTrainDef.style.display = "block";
+            gymTrainDex.style.display = "block";
+            gymTrainAgi.style.display = "block";
             break;
 
-        case Locations.AevumSnapFitnessGym:  
-            gymTrainStr.style.display = "inline";
-            gymTrainDef.style.display = "inline";
-            gymTrainDex.style.display = "inline";
-            gymTrainAgi.style.display = "inline";
+        case Locations.AevumSnapFitnessGym:  			
+            gymTrainStr.style.display = "block";
+            gymTrainDef.style.display = "block";
+            gymTrainDex.style.display = "block";
+            gymTrainAgi.style.display = "block";
             break;
-
 
         case Locations.ChongqingTravelAgency:   
-            travelToAevum.style.display = "inline";
-            travelToSector12.style.display = "inline";
-            travelToNewTokyo.style.display = "inline";
-            travelToIshima.style.display = "inline";
-            travelToVolhaven.style.display = "inline";        
+            travelToAevum.style.display = "block";
+            travelToSector12.style.display = "block";
+            travelToNewTokyo.style.display = "block";
+            travelToIshima.style.display = "block";
+            travelToVolhaven.style.display = "block";        
             break;
 
         case Locations.ChongqingKuaiGongInternational:
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
         case Locations.ChongqingSolarisSpaceSystems:  
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
 
         case Locations.Sector12TravelAgency:   
-            travelToAevum.style.display = "inline";
-            travelToChongqing.style.display = "inline";
-            travelToNewTokyo.style.display = "inline";
-            travelToIshima.style.display = "inline";
-            travelToVolhaven.style.display = "inline";
+            travelToAevum.style.display = "block";
+            travelToChongqing.style.display = "block";
+            travelToNewTokyo.style.display = "block";
+            travelToIshima.style.display = "block";
+            travelToVolhaven.style.display = "block";
             break;
 
         case Locations.Sector12MegaCorp:  
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
-        case Locations.Sector12BladeIndustries:   
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+        case Locations.Sector12BladeIndustries:  
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
         case Locations.Sector12FourSigma:    
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
         case Locations.Sector12IcarusMicrosystems: 
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
             break;
 
         case Locations.Sector12UniversalEnergy:
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
             break;
 
         case Locations.Sector12DeltaOne:      
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
         case Locations.Sector12CIA:     
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            securityJob.style.display = "inline";
-            agentJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            securityJob.style.display = "block";
+            agentJob.style.display = "block";
             break;
 
         case Locations.Sector12NSA:          
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            securityJob.style.display = "inline";
-            agentJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            securityJob.style.display = "block";
+            agentJob.style.display = "block";
             break;
 
         case Locations.Sector12AlphaEnterprises:
-            softwareJob.style.display = "inline";
-            businessJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            businessJob.style.display = "block";
             break;
 
         case Locations.Sector12CarmichaelSecurity:
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            securityJob.style.display = "inline";
-            agentJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            securityJob.style.display = "block";
+            agentJob.style.display = "block";
             break;
 
         case Locations.Sector12FoodNStuff:
-            employeeJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            employeeJob.style.display = "block";
             break;
 
         case Locations.Sector12JoesGuns:
-            employeeJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            employeeJob.style.display = "block";
             break;
 
         case Locations.Sector12IronGym:
-            gymTrainStr.style.display = "inline";
-            gymTrainDef.style.display = "inline";
-            gymTrainDex.style.display = "inline";
-            gymTrainAgi.style.display = "inline";
+            gymTrainStr.style.display = "block";
+            gymTrainDef.style.display = "block";
+            gymTrainDex.style.display = "block";
+            gymTrainAgi.style.display = "block";
             break;
 
         case Location.Sector12PowerhouseGym:
-            gymTrainStr.style.display = "inline";
-            gymTrainDef.style.display = "inline";
-            gymTrainDex.style.display = "inline";
-            gymTrainAgi.style.display = "inline";
+            gymTrainStr.style.display = "block";
+            gymTrainDef.style.display = "block";
+            gymTrainDex.style.display = "block";
+            gymTrainAgi.style.display = "block";
             break;
 
 
         case Locations.NewTokyoTravelAgency: 
-            travelToAevum.style.display = "inline";
-            travelToChongqing.style.display = "inline";
-            travelToSector12.style.display = "inline";
-            travelToIshima.style.display = "inline";
-            travelToVolhaven.style.display = "inline";
+            travelToAevum.style.display = "block";
+            travelToChongqing.style.display = "block";
+            travelToSector12.style.display = "block";
+            travelToIshima.style.display = "block";
+            travelToVolhaven.style.display = "block";
             break;
 
-        case Locations.NewTokyoDefComm:       
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
+        case Locations.NewTokyoDefComm:
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
             break;
 
         case Locations.NewTokyoVitaLife:
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
             break;
 
         case Locations.NewTokyoGlobalPharmaceuticals: 
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
-        case Locations.NewTokyoNoodleBar:      
-            waiterJob.style.display = "inline";
+        case Locations.NewTokyoNoodleBar:      	
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            waiterJob.style.display = "block";
             break;
         
 
         case Locations.IshimaTravelAgency:      
-            travelToAevum.style.display = "inline";
-            travelToChongqing.style.display = "inline";
-            travelToSector12.style.display = "inline";
-            travelToNewTokyo.style.display = "inline";
-            travelToVolhaven.style.display = "inline";
+            travelToAevum.style.display = "block";
+            travelToChongqing.style.display = "block";
+            travelToSector12.style.display = "block";
+            travelToNewTokyo.style.display = "block";
+            travelToVolhaven.style.display = "block";
             break;
 
         case Locations.IshimaStormTechnologies:
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
             securityJob.style.display = "none";
             agentJob.style.display = "none";
             employeeJob.style.display = "none";
@@ -451,90 +522,110 @@ displayLocationContent = function() {
             break;
 
         case Locations.IshimaNovaMedical:         
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
             break;
 
         case Locations.IshimaOmegaSoftware:   
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            businessJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            businessJob.style.display = "block";
             break;
 
-        case Locations.VolhavenTravelAgency:       
-            travelToAevum.style.display = "inline";
-            travelToChongqing.style.display = "inline";
-            travelToSector12.style.display = "inline";
-            travelToNewTokyo.style.display = "inline";
-            travelToIshima.style.display = "inline";
+        case Locations.VolhavenTravelAgency:     
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            travelToAevum.style.display = "block";
+            travelToChongqing.style.display = "block";
+            travelToSector12.style.display = "block";
+            travelToNewTokyo.style.display = "block";
+            travelToIshima.style.display = "block";
             break;
 
         case Locations.VolhavenOmniTekIncorporated:   
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
         case Locations.VolhavenNWO:      
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
         case Locations.VolhavenHeliosLabs:            
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
             break;
 
         case Locations.VolhavenOmniaCybersystems:
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
         case Locations.VolhavenLexoCorp:
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
-            businessJob.style.display = "inline";
-            securityJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
+            businessJob.style.display = "block";
+            securityJob.style.display = "block";
             break;
 
         case Locations.VolhavenSysCoreSecurities:     
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
             break;
 
         case Locations.VolhavenCompuTek:       
-            softwareJob.style.display = "inline";
-            itJob.style.display = "inline";
-            securityEngineerJob.style.display = "inline";
-            networkEngineerJob.style.display = "inline";
+			locationInfo.innerHTML = Companies[loc].info;
+			
+            softwareJob.style.display = "block";
+            itJob.style.display = "block";
+            securityEngineerJob.style.display = "block";
+            networkEngineerJob.style.display = "block";
             break;
 
         case Locations.VolhavenMilleniumFitnessGym:   
-            gymTrainStr.style.display = "inline";
-            gymTrainDef.style.display = "inline";
-            gymTrainDex.style.display = "inline";
-            gymTrainAgi.style.display = "inline";
+            gymTrainStr.style.display = "block";
+            gymTrainDef.style.display = "block";
+            gymTrainDex.style.display = "block";
+            gymTrainAgi.style.display = "block";
             break;
 
     }
@@ -595,7 +686,7 @@ initLocationButtons = function() {
         Engine.loadLocationContent();
     });
     
-    aevumPolice = document.getElementById("aevum-police");
+    aevumPolice = document.getElementById("aevum-aevumpolice");
     aevumPolice.addEventListener("click", function() {
         Player.location = Locations.AevumPolice;
         Engine.loadLocationContent();
@@ -618,5 +709,220 @@ initLocationButtons = function() {
         Player.location = Locations.AevumSnapFitnessGym;
         Engine.loadLocationContent();
     });
+	
+	chongqingTravelAgency = document.getElementById("chongqing-travelagency");
+	chongqingTravelAgency.addEventListener("click", function() {
+		Player.location = Locations.ChongqingTravelAgency;
+		Engine.loadLocationContent();
+	});
+	
+	chongqingKuaiGongInternational = document.getElementById("chongqing-kuaigonginternational");
+	chongqingKuaiGongInternational.addEventListener("click", function() {
+		Player.location = Locations.ChongqingKuaiGongInternational;
+		Engine.loadLocationContent(); 
+	});
+	
+	chongqingSolarisSpaceSystems = document.getElementById("chongqing-solarisspacesystems");
+	chongqingSolarisSpaceSystems.addEventListener("click", function() {
+		Player.location = Locations.ChongqingSolarisSpaceSystems;
+		Engine.loadLocationContent();
+	});
+	
+	sector12TravelAgency = document.getElementById("sector12-travelagency");
+	sector12TravelAgency.addEventListener("click", function() {
+		Player.location = Locations.Sector12TravelAgency;
+		Engine.loadLocationContent();
+	});
+	
+	sector12MegaCorp = document.getElementById("sector12-megacorp");
+	sector12MegaCorp.addEventListener("click", function() {
+		Player.location = Locations.Sector12MegaCorp;
+		Engine.loadLocationContent();
+	});
+	
+	sector12BladeIndustries = document.getElementById("sector12-bladeindustries");
+	sector12BladeIndustries.addEventListener("click", function() {
+		Player.location = Locations.Sector12BladeIndustries;
+		Engine.loadLocationContent();
+	});
+	
+	sector12FourSigma = document.getElementById("sector12-foursigma");
+	sector12FourSigma.addEventListener("click", function() {
+		Player.location = Locations.Sector12FourSigma;
+		Engine.loadLocationContent();
+	});
+	
+	sector12IcarusMicrosystems = document.getElementById("sector12-icarusmicrosystems");
+	sector12IcarusMicrosystems.addEventListener("click", function() {
+		Player.location = Locations.Sector12IcarusMicrosystems;
+		Engine.loadLocationContent();
+	});
+	
+	sector12UniversalEnergy = document.getElementById("sector12-universalenergy");
+	sector12UniversalEnergy.addEventListener("click", function() {
+		Player.location = Locations.Sector12UniversalEnergy;
+		Engine.loadLocationContent();
+	});
+	
+	sector12DeltaOne = document.getElementById("sector12-deltaone");
+	sector12DeltaOne.addEventListener("click", function() {
+		Player.location = Locations.Sector12DeltaOne;
+		Engine.loadLocationContent();
+	});
+	
+	sector12CIA = document.getElementById("sector12-cia");
+	sector12CIA.addEventListener("click", function() {
+		Player.location = Locations.Sector12CIA;
+		Engine.loadLocationContent();
+	});
+	
+	sector12NSA = document.getElementById("sector12-nsa");
+	sector12NSA.addEventListener("click", function() {
+		Player.location = Locations.Sector12NSA;
+		Engine.loadLocationContent();
+	});
+	
+	sector12AlphaEnterprises = document.getElementById("sector12-alphaenterprises");
+	sector12AlphaEnterprises.addEventListener("click", function() {
+		Player.location = Locations.Sector12AlphaEnterprises; 
+		Engine.loadLocationContent();
+	});
+	
+	sector12CarmichaelSecurity = document.getElementById("sector12-carmichaelsecurity");
+	sector12CarmichaelSecurity.addEventListener("click", function() {
+		Player.location = Locations.Sector12CarmichaelSecurity;
+		Engine.loadLocationContent();
+	});
+	
+	sector12FoodNStuff = document.getElementById("sector12-foodnstuff");
+	sector12FoodNStuff.addEventListener("click", function() {
+		Player.location = Locations.Sector12FoodNStuff;
+		Engine.loadLocationContent();
+	});
+	
+	sector12JoesGuns = document.getElementById("sector12-joesguns");
+	sector12JoesGuns.addEventListener("click", function() {
+		Player.location = Locations.Sector12JoesGuns;
+		Engine.loadLocationContent();
+	});
+	
+	sector12IronGym = document.getElementById("sector12-irongym");
+	sector12IronGym.addEventListener("click", function() {
+		Player.location = Locations.Sector12IronGym;
+		Engine.loadLocationContent();
+	});
+	
+	sector12PowerhouseGym = document.getElementById("sector12-powerhousegym");
+	sector12PowerhouseGym.addEventListener("click", function() {
+		Player.location = Locations.Sector12PowerhouseGym;
+		Engine.loadLocationContent();
+	});
+	
+	newTokyoTravelAgency = document.getElementById("newtokyo-travelagency");
+	newTokyoTravelAgency.addEventListener("click", function() {
+		Player.location = Locations.NewTokyoTravelAgency;
+		Engine.loadLocationContent();
+	});
+	
+	newTokyoDefComm = document.getElementById("newtokyo-defcomm");
+	newTokyoDefComm.addEventListener("click", function() {
+		Player.location = Locations.NewTokyoDefComm;
+		Engine.loadLocationContent();
+	});
+	
+	newTokyoVitaLife = document.getElementById("newtokyo-vitalife");
+	newTokyoVitaLife.addEventListener("click", function() {
+		Player.location = Locations.NewTokyoVitaLife;
+		Engine.loadLocationContent();
+	});
+	
+	newTokyoGlobalPharmaceuticals = document.getElementById("newtokyo-globalpharmaceuticals");
+	newTokyoGlobalPharmaceuticals.addEventListener("click", function() {
+		Player.location = Locations.NewTokyoGlobalPharmaceuticals;
+		Engine.loadLocationContent();
+	});
     
+	newTokyoNoodleBar = document.getElementById("newtokyo-noodlebar");
+	newTokyoNoodleBar.addEventListener("click", function() {
+		Player.location = Locations.NewTokyoNoodleBar;
+		Engine.loadLocationContent();
+	});
+	
+	ishimaTravelAgency = document.getElementById("ishima-travelagency");
+	ishimaTravelAgency.addEventListener("click", function() {
+		Player.location = Locations.IshimaTravelAgency;
+		Engine.loadLocationContent();
+	});
+	
+	ishimaStormTechnologies = document.getElementById("ishima-stormtechnologies");
+	ishimaStormTechnologies.addEventListener("click", function() {
+		Player.location = Locations.IshimaStormTechnologies;
+		Engine.loadLocationContent();
+	});
+	
+	ishimaNovaMedical = document.getElementById("ishima-novamedical");
+	ishimaNovaMedical.addEventListener("click", function() {
+		Player.location = Locations.IshimaNovaMedical;
+		Engine.loadLocationContent();
+	});
+	
+	ishimaOmegaSoftware = document.getElementById("ishima-omegasoftware");
+	ishimaOmegaSoftware.addEventListener("click", function() {
+		Player.location = Locations.IshimaOmegaSoftware;
+		Engine.loadLocationContent();
+	});
+	
+	volhavenTravelAgency = document.getElementById("volhaven-travelagency");
+	volhavenTravelAgency.addEventListener("click", function() {
+		Player.location = Locations.VolhavenTravelAgency;
+		Engine.loadLocationContent();
+	});
+	
+	volhavenOmniTekIncorporated = document.getElementById("volhaven-omnitekincorporated");
+	volhavenOmniTekIncorporated.addEventListener("click", function() {
+		Player.location = Locations.VolhavenOmniTekIncorporated;
+		Engine.loadLocationContent();
+	});
+	
+	volhavenNWO = document.getElementById("volhaven-nwo");
+	volhavenNWO.addEventListener("click", function() {
+		Player.location = Locations.VolhavenNWO;
+		Engine.loadLocationContent();
+	});
+	
+	volhavenHeliosLabs = document.getElementById("volhaven-helioslabs");
+	volhavenHeliosLabs.addEventListener("click", function() {
+		Player.location = Locations.VolhavenHeliosLabs;
+		Engine.loadLocationContent();
+	});
+	
+	volhavenOmniaCybersystems = document.getElementById("volhaven-omniacybersystems");
+	volhavenOmniaCybersystems.addEventListener("click", function() {
+		Player.location = Locations.VolhavenOmniaCybersystems;
+		Engine.loadLocationContent();
+	});
+	
+	volhavenLexoCorp = document.getElementById("volhaven-lexocorp");
+	volhavenLexoCorp.addEventListener("click", function() {
+		Player.location = Locations.VolhavenLexoCorp;
+		Engine.loadLocationContent();
+	});
+	
+	volhavenSysCoreSecurities = document.getElementById("volhaven-syscoresecurities");
+	volhavenSysCoreSecurities.addEventListener("click", function() {
+		Player.location = Locations.VolhavenSysCoreSecurities;
+		Engine.loadLocationContent();
+	});
+	
+	volhavenCompuTek = document.getElementById("volhaven-computek");
+	volhavenCompuTek.addEventListener("click", function() {
+		Player.location = Locations.VolhavenCompuTek;
+		Engine.loadLocationContent();
+	});
+	
+	volhavenMilleniumFitnessGym = document.getElementById("volhaven-milleniumfitnessgym");
+	volhavenMilleniumFitnessGym.addEventListener("click", function() {
+		Player.location = Locations.VolhavenMilleniumFitnessGym;
+		Engine.loadLocationContent();
+	});
 }

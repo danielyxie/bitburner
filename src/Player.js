@@ -65,7 +65,7 @@ function PlayerObject() {
     
     //Company Information
     this.companyName = "";
-    this.companyJob = "";
+    this.companyJob = "";	//Name of current Company Position
     
     //Servers
     this.currentServer       = ""; //IP address of Server currently being accessed through terminal
