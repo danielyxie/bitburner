@@ -543,7 +543,80 @@ displayLocationContent = function() {
 initLocationButtons = function() {
     aevumTravelAgency = document.getElementById("aevum-travelagency");
     aevumTravelAgency.addEventListener("click", function() {
-        Player.location = Locations
+        Player.location = Locations.AevumTravelAgency;
         Engine.loadLocationContent();
     });
+    
+    aevumECorp = document.getElementById("aevum-ecorp");
+    aevumECorp.addEventListener("click", function() {
+        Player.location = Locations.AevumECorp;
+        Engine.loadLocationContent();
+    });
+    
+    aevumBachmanAndAssociates = document.getElementById("aevum-bachmanandassociates");
+    aevumBachmanAndAssociates.addEventListener("click", function() {
+        Player.location = Locations.AevumBachmanAndAssociates;
+        Engine.loadLocationContent();
+    });
+    
+    aevumClarkeIncorporated = document.getElementById("aevum-clarkeincorporated");
+    aevumClarkeIncorporated.addEventListener("click", function() {
+       Player.location = Locations.AevumClarkeIncorporated; 
+       Engine.loadLocationContent();
+    });
+    
+    aevumFulcrumTechnologies = document.getElementById("aevum-fulcrumtechnologies");
+    aevumFulcrumTechnologies.addEventListener("click", function() {
+        Player.location = Locations.AevumFulcrumTechnologies;
+        Engine.loadLocationContent();
+    });
+    
+    aevumAeroCorp = document.getElementById("aevum-aerocorp");
+    aevumAeroCorp.addEventListener("click", function() {
+        Player.location = Locations.AevumAeroCorp;
+        Engine.loadLocationContent();
+    });
+    
+    aevumGalacticCybersystems = document.getElementById("aevum-galacticcybersystems");
+    aevumGalacticCybersystems.addEventListener("click", function() {
+        Player.location = Locations.AevumGalacticCybersystems;
+        Engine.loadLocationContent();
+    });
+    
+    aevumWatchdogSecurity = document.getElementById("aevum-watchdogsecurity");
+    aevumWatchdogSecurity.addEventListener("click", function() {
+        Player.location = Locations.AevumWatchdogSecurity;
+        Engine.loadLocationContent();
+    });
+    
+    aevumRhoConstruction = document.getElementById("aevum-rhoconstruction");
+    aevumRhoConstruction.addEventListener("click", function() {
+       Player.location = Locations.AevumRhoConstruction;
+        Engine.loadLocationContent();
+    });
+    
+    aevumPolice = document.getElementById("aevum-police");
+    aevumPolice.addEventListener("click", function() {
+        Player.location = Locations.AevumPolice;
+        Engine.loadLocationContent();
+    });
+    
+    aevumNetLinkTechnologies = document.getElementById("aevum-netlinktechnologies");
+    aevumNetLinkTechnologies.addEventListener("click", function() {
+        Player.location = Locations.AevumNetLinkTechnologies;
+        Engine.loadLocationContent();
+    });
+    
+    aevumCrushFitnessGym = document.getElementById("aevum-crushfitnessgym");
+    aevumCrushFitnessGym.addEventListener("click", function() {
+        Player.location = Locations.AevumCrushFitnessGym;
+        Engine.loadLocationContent();
+    });
+    
+    aevumSnapFitnessGym = document.getElementById("aevum-snapfitnessgym");
+    aevumSnapFitnessGym.addEventListener("click", function() {
+        Player.location = Locations.AevumSnapFitnessGym;
+        Engine.loadLocationContent();
+    });
+    
 }
