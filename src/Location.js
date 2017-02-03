@@ -1,5 +1,6 @@
 /* Display Location Content when visiting somewhere in the World*/
 
+    
 Locations = {
     //Cities
 	Aevum: 			"Aevum",
@@ -76,21 +77,13 @@ displayLocationContent = function() {
 	if (Engine.debug) {
 		console.log("displayLocationContent() called with location " + Player.location)
 	}
-	
-	var loc = Player.location;
-
-    var returnToWorld       = document.getElementById("location-return-to-world-button");
-	returnToWorld.addEventListener("click", function() {
-		Engine.loadWorldContent();
-	});
-	
-    var locationName        = document.getElementById("location-name");
-	locationName.innerHTML = loc;
-	locationName.style.display = "block";
-	
-    var locationInfo        = document.getElementById("location-info");
-	locationInfo.style.display = "block";
     
+    var returnToWorld       = document.getElementById("location-return-to-world-button");
+    
+    var locationName        = document.getElementById("location-name");
+
+    var locationInfo        = document.getElementById("location-info");
+
     var softwareJob         = document.getElementById("location-software-job");
     var itJob               = document.getElementById("location-it-job");
     var securityEngineerJob = document.getElementById("location-security-engineer-job");
@@ -100,9 +93,9 @@ displayLocationContent = function() {
     var agentJob            = document.getElementById("location-agent-job");
     var employeeJob         = document.getElementById("location-employee-job");
     var waiterJob           = document.getElementById("location-waiter-job");
-    
+
     var work                = document.getElementById("location-work");
-    
+
     var gymTrainStr         = document.getElementById("location-gym-train-str");
     var gymTrainDef         = document.getElementById("location-gym-train-def");
     var gymTrainDex         = document.getElementById("location-gym-train-dex");
@@ -126,6 +119,17 @@ displayLocationContent = function() {
     var travelToNewTokyo    = document.getElementById("location-travel-to-newtokyo");
     var travelToIshima      = document.getElementById("location-travel-to-ishima");
     var travelToVolhaven    = document.getElementById("location-travel-to-volhaven");
+	
+    var loc = Player.location;
+    
+    returnToWorld.addEventListener("click", function() {
+        Engine.loadWorldContent();
+    });
+
+    locationName.innerHTML = loc;
+    locationName.style.display = "block";
+
+    locationInfo.style.display = "block";
     
     softwareJob.style.display = "none";
     itJob.style.display = "none";
@@ -137,7 +141,7 @@ displayLocationContent = function() {
     employeeJob.style.display = "none";
     waiterJob.style.display = "none";
     
-    work.style.display = "none";
+    work.style.display = "none";    //TODO DIsplay this
     
     gymTrainStr.style.display = "none";
     gymTrainDef.style.display = "none";
@@ -181,7 +185,13 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
             securityJob.style.display = "block";
+            
+            purchase128gb.style.display = "block";
+            purchase256gb.style.display = "block";
+            purchase512gb.style.display = "block";
+            purchase1tb.style.display = "block";
             break;
+            
         case Locations.AevumBachmanAndAssociates: 
 			locationInfo.innerHTML = Companies[loc].info;
 			
@@ -212,6 +222,11 @@ displayLocationContent = function() {
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
+            
+            purchase128gb.style.display = "block";
+            purchase256gb.style.display = "block";
+            purchase512gb.style.display = "block";
+            purchase1tb.style.display = "block";
             break;
 
         case Locations.AevumAeroCorp:        
@@ -267,6 +282,11 @@ displayLocationContent = function() {
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
+            
+            purchase1gb.style.display = "block";
+            purchase2gb.style.display = "block";
+            purchase4gb.style.display = "block";
+            purchase8gb.style.display = "block";
             break;
 
         case Locations.AevumCrushFitnessGym:  
@@ -445,13 +465,12 @@ displayLocationContent = function() {
             gymTrainAgi.style.display = "block";
             break;
 
-        case Location.Sector12PowerhouseGym:
+        case Locations.Sector12PowerhouseGym:
             gymTrainStr.style.display = "block";
             gymTrainDef.style.display = "block";
             gymTrainDex.style.display = "block";
             gymTrainAgi.style.display = "block";
             break;
-
 
         case Locations.NewTokyoTravelAgency: 
             travelToAevum.style.display = "block";
@@ -518,7 +537,12 @@ displayLocationContent = function() {
             securityJob.style.display = "none";
             agentJob.style.display = "none";
             employeeJob.style.display = "none";
-            waiterJob.style.display = "none";        
+            waiterJob.style.display = "none"; 
+
+            purchase32gb.style.display = "block";
+            purchase64gb.style.display = "block";
+            purchase128gb.style.display = "block";
+            purchase256gb.style.display = "block";
             break;
 
         case Locations.IshimaNovaMedical:         
@@ -537,6 +561,11 @@ displayLocationContent = function() {
             softwareJob.style.display = "block";
             itJob.style.display = "block";
             businessJob.style.display = "block";
+            
+            purchase4gb.style.display = "block";
+            purchase8gb.style.display = "block";
+            purchase16gb.style.display = "block";
+            purchase32gb.style.display = "block";
             break;
 
         case Locations.VolhavenTravelAgency:     
@@ -558,6 +587,11 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
             securityJob.style.display = "block";
+            
+            purchase128gb.style.display = "block";
+            purchase256gb.style.display = "block";
+            purchase512gb.style.display = "block";
+            purchase1tb.style.display = "block";
             break;
 
         case Locations.VolhavenNWO:      
@@ -619,6 +653,14 @@ displayLocationContent = function() {
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
+            
+            purchase8gb.style.display = "block";
+            purchase16gb.style.display = "block";
+            purchase32gb.style.display = "block";
+            purchase64gb.style.display = "block";
+            purchase128gb.style.display = "block";
+            purchase256gb.style.display = "block";
+            
             break;
 
         case Locations.VolhavenMilleniumFitnessGym:   
@@ -632,297 +674,444 @@ displayLocationContent = function() {
 }
 
 initLocationButtons = function() {
+    //Buttons to travel to different locations in World
     aevumTravelAgency = document.getElementById("aevum-travelagency");
     aevumTravelAgency.addEventListener("click", function() {
         Player.location = Locations.AevumTravelAgency;
         Engine.loadLocationContent();
+        return false;
     });
     
     aevumECorp = document.getElementById("aevum-ecorp");
     aevumECorp.addEventListener("click", function() {
         Player.location = Locations.AevumECorp;
         Engine.loadLocationContent();
+        return false;
     });
     
     aevumBachmanAndAssociates = document.getElementById("aevum-bachmanandassociates");
     aevumBachmanAndAssociates.addEventListener("click", function() {
         Player.location = Locations.AevumBachmanAndAssociates;
         Engine.loadLocationContent();
+        return false;
     });
     
     aevumClarkeIncorporated = document.getElementById("aevum-clarkeincorporated");
     aevumClarkeIncorporated.addEventListener("click", function() {
        Player.location = Locations.AevumClarkeIncorporated; 
        Engine.loadLocationContent();
+       return false;
     });
     
     aevumFulcrumTechnologies = document.getElementById("aevum-fulcrumtechnologies");
     aevumFulcrumTechnologies.addEventListener("click", function() {
         Player.location = Locations.AevumFulcrumTechnologies;
         Engine.loadLocationContent();
+        return false;
     });
     
     aevumAeroCorp = document.getElementById("aevum-aerocorp");
     aevumAeroCorp.addEventListener("click", function() {
         Player.location = Locations.AevumAeroCorp;
         Engine.loadLocationContent();
+        return false;
     });
     
     aevumGalacticCybersystems = document.getElementById("aevum-galacticcybersystems");
     aevumGalacticCybersystems.addEventListener("click", function() {
         Player.location = Locations.AevumGalacticCybersystems;
         Engine.loadLocationContent();
+        return false;
     });
     
     aevumWatchdogSecurity = document.getElementById("aevum-watchdogsecurity");
     aevumWatchdogSecurity.addEventListener("click", function() {
         Player.location = Locations.AevumWatchdogSecurity;
         Engine.loadLocationContent();
+        return false;
     });
     
     aevumRhoConstruction = document.getElementById("aevum-rhoconstruction");
     aevumRhoConstruction.addEventListener("click", function() {
        Player.location = Locations.AevumRhoConstruction;
         Engine.loadLocationContent();
+        return false;
     });
     
     aevumPolice = document.getElementById("aevum-aevumpolice");
     aevumPolice.addEventListener("click", function() {
         Player.location = Locations.AevumPolice;
         Engine.loadLocationContent();
+        return false;
     });
     
     aevumNetLinkTechnologies = document.getElementById("aevum-netlinktechnologies");
     aevumNetLinkTechnologies.addEventListener("click", function() {
         Player.location = Locations.AevumNetLinkTechnologies;
         Engine.loadLocationContent();
+        return false;
     });
     
     aevumCrushFitnessGym = document.getElementById("aevum-crushfitnessgym");
     aevumCrushFitnessGym.addEventListener("click", function() {
         Player.location = Locations.AevumCrushFitnessGym;
         Engine.loadLocationContent();
+        return false;
     });
     
     aevumSnapFitnessGym = document.getElementById("aevum-snapfitnessgym");
     aevumSnapFitnessGym.addEventListener("click", function() {
         Player.location = Locations.AevumSnapFitnessGym;
         Engine.loadLocationContent();
+        return false;
     });
 	
 	chongqingTravelAgency = document.getElementById("chongqing-travelagency");
 	chongqingTravelAgency.addEventListener("click", function() {
 		Player.location = Locations.ChongqingTravelAgency;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	chongqingKuaiGongInternational = document.getElementById("chongqing-kuaigonginternational");
 	chongqingKuaiGongInternational.addEventListener("click", function() {
 		Player.location = Locations.ChongqingKuaiGongInternational;
 		Engine.loadLocationContent(); 
+        return false;
 	});
 	
 	chongqingSolarisSpaceSystems = document.getElementById("chongqing-solarisspacesystems");
 	chongqingSolarisSpaceSystems.addEventListener("click", function() {
 		Player.location = Locations.ChongqingSolarisSpaceSystems;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12TravelAgency = document.getElementById("sector12-travelagency");
 	sector12TravelAgency.addEventListener("click", function() {
 		Player.location = Locations.Sector12TravelAgency;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12MegaCorp = document.getElementById("sector12-megacorp");
 	sector12MegaCorp.addEventListener("click", function() {
 		Player.location = Locations.Sector12MegaCorp;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12BladeIndustries = document.getElementById("sector12-bladeindustries");
 	sector12BladeIndustries.addEventListener("click", function() {
 		Player.location = Locations.Sector12BladeIndustries;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12FourSigma = document.getElementById("sector12-foursigma");
 	sector12FourSigma.addEventListener("click", function() {
 		Player.location = Locations.Sector12FourSigma;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12IcarusMicrosystems = document.getElementById("sector12-icarusmicrosystems");
 	sector12IcarusMicrosystems.addEventListener("click", function() {
 		Player.location = Locations.Sector12IcarusMicrosystems;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12UniversalEnergy = document.getElementById("sector12-universalenergy");
 	sector12UniversalEnergy.addEventListener("click", function() {
 		Player.location = Locations.Sector12UniversalEnergy;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12DeltaOne = document.getElementById("sector12-deltaone");
 	sector12DeltaOne.addEventListener("click", function() {
 		Player.location = Locations.Sector12DeltaOne;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12CIA = document.getElementById("sector12-cia");
 	sector12CIA.addEventListener("click", function() {
 		Player.location = Locations.Sector12CIA;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12NSA = document.getElementById("sector12-nsa");
 	sector12NSA.addEventListener("click", function() {
 		Player.location = Locations.Sector12NSA;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12AlphaEnterprises = document.getElementById("sector12-alphaenterprises");
 	sector12AlphaEnterprises.addEventListener("click", function() {
 		Player.location = Locations.Sector12AlphaEnterprises; 
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12CarmichaelSecurity = document.getElementById("sector12-carmichaelsecurity");
 	sector12CarmichaelSecurity.addEventListener("click", function() {
 		Player.location = Locations.Sector12CarmichaelSecurity;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12FoodNStuff = document.getElementById("sector12-foodnstuff");
 	sector12FoodNStuff.addEventListener("click", function() {
 		Player.location = Locations.Sector12FoodNStuff;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12JoesGuns = document.getElementById("sector12-joesguns");
 	sector12JoesGuns.addEventListener("click", function() {
 		Player.location = Locations.Sector12JoesGuns;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12IronGym = document.getElementById("sector12-irongym");
 	sector12IronGym.addEventListener("click", function() {
 		Player.location = Locations.Sector12IronGym;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	sector12PowerhouseGym = document.getElementById("sector12-powerhousegym");
 	sector12PowerhouseGym.addEventListener("click", function() {
 		Player.location = Locations.Sector12PowerhouseGym;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	newTokyoTravelAgency = document.getElementById("newtokyo-travelagency");
 	newTokyoTravelAgency.addEventListener("click", function() {
 		Player.location = Locations.NewTokyoTravelAgency;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	newTokyoDefComm = document.getElementById("newtokyo-defcomm");
 	newTokyoDefComm.addEventListener("click", function() {
 		Player.location = Locations.NewTokyoDefComm;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	newTokyoVitaLife = document.getElementById("newtokyo-vitalife");
 	newTokyoVitaLife.addEventListener("click", function() {
 		Player.location = Locations.NewTokyoVitaLife;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	newTokyoGlobalPharmaceuticals = document.getElementById("newtokyo-globalpharmaceuticals");
 	newTokyoGlobalPharmaceuticals.addEventListener("click", function() {
 		Player.location = Locations.NewTokyoGlobalPharmaceuticals;
 		Engine.loadLocationContent();
+        return false;
 	});
     
 	newTokyoNoodleBar = document.getElementById("newtokyo-noodlebar");
 	newTokyoNoodleBar.addEventListener("click", function() {
 		Player.location = Locations.NewTokyoNoodleBar;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	ishimaTravelAgency = document.getElementById("ishima-travelagency");
 	ishimaTravelAgency.addEventListener("click", function() {
 		Player.location = Locations.IshimaTravelAgency;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	ishimaStormTechnologies = document.getElementById("ishima-stormtechnologies");
 	ishimaStormTechnologies.addEventListener("click", function() {
 		Player.location = Locations.IshimaStormTechnologies;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	ishimaNovaMedical = document.getElementById("ishima-novamedical");
 	ishimaNovaMedical.addEventListener("click", function() {
 		Player.location = Locations.IshimaNovaMedical;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	ishimaOmegaSoftware = document.getElementById("ishima-omegasoftware");
 	ishimaOmegaSoftware.addEventListener("click", function() {
 		Player.location = Locations.IshimaOmegaSoftware;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	volhavenTravelAgency = document.getElementById("volhaven-travelagency");
 	volhavenTravelAgency.addEventListener("click", function() {
 		Player.location = Locations.VolhavenTravelAgency;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	volhavenOmniTekIncorporated = document.getElementById("volhaven-omnitekincorporated");
 	volhavenOmniTekIncorporated.addEventListener("click", function() {
 		Player.location = Locations.VolhavenOmniTekIncorporated;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	volhavenNWO = document.getElementById("volhaven-nwo");
 	volhavenNWO.addEventListener("click", function() {
 		Player.location = Locations.VolhavenNWO;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	volhavenHeliosLabs = document.getElementById("volhaven-helioslabs");
 	volhavenHeliosLabs.addEventListener("click", function() {
 		Player.location = Locations.VolhavenHeliosLabs;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	volhavenOmniaCybersystems = document.getElementById("volhaven-omniacybersystems");
 	volhavenOmniaCybersystems.addEventListener("click", function() {
 		Player.location = Locations.VolhavenOmniaCybersystems;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	volhavenLexoCorp = document.getElementById("volhaven-lexocorp");
 	volhavenLexoCorp.addEventListener("click", function() {
 		Player.location = Locations.VolhavenLexoCorp;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	volhavenSysCoreSecurities = document.getElementById("volhaven-syscoresecurities");
 	volhavenSysCoreSecurities.addEventListener("click", function() {
 		Player.location = Locations.VolhavenSysCoreSecurities;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	volhavenCompuTek = document.getElementById("volhaven-computek");
 	volhavenCompuTek.addEventListener("click", function() {
 		Player.location = Locations.VolhavenCompuTek;
 		Engine.loadLocationContent();
+        return false;
 	});
 	
 	volhavenMilleniumFitnessGym = document.getElementById("volhaven-milleniumfitnessgym");
 	volhavenMilleniumFitnessGym.addEventListener("click", function() {
 		Player.location = Locations.VolhavenMilleniumFitnessGym;
 		Engine.loadLocationContent();
+        return false;
 	});
-}
+    
+    
+    //Buttons to interact at a location (apply for job/promotion, train, purchase, etc.)
+    var softwareJob         = document.getElementById("location-software-job");
+    var itJob               = document.getElementById("location-it-job");
+    var securityEngineerJob = document.getElementById("location-security-engineer-job");
+    var networkEngineerJob  = document.getElementById("location-network-engineer-job");
+    var businessJob         = document.getElementById("location-business-job");
+    var securityJob         = document.getElementById("location-security-job");
+    var agentJob            = document.getElementById("location-agent-job");
+    var employeeJob         = document.getElementById("location-employee-job");
+    var waiterJob           = document.getElementById("location-waiter-job");
+
+    var work                = document.getElementById("location-work");
+
+    var gymTrainStr         = document.getElementById("location-gym-train-str");
+    var gymTrainDef         = document.getElementById("location-gym-train-def");
+    var gymTrainDex         = document.getElementById("location-gym-train-dex");
+    var gymTrainAgi         = document.getElementById("location-gym-train-agi");
+
+    var purchase1gb         = document.getElementById("location-purchase-1gb");
+    var purchase2gb         = document.getElementById("location-purchase-2gb");
+    var purchase4gb         = document.getElementById("location-purchase-4gb");
+    var purchase8gb         = document.getElementById("location-purchase-8gb");
+    var purchase16gb        = document.getElementById("location-purchase-16gb");
+    var purchase32gb        = document.getElementById("location-purchase-32gb");
+    var purchase64gb        = document.getElementById("location-purchase-64gb");
+    var purchase128gb       = document.getElementById("location-purchase-128gb");
+    var purchase256gb       = document.getElementById("location-purchase-256gb");
+    var purchase512gb       = document.getElementById("location-purchase-512gb");
+    var purchase1tb         = document.getElementById("location-purchase-1tb");
+
+    var travelToAevum       = document.getElementById("location-travel-to-aevum");
+    var travelToChongqing   = document.getElementById("location-travel-to-chongqing");
+    var travelToSector12    = document.getElementById("location-travel-to-sector12");
+    var travelToNewTokyo    = document.getElementById("location-travel-to-newtokyo");
+    var travelToIshima      = document.getElementById("location-travel-to-ishima");
+    var travelToVolhaven    = document.getElementById("location-travel-to-volhaven");
+    
+    softwareJob.addEventListener("click", function() {
+        Player.applyForSoftwareJob();
+        return false;
+    });
+    
+    itJob.addEventListener("click", function() {
+        Player.applyForSoftwareJob()
+        return false; 
+    });
+    
+    securityEngineerJob.addEventListener("click", function() {
+        Player.applyForSecurityEngineerJob();
+        return false; 
+    });
+    
+    networkEngineerJob.addEventListener("click", function() {
+        Player.applyForNetworkEngineerJob();
+        return false; 
+    });
+    
+    businessJob.addEventListener("click", function() {
+        Player.applyForBusinessJob();
+        return false; 
+    });
+    
+    securityJob.addEventListener("click", function() {
+        Player.applyForSecurityJob();
+        return false; 
+    });
+    
+    agentJob.addEventListener("click", function() {
+        Player.applyForAgentJob();
+        return false; 
+    });
+    
+    employeeJob.addEventListener("click", function() {
+        Player.applyForEmployeeJob();
+        return false; 
+    });
+    
+    waiterJob.addEventListener("click", function() {
+        Player.applyForWaiterJob();
+        return false; 
+    });
+    
+    purchase1gb.addEventListener("click", function() {
+        askToPurchaseServer(1);
+    }); 
+    
+}   purchase2gb  
+    purchase4gb  
+    purchase8gb  
+    purchase16gb 
+    purchase32gb 
+    purchase64gb 
+    purchase128gb
+    purchase256gb
+    purchase512gb
+    purchase1tb  

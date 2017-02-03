@@ -247,7 +247,14 @@ var Engine = {
     
     /* Display character info */
     displayCharacterInfo: function() {
-        Engine.Display.characterInfo.innerHTML = 'Money: $' + Player.money.toFixed(2) + '<br><br>' +
+        var companyPosition = "";
+        if (Player.companyPosition != "") {
+            companyPosition = Player.companyPosition.positionName;
+        }
+        Engine.Display.characterInfo.innerHTML = 'Current City: ' + Player.city + '<br><br>' + 
+                                                 'Employer: ' + Player.companyName + '<br><br>' + 
+                                                 'Job Title: ' + companyPosition + '<br><br><br><br>' + 
+                                                 'Money: $' + Player.money.toFixed(2) + '<br><br>' +
                                                  'Hacking Level: ' + Player.hacking_skill + '<br><br>' + 
                                                  'Strength: ' + Player.strength + '<br><br>' + 
                                                  'Defense: ' + Player.defense + '<br><br>' + 

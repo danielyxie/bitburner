@@ -228,6 +228,7 @@ var Terminal = {
                     if (Player.getCurrentServer().getServerOnNetwork(i).ip == ip || Player.getCurrentServer().getServerOnNetwork(i).hostname == ip) {
                         Player.getCurrentServer().isConnectedTo = false;
                         Player.currentServer = Player.getCurrentServer().getServerOnNetwork(i).ip;
+                        Player.getCurrentServer().isConnectedTo = true;
                         post("Connected to " + ip);
                         return;
                     }

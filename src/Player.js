@@ -60,7 +60,7 @@ function PlayerObject() {
     this.homeComputer = "";
 	
 	//Location information
-	this.city 			= Locations.Aevum;
+	this.city 			= Locations.Sector12;
 	this.location 		= "";
     
     //Company Information
@@ -69,7 +69,7 @@ function PlayerObject() {
     
     //Servers
     this.currentServer       = ""; //IP address of Server currently being accessed through terminal
-    this.discoveredServers   = [];   //IP addresses of secret servers not in the network that you have discovered
+    this.discoveredServers   = []; //IP addresses of secret servers not in the network that you have discovered
     this.purchasedServers    = [];
     
     //Achievements and achievement progress

@@ -67,3 +67,87 @@ h1 {
     border-bottom: 1px solid #333333;
     border-left: 1px solid #333333;
 }
+
+/* Pop-up Dialog Box */
+#dialog-box-container {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #333; /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#dialog-box-content {
+    background-color: #555;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 1px;
+    border: 1px solid #555;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.dialog-box-text {
+    color: #66ff33;
+}
+
+#dialog-box-close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#dialog-box-close-button:hover,
+#dialog-box-close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Pop-up Yes/no box */
+#yes-no-box-container {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #333; /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#yes-no-box-content {
+    background-color: #555;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 1px;
+    border: 1px solid #555;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+#yes-no-box-yes, #yes-no-box-no {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#yes-no-box-yes:hover,
+#yes-no-box-yes:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+#yes-no-box-no:hover,
+#yes-no-box-no:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

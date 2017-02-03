@@ -47,7 +47,6 @@
 	box-shadow: none;
 }
 
-
 #script-editor-status {
 	float: left;
 	color: #ffffff;
@@ -98,21 +97,6 @@
     height: 100%;
     margin-left: 10%;
     width: 99%;
-}
-
-/* Purchase servers */
-#purchase-servers-container {
-    position: fixed;
-    padding-top: 10px;
-    padding-left: 10px;
-    height: 100%;
-    margin-left: 10%;
-    width: 99%;
-}
-
-#purchase-servers-input, #purchase-servers-gb-text {
-    display:inline-block;
-    color: #66ff33;
 }
 
 /* Create program */

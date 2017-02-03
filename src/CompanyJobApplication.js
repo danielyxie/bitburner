@@ -3,62 +3,81 @@
 //Determines the job that the Player should get (if any) at the current
 //company
 PlayerObject.prototype.applyForJob = function(entryPosType) {
-    var currCompany = Companies[this.companyName];
-    var currPositionName = this.companyPosition.positionName;
+    if (Engine.Debug) {
+        console.log("Player.applyForJob() called");
+    }
+    
+    var currCompany = "";
+    if (this.companyName != "") {
+        currCompany = Companies[this.companyName];
+    }
+    var currPositionName = "";
+    if (this.companyPosition != "") {
+        currPositionName = this.companyPosition.positionName;
+    }
 	var company = Companies[this.location]; //Company being applied to
 	
     var pos = entryPosType;
-    //var pos = CompanyPositions.SoftwareIntern;
+    
+    if (!this.isQualified(company, pos)) {
+        dialogBoxCreate("You are not qualified for this position");
+        return;
+    }
     
     while (true) {
         if (Engine.Debug) {console.log("Determining qualification for next Company Position");}
         var newPos = getNextCompanyPosition(pos);
         
+        if (newPos == null) {
+            if (Engine.Debug) {
+                console.log("Player already at highest position, cannot go any higher");
+            }
+            break;
+        }
+        
         //Check if this company has this position
         if (company.hasPosition(newPos)) {
-            if (newPos == null) {
-                if (Engine.Debug) {
-                    console.log("Player already at highest position, cannot go any higher");
-                }
-                break;
-            }
-            
             if (!this.isQualified(company, newPos)) {
                 //If player not qualified for next job, break loop so player will be given current job
                 break;
             }
             pos = newPos;
         } else {
-            //TODO Post something about having no position to be promoted to
-            return;
+            break;
         }
         
     }
     
     //Check if the determined job is the same as the player's current job
-    if (currCompany.companyName == company.companyName &&
-        pos.positionName == currPositionName) {
-        //TODO Post something about not being able to get a promotion
-        return; //Same job, do nothing
+    if (currCompany != "") {
+        if (currCompany.companyName == company.companyName &&
+            pos.positionName == currPositionName) {
+            dialogBoxCreate("Unfortunately, you do not qualify for a promotion");
+            return; //Same job, do nothing
+        }
     }
+    
 	
     //Lose reputation from a Company if you are leaving it for another job
-	if (currCompany.companyName != company.companyName) {
-        company.playerReputation -= 1000;
+    if (currCompany != "") {
+        if (currCompany.companyName != company.companyName) {
+            company.playerReputation -= 1000;
+        }
     }
+	
     
     this.companyName = company.companyName;
     this.companyPosition = pos;
     
-    //TODO Post something about being promoted/getting new job
+    dialogBoxCreate("Congratulations! You were offered a new job at ", this.companyName, " as a " + pos.positionName);
 }
 
 PlayerObject.prototype.applyForSoftwareJob = function() {
-    applyForJob(CompanyPositions.SoftwareIntern);
+    this.applyForJob(CompanyPositions.SoftwareIntern);
 }
 
 PlayerObject.prototype.applyForItJob = function() {
-	applyForJob(CompanyPositions.ITIntern);
+	this.applyForJob(CompanyPositions.ITIntern);
 }
 
 PlayerObject.prototype.applyForSecurityEngineerJob = function() {
@@ -66,58 +85,58 @@ PlayerObject.prototype.applyForSecurityEngineerJob = function() {
     if (this.isQualified(company, CompanyPositions.SecurityEngineer)) {
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.SecurityEngineer;
-        //TODO Post that u got job
+        dialogBoxCreate("Congratulations, you were offered a position at ", this.companyName, " as a Security Engineer!" , "");
     } else {
-        //TODO Post not qualified
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
     }
 }
 
 PlayerObject.prototype.applyForNetworkEngineerJob = function() {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.NetworkEngineer)) {
-        applyForJob(CompanyPositions.NetworkEngineer);
+        this.applyForJob(CompanyPositions.NetworkEngineer);
     } else {
-        //TODO Say you aren't qualified
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
     }
 }
 
 PlayerObject.prototype.applyForBusinessJob = function() {
-	applyForJob(CompanyPositions.BusinessIntern);
+	this.applyForJob(CompanyPositions.BusinessIntern);
 }
 
 PlayerObject.prototype.applyForSecurityJob = function() {
     //TODO If case for POlice departments
-	applyForJob(CompanyPositions.SecurityGuard);
+	this.applyForJob(CompanyPositions.SecurityGuard);
 }
 
 PlayerObject.prototype.applyForAgentJob = function() {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.FieldAgent)) {
-        applyForJob(CompanyPositions.FieldAgent);
+        this.applyForJob(CompanyPositions.FieldAgent);
     } else {
-        //TODO Post not qualified
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
     }
 }
 
 PlayerObject.prototype.applyForEmployeeJob = function() {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.Employee) {
+    if (this.isQualified(company, CompanyPositions.Employee)) {
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Employee;
-        //TODO Post that u got the job
+        dialogBoxCreate("Congratulations, you are now employed at ", this.companyName, "", "");
     } else {
-        //TODO Post not qualified
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
     }
 }
 
 PlayerObject.prototype.applyForWaiterJob = function() {
 	var company = Companies[this.location]; //Company being applied to
-    if (this.isQualified(company, CompanyPositions.Waiter) {
+    if (this.isQualified(company, CompanyPositions.Waiter)) {
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Waiter;
-        //TODO Post that u got job
+        dialogBoxCreate("Congratulations, you are now employed as a waiter at ", this.companyName, "", "");
     } else {
-        //TODO Post not qualified
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
     }
 }
 
