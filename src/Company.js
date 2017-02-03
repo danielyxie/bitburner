@@ -189,6 +189,16 @@ CompanyPosition.prototype.isAgentJob = function() {
     return false;
 }
 
+CompanyPosition.prototype.toJSON = function() {
+    return Generic_toJSON("CompanyPosition", this);
+}
+
+CompanyPosition.fromJSON = function(value) {
+    return Generic_fromJSON(CompanyPosition, value.data);
+}
+
+Reviver.constructors.CompanyPosition = CompanyPosition;
+
 CompanyPositions = {
     //Constructor: CompanyPosition(name, reqHack, reqStr, reqDef, reqDex, reqAgi, reqCha, reqRep, salary)
 
