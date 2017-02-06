@@ -35,7 +35,9 @@ purchaseServerBoxCreate = function(ram, cost) {
     
     var confirmButton = document.getElementById("purchase-server-box-confirm");
     confirmButton.addEventListener("click", function() {
+        purchaseServerBoxClose();
         purchaseServer(ram, cost);
+        return false;
     });
     
     purchaseServerBoxOpen();

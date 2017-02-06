@@ -433,6 +433,9 @@ displayLocationContent = function() {
 			
             softwareJob.style.display = "block";
             businessJob.style.display = "block";
+            purchase1gb.style.display = "block";
+            purchase2gb.style.display = "block";
+            purchase4gb.style.display = "block";
             break;
 
         case Locations.Sector12CarmichaelSecurity:
@@ -1102,16 +1105,58 @@ initLocationButtons = function() {
     });
     
     purchase1gb.addEventListener("click", function() {
-        askToPurchaseServer(1);
-    }); 
+        purchaseServerBoxCreate(1, 100000);
+        return false;
+    });
     
-}   purchase2gb  
-    purchase4gb  
-    purchase8gb  
-    purchase16gb 
-    purchase32gb 
-    purchase64gb 
-    purchase128gb
-    purchase256gb
-    purchase512gb
-    purchase1tb  
+    purchase2gb.addEventListener("click", function() {
+        purchaseServerBoxCreate(2, 250000);
+        return false;
+    });
+    
+    purchase4gb.addEventListener("click", function() {
+        purchaseServerBoxCreate(4, 600000);
+        return false;
+    });
+    
+    purchase8gb.addEventListener("click", function() {
+        purchaseServerBoxCreate(8, 1500000);
+        return false;
+    });
+    
+    purchase16gb.addEventListener("click", function() {
+        purchaseServerBoxCreate(16, 4000000);
+        return false;
+    });
+    
+    purchase32gb.addEventListener("click", function() {
+        purchaseServerBoxCreate(32, 9000000);
+        return false;
+    });
+    
+    purchase64gb.addEventListener("click", function() {
+        purchaseServerBoxCreate(64, 20000000);
+        return false;
+    });
+    
+    purchase128gb.addEventListener("click", function() {
+        purchaseServerBoxCreate(128, 45000000);
+        return false;
+    });
+    
+    purchase256gb.addEventListener("click", function() {
+        purchaseServerBoxCreate(256, 100000000);
+        return false;
+    });
+    
+    purchase512gb.addEventListener("click", function() {
+        purchaseServerBoxCreate(512, 250000000);
+        return false;
+    });
+    
+    purchase1tb.addEventListener("click", function() {
+        purchaseServerBoxCreate(1024, 600000000);
+        return false;
+    });
+    
+}   
