@@ -23,3 +23,22 @@ function getIndicesOf(searchStr, str, caseSensitive) {
 String.prototype.replaceAt=function(index, character) {
     return this.substr(0, index) + character + this.substr(index+character.length);
 }
+
+//Converts a date representing time in milliseconds to a string with the format
+//      H hours M minutes and S seconds
+// e.g. 10000 -> "0 hours 0 minutes and 10 seconds"
+//      120000 -> "0 0 hours 2 minutes and 0 seconds"
+function convertTimeMsToTimeElapsedString(time) {
+    //Convert ms to seconds, since we only have second-level precision
+    time = Math.floor(time / 1000);
+    
+    var hours = Math.floor(time / 3600);
+    time %= 3600;
+    
+    var minutes = Math.floor(time / 60);
+    time %= 60;
+    
+    var seconds = time;
+    
+    return hours + " hours " + minutes + " minutes " + seconds + " seconds";
+}

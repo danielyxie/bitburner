@@ -425,6 +425,10 @@ var Engine = {
             Player.startAction = false;
         }
         
+        if (Player.isWorking) {
+            //TODO
+        }
+        
         //Counters
         Engine.decrementAllCounters(numCycles);
         Engine.checkCounters();        

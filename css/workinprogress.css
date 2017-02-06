@@ -1,0 +1,27 @@
+#work-in-progress-container {
+
+}
+
+#work-in-progress-text {
+    color: #66ff33;
+}
+
+#work-in-progress-cancel-button {
+    color: #aaa;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+#work-in-progress-cancel-button:hover,
+#work-in-progress-cancel-button:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}

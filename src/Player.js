@@ -64,8 +64,8 @@ function PlayerObject() {
 	this.location 		= "";
     
     //Company Information
-    this.companyName = "";
-    this.companyPosition = "";
+    this.companyName = "";      //Name of Company, equivalent to an object from Locations
+    this.companyPosition = "";  //CompanyPosition object
     
     //Servers
     this.currentServer       = ""; //IP address of Server currently being accessed through terminal
@@ -74,9 +74,21 @@ function PlayerObject() {
     
     //Achievements and achievement progress
     
-    //Flag to let the engine know the player is starting a hack
+    //Flag to let the engine know the player is starting an action
+    //  Current actions: hack, analyze
     this.startAction = false;
     this.actionTime = 0;
+    
+    //Flags for working
+    this.isWorking = false;
+    this.workHackExpGained = 0;
+    this.workStrExpGained = 0;
+    this.workDefExpGained = 0;
+    this.workDexExpGained = 0;
+    this.workAgiExpGained = 0;
+    this.workRepGained = 0;
+    this.workMoneyGained = 0;
+    this.timeWorked = 0;    //in ms
 	
 	//Used to store the last update time. 
 	this.lastUpdate = new Date().getTime();
@@ -182,6 +194,68 @@ PlayerObject.prototype.gainMoney = function(money) {
 	this.money += money;
 	this.total_money += money;
 	this.lifetime_money += money;
+}
+
+/* Working */
+PlayerObject.prototype.startWork = function() {
+    this.isWorking = true;
+    this.workHackExpGained = 0;
+    this.workStrExpGained = 0;
+    this.workDefExpGained = 0;
+    this.workDexExpGained = 0;
+    this.workAgiExpGained = 0;
+    this.workRepGained = 0;
+    this.workMoneyGained = 0;
+    this.timeWorked = 0;
+}
+    
+PlayerObject.prototype.work = function(numCycles) {
+    var txt = document.getElementById("work-in-progress-text");
+    txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName + 
+                    " at " + Player.companyName + "<br><br>" + 
+                    "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
+                    "You have earned: <br><br>" + 
+                    "$" + this.workMoneyGained + " (" 
+                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br><br>" + 
+                    "but you will only gain half of the experience, money, and reputation you've earned so far."
+}
+
+//Money gained per game cycle
+PlayerObject.prototype.getWorkMoneyGain() {
+    var company = Companies[this.companyName];
+    
+    var salary = this.companyPosition.baseSalary;
+    return salary * company.salaryMultiplier;
+}
+
+//Hack exp gained per game cycle
+PlayerObject.prototype.getWorkHackExpGain() {
+    
+}
+
+//Str exp gained per game cycle
+PlayerObject.prototype.getWorkStrExpGain() {
+    
+}
+
+//Def exp gained per game cycle
+PlayerObject.prototype.getWorkDefExpGain() {
+    
+}
+
+//Dex exp gained per game cycle
+PlayerObject.prototype.getWorkDexExpGain() {
+    
+}
+
+//Agi exp gained per game cycle
+PlayerObject.prototype.getWorkAgiExpGain() {
+    
+}
+
+//Reputation gained per game cycle
+PlayerObject.prototype.getWorkRepGain() {
+    
 }
 
 //Functions for saving and loading the Player data

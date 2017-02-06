@@ -141,7 +141,7 @@ displayLocationContent = function() {
     employeeJob.style.display = "none";
     waiterJob.style.display = "none";
     
-    work.style.display = "none";    //TODO DIsplay this
+    work.style.display = "block";
     
     gymTrainStr.style.display = "none";
     gymTrainDef.style.display = "none";
@@ -166,6 +166,24 @@ displayLocationContent = function() {
     travelToNewTokyo.style.display = "none";
     travelToIshima.style.display = "none";
     travelToVolhaven.style.display = "none";
+    
+    //Check if the player is employed at this Location. If he is, display the "Work" button,
+    //update the job title, etc.
+    if (pos == Player.companyName) {
+        var company = Companies[pos];
+        
+        jobTitle = document.getElementById("location-job-title");
+        jobTitle.innerHTML = "Job Title: " + Player.companyPosition.positionName;
+        jobReputation = document.getElementById("location-job-reputation");
+        jobReputation.innerHTML = "Company reputation: " + company.playerReputation;
+        work.style.display = "block";
+        
+        work.addEventListener("click", function() {
+            Player.startWork();
+            return false;
+        });
+    }
+    
     
     switch (loc) {
         case Locations.AevumTravelAgency: 
