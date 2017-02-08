@@ -1,5 +1,9 @@
 #work-in-progress-container {
-
+    color: #66ff33;
+    position: fixed;
+	padding-top: 10px;
+	padding-left: 10px;
+	height: 100%;
 }
 
 #work-in-progress-text {

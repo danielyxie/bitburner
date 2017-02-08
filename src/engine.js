@@ -39,6 +39,7 @@ var Engine = {
         augmentationsContent:   null,
         tutorialContent:        null,
         locationContent:        null,
+        workInProgressContent:  null,
         
         //Character info
         characterInfo:          null,
@@ -221,6 +222,16 @@ var Engine = {
         Engine.currentPage = Engine.Page.Location;
     },
     
+    loadWorkInProgressContent: function() {
+        Engine.hideAllContent();
+        
+        var mainMenu = document.getElementById("mainmenu-container");
+        mainMenu.style.visibility = "hidden";
+        
+        Engine.Display.workInProgressContent.style.visibility = "visible";
+        
+    },
+    
     //Helper function that hides all content 
     hideAllContent: function() {
         Engine.Display.terminalContent.style.visibility = "hidden";
@@ -233,8 +244,8 @@ var Engine = {
         Engine.Display.factionContent.style.visibility = "hidden";
         Engine.Display.augmentationsContent.style.visibility = "hidden";
         Engine.Display.tutorialContent.style.visibility = "hidden";
-        
         Engine.Display.locationContent.style.visibility = "hidden";
+        Engine.Display.workInProgressContent.style.visibility = "hidden";
         
         //Location lists
         Engine.aevumLocationsList.style.display = "none";
@@ -662,6 +673,10 @@ var Engine = {
         //Location page (page that shows up when you visit a specific location in World)
         Engine.Display.locationContent = document.getElementById("location-container");
         Engine.Display.locationContent.style.visibility = "hidden";
+        
+        //Work In Progress
+        Engine.Display.workInProgressContent = document.getElementById("work-in-progress-container");
+        Engine.Display.workInProgressContent.style.visibility = "hidden";
 		
 		//Init Location buttons
 		initLocationButtons();

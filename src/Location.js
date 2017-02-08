@@ -95,6 +95,9 @@ displayLocationContent = function() {
     var waiterJob           = document.getElementById("location-waiter-job");
 
     var work                = document.getElementById("location-work");
+	
+	var jobTitle 			= document.getElementById("location-job-title");
+	var jobReputation 		= document.getElementById("location-job-reputation");
 
     var gymTrainStr         = document.getElementById("location-gym-train-str");
     var gymTrainDef         = document.getElementById("location-gym-train-def");
@@ -141,7 +144,7 @@ displayLocationContent = function() {
     employeeJob.style.display = "none";
     waiterJob.style.display = "none";
     
-    work.style.display = "block";
+    work.style.display = "none";
     
     gymTrainStr.style.display = "none";
     gymTrainDef.style.display = "none";
@@ -169,12 +172,11 @@ displayLocationContent = function() {
     
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
-    if (pos == Player.companyName) {
-        var company = Companies[pos];
+    if (loc == Player.companyName) {
+        var company = Companies[loc];
         
-        jobTitle = document.getElementById("location-job-title");
+        
         jobTitle.innerHTML = "Job Title: " + Player.companyPosition.positionName;
-        jobReputation = document.getElementById("location-job-reputation");
         jobReputation.innerHTML = "Company reputation: " + company.playerReputation;
         work.style.display = "block";
         
@@ -182,7 +184,10 @@ displayLocationContent = function() {
             Player.startWork();
             return false;
         });
-    }
+    } else {
+		jobTitle.style.display = "none";
+		jobReputation.style.display = "none";
+	}
     
     
     switch (loc) {
