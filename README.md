@@ -41,13 +41,18 @@ TESTING TODO:
 		No errors thrown when saving/loading game at the start
 		
 	Scroll all the way down when something is post()ed
+    
+    Purchasing Servers
+    
+    Work
+    Companies
+    Add possible CompanyPositions for every Company
+    Applying/working for companies
 
 Tasks TODO:
 	Script logging functionality? Logs to internal "log file" (property of script itself)
 	Tutorial and help
 	Secret Servers
-	
-	Purchasing Servers
 	
 	Hack time formula needs rebalancing I think
 	
@@ -56,10 +61,6 @@ Tasks TODO:
 	Update CONSTANTS.HelpText
 	Account for Max possible int when gaining exp
 	Text in script editor that says ("ctrl + x" to save and quit)
-	
-	Companies
-		Add possible CompanyPositions for every Company
-		Applying/working for companies
 	
 	OPTIMIZATION
 		https://gamealchemist.wordpress.com/2013/05/01/lets-get-those-javascript-arrays-to-work-fast/

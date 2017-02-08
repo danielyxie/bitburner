@@ -1,6 +1,7 @@
 //Augmentations
 function Augmentation(name) {
 	this.name = name;
+    this.info = "";
 	this.owned = false;	//Whether the player has it (you can only have each augmentation once)
 	this.description = "";
 }
@@ -32,34 +33,34 @@ AddToAugmentations = function(aug) {
 //		Similarly. something that helps you gain company reputation
 initAugmentations = function() {
 	//Combat stat augmentations
-	var Targeting1 = new Augmentation("Targeting I");
+	var Targeting1 = new Augmentation("Augmented Targeting I");
 	AddToAugmentations(Targeting1);
 	
-	var Targeting2 = new Augmentation("Targeting II");
+	var Targeting2 = new Augmentation("Augmented Targeting II");
 	AddToAugmentations(Targeting2);
 	
-	var Targeting3 = new Augmentation("Targeting III");
+	var Targeting3 = new Augmentation("Augmented Targeting III");
 	AddToAugmentations(Targeting3);
 	
 	var SyntheticHeart = new Augmentation("Synthetic Heart");
 	AddToAugmentations(SyntheticHeart);
+    
+	var SynfibrilMuscle = new Augmentation("Synfibril Muscle");
+	AddToAugmentations(SynfibrilMuscle)
 	
-	var MicrofibralMuscle = new Augmentation("Microfibral Muscle");
-	AddToAugmentations(MicrofibralMuscle)
+	var CombatRib1 = new Augmentation("Combat Rib I");
+	AddToAugmentations(CombatRib1);
 	
-	var CombatStrength1 = new Augmentation("Combat Strength I");
-	AddToAugmentations(CombatStrength1);
+	var CombatRib2 = new Augmentation("Combat Rib II");
+	AddToAugmentations(CombatRib2);
 	
-	var CombatStrength2 = new Augmentation("Combat Strength II");
-	AddToAugmentations(CombatStrength2);
-	
-	var CombatStrength3 = new Augmentation("Combat Strength III");
-	AddToAugmentations(CombatStrength3);
+	var CombatRib3 = new Augmentation("Combat Rib III");
+	AddToAugmentations(CombatRib3);
 	
 	var NanofiberWeave = new Augmentation("Nanofiber Weave");
 	AddToAugmentations(NanofiberWeave);
 	
-	var SubdermalArmor = new Augmentation("Subdermal Armor");
+	var SubdermalArmor = new Augmentation("NEMEAN Subdermal Weave");
 	AddToAugmentations(SubdermalArmor);
 	
 	var WiredReflexes = new Augmentation("Wired Reflexes");
@@ -71,15 +72,21 @@ initAugmentations = function() {
 	var BionicSpine = new Augmentation("Bionic Spine");
 	AddToAugmentations(BionicSpine);
 	
-	var GrapheneBionicSpine = new Augmentation("Graphene Bionic Spine");
+	var GrapheneBionicSpine = new Augmentation("Graphene Bionic Spine Upgrade");
 	AddToAugmentations(GrapheneBionicSpine);
+    
+    var BionicLegs = new Augmentation("Bionic Legs");
+    AddToAugmentations(BionicLegs);
+    
+    var GrapheneBionicLegs = new Augmentation("PC Direct-Neural Interface NeuroNet Injector");
+    AddToAugmentations(GrapheneBionicLegs);
 	
 	//Labor stat augmentations
-	var SpeechProcessor = new Augmentation("Speech Processor Implant");
+	var SpeechProcessor = new Augmentation("Speech Processor Implant"); //Cochlear imlant?
 	AddToAugmentations(SpeechProcessor);
 	
-	var CASIE = new Augmentation("Computer Assisted Social Interaction Enhancement");
-	AddToAugmentations(CASIE);
+	var EnhancedSocialInteractionImplant = new Augmentation("Enhanced Social Interaction Implant");
+	AddToAugmentations(EnhancedSocialInteractionImplant);
 	
 	//Hacking augmentations
 	var ArtificialBioNeuralNetwork = new Augmentation("Artificial Bio-neural Network Implant");
@@ -87,6 +94,9 @@ initAugmentations = function() {
 	
 	var ArtificialSynapticPotentiation = new Augmentation("Artificial Synaptic Potentiation");
 	AddToAugmentations(ArtificialSynapticPotentiation);
+    
+    var EnhancedMyelinSheathing = new Augmentation("Enhanced Myelin Sheating");
+    AddToAugmentations(EnhancedMyelinSheathing);
 	
 	var SynapticEnhancement = new Augmentation("Synaptic Enhancement Implant");
 	AddToAugmentations(SynapticEnhancement);
@@ -117,39 +127,69 @@ initAugmentations = function() {
 	
 	var Neuralstimulator = new Augmentation("Neuralstimulator");
 	AddToAugmentations(Neuralstimulator);
+    
+    var PCDNINeuralNetwork = new Augmentation("PC Direct-Neural Interface NeuroNet Injector");
+    AddToAugmentations(PCDNINeuralNetwork);
 	
+    //Work Augmentations
+    var NuoptimalInjectorImplant = new Augmentation("Nuoptimal Nootropic Injector Implant");
+    AddToAugmentations(NuoptimalInjectorImplant);
+    
+    var SpeechEnhancement = new Augmentation("Speech Enhancement");
+    AddToAugmentations(SpeechEnhancement);
+    
+    var FocusWire = new Augmentation("FocusWire"); //Stops procrastination
+    AddToAugmentations(FocusWire)
+    
+    var PCDNI = new Augmentation("PC Direct-Neural Interface");
+    AddToAugmentations(PCDNI);
+    
+    var PCDNIOptimizer = new Augmentation("PC Direct-Neural Interface Optimization Submodule");
+    AddToAugmentations(PCDNIOptimizer);
+    
 	//Misc augmentations
+    var Neurotrainer1 = new Augmentation("Neurotrainer I");
+    AddToAugmentations(Neurotrainer1);
+    
+    var Neurotrainer2 = new Augmentation("Neurotrainer II");
+    AddToAugmentations(Neurotrainer2);
+    
+    var Neurotrainer3 = new Augmentation("Neurotrainer III");
+    AddToAugmentations(Neurotrainer3);
+    
+    var Hypersight = new Augmentation("HyperSight Corneal Implant");
+    AddToAugmentations(Hypersight);
 }
 
-applyAugmentations = function(aug) {
+applyAugmentation = function(aug) {
 	switch(aug.name) {
 		//Combat stat augmentations
-		case "Targeting I":
+		case "Augmented Targeting I":
 			//Dex 5%
 			break;
-		case "Targeting II":
+		case "Augmented Targeting II":
 			//Dex 5% 
 			break;
-		case "Targeting III":
+		case "Augmented Targeting III":
 			//Dex 5%
 			break;
 		case "Synthetic Heart":
 			//Agi and Str 10%
 			break;
-		case "Microfibral muscle":
+		case "Synfibril Muscle":
 			//Strength and Defense 10%
 			break;
-		case "Combat Strength I":
+		case "Combat Rib I":
 			//Str and Defense 5%
 			break;
-		case "Combat Strength II":
+		case "Combat Rib II":
 			break;
-		case "Combat Strength III":
+		case "Combat Rib III":
 			break;
 		case "Nanofiber Weave":
 			//str + Defense 10%
 			break;
-		case "Subdermal Armor":
+		case "NEMEAN Subdermal Weave":
 			//Defense 10%
 			break;
 		case "Wired Reflexes":
@@ -161,12 +201,18 @@ applyAugmentations = function(aug) {
 		case "Bionic Spine":
 			//Everything 3%?
 			break;
-		case "Graphene Bionic Spine":
+		case "Graphene Bionic Spine Upgrade":
 			//Everything 5%
 			break;
+        case "Bionic Legs":
+            //Agi
+            break;
+        case "PC Direct-Neural Interface NeuroNet Injector":
+            //Agi
+            break;
 			
 		//Labor stats augmentations
-		case "Computer Assisted Social Interaction Enhancement":
+		case "Enhanced Social Interaction Implant":
 			//Charisma 10%
 			break;
 		case "Speech Processor Implant":
@@ -180,6 +226,9 @@ applyAugmentations = function(aug) {
 		case "Artificial Synaptic Potentiation":
 			//Hacking speed 15%
 			break;
+        case "Enhanced Myelin Sheating":
+            //Hacking speed and exp gain 10%
+            break;
 		case "Synaptic Enhancement Implant":
 			//Hacking speed 5%
 			break;
@@ -211,6 +260,40 @@ applyAugmentations = function(aug) {
 		case "Neuralstimulator":
 			//Hacking speed, money gained, and exp gained 10%
 			break;
+        case "PC Direct-Neural Interface NeuroNet Injector":
+            //Hacking speed increases
+            break;
+            
+        //Work augmentations
+        case "Nuoptimal Nootropic Injector Implant":
+            //Increase in gains for software, IT, and Business jobs
+            break;
+        case "Speech Enhancement":
+            //Increase in business jobs and reputation gained
+            break;
+        case "FocusWire":
+            //Increase in all gains and reputation gained
+            break;
+        case "PC Direct-Neural Interface":
+            //Allows people to directly communicate interface with PCs..which helps with Software and IT jobs
+            break;
+        case "PC Direct-Neural Interface Optimization Submodule":
+            //Allows u to better optimize code/pc when connecting with PC DNI..helps with software/IT jobs
+            break;
+        
+        //Misc augmentations
+        case "Neurotrainer I":
+            //Increase all exp gains
+            break;
+        case "Neurotrainer II":
+            //Increase all exp gains
+            break;
+        case "Neurotrainer III":
+            //Increase all exp gains
+            break;
+        case "HyperSight Corneal Implant":
+            //Increases sight..which increases dex..hacking speed + money?
+            break;
 		
 		default:
 			console.log("No such augmentation!");

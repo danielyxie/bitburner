@@ -10,6 +10,7 @@ function Faction(name) {
     this.playerReputation 	= 0;  		//"Reputation" within faction
 };
 
+//TODO Probably dont need this..will set this in initAugmentations instead
 Faction.prototype.setAugmentations = function(augs) {
 	for (var i = 0; i < augs.length; i++) {
 		this.augmentations.push(augs[i]);
