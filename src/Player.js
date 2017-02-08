@@ -234,13 +234,13 @@ PlayerObject.prototype.finishWork = function(cancelled) {
         txt = "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
               "Since you cancelled your work early, you only gained half of the experience, money, and reputation you earned. <br><br>" + 
               "You earned a total of: <br>" + 
-              "$" + (this.workMoneyGained / cancMult) + "<br>" + 
-              (this.workRepGained / cancMult) + " reputation for the company <br>" + 
-              (this.workHackExpGained / cancMult) + " hacking exp <br>" + 
-              (this.workStrExpGained / cancMult) + " strength exp <br>" + 
-              (this.workDefExpGained / cancMult) + " defense exp <br>" +
-              (this.workDexExpGained / cancMult) + " dexterity exp <br>" + 
-              (this.workAgiExpGained / cancMult) + " agility exp <br>";
+              "$" + (this.workMoneyGained / cancMult).toFixed(2) + "<br>" + 
+              (this.workRepGained / cancMult).toFixed(3) + " reputation for the company <br>" + 
+              (this.workHackExpGained / cancMult).toFixed(3) + " hacking exp <br>" + 
+              (this.workStrExpGained / cancMult).toFixed(3) + " strength exp <br>" + 
+              (this.workDefExpGained / cancMult).toFixed(3) + " defense exp <br>" +
+              (this.workDexExpGained / cancMult).toFixed(3) + " dexterity exp <br>" + 
+              (this.workAgiExpGained / cancMult).toFixed(3) + " agility exp <br>";
               
     } else {
         txt = "You worked a full shirt of 8 hours! <br><br> " +
@@ -254,6 +254,11 @@ PlayerObject.prototype.finishWork = function(cancelled) {
               (this.workAgiExpGained / cancMult) + " agility exp <br>";
     }
     dialogBoxCreate(txt);
+    
+    var mainMenu = document.getElementById("mainmenu-container");
+    mainMenu.style.visibility = "visible";
+        
+    Engine.loadTerminalContent();
 }
 
 PlayerObject.prototype.startWork = function() {
@@ -279,7 +284,7 @@ PlayerObject.prototype.startWork = function() {
     
     var cancelButton = document.getElementById("work-in-progress-cancel-button");
     cancelButton.addEventListener("click", function() {
-        this.finishWork(true);
+        Player.finishWork(true);
     });
     
     //Display Work In Progress Screen
@@ -309,15 +314,15 @@ PlayerObject.prototype.work = function(numCycles) {
                     " at " + Player.companyName + "<br><br>" + 
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" + 
-                    "$" + this.workMoneyGained + " (" + this.workMoneyGainRate * cyclesPerSec + " / sec) <br><br>" + 
-                    this.workRepGained + " (" + this.workRepGainRate * cyclesPerSec + " / sec) reputation for this company <br>" + 
-                    this.workHackExpGained + " (" + this.workHackExpGainRate * cyclesPerSec + " / sec) hacking exp <br>" + 
-                    this.workStrExpGained + " (" + this.workStrExpGainRate * cyclesPerSec + " / sec) strength exp <br>" + 
-                    this.workDefExpGained + " (" + this.workDefExpGainRate * cyclesPerSec + " / sec) defense exp <br>" + 
-                    this.workDexExpGained + " (" + this.workDexExpGainRate * cyclesPerSec + " / sec) dexterity exp <br>" + 
-                    this.workAgiExpGained + " (" + this.workAgiExpGainrate * cyclesPerSec + " / sec) agility exp <br> " +
+                    "$" + this.workMoneyGained + " (" + (this.workMoneyGainRate * cyclesPerSec).toFixed(2) + " / sec) <br><br>" + 
+                    this.workRepGained.toFixed(3) + " (" + (this.workRepGainRate * cyclesPerSec).toFixed(3) + " / sec) reputation for this company <br>" + 
+                    this.workHackExpGained.toFixed(3) + " (" + (this.workHackExpGainRate * cyclesPerSec).toFixed(3) + " / sec) hacking exp <br>" + 
+                    this.workStrExpGained.toFixed(3) + " (" + (this.workStrExpGainRate * cyclesPerSec).toFixed(3) + " / sec) strength exp <br>" + 
+                    this.workDefExpGained.toFixed(3) + " (" + (this.workDefExpGainRate * cyclesPerSec).toFixed(3) + " / sec) defense exp <br>" + 
+                    this.workDexExpGained.toFixed(3) + " (" + (this.workDexExpGainRate * cyclesPerSec).toFixed(3) + " / sec) dexterity exp <br>" + 
+                    this.workAgiExpGained.toFixed(3) + " (" + (this.workAgiExpGainRate * cyclesPerSec).toFixed(3) + " / sec) agility exp <br><br> " +
                     
-                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br><br>" + 
+                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" + 
                     "but you will only gain half of the experience, money, and reputation you've earned so far."
                     
 }
@@ -331,31 +336,34 @@ PlayerObject.prototype.getWorkMoneyGain = function() {
 //Hack exp gained per game cycle
 PlayerObject.prototype.getWorkHackExpGain = function() {
     var company = Companies[this.companyName];
+    if (Engine.Debug) {
+        console.log(company.companyName);
+    }
     return this.companyPosition.hackingExpGain * company.expMultiplier * this.hacking_exp_mult;
 }
 
 //Str exp gained per game cycle
 PlayerObject.prototype.getWorkStrExpGain = function() {
     var company = Companies[this.companyName];
-    return this.companyPosition.strengthExpGain * company.expMultiplier * this.str_exp_mult;
+    return this.companyPosition.strengthExpGain * company.expMultiplier * this.strength_exp_mult;
 }
 
 //Def exp gained per game cycle
 PlayerObject.prototype.getWorkDefExpGain = function() {
     var company = Companies[this.companyName];
-    return this.companyPosition.defenseExpGain * company.expMultiplier * this.def_exp_mult;
+    return this.companyPosition.defenseExpGain * company.expMultiplier * this.defense_exp_mult;
 }
 
 //Dex exp gained per game cycle
 PlayerObject.prototype.getWorkDexExpGain = function() {
     var company = Companies[this.companyName];
-    return this.companyPosition.dexterityExpGain * company.expMultiplier * this.dex_exp_mult;
+    return this.companyPosition.dexterityExpGain * company.expMultiplier * this.dexterity_exp_mult;
 }
 
 //Agi exp gained per game cycle
 PlayerObject.prototype.getWorkAgiExpGain = function() {
     var company = Companies[this.companyName];
-    return this.companyPosition.agilityExpGain * company.expMultiplier * this.agi_exp_mult;
+    return this.companyPosition.agilityExpGain * company.expMultiplier * this.agility_exp_mult;
 }
 
 //Reputation gained per game cycle

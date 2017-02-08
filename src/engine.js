@@ -425,7 +425,7 @@ var Engine = {
     },
     
     updateGame: function(numCycles = 1) {
-        //Manual hack
+        //Start Manual hack 
         if (Player.startAction == true) {
             Engine._totalActionTime = Player.actionTime;
             Engine._actionTimeLeft = Player.actionTime;
@@ -437,7 +437,7 @@ var Engine = {
         }
         
         if (Player.isWorking) {
-            //TODO
+            Player.work(numCycles);
         }
         
         //Counters

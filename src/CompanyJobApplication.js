@@ -70,6 +70,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
     this.companyPosition = pos;
     
     dialogBoxCreate("Congratulations! You were offered a new job at ", this.companyName, " as a " + pos.positionName);
+    Engine.loadLocationContent();
 }
 
 PlayerObject.prototype.applyForSoftwareJob = function() {
@@ -86,6 +87,7 @@ PlayerObject.prototype.applyForSecurityEngineerJob = function() {
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.SecurityEngineer;
         dialogBoxCreate("Congratulations, you were offered a position at ", this.companyName, " as a Security Engineer!" , "");
+        Engine.loadLocationContent();
     } else {
         dialogBoxCreate("Unforunately, you do not qualify for this position");
     }
@@ -124,6 +126,7 @@ PlayerObject.prototype.applyForEmployeeJob = function() {
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Employee;
         dialogBoxCreate("Congratulations, you are now employed at ", this.companyName, "", "");
+        Engine.loadLocationContent();
     } else {
         dialogBoxCreate("Unforunately, you do not qualify for this position");
     }
@@ -135,6 +138,7 @@ PlayerObject.prototype.applyForWaiterJob = function() {
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Waiter;
         dialogBoxCreate("Congratulations, you are now employed as a waiter at ", this.companyName, "", "");
+        Engine.loadLocationContent();
     } else {
         dialogBoxCreate("Unforunately, you do not qualify for this position");
     }
