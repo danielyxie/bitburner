@@ -68,6 +68,10 @@ initFactions = function() {
 	AddToFactions(FourSigma);
 	var KuaiGongInternational 	= new Faction("KuaiGong International");
 	AddToFactions(KuaiGongInternational);
+    
+    //Other corporations
+    var FulcrumTechnologies     = new Faction("Fulcrum Secret Technologies");
+    AddToFactions(FulcrumTechnologies);
 	
 	//Hacker groups
 	var BitRunners 				= new Faction("BitRunners");
