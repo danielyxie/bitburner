@@ -176,12 +176,14 @@ initForeignServers = function() {
     FulcrumTechnologiesServer.setHackingParameters(900, 2000000000, 90, 85);
     FulcrumTechnologiesServer.setPortProperties(5);
     AddToAllServers(FulcrumTechnologiesServer);
-    
+	
     var FulcrumSecretTechnologiesServer = new Server();
     FulcrumSecretTechnologiesServer.init(createRandomIp(), "fulcrumassets", "Fulcrum Technologies Assets", true, false, false, false, 1024);
     FulcrumSecretTechnologiesServer.setHackingParameters(999, 1000000, 99, 1);
     FulcrumSecretTechnologiesServer.setPortProperties(5);
     AddToAllServers(FulcrumSecretTechnologiesServer);
+	
+	SpecialServerIps.fulcrumSecretServer = FulcrumSecretTechnologiesServer.ip;
     
     var StormTechnologiesServer = new Server();
     StormTechnologiesServer.init(createRandomIp(), "stormtech", "Storm Technologies", true, false, false, false, 256);

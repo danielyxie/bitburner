@@ -10,13 +10,6 @@ function Faction(name) {
     this.playerReputation 	= 0;  		//"Reputation" within faction
 };
 
-//TODO Probably dont need this..will set this in initAugmentations instead
-Faction.prototype.setAugmentations = function(augs) {
-	for (var i = 0; i < augs.length; i++) {
-		this.augmentations.push(augs[i]);
-	}
-}
-
 Faction.prototype.setInformation = function(info) {
 	this.information = info;
 }
@@ -109,6 +102,165 @@ initFactions = function() {
 	AddToFactions(TianDiHui);
 	var CyberSec 				= new Faction("CyberSec");
 	AddToFactions(CyberSec);
+}
+
+//This function sets the requirements to join a Faction. It checks whether the Player meets
+//those requirements and will return an array of all factions that the Player should
+//receive an invitation to
+PlayerObject.prototype.checkForFactionInvitations() {
+    invitedFactions = []; //Array which will hold NAMES of all Factions player should be invited to
+    
+    var companyRep = Companies[this.companyName].playerReputation;
+    
+    //Illuminati
+    var illuminatiFac = Factions["Illuminati"];
+    if (illuminatiFac.isBanned == false && illuminatiFac.isMember == false &&
+        this.numAugmentations >= 10 && 
+        this.money >= 10000000000 && this.total_money >= 20000000000 &&
+        this.hacking_skill >= 800 && this.total_hacking >= 7000 &&
+        this.strength >= 900 && this.total_strength >= 10000 && 
+        this.defense >= 900 && this.total_defense >= 10000 &&
+        this.dexterity >= 900 && this.total_dexterity >= 10000 && 
+        this.agility >= 900 && this.total_agility >= 10000) {
+        invitedFactions.push("Illuminati");
+    }
+        
+    //Daedalus
+    var daedalusFac = Factions["Daedalus"];
+    if (daedalusFac.isBanned == false && daedalusFac.isMember == false &&
+        this.numAugmentations >= 15 && 
+        this.money >= 1000000000 && this.total_money >= 10000000000 &&
+        this.hacking_skill >= 1000 && this.total_hacking >= 10000 &&
+        this.strength >= 500 && this.total_strength >= 8000 && 
+        this.defense >= 500 && this.total_defense >= 8000 &&
+        this.dexterity >= 500 && this.total_dexterity >= 8000 && 
+        this.agility >= 500 && this.total_agility >= 8000) {
+        invitedFactions.push("Daedalus");
+    }
+    
+    //The Covenant
+    var covenantFac = Factions["The Covenant"];
+    if (covenantFac.isBanned == false && covenantFac.isMember == false &&
+        this.numAugmentations >= 12 &&
+        this.money >= 5000000000 && this.total_money >= 10000000000 &&
+        this.hacking_skill >= 850 && this.total_hack >= 5000 && 
+        this.strength >= 850 && this.total_strength >= 5000 &&
+        this.defense >= 850 && this.total_defense >= 5000 &&
+        this.dexterity >= 850 && this.total_dexterity >= 5000 &&
+        this.agility >= 850 && this.total_agility >= 5000) {
+        invitedFactions.push("The Covenant");
+    }
+    
+    //ECorp
+    var ecorpFac = Factions["ECorp"];
+    if (ecorpFac.isBanned == false && ecorpFac.isMember == false && 
+        this.companyName == Locations.AevumECorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push("ECorp");
+    }
+    
+    //MegaCorp
+    var megacorpFac = Factions["MegaCorp"];
+    if (megacorpFac.isBanned == false && megacorpFac.isMember == false && 
+        this.companyName == Locations.Sector12MegaCorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push("MegaCorp");
+    }
+        
+    //Bachman & Associates
+    var bachmanandassociatesFac = Factions["Bachman & Associates"];
+    if (bachmanandassociatesFac.isBanned == false && bachmanandassociatesFac.isMember == false &&
+        this.companyName == Locations.AevumBachmanAndAssociates && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push("Bachman & Associates");
+    }
+    
+    //Blade Industries
+    var bladeindustriesFac = Factions["Blade Industries"];
+    if (bladeindustriesFac.isBanned == false && bladeindustriesFac.isMember == false && 
+        this.companyName == Locations.Sector12BladeIndustries && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push("Blade Industries");
+    }
+    
+    //NWO
+    var nwoFac = Factions["NWO"];
+    if (nwoFac.isBanned == false && nwoFac.isMember == false && 
+        this.companyName == Locations.VolhavenNWO && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push("NWO");
+    }
+    
+    //Clarke Incorporated
+    var clarkeincorporatedFac = Factions["Clarke Incorporated"];
+    if (clarkeincorporatedFac.isBanned == false && clarkeincorporatedFac.isMember == false &&
+        this.companyName == Locations.AevumClarkeIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push("Clarke Incorporated");
+    }
+    
+    //OmniTek Incorporated
+    
+    var omnitekincorporatedFac = Factions["OmniTek Incorporated"];
+    if (omnitekincorporatedFac.isBanned == false && omnitekincorporatedFac.isMember == false &&
+        this.companyName == Locations.VolhavenOmniTekIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push("OmniTek Incorporated");
+    }
+    
+    //Four Sigma
+    var foursigmaFac = Factions["Four Sigma"];
+    if (foursigmaFac.isBanned == false && foursigmaFac.isMember == false && 
+        this.companyName == Locations.Sector12FourSigma && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push("Four Sigma");
+    }
+    
+    //KuaiGong International
+    var kuaigonginternationalFac = Factions["KuaiGong International"];
+    if (kuaigonginternationalFac.isBanned == false && kuaigonginternationalFac.isMember == false &&
+        this.companyName == Locations.ChongqingKuaiGongInternational && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push("KuaiGong International");
+    }
+    
+    //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
+    var fulcrumsecrettechonologiesFac = Factions["Fulcrum Secret Technologies"];
+    var fulcrumSecretServer = AllServers[SpecialServerIps.fulcrumSecretServer];
+    if (fulcrumSecretServer == null) {
+        console.log("Error: Could not find Fulcrum Secret Technologies Server");
+    }
+    if (fulcrumsecrettechonologiesFac.isBanned == false && fulcrumsecrettechonologiesFac.isMember == false &&
+        fulcrumSecretServer.hasAdminRights && 
+        this.companyName == Locations.AevumFulcrumTechnologies && companyRep >= 250000) {
+        invitedFactions.push("Fulcrum Secret Technologies");
+    }
+    
+    //BitRunners
+    var bitrunnersFac = Factions["BitRunners"];
+    var homeComp = AllServers[this.homeComputer];
+    if (bitrunnersFac.isBanned == false && bitrunnersFac.isMember == false &&
+        this.hacking_skill >= 600 && homeComp.maxRam >= 32) {
+        invitedFactions.push("BitRunners");
+    }
+    
+    //The Black Hand
+    var theblackhandFac = Factions["The Black Hand"];
+    if (theblackhandFac.isBanned == false && theblackhandFac.isMember == false &&
+        this.hacking_skill >= 400 && this.strength >= 300 && this.defense >= 300 &&
+        this.agility >= 300 && this.dexterity >= 300 && homeComp.maxRam >= 16) {
+        invitedFactions.push("The Black Hand");
+    }
+    
+    //NiteSec
+    var nitesecFac = Factions["NiteSec"];
+    if (nitesecFac.isBanned == false && nitesecFac.isMember == false && 
+        this.hacking_skill >= 500 && homeComp.maxRam >= 32) {
+        invitedFactions.push("NiteSec");
+    }
+    
+    //Chongqing
+    //Sector-12
+    //New Tokyo
+    //Aevum
+    //Ishima
+    //Volhaven
+    //Speakers for the Dead
+    //The Dark Army
+    //The Syndicate
+    //Tian Di Hui
+    //CyberSec
 }
 
 joinFaction = function(faction) {

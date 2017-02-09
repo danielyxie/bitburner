@@ -72,6 +72,9 @@ function PlayerObject() {
     this.discoveredServers   = []; //IP addresses of secret servers not in the network that you have discovered
     this.purchasedServers    = [];
     
+    //Augmentations
+    this.numAugmentations = 0;
+    
     //Achievements and achievement progress
     
     //Flag to let the engine know the player is starting an action
@@ -129,7 +132,7 @@ PlayerObject.prototype.getHomeComputer = function() {
 //  At the maximum possible exp (MAX_INT = 9007199254740991), the hacking skill will be 1796 TODO REcalculate this
 //  Gets to level 1000 hacking skill at (TODO Determine this)
 PlayerObject.prototype.calculateSkill = function(exp) {
-    return Math.max(Math.floor(7.2 * Math.log(exp + 518.013) - 44), 1);
+    return Math.max(Math.floor(32 * Math.log(exp + 112) - 150), 1);
 }
 
 PlayerObject.prototype.updateSkillLevels = function() {
