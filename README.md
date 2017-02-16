@@ -48,6 +48,8 @@ TESTING TODO:
     Companies
     Add possible CompanyPositions for every Company
     Applying/working for companies
+    
+    Factions
 
 Tasks TODO:
 	Script logging functionality? Logs to internal "log file" (property of script itself)
@@ -56,7 +58,10 @@ Tasks TODO:
 	
 	Hack time formula needs rebalancing I think
 	
-	Factions
+    Create new menu page for purchased servers
+    
+    Change Company pages to display "apply for promotion" and other stuff when you are already employed there
+	
 	Augmentations
 	Update CONSTANTS.HelpText
 	Account for Max possible int when gaining exp

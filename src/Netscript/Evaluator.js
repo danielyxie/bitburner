@@ -200,8 +200,21 @@ function evaluate(exp, workerScript) {
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						
 						ipPromise.then(function(ip) {
+                            //Check if its a valid IP address. If it's not, assume its a hostname and
+                            //try to get the server. If its not a server, there is an error
+                            var server = null;
+                            if (!isValidIPAddress(ip)) {
+                                //It's not an IP address, so see if its a hostanme
+                                server = GetServerByHostname(ip);
+                            } else {
+                                server = AllServers[ip];
+                            }
+                            if (server == null) {
+                                resolve("Invalid IP or server hostname passed in");
+                                //TODO LOg...or throw error or something
+                            }
+                            
 							//Calculate the hacking time 
-							var server = AllServers[ip];
 							var hackingTime = scriptCalculateHackingTime(server); //This is in seconds
 							
 							if (server.hasAdminRights == false) {
@@ -517,7 +530,7 @@ function scriptCalculateHackingChance(server) {
 //The same as Player's calculateHackingTime() function but takes in the server as an argument
 function scriptCalculateHackingTime(server) {
 	var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-	var skillFactor = difficultyMult / Player.hacking_skill;
+	var skillFactor = (difficultyMult + 500) / (Player.hacking_skill + 50);
 	var hackingTime = skillFactor * Player.hacking_speed_multiplier; //This is in seconds
 	return hackingTime;
 }

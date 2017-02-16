@@ -175,7 +175,8 @@ displayLocationContent = function() {
     if (loc == Player.companyName) {
         var company = Companies[loc];
         
-        
+        jobTitle.style.display = "block";
+        jobReputation.style.display = "block";
         jobTitle.innerHTML = "Job Title: " + Player.companyPosition.positionName;
         jobReputation.innerHTML = "Company reputation: " + company.playerReputation;
         work.style.display = "block";

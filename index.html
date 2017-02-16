@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="css/terminal.css" />
 	<link rel="stylesheet" type="text/css" href="css/menupages.css" />
 	<link rel="stylesheet" type="text/css" href="css/workinprogress.css" />
+    <link rel="stylesheet" type="text/css" href="css/popupboxes.css" />
    
     <!-- We'll add in the jQuery library here - direct from
     the Google CDN (Content Delivery Network). -->
@@ -19,6 +20,7 @@
 	<script src="utils/ObjectHelperFunctions.js"></script>
     <script src="utils/DialogBox.js"></script>
     <script src="utils/PurchaseServerBox.js"></script>
+    <script src="utils/FactionInvitationBox.js"></script>
 	
 	<!-- Netscript -->
 	<script src="src/netscript/NetScriptWorker.js"></script>
@@ -30,6 +32,7 @@
     
 	<!-- Main game files -->
 	<script src="src/Constants.js"></script>
+    <script src="src/SpecialServerIps.js"></script>
     <script src="src/Location.js"></script>
 	<script src="src/Script.js"></script>
    	<script src="src/Server.js"></script>
@@ -412,7 +415,7 @@
         </div>
     </div>
     
-    <!-- Purchase Server Box -->
+    <!-- Purchase Server Pop-up Box -->
     <div id="purchase-server-box-container">
         <div id="purchase-server-box-content">
             <p id="purchase-server-box-text"> </p>
@@ -420,6 +423,20 @@
             <input type="text" id="purchase-server-box-input" pattern="[a-zA-Z0-9-_]+ maxlength="30"> </input>
             <span id="purchase-server-box-confirm"> Purchase </span>
             <span id="purchase-server-box-cancel"> Cancel </span>
+        </div>
+    </div>
+    
+    <!-- Faction Invitation Pop-up Box -->
+    <div id="faction-invitation-box-container">
+        <div id="faction-invitation-box-content">
+            <p id="faction-invitation-box-text"> </p>
+            <p id="faction-invitation-box-message"> </p>
+            <p id="faction-invitation-box-warning"> 
+                Would you like to join? <br> <br>
+                Warning: Joining this faction may prevent you from joining other factions during this run! 
+            </p>
+            <span id="faction-invitation-box-yes"> Yes </span>
+            <span id="faction-invitation-box-no"> No </span>
         </div>
     </div>
     

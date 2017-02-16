@@ -14,10 +14,17 @@ purchaseServer = function(ram, cost) {
         return;
     }
     
-    newServ.init(createRandomIp(), hostname, "", true, false, true, true, ram);
     
+    //Create server
+    newServ.init(createRandomIp(), hostname, "", true, false, true, true, ram);
     AddToAllServers(newServ);
+    
+    //Add to Player's purchasedServers array
     Player.purchasedServers.push(newServ);
+    
+    //Connect new server to home computer
+    var homeComputer = Player.getHomeComputer();
+    homeComputer.serversOnNetwork.push(newServ);
     
     Player.money -= cost; 
     

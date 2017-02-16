@@ -54,6 +54,9 @@ function runScriptsLoop() {
 				if (w instanceof Error) {
 					//Error text format: |serverip|scriptname|error message
 					var errorText = w.toString();
+                    if (Engine.Debug) {
+                        console.log("Error in script: " + errorText);
+                    }
 					var errorTextArray = errorText.split("|");
 					if (errorTextArray.length != 4) {
 						console.log("ERROR: Something wrong with Error text in evaluator...");

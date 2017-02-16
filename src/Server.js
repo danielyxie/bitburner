@@ -183,7 +183,7 @@ initForeignServers = function() {
     FulcrumSecretTechnologiesServer.setPortProperties(5);
     AddToAllServers(FulcrumSecretTechnologiesServer);
 	
-	SpecialServerIps.fulcrumSecretServer = FulcrumSecretTechnologiesServer.ip;
+	SpecialServerIps.addIp("Fulcrum Secret Technologies Server", FulcrumSecretTechnologiesServer.ip);
     
     var StormTechnologiesServer = new Server();
     StormTechnologiesServer.init(createRandomIp(), "stormtech", "Storm Technologies", true, false, false, false, 256);

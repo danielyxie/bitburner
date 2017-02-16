@@ -61,6 +61,7 @@ var Engine = {
         Augmentations:      "Augmentations",
         Tutorial:           "Tutorial",
         Location:           "Location",
+        workInProgress:     "WorkInProgress",
     },
     currentPage:    null,
 
@@ -75,12 +76,14 @@ var Engine = {
         var AllServersSave          = JSON.stringify(AllServers);
         var CompaniesSave           = JSON.stringify(Companies);
         var FactionsSave            = JSON.stringify(Factions);
-        //TODO Add factions + companies here when they're done
+        var SpecialServerIpsSave    = JSON.stringify(SpecialServerIps);
         
         window.localStorage.setItem("netburnerPlayerSave", PlayerSave);
         window.localStorage.setItem("netburnerAllServersSave", AllServersSave);
         window.localStorage.setItem("netburnerCompaniesSave", CompaniesSave);
         window.localStorage.setItem("netburnerFactionsSave", FactionsSave);
+        window.localStorage.setItem("netburnerSpecialServerIpsSave", SpecialServerIpsSave);
+        
         console.log("Game saved to local storage");
     },
     
@@ -99,15 +102,21 @@ var Engine = {
         } else if (!window.localStorage.getItem("netburnerFactionsSave")) {
             console.log("No Factions save to load");
             return false;
+        } else if (!window.localStorage.getItem("netburnerSpecialServerIpsSave")) {
+            console.log("No Special Server Ips save to load");
+            return false;
         } else {
             var PlayerSave              = window.localStorage.getItem("netburnerPlayerSave");
             var AllServersSave          = window.localStorage.getItem("netburnerAllServersSave");
             var CompaniesSave           = window.localStorage.getItem("netburnerCompaniesSave");
             var FactionsSave            = window.localStorage.getItem("netburnerFactionsSave");
+            var SpecialServerIpsSave    = window.localStorage.getItem("netburnerSpecialServerIpsSave");
+            
             Player          = JSON.parse(PlayerSave, Reviver);
             AllServers      = JSON.parse(AllServersSave, Reviver);
             Companies       = JSON.parse(CompaniesSave, Reviver);
             Factions        = JSON.parse(FactionsSave, Reviver);
+            SpecialServerIps = JSON.parse(SpecialServerIpsSave, Reviver);
             return true;
         }
     },
@@ -116,25 +125,24 @@ var Engine = {
     deleteSave: function() {
         //TODO if a save doesn't exist..maybe I shouldn't return? I just keep going
         //or else nothing gets deleted. TODO Fix this
-        if (!window.localStorage.getItem("netburnerPlayerSave")) {
-            console.log("No Player Save to delete");
-            return false;
-        } else if (!window.localStorage.getItem("netburnerAllServersSave")) {
-            console.log("No AllServers Save to delete");
-            return false;
-        } else if (!window.localStorage.getItem("netburnerCompaniesSave")) {
-            console.log("No Companies Save to delete");
-            return false;
-        } else if (!window.localStorage.getItem("netburnerFactionsSave")) {
-            console.log("No Factions Save to delete");
-            return false;
-        } else {
-            window.localStorage.removeItem("netburnerPlayerSave");
+        if (window.localStorage.getItem("netburnerPlayerSave")) {
+            window.localStorage.removeItem("netburnerPlayerSave"); 
+        }
+        
+        if (window.localStorage.getItem("netburnerAllServersSave")) {
             window.localStorage.removeItem("netburnerAllServersSave");
+        }
+        
+        if (window.localStorage.getItem("netburnerCompaniesSave")) {
             window.localStorage.removeItem("netburnerCompaniesSave");
+        } 
+        
+        if (window.localStorage.getItem("netburnerFactionsSave")) {
             window.localStorage.removeItem("netburnerFactionsSave");
-            console.log("Deleted saves")
-            return true;
+        }
+        
+        if (window.localStorage.getItem("netburnerSpecialServerIpsSave")) {
+            window.localStorage.removeItem("netburnerSpecialServerIpsSave");
         }
     },
     
@@ -230,6 +238,7 @@ var Engine = {
         
         Engine.Display.workInProgressContent.style.visibility = "visible";
         
+        Engine.currentPage = Engine.Page.WorkInProgress;
     },
     
     //Helper function that hides all content 
@@ -273,7 +282,12 @@ var Engine = {
                                                  'Agility: ' + Player.agility + '<br><br>' +
                                                  'Charisma: ' + Player.charisma + '<br><br>' +
                                                  'Servers owned: ' + Player.purchasedServers.length + '<br><br>' +
-                                                 'Hacking Experience: ' + Player.hacking_exp.toFixed(4) + '<br><br>';
+                                                 'Hacking experience: ' + Player.hacking_exp.toFixed(4) + '<br><br>' + 
+                                                 'Strength experience: ' + Player.strength_exp.toFixed(4) + '<br><br>' + 
+                                                 'Defense experience: ' + Player.defense_exp.toFixed(4) + '<br><br>' + 
+                                                 'Dexterity experience: ' + Player.dexterity_exp.toFixed(4) + '<br><br>' + 
+                                                 'Agility experience: ' + Player.agility_exp.toFixed(4) + '<br><br>' + 
+                                                 'Charisma experience: ' + Player.charisma_exp.toFixed(4) + '<br><br>';
     },
     
     /* Display locations in the world*/
@@ -457,9 +471,11 @@ var Engine = {
     //for something to happen. 
     Counters: {
         autoSaveCounter:    300,            //Autosave every minute
-        updateSkillLevelsCounter: 10,        //Only update skill levels every 2 seconds. Might improve performance
-        updateDisplays: 10,                    //Update displays such as Active Scripts display and character display
-        serverGrowth: 450,                    //Process server growth every minute and a half
+        updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
+        updateDisplays: 10,                 //Update displays such as Active Scripts display and character display
+        serverGrowth: 450,                  //Process server growth every minute and a half
+        //checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
+        checkFactionInvitations: 30,
     },
     
     decrementAllCounters: function(numCycles = 1) {
@@ -497,6 +513,15 @@ var Engine = {
             var numCycles = Math.floor((450 - Engine.Counters.serverGrowth));
             processServerGrowth(numCycles);
             Engine.Counters.serverGrowth = 450;
+        }
+        
+        if (Engine.Counters.checkFactionInvitations <= 0) {
+            var invitedFactions = Player.checkForFactionInvitations();
+            if (invitedFactions.length > 0) {
+                var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
+                inviteToFaction(randFaction);
+            }
+            Engine.Counters.checkFactionInvitations = 1500;
         }
     },
     
@@ -536,28 +561,6 @@ var Engine = {
     
     /* Initialization */
     init: function() {
-        //Initialization functions
-        if (Engine.loadSave()) {
-            console.log("Loaded game from save");
-            CompanyPositions.init();
-
-            //Calculate the number of cycles have elapsed while offline
-            var thisUpdate = new Date().getTime();
-            var lastUpdate = Player.lastUpdate;
-            var numCyclesOffline = Math.floor((thisUpdate - lastUpdate) / Engine._idleSpeed);
-            
-            processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
-            loadAllRunningScripts();    //This also takes care of offline production for those scripts
-        } else {
-            //No save found, start new game
-            console.log("Initializing new game");
-            Player.init();
-            initForeignServers();
-            initCompanies();
-            initFactions();
-            CompanyPositions.init();
-        }
-                
         //Main menu buttons and content
         Engine.Clickables.terminalMainMenuButton = document.getElementById("terminal-menu-link");
         Engine.Clickables.terminalMainMenuButton.addEventListener("click", function() {
@@ -684,12 +687,48 @@ var Engine = {
         //Script editor 
         Engine.Display.scriptEditorText = document.getElementById("script-editor-text");
         
+        //Load game from save or create new game
+        if (Engine.loadSave()) {
+            console.log("Loaded game from save");
+            CompanyPositions.init();
+
+            //Calculate the number of cycles have elapsed while offline
+            var thisUpdate = new Date().getTime();
+            var lastUpdate = Player.lastUpdate;
+            var numCyclesOffline = Math.floor((thisUpdate - lastUpdate) / Engine._idleSpeed);
+            
+            processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
+            loadAllRunningScripts();    //This also takes care of offline production for those scripts
+            Player.work(numCyclesOffline);
+        } else {
+            //No save found, start new game
+            console.log("Initializing new game");
+            SpecialServerIps = new SpecialServerIpsMap();
+            Player.init();
+            initForeignServers();
+            initCompanies();
+            initFactions();
+            CompanyPositions.init();
+            
+        }
+                
         //Message at the top of terminal
         postNetburnerText();
+        
+        //Player was working
+        if (Player.isWorking) {
+            var cancelButton = document.getElementById("work-in-progress-cancel-button");
+            cancelButton.addEventListener("click", function() {
+                Player.finishWork(true);
+            });
+            Engine.loadWorkInProgressContent();
+        }
+        
         
         //Run main loop
         Engine.idleTimer();
         
+        //Scripts
         runScriptsLoop();
     }
 };

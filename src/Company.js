@@ -301,7 +301,7 @@ CompanyPositions = {
         CompanyPositions.Waiter.setPerformanceParameters(0, 10, 0, 10, 10, 70);
         CompanyPositions.Waiter.setExperienceGains(0, .01, .01, .01, .01, .05);
         CompanyPositions.Employee.setPerformanceParameters(0, 10, 0, 10, 10, 70);
-        CompanyPositions.Employee.setExperienceGains(0, .01, .01, .01, .01, .05);
+        CompanyPositions.Employee.setExperienceGains(0, .01, .01, .01, .01, .015);
         CompanyPositions.SecurityGuard.setPerformanceParameters(5, 20, 20, 20, 20, 15);
         CompanyPositions.SecurityGuard.setExperienceGains(.01, .02, .02, .02, .02, .01);
         CompanyPositions.PoliceOfficer.setPerformanceParameters(5, 20, 20, 20, 20, 15);

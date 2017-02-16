@@ -107,8 +107,11 @@ initFactions = function() {
 //This function sets the requirements to join a Faction. It checks whether the Player meets
 //those requirements and will return an array of all factions that the Player should
 //receive an invitation to
-PlayerObject.prototype.checkForFactionInvitations() {
-    invitedFactions = []; //Array which will hold NAMES of all Factions player should be invited to
+PlayerObject.prototype.checkForFactionInvitations = function() {
+    if (Engine.Debug) {
+        console.log("checkForFactionInvitations() called");
+    }
+    invitedFactions = []; //Array which will hold all Factions th eplayer should be invited to
     
     var companyRep = Companies[this.companyName].playerReputation;
     
@@ -122,7 +125,7 @@ PlayerObject.prototype.checkForFactionInvitations() {
         this.defense >= 900 && this.total_defense >= 10000 &&
         this.dexterity >= 900 && this.total_dexterity >= 10000 && 
         this.agility >= 900 && this.total_agility >= 10000) {
-        invitedFactions.push("Illuminati");
+        invitedFactions.push(illuminatiFac);
     }
         
     //Daedalus
@@ -135,7 +138,7 @@ PlayerObject.prototype.checkForFactionInvitations() {
         this.defense >= 500 && this.total_defense >= 8000 &&
         this.dexterity >= 500 && this.total_dexterity >= 8000 && 
         this.agility >= 500 && this.total_agility >= 8000) {
-        invitedFactions.push("Daedalus");
+        invitedFactions.push(daedalusFac);
     }
     
     //The Covenant
@@ -148,91 +151,90 @@ PlayerObject.prototype.checkForFactionInvitations() {
         this.defense >= 850 && this.total_defense >= 5000 &&
         this.dexterity >= 850 && this.total_dexterity >= 5000 &&
         this.agility >= 850 && this.total_agility >= 5000) {
-        invitedFactions.push("The Covenant");
+        invitedFactions.push(covenantFac);
     }
     
     //ECorp
     var ecorpFac = Factions["ECorp"];
     if (ecorpFac.isBanned == false && ecorpFac.isMember == false && 
         this.companyName == Locations.AevumECorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push("ECorp");
+        invitedFactions.push(ecorpFac);
     }
     
     //MegaCorp
     var megacorpFac = Factions["MegaCorp"];
     if (megacorpFac.isBanned == false && megacorpFac.isMember == false && 
         this.companyName == Locations.Sector12MegaCorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push("MegaCorp");
+        invitedFactions.push(megacorpFac);
     }
         
     //Bachman & Associates
     var bachmanandassociatesFac = Factions["Bachman & Associates"];
     if (bachmanandassociatesFac.isBanned == false && bachmanandassociatesFac.isMember == false &&
         this.companyName == Locations.AevumBachmanAndAssociates && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push("Bachman & Associates");
+        invitedFactions.push(bachmanandassociatesFac);
     }
     
     //Blade Industries
     var bladeindustriesFac = Factions["Blade Industries"];
     if (bladeindustriesFac.isBanned == false && bladeindustriesFac.isMember == false && 
         this.companyName == Locations.Sector12BladeIndustries && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push("Blade Industries");
+        invitedFactions.push(bladeindustriesFac);
     }
     
     //NWO
     var nwoFac = Factions["NWO"];
     if (nwoFac.isBanned == false && nwoFac.isMember == false && 
         this.companyName == Locations.VolhavenNWO && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push("NWO");
+        invitedFactions.push(nwoFac);
     }
     
     //Clarke Incorporated
     var clarkeincorporatedFac = Factions["Clarke Incorporated"];
     if (clarkeincorporatedFac.isBanned == false && clarkeincorporatedFac.isMember == false &&
         this.companyName == Locations.AevumClarkeIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push("Clarke Incorporated");
+        invitedFactions.push(clarkeincorporatedFac);
     }
     
     //OmniTek Incorporated
-    
     var omnitekincorporatedFac = Factions["OmniTek Incorporated"];
     if (omnitekincorporatedFac.isBanned == false && omnitekincorporatedFac.isMember == false &&
         this.companyName == Locations.VolhavenOmniTekIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push("OmniTek Incorporated");
+        invitedFactions.push(omnitekincorporatedFac);
     }
     
     //Four Sigma
     var foursigmaFac = Factions["Four Sigma"];
     if (foursigmaFac.isBanned == false && foursigmaFac.isMember == false && 
         this.companyName == Locations.Sector12FourSigma && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push("Four Sigma");
+        invitedFactions.push(foursigmaFac);
     }
     
     //KuaiGong International
     var kuaigonginternationalFac = Factions["KuaiGong International"];
     if (kuaigonginternationalFac.isBanned == false && kuaigonginternationalFac.isMember == false &&
         this.companyName == Locations.ChongqingKuaiGongInternational && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push("KuaiGong International");
+        invitedFactions.push(kuaigonginternationalFac);
     }
     
     //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
     var fulcrumsecrettechonologiesFac = Factions["Fulcrum Secret Technologies"];
-    var fulcrumSecretServer = AllServers[SpecialServerIps.fulcrumSecretServer];
+    var fulcrumSecretServer = AllServers[SpecialServerIps["Fulcrum Secret Technologies Server"]];
     if (fulcrumSecretServer == null) {
         console.log("Error: Could not find Fulcrum Secret Technologies Server");
     }
     if (fulcrumsecrettechonologiesFac.isBanned == false && fulcrumsecrettechonologiesFac.isMember == false &&
         fulcrumSecretServer.hasAdminRights && 
         this.companyName == Locations.AevumFulcrumTechnologies && companyRep >= 250000) {
-        invitedFactions.push("Fulcrum Secret Technologies");
+        invitedFactions.push(fulcrumsecrettechonologiesFac);
     }
     
     //BitRunners
     var bitrunnersFac = Factions["BitRunners"];
-    var homeComp = AllServers[this.homeComputer];
+    var homeComp = Player.getHomeComputer();
     if (bitrunnersFac.isBanned == false && bitrunnersFac.isMember == false &&
         this.hacking_skill >= 600 && homeComp.maxRam >= 32) {
-        invitedFactions.push("BitRunners");
+        invitedFactions.push(bitrunnersFac);
     }
     
     //The Black Hand
@@ -240,27 +242,113 @@ PlayerObject.prototype.checkForFactionInvitations() {
     if (theblackhandFac.isBanned == false && theblackhandFac.isMember == false &&
         this.hacking_skill >= 400 && this.strength >= 300 && this.defense >= 300 &&
         this.agility >= 300 && this.dexterity >= 300 && homeComp.maxRam >= 16) {
-        invitedFactions.push("The Black Hand");
+        invitedFactions.push(theblackhandFac);
     }
     
     //NiteSec
     var nitesecFac = Factions["NiteSec"];
     if (nitesecFac.isBanned == false && nitesecFac.isMember == false && 
         this.hacking_skill >= 500 && homeComp.maxRam >= 32) {
-        invitedFactions.push("NiteSec");
+        invitedFactions.push(nitesecFac);
     }
     
     //Chongqing
+    var chongqingFac = Factions["Chongqing"];
+    if (chongqingFac.isBanned == false && chongqingFac.isMember == false &&
+        this.money >= 20000000 && this.location == Locations.Chongqing) {
+        invitedFactions.push(chongqingFac);
+    }
+    
     //Sector-12
+    var sector12Fac = Factions["Sector-12"];
+    if (sector12Fac.isBanned == false && sector12Fac.isMember == false && 
+        this.money >= 50000000 && this.location == Locations.Sector12) {
+        invitedFactions.push(sector12Fac);
+    }
+    
     //New Tokyo
+    var newtokyoFac = Factions["New Tokyo"];
+    if (newtokyoFac.isBanned == false && newtokyoFac.isMember == false && 
+        this.money >= 20000000 && this.location == Locations.NewTokyo) {
+        invitedFactions.push(newtokyoFac);
+    }
+    
     //Aevum
+    var aevumFac = Factions["Aevum"];
+    if (aevumFac.isBanned == false && aevumFac.isMember == false && 
+        this.money >= 40000000 && this.location == Locations.Aevum) {
+        invitedFactions.push(aevumFac);
+    }
+    
     //Ishima
+    var ishimaFac = Factions["Ishima"];
+    if (ishimaFac.isBanned == false && ishimaFac.isMember == false &&
+        this.money >= 30000000 && this.location == Locations.Ishima) {
+        invitedFactions.push(ishimaFac);
+    }
+    
     //Volhaven
+    var volhavenFac = Factions["Volhaven"];
+    if (volhavenFac.isBanned == false && volhavenFac.isMember == false && 
+        this.money >= 50000000 && this.location == Locations.Volhaven) {
+        invitedFactions.push(volhavenFac);
+    }
+    
     //Speakers for the Dead
+    var speakersforthedeadFac = Factions["Speakers for the Dead"];
+    if (speakersforthedeadFac.isBanned == false && speakersforthedeadFac.isMember == false && 
+        this.hacking_skill >= 100 && this.strength >= 300 && this.defense >= 300 && 
+        this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 10 &&
+        this.numPeopleKilledTotal >= 100 && this.companyName != Locations.Sector12CIA &&
+        this.companyName != Locations.Sector12NSA) {
+        invitedFactions.push(speakersforthedeadFac);
+    }   
+        
     //The Dark Army
+    var thedarkarmyFac = Factions["The Dark Army"];
+    if (thedarkarmyFac.isBanned == false && thedarkarmyFac.isMember == false && 
+        this.hacking_skill >= 300 && this.strength >= 300 && this.defense >= 300 && 
+        this.dexterity >= 300 && this.agility >= 300 && this.location == Locations.Chongqing && 
+        this.numPeopleKilled >= 5 && this.companyName != Locations.Sector12CIA && 
+        this.companyName != Locations.Sector12NSA) {
+        invitedFactions.push(thedarkarmyFac);
+    }
+    
     //The Syndicate
+    var thesyndicateFac = Factions["The Syndicate"];
+    if (thesyndicateFac.isBanned == false && thesyndicateFac.isMember == false &&
+        this.hacking_skill >= 200 && this.strength >= 200 && this.defense >= 200 &&
+        this.dexterity >= 200 && this.agility >= 200 && 
+        (this.location == Locations.Aevum || this.location == Locations.Sector12) &&
+        this.money >= 10000000 && this.companyName != Locations.Sector12CIA && 
+        this.companyName != Locations.Sector12NSA) {
+        invitedFactions.push(thesyndicateFac);
+    }
+    
     //Tian Di Hui
+    var tiandihuiFac = Factions["Tian Di Hui"];
+    if (tiandihuiFac.isBanned == false && tiandihuiFac.isMember == false && 
+        this.money >= 1000000 && this.hacking_skill >= 50 &&
+        (this.location == Locations.Chongqing || this.location == Locations.NewTokyo || 
+         this.location == Locations.Ishima)) {
+        invitedFactions.push(tiandihuiFac);
+    }
+    
     //CyberSec
+    var cybersecFac = Factions["CyberSec"];
+    if (cybersecFac.isBanned == false && cybersecFac.isMember == false && 
+        this.hacking_skill >= 50) {
+        invitedFactions.push(cybersecFac);
+    }
+    
+    return invitedFactions;
+}
+
+inviteToFaction = function(faction) {
+    if (Engine.Debug) {
+        console.log("inviteToFaction() called with faction: " + faction.name);
+    }
+    factionInvitationBoxCreate(faction);
 }
 
 joinFaction = function(faction) {
@@ -270,6 +358,7 @@ joinFaction = function(faction) {
 	var item = document.createElement("li");
 	var aElem = document.createElement("a");
 	aElem.setAttribute("href", "#");
+    aElem.setAttribute("class", "a-link-button");
 	aElem.innerHTML = faction.name;
 	aElem.addEventListener("click", function() {
 		displayFactionContent(faction.name);
@@ -279,7 +368,49 @@ joinFaction = function(faction) {
 				
 	var factionsList = document.getElementById("factions-list");
 	factionsList.appendChild(item);
+    
+    //Determine what factions you are banned from now that you have joined this faction
+    if (faction.name == "BitRunners") {
+        Factions["The Black Hand"].isBanned = true;
+        Factions["NiteSec"].isBanned = true;
+    } else if (faction.name == "The Black Hand") {
+        Factions["BitRunners"].isBanned = true;
+        Factions["NiteSec"].isBanned = true;
+    } else if (faction.name == "NiteSec") {
+        Factions["BitRunners"].isBanned = true;
+        Factions["The Black Hand"].isBanned = true;
+    } else if (faction.name == "Chongqing") {
+        Factions["Sector-12"].isBanned = true;
+        Factions["Aevum"].isBanned = true;
+        Factions["Volhaven"].isBanned = true;
+    } else if (faction.name == "Sector-12") {
+        Factions["Chongqing"].isBanned = true;
+        Factions["New Tokyo"].isBanned = true;
+        Factions["Ishima"].isBanned = true;
+        Factions["Volhaven"].isBanned = true;
+    } else if (faction.name == "New Tokyo") {
+        Factions["Sector-12"].isBanned = true;
+        Factions["Aevum"].isBanned = true;
+        Factions["Volhaven"].isBanned = true;
+    } else if (faction.name == "Aevum") {
+        Factions["Chongqing"].isBanned = true;
+        Factions["New Tokyo"].isBanned = true;
+        Factions["Ishima"].isBanned = true;
+        Factions["Volhaven"].isBanned = true;
+    } else if (faction.name == "Ishima") {
+        Factions["Sector-12"].isBanned = true;
+        Factions["Aevum"].isBanned = true;
+        Factions["Volhaven"].isBanned = true;
+    } else if (faction.name == "Volhaven") {
+        Factions["Chongqing"].isBanned = true;
+        Factions["Sector-12"].isBanned = true;
+        Factions["New Tokyo"].isBanned = true;
+        Factions["Aevum"].isBanned = true;
+        Factions["Ishima"].isBanned = true;
+    }
 }
+
+//TODO Leave faction
 
 //Displays the HTML content for this faction
 displayFactionContent = function(factionName) {

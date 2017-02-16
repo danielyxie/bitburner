@@ -340,7 +340,7 @@ var Terminal = {
 				
 				//Can only edit script files
 				if (filename.endsWith(".script") == false) {
-					post("Error: Only .script files are editable with nano (filename must end with .scrip)"); return;
+					post("Error: Only .script files are editable with nano (filename must end with .script)"); return;
 				}
 				
 				//Script name is the filename without the .script at the end
@@ -448,7 +448,7 @@ var Terminal = {
 				return;
 			}
 		}
-		post("ERROR: No such executable on home computer (Programs can only be run from home computer)");
+		post("ERROR: No such executable on home computer (Only programs that exist on your home computer can be run)");
 	},
 	
 	//Contains the implementations of all possible programs
