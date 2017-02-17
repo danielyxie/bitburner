@@ -21,6 +21,7 @@
     <script src="utils/DialogBox.js"></script>
     <script src="utils/PurchaseServerBox.js"></script>
     <script src="utils/FactionInvitationBox.js"></script>
+    <script src="utils/PurchaseAugmentationBox.js"></script>
 	
 	<!-- Netscript -->
 	<script src="src/netscript/NetScriptWorker.js"></script>
@@ -325,26 +326,51 @@
 		</p>
 		
 		<div id="faction-hack-div">
-		<div id="faction-hack-button-div"><button id="faction-hack-button"> Hacking Contracts </button></div>
-		<p id="faction-hack-text">Complete hacking contracts for your faction! Speed and effectiveness determined by hacking skill. Gain hacking exp.</p>
+        <a href="#" id="faction-hack-button" class="a-link-button">Hacking Contracts</a>
+		<p id="faction-hack-text">
+			Complete hacking contracts for your faction! <br>
+			Your effectiveness, which determines how much reputation you gain for this faction, is based on your hacking skill. <br>
+			Gain hacking exp.
+		</p>
 		<div id="faction-hack-text-div">
 		</div>
 		</div>
 		
 		<div id="faction-fieldwork-div">
-		<div id="faction-fieldwork-button-div"><button id="faction-fieldwork-button"> Field Work </button></div>
+        <a href="#" id="faction-fieldwork-button" class="a-link-button">Field Work</a>
 		<div id="faction-fieldwork-text-div">
-		<p id="faction-fieldwork-text">Carry out field missions for your faction. Speed and effectiveness determined by all stats. Gains exp for all stats.</p>
+		<p id="faction-fieldwork-text">
+			Carry out field missions for your faction. <br>
+			Your effectiveness, which determines how much reputation you gain for this faction, is based on all of your stats. <br>
+			Gains exp for all stats.
+		</p>
 		</div>
 		</div>
 		
 		<div id="faction-securitywork-div">
-		<div id="faction-securitywork-button-div"><button id="faction-securitywork-button"> Security Work </button></div>
+        <a href="#" id="faction-securitywork-button" class="a-link-button">Security Work</a>
 		<div id="faction-securitywork-text-div">
-		<p id="faction-securitywork-text">Serve in a security detail for your faction. Speed and effectiveness determined by combat stats. Gains exp for all combat stats.</p>
+		<p id="faction-securitywork-text">
+			Serve in a security detail for your faction. <br>
+			Your effectiveness, which determines how much reputation you gain for this faction, is based on your combat stats. <br>
+			Gains exp for all combat stats.
+		</p>
 		</div>
 		</div>
+
+        <p>
+            As your reputation with this faction rises, you will unlock Augmentations, which you 
+            can purchase to enhance your abilities.
+        </p>
+        <a href="#" id="faction-purchase-augmentations" class="a-link-button">Purchase Augmentations</a>
 	</div>
+
+    <div id="faction-augmentations-container">
+		<h1 id> Faction Augmentations </h1>
+		<p id="faction-augmentations-page-desc"> Lists all augmentations that are available from </p>
+		<ul class="factions-augmentations-list" id="factions-augmentations-list">
+		</ul>
+    </div>
 	
 	<!-- Installed augmentations -->
 	<div id="augmentations-container">
@@ -423,6 +449,24 @@
             <input type="text" id="purchase-server-box-input" pattern="[a-zA-Z0-9-_]+ maxlength="30"> </input>
             <span id="purchase-server-box-confirm"> Purchase </span>
             <span id="purchase-server-box-cancel"> Cancel </span>
+        </div>
+    </div>
+
+    <!-- Purchase Augmentation Pop-up Box -->
+    <div id="purchase-augmentation-box-container">
+        <div id="purchase-augmentation-box-content">
+            <p id="purchase-augmentation-box-text"> </p>
+            <p> WARNING: Purchasing an Augmentation resets most of your progress, including: <br>
+                Stats/Skill levels and Experience <br>
+                Money <br>
+                Scripts <br>
+                Faction/Company reputation <br><br>
+                Purchasing an Augmentation lets you start over with the perks and benefits granted by all
+                of the Augmentations you have ever purchased (purchasing an Augmentation does not reset the benefits
+                of Augmentations you have previously purchased).
+            <p>
+            <span id="purchase-augmentation-box-confirm"> Purchase </span>
+            <span id="purchase-augmentation-box-cancel"> Cancel </span>
         </div>
     </div>
     

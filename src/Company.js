@@ -225,8 +225,8 @@ CompanyPositions = {
     
     //Business
     BusinessIntern:             new CompanyPosition("Business Intern", 1, 1, 1, 1, 1, 1, 0, 1),
-    BusinessAnalyst:            new CompanyPosition("Business Analyst", 5, 1, 1, 1, 1, 50, 9000, 5),
-    BusinessManager:            new CompanyPosition("Business Manager", 50, 1, 1, 1, 1, 100, 36000, 12),
+    BusinessAnalyst:            new CompanyPosition("Business Analyst", 5, 1, 1, 1, 1, 50, 9000, 8),
+    BusinessManager:            new CompanyPosition("Business Manager", 50, 1, 1, 1, 1, 100, 36000, 15),
     OperationsManager:          new CompanyPosition("Operations Manager", 50, 1, 1, 1, 1, 200, 72000, 20),
     CFO:                        new CompanyPosition("Chief Financial Officer", 75, 1, 1, 1, 1, 500, 108000, 50),
     CEO:                        new CompanyPosition("Chief Executive Officer", 100, 1, 1, 1, 1, 750, 216000, 100),

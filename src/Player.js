@@ -49,7 +49,8 @@ function PlayerObject() {
     this.agility_exp_mult    = 1;
     this.charisma_exp_mult   = 1;
 
-    this.company_rep_mult    = 1;  //Multiplier for how fast the player gains reputation at a company
+    this.company_rep_mult    = 1;
+    this.faction_rep_mult    = 1;   
     
     //Money
     this.money           = 0;
@@ -72,7 +73,11 @@ function PlayerObject() {
     this.discoveredServers   = []; //IP addresses of secret servers not in the network that you have discovered
     this.purchasedServers    = [];
     
+    //Factions
+    this.factions = []; //Names of all factions player has joined
+    
     //Augmentations
+    this.augmentations = []; //Names of all installed augmentations
     this.numAugmentations = 0;
     
     //Misc statistics
@@ -89,7 +94,8 @@ function PlayerObject() {
     
     //Flags/variables for working (both Company and faction) 
     this.isWorking = false;
-    this.isWorkingForFaction = false;
+    this.currentWorkFactionName = "";
+    this.currentWorkFactionDescription = "";
     
     this.workHackExpGainRate = 0;
     this.workStrExpGainRate = 0;
@@ -367,33 +373,22 @@ PlayerObject.prototype.work = function(numCycles) {
 }
 
 /* Working for Faction */
-PlayerObject.prototype.finishFactionWork = function(cancelled) {
-    //Since the work was cancelled early, player only gains half of what they've earned so far
-    var cancMult = 1;
-    if (cancelled) {
-        cancMult = 2;
-    }
-    if (Engine.Debug) {
-        console.log("Player finishWork() called with " + this.workMoneyGained / cancMult + " $ gained");
-    }
-    this.hacking_exp    += (this.workHackExpGained / cancMult);
-    this.strength_exp   += (this.workStrExpGained / cancMult);
-    this.defense_exp    += (this.workDefExpGained / cancMult);
-    this.dexterity_exp  += (this.workDexExpGained / cancMult);
-    this.agility_exp    += (this.workAgiExpGained / cancMult);
-    this.charisma_exp   += (this.workChaExpGained / cancMult);
+PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
+    this.hacking_exp    += (this.workHackExpGained);
+    this.strength_exp   += (this.workStrExpGained);
+    this.defense_exp    += (this.workDefExpGained);
+    this.dexterity_exp  += (this.workDexExpGained);
+    this.agility_exp    += (this.workAgiExpGained);
+    this.charisma_exp   += (this.workChaExpGained);
     
-    var company = Companies[this.companyName];
-    company.playerReputation += (this.workRepGained / cancMult);
+    var faction = Factions[this.currentWorkFactionName];
+    faction.playerReputation += (this.workRepGained);
     
     this.gainMoney(this.workMoneyGained / cancMult);
     
     this.updateSkillLevels();
     
-    var txt = "";
-    if (cancelled) {
-        txt = "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
-              "Since you cancelled your work early, you only gained half of the experience, money, and reputation you earned. <br><br>" + 
+    var txt = "You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
               "You earned a total of: <br>" + 
               "$" + (this.workMoneyGained / cancMult).toFixed(2) + "<br>" + 
               (this.workRepGained / cancMult).toFixed(3) + " reputation for the company <br>" + 
@@ -403,19 +398,6 @@ PlayerObject.prototype.finishFactionWork = function(cancelled) {
               (this.workDexExpGained / cancMult).toFixed(3) + " dexterity exp <br>" + 
               (this.workAgiExpGained / cancMult).toFixed(3) + " agility exp <br>" + 
               (this.workChaExpGained / cancMult).toFixed(3) + " charisma exp<br>";
-              
-    } else {
-        txt = "You worked a full shift of 8 hours! <br><br> " +
-              "You earned a total of: <br>" + 
-              "$" + (this.workMoneyGained / cancMult) + "<br>" + 
-              (this.workRepGained / cancMult) + " reputation for the company <br>" + 
-              (this.workHackExpGained / cancMult) + " hacking exp <br>" + 
-              (this.workStrExpGained / cancMult) + " strength exp <br>" + 
-              (this.workDefExpGained / cancMult) + " defense exp <br>" +
-              (this.workDexExpGained / cancMult) + " dexterity exp <br>" + 
-              (this.workAgiExpGained / cancMult) + " agility exp <br>" + 
-              (this.workChaExpGained / cancMult) + " charisma exp <br>";
-    }
     dialogBoxCreate(txt);
     
     var mainMenu = document.getElementById("mainmenu-container");
@@ -426,17 +408,9 @@ PlayerObject.prototype.finishFactionWork = function(cancelled) {
     Engine.loadTerminalContent();
 }
 
-PlayerObject.prototype.startFactionHackWork = function() {
+PlayerObject.prototype.startFactionWork(faction) {
     this.isWorking = true;
-    
-    this.workHackExpGainRate    = this.getWorkHackExpGain();
-    this.workStrExpGainRate     = this.getWorkStrExpGain();
-    this.workDefExpGainRate     = this.getWorkDefExpGain();
-    this.workDexExpGainRate     = this.getWorkDexExpGain();
-    this.workAgiExpGainRate     = this.getWorkAgiExpGain();
-    this.workChaExpGainRate     = this.getWorkChaExpGain();
-    this.workRepGainRate        = this.getWorkRepGain();
-    this.workMoneyGainRate      = this.getWorkMoneyGain();
+    this.currentWorkFactionName = faction.name;
     
     this.workHackExpGained = 0;
     this.workStrExpGained = 0;
@@ -456,15 +430,62 @@ PlayerObject.prototype.startFactionHackWork = function() {
     cancelButton.parentNode.replaceChild(newCancelButton, cancelButton);
     
     newCancelButton.addEventListener("click", function() {
-        Player.finishWork(true);
+        Player.finishFactionWork(true, faction);
         return false;
     });
     
     //Display Work In Progress Screen
     Engine.loadWorkInProgressContent();
 }
+
+PlayerObject.prototype.startFactionHackWork = function(faction) {
+    this.workHackExpGainRate    = .1 * this.hacking_exp_mult;
+    this.workStrExpGainRate     = 0;
+    this.workDefExpGainRate     = 0;
+    this.workDexExpGainRate     = 0;
+    this.workAgiExpGainRate     = 0;
+    this.workChaExpGainRate     = 0;
+    this.workRepGainRate        = this.hacking_skill / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
+    this.workMoneyGainRate      = 0;
+    
+    this.currentWorkFactionDescription = "carrying out hacking contracts";
+   
+    this.startFactionWork(faction);
+}
+
+PlayerObject.prototype.startFactionFieldWork = function(faction) {
+    this.workHackExpGainRate    = .05 * this.hacking_exp_mult;
+    this.workStrExpGainRate     = .05 * this.strength_exp_mult;
+    this.workDefExpGainRate     = .05 * this.defense_exp_mult;
+    this.workDexExpGainRate     = .05 * this.dexterity_exp_mult;
+    this.workAgiExpGainRate     = .05 * this.agility_exp_mult;
+    this.workChaExpGainRate     = .05 * this.charisma_exp_mult;
+    this.workRepGainRate        = this.getFactionFieldWorkRepGain();
+    this.workMoneyGainRate      = 0;
+    
+    this.currentWorkFactionDescription = "carrying out field missions"
+   
+    this.startFactionWork(faction);
+}
+
+PlayerObject.prototype.startFactionSecurityWork = faction(faction) {
+    this.workHackExpGainRate    = .1 * this.hacking_exp_mult;
+    this.workStrExpGainRate     = 0;
+    this.workDefExpGainRate     = 0;
+    this.workDexExpGainRate     = 0;
+    this.workAgiExpGainRate     = 0;
+    this.workChaExpGainRate     = 0;
+    this.workRepGainRate        = this.getFactionFieldWorkRepGain();
+    this.workMoneyGainRate      = 0;
+    
+    this.currentWorkFactionDescription = "performing security detail"
+   
+    this.startFactionWork(faction);
+}
     
 PlayerObject.prototype.workForFaction = function(numCycles) {
+    var faction = Factions[this.currentWorkFactionName];
+    
     this.workHackExpGained  += this.workHackExpGainRate * numCycles;
     this.workStrExpGained   += this.workStrExpGainRate * numCycles;
     this.workDefExpGained   += this.workDefExpGainRate * numCycles;
@@ -478,9 +499,9 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     
     this.timeWorked += Engine._idleSpeed * numCycles;
     
-    //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
-    if (this.timeWorked >= 28800000) {
-        var maxCycles = 144000; //Number of cycles in 8 hours 
+    //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
+    if (this.timeWorked >= 72000000) {
+        var maxCycles = 360000; //Number of cycles in 20 hours 
         this.workHackExpGained = this.workhackExpGainRate * maxCycles;
         this.workStrExpGained  = this.workStrExpGainRate * maxCycles;
         this.workDefExpGained  = this.workDefExpGainRate * maxCycles;
@@ -489,13 +510,12 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
         this.workChaExpGained  = this.workChaExpGainRate * maxCycles;
         this.workRepGained     = this.workRepGainRate * maxCycles;
         this.workMoneyGained   = this.workMoneyGainRate * maxCycles;
-        this.finishWork(false);
+        this.finishFactionWork(false, faction);
     }
     
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName + 
-                    " at " + Player.companyName + "<br><br>" + 
-                    "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
+    txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name + "." + 
+                    "You have been doing this for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" + 
                     "$" + this.workMoneyGained + " (" + (this.workMoneyGainRate * cyclesPerSec).toFixed(2) + " / sec) <br><br>" + 
                     this.workRepGained.toFixed(3) + " (" + (this.workRepGainRate * cyclesPerSec).toFixed(3) + " / sec) reputation for this company <br><br>" + 
@@ -506,10 +526,8 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
                     this.workAgiExpGained.toFixed(3) + " (" + (this.workAgiExpGainRate * cyclesPerSec).toFixed(3) + " / sec) agility exp <br><br> " +
                     this.workChaExpGained.toFixed(3) + " (" + (this.workChaExpGainRate * cyclesPerSec).toFixed(3) + " / sec) charisma exp <br><br>" + 
                     
-                    
-                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" + 
-                    "but you will only gain half of the experience, money, and reputation you've earned so far."
-                    
+                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish.<br>" + 
+                    "There is no penalty for cancelling earlier";  
 }
 
 
@@ -557,9 +575,30 @@ PlayerObject.prototype.getWorkChaExpGain = function() {
 
 //Reputation gained per game cycle
 PlayerObject.prototype.getWorkRepGain = function() {
-    return this.companyPosition.calculateJobPerformance(this.hacking_skill, this.strength,
-                                                        this.defense, this.dexterity,
-                                                        this.agility, this.charisma);
+    
+    var jobPerformance = this.companyPosition.calculateJobPerformance(this.hacking_skill, this.strength,
+                                                                      this.defense, this.dexterity,
+                                                                      this.agility, this.charisma);
+    return jobPerformance * this.company_rep_mult;                                                                    
+}
+
+PlayerObject.prototype.getFactionSecurityWorkRepGain = function() {
+    var t = (this.hacking_skill  / CONSTANTS.MaxSkillLevel + 
+            this.strength       / CONSTANTS.MaxSkillLevel + 
+            this.defense        / CONSTANTS.MaxSkillLevel + 
+            this.dexterity      / CONSTANTS.MaxSkillLevel + 
+            this.agility        / CONSTANTS.MaxSkillLevel) / 5;
+    return t * this.faction_rep_mult;
+}
+
+PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
+    var t = (this.hacking_skill  / CONSTANTS.MaxSkillLevel + 
+            this.strength       / CONSTANTS.MaxSkillLevel + 
+            this.defense        / CONSTANTS.MaxSkillLevel + 
+            this.dexterity      / CONSTANTS.MaxSkillLevel + 
+            this.agility        / CONSTANTS.MaxSkillLevel + 
+            this.charisma       / CONSTANTS.MaxSkillLevel) / 6;
+    return t * this.faction_rep_mult;
 }
 
 //Functions for saving and loading the Player data

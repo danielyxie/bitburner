@@ -8,7 +8,16 @@ function Faction(name) {
 	this.isMember 			= false; 	//Whether player is member
     this.isBanned           = false;    //Whether or not player is banned from joining this faction
     this.playerReputation 	= 0;  		//"Reputation" within faction
+    
+    //Multipliers for unlocking and purchasing augmentations
+    this.augmentationPriceMult = 1;
+    this.augmentationRepRequirementMult = 1;
 };
+
+Faction.prototype.setAugmentationMultipliers = function(price, rep) {
+    this.augmentationPriceMult = price;
+    this.augmentationRepRequirementMult = rep;
+}
 
 Faction.prototype.setInformation = function(info) {
 	this.information = info;
@@ -33,6 +42,8 @@ AddToFactions = function(faction) {
 }
 
 //TODO Add faction information
+//TODO Augmentation price and rep requirement mult are 1 for everything right now,
+//      This might change in the future for balance
 initFactions = function() {
 	//Endgame
 	var Illuminati 				= new Faction("Illuminati");
@@ -353,6 +364,7 @@ inviteToFaction = function(faction) {
 
 joinFaction = function(faction) {
 	faction.isMember = true;
+    Player.factions.push(faction.name);
 	
 	//Add the faction to the Factions page content
 	var item = document.createElement("li");
@@ -424,7 +436,42 @@ displayFactionContent = function(factionName) {
 	var fieldWorkButton 	= document.getElementById("faction-fieldwork-button");
 	var securityWorkButton 	= document.getElementById("faction-securitywork-button");
 	
-	//TODO Add event listeners for the buttons
+	//Set new event listener for all of the work buttons
+    //The old buttons need to be replaced to clear the old event listeners
+    var newHackButton = hackButton.cloneNode(true);
+    var newFieldWorkButton = fieldWorkButton.cloneNode(true);
+    var newSecurityWorkButton = securityWorkbutton.cloneNode(true);
+    
+    hackButton.parentNode.replaceChild(newHackButton, hackButton);
+    fieldWorkButton.parentNode.replaceChild(newFieldWorkButton, fieldWorkButton);
+    securityWorkButton.parentNode.replaceChild(newSecurityWorkButton, securityWorkButton);
+    
+    newHackButton.addEventListener("click", function() {
+        Player.startFactionHackWork(faction);
+        return false;
+    });
+    
+    newFieldWorkButton.addEventListener("click", function() {
+        Player.startFactionFieldWork(faction);
+        return false;
+    });
+    
+    newSecurityWorkButton("click", function() {
+        Player.startFactionSecurityWork(faction);
+        return false;
+    });
+    
+    
+    //Set new event listener for the purchase augmentation buttons
+    //The old button needs to be replaced to clear the old event listeners
+    var purchaseAugmentations = document.getElementById("faction-purchase-augmentations");    
+    var newPurchaseAugmentationsButton = purchaseAugmentations.cloneNode(true);
+    purchaseAugmentations.parentNode.replaceChild(newPurchaseAugmentationsButton, purchaseAugmentations);
+    
+    newPurchaseAugmentationsButton.addEventListener("click", function() {
+        displayFactionAugmentations(factionName);
+        return false;
+    });
 	
 	if (faction.isMember) {
 		switch(faction.name) {
@@ -565,4 +612,51 @@ displayFactionContent = function(factionName) {
 	} else {
 		console.log("Not a member of this faction, cannot display faction information");
 	}
+}
+
+displayFactionAugmentations = function(factionName) {
+    //E.g:
+    //Add the faction to the Factions page content
+	var item = document.createElement("li");
+	var aElem = document.createElement("a");
+	aElem.setAttribute("href", "#");
+    aElem.setAttribute("class", "a-link-button");
+	aElem.innerHTML = faction.name;
+	aElem.addEventListener("click", function() {
+		displayFactionContent(faction.name);
+		return false;
+	});
+	item.appendChild(aElem);
+				
+	var factionsList = document.getElementById("factions-list");
+	factionsList.appendChild(item);
+    ///
+    
+    var faction = Factions[factionName];
+    
+    var augmentationsList = document.getElementById("faction-augmentations-list");
+    
+    for (var i = 0; i < Player.augmentations.length; ++i) {
+        var aug = Augmentations[Player.augmentations[i]];
+        var span = document.createElement("span");
+        var aElem = document.createElement("a");
+        var pElem = document.createElement("p");
+        aElem.setAttribute("href", "#");
+        if (faction.playerReputation >= (aug.baseRepRequirement * faction.augmentationRepRequirementMult)) {
+            aElem.setAttribute("class", "a-link-button");
+            pElem.innerHTML = "UNLOCKED"
+            pElem.style.color = #66ff33;
+            //TODO Event listener for button to purchase augmentation
+        } else {
+            aElem.setAttribute("class", "a-link-button-inactive");
+            pElem.innerHTML = "LOCKED";
+            pElem.style.color = red;
+        }
+        aElem.innerHTML = aug.name;
+        
+        span.appendChild(aElem);
+        span.appendChild(pElem);
+        
+        augmentationsList.appendChild(span);
+    }
 }

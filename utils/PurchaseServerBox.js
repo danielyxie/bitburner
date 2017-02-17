@@ -1,4 +1,4 @@
-/* Pop up Yes/No Box */
+/* Pop up Purchase Server Box */
 function purchaseServerBoxInit() {
     if (Engine.Debug) {
         console.log("Purchase Server box Initialized");
@@ -33,8 +33,11 @@ purchaseServerBoxSetText = function(txt) {
 purchaseServerBoxCreate = function(ram, cost) {
     purchaseServerBoxSetText("Would you like to purchase a new server with " + ram + "GB of RAM for $" + cost + "?" );
     
+    //Clear old event listeners from Confirm button
     var confirmButton = document.getElementById("purchase-server-box-confirm");
-    confirmButton.addEventListener("click", function() {
+    var newConfirmButton = confirmButton.cloneNode(true);
+    confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
+    newConfirmButton.addEventListener("click", function() {
         purchaseServerBoxClose();
         purchaseServer(ram, cost);
         return false;
