@@ -14,10 +14,10 @@ function PlayerObject() {
 	//Intelligence, perhaps?
     
     //Hacking multipliers
-    this.hacking_chance_multiplier   = 2;  //Increase through ascensions/augmentations
-    //this.hacking_speed_multiplier  =     5;  //Decrease through ascensions/augmentations
-    this.hacking_speed_multiplier    =  1;  //Make it faster for debugging
-    this.hacking_money_multiplier    = .001;    //Increase through ascensions/augmentations. Can't go above 1
+    this.hacking_chance_mult   = 2;  //Increase through ascensions/augmentations
+    //this.hacking_speed_mult  =     5;  //Decrease through ascensions/augmentations
+    this.hacking_speed_mult    =  1;  //Make it faster for debugging
+    this.hacking_money_mult    = .001;    //Increase through ascensions/augmentations. Can't go above 1
     
     //Note: "Lifetime" refers to current ascension, "total" refers to the entire game history
     //Accumulative  stats and skills
@@ -41,6 +41,13 @@ function PlayerObject() {
     this.dexterity_exp   = 0;
     this.agility_exp     = 0;
     this.charisma_exp    = 0;
+    
+    this.hacking_mult       = 1;
+    this.strength_mult      = 1;
+    this.defense_mult       = 1;
+    this.dexterity_mult     = 1;
+    this.agility_mult       = 1;
+    this.charisma_mult      = 1;
     
     this.hacking_exp_mult    = 1;
     this.strength_exp_mult   = 1;
@@ -151,12 +158,12 @@ PlayerObject.prototype.calculateSkill = function(exp) {
 
 PlayerObject.prototype.updateSkillLevels = function() {
     //TODO Account for total and lifetime stats for achievements and stuff
-	this.hacking_skill = this.calculateSkill(this.hacking_exp);
-	this.strength      = this.calculateSkill(this.strength_exp);
-    this.defense       = this.calculateSkill(this.defense_exp);
-    this.dexterity     = this.calculateSkill(this.dexterity_exp);
-    this.agility       = this.calculateSkill(this.agility_exp);
-    this.charisma      = this.calculateSkill(this.charisma_exp);
+	this.hacking_skill = Math.floor(this.calculateSkill(this.hacking_exp) * this.hacking_mult);
+	this.strength      = Math.floor(this.calculateSkill(this.strength_exp) * this.strength_mult);
+    this.defense       = Math.floor(this.calculateSkill(this.defense_exp) * this.defense_mult);
+    this.dexterity     = Math.floor(this.calculateSkill(this.dexterity_exp) * this.dexterity_mult);
+    this.agility       = Math.floor(this.calculateSkill(this.agility_exp) * this.agility_mult);
+    this.charisma      = Math.floor(this.calculateSkill(this.charisma_exp) * this.charisma_mult);
 }
 
 //Calculates the chance of hacking a server
@@ -166,7 +173,7 @@ PlayerObject.prototype.updateSkillLevels = function() {
 //        (hacking_chance_multiplier * hacking_skill)                      100
 PlayerObject.prototype.calculateHackingChance = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
-    var skillMult = (this.hacking_chance_multiplier * this.hacking_skill);
+    var skillMult = (this.hacking_chance_mult * this.hacking_skill);
     var skillChance = (skillMult - this.getCurrentServer().requiredHackingSkill) / skillMult;
     return (skillChance * difficultyMult);
 }
@@ -179,7 +186,7 @@ PlayerObject.prototype.calculateHackingChance = function() {
 PlayerObject.prototype.calculateHackingTime = function() {
     var difficultyMult = this.getCurrentServer().requiredHackingSkill * this.getCurrentServer().hackDifficulty;
     var skillFactor = (difficultyMult + 500) / (this.hacking_skill + 100);
-    return skillFactor * this.hacking_speed_multiplier;
+    return skillFactor * this.hacking_speed_mult;
 }
 
 //Calculates the PERCENTAGE of a server's money that the player will hack from the server if successful
@@ -190,7 +197,7 @@ PlayerObject.prototype.calculateHackingTime = function() {
 PlayerObject.prototype.calculatePercentMoneyHacked = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
     var skillMult = (this.hacking_skill - (this.getCurrentServer().requiredHackingSkill - 1)) / this.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_multiplier;
+    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult;
     console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
     return percentMoneyHacked;
 }
@@ -384,20 +391,20 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
     var faction = Factions[this.currentWorkFactionName];
     faction.playerReputation += (this.workRepGained);
     
-    this.gainMoney(this.workMoneyGained / cancMult);
+    this.gainMoney(this.workMoneyGained);
     
     this.updateSkillLevels();
     
     var txt = "You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
               "You earned a total of: <br>" + 
-              "$" + (this.workMoneyGained / cancMult).toFixed(2) + "<br>" + 
-              (this.workRepGained / cancMult).toFixed(3) + " reputation for the company <br>" + 
-              (this.workHackExpGained / cancMult).toFixed(3) + " hacking exp <br>" + 
-              (this.workStrExpGained / cancMult).toFixed(3) + " strength exp <br>" + 
-              (this.workDefExpGained / cancMult).toFixed(3) + " defense exp <br>" +
-              (this.workDexExpGained / cancMult).toFixed(3) + " dexterity exp <br>" + 
-              (this.workAgiExpGained / cancMult).toFixed(3) + " agility exp <br>" + 
-              (this.workChaExpGained / cancMult).toFixed(3) + " charisma exp<br>";
+              "$" + (this.workMoneyGained).toFixed(2) + "<br>" + 
+              (this.workRepGained).toFixed(3) + " reputation for the company <br>" + 
+              (this.workHackExpGained).toFixed(3) + " hacking exp <br>" + 
+              (this.workStrExpGained).toFixed(3) + " strength exp <br>" + 
+              (this.workDefExpGained).toFixed(3) + " defense exp <br>" +
+              (this.workDexExpGained).toFixed(3) + " dexterity exp <br>" + 
+              (this.workAgiExpGained).toFixed(3) + " agility exp <br>" + 
+              (this.workChaExpGained).toFixed(3) + " charisma exp<br>";
     dialogBoxCreate(txt);
     
     var mainMenu = document.getElementById("mainmenu-container");

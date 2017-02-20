@@ -50,8 +50,6 @@ AddToAugmentations = function(aug) {
 //TODO Set descriptions for all 
 
 //TODO Something that decreases RAM usage of scripts
-//TODO SOmething that increases rate at which you gain faction respect
-//        Similarly. something that helps you gain company reputation
 initAugmentations = function() {
     //Combat stat augmentations
     var Targeting1 = new Augmentation("Augmented Targeting I");
@@ -171,7 +169,7 @@ initAugmentations = function() {
     ArtificialSynapticPotentiation.addToFactions("The Black Hand", "NiteSec");
     AddToAugmentations(ArtificialSynapticPotentiation);
     
-    var EnhancedMyelinSheathing = new Augmentation("Enhanced Myelin Sheating");
+    var EnhancedMyelinSheathing = new Augmentation("Enhanced Myelin Sheathing");
     EnhancedMyelinSheathing.setRequirements(900000, 850000000);)
     EnhancedMyelinSheating.addToFactions("Fulcrum Secret Technologies", "BitRunners", "The Black Hand");
     AddToAugmentations(EnhancedMyelinSheathing);
@@ -187,7 +185,7 @@ initAugmentations = function() {
     AddToAugmentations(NeuralRetentionEnhancement);
     
     var DataJack = new Augmentation("DataJack");
-    DataJack.setRequirements(750000, 750000000);
+    DataJack.setRequirements(750000, 75000000);
     DataJack.addToFactions("BitRunners", "The Black Hand", "NiteSec", "Chongqing", "New Tokyo");
     AddToAugmentations(DataJack);
     
@@ -294,141 +292,202 @@ applyAugmentation = function(aug, faction) {
     switch(aug.name) {
         //Combat stat augmentations
         case "Augmented Targeting I":
-            //Dex 5%
+            Player.dexterity_mult *= 1.1;
             break;
         case "Augmented Targeting II":
-            //Dex 5% 
+            Player.dexterity_mult *= 1.2;
             break;
         case "Augmented Targeting III":
-            //Dex 5%
+            Player.dexterity_mult *= 1.5;
             break;
-        case "Synthetic Heart":
-            //Agi and Str - HIGH LEVEL
+        case "Synthetic Heart":         //High level
+            Player.agility_mult *= 2.0;
+            Player.strength_mult *= 2.0;
             break;
-        case "Synfibril Muscle":
-            //Strength and Defense - MED HIGH LEVEL
+        case "Synfibril Muscle":        //Medium-high level
+            Player.strength_mult    *= 1.5;
+            Player.defense_mult     *= 1.5;
             break;
         case "Combat Rib I":
             //Str and Defense 5%
+            Player.strength_mult    *= 1.1;
+            Player.defense_mult     *= 1.1;
             break;
         case "Combat Rib II":
+            Player.strength_mult    *= 1.2;
+            Player.defense_mult     *= 1.2;
             break;
         case "Combat Rib III":
+            Player.strength_mult    *= 1.3;
+            Player.defense_mult     *= 1.3;
             break;
-        case "Nanofiber Weave":
-            //str + Defense - MED LEVEL
+        case "Nanofiber Weave":         //Med level
+            Player.strength_mult    *= 1.3;
+            Player.defense_mult     *= 1.3;
             break;
-        case "NEMEAN Subdermal Weave":
-            //Defense - HIGH LEVEL
+        case "NEMEAN Subdermal Weave":  //High level
+            Player.defense_mult     *= 2.5;
             break;
-        case "Wired Reflexes":
-            //Agility - Low level
+        case "Wired Reflexes":          //Low level
+            Player.agility_mult     *= 1.05;
             break;
-        case "Graphene Bone Lacings":
-            //Strength defense - HIGH level
+        case "Graphene Bone Lacings":   //High level
+            Player.strength_mult    *= 2;
+            Player.defense_mult     *= 2;
             break;
-        case "Bionic Spine":
-            //Everything  - Medium level
+        case "Bionic Spine":            //Med level
+            Player.strength_mult    *= 1.2;
+            Player.defense_mult     *= 1.2;
+            Player.agility_mult     *= 1.2;
+            Player.dexterity_mult   *= 1.2;
             break;
-        case "Graphene Bionic Spine Upgrade":
-            //Everything - high level
+        case "Graphene Bionic Spine Upgrade":   //High level
+            Player.strength_mult    *= 2;
+            Player.defense_mult     *= 2;
+            Player.agility_mult     *= 2;
+            Player.dexterity_mult   *= 2;
             break;
-        case "Bionic Legs":
-            //Agi - Med level
+        case "Bionic Legs":             //Med level
+            Player.agility_mult     *= 1.5;
             break;
-        case "Graphene Bionic Legs Upgrade":
-            //Agi - HIGH level
+        case "Graphene Bionic Legs Upgrade":    //High level
+            player.agility_mult     *= 3.0;
             break;
             
         //Labor stats augmentations
-        case "Enhanced Social Interaction Implant":
-            //Charisma 10% - Med high level
+        case "Enhanced Social Interaction Implant": //Med-high level
+            Player.charisma_mult    *= 1.5;
+            Player.charisma_exp_mult *= 1.5;
             break;
-        case "Speech Processor Implant":
-            //Charisma 5% - Med level
+        case "Speech Processor Implant":    //Med level
+            Player.charisma_mult    *= 1.2;
             break;
 
         //Hacking augmentations
-        case "Artificial Bio-neural Network Implant":
-            //Hacking speed and money gained - MED Level
+        case "Artificial Bio-neural Network Implant":   //Med level
+            Player.hacking_speed_mult *= .98;
+            Player.hacking_money_mult *= 1.1;
+            Player.hacking_mult       *= 1.1;
             break;
-        case "Artificial Synaptic Potentiation":
-            //Hacking speed - MED Level
+        case "Artificial Synaptic Potentiation":    //Med level
+            Player.hacking_speed_mult *= .99;
+            Player.hacking_chance_mult *= 1.01;
             break;
-        case "Enhanced Myelin Sheating":
-            //Hacking speed and exp gain - MED Level
+        case "Enhanced Myelin Sheathing":       //Med level
+            Player.hacking_speed_mult *= .99;
+            Player.hacking_exp_mult   *= 1.05;
+            Player.hacking_mult       *= 1.05;
             break;
-        case "Synaptic Enhancement Implant":
-            //Hacking speed - LOw level
+        case "Synaptic Enhancement Implant":    //Low Level
+            Player.hacking_speed_mult *= .99;
             break;
-        case "Neural-Retention Enhancement":
-            //Gain 10% more hacking exp - med level
+        case "Neural-Retention Enhancement":    //Med level
+            Player.hacking_exp_mult   *= 1.4;
             break;
-        case "DataJack":
-            //5% more money from hacking - med low level
+        case "DataJack":                        //Med low level
+            Player.hacking_money_mult *= 1.2;
             break;
-        case "Embedded Netburner Module":
-            //Doesn't give anyhting itself but allows user to install
-            //ENM upgrades in the future, which are very powerful
-            //Med level
+        case "Embedded Netburner Module":       //Medium level
+            Player.hacking_mult           *= 1.01;
             break;
-        case "Embedded Netburner Module Core Implant":
-            //Hacking speed, money gained, and exp gained - Med level
+        case "Embedded Netburner Module Core Implant":      //Medium level
+            Player.hacking_speed_mult     *= .98;
+            Player.hacking_money_mult     *= 1.1;
+            Player.hacking_chance_mult    *= 1.02;
+            Player.hacking_exp_mult       *= 1.1;
+            Player.hacking_mult           *= 1.01;
             break;
-        case "Embedded Netburner Module Core V2 Upgrade":
-            //Hacking speed, money gained, and exp gained - Med High Level
+        case "Embedded Netburner Module Core V2 Upgrade":   //Medium high level
+            Player.hacking_speed_mult     *= .95;
+            Player.hacking_money_mult     *= 1.5;
+            Player.hacking_chance_mult    *= 1.05;
+            Player.hacking_exp_mult       *= 1.5;
+            Player.hacking_mult           *= 1.05;
             break;
-        case "Embedded Netburner Module Core V3 Upgrade":
-            //Hacking speed, money gained, and exp gained - High level
+        case "Embedded Netburner Module Core V3 Upgrade":   //High level
+            Player.hacking_speed_mult     *= .95;
+            Player.hacking_money_mult     *= 1.5;
+            Player.hacking_chance_mult    *= 1.1;
+            Player.hacking_exp_mult       *= 2.0;
+            Player.hacking_mult           *= 1.1;
             break;
-        case "Embedded Netburner Module Analyze Engine":
+        case "Embedded Netburner Module Analyze Engine":    //High level
             //Hacking speed 20%  - High level
+            Player.hacking_speed_mult     *= 0.9;
             break;
-        case "Embedded Netburner Module Direct Memory Access Upgrade":
+        case "Embedded Netburner Module Direct Memory Access Upgrade":  //High level
             //Money hacked 20%  - High level
+            Player.hacking_money_mult     *= 1.5;
+            Player.hacking_chance_mult    *= 1.2;
             break;
-        case "Neuralstimulator":
-            //Hacking speed, money gained, and exp gained - Med level
+        case "Neuralstimulator":    //Medium Level
+            Player.hacking_speed_mult     *= .99;
+            Player.hacking_chance_mult    *= 1.1;
+            Player.hacking_exp_mult       *= 1.2;
             break;
-        case "PC Direct-Neural Interface NeuroNet Injector":
-            //Hacking speed increases
-            break;
-            
+
         //Work augmentations
-        case "Nuoptimal Nootropic Injector Implant":
-            //Increase in gains for software, IT, and Business jobs - Low Med Level
+        case "Nuoptimal Nootropic Injector Implant":    //Low medium level
+            Player.company_rep_mult   *= 1.1;
             break;
-        case "Speech Enhancement":
-            //Increase in business jobs and reputation gained - Low Level
+        case "Speech Enhancement":  //Low level
+            Player.company_rep_mult   *= 1.05;
+            Player.charisma_mult      *= 1.05;
             break;
-        case "FocusWire":
-            //Increase in all gains and reputation gained - Med Level
+        case "FocusWire":   //Med level
+            Player.hacking_exp_mult   *= 1.1;
+            Player.strength_exp_mult  *= 1.1;
+            Player.defense_exp_mult   *= 1.1;
+            Player.dexterity_exp_mult *= 1.1;
+            Player.agility_exp_mult   *= 1.1;
+            Player.charisma_exp_mult  *= 1.1;
+            Player.company_rep_mult   *= 1.05;
+            Player.work_money_mult  *= 1.05;
             break;
-        case "PC Direct-Neural Interface":
-            //Allows people to directly communicate interface with PCs..which helps with Software and IT jobs
-            //Med level
+        case "PC Direct-Neural Interface":  //Med level
+            Player.company_rep_mult   *= 1.1;
+            Player.hacking_mult       *= 1.1;
             break;
-        case "PC Direct-Neural Interface Optimization Submodule":
+        case "PC Direct-Neural Interface Optimization Submodule":   //High level
             //Allows u to better optimize code/pc when connecting with PC DNI..helps with software/IT jobs
-            //High level
+            Player.company_rep_mult   *= 1.2;
+            Player.hacking_mult       *= 1.2;
             break;    
-        case "PC Direct-Neural Interface NeuroNet Injector":
-            //Allow you to use ur brain as aneural net on a computer lol...increases everything
-            //High Level
+        case "PC Direct-Neural Interface NeuroNet Injector":        //High level
+            Player.company_rep_mult   *= 1.1;
+            Player.hacking_mult       *= 1.1;
+            Player.hacking_speed_mult *= .98;
             break;
         
         //Misc augmentations
-        case "Neurotrainer I":
-            //Increase all exp gains - Low level
+        case "Neurotrainer I":      //Low Level
+            Player.hacking_exp_mult   *= 1.05;
+            Player.strength_exp_mult  *= 1.05;
+            Player.defense_exp_mult   *= 1.05;
+            Player.dexterity_exp_mult *= 1.05;
+            Player.agility_exp_mult   *= 1.05;
+            this.charisma_exp_mult  *= 1.05;
             break;
-        case "Neurotrainer II":
-            //Increase all exp gains - Med level
+        case "Neurotrainer II":     //Medium level
+            Player.hacking_exp_mult   *= 1.1;
+            Player.strength_exp_mult  *= 1.1;
+            Player.defense_exp_mult   *= 1.1;
+            Player.dexterity_exp_mult *= 1.1;
+            Player.agility_exp_mult   *= 1.1;
+            Player.charisma_exp_mult  *= 1.1;
             break;
-        case "Neurotrainer III":
-            //Increase all exp gains - High Level
+        case "Neurotrainer III":    //High Level
+            Player.hacking_exp_mult   *= 1.2;
+            Player.strength_exp_mult  *= 1.2;
+            Player.defense_exp_mult   *= 1.2;
+            Player.dexterity_exp_mult *= 1.2;
+            Player.agility_exp_mult   *= 1.2;
+            Player.charisma_exp_mult  *= 1.2;
             break;
-        case "HyperSight Corneal Implant":
-            //Increases sight..which increases dex..hacking speed + money? - Med high level
+        case "HyperSight Corneal Implant":  //Medium high level
+            Player.dexterity_mult     *= 1.5;
+            Player.hacking_speed_mult *= .99;
+            Player.hacking_money_mult *= 1.1;
             break;
         
         default:
@@ -438,4 +497,6 @@ applyAugmentation = function(aug, faction) {
 
     aug.owned = true;
     aug.factionInstalledBy = faction.name;
+    Player.augmentations.push(aug.name);
+    ++Player.numAugmentations;
 }

@@ -77,12 +77,14 @@ var Engine = {
         var CompaniesSave           = JSON.stringify(Companies);
         var FactionsSave            = JSON.stringify(Factions);
         var SpecialServerIpsSave    = JSON.stringify(SpecialServerIps);
+        var AugmentationsSave       = JSON.stringify(Augmentations);
         
         window.localStorage.setItem("netburnerPlayerSave", PlayerSave);
         window.localStorage.setItem("netburnerAllServersSave", AllServersSave);
         window.localStorage.setItem("netburnerCompaniesSave", CompaniesSave);
         window.localStorage.setItem("netburnerFactionsSave", FactionsSave);
         window.localStorage.setItem("netburnerSpecialServerIpsSave", SpecialServerIpsSave);
+        window.localStorage.setItem("netburnerAugmentationsSave", AugmentationsSave);
         
         console.log("Game saved to local storage");
     },
@@ -105,18 +107,23 @@ var Engine = {
         } else if (!window.localStorage.getItem("netburnerSpecialServerIpsSave")) {
             console.log("No Special Server Ips save to load");
             return false;
+        } else if (!window.localStorage.getItem("netburnerAugmentationsSave")) {
+            console.log("No Augmentations save to load");
+            return false;
         } else {
             var PlayerSave              = window.localStorage.getItem("netburnerPlayerSave");
             var AllServersSave          = window.localStorage.getItem("netburnerAllServersSave");
             var CompaniesSave           = window.localStorage.getItem("netburnerCompaniesSave");
             var FactionsSave            = window.localStorage.getItem("netburnerFactionsSave");
             var SpecialServerIpsSave    = window.localStorage.getItem("netburnerSpecialServerIpsSave");
+            var AugmentationsSave       = window.localStorage.getItem("netburnerAugmentationsSave");
             
             Player          = JSON.parse(PlayerSave, Reviver);
             AllServers      = JSON.parse(AllServersSave, Reviver);
             Companies       = JSON.parse(CompaniesSave, Reviver);
             Factions        = JSON.parse(FactionsSave, Reviver);
             SpecialServerIps = JSON.parse(SpecialServerIpsSave, Reviver);
+            Augmentations   = JSON.parse(AugmentationsSave, Reviver);
             return true;
         }
     },
@@ -143,6 +150,10 @@ var Engine = {
         
         if (window.localStorage.getItem("netburnerSpecialServerIpsSave")) {
             window.localStorage.removeItem("netburnerSpecialServerIpsSave");
+        }
+        
+        if (window.localStorage.getItem("netburnerAugmentationsSave")) {
+            window.localStorage.removeItem("netburnerAugmentationsSave");
         }
     },
     
@@ -274,20 +285,20 @@ var Engine = {
         Engine.Display.characterInfo.innerHTML = 'Current City: ' + Player.city + '<br><br>' + 
                                                  'Employer: ' + Player.companyName + '<br><br>' + 
                                                  'Job Title: ' + companyPosition + '<br><br><br><br>' + 
-                                                 'Money: $' + Player.money.toFixed(2) + '<br><br>' +
-                                                 'Hacking Level: ' + Player.hacking_skill + '<br><br>' + 
-                                                 'Strength: ' + Player.strength + '<br><br>' + 
-                                                 'Defense: ' + Player.defense + '<br><br>' + 
-                                                 'Dexterity: ' + Player.dexterity + '<br><br>' + 
-                                                 'Agility: ' + Player.agility + '<br><br>' +
-                                                 'Charisma: ' + Player.charisma + '<br><br>' +
+                                                 'Money: $' + (Player.money.toFixed(2)).toLocaleString() + '<br><br>' +
+                                                 'Hacking Level: ' + (Player.hacking_skill).toLocaleString() + '<br><br>' + 
+                                                 'Strength: ' + (Player.strength.toLocaleString() + '<br><br>' + 
+                                                 'Defense: ' + (Player.defense).toLocaleString() + '<br><br>' + 
+                                                 'Dexterity: ' + (Player.dexterity).toLocaleString() + '<br><br>' + 
+                                                 'Agility: ' + (Player.agility).toLocaleString() + '<br><br>' +
+                                                 'Charisma: ' + (Player.charisma).toLocaleString() + '<br><br>' +
                                                  'Servers owned: ' + Player.purchasedServers.length + '<br><br>' +
-                                                 'Hacking experience: ' + Player.hacking_exp.toFixed(4) + '<br><br>' + 
-                                                 'Strength experience: ' + Player.strength_exp.toFixed(4) + '<br><br>' + 
-                                                 'Defense experience: ' + Player.defense_exp.toFixed(4) + '<br><br>' + 
-                                                 'Dexterity experience: ' + Player.dexterity_exp.toFixed(4) + '<br><br>' + 
-                                                 'Agility experience: ' + Player.agility_exp.toFixed(4) + '<br><br>' + 
-                                                 'Charisma experience: ' + Player.charisma_exp.toFixed(4) + '<br><br>';
+                                                 'Hacking experience: ' + (Player.hacking_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
+                                                 'Strength experience: ' +  (Player.strength_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
+                                                 'Defense experience: ' + (Player.defense_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
+                                                 'Dexterity experience: ' + (Player.dexterity_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
+                                                 'Agility experience: ' + (Player.agility_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
+                                                 'Charisma experience: ' + (Player.charisma_exp.toFixed(4)).toLocaleString() + '<br><br>';
     },
     
     /* Display locations in the world*/
@@ -709,7 +720,7 @@ var Engine = {
             initCompanies();
             initFactions();
             CompanyPositions.init();
-            
+            initAugmentations();
         }
                 
         //Message at the top of terminal
