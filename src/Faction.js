@@ -365,21 +365,6 @@ inviteToFaction = function(faction) {
 joinFaction = function(faction) {
 	faction.isMember = true;
     Player.factions.push(faction.name);
-	
-	//Add the faction to the Factions page content
-	var item = document.createElement("li");
-	var aElem = document.createElement("a");
-	aElem.setAttribute("href", "#");
-    aElem.setAttribute("class", "a-link-button");
-	aElem.innerHTML = faction.name;
-	aElem.addEventListener("click", function() {
-		displayFactionContent(faction.name);
-		return false;
-	});
-	item.appendChild(aElem);
-				
-	var factionsList = document.getElementById("factions-list");
-	factionsList.appendChild(item);
     
     //Determine what factions you are banned from now that you have joined this faction
     if (faction.name == "BitRunners") {
@@ -424,7 +409,7 @@ joinFaction = function(faction) {
 
 //TODO Leave faction
 
-//Displays the HTML content for this faction
+//Displays the HTML content for a specific faction
 displayFactionContent = function(factionName) {
 	var faction = Factions[factionName];
 	
@@ -630,7 +615,6 @@ displayFactionAugmentations = function(factionName) {
 				
 	var factionsList = document.getElementById("factions-list");
 	factionsList.appendChild(item);
-    ///
     
     var faction = Factions[factionName];
     
@@ -638,6 +622,7 @@ displayFactionAugmentations = function(factionName) {
     
     for (var i = 0; i < Player.augmentations.length; ++i) {
         var aug = Augmentations[Player.augmentations[i]];
+        var item = document.createElement("li");
         var span = document.createElement("span");
         var aElem = document.createElement("a");
         var pElem = document.createElement("p");
@@ -657,6 +642,8 @@ displayFactionAugmentations = function(factionName) {
         span.appendChild(aElem);
         span.appendChild(pElem);
         
-        augmentationsList.appendChild(span);
+        item.appendChild(span);
+        
+        augmentationsList.appendChild(item);
     }
 }

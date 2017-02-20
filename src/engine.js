@@ -208,6 +208,7 @@ var Engine = {
     loadFactionsContent: function() {
         Engine.hideAllContent();
         Engine.Display.factionsContent.style.visibility = "visible";
+        Engine.displayFactionsInfo();
         
         Engine.currentPage = Engine.Page.Factions;
     },
@@ -222,6 +223,7 @@ var Engine = {
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.visibility = "visible";
+        Engine.displayAugmentationsContent();
         
         Engine.currentPage = Engine.Page.Augmentations;
     },
@@ -320,27 +322,21 @@ var Engine = {
         switch(Player.city) {
             case Locations.Aevum:
                 Engine.aevumLocationsList.style.display = "inline";
-                //Engine.aevumLocationsList.style.visibility  = "visible";
                 break;
             case Locations.Chongqing:
                 Engine.chongqingLocationsList.style.display = "inline";
-                //Engine.chongqingLocationsList.style.visibility = "visible";
                 break;
             case Locations.Sector12:
                 Engine.sector12LocationsList.style.display = "inline";
-                //Engine.sector12LocationsList.style.visibility = "visible";
                 break;
             case Locations.NewTokyo:
                 Engine.newTokyoLocationsList.style.display = "inline";
-                //Engine.newTokyoLocationsList.style.visibility = "visible";
                 break;
             case Locations.Ishima:
                 Engine.ishimaLocationsList.style.display = "inline";
-                //Engine.ishimaLocationsList.style.visibility = "visible";
                 break;
             case Locations.Volhaven:
                 Engine.volhavenLocationsList.style.display = "inline";
-                //Engine.volhavenLocationsList.style.visibility = "visible";
                 break;
             default:
                 console.log("Invalid city value in Player object!");
@@ -399,7 +395,7 @@ var Engine = {
         Engine.createActiveScriptsText(workerscript, item);
     },
     
-    createActiveScriptsText(workerscript, item) {
+    createActiveScriptsText: function(workerscript, item) {
         //Script name
         var scriptName = document.createElement("h2");
         scriptName.appendChild(document.createTextNode(workerscript.name));
@@ -427,6 +423,52 @@ var Engine = {
                             offlineMpsText + "<br>" + offlineEpsText + "<br>";
         
         item.appendChild(itemText);
+    },
+    
+    displayFactionsInfo: function() {
+        var factionsList = document.getElementById("factions-list");
+        
+        for (var i = 0; i < Player.factions.length; ++i) {
+            var factionName = Player.factions[i];
+            
+            //Add the faction to the Factions page content
+            var item = document.createElement("li");
+            var aElem = document.createElement("a");
+            aElem.setAttribute("href", "#");
+            aElem.setAttribute("class", "a-link-button");
+            aElem.innerHTML = factionName;
+            aElem.addEventListener("click", function() {
+                Engine.loadFactionContent();
+                displayFactionContent(factionName);
+                return false;
+            });
+            item.appendChild(aElem);
+                            
+            factionsList.appendChild(item);
+        }
+    },
+    
+    displayAugmentationsContent: function() {
+        var augmentationsList = document.getElementById("augmentations-list");
+        
+        for (var i = 0; i < Player.augmentations.length; ++i) {
+            var augName = Player.augmentations[i];
+            var aug = Augmentations[augName];
+            
+            
+            var item = document.createElement("li");
+            var hElem = document.createElement("h2");
+            var pElem = document.createElement("p");
+            
+            item.setAttribute("class", "installed-augmentation");
+            hElem.innerHTML = augName;
+            pElem.innerHTML = aug.info;
+            
+            item.appendChild(hElem);
+            item.appendChild(pElem);
+            
+            augmentationsList.appendChild(item);
+        }
     },
     
     /* Main Event Loop */

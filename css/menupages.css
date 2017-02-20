@@ -159,6 +159,10 @@
     width: 99%;
 }
 
+.installed-augmentation {
+    /* TODO */
+}
+
 /* Tutorial */
 #tutorial-container {
 	color: #66ff33;

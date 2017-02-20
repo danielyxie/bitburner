@@ -17,6 +17,10 @@ h1 {
     
 }
 
+h2 {
+    color: #66ff33;
+}
+
 /* Main menu */
 .mainmenu {
     list-style-type: none;
