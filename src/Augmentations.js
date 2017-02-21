@@ -54,54 +54,81 @@ initAugmentations = function() {
     //Combat stat augmentations
     var Targeting1 = new Augmentation("Augmented Targeting I");
     Targeting1.setRequirements(36000, 10000000);
+    Targeting1.setInfo("This cranial implant is embedded within the player's inner ear structure and optic nerves. It regulates and enhances the user's" + 
+                       "balance and hand-eye coordination. It is also capable of augmenting reality by projecting digital information\n" + 
+                       "directly onto the retina. These enhancements allow the player to better lock-on and keep track of enemies. \n\n" +
+                       "This augmentation increases the player's dexterity by 10%.");
     Targeting1.addToFactions("The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries");
     AddToAugmentations(Targeting1);
     
     var Targeting2 = new Augmentation("Augmented Targeting II");
     Targeting2.setRequirements(72000, 20000000);
+    Targeting2.setInfo("This is an upgrade of the Augmented Targeting I cranial implant, which is capable of augmenting reality\n" + 
+                       "and enhances the user's balance and hand-eye coordination. \n\nThis upgrade increases the player's dexterity" + 
+                       "by an additional 20%.");
     Targeting2.addToFactions("The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries");
     AddToAugmentations(Targeting2);
     
     var Targeting3 = new Augmentation("Augmented Targeting III");
     Targeting3.setRequirements(144000, 50000000);
+    Targeting3.setInfo("This is an upgrade of the Augmented Targeting II cranial implant, which is capable of augmenting reality\n" + 
+                       "and enhances the user's balance and hand-eye coordination. \n\nThis upgrade increases the player's dexterity" +
+                       "by an additional 50%.");
     Targeting3.addToFactions("The Dark Army", "The Syndicate", "OmniTek Incorporated",
                              "KuaiGong International", "Blade Industries", "The Covenant");
     AddToAugmentations(Targeting3);
     
     var SyntheticHeart = new Augmentation("Synthetic Heart");
     SyntheticHeart.setRequirements(1000000, 500000000);
+    SyntheticHeart.setInfo("This advanced artificial heart, created from plasteel and graphene, is capable of pumping more blood\n" + 
+                           "at much higher efficiencies than a normal human heart.\n\n This augmentation increases the player's agility" +
+                           "and strength by 100%");
     SyntheticHeart.addToFactions("KuaiGong International", "Fulcrum Secret Technologies", "Speakers for the Dead",
                                  "NWO", "The Covenant", "Daedalus", "Illuminati");
     AddToAugmentations(SyntheticHeart);
     
     var SynfibrilMuscle = new Augmentation("Synfibril Muscle");
     SynfibrilMuscle.setRequirements(900000, 400000000);
+    SynfibrilMuscle.setInfo("The myofibrils in human muscles are injected with special chemicals that react with the proteins inside\n" + 
+                            "the myofibrils, altering their underlying structure. The end result is muscles that are stronger and more elastic.\n" + 
+                            "Scientists have named these artificially enhanced units 'synfibrils'.\n\n This augmentation increases the player's" +
+                            "strength and defense by 50%.");
     SynfibrilMuscle.addToFactions("KuaiGong International", "Fulcrum Secret Technologies", "Speakers for the Dead",
                                   "NWO", "The Covenant", "Daedalus", "Illuminati", "Blade Industries");
     AddToAugmentations(SynfibrilMuscle)
     
     var CombatRib1 = new Augmentation("Combat Rib I");
     CombatRib1.setRequirements(50000, 15000000);
+    CombatRib1.setInfo("The human body's ribs are replaced with artificial ribs that automatically and continuously release cognitive" + 
+                       "and performance-enhancing drugs into the bloodstream, improving the user's abilities in combat.\n\n" + 
+                       "This augmentation increases the player's strength and defense by 10%.");
     CombatRib1.addToFactions("The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries");
     AddToAugmentations(CombatRib1);
     
     var CombatRib2 = new Augmentation("Combat Rib II");
     CombatRib2.setRequirements.setRequirements(100000, 40000000);
+    CombatRib2.setInfo("This is an upgrade to the Combat Rib I augmentation, and is capable of releasing even more potent combat-enhancing\n" + 
+                       "drugs into the bloodstream\n\n. This upgrade increases the player's strength and defense by an additional 20%.")
     CombatRib2.addToFactions("The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries");
     AddToAugmentations(CombatRib2);
     
     var CombatRib3 = new Augmentation("Combat Rib III");
     CombatRib3.setRequirements(200000, 100000000);
+    CombatRib3.setInfo("This is an upgrade to the Combat Rib II augmentation, and is capable of releasing even more potent combat-enhancing\n" + 
+                       "drugs into the bloodstream\n\n. This upgrade increases the player's strength and defense by an additional 30%.");
     CombatRib3.addToFactions("The Dark Army", "The Syndicate", "OmniTek Incorporated",
                              "KuaiGong International", "Blade Industries", "The Covenant");
     AddToAugmentations(CombatRib3);
     
     var NanofiberWeave = new Augmentation("Nanofiber Weave");
     NanofiberWeave.setRequirements(400000, 250000000);
+    NanofiberWeave.setInfo("Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning.\n" + 
+                           "This improves the skin's ability to regenerate itself and protect the body from external stresses and forces.\n\n" + 
+                           "This augmentation increases the player's strength and defense by 30%.");
     NanofiberWeave.addToFactions("Tian Di Hui", "The Syndicate", "The Dark Army", "Speakers for the Dead",
                                  "Blade Industries", "Fulcrum Secret Technologies", "OmniTek Incorporated");
     AddToAugmentations(NanofiberWeave);
