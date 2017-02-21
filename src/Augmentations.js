@@ -135,6 +135,12 @@ initAugmentations = function() {
     
     var SubdermalArmor = new Augmentation("NEMEAN Subdermal Weave");
     SubdermalArmor.setRequirements(1000000, 750000000);
+    SubdermalArmor.setInfo("The NEMEAN Subdermal Weave is a thin, light-weight, graphene plating that houses a dilatant fluid.\n"
+                           "The material is implanted underneath the skin, and is the most advanced form of defensive enhancement\n" +
+                           "that has ever been created. The dilatant fluid, despite being thin and light, is extremely effective\n" + 
+                           "at stopping piercing blows and reducing blunt trauma. The properties of graphene allow the plating to\n" +
+                           "mitigate damage from any fire-related or electrical traumas.\n\n" + 
+                           "This augmentation increases the player's defense by 150%.");
     SubdermalArmor.addToFactions("The Syndicate", "Fulcrum Secret Technologies", "Illuminati", "Daedalus",
                                  "The Covenant");
     AddToAugmentations(SubdermalArmor);
