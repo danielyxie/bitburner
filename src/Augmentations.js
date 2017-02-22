@@ -147,46 +147,75 @@ initAugmentations = function() {
     
     var WiredReflexes = new Augmentation("Wired Reflexes");
     WiredReflexes.setRequirements(36000, 10000000);
+    WiredReflexes.setInfo("Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system,\n" + 
+                          "supercharging the body's ability to send signals through neurons. This results in increased reflex speed.\n\n" + 
+                          "This augmentation increases the player's agility by 5%.");
     WiredReflexes.addToFactions("Tian Di Hui", "Sector-12", "Volhaven", "Aevum", "Ishima", 
                                 "The Syndicate", "The Dark Army", "Speakers for the Dead");
     AddToAugmentations(WiredReflexes);
     
     var GrapheneBoneLacings = new Augmentation("Graphene Bone Lacings");
     GrapheneBoneLacings.setRequirements(1500000, 1000000000);
+    GrapheneBoneLacings.setInfo("A graphene-based material is grafted and fused into the user's bones, significantly increasing\n" +
+                                "their density and tensile strength.\n\n" + 
+                                "This augmentation increases the player's strength and defense by 100%.");
     GrapheneBoneLacings.addToFactions("Fulcrum Secret Technologies", "The Covenant");
     AddToAugmentations(GrapheneBoneLacings);
     
     var BionicSpine = new Augmentation("Bionic Spine");
     BionicSpine.setRequirements(250000, 75000000);
+    BionicSpine.setInfo("An artificial spine created from plasteel and carbon fibers that completely replaces the organic spine.\n" + 
+                        "Not only is the Bionic Spine physically stronger than a human spine, but it is also capable of digitally\n" + 
+                        "stimulating and regulating the neural signals that are sent and received by the spinal cord. This results in\n" + 
+                        "greatly improved senses and reaction speeds.\n\n" + 
+                        "This augmentation increases all of the player's combat stats by 20%.");
     BionicSpine.addToFactions("Speakers for the Dead", "The Syndicate", "KuaiGong International",
                               "OmniTek Incorporated", "Blade Industries");
     AddToAugmentations(BionicSpine);
     
     var GrapheneBionicSpine = new Augmentation("Graphene Bionic Spine Upgrade");
     GrapheneBionicSpine.setRequirements(1200000, 1000000000);
+    GrapheneBionicSpine.setInfo("An upgrade to the Bionic Spine augmentation. It fuses the implant with an advanced graphene\n" + 
+                                "material to make it much stronger and lighter.\n\n" + 
+                                "This augmentation increases all of the player's combat stats by 100%.");
     GrapheneBionicSpine.addToFactions("Fulcrum Secret Technologies", "ECorp");
     AddToAugmentations(GrapheneBionicSpine);
     
     var BionicLegs = new Augmentation("Bionic Legs");
     BionicLegs.setRequirements(200000, 60000000);
+    BionicLegs.setInfo("Cybernetic legs created from plasteel and carbon fibers that completely replace the user's organic legs. \n\n" + 
+                       "This augmentation increases the player's agility by 50%.");
     BionicLegs.addToFactions("Speakers for the Dead", "The Syndicate", "KuaiGong International",
                              "OmniTek Incorporated", "Blade Industries");
     AddToAugmentations(BionicLegs);
     
     var GrapheneBionicLegs = new Augmentation("Graphene Bionic Legs Upgrade");
     GrapheneBionicLegs.setRequirements(1000000, 900000000);
+    GrapheneBionicLegs.setInfo("An upgrade to the Bionic Legs augmentation. It fuses the implant with an advanced graphene\n" + 
+                               "material to make it much stronger and lighter\n\n" + 
+                               "This augmentation increases the player's agility by an additional 150%.");
     GrapheneBionicLegs.addToFactions("MegaCorp", "ECorp", "Fulcrum Secret Technologies");
     AddToAugmentations(GrapheneBionicLegs);
     
     //Labor stat augmentations
     var SpeechProcessor = new Augmentation("Speech Processor Implant"); //Cochlear imlant?
     SpeechProcessor.setRequirements(50000, 15000000);
+    SpeechProcessor.setInfo("A cochlear implant with an embedded computer that analyzes incoming speech.\n" +
+                            "The embedded computer processes characteristics of incoming speech, such as tone\n" +
+                            "and inflection, to pick up on subtle cues and aid in social interaction.\n\n" + 
+                            "This augmentation increases the player's charisma by 20%.");
     SpeechProcessor.addToFactions("Tian Di Hui", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
                                   "Ishima", "Volhaven");
     AddToAugmentations(SpeechProcessor);
     
     var EnhancedSocialInteractionImplant = new Augmentation("Enhanced Social Interaction Implant");
     EnhancedSocialInteractionImplant.setRequirements(750000, 500000000);
+    EnhancedSocialInteractionImplant.setInfo("A cranial implant that greatly assists in the user's ability to analyze social situations\n" + 
+                                             "and interactions. The system uses a wide variety of factors such as facial expression, body\n" + 
+                                             "language, and the voice's tone/inflection to determine the best course of action during social\n" + 
+                                             "situations. The implant also uses deep learning software to continuously learn new behavior\n" + 
+                                             "patterns and how to best respond.\n\n" + 
+                                             "This augmentation increases the player's charisma and charisma experience gain rate by 50%.");
     EnhancedSocialInteractionImplant.addToFactions("Bachman & Associates", "NWO", "Clarke Incorporated",
                                                    "OmniTek Incorporated", "Four Sigma");
     AddToAugmentations(EnhancedSocialInteractionImplant);
@@ -194,31 +223,57 @@ initAugmentations = function() {
     //Hacking augmentations
     var ArtificialBioNeuralNetwork = new Augmentation("Artificial Bio-neural Network Implant");
     ArtificialBioNeuralNetwork.setRequirements(750000, 600000000);
+    ArtificialBioNeuralNetwork.setInfo("A network consisting of millions of nanoprocessors is embedded into the brain. \n" +
+                                       "The network is meant to mimick the way a biological brain solves a problem, which each\n" + 
+                                       "nanoprocessor acting similar to the way a neuron would in a neural network. However, these\n" + 
+                                       "nanoprocessors are programmed to perform computations much faster than organic neurons,\n" + 
+                                       "allowing its user to solve much more complex problems at a much faster rate.\n\n" + 
+                                       "This augmentation increases the player's hacking speed by 2%, increases the amount of\n" + 
+                                       "money gained while hacking by 10%, and increases the palyer's hacking skill by 10%.");
     ArtificialBioNeuralNetwork.addToFactions("BitRunners", "Fulcrum Secret Technologies");
     AddToAugmentations(ArtificialBioNeuralNetwork);
     
     var ArtificialSynapticPotentiation = new Augmentation("Artificial Synaptic Potentiation");
     ArtificialSynapticPotentiation.setRequirements(600000, 400000000);
+    ArtificialSynapticPotentiation.("The body is injected with a chemical that artificially induces synaptic potentiation,\n" + 
+                                    "otherwise known as the strengthening of synapses. This results in a enhanced cognitive abilities.\n\n" + 
+                                    "This augmentation increases the player's hacking speed and hacking chance by 1%.");
     ArtificialSynapticPotentiation.addToFactions("The Black Hand", "NiteSec");
     AddToAugmentations(ArtificialSynapticPotentiation);
     
     var EnhancedMyelinSheathing = new Augmentation("Enhanced Myelin Sheathing");
     EnhancedMyelinSheathing.setRequirements(900000, 850000000);)
+    EnhancedMyelinSheathing.setInfo("Electrical signals are used to induce a new, artificial form of myelinogensis in the human body.\n" + 
+                                    "This process results in the proliferation of new, synthetic myelin sheaths in the nervous\n" + 
+                                    "system. These myelin sheaths can propogate neuro-signals much faster than their organic\n" + 
+                                    "counterparts, leading to greater processing speeds and better brain function.\n\n" + 
+                                    "This augmentation increases the player's hacking speed by 1%, increases the player's hacking\n" + 
+                                    "skill by 5%, and increases the player's hacking experience gain rate by 5%.");
     EnhancedMyelinSheating.addToFactions("Fulcrum Secret Technologies", "BitRunners", "The Black Hand");
     AddToAugmentations(EnhancedMyelinSheathing);
     
     var SynapticEnhancement = new Augmentation("Synaptic Enhancement Implant");
     SynapticEnhancement.setRequirements(50000, 35000000);
+    SynapticEnhancement.setInfo("A small cranial implant that continuously uses weak electric signals to stimulate the brain and \n" +
+                                "induce stronger synaptic activity. This improves the the user's cognitive abilities.\n\n" + 
+                                "This augmentation increases the player's hacking speed by 1%.");
     SynapticEnhancement.addToFactions("CyberSec");
     AddToAugmentations(SynapticEnhancement);
     
     var NeuralRetentionEnhancement = new Augmentation("Neural-Retention Enhancement");
     NeuralRetentionEnhancement.setRequirements(200000, 250000000);
+    NeuralRetentionEnhancement.setInfo("Chemical injections are used to permanently alter and strengthen the brain's neuronal\n" +
+                                       "circuits, strengthening its ability to retain information.\n\n" + 
+                                       "This augmentation increases the player's hacking experience gain rate by 40%.");
     NeuralRetentionEnhancement.addToFactions("CyberSec", "NiteSec");
     AddToAugmentations(NeuralRetentionEnhancement);
     
     var DataJack = new Augmentation("DataJack");
     DataJack.setRequirements(750000, 75000000);
+    DataJack.("A brain implant that provides an interface for direct, wireless communication between a computer and\n" + 
+              "your mind. This implant allows the user to easily and effectively access and manipulate a computer's\n" + 
+              "memory with his mind.\n\n" + 
+              "This augmentation increases the amount of money the player gains from hacking by 20%.");
     DataJack.addToFactions("BitRunners", "The Black Hand", "NiteSec", "Chongqing", "New Tokyo");
     AddToAugmentations(DataJack);
     

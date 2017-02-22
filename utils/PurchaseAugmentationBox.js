@@ -78,6 +78,24 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
             if (combatRib2.owned == false) {
                 dialogBoxCreate("You must first install Combat Rib II before you can upgrade it to Combat Rib III");
             }
+        } else if (aug.name == "Graphene Bionic Spine Upgrade") {
+            var bionicSpine = Augmentations["Bionic Spine"];
+            if (bionicSpine == null) {
+                console.log("ERROR: Could not find Bionic Spine");
+                return;
+            }
+            if (bionicSpine.owned == false) {
+                dialogBoxCreate("You must first install a Bionic Spine before you can upgrade it to a Graphene Bionic Spine");
+            }
+        } else if (aug.name == "Graphene Bionic Legs Upgrade") {
+            var bionicLegs = Augmentations["Bionic Legs"];
+            if (bionicLegs == null) {
+                console.log("ERROR: Could not find Bionic Legs");
+                return;
+            }
+            if (bionicLegs.owned == false ) {
+                dialogBoxCreate("You must first install Bionic Legs before you can upgrade it to Graphene Bionic Legs");        
+            }
         } else if (aug.name == "Embedded Netburner Module Core V2 Upgrade") {
             var coreImplant = Augmentations["Embedded Netburner Module Core Implant"];
             if (coreImplant == null) {
