@@ -112,7 +112,7 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
                 return;
             }
             if (v2Upgrade.owned == false) {
-                dialogBoxCreate("you must first install Embedded Netburner Module Core V2 Upgrade before you can upgrade it to V3");
+                dialogBoxCreate("You must first install Embedded Netburner Module Core V2 Upgrade before you can upgrade it to V3");
             }
         } else if (aug.name == "Embedded Netburner Module Core Implant" ||
                    aug.name == "Embedded Netburner Module Analyze Engine" ||
@@ -126,6 +126,17 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
                dialogBoxCreate("You must first install the Embedded Netburner Module before installing any upgrades to it");
            }
             
+        } else if (aug.name == "PC Direct-Neural Interface Optimization Submodule" ||
+                   aug.name == "PC Direct-Neural Interface NeuroNet Injector") {
+            var pcdni = Augmentations["PC Direct-Neural Interface"];
+            if (pcdni == null) {
+                console.log("ERROR: Could not find PC Direct Neural Interface");
+                return;
+            }
+            if (pcdni.owned == false) {
+                dialogBoxCreate("You must first install the PD Direct-Neural Interface before installing this upgrade");
+            }
+            
         } else if (Player.money >= (aug.baseCost * fac.augmentationPriceMult)) {
             applyAugmentation(aug, fac);
             //TODO Make this text better
@@ -133,7 +144,7 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
                             " in order to install the " + aug.name + " Augmentation. <br>br>" +
                             "You wake up in your home...you feel different...");
 
-            //TODO RESSETTTT FOR PRESTIGE
+            prestigeAugmentation();
         } else {
             dialogBoxCreate("You don't have enough money to purchase this Augmentation!");
         }
