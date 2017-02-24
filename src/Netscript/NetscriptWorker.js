@@ -69,6 +69,7 @@ function runScriptsLoop() {
 					//Post error message to terminal
 					//TODO Only post this if you're on the machine the script is running on?
 					post("Script runtime error: " + errorMsg);
+                    dialogBoxCreate("Script runtime error: ", "Server Ip: " + serverIp, "Script name: " + scriptName, errorMsg);
 					
 					//Find the corresponding workerscript and set its flags to kill it
 					for (var i = 0; i < workerScripts.length; ++i) {

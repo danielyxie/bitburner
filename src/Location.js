@@ -144,6 +144,16 @@ displayLocationContent = function() {
     employeeJob.style.display = "none";
     waiterJob.style.display = "none";
     
+    softwareJob.innerHTML = "Apply for Software Job";
+    itJob.innerHTML = "Apply for IT Job";
+    securityEngineerJob.innerHTML = "Apply for Security Engineer Job";
+    networkEngineerJob.innerHTML = "Apply for Network Engineer Job";
+    businessJob.innerHTML = "Apply for Business Job";
+    securityJob.innerHTML = "Apply for Security Job";
+    agentJob.innerHTML = "Apply for Agent Job";
+    employeeJob.innerHTML = "Apply to be an Employee";
+    waiterJob.innerHTML = "Apply to be a Waiter";
+    
     work.style.display = "none";
     
     gymTrainStr.style.display = "none";
@@ -178,13 +188,35 @@ displayLocationContent = function() {
         jobTitle.style.display = "block";
         jobReputation.style.display = "block";
         jobTitle.innerHTML = "Job Title: " + Player.companyPosition.positionName;
-        jobReputation.innerHTML = "Company reputation: " + company.playerReputation;
+        jobReputation.innerHTML = "Company reputation: " + (company.playerReputation.toFixed(4)).toLocaleString();
         work.style.display = "block";
         
         work.addEventListener("click", function() {
             Player.startWork();
             return false;
         });
+        
+        //Change the text for the corresponding position from "Apply for X Job" to "Apply for promotion"
+        var currPos = Player.companyPosition;
+        if (currPos.isSoftwareJob()) {
+            softwareJob.innerHTML = "Apply for a promotion (Software)";
+        } else if (currPos.isITJob()) {
+            itJob.innerHTML = "Apply for a promotion (IT)";
+        } else if (currPos.isSecurityEngineerJob()) {
+            securityEngineerJob.innerHTML = "Apply for a promotion (Security Engineer)";
+        } else if (currPos.isNetworkEngineerJob()) {
+            networkEngineerJob.innerHTML = "Apply for a promotion (Network Engineer)";
+        } else if (currPos.isBusinessJob()) {
+            businessJob.innerHTML = "Apply for a promotion (Business)";
+        } else if (currPos.isSecurityJob()) {
+            securityJob.innerHTML = "Apply for a promotion (Security)";
+        } else if (currPos.isAgentJob()) {
+            agentJob.innerHTML = "Apply for a promotion (Agent)";
+        } else if (currPos.positionName == CompanyPositions.Employee) {
+            employeeJob.style.display = "none";
+        } else if (currPos.positionName == CompanyPositions.Waiter) {
+            waiterJob.style.display = "none";
+        }
     } else {
 		jobTitle.style.display = "none";
 		jobReputation.style.display = "none";
