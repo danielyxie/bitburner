@@ -21,37 +21,21 @@ FactionInfo = {
                 "scan                   See 'netstat' command\n" + 
                 "telnet [ip/hostname]   See 'connect' command\n" +
                 "top                    Display all running scripts and their RAM usage\n",
-                
-	
-	
-	As long as technology has a global reach, someone will have the world in the palm of his hand
 				
 	
-		
-	"If there were no god, it would be necessary to invent him."
-	 
-	Absolute freedom is no better than chaos. Society needs laws and regulations to protect it.
- 
-	The need to be observed and understood was once satisfied by God. Now we can implement same functionality with data-mining algorithms.
-	
-	"Arrogance, daring to go beyond the limits imposed upon us, that is exactly what makes us human beings."
-	
 	//Endgame
-	IlluminatiInfo: "We are the Invisible Hand. We are the Illuminati. We come before and after. We are forever.\n" + 
-					"And eventually... eventually we will lead them into the day.",
+	IlluminatiInfo: "Humanity never changes. No matter how civilized society becomes, it will eventually fall back\n" + 
+                    "into chaos. And out of this chaos, we will lead them to order.\n" + 
+                    "We are the Invisible Hand. We are forever.",
 					
-	DaedalusInfo: "It is a commonly held precept that two are stronger than one, and that four are stronger than two,\n" + 
-				  "and that sixteen are by far stronger than four; with this, there can be no argument. If all of human \n" +
+	DaedalusInfo: "If all of human \n" +
 				  "history is but a single lesson, it is that the individual may be remembered, but the organization \n" + 
 				  "persists and thrives. A single artist, a single general, a single hero or a single villain may all die,\n" + 
 				  "but it is impossible to kill a people, a nation, an idea -- except when that idea has grown weak and is \n" + 
-				  "overpowered by one that is stronger.\n\n" + 
-				  "This then is the true calling of those who would be mighty and join They Who Rule the World in Majesty, to \n" +
-				  "shun all that is empty fame and glory; to eliminate weak thoughts, weak hands, and weak ideas; to give up vain\n" + 
-				  "individuality and instead become part of something that is glorious and strong. This is the First Secret, that by\n" +
-				  "surrendering that part of you that is the least, you are elevated to the Most. The First Secret shall set you free,\n" +
-				  "and those who know their duty will find in it the keys to immortality.\n\n" +
-				  "The Second Secret can be explained to all, but truly understood only by those who have submitted to the first Body and Soul...",
+				  "overpowered by one that is stronger. -- The Doctrine of the Mighty\n\n" + 
+                  "Surrender yourself. Give up your empty individuality to become part of something great, something eternal.\n" +
+                  "Become a slave. Submit your mind, body, and soul. Only then can you set yourself free.\n\n" + 
+                  "Only then can you discover immortality.",
 	
 	CovenantInfo: "Yesterday we obeyed kings and bent our necks to emperors. Today we kneel only to truth.",
 	

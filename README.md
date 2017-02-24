@@ -50,7 +50,10 @@ TESTING TODO:
     Applying/working for companies
     
     Factions
+    
+    Change Company pages to display "apply for promotion" and other stuff when you are already employed there
 
+    Augmentations
 Tasks TODO:
 	Script logging functionality? Logs to internal "log file" (property of script itself)
 	Tutorial and help
@@ -60,9 +63,7 @@ Tasks TODO:
 	
     Create new menu page for purchased servers
     
-    Change Company pages to display "apply for promotion" and other stuff when you are already employed there
 	
-	Augmentations
 	Update CONSTANTS.HelpText
 	Account for Max possible int when gaining exp
 	Text in script editor that says ("ctrl + x" to save and quit)

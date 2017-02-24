@@ -222,7 +222,6 @@ displayLocationContent = function() {
 		jobReputation.style.display = "none";
 	}
     
-    
     switch (loc) {
         case Locations.AevumTravelAgency: 
             travelToChongqing.style.display = "block";
