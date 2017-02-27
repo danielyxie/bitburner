@@ -415,7 +415,7 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
     Engine.loadTerminalContent();
 }
 
-PlayerObject.prototype.startFactionWork(faction) {
+PlayerObject.prototype.startFactionWork = function(faction) {
     this.isWorking = true;
     this.currentWorkFactionName = faction.name;
     
@@ -475,7 +475,7 @@ PlayerObject.prototype.startFactionFieldWork = function(faction) {
     this.startFactionWork(faction);
 }
 
-PlayerObject.prototype.startFactionSecurityWork = faction(faction) {
+PlayerObject.prototype.startFactionSecurityWork = function(faction) {
     this.workHackExpGainRate    = .1 * this.hacking_exp_mult;
     this.workStrExpGainRate     = 0;
     this.workDefExpGainRate     = 0;

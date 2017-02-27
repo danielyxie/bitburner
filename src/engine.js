@@ -289,18 +289,18 @@ var Engine = {
                                                  'Job Title: ' + companyPosition + '<br><br><br><br>' + 
                                                  'Money: $' + (Player.money.toFixed(2)).toLocaleString() + '<br><br>' +
                                                  'Hacking Level: ' + (Player.hacking_skill).toLocaleString() + '<br><br>' + 
-                                                 'Strength: ' + (Player.strength.toLocaleString() + '<br><br>' + 
+                                                 'Strength: ' + (Player.strength).toLocaleString() + '<br><br>' + 
                                                  'Defense: ' + (Player.defense).toLocaleString() + '<br><br>' + 
                                                  'Dexterity: ' + (Player.dexterity).toLocaleString() + '<br><br>' + 
                                                  'Agility: ' + (Player.agility).toLocaleString() + '<br><br>' +
                                                  'Charisma: ' + (Player.charisma).toLocaleString() + '<br><br>' +
-                                                 'Servers owned: ' + Player.purchasedServers.length + '<br><br>' +
+                                                 'Servers owned: ' + Player.purchasedServers.length + '<br><br>';
                                                  'Hacking experience: ' + (Player.hacking_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
                                                  'Strength experience: ' +  (Player.strength_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
                                                  'Defense experience: ' + (Player.defense_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
                                                  'Dexterity experience: ' + (Player.dexterity_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
-                                                 'Agility experience: ' + (Player.agility_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
-                                                 'Charisma experience: ' + (Player.charisma_exp.toFixed(4)).toLocaleString() + '<br><br>';
+                                                 'Agility experience: ' + (Player.agility_exp.toFixed(4)).toLocaleString() + '<br><br>' +
+                                                 'Charisma experience: ' + (Player.charisma_exp.toFixed(4)).toLocaleString();
     },
     
     /* Display locations in the world*/

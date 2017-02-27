@@ -629,8 +629,8 @@ displayFactionAugmentations = function(factionName) {
         aElem.setAttribute("href", "#");
         if (faction.playerReputation >= (aug.baseRepRequirement * faction.augmentationRepRequirementMult)) {
             aElem.setAttribute("class", "a-link-button");
-            pElem.innerHTML = "UNLOCKED"
-            pElem.style.color = #66ff33;
+            pElem.innerHTML = "UNLOCKED";
+            //Might need to set color? Should be the green by default though...
             //TODO Event listener for button to purchase augmentation
         } else {
             aElem.setAttribute("class", "a-link-button-inactive");
