@@ -28,24 +28,25 @@ var Engine = {
         hacking_skill:          null,
         
         //Main menu content
-        terminalContent:        null,
-        characterContent:       null,
-        scriptEditorContent:    null,
-        activeScriptsContent:   null,
-        worldContent:           null,
-        createProgramContent:   null,
-        factionsContent:        null,
-        factionContent:         null,
-        augmentationsContent:   null,
-        tutorialContent:        null,
-        locationContent:        null,
-        workInProgressContent:  null,
+        terminalContent:                null,
+        characterContent:               null,
+        scriptEditorContent:            null,
+        activeScriptsContent:           null,
+        worldContent:                   null,
+        createProgramContent:           null,
+        factionsContent:                null,
+        factionContent:                 null,
+        factionAugmentationsContent:    null,
+        augmentationsContent:           null,
+        tutorialContent:                null,
+        locationContent:                null,
+        workInProgressContent:          null,
         
         //Character info
-        characterInfo:          null,
+        characterInfo:                  null,
         
         //Script editor text
-        scriptEditorText:       null,
+        scriptEditorText:               null,
     },
     
     //Current page status 
@@ -264,6 +265,7 @@ var Engine = {
         Engine.Display.createProgramContent.style.visibility = "hidden";
         Engine.Display.factionsContent.style.visibility = "hidden";
         Engine.Display.factionContent.style.visibility = "hidden";
+        Engine.Display.factionAugmentationsContent.style.visibility = "hidden";
         Engine.Display.augmentationsContent.style.visibility = "hidden";
         Engine.Display.tutorialContent.style.visibility = "hidden";
         Engine.Display.locationContent.style.visibility = "hidden";
@@ -527,8 +529,7 @@ var Engine = {
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
         updateDisplays: 10,                 //Update displays such as Active Scripts display and character display
         serverGrowth: 450,                  //Process server growth every minute and a half
-        //checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
-        checkFactionInvitations: 30,
+        checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
     },
     
     decrementAllCounters: function(numCycles = 1) {
@@ -708,6 +709,9 @@ var Engine = {
         
         Engine.Display.factionContent = document.getElementById("faction-container");
         Engine.Display.factionContent.style.visibility = "hidden";
+        
+        Engine.Display.factionAugmentationsContent = document.getElementById("faction-augmentations-container");
+        Engine.Display.factionAugmentationsContent.style.visibility = "hidden";
         
         Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
         Engine.Display.augmentationsContent.style.visibility = "hidden";

@@ -124,7 +124,12 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
     invitedFactions = []; //Array which will hold all Factions th eplayer should be invited to
     
-    var companyRep = Companies[this.companyName].playerReputation;
+    var company = Companies[this.companyName];
+    if (company == null) {
+        return invitedFactions;
+    }
+    var companyRep = company.playerReputation;
+    
     
     //Illuminati
     var illuminatiFac = Factions["Illuminati"];
@@ -454,6 +459,12 @@ displayFactionContent = function(factionName) {
     purchaseAugmentations.parentNode.replaceChild(newPurchaseAugmentationsButton, purchaseAugmentations);
     
     newPurchaseAugmentationsButton.addEventListener("click", function() {
+        Engine.hideAllContent();
+        Engine.Display.factionAugmentationsContent.style.visiblility = "visible";
+        document.getElementById("faction-augmentations-back-button").addEventListener("click", function() {
+            displayFactionContent(factionName);
+            return false; 
+        });
         displayFactionAugmentations(factionName);
         return false;
     });
@@ -600,22 +611,6 @@ displayFactionContent = function(factionName) {
 }
 
 displayFactionAugmentations = function(factionName) {
-    //E.g:
-    //Add the faction to the Factions page content
-	var item = document.createElement("li");
-	var aElem = document.createElement("a");
-	aElem.setAttribute("href", "#");
-    aElem.setAttribute("class", "a-link-button");
-	aElem.innerHTML = faction.name;
-	aElem.addEventListener("click", function() {
-		displayFactionContent(faction.name);
-		return false;
-	});
-	item.appendChild(aElem);
-				
-	var factionsList = document.getElementById("factions-list");
-	factionsList.appendChild(item);
-    
     var faction = Factions[factionName];
     
     var augmentationsList = document.getElementById("faction-augmentations-list");
