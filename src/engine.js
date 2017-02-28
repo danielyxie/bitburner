@@ -202,6 +202,7 @@ var Engine = {
     loadCreateProgramContent: function() {
         Engine.hideAllContent();
         Engine.Display.createProgramContent.style.visibility = "visible";
+        displayCreateProgramContent();
         
         Engine.currentPage = Engine.Page.CreateProgram;
     },
@@ -296,7 +297,7 @@ var Engine = {
                                                  'Dexterity: ' + (Player.dexterity).toLocaleString() + '<br><br>' + 
                                                  'Agility: ' + (Player.agility).toLocaleString() + '<br><br>' +
                                                  'Charisma: ' + (Player.charisma).toLocaleString() + '<br><br>' +
-                                                 'Servers owned: ' + Player.purchasedServers.length + '<br><br>';
+                                                 'Servers owned: ' + Player.purchasedServers.length + '<br><br>' + 
                                                  'Hacking experience: ' + (Player.hacking_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
                                                  'Strength experience: ' +  (Player.strength_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
                                                  'Defense experience: ' + (Player.defense_exp.toFixed(4)).toLocaleString() + '<br><br>' + 

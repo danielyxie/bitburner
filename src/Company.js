@@ -166,7 +166,7 @@ CompanyPosition.prototype.isBusinessJob = function() {
         this.positionName == "Chief Executive Officer") {
             return true;
     }
-    return true;
+    return false;
 }
 
 CompanyPosition.prototype.isSecurityJob = function() {

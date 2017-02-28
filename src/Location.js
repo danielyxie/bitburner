@@ -196,8 +196,9 @@ displayLocationContent = function() {
             return false;
         });
         
-        //Change the text for the corresponding position from "Apply for X Job" to "Apply for promotion"
         var currPos = Player.companyPosition;
+        
+        //Change the text for the corresponding position from "Apply for X Job" to "Apply for promotion"
         if (currPos.isSoftwareJob()) {
             softwareJob.innerHTML = "Apply for a promotion (Software)";
         } else if (currPos.isITJob()) {
@@ -212,10 +213,6 @@ displayLocationContent = function() {
             securityJob.innerHTML = "Apply for a promotion (Security)";
         } else if (currPos.isAgentJob()) {
             agentJob.innerHTML = "Apply for a promotion (Agent)";
-        } else if (currPos.positionName == CompanyPositions.Employee) {
-            employeeJob.style.display = "none";
-        } else if (currPos.positionName == CompanyPositions.Waiter) {
-            waiterJob.style.display = "none";
         }
     } else {
 		jobTitle.style.display = "none";
@@ -727,7 +724,21 @@ displayLocationContent = function() {
             gymTrainDex.style.display = "block";
             gymTrainAgi.style.display = "block";
             break;
+            
+        default:
+            console.log("ERROR: INVALID LOCATION");
 
+    }
+    
+    //Make the "Apply to be Employee and Waiter" texts disappear if you already hold the job
+    if (loc == Player.companyName) {
+        var currPos = Player.companyPosition;
+        
+        if (currPos.positionName == CompanyPositions.Employee.positionName) {
+            employeeJob.style.display = "none";
+        } else if (currPos.positionName == CompanyPositions.Waiter.positionName) {
+            waiterJob.style.display = "none";
+        }
     }
 }
 
