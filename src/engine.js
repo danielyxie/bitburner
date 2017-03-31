@@ -15,6 +15,17 @@ var Engine = {
         tutorialMainMenuButton:         null,
         saveMainMenuButton:             null,
         deleteMainMenuButton:           null,
+        
+        //Tutorial buttons
+        tutorialGettingStartedButton:   null,
+        tutorialNetworkingButton:       null,
+        tutorialHackingButton:          null,
+        tutorialScriptsButton:          null,
+        tutorialTravelingButton:        null,
+        tutorialJobsButton:             null,
+        tutorialFactionsButton:         null,
+        tutorialAugmentationsButton:    null,
+        tutorialBackButton:             null,
     },
     
     //Display objects
@@ -233,6 +244,7 @@ var Engine = {
     loadTutorialContent: function() {
         Engine.hideAllContent();
         Engine.Display.tutorialContent.style.visibility = "visible";
+        Engine.displayTutorialContent();
         
         Engine.currentPage = Engine.Page.Tutorial;
     },
@@ -411,19 +423,26 @@ var Engine = {
         var serverIpHostname = "Server: " + hostname + "(" + workerscript.serverIp + ")";
         
         //Online
+        var onlineTotalMoneyMade = "Total online production: $" + workerscript.scriptRef.onlineMoneyMade.toFixed(2);
+        var onlineTotalExpEarned = (Array(26).join(" ") + workerScript.scriptRef.onlineExpGained.toFixed(2) + " exp").replace( / /g, "&nbsp;");
+        
         var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
-        var onlineMpsText = "Online production: $" + onlineMps.toFixed(2) + "/second";
+        var onlineMpsText = "Online production rate: $" + onlineMps.toFixed(2) + "/second";
         var onlineEps = workerscript.scriptRef.onlineExpGained / workerscript.scriptRef.onlineRunningTime;
-        var onlineEpsText = (Array(20).join(" ") + onlineEps.toFixed(4) + " exp/second").replace( / /g, "&nbsp;");
+        var onlineEpsText = (Array(25).join(" ") + onlineEps.toFixed(4) + " exp/second").replace( / /g, "&nbsp;");
         
         //Offline
-        var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
-        var offlineMpsText = "Offline production: $" + offlineMps.toFixed(2) + "/second";
-        var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
-        var offlineEpsText = (Array(21).join(" ") + offlineEps.toFixed(4) +  " exp/second").replace( / /g, "&nbsp;");
+        var offlineTotalMoneyMade = "Total offline production: $" + workerScript.scriptRef.offlineMoneyMade.toFixed(2);
+        var offlineTotalExpEarned = (Array(27).join(" ") + workerScript.scriptRef.offlineExpGained.toFixed(2) + " exp").replace( / /g, "&nbsp;");
         
-        itemText.innerHTML = serverIpHostname + "<br>" + onlineMpsText + "<br>" + onlineEpsText + "<br>" +
-                            offlineMpsText + "<br>" + offlineEpsText + "<br>";
+        var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
+        var offlineMpsText = "Offline production rate: $" + offlineMps.toFixed(2) + "/second";
+        var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
+        var offlineEpsText = (Array(26).join(" ") + offlineEps.toFixed(4) +  " exp/second").replace( / /g, "&nbsp;");
+        
+        itemText.innerHTML = serverIpHostname + "<br>" + onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
+                             onlineMpsText + "<br>" + onlineEpsText + "<br>" + offlineTotalMoneyMade + "<br>" + offlineTotalExpEarned + "<br>" +
+                             offlineMpsText + "<br>" + offlineEpsText + "<br>";
         
         item.appendChild(itemText);
     },
@@ -472,6 +491,36 @@ var Engine = {
             
             augmentationsList.appendChild(item);
         }
+    },
+    
+    displayTutorialContent: function() {
+        Engine.Clickables.tutorialGettingStartedButton.style.display = "block";
+        Engine.Clickables.tutorialNetworkingButton.style.display = "block";
+        Engine.Clickables.tutorialHackingButton.style.display = "block";
+        Engine.Clickables.tutorialScriptsButton.style.display = "block";
+        Engine.Clickables.tutorialTravelingButton.style.display = "block";
+        Engine.Clickables.tutorialJobsButton.style.display = "block";
+        Engine.Clickables.tutorialFactionsButton.style.display = "block";
+        Engine.Clickables.tutorialAugmentationsButton.style.display = "block";    
+
+        Engine.CLickables.tutorialBackButton.style.display = "none";
+        document.getElementById("tutorial-text").style.display = "none";
+    },
+    
+    //Displays the text when a section of the Tutorial is opened
+    displayTutorialPage: function(text) {
+        Engine.Clickables.tutorialGettingStartedButton.style.display = "none";
+        Engine.Clickables.tutorialNetworkingButton.style.display = "none";
+        Engine.Clickables.tutorialHackingButton.style.display = "none";
+        Engine.Clickables.tutorialScriptsButton.style.display = "none";
+        Engine.Clickables.tutorialTravelingButton.style.display = "none";
+        Engine.Clickables.tutorialJobsButton.style.display = "none";
+        Engine.Clickables.tutorialFactionsButton.style.display = "none";
+        Engine.Clickables.tutorialAugmentationsButton.style.display = "none";
+        
+        Engine.Clickables.tutorialBackButton.style.display = "block";
+        document.getElementById("tutorial-text").style.display = "block";
+        document.getElementById("tutorial-text").innerHTML = text;
     },
     
     /* Main Event Loop */
@@ -686,6 +735,54 @@ var Engine = {
             return false;
         });
         
+        //Tutorial buttons
+        Engine.Clickables.tutorialGettingStartedButton = document.getElementById("tutorial-getting-started-link");
+        Engine.Clickables.tutorialGettingStartedButton.addEventListener("click", function() {
+            Engine.displayTutorialPage(CONSTANTS.TutorialGettingStartedText);
+        });
+        
+        Engine.Clickables.tutorialNetworkingButton = document.getElementById("tutorial-networking-link");
+        Engine.Clickables.tutorialNetworkingButton.addEventListener("click", function() {
+            Engine.displayTutorialPage(CONSTANTS.TutorialNetworkingText);
+        });
+        
+        Engine.Clickables.tutorialHackingButton = document.getElementById("tutorial-hacking-link");
+        Engine.Clickables.tutorialHackingButton.addEventListener("click", function() {
+            Engine.displayTutorialPage(CONSTANTS.TutorialHackingText);
+        });
+        
+        Engine.Clickables.tutorialScriptsButton = document.getElementById("tutorial-scripts-link");
+        Engine.Clickables.tutorialScriptsButton.addEventListener("click", function() {
+            Engine.displayTutorialPage(CONSTANTS.TutorialScriptsText);
+        });
+        
+        Engine.Clickables.tutorialTravelingButton = document.getElementById("tutorial-traveling-link");
+        Engine.Clickables.tutorialTravelingButton.addEventListener("click", function() {
+            Engine.displayTutorialPage(CONSTANTS.TutorialTravelingText);
+        });
+        
+        Engine.Clickables.tutorialJobsButton = document.getElementById("tutorial-jobs-link");
+        Engine.Clickables.tutorialJobsButton.addEventListener("click", function() {
+            Engine.displayTutorialPage(CONSTANTS.TutorialJobsText);
+        });
+        
+        Engine.Clickables.tutorialFactionsButton = document.getElementById("tutorial-factions-link");
+        Engine.Clickables.tutorialFactionsButton.addEventListener("click", function() {
+            Engine.displayTutorialPage(CONSTANTS.TutorialFactionsText);
+        });
+        
+        Engine.Clickables.tutorialAugmentationsButton = document.getElementById("tutorial-augmentations-link");
+        Engine.Clickables.tutorialAugmentationsButton.addEventListener("click", function() {
+            Engine.displayTutorialPage(CONSTANTS.TutorialAugmentationsText);
+        });
+        
+        Engine.Clickables.tutorialBackButton = document.getElementById("tutorial-back-button");
+        Engine.Clickables.tutorialBackButton.addEventListener("click", function() {
+            Engine.displayTutorialContent();
+        });
+        
+        
+        //Content elements        
         Engine.Display.terminalContent = document.getElementById("terminal-container");
         Engine.currentPage = Engine.Page.Terminal;
         

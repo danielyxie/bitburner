@@ -14,6 +14,8 @@ function displayCreateProgramContent() {
     httpWormALink.style.display = "none";
     sqlInjectALink.style.display = "none";
     
+    //TODO These addEventListeners should only happen once so I guess just put them in Engine.init()
+    
     //PortHack.exe (in case you delete it lol)
     if (Player.getHomeComputer().programs.indexOf(CONSTANTS.PortHackProgram) == -1) {    
         portHackALink.style.display = "block";
@@ -50,7 +52,7 @@ function displayCreateProgramContent() {
     }
     
     //HTTPWorm
-    if (Player.getHomeComputer().programs.indexof(CONSTANTS.HTTPWormProgram == -1 &&
+    if (Player.getHomeComputer().programs.indexOf(CONSTANTS.HTTPWormProgram == -1 &&
         Player.hacking_skill >= 500) {
         httpWormALink.style.display = "block";
         httpWormALink.addEventListener("click", function() {
@@ -59,7 +61,7 @@ function displayCreateProgramContent() {
     }
     
     //SQLInject
-    if (Player.getHomeComputer().programs.indexof(CONSTANTS.SQLInjectProgram == -1 &&
+    if (Player.getHomeComputer().programs.indexOf(CONSTANTS.SQLInjectProgram == -1 &&
         Player.hacking_skill >= 750) {
         sqlInjectALink.style.display = "block";
         sqlInjectALink.addEventListener("click", function() {
@@ -68,6 +70,6 @@ function displayCreateProgramContent() {
     }
 }
 
-function createProgram() {
-    
+function createProgram(programName) {
+    Player.startCreateProgramWork(programName);
 }

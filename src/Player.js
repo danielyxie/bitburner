@@ -99,7 +99,7 @@ function PlayerObject() {
     this.startAction = false;
     this.actionTime = 0;
     
-    //Flags/variables for working (both Company and faction) 
+    //Flags/variables for working (Company, Faction, and Creating Programin) 
     this.isWorking = false;
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";
@@ -121,6 +121,8 @@ function PlayerObject() {
     this.workChaExpGained = 0;
     this.workRepGained = 0;
     this.workMoneyGained = 0;
+    
+    this.createProgramName = "";
     
     this.timeWorked = 0;    //in ms
     
@@ -609,10 +611,12 @@ PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
 }
 
 /* Creating a Program */
-PlayerObject.prototype.startCreateProgramWork = function() {
+PlayerObject.prototype.startCreateProgramWork = function(programName) {
     this.isWorking = true;
     
     this.timeWorked = 0;
+    
+    this.createProgramName = programName;
     
     var cancelButton = document.getElementById("work-in-progress-cancel-button");
     
@@ -621,7 +625,7 @@ PlayerObject.prototype.startCreateProgramWork = function() {
     cancelButton.parentNode.replaceChild(newCancelButton, cancelButton);
     
     newCancelButton.addEventListener("click", function() {
-        Player.finishCreateProgramWork(true, faction);
+        Player.finishCreateProgramWork(true, programName);
         return false;
     });
     
@@ -629,12 +633,39 @@ PlayerObject.prototype.startCreateProgramWork = function() {
     Engine.loadWorkInProgressContent();
 }
 
-PlayerObject.prototype.createProgramWork = function() {
+PlayerObject.prototype.createProgramWork = function(numCycles) {
+    this.timeWorked += Engine._idleSpeed * numCycles;
+    var programName = this.createProgramName;
     
+    //If timeWorked == 10 hours, then finish
+    //Creating a program will take a flat 10 hours for now. We can make this variable based
+    //on skill level later 
+    var timeToComplete = 36000000;
+    if (this.timeWorked >= timeToComplete) {
+        this.finishCreateProgramWork(false, programName);
+    }
+    
+    var txt = document.getElementById("work-in-progress-text");
+    txt.innerHTML = "You are currently working on coding " + programName + ".<br><br> " + 
+                    "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
+                    "The program is " + (this.timeWorked / timeToComplete).toFixed(2) "% complete. <br>" + 
+                    "If you cancel, you will lose all of your progress.";  
 }
 
-PlayerObject.prototype.finishCreateProgramWork = function() {
+PlayerObject.prototype.finishCreateProgramWork = function(cancelled, programName) {
+    if (cancelled == false) {
+        dialogBoxCreate("You've finished creating " + programName + "!<br>" + 
+                        "The new program can be found on your home computer.");
     
+        Player.getHomeComputer().programs.push(programName);
+    }
+    
+    var mainMenu = document.getElementById("mainmenu-container");
+    mainMenu.style.visibility = "visible";
+        
+    Player.isWorking = false;
+    
+    Engine.loadTerminalContent();
 }
 
 //Functions for saving and loading the Player data

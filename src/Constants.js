@@ -1,16 +1,21 @@
 CONSTANTS = {
 	//Max level for any skill. Determined by max numerical value in javascript and the skill level
 	//formula in Player.js
-	MaxSkillLevel: 			1025,
+	MaxSkillLevel: 			975,
     
     //How much reputation is needed to join a megacorporation's faction
     CorpFactionRepRequirement: 250000,
 	
+    
+    /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
 	CodeInstructionRunTime:	1500, 
 	
 	//Time (seconds) it takes to run one operation in Netscript OFFLINE
 	CodeOfflineExecutionTime: 10,
+    
+    //Maximum number of log entries for a script
+    MaxLogCapacity: 20,
     
     //Programs
     PortHackProgram: "PortHack.exe",
@@ -37,15 +42,21 @@ CONSTANTS = {
                 "ps                     Display all scripts that are currently running<br>" + 
                 "rm                     Delete a script/program from the machine. (WARNING: Permanent)<br>" + 
                 "run [script/program]   Execute a program or a script<br>" + 
-                "scan                   See 'netstat' command<br>" + 
+                "scan                   See 'netstat' command<br>" +
+                "tail                   Display script logs (logs contain details about active scripts)"
                 "telnet [ip/hostname]   See 'connect' command<br>" +
                 "top                    Display all running scripts and their RAM usage<br>",
                 
-	//TutorialGettingStartedText:
-		
-	//TutorialServersText:
-	
-	//TutorialScriptText:
+    /* Tutorial related things */
+	TutorialGettingStartedText: 
+    
+    TutorialNetworkingText: 
+    TutorialHackingText:
+    TutorialScriptsText:
+    TutorialTravelingText:
+    TutorialJobsText:
+    TutorialFactionsText:
+    TutorialAugmentationsText:
 	
 	
 	

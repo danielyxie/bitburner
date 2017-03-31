@@ -407,10 +407,8 @@ var Terminal = {
 				break;
 			case "run":
 				//Run a program or a script
-				if (commandArray.length == 1) {
-					post("No program specified to run. Usage: run [program/script]");
-				} else if (commandArray.length > 2) {
-					post("Too many arguments. Usage: run [program/script]");
+				if (commandArray.length != 2) {
+					post("Incorrect number of arguments. Usage: run [program/script]");
 				} else {
 					var executableName = commandArray[1];
 					//Check if its a script or just a program/executable 
@@ -427,7 +425,26 @@ var Terminal = {
 				//TODO
 				break;
 			case "tail":
-				//TODO
+				if (commandArray.length != 1) {
+                    post("Incorrect number of arguments. Usage: tail [script]");
+                } else {
+                    var scriptName == commandArray[1];
+                    
+                    //Can only tail script files
+                    if (scriptName.endsWith(".script") == false) {
+                        post("Error: tail can only be called on .script files (filename must end with .script)"); return;
+                    }
+                    
+                    //Check that the script exists on this machine
+                    var currScripts = Player.getCurrentServer().scripts;
+                    for (var i = 0; i < currScripts.length; ++i) {
+                        if (scriptName == currScripts[i]) {
+                            currScripts[i].displayLog();
+                        }
+                    }
+                    
+                    post("Error: No such script exists");
+                }
 				break;
 			case "top":
 				//TODO List each's script RAM usage

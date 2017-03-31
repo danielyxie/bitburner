@@ -54,8 +54,13 @@ TESTING TODO:
     Change Company pages to display "apply for promotion" and other stuff when you are already employed there
 
     Augmentations
+    
+    Make it so that a script cannot be edited if it is running
+        
+    Script logging functionality? Logs to internal "log file" (property of script itself)
+        Can see log with tail.
+        Should add something where if you click it in the "Active Scripts" GUI you can see the logs too        
 Tasks TODO:
-	Script logging functionality? Logs to internal "log file" (property of script itself)
 	Tutorial and help
 	Secret Servers
 	
@@ -65,7 +70,7 @@ Tasks TODO:
     
 	
 	Update CONSTANTS.HelpText
-	Account for Max possible int when gaining exp
+	Account for Max possible int when gaining exp (it will overflow)
 	Text in script editor that says ("ctrl + x" to save and quit)
 	
 	OPTIMIZATION
