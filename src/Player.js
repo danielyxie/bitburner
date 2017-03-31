@@ -138,7 +138,7 @@ PlayerObject.prototype.init = function() {
     this.currentServer = t_homeComp.ip;
     AddToAllServers(t_homeComp);
     
-    this.getHomeComputer().programs.push("PortHack.exe");
+    this.getHomeComputer().programs.push(CONSTANTS.PortHackProgram);
 }    
 
 PlayerObject.prototype.getCurrentServer = function() {
@@ -288,7 +288,7 @@ PlayerObject.prototype.finishWork = function(cancelled) {
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
         
-    Player.isWorking = false;
+    this.isWorking = false;
     
     Engine.loadTerminalContent();
 }
@@ -606,6 +606,35 @@ PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
             this.agility        / CONSTANTS.MaxSkillLevel + 
             this.charisma       / CONSTANTS.MaxSkillLevel) / 6;
     return t * this.faction_rep_mult;
+}
+
+/* Creating a Program */
+PlayerObject.prototype.startCreateProgramWork = function() {
+    this.isWorking = true;
+    
+    this.timeWorked = 0;
+    
+    var cancelButton = document.getElementById("work-in-progress-cancel-button");
+    
+    //Remove all old event listeners from Cancel button
+    var newCancelButton = cancelButton.cloneNode(true);
+    cancelButton.parentNode.replaceChild(newCancelButton, cancelButton);
+    
+    newCancelButton.addEventListener("click", function() {
+        Player.finishCreateProgramWork(true, faction);
+        return false;
+    });
+    
+    //Display Work In Progress Screen
+    Engine.loadWorkInProgressContent();
+}
+
+PlayerObject.prototype.createProgramWork = function() {
+    
+}
+
+PlayerObject.prototype.finishCreateProgramWork = function() {
+    
 }
 
 //Functions for saving and loading the Player data

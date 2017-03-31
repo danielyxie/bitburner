@@ -1,15 +1,73 @@
 /* Create programs */
 function displayCreateProgramContent() {
+    var portHackALink   = document.getElementById("create-program-porthack");
+    var bruteSshALink   = document.getElementById("create-program-brutessh");
+    var ftpCrackALink   = document.getElementById("create-program-ftpcrack");
+    var relaySmtpALink  = document.getElementById("create-program-relaysmtp");
+    var httpWormALink   = document.getElementById("create-program-httpworm");
+    var sqlInjectALink  = document.getElementById("create-program-sqlinject");
+    
+    portHackALink.style.display = "none";
+    bruteSshALink.style.display = "none"; 
+    ftpCrackALink.style.display = "none";
+    relaySmtpALink.style.display = "none";
+    httpWormALink.style.display = "none";
+    sqlInjectALink.style.display = "none";
+    
     //PortHack.exe (in case you delete it lol)
-    if (Player.)
+    if (Player.getHomeComputer().programs.indexOf(CONSTANTS.PortHackProgram) == -1) {    
+        portHackALink.style.display = "block";
+        portHackALink.addEventListener("click", function() {
+            createProgram(CONSTANTS.PortHackProgram);
+        }
+    }
     
     //BruteSSH
+    if (Player.getHomeComputer().programs.indexOf(CONSTANTS.BruteSSHProgram) == -1 &&
+        Player.hacking_skill >= 50) {
+        bruteSshALink.style.display = "block";
+        bruteSshALink.addEventListener("click", function() {
+            createProgram(CONSTANTS.BruteSSHProgram);
+        }
+    }
     
     //FTPCrack
+    if (Player.getHomeComputer().programs.indexOf(CONSTANTS.FTPCrackProgram) == -1 &&
+        Player.hacking_skill >= 125) {
+        ftpCrackALink.style.display = "block";
+        ftpCrackALink.addEventListener("click", function() {
+            createProgram(COSNTANTS.FTPCrackProgram);
+        }
+    }
     
     //relaySMTP
+    if (Player.getHomeComputer().programs.indexOf(CONSTANTS.RelaySMTPProgram == -1 &&
+        Player.hacking_skill >= 300) {
+        relaySmtpALink.style.display = "block";
+        relaySmtpAlink.addEventListener("click", function() {
+            createProgram(CONSTANTS.RelaySMTPProgram);
+        }
+    }
     
     //HTTPWorm
+    if (Player.getHomeComputer().programs.indexof(CONSTANTS.HTTPWormProgram == -1 &&
+        Player.hacking_skill >= 500) {
+        httpWormALink.style.display = "block";
+        httpWormALink.addEventListener("click", function() {
+            createProgram(CONSTANTS.HTTPWormProgram);
+        }
+    }
     
     //SQLInject
+    if (Player.getHomeComputer().programs.indexof(CONSTANTS.SQLInjectProgram == -1 &&
+        Player.hacking_skill >= 750) {
+        sqlInjectALink.style.display = "block";
+        sqlInjectALink.addEventListener("click", function() {
+            createProgram(CONSTANTS.SQLInjectProgram);
+        }
+    }
+}
+
+function createProgram() {
+    
 }

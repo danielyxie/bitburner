@@ -454,7 +454,7 @@ var Terminal = {
 	//Contains the implementations of all possible programs
 	executeProgram: function(programName) {
 		switch (programName) {
-			case "PortHack.exe":
+			case CONSTANTS.PortHackProgram:
 				if (Player.getCurrentServer().hasAdminRights) {
 					post("You already have root access to this computer. There is no reason to run PortHack.exe");
 				} else {

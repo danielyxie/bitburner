@@ -109,6 +109,30 @@
     width: 99%;
 }
 
+.create-program-a-link-button {
+    text-decoration: none;
+    background-color: #555;
+    color: #FFFFFF;
+    padding: 4px 4px 4px 4px;
+    border-top: 1px solid #333333;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #333333;
+}
+
+.create-program-a-link-button-inactive {
+    text-decoration: none;
+    background-color: #555;
+    color: #FFFFFF;
+    padding: 4px 4px 4px 4px;
+    border-top: 1px solid #333333;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #333333;
+    pointer-events: none;
+    cursor: default;
+}
+
 /* Factions */
 #factions-container {
     position: fixed;

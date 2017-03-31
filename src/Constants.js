@@ -12,6 +12,14 @@ CONSTANTS = {
 	//Time (seconds) it takes to run one operation in Netscript OFFLINE
 	CodeOfflineExecutionTime: 10,
     
+    //Programs
+    PortHackProgram: "PortHack.exe",
+    BruteSSHProgram: "BruteSSH.exe",
+    FTPCrackProgram: "FTPCrack.exe",
+    RelaySMTPProgram: "relaySMTP.exe",
+    HTTPWormProgram: "HTTPWorm.exe",
+    SQLInjectProgram: "SQLInject.exe",
+    
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   "analyze                Get statistics and information about current machine <br>" + 
                 "clear                  Clear all text on the terminal <br>" +

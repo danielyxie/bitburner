@@ -530,7 +530,7 @@ function scriptCalculateHackingChance(server) {
 //The same as Player's calculateHackingTime() function but takes in the server as an argument
 function scriptCalculateHackingTime(server) {
 	var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-	var skillFactor = (difficultyMult + 500) / (Player.hacking_skill + 50);
+	var skillFactor = (difficultyMult + 1000) / (Player.hacking_skill + 50);
 	var hackingTime = skillFactor * Player.hacking_speed_mult; //This is in seconds
 	return hackingTime;
 }
