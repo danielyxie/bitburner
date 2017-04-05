@@ -61,7 +61,7 @@ TESTING TODO:
         Can see log with tail.
         Should add something where if you click it in the "Active Scripts" GUI you can see the logs too        
 Tasks TODO:
-	Tutorial and help
+	Tutorial and help - INTERACTIVE TUTORIAL
 	Secret Servers
 	
 	Hack time formula needs rebalancing I think

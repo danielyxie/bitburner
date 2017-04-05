@@ -140,7 +140,7 @@ var Terminal = {
 			post("Estimated chance to hack: " + Math.round(Player.calculateHackingChance() * 100) + "%");
 			post("Estimated time to hack: " + Math.round(Player.calculateHackingTime()) + " seconds");
 			post("Estimed total money available on server: $" + Player.getCurrentServer().moneyAvailable);
-			post("Required number of open ports for PortHack: " +Player.getCurrentServer().numOpenPortsRequired);
+			post("Required number of open ports for NUKE: " +Player.getCurrentServer().numOpenPortsRequired);
 			if (Player.getCurrentServer().sshPortOpen) {
 				post("SSH port: Open")
 			} else {
@@ -471,17 +471,17 @@ var Terminal = {
 	//Contains the implementations of all possible programs
 	executeProgram: function(programName) {
 		switch (programName) {
-			case CONSTANTS.PortHackProgram:
+			case CONSTANTS.NukeProgram:
 				if (Player.getCurrentServer().hasAdminRights) {
-					post("You already have root access to this computer. There is no reason to run PortHack.exe");
+					post("You already have root access to this computer. There is no reason to run NUKE.exe");
 				} else {
-					console.log("Running PortHack executable");
+					console.log("Running NUKE executable");
 					if (Player.getCurrentServer().openPortCount >= Player.getCurrentServer().numOpenPortsRequired) {
 						Player.getCurrentServer().hasAdminRights = true;
-						post("PortHack successful! Gained root access to " + Player.getCurrentServer().hostname);
+						post("NUKE successful! Gained root access to " + Player.getCurrentServer().hostname);
 						//TODO Make this take time rather than be instant
 					} else {
-						post("PortHack unsuccessful. Not enough ports have been opened");
+						post("NUKE unsuccessful. Not enough ports have been opened");
 					}
 				}
 				break;

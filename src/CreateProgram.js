@@ -17,7 +17,7 @@ function displayCreateProgramContent() {
     //TODO These addEventListeners should only happen once so I guess just put them in Engine.init()
     
     //PortHack.exe (in case you delete it lol)
-    if (Player.getHomeComputer().programs.indexOf(CONSTANTS.PortHackProgram) == -1) {    
+    if (Player.getHomeComputer().programs.indexOf(CONSTANTS.NukeProgram) == -1) {    
         portHackALink.style.display = "block";
         portHackALink.addEventListener("click", function() {
             createProgram(CONSTANTS.PortHackProgram);
