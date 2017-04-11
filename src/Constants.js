@@ -97,9 +97,51 @@ CONSTANTS = {
                          "tail [script] - Displays a script's logs<br>" + 
                          "top - Displays all active scripts and their RAM usage <br><br>"
     TutorialTravelingText:
-    TutorialJobsText:
-    TutorialFactionsText:
-    TutorialAugmentationsText:
+    TutorialJobsText: "Hacking is not the only way to gain money and experience! Located around the world are many " + 
+                      "different companies which you can work for. By working for a company you can earn money, " + 
+                      "train your various labor skills, and unlock powerful passive perks. <br> " +
+                      "To apply for a job, visit the company you want to work for through the 'World' menu. The company " + 
+                      "page will have options that let you apply to positions in the company. There might be several different" + 
+                      "positions you can apply for, ranging from software engineer to business analyst to security officer. <br> " + 
+                      "When you apply for a job, you will get the offer if your stats are high enough. Your first position at " + 
+                      "a company will be an entry-level position such as 'intern'. Once you get the job, an button will appear on " + 
+                      "the company page that allows you to work for the company. Click this button to start working. <br>" + 
+                      "Working occurs in 8 hour shifts. Once you start working, you will begin earning money, experience, " + 
+                      "and reputation. The rate at which you money and experience depends on the company and your position. " + 
+                      "The amount of reputation you gain for your company is based on your job performance, which is affected by " +
+                      "your stats. Different positions value different stats. When you are working, you are unable to perform any " +
+                      "other actions such as using your terminal or visiting other locations (However, note that any scripts you have " + 
+                      "running on servers will continue to run as you work!). It is possible to cancel your work shift before the " + 
+                      "8 hours is up, but doing so will result in you gaining only half of all of the money, experience, and reputation " +
+                      "that you had earned up to that point. <br>"
+                      "As you continue to work at a company, you will gain more and more reputation at that company. When your stats " + 
+                      "and reputation are high enough, you can get a promotion. You can apply for a promotion on the company page, just like " + 
+                      "you applied for the job originally. Higher positions at a company provide better salaries and stat gains",
+    TutorialFactionsText: "Throughout the game you may receive invitations from factions. There are many different factions, and each faction " +
+                          "has different criteria for determining its potential members. Joining a faction and furthering its cause is crucial " + 
+                          "to progressing in the game and unlocking endgame content. <br> " + 
+                          "It is possible to join multiple factions if you receive invitations from them. However, note that joining a faction " +
+                          "may prevent you from joining other rival factions. <br> " + 
+                          "The 'Factions' link on the menu brings up a list of all factions that you have joined. " + 
+                          "You can select a Faction on this list to go to that Faction page. This page displays general " + 
+                          "information about the Faction and also lets you perform work for the faction. " + 
+                          "Working for a Faction is similar to working for a company except that you don't get paid a salary. " + 
+                          "You will only earn reputation in your Faction and train your stats. Also, cancelling work early " + 
+                          "when working for a Faction does not result in reduced experience/reputation earnings. <br>" + 
+                          "Earning reputation for a Faction unlocks powerful upgrades. These upgrades vary from faction to faction. ",
+    TutorialAugmentationsText: "Advances in science and medicine have lead to powerful new technologies that allow people to augment themselves " + 
+                               "beyond normal human capabilities. There are many different types of Augmentations, ranging from cybernetic to " + 
+                               "genetic to biological. Acquiring these Augmentations enhances the user's physical and mental faculties. <br>" + 
+                               "Because of how powerful these Augmentations are, the technology behind them is kept private and secret by the " + 
+                               "corporations and organizations that create them. Therefore, the only way for the player to obtain Augmentations is " + 
+                               "through Factions. After joining a Faction and earning enough reputation in it, you will be able to purchase " + 
+                               "its Augmentations. Different Factions offer different Augmentations. Augmentations must be purchased in order to be installed, " + 
+                               "and they are fairly expensive. <br>" +
+                               "Unfortunately, installing an Augmentation has side effects. All of your stats and experience will be reset to 1. " +
+                               "You will lose all of your digital assets as well, such as your money, programs, scripts, and purchased servers. " + 
+                               "You will lose all of the reputation you have earned from every company and faction and will no longer be an employee " + 
+                               "or member of any. The only thing you will keep when you install an Augmentation is all of the past Augmentations " + 
+                               "you have installed. ",
 	
 	
 	
