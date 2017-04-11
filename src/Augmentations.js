@@ -48,8 +48,6 @@ AddToAugmentations = function(aug) {
     Augmentations[name] = aug;
 }
 
-//TODO Set descriptions for all 
-
 //TODO Something that decreases RAM usage of scripts
 initAugmentations = function() {
     //Combat stat augmentations
@@ -486,6 +484,11 @@ initAugmentations = function() {
 }
 
 applyAugmentation = function(aug, faction) {
+    if (aug.owned) {
+        throw new Error("This Augmentation is already owned/applied...somethings wrong");
+        return;
+    }
+    
     switch(aug.name) {
         //Combat stat augmentations
         case "Augmented Targeting I":

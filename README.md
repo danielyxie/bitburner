@@ -68,6 +68,7 @@ Tasks TODO:
 	
     Create new menu page for purchased servers
     
+    Gyms + Traveling
 	
 	Update CONSTANTS.HelpText
 	Account for Max possible int when gaining exp (it will overflow)

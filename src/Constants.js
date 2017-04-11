@@ -17,14 +17,6 @@ CONSTANTS = {
     //Maximum number of log entries for a script
     MaxLogCapacity: 20,
     
-    //Programs
-    NukeProgram: "NUKE.exe",
-    BruteSSHProgram: "BruteSSH.exe",
-    FTPCrackProgram: "FTPCrack.exe",
-    RelaySMTPProgram: "relaySMTP.exe",
-    HTTPWormProgram: "HTTPWorm.exe",
-    SQLInjectProgram: "SQLInject.exe",
-    
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   "analyze                Get statistics and information about current machine <br>" + 
                 "clear                  Clear all text on the terminal <br>" +
@@ -142,10 +134,6 @@ CONSTANTS = {
                                "You will lose all of the reputation you have earned from every company and faction and will no longer be an employee " + 
                                "or member of any. The only thing you will keep when you install an Augmentation is all of the past Augmentations " + 
                                "you have installed. ",
-	
-	
-	
-
 	
 	
 }
