@@ -67,7 +67,7 @@ CONSTANTS = {
                          "The key to hacking a server is to gain root access to that server. This can be done using " + 
                          "the NUKE virus (NUKE.exe). You start the game with a copy of the NUKE virus on your home " + 
                          "computer. The NUKE virus attacks the target server's open ports using buffer overflow " + 
-                         "exploits. When successful, you are granted root administrative access to the machine. <br><br>" + 
+                         "exploits. When successful, you are granted root administrative access to the machine. <br>" + 
                          "Typically, in order for the NUKE virus to succeed, the target server needs to have at least " + 
                          "one of its ports opened. Some servers have no security and will not need any ports opened. Some " +
                          "will have very high security and will need many ports opened. In order to open ports on another " + 
@@ -76,14 +76,23 @@ CONSTANTS = {
                          "a seller. <br><br>" 
                          "In order to determine how many ports need to be opened to successfully NUKE a server, connect to " + 
                          "that server and run the 'analyze' command. This will also show you which ports have already been " + 
-                         "opened. <br><br>" +
+                         "opened. <br>" +
                          "Once you have enough ports opened and have ran the NUKE virus to gain root access, the server " + 
-                         "can then be hacked by simply calling the 'hack' command, or by using a script.<br><br>" + 
+                         "can then be hacked by simply calling the 'hack' command through terminal, or by using a script.<br><br>" + 
                          "Hacking mechanics <br>" + 
-                         ,
-                         
-                         //TODO Add stuff about only hacking a percentage and so if you keep hacking a server it'll go down, and 
-                         //Hacking percentage
+                         "When you execute the hack command, either manually through the terminal or automatically through " + 
+                         "a script, you attempt to hack the server. This action takes time. The more advanced a server's " + 
+                         "security is, the more time it will take. Your hacking skill level also affects the hacking time, " + 
+                         "with a higher hacking skill leading to shorter hacking times. Also, running the hack command " + 
+                         "manually through terminal is faster than hacking from a script. <br>" + 
+                         "Your attempt to hack a server will not always succeed. The chance you have to successfully hack a " + 
+                         "server is also determined by the server's security and your hacking skill level. Even if your " + 
+                         "hacking attempt is unsuccessful, you will still gain experience points. <br>" + 
+                         "When you successfully hack a server. You steal a certain percentage of that server's total money. This " + 
+                         "percentage is determined by the server's security and your hacking skill level. The amount of money " + 
+                         "on a server is not limitless. So, if you constantly hack a server and deplete its money, then you will " +
+                         "encounter diminishing returns in your hacking (since you are only hacking a certain percentage). A server " + 
+                         "will regain money at a slow rate over time. ",
                          
     TutorialScriptsText: "Scripts can be used to automate the hacking process. Scripts must be written in the Netscript language " + 
                          "and are saved as a file. Running a script requires RAM. The more complex a script is, the more RAM " + 
@@ -91,12 +100,16 @@ CONSTANTS = {
                          "Here are some commands that are useful when working with scripts: <br>" + 
                          "free - Shows the current server's RAM usage <br>" + 
                          "kill [script] - Stops a script that is running <br>" + 
-                         "nano [script] - Edit the script <br>" + 
+                         "nano [script] - Edit a script <br>" + 
                          "ps - Displays all scripts that are actively running on the current server<br>" + 
                          "run [script] - Run a script <br>" + 
                          "tail [script] - Displays a script's logs<br>" + 
-                         "top - Displays all active scripts and their RAM usage <br><br>"
-    TutorialTravelingText:
+                         "top - Displays all active scripts and their RAM usage <br><br>" + 
+                         "The following is a brief overview of how to code in the Netscript language: ",                         
+    TutorialTravelingText: "There are SIX major cities in the world that you are able to travel to: <br> "  +
+                           "    Aevum<br>" + 
+                           "    Chongqing<br>" + 
+                           "    
     TutorialJobsText:
     TutorialFactionsText:
     TutorialAugmentationsText:
