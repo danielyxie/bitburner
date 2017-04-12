@@ -211,7 +211,7 @@ function evaluate(exp, workerScript) {
                             }
                             if (server == null) {
                                 resolve("Invalid IP or server hostname passed in");
-                                //TODO LOg...or throw error or something
+                                workerScript.scriptRef.log("Cannot hack(). Invalid IP or hostname passed in: " + ip);
                             }
                             
 							//Calculate the hacking time 
@@ -219,9 +219,11 @@ function evaluate(exp, workerScript) {
 							
 							if (server.hasAdminRights == false) {
 								console.log("Cannot hack server " + server.hostname);
-								resolve("Cannot hack");
-								//TODO LOG That it can't be hacked
+								resolve("Cannot hack, no admin rights");
+								workerScript.scriptRef.log("Cannot hack this server because user does not have root access");
 							}
+                            
+                            workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime + " seconds");
 							
 							var p = new Promise(function(resolve, reject) {
 								if (env.stopFlag) {reject(workerScript);}
@@ -245,6 +247,7 @@ function evaluate(exp, workerScript) {
 										Player.hacking_exp += expGainedOnSuccess;
 										workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
 										console.log("Script successfully hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
+                                        workerScript.scriptRef.log("Script successfully hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
 										resolve("Hack success");
 									} else {			
 										//Player only gains 25% exp for failure? TODO Can change this later to balance
@@ -252,6 +255,7 @@ function evaluate(exp, workerScript) {
 										workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
 										
 										console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + "exp");
+                                        workerScript.scriptRef.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + "exp");
 										resolve("Hack failure");
 									}
 								}, hackingTime * 1000);
@@ -275,6 +279,7 @@ function evaluate(exp, workerScript) {
 						var sleepTimePromise = evaluate(exp.args[0], workerScript);
 						sleepTimePromise.then(function(sleepTime) {
 							console.log("Sleep time: " + sleepTime);
+                            workerScript.scriptRef.log("Sleeping for " + sleepTime + " milliseconds");
 							var p = new Promise(function(resolve, reject) {
 								setTimeout(function() {
 									resolve("foo");

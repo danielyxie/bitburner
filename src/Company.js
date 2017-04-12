@@ -5,6 +5,7 @@ function Company() {
     this.companyName        = "";
     this.info               = "";
     this.companyPositions   = [];   //Names (only name, not object) of all company positions
+    this.perks              = [];   //Available Perks
     this.salaryMultiplier   = 1;    //Multiplier for base salary
     this.expMultiplier      = 1;    //Multiplier for base exp gain
     
@@ -17,7 +18,6 @@ function Company() {
     this.isPlayerEmployed   = false;
     this.playerPosition     = "";    //Name (only name, not object) of the current position player holds
     this.playerReputation   = 0;  //"Reputation" within company, gain reputation by working for company
-    
 };
 
 Company.prototype.init = function(name, salaryMult, expMult, jobStatReqOffset) {
