@@ -96,9 +96,16 @@ CONSTANTS = {
                          "run [script] - Run a script <br>" + 
                          "tail [script] - Displays a script's logs<br>" + 
                          "top - Displays all active scripts and their RAM usage <br><br>"
-    TutorialTravelingText:"There are SIX major cities in the world that you are able to travel to: <br> "  +
+    TutorialTravelingText:"There are six major cities in the world that you are able to travel to: <br> "  +
                            "    Aevum<br>" + 
-                           "    Chongqing<br>",
+                           "    Chongqing<br>" + 
+                           "    Sector-12<br>" + 
+                           "    New Tokyo<br>" + 
+                           "    Ishima<br>" + 
+                           "    Volhaven<br>" + 
+                           "To travel between cities, visit your current city's travel agency through the 'World' page. " + 
+                           "From the travel agency you can travel to any other city. Doing so costs money. <br>" + 
+                           "Each city has its own set of companies and unique locations. "
     TutorialJobsText: "Hacking is not the only way to gain money and experience! Located around the world are many " + 
                       "different companies which you can work for. By working for a company you can earn money, " + 
                       "train your various labor skills, and unlock powerful passive perks. <br> " +
