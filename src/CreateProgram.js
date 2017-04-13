@@ -30,7 +30,7 @@ function displayCreateProgramContent() {
         portHackALink.style.display = "block";
         portHackALink.addEventListener("click", function() {
             createProgram(Programs.PortHackProgram);
-        }
+        });
     }
     
     //BruteSSH
@@ -39,7 +39,7 @@ function displayCreateProgramContent() {
         bruteSshALink.style.display = "block";
         bruteSshALink.addEventListener("click", function() {
             createProgram(Programs.BruteSSHProgram);
-        }
+        });
     }
     
     //FTPCrack
@@ -48,34 +48,34 @@ function displayCreateProgramContent() {
         ftpCrackALink.style.display = "block";
         ftpCrackALink.addEventListener("click", function() {
             createProgram(Programs.FTPCrackProgram);
-        }
+        });
     }
     
     //relaySMTP
-    if (Player.getHomeComputer().programs.indexOf(Programs.RelaySMTPProgram == -1 &&
+    if (Player.getHomeComputer().programs.indexOf(Programs.RelaySMTPProgram) == -1 &&
         Player.hacking_skill >= 300) {
         relaySmtpALink.style.display = "block";
         relaySmtpAlink.addEventListener("click", function() {
             createProgram(Programs.RelaySMTPProgram);
-        }
+        });
     }
     
     //HTTPWorm
-    if (Player.getHomeComputer().programs.indexOf(Programs.HTTPWormProgram == -1 &&
+    if (Player.getHomeComputer().programs.indexOf(Programs.HTTPWormProgram) == -1 &&
         Player.hacking_skill >= 500) {
         httpWormALink.style.display = "block";
         httpWormALink.addEventListener("click", function() {
             createProgram(Programs.HTTPWormProgram);
-        }
+        });
     }
     
     //SQLInject
-    if (Player.getHomeComputer().programs.indexOf(Programs.SQLInjectProgram == -1 &&
+    if (Player.getHomeComputer().programs.indexOf(Programs.SQLInjectProgram) == -1 &&
         Player.hacking_skill >= 750) {
         sqlInjectALink.style.display = "block";
         sqlInjectALink.addEventListener("click", function() {
             createProgram(Programs.SQLInjectProgram);
-        }
+        });
     }
 }
 

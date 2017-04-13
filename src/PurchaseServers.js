@@ -6,7 +6,6 @@ purchaseServer = function(ram, cost) {
         return;
     }
     
-    
     var newServ = new Server();
     var hostname = document.getElementById("purchase-server-box-input").value;
     if (hostname == "") {

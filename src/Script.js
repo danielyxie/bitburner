@@ -68,7 +68,7 @@ function Script() {
     this.code       = "";
     this.ramUsage   = 0;
 	this.server 	= "";	//IP of server this script is on
-    this.log       = [];   //Script logging. Array of strings, with each element being a log entry
+    this.logs       = [];   //Script logging. Array of strings, with each element being a log entry
     
     /* Properties to calculate offline progress. Only applies for infinitely looping scripts */
     
@@ -127,18 +127,18 @@ Script.prototype.updateRamUsage = function() {
 }
 
 Script.prototype.log = function(txt) {
-    if (this.log.length > CONSTANTS.MaxLogCapacity) {
+    if (this.logs.length > CONSTANTS.MaxLogCapacity) {
         //Delete first element and add new log entry to the end.
         //TODO Eventually it might be better to replace this with circular array
         //to improve performance
-        this.log.shift();
+        this.logs.shift();
     }
-    this.log.push(txt);
+    this.logs.push(txt);
 }
 
 Script.prototype.displayLog = function() {
-    for (var i = 0; i < this.log.length; ++i) {
-        post(this.log[i]);
+    for (var i = 0; i < this.logs.length; ++i) {
+        post(this.logs[i]);
     }
 }
 

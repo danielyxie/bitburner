@@ -61,8 +61,8 @@ function PlayerObject() {
     
     //Money
     this.money           = 0;
-    this.total_money     = 0;
-    this.lifetime_money  = 0;
+    this.total_money     = 0;   //Total money ever earned
+    this.lifetime_money  = 0;   //Total money ever earned
     
     //IP Address of Starting (home) computer
     this.homeComputer = "";
@@ -140,7 +140,7 @@ PlayerObject.prototype.init = function() {
     this.currentServer = t_homeComp.ip;
     AddToAllServers(t_homeComp);
     
-    this.getHomeComputer().programs.push(CONSTANTS.PortHackProgram);
+    this.getHomeComputer().programs.push(Programs.NukeProgram);
 }    
 
 PlayerObject.prototype.getCurrentServer = function() {
@@ -648,7 +648,7 @@ PlayerObject.prototype.createProgramWork = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working on coding " + programName + ".<br><br> " + 
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "The program is " + (this.timeWorked / timeToComplete).toFixed(2) "% complete. <br>" + 
+                    "The program is " + (this.timeWorked / timeToComplete).toFixed(2) + "% complete. <br>" + 
                     "If you cancel, you will lose all of your progress.";  
 }
 

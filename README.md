@@ -56,11 +56,17 @@ TESTING TODO:
     Augmentations
     
     Make it so that a script cannot be edited if it is running
+    
+    + Traveling
         
     Script logging functionality? Logs to internal "log file" (property of script itself)
         Can see log with tail.
         Should add something where if you click it in the "Active Scripts" GUI you can see the logs too        
+        
+        Seems to work fine
 Tasks TODO:
+    New server hostname in Purchase Server Pop-up Box needs limits..don't think the ones set in HTML work
+    
 	Tutorial and help - INTERACTIVE TUTORIAL
 	Secret Servers
 	
@@ -68,7 +74,7 @@ Tasks TODO:
 	
     Create new menu page for purchased servers
     
-    Gyms + Traveling
+    Gyms - Later..don't need for MVP
 	
 	Update CONSTANTS.HelpText
 	Account for Max possible int when gaining exp (it will overflow)

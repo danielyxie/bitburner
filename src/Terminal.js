@@ -140,8 +140,8 @@ var Terminal = {
 			post("Estimated chance to hack: " + Math.round(Player.calculateHackingChance() * 100) + "%");
 			post("Estimated time to hack: " + Math.round(Player.calculateHackingTime()) + " seconds");
 			post("Estimed total money available on server: $" + Player.getCurrentServer().moneyAvailable);
-			post("Required number of open ports for NUKE: " +Player.getCurrentServer().numOpenPortsRequired);
-			if (Player.getCurrentServer().sshPortOpen) {
+			post("Required number of open ports for NUKE: " + Player.getCurrentServer().numOpenPortsRequired);
+            if (Player.getCurrentServer().sshPortOpen) {
 				post("SSH port: Open")
 			} else {
 				post("SSH port: Closed")
@@ -425,10 +425,10 @@ var Terminal = {
 				//TODO
 				break;
 			case "tail":
-				if (commandArray.length != 1) {
+				if (commandArray.length != 2) {
                     post("Incorrect number of arguments. Usage: tail [script]");
                 } else {
-                    var scriptName == commandArray[1];
+                    var scriptName = commandArray[1];
                     
                     //Can only tail script files
                     if (scriptName.endsWith(".script") == false) {
@@ -438,8 +438,9 @@ var Terminal = {
                     //Check that the script exists on this machine
                     var currScripts = Player.getCurrentServer().scripts;
                     for (var i = 0; i < currScripts.length; ++i) {
-                        if (scriptName == currScripts[i]) {
+                        if (scriptName == currScripts[i].filename) {
                             currScripts[i].displayLog();
+                            return;
                         }
                     }
                     

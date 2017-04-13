@@ -116,6 +116,7 @@ displayLocationContent = function() {
     var purchase512gb       = document.getElementById("location-purchase-512gb");
     var purchase1tb         = document.getElementById("location-purchase-1tb");
 
+    var travelAgencyText    = document.getElementById("location-travel-agency-text");
     var travelToAevum       = document.getElementById("location-travel-to-aevum");
     var travelToChongqing   = document.getElementById("location-travel-to-chongqing");
     var travelToSector12    = document.getElementById("location-travel-to-sector12");
@@ -173,6 +174,7 @@ displayLocationContent = function() {
     purchase512gb.style.display = "none";
     purchase1tb.style.display = "none";
     
+    travelAgencyText.style.display = "none";
     travelToAevum.style.display = "none";
     travelToChongqing.style.display = "none";
     travelToSector12.style.display = "none";
@@ -221,6 +223,7 @@ displayLocationContent = function() {
     
     switch (loc) {
         case Locations.AevumTravelAgency: 
+            travelAgencyText.style.display = "block";
             travelToChongqing.style.display = "block";
             travelToSector12.style.display = "block";
             travelToNewTokyo.style.display = "block";
@@ -356,6 +359,7 @@ displayLocationContent = function() {
             break;
 
         case Locations.ChongqingTravelAgency:   
+            travelAgencyText.style.display = "block";
             travelToAevum.style.display = "block";
             travelToSector12.style.display = "block";
             travelToNewTokyo.style.display = "block";
@@ -387,6 +391,7 @@ displayLocationContent = function() {
 
 
         case Locations.Sector12TravelAgency:   
+            travelAgencyText.style.display = "block";
             travelToAevum.style.display = "block";
             travelToChongqing.style.display = "block";
             travelToNewTokyo.style.display = "block";
@@ -528,6 +533,7 @@ displayLocationContent = function() {
             break;
 
         case Locations.NewTokyoTravelAgency: 
+            travelAgencyText.style.display = "block";
             travelToAevum.style.display = "block";
             travelToChongqing.style.display = "block";
             travelToSector12.style.display = "block";
@@ -573,7 +579,8 @@ displayLocationContent = function() {
             break;
         
 
-        case Locations.IshimaTravelAgency:      
+        case Locations.IshimaTravelAgency:
+            travelAgencyText.style.display = "block";
             travelToAevum.style.display = "block";
             travelToChongqing.style.display = "block";
             travelToSector12.style.display = "block";
@@ -624,8 +631,7 @@ displayLocationContent = function() {
             break;
 
         case Locations.VolhavenTravelAgency:     
-			locationInfo.innerHTML = Companies[loc].info;
-			
+            travelAgencyText.style.display = "block";
             travelToAevum.style.display = "block";
             travelToChongqing.style.display = "block";
             travelToSector12.style.display = "block";
@@ -1225,4 +1231,40 @@ initLocationButtons = function() {
         return false;
     });
     
+    travelToAevum.addEventListener("click", function() {
+        travelBoxCreate(Locations.Aevum, 1000000);
+    });
+    
+    travelToChongqing.addEventListener("click", function() {
+        travelBoxCreate(Locations.Chongqing, 1000000);
+    });
+    
+    travelToSector12.addEventListener("click", function() {
+        travelBoxCreate(Locations.Sector12, 1000000);
+    });
+    
+    travelToNewTokyo.addEventListener("click", function() {
+        travelBoxCreate(Locations.NewTokyo, 1000000);
+    });
+    
+    travelToIshima.addEventListener("click", function() {
+        travelBoxCreate(Locations.Ishima, 1000000);
+    });
+    
+    travelToVolhaven.addEventListener("click", function() {
+        travelBoxCreate(Locations.Volhaven, 1000000);
+    });
+    
 }   
+
+travelToCity = function(destCityName, cost) {
+    if (cost > Player.money) {
+        dialogBoxCreate("You cannot afford to travel to " + destCityName);  
+        return;
+    }
+    Player.money -= cost;
+    
+    Player.city = destCityName;
+    dialogBoxCreate("You are now in " + destCityName + "!");
+    Engine.loadWorldContent();
+}

@@ -1,7 +1,4 @@
-/* Worker code, contains Netscript scripts that are actually running */
-//TODO Need some way to stop scripts. Idea: Put a flag in the environment, we can setActive
-//this flag from outside. If the evaluate() function sees that flag it rejects the current
-// Promise. We can catch that rejection and stop the script.  
+/* Worker code, contains Netscript scripts that are actually running */  
  
 //TODO Tested For and while and generic call statements. Have not tested if statements 
 

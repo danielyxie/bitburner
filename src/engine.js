@@ -424,7 +424,7 @@ var Engine = {
         
         //Online
         var onlineTotalMoneyMade = "Total online production: $" + workerscript.scriptRef.onlineMoneyMade.toFixed(2);
-        var onlineTotalExpEarned = (Array(26).join(" ") + workerScript.scriptRef.onlineExpGained.toFixed(2) + " exp").replace( / /g, "&nbsp;");
+        var onlineTotalExpEarned = (Array(26).join(" ") + workerscript.scriptRef.onlineExpGained.toFixed(2) + " exp").replace( / /g, "&nbsp;");
         
         var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
         var onlineMpsText = "Online production rate: $" + onlineMps.toFixed(2) + "/second";
@@ -432,8 +432,8 @@ var Engine = {
         var onlineEpsText = (Array(25).join(" ") + onlineEps.toFixed(4) + " exp/second").replace( / /g, "&nbsp;");
         
         //Offline
-        var offlineTotalMoneyMade = "Total offline production: $" + workerScript.scriptRef.offlineMoneyMade.toFixed(2);
-        var offlineTotalExpEarned = (Array(27).join(" ") + workerScript.scriptRef.offlineExpGained.toFixed(2) + " exp").replace( / /g, "&nbsp;");
+        var offlineTotalMoneyMade = "Total offline production: $" + workerscript.scriptRef.offlineMoneyMade.toFixed(2);
+        var offlineTotalExpEarned = (Array(27).join(" ") + workerscript.scriptRef.offlineExpGained.toFixed(2) + " exp").replace( / /g, "&nbsp;");
         
         var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
         var offlineMpsText = "Offline production rate: $" + offlineMps.toFixed(2) + "/second";
@@ -503,7 +503,7 @@ var Engine = {
         Engine.Clickables.tutorialFactionsButton.style.display = "block";
         Engine.Clickables.tutorialAugmentationsButton.style.display = "block";    
 
-        Engine.CLickables.tutorialBackButton.style.display = "none";
+        Engine.Clickables.tutorialBackButton.style.display = "none";
         document.getElementById("tutorial-text").style.display = "none";
     },
     
@@ -518,7 +518,7 @@ var Engine = {
         Engine.Clickables.tutorialFactionsButton.style.display = "none";
         Engine.Clickables.tutorialAugmentationsButton.style.display = "none";
         
-        Engine.Clickables.tutorialBackButton.style.display = "block";
+        Engine.Clickables.tutorialBackButton.style.display = "inline-block";
         document.getElementById("tutorial-text").style.display = "block";
         document.getElementById("tutorial-text").innerHTML = text;
     },
@@ -577,7 +577,7 @@ var Engine = {
     Counters: {
         autoSaveCounter:    300,            //Autosave every minute
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
-        updateDisplays: 10,                 //Update displays such as Active Scripts display and character display
+        updateDisplays: 5,                  //Update displays such as Active Scripts display and character display
         serverGrowth: 450,                  //Process server growth every minute and a half
         checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
     },
@@ -610,7 +610,7 @@ var Engine = {
                 Engine.displayCharacterInfo();
             } 
             
-            Engine.Counters.updateDisplays = 10;
+            Engine.Counters.updateDisplays = 5;
         }
         
         if (Engine.Counters.serverGrowth <= 0) {

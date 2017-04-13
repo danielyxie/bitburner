@@ -34,7 +34,7 @@ CONSTANTS = {
                 "rm                     Delete a script/program from the machine. (WARNING: Permanent)<br>" + 
                 "run [script/program]   Execute a program or a script<br>" + 
                 "scan                   See 'netstat' command<br>" +
-                "tail [script]          Display script logs (logs contain details about active scripts)"
+                "tail [script]          Display script logs (logs contain details about active scripts)" +
                 "telnet [ip/hostname]   See 'connect' command<br>" +
                 "top                    Display all running scripts and their RAM usage<br>",
                 
@@ -64,7 +64,7 @@ CONSTANTS = {
                          "will have very high security and will need many ports opened. In order to open ports on another " + 
                          "server, you will need to run programs that attack the server to open specific ports. These programs " +
                          "can be coded once your hacking skill gets high enough, or they can be purchased if you can find " + 
-                         "a seller. <br><br>" 
+                         "a seller. <br><br>" +
                          "In order to determine how many ports need to be opened to successfully NUKE a server, connect to " + 
                          "that server and run the 'analyze' command. This will also show you which ports have already been " + 
                          "opened. <br>" +
@@ -95,7 +95,7 @@ CONSTANTS = {
                          "ps - Displays all scripts that are actively running on the current server<br>" + 
                          "run [script] - Run a script <br>" + 
                          "tail [script] - Displays a script's logs<br>" + 
-                         "top - Displays all active scripts and their RAM usage <br><br>"
+                         "top - Displays all active scripts and their RAM usage <br><br>",
     TutorialTravelingText:"There are six major cities in the world that you are able to travel to: <br> "  +
                            "    Aevum<br>" + 
                            "    Chongqing<br>" + 
@@ -105,7 +105,7 @@ CONSTANTS = {
                            "    Volhaven<br>" + 
                            "To travel between cities, visit your current city's travel agency through the 'World' page. " + 
                            "From the travel agency you can travel to any other city. Doing so costs money. <br>" + 
-                           "Each city has its own set of companies and unique locations. "
+                           "Each city has its own set of companies and unique locations. ",
     TutorialJobsText: "Hacking is not the only way to gain money and experience! Located around the world are many " + 
                       "different companies which you can work for. By working for a company you can earn money, " + 
                       "train your various labor skills, and unlock powerful passive perks. <br> " +
@@ -122,7 +122,7 @@ CONSTANTS = {
                       "other actions such as using your terminal or visiting other locations (However, note that any scripts you have " + 
                       "running on servers will continue to run as you work!). It is possible to cancel your work shift before the " + 
                       "8 hours is up, but doing so will result in you gaining only half of all of the money, experience, and reputation " +
-                      "that you had earned up to that point. <br>"
+                      "that you had earned up to that point. <br>" +
                       "As you continue to work at a company, you will gain more and more reputation at that company. When your stats " + 
                       "and reputation are high enough, you can get a promotion. You can apply for a promotion on the company page, just like " + 
                       "you applied for the job originally. Higher positions at a company provide better salaries and stat gains",

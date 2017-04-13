@@ -22,6 +22,7 @@
     <script src="utils/PurchaseServerBox.js"></script>
     <script src="utils/FactionInvitationBox.js"></script>
     <script src="utils/PurchaseAugmentationBox.js"></script>
+    <script src="utils/TravelBox.js"></script>
 	
 	<!-- Netscript -->
 	<script src="src/netscript/NetScriptWorker.js"></script>
@@ -45,6 +46,7 @@
     <script src="src/PurchaseServers.js"></script>
     <script src="src/CreateProgram.js"></script>
     <script src="src/Augmentations.js"></script>
+    <script src="src/Perk.js"></script>
 	
     <script src="src/engine.js"></script>
 	
@@ -466,6 +468,9 @@
         <a href="#" id="location-purchase-1tb" class="a-link-button"> Purchase 1TB Server - $600,000,000</a>
         
         <!-- Travel agency -->
+        <p id="location-travel-agency-text"> 
+            From here, you can travel to any other city! A ticket costs $1,000,000. 
+        </p>
         <a href="#" id="location-travel-to-aevum" class="a-link-button"> Travel to Aevum </a>
         <a href="#" id="location-travel-to-chongqing" class="a-link-button"> Travel to Chongqing</a>
         <a href="#" id="location-travel-to-sector12" class="a-link-button"> Travel to Sector-12</a>
@@ -493,6 +498,15 @@
             <input type="text" id="purchase-server-box-input" pattern="[a-zA-Z0-9-_]+ maxlength="30"> </input>
             <span id="purchase-server-box-confirm"> Purchase </span>
             <span id="purchase-server-box-cancel"> Cancel </span>
+        </div>
+    </div>
+    
+    <!-- Travel Pop-up Box -->
+    <div id="travel-box-container">
+        <div id="travel-box-content".
+            <p id="travel-box-text"> </p>
+            <span id="travel-box-confirm"> Yes </span>
+            <span id="travel-box-cancel"> No </span>
         </div>
     </div>
 
