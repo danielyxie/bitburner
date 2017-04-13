@@ -115,6 +115,7 @@ displayLocationContent = function() {
     var purchase256gb       = document.getElementById("location-purchase-256gb");
     var purchase512gb       = document.getElementById("location-purchase-512gb");
     var purchase1tb         = document.getElementById("location-purchase-1tb");
+    var purchaseTor         = document.getElementById("location-purchase-tor");
 
     var travelAgencyText    = document.getElementById("location-travel-agency-text");
     var travelToAevum       = document.getElementById("location-travel-to-aevum");
@@ -173,6 +174,7 @@ displayLocationContent = function() {
     purchase256gb.style.display = "none";
     purchase512gb.style.display = "none";
     purchase1tb.style.display = "none";
+    purchaseTor.style.display = "none";
     
     travelAgencyText.style.display = "none";
     travelToAevum.style.display = "none";
@@ -245,6 +247,7 @@ displayLocationContent = function() {
             purchase256gb.style.display = "block";
             purchase512gb.style.display = "block";
             purchase1tb.style.display = "block";
+            purchaseTor.style.display = "block";
             break;
             
         case Locations.AevumBachmanAndAssociates: 
@@ -282,6 +285,7 @@ displayLocationContent = function() {
             purchase256gb.style.display = "block";
             purchase512gb.style.display = "block";
             purchase1tb.style.display = "block";
+            purchaseTor.style.display = "block";
             break;
 
         case Locations.AevumAeroCorp:        
@@ -342,6 +346,7 @@ displayLocationContent = function() {
             purchase2gb.style.display = "block";
             purchase4gb.style.display = "block";
             purchase8gb.style.display = "block";
+            purchaseTor.style.display = "block";
             break;
 
         case Locations.AevumCrushFitnessGym:  
@@ -493,6 +498,7 @@ displayLocationContent = function() {
             purchase1gb.style.display = "block";
             purchase2gb.style.display = "block";
             purchase4gb.style.display = "block";
+            purchaseTor.style.display = "block";
             break;
 
         case Locations.Sector12CarmichaelSecurity:
@@ -628,6 +634,7 @@ displayLocationContent = function() {
             purchase8gb.style.display = "block";
             purchase16gb.style.display = "block";
             purchase32gb.style.display = "block";
+            purchaseTor.style.display = "block";
             break;
 
         case Locations.VolhavenTravelAgency:     
@@ -721,6 +728,7 @@ displayLocationContent = function() {
             purchase64gb.style.display = "block";
             purchase128gb.style.display = "block";
             purchase256gb.style.display = "block";
+            purchaseTor.style.display = "block";
             
             break;
 
@@ -1123,6 +1131,7 @@ initLocationButtons = function() {
     var purchase256gb       = document.getElementById("location-purchase-256gb");
     var purchase512gb       = document.getElementById("location-purchase-512gb");
     var purchase1tb         = document.getElementById("location-purchase-1tb");
+    var purchaseTor         = document.getElementById("location-purchase-tor");
 
     var travelToAevum       = document.getElementById("location-travel-to-aevum");
     var travelToChongqing   = document.getElementById("location-travel-to-chongqing");
@@ -1231,28 +1240,39 @@ initLocationButtons = function() {
         return false;
     });
     
+    purchaseTor.addEventListener("click", function() {
+        purchaseTor();
+        return false;
+    }
+    
     travelToAevum.addEventListener("click", function() {
         travelBoxCreate(Locations.Aevum, 1000000);
+        return false;
     });
     
     travelToChongqing.addEventListener("click", function() {
         travelBoxCreate(Locations.Chongqing, 1000000);
+        return false;
     });
     
     travelToSector12.addEventListener("click", function() {
         travelBoxCreate(Locations.Sector12, 1000000);
+        return false;
     });
     
     travelToNewTokyo.addEventListener("click", function() {
         travelBoxCreate(Locations.NewTokyo, 1000000);
+        return false;
     });
     
     travelToIshima.addEventListener("click", function() {
         travelBoxCreate(Locations.Ishima, 1000000);
+        return false;
     });
     
     travelToVolhaven.addEventListener("click", function() {
         travelBoxCreate(Locations.Volhaven, 1000000);
+        return false;
     });
     
 }   
@@ -1267,4 +1287,19 @@ travelToCity = function(destCityName, cost) {
     Player.city = destCityName;
     dialogBoxCreate("You are now in " + destCityName + "!");
     Engine.loadWorldContent();
+}
+
+purchaseTor = function() {
+    if (CONSTANTS.TorRouterCost > Player.money) {
+        dialogBoxCreate("You cannot afford to purchase the Tor router");
+        return;
+    }
+    Player.money -= CONSTANTS.TorRouterCost;
+    
+    var darkweb = new Server();
+    darkweb.init(createRandomIp(), "darkweb", "", true, false, false, false, 1);
+    AddToAllServers(darkweb);
+    
+    Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
+    dialogBoxCreate("You have purchased a Tor router!", "You now have access to the dark web from your home computer", "Use the scan/netstat commands to search for the dark web connect.", "");
 }

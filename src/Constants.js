@@ -16,6 +16,9 @@ CONSTANTS = {
     //Maximum number of log entries for a script
     MaxLogCapacity: 20,
     
+    //How much a TOR router costs
+    TorRouterCost: 2000000,
+    
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   "analyze                Get statistics and information about current machine <br>" + 
                 "clear                  Clear all text on the terminal <br>" +

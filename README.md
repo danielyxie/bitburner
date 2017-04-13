@@ -55,6 +55,8 @@ TESTING TODO:
 
     Augmentations
     
+    rm command seems to work
+    
     Make it so that a script cannot be edited if it is running
     
     + Traveling
@@ -65,12 +67,14 @@ TESTING TODO:
         
         Seems to work fine
 Tasks TODO:
+    Augmentations that decrease time to make programs
+    
     New server hostname in Purchase Server Pop-up Box needs limits..don't think the ones set in HTML work
     
 	Tutorial and help - INTERACTIVE TUTORIAL
 	Secret Servers
 	
-	Hack time formula needs rebalancing I think, so does hack exp
+	Hack time formula needs rebalancing I think, so does hack exp formula
 	
     Create new menu page for purchased servers
     

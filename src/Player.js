@@ -297,6 +297,9 @@ PlayerObject.prototype.finishWork = function(cancelled) {
 
 PlayerObject.prototype.startWork = function() {
     this.isWorking = true;
+    this.currentWorkFactionName = "";
+    this.currentWorkFactionDescription = "";
+    this.createProgramName = "";
     
     this.workHackExpGainRate    = this.getWorkHackExpGain();
     this.workStrExpGainRate     = this.getWorkStrExpGain();
@@ -420,6 +423,7 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
 PlayerObject.prototype.startFactionWork = function(faction) {
     this.isWorking = true;
     this.currentWorkFactionName = faction.name;
+    this.createProgramName = "";
     
     this.workHackExpGained = 0;
     this.workStrExpGained = 0;
@@ -616,6 +620,8 @@ PlayerObject.prototype.startCreateProgramWork = function(programName) {
     
     this.timeWorked = 0;
     
+    this.currentWorkFactionName = "";
+    this.currentWorkFactionDescription = "";    
     this.createProgramName = programName;
     
     var cancelButton = document.getElementById("work-in-progress-cancel-button");

@@ -556,7 +556,13 @@ var Engine = {
         }
         
         if (Player.isWorking) {
-            Player.work(numCycles);
+            if (Player.currentWorkFactionName != "") {
+                Player.workForFaction(numCycles);
+            } else if (Player.createProgramName != "") {
+                Player.createProgramWork(numCycles);
+            } else {
+                Player.work(numCycles);
+            }
         }
         
         //Counters
