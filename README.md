@@ -70,7 +70,7 @@ Tasks TODO:
 	Tutorial and help - INTERACTIVE TUTORIAL
 	Secret Servers
 	
-	Hack time formula needs rebalancing I think
+	Hack time formula needs rebalancing I think, so does hack exp
 	
     Create new menu page for purchased servers
     

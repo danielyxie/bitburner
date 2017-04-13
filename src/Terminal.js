@@ -396,14 +396,41 @@ var Terminal = {
 				break;
 			case "ps":
 				if (commandArray.length != 1) {
-					post("Incorrect usage of ps command. Usage: ps");
+					post("Incorrect usage of ps command. Usage: ps"); return;
 				}
 				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
 					post(Player.getCurrentServer().runningScripts[i]);
 				}
 				break;
 			case "rm":
-				//TODO
+				if (commandArray.length != 2) {
+                    post("Incorrect number of arguments. Usage: rm [program/script]"); return;
+                }
+                
+                //Check programs
+                var delTarget = commandArray[1];
+                var s = Player.getCurrentServer();
+                for (var i = 0; i < s.programs.length; ++i) {
+                    if (s.programs[i] == delTarget) {
+                       s.programs.splice(i, 1);
+                       return;
+                    }
+                }
+                
+                //Check scripts
+                for (var i = 0; i < s.scripts.length; ++i) {
+                    if (s.scripts[i].filename == delTarget) {
+                        //Check that the script isnt currently running
+                        if (s.runningScripts.indexOf(delTarget) > -1) {
+                            post("Cannot delete a script that is currently running!");
+                        } else {
+                            s.scripts.splice(i, 1);
+                        }
+                        return;
+                    }
+                }
+                
+                post("No such file exists");
 				break;
 			case "run":
 				//Run a program or a script
