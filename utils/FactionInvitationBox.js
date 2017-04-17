@@ -40,7 +40,10 @@ factionInvitationBoxCreate = function(faction) {
     //TODO Faction invitation message
     
     var yesButton = document.getElementById("faction-invitation-box-yes");
-    yesButton.addEventListener("click", function() {
+    var newYesButton = yesButton.cloneNode(true);
+    yesButton.parentNode.replaceChild(newYesButton, yesButton);
+    
+    newYesButton.addEventListener("click", function() {
         joinFaction(faction);
         factionInvitationBoxClose();
         return false;

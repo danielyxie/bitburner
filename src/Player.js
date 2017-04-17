@@ -15,8 +15,8 @@ function PlayerObject() {
     
     //Hacking multipliers
     this.hacking_chance_mult   = 2;  //Increase through ascensions/augmentations
-    //this.hacking_speed_mult  =     5;  //Decrease through ascensions/augmentations
-    this.hacking_speed_mult    =  1;  //Make it faster for debugging
+    this.hacking_speed_mult  =     5;  //Decrease through ascensions/augmentations
+    //this.hacking_speed_mult    =  1;  //Make it faster for debugging
     this.hacking_money_mult    = .001;    //Increase through ascensions/augmentations. Can't go above 1
     
     //Note: "Lifetime" refers to current ascension, "total" refers to the entire game history
@@ -177,7 +177,9 @@ PlayerObject.prototype.calculateHackingChance = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
     var skillMult = (this.hacking_chance_mult * this.hacking_skill);
     var skillChance = (skillMult - this.getCurrentServer().requiredHackingSkill) / skillMult;
-    return (skillChance * difficultyMult);
+    var chance = skillChance * difficultyMult;
+    if (chance < 0) {return 0;} 
+    else {return chance;}
 }
 
 //Calculate the time it takes to hack a server in seconds. Returns the time

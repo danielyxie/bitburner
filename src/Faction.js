@@ -430,7 +430,7 @@ displayFactionContent = function(factionName) {
     //The old buttons need to be replaced to clear the old event listeners
     var newHackButton = hackButton.cloneNode(true);
     var newFieldWorkButton = fieldWorkButton.cloneNode(true);
-    var newSecurityWorkButton = securityWorkbutton.cloneNode(true);
+    var newSecurityWorkButton = securityWorkButton.cloneNode(true);
     
     hackButton.parentNode.replaceChild(newHackButton, hackButton);
     fieldWorkButton.parentNode.replaceChild(newFieldWorkButton, fieldWorkButton);

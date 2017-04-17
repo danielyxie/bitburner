@@ -254,8 +254,8 @@ function evaluate(exp, workerScript) {
 										Player.hacking_exp += expGainedOnFailure;
 										workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
 										
-										console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + "exp");
-                                        workerScript.scriptRef.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + "exp");
+										console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + " exp");
+                                        workerScript.scriptRef.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + " exp");
 										resolve("Hack failure");
 									}
 								}, hackingTime * 1000);
@@ -529,7 +529,9 @@ function scriptCalculateHackingChance(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_chance_mult * Player.hacking_skill);
     var skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
-    return (skillChance * difficultyMult);
+    var chance = skillChance * difficultyMult;
+    if (chance < 0) {return 0;}
+    else {return chance;}
 }
 
 //The same as Player's calculateHackingTime() function but takes in the server as an argument

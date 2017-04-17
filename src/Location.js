@@ -1243,7 +1243,7 @@ initLocationButtons = function() {
     purchaseTor.addEventListener("click", function() {
         purchaseTor();
         return false;
-    }
+    });
     
     travelToAevum.addEventListener("click", function() {
         travelBoxCreate(Locations.Aevum, 1000000);
