@@ -62,6 +62,10 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
     if (currCompany != "") {
         if (currCompany.companyName != company.companyName) {
             company.playerReputation -= 1000;
+            if (company.playerReputation < 0) {company.playerReputation = 0;}
+            if (Engine.debug) {
+                console.log("Lost reputation for " + company.companyName + ". It is now " + company.playerReputation);
+            }
         }
     }
 	

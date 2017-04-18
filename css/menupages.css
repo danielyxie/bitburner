@@ -64,6 +64,10 @@
 }
 
 /* Active scripts */
+.active-scripts-list {
+    list-style-type: none;
+}
+
 #active-scripts-container {
 	position: fixed;
 	padding-top: 10px;

@@ -645,6 +645,7 @@ var Engine = {
     updateHackProgress: function(numCycles = 1) {
         var timeElapsedMilli = numCycles * Engine._idleSpeed;
         Engine._actionTimeLeft -= (timeElapsedMilli/ 1000);    //Substract idle speed (ms)
+        Engine._actionTimeLeft = Math.max(Engine._actionTimeLeft, 0);
     
         //Calculate percent filled 
         var percent = Math.round((1 - Engine._actionTimeLeft / Engine._totalActionTime) * 100);

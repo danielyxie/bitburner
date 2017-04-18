@@ -21,6 +21,14 @@ h2 {
     color: #66ff33;
 }
 
+ul {
+    list-style-type: none;
+}
+
+li {
+    list-style-type: none;
+}
+
 /* Main menu */
 .mainmenu {
     list-style-type: none;

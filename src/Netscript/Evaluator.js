@@ -244,14 +244,14 @@ function evaluate(exp, workerScript) {
 										Player.gainMoney(moneyGained);
 										workerScript.scriptRef.onlineMoneyMade += moneyGained;
 										
-										Player.hacking_exp += expGainedOnSuccess;
+                                        Player.gainHackingExp(expGainedOnSuccess);
 										workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
 										console.log("Script successfully hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
                                         workerScript.scriptRef.log("Script successfully hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
 										resolve("Hack success");
 									} else {			
 										//Player only gains 25% exp for failure? TODO Can change this later to balance
-										Player.hacking_exp += expGainedOnFailure;
+                                        Player.gainHackingExp(expGainedOnFailure);
 										workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
 										
 										console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + " exp");
@@ -544,7 +544,7 @@ function scriptCalculateHackingTime(server) {
 
 //The same as Player's calculateExpGain() function but takes in the server as an argument 
 function scriptCalculateExpGain(server) {
-	return Math.round(server.hackDifficulty * server.requiredHackingSkill * Player.hacking_exp_mult);
+	return Math.round(server.hackDifficulty * Player.hacking_exp_mult);
 }
 
 //The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument
@@ -553,5 +553,7 @@ function scriptCalculatePercentMoneyHacked(server) {
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
     var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult;
     console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
+    if (percentMoneyHacked < 0) {return 0;}
+    if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;
 } 

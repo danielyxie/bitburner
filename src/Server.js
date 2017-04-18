@@ -396,7 +396,7 @@ initForeignServers = function() {
     //"Low level" targets
     var FoodNStuffServer = new Server();
     FoodNStuffServer.init(createRandomIp(), "foodnstuff", "Food N Stuff Supermarket", true, false, false, false, 2);
-    FoodNStuffServer.setHackingParameters(1, 1000000, 10, 20);
+    FoodNStuffServer.setHackingParameters(1, 500000, 10, 20);
     FoodNStuffServer.setPortProperties(0);
     AddToAllServers(FoodNStuffServer);
     
@@ -644,7 +644,7 @@ processServerGrowth = function(numCycles) {
 			
 			//Apply serverGrowth for the calculated number of growth cycles
 			var serverGrowth = Math.pow(1.0001, numServerGrowthCyclesAdjusted);
-			console.log("serverGrowth ratio: " + serverGrowth);
+			//console.log("serverGrowth ratio: " + serverGrowth);
 			server.moneyAvailable *= serverGrowth;
 		}
 	}

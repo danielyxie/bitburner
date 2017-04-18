@@ -203,6 +203,8 @@ PlayerObject.prototype.calculatePercentMoneyHacked = function() {
     var skillMult = (this.hacking_skill - (this.getCurrentServer().requiredHackingSkill - 1)) / this.hacking_skill;
     var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult;
     console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
+    if (percentMoneyHacked < 0) {return 0;}
+    if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;
 }
 
@@ -212,7 +214,7 @@ PlayerObject.prototype.calculatePercentMoneyHacked = function() {
 //
 // Note: Keep it at an integer for now,
 PlayerObject.prototype.calculateExpGain = function() {
-    return Math.round(this.getCurrentServer().hackDifficulty * this.getCurrentServer().requiredHackingSkill * this.hacking_exp_mult);
+    return Math.round(this.getCurrentServer().hackDifficulty * this.hacking_exp_mult);
 }
 
 //Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for
@@ -232,27 +234,71 @@ PlayerObject.prototype.analyze = function() {
 }    
 
 PlayerObject.prototype.gainMoney = function(money) {
+    if (isNaN(money)) {
+        console.log("ERR: NaN passed into Player.gainMoney()"); return;
+    }
 	this.money += money;
 	this.total_money += money;
 	this.lifetime_money += money;
+}
+
+PlayerObject.prototype.gainHackingExp = function(exp) {
+    if (isNaN(exp)) {
+        console.log("ERR: NaN passed into Player.gainHackingExp()"); return;
+    }
+    this.hacking_exp += exp;
+}
+
+PlayerObject.prototype.gainStrengthExp = function(exp) {
+    if (isNaN(exp)) {
+        console.log("ERR: NaN passed into Player.gainStrengthExp()"); return;
+    }
+    this.strength_exp += exp;
+}
+
+PlayerObject.prototype.gainDefenseExp = function(exp) {
+    if (isNaN(exp)) {
+        console.log("ERR: NaN passed into player.gainDefenseExp()"); return;
+    }
+    this.defense_exp += exp;
+}
+
+PlayerObject.prototype.gainDexterityExp = function(exp) {
+    if (isNaN(exp)) {
+        console.log("ERR: NaN passed into Player.gainDexterityExp()"); return;
+    }
+    this.dexterity_exp += exp;
+}
+
+PlayerObject.prototype.gainAgilityExp = function(exp) {
+    if (isNaN(exp)) {
+        console.log("ERR: NaN passed into Player.gainAgilityExp()"); return;
+    }
+    this.agility_exp += exp;
+}
+
+PlayerObject.prototype.gainCharismaExp = function(exp) {
+    if (isNaN(exp)) {
+        console.log("ERR: NaN passed into Player.gainCharismaExp()"); return;
+    }
+    this.charisma_exp += exp;
 }
 
 /* Working for Company */
 PlayerObject.prototype.finishWork = function(cancelled) {
     //Since the work was cancelled early, player only gains half of what they've earned so far
     var cancMult = 1;
-    if (cancelled) {
-        cancMult = 2;
-    }
+    if (cancelled) {cancMult = 2;}
+    
     if (Engine.Debug) {
         console.log("Player finishWork() called with " + this.workMoneyGained / cancMult + " $ gained");
     }
-    this.hacking_exp    += (this.workHackExpGained / cancMult);
-    this.strength_exp   += (this.workStrExpGained / cancMult);
-    this.defense_exp    += (this.workDefExpGained / cancMult);
-    this.dexterity_exp  += (this.workDexExpGained / cancMult);
-    this.agility_exp    += (this.workAgiExpGained / cancMult);
-    this.charisma_exp   += (this.workChaExpGained / cancMult);
+    this.gainHackingExp(this.workHackExpGained / cancMult);
+    this.gainStrengthExp(this.workStrExpGained / cancMult);
+    this.gainDefenseExp(this.workDefExpGained / cancMult);
+    this.gainDexterityExp(this.workDexExpGained / cancMult);
+    this.gainAgilityExp(this.workAgiExpGained / cancMult);
+    this.gainCharismaExp(this.workChaExpGained / cancMult);
     
     var company = Companies[this.companyName];
     company.playerReputation += (this.workRepGained / cancMult);
@@ -279,13 +325,13 @@ PlayerObject.prototype.finishWork = function(cancelled) {
         txt = "You worked a full shift of 8 hours! <br><br> " +
               "You earned a total of: <br>" + 
               "$" + (this.workMoneyGained / cancMult) + "<br>" + 
-              (this.workRepGained / cancMult) + " reputation for the company <br>" + 
-              (this.workHackExpGained / cancMult) + " hacking exp <br>" + 
-              (this.workStrExpGained / cancMult) + " strength exp <br>" + 
-              (this.workDefExpGained / cancMult) + " defense exp <br>" +
-              (this.workDexExpGained / cancMult) + " dexterity exp <br>" + 
-              (this.workAgiExpGained / cancMult) + " agility exp <br>" + 
-              (this.workChaExpGained / cancMult) + " charisma exp <br>";
+              (this.workRepGained / cancMult).toFixed(3) + " reputation for the company <br>" + 
+              (this.workHackExpGained / cancMult).toFixed(3) + " hacking exp <br>" + 
+              (this.workStrExpGained / cancMult).toFixed(3) + " strength exp <br>" + 
+              (this.workDefExpGained / cancMult).toFixed(3) + " defense exp <br>" +
+              (this.workDexExpGained / cancMult).toFixed(3) + " dexterity exp <br>" + 
+              (this.workAgiExpGained / cancMult).toFixed(3) + " agility exp <br>" + 
+              (this.workChaExpGained / cancMult).toFixed(3) + " charisma exp <br>";
     }
     dialogBoxCreate(txt);
     
@@ -353,8 +399,8 @@ PlayerObject.prototype.work = function(numCycles) {
     this.timeWorked += Engine._idleSpeed * numCycles;
     
     //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
-    if (this.timeWorked >= 28800000) {
-        var maxCycles = 144000; //Number of cycles in 8 hours 
+    if (this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
+        var maxCycles = CONSTANTS.GameCyclesPer8Hours; //Number of cycles in 8 hours 
         this.workHackExpGained = this.workhackExpGainRate * maxCycles;
         this.workStrExpGained  = this.workStrExpGainRate * maxCycles;
         this.workDefExpGained  = this.workDefExpGainRate * maxCycles;
@@ -515,8 +561,8 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     this.timeWorked += Engine._idleSpeed * numCycles;
     
     //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
-    if (this.timeWorked >= 72000000) {
-        var maxCycles = 360000; //Number of cycles in 20 hours 
+    if (this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
+        var maxCycles = CONSTANTS.GameCyclesPer20Hours; //Number of cycles in 20 hours 
         this.workHackExpGained = this.workhackExpGainRate * maxCycles;
         this.workStrExpGained  = this.workStrExpGainRate * maxCycles;
         this.workDefExpGained  = this.workDefExpGainRate * maxCycles;

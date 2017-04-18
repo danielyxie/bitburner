@@ -19,6 +19,15 @@ CONSTANTS = {
     //How much a TOR router costs
     TorRouterCost: 2000000,
     
+    MillisecondsPer20Hours: 72000000,
+    GameCyclesPer20Hours: 72000000 / 200,
+    
+    MillisecondsPer8Hours: 28800000,
+    GameCyclesPer8Hours: 28800000 / 200,
+    
+    MillisecondsPerHour: 3600000,
+    GameCyclesPerHour: 3600000 / 200,
+    
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   "analyze                Get statistics and information about current machine <br>" + 
                 "clear                  Clear all text on the terminal <br>" +

@@ -112,12 +112,12 @@ var Terminal = {
 				Player.getCurrentServer().moneyAvailable -= moneyGained;
 				Player.gainMoney(moneyGained);
 				
-				Player.hacking_exp += expGainedOnSuccess;
+                Player.gainHackingExp(expGainedOnSuccess)
 				
 				post("Hack successful! Gained $" + moneyGained + " and " + expGainedOnSuccess + " hacking EXP");
 			} else {					//Failure
 				//Player only gains 25% exp for failure? TODO Can change this later to balance
-				Player.hacking_exp += expGainedOnFailure;
+                Player.gainHackingExp(expGainedOnFailure)
 				post("Failed to hack " + Player.getCurrentServer().hostname + ". Gained " + expGainedOnFailure + " hacking EXP");
 			}
 		}
