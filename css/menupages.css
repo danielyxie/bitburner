@@ -157,6 +157,11 @@
     width: 90%;
 }
 
+#factions-list li {
+    padding: 6px;
+    margin: 6px;
+}
+
 #faction-hack-button-div, #faction-hack-text-div {
 	display:inline-block;
 }

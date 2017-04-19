@@ -450,6 +450,12 @@ var Engine = {
     displayFactionsInfo: function() {
         var factionsList = document.getElementById("factions-list");
         
+        //Clear the list 
+        while (factionsList.firstChild) {
+            factionsList.removeChild(factionsList.firstChild);
+        }
+        
+        //Re-add a link for each faction you are a member of
         for (var i = 0; i < Player.factions.length; ++i) {
             var factionName = Player.factions[i];
             
@@ -585,7 +591,8 @@ var Engine = {
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
         updateDisplays: 5,                  //Update displays such as Active Scripts display and character display
         serverGrowth: 450,                  //Process server growth every minute and a half
-        checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
+        //checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
+        checkFactionInvitations: 50,
     },
     
     decrementAllCounters: function(numCycles = 1) {

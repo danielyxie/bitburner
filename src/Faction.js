@@ -125,11 +125,10 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     invitedFactions = []; //Array which will hold all Factions th eplayer should be invited to
     
     var company = Companies[this.companyName];
-    if (company == null) {
-        return invitedFactions;
+    var companyRep = 0;
+    if (company != null) {
+        companyRep = company.playerReputation;
     }
-    var companyRep = company.playerReputation;
-    
     
     //Illuminati
     var illuminatiFac = Factions["Illuminati"];
@@ -352,8 +351,10 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //CyberSec
     var cybersecFac = Factions["CyberSec"];
+    console.log(this.hacking_skill + " " + cybersecFac.isMember + " " + cybersecFac.isBanned);
     if (cybersecFac.isBanned == false && cybersecFac.isMember == false && 
-        this.hacking_skill >= 50) {
+        this.hacking_skill >= 5) {
+        console.log("Qualified for CyberSec");
         invitedFactions.push(cybersecFac);
     }
     
@@ -446,7 +447,7 @@ displayFactionContent = function(factionName) {
         return false;
     });
     
-    newSecurityWorkButton("click", function() {
+    newSecurityWorkButton.addEventListener("click", function() {
         Player.startFactionSecurityWork(faction);
         return false;
     });

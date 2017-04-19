@@ -67,6 +67,8 @@ TESTING TODO:
         
         Seems to work fine
 Tasks TODO:
+    Factions Info page isn't formatted correctly
+    
     Augmentations that decrease time to make programs
     
     New server hostname in Purchase Server Pop-up Box needs limits..don't think the ones set in HTML work

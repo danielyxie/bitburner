@@ -401,7 +401,7 @@ PlayerObject.prototype.work = function(numCycles) {
     //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
     if (this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
         var maxCycles = CONSTANTS.GameCyclesPer8Hours; //Number of cycles in 8 hours 
-        this.workHackExpGained = this.workhackExpGainRate * maxCycles;
+        this.workHackExpGained = this.workHackExpGainRate * maxCycles;
         this.workStrExpGained  = this.workStrExpGainRate * maxCycles;
         this.workDefExpGained  = this.workDefExpGainRate * maxCycles;
         this.workDexExpGained  = this.workDexExpGainRate * maxCycles;
@@ -434,12 +434,12 @@ PlayerObject.prototype.work = function(numCycles) {
 
 /* Working for Faction */
 PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
-    this.hacking_exp    += (this.workHackExpGained);
-    this.strength_exp   += (this.workStrExpGained);
-    this.defense_exp    += (this.workDefExpGained);
-    this.dexterity_exp  += (this.workDexExpGained);
-    this.agility_exp    += (this.workAgiExpGained);
-    this.charisma_exp   += (this.workChaExpGained);
+    this.gainHackingExp(this.workHackExpGained);
+    this.gainStrengthExp(this.workStrExpGained);
+    this.gainDefenseExp(this.workDefExpGained);
+    this.gainDexterityExp(this.workDexExpGained);
+    this.gainAgilityExp(this.workAgiExpGained);
+    this.gainCharismaExp(this.workChaExpGained);
     
     var faction = Factions[this.currentWorkFactionName];
     faction.playerReputation += (this.workRepGained);
@@ -563,7 +563,7 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
     if (this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
         var maxCycles = CONSTANTS.GameCyclesPer20Hours; //Number of cycles in 20 hours 
-        this.workHackExpGained = this.workhackExpGainRate * maxCycles;
+        this.workHackExpGained = this.workHackExpGainRate * maxCycles;
         this.workStrExpGained  = this.workStrExpGainRate * maxCycles;
         this.workDefExpGained  = this.workDefExpGainRate * maxCycles;
         this.workDexExpGained  = this.workDexExpGainRate * maxCycles;

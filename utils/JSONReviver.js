@@ -7,7 +7,9 @@
 // off to that `fromJSON` fuunction, passing in the value.
 function Reviver(key, value) {
 	var ctor;
-    //console.log("Reviver called with key: " + key + ", and value: " + value);
+    if (value == null) {
+        console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
+    }
 	if (typeof value === "object" &&
 		typeof value.ctor === "string" &&
 		typeof value.data !== "undefined") {
