@@ -131,6 +131,9 @@ initFactions = function() {
 	var TheSyndicate 			= new Faction("The Syndicate");
     TheSyndicate.setInfo(FactionInfo.TheSyndicateInfo);
 	AddToFactions(TheSyndicate);
+    var Silhouette              = new Faction("Silhouette");
+    Silhouette.setInfo(FactionInfo.SilhouetteInfo);
+    AddToFactions(Silhouette);
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
@@ -366,6 +369,15 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(thesyndicateFac);
     }
+    
+    var silhouetteFac = Factions["Silhouette"];
+    if (silhouetteFac.isBanned == false && silhouetteFac.isMember == false && 
+        (this.companyPosition.positionName == CompanyPositions.CTO.positionName || 
+         this.companyPosition.positionName == CompanyPositions.CFO.positionName || 
+         this.companyPosition.positionName == CompanyPositions.CEO.positionName) &&
+         this.money >= 15000000) {
+        invitedFactions.push(silhouetteFac);
+     }
     
     //Tian Di Hui
     var tiandihuiFac = Factions["Tian Di Hui"];
@@ -625,6 +637,10 @@ displayFactionContent = function(factionName) {
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
+            case "Silhouette":
+                hackDiv.style.display = "inline";
+                fieldWorkDiv.style.display = "inline";
+                securityWorkDiv.style.display = "none";
 			case "Tian Di Hui":
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "none";
