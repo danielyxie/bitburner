@@ -492,8 +492,8 @@ var Terminal = {
 	
 	//Contains the implementations of all possible programs
 	executeProgram: function(programName) {
+        var s = Player.getCurrentServer();
 		switch (programName) {
-            var s = Player.getCurrentServer();
 			case Programs.NukeProgram:
 				if (s.hasAdminRights) {
 					post("You already have root access to this computer. There is no reason to run NUKE.exe");
