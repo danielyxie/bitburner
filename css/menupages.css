@@ -191,6 +191,14 @@
     color: #66ff33;
 }
 
+#faction-augmentations-container p,
+#faction-augmentations-container a,
+#faction-augmentations-container ul,
+#faction-augmentations-container h1{
+    margin: 8px;
+    padding: 4px;
+}
+
 /* World */
 #world-container li {
     margin: 0 0 15px 0;

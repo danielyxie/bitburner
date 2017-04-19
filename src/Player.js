@@ -125,6 +125,7 @@ function PlayerObject() {
     this.createProgramName = "";
     
     this.timeWorked = 0;    //in ms
+    this.timeNeededToCompleteWork = 0;
     
     this.work_money_mult = 1;
 	
@@ -368,6 +369,7 @@ PlayerObject.prototype.startWork = function() {
     this.workMoneyGained = 0;
     
     this.timeWorked = 0;
+    this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
     
     var cancelButton = document.getElementById("work-in-progress-cancel-button");
     
@@ -400,7 +402,7 @@ PlayerObject.prototype.work = function(numCycles) {
     
     //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
     if (this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
-        var maxCycles = CONSTANTS.GameCyclesPer8Hours; //Number of cycles in 8 hours 
+        var maxCycles = CONSTANTS.GameCyclesPer8Hours;
         this.workHackExpGained = this.workHackExpGainRate * maxCycles;
         this.workStrExpGained  = this.workStrExpGainRate * maxCycles;
         this.workDefExpGained  = this.workDefExpGainRate * maxCycles;
@@ -483,6 +485,7 @@ PlayerObject.prototype.startFactionWork = function(faction) {
     this.workMoneyGained = 0;
     
     this.timeWorked = 0;
+    this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer20Hours;
     
     var cancelButton = document.getElementById("work-in-progress-cancel-button");
     
@@ -562,7 +565,7 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     
     //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
     if (this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
-        var maxCycles = CONSTANTS.GameCyclesPer20Hours; //Number of cycles in 20 hours 
+        var maxCycles = CONSTANTS.GameCyclesPer20Hours;
         this.workHackExpGained = this.workHackExpGainRate * maxCycles;
         this.workStrExpGained  = this.workStrExpGainRate * maxCycles;
         this.workDefExpGained  = this.workDefExpGainRate * maxCycles;
@@ -579,7 +582,7 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
                     "You have been doing this for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" + 
                     "$" + this.workMoneyGained + " (" + (this.workMoneyGainRate * cyclesPerSec).toFixed(2) + " / sec) <br><br>" + 
-                    this.workRepGained.toFixed(3) + " (" + (this.workRepGainRate * cyclesPerSec).toFixed(3) + " / sec) reputation for this company <br><br>" + 
+                    this.workRepGained.toFixed(3) + " (" + (this.workRepGainRate * cyclesPerSec).toFixed(3) + " / sec) reputation for this faction <br><br>" + 
                     this.workHackExpGained.toFixed(3) + " (" + (this.workHackExpGainRate * cyclesPerSec).toFixed(3) + " / sec) hacking exp <br><br>" + 
                     this.workStrExpGained.toFixed(3) + " (" + (this.workStrExpGainRate * cyclesPerSec).toFixed(3) + " / sec) strength exp <br>" + 
                     this.workDefExpGained.toFixed(3) + " (" + (this.workDefExpGainRate * cyclesPerSec).toFixed(3) + " / sec) defense exp <br>" + 
@@ -587,8 +590,8 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
                     this.workAgiExpGained.toFixed(3) + " (" + (this.workAgiExpGainRate * cyclesPerSec).toFixed(3) + " / sec) agility exp <br><br> " +
                     this.workChaExpGained.toFixed(3) + " (" + (this.workChaExpGainRate * cyclesPerSec).toFixed(3) + " / sec) charisma exp <br><br>" + 
                     
-                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish.<br>" + 
-                    "There is no penalty for cancelling earlier";  
+                    "You will automatically finish after working for 20 hours. You can cancel earlier if you wish.<br>" + 
+                    "There is no penalty for cancelling earlier.";  
 }
 
 
@@ -663,10 +666,11 @@ PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
 }
 
 /* Creating a Program */
-PlayerObject.prototype.startCreateProgramWork = function(programName) {
+PlayerObject.prototype.startCreateProgramWork = function(programName, time) {
     this.isWorking = true;
     
     this.timeWorked = 0;
+    this.timeNeededToCompleteWork = time;
     
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";    
@@ -691,18 +695,14 @@ PlayerObject.prototype.createProgramWork = function(numCycles) {
     this.timeWorked += Engine._idleSpeed * numCycles;
     var programName = this.createProgramName;
     
-    //If timeWorked == 10 hours, then finish
-    //Creating a program will take a flat 10 hours for now. We can make this variable based
-    //on skill level later 
-    var timeToComplete = 36000000;
-    if (this.timeWorked >= timeToComplete) {
+    if (this.timeWorked >= this.timeNeededToCompleteWork) {
         this.finishCreateProgramWork(false, programName);
     }
     
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working on coding " + programName + ".<br><br> " + 
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "The program is " + (this.timeWorked / timeToComplete).toFixed(2) + "% complete. <br>" + 
+                    "The program is " + (this.timeWorked / this.timeNeededToCompleteWork * 100).toFixed(2) + "% complete. <br>" + 
                     "If you cancel, you will lose all of your progress.";  
 }
 

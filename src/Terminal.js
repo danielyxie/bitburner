@@ -493,12 +493,13 @@ var Terminal = {
 	//Contains the implementations of all possible programs
 	executeProgram: function(programName) {
 		switch (programName) {
+            var s = Player.getCurrentServer();
 			case Programs.NukeProgram:
-				if (Player.getCurrentServer().hasAdminRights) {
+				if (s.hasAdminRights) {
 					post("You already have root access to this computer. There is no reason to run NUKE.exe");
 				} else {
-					if (Player.getCurrentServer().openPortCount >= Player.getCurrentServer().numOpenPortsRequired) {
-						Player.getCurrentServer().hasAdminRights = true;
+					if (s.openPortCount >= Player.getCurrentServer().numOpenPortsRequired) {
+						s.hasAdminRights = true;
 						post("NUKE successful! Gained root access to " + Player.getCurrentServer().hostname);
 						//TODO Make this take time rather than be instant
 					} else {
@@ -506,6 +507,61 @@ var Terminal = {
 					}
 				}
 				break;
+            case Programs.BruteSSHProgram:
+                if (s.hasAdminRights == false) {
+                    post("Permission denied. You do not have root access to this computer.");
+                } else if (s.sshPortOpen) {
+                    post("SSH Port (22) is already open!");
+                } else {
+                    s.sshPortOpen = true;
+                    post("Opened SSH Port(22)!")
+                    ++s.openPortCount;
+                }
+                break;
+            case Programs.FTPCrackProgram:
+                if (s.hasAdminRights == false) {
+                    post("Permission denied. You do not have root access to this computer.");
+                } else if (s.ftpPortOpen) {
+                    post("FTP Port (21) is already open!");
+                } else {
+                    s.ftpPortOpen = true;
+                    post("Opened FTP Port (21)!");
+                    ++s.openPortCount;
+                }
+                break;
+            case Programs.RelaySMTPProgram:
+                if (s.hasAdminRights == false) {
+                    post("Permission denied. You do not have root access to this computer.");
+                } else if (s.smtpPortOpen) {
+                    post("SMTP Port (25) is already open!");
+                } else {
+                    s.smtpPortOpen = true;
+                    post("Opened SMTP Port (25)!");
+                    ++s.openPortCount;
+                }
+                break;
+            case Programs.HTTPWormProgram:
+                if (s.hasAdminRights == false) {
+                    post("permission denied. You do not have root access to this computer.");
+                } else if (s.httpPortOpen) {
+                    post("HTTP Port (80) is already open!");
+                } else {
+                    s.httpPortOpen = true;
+                    post("Opened HTTP Port (80)!");
+                    ++s.openPortCount;
+                }
+                break;
+            case Programs.SQLInjectProgram:
+                if (s.hasAdminRights == false) {
+                    post("permission denied. You do not have root access to this computer.");
+                } else if (s.sqlPortOpen) {
+                    post("SQL Port (1433) is already open!");
+                } else {
+                    s.sqlPortOpen = true;
+                    post("Opened SQL Port (1433)!");
+                    ++s.openPortCount;
+                }
+                break;
 			default:
 				post("Executable not found");
 				return;

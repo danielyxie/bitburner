@@ -8,6 +8,8 @@ Programs = {
     SQLInjectProgram: "SQLInject.exe",
 }
 
+//TODO Right now the times needed to complete work are hard-coded...
+//maybe later make this dependent on hacking level or something
 function displayCreateProgramContent() {
     var portHackALink   = document.getElementById("create-program-porthack");
     var bruteSshALink   = document.getElementById("create-program-brutessh");
@@ -38,7 +40,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 50) {
         bruteSshALink.style.display = "block";
         bruteSshALink.addEventListener("click", function() {
-            createProgram(Programs.BruteSSHProgram);
+            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerHour);
         });
     }
     
@@ -47,7 +49,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 125) {
         ftpCrackALink.style.display = "block";
         ftpCrackALink.addEventListener("click", function() {
-            createProgram(Programs.FTPCrackProgram);
+            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPer4Hours);
         });
     }
     
@@ -56,7 +58,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 300) {
         relaySmtpALink.style.display = "block";
         relaySmtpAlink.addEventListener("click", function() {
-            createProgram(Programs.RelaySMTPProgram);
+            Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer8Hours);
         });
     }
     
@@ -65,7 +67,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 500) {
         httpWormALink.style.display = "block";
         httpWormALink.addEventListener("click", function() {
-            createProgram(Programs.HTTPWormProgram);
+            Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer10Hours);
         });
     }
     
@@ -74,11 +76,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 750) {
         sqlInjectALink.style.display = "block";
         sqlInjectALink.addEventListener("click", function() {
-            createProgram(Programs.SQLInjectProgram);
+            Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer10Hours);
         });
     }
-}
-
-function createProgram(programName) {
-    Player.startCreateProgramWork(programName);
 }

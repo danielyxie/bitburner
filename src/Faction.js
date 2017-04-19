@@ -445,7 +445,7 @@ displayFactionContent = function(factionName) {
 	var faction = Factions[factionName];
     document.getElementById("faction-name").innerHTML = factionName;
     document.getElementById("faction-info").innerHTML = faction.info;
-    document.getElementById("faction-reputation").innerHTML = "Reputation: " + faction.playerReputation;
+    document.getElementById("faction-reputation").innerHTML = "Reputation: " + faction.playerReputation.toFixed(3);
 	
 	var hackDiv 			= document.getElementById("faction-hack-div");
 	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
@@ -649,6 +649,9 @@ displayFactionAugmentations = function(factionName) {
     var faction = Factions[factionName];
     
     var augmentationsList = document.getElementById("faction-augmentations-list");
+    while (augmentationsList.firstChild) {
+        augmentationsList.removeChild(augmentationsList.firstChild);
+    }
     
     for (var i = 0; i < faction.augmentations.length; ++i) {
         var aug = Augmentations[faction.augmentations[i]];
@@ -660,13 +663,14 @@ displayFactionAugmentations = function(factionName) {
         if (faction.playerReputation >= (aug.baseRepRequirement * faction.augmentationRepRequirementMult)) {
             aElem.setAttribute("class", "a-link-button");
             pElem.innerHTML = "UNLOCKED";
-            //Might need to set color? Should be the green by default though...
             //TODO Event listener for button to purchase augmentation
         } else {
             aElem.setAttribute("class", "a-link-button-inactive");
             pElem.innerHTML = "LOCKED";
-            pElem.style.color = red;
+            pElem.style.color = "red";
         }
+        aElem.style.display = "inline-block";
+        pElem.style.display = "inline-block";
         aElem.innerHTML = aug.name;
         
         span.appendChild(aElem);

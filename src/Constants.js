@@ -28,6 +28,9 @@ CONSTANTS = {
     MillisecondsPer8Hours: 28800000,
     GameCyclesPer8Hours: 28800000 / 200,
     
+    MillisecondsPer4Hours: 14400000,
+    GameCyclesPer4Hours: 14400000 / 200,
+    
     MillisecondsPerHour: 3600000,
     GameCyclesPerHour: 3600000 / 200,
     
