@@ -25,7 +25,7 @@ Augmentation.prototype.addToFactions = function(factionList) {
         var faction = Factions[factionList[i]];
         if (faction == null) {
             console.log("Error: Could not find faction with this name:" + factionList[i]);
-            return;
+            continue;
         }
         faction.augmentations.push(this.name);
     }

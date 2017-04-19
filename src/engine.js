@@ -591,8 +591,7 @@ var Engine = {
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
         updateDisplays: 5,                  //Update displays such as Active Scripts display and character display
         serverGrowth: 450,                  //Process server growth every minute and a half
-        //checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
-        checkFactionInvitations: 50,
+        checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
     },
     
     decrementAllCounters: function(numCycles = 1) {

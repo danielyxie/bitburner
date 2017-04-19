@@ -1,28 +1,6 @@
 //Contains the "information" property for all the Factions, which is just a description
 //of each faction
 FactionInfo = {
-    //Text that is displayed when the 'help' command is ran in Terminal
-    HelpText:   "analyze                Get statistics and information about current machine\n" + 
-                "clear                  Clear all text on the terminal\n" +
-                "cls                    See 'clear' command\n" +
-                "connect [ip/hostname]  Connects to the machine given by its IP or hostname\n" + 
-                "free                   Check the machine's memory usage\n" + 
-                "hack                   Hack the current machine\n" +
-                "help                   Display this list\n" + 
-                "hostname               Displays the hostname of the machine\n" + 
-                "ifconfig               Displays the IP address of the machine\n" +
-                "kill [script name]     Stops a script that is running\n" +
-                "ls                     Displays all programs and scripts on the machine\n" + 
-                "nano [script name]     Text editor - Open up and edit a script\n" + 
-                "netstat                Displays all available network connections\n" +  
-                "ps                     Display all scripts that are currently running\n" + 
-                "rm                     Delete a script/program from the machine. (WARNING: Permanent)\n" + 
-                "run [script/program]   Execute a program or a script\n" + 
-                "scan                   See 'netstat' command\n" + 
-                "telnet [ip/hostname]   See 'connect' command\n" +
-                "top                    Display all running scripts and their RAM usage\n",
-				
-	
 	//Endgame
 	IlluminatiInfo: "Humanity never changes. No matter how civilized society becomes, it will eventually fall back\n" + 
                     "into chaos. And out of this chaos, we will lead them to order.\n" + 
@@ -49,19 +27,22 @@ FactionInfo = {
 				  "transporation on an unprecendented scale, in ways that no other company can.\n\n" + 
 				  "In its labs and factories and on the ground with customers, MegaCorp is ushering in a new era for the world.",
 				  
-	BachmanAndAssociatesInfo:
+	BachmanAndAssociatesInfo: "TODO",
 	
-	BladeIndustriesInfo:
+	BladeIndustriesInfo: "TODO",
 	
 	NWOInfo: "The human being created civilization not because of willingness but of a need to be assimilated into higher orders of structure and meaning.",
 	
-	ClarkeIncorporatedInfo:
+	ClarkeIncorporatedInfo: "TODO",
 	
 	OmniTekIncorporatedInfo: "Simply put, our mission is to design and build robots that make a difference",
 	
-	FourSigmaInfo:
+	FourSigmaInfo: "TODO",
 	
-	KuaiGongInternationalInfo:
+	KuaiGongInternationalInfo: "TODO",
+    
+    //Other Corporations
+    FulcrumSecretTechnologiesInfo: "TODO",
 	
 	//Hacker groups
 	BitRunnersInfo: "Our entire lives are controlled by bits. All of our actions, our thoughts, our personal information. \n"+
@@ -79,56 +60,56 @@ FactionInfo = {
 				   "So much pain. So many lives. Their darkness must end.", 
 	
 	NiteSecInfo:
-"                          __..__               "
-"                      _.nITESECNIt.            "
-"                   .-'NITESECNITESEc.          "
-"                 .'    NITESECNITESECn         "
-"                /       NITESECNITESEC;        "
-"               :        :NITESECNITESEC;       "
-"               ;       @ NITESECNITESECN       "
-"              :    _,   ,N'ITESECNITESEC       "
-"              : .+''`,  :    `NITESECNIT       "
-"               ) /),     `-,-=,NITESECNI       "
-"              /  `         ,-;|NITESECN;       "
-"             /     _.'(o)  '-';NITESECN        "
-"            (  ,   o       ,-''`^NITE'         "
-"             )`            :`.    .'           "
-"             )-.           ;  `- /             "
-"             \         _.-'     :              "
-"             (     _.-'   \.     \             "
-"              \------.      \     \            "
-"                      \.     \     \           "
-"                   bug  \       _.nIt          "
-"                         \ _.nITESECNi         "
-"                         nITESECNIT^' \        "
-"                         NITE^' ___    \       "
-"                        /    .gP''''Tp. \      "
-"                       :    d'     .  `b \     "
-"                       ;   d'       o  `b ;    "
-"                      /   d;            `b|    "
-"                     /,   $;          @  `:    "
-"                    /'    $$               ;   "
-"                  .'      $$b         (o)  |   "
-"                .'       d$$$;             :   "
-"               /       .d$$$$;          ,   ;  "
-"              d      .d$$$$$$$          $   |  "
-"             :bp.__.g$$$$$$$$$         :$   ;  "
-"             $$$$$$$$$$$$$$$$$         $$b :   "
+"                          __..__               <br>" +
+"                      _.nITESECNIt.            <br>" +
+"                   .-'NITESECNITESEc.          <br>" +
+"                 .'    NITESECNITESECn         <br>" +
+"                /       NITESECNITESEC;        <br>" +
+"               :        :NITESECNITESEC;       <br>" +
+"               ;       @ NITESECNITESECN       <br>" +
+"              :    _,   ,N'ITESECNITESEC       <br>" +
+"              : .+''`,  :    `NITESECNIT       <br>" +
+"               ) /),     `-,-=,NITESECNI       <br>" +
+"              /  `         ,-;|NITESECN;       <br>" +
+"             /     _.'(o)  '-';NITESECN        <br>" +
+"            (  ,   o       ,-''`^NITE'         <br>" +
+"             )`            :`.    .'           <br>" +
+"             )-.           ;  `- /             <br>" +
+"             \         _.-'     :              <br>" +
+"             (     _.-'   \.     \             <br>" +
+"              \------.      \     \            <br>" +
+"                      \.     \     \           <br>" +
+"                   bug  \       _.nIt          <br>" +
+"                         \ _.nITESECNi         <br>" +
+"                         nITESECNIT^' \        <br>" +
+"                         NITE^' ___    \       <br>" +
+"                        /    .gP''''Tp. \      <br>" +
+"                       :    d'     .  `b \     <br>" +
+"                       ;   d'       o  `b ;    <br>" +
+"                      /   d;            `b|    <br>" +
+"                     /,   $;          @  `:    <br>" +
+"                    /'    $$               ;   <br>" +
+"                  .'      $$b         (o)  |   <br>" +
+"                .'       d$$$;             :   <br>" +
+"               /       .d$$$$;          ,   ;  <br>" +
+"              d      .d$$$$$$$          $   |  <br>" +
+"             :bp.__.g$$$$$$$$$         :$   ;  <br>" +
+"             $$$$$$$$$$$$$$$$$         $$b :   <br>",
 	
 	//City factions, essentially governments
-	ChongqingInfo: "",
-	Sector12Info: "",
-	HongKongInfo: "",
-	AevumInfo: "",
-    IshimaInfo: "",
-	VolhavenInfo: "",
+	ChongqingInfo: "TODO",
+	Sector12Info: "TODO",
+	HongKongInfo: "TODO",
+	AevumInfo: "TODO",
+    IshimaInfo: "TODO",
+	VolhavenInfo: "TODO",
 	
 	//Criminal Organizations/Gangs
 	SpeakersForTheDeadInfo:	"It is better to reign in hell than to serve in heaven.",
 	
 	DarkArmyInfo: "The World doesn't care about right or wrong. It's all about power.",
 	
-	TheSyndicateInfo: "",
+	TheSyndicateInfo: "TODO",
 	
 	Silhouette: "Corporations are so big, you don't even know who you're working for. That's terror. Terror built into the system.",
 	

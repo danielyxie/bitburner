@@ -1,8 +1,5 @@
 /* Pop up Purchase Server Box */
 function travelBoxInit() {
-    if (Engine.Debug) {
-        console.log("Travel box Initialized");
-    }
     var cancelButton = document.getElementById("travel-box-cancel");
     
     //Close Dialog box

@@ -1241,7 +1241,7 @@ initLocationButtons = function() {
     });
     
     purchaseTor.addEventListener("click", function() {
-        purchaseTor();
+        purchaseTorRouter();
         return false;
     });
     
@@ -1289,7 +1289,7 @@ travelToCity = function(destCityName, cost) {
     Engine.loadWorldContent();
 }
 
-purchaseTor = function() {
+purchaseTorRouter = function() {
     if (CONSTANTS.TorRouterCost > Player.money) {
         dialogBoxCreate("You cannot afford to purchase the Tor router");
         return;

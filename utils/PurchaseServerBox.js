@@ -1,8 +1,5 @@
 /* Pop up Purchase Server Box */
 function purchaseServerBoxInit() {
-    if (Engine.Debug) {
-        console.log("Purchase Server box Initialized");
-    }
     var cancelButton = document.getElementById("purchase-server-box-cancel");
     
     //Close Dialog box

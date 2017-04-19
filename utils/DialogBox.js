@@ -1,8 +1,5 @@
 /* Pop up Dialog Box */
 function dialogBoxInit() {
-    if (Engine.Debug) {
-        console.log("Dialog Box Initialized");
-    }
     var closeButton = document.getElementById("dialog-box-close-button");
     var dialogBox = document.getElementById("dialog-box-container");
     

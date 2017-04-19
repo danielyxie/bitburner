@@ -396,7 +396,7 @@ initForeignServers = function() {
     //"Low level" targets
     var FoodNStuffServer = new Server();
     FoodNStuffServer.init(createRandomIp(), "foodnstuff", "Food N Stuff Supermarket", true, false, false, false, 2);
-    FoodNStuffServer.setHackingParameters(1, 500000, 10, 20);
+    FoodNStuffServer.setHackingParameters(1, 500000, 10, 5);
     FoodNStuffServer.setPortProperties(0);
     AddToAllServers(FoodNStuffServer);
     
@@ -408,7 +408,7 @@ initForeignServers = function() {
     
     var JoesGunsServer = new Server();
     JoesGunsServer.init(createRandomIp(), "joesguns", "Joe's Guns", true, false, false, false, 8);
-    JoesGunsServer.setHackingParameters(10, 200000, 20, 20);
+    JoesGunsServer.setHackingParameters(10, 200000, 20, 25);
     JoesGunsServer.setPortProperties(0);
     AddToAllServers(JoesGunsServer);
     
@@ -456,7 +456,7 @@ initForeignServers = function() {
     
     var MaxHardwareServer = new Server();
     MaxHardwareServer.init(createRandomIp(), "max-hardware", "Max Hardware Store", true, false, false, false, 8);
-    MaxHardwareServer.setHackingParameters(80, 150000, 15, 10);
+    MaxHardwareServer.setHackingParameters(80, 150000, 15, 25);
     MaxHardwareServer.setPortProperties(1);
     AddToAllServers(MaxHardwareServer);
     

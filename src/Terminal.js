@@ -193,7 +193,6 @@ var Terminal = {
 					post("Incorrect usage of analyze command. Usage: analyze"); return;
 				}
                 //Analyze the current server for information
-                console.log("analyze terminal command called");
                 Terminal.analyzeFlag = true;
                 post("Analyzing system...");
                 hackProgressPost("Time left:");
@@ -201,7 +200,6 @@ var Terminal = {
                 Player.analyze();
                 
                 //Disable terminal
-                console.log("Disabling terminal");
                 document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                 $('input[class=terminal-input]').prop('disabled', true);
 				break;
@@ -210,7 +208,6 @@ var Terminal = {
 				if (commandArray.length != 1) {
 					post("Incorrect usage of clear/cls command. Usage: clear/cls"); return;
 				}
-				console.log("cls/clear terminal command called");
 				$("#terminal tr:not(:last)").remove();
 				postNetburnerText();
 				break;	
@@ -240,7 +237,6 @@ var Terminal = {
 				if (commandArray.length != 1) {
 					post("Incorrect usage of free command. Usage: free"); return;
 				}
-				console.log("free terminal command called");
                 post("Total: " + Player.getCurrentServer().maxRam.toString() + " GB");
                 post("Used: " + Player.getCurrentServer().ramUsed.toString() + " GB");
                 post("Available: " + (Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed).toString() + " GB");
@@ -264,7 +260,6 @@ var Terminal = {
 					Player.hack();
 					
 					//Disable terminal
-					console.log("Disabling terminal");
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
 				}
@@ -368,7 +363,6 @@ var Terminal = {
                     post("Incorrect usage of netstat/scan command. Usage: netstat/scan"); return;
                 }
 				//Displays available network connections using TCP
-                console.log("netstat/scan terminal command called");
                 post("Hostname             IP                   Root Access");
                 for (var i = 0; i < Player.getCurrentServer().serversOnNetwork.length; i++) {
                     //Add hostname
@@ -503,7 +497,6 @@ var Terminal = {
 				if (Player.getCurrentServer().hasAdminRights) {
 					post("You already have root access to this computer. There is no reason to run NUKE.exe");
 				} else {
-					console.log("Running NUKE executable");
 					if (Player.getCurrentServer().openPortCount >= Player.getCurrentServer().numOpenPortsRequired) {
 						Player.getCurrentServer().hasAdminRights = true;
 						post("NUKE successful! Gained root access to " + Player.getCurrentServer().hostname);

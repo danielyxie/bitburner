@@ -796,7 +796,7 @@ initCompanies = function() {
     AddToCompanies(AevumPolice);
     
     var SysCoreSecurities = new Company();
-    SysCoreSecurities.init(Locations.VolhavenSysCoreSecurities, 1.3, 1.3, 75);
+    SysCoreSecurities.init(Locations.VolhavenSysCoreSecurities, 1.3, 1.3, 125);
     SysCoreSecurities.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -826,7 +826,7 @@ initCompanies = function() {
     AddToCompanies(NetLinkTechnologies);
     
     var CarmichaelSecurity = new Company();
-    CarmichaelSecurity.init(Locations.Sector12CarmichaelSecurity, 1.2, 1.2, 100);
+    CarmichaelSecurity.init(Locations.Sector12CarmichaelSecurity, 1.2, 1.2, 75);
     CarmichaelSecurity.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,

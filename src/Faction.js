@@ -2,7 +2,7 @@
 function Faction(name) {
 	this.name 				= name;
     this.augmentations 		= [];   //Name of augmentation only
-	this.information 		= "";	//Introductory/informational text about the faction
+	this.info 		        = "";	//Introductory/informational text about the faction
     
     //Player-related properties for faction
 	this.isMember 			= false; 	//Whether player is member
@@ -19,8 +19,8 @@ Faction.prototype.setAugmentationMultipliers = function(price, rep) {
     this.augmentationRepRequirementMult = rep;
 }
 
-Faction.prototype.setInformation = function(info) {
-	this.information = info;
+Faction.prototype.setInfo = function(inf) {
+	this.info = inf;
 }
 
 Faction.prototype.toJSON = function() {
@@ -47,71 +47,98 @@ AddToFactions = function(faction) {
 initFactions = function() {
 	//Endgame
 	var Illuminati 				= new Faction("Illuminati");
+    Illuminati.setInfo(FactionInfo.IlluminatiInfo);
 	AddToFactions(Illuminati);
 	var Daedalus 				= new Faction("Daedalus");
+    Daedalus.setInfo(FactionInfo.DaedalusInfo);
 	AddToFactions(Daedalus);
 	var Covenant 				= new Faction("The Covenant");
+    Covenant.setInfo(FactionInfo.CovenantInfo);
 	AddToFactions(Covenant);
 	
 	//Megacorporations, each forms its own faction
 	var ECorp 					= new Faction("ECorp");
+    ECorp.setInfo(FactionInfo.ECorpInfo);
 	AddToFactions(ECorp);
 	var MegaCorp 				= new Faction("MegaCorp");
+    MegaCorp.setInfo(FactionInfo.MegaCorpInfo);
 	AddToFactions(MegaCorp);
 	var BachmanAndAssociates 	= new Faction("Bachman & Associates");
+    BachmanAndAssociates.setInfo(FactionInfo.BachmanAndAssociatesInfo);
 	AddToFactions(BachmanAndAssociates);
 	var BladeIndustries 		= new Faction("Blade Industries");
+    BladeIndustries.setInfo(FactionInfo.BladeIndustriesInfo);
 	AddToFactions(BladeIndustries);
 	var NWO 					= new Faction("NWO");
+    NWO.setInfo(FactionInfo.NWOInfo);
 	AddToFactions(NWO);
 	var ClarkeIncorporated 		= new Faction("Clarke Incorporated");
+    ClarkeIncorporated.setInfo(FactionInfo.ClarkeIncorporatedInfo);
 	AddToFactions(ClarkeIncorporated);
 	var OmniTekIncorporated 	= new Faction("OmniTek Incorporated");
+    OmniTekIncorporated.setInfo(FactionInfo.OmniTekIncorporatedInfo);
 	AddToFactions(OmniTekIncorporated);
 	var FourSigma 				= new Faction("Four Sigma");
+    FourSigma.setInfo(FactionInfo.FourSigmaInfo);
 	AddToFactions(FourSigma);
 	var KuaiGongInternational 	= new Faction("KuaiGong International");
+    KuaiGongInternational.setInfo(FactionInfo.KuaiGongInternationalInfo);
 	AddToFactions(KuaiGongInternational);
     
     //Other corporations
     var FulcrumTechnologies     = new Faction("Fulcrum Secret Technologies");
+    FulcrumTechnologies.setInfo(FactionInfo.FulcrumSecretTechnologiesInfo);
     AddToFactions(FulcrumTechnologies);
 	
 	//Hacker groups
 	var BitRunners 				= new Faction("BitRunners");
+    BitRunners.setInfo(FactionInfo.BitRunnersInfo);
 	AddToFactions(BitRunners);
 	var BlackHand				= new Faction("The Black Hand");
+    BlackHand.setInfo(FactionInfo.BlackHandInfo);
 	AddToFactions(BlackHand);
 	var NiteSec 				= new Faction("NiteSec");
+    NiteSec.setInfo(FactionInfo.NiteSecInfo);
 	AddToFactions(NiteSec);
 	
 	//City factions, essentially governments
 	var Chongqing 				= new Faction("Chongqing");
+    Chongqing.setInfo(FactionInfo.ChongqingInfo);
 	AddToFactions(Chongqing);
 	var Sector12 				= new Faction("Sector-12");
+    Sector12.setInfo(FactionInfo.Sector12Info);
 	AddToFactions(Sector12);
 	var NewTokyo				= new Faction("New Tokyo");
+    NewTokyo.setInfo(FactionInfo.NewTokyoInfo);
 	AddToFactions(NewTokyo);
 	var Aevum 				    = new Faction("Aevum");
+    Aevum.setInfo(FactionInfo.AevumInfo);
 	AddToFactions(Aevum);
     var Ishima                 	= new Faction("Ishima");
+    Ishima.setInfo(FactionInfo.IshimaInfo);
 	AddToFactions(Ishima);
 	var Volhaven 				= new Faction("Volhaven");
+    Volhaven.setInfo(FactionInfo.VolhavenInfo);
 	AddToFactions(Volhaven);
 	
 	//Criminal Organizations/Gangs
 	var SpeakersForTheDead		= new Faction("Speakers for the Dead"); 
+    SpeakersForTheDead.setInfo(FactionInfo.SpeakersForTheDeadInfo);
 	AddToFactions(SpeakersForTheDead);
 	var DarkArmy				= new Faction("The Dark Army");
+    DarkArmy.setInfo(FactionInfo.DarkArmyInfo);
 	AddToFactions(DarkArmy);
 	var TheSyndicate 			= new Faction("The Syndicate");
+    TheSyndicate.setInfo(FactionInfo.TheSyndicateInfo);
 	AddToFactions(TheSyndicate);
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
 	var TianDiHui				= new Faction("Tian Di Hui");	//Society of the Heaven and Earth
+    TianDiHui.setInfo(FactionInfo.TianDiHuiInfo);
 	AddToFactions(TianDiHui);
 	var CyberSec 				= new Faction("CyberSec");
+    CyberSec.setInfo(FactionInfo.CyberSecInfo);
 	AddToFactions(CyberSec);
 }
 
@@ -351,10 +378,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //CyberSec
     var cybersecFac = Factions["CyberSec"];
-    console.log(this.hacking_skill + " " + cybersecFac.isMember + " " + cybersecFac.isBanned);
     if (cybersecFac.isBanned == false && cybersecFac.isMember == false && 
-        this.hacking_skill >= 5) {
-        console.log("Qualified for CyberSec");
+        this.hacking_skill >= 50) {
         invitedFactions.push(cybersecFac);
     }
     
@@ -418,6 +443,9 @@ joinFaction = function(faction) {
 //Displays the HTML content for a specific faction
 displayFactionContent = function(factionName) {
 	var faction = Factions[factionName];
+    document.getElementById("faction-name").innerHTML = factionName;
+    document.getElementById("faction-info").innerHTML = faction.info;
+    document.getElementById("faction-reputation").innerHTML = "Reputation: " + faction.playerReputation;
 	
 	var hackDiv 			= document.getElementById("faction-hack-div");
 	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
@@ -461,8 +489,13 @@ displayFactionContent = function(factionName) {
     
     newPurchaseAugmentationsButton.addEventListener("click", function() {
         Engine.hideAllContent();
-        Engine.Display.factionAugmentationsContent.style.visiblility = "visible";
-        document.getElementById("faction-augmentations-back-button").addEventListener("click", function() {
+        Engine.Display.factionAugmentationsContent.style.visibility = "visible";
+        
+        var backButton = document.getElementById("faction-augmentations-back-button");
+        var newBackButton = backButton.cloneNode(true);
+        backButton.parentNode.replaceChild(newBackButton, backButton);
+        newBackButton.addEventListener("click", function() {
+            Engine.loadFactionContent();
             displayFactionContent(factionName);
             return false; 
         });
@@ -617,8 +650,8 @@ displayFactionAugmentations = function(factionName) {
     
     var augmentationsList = document.getElementById("faction-augmentations-list");
     
-    for (var i = 0; i < Player.augmentations.length; ++i) {
-        var aug = Augmentations[Player.augmentations[i]];
+    for (var i = 0; i < faction.augmentations.length; ++i) {
+        var aug = Augmentations[faction.augmentations[i]];
         var item = document.createElement("li");
         var span = document.createElement("span");
         var aElem = document.createElement("a");

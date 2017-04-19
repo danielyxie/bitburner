@@ -1,8 +1,5 @@
 /* Faction Invitation Pop-up box */
 function factionInvitationBoxInit() {
-    if (Engine.Debug) {
-        console.log("Faction Invitation Box Initialized");
-    }
     var cancelButton = document.getElementById("faction-invitation-box-no");
     
     //Close Dialog box

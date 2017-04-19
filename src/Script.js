@@ -123,7 +123,7 @@ Script.prototype.updateNumInstructions = function() {
 //Ideally, I would want it to be based on type of instructions as well
 // 	(e.g. hack() costs a lot but others dont)
 Script.prototype.updateRamUsage = function() {
-	this.ramUsage = this.numInstructions * .2;
+	this.ramUsage = this.numInstructions * .25;
 }
 
 Script.prototype.log = function(txt) {

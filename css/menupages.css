@@ -75,6 +75,7 @@
 	height: 100%;
 	margin-left: 10%;
 	width: 99%;
+    overflow-y: scroll;
 }
 
 .active-scripts-list>li h2{
@@ -137,7 +138,7 @@
     cursor: default;
 }
 
-/* Factions */
+/* Factions and Faction (Single Faction page) */
 #factions-container {
     position: fixed;
     padding-top: 10px;
@@ -172,6 +173,11 @@
 
 #faction-securitywork-button-div, #faction-securitywork-text-div {
 	display:inline-block;
+}
+
+#faction-container p {
+    padding: 6px;
+    margin: 6px;
 }
 
 /* Faction Augmentations */

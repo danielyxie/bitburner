@@ -67,6 +67,7 @@ TESTING TODO:
         
         Seems to work fine
 Tasks TODO:
+    Add Silhouette Criminal Faction 
     Factions Info page isn't formatted correctly
     
     Augmentations that decrease time to make programs

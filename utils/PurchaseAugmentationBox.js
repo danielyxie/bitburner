@@ -1,8 +1,5 @@
 /* Pop up Purchase Augmentation Box */
 function purchaseAugmentationBoxInit() {
-    if (Engine.Debug) {
-        console.log("Purchase Augmentation Box Initialized");
-    }
     var cancelButton = document.getElementById("purchase-augmentation-box-cancel");
     
     //Close Dialog box
