@@ -34,6 +34,10 @@ CONSTANTS = {
     MillisecondsPerHour: 3600000,
     GameCyclesPerHour: 3600000 / 200,
     
+    FactionWorkHacking: "Faction Hacking Work",
+    FactionWorkField: "Faction Field Work",
+    FactionWorkSecurity: "Faction Security Work",
+    
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   "analyze                Get statistics and information about current machine <br>" + 
                 "clear                  Clear all text on the terminal <br>" +

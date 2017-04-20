@@ -469,31 +469,31 @@ initForeignServers = function() {
     //Gyms
     var CrushFitnessGymServer = new Server();
     CrushFitnessGymServer.init(createRandomIp(), "crush-fitness", "Crush Fitness", true, false, false, false, 4);
-    CrushFitnessGymServer.setHackingParameters(250, 500000, 40, 25);
+    CrushFitnessGymServer.setHackingParameters(250, 300000, 40, 25);
     CrushFitnessGymServer.setPortProperties(2);
     AddToAllServers(CrushFitnessGymServer);
     
     var IronGymServer = new Server();
     IronGymServer.init(createRandomIp(), "iron-gym", "Iron Gym Network", true, false, false, false, 4);
-    IronGymServer.setHackingParameters(100, 250000, 30, 15);
+    IronGymServer.setHackingParameters(100, 150000, 30, 15);
     IronGymServer.setPortProperties(1);
     AddToAllServers(IronGymServer);
     
     var MilleniumFitnessGymServer = new Server();
     MilleniumFitnessGymServer.init(createRandomIp(), "millenium-fitness", "Millenium Fitness Network", true, false, false, false, 8);
-    MilleniumFitnessGymServer.setHackingParameters(500, 600000, 50, 30);
+    MilleniumFitnessGymServer.setHackingParameters(500, 400000, 50, 30);
     MilleniumFitnessGymServer.setPortProperties(3);
     AddToAllServers(MilleniumFitnessGymServer);
     
     var PowerhouseGymServer = new Server();
     PowerhouseGymServer.init(createRandomIp(), "powerhouse-fitness", "Powerhouse Fitness", true, false, false, false, 8);
-    PowerhouseGymServer.setHackingParameters(1000, 2000000, 60, 50);
+    PowerhouseGymServer.setHackingParameters(1000, 1000000, 60, 50);
     PowerhouseGymServer.setPortProperties(5);
     AddToAllServers(PowerhouseGymServer);
 
     var SnapFitnessGymServer = new Server();
     SnapFitnessGymServer.init(createRandomIp(), "snap-fitness", "Snap Fitness", true, false, false, false, 8);
-    SnapFitnessGymServer.setHackingParameters(750, 1000000, 50, 45);
+    SnapFitnessGymServer.setHackingParameters(750, 750000, 50, 45);
     SnapFitnessGymServer.setPortProperties(4);
     AddToAllServers(SnapFitnessGymServer);
 	
@@ -643,7 +643,7 @@ processServerGrowth = function(numCycles) {
 			var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage;
 			
 			//Apply serverGrowth for the calculated number of growth cycles
-			var serverGrowth = Math.pow(1.0001, numServerGrowthCyclesAdjusted);
+			var serverGrowth = Math.pow(1.0004, numServerGrowthCyclesAdjusted);
 			//console.log("serverGrowth ratio: " + serverGrowth);
 			server.moneyAvailable *= serverGrowth;
 		}
