@@ -370,6 +370,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         invitedFactions.push(thesyndicateFac);
     }
     
+    //Silhouette
     var silhouetteFac = Factions["Silhouette"];
     if (silhouetteFac.isBanned == false && silhouetteFac.isMember == false && 
         (this.companyPosition.positionName == CompanyPositions.CTO.positionName || 

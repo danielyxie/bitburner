@@ -207,6 +207,14 @@ initAugmentations = function() {
                                   "Ishima", "Volhaven"]);
     AddToAugmentations(SpeechProcessor);
     
+    TITN41Injection = new Augmentation("TITN-41 Gene-Modification Injection");
+    TITN41Injection.setRequirements(150000, 75000000);
+    TITN41Injection.setInfo("TITN is a series of viruses that targets and alters the sequences of human DNA in genes that \n" + 
+                            "control personality. The TITN-41 strain alters these genes so that the subject becomes more \n " + 
+                            "outgoing and socialable. \n\n" + 
+                            "This augmentation increases the player's charisma and charisma experience gain rate by 15%");
+    TITN41Injection.addToFactions(["Silhouette"]);            
+    
     var EnhancedSocialInteractionImplant = new Augmentation("Enhanced Social Interaction Implant");
     EnhancedSocialInteractionImplant.setRequirements(750000, 500000000);
     EnhancedSocialInteractionImplant.setInfo("A cranial implant that greatly assists in the user's ability to analyze social situations\n" + 
