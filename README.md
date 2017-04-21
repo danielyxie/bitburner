@@ -66,8 +66,10 @@ TESTING TODO:
         Should add something where if you click it in the "Active Scripts" GUI you can see the logs too        
         
         Seems to work fine
+        
+        
 Tasks TODO:
-    Add Silhouette Criminal Faction 
+    Adding augmentations for Silhouette fac
     Factions Info page isn't formatted correctly
     
     Augmentations that decrease time to make programs
