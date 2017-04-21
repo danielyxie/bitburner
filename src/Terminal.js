@@ -343,7 +343,7 @@ var Terminal = {
 				
 				//Cannot edit scripts that are currently running
 				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
-					if (filename == Player.getCurrentServer().runningScripts[i].filename) {
+					if (filename == Player.getCurrentServer().runningScripts[i]) {
 						post("Cannot open/edit scripts that are currently running!"); return;
 					}
 				}

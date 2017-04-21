@@ -23,6 +23,7 @@ purchaseServer = function(ram, cost) {
     //Connect new server to home computer
     var homeComputer = Player.getHomeComputer();
     homeComputer.serversOnNetwork.push(newServ.ip);
+    newServ.serversOnNetwork.push(homeComputer.ip);
     
     Player.money -= cost; 
     

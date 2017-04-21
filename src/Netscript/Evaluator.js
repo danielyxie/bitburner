@@ -27,7 +27,6 @@ function evaluate(exp, workerScript) {
 			break;
 		//Can currently only assign to "var"s
 		case "assign":
-			console.log("Evaluating assign operation");
 			return new Promise(function(resolve, reject) {
 				if (env.stopFlag) {reject(workerScript);}
 				
@@ -46,13 +45,11 @@ function evaluate(exp, workerScript) {
 				});
 				
 				p.then(function(expRight) {
-					console.log("Right side of assign operation resolved with value: " + expRight);
 					try {
 						env.set(exp.left.value, expRight);
 					} catch (e) {
 						throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
 					}
-					console.log("Assign operation finished");
 					resolve("assignFinished");
 				}, function(e) {
 					reject(e);
@@ -60,7 +57,6 @@ function evaluate(exp, workerScript) {
 			});
 			
 		case "binary":
-			console.log("Binary operation called");
 			return new Promise(function(resolve, reject) {
 				if (env.stopFlag) {reject(workerScript);}
 				
@@ -88,7 +84,6 @@ function evaluate(exp, workerScript) {
 					});
 				
 					pRight.then(function(args) {
-						console.log("Resolving binary operation");
 						try {
 							resolve(apply_op(exp.operator, args[0], args[1]));
 						} catch (e) {
@@ -149,7 +144,6 @@ function evaluate(exp, workerScript) {
 			});
 			break;
 		case "while":
-			console.log("Evaluating while loop");
 			return new Promise(function(resolve, reject) {
 				if (env.stopFlag) {reject(workerScript);}
 				
@@ -191,7 +185,6 @@ function evaluate(exp, workerScript) {
 				
 				setTimeout(function() {
 					if (exp.func.value == "hack") {
-						console.log("Execute hack()");
 						if (exp.args.length != 1) {
 							throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|Hack() call has incorrect number of arguments. Takes 1 argument");
 						}
@@ -271,14 +264,12 @@ function evaluate(exp, workerScript) {
 						});
 
 					} else if (exp.func.value == "sleep") {
-						console.log("Execute sleep()");
 						if (exp.args.length != 1) {
 							throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|Sleep() call has incorrect number of arguments. Takes 1 argument.");
 						}
 						
 						var sleepTimePromise = evaluate(exp.args[0], workerScript);
 						sleepTimePromise.then(function(sleepTime) {
-							console.log("Sleep time: " + sleepTime);
                             workerScript.scriptRef.log("Sleeping for " + sleepTime + " milliseconds");
 							var p = new Promise(function(resolve, reject) {
 								setTimeout(function() {
@@ -314,7 +305,6 @@ function evaluate(exp, workerScript) {
 					
 						p.then(function(res) {
 							post(res.toString());
-							console.log("Print call executed");
 							resolve("printExecuted");
 						}, function(e) {
 							reject(e);

@@ -156,7 +156,6 @@ function Parser(input) {
 		checkKeywordAndSkip("for");
 
 		splitExpressions = delimited("(", ")", ";", parse_expression);
-		console.log("Parsing code in for loop");
 		code = parse_expression();
 		
 		if (splitExpressions.length != 3) {
@@ -180,7 +179,6 @@ function Parser(input) {
 	 * code: prog node
 	 */
 	function parse_while() {
-		console.log("Parsing while token");
 		checkKeywordAndSkip("while");
 		
 		var cond = parse_expression();
@@ -238,7 +236,6 @@ function Parser(input) {
     }
 	
     function parse_prog() {
-		console.log("Parsing prog token");
         var prog = delimited("{", "}", ";", parse_expression);
         if (prog.length == 0) return FALSE;
         if (prog.length == 1) return prog[0];

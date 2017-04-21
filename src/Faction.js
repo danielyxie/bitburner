@@ -677,13 +677,14 @@ displayFactionAugmentations = function(factionName) {
         var aElem = document.createElement("a");
         var pElem = document.createElement("p");
         aElem.setAttribute("href", "#");
-        if (faction.playerReputation >= (aug.baseRepRequirement * faction.augmentationRepRequirementMult)) {
+        var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
+        if (faction.playerReputation >= req) {
             aElem.setAttribute("class", "a-link-button");
             pElem.innerHTML = "UNLOCKED";
             //TODO Event listener for button to purchase augmentation
         } else {
             aElem.setAttribute("class", "a-link-button-inactive");
-            pElem.innerHTML = "LOCKED";
+            pElem.innerHTML = "LOCKED (Requires " + req + " faction reputation)";
             pElem.style.color = "red";
         }
         aElem.style.display = "inline-block";

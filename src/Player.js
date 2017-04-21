@@ -387,6 +387,8 @@ PlayerObject.prototype.startWork = function() {
 }
     
 PlayerObject.prototype.work = function(numCycles) {
+    this.workRepGainRate    = this.getWorkRepGain();
+    
     this.workHackExpGained  += this.workHackExpGainRate * numCycles;
     this.workStrExpGained   += this.workStrExpGainRate * numCycles;
     this.workDefExpGained   += this.workDefExpGainRate * numCycles;
@@ -512,6 +514,7 @@ PlayerObject.prototype.startFactionHackWork = function(faction) {
     this.workRepGainRate        = this.hacking_skill / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
     this.workMoneyGainRate      = 0;
     
+    this.factionWorkType = CONSTANTS.FactionWorkHacking;
     this.currentWorkFactionDescription = "carrying out hacking contracts";
    
     this.startFactionWork(faction);
@@ -527,6 +530,7 @@ PlayerObject.prototype.startFactionFieldWork = function(faction) {
     this.workRepGainRate        = this.getFactionFieldWorkRepGain();
     this.workMoneyGainRate      = 0;
     
+    this.factionWorkType = CONSTANTS.factionWorkField;
     this.currentWorkFactionDescription = "carrying out field missions"
    
     this.startFactionWork(faction);
@@ -539,9 +543,10 @@ PlayerObject.prototype.startFactionSecurityWork = function(faction) {
     this.workDexExpGainRate     = 0;
     this.workAgiExpGainRate     = 0;
     this.workChaExpGainRate     = 0;
-    this.workRepGainRate        = this.getFactionFieldWorkRepGain();
+    this.workRepGainRate        = this.getFactionSecurityWorkRepGain();
     this.workMoneyGainRate      = 0;
     
+    this.factionWorkType = CONSTANTS.FactionWorkSecurity;
     this.currentWorkFactionDescription = "performing security detail"
    
     this.startFactionWork(faction);
@@ -549,6 +554,21 @@ PlayerObject.prototype.startFactionSecurityWork = function(faction) {
     
 PlayerObject.prototype.workForFaction = function(numCycles) {
     var faction = Factions[this.currentWorkFactionName];
+    
+    //Constantly update the rep gain rate
+    switch (this.factionWorkType) {
+        case CONSTANTS.FactionWorkHacking:
+            this.workRepGainRate = this.hacking_skill / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
+            break;
+        case CONSTANTS.FactionWorkField:
+            this.workRepGainRate = this.getFactionFieldWorkRepGain();
+            break;
+        case CONSTANTS.FactionWorkSecurity:
+            this.workRepGainRate = this.getFactionSecurityWorkRepGain();
+            break;
+        default:
+            break;
+    }
     
     this.workHackExpGained  += this.workHackExpGainRate * numCycles;
     this.workStrExpGained   += this.workStrExpGainRate * numCycles;
