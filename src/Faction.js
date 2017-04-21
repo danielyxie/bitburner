@@ -41,7 +41,6 @@ AddToFactions = function(faction) {
 	Factions[name] = faction;
 }
 
-//TODO Add faction information
 //TODO Augmentation price and rep requirement mult are 1 for everything right now,
 //      This might change in the future for balance
 initFactions = function() {
