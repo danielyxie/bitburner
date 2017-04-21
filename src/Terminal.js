@@ -508,9 +508,7 @@ var Terminal = {
 				}
 				break;
             case Programs.BruteSSHProgram:
-                if (s.hasAdminRights == false) {
-                    post("Permission denied. You do not have root access to this computer.");
-                } else if (s.sshPortOpen) {
+                if (s.sshPortOpen) {
                     post("SSH Port (22) is already open!");
                 } else {
                     s.sshPortOpen = true;
@@ -519,9 +517,7 @@ var Terminal = {
                 }
                 break;
             case Programs.FTPCrackProgram:
-                if (s.hasAdminRights == false) {
-                    post("Permission denied. You do not have root access to this computer.");
-                } else if (s.ftpPortOpen) {
+                if (s.ftpPortOpen) {
                     post("FTP Port (21) is already open!");
                 } else {
                     s.ftpPortOpen = true;
@@ -530,9 +526,7 @@ var Terminal = {
                 }
                 break;
             case Programs.RelaySMTPProgram:
-                if (s.hasAdminRights == false) {
-                    post("Permission denied. You do not have root access to this computer.");
-                } else if (s.smtpPortOpen) {
+                if (s.smtpPortOpen) {
                     post("SMTP Port (25) is already open!");
                 } else {
                     s.smtpPortOpen = true;
@@ -541,9 +535,7 @@ var Terminal = {
                 }
                 break;
             case Programs.HTTPWormProgram:
-                if (s.hasAdminRights == false) {
-                    post("permission denied. You do not have root access to this computer.");
-                } else if (s.httpPortOpen) {
+                if (s.httpPortOpen) {
                     post("HTTP Port (80) is already open!");
                 } else {
                     s.httpPortOpen = true;
@@ -552,9 +544,7 @@ var Terminal = {
                 }
                 break;
             case Programs.SQLInjectProgram:
-                if (s.hasAdminRights == false) {
-                    post("permission denied. You do not have root access to this computer.");
-                } else if (s.sqlPortOpen) {
+                if (s.sqlPortOpen) {
                     post("SQL Port (1433) is already open!");
                 } else {
                     s.sqlPortOpen = true;

@@ -287,6 +287,7 @@ PlayerObject.prototype.gainCharismaExp = function(exp) {
 
 /* Working for Company */
 PlayerObject.prototype.finishWork = function(cancelled) {
+    console.log("HERE");
     //Since the work was cancelled early, player only gains half of what they've earned so far
     var cancMult = 1;
     if (cancelled) {cancMult = 2;}
@@ -438,6 +439,7 @@ PlayerObject.prototype.work = function(numCycles) {
 
 /* Working for Faction */
 PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
+    console.log("HERE");
     this.gainHackingExp(this.workHackExpGained);
     this.gainStrengthExp(this.workStrExpGained);
     this.gainDefenseExp(this.workDefExpGained);
@@ -455,7 +457,7 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
     var txt = "You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
               "You earned a total of: <br>" + 
               "$" + (this.workMoneyGained).toFixed(2) + "<br>" + 
-              (this.workRepGained).toFixed(3) + " reputation for the company <br>" + 
+              (this.workRepGained).toFixed(3) + " reputation for the faction <br>" + 
               (this.workHackExpGained).toFixed(3) + " hacking exp <br>" + 
               (this.workStrExpGained).toFixed(3) + " strength exp <br>" + 
               (this.workDefExpGained).toFixed(3) + " defense exp <br>" +
@@ -467,7 +469,7 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
         
-    Player.isWorking = false;
+    this.isWorking = false;
     
     Engine.loadTerminalContent();
 }
