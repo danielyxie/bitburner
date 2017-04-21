@@ -1,0 +1,129 @@
+Cyberpunk theme for now. Hacking? Play Hacknet through to get ideas
+
+Requirements:
+Prestige mechanic for replayability (Ascension)
+Good progression system
+A prestige system does offer a sense of progression, but its better to have multiple systems that allow for progression. For example clicker heroes had ascending, transcending, gilding, Ancients, etc.  
+Complexity and variety
+Different types of gameplay, idle vs active
+Allow for different strategies through upgrades (or the faction system like in Realm Grinder)
+Crafting 
+Maybe reward active gameplay by allowing players to find things that allow them to craft. This isn't doable with idle gameplay
+Multiplayer, maybe? Hacking other people
+People seem to like comparing themselves to others (leaderboards, high scores, etc.)
+People like a sense of exploration/discovery
+RPG Elements 
+
+Suggestions from other people:
+
+For me it's quite important to be able to do stuff differently, I want choice. Realm Grinder and its Mercenary, Research and Faction system is the perfect
+ example for it. Different factions have different perks and spells, later on you can make your own faction out of everyone and you can further customize 
+ your playstyle by the research skill tree mid-game. I feel like that it is important that you can do other stuff each time you prestige, not just "click-level up-reset".
+ That might've sparked some ideas, if not something to consider in future content updates.
+
+What I really hate about CH1 is the fact that your Mercs can die [and can only be revived with premium currency (though you can earn a fair amount of it while playing!)],
+ I don't like when a incremental game punishes me in any way. This is literally why I stopped Tap Titans even though I had a lot of fun with it! I know that some people
+ really want some kind of challenge or something, just look at Kittens Game and how many people love it.
+
+Also, watch this video about Unfolding Games. It's not just addiction or a formula-that-works that keeps people here, or choice, or multiplayer - it's discovery. I want
+ to discover something new, not yet another "10 kills til next stage, every 5 is bosses who eventually give prestige currency" game. I want to wonder what comes next even
+ as I have my eyes on a visible goal. I want to unlock something and be surprised at the features that are enabled next. There are many, many games that do this successfully - just ask for me examples.
+
+Keep in mind that the draw of Clicker Heroes, and indeed most of these games, is that it's an RPG without all the things people don't care about. Take a different aspect
+ of the RPG and make it part of your idle game, and you've made something new. So far it's got the "kill things for more gold for more ability to kill things, with diminishing returns"
+ aspect, but that's not all there is. Adding quests, adding more currency, adding skills, adding talent trees, adding travel time, adding monster variability, etc. all fits
+ the same underlying theme, as long as you keep them engaging and fun.
+
+Hacking background Terminology (and stuff Hacknet game does)
+    Compromising the security of another computer is illegal under USC ACT 1030-18
+    
+    Botnet
+        
+    HackNet commands:
+        probe command to analyze open ports and security (or nmap)
+        SSHCrack [Port number] (usually 22)
+        PortHack [Port number] (usually 80, after ports are cracked)
+        FTPBounce [Port number] (usually 21)
+        SMTPoverflow [Port number] (usually 25)
+        WebServerWorm [Port number] (usually 80) - for HTTP port
+        SQL_MemCorrupt [Port number] (usually 1433) - The public-facing SQL ports
+        
+        Decypher to decrypt something
+        
+        Firewall
+            Analyze several times
+            Solve [FIREWALL_SOLUTION] to attempt to syndicate firewall
+        
+        scp to download files
+        
+        Shell command
+            Create a shell on your computer and you can overload proxys
+            
+        forkbomb Down a system in a hurry
+
+        Trace - Traces you when you try to hack, takes some amount of time
+        
+        Proxy Servers function as a buffering layer between a target computer and a connecting counterpart that filters,
+        caches, and monitors incoming traffic to both optimize web performacne for repeated queries, and prevent
+        some kinds of attacks. the most well-recognized flaw in proxy servers is their upper memory limit - which
+        when reached will force them to allow unchecked traffic to pass trhough. To exploit this, hackers and testers will 
+        often run Shells on other computers that an attack has access to. Then, with a collection of shells on 
+        servant machines, will connect to a target computer, and use the shells "overload" funcitonality to flood
+        the target proxy server with junk data, allowing other, potentially harmful traffic through. 
+        
+        
+Netburner
+
+Features:
+    Command line interface
+    Hack - Active hack
+        A hack takes time
+    Scripts - Automatically perform hacks and other actions
+        Allow people to write their own scripts?
+        So, people could write their own complicate scripts
+        
+    Servers - Allow you to run more hacks. Allow you to hack idly
+    Computers - More powerful hacks, more hacks
+        CPU usage stats that lets you do more stuff, goes up as you upgrade?
+    Hire people
+    
+    Join different factions (each with different advantages)
+        Police
+        Cybersecurity
+        Hacker group
+        
+    Botnet
+        Create and sell botnet
+        Use botnet to DDOS
+    
+    Start with only command line, you can develop a GUI after a little
+    
+    Eventually you can join a gym and go to the gym to train your stats. This can be done idly
+    
+    Allow people to take jobs to earn money. Working a job can be done idly
+    
+    Bitcoin - You can exchange USD for bitcoins. Bitcoin exchange rate reflects real exchange rate
+    
+    Persistent companies, as in companies that stay there through ascensions and you hacking them will
+        affect their performance. So if you hack something it might give you 100k, but then hacking it again
+        right away will give less like 99k. Diminishing returns. Therefore you have to stop hacking it for a 
+        little to to allow it to give full rewards again
+    
+Character stats:
+    Hacking skill
+    
+    Strength - How much damage you give
+    Defense - How much damage you take
+    Agility - How fast you attack and dodge %
+    Dexterity - Accuracy 
+    
+Prestige system
+    Ascend
+        Reset all stats, computers, scripts, get an augmentation
+    Reincarnate
+        Reset all stats and augmentations
+        Get some kind of big powerup for the next run
+        
+Crafting
+    Let's start small at first and add this in later
+    

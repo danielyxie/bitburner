@@ -1,0 +1,247 @@
+/* CSS for different main menu pages, such as character info, script editor, etc (but excluding
+	terminal which has its own page) */
+	
+/* Character Info */
+#character-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-left: 10%;
+    width: 99%;
+}
+
+
+/* Script Editor */
+/* This temp element is used for auto adjusting filename field */
+.tmp-element {
+        visibility: hidden;
+        white-space: pre;
+}
+	  
+#script-editor-container {
+	position: fixed;
+	padding-top: 10px;
+	padding-left: 10px;
+	height: 100%;
+	margin-left: 10%;
+    color: #66ff33;
+}
+
+#script-editor-filename-tag {
+	float: left;
+}
+
+#script-editor-filename {	
+	float: left;
+	resize: none;
+	color: #66ff33;
+	width: 100%;
+	
+	border:	none;
+	outline: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+#script-editor-status {
+	float: left;
+	color: #ffffff;
+}
+
+#script-editor-text {
+	color: #66ff33;
+	width: 90%;
+	height: 100%;
+	
+	outline: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+/* Active scripts */
+.active-scripts-list {
+    list-style-type: none;
+}
+
+#active-scripts-container {
+	position: fixed;
+	padding-top: 10px;
+	padding-left: 10px;
+	height: 100%;
+	margin-left: 10%;
+	width: 99%;
+    overflow-y: scroll;
+}
+
+.active-scripts-list>li h2{
+    color: #66ff33;
+	padding-top: 10px;
+	padding-left: 10px;
+    background-color: #333;
+    text-decoration: none;
+}
+
+.active-scripts-list>li p {
+	color: #66ff33;
+	padding: 10px;
+	padding-left: 40px;
+    background-color: #333;
+    text-decoration: none;
+}
+
+/* World */
+#world-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+}
+
+/* Create program */
+#create-program-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+}
+
+.create-program-a-link-button {
+    text-decoration: none;
+    background-color: #555;
+    color: #FFFFFF;
+    padding: 4px 4px 4px 4px;
+    border-top: 1px solid #333333;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #333333;
+}
+
+.create-program-a-link-button-inactive {
+    text-decoration: none;
+    background-color: #555;
+    color: #FFFFFF;
+    padding: 4px 4px 4px 4px;
+    border-top: 1px solid #333333;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #333333;
+    pointer-events: none;
+    cursor: default;
+}
+
+/* Factions and Faction (Single Faction page) */
+#factions-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+    color: #66ff33;
+}
+
+#faction-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 90%;
+}
+
+#factions-list li {
+    padding: 6px;
+    margin: 6px;
+}
+
+#faction-hack-button-div, #faction-hack-text-div {
+	display:inline-block;
+}
+
+#faction-fieldwork-button-div, #faction-fieldwork-text-div {
+	display:inline-block;
+}
+
+#faction-securitywork-button-div, #faction-securitywork-text-div {
+	display:inline-block;
+}
+
+#faction-container p {
+    padding: 6px;
+    margin: 6px;
+}
+
+/* Faction Augmentations */
+#faction-augmentations-container{
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+    color: #66ff33;
+}
+
+#faction-augmentations-container p,
+#faction-augmentations-container a,
+#faction-augmentations-container ul,
+#faction-augmentations-container h1{
+    margin: 8px;
+    padding: 4px;
+}
+
+/* World */
+#world-container li {
+    margin: 0 0 15px 0;
+    list-style-type: none;
+}
+
+
+
+/* Augmentations */
+#augmentations-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+    color: #66ff33;
+}
+
+.installed-augmentation {
+    /* TODO */
+}
+
+/* Tutorial */
+#tutorial-container {
+	color: #66ff33;
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+}
+
+/* Location */
+#location-container {
+	color: #66ff33;
+	position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+	padding: 20px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+}
+
+#location-container * {
+	margin: 10px 5px 10px 5px;
+}

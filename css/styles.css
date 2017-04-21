@@ -1,0 +1,98 @@
+/** This removes all padding and margins as well as 
+    setting a default font size and family for the page **/
+* { 
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-family: 'Lucida Console', 'Lucida Sans Unicode', 'Fira Mono', 'Consolas', 'Times New Roman';
+    background-color: #252527;
+    background-color: black;
+}
+
+p {
+    color: #66ff33;
+}
+
+h1 {
+    color: #66ff33;
+}
+
+h2 {
+    color: #66ff33;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    list-style-type: none;
+}
+
+/* Main menu */
+.mainmenu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 10%;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    
+    border: 0;
+	border-bottom: 1px solid #000000;
+	border-radius: 0;
+	background-color: #333;
+}
+
+.mainmenu>li a {
+    display: block;
+    color: #e6e6e6;
+    background-color: #333;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.mainmenu>li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+.mainmenu>li a:focus {
+    background-color: #555;
+}
+
+.mainmenu>li a.active {
+    background-color: #555;
+    color: white;
+	
+}
+
+/* Make html links ("a" elements) nice looking buttons with this class */
+.a-link-button {
+    text-decoration: none;
+    background-color: #555;
+    color: #FFFFFF;
+    padding: 6px;
+    margin: 6px;
+    border-top: 1px solid #333333;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #333333;
+}
+
+/* Make anchor tags ("a" elements) inactive (not clickable) */
+.a-link-button-inactive {
+    text-decoration: none;
+    background-color: #555;
+    color: #FFFFFF;
+    padding: 6px;
+    margin: 6px;
+    border-top: 1px solid #333333;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #333333;
+    pointer-events: none;
+    cursor: default;
+}
+

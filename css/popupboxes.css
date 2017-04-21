@@ -1,0 +1,252 @@
+/* Pop-up boxes */
+
+/* Pop-up Dialog Box */
+#dialog-box-container {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: black; /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#dialog-box-content {
+    background-color: black;
+    margin: 20% auto; /* 15% from the top and centered */
+    padding: 10px;
+    border: 5px solid #FFFFFF;
+    width: 40%; /* Could be more or less, depending on screen size */
+}
+
+.dialog-box-text {
+    color: #66ff33;
+}
+
+#dialog-box-close-button {
+    color: #aaa;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+#dialog-box-close-button:hover,
+#dialog-box-close-button:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Purchase server box */
+#purchase-server-box-container {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: black; /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    transition: opacity 400ms ease-in;
+}
+
+#purchase-server-box-content {
+    background-color: black;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 1px;
+    border: 5px solid #FFFFFF;
+    width: 80%; /* Could be more or less, depending on screen size */
+    color: #66ff33;
+}
+
+#purchase-server-box-input {
+    color: white;
+}
+
+#purchase-server-box-confirm,
+#purchase-server-box-cancel {
+    color: #aaa;
+    float: right;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 2px;
+    border: 1px solid white;
+}
+
+#purchase-server-box-confirm:hover,
+#purchase-server-box-confirm:focus {
+    color: #66ff33;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#purchase-server-box-cancel:hover,
+#purchase-server-box-cancel:focus {
+    color: #66ff33;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Purchase Invitation Box */
+#purchase-augmentation-box-container {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: black; /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    transition: opacity 400ms ease-in;
+}
+
+#purchase-augmentation-box-content {
+    background-color: black;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 1px;
+    border: 5px solid #FFFFFF;
+    width: 80%; /* Could be more or less, depending on screen size */
+    color: #66ff33;
+}
+
+#purchase-augmentation-box-confirm,
+#purchase-augmentation-box-cancel {
+    color: #aaa;
+    float: right;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 2px;
+    border: 1px solid white;
+}
+
+#purchase-augmentation-box-confirm:hover,
+#purchase-augmentation-box-confirm:focus {
+    color: #66ff33;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#purchase-augmentation-box-cancel:hover,
+#purchase-augmentation-box-cancel:focus {
+    color: #66ff33;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Faction invitation box */
+#faction-invitation-box-container {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: black; /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    transition: opacity 400ms ease-in;
+}
+
+#faction-invitation-box-content {
+    background-color: black;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 10px;
+    border: 5px solid #FFFFFF;
+    width: 80%; /* Could be more or less, depending on screen size */
+    color: #66ff33;
+}
+
+#faction-invitation-box-yes,
+#faction-invitation-box-no {
+    color: #aaa;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 1px;
+    margin: 3px;
+    border: 1px solid white;
+}
+
+#faction-invitation-box-yes:hover,
+#faction-invitation-box-yes:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#faction-invitation-box-no:hover,
+#faction-invitation-box-no:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* Travel Pop-up Box */
+#travel-box-container {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: black; /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    transition: opacity 400ms ease-in;
+}
+
+#travel-box-content {
+    background-color: black;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 10px;
+    border: 5px solid #FFFFFF;
+    width: 80%; /* Could be more or less, depending on screen size */
+    color: #66ff33;
+}
+
+#travel-box-confirm,
+#travel-box-cancel {
+    color: #aaa;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 3px;
+    margin: 3px;
+    border: 1px solid white;
+}
+
+#travel-box-confirm:hover,
+#travel-box-confirm:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#travel-box-cancel:hover,
+#travel-box-cancel:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
