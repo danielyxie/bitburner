@@ -451,7 +451,53 @@ joinFaction = function(faction) {
     }
 }
 
-//TODO Leave faction
+leaveFaction = function(faction) {
+    faction.isMember = false;
+    var i = Player.factions.indexOf(faction.name);
+    if (i > -1) {
+        Player.factions.splice(i, 1);
+    }
+    
+    //Unban from faction
+    if (faction.name == "BitRunners") {
+        Factions["The Black Hand"].isBanned = false;
+        Factions["NiteSec"].isBanned = false;
+    } else if (faction.name == "The Black Hand") {
+        Factions["BitRunners"].isBanned = false;
+        Factions["NiteSec"].isBanned = false;
+    } else if (faction.name == "NiteSec") {
+        Factions["BitRunners"].isBanned = false;
+        Factions["The Black Hand"].isBanned = false;
+    } else if (faction.name == "Chongqing") {
+        Factions["Sector-12"].isBanned = false;
+        Factions["Aevum"].isBanned = false;
+        Factions["Volhaven"].isBanned = false;
+    } else if (faction.name == "Sector-12") {
+        Factions["Chongqing"].isBanned = false;
+        Factions["New Tokyo"].isBanned = false;
+        Factions["Ishima"].isBanned = false;
+        Factions["Volhaven"].isBanned = false;
+    } else if (faction.name == "New Tokyo") {
+        Factions["Sector-12"].isBanned = false;
+        Factions["Aevum"].isBanned = false;
+        Factions["Volhaven"].isBanned = false;
+    } else if (faction.name == "Aevum") {
+        Factions["Chongqing"].isBanned = false;
+        Factions["New Tokyo"].isBanned = false;
+        Factions["Ishima"].isBanned = false;
+        Factions["Volhaven"].isBanned = false;
+    } else if (faction.name == "Ishima") {
+        Factions["Sector-12"].isBanned = false;
+        Factions["Aevum"].isBanned = false;
+        Factions["Volhaven"].isBanned = false;
+    } else if (faction.name == "Volhaven") {
+        Factions["Chongqing"].isBanned = false;
+        Factions["Sector-12"].isBanned = false;
+        Factions["New Tokyo"].isBanned = false;
+        Factions["Aevum"].isBanned = false;
+        Factions["Ishima"].isBanned = false;
+    }
+}
 
 //Displays the HTML content for a specific faction
 displayFactionContent = function(factionName) {
