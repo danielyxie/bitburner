@@ -264,7 +264,7 @@ initAugmentations = function() {
     AddToAugmentations(EnhancedMyelinSheathing);
     
     var SynapticEnhancement = new Augmentation("Synaptic Enhancement Implant");
-    SynapticEnhancement.setRequirements(50000, 35000000);
+    SynapticEnhancement.setRequirements(50000, 10000000);
     SynapticEnhancement.setInfo("A small cranial implant that continuously uses weak electric signals to stimulate the brain and \n" +
                                 "induce stronger synaptic activity. This improves the the user's cognitive abilities.\n\n" + 
                                 "This augmentation increases the player's hacking speed by 1%.");
@@ -451,7 +451,7 @@ initAugmentations = function() {
     
     //Misc augmentations
     var Neurotrainer1 = new Augmentation("Neurotrainer I");
-    Neurotrainer1.setRequirements(50000, 35000000);
+    Neurotrainer1.setRequirements(50000, 20000000);
     Neurotrainer1.setInfo("A decentralized cranial implant that improves the brain's ability to learn. It is\n" + 
                           "installed by releasing millions of nanobots into the human brain, each of which\n" + 
                           "attaches to a different neural pathway to enhance the brain's ability to retain\n" + 

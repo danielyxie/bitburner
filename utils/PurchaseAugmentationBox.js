@@ -28,6 +28,7 @@ purchaseAugmentationBoxSetText = function(txt) {
 
 //ram argument is in GB
 purchaseAugmentationBoxCreate = function(aug, fac) {
+    console.log("here");
     purchaseAugmentationBoxSetText("Would you like to purchase the " + aug.name + " Augmentation for $" + 
                                    (aug.baseCost * fac.augmentationPriceMult)  + "?");
     

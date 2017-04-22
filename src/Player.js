@@ -287,7 +287,6 @@ PlayerObject.prototype.gainCharismaExp = function(exp) {
 
 /* Working for Company */
 PlayerObject.prototype.finishWork = function(cancelled) {
-    console.log("HERE");
     //Since the work was cancelled early, player only gains half of what they've earned so far
     var cancMult = 1;
     if (cancelled) {cancMult = 2;}
@@ -439,7 +438,6 @@ PlayerObject.prototype.work = function(numCycles) {
 
 /* Working for Faction */
 PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
-    console.log("HERE");
     this.gainHackingExp(this.workHackExpGained);
     this.gainStrengthExp(this.workStrExpGained);
     this.gainDefenseExp(this.workDefExpGained);

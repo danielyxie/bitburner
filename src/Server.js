@@ -643,7 +643,7 @@ processServerGrowth = function(numCycles) {
 			var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage;
 			
 			//Apply serverGrowth for the calculated number of growth cycles
-			var serverGrowth = Math.pow(1.0004, numServerGrowthCyclesAdjusted);
+			var serverGrowth = Math.pow(1.00075, numServerGrowthCyclesAdjusted);
 			//console.log("serverGrowth ratio: " + serverGrowth);
 			server.moneyAvailable *= serverGrowth;
 		}

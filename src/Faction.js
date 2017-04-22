@@ -141,6 +141,7 @@ initFactions = function() {
 	AddToFactions(TianDiHui);
 	var CyberSec 				= new Faction("CyberSec");
     CyberSec.setInfo(FactionInfo.CyberSecInfo);
+    CyberSec.setAugmentationMultipliers(0.8, 0.8);
 	AddToFactions(CyberSec);
 }
 
@@ -735,6 +736,11 @@ displayFactionAugmentations = function(factionName) {
         aElem.style.display = "inline-block";
         pElem.style.display = "inline-block";
         aElem.innerHTML = aug.name;
+        
+        aElem.addEventListener("click", function() {
+            console.log("here");
+            purchaseAugmentationBoxCreate(aug, faction);
+        });
         
         span.appendChild(aElem);
         span.appendChild(pElem);

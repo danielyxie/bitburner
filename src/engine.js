@@ -867,7 +867,9 @@ var Engine = {
             
             processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
             loadAllRunningScripts();    //This also takes care of offline production for those scripts
-            Player.work(numCyclesOffline);
+            if (Player.isWorking) {
+                Player.work(numCyclesOffline);
+            }
         } else {
             //No save found, start new game
             console.log("Initializing new game");
