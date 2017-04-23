@@ -240,7 +240,7 @@ function evaluate(exp, workerScript) {
                                         Player.gainHackingExp(expGainedOnSuccess);
 										workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
 										console.log("Script successfully hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
-                                        workerScript.scriptRef.log("Script successfully hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
+                                        workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
 										resolve("Hack success");
 									} else {			
 										//Player only gains 25% exp for failure? TODO Can change this later to balance
@@ -248,7 +248,7 @@ function evaluate(exp, workerScript) {
 										workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
 										
 										console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + " exp");
-                                        workerScript.scriptRef.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + " exp");
+                                        workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + expGainedOnFailure + " exp");
 										resolve("Hack failure");
 									}
 								}, hackingTime * 1000);

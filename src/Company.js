@@ -17,7 +17,7 @@ function Company() {
     //Player-related properties for company
     this.isPlayerEmployed   = false;
     this.playerPosition     = "";    //Name (only name, not object) of the current position player holds
-    this.playerReputation   = 0;  //"Reputation" within company, gain reputation by working for company
+    this.playerReputation   = 1;  //"Reputation" within company, gain reputation by working for company
 };
 
 Company.prototype.init = function(name, salaryMult, expMult, jobStatReqOffset) {

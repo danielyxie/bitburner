@@ -35,11 +35,7 @@ function runScriptsLoop() {
                 workerScripts[i].env.stopFlag = true;
 				continue;
 			}
-			
-			console.log("Starting new script: " + workerScripts[i].name);
-			console.log("AST of new script:");
-			console.log(ast);
-			
+						
 			workerScripts[i].running = true;
 			var p = evaluate(ast, workerScripts[i]);
 			//Once the code finishes (either resolved or rejected, doesnt matter), set its
@@ -120,7 +116,6 @@ function runScriptsLoop() {
 //all of its promises recursively, and when it does so it will no longer be running.
 //The runScriptsLoop() will then delete the script from worker scripts
 function killWorkerScript(scriptName, serverIp) {
-	console.log("killWorkerScript called for script " + scriptName + " on server " + serverIp);
 	for (var i = 0; i < workerScripts.length; i++) {
 		if (workerScripts[i].name == scriptName && workerScripts[i].serverIp == serverIp) {
 			workerScripts[i].env.stopFlag = true;
@@ -147,7 +142,6 @@ function addWorkerScript(script, server) {
 	
 	//Add the WorkerScript
 	workerScripts.push(s);
-	console.log("Pushed script onto workerScripts");
 	return;
 }
 

@@ -151,12 +151,19 @@ PlayerObject.prototype.applyForWaiterJob = function() {
 //Checks if the Player is qualified for a certain position
 PlayerObject.prototype.isQualified = function(company, position) {
 	var offset = company.jobStatReqOffset;
-	if (this.hacking_skill >= position.requiredHacking+offset &&
-		this.strength 	   >= position.requiredStrength+offset &&
-        this.defense       >= position.requiredDefense+offset && 
-        this.dexterity     >= position.requiredDexterity+offset &&
-        this.agility       >= position.requiredAgility+offset &&
-        this.charisma      >= position.requiredCharisma+offset &&
+    var reqHacking = position.requiredHacking > 1       ? position.requiredHacking+offset   : 1;
+    var reqStrength = position.requiredStrength > 1     ? position.requiredStrength+offset  : 1;
+    var reqDefense = position.requiredDefense > 1       ? position.requiredDefense+offset   : 1;
+    var reqDexterity = position.requiredDexterity > 1   ? position.requiredDexterity+offset : 1;
+    var reqAgility = position.requiredDexterity > 1     ? position.requiredDexterity+offset : 1;
+    var reqCharisma = position.requiredCharisma > 1     ? position.requiredCharisma+offset  : 1;
+    
+	if (this.hacking_skill >= reqHacking &&
+		this.strength 	   >= reqStrength &&
+        this.defense       >= reqDefense && 
+        this.dexterity     >= reqDexterity &&
+        this.agility       >= reqAgility &&
+        this.charisma      >= reqCharisma &&
         company.playerReputation >= position.requiredReputation) {
             return true;
     }
