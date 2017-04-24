@@ -29,6 +29,11 @@ li {
     list-style-type: none;
 }
 
+span {
+    margin: 4px;
+    padding: 4px;
+}
+
 
 /* Main menu */
 .mainmenu {

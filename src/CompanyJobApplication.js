@@ -20,7 +20,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
     var pos = entryPosType;
     
     if (!this.isQualified(company, pos)) {
-        dialogBoxCreate("You are not qualified for this position");
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
         return;
     }
     
@@ -59,8 +59,12 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
     
 	
     //Lose reputation from a Company if you are leaving it for another job
+    var leaveCompany = false;
+    var oldCompanyName = "";
     if (currCompany != "") {
         if (currCompany.companyName != company.companyName) {
+            leaveCompany = true;
+            oldCompanyName = currCompany.companyName;
             company.playerReputation -= 1000;
             if (company.playerReputation < 0) {company.playerReputation = 0;}
             if (Engine.debug) {
@@ -73,7 +77,13 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
     this.companyName = company.companyName;
     this.companyPosition = pos;
     
-    dialogBoxCreate("Congratulations! You were offered a new job at ", this.companyName, " as a " + pos.positionName);
+    if (leaveCompany) {
+        dialogBoxCreate("Congratulations! You were offered a new job at ", this.companyName, " as a " + pos.positionName + "!", 
+                        "You lost 1000 reputatation at your old company " + oldCompanyName + " because you left.");    
+    } else {
+        dialogBoxCreate("Congratulations! You were offered a new job at ", this.companyName, " as a " + pos.positionName + "!");
+    }
+    
     Engine.loadLocationContent();
 }
 
