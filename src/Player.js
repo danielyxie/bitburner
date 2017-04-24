@@ -519,7 +519,7 @@ PlayerObject.prototype.startFactionWork = function(faction) {
 }
 
 PlayerObject.prototype.startFactionHackWork = function(faction) {
-    this.workHackExpGainRate    = .1 * this.hacking_exp_mult;
+    this.workHackExpGainRate    = .02 * this.hacking_exp_mult;
     this.workStrExpGainRate     = 0;
     this.workDefExpGainRate     = 0;
     this.workDexExpGainRate     = 0;

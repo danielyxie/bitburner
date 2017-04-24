@@ -247,8 +247,8 @@ displayLocationContent = function() {
             break;
             
         case Locations.AevumSummitUniveristy:
-            var costMult = 2;
-            var expMult = 1;
+            var costMult = 3;
+            var expMult = 2;
             displayUniversityLocationContent(costMult);
             
             var newStudyCS = studyComputerScience.cloneNode(true);
@@ -453,8 +453,8 @@ displayLocationContent = function() {
             break;
             
         case Locations.Sector12RothmanUniversity:
-            var costMult = 1;
-            var expMult = 0.5;
+            var costMult = 2;
+            var expMult = 1;
             displayUniversityLocationContent(costMult);    
 
             var newStudyCS = studyComputerScience.cloneNode(true);
@@ -729,8 +729,8 @@ displayLocationContent = function() {
             break;
             
         case Locations.VolhavenZBInstituteOfTechnology:
-            var costMult = 3;
-            var expMult = 2;
+            var costMult = 4;
+            var expMult = 3;
             displayUniversityLocationContent(costMult);   
             
             var newStudyCS = studyComputerScience.cloneNode(true);
