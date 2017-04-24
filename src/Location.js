@@ -13,6 +13,7 @@ Locations = {
     
     //Aevum Locations
     AevumTravelAgency:          "Aevum Travel Agency",
+    AevumSummitUniversity:      "Summit University",
     AevumECorp:                 "ECorp",
     AevumBachmanAndAssociates:  "Bachman & Associates",
     AevumClarkeIncorporated:    "Clarke Incorporated",
@@ -33,6 +34,7 @@ Locations = {
     
     //Sector 12
     Sector12TravelAgency:       "Sector-12 Travel Agency",
+    Sector12RothmanUniversity:  "Rothman University",
     Sector12MegaCorp:           "MegaCorp",
     Sector12BladeIndustries:    "Blade Industries",
     Sector12FourSigma:          "Four Sigma",
@@ -62,15 +64,16 @@ Locations = {
     IshimaOmegaSoftware:        "Omega Software",
     
     //Volhaven
-    VolhavenTravelAgency:           "Volhaven Travel Agency",
-    VolhavenOmniTekIncorporated:    "OmniTek Incorporated",
-    VolhavenNWO:                    "NWO",
-    VolhavenHeliosLabs:             "Helios Labs",
-    VolhavenOmniaCybersystems:      "Omnia Cybersystems",
-    VolhavenLexoCorp:               "LexoCorp",
-    VolhavenSysCoreSecurities:      "SysCore Securities",
-    VolhavenCompuTek:               "CompuTek",
-    VolhavenMilleniumFitnessGym:    "Millenium Fitness Gym",
+    VolhavenTravelAgency:               "Volhaven Travel Agency",
+    VolhavenZBInstituteOfTechnology:    "ZB Institute of Technology",
+    VolhavenOmniTekIncorporated:        "OmniTek Incorporated",
+    VolhavenNWO:                        "NWO",
+    VolhavenHeliosLabs:                 "Helios Labs",
+    VolhavenOmniaCybersystems:          "Omnia Cybersystems",
+    VolhavenLexoCorp:                   "LexoCorp",
+    VolhavenSysCoreSecurities:          "SysCore Securities",
+    VolhavenCompuTek:                   "CompuTek",
+    VolhavenMilleniumFitnessGym:        "Millenium Fitness Gym",
 }
 
 displayLocationContent = function() {
@@ -103,6 +106,11 @@ displayLocationContent = function() {
     var gymTrainDef         = document.getElementById("location-gym-train-def");
     var gymTrainDex         = document.getElementById("location-gym-train-dex");
     var gymTrainAgi         = document.getElementById("location-gym-train-agi");
+    
+    var studyComputerScience= document.getElementById("location-study-computer-science");
+    var classDataStructures = document.getElementById("location-data-structures-class");
+    var classNetworks       = document.getElementById("location-networks-class");
+    var classAlgorithms     = document.getElementById("location-algorithms-class");
 
     var purchase1gb         = document.getElementById("location-purchase-1gb");
     var purchase2gb         = document.getElementById("location-purchase-2gb");
@@ -162,6 +170,11 @@ displayLocationContent = function() {
     gymTrainDef.style.display = "none";
     gymTrainDex.style.display = "none";
     gymTrainAgi.style.display = "none";
+    
+    studyComputerScience.style.display = "none";
+    classDataStructures.style.display = "none";
+    classNetworks.style.display = "none";
+    classAlgorithms.style.display = "none";
     
     purchase1gb.style.display = "none";
     purchase2gb.style.display = "none";
@@ -231,6 +244,41 @@ displayLocationContent = function() {
             travelToNewTokyo.style.display = "block";
             travelToIshima.style.display = "block";
             travelToVolhaven.style.display = "block";
+            break;
+            
+        case Locations.AevumSummitUniveristy:
+            var costMult = 2;
+            var expMult = 1;
+            displayUniversityLocationContent(costMult);
+            
+            var newStudyCS = studyComputerScience.cloneNode(true);
+            studyComputerScience.parentNode.replaceChild(newStudyCS, studyComputerScience)
+            newStudyCS.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassStudyComputerScience);
+                return false;
+            });
+            
+            var newClassDataStructures = classDataStructures.cloneNode(true);
+            classDataStructures.parentNode.replaceChild(newClassDataStructures, classDataStructures);
+            newClassDataStructures.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassDataStructures);
+                return false;
+            });
+            
+            var newClassNetworks = classNetworks.cloneNode(true);
+            classNetworks.parentNode.replaceChild(newClassNetworks, classNetworks);
+            newClassNetworks.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassNetworks);
+                return false;
+            });
+            
+            var newClassAlgorithms = classAlgorithms.cloneNode(true);
+            classAlgorithms.parentNode.replaceChild(newClassAlgorithms, classAlgorithms);
+            newClassAlgorithms.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassAlgorithms);
+                return false;
+            });
+            
             break;
             
         case Locations.AevumECorp:  
@@ -402,6 +450,40 @@ displayLocationContent = function() {
             travelToNewTokyo.style.display = "block";
             travelToIshima.style.display = "block";
             travelToVolhaven.style.display = "block";
+            break;
+            
+        case Locations.Sector12RothmanUniversity:
+            var costMult = 1;
+            var expMult = 0.5;
+            displayUniversityLocationContent(costMult);    
+
+            var newStudyCS = studyComputerScience.cloneNode(true);
+            studyComputerScience.parentNode.replaceChild(newStudyCS, studyComputerScience)
+            newStudyCS.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassStudyComputerScience);
+                return false;
+            });
+            
+            var newClassDataStructures = classDataStructures.cloneNode(true);
+            classDataStructures.parentNode.replaceChild(newClassDataStructures, classDataStructures);
+            newClassDataStructures.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassDataStructures);
+                return false;
+            });
+            
+            var newClassNetworks = classNetworks.cloneNode(true);
+            classNetworks.parentNode.replaceChild(newClassNetworks, classNetworks);
+            newClassNetworks.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassNetworks);
+                return false;
+            });
+            
+            var newClassAlgorithms = classAlgorithms.cloneNode(true);
+            classAlgorithms.parentNode.replaceChild(newClassAlgorithms, classAlgorithms);
+            newClassAlgorithms.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassAlgorithms);
+                return false;
+            });            
             break;
 
         case Locations.Sector12MegaCorp:  
@@ -637,13 +719,47 @@ displayLocationContent = function() {
             purchaseTor.style.display = "block";
             break;
 
-        case Locations.VolhavenTravelAgency:     
+        case Locations.VolhavenTravelAgency:
             travelAgencyText.style.display = "block";
             travelToAevum.style.display = "block";
             travelToChongqing.style.display = "block";
             travelToSector12.style.display = "block";
             travelToNewTokyo.style.display = "block";
             travelToIshima.style.display = "block";
+            break;
+            
+        case Locations.VolhavenZBInstituteOfTechnology:
+            var costMult = 3;
+            var expMult = 2;
+            displayUniversityLocationContent(costMult);   
+            
+            var newStudyCS = studyComputerScience.cloneNode(true);
+            studyComputerScience.parentNode.replaceChild(newStudyCS, studyComputerScience)
+            newStudyCS.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassStudyComputerScience);
+                return false;
+            });
+            
+            var newClassDataStructures = classDataStructures.cloneNode(true);
+            classDataStructures.parentNode.replaceChild(newClassDataStructures, classDataStructures);
+            newClassDataStructures.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassDataStructures);
+                return false;
+            });
+            
+            var newClassNetworks = classNetworks.cloneNode(true);
+            classNetworks.parentNode.replaceChild(newClassNetworks, classNetworks);
+            newClassNetworks.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassNetworks);
+                return false;
+            });
+            
+            var newClassAlgorithms = classAlgorithms.cloneNode(true);
+            classAlgorithms.parentNode.replaceChild(newClassAlgorithms, classAlgorithms);
+            newClassAlgorithms.addEventListener("click", function() {
+                Player.startClass(costMult, expMult, CONSTANTS.ClassAlgorithms);
+                return false;
+            });            
             break;
 
         case Locations.VolhavenOmniTekIncorporated:   
@@ -765,6 +881,13 @@ initLocationButtons = function() {
         return false;
     });
     
+    aevumSummitUniversity = document.getElementById("aevum-summituniversity");
+    aevumSummitUniversity.addEventListener("click", function() {
+       Player.location = Locations.AevumSummitUniversity;
+        Engine.loadLocationContent();
+        return false;
+    });
+    
     aevumECorp = document.getElementById("aevum-ecorp");
     aevumECorp.addEventListener("click", function() {
         Player.location = Locations.AevumECorp;
@@ -877,6 +1000,13 @@ initLocationButtons = function() {
         return false;
 	});
 	
+    sector12RothmanUniversity = document.getElementById("sector12-rothmanuniversity");
+    sector12RothmanUniversity.addEventListener("click", function() {
+        Player.location = Locations.Sector12RothmanUniversity;
+        Engine.loadLocationContent();
+        return false;
+    });
+    
 	sector12MegaCorp = document.getElementById("sector12-megacorp");
 	sector12MegaCorp.addEventListener("click", function() {
 		Player.location = Locations.Sector12MegaCorp;
@@ -1044,6 +1174,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    volhavenZBInstituteOfTechnology = document.getElementById("volhaven-zbinstituteoftechnology");
+    volhavenZBInstituteOfTechnology.addEventListener("click", function() {
+        Player.location = Locations.VolhavenZBInstituteOfTechnology;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	volhavenOmniTekIncorporated = document.getElementById("volhaven-omnitekincorporated");
 	volhavenOmniTekIncorporated.addEventListener("click", function() {
@@ -1302,4 +1439,31 @@ purchaseTorRouter = function() {
     
     Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
     dialogBoxCreate("You have purchased a Tor router!", "You now have access to the dark web from your home computer", "Use the scan/netstat commands to search for the dark web connect.", "");
+}
+
+displayUniversityLocationContent = function(costMult) {
+    var studyComputerScienceButton  = document.getElementById("location-study-computer-science");
+    var classDataStructuresButton   = document.getElementById("location-data-structures-class");
+    var classNetworksButton         = document.getElementById("location-networks-class");
+    var classAlgorithmsButton       = document.getElementById("location-algorithms-class");
+    studyComputerScienceButton.style.display = "block";
+    classDataStructuresButton.style.display = "block";
+    classNetworksButton.style.display = "block";
+    classAlgorithmsButton.style.display = "block";
+    
+    var gameCPS = 1 / Engine._idleSpeed;
+    
+    //Costs (per second)
+    var baseDataStructuresCost = 1;
+    var baseNetworksCost = 5;
+    var baseAlgorithmsCost = 20;
+    
+    var dataStructuresCost  = baseDataStructuresCost * costMult;
+    var networksCost        = baseNetworksCost * costMult;
+    var algorithmsCost      = baseAlgorithmsCost * costMult;
+    
+    //Update button text to show cost
+    classDataStructuresButton.innerHTML = "Take Data Structures Class ($" + dataStructuresCost + " / sec)";
+    classNetworksButton.innerHTML = "Take Networks Class ($" + networksCost + " / second)";
+    classAlgorithmsButton.innerHTML = "Take Algorithms Class ($" + algorithmsCost + " / second)";
 }

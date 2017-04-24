@@ -1,4 +1,6 @@
 CONSTANTS = {
+    Version:                "0.1",
+    
 	//Max level for any skill. Determined by max numerical value in javascript and the skill level
 	//formula in Player.js
 	MaxSkillLevel: 			975,
@@ -40,6 +42,16 @@ CONSTANTS = {
     FactionWorkHacking: "Faction Hacking Work",
     FactionWorkField: "Faction Field Work",
     FactionWorkSecurity: "Faction Security Work",
+    
+    WorkTypeCompany: "Working for Company",
+    WorkTypeFaction: "Working for Faction",
+    WorkTypeCreateProgram: "Working on Create a Program",
+    WorkTypeStudyClass: "Studying or Taking a class at university",
+    
+    ClassStudyComputerScience: "studying Computer Science",
+    ClassDataStructures: "taking a Data Structures course",
+    ClassNetworks: "taking a Networks course",
+    ClassAlgorithms: "taking an Algorithms course",
     
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   "analyze                Get statistics and information about current machine <br>" + 

@@ -561,11 +561,14 @@ var Engine = {
             Player.startAction = false;
         }
         
+        //Working
         if (Player.isWorking) {
-            if (Player.currentWorkFactionName != "") {
+            if (Player.workType == CONSTANTS.WorkTypeFaction) {
                 Player.workForFaction(numCycles);
-            } else if (Player.createProgramName != "") {
+            } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
                 Player.createProgramWork(numCycles);
+            } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
+              Player.takeClass(numCycles);  
             } else {
                 Player.work(numCycles);
             }
@@ -868,10 +871,12 @@ var Engine = {
             processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
             loadAllRunningScripts();    //This also takes care of offline production for those scripts
             if (Player.isWorking) {
-                if (Player.currentWorkFactionName != "") {
+                if (Player.workType == CONSTANTS.WorkTypeFaction) {
                     Player.workForFaction(numCyclesOffline);
-                } else if (Player.createProgramName != "") {
+                } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
                     Player.createProgramWork(numCyclesOffline);
+                } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
+                    Player.takeClass(numCyclesOffline);
                 } else {
                     Player.work(numCyclesOffline);
                 }
@@ -895,11 +900,13 @@ var Engine = {
         if (Player.isWorking) {
             var cancelButton = document.getElementById("work-in-progress-cancel-button");
             cancelButton.addEventListener("click", function() {
-                if (Player.currentWorkFactionName != "") {
+                if (Player.workType == CONSTANTS.WorkTypeFaction) {
                     var fac = Factions[Player.currentWorkFactionName];
                     Player.finishFactionWork(true, fac);
-                } else if (Player.createProgramName != "") {
+                } else if (Player.WorkType == CONSTANTS.WorkTypeCreateProgram) {
                     Player.finishCreateProgramWork(true, Player.createProgramName);
+                } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
+                    Player.finishClass();
                 } else {
                     Player.finishWork(true);
                 }

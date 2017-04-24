@@ -23,7 +23,7 @@ function updateTerminalScroll() {
 }
 
 var postNetburnerText = function() {
-	post("Netburner v0.1");
+	post("Bitburner v" + CONSTANTS.Version);
 }
 
 //Defines key commands in terminal
