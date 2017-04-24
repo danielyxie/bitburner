@@ -40,7 +40,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 50) {
         bruteSshALink.style.display = "block";
         bruteSshALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerHour);
+            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerHalfHour);
         });
     }
     
@@ -49,7 +49,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 125) {
         ftpCrackALink.style.display = "block";
         ftpCrackALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPer4Hours);
+            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHour);
         });
     }
     
@@ -58,7 +58,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 300) {
         relaySmtpALink.style.display = "block";
         relaySmtpAlink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer8Hours);
+            Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer4Hours);
         });
     }
     
@@ -67,7 +67,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 500) {
         httpWormALink.style.display = "block";
         httpWormALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer10Hours);
+            Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer8Hours);
         });
     }
     

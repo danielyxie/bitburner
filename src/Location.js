@@ -1186,22 +1186,22 @@ initLocationButtons = function() {
     });
     
     purchase1gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(1, 100000);
+        purchaseServerBoxCreate(1, 50000);
         return false;
     });
     
     purchase2gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(2, 250000);
+        purchaseServerBoxCreate(2, 100000);
         return false;
     });
     
     purchase4gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(4, 600000);
+        purchaseServerBoxCreate(4, 250000);
         return false;
     });
     
     purchase8gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(8, 1500000);
+        purchaseServerBoxCreate(8, 1000000);
         return false;
     });
     
@@ -1211,7 +1211,7 @@ initLocationButtons = function() {
     });
     
     purchase32gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(32, 9000000);
+        purchaseServerBoxCreate(32, 10000000);
         return false;
     });
     
@@ -1221,7 +1221,7 @@ initLocationButtons = function() {
     });
     
     purchase128gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(128, 45000000);
+        purchaseServerBoxCreate(128, 50000000);
         return false;
     });
     
@@ -1236,7 +1236,7 @@ initLocationButtons = function() {
     });
     
     purchase1tb.addEventListener("click", function() {
-        purchaseServerBoxCreate(1024, 600000000);
+        purchaseServerBoxCreate(1024, 750000000);
         return false;
     });
     

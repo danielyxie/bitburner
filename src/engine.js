@@ -868,7 +868,13 @@ var Engine = {
             processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
             loadAllRunningScripts();    //This also takes care of offline production for those scripts
             if (Player.isWorking) {
-                Player.work(numCyclesOffline);
+                if (Player.currentWorkFactionName != "") {
+                    Player.workForFaction(numCyclesOffline);
+                } else if (Player.createProgramName != "") {
+                    Player.createProgramWork(numCyclesOffline);
+                } else {
+                    Player.work(numCyclesOffline);
+                }
             }
         } else {
             //No save found, start new game
@@ -889,7 +895,14 @@ var Engine = {
         if (Player.isWorking) {
             var cancelButton = document.getElementById("work-in-progress-cancel-button");
             cancelButton.addEventListener("click", function() {
-                Player.finishWork(true);
+                if (Player.currentWorkFactionName != "") {
+                    var fac = Factions[Player.currentWorkFactionName];
+                    Player.finishFactionWork(true, fac);
+                } else if (Player.createProgramName != "") {
+                    Player.finishCreateProgramWork(true, Player.createProgramName);
+                } else {
+                    Player.finishWork(true);
+                }
             });
             Engine.loadWorkInProgressContent();
         }

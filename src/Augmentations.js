@@ -451,7 +451,7 @@ initAugmentations = function() {
     
     //Misc augmentations
     var Neurotrainer1 = new Augmentation("Neurotrainer I");
-    Neurotrainer1.setRequirements(50000, 20000000);
+    Neurotrainer1.setRequirements(40000, 10000000);
     Neurotrainer1.setInfo("A decentralized cranial implant that improves the brain's ability to learn. It is\n" + 
                           "installed by releasing millions of nanobots into the human brain, each of which\n" + 
                           "attaches to a different neural pathway to enhance the brain's ability to retain\n" + 

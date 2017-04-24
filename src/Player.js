@@ -229,8 +229,8 @@ PlayerObject.prototype.hack = function() {
 }
 
 PlayerObject.prototype.analyze = function() {
-    //TODO Analyze only takes 5 seconds for now..maybe change this in the future?
-    this.actionTime = 5;
+    //TODO Analyze only takes 1 seconds for now..maybe change this in the future?
+    this.actionTime = 1;
     this.startAction = true;
 }    
 
@@ -421,7 +421,7 @@ PlayerObject.prototype.work = function(numCycles) {
                     " at " + Player.companyName + "<br><br>" + 
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" + 
-                    "$" + this.workMoneyGained + " (" + (this.workMoneyGainRate * cyclesPerSec).toFixed(2) + " / sec) <br><br>" + 
+                    "$" + this.workMoneyGained.toFixed(2) + " ($" + (this.workMoneyGainRate * cyclesPerSec).toFixed(2) + " / sec) <br><br>" + 
                     this.workRepGained.toFixed(3) + " (" + (this.workRepGainRate * cyclesPerSec).toFixed(3) + " / sec) reputation for this company <br><br>" + 
                     this.workHackExpGained.toFixed(3) + " (" + (this.workHackExpGainRate * cyclesPerSec).toFixed(3) + " / sec) hacking exp <br><br>" + 
                     this.workStrExpGained.toFixed(3) + " (" + (this.workStrExpGainRate * cyclesPerSec).toFixed(3) + " / sec) strength exp <br>" + 
