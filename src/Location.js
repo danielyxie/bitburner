@@ -274,6 +274,7 @@ displayLocationContent = function() {
             purchase512gb.style.display = "block";
             purchase1tb.style.display = "block";
             purchaseTor.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
             
         case Locations.AevumBachmanAndAssociates: 
@@ -312,6 +313,7 @@ displayLocationContent = function() {
             purchase512gb.style.display = "block";
             purchase1tb.style.display = "block";
             purchaseTor.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
 
         case Locations.AevumAeroCorp:        
@@ -373,6 +375,7 @@ displayLocationContent = function() {
             purchase4gb.style.display = "block";
             purchase8gb.style.display = "block";
             purchaseTor.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
 
         case Locations.AevumCrushFitnessGym:  
@@ -532,6 +535,7 @@ displayLocationContent = function() {
             purchase2gb.style.display = "block";
             purchase4gb.style.display = "block";
             purchaseTor.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
 
         case Locations.Sector12CarmichaelSecurity:
@@ -644,6 +648,7 @@ displayLocationContent = function() {
             purchase64gb.style.display = "block";
             purchase128gb.style.display = "block";
             purchase256gb.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
 
         case Locations.IshimaNovaMedical:         
@@ -668,6 +673,7 @@ displayLocationContent = function() {
             purchase16gb.style.display = "block";
             purchase32gb.style.display = "block";
             purchaseTor.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
 
         case Locations.VolhavenTravelAgency:
@@ -769,7 +775,7 @@ displayLocationContent = function() {
             purchase128gb.style.display = "block";
             purchase256gb.style.display = "block";
             purchaseTor.style.display = "block";
-            
+            purchaseHomeRam.style.display = "block";
             break;
 
         case Locations.VolhavenMilleniumFitnessGym:   
@@ -1193,6 +1199,7 @@ initLocationButtons = function() {
     var purchase512gb       = document.getElementById("location-purchase-512gb");
     var purchase1tb         = document.getElementById("location-purchase-1tb");
     var purchaseTor         = document.getElementById("location-purchase-tor");
+    var purchaseHomeRam     = document.getElementById("location-purchase-home-ram");
 
     var travelToAevum       = document.getElementById("location-travel-to-aevum");
     var travelToChongqing   = document.getElementById("location-travel-to-chongqing");
@@ -1303,6 +1310,11 @@ initLocationButtons = function() {
     
     purchaseTor.addEventListener("click", function() {
         purchaseTorRouter();
+        return false;
+    });
+    
+    purchaseHomeRam.addEventListener("click", function() {
+        purchaseRamForHomeBoxCreate();
         return false;
     });
     
