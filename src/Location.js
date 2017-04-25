@@ -111,6 +111,8 @@ displayLocationContent = function() {
     var classDataStructures = document.getElementById("location-data-structures-class");
     var classNetworks       = document.getElementById("location-networks-class");
     var classAlgorithms     = document.getElementById("location-algorithms-class");
+    var classManagement     = document.getElementById("location-management-class");
+    var classLeadership     = document.getElementById("location-leadership-class");
 
     var purchase1gb         = document.getElementById("location-purchase-1gb");
     var purchase2gb         = document.getElementById("location-purchase-2gb");
@@ -175,6 +177,8 @@ displayLocationContent = function() {
     classDataStructures.style.display = "none";
     classNetworks.style.display = "none";
     classAlgorithms.style.display = "none";
+    classManagement.style.display = "none";
+    classLeadership.style.display = "none";
     
     purchase1gb.style.display = "none";
     purchase2gb.style.display = "none";
@@ -250,35 +254,7 @@ displayLocationContent = function() {
             var costMult = 3;
             var expMult = 2;
             displayUniversityLocationContent(costMult);
-            
-            var newStudyCS = studyComputerScience.cloneNode(true);
-            studyComputerScience.parentNode.replaceChild(newStudyCS, studyComputerScience)
-            newStudyCS.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassStudyComputerScience);
-                return false;
-            });
-            
-            var newClassDataStructures = classDataStructures.cloneNode(true);
-            classDataStructures.parentNode.replaceChild(newClassDataStructures, classDataStructures);
-            newClassDataStructures.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassDataStructures);
-                return false;
-            });
-            
-            var newClassNetworks = classNetworks.cloneNode(true);
-            classNetworks.parentNode.replaceChild(newClassNetworks, classNetworks);
-            newClassNetworks.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassNetworks);
-                return false;
-            });
-            
-            var newClassAlgorithms = classAlgorithms.cloneNode(true);
-            classAlgorithms.parentNode.replaceChild(newClassAlgorithms, classAlgorithms);
-            newClassAlgorithms.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassAlgorithms);
-                return false;
-            });
-            
+            setUniversityLocationButtons(costMult, expMult);
             break;
             
         case Locations.AevumECorp:  
@@ -455,35 +431,8 @@ displayLocationContent = function() {
         case Locations.Sector12RothmanUniversity:
             var costMult = 2;
             var expMult = 1;
-            displayUniversityLocationContent(costMult);    
-
-            var newStudyCS = studyComputerScience.cloneNode(true);
-            studyComputerScience.parentNode.replaceChild(newStudyCS, studyComputerScience)
-            newStudyCS.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassStudyComputerScience);
-                return false;
-            });
-            
-            var newClassDataStructures = classDataStructures.cloneNode(true);
-            classDataStructures.parentNode.replaceChild(newClassDataStructures, classDataStructures);
-            newClassDataStructures.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassDataStructures);
-                return false;
-            });
-            
-            var newClassNetworks = classNetworks.cloneNode(true);
-            classNetworks.parentNode.replaceChild(newClassNetworks, classNetworks);
-            newClassNetworks.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassNetworks);
-                return false;
-            });
-            
-            var newClassAlgorithms = classAlgorithms.cloneNode(true);
-            classAlgorithms.parentNode.replaceChild(newClassAlgorithms, classAlgorithms);
-            newClassAlgorithms.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassAlgorithms);
-                return false;
-            });            
+            displayUniversityLocationContent(costMult);
+            setUniversityLocationButtons(costMult, expMult);
             break;
 
         case Locations.Sector12MegaCorp:  
@@ -731,35 +680,8 @@ displayLocationContent = function() {
         case Locations.VolhavenZBInstituteOfTechnology:
             var costMult = 4;
             var expMult = 3;
-            displayUniversityLocationContent(costMult);   
-            
-            var newStudyCS = studyComputerScience.cloneNode(true);
-            studyComputerScience.parentNode.replaceChild(newStudyCS, studyComputerScience)
-            newStudyCS.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassStudyComputerScience);
-                return false;
-            });
-            
-            var newClassDataStructures = classDataStructures.cloneNode(true);
-            classDataStructures.parentNode.replaceChild(newClassDataStructures, classDataStructures);
-            newClassDataStructures.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassDataStructures);
-                return false;
-            });
-            
-            var newClassNetworks = classNetworks.cloneNode(true);
-            classNetworks.parentNode.replaceChild(newClassNetworks, classNetworks);
-            newClassNetworks.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassNetworks);
-                return false;
-            });
-            
-            var newClassAlgorithms = classAlgorithms.cloneNode(true);
-            classAlgorithms.parentNode.replaceChild(newClassAlgorithms, classAlgorithms);
-            newClassAlgorithms.addEventListener("click", function() {
-                Player.startClass(costMult, expMult, CONSTANTS.ClassAlgorithms);
-                return false;
-            });            
+            displayUniversityLocationContent(costMult);
+            setUniversityLocationButtons(costMult, expMult);
             break;
 
         case Locations.VolhavenOmniTekIncorporated:   
@@ -1446,24 +1368,84 @@ displayUniversityLocationContent = function(costMult) {
     var classDataStructuresButton   = document.getElementById("location-data-structures-class");
     var classNetworksButton         = document.getElementById("location-networks-class");
     var classAlgorithmsButton       = document.getElementById("location-algorithms-class");
+    var classManagementButton       = document.getElementById("location-management-class");
+    var classLeadershipButton       = document.getElementById("location-leadership-class");
     studyComputerScienceButton.style.display = "block";
     classDataStructuresButton.style.display = "block";
     classNetworksButton.style.display = "block";
     classAlgorithmsButton.style.display = "block";
-    
-    var gameCPS = 1 / Engine._idleSpeed;
+    classManagementButton.style.display = "block";
+    classLeadershipButton.style.display = "block";
     
     //Costs (per second)
-    var baseDataStructuresCost = 1;
-    var baseNetworksCost = 5;
-    var baseAlgorithmsCost = 20;
+    var baseDataStructuresCost  = 1;
+    var baseNetworksCost        = 5;
+    var baseAlgorithmsCost      = 20;
+    var baseManagementCost      = 10;
+    var baseLeadershipCost      = 20;
     
-    var dataStructuresCost  = baseDataStructuresCost * costMult;
-    var networksCost        = baseNetworksCost * costMult;
-    var algorithmsCost      = baseAlgorithmsCost * costMult;
+    var dataStructuresCost  = baseDataStructuresCost    * costMult;
+    var networksCost        = baseNetworksCost          * costMult;
+    var algorithmsCost      = baseAlgorithmsCost        * costMult;
+    var managementCost      = baseManagementCost        * costMult;
+    var leadershipCost      = baseLeadershipCost        * costMult;
     
     //Update button text to show cost
-    classDataStructuresButton.innerHTML = "Take Data Structures Class ($" + dataStructuresCost + " / sec)";
-    classNetworksButton.innerHTML = "Take Networks Class ($" + networksCost + " / second)";
-    classAlgorithmsButton.innerHTML = "Take Algorithms Class ($" + algorithmsCost + " / second)";
+    classDataStructuresButton.innerHTML = "Take Data Structures course ($"  + dataStructuresCost + " / sec)";
+    classNetworksButton.innerHTML       = "Take Networks course ($"         + networksCost       + " / second)";
+    classAlgorithmsButton.innerHTML     = "Take Algorithms course ($"       + algorithmsCost     + " / second)";
+    classManagementButton.innerHTML     = "Take Management course ($"       + managementCost     + " / second)";
+    classLeadershipButton.innerHTML     = "Take Leadership course ($"       + leadershipCost     + " / second)";
 }
+
+setUniversityLocationButtons = function(costMult, expMult) {
+    var studyComputerScience= document.getElementById("location-study-computer-science");
+    var classDataStructures = document.getElementById("location-data-structures-class");
+    var classNetworks       = document.getElementById("location-networks-class");
+    var classAlgorithms     = document.getElementById("location-algorithms-class");
+    var classManagement     = document.getElementById("location-management-class");
+    var classLeadership     = document.getElementById("location-leadership-class");
+    
+    var newStudyCS = studyComputerScience.cloneNode(true);
+    studyComputerScience.parentNode.replaceChild(newStudyCS, studyComputerScience)
+    newStudyCS.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassStudyComputerScience);
+        return false;
+    });
+    
+    var newClassDataStructures = classDataStructures.cloneNode(true);
+    classDataStructures.parentNode.replaceChild(newClassDataStructures, classDataStructures);
+    newClassDataStructures.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassDataStructures);
+        return false;
+    });
+    
+    var newClassNetworks = classNetworks.cloneNode(true);
+    classNetworks.parentNode.replaceChild(newClassNetworks, classNetworks);
+    newClassNetworks.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassNetworks);
+        return false;
+    });
+    
+    var newClassAlgorithms = classAlgorithms.cloneNode(true);
+    classAlgorithms.parentNode.replaceChild(newClassAlgorithms, classAlgorithms);
+    newClassAlgorithms.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassAlgorithms);
+        return false;
+    });
+    
+    var newClassManagement = classManagement.cloneNode(true);
+    classManagement.parentNode.replaceChild(newClassManagement, classManagement);
+    newClassManagement.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassManagement);
+        return false;
+    });
+    
+    var newClassLeadership = classLeadership.cloneNode(true);
+    classLeadership.parentNode.replaceChild(newClassLeadership, classLeadership);
+    newClassLeadership.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassLeadership);
+        return false;
+    });
+}
+

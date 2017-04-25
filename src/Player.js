@@ -769,7 +769,6 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     this.workDefExpGainRate     = 0;
     this.workDexExpGainRate     = 0;
     this.workAgiExpGainRate     = 0;
-    this.workChaExpGainRate     = 0;
     this.workRepGainRate        = 0;
     this.workMoneyGainRate      = 0;
     
@@ -787,15 +786,20 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     var baseDataStructuresCost = 1;
     var baseNetworksCost = 5;
     var baseAlgorithmsCost = 20;
+    var baseManagementCost = 10;
+    var baseLeadershipCost = 20;
     
     var baseStudyComputerScienceExp = 0.02;
     var baseDataStructuresExp       = 0.1;
-    var baseNetworksExp             = 0.5;
-    var baseAlgorithmsExp           = 2.0;
+    var baseNetworksExp             = 0.4;
+    var baseAlgorithmsExp           = 1.5;
+    var baseManagementExp           = 0.8;
+    var baseLeadershipExp           = 1.5;
     
     //Find cost and exp gain per game cycle
     var cost = 0; 
     var hackExp = 0;
+    var chaExp = 0;
     switch (className) {
         case CONSTANTS.ClassStudyComputerScience:
             hackExp = baseStudyComputerScienceExp * expMult / gameCPS;
@@ -812,13 +816,22 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
             cost = baseAlgorithmsCost * costMult / gameCPS;
             hackExp = baseAlgorithmsExp * expMult / gameCPS;
             break;
+        case CONSTANTS.ClassManagement:
+            cost = baseManagementCost * costMult / gameCPS;
+            chaExp = baseManagementExp * expMult / gameCPS;
+            break;
+        case CONSTANTS.ClassLeadership:
+            cost = baseLeadershipCost * costMult / gameCPS;
+            chaExp = baseLeadershipExp * expMult / gameCPS;
+            break;
         default:
             throw new Error("ERR: Invalid/unregocnized class name");
             return;
     }
     
-    this.workMoneyLossRate = cost;
-    this.workHackExpGainRate = hackExp;
+    this.workMoneyLossRate      = cost;
+    this.workHackExpGainRate    = hackExp;
+    this.workChaExpGainRate     = chaExp;
     
     var cancelButton = document.getElementById("work-in-progress-cancel-button");
     
@@ -883,7 +896,7 @@ PlayerObject.prototype.finishClass = function() {
     
     this.updateSkillLevels();
     var txt = "After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", <br>" +
-              "you spent a total of " + this.workMoneyGained * -1 + ". <br><br>" + 
+              "you spent a total of $" + this.workMoneyGained * -1 + ". <br><br>" + 
               "You earned a total of: <br>" + 
               (this.workHackExpGained).toFixed(3) + " hacking exp <br>" + 
               (this.workStrExpGained).toFixed(3) + " strength exp <br>" + 

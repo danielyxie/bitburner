@@ -52,6 +52,8 @@ CONSTANTS = {
     ClassDataStructures: "taking a Data Structures course",
     ClassNetworks: "taking a Networks course",
     ClassAlgorithms: "taking an Algorithms course",
+    ClassManagement: "taking a Management course",
+    ClassLeadership: "taking a Leadership course",
     
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   "analyze                Get statistics and information about current machine <br>" + 
