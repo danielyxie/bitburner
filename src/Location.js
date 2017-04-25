@@ -126,6 +126,7 @@ displayLocationContent = function() {
     var purchase512gb       = document.getElementById("location-purchase-512gb");
     var purchase1tb         = document.getElementById("location-purchase-1tb");
     var purchaseTor         = document.getElementById("location-purchase-tor");
+    var purchaseHomeRam     = document.getElementById("location-purchase-home-ram");
 
     var travelAgencyText    = document.getElementById("location-travel-agency-text");
     var travelToAevum       = document.getElementById("location-travel-to-aevum");
@@ -192,6 +193,7 @@ displayLocationContent = function() {
     purchase512gb.style.display = "none";
     purchase1tb.style.display = "none";
     purchaseTor.style.display = "none";
+    purchaseHomeRam.stlye.display = "none";
     
     travelAgencyText.style.display = "none";
     travelToAevum.style.display = "none";

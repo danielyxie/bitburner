@@ -1,4 +1,7 @@
-/* Functions to handle Purchase of Servers */
+/* Functions to handle any server-related purchasing:
+ *  Purchasing new servers
+ *  Purchasing more RAM for home computer
+ */
 purchaseServer = function(ram, cost) {
     //Check if player has enough money
     if (cost > Player.money) {
@@ -28,4 +31,9 @@ purchaseServer = function(ram, cost) {
     Player.money -= cost; 
     
     dialogBoxCreate("Server successfully purchased with hostname " + hostname);
+}
+
+
+purchaseRamForHomeComputer = function() {
+    
 }

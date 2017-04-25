@@ -327,7 +327,7 @@ initForeignServers = function() {
     AddToAllServers(RhoConstructionServer);
     
     var AlphaEnterprisesServer = new Server();
-    AlphaEnterprisesServer.init(createRandomIp(), "alpha-ent", "Alpha Enterprises", true, false, false, false, 8);
+    AlphaEnterprisesServer.init(createRandomIp(), "alpha-ent", "Alpha Enterprises", true, false, false, false, 0);
     AlphaEnterprisesServer.setHackingParameters(550, 800000000, 60, 55);
     AlphaEnterprisesServer.setPortProperties(4);
     AddToAllServers(AlphaEnterprisesServer);
@@ -382,7 +382,7 @@ initForeignServers = function() {
     AddToAllServers(CompuTekServer);
 
     var NetLinkTechnologiesServer = new Server();
-    NetLinkTechnologiesServer.init(createRandomIp(), "netlink", "NetLink Technologies", true, false, false, false, 8);
+    NetLinkTechnologiesServer.init(createRandomIp(), "netlink", "NetLink Technologies", true, false, false, false, 0);
     NetLinkTechnologiesServer.setHackingParameters(400, 350000000, 70, 60);
     NetLinkTechnologiesServer.setPortProperties(3);
     AddToAllServers(NetLinkTechnologiesServer);
@@ -413,7 +413,7 @@ initForeignServers = function() {
     AddToAllServers(JoesGunsServer);
     
     var Zer0NightclubServer = new Server();
-    Zer0NightclubServer.init(createRandomIp(), "zer0", "ZER0 Nightclub", true, false, false, false, 4);
+    Zer0NightclubServer.init(createRandomIp(), "zer0", "ZER0 Nightclub", true, false, false, false, 2);
     Zer0NightclubServer.setHackingParameters(75, 750000, 25, 40);
     Zer0NightclubServer.setPortProperties(1);
     AddToAllServers(Zer0NightclubServer);
@@ -449,7 +449,7 @@ initForeignServers = function() {
     AddToAllServers(HaraKiriSushiBarServer);
     
     var PhantasyServer = new Server();
-    PhantasyServer.init(createRandomIp(), "phantasy", "Phantasy Club", true, false, false, false, 1);
+    PhantasyServer.init(createRandomIp(), "phantasy", "Phantasy Club", true, false, false, false, 4);
     PhantasyServer.setHackingParameters(100, 300000, 20, 35);
     PhantasyServer.setPortProperties(2);
     AddToAllServers(PhantasyServer);
@@ -499,22 +499,22 @@ initForeignServers = function() {
 	
 	//Faction servers, cannot hack money from these
 	var BitRunnersServer = new Server();
-	BitRunnersServer.init(createRandomIp(), "run4theh111z", "The Runners", true, false, false, false,  1);
+	BitRunnersServer.init(createRandomIp(), "run4theh111z", "The Runners", true, false, false, false,  0);
 	BitRunnersServer.setPortProperties(4);
 	AddToAllServers(BitRunnersServer);
 	
 	var NiteSecServer = new Server();
-	NiteSecServer.init(createRandomIp(), "avmnite-02h", "NiteSec", true, false, false, false, 1);
+	NiteSecServer.init(createRandomIp(), "avmnite-02h", "NiteSec", true, false, false, false, 0);
 	NiteSecServer.setPortProperties(2);
 	AddToAllServers(NiteSecServer);
 	
 	var DarkArmyServer = new Server();
-    DarkArmyServer.init(createRandomIp(), ".", ".", true, false, false, false, 1);
+    DarkArmyServer.init(createRandomIp(), ".", ".", true, false, false, false, 0);
 	DarkArmyServer.setPortProperties(5);
 	AddToAllServers(DarkArmyServer);
 	
 	var CyberSecServer = new Server();
-	CyberSecServer.init(createRandomIp(), "CSEC", "CyberSec", true, false, false, false, 1);
+	CyberSecServer.init(createRandomIp(), "CSEC", "CyberSec", true, false, false, false, 0);
 	CyberSecServer.setPortProperties(2);
 	AddToAllServers(CyberSecServer);
 	

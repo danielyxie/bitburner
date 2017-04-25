@@ -204,7 +204,7 @@ CompanyPositions = {
 
     //Software
     SoftwareIntern:             new CompanyPosition("Software Engineering Intern", 1, 0, 0, 0, 0, 0, 0, 1),
-    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 50, 0, 0, 0, 0, 1, 9000, 5),
+    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 50, 0, 0, 0, 0, 0, 9000, 5),
     SeniorDev:                  new CompanyPosition("Senior Software Engineer", 250, 0, 0, 0, 0, 50, 36000, 12),
     LeadDev:                    new CompanyPosition("Lead Software Developer", 400, 0, 0, 0, 0, 150, 144000, 15),
     
