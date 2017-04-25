@@ -193,7 +193,7 @@ displayLocationContent = function() {
     purchase512gb.style.display = "none";
     purchase1tb.style.display = "none";
     purchaseTor.style.display = "none";
-    purchaseHomeRam.stlye.display = "none";
+    purchaseHomeRam.style.display = "none";
     
     travelAgencyText.style.display = "none";
     travelToAevum.style.display = "none";

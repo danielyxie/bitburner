@@ -43,7 +43,7 @@ Company.prototype.addPositions = function(positions) {
 
 Company.prototype.hasPosition = function(pos) {
     for (var i = 0; i < this.companyPositions.length; ++i) {
-        if (pos.name == this.companyPositions[i]) {
+        if (pos.positionName == this.companyPositions[i]) {
             return true;
         }
     }

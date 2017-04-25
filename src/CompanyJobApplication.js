@@ -2,11 +2,7 @@
 
 //Determines the job that the Player should get (if any) at the current
 //company
-PlayerObject.prototype.applyForJob = function(entryPosType) {
-    if (Engine.Debug) {
-        console.log("Player.applyForJob() called");
-    }
-    
+PlayerObject.prototype.applyForJob = function(entryPosType) {    
     var currCompany = "";
     if (this.companyName != "") {
         currCompany = Companies[this.companyName];
