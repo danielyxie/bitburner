@@ -204,13 +204,13 @@ CompanyPositions = {
 
     //Software
     SoftwareIntern:             new CompanyPosition("Software Engineering Intern", 1, 0, 0, 0, 0, 0, 0, 1),
-    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 50, 0, 0, 0, 0, 25, 9000, 5),
-    SeniorDev:                  new CompanyPosition("Senior Software Engineer", 250, 0, 0, 0, 0, 75, 36000, 12),
+    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 50, 0, 0, 0, 0, 1, 9000, 5),
+    SeniorDev:                  new CompanyPosition("Senior Software Engineer", 250, 0, 0, 0, 0, 50, 36000, 12),
     LeadDev:                    new CompanyPosition("Lead Software Developer", 400, 0, 0, 0, 0, 150, 144000, 15),
     
     //IT
-    ITIntern:                   new CompanyPosition("IT Intern", 1, 0, 0, 0, 0, 1, 0, .8),
-    ITAnalyst:                  new CompanyPosition("IT Analyst", 25, 0, 0, 0, 0, 1, 9000, 2),
+    ITIntern:                   new CompanyPosition("IT Intern", 1, 0, 0, 0, 0, 0, 0, .8),
+    ITAnalyst:                  new CompanyPosition("IT Analyst", 25, 0, 0, 0, 0, 0, 9000, 2),
     ITManager:                  new CompanyPosition("IT Manager", 150, 0, 0, 0, 0, 50, 36000, 8),
     SysAdmin:                   new CompanyPosition("Systems Administrator", 250, 0, 0, 0, 0, 75, 144000, 13),
     SecurityEngineer:           new CompanyPosition("Security Engineer", 150, 0, 0, 0, 0, 25, 36000, 10),
