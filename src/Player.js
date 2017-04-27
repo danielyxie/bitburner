@@ -79,6 +79,7 @@ function PlayerObject() {
     this.currentServer       = ""; //IP address of Server currently being accessed through terminal
     this.discoveredServers   = []; //IP addresses of secret servers not in the network that you have discovered
     this.purchasedServers    = [];
+    this.hacknetNodes   =   [];
     
     //Factions
     this.factions = []; //Names of all factions player has joined

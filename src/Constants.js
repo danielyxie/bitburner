@@ -7,6 +7,9 @@ CONSTANTS = {
     
     //How much reputation is needed to join a megacorporation's faction
     CorpFactionRepRequirement: 250000,
+    
+    //Base cost for 1GB of RAM
+    BaseCostFor1GBOfRam: 50000,
 	
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  

@@ -108,6 +108,20 @@
     text-decoration: none;
 }
 
+/* Hacknet Nodes */
+#hacknet-nodes-container {
+    position: fixed;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 100%;
+    margin-left: 10%;
+    width: 99%;
+}
+
+.hacknet-node li {
+    
+}
+
 /* World */
 #world-container {
     position: fixed;
@@ -218,8 +232,6 @@
     margin: 0 0 15px 0;
     list-style-type: none;
 }
-
-
 
 /* Augmentations */
 #augmentations-container {
