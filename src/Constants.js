@@ -8,8 +8,18 @@ CONSTANTS = {
     //How much reputation is needed to join a megacorporation's faction
     CorpFactionRepRequirement: 250000,
     
-    //Base cost for 1GB of RAM
-    BaseCostFor1GBOfRam: 50000,
+    /* Base costs */
+    BaseCostFor1GBOfRam: 50000,     //1 GB of RAM
+    
+    BaseCostForHacknetNode: 1000,
+    BaseCostForHacknetNodeCore: 1000000,
+    
+    /* Hacknet Node constants */
+    HacknetNodeMoneyGainPerLevel: 0.25,
+    HacknetNodePurchaseNextMult: 1.2;   //Multiplier when purchasing an additional hacknet node
+    HacknetNodeUpgradeLevelMult: 1.08,  //Multiplier for cost when upgrading level
+    HacknetNodeUpgradeRamMult: 1.2,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeCoreMult: 1.5,    //Multiplier for cost when buying another core
 	
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  

@@ -297,7 +297,7 @@ var Terminal = {
 				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
 					if (Player.getCurrentServer().runningScripts[i] == scriptName) {						
 						killWorkerScript(scriptName, Player.getCurrentServer().ip); 
-						post("Killing " + scriptName + ". May take a few seconds");
+						post("Killing " + scriptName + ". May take up to a few minutes for the scripts to die...");
 						return;
 					} 
 				}

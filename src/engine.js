@@ -8,6 +8,7 @@ var Engine = {
         characterMainMenuButton:        null,
         scriptEditorMainMenuButton:     null,
         activeScriptsMainMenuButton:    null,
+        hacknetNodesMainMenuButton:     null,
         worldMainMenuButton:            null,
         createProgramMainMenuButton:    null,
         factionsMainMenuButton:         null,
@@ -43,6 +44,7 @@ var Engine = {
         characterContent:               null,
         scriptEditorContent:            null,
         activeScriptsContent:           null,
+        hacknetNodesContent:            null,
         worldContent:                   null,
         createProgramContent:           null,
         factionsContent:                null,
@@ -66,6 +68,7 @@ var Engine = {
         CharacterInfo:      "CharacterInfo",
         ScriptEditor:       "ScriptEditor",
         ActiveScripts:      "ActiveScripts",
+        HacknetNodes:       "HacknetNodes",
         World:              "World",
         CreateProgram:      "CreateProgram",
         Factions:           "Factions",
@@ -202,6 +205,14 @@ var Engine = {
         Engine.currentPage = Engine.Page.ActiveScripts;
     },
     
+    loadHacknetNodesContent: function() {
+        Engine.hideAllContent();
+        Engine.Display.hacknetNodesContent.style.visibility = "visible";
+        displayHacknetNodesContent();
+        
+        Engine.currentPage = Engine.Page.HacknetNodes;
+    },
+    
     loadWorldContent: function() {
         Engine.hideAllContent();
         Engine.Display.worldContent.style.visibility = "visible";
@@ -274,6 +285,7 @@ var Engine = {
         Engine.Display.characterContent.style.visibility = "hidden";
         Engine.Display.scriptEditorContent.style.visibility = "hidden";
         Engine.Display.activeScriptsContent.style.visibility = "hidden";
+        Engine.Display.hacknetNodesContent.style.visibility = "hidden";
         Engine.Display.worldContent.style.visibility = "hidden";
         Engine.Display.createProgramContent.style.visibility = "hidden";
         Engine.Display.factionsContent.style.visibility = "hidden";
@@ -310,6 +322,7 @@ var Engine = {
                                                  'Agility: ' + (Player.agility).toLocaleString() + '<br><br>' +
                                                  'Charisma: ' + (Player.charisma).toLocaleString() + '<br><br>' +
                                                  'Servers owned: ' + Player.purchasedServers.length + '<br><br>' + 
+                                                 'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br><br>' + 
                                                  'Hacking experience: ' + (Player.hacking_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
                                                  'Strength experience: ' +  (Player.strength_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
                                                  'Defense experience: ' + (Player.defense_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
@@ -585,6 +598,9 @@ var Engine = {
         
         //Update the running time of all active scripts
         updateOnlineScriptTimes(numCycles);
+        
+        //Hacknet Nodes
+        processAllHacknetNodeEarnings(numCycles);
     },
     
     //Counters for the main event loop. Represent the number of game cycles are required
@@ -592,7 +608,7 @@ var Engine = {
     Counters: {
         autoSaveCounter:    300,            //Autosave every minute
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
-        updateDisplays: 5,                  //Update displays such as Active Scripts display and character display
+        updateDisplays: 4,                  //Update displays such as Active Scripts display and character display
         serverGrowth: 450,                  //Process server growth every minute and a half
         checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
     },
@@ -623,9 +639,11 @@ var Engine = {
                 Engine.updateActiveScriptsItems();
             } else if (Engine.currentPage == Engine.Page.CharacterInfo) {
                 Engine.displayCharacterInfo();
-            } 
+            }  else if (Engine.currentPage == Engine.Page.HacknetNodes) {
+                updateHacknetNodesContent();
+            }
             
-            Engine.Counters.updateDisplays = 5;
+            Engine.Counters.updateDisplays = 4;
         }
         
         if (Engine.Counters.serverGrowth <= 0) {
@@ -703,6 +721,12 @@ var Engine = {
         Engine.Clickables.activeScriptsMainMenuButton = document.getElementById("active-scripts-menu-link");
         Engine.Clickables.activeScriptsMainMenuButton.addEventListener("click", function() {
             Engine.loadActiveScriptsContent();
+            return false;
+        });
+        
+        Engine.Clickables.hacknetNodesMainMenuButton = document.getElementById("hacknet-nodes-menu-link");
+        Engine.Clickables.hacknetNodesMainMenuButton.addEventListener("click", function() {
+            Engine.loadHacknetNodesContent();
             return false;
         });
         
@@ -811,6 +835,9 @@ var Engine = {
         Engine.Display.activeScriptsContent = document.getElementById("active-scripts-container");
         Engine.Display.activeScriptsContent.style.visibility = "hidden";
         
+        Engine.Display.hacknetNodesContent = document.getElementById("hacknet-nodes-container");
+        Engine.Display.hacknetNodesContent.style.visibility = "hidden";
+        
         Engine.Display.worldContent = document.getElementById("world-container");
         Engine.Display.worldContent.style.visibility = "hidden";
         
@@ -881,6 +908,9 @@ var Engine = {
                     Player.work(numCyclesOffline);
                 }
             }
+            
+            //Hacknet Nodes
+            processAllHacknetNodeEarnings(numCyclesOffline);
         } else {
             //No save found, start new game
             console.log("Initializing new game");

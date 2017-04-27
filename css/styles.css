@@ -22,6 +22,7 @@ h2 {
 }
 
 ul {
+    padding: 6px;
     list-style-type: none;
 }
 
@@ -87,10 +88,14 @@ span {
     border-left: 1px solid #333333;
 }
 
+.a-link-button:hover {
+    background-color: #666;
+}
+
 /* Make anchor tags ("a" elements) inactive (not clickable) */
 .a-link-button-inactive {
     text-decoration: none;
-    background-color: #555;
+    background-color: #333;
     color: #FFFFFF;
     padding: 6px;
     margin: 6px;
