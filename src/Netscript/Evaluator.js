@@ -120,6 +120,7 @@ function evaluate(exp, workerScript) {
 				if (env.stopFlag) {reject(workerScript);}
 				
 				console.log("for loop encountered in evaluator");
+                workerScript.scriptRef.log("Entering for loop");
 				var pInit = new Promise(function(resolve, reject) {
 					setTimeout(function() {
 						var resInit = evaluate(exp.init, workerScript);
@@ -135,6 +136,7 @@ function evaluate(exp, workerScript) {
 					var pForLoop = evaluateFor(exp, workerScript);
 					pForLoop.then(function(forLoopRes) {
 						resolve("forLoopDone");
+                        workerScript.scriptRef.log("Exiting for loop");
 					}, function(e) {
 						reject(e);
 					});

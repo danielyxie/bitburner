@@ -831,8 +831,8 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     }
     
     this.workMoneyLossRate      = cost;
-    this.workHackExpGainRate    = hackExp;
-    this.workChaExpGainRate     = chaExp;
+    this.workHackExpGainRate    = hackExp * this.hacking_exp_mult;
+    this.workChaExpGainRate     = chaExp * this.charisma_exp_mult;
     
     var cancelButton = document.getElementById("work-in-progress-cancel-button");
     
