@@ -212,11 +212,16 @@ function evaluate(exp, workerScript) {
 							//Calculate the hacking time 
 							var hackingTime = scriptCalculateHackingTime(server); //This is in seconds
 							
+                            //No root access or skill level too low
 							if (server.hasAdminRights == false) {
-								console.log("Cannot hack server " + server.hostname);
-								resolve("Cannot hack, no admin rights");
-								workerScript.scriptRef.log("Cannot hack this server because user does not have root access");
+								workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user does not have root access");
+                                throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because it did not have root access to " + server.hostname);
 							}
+                            
+                            if (server.requiredHackingSkill > Player.hacking_skill) {
+                                workerScript.scriptRef.log("Cannot hack this server (" + server.hostaname + ") because user does not have root access");
+                                throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because player's hacking skill is not high enough to hack " + server.hostname);
+                            }
                             
                             workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime + " seconds");
 							
