@@ -12,6 +12,7 @@ function WorkerScript(script) {
 	this.output			= "";
 	this.ramUsage		= 0;
 	this.scriptRef		= script;
+    this.errorMessage   = "";
 }
 
 //Returns the server on which the workerScript is running
@@ -60,9 +61,6 @@ function runScriptsLoop() {
 					var scriptName = errorTextArray[2];
 					var errorMsg = errorTextArray[3];
 					
-					//Post error message to terminal
-					//TODO Only post this if you're on the machine the script is running on?
-					post("Script runtime error: " + errorMsg);
                     dialogBoxCreate("Script runtime error: ", "Server Ip: " + serverIp, "Script name: " + scriptName, errorMsg);
 					
 					//Find the corresponding workerscript and set its flags to kill it
@@ -72,10 +70,20 @@ function runScriptsLoop() {
 							workerScripts[i].env.stopFlag = true;
 							return;
 						}
-					}
+					} 
+                } else if (w instanceof WorkerScript) {
+                    if (isScriptErrorMessage(w.errorMessage)) {
+                        var errorTextArray = w.errorMessage.split("|");
+                        if (errorTextArray.length != 4) {
+                            console.log("ERROR: Something wrong with Error text in evaluator...");
+                            console.log("Error text: " + errorText);
+                        }
+                        var serverIp = errorTextArray[1];
+                        var scriptName = errorTextArray[2];
+                        var errorMsg = errorTextArray[3];
 					
-				} else {
-					console.log("Stopping script" + w.name + " because it was manually stopped (rejected)")
+                        dialogBoxCreate("Script runtime error: ", "Server Ip: " + serverIp, "Script name: " + scriptName, errorMsg);
+                    }
 					w.running = false;
 					w.env.stopFlag = true;
 				}

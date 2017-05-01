@@ -6,6 +6,9 @@
 //wait for that promise to finish before continuing
 function evaluate(exp, workerScript) {
 	var env = workerScript.env;
+    if (exp == null) {
+        return;
+    }
     switch (exp.type) {
 		case "num":
 		case "str":
@@ -103,7 +106,7 @@ function evaluate(exp, workerScript) {
 			var numConds = exp.cond.length;
 			var numThens = exp.then.length;
 			if (numConds == 0 || numThens == 0 || numConds != numThens) {
-				throw new Error ("|" + workerScript.serverIp + "|" + workerScript.name + "|Number of conds and thens in if structure don't match (or there are none)");
+				reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Number of conds and thens in if structure don't match (or there are none)");
 			}
 			
 			for (var i = 0; i < numConds; i++) {
@@ -165,7 +168,9 @@ function evaluate(exp, workerScript) {
 				evaluateProgPromise.then(function(w) {
 					resolve(workerScript);
 				}, function(e) {
-					reject(e);
+                    console.log("Here");
+                    workerScript.errorMessage = e.toString();
+					reject(workerScript);
 				});
 			});
 			break;
@@ -188,7 +193,7 @@ function evaluate(exp, workerScript) {
 				setTimeout(function() {
 					if (exp.func.value == "hack") {
 						if (exp.args.length != 1) {
-							throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|Hack() call has incorrect number of arguments. Takes 1 argument");
+							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Hack() call has incorrect number of arguments. Takes 1 argument");
 						}
 						
 						//IP of server to hack
@@ -215,12 +220,12 @@ function evaluate(exp, workerScript) {
                             //No root access or skill level too low
 							if (server.hasAdminRights == false) {
 								workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user does not have root access");
-                                throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because it did not have root access to " + server.hostname);
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because it did not have root access to " + server.hostname);
 							}
                             
                             if (server.requiredHackingSkill > Player.hacking_skill) {
                                 workerScript.scriptRef.log("Cannot hack this server (" + server.hostaname + ") because user does not have root access");
-                                throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because player's hacking skill is not high enough to hack " + server.hostname);
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because player's hacking skill is not high enough to hack " + server.hostname);
                             }
                             
                             workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime + " seconds");
@@ -272,7 +277,7 @@ function evaluate(exp, workerScript) {
 
 					} else if (exp.func.value == "sleep") {
 						if (exp.args.length != 1) {
-							throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|Sleep() call has incorrect number of arguments. Takes 1 argument.");
+							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Sleep() call has incorrect number of arguments. Takes 1 argument.");
 						}
 						
 						var sleepTimePromise = evaluate(exp.args[0], workerScript);
@@ -296,7 +301,7 @@ function evaluate(exp, workerScript) {
 						
 					} else if (exp.func.value == "print") {
 						if (exp.args.length != 1) {
-							throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "| Print() call has incorrect number of arguments. Takes 1 argument");
+							reject("|" + workerScript.serverIp + "|" + workerScript.name + "| Print() call has incorrect number of arguments. Takes 1 argument");
 						}
 						
 						var p = new Promise(function(resolve, reject) {
@@ -322,7 +327,7 @@ function evaluate(exp, workerScript) {
 			break;
 
 		default:
-			throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "| Can't evaluate type " + exp.type);
+			reject("|" + workerScript.serverIp + "|" + workerScript.name + "| Can't evaluate type " + exp.type);
     }
 }
 
@@ -520,6 +525,18 @@ function apply_op(op, a, b) {
     }
     throw new Error("Can't apply operator " + op);
 } 
+
+function isScriptErrorMessage(msg) {
+    splitMsg = msg.split("|");
+    if (splitMsg.length != 4){
+        return false;
+    }
+    var ip = splitMsg[1];
+    if (!isValidIPAddress(ip)) {
+        return false;
+    }
+    return true;
+}
 
 //The same as Player's calculateHackingChance() function but takes in the server as an argument
 function scriptCalculateHackingChance(server) {
