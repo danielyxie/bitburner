@@ -28,7 +28,7 @@ var postNetburnerText = function() {
 }
 
 //Defines key commands in terminal
-$(document).keyup(function(event) {
+$(document).keydown(function(event) {
 	//Terminal
 	if (Engine.currentPage == Engine.Page.Terminal) {
 		//Enter
@@ -61,6 +61,29 @@ $(document).keyup(function(event) {
             document.getElementById("terminal-input-text-box").value = prevCommand;
             --Terminal.commandHistoryIndex;
         }
+        
+        //Tab (autocomplete)
+        if (event.keyCode == 9) {
+            console.log("Tab pressed");
+            var input = document.getElementById("terminal-input-text-box").value;
+            if (input == "") {return;}
+            input = input.replace(/\s\s+/g, ' ');
+            
+            var allPos = determineAllPossibilitiesForTabCompletion(input);
+            console.log("allPos: " + allPos);
+            if (allPos.length == 0) {return;}
+            
+            var commandArray = input.split(" ");
+            
+            var arg = "";
+            if (commandArray.length == 0) {return;}
+            else if (commandArray.length > 1) {
+                arg = commandArray[1];
+            }
+            
+            console.log("arg: " + arg);
+            tabCompletion(arg, allPos);
+        }
 	}
 });
 
@@ -90,6 +113,82 @@ $(document).keyup(function(e) {
 		}
 	}
 })
+
+//Implements a tab completion feature for terminal
+//  str - Incomplete string that the function will try to complete, or will display
+//        a series of possible options for
+//  allPossibilities - Array of strings containing all possibilities that the
+//                     string can complete to
+function tabCompletion(str, allPossibilities) {
+    if (!(allPossibilities.constructor === Array)) {return;}
+    if (!containsAllStrings(allPossibilities)) {return;}
+    
+    for (var i = allPossibilities.length-1; i >= 0; --i) {
+        if (!allPossibilities[i].startsWith(str)) {
+            allPossibilities.splice(i, 1);
+        }
+    }
+    
+    console.log("Tab completion possibilities: " + allPossibilities);
+    if (allPossibilities.length == 1) {
+        document.getElementById("terminal-input-text-box").value = allPossibilities[0];
+    } else {
+        var longestStartSubstr = longestCommonStart(allPossibilities);
+        //If the longest common starting substring of remaining possibilities is the same
+        //as whatevers already in terminal, just list all possible options. Otherwise,
+        //change the input in the terminal to the longest common starting substr
+        if (longestStartSubstr == str) {
+            //List all possible options
+            var allOptionsStr = "";
+            for (var i = 0; i < allPossibilities.length; ++i) {
+                allOptionsStr += allPossibilities[i];
+                allOptionsStr += "   ";
+            }
+            post(allOptionsStr);
+        } else {
+            document.getElementById("terminal-input-text-box").value = longestStartSubstr;
+        }
+    }
+}
+
+function determineAllPossibilitiesForTabCompletion(input) {
+    var allPos = [];
+    var currServ = Player.getCurrentServer();
+    if (input.startsWith("connect ") || input.startsWith("telnet ")) {
+        //All network connections
+        for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
+            var serv = AllServers[currServ.serversOnNetwork[i]];
+            if (serv == null) {continue;}
+            allPos.push(serv.ip); //IP
+            allPos.push(serv.hostname); //Hostname
+        }
+        return allPos;
+    } 
+    
+    if (input.startsWith("kill ") || input.startsWith("nano ") ||
+        input.startsWith("tail ")) {
+        //All Scripts
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push(currServ.scripts[i].filename);
+        }
+        return allPos;
+    }
+    
+    if (input.startsWith("run ")) {
+        //All programs and scripts
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push(currServ.scripts[i].filename);
+        }
+        
+        //Programs are on home computer
+        var homeComputer = Player.getHomeComputer();
+        for(var i = 0; i < homeComputer.programs.length; ++i) {
+            allPos.push(homeComputer.programs[i]);
+        }
+        return allPos;
+    }
+    return allPos;
+}
 
 var Terminal = {
     //Flags to determine whether the player is currently running a hack or an analyze
@@ -141,7 +240,7 @@ var Terminal = {
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" class="terminal-input"/>';
+        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input"/>';
         $('input[class=terminal-input]').prop('disabled', false);      
 
         Terminal.hackFlag = false;
@@ -197,9 +296,13 @@ var Terminal = {
     }, 
 	
 	executeCommand:  function(command) {
+        //Replace all extra whitespace in command with a single space
+        //TODO Remove trailing and leading whitespace
+        command = command.replace(/\s\s+/g, ' ');
+        
         Terminal.commandHistory.push(command);
         if (Terminal.commandHistory.length > 50) {
-            Terminal.commandHistory.splice(0);
+            Terminal.commandHistory.splice(0, 1);
         }
         Terminal.commandHistoryIndex = Terminal.commandHistory.length - 1;
         
@@ -492,6 +595,7 @@ var Terminal = {
 				break;
 			case "top":
 				//TODO List each's script RAM usage
+                post("Not yet implemented");
 				break;
 			default:
 				post("Command not found");
@@ -616,6 +720,7 @@ var Terminal = {
 		
 		post("ERROR: No such script");
 	}
+    
 };
 
 

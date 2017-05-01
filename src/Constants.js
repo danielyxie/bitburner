@@ -75,10 +75,10 @@ CONSTANTS = {
                 "connect [ip/hostname]  Connects to the machine given by its IP or hostname <br>" + 
                 "free                   Check the machine's memory (RAM) usage<br>" + 
                 "hack                   Hack the current machine<br>" +
-                "help                   Display this list<br>" + 
+                "help                   Display this help text<br>" + 
                 "hostname               Displays the hostname of the machine<br>" + 
                 "ifconfig               Displays the IP address of the machine<br>" +
-                "kill [script name]     Stops a script that is running<br>" +
+                "kill [script name]     Stops a script that is running on the current machine<br>" +
                 "ls                     Displays all programs and scripts on the machine<br>" + 
                 "nano [script name]     Text editor - Open up and edit a script<br>" + 
                 "netstat                Displays all available network connections<br>" +  

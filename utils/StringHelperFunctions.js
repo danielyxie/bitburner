@@ -42,3 +42,24 @@ function convertTimeMsToTimeElapsedString(time) {
     
     return hours + " hours " + minutes + " minutes " + seconds + " seconds";
 }
+
+//Finds the longest common starting substring in a set of strings
+function longestCommonStart(strings) {
+    if (!containsAllStrings(strings)) {return;}
+    
+    var A = strings.concat().sort(), 
+    a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
+    while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
+    return a1.substring(0, i);
+}
+
+
+//Returns whether a variable is a string
+function isString(str) {
+    return (typeof str === 'string' || str instanceof String);
+}
+
+//Returns whether an array contains entirely of string objects
+function containsAllStrings(arr) {
+    return arr.every(isString);
+}
