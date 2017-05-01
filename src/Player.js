@@ -60,7 +60,7 @@ function PlayerObject() {
     this.faction_rep_mult    = 1;   
     
     //Money
-    this.money           = 0;
+    this.money           = 1000;
     this.total_money     = 0;   //Total money ever earned
     this.lifetime_money  = 0;   //Total money ever earned
     

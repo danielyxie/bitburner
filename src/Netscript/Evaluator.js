@@ -7,7 +7,9 @@
 function evaluate(exp, workerScript) {
 	var env = workerScript.env;
     if (exp == null) {
-        return;
+        return new Promise(function(resolve, reject) {
+            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Error: NULL expression");
+        });
     }
     switch (exp.type) {
 		case "num":
@@ -168,7 +170,6 @@ function evaluate(exp, workerScript) {
 				evaluateProgPromise.then(function(w) {
 					resolve(workerScript);
 				}, function(e) {
-                    console.log("Here");
                     workerScript.errorMessage = e.toString();
 					reject(workerScript);
 				});
@@ -210,8 +211,9 @@ function evaluate(exp, workerScript) {
                                 server = AllServers[ip];
                             }
                             if (server == null) {
-                                resolve("Invalid IP or server hostname passed in");
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into hack() command");
                                 workerScript.scriptRef.log("Cannot hack(). Invalid IP or hostname passed in: " + ip);
+                                return;
                             }
                             
 							//Calculate the hacking time 
@@ -221,11 +223,13 @@ function evaluate(exp, workerScript) {
 							if (server.hasAdminRights == false) {
 								workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user does not have root access");
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because it did not have root access to " + server.hostname);
+                                return;
 							}
                             
                             if (server.requiredHackingSkill > Player.hacking_skill) {
                                 workerScript.scriptRef.log("Cannot hack this server (" + server.hostaname + ") because user does not have root access");
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because player's hacking skill is not high enough to hack " + server.hostname);
+                                return;
                             }
                             
                             workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime + " seconds");
@@ -278,6 +282,7 @@ function evaluate(exp, workerScript) {
 					} else if (exp.func.value == "sleep") {
 						if (exp.args.length != 1) {
 							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Sleep() call has incorrect number of arguments. Takes 1 argument.");
+                            return;
 						}
 						
 						var sleepTimePromise = evaluate(exp.args[0], workerScript);
