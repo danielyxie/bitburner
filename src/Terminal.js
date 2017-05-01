@@ -17,6 +17,7 @@ var hackProgressPost = function(input) {
 	updateTerminalScroll();    
 }
 
+//Scroll to the bottom of the terminal's 'text area'
 function updateTerminalScroll() {
 	var element = document.getElementById("terminal-container");
 	element.scrollTop = element.scrollHeight;
@@ -48,6 +49,18 @@ $(document).keyup(function(event) {
 			Engine._actionInProgress = false;
 			Terminal.finishAction(true);
 		}
+        
+        //Up key to cycle through past commands
+        if (event.keyCode == 38) {
+            if (Terminal.commandHistory.length == 0) {return;}
+            if (Terminal.commandHistoryIndex  < 0 || 
+                Terminal.commandHistoryIndex >= Terminal.commandHistory.length) {
+                Terminal.commandHistoryIndex = Terminal.commandHistory.length-1;
+            } 
+            var prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
+            document.getElementById("terminal-input-text-box").value = prevCommand;
+            --Terminal.commandHistoryIndex;
+        }
 	}
 });
 
@@ -82,6 +95,9 @@ var Terminal = {
     //Flags to determine whether the player is currently running a hack or an analyze
     hackFlag:       false, 
     analyzeFlag:    false, 
+    
+    commandHistory: [],
+    commandHistoryIndex: 0,
     
     finishAction: function(cancelled = false) {
         if (Terminal.hackFlag) {
@@ -181,6 +197,12 @@ var Terminal = {
     }, 
 	
 	executeCommand:  function(command) {
+        Terminal.commandHistory.push(command);
+        if (Terminal.commandHistory.length > 50) {
+            Terminal.commandHistory.splice(0);
+        }
+        Terminal.commandHistoryIndex = Terminal.commandHistory.length - 1;
+        
 		var commandArray = command.split(" ");
 		
 		if (commandArray.length == 0) {
