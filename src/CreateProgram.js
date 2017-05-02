@@ -46,7 +46,7 @@ function displayCreateProgramContent() {
     
     //FTPCrack
     if (Player.getHomeComputer().programs.indexOf(Programs.FTPCrackProgram) == -1 &&
-        Player.hacking_skill >= 125) {
+        Player.hacking_skill >= 100) {
         ftpCrackALink.style.display = "block";
         ftpCrackALink.addEventListener("click", function() {
             Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHour);
@@ -55,7 +55,7 @@ function displayCreateProgramContent() {
     
     //relaySMTP
     if (Player.getHomeComputer().programs.indexOf(Programs.RelaySMTPProgram) == -1 &&
-        Player.hacking_skill >= 300) {
+        Player.hacking_skill >= 250) {
         relaySmtpALink.style.display = "block";
         relaySmtpAlink.addEventListener("click", function() {
             Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer4Hours);
