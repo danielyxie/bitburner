@@ -224,7 +224,7 @@ updateHacknetNodeDomElement = function(nodeObj) {
     if (txt == null) {throw new Error("Cannot find text element");}
     txt.innerHTML = "Node name:  " + nodeName + "<br>" +
                     "Production: $" + nodeObj.totalMoneyGenerated.toFixed(2) + 
-                                 " ($" + nodeObj.moneyGainRatePerSecond + " / second) <br>" + 
+                                 " ($" + nodeObj.moneyGainRatePerSecond.toFixed(2) + " / second) <br>" + 
                     "Level:      " + nodeObj.level + "<br>" + 
                     "RAM:        " + nodeObj.ram + "GB<br>" + 
                     "Cores:      " + nodeObj.numCores;
