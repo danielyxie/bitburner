@@ -112,7 +112,7 @@
     <div id="terminal-container">
         <table id="terminal">
            <tr id="terminal-input">
-                <td id="terminal-input-td">$  <input type="text" id="terminal-input-text-box" class="terminal-input"/></td>
+                <td id="terminal-input-td" tabindex="2">$  <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/></td>
            </tr>
            
         </table>
@@ -130,10 +130,10 @@
         
         </span>
             
-        <input id="script-editor-filename" type="text" maxlength="30"> </input>
+        <input id="script-editor-filename" type="text" maxlength="30" tabindex="1"> </input>
 		<br>
 		<br><br>
-		<textarea id="script-editor-text" autofocus> </textarea>
+		<textarea id="script-editor-text" tabindex="2" autofocus> </textarea>
 	</div>
 	
 	<!-- Active scripts info page -->

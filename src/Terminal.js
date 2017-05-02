@@ -52,21 +52,49 @@ $(document).keydown(function(event) {
         
         //Up key to cycle through past commands
         if (event.keyCode == 38) {
-            if (Terminal.commandHistory.length == 0) {return;}
-            if (Terminal.commandHistoryIndex  < 0 || 
-                Terminal.commandHistoryIndex >= Terminal.commandHistory.length) {
-                Terminal.commandHistoryIndex = Terminal.commandHistory.length-1;
+            var i = Terminal.commandHistoryIndex;
+            var len = Terminal.commandHistory.length;
+            
+            if (len == 0) {return;}
+            if (i < 0 || i > len) {
+                Terminal.commandHistoryIndex = len;
             } 
+            
+            if (i != 0) {
+                --Terminal.commandHistoryIndex;
+            }
             var prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
             document.getElementById("terminal-input-text-box").value = prevCommand;
-            --Terminal.commandHistoryIndex;
+
+            
+        }
+        
+        //Down key
+        if (event.keyCode == 40) {
+            var i = Terminal.commandHistoryIndex;
+            var len = Terminal.commandHistory.length;
+            
+            if (len == 0) {return;}
+            if (i < 0 || i > len) {
+                Terminal.commandHistoryIndex = len;
+            }
+            
+            //Latest command, put nothing
+            if (i == len || i == len-1) {
+                Terminal.commandHistoryIndex = len;
+                document.getElementById("terminal-input-text-box").value = "";
+            } else {
+                ++Terminal.commandHistoryIndex;
+                var prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
+                document.getElementById("terminal-input-text-box").value = prevCommand;
+            }
         }
         
         //Tab (autocomplete)
         if (event.keyCode == 9) {
-            console.log("Tab pressed");
             var input = document.getElementById("terminal-input-text-box").value;
             if (input == "") {return;}
+            input = input.trim();
             input = input.replace(/\s\s+/g, ' ');
             
             var allPos = determineAllPossibilitiesForTabCompletion(input);
@@ -82,7 +110,7 @@ $(document).keydown(function(event) {
             }
             
             console.log("arg: " + arg);
-            tabCompletion(arg, allPos);
+            tabCompletion(commandArray[0], arg, allPos);
         }
 	}
 });
@@ -115,38 +143,41 @@ $(document).keyup(function(e) {
 })
 
 //Implements a tab completion feature for terminal
-//  str - Incomplete string that the function will try to complete, or will display
+//  command - Command (first arg only)
+//  arg - Incomplete argument string that the function will try to complete, or will display
 //        a series of possible options for
 //  allPossibilities - Array of strings containing all possibilities that the
 //                     string can complete to
-function tabCompletion(str, allPossibilities) {
+function tabCompletion(command, arg, allPossibilities) {
     if (!(allPossibilities.constructor === Array)) {return;}
     if (!containsAllStrings(allPossibilities)) {return;}
     
     for (var i = allPossibilities.length-1; i >= 0; --i) {
-        if (!allPossibilities[i].startsWith(str)) {
+        if (!allPossibilities[i].startsWith(arg)) {
             allPossibilities.splice(i, 1);
         }
     }
     
-    console.log("Tab completion possibilities: " + allPossibilities);
     if (allPossibilities.length == 1) {
-        document.getElementById("terminal-input-text-box").value = allPossibilities[0];
+        document.getElementById("terminal-input-text-box").value = command + " " + allPossibilities[0];
+        document.getElementById("terminal-input-text-box").focus();
     } else {
         var longestStartSubstr = longestCommonStart(allPossibilities);
         //If the longest common starting substring of remaining possibilities is the same
         //as whatevers already in terminal, just list all possible options. Otherwise,
         //change the input in the terminal to the longest common starting substr
-        if (longestStartSubstr == str) {
+        if (longestStartSubstr == arg) {
             //List all possible options
             var allOptionsStr = "";
             for (var i = 0; i < allPossibilities.length; ++i) {
                 allOptionsStr += allPossibilities[i];
                 allOptionsStr += "   ";
             }
+            post("> " + command + " " + arg);
             post(allOptionsStr);
         } else {
-            document.getElementById("terminal-input-text-box").value = longestStartSubstr;
+            document.getElementById("terminal-input-text-box").value = command + " " + longestStartSubstr;
+            document.getElementById("terminal-input-text-box").focus();
         }
     }
 }
@@ -240,7 +271,7 @@ var Terminal = {
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input"/>';
+        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);      
 
         Terminal.hackFlag = false;
@@ -291,20 +322,20 @@ var Terminal = {
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" class="terminal-input"/>';
+        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);      
     }, 
 	
 	executeCommand:  function(command) {
+        command = command.trim();
         //Replace all extra whitespace in command with a single space
-        //TODO Remove trailing and leading whitespace
         command = command.replace(/\s\s+/g, ' ');
         
         Terminal.commandHistory.push(command);
         if (Terminal.commandHistory.length > 50) {
             Terminal.commandHistory.splice(0, 1);
         }
-        Terminal.commandHistoryIndex = Terminal.commandHistory.length - 1;
+        Terminal.commandHistoryIndex = Terminal.commandHistory.length;
         
 		var commandArray = command.split(" ");
 		
