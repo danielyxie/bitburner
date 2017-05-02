@@ -35,6 +35,14 @@ span {
     padding: 4px;
 }
 
+/* Disable border highlight on elements */
+input:focus,
+textarea:focus,
+button:focus,
+td:focus,
+tr:focus {
+    outline:none;
+}
 
 /* Main menu */
 .mainmenu {

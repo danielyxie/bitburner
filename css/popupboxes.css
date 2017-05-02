@@ -82,7 +82,8 @@
     float: right;
     font-size: 16px;
     font-weight: bold;
-    padding: 2px;
+    padding: 6px;
+    margin: 6px;
     border: 1px solid white;
 }
 
@@ -132,7 +133,8 @@
     float: right;
     font-size: 16px;
     font-weight: bold;
-    padding: 2px;
+    padding: 6px;
+    margin: 6px;
     border: 1px solid white;
 }
 
@@ -182,7 +184,8 @@
     float: right;
     font-size: 16px;
     font-weight: bold;
-    padding: 2px;
+    padding: 6px;
+    margin: 6px;
     border: 1px solid white;
 }
 
@@ -231,8 +234,8 @@
     color: #aaa;
     font-size: 20px;
     font-weight: bold;
-    padding: 1px;
-    margin: 3px;
+    padding: 6px;
+    margin: 6px;
     border: 1px solid white;
 }
 
@@ -282,8 +285,8 @@
     color: #aaa;
     font-size: 20px;
     font-weight: bold;
-    padding: 3px;
-    margin: 3px;
+    padding: 6px;
+    margin: 6px;
     border: 1px solid white;
 }
 
