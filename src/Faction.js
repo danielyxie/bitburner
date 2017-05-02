@@ -136,6 +136,9 @@ initFactions = function() {
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
+    var Netburners              = new Faction("Netburners");
+    Netburners.setInfo(FactionInfo.NetburnersInfo);
+    AddToFactions(Netburners);
 	var TianDiHui				= new Faction("Tian Di Hui");	//Society of the Heaven and Earth
     TianDiHui.setInfo(FactionInfo.TianDiHuiInfo);
 	AddToFactions(TianDiHui);
@@ -378,7 +381,24 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
          this.companyPosition.positionName == CompanyPositions.CEO.positionName) &&
          this.money >= 15000000) {
         invitedFactions.push(silhouetteFac);
-     }
+    }
+    
+    //Netburners
+    /*
+    var netburnersFac = Factions["Netburners"];
+    var totalHacknetRam = 0;
+    var totalHacknetCores = 0;
+    var totalHacknetLevels = 0;
+    for (var i = 0; i < Player.hacknetNodes.length; ++i) {
+        totalHacknetLevels += Player.hacknetNodes[i].level;
+        totalHacknetRam += Player.hacknetNodes[i].ram;
+        totalHacknetCores += Player.hacknetNodes[i].numCores;
+    }
+    if (netburnersFac.isBanned == false && netburnersFac.isMember == false &&
+        this.hacking_skill >= 100 && totalHacknetRam >= 10 && 
+        totalHacknetCores >= 5 && totalHacknetLevels >= 100) {
+        invitedFactions.push(netburnersFac);
+    }*/
     
     //Tian Di Hui
     var tiandihuiFac = Factions["Tian Di Hui"];

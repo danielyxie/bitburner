@@ -281,7 +281,7 @@ function evaluate(exp, workerScript) {
 
 					} else if (exp.func.value == "sleep") {
 						if (exp.args.length != 1) {
-							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Sleep() call has incorrect number of arguments. Takes 1 argument.");
+							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|sleep() call has incorrect number of arguments. Takes 1 argument.");
                             return;
 						}
 						
@@ -302,11 +302,9 @@ function evaluate(exp, workerScript) {
 						}, function(e) {
 							reject(e)
 						});
-
-						
 					} else if (exp.func.value == "print") {
 						if (exp.args.length != 1) {
-							reject("|" + workerScript.serverIp + "|" + workerScript.name + "| Print() call has incorrect number of arguments. Takes 1 argument");
+							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|print() call has incorrect number of arguments. Takes 1 argument");
 						}
 						
 						var p = new Promise(function(resolve, reject) {
@@ -321,18 +319,67 @@ function evaluate(exp, workerScript) {
 						});
 					
 						p.then(function(res) {
-							post(res.toString());
+							workerScript.scriptRef.log(res.toString());
 							resolve("printExecuted");
 						}, function(e) {
 							reject(e);
 						});
-					}
+					} else if (exp.func.value == "grow") {
+                        if (exp.args.length != 1) {
+                            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|grow() call has incorrect number of arguments. Takes 1 argument");
+                        }
+                        
+                        //IP/hostname of server to hack
+						var ipPromise = evaluate(exp.args[0], workerScript);
+						
+						ipPromise.then(function(ip) {
+                            //Check if its a valid IP address. If it's not, assume its a hostname and
+                            //try to get the server. If its not a server, there is an error
+                            var server = null;
+                            if (!isValidIPAddress(ip)) {
+                                //It's not an IP address, so see if its a hostanme
+                                server = GetServerByHostname(ip);
+                            } else {
+                                server = AllServers[ip];
+                            }
+                            if (server == null) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into grow() command");
+                                workerScript.scriptRef.log("Cannot grow(). Invalid IP or hostname passed in: " + ip);
+                                return;
+                            }
+                            							
+                            //No root access or skill level too low
+							if (server.hasAdminRights == false) {
+								workerScript.scriptRef.log("Cannot grow this server (" + server.hostname + ") because user does not have root access");
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because it did not have root access to " + server.hostname);
+                                return;
+							}
+                            
+                            var p = new Promise(function(resolve, reject) {
+								if (env.stopFlag) {reject(workerScript);}
+                                console.log("Executing grow on " + server.hostname + " in 2 minutes ");
+								setTimeout(function() {
+									var growthPercentage = processSingleServerGrowth(server, 450);
+                                    resolve(growthPercentage);
+								}, 120 * 1000); //grow() takes flat 2 minutes right now
+							});
+                            
+                            p.then(function(growthPercentage) {
+								resolve("hackExecuted");
+                                workerScript.scriptRef.log("Using grow(), the money available on " + server.hostname + " was grown by " + growthPercentage + "%");
+							}, function(e) {
+								reject(e);
+							});
+                        }, function(e) {
+							reject(e);
+						});
+                    }
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
 			break;
 
 		default:
-			reject("|" + workerScript.serverIp + "|" + workerScript.name + "| Can't evaluate type " + exp.type);
+			reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Can't evaluate type " + exp.type);
     }
 }
 

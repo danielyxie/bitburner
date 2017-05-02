@@ -46,6 +46,7 @@ function convertTimeMsToTimeElapsedString(time) {
 //Finds the longest common starting substring in a set of strings
 function longestCommonStart(strings) {
     if (!containsAllStrings(strings)) {return;}
+    if (strings.length == 0) {return;}
     
     var A = strings.concat().sort(), 
     a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;

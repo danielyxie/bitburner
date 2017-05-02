@@ -191,12 +191,12 @@ PlayerObject.prototype.calculateHackingChance = function() {
 
 //Calculate the time it takes to hack a server in seconds. Returns the time
 //The formula is:
-//    (requiredLevel * difficulty)          
-//  -------------------------------  *  hacking_speed_multiplier
-//        hacking_skill                           
+//    (requiredLevel * difficulty + 500)          
+//  -----------------------------------  *  hacking_speed_multiplier
+//        hacking_skill + 100                           
 PlayerObject.prototype.calculateHackingTime = function() {
     var difficultyMult = this.getCurrentServer().requiredHackingSkill * this.getCurrentServer().hackDifficulty;
-    var skillFactor = (difficultyMult + 500) / (this.hacking_skill + 100);
+    var skillFactor = (2 * difficultyMult + 300) / (this.hacking_skill + 100);
     return skillFactor * this.hacking_speed_mult;
 }
 

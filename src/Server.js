@@ -626,11 +626,12 @@ initForeignServers = function() {
         Player.getHomeComputer().serversOnNetwork.push(NetworkGroup1[i].ip);
         NetworkGroup1[i].serversOnNetwork.push(Player.homeComputer);
     }
-},
+}
 
 
 //Server growth
 processServerGrowth = function(numCycles) {
+    //Server growth processed once every 450 game cycles
 	var numServerGrowthCycles = Math.max(Math.floor(numCycles / 450), 0);
 	
 	for (var ip in AllServers) {
@@ -643,13 +644,30 @@ processServerGrowth = function(numCycles) {
 			var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage;
 			
 			//Apply serverGrowth for the calculated number of growth cycles
-			var serverGrowth = Math.pow(1.00075, numServerGrowthCyclesAdjusted);
+			var serverGrowth = Math.pow(CONSTANTS.ServerGrowthRate, numServerGrowthCyclesAdjusted);
 			//console.log("serverGrowth ratio: " + serverGrowth);
 			server.moneyAvailable *= serverGrowth;
 		}
 	}
 	console.log("Server growth processed for " + numServerGrowthCycles + " cycles");
-},
+}
+
+//Applied server growth for a single server. Returns the percentage growth
+processSingleServerGrowth = function(server, numCycles) {
+    //Server growth processed once every 450 game cycles
+	var numServerGrowthCycles = Math.max(Math.floor(numCycles / 450), 0);
+    
+    //Get the number of server growth cycles that will be applied based on the
+    //server's serverGrowth property
+    var serverGrowthPercentage = server.serverGrowth / 100;
+    var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage;
+    
+    //Apply serverGrowth for the calculated number of growth cycles
+    var serverGrowth = Math.pow(CONSTANTS.ServerGrowthRate, numServerGrowthCyclesAdjusted);
+    server.moneyAvailable *= serverGrowth;
+
+    return serverGrowth;
+}
 
 //List of all servers that exist in the game, indexed by their ip
 AllServers = {};

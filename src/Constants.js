@@ -28,6 +28,9 @@ CONSTANTS = {
 	//Time (seconds) it takes to run one operation in Netscript OFFLINE
 	CodeOfflineExecutionTime: 10,
     
+    //Server growth rate
+    ServerGrowthRate: 1.00075,
+    
     //Maximum number of log entries for a script
     MaxLogCapacity: 20,
     

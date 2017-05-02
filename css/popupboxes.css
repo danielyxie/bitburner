@@ -82,7 +82,7 @@
     float: right;
     font-size: 16px;
     font-weight: bold;
-    padding: 6px;
+    padding: 2px;
     margin: 6px;
     border: 1px solid white;
 }
@@ -133,7 +133,7 @@
     float: right;
     font-size: 16px;
     font-weight: bold;
-    padding: 6px;
+    padding: 2px;
     margin: 6px;
     border: 1px solid white;
 }
@@ -184,7 +184,7 @@
     float: right;
     font-size: 16px;
     font-weight: bold;
-    padding: 6px;
+    padding: 2px;
     margin: 6px;
     border: 1px solid white;
 }
@@ -229,12 +229,16 @@
     color: #66ff33;
 }
 
+#faction-invitation-box-warning {
+    margin: 4px;
+}
+
 #faction-invitation-box-yes,
 #faction-invitation-box-no {
     color: #aaa;
     font-size: 20px;
     font-weight: bold;
-    padding: 6px;
+    padding: 2px;
     margin: 6px;
     border: 1px solid white;
 }
@@ -285,7 +289,7 @@
     color: #aaa;
     font-size: 20px;
     font-weight: bold;
-    padding: 6px;
+    padding: 2px;
     margin: 6px;
     border: 1px solid white;
 }

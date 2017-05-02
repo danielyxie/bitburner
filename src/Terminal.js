@@ -31,6 +31,12 @@ var postNetburnerText = function() {
 $(document).keydown(function(event) {
 	//Terminal
 	if (Engine.currentPage == Engine.Page.Terminal) {
+        var terminalInput = document.getElementById("terminal-input-text-box");
+        if (terminalInput == null) {return;}
+        
+        //Keep terminal input in focus
+        terminalInput.focus();
+        
 		//Enter
 		if (event.keyCode == 13) {
 			var command = $('input[class=terminal-input]').val();
@@ -64,9 +70,8 @@ $(document).keydown(function(event) {
                 --Terminal.commandHistoryIndex;
             }
             var prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
-            document.getElementById("terminal-input-text-box").value = prevCommand;
-
-            
+            terminalInput.value = prevCommand;
+            setTimeout(function(){terminalInput.selectionStart = terminalInput.selectionEnd = 10000; }, 0);
         }
         
         //Down key
@@ -82,17 +87,17 @@ $(document).keydown(function(event) {
             //Latest command, put nothing
             if (i == len || i == len-1) {
                 Terminal.commandHistoryIndex = len;
-                document.getElementById("terminal-input-text-box").value = "";
+                terminalInput.value = "";
             } else {
                 ++Terminal.commandHistoryIndex;
                 var prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
-                document.getElementById("terminal-input-text-box").value = prevCommand;
+                terminalInput.value = prevCommand;
             }
         }
         
         //Tab (autocomplete)
         if (event.keyCode == 9) {
-            var input = document.getElementById("terminal-input-text-box").value;
+            var input = terminalInput.value;
             if (input == "") {return;}
             input = input.trim();
             input = input.replace(/\s\s+/g, ' ');
@@ -158,7 +163,9 @@ function tabCompletion(command, arg, allPossibilities) {
         }
     }
     
-    if (allPossibilities.length == 1) {
+    if (allPossibilities.length == 0) {
+        return;
+    } else if (allPossibilities.length == 1) {
         document.getElementById("terminal-input-text-box").value = command + " " + allPossibilities[0];
         document.getElementById("terminal-input-text-box").focus();
     } else {
