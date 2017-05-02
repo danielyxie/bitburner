@@ -134,6 +134,13 @@ function PlayerObject() {
     this.timeNeededToCompleteWork = 0;
     
     this.work_money_mult = 1;
+    
+    //Hacknet Node multipliers
+    this.hacknet_node_money_mult            = 1;
+    this.hacknet_node_purchase_cost_mult    = 1;
+    this.hacknet_node_ram_cost_mult         = 1;
+    this.hacknet_node_core_cost_mult        = 1;
+    this.hacknet_node_level_cost_mult       = 1;
 	
 	//Used to store the last update time. 
 	this.lastUpdate = new Date().getTime();

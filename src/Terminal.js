@@ -34,9 +34,6 @@ $(document).keydown(function(event) {
         var terminalInput = document.getElementById("terminal-input-text-box");
         if (terminalInput == null) {return;}
         
-        //Keep terminal input in focus
-        terminalInput.focus();
-        
 		//Enter
 		if (event.keyCode == 13) {
 			var command = $('input[class=terminal-input]').val();
@@ -134,7 +131,7 @@ $(document).keydown(function(e) {
 		} else if (terminalCtrlPressed == true) {
 			//Don't focus
 		} else {
-			$('.terminal-input').focus();	
+			document.getElementById("terminal-input-text-box").focus();	
 			terminalCtrlPressed = false;
 		}
 	}

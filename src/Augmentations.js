@@ -449,6 +449,54 @@ initAugmentations = function() {
     PCDNINeuralNetwork.addToFactions(["Fulcrum Secret Technologies"]);
     AddToAugmentations(PCDNINeuralNetwork);
     
+    
+    //HacknetNode Augmentations
+    var HacknetNodeCPUUpload = new Augmentation("Hacknet Node CPU Architecture Neural-Upload");
+    HacknetNodeCPUUpload.setRequirements(60000, 12000000);
+    HacknetNodeCPUUpload.setInfo("Uploads the architecture and design details of a Hacknet Node's CPU into \n" + 
+                                 "the brain. This allows the user to engineer custom hardware and software \n " +
+                                 "for the Hacknet Node that provides better performance.\n\n" + 
+                                 "This augmentation:\n" + 
+                                 "Increases the amount of money produced by Hacknet Nodes by 15%\n" + 
+                                 "Decreases the cost of purchasing a Hacknet Node Core by 10%");
+    AddToAugmentations(HacknetNodeCPUUpload);
+    
+    var HacknetNodeCacheUpload = new Augmentation("Hacknet Node Cache Architecture Neural-Upload");
+    HacknetNodeCacheUpload.setRequirements(40000, 8000000);
+    HacknetNodeCacheUpload.setInfo("Uploads the architecture and design details of a Hacknet Node's main-memory cacge\n" + 
+                                   "into the brain. This allows the user to engineer custom cache hardware for the \n" + 
+                                   "Hacknet Node that offers better performance.\n\n" + 
+                                   "This augmentation:\n " + 
+                                   "Increases the amount of money produced by Hacknet Nodes by 10%\n" + 
+                                   "Decreases the cost of leveling up a Hacknet Node by 10%");
+    AddToAugmentations(HacknetNodeCacheUpload);
+    
+    var HacknetNodeNICUpload = new Augmentation("HacknetNode NIC Architecture Neural-Upload");
+    HacknetNodeNICUpload.setRequirements(20000, 6000000);
+    HacknetNodeNICUpload.setInfo("Uploads the architecture and design details of a Hacknet Node's Network Interface Card (NIC)\n" + 
+                                 "into the brain. This allows the user to engineer a custom NIC for the Hacknet Node that \n" + 
+                                 "offers better performance.\n\n" + 
+                                 "This augmentation:\n" + 
+                                 "Increases the amount of money produced by Hacknet Nodes by 5%\n" + 
+                                 "Decreases the cost of purchasing a Hacknet Node by 5%");
+    AddToAugmentations(HacknetNodeNICUpload);
+    
+    var HacknetNodeKernelDNI = new Augmentation("Hacknet Node Kernel Direct-Neural Interface");
+    HacknetNodeKernelDNI.setRequirements(120000, 30000000);
+    HacknetNodeKernelDNI.setInfo("Installs a Direct-Neural Interface jack into the arm that is capable of connecting to a\n" + 
+                                 "Hacknet Node. This lets the user access and manipulate the Node's kernel using the mind's\n" + 
+                                 "electrochemical signals.\n\n" + 
+                                 "This augmentation increases the amount of money produced by Hacknet Nodes by 50%.");
+    AddToAugmentations(HacknetNodeKernelDNI);
+    
+    var HacknetNodeCoreDNI = new Augmentation("Hacknet Node Core Direct-Neural Interface");
+    HacknetNodeCoreDNI.setRequirements(200000, 50000000);
+    HacknetNodeCoreDNI.setInfo("Installs a Direct-Neural Interface jack into the arm that is capable of connecting \n" +
+                               "to a Hacknet Node. This lets the user access and manipulate the Node's processing logic using" + 
+                               "the mind's electrochemical signals.\n\n" + 
+                               "This augmentation increases the amount of money produced by Hacknet Nodes by 75%.");
+    AddToAugmentations(HacknetNodeCoreDNI);
+    
     //Misc augmentations
     var Neurotrainer1 = new Augmentation("Neurotrainer I");
     Neurotrainer1.setRequirements(40000, 10000000);
@@ -665,6 +713,26 @@ applyAugmentation = function(aug, faction) {
             Player.company_rep_mult   *= 1.1;
             Player.hacking_mult       *= 1.1;
             Player.hacking_speed_mult *= .98;
+            break;
+        
+        //Hacknet Node Augmentations
+        case "Hacknet Node CPU Architecture Neural-Upload":
+            Player.hacknet_node_money_mult            *= 1.15;
+            Player.hacknet_node_purchase_cost_mult    *= 0.90;
+            break;
+        case "Hacknet Node Cache Architecture Neural-Upload":
+            Player.hacknet_node_money_mult            *= 1.10;
+            Player.hacknet_node_level_cost_mult       *= 0.90;
+            break;
+        case "HacknetNode NIC Architecture Neural-Upload":
+            Player.hacknet_node_money_mult            *= 1.05;
+            Player.hacknet_node_purchase_cost_mult    *= 0.95;
+            break;
+        case "Hacknet Node Kernel Direct-Neural Interface":
+            Player.hacknet_node_money_mult            *= 1.50;
+            break;
+        case "Hacknet Node Core Direct-Neural Interface":
+            Player.hacknet_node_money_mult            *= 1.75;
             break;
         
         //Misc augmentations
