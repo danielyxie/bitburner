@@ -66,7 +66,7 @@
 #purchase-server-box-content {
     background-color: black;
     margin: 15% auto; /* 15% from the top and centered */
-    padding: 1px;
+    padding: 12px;
     border: 5px solid #FFFFFF;
     width: 80%; /* Could be more or less, depending on screen size */
     color: #66ff33;
@@ -121,7 +121,7 @@
 #purchase-ram-for-home-box-content {
     background-color: black;
     margin: 15% auto; /* 15% from the top and centered */
-    padding: 1px;
+    padding: 12px;
     border: 5px solid #FFFFFF;
     width: 80%; /* Could be more or less, depending on screen size */
     color: #66ff33;
@@ -231,6 +231,7 @@
 
 #faction-invitation-box-warning {
     margin: 4px;
+    padding: 4px;
 }
 
 #faction-invitation-box-yes,

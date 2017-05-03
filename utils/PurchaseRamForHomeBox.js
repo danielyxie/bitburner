@@ -18,7 +18,7 @@ purchaseRamForHomeBoxClose = function() {
 
 purchaseRamForHomeBoxOpen = function() {
     var purchaseRamForHomeBox = document.getElementById("purchase-ram-for-home-box-container");
-    purchaseRamForHomeBox.style.display = "none";
+    purchaseRamForHomeBox.style.display = "block";
 }
 
 purchaseRamForHomeBoxSetText = function(txt) {
@@ -43,6 +43,8 @@ purchaseRamForHomeBoxCreate = function() {
     purchaseRamForHomeBoxSetText("Would you like to purchase additional RAM for your home computer? <br><br>" + 
                                  "This will upgrade your RAM from " + currentRam + "GB to " + newRam + "GB. <br><br>" + 
                                  "This will cost $" + cost);
+    
+    purchaseRamForHomeBoxOpen();
     
     //Clear old event listeners from Confirm button
     var confirmButton = document.getElementById("purchase-ram-for-home-box-confirm");

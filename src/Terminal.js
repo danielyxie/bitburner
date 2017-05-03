@@ -32,7 +32,6 @@ $(document).keydown(function(event) {
 	//Terminal
 	if (Engine.currentPage == Engine.Page.Terminal) {
         var terminalInput = document.getElementById("terminal-input-text-box");
-        if (terminalInput == null) {return;}
         
 		//Enter
 		if (event.keyCode == 13) {
@@ -55,6 +54,7 @@ $(document).keydown(function(event) {
         
         //Up key to cycle through past commands
         if (event.keyCode == 38) {
+            if (terminalInput == null) {return;}
             var i = Terminal.commandHistoryIndex;
             var len = Terminal.commandHistory.length;
             
@@ -73,6 +73,7 @@ $(document).keydown(function(event) {
         
         //Down key
         if (event.keyCode == 40) {
+            if (terminalInput == null) {return;}
             var i = Terminal.commandHistoryIndex;
             var len = Terminal.commandHistory.length;
             
@@ -94,13 +95,13 @@ $(document).keydown(function(event) {
         
         //Tab (autocomplete)
         if (event.keyCode == 9) {
+            if (terminalInput == null) {return;}
             var input = terminalInput.value;
             if (input == "") {return;}
             input = input.trim();
             input = input.replace(/\s\s+/g, ' ');
             
             var allPos = determineAllPossibilitiesForTabCompletion(input);
-            console.log("allPos: " + allPos);
             if (allPos.length == 0) {return;}
             
             var commandArray = input.split(" ");
@@ -131,7 +132,11 @@ $(document).keydown(function(e) {
 		} else if (terminalCtrlPressed == true) {
 			//Don't focus
 		} else {
-			document.getElementById("terminal-input-text-box").focus();	
+            var inputTextBox = document.getElementById("terminal-input-text-box");
+            if (inputTextBox != null) {
+                inputTextBox.focus();
+            }
+			
 			terminalCtrlPressed = false;
 		}
 	}
@@ -201,7 +206,7 @@ function determineAllPossibilitiesForTabCompletion(input) {
     } 
     
     if (input.startsWith("kill ") || input.startsWith("nano ") ||
-        input.startsWith("tail ")) {
+        input.startsWith("tail ") || input.startsWith("rm ")) {
         //All Scripts
         for (var i = 0; i < currServ.scripts.length; ++i) {
             allPos.push(currServ.scripts[i].filename);

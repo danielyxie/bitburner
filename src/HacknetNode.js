@@ -28,11 +28,12 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
 HacknetNode.prototype.calculateLevelUpgradeCost = function() {
     //Upgrade cost = Base cost * multiplier ^ level
     var mult = CONSTANTS.HacknetNodeUpgradeLevelMult;
-    return CONSTANTS.BaseCostForHacknetNode * Math.pow(mult, this.level);
+    return CONSTANTS.BaseCostForHacknetNode * Math.pow(mult, this.level) * Player.hacknet_node_level_cost_mult;
 }
 
 HacknetNode.prototype.purchaseLevelUpgrade = function() {
     var cost = this.calculateLevelUpgradeCost();
+    if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
     if (cost > Player.money) {return;}
     Player.loseMoney(cost);
     ++this.level;
@@ -47,11 +48,12 @@ HacknetNode.prototype.calculateRamUpgradeCost = function() {
     //the RAM has been upgraded
     var cost = this.ram * CONSTANTS.BaseCostFor1GBOfRam;
     var mult = Math.pow(CONSTANTS.HacknetNodeUpgradeRamMult, numUpgrades);
-    return cost * mult;
+    return cost * mult * Player.hacknet_node_ram_cost_mult;
 }
 
 HacknetNode.prototype.purchaseRamUpgrade = function() {
     var cost = this.calculateRamUpgradeCost();
+    if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
     if (cost > Player.money) {return;}
     Player.loseMoney(cost);
     this.ram *= 2; //Ram is always doubled
@@ -61,11 +63,12 @@ HacknetNode.prototype.purchaseRamUpgrade = function() {
 HacknetNode.prototype.calculateCoreUpgradeCost = function() {
     var coreBaseCost = CONSTANTS.BaseCostForHacknetNodeCore;
     var mult = CONSTANTS.HacknetNodeUpgradeCoreMult;
-    return coreBaseCost * Math.pow(mult, this.numCores-1);
+    return coreBaseCost * Math.pow(mult, this.numCores-1) * Player.hacknet_node_core_cost_mult;
 }
 
 HacknetNode.prototype.purchaseCoreUpgrade = function() {
     var cost = this.calculateCoreUpgradeCost();
+    if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
     if (cost > Player.money) {return;}
     Player.loseMoney(cost);
     ++this.numCores;
@@ -84,9 +87,9 @@ HacknetNode.fromJSON = function(value) {
 Reviver.constructors.HacknetNode = HacknetNode;
 
 
-
 purchaseHacknet = function() {
     var cost = getCostOfNextHacknetNode();
+    if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
     if (cost > Player.money) {
         dialogBoxCreate("You cannot afford to purchase a Hacknet Node!");
         return;
@@ -108,7 +111,7 @@ getCostOfNextHacknetNode = function() {
     //Cost increases exponentially based on how many you own
     var numOwned = Player.hacknetNodes.length;
     var mult = CONSTANTS.HacknetNodePurchaseNextMult;
-    return CONSTANTS.BaseCostForHacknetNode * Math.pow(mult, numOwned);
+    return CONSTANTS.BaseCostForHacknetNode * Math.pow(mult, numOwned) * Player.hacknet_node_purchase_cost_mult;
 }
 
 //Creates Hacknet Node DOM elements when the page is opened

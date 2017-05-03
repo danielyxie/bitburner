@@ -23,6 +23,7 @@
     <script src="utils/FactionInvitationBox.js"></script>
     <script src="utils/PurchaseAugmentationBox.js"></script>
     <script src="utils/TravelBox.js"></script>
+    <script src="utils/PurchaseRamForHomeBox.js"></script>
 	
 	<!-- Netscript -->
 	<script src="src/netscript/NetScriptWorker.js"></script>
@@ -128,10 +129,10 @@
 	
 	<!-- Script editor -->
 	<div id="script-editor-container">
-        <span>
+        <div>
 		<p id="script-editor-filename-tag"> Script name: </p>
-        
-        </span>
+        <span id="script-editor-save-and-close-button" float="right" class="a-link-button">Save & Close (Ctrl + b)</span>
+        </div>
             
         <input id="script-editor-filename" type="text" maxlength="30" tabindex="1"> </input>
 		<br>
@@ -585,7 +586,7 @@
                 Purchasing an Augmentation lets you start over with the perks and benefits granted by all
                 of the Augmentations you have ever purchased (purchasing an Augmentation does not reset the benefits
                 of Augmentations you have previously purchased).
-            <p>
+            </p>
             <span id="purchase-augmentation-box-confirm"> Purchase </span>
             <span id="purchase-augmentation-box-cancel"> Cancel </span>
         </div>

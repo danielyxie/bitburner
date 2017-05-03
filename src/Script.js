@@ -2,45 +2,67 @@
  *  Script object
  */
 
-//Define key commands in script editor (ctrl x to close, etc.)
+//Initialize the 'save and close' button on script editor page
+function scriptEditorSaveCloseInit() {
+    var closeButton = document.getElementById("script-editor-save-and-close-button");
+    
+    closeButton.addEventListener("click", function() {
+        saveAndCloseScriptEditor();
+        return false;
+    });
+};
+
+document.addEventListener("DOMContentLoaded", scriptEditorSaveCloseInit, false);
+
+//Define key commands in script editor (ctrl o to save + close, etc.)
 $(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
 		//Ctrl + x
-        if (e.keyCode == 88 && e.ctrlKey) {			
-			var filename = document.getElementById("script-editor-filename").value;
-			
-			if (checkValidFilename(filename) == false) {
-				postScriptEditorStatus("Script filename can contain only alphanumerics, hyphens, and underscores");
-				return;
-			}
-			
-			filename += ".script";
-			
-			//If the current script matches one thats currently running, throw an error
-			for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
-				if (filename == Player.getCurrentServer().runningScripts[i].filename) {
-					postScriptEditorStatus("Cannot write to script that is currently running!");
-					return;
-				}
-			}
-			
-			//If the current script already exists on the server, overwrite it
-			for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
-				if (filename == Player.getCurrentServer().scripts[i].filename) {
-					Player.getCurrentServer().scripts[i].saveScript();
-					Engine.loadTerminalContent();
-					return;
-				}
-			}
-			
-			//If the current script does NOT exist, create a new one
-			var script = new Script();
-			script.saveScript();
-			Player.getCurrentServer().scripts.push(script);
-			Engine.loadTerminalContent();
+        if (e.keyCode == 66 && e.ctrlKey) {			
+			saveAndCloseScriptEditor();
         }
 	}
 });
+
+function saveAndCloseScriptEditor() {
+    var filename = document.getElementById("script-editor-filename").value;
+    
+    if (filename == "") {
+        //If no filename...just close and do nothing
+        Engine.loadTerminalContent();
+        return;
+    }
+        
+    if (checkValidFilename(filename) == false) {
+        dialogBoxCreate("Script filename can contain only alphanumerics, hyphens, and underscores");
+        return;
+    }
+    
+    filename += ".script";
+    
+    //If the current script matches one thats currently running, throw an error
+    for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
+        if (filename == Player.getCurrentServer().runningScripts[i].filename) {
+            dialogBoxCreate("Cannot write to script that is currently running!");
+            return;
+        }
+    }
+    
+    //If the current script already exists on the server, overwrite it
+    for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
+        if (filename == Player.getCurrentServer().scripts[i].filename) {
+            Player.getCurrentServer().scripts[i].saveScript();
+            Engine.loadTerminalContent();
+            return;
+        }
+    }
+    
+    //If the current script does NOT exist, create a new one
+    var script = new Script();
+    script.saveScript();
+    Player.getCurrentServer().scripts.push(script);
+    Engine.loadTerminalContent();
+}
 
 //Checks that the string contains only valid characters for a filename, which are alphanumeric,
 // underscores and hyphens
@@ -51,16 +73,6 @@ function checkValidFilename(filename) {
 		return true;
 	}
 	return false;
-}
-
-var ScriptEditorLastStatus = null;
-function postScriptEditorStatus(text) {
-	document.getElementById("script-editor-status").innerHTML = text;
-	
-	clearTimeout(ScriptEditorLastStatus);
-	ScriptEditorLastStatus = setTimeout(function() {
-		document.getElementById("script-editor-status").innerHTML = "";
-	}, 3000);
 }
 
 function Script() {    

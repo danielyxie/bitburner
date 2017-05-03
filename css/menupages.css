@@ -29,9 +29,15 @@
 }
 
 #script-editor-filename-tag {
+    padding-top: 10px;
+    padding-bottom: 0px;
 	float: left;
 }
 
+#script-editor-save-and-close-button {
+    float: right;
+    display: inline-block;
+}
 
 #script-editor-filename {	
 	float: left;

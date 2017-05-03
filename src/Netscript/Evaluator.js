@@ -355,6 +355,7 @@ function evaluate(exp, workerScript) {
                                 return;
 							}
                             
+                            workerScript.scriptRef.log("Calling grow() on server " + server.hostname + " in 120 seconds");
                             var p = new Promise(function(resolve, reject) {
 								if (env.stopFlag) {reject(workerScript);}
                                 console.log("Executing grow on " + server.hostname + " in 2 minutes ");
@@ -366,7 +367,7 @@ function evaluate(exp, workerScript) {
                             
                             p.then(function(growthPercentage) {
 								resolve("hackExecuted");
-                                workerScript.scriptRef.log("Using grow(), the money available on " + server.hostname + " was grown by " + growthPercentage + "%");
+                                workerScript.scriptRef.log("Using grow(), the money available on " + server.hostname + " was grown by " + (growthPercentage*100 - 100).toFixed(6) + "%");
 							}, function(e) {
 								reject(e);
 							});
@@ -482,7 +483,6 @@ function evaluateWhile(exp, workerScript) {
 					setTimeout(function() {
 						var evaluatePromise = evaluate(exp.code, workerScript);
 						evaluatePromise.then(function(resCode) {
-							console.log("Evaluated an iteration of while loop code");
 							resolve(resCode);
 						}, function(e) {
 							reject(e);
@@ -502,7 +502,6 @@ function evaluateWhile(exp, workerScript) {
 					reject(e);
 				});
 			} else {
-				console.log("Cond is false, stopping while loop");
 				resolve("endWhileLoop");	//Doesn't need to resolve to any particular value
 			}
 		}, function(e) {
@@ -603,7 +602,7 @@ function scriptCalculateHackingChance(server) {
 //The same as Player's calculateHackingTime() function but takes in the server as an argument
 function scriptCalculateHackingTime(server) {
 	var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-	var skillFactor = (2 * difficultyMult + 1000) / (Player.hacking_skill + 50);
+	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
 	var hackingTime = skillFactor * Player.hacking_speed_mult; //This is in seconds
 	return hackingTime;
 }
