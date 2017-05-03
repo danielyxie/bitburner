@@ -144,7 +144,6 @@ initFactions = function() {
 	AddToFactions(TianDiHui);
 	var CyberSec 				= new Faction("CyberSec");
     CyberSec.setInfo(FactionInfo.CyberSecInfo);
-    CyberSec.setAugmentationMultipliers(0.8, 0.8);
 	AddToFactions(CyberSec);
 }
 
