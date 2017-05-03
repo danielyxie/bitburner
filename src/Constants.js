@@ -63,6 +63,7 @@ CONSTANTS = {
     WorkTypeFaction: "Working for Faction",
     WorkTypeCreateProgram: "Working on Create a Program",
     WorkTypeStudyClass: "Studying or Taking a class at university",
+    WorkTypeCrime: "Committing a crime",
     
     ClassStudyComputerScience: "studying Computer Science",
     ClassDataStructures: "taking a Data Structures course",
@@ -70,6 +71,13 @@ CONSTANTS = {
     ClassAlgorithms: "taking an Algorithms course",
     ClassManagement: "taking a Management course",
     ClassLeadership: "taking a Leadership course",
+    
+    CrimeShoplift: "shoplift",
+    CrimeMug: "mug someone",
+    CrimeDrugs: "deal drugs",
+    CrimeTraffickArms: "traffick illegal arms",
+    CrimeHomicide: "commit homicide",
+    CrimeKidnap: "kidnap someone for ransom",
     
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   "analyze                Get statistics and information about current machine <br>" + 

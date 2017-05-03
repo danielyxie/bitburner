@@ -347,7 +347,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (speakersforthedeadFac.isBanned == false && speakersforthedeadFac.isMember == false && 
         this.hacking_skill >= 100 && this.strength >= 300 && this.defense >= 300 && 
         this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 10 &&
-        this.numPeopleKilledTotal >= 100 && this.companyName != Locations.Sector12CIA &&
+        this.numPeopleKilledTotal >= 100 && this.karma <= -50 && this.companyName != Locations.Sector12CIA &&
         this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(speakersforthedeadFac);
     }   
@@ -357,7 +357,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (thedarkarmyFac.isBanned == false && thedarkarmyFac.isMember == false && 
         this.hacking_skill >= 300 && this.strength >= 300 && this.defense >= 300 && 
         this.dexterity >= 300 && this.agility >= 300 && this.location == Locations.Chongqing && 
-        this.numPeopleKilled >= 5 && this.companyName != Locations.Sector12CIA && 
+        this.numPeopleKilled >= 5 && this.karma <= -50 && this.companyName != Locations.Sector12CIA && 
         this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(thedarkarmyFac);
     }
@@ -368,8 +368,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         this.hacking_skill >= 200 && this.strength >= 200 && this.defense >= 200 &&
         this.dexterity >= 200 && this.agility >= 200 && 
         (this.location == Locations.Aevum || this.location == Locations.Sector12) &&
-        this.money >= 10000000 && this.companyName != Locations.Sector12CIA && 
-        this.companyName != Locations.Sector12NSA) {
+        this.money >= 10000000 && this.karma <= -100 && 
+        this.companyName != Locations.Sector12CIA && this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(thesyndicateFac);
     }
     
@@ -379,7 +379,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         (this.companyPosition.positionName == CompanyPositions.CTO.positionName || 
          this.companyPosition.positionName == CompanyPositions.CFO.positionName || 
          this.companyPosition.positionName == CompanyPositions.CEO.positionName) &&
-         this.money >= 15000000) {
+         this.money >= 15000000 && this.karma <= -25) {
         invitedFactions.push(silhouetteFac);
     }
     

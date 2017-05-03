@@ -10,7 +10,6 @@ Locations = {
 	Ishima: 		"Ishima",
 	Volhaven: 		"Volhaven",
     
-    
     //Aevum Locations
     AevumTravelAgency:          "Aevum Travel Agency",
     AevumSummitUniversity:      "Summit University",
@@ -26,11 +25,13 @@ Locations = {
     AevumNetLinkTechnologies:   "NetLink Technologies",
     AevumCrushFitnessGym:       "Crush Fitness Gym",
     AevumSnapFitnessGym:        "Snap Fitness Gym",
+    AevumSlums:                 "Aevum Slums",
     
     //Chongqing locations
     ChongqingTravelAgency:          "Chongqing Travel Agency", 
     ChongqingKuaiGongInternational: "KuaiGong International",
     ChongqingSolarisSpaceSystems:   "Solaris Space Systems",
+    ChongqingSlums:                 "Chongqing Slums",
     
     //Sector 12
     Sector12TravelAgency:       "Sector-12 Travel Agency",
@@ -49,6 +50,7 @@ Locations = {
     Sector12JoesGuns:           "Joe's Guns",
     Sector12IronGym:            "Iron Gym",
     Sector12PowerhouseGym:      "Powerhouse Gym",
+    Sector12Slums:              "Sector12 Slums",
     
     //New Tokyo
     NewTokyoTravelAgency:           "New Tokyo Travel Agency",
@@ -56,12 +58,14 @@ Locations = {
     NewTokyoVitaLife:               "VitaLife",
     NewTokyoGlobalPharmaceuticals:  "Global Pharmaceuticals",
     NewTokyoNoodleBar:              "Noodle Bar",
+    NewTokyoSlums:                  "New Tokyo Slums"
     
     //Ishima
     IshimaTravelAgency:         "Ishima Travel Agency",
     IshimaStormTechnologies:    "Storm Technologies",
     IshimaNovaMedical:          "Nova Medical",
     IshimaOmegaSoftware:        "Omega Software",
+    IshimaSlums:                "Ishima Slums",
     
     //Volhaven
     VolhavenTravelAgency:               "Volhaven Travel Agency",
@@ -74,6 +78,7 @@ Locations = {
     VolhavenSysCoreSecurities:          "SysCore Securities",
     VolhavenCompuTek:                   "CompuTek",
     VolhavenMilleniumFitnessGym:        "Millenium Fitness Gym",
+    VolhavenSlums:                      "Volhaven Slums",
 }
 
 displayLocationContent = function() {
@@ -136,6 +141,14 @@ displayLocationContent = function() {
     var travelToIshima      = document.getElementById("location-travel-to-ishima");
     var travelToVolhaven    = document.getElementById("location-travel-to-volhaven");
 	
+    var slumsDescText       = document.getElementById("location-slums-description");
+    var slumsShoplift       = document.getElementById("location-slums-shoplift");
+    var slumsMug            = document.getElementById("location-slums-mug");
+    var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
+    var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
+    var slumsHomicide       = document.getElementById("location-slums-homicide");
+    var slumsKidnap         = document.getElementById("location-slums-kidnap");
+    
     var loc = Player.location;
     
     returnToWorld.addEventListener("click", function() {
@@ -202,6 +215,14 @@ displayLocationContent = function() {
     travelToNewTokyo.style.display = "none";
     travelToIshima.style.display = "none";
     travelToVolhaven.style.display = "none";
+    
+    slumsDescText.style.display = "none";
+    slumsShoplift.style.display = "none";
+    slumsMug.style.display = "none";
+    slumsDealDrugs.style.display = "none";
+    slumsTrafficArms.style.display = "none";
+    slumsHomicide.style.display = "none";
+    slumsKidnap.style.display = "none";
     
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
@@ -785,6 +806,21 @@ displayLocationContent = function() {
             gymTrainAgi.style.display = "block";
             break;
             
+        //All Slums
+        case Locations.AevumSlums:
+        case Locations.ChongqingSlums:
+        case Locations.Sector12Slums:
+        case Locations.NewTokyokSlums:
+        case Locations.IshimaSlums:
+        case Locations.VolhavenSlums:
+            slumsDescText.style.display = "block";
+            slumsShoplift.style.display = "block";
+            slumsMug.style.display = "block";
+            slumsDealDrugs.style.display = "block";
+            slumsTrafficArms.style.display = "block";
+            slumsHomicide.style.display = "block";
+            slumsKidnap.style.display = "block";
+            
         default:
             console.log("ERROR: INVALID LOCATION");
 
@@ -901,6 +937,13 @@ initLocationButtons = function() {
         Engine.loadLocationContent();
         return false;
     });
+    
+    aevumSlums = document.getElementById("aevum-slums");
+    aevumSlums.addEventListener("click", function() {
+        Player.location = Locations.AevumSlums;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	chongqingTravelAgency = document.getElementById("chongqing-travelagency");
 	chongqingTravelAgency.addEventListener("click", function() {
@@ -922,6 +965,14 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    chongqingSlums = document.getElementById("chongqing-slums");
+    chongqingSlums.addEventListener("click", function() {
+        Player.location = Locations.ChongqingSlums;
+        Engine.loadLocationContent();
+        return false;
+    });
+    
 	
 	sector12TravelAgency = document.getElementById("sector12-travelagency");
 	sector12TravelAgency.addEventListener("click", function() {
@@ -1034,6 +1085,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    sector12Slums = document.getElementById("sector12-slums");
+    sector12Slums.addEventListener("click", function() {
+        Player.location = Locations.Sector12Slums;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	newTokyoTravelAgency = document.getElementById("newtokyo-travelagency");
 	newTokyoTravelAgency.addEventListener("click", function() {
@@ -1069,6 +1127,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    newTokyoSlums = document.getElementByID("newtokyo-slums");
+    newTokyoSlums.addEventListener("click", function() {
+        Player.location = Locations.NewTokyoSlums;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	ishimaTravelAgency = document.getElementById("ishima-travelagency");
 	ishimaTravelAgency.addEventListener("click", function() {
@@ -1097,6 +1162,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    ishimaSlums = document.getElementById("ishima-slums");
+    ishimaSlums.addEventListener("click", function() {
+        Player.location = Locations.IshimaSlums;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	volhavenTravelAgency = document.getElementById("volhaven-travelagency");
 	volhavenTravelAgency.addEventListener("click", function() {
@@ -1168,6 +1240,13 @@ initLocationButtons = function() {
         return false;
 	});
     
+    volhavenSlums = document.getElementById("volhaven-slums");
+    volhavenSlums.addEventListener("click", function() {
+        Player.location = Locations.VolhavenSlums;
+        Engine.loadLocationContent();
+        return false;
+    });
+    
     
     //Buttons to interact at a location (apply for job/promotion, train, purchase, etc.)
     var softwareJob         = document.getElementById("location-software-job");
@@ -1207,6 +1286,13 @@ initLocationButtons = function() {
     var travelToNewTokyo    = document.getElementById("location-travel-to-newtokyo");
     var travelToIshima      = document.getElementById("location-travel-to-ishima");
     var travelToVolhaven    = document.getElementById("location-travel-to-volhaven");
+    
+    var slumsShoplift       = document.getElementById("location-slums-shoplift");
+    var slumsMug            = document.getElementById("location-slums-mug");
+    var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
+    var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
+    var slumsHomicide       = document.getElementById("location-slums-homicide");
+    var slumsKidnap         = document.getElementById("location-slums-kidnap");
     
     softwareJob.addEventListener("click", function() {
         Player.applyForSoftwareJob();
@@ -1348,6 +1434,15 @@ initLocationButtons = function() {
         return false;
     });
     
+    //TODO
+    /*
+    var slumsShoplift       = document.getElementById("location-slums-shoplift");
+    var slumsMug            = document.getElementById("location-slums-mug");
+    var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
+    var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
+    var slumsHomicide       = document.getElementById("location-slums-homicide");
+    var slumsKidnap         = document.getElementById("location-slums-kidnap");
+    */
 }   
 
 travelToCity = function(destCityName, cost) {
