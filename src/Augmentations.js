@@ -459,6 +459,7 @@ initAugmentations = function() {
                                  "This augmentation:\n" + 
                                  "Increases the amount of money produced by Hacknet Nodes by 15%\n" + 
                                  "Decreases the cost of purchasing a Hacknet Node Core by 10%");
+    HacknetNodeCPUUpload.addToFactions(["Netburners"]);
     AddToAugmentations(HacknetNodeCPUUpload);
     
     var HacknetNodeCacheUpload = new Augmentation("Hacknet Node Cache Architecture Neural-Upload");
@@ -469,6 +470,7 @@ initAugmentations = function() {
                                    "This augmentation:\n " + 
                                    "Increases the amount of money produced by Hacknet Nodes by 10%\n" + 
                                    "Decreases the cost of leveling up a Hacknet Node by 10%");
+    HacknetNodeCacheUpload.addToFactions(["Netburners"]);
     AddToAugmentations(HacknetNodeCacheUpload);
     
     var HacknetNodeNICUpload = new Augmentation("HacknetNode NIC Architecture Neural-Upload");
@@ -479,6 +481,7 @@ initAugmentations = function() {
                                  "This augmentation:\n" + 
                                  "Increases the amount of money produced by Hacknet Nodes by 5%\n" + 
                                  "Decreases the cost of purchasing a Hacknet Node by 5%");
+    HacknetNodeNICUpload.addToFactions(["Netburners"]);
     AddToAugmentations(HacknetNodeNICUpload);
     
     var HacknetNodeKernelDNI = new Augmentation("Hacknet Node Kernel Direct-Neural Interface");
@@ -487,6 +490,7 @@ initAugmentations = function() {
                                  "Hacknet Node. This lets the user access and manipulate the Node's kernel using the mind's\n" + 
                                  "electrochemical signals.\n\n" + 
                                  "This augmentation increases the amount of money produced by Hacknet Nodes by 50%.");
+    HacknetNodeKernelDNI.addToFactions(["Netburners"]);
     AddToAugmentations(HacknetNodeKernelDNI);
     
     var HacknetNodeCoreDNI = new Augmentation("Hacknet Node Core Direct-Neural Interface");
@@ -495,6 +499,7 @@ initAugmentations = function() {
                                "to a Hacknet Node. This lets the user access and manipulate the Node's processing logic using" + 
                                "the mind's electrochemical signals.\n\n" + 
                                "This augmentation increases the amount of money produced by Hacknet Nodes by 75%.");
+    HacknetNodeCoreDNI.addToFactions(["Netburners"]);
     AddToAugmentations(HacknetNodeCoreDNI);
     
     //Misc augmentations

@@ -384,7 +384,6 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
     
     //Netburners
-    /*
     var netburnersFac = Factions["Netburners"];
     var totalHacknetRam = 0;
     var totalHacknetCores = 0;
@@ -398,7 +397,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         this.hacking_skill >= 100 && totalHacknetRam >= 10 && 
         totalHacknetCores >= 5 && totalHacknetLevels >= 100) {
         invitedFactions.push(netburnersFac);
-    }*/
+    }
     
     //Tian Di Hui
     var tiandihuiFac = Factions["Tian Di Hui"];
@@ -707,6 +706,10 @@ displayFactionContent = function(factionName) {
             case "Silhouette":
                 hackDiv.style.display = "inline";
                 fieldWorkDiv.style.display = "inline";
+                securityWorkDiv.style.display = "none";
+            case "Netburners":
+                hackDiv.style.display = "inline";
+                fieldWorkDiv.style.display = "none";
                 securityWorkDiv.style.display = "none";
 			case "Tian Di Hui":
 				hackDiv.style.display = "inline";
