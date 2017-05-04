@@ -64,3 +64,11 @@ function isString(str) {
 function containsAllStrings(arr) {
     return arr.every(isString);
 }
+
+//Formats a number with commas and a specific number of decimal digits
+function formatNumber(num, numFractionDigits) {
+    return num.toLocaleString(undefined, {
+        minimumFractionDigits: numFractionDigits,
+        maximumFractionDigits: numFractionDigits
+    });
+}

@@ -384,26 +384,26 @@ PlayerObject.prototype.finishWork = function(cancelled) {
         txt = "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
               "Since you cancelled your work early, you only gained half of the experience, money, and reputation you earned. <br><br>" + 
               "You earned a total of: <br>" + 
-              "$" + (this.workMoneyGained / cancMult).toFixed(2) + "<br>" + 
-              (this.workRepGained / cancMult).toFixed(3) + " reputation for the company <br>" + 
-              (this.workHackExpGained / cancMult).toFixed(3) + " hacking exp <br>" + 
-              (this.workStrExpGained / cancMult).toFixed(3) + " strength exp <br>" + 
-              (this.workDefExpGained / cancMult).toFixed(3) + " defense exp <br>" +
-              (this.workDexExpGained / cancMult).toFixed(3) + " dexterity exp <br>" + 
-              (this.workAgiExpGained / cancMult).toFixed(3) + " agility exp <br>" + 
-              (this.workChaExpGained / cancMult).toFixed(3) + " charisma exp<br>";
+              "$" + formatNumber(this.workMoneyGained / cancMult, 2) + "<br>" + 
+              formatNumber(this.workRepGained / cancMult, 4) + " reputation for the company <br>" + 
+              formatNumber(this.workHackExpGained / cancMult, 4) + " hacking exp <br>" + 
+              formatNumber(this.workStrExpGained / cancMult, 4) + " strength exp <br>" + 
+              formatNumber(this.workDefExpGained / cancMult, 4) + " defense exp <br>" +
+              formatNumber(this.workDexExpGained / cancMult, 4) + " dexterity exp <br>" + 
+              formatNumber(this.workAgiExpGained / cancMult, 4) + " agility exp <br>" + 
+              formatNumber(this.workChaExpGained / cancMult, 4) + " charisma exp<br>";
               
     } else {
         txt = "You worked a full shift of 8 hours! <br><br> " +
               "You earned a total of: <br>" + 
-              "$" + (this.workMoneyGained / cancMult) + "<br>" + 
-              (this.workRepGained / cancMult).toFixed(3) + " reputation for the company <br>" + 
-              (this.workHackExpGained / cancMult).toFixed(3) + " hacking exp <br>" + 
-              (this.workStrExpGained / cancMult).toFixed(3) + " strength exp <br>" + 
-              (this.workDefExpGained / cancMult).toFixed(3) + " defense exp <br>" +
-              (this.workDexExpGained / cancMult).toFixed(3) + " dexterity exp <br>" + 
-              (this.workAgiExpGained / cancMult).toFixed(3) + " agility exp <br>" + 
-              (this.workChaExpGained / cancMult).toFixed(3) + " charisma exp <br>";
+              "$" + formatNumber(this.workMoneyGained / cancMult, 2) + "<br>" + 
+              formatNumber(this.workRepGained / cancMult, 4) + " reputation for the company <br>" + 
+              formatNumber(this.workHackExpGained / cancMult, 4) + " hacking exp <br>" + 
+              formatNumber(this.workStrExpGained / cancMult, 4) + " strength exp <br>" + 
+              formatNumber(this.workDefExpGained / cancMult, 4) + " defense exp <br>" +
+              formatNumber(this.workDexExpGained / cancMult, 4) + " dexterity exp <br>" + 
+              formatNumber(this.workAgiExpGained / cancMult, 4) + " agility exp <br>" + 
+              formatNumber(this.workChaExpGained / cancMult, 4) + " charisma exp <br>";
     }
     dialogBoxCreate(txt);
     
@@ -481,14 +481,14 @@ PlayerObject.prototype.work = function(numCycles) {
                     " at " + Player.companyName + "<br><br>" + 
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" + 
-                    "$" + this.workMoneyGained.toFixed(2) + " ($" + (this.workMoneyGainRate * cyclesPerSec).toFixed(2) + " / sec) <br><br>" + 
-                    this.workRepGained.toFixed(3) + " (" + (this.workRepGainRate * cyclesPerSec).toFixed(3) + " / sec) reputation for this company <br><br>" + 
-                    this.workHackExpGained.toFixed(3) + " (" + (this.workHackExpGainRate * cyclesPerSec).toFixed(3) + " / sec) hacking exp <br><br>" + 
-                    this.workStrExpGained.toFixed(3) + " (" + (this.workStrExpGainRate * cyclesPerSec).toFixed(3) + " / sec) strength exp <br>" + 
-                    this.workDefExpGained.toFixed(3) + " (" + (this.workDefExpGainRate * cyclesPerSec).toFixed(3) + " / sec) defense exp <br>" + 
-                    this.workDexExpGained.toFixed(3) + " (" + (this.workDexExpGainRate * cyclesPerSec).toFixed(3) + " / sec) dexterity exp <br>" + 
-                    this.workAgiExpGained.toFixed(3) + " (" + (this.workAgiExpGainRate * cyclesPerSec).toFixed(3) + " / sec) agility exp <br><br> " +
-                    this.workChaExpGained.toFixed(3) + " (" + (this.workChaExpGainRate * cyclesPerSec).toFixed(3) + " / sec) charisma exp <br><br>" + 
+                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" + 
+                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this company <br><br>" + 
+                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" + 
+                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" + 
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" + 
+                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" + 
+                    formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
+                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" + 
                     
                     
                     "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" + 
@@ -509,14 +509,14 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
     
     var txt = "You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
               "You earned a total of: <br>" + 
-              "$" + (this.workMoneyGained).toFixed(2) + "<br>" + 
-              (this.workRepGained).toFixed(3) + " reputation for the faction <br>" + 
-              (this.workHackExpGained).toFixed(3) + " hacking exp <br>" + 
-              (this.workStrExpGained).toFixed(3) + " strength exp <br>" + 
-              (this.workDefExpGained).toFixed(3) + " defense exp <br>" +
-              (this.workDexExpGained).toFixed(3) + " dexterity exp <br>" + 
-              (this.workAgiExpGained).toFixed(3) + " agility exp <br>" + 
-              (this.workChaExpGained).toFixed(3) + " charisma exp<br>";
+              "$" + formatNumber(this.workMoneyGained, 2) + "<br>" + 
+              formatNumber(this.workRepGained, 4) + " reputation for the faction <br>" + 
+              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" + 
+              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" + 
+              formatNumber(this.workDefExpGained, 4) + " defense exp <br>" +
+              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" + 
+              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" + 
+              formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
     dialogBoxCreate(txt);
     
     var mainMenu = document.getElementById("mainmenu-container");
@@ -644,14 +644,14 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name + "." + 
                     "You have been doing this for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" + 
-                    "$" + this.workMoneyGained + " (" + (this.workMoneyGainRate * cyclesPerSec).toFixed(2) + " / sec) <br><br>" + 
-                    this.workRepGained.toFixed(3) + " (" + (this.workRepGainRate * cyclesPerSec).toFixed(3) + " / sec) reputation for this faction <br><br>" + 
-                    this.workHackExpGained.toFixed(3) + " (" + (this.workHackExpGainRate * cyclesPerSec).toFixed(3) + " / sec) hacking exp <br><br>" + 
-                    this.workStrExpGained.toFixed(3) + " (" + (this.workStrExpGainRate * cyclesPerSec).toFixed(3) + " / sec) strength exp <br>" + 
-                    this.workDefExpGained.toFixed(3) + " (" + (this.workDefExpGainRate * cyclesPerSec).toFixed(3) + " / sec) defense exp <br>" + 
-                    this.workDexExpGained.toFixed(3) + " (" + (this.workDexExpGainRate * cyclesPerSec).toFixed(3) + " / sec) dexterity exp <br>" + 
-                    this.workAgiExpGained.toFixed(3) + " (" + (this.workAgiExpGainRate * cyclesPerSec).toFixed(3) + " / sec) agility exp <br><br> " +
-                    this.workChaExpGained.toFixed(3) + " (" + (this.workChaExpGainRate * cyclesPerSec).toFixed(3) + " / sec) charisma exp <br><br>" + 
+                    "$" + formatNumber(this.workMoneyGained, 2) + " (" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" + 
+                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this faction <br><br>" + 
+                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" + 
+                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" + 
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" + 
+                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" + 
+                    formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
+                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" + 
                     
                     "You will automatically finish after working for 20 hours. You can cancel earlier if you wish.<br>" + 
                     "There is no penalty for cancelling earlier.";  
@@ -878,14 +878,14 @@ PlayerObject.prototype.takeClass = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You have been " + className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ".<br><br>" +
                     "This has cost you: <br>" + 
-                    "$" + this.workMoneyGained.toFixed(2) + " ($" + (this.workMoneyLossRate * cyclesPerSec).toFixed(2) + " / sec) <br><br>" + 
+                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyLossRate * cyclesPerSec, 2) + " / sec) <br><br>" + 
                     "You have gained: <br>" + 
-                    this.workHackExpGained.toFixed(3) + " (" + (this.workHackExpGainRate * cyclesPerSec).toFixed(3) + " / sec) hacking exp <br>" + 
-                    this.workStrExpGained.toFixed(3) + " (" + (this.workStrExpGainRate * cyclesPerSec).toFixed(3) + " / sec) strength exp <br>" + 
-                    this.workDefExpGained.toFixed(3) + " (" + (this.workDefExpGainRate * cyclesPerSec).toFixed(3) + " / sec) defense exp <br>" + 
-                    this.workDexExpGained.toFixed(3) + " (" + (this.workDexExpGainRate * cyclesPerSec).toFixed(3) + " / sec) dexterity exp <br>" + 
-                    this.workAgiExpGained.toFixed(3) + " (" + (this.workAgiExpGainRate * cyclesPerSec).toFixed(3) + " / sec) agility exp <br>" +
-                    this.workChaExpGained.toFixed(3) + " (" + (this.workChaExpGainRate * cyclesPerSec).toFixed(3) + " / sec) charisma exp <br>" + 
+                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br>" + 
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" + 
+                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" + 
+                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" + 
+                    formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br>" +
+                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br>" + 
                     "You may cancel at any time";       
 }
 
@@ -899,14 +899,14 @@ PlayerObject.prototype.finishClass = function() {
     
     this.updateSkillLevels();
     var txt = "After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", <br>" +
-              "you spent a total of $" + this.workMoneyGained * -1 + ". <br><br>" + 
+              "you spent a total of $" + formatNumber(this.workMoneyGained * -1, 2) + ". <br><br>" + 
               "You earned a total of: <br>" + 
-              (this.workHackExpGained).toFixed(3) + " hacking exp <br>" + 
-              (this.workStrExpGained).toFixed(3) + " strength exp <br>" + 
-              (this.workDefExpGained).toFixed(3) + " defense exp <br>" +
-              (this.workDexExpGained).toFixed(3) + " dexterity exp <br>" + 
-              (this.workAgiExpGained).toFixed(3) + " agility exp <br>" + 
-              (this.workChaExpGained).toFixed(3) + " charisma exp<br>";
+              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" + 
+              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" + 
+              formatNumber(this.workDefExpGained, 4) + " defense exp <br>" +
+              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" + 
+              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" + 
+              formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
 
     dialogBoxCreate(txt);
     

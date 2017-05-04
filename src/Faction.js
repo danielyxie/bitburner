@@ -522,7 +522,7 @@ displayFactionContent = function(factionName) {
 	var faction = Factions[factionName];
     document.getElementById("faction-name").innerHTML = factionName;
     document.getElementById("faction-info").innerHTML = faction.info;
-    document.getElementById("faction-reputation").innerHTML = "Reputation: " + faction.playerReputation.toFixed(3);
+    document.getElementById("faction-reputation").innerHTML = "Reputation: " + formatNumber(faction.playerReputation, 4);
 	
 	var hackDiv 			= document.getElementById("faction-hack-div");
 	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
@@ -749,11 +749,11 @@ displayFactionAugmentations = function(factionName) {
             var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
             if (faction.playerReputation >= req) {
                 aElem.setAttribute("class", "a-link-button");
-                pElem.innerHTML = "UNLOCKED - $" + aug.baseCost * faction.augmentationPriceMult;
+                pElem.innerHTML = "UNLOCKED - $" + formatNumber(aug.baseCost * faction.augmentationPriceMult, 2);
                 //TODO Event listener for button to purchase augmentation
             } else {
                 aElem.setAttribute("class", "a-link-button-inactive");
-                pElem.innerHTML = "LOCKED (Requires " + req + " faction reputation)";
+                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 4) + " faction reputation)";
                 pElem.style.color = "red";
             }
             aElem.style.display = "inline-block";

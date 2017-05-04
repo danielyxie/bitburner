@@ -144,7 +144,7 @@ updateHacknetNodesContent = function() {
     //Set purchase button to inactive if not enough money, and update its price display
     var cost = getCostOfNextHacknetNode();
     var purchaseButton = document.getElementById("hacknet-nodes-purchase-button");
-    purchaseButton.innerHTML = "Purchase Hacknet Node - $" + cost.toFixed(2);
+    purchaseButton.innerHTML = "Purchase Hacknet Node - $" + formatNumber(cost, 2);
     if (cost > Player.money) {
         purchaseButton.setAttribute("class", "a-link-button-inactive");
     } else {
@@ -152,7 +152,7 @@ updateHacknetNodesContent = function() {
     }
     
     //Update player's money
-    document.getElementById("hacknet-nodes-money").innerHTML = "Money: $" + Player.money.toFixed(2);
+    document.getElementById("hacknet-nodes-money").innerHTML = "Money: $" + formatNumber(Player.money, 2);
     
     //Update information in each owned hacknet node
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
@@ -228,8 +228,8 @@ updateHacknetNodeDomElement = function(nodeObj) {
     var txt = document.getElementById("hacknet-node-text-" + nodeName);
     if (txt == null) {throw new Error("Cannot find text element");}
     txt.innerHTML = "Node name:  " + nodeName + "<br>" +
-                    "Production: $" + nodeObj.totalMoneyGenerated.toFixed(2) + 
-                                 " ($" + nodeObj.moneyGainRatePerSecond.toFixed(2) + " / second) <br>" + 
+                    "Production: $" + formatNumber(nodeObj.totalMoneyGenerated, 2) + 
+                                 " ($" + formatNumber(nodeObj.moneyGainRatePerSecond, 2) + " / second) <br>" + 
                     "Level:      " + nodeObj.level + "<br>" + 
                     "RAM:        " + nodeObj.ram + "GB<br>" + 
                     "Cores:      " + nodeObj.numCores;
@@ -237,7 +237,7 @@ updateHacknetNodeDomElement = function(nodeObj) {
     var upgradeLevelButton = document.getElementById("hacknet-node-upgrade-level-" + nodeName);
     if (upgradeLevelButton == null) {throw new Error("Cannot find upgrade level button element");}
     var upgradeLevelCost = nodeObj.calculateLevelUpgradeCost();
-    upgradeLevelButton.innerHTML = "Upgrade Hacknet Node Level - $" + upgradeLevelCost.toFixed(2);
+    upgradeLevelButton.innerHTML = "Upgrade Hacknet Node Level - $" + formatNumber(upgradeLevelCost, 2);
     if (upgradeLevelCost > Player.money) {
         upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
     } else {
@@ -247,7 +247,7 @@ updateHacknetNodeDomElement = function(nodeObj) {
     var upgradeRamButton = document.getElementById("hacknet-node-upgrade-ram-" + nodeName);
     if (upgradeRamButton == null) {throw new Error("Cannot find upgrade ram button element");}
     var upgradeRamCost = nodeObj.calculateRamUpgradeCost();
-    upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM -$" + upgradeRamCost.toFixed(2);
+    upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM -$" + formatNumber(upgradeRamCost, 2);
     if (upgradeRamCost > Player.money) {
         upgradeRamButton.setAttribute("class", "a-link-button-inactive");
     } else {
@@ -257,7 +257,7 @@ updateHacknetNodeDomElement = function(nodeObj) {
     var upgradeCoreButton = document.getElementById("hacknet-node-upgrade-core-" + nodeName);
     if (upgradeCoreButton == null) {throw new Error("Cannot find upgrade cores button element");}
     var upgradeCoreCost = nodeObj.calculateCoreUpgradeCost();
-    upgradeCoreButton.innerHTML = "Purchase additional CPU Core - $" + upgradeCoreCost.toFixed(2);
+    upgradeCoreButton.innerHTML = "Purchase additional CPU Core - $" + formatNumber(upgradeCoreCost, 2);
     if (upgradeCoreCost > Player.money) {
         upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
     } else {

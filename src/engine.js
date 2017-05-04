@@ -311,24 +311,53 @@ var Engine = {
         if (Player.companyPosition != "") {
             companyPosition = Player.companyPosition.positionName;
         }
-        Engine.Display.characterInfo.innerHTML = 'Current City: ' + Player.city + '<br><br>' + 
-                                                 'Employer: ' + Player.companyName + '<br><br>' + 
-                                                 'Job Title: ' + companyPosition + '<br><br><br><br>' + 
-                                                 'Money: $' + (Player.money.toFixed(2)).toLocaleString() + '<br><br>' +
-                                                 'Hacking Level: ' + (Player.hacking_skill).toLocaleString() + '<br><br>' + 
-                                                 'Strength: ' + (Player.strength).toLocaleString() + '<br><br>' + 
-                                                 'Defense: ' + (Player.defense).toLocaleString() + '<br><br>' + 
-                                                 'Dexterity: ' + (Player.dexterity).toLocaleString() + '<br><br>' + 
-                                                 'Agility: ' + (Player.agility).toLocaleString() + '<br><br>' +
-                                                 'Charisma: ' + (Player.charisma).toLocaleString() + '<br><br>' +
-                                                 'Servers owned: ' + Player.purchasedServers.length + '<br><br>' + 
-                                                 'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br><br>' + 
-                                                 'Hacking experience: ' + (Player.hacking_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
-                                                 'Strength experience: ' +  (Player.strength_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
-                                                 'Defense experience: ' + (Player.defense_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
-                                                 'Dexterity experience: ' + (Player.dexterity_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
-                                                 'Agility experience: ' + (Player.agility_exp.toFixed(4)).toLocaleString() + '<br><br>' +
-                                                 'Charisma experience: ' + (Player.charisma_exp.toFixed(4)).toLocaleString();
+        Engine.Display.characterInfo.innerHTML = 
+        '<b>General</b><br><br>' + 
+        'Current City: ' + Player.city + '<br><br>' + 
+        'Employer: ' + Player.companyName + '<br>' + 
+        'Job Title: ' + companyPosition + '<br><br>' + 
+        'Money: $' + formatNumber(Player.money, 2)+ '<br><br><br>' +
+        '<b>Stats</b><br><br>' + 
+        'Hacking Level: ' + (Player.hacking_skill).toLocaleString() + 
+                        " (" + formatNumber(Player.hacking_exp, 4) + ' experience)<br>' + 
+        'Strength: ' + (Player.strength).toLocaleString() + 
+                   " (" + formatNumber(Player.strength_exp, 4) + ' experience)<br>' + 
+        'Defense: ' + (Player.defense).toLocaleString() + 
+                  " (" + formatNumber(Player.defense_exp, 4) + ' experience)<br>' + 
+        'Dexterity: ' + (Player.dexterity).toLocaleString() + 
+                   " (" + formatNumber(Player.dexterity_exp, 4) + ' experience)<br>' + 
+        'Agility: ' + (Player.agility).toLocaleString() + 
+                  " (" + formatNumber(Player.agility_exp, 4) + ' experience)<br>' +
+        'Charisma: ' + (Player.charisma).toLocaleString() +
+                   " (" + formatNumber(Player.charisma_exp, 4) + ' experience)<br><br><br>' +
+        '<b>Multipliers</b><br><br>' + 
+        'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' + 
+        'Hacking Speed multiplier: ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' + 
+        'Hacking money multiplier: ' + formatNumber(Player.hacking_money_mult * 100, 2) + '%<br><br>' + 
+        'Hacking Level multiplier: ' + formatNumber(Player.hacking_mult * 100, 2) + '%<br>' +
+        'Hacking Experience multiplier: ' + formatNumber(Player.hacking_exp_mult * 100, 2) + '%<br><br>' + 
+        'Strength Level multiplier: ' + formatNumber(Player.strength_mult * 100, 2) + '%<br>' + 
+        'Strength Experience multiplier: ' + formatNumber(Player.strength_exp_mult * 100, 2) + '%<br><br>' + 
+        'Defense Level multiplier: ' + formatNumber(Player.defense_mult * 100, 2) + '%<br>' + 
+        'Defense Experience multiplier: ' + formatNumber(Player.defense_exp_mult * 100, 2) + '%<br><br>' + 
+        'Dexterity Level multiplier: ' + formatNumber(Player.dexterity_mult * 100, 2) + '%<br>' + 
+        'Dexterity Experience multiplier: ' + formatNumber(Player.dexterity_exp_mult * 100, 2) + '%<br><br>' + 
+        'Agility Level multiplier: ' + formatNumber(Player.agility_mult * 100, 2) + '%<br>' + 
+        'Agility Experience multiplier: ' + formatNumber(Player.agility_exp_mult * 100, 2) + '%<br><br>' + 
+        'Charisma Level multiplier: ' + formatNumber(Player.charisma_mult * 100, 2) + '%<br>' + 
+        'Charisma Experience multiplier: ' + formatNumber(Player.charisma_exp_mult * 100, 2) + '%<br><br>' + 
+        'Hacknet Node production multiplier: ' + formatNumber(Player.hacknet_node_money_mult * 100, 2) + '%<br>' +
+        'Hacknet Node purchase cost multiplier: '+ formatNumber(Player.hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
+        'Hacknet Node RAM upgrade cost multiplier: ' + formatNumber(Player.hacknet_node_ram_cost_mult * 100, 2) + '%<br>' + 
+        'Hacknet Node Core purchase cost multiplier: ' + formatNumber(Player.hacknet_node_core_cost_mult * 100, 2) + '%<br>' + 
+        'Hacknet Node level upgrade cost multiplier: ' + formatNumber(Player.hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' + 
+        'Company reputation gain multiplier: ' + formatNumber(Player.company_rep_mult * 100, 2) + '%<br>' + 
+        'Faction reputation gain multiplier: ' + formatNumber(Player.faction_rep_mult * 100, 2) + '%<br>' + 
+        'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br><br><br>' +
+        '<b>Misc</b><br><br>' + 
+        'Servers owned: ' + Player.purchasedServers.length + '<br>' + 
+        'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>';
+        
     },
     
     /* Display locations in the world*/
@@ -436,22 +465,22 @@ var Engine = {
         var serverIpHostname = "Server: " + hostname + "(" + workerscript.serverIp + ")";
         
         //Online
-        var onlineTotalMoneyMade = "Total online production: $" + workerscript.scriptRef.onlineMoneyMade.toFixed(2);
-        var onlineTotalExpEarned = (Array(26).join(" ") + workerscript.scriptRef.onlineExpGained.toFixed(2) + " exp").replace( / /g, "&nbsp;");
+        var onlineTotalMoneyMade = "Total online production: $" + formatNumber(workerscript.scriptRef.onlineMoneyMade, 2);
+        var onlineTotalExpEarned = (Array(26).join(" ") + formatNumber(workerscript.scriptRef.onlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
         
         var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
-        var onlineMpsText = "Online production rate: $" + onlineMps.toFixed(2) + "/second";
+        var onlineMpsText = "Online production rate: $" + formatNumber(onlineMps, 2) + "/second";
         var onlineEps = workerscript.scriptRef.onlineExpGained / workerscript.scriptRef.onlineRunningTime;
-        var onlineEpsText = (Array(25).join(" ") + onlineEps.toFixed(4) + " exp/second").replace( / /g, "&nbsp;");
+        var onlineEpsText = (Array(25).join(" ") + formatNumber(onlineEps, 4) + " hacking exp/second").replace( / /g, "&nbsp;");
         
         //Offline
-        var offlineTotalMoneyMade = "Total offline production: $" + workerscript.scriptRef.offlineMoneyMade.toFixed(2);
-        var offlineTotalExpEarned = (Array(27).join(" ") + workerscript.scriptRef.offlineExpGained.toFixed(2) + " exp").replace( / /g, "&nbsp;");
+        var offlineTotalMoneyMade = "Total offline production: $" + formatNumber(workerscript.scriptRef.offlineMoneyMade, 2);
+        var offlineTotalExpEarned = (Array(27).join(" ") + formatNumber(workerscript.scriptRef.offlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
         
         var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
-        var offlineMpsText = "Offline production rate: $" + offlineMps.toFixed(2) + "/second";
+        var offlineMpsText = "Offline production rate: $" + formatNumber(offlineMps, 2) + "/second";
         var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
-        var offlineEpsText = (Array(26).join(" ") + offlineEps.toFixed(4) +  " exp/second").replace( / /g, "&nbsp;");
+        var offlineEpsText = (Array(26).join(" ") + formatNumber(offlineEps, 4) +  " hacking exp/second").replace( / /g, "&nbsp;");
         
         itemText.innerHTML = serverIpHostname + "<br>" + onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
                              onlineMpsText + "<br>" + onlineEpsText + "<br>" + offlineTotalMoneyMade + "<br>" + offlineTotalExpEarned + "<br>" +

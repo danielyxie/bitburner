@@ -4,10 +4,16 @@
 /* Character Info */
 #character-container {
     position: fixed;
+    height: 100%;
     padding-top: 10px;
     padding-left: 10px;
     margin-left: 10%;
     width: 99%;
+    overflow-y: scroll;
+}
+
+#character-info {
+    overflow-y: scroll;
 }
 
 
