@@ -243,7 +243,7 @@ initAugmentations = function() {
     AddToAugmentations(ArtificialBioNeuralNetwork);
     
     var ArtificialSynapticPotentiation = new Augmentation("Artificial Synaptic Potentiation");
-    ArtificialSynapticPotentiation.setRequirements(20000, 400000000);
+    ArtificialSynapticPotentiation.setRequirements(20000, 80000000);
     ArtificialSynapticPotentiation.setInfo("The body is injected with a chemical that artificially induces synaptic potentiation,\n" + 
                                            "otherwise known as the strengthening of synapses. This results in a enhanced cognitive abilities.\n\n" + 
                                            "This augmentation increases the player's hacking speed and hacking chance by 1%.");
@@ -289,7 +289,7 @@ initAugmentations = function() {
     AddToAugmentations(DataJack);
     
     var ENM = new Augmentation("Embedded Netburner Module");
-    ENM.setRequirements(20000, 300000000);
+    ENM.setRequirements(20000, 100000000);
     ENM.setInfo("A thin device embedded inside the arm containing a wireless module capable of connecting\n" + 
                 "to nearby networks. Once connected, the Netburner Module is capable of capturing and\n" + 
                 "processing all of the traffic on that network. By itself, the Embedded Netburner Module does\n" + 
@@ -381,7 +381,7 @@ initAugmentations = function() {
     
     //Work Augmentations
     var NuoptimalInjectorImplant = new Augmentation("Nuoptimal Nootropic Injector Implant");
-    NuoptimalInjectorImplant.setRequirements(12000, 75000000);
+    NuoptimalInjectorImplant.setRequirements(12000, 30000000);
     NuoptimalInjectorImplant.setInfo("This torso implant automatically injects nootropic supplements into\n" + 
                                      "the bloodstream to improve memory, increase focus, and provide other\n" + 
                                      "cognitive enhancements.\n\n" + 
@@ -392,7 +392,7 @@ initAugmentations = function() {
     AddToAugmentations(NuoptimalInjectorImplant);
     
     var SpeechEnhancement = new Augmentation("Speech Enhancement");
-    SpeechEnhancement.setRequirements(6000, 20000000);
+    SpeechEnhancement.setRequirements(6000, 4000000);
     SpeechEnhancement.setInfo("An advanced neural implant that improves your speaking abilities, making\n" + 
                               "you more convincing and likable in conversations and overall improving your\n" +
                               "social interactions.\n\n" + 
@@ -404,7 +404,7 @@ initAugmentations = function() {
     AddToAugmentations(SpeechEnhancement);
     
     var FocusWire = new Augmentation("FocusWire"); //Stops procrastination
-    FocusWire.setRequirements(100000, 350000000);
+    FocusWire.setRequirements(100000, 200000000);
     FocusWire.setInfo("A cranial implant that stops procrastination by blocking specific neural pathways\n" + 
                       "in the brain.\n\n" + 
                       "This augmentation: \n" + 
@@ -504,7 +504,7 @@ initAugmentations = function() {
     
     //Misc augmentations
     var Neurotrainer1 = new Augmentation("Neurotrainer I");
-    Neurotrainer1.setRequirements(4000, 4000000);
+    Neurotrainer1.setRequirements(4000, 3000000);
     Neurotrainer1.setInfo("A decentralized cranial implant that improves the brain's ability to learn. It is\n" + 
                           "installed by releasing millions of nanobots into the human brain, each of which\n" + 
                           "attaches to a different neural pathway to enhance the brain's ability to retain\n" + 
@@ -514,7 +514,7 @@ initAugmentations = function() {
     AddToAugmentations(Neurotrainer1);
     
     var Neurotrainer2 = new Augmentation("Neurotrainer II");
-    Neurotrainer2.setRequirements(16000, 100000000);
+    Neurotrainer2.setRequirements(16000, 20000000);
     Neurotrainer2.setInfo("A decentralized cranial implant that improves the brain's ability to learn. This\n" + 
                           "is a more powerful version of the Neurotrainer I augmentation, but it does not\n" + 
                           "require Neurotrainer I to be installed as a prerequisite.\n\n" + 
@@ -523,7 +523,7 @@ initAugmentations = function() {
     AddToAugmentations(Neurotrainer2);
     
     var Neurotrainer3 = new Augmentation("Neurotrainer III");
-    Neurotrainer3.setRequirements(40000, 725000000);
+    Neurotrainer3.setRequirements(40000, 100000000);
     Neurotrainer3.setInfo("A decentralized cranial implant that improves the brain's ability to learn. This\n" +
                           "is a more powerful version of the Neurotrainer I and Neurotrainer II augmentation,\n" + 
                           "but it does not require either of them to be installed as a prerequisite.\n\n" + 

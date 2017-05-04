@@ -739,37 +739,39 @@ displayFactionAugmentations = function(factionName) {
     }
     
     for (var i = 0; i < faction.augmentations.length; ++i) {
-        var aug = Augmentations[faction.augmentations[i]];
-        var item = document.createElement("li");
-        var span = document.createElement("span");
-        var aElem = document.createElement("a");
-        var pElem = document.createElement("p");
-        aElem.setAttribute("href", "#");
-        var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
-        if (faction.playerReputation >= req) {
-            aElem.setAttribute("class", "a-link-button");
-            pElem.innerHTML = "UNLOCKED";
-            //TODO Event listener for button to purchase augmentation
-        } else {
-            aElem.setAttribute("class", "a-link-button-inactive");
-            pElem.innerHTML = "LOCKED (Requires " + req + " faction reputation)";
-            pElem.style.color = "red";
-        }
-        aElem.style.display = "inline-block";
-        pElem.style.display = "inline-block";
-        aElem.innerHTML = aug.name;
-        
-        aElem.addEventListener("click", function() {
-            console.log("here");
-            purchaseAugmentationBoxCreate(aug, faction);
-        });
-        
-        span.appendChild(aElem);
-        span.appendChild(pElem);
-        
-        item.appendChild(span);
-        
-        augmentationsList.appendChild(item);
+        (function () {
+            var aug = Augmentations[faction.augmentations[i]];
+            var item = document.createElement("li");
+            var span = document.createElement("span");
+            var aElem = document.createElement("a");
+            var pElem = document.createElement("p");
+            aElem.setAttribute("href", "#");
+            var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
+            if (faction.playerReputation >= req) {
+                aElem.setAttribute("class", "a-link-button");
+                pElem.innerHTML = "UNLOCKED - $" + aug.baseCost * faction.augmentationPriceMult;
+                //TODO Event listener for button to purchase augmentation
+            } else {
+                aElem.setAttribute("class", "a-link-button-inactive");
+                pElem.innerHTML = "LOCKED (Requires " + req + " faction reputation)";
+                pElem.style.color = "red";
+            }
+            aElem.style.display = "inline-block";
+            pElem.style.display = "inline-block";
+            aElem.innerHTML = aug.name;
+            
+            aElem.addEventListener("click", function() {
+                console.log("here");
+                purchaseAugmentationBoxCreate(aug, faction);
+            });
+            
+            span.appendChild(aElem);
+            span.appendChild(pElem);
+            
+            item.appendChild(span);
+            
+            augmentationsList.appendChild(item);
+        }()); //Immediate invocation closure
     }
 }
 
