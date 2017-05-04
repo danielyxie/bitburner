@@ -40,7 +40,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 50) {
         bruteSshALink.style.display = "block";
         bruteSshALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerHalfHour);
+            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerQuarterHour);
         });
     }
     
@@ -49,7 +49,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 100) {
         ftpCrackALink.style.display = "block";
         ftpCrackALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHour);
+            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsHalfHour);
         });
     }
     
@@ -58,7 +58,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 250) {
         relaySmtpALink.style.display = "block";
         relaySmtpAlink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer4Hours);
+            Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer2Hours);
         });
     }
     
@@ -67,7 +67,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 500) {
         httpWormALink.style.display = "block";
         httpWormALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer8Hours);
+            Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer4Hours);
         });
     }
     
@@ -76,7 +76,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 750) {
         sqlInjectALink.style.display = "block";
         sqlInjectALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer10Hours);
+            Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer8Hours);
         });
     }
 }

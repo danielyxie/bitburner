@@ -834,6 +834,7 @@ displayLocationContent = function() {
             slumsKidnap.style.display = "block";
             slumsKidnap.innerHTML = "Kidnap and Ransom (" + (kidnapChance*100).toFixed(3) + "% chance of success)";
             
+            break;
         default:
             console.log("ERROR: INVALID LOCATION");
 

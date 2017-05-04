@@ -49,11 +49,17 @@ CONSTANTS = {
     MillisecondsPer4Hours: 14400000,
     GameCyclesPer4Hours: 14400000 / 200,
     
+    MillisecondsPer2Hours: 7200000,
+    GameCyclesPer2Hours: 7200000 / 200,
+    
     MillisecondsPerHour: 3600000,
     GameCyclesPerHour: 3600000 / 200,
     
     MillisecondsPerHalfHour: 1800000,
     GameCyclesPerHalfHour: 1800000 / 200,
+    
+    MillisecondsPerQuarterHour: 900000,
+    GameCyclesPerQuarterHour: 900000 / 200,
     
     FactionWorkHacking: "Faction Hacking Work",
     FactionWorkField: "Faction Field Work",

@@ -11,22 +11,22 @@ function commitMugCrime() {
 
 function commitDealDrugsCrime() {
     Player.crimeType = CONSTANTS.CrimeDrugs;
-    Player.startCrime(0, 2, 2, 2, 2, 5, 1000, 10000); //$100 per sec
+    Player.startCrime(0, 2, 2, 2, 2, 4, 1000, 10000); //$100 per sec
 }
 
 function commitTraffickArmsCrime() {
     Player.crimeType = CONSTANTS.CrimeTraffickArms;
-    Player.startCrime(0, 5, 5, 5, 5, 10, 2500, 20000); //$125 per sec
+    Player.startCrime(0, 5, 5, 5, 5, 8, 2500, 20000); //$125 per sec
 }
 
 function commitHomicideCrime() {
     Player.crimeType = CONSTANTS.CrimeHomicide;
-    Player.startCrime(0, 20, 20, 20, 20, 0, 300, 3000); //$100 per sec
+    Player.startCrime(0, 15, 15, 15, 15, 0, 300, 3000); //$100 per sec
 }
 
 function commitKidnapCrime() {
     Player.crimeType = CONSTANTS.CrimeKidnap;
-    Player.startCrime(0, 6, 6, 6, 6, 6, 10000, 60000); //$166.67 per sec
+    Player.startCrime(0, 10, 10, 10, 10, 10, 10000, 60000); //$166.67 per sec
 }
 
 function determineCrimeSuccess(crime, moneyGained) {

@@ -581,7 +581,9 @@ var Engine = {
             } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
                 Player.createProgramWork(numCycles);
             } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
-              Player.takeClass(numCycles);  
+                Player.takeClass(numCycles);  
+            } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
+                Player.commitCrime(numCycles);
             } else {
                 Player.work(numCycles);
             }
@@ -608,7 +610,7 @@ var Engine = {
     Counters: {
         autoSaveCounter:    300,            //Autosave every minute
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
-        updateDisplays: 4,                  //Update displays such as Active Scripts display and character display
+        updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
         serverGrowth: 450,                  //Process server growth every minute and a half
         checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
         passiveFactionGrowth: 600,
@@ -644,7 +646,7 @@ var Engine = {
                 updateHacknetNodesContent();
             }
             
-            Engine.Counters.updateDisplays = 4;
+            Engine.Counters.updateDisplays = 3;
         }
         
         if (Engine.Counters.serverGrowth <= 0) {
