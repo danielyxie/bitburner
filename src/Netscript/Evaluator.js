@@ -387,7 +387,6 @@ function evaluate(exp, workerScript) {
 //Evaluate the looping part of a for loop (Initialization block is NOT done in here)
 function evaluateFor(exp, workerScript) {
 	var env = workerScript.env;
-	console.log("evaluateFor() called");
 	return new Promise(function(resolve, reject) {
 		if (env.stopFlag) {reject(workerScript);}
 		
@@ -395,7 +394,6 @@ function evaluateFor(exp, workerScript) {
 			setTimeout(function() {
 				var evaluatePromise = evaluate(exp.cond, workerScript);
 				evaluatePromise.then(function(resCond) {
-					console.log("Conditional evaluated to: " + resCond);
 					resolve(resCond);
 				}, function(e) {
 					reject(e);
@@ -405,13 +403,11 @@ function evaluateFor(exp, workerScript) {
 		
 		pCond.then(function(resCond) {
 			if (resCond) {
-				console.log("About to evaluate an iteration of for loop code");
 				//Run the for loop code
 				var pCode = new Promise(function(resolve, reject) {
 					setTimeout(function() {
 						var evaluatePromise = evaluate(exp.code, workerScript);
 						evaluatePromise.then(function(resCode) {
-							console.log("Evaluated an iteration of for loop code");
 							resolve(resCode);
 						}, function(e) {
 							reject(e);
@@ -425,7 +421,6 @@ function evaluateFor(exp, workerScript) {
 						setTimeout(function() {
 							var evaluatePromise = evaluate(exp.postloop, workerScript);
 							evaluatePromise.then(function(foo) {
-								console.log("Evaluated for loop postloop");
 								resolve("postLoopFinished");
 							}, function(e) {
 								reject(e);
@@ -448,7 +443,6 @@ function evaluateFor(exp, workerScript) {
 					reject(e);
 				});
 			} else {
-				console.log("Cond is false, stopping for loop");
 				resolve("endForLoop");	//Doesn't need to resolve to any particular value
 			}
 		}, function(e) {
@@ -460,7 +454,6 @@ function evaluateFor(exp, workerScript) {
 function evaluateWhile(exp, workerScript) {
 	var env = workerScript.env;
 	
-	console.log("evaluateWhile() called");
 	return new Promise(function(resolve, reject) {
 		if (env.stopFlag) {reject(workerScript);}
 		
@@ -468,7 +461,6 @@ function evaluateWhile(exp, workerScript) {
 			setTimeout(function() {
 				var evaluatePromise = evaluate(exp.cond, workerScript);
 				evaluatePromise.then(function(resCond) {
-					console.log("Conditional evaluated to: " + resCond);
 					resolve(resCond);
 				}, function(e) {
 					reject(e);	
@@ -513,12 +505,10 @@ function evaluateWhile(exp, workerScript) {
 function evaluateProg(exp, workerScript, index) {
 	var env = workerScript.env;
 	
-	console.log("evaluateProg() called");
 	return new Promise(function(resolve, reject) {
 		if (env.stopFlag) {reject(workerScript);}
 		
 		if (index >= exp.prog.length) {
-			console.log("Prog done. Resolving recursively");
 			resolve("progFinished");
 		} else {
 			//Evaluate this line of code in the prog
@@ -617,7 +607,6 @@ function scriptCalculatePercentMoneyHacked(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
     var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult;
-    console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;

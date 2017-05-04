@@ -172,7 +172,7 @@
 #purchase-augmentation-box-content {
     background-color: black;
     margin: 15% auto; /* 15% from the top and centered */
-    padding: 1px;
+    padding: 8px;
     border: 5px solid #FFFFFF;
     width: 80%; /* Could be more or less, depending on screen size */
     color: #66ff33;
@@ -184,7 +184,7 @@
     float: right;
     font-size: 16px;
     font-weight: bold;
-    padding: 2px;
+    padding: 4px;
     margin: 6px;
     border: 1px solid white;
 }

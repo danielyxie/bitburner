@@ -470,22 +470,25 @@ var Engine = {
         
         //Re-add a link for each faction you are a member of
         for (var i = 0; i < Player.factions.length; ++i) {
-            var factionName = Player.factions[i];
-            
-            //Add the faction to the Factions page content
-            var item = document.createElement("li");
-            var aElem = document.createElement("a");
-            aElem.setAttribute("href", "#");
-            aElem.setAttribute("class", "a-link-button");
-            aElem.innerHTML = factionName;
-            aElem.addEventListener("click", function() {
-                Engine.loadFactionContent();
-                displayFactionContent(factionName);
-                return false;
-            });
-            item.appendChild(aElem);
-                            
-            factionsList.appendChild(item);
+            (function () {
+                var factionName = Player.factions[i];
+                
+                //Add the faction to the Factions page content
+                var item = document.createElement("li");
+                var aElem = document.createElement("a");
+                aElem.setAttribute("href", "#");
+                aElem.setAttribute("class", "a-link-button");
+                aElem.innerHTML = factionName;
+                aElem.addEventListener("click", function() {
+                    console.log("factionName:" + factionName)
+                    Engine.loadFactionContent();
+                    displayFactionContent(factionName);
+                    return false;
+                });
+                item.appendChild(aElem);
+                                
+                factionsList.appendChild(item);                
+            }()); //Immediate invocation
         }
     },
     
