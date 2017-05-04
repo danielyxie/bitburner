@@ -58,7 +58,7 @@ Locations = {
     NewTokyoVitaLife:               "VitaLife",
     NewTokyoGlobalPharmaceuticals:  "Global Pharmaceuticals",
     NewTokyoNoodleBar:              "Noodle Bar",
-    NewTokyoSlums:                  "New Tokyo Slums"
+    NewTokyoSlums:                  "New Tokyo Slums",
     
     //Ishima
     IshimaTravelAgency:         "Ishima Travel Agency",
@@ -813,13 +813,26 @@ displayLocationContent = function() {
         case Locations.NewTokyokSlums:
         case Locations.IshimaSlums:
         case Locations.VolhavenSlums:
+            var shopliftChance = determineCrimeChanceShoplift();
+            var mugChance = determineCrimeChanceMug();
+            var drugsChance = determineCrimeChanceDealDrugs();
+            var armsChance = determineCrimeChanceTraffickArms();
+            var homicideChance = determineCrimeChanceHomicide();
+            var kidnapChance = determineCrimeChanceKidnap();
+            
             slumsDescText.style.display = "block";
             slumsShoplift.style.display = "block";
+            slumsShoplift.innerHTML = "Shoplift (" + (shopliftChance*100).toFixed(3) + "% chance of success)";
             slumsMug.style.display = "block";
+            slumsMug.innerHTML = "Mug someone (" + (mugChance*100).toFixed(3) + "% chance of success)";
             slumsDealDrugs.style.display = "block";
+            slumsDealDrugs.innerHTML = "Deal Drugs (" + (drugsChance*100).toFixed(3) + "% chance of success)";
             slumsTrafficArms.style.display = "block";
+            slumsTrafficArms.innerHTML = "Traffick Illegal Arms (" + (armsChance*100).toFixed(3) + "% chance of success)";
             slumsHomicide.style.display = "block";
+            slumsHomicide.innerHTML = "Homicide (" + (homicideChance*100).toFixed(3) + "% chance of success)";
             slumsKidnap.style.display = "block";
+            slumsKidnap.innerHTML = "Kidnap and Ransom (" + (kidnapChance*100).toFixed(3) + "% chance of success)";
             
         default:
             console.log("ERROR: INVALID LOCATION");
@@ -1128,7 +1141,7 @@ initLocationButtons = function() {
         return false;
 	});
     
-    newTokyoSlums = document.getElementByID("newtokyo-slums");
+    newTokyoSlums = document.getElementById("newtokyo-slums");
     newTokyoSlums.addEventListener("click", function() {
         Player.location = Locations.NewTokyoSlums;
         Engine.loadLocationContent();
@@ -1434,15 +1447,35 @@ initLocationButtons = function() {
         return false;
     });
     
-    //TODO
-    /*
-    var slumsShoplift       = document.getElementById("location-slums-shoplift");
-    var slumsMug            = document.getElementById("location-slums-mug");
-    var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
-    var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
-    var slumsHomicide       = document.getElementById("location-slums-homicide");
-    var slumsKidnap         = document.getElementById("location-slums-kidnap");
-    */
+    slumsShoplift.addEventListener("click", function() {
+        commitShopliftCrime();
+        return false;
+    });
+    
+    slumsMug.addEventListener("click", function() {
+        commitMugCrime();
+        return false;
+    });
+    
+    slumsDealDrugs.addEventListener("click", function() {
+        commitDealDrugsCrime();
+        return false;
+    });
+    
+    slumsTrafficArms.addEventListener("click", function() {
+        commitTraffickArmsCrime();
+        return false;
+    });
+    
+    slumsHomicide.addEventListener("click", function() {
+        commitHomicideCrime();
+        return false;
+    });
+    
+    slumsKidnap.addEventListener("click", function() {
+        commitKidnapCrime();
+        return false;
+    });
 }   
 
 travelToCity = function(destCityName, cost) {

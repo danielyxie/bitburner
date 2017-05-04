@@ -915,7 +915,7 @@ PlayerObject.prototype.finishClass = function() {
         
     this.isWorking = false;
     
-    Engine.loadTerminalContent();
+    Engine.loadLocationContent();
 }
 
 //The EXP and $ gains are hardcoded. Time is in ms
@@ -924,13 +924,13 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeCrime;
     
-    this.workHackExpGained  = hackExp;
-    this.workStrExpGained   = strExp;
-    this.workDefExpGained   = defExp;
-    this.workDexExpGained   = dexExp;
-    this.workAgiExpGained   = agiExp;
-    this.workChaExpGained   = chaExp;
-    this.workMoneyGained    = money;
+    this.workHackExpGained  = hackExp * this.hacking_exp_mult;
+    this.workStrExpGained   = strExp * this.strength_exp_mult;
+    this.workDefExpGained   = defExp * this.defense_exp_mult;
+    this.workDexExpGained   = dexExp * this.dexteriy_exp_mult;
+    this.workAgiExpGained   = agiExp * this.agility_exp_mult;
+    this.workChaExpGained   = chaExp * this.charisma_exp_mult;
+    this.workMoneyGained    = money; //TODO multiplier for this?
     
     this.timeNeededToCompleteWork = time;
     
@@ -962,7 +962,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
         //Do nothing
     } else {
         this.gainWorkExp();
-        this.gainMoney(this.workMoneyGained);
+        
       
         //Handle Karma and crime statistics
         switch(this.crimeType) {
@@ -996,10 +996,30 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
         }
     }
     
+    //Determine crime success/failure
+    if (determineCrimeSuccess(this.crimeType, this.workMoneyGained)) {
+        dialogBoxCreate("Crime successful! <br><br>" + 
+                        "You gained:<br>"+ 
+                        "$" + this.workMoneyGained + "<br>" + 
+                        this.workHackExpGained + " hacking experience <br>" + 
+                        this.workStrExpGained + " strength experience<br>" + 
+                        this.workDefExpGained + " defense experience<br>" + 
+                        this.workDexExpGained + " dexterity experience<br>" + 
+                        this.workAgiExpGained + " agility experience<br>");
+    } else {
+        dialogBoxCreate("Crime failed! <br><br>" + 
+                "You gained:<br>"+ 
+                this.workHackExpGained + " hacking experience <br>" + 
+                this.workStrExpGained + " strength experience<br>" + 
+                this.workDefExpGained + " defense experience<br>" + 
+                this.workDexExpGained + " dexterity experience<br>" + 
+                this.workAgiExpGained + " agility experience<br>");
+    }
+    
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
-    Engine.loadTerminalContent();
+    Engine.loadLocationContent();
 }
 
 /* Functions for saving and loading the Player data */

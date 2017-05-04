@@ -772,3 +772,17 @@ displayFactionAugmentations = function(factionName) {
         augmentationsList.appendChild(item);
     }
 }
+
+function processPassiveFactionRepGain(numCycles) {
+    var numTimesGain = numCycles / 600;
+    for (var name in Factions) {
+		if (Factions.hasOwnProperty(name)) {
+			var faction = Factions[name];
+			
+			//TODO Get hard value of 1 rep per "rep gain cycle"" for now..
+            //maybe later make this based on
+            //a player's 'status' like how powerful they are and how much money they have
+            if (faction.isMember) {faction.playerReputation += numTimesGain;}
+		}
+	}
+}

@@ -611,6 +611,7 @@ var Engine = {
         updateDisplays: 4,                  //Update displays such as Active Scripts display and character display
         serverGrowth: 450,                  //Process server growth every minute and a half
         checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
+        passiveFactionGrowth: 600,
     },
     
     decrementAllCounters: function(numCycles = 1) {
@@ -659,6 +660,12 @@ var Engine = {
                 inviteToFaction(randFaction);
             }
             Engine.Counters.checkFactionInvitations = 1500;
+        }
+        
+        if (Engine.Counters.passiveFactionGrowth <= 0) {
+            var adjustedCycles = Math.floor((600 - Engine.Counters.passiveFactionGrowth));
+            processPassiveFactionRepGain(adjustedCycles);
+            Engine.Counters.passiveFactionGrowth = 600;
         }
     },
     
@@ -895,6 +902,7 @@ var Engine = {
             var lastUpdate = Player.lastUpdate;
             var numCyclesOffline = Math.floor((thisUpdate - lastUpdate) / Engine._idleSpeed);
             
+            /* Process offline progress */
             processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
             loadAllRunningScripts();    //This also takes care of offline production for those scripts
             if (Player.isWorking) {
@@ -909,8 +917,11 @@ var Engine = {
                 }
             }
             
-            //Hacknet Nodes
+            //Hacknet Nodes offline progress
             processAllHacknetNodeEarnings(numCyclesOffline);
+            
+            //Passive faction rep gain offline
+            processPassiveFactionRepGain(numCyclesOffline);
         } else {
             //No save found, start new game
             console.log("Initializing new game");
