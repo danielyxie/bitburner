@@ -32,7 +32,7 @@ $(document).keydown(function(event) {
 	//Terminal
 	if (Engine.currentPage == Engine.Page.Terminal) {
         var terminalInput = document.getElementById("terminal-input-text-box");
-        if (terminalInput != null && !event.ctrlKey) {terminalInput.focus();}
+        if (terminalInput != null && !event.ctrlKey && !event.shiftKey) {terminalInput.focus();}
         
 		//Enter
 		if (event.keyCode == 13) {

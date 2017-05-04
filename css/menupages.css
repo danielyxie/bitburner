@@ -117,8 +117,7 @@
 /* Hacknet Nodes */
 #hacknet-nodes-container {
     position: fixed;
-    padding-top: 10px;
-    padding-left: 10px;
+    padding: 10px;
     height: 100%;
     margin-left: 10%;
     width: 99%;
@@ -297,21 +296,30 @@
     padding-left: 10px;
     height: 100%;
     margin-left: 10%;
-    width: 99%;
+    width: 85%;
 }
 
 /* Location */
 #location-container {
 	color: #66ff33;
 	position: fixed;
-    padding-top: 10px;
-    padding-left: 10px;
-	padding: 20px;
+	padding: 6px;
     height: 100%;
     margin-left: 10%;
     width: 99%;
 }
 
+#location-slums-description {
+    width: 80%;
+    margin: 10px;
+}
+
+#location-return-to-world-button {
+    margin: 10px;
+    padding: 6px;
+}
+
 #location-container * {
 	margin: 10px 5px 10px 5px;
 }
+

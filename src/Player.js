@@ -960,44 +960,40 @@ PlayerObject.prototype.commitCrime = function (numCycles) {
 }
 
 PlayerObject.prototype.finishCrime = function(cancelled) {
-    if (cancelled) {
-        //Do nothing
-    } else {
-        //Handle Karma and crime statistics
-        switch(this.crimeType) {
-            case CONSTANTS.CrimeShoplift:
-                this.karma -= 0.1;
-                ++this.numTimesShoplifted;
-                break;
-            case CONSTANTS.CrimeMug:
-                this.karma -= 0.2;
-                ++this.numPeopleMugged;
-                break;
-            case CONSTANTS.CrimeDrugs:
-                ++this.numTimesDealtDrugs;
-                this.karma -= 0.5; 
-                break;
-            case CONSTANTS.CrimeTraffickArms:
-                ++this.numTimesTraffickArms;
-                this.karma -= 1;
-                break;
-            case CONSTANTS.CrimeHomicide:
-                ++this.numPeopleKilled;
-                this.karma -= 3;
-                break;
-            case CONSTANTS.CrimeKidnap:
-                ++this.numTimesKidnapped;
-                this.karma -= 3;
-                break;
-            default:
-                dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
-                return;
-        }
-    }
-    
     //Determine crime success/failure
     if (!cancelled) {
         if (determineCrimeSuccess(this.crimeType, this.workMoneyGained)) {
+            //Handle Karma and crime statistics
+            switch(this.crimeType) {
+                case CONSTANTS.CrimeShoplift:
+                    this.karma -= 0.1;
+                    ++this.numTimesShoplifted;
+                    break;
+                case CONSTANTS.CrimeMug:
+                    this.karma -= 0.2;
+                    ++this.numPeopleMugged;
+                    break;
+                case CONSTANTS.CrimeDrugs:
+                    ++this.numTimesDealtDrugs;
+                    this.karma -= 0.5; 
+                    break;
+                case CONSTANTS.CrimeTraffickArms:
+                    ++this.numTimesTraffickArms;
+                    this.karma -= 1;
+                    break;
+                case CONSTANTS.CrimeHomicide:
+                    ++this.numPeopleKilled;
+                    this.karma -= 3;
+                    break;
+                case CONSTANTS.CrimeKidnap:
+                    ++this.numTimesKidnapped;
+                    this.karma -= 3;
+                    break;
+                default:
+                    dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
+                    return;
+            }
+        
             //On a crime success, gain 2x exp
             this.workHackExpGained  *= 2;
             this.workStrExpGained   *= 2;
@@ -1013,7 +1009,8 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                             this.workStrExpGained + " strength experience<br>" + 
                             this.workDefExpGained + " defense experience<br>" + 
                             this.workDexExpGained + " dexterity experience<br>" + 
-                            this.workAgiExpGained + " agility experience<br>");
+                            this.workAgiExpGained + " agility experience<br>" + 
+                            this.workChaExpGained + " charisma experience");
         } else {
             dialogBoxCreate("Crime failed! <br><br>" + 
                     "You gained:<br>"+ 
@@ -1021,7 +1018,8 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     this.workStrExpGained + " strength experience<br>" + 
                     this.workDefExpGained + " defense experience<br>" + 
                     this.workDexExpGained + " dexterity experience<br>" + 
-                    this.workAgiExpGained + " agility experience<br>");
+                    this.workAgiExpGained + " agility experience<br>" + 
+                    this.workChaExpGained + " charisma experience");
         }
     }
     

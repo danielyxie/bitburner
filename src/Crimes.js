@@ -21,7 +21,7 @@ function commitTraffickArmsCrime() {
 
 function commitHomicideCrime() {
     Player.crimeType = CONSTANTS.CrimeHomicide;
-    Player.startCrime(0, 15, 15, 15, 15, 0, 300, 3000); //$100 per sec
+    Player.startCrime(0, 3, 3, 3, 3, 0, 300, 3000); //$100 per sec
 }
 
 function commitKidnapCrime() {
@@ -54,7 +54,7 @@ function determineCrimeSuccess(crime, moneyGained) {
             dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
             return;
     }
-    if (Math.random <= chance) {
+    if (Math.random() <= chance) {
         //Success
         Player.gainMoney(moneyGained);
         return true;

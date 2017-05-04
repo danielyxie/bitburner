@@ -50,7 +50,7 @@ Locations = {
     Sector12JoesGuns:           "Joe's Guns",
     Sector12IronGym:            "Iron Gym",
     Sector12PowerhouseGym:      "Powerhouse Gym",
-    Sector12Slums:              "Sector12 Slums",
+    Sector12Slums:              "Sector-12 Slums",
     
     //New Tokyo
     NewTokyoTravelAgency:           "New Tokyo Travel Agency",
