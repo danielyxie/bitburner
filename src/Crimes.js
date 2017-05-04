@@ -1,32 +1,32 @@
 /* Crimes.js */
 function commitShopliftCrime() {
     Player.crimeType = CONSTANTS.CrimeShoplift;
-    Player.startCrime(0, 1, 1, 1, 1, 0, 100, 3000); //$33.33 per sec
+    Player.startCrime(0, 1, 1, 1, 1, 0, 100, 3000); //$33.33/s, .333 exp/s
 }   
 
 function commitMugCrime() {
     Player.crimeType = CONSTANTS.CrimeMug;
-    Player.startCrime(0, 2, 2, 2, 2, 0, 250, 5000); //$50 per sec
+    Player.startCrime(0, 2, 2, 2, 2, 0, 250, 5000); //$50/s, .4 exp/s
 }   
 
 function commitDealDrugsCrime() {
     Player.crimeType = CONSTANTS.CrimeDrugs;
-    Player.startCrime(0, 2, 2, 2, 2, 4, 1000, 10000); //$100 per sec
+    Player.startCrime(0, 2, 2, 2, 2, 4, 1000, 10000); //$100/s, .2 combat exp/s, .4 cha exp/s
 }
 
 function commitTraffickArmsCrime() {
     Player.crimeType = CONSTANTS.CrimeTraffickArms;
-    Player.startCrime(0, 5, 5, 5, 5, 8, 2500, 20000); //$125 per sec
+    Player.startCrime(0, 10, 10, 10, 10, 16, 5000, 40000); //$125/s, .25 combat exp/s, .4 cha exp/s
 }
 
 function commitHomicideCrime() {
     Player.crimeType = CONSTANTS.CrimeHomicide;
-    Player.startCrime(0, 3, 3, 3, 3, 0, 300, 3000); //$100 per sec
+    Player.startCrime(0, 3, 3, 3, 3, 0, 300, 3000); //$100/s, 1 combat exp/s
 }
 
 function commitKidnapCrime() {
     Player.crimeType = CONSTANTS.CrimeKidnap;
-    Player.startCrime(0, 10, 10, 10, 10, 10, 10000, 60000); //$166.67 per sec
+    Player.startCrime(0, 30, 30, 30, 30, 30, 20000, 120000); //$166.67/s. .25 exp/s
 }
 
 function determineCrimeSuccess(crime, moneyGained) {
@@ -65,40 +65,46 @@ function determineCrimeSuccess(crime, moneyGained) {
 }
 
 function determineCrimeChanceShoplift() {
-    return       ((Player.strength / CONSTANTS.MaxSkillLevel + 
+    var chance = ((Player.strength / CONSTANTS.MaxSkillLevel + 
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel)) * 10;
+                   Player.agility / CONSTANTS.MaxSkillLevel)) * 8;
+                   
+    return Math.min(chance, 1);
 }
 
 function determineCrimeChanceMug() {
-    return       ((Player.strength / CONSTANTS.MaxSkillLevel + 
+    var chance = ((Player.strength / CONSTANTS.MaxSkillLevel + 
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
                    Player.agility / CONSTANTS.MaxSkillLevel)) * 4;
+    return Math.min(chance, 1);
 }
 
 function determineCrimeChanceDealDrugs() {
-    return       ((3*Player.charisma / CONSTANTS.MaxSkillLevel +
-                   2*Player.strength / CONSTANTS.MaxSkillLevel + 
-                   2*Player.defense / CONSTANTS.MaxSkillLevel + 
-                   2*Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   2*Player.agility / CONSTANTS.MaxSkillLevel));
-}
-
-function determineCrimeChanceTraffickArms() {
-    return       ((Player.charisma / CONSTANTS.MaxSkillLevel +
+    var chance = ((1.5*Player.charisma / CONSTANTS.MaxSkillLevel +
                    Player.strength / CONSTANTS.MaxSkillLevel + 
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel)) * 1.5;
+                   Player.agility / CONSTANTS.MaxSkillLevel));
+    return Math.min(chance, 1);
+}
+
+function determineCrimeChanceTraffickArms() {
+    var chance = ((Player.charisma / CONSTANTS.MaxSkillLevel +
+                   Player.strength / CONSTANTS.MaxSkillLevel + 
+                   Player.defense / CONSTANTS.MaxSkillLevel + 
+                   Player.dexterity / CONSTANTS.MaxSkillLevel +
+                   Player.agility / CONSTANTS.MaxSkillLevel));
+    return Math.min(chance, 1);
 }
 
 function determineCrimeChanceHomicide() {
-    return       ((Player.strength / CONSTANTS.MaxSkillLevel + 
+    var chance = ((Player.strength / CONSTANTS.MaxSkillLevel + 
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel)) * 2;    
+                   Player.agility / CONSTANTS.MaxSkillLevel));  
+    return Math.min(chance, 1);
 }
 
 function determineCrimeChanceKidnap() {
@@ -106,5 +112,6 @@ function determineCrimeChanceKidnap() {
                    Player.strength / CONSTANTS.MaxSkillLevel + 
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel));
+                   Player.agility / CONSTANTS.MaxSkillLevel)) / 4;
+    return Math.min(chance, 1);
 }
