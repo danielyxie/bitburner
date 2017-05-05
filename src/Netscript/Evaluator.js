@@ -238,6 +238,7 @@ function evaluate(exp, workerScript) {
 								if (env.stopFlag) {reject(workerScript);}
 								console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds.");
 								setTimeout(function() {
+                                    if (env.stopFlag) {reject(workerScript);}
 									var hackChance = scriptCalculateHackingChance(server);
 									var rand = Math.random();
 									var expGainedOnSuccess = scriptCalculateExpGain(server);

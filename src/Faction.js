@@ -309,7 +309,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Sector-12
     var sector12Fac = Factions["Sector-12"];
     if (sector12Fac.isBanned == false && sector12Fac.isMember == false && 
-        this.money >= 50000000 && this.location == Locations.Sector12) {
+        this.money >= 40000000 && this.location == Locations.Sector12) {
         invitedFactions.push(sector12Fac);
     }
     
@@ -393,8 +393,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         totalHacknetCores += Player.hacknetNodes[i].numCores;
     }
     if (netburnersFac.isBanned == false && netburnersFac.isMember == false &&
-        this.hacking_skill >= 100 && totalHacknetRam >= 10 && 
-        totalHacknetCores >= 5 && totalHacknetLevels >= 100) {
+        this.hacking_skill >= 80 && totalHacknetRam >= 8 && 
+        totalHacknetCores >= 4 && totalHacknetLevels >= 100) {
         invitedFactions.push(netburnersFac);
     }
     
