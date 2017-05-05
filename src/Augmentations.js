@@ -757,7 +757,7 @@ applyAugmentation = function(aug, faction) {
             Player.defense_exp_mult   *= 1.05;
             Player.dexterity_exp_mult *= 1.05;
             Player.agility_exp_mult   *= 1.05;
-            this.charisma_exp_mult  *= 1.05;
+            Player.charisma_exp_mult  *= 1.05;
             break;
         case "Neurotrainer II":     //Medium level
             Player.hacking_exp_mult   *= 1.1;

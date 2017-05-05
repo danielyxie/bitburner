@@ -24,9 +24,7 @@ function displayCreateProgramContent() {
     relaySmtpALink.style.display = "none";
     httpWormALink.style.display = "none";
     sqlInjectALink.style.display = "none";
-    
-    //TODO These addEventListeners should only happen once so I guess just put them in Engine.init()
-    
+        
     //PortHack.exe (in case you delete it lol)
     if (Player.getHomeComputer().programs.indexOf(Programs.NukeProgram) == -1) {    
         portHackALink.style.display = "block";

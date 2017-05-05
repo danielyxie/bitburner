@@ -438,6 +438,10 @@ var Engine = {
     displayAugmentationsContent: function() {
         var augmentationsList = document.getElementById("augmentations-list");
         
+        while (augmentationsList.firstChild) {
+            augmentationsList.removeChild(augmentationsList.firstChild);
+        }
+        
         for (var i = 0; i < Player.augmentations.length; ++i) {
             var augName = Player.augmentations[i];
             var aug = Augmentations[augName];
