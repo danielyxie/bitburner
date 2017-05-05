@@ -93,6 +93,7 @@ CONSTANTS = {
                 "free                   Check the machine's memory (RAM) usage<br>" + 
                 "hack                   Hack the current machine<br>" +
                 "help                   Display this help text<br>" + 
+                "home                   Connect to home computer<br>" + 
                 "hostname               Displays the hostname of the machine<br>" + 
                 "ifconfig               Displays the IP address of the machine<br>" +
                 "kill [script name]     Stops a script that is running on the current machine<br>" +

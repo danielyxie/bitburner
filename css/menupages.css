@@ -104,6 +104,11 @@
     overflow-y: scroll;
 }
 
+.active-scripts-list > li {
+    margin: 6px;
+    width: 80%;
+}
+
 .active-scripts-list>li h2{
     color: #66ff33;
 	padding-top: 10px;
@@ -288,6 +293,19 @@
     margin-left: 10%;
     width: 99%;
     color: #66ff33;
+}
+
+#augmentations-list > li {
+    margin: 6px;
+    width: 80%;
+}
+
+#augmentations-list > li h2{
+    color: #66ff33;
+	padding-top: 10px;
+	padding-left: 10px;
+    background-color: #333;
+    text-decoration: none;
 }
 
 .installed-augmentation {

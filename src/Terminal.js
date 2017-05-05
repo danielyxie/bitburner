@@ -113,7 +113,6 @@ $(document).keydown(function(event) {
                 arg = commandArray[1];
             }
             
-            console.log("arg: " + arg);
             tabCompletion(commandArray[0], arg, allPos);
         }
 	}
@@ -438,7 +437,13 @@ var Terminal = {
 				post(CONSTANTS.HelpText);
 				break;
 			case "home":
-				//TODO return to home computer
+				if (commandArray.length != 1) {
+                    post("Incorrect usage of home command. Usage: home"); return;
+                }
+                Player.getCurrentServer().isConnectedTo = false;
+                Player.currentServer = Player.getHomeComputer().ip;
+                Player.getCurrentServer().isConnectedTo = true;
+                post("Connected to home");
 				break;
 			case "hostname":
 				if (commandArray.length != 1) {

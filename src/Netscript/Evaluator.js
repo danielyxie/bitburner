@@ -582,7 +582,7 @@ function isScriptErrorMessage(msg) {
 //The same as Player's calculateHackingChance() function but takes in the server as an argument
 function scriptCalculateHackingChance(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
-    var skillMult = (Player.hacking_chance_mult * Player.hacking_skill);
+    var skillMult = (2 * Player.hacking_chance_mult * Player.hacking_skill);
     var skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
     var chance = skillChance * difficultyMult;
     if (chance < 0) {return 0;}
@@ -593,7 +593,7 @@ function scriptCalculateHackingChance(server) {
 function scriptCalculateHackingTime(server) {
 	var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
 	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
-	var hackingTime = skillFactor * Player.hacking_speed_mult; //This is in seconds
+	var hackingTime = skillFactor * Player.hacking_speed_mult * 5; //This is in seconds
 	return hackingTime;
 }
 
@@ -606,7 +606,7 @@ function scriptCalculateExpGain(server) {
 function scriptCalculatePercentMoneyHacked(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult;
+    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 1000;
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;

@@ -14,10 +14,9 @@ function PlayerObject() {
 	//Intelligence, perhaps?
     
     //Hacking multipliers
-    this.hacking_chance_mult   = 2;  //Increase through ascensions/augmentations
-    this.hacking_speed_mult  =     5;  //Decrease through ascensions/augmentations
-    //this.hacking_speed_mult    =  1;  //Make it faster for debugging
-    this.hacking_money_mult    = .001;    //Increase through ascensions/augmentations. Can't go above 1
+    this.hacking_chance_mult    = 1;  //Increase through ascensions/augmentations
+    this.hacking_speed_mult     = 1;  //Decrease through ascensions/augmentations
+    this.hacking_money_mult     = 1;  //Increase through ascensions/augmentations. Can't go above 1
     
     //Note: "Lifetime" refers to current ascension, "total" refers to the entire game history
     //Accumulative  stats and skills
@@ -101,7 +100,7 @@ function PlayerObject() {
     this.numTimesDealtDrugsLifetime     = 0;
     this.numTimesTraffickArms           = 0;
     this.numTimesTraffickArmsTotal      = 0;
-    this.numTimesTrafficksArmsLifetime  = 0;
+    this.numTimesTraffickArmsLifetime  = 0;
     this.numPeopleKilled                = 0;
     this.numPeopleKilledTotal           = 0;
     this.numPeopleKilledLifetime        = 0;
@@ -207,7 +206,7 @@ PlayerObject.prototype.updateSkillLevels = function() {
 //        (hacking_chance_multiplier * hacking_skill)                      100
 PlayerObject.prototype.calculateHackingChance = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
-    var skillMult = (this.hacking_chance_mult * this.hacking_skill);
+    var skillMult = (2 * this.hacking_chance_mult * this.hacking_skill);
     var skillChance = (skillMult - this.getCurrentServer().requiredHackingSkill) / skillMult;
     var chance = skillChance * difficultyMult;
     if (chance < 0) {return 0;} 
@@ -222,7 +221,7 @@ PlayerObject.prototype.calculateHackingChance = function() {
 PlayerObject.prototype.calculateHackingTime = function() {
     var difficultyMult = this.getCurrentServer().requiredHackingSkill * this.getCurrentServer().hackDifficulty;
     var skillFactor = (2.5 * difficultyMult + 200) / (this.hacking_skill + 100);
-    return skillFactor * this.hacking_speed_mult;
+    return skillFactor * this.hacking_speed_mult * 5;
 }
 
 //Calculates the PERCENTAGE of a server's money that the player will hack from the server if successful
@@ -233,7 +232,7 @@ PlayerObject.prototype.calculateHackingTime = function() {
 PlayerObject.prototype.calculatePercentMoneyHacked = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
     var skillMult = (this.hacking_skill - (this.getCurrentServer().requiredHackingSkill - 1)) / this.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult;
+    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 1000;
     console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}

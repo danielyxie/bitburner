@@ -201,8 +201,8 @@ scriptCalculateOfflineProduction = function(script) {
 	
 	//Calculate the "confidence" rating of the script's true production. This is based
 	//entirely off of time. We will arbitrarily say that if a script has been running for
-	//120 minutes (7200 sec) then we are completely confident in its ability
-	var confidence = (script.onlineRunningTime) / 7200;
+	//4 hours (14400 sec) then we are completely confident in its ability
+	var confidence = (script.onlineRunningTime) / 14400;
 	if (confidence >= 1) {confidence = 1;}
 	console.log("onlineRunningTime: " + script.onlineRunningTime.toString());
 	console.log("Confidence: " + confidence.toString());
@@ -214,11 +214,15 @@ scriptCalculateOfflineProduction = function(script) {
 	var expGain = (1/2) * (script.onlineExpGained / script.onlineRunningTime) * timePassed;
 	expGain *= confidence;
 	
-	//Account for production in Player and server
+	//Account for production in Player and server)
+    var server = AllServers[script.server];
+    if (production > server.moneyAvailable) {
+        production = server.moneyAvailable;
+    }
+    
 	Player.gainMoney(production);
-	Player.hacking_exp += expGain;
+	Player.gainHackingExp(expGain);
 	
-	var server = AllServers[script.server];
 	server.moneyAvailable -= production;
 	if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
 	
