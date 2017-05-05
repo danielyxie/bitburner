@@ -35,9 +35,10 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
                                    formatNumber(aug.baseCost * fac.augmentationPriceMult, 2)  + "?");
     
     //Clear old event listeners from Confirm button
-    var confirmButton = document.getElementById("purchase-augmentation-box-confirm");
-    var newConfirmButton = confirmButton.cloneNode(true);
-    confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
+    var newConfirmButton = clearEventListeners("purchase-augmentation-box-confirm");
+    //var confirmButton = document.getElementById("purchase-augmentation-box-confirm");
+    //var newConfirmButton = confirmButton.cloneNode(true);
+    //confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
     
     newConfirmButton.addEventListener("click", function() {
         

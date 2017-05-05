@@ -31,9 +31,10 @@ purchaseServerBoxCreate = function(ram, cost) {
     purchaseServerBoxSetText("Would you like to purchase a new server with " + ram + "GB of RAM for $" + cost + "?" );
     
     //Clear old event listeners from Confirm button
-    var confirmButton = document.getElementById("purchase-server-box-confirm");
-    var newConfirmButton = confirmButton.cloneNode(true);
-    confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
+    var newConfirmButton = clearEventListeners("purchase-server-box-confirm");
+    //var confirmButton = document.getElementById("purchase-server-box-confirm");
+    //var newConfirmButton = confirmButton.cloneNode(true);
+    //confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
     newConfirmButton.addEventListener("click", function() {
         purchaseServerBoxClose();
         purchaseServer(ram, cost);

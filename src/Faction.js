@@ -23,6 +23,12 @@ Faction.prototype.setInfo = function(inf) {
 	this.info = inf;
 }
 
+Faction.prototype.reset = function() {
+    this.isMember = false;
+    this.isBanned = false;
+    this.playerReputation = 0;
+}
+
 Faction.prototype.toJSON = function() {
 	return Generic_toJSON("Faction", this);
 }
@@ -730,8 +736,9 @@ displayFactionContent = function(factionName) {
 }
 
 displayFactionAugmentations = function(factionName) {
-    document.getElementById("faction-augmentations-page-desc").innerHTML = "Lists all augmentations that are available to purchase from" + factionName;
+    document.getElementById("faction-augmentations-page-desc").innerHTML = "Lists all augmentations that are available to purchase from " + factionName;
     var faction = Factions[factionName];
+    console.log("fac augs: " + faction.augmentations);
     
     var augmentationsList = document.getElementById("faction-augmentations-list");
     while (augmentationsList.firstChild) {
@@ -739,6 +746,7 @@ displayFactionAugmentations = function(factionName) {
     }
     
     for (var i = 0; i < faction.augmentations.length; ++i) {
+        console.log("here");
         (function () {
             var aug = Augmentations[faction.augmentations[i]];
             var item = document.createElement("li");

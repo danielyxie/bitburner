@@ -670,6 +670,120 @@ var Engine = {
         }
     },
     
+    load: function() {
+        //Load game from save or create new game
+        if (loadGame(saveObject)) {    
+            console.log("Loaded game from save");
+            Engine.setDisplayElements();    //Sets variables for important DOM elements
+            Engine.init();                  //Initialize main game loop, buttons, etc.
+            CompanyPositions.init();
+
+            //Calculate the number of cycles have elapsed while offline
+            var thisUpdate = new Date().getTime();
+            var lastUpdate = Player.lastUpdate;
+            var numCyclesOffline = Math.floor((thisUpdate - lastUpdate) / Engine._idleSpeed);
+            
+            /* Process offline progress */
+            processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
+            loadAllRunningScripts();    //This also takes care of offline production for those scripts
+            if (Player.isWorking) {
+                if (Player.workType == CONSTANTS.WorkTypeFaction) {
+                    Player.workForFaction(numCyclesOffline);
+                } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
+                    Player.createProgramWork(numCyclesOffline);
+                } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
+                    Player.takeClass(numCyclesOffline);
+                } else {
+                    Player.work(numCyclesOffline);
+                }
+            }
+            
+            //Hacknet Nodes offline progress
+            processAllHacknetNodeEarnings(numCyclesOffline);
+            
+            //Passive faction rep gain offline
+            processPassiveFactionRepGain(numCyclesOffline);
+        } else {
+            //No save found, start new game
+            console.log("Initializing new game");
+            Engine.setDisplayElements();        //Sets variables for important DOM elements
+            SpecialServerIps = new SpecialServerIpsMap();
+            Player.init();
+            initForeignServers();
+            initCompanies();
+            initFactions();
+            CompanyPositions.init();
+            initAugmentations();
+            
+            //Start tutorial
+        }
+    },
+    
+    setDisplayElements: function() {
+        //Content elements        
+        Engine.Display.terminalContent = document.getElementById("terminal-container");
+        Engine.currentPage = Engine.Page.Terminal;
+        
+        Engine.Display.characterContent = document.getElementById("character-container");
+        Engine.Display.characterContent.style.visibility = "hidden";
+        
+        Engine.Display.scriptEditorContent = document.getElementById("script-editor-container");
+        Engine.Display.scriptEditorContent.style.visibility = "hidden";
+        
+        Engine.Display.activeScriptsContent = document.getElementById("active-scripts-container");
+        Engine.Display.activeScriptsContent.style.visibility = "hidden";
+        
+        Engine.Display.hacknetNodesContent = document.getElementById("hacknet-nodes-container");
+        Engine.Display.hacknetNodesContent.style.visibility = "hidden";
+        
+        Engine.Display.worldContent = document.getElementById("world-container");
+        Engine.Display.worldContent.style.visibility = "hidden";
+        
+        Engine.Display.createProgramContent = document.getElementById("create-program-container");
+        Engine.Display.createProgramContent.style.visibility = "hidden";
+        
+        Engine.Display.factionsContent = document.getElementById("factions-container");
+        Engine.Display.factionsContent.style.visibility = "hidden";
+        
+        
+        Engine.Display.factionContent = document.getElementById("faction-container");
+        Engine.Display.factionContent.style.visibility = "hidden";
+        
+        Engine.Display.factionAugmentationsContent = document.getElementById("faction-augmentations-container");
+        Engine.Display.factionAugmentationsContent.style.visibility = "hidden";
+        
+        Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
+        Engine.Display.augmentationsContent.style.visibility = "hidden";
+        
+        Engine.Display.tutorialContent = document.getElementById("tutorial-container");
+        Engine.Display.tutorialContent.style.visibility = "hidden";
+        
+        //Character info
+        Engine.Display.characterInfo = document.getElementById("character-info");
+        
+        //Location lists
+        Engine.aevumLocationsList = document.getElementById("aevum-locations-list");
+        Engine.chongqingLocationsList = document.getElementById("chongqing-locations-list");
+        Engine.sector12LocationsList = document.getElementById("sector12-locations-list");
+        Engine.newTokyoLocationsList = document.getElementById("newtokyo-locations-list");
+        Engine.ishimaLocationsList = document.getElementById("ishima-locations-list");
+        Engine.volhavenLocationsList = document.getElementById("volhaven-locations-list");
+        
+        //Location page (page that shows up when you visit a specific location in World)
+        Engine.Display.locationContent = document.getElementById("location-container");
+        Engine.Display.locationContent.style.visibility = "hidden";
+        
+        //Work In Progress
+        Engine.Display.workInProgressContent = document.getElementById("work-in-progress-container");
+        Engine.Display.workInProgressContent.style.visibility = "hidden";
+		
+		//Init Location buttons
+		initLocationButtons();
+        
+        //Script editor 
+        Engine.Display.scriptEditorText = document.getElementById("script-editor-text");
+    }
+    
     /* Initialization */
     init: function() {
         //Main menu buttons and content
@@ -795,48 +909,6 @@ var Engine = {
             Engine.displayTutorialContent();
         });
         
-        
-        //Content elements        
-        Engine.Display.terminalContent = document.getElementById("terminal-container");
-        Engine.currentPage = Engine.Page.Terminal;
-        
-        Engine.Display.characterContent = document.getElementById("character-container");
-        Engine.Display.characterContent.style.visibility = "hidden";
-        
-        Engine.Display.scriptEditorContent = document.getElementById("script-editor-container");
-        Engine.Display.scriptEditorContent.style.visibility = "hidden";
-        
-        Engine.Display.activeScriptsContent = document.getElementById("active-scripts-container");
-        Engine.Display.activeScriptsContent.style.visibility = "hidden";
-        
-        Engine.Display.hacknetNodesContent = document.getElementById("hacknet-nodes-container");
-        Engine.Display.hacknetNodesContent.style.visibility = "hidden";
-        
-        Engine.Display.worldContent = document.getElementById("world-container");
-        Engine.Display.worldContent.style.visibility = "hidden";
-        
-        Engine.Display.createProgramContent = document.getElementById("create-program-container");
-        Engine.Display.createProgramContent.style.visibility = "hidden";
-        
-        Engine.Display.factionsContent = document.getElementById("factions-container");
-        Engine.Display.factionsContent.style.visibility = "hidden";
-        
-        
-        Engine.Display.factionContent = document.getElementById("faction-container");
-        Engine.Display.factionContent.style.visibility = "hidden";
-        
-        Engine.Display.factionAugmentationsContent = document.getElementById("faction-augmentations-container");
-        Engine.Display.factionAugmentationsContent.style.visibility = "hidden";
-        
-        Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
-        Engine.Display.augmentationsContent.style.visibility = "hidden";
-        
-        Engine.Display.tutorialContent = document.getElementById("tutorial-container");
-        Engine.Display.tutorialContent.style.visibility = "hidden";
-        
-        //Character info
-        Engine.Display.characterInfo = document.getElementById("character-info");
-        
         //Create Program buttons
         var portHackALink   = document.getElementById("create-program-porthack");
         var bruteSshALink   = document.getElementById("create-program-brutessh");
@@ -864,69 +936,7 @@ var Engine = {
         });
         
         
-        //Location lists
-        Engine.aevumLocationsList = document.getElementById("aevum-locations-list");
-        Engine.chongqingLocationsList = document.getElementById("chongqing-locations-list");
-        Engine.sector12LocationsList = document.getElementById("sector12-locations-list");
-        Engine.newTokyoLocationsList = document.getElementById("newtokyo-locations-list");
-        Engine.ishimaLocationsList = document.getElementById("ishima-locations-list");
-        Engine.volhavenLocationsList = document.getElementById("volhaven-locations-list");
         
-        //Location page (page that shows up when you visit a specific location in World)
-        Engine.Display.locationContent = document.getElementById("location-container");
-        Engine.Display.locationContent.style.visibility = "hidden";
-        
-        //Work In Progress
-        Engine.Display.workInProgressContent = document.getElementById("work-in-progress-container");
-        Engine.Display.workInProgressContent.style.visibility = "hidden";
-		
-		//Init Location buttons
-		initLocationButtons();
-        
-        //Script editor 
-        Engine.Display.scriptEditorText = document.getElementById("script-editor-text");
-        
-        //Load game from save or create new game
-        if (loadGame(saveObject)) {
-            console.log("Loaded game from save");
-            CompanyPositions.init();
-
-            //Calculate the number of cycles have elapsed while offline
-            var thisUpdate = new Date().getTime();
-            var lastUpdate = Player.lastUpdate;
-            var numCyclesOffline = Math.floor((thisUpdate - lastUpdate) / Engine._idleSpeed);
-            
-            /* Process offline progress */
-            processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
-            loadAllRunningScripts();    //This also takes care of offline production for those scripts
-            if (Player.isWorking) {
-                if (Player.workType == CONSTANTS.WorkTypeFaction) {
-                    Player.workForFaction(numCyclesOffline);
-                } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
-                    Player.createProgramWork(numCyclesOffline);
-                } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
-                    Player.takeClass(numCyclesOffline);
-                } else {
-                    Player.work(numCyclesOffline);
-                }
-            }
-            
-            //Hacknet Nodes offline progress
-            processAllHacknetNodeEarnings(numCyclesOffline);
-            
-            //Passive faction rep gain offline
-            processPassiveFactionRepGain(numCyclesOffline);
-        } else {
-            //No save found, start new game
-            console.log("Initializing new game");
-            SpecialServerIps = new SpecialServerIpsMap();
-            Player.init();
-            initForeignServers();
-            initCompanies();
-            initFactions();
-            CompanyPositions.init();
-            initAugmentations();
-        }
                 
         //Message at the top of terminal
         postNetburnerText();
@@ -959,7 +969,7 @@ var Engine = {
 };
 
 window.onload = function() {
-    Engine.init();
+    Engine.load();
 };
 
 

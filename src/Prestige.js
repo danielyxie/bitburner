@@ -133,19 +133,17 @@ function prestigeAugmentation() {
     }
     Companies = {};
     
-    //Delete Factions
+    //Reset Factions
     for (var member in Factions) {
-        delete Factions[member];
+        Factions[member].reset();
     }
-    Factions = {};
     
     //Inititialization
     SpecialServerIps = new SpecialServerIpsMap();
     Player.init();
     initForeignServers();
     initCompanies();
-    initFactions();
-    CompanyPositions.init();
+    //CompanyPositions.init(); Dont think this is needed
     
     Engine.loadTerminalContent();
 }

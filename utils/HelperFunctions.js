@@ -19,3 +19,13 @@ function addOffset(n, percentage) {
     
     return n * (Math.random() * (2 * offset) - offset);
 }
+
+//Given an element by its Id(usually an 'a' element), removes all event listeners
+//from that element by cloning and replacing. Then returns the new cloned element
+function clearEventListeners(elemId) {
+    var elem = document.getElementById(elemId);
+    if (elem == null) {console.log("ERR: Could not find element for: " + elemId); return null;}
+    var newElem = elem.cloneNode(true);
+    elem.parentNode.replaceChild(newElem, elem);
+    return elem;
+}

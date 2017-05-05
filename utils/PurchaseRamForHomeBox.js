@@ -47,9 +47,10 @@ purchaseRamForHomeBoxCreate = function() {
     purchaseRamForHomeBoxOpen();
     
     //Clear old event listeners from Confirm button
-    var confirmButton = document.getElementById("purchase-ram-for-home-box-confirm");
-    var newConfirmButton = confirmButton.cloneNode(true);
-    confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
+    var newConfirmButton = clearEventListeners("purchase-ram-for-home-box-confirm");
+    //var confirmButton = document.getElementById("purchase-ram-for-home-box-confirm");
+    //var newConfirmButton = confirmButton.cloneNode(true);
+    //confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
     newConfirmButton.addEventListener("click", function() {
         purchaseRamForHomeBoxClose();
         purchaseRamForHomeComputer(cost);
