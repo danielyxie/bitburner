@@ -242,7 +242,7 @@ function evaluate(exp, workerScript) {
 									var hackChance = scriptCalculateHackingChance(server);
 									var rand = Math.random();
 									var expGainedOnSuccess = scriptCalculateExpGain(server);
-									var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
+									var expGainedOnFailure = (expGainedOnSuccess / 4);
 									if (rand < hackChance) {	//Success!
 										var moneyGained = scriptCalculatePercentMoneyHacked(server);
 										moneyGained = Math.floor(server.moneyAvailable * moneyGained);
@@ -256,16 +256,16 @@ function evaluate(exp, workerScript) {
 										
                                         Player.gainHackingExp(expGainedOnSuccess);
 										workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
-										console.log("Script successfully hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
-                                        workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
+										console.log("Script successfully hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
+                                        workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
 										resolve("Hack success");
 									} else {			
 										//Player only gains 25% exp for failure? TODO Can change this later to balance
                                         Player.gainHackingExp(expGainedOnFailure);
 										workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
 										
-										console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + " exp");
-                                        workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + expGainedOnFailure + " exp");
+										console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp");
+                                        workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp");
 										resolve("Hack failure");
 									}
 								}, hackingTime * 1000);
@@ -368,7 +368,9 @@ function evaluate(exp, workerScript) {
                             
                             p.then(function(growthPercentage) {
 								resolve("hackExecuted");
-                                workerScript.scriptRef.log("Using grow(), the money available on " + server.hostname + " was grown by " + (growthPercentage*100 - 100).toFixed(6) + "%");
+                                workerScript.scriptRef.log("Using grow(), the money available on " + server.hostname + " was grown by " + (growthPercentage*100 - 100).toFixed(6) + "%. Gained 1 hacking exp");
+                                Player.gainHackingExp(1);
+                                workerScript.scriptRef.onlineExpGained += 1;
 							}, function(e) {
 								reject(e);
 							});
@@ -600,7 +602,7 @@ function scriptCalculateHackingTime(server) {
 
 //The same as Player's calculateExpGain() function but takes in the server as an argument 
 function scriptCalculateExpGain(server) {
-	return Math.round(server.hackDifficulty * Player.hacking_exp_mult);
+	return (server.hackDifficulty * Player.hacking_exp_mult);
 }
 
 //The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument

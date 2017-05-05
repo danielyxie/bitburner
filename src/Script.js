@@ -89,10 +89,10 @@ function Script() {
     this.numInstructions        = 0;
 	
 	//Stats to display on the Scripts menu, and used to determine offline progress
-	this.offlineRunningTime  	= 0;	//Seconds
+	this.offlineRunningTime  	= 0.01;	//Seconds
 	this.offlineMoneyMade 		= 0;
 	this.offlineExpGained 		= 0;
-	this.onlineRunningTime 		= 0;	//Seconds
+	this.onlineRunningTime 		= 0.01;	//Seconds
 	this.onlineMoneyMade 		= 0;
 	this.onlineExpGained 		= 0;
 	
@@ -116,9 +116,9 @@ Script.prototype.saveScript = function() {
 		this.updateRamUsage();
 		
 		//Clear the stats when the script is updated
-		this.offlineRunningTime  	= 0;	//Seconds
+		this.offlineRunningTime  	= 0.01;	//Seconds
 		this.offlineMoneyMade 		= 0;
-		this.onlineRunningTime 		= 0;	//Seconds
+		this.onlineRunningTime 		= 0.01;	//Seconds
 		this.onlineMoneyMade 		= 0;
 		this.lastUpdate				= 0;
 	}

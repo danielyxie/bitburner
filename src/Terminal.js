@@ -256,7 +256,7 @@ var Terminal = {
 			var rand = Math.random();
 			console.log("Hack success chance: " + hackChance +  ", rand: " + rand);
 			var expGainedOnSuccess = Player.calculateExpGain();
-			var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
+			var expGainedOnFailure = (expGainedOnSuccess / 4);
 			if (rand < hackChance) {	//Success!
 				var moneyGained = Player.calculatePercentMoneyHacked();
 				moneyGained = Math.floor(Player.getCurrentServer().moneyAvailable * moneyGained);
@@ -269,11 +269,11 @@ var Terminal = {
 				
                 Player.gainHackingExp(expGainedOnSuccess)
 				
-				post("Hack successful! Gained $" + moneyGained + " and " + expGainedOnSuccess + " hacking EXP");
+				post("Hack successful! Gained $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) + " hacking EXP");
 			} else {					//Failure
 				//Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure)
-				post("Failed to hack " + Player.getCurrentServer().hostname + ". Gained " + expGainedOnFailure + " hacking EXP");
+				post("Failed to hack " + Player.getCurrentServer().hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " hacking EXP");
 			}
 		}
         
@@ -348,9 +348,7 @@ var Terminal = {
         
 		var commandArray = command.split(" ");
 		
-		if (commandArray.length == 0) {
-			return;
-		}
+		if (commandArray.length == 0) {return;}
 		
 		switch (commandArray[0]) {
 			case "analyze":
@@ -368,6 +366,9 @@ var Terminal = {
                 document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                 $('input[class=terminal-input]').prop('disabled', true);
 				break;
+            case "buy":
+                executeDarkwebTerminalCommand(commandArray);
+                break;
 			case "clear":
 			case "cls":
 				if (commandArray.length != 1) {
@@ -392,6 +393,9 @@ var Terminal = {
                         Player.currentServer = Player.getCurrentServer().getServerOnNetwork(i).ip;
                         Player.getCurrentServer().isConnectedTo = true;
                         post("Connected to " + ip);
+                        if (Player.getCurrentServer().hostname == "darkweb") {
+                            checkIfConnectedToDarkweb(); //Posts a 'help' message if connecting to dark web
+                        }
                         return;
                     }
                 }

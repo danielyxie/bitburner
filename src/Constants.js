@@ -35,7 +35,7 @@ CONSTANTS = {
     MaxLogCapacity: 20,
     
     //How much a TOR router costs
-    TorRouterCost: 2000000,
+    TorRouterCost: 100000,
     
     MillisecondsPer20Hours: 72000000,
     GameCyclesPer20Hours: 72000000 / 200,

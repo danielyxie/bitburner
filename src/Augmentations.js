@@ -55,7 +55,7 @@ initAugmentations = function() {
     Targeting1.setRequirements(8000, 10000000);
     Targeting1.setInfo("This cranial implant is embedded within the player's inner ear structure and optic nerves. It regulates and enhances the user's " + 
                        "balance and hand-eye coordination. It is also capable of augmenting reality by projecting digital information " + 
-                       "directly onto the retina. These enhancements allow the player to better lock-on and keep track of enemies. \n\n" +
+                       "directly onto the retina. These enhancements allow the player to better lock-on and keep track of enemies. <br><br>" +
                        "This augmentation increases the player's dexterity by 10%.");
     Targeting1.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
@@ -64,7 +64,7 @@ initAugmentations = function() {
     var Targeting2 = new Augmentation("Augmented Targeting II");
     Targeting2.setRequirements(30000, 20000000);
     Targeting2.setInfo("This is an upgrade of the Augmented Targeting I cranial implant, which is capable of augmenting reality " + 
-                       "and enhances the user's balance and hand-eye coordination. \n\nThis upgrade increases the player's dexterity " + 
+                       "and enhances the user's balance and hand-eye coordination. <br><br>This upgrade increases the player's dexterity " + 
                        "by an additional 20%.");
     Targeting2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
@@ -73,7 +73,7 @@ initAugmentations = function() {
     var Targeting3 = new Augmentation("Augmented Targeting III");
     Targeting3.setRequirements(80000, 50000000);
     Targeting3.setInfo("This is an upgrade of the Augmented Targeting II cranial implant, which is capable of augmenting reality " + 
-                       "and enhances the user's balance and hand-eye coordination. \n\nThis upgrade increases the player's dexterity " +
+                       "and enhances the user's balance and hand-eye coordination. <br><br>This upgrade increases the player's dexterity " +
                        "by an additional 50%.");
     Targeting3.addToFactions(["The Dark Army", "The Syndicate", "OmniTek Incorporated",
                              "KuaiGong International", "Blade Industries", "The Covenant"]);
@@ -82,7 +82,7 @@ initAugmentations = function() {
     var SyntheticHeart = new Augmentation("Synthetic Heart");
     SyntheticHeart.setRequirements(400000, 500000000);
     SyntheticHeart.setInfo("This advanced artificial heart, created from plasteel and graphene, is capable of pumping more blood " + 
-                           "at much higher efficiencies than a normal human heart.\n\n This augmentation increases the player's agility " +
+                           "at much higher efficiencies than a normal human heart.<br><br> This augmentation increases the player's agility " +
                            "and strength by 100%");
     SyntheticHeart.addToFactions(["KuaiGong International", "Fulcrum Secret Technologies", "Speakers for the Dead",
                                  "NWO", "The Covenant", "Daedalus", "Illuminati"]);
@@ -92,7 +92,7 @@ initAugmentations = function() {
     SynfibrilMuscle.setRequirements(300000, 400000000);
     SynfibrilMuscle.setInfo("The myofibrils in human muscles are injected with special chemicals that react with the proteins inside " + 
                             "the myofibrils, altering their underlying structure. The end result is muscles that are stronger and more elastic. " + 
-                            "Scientists have named these artificially enhanced units 'synfibrils'.\n\n This augmentation increases the player's " +
+                            "Scientists have named these artificially enhanced units 'synfibrils'.<br><br> This augmentation increases the player's " +
                             "strength and defense by 50%.");
     SynfibrilMuscle.addToFactions(["KuaiGong International", "Fulcrum Secret Technologies", "Speakers for the Dead",
                                   "NWO", "The Covenant", "Daedalus", "Illuminati", "Blade Industries"]);
@@ -101,7 +101,7 @@ initAugmentations = function() {
     var CombatRib1 = new Augmentation("Combat Rib I");
     CombatRib1.setRequirements(12000, 15000000);
     CombatRib1.setInfo("The human body's ribs are replaced with artificial ribs that automatically and continuously release cognitive " + 
-                       "and performance-enhancing drugs into the bloodstream, improving the user's abilities in combat.\n\n" + 
+                       "and performance-enhancing drugs into the bloodstream, improving the user's abilities in combat.<br><br>" + 
                        "This augmentation increases the player's strength and defense by 10%.");
     CombatRib1.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
@@ -110,7 +110,7 @@ initAugmentations = function() {
     var CombatRib2 = new Augmentation("Combat Rib II");
     CombatRib2.setRequirements(40000, 40000000);
     CombatRib2.setInfo("This is an upgrade to the Combat Rib I augmentation, and is capable of releasing even more potent combat-enhancing " + 
-                       "drugs into the bloodstream\n\n. This upgrade increases the player's strength and defense by an additional 20%.")
+                       "drugs into the bloodstream<br><br>. This upgrade increases the player's strength and defense by an additional 20%.")
     CombatRib2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     AddToAugmentations(CombatRib2);
@@ -118,7 +118,7 @@ initAugmentations = function() {
     var CombatRib3 = new Augmentation("Combat Rib III");
     CombatRib3.setRequirements(120000, 100000000);
     CombatRib3.setInfo("This is an upgrade to the Combat Rib II augmentation, and is capable of releasing even more potent combat-enhancing " + 
-                       "drugs into the bloodstream\n\n. This upgrade increases the player's strength and defense by an additional 30%.");
+                       "drugs into the bloodstream<br><br>. This upgrade increases the player's strength and defense by an additional 30%.");
     CombatRib3.addToFactions(["The Dark Army", "The Syndicate", "OmniTek Incorporated",
                              "KuaiGong International", "Blade Industries", "The Covenant"]);
     AddToAugmentations(CombatRib3);
@@ -126,7 +126,7 @@ initAugmentations = function() {
     var NanofiberWeave = new Augmentation("Nanofiber Weave");
     NanofiberWeave.setRequirements(150000, 250000000);
     NanofiberWeave.setInfo("Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning. " + 
-                           "This improves the skin's ability to regenerate itself and protect the body from external stresses and forces.\n\n" + 
+                           "This improves the skin's ability to regenerate itself and protect the body from external stresses and forces.<br><br>" + 
                            "This augmentation increases the player's strength and defense by 30%.");
     NanofiberWeave.addToFactions(["Tian Di Hui", "The Syndicate", "The Dark Army", "Speakers for the Dead",
                                  "Blade Industries", "Fulcrum Secret Technologies", "OmniTek Incorporated"]);
@@ -138,7 +138,7 @@ initAugmentations = function() {
                            "The material is implanted underneath the skin, and is the most advanced form of defensive enhancement " +
                            "that has ever been created. The dilatant fluid, despite being thin and light, is extremely effective " + 
                            "at stopping piercing blows and reducing blunt trauma. The properties of graphene allow the plating to " +
-                           "mitigate damage from any fire-related or electrical traumas.\n\n" + 
+                           "mitigate damage from any fire-related or electrical traumas.<br><br>" + 
                            "This augmentation increases the player's defense by 150%.");
     SubdermalArmor.addToFactions(["The Syndicate", "Fulcrum Secret Technologies", "Illuminati", "Daedalus",
                                  "The Covenant"]);
@@ -147,7 +147,7 @@ initAugmentations = function() {
     var WiredReflexes = new Augmentation("Wired Reflexes");
     WiredReflexes.setRequirements(3000, 6000000);
     WiredReflexes.setInfo("Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system, " + 
-                          "supercharging the body's ability to send signals through neurons. This results in increased reflex speed.\n\n" + 
+                          "supercharging the body's ability to send signals through neurons. This results in increased reflex speed.<br><br>" + 
                           "This augmentation increases the player's agility by 5%.");
     WiredReflexes.addToFactions(["Tian Di Hui", "Sector-12", "Volhaven", "Aevum", "Ishima", 
                                 "The Syndicate", "The Dark Army", "Speakers for the Dead"]);
@@ -156,7 +156,7 @@ initAugmentations = function() {
     var GrapheneBoneLacings = new Augmentation("Graphene Bone Lacings");
     GrapheneBoneLacings.setRequirements(750000, 1000000000);
     GrapheneBoneLacings.setInfo("A graphene-based material is grafted and fused into the user's bones, significantly increasing " +
-                                "their density and tensile strength.\n\n" + 
+                                "their density and tensile strength.<br><br>" + 
                                 "This augmentation increases the player's strength and defense by 100%.");
     GrapheneBoneLacings.addToFactions(["Fulcrum Secret Technologies", "The Covenant"]);
     AddToAugmentations(GrapheneBoneLacings);
@@ -166,7 +166,7 @@ initAugmentations = function() {
     BionicSpine.setInfo("An artificial spine created from plasteel and carbon fibers that completely replaces the organic spine. " + 
                         "Not only is the Bionic Spine physically stronger than a human spine, but it is also capable of digitally " + 
                         "stimulating and regulating the neural signals that are sent and received by the spinal cord. This results in " + 
-                        "greatly improved senses and reaction speeds.\n\n" + 
+                        "greatly improved senses and reaction speeds.<br><br>" + 
                         "This augmentation increases all of the player's combat stats by 20%.");
     BionicSpine.addToFactions(["Speakers for the Dead", "The Syndicate", "KuaiGong International",
                               "OmniTek Incorporated", "Blade Industries"]);
@@ -175,14 +175,14 @@ initAugmentations = function() {
     var GrapheneBionicSpine = new Augmentation("Graphene Bionic Spine Upgrade");
     GrapheneBionicSpine.setRequirements(650000, 1000000000);
     GrapheneBionicSpine.setInfo("An upgrade to the Bionic Spine augmentation. It fuses the implant with an advanced graphene " + 
-                                "material to make it much stronger and lighter.\n\n" + 
+                                "material to make it much stronger and lighter.<br><br>" + 
                                 "This augmentation increases all of the player's combat stats by 100%.");
     GrapheneBionicSpine.addToFactions(["Fulcrum Secret Technologies", "ECorp"]);
     AddToAugmentations(GrapheneBionicSpine);
     
     var BionicLegs = new Augmentation("Bionic Legs");
     BionicLegs.setRequirements(100000, 60000000);
-    BionicLegs.setInfo("Cybernetic legs created from plasteel and carbon fibers that completely replace the user's organic legs. \n\n" + 
+    BionicLegs.setInfo("Cybernetic legs created from plasteel and carbon fibers that completely replace the user's organic legs. <br><br>" + 
                        "This augmentation increases the player's agility by 50%.");
     BionicLegs.addToFactions(["Speakers for the Dead", "The Syndicate", "KuaiGong International",
                              "OmniTek Incorporated", "Blade Industries"]);
@@ -191,7 +191,7 @@ initAugmentations = function() {
     var GrapheneBionicLegs = new Augmentation("Graphene Bionic Legs Upgrade");
     GrapheneBionicLegs.setRequirements(400000, 900000000);
     GrapheneBionicLegs.setInfo("An upgrade to the Bionic Legs augmentation. It fuses the implant with an advanced graphene " + 
-                               "material to make it much stronger and lighter.\n\n" + 
+                               "material to make it much stronger and lighter.<br><br>" + 
                                "This augmentation increases the player's agility by an additional 150%.");
     GrapheneBionicLegs.addToFactions(["MegaCorp", "ECorp", "Fulcrum Secret Technologies"]);
     AddToAugmentations(GrapheneBionicLegs);
@@ -201,7 +201,7 @@ initAugmentations = function() {
     SpeechProcessor.setRequirements(25000, 15000000);
     SpeechProcessor.setInfo("A cochlear implant with an embedded computer that analyzes incoming speech. " +
                             "The embedded computer processes characteristics of incoming speech, such as tone " +
-                            "and inflection, to pick up on subtle cues and aid in social interaction.\n\n" + 
+                            "and inflection, to pick up on subtle cues and aid in social interaction.<br><br>" + 
                             "This augmentation increases the player's charisma by 20%.");
     SpeechProcessor.addToFactions(["Tian Di Hui", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
                                   "Ishima", "Volhaven"]);
@@ -211,7 +211,7 @@ initAugmentations = function() {
     TITN41Injection.setRequirements(40000, 75000000);
     TITN41Injection.setInfo("TITN is a series of viruses that targets and alters the sequences of human DNA in genes that " + 
                             "control personality. The TITN-41 strain alters these genes so that the subject becomes more " + 
-                            "outgoing and socialable. \n\n" + 
+                            "outgoing and socialable. <br><br>" + 
                             "This augmentation increases the player's charisma and charisma experience gain rate by 15%");
     TITN41Injection.addToFactions(["Silhouette"]);            
     
@@ -221,7 +221,7 @@ initAugmentations = function() {
                                              "and interactions. The system uses a wide variety of factors such as facial expression, body " + 
                                              "language, and the voice's tone/inflection to determine the best course of action during social" + 
                                              "situations. The implant also uses deep learning software to continuously learn new behavior" + 
-                                             "patterns and how to best respond.\n\n" + 
+                                             "patterns and how to best respond.<br><br>" + 
                                              "This augmentation increases the player's charisma and charisma experience gain rate by 50%.");
     EnhancedSocialInteractionImplant.addToFactions(["Bachman & Associates", "NWO", "Clarke Incorporated",
                                                    "OmniTek Incorporated", "Four Sigma"]);
@@ -231,7 +231,7 @@ initAugmentations = function() {
     var BitWire = new Augmentation("BitWire");
     BitWire.setRequirements(4000, 3000000);
     BitWire.setInfo("A small brain implant embedded in the cerebrum. This regulates and improves the brain's computing " + 
-                    "capabilities. \n\n This augmentation increases the player's hacking skill by 5%");
+                    "capabilities. <br><br> This augmentation increases the player's hacking skill by 5%");
     BitWire.addToFactions(["CyberSec", "BitRunners", "NiteSec"]);
     AddToAugmentations(BitWire);
     
@@ -241,10 +241,10 @@ initAugmentations = function() {
                                        "The network is meant to mimick the way a biological brain solves a problem, which each " + 
                                        "nanoprocessor acting similar to the way a neuron would in a neural network. However, these " + 
                                        "nanoprocessors are programmed to perform computations much faster than organic neurons, " + 
-                                       "allowing its user to solve much more complex problems at a much faster rate.\n\n" + 
-                                       "This augmentation:\n" + 
-                                       "Increases the player's hacking speed by 2%\n" + 
-                                       "Increases the amount of money the player's gains from hacking by 10%\n" + 
+                                       "allowing its user to solve much more complex problems at a much faster rate.<br><br>" + 
+                                       "This augmentation:<br>" + 
+                                       "Increases the player's hacking speed by 2%<br>" + 
+                                       "Increases the amount of money the player's gains from hacking by 10%<br>" + 
                                        "Inreases the player's hacking skill by 10%");
     ArtificialBioNeuralNetwork.addToFactions(["BitRunners", "Fulcrum Secret Technologies"]);
     AddToAugmentations(ArtificialBioNeuralNetwork);
@@ -252,7 +252,7 @@ initAugmentations = function() {
     var ArtificialSynapticPotentiation = new Augmentation("Artificial Synaptic Potentiation");
     ArtificialSynapticPotentiation.setRequirements(20000, 80000000);
     ArtificialSynapticPotentiation.setInfo("The body is injected with a chemical that artificially induces synaptic potentiation, " + 
-                                           "otherwise known as the strengthening of synapses. This results in a enhanced cognitive abilities.\n\n" + 
+                                           "otherwise known as the strengthening of synapses. This results in a enhanced cognitive abilities.<br><br>" + 
                                            "This augmentation increases the player's hacking speed and hacking chance by 1%.");
     ArtificialSynapticPotentiation.addToFactions(["The Black Hand", "NiteSec"]);
     AddToAugmentations(ArtificialSynapticPotentiation);
@@ -262,10 +262,10 @@ initAugmentations = function() {
     EnhancedMyelinSheathing.setInfo("Electrical signals are used to induce a new, artificial form of myelinogensis in the human body. " + 
                                     "This process results in the proliferation of new, synthetic myelin sheaths in the nervous " + 
                                     "system. These myelin sheaths can propogate neuro-signals much faster than their organic " + 
-                                    "counterparts, leading to greater processing speeds and better brain function.\n\n" + 
-                                    "This augmentation:\n" + 
-                                    "Increases the player's hacking speed by 1%\n" + 
-                                    "Increases the player's hacking skill by 5%\n" + 
+                                    "counterparts, leading to greater processing speeds and better brain function.<br><br>" + 
+                                    "This augmentation:<br>" + 
+                                    "Increases the player's hacking speed by 1%<br>" + 
+                                    "Increases the player's hacking skill by 5%<br>" + 
                                     "Increases the player's hacking experience gain rate by 5%");
     EnhancedMyelinSheathing.addToFactions(["Fulcrum Secret Technologies", "BitRunners", "The Black Hand"]);
     AddToAugmentations(EnhancedMyelinSheathing);
@@ -273,7 +273,7 @@ initAugmentations = function() {
     var SynapticEnhancement = new Augmentation("Synaptic Enhancement Implant");
     SynapticEnhancement.setRequirements(4000, 2000000);
     SynapticEnhancement.setInfo("A small cranial implant that continuously uses weak electric signals to stimulate the brain and " +
-                                "induce stronger synaptic activity. This improves the the user's cognitive abilities.\n\n" + 
+                                "induce stronger synaptic activity. This improves the the user's cognitive abilities.<br><br>" + 
                                 "This augmentation increases the player's hacking speed by 1%.");
     SynapticEnhancement.addToFactions(["CyberSec"]);
     AddToAugmentations(SynapticEnhancement);
@@ -281,7 +281,7 @@ initAugmentations = function() {
     var NeuralRetentionEnhancement = new Augmentation("Neural-Retention Enhancement");
     NeuralRetentionEnhancement.setRequirements(80000, 100000000);
     NeuralRetentionEnhancement.setInfo("Chemical injections are used to permanently alter and strengthen the brain's neuronal " +
-                                       "circuits, strengthening its ability to retain information.\n\n" + 
+                                       "circuits, strengthening its ability to retain information.<br><br>" + 
                                        "This augmentation increases the player's hacking experience gain rate by 40%.");
     NeuralRetentionEnhancement.addToFactions(["CyberSec", "NiteSec"]);
     AddToAugmentations(NeuralRetentionEnhancement);
@@ -290,7 +290,7 @@ initAugmentations = function() {
     DataJack.setRequirements(200000, 75000000);
     DataJack.setInfo("A brain implant that provides an interface for direct, wireless communication between a computer's main " + 
                      "memory and the mind. This implant allows the user to not only access a computer's memory, but also alter " + 
-                     "and delete it.\n\n" + 
+                     "and delete it.<br><br>" + 
                      "This augmentation increases the amount of money the player gains from hacking by 20%");
     DataJack.addToFactions(["BitRunners", "The Black Hand", "NiteSec", "Chongqing", "New Tokyo"]);
     AddToAugmentations(DataJack);
@@ -301,7 +301,7 @@ initAugmentations = function() {
                 "to nearby networks. Once connected, the Netburner Module is capable of capturing and " + 
                 "processing all of the traffic on that network. By itself, the Embedded Netburner Module does " + 
                 "not do much, but a variety of very powerful upgrades can be installed that allow you to fully " +
-                "control the traffic on a network.\n\n" + 
+                "control the traffic on a network.<br><br>" + 
                 "This augmentation increases the player's hacking skill by 2%");
     ENM.addToFactions(["BitRunners", "The Black Hand", "NiteSec", "ECorp", "MegaCorp", 
                       "Fulcrum Secret Technologies", "NWO", "Blade Industries"]);
@@ -310,12 +310,12 @@ initAugmentations = function() {
     var ENMCore = new Augmentation("Embedded Netburner Module Core Implant");
     ENMCore.setRequirements(250000, 500000000);
     ENMCore.setInfo("The Core library is an implant that upgrades the firmware of the Embedded Netburner Module. " + 
-                    "This upgrade allows the Embedded Netburner Module to generate its own data on a network.\n\n" +
-                    "This augmentation:\n" + 
-                    "Increases the player's hacking speed by 2%\n" + 
-                    "Increases the amount of money the player gains from hacking by 10%\n" + 
-                    "Increases the player's chance of successfully performing a hack by 2%\n" + 
-                    "Increases the player's hacking experience gain rate by 10%\n" + 
+                    "This upgrade allows the Embedded Netburner Module to generate its own data on a network.<br><br>" +
+                    "This augmentation:<br>" + 
+                    "Increases the player's hacking speed by 2%<br>" + 
+                    "Increases the amount of money the player gains from hacking by 10%<br>" + 
+                    "Increases the player's chance of successfully performing a hack by 2%<br>" + 
+                    "Increases the player's hacking experience gain rate by 10%<br>" + 
                     "Increases the player's hacking skill by 1%");
     ENMCore.addToFactions(["BitRunners", "The Black Hand", "NiteSec", "ECorp", "MegaCorp", 
                           "Fulcrum Secret Technologies", "NWO", "Blade Industries"]);
@@ -326,12 +326,12 @@ initAugmentations = function() {
     ENMCoreV2.setInfo("The Core V2 library is an implant that upgrades the firmware of the Embedded Netburner Module. " + 
                       "This upgraded firmware allows the Embedded Netburner Module to control the information on " + 
                       "a network by re-routing traffic, spoofing IP addresses, or altering the data inside network " + 
-                      "packets.\n\n" + 
-                      "This augmentation: \n" + 
-                      "Increases the player's hacking speed by 5%\n" + 
-                      "Increases the amount of money the player gains from hacking by 50%\n" + 
-                      "Increases the player's chance of successfully performing a hack by 5%\n" + 
-                      "Increases the player's hacking experience gain rate by 50%\n" + 
+                      "packets.<br><br>" + 
+                      "This augmentation: <br>" + 
+                      "Increases the player's hacking speed by 5%<br>" + 
+                      "Increases the amount of money the player gains from hacking by 50%<br>" + 
+                      "Increases the player's chance of successfully performing a hack by 5%<br>" + 
+                      "Increases the player's hacking experience gain rate by 50%<br>" + 
                       "Increases the player's hacking skill by 5%");
     ENMCoreV2.addToFactions(["ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                             "Blade Industries", "OmniTek Incorporated", "KuaiGong International"]);
@@ -341,12 +341,12 @@ initAugmentations = function() {
     ENMCoreV3.setRequirements(750000, 1250000000);
     ENMCoreV3.setInfo("The Core V3 library is an implant that upgrades the firmware of the Embedded Netburner Module. " + 
                       "This upgraded firmware allows the Embedded Netburner Module to seamlessly inject code into " + 
-                      "any device on a network.\n\n" + 
-                      "This augmentation:\n" + 
-                      "Increases the player's hacking speed by 5%\n" + 
-                      "Increases the amount of money the player gains from hacking by 50%\n" + 
-                      "Increases the player's chance of successfully performing a hack by 10%\n" + 
-                      "Increases the player's hacking experience gain rate by 100%\n" + 
+                      "any device on a network.<br><br>" + 
+                      "This augmentation:<br>" + 
+                      "Increases the player's hacking speed by 5%<br>" + 
+                      "Increases the amount of money the player gains from hacking by 50%<br>" + 
+                      "Increases the player's chance of successfully performing a hack by 10%<br>" + 
+                      "Increases the player's hacking experience gain rate by 100%<br>" + 
                       "Increases the player's hacking skill by 10%");
     ENMCoreV3.addToFactions(["ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                             "Daedalus", "The Covenant", "Illuminati"]);
@@ -355,7 +355,7 @@ initAugmentations = function() {
     var ENMAnalyzeEngine = new Augmentation("Embedded Netburner Module Analyze Engine");
     ENMAnalyzeEngine.setRequirements(700000, 1000000000);
     ENMAnalyzeEngine.setInfo("Installs the Analyze Engine for the Embedded Netburner Module, which is a CPU cluster " + 
-                             "that vastly outperforms the Netburner Module's native single-core processor.\n\n" + 
+                             "that vastly outperforms the Netburner Module's native single-core processor.<br><br>" + 
                              "This augmentation increases the player's hacking speed by 10%.");
     ENMAnalyzeEngine.addToFactions(["ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                                    "Daedalus", "The Covenant", "Illuminati"]);
@@ -365,9 +365,9 @@ initAugmentations = function() {
     ENMDMA.setRequirements(750000, 1100000000);
     ENMDMA.setInfo("This implant installs a Direct Memory Access (DMA) controller into the " + 
                    "Embedded Netburner Module. This allows the Module to send and receive data " + 
-                   "directly to and from the main memory of devices on a network.\n\n" + 
-                   "This augmentation: \n" + 
-                   "Increases the amount of money the player gains from hacking by 50%\n"  +
+                   "directly to and from the main memory of devices on a network.<br><br>" + 
+                   "This augmentation: <br>" + 
+                   "Increases the amount of money the player gains from hacking by 50%<br>"  +
                    "Increases the player's chance of successfully performing a hack by 20%");            
     ENMDMA.addToFactions(["ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                          "Daedalus", "The Covenant", "Illuminati"]);
@@ -376,10 +376,10 @@ initAugmentations = function() {
     var Neuralstimulator = new Augmentation("Neuralstimulator");
     Neuralstimulator.setRequirements(120000, 600000000);
     Neuralstimulator.setInfo("A cranial implant that intelligently stimulates certain areas of the brain " + 
-                             "in order to improve cognitive functions\n\n" + 
-                             "This augmentation:\n" + 
-                             "Increases the player's hacking speed by 1%\n" + 
-                             "Increases the player's chance of successfully performing a hack by 10%\n" + 
+                             "in order to improve cognitive functions<br><br>" + 
+                             "This augmentation:<br>" + 
+                             "Increases the player's hacking speed by 1%<br>" + 
+                             "Increases the player's chance of successfully performing a hack by 10%<br>" + 
                              "Increases the player's hacking experience gain rate by 20%");
     Neuralstimulator.addToFactions(["The Black Hand", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
                                    "Ishima", "Volhaven", "Bachman & Associates", "Clarke Incorporated", 
@@ -391,7 +391,7 @@ initAugmentations = function() {
     NuoptimalInjectorImplant.setRequirements(12000, 30000000);
     NuoptimalInjectorImplant.setInfo("This torso implant automatically injects nootropic supplements into " + 
                                      "the bloodstream to improve memory, increase focus, and provide other " + 
-                                     "cognitive enhancements.\n\n" + 
+                                     "cognitive enhancements.<br><br>" + 
                                      "This augmentation increases the amount of reputation the player gains " + 
                                      "when working for a company by 10%.");
     NuoptimalInjectorImplant.addToFactions(["Tian Di Hui", "Volhaven", "New Tokyo", "Chongqing", "Ishima",
@@ -402,9 +402,9 @@ initAugmentations = function() {
     SpeechEnhancement.setRequirements(5000, 4000000);
     SpeechEnhancement.setInfo("An advanced neural implant that improves your speaking abilities, making " + 
                               "you more convincing and likable in conversations and overall improving your " +
-                              "social interactions.\n\n" + 
-                              "This augmentation:\n" +
-                              "Increases the player's charisma by 5%\n" +
+                              "social interactions.<br><br>" + 
+                              "This augmentation:<br>" +
+                              "Increases the player's charisma by 5%<br>" +
                               "Increases the amount of reputation the player gains when working for a company by 5%");
     SpeechEnhancement.addToFactions(["Tian Di Hui", "Speakers for the Dead", "Four Sigma", "KuaiGong International",
                                     "Clarke Incorporated", "Four Sigma", "Bachman & Associates"]);
@@ -413,10 +413,10 @@ initAugmentations = function() {
     var FocusWire = new Augmentation("FocusWire"); //Stops procrastination
     FocusWire.setRequirements(100000, 200000000);
     FocusWire.setInfo("A cranial implant that stops procrastination by blocking specific neural pathways " + 
-                      "in the brain.\n\n" + 
-                      "This augmentation: \n" + 
-                      "Increases all experience gains by 10%\n" +
-                      "Increases the amount of money the player gains from working by 5%\n" + 
+                      "in the brain.<br><br>" + 
+                      "This augmentation: <br>" + 
+                      "Increases all experience gains by 10%<br>" +
+                      "Increases the amount of money the player gains from working by 5%<br>" + 
                       "Increases the amount of reputation the player gains when working for a company by 5%");
     FocusWire.addToFactions(["Bachman & Associates", "Clarke Incorporated", "Four Sigma", "KuaiGong International"]);
     AddToAugmentations(FocusWire)
@@ -425,9 +425,9 @@ initAugmentations = function() {
     PCDNI.setRequirements(400000, 650000000);
     PCDNI.setInfo("Installs a Direct-Neural Interface jack into your arm that is compatible with most " + 
                   "computers. Connecting to a computer through this jack allows you to interface with " +
-                  "it using the brain's electrochemical signals.\n\n" + 
-                  "This augmentation:\n" +
-                  "Increases the amount of reputation the player gains when working for a company by 10%\n" + 
+                  "it using the brain's electrochemical signals.<br><br>" + 
+                  "This augmentation:<br>" +
+                  "Increases the amount of reputation the player gains when working for a company by 10%<br>" + 
                   "Increases the player's hacking skill by 10%");
     PCDNI.addToFactions(["Four Sigma", "OmniTek Incorporated", "ECorp", "Blade Industries"]);
     AddToAugmentations(PCDNI);
@@ -436,9 +436,9 @@ initAugmentations = function() {
     PCDNIOptimizer.setRequirements(500000, 875000000);
     PCDNIOptimizer.setInfo("This is a submodule upgrade to the PC Direct-Neural Interface augmentation. It " + 
                            "improves the performance of the interface and gives the user more control options " +
-                           "to the connected computer.\n\n" + 
-                           "This augmentation:\n" + 
-                           "Increases the amount of reputation the player gains when working for a company by 20%\n" + 
+                           "to the connected computer.<br><br>" + 
+                           "This augmentation:<br>" + 
+                           "Increases the amount of reputation the player gains when working for a company by 20%<br>" + 
                            "Increases the player's hacking skill by 20%");
     PCDNIOptimizer.addToFactions(["Fulcrum Secret Technologies", "ECorp", "Blade Industries"]);
     AddToAugmentations(PCDNIOptimizer);
@@ -448,10 +448,10 @@ initAugmentations = function() {
     PCDNINeuralNetwork.setInfo("This is an additional installation that upgrades the functionality of the " + 
                                "PC Direct-Neural Interface augmentation. When connected to a computer, " + 
                                "The NeuroNet Injector upgrade allows the user to use his/her own brain's " + 
-                               "processing power to aid the computer in computational tasks.\n\n" + 
-                               "This augmentation:\n" + 
-                               "Increases the amount of reputation the player gains when working for a company by 10%\n" + 
-                               "Increases the player's hacking skill by 10%\n" + 
+                               "processing power to aid the computer in computational tasks.<br><br>" + 
+                               "This augmentation:<br>" + 
+                               "Increases the amount of reputation the player gains when working for a company by 10%<br>" + 
+                               "Increases the player's hacking skill by 10%<br>" + 
                                "Increases the player's hacking speed by 2%");
     PCDNINeuralNetwork.addToFactions(["Fulcrum Secret Technologies"]);
     AddToAugmentations(PCDNINeuralNetwork);
@@ -462,9 +462,9 @@ initAugmentations = function() {
     HacknetNodeCPUUpload.setRequirements(15000, 12000000);
     HacknetNodeCPUUpload.setInfo("Uploads the architecture and design details of a Hacknet Node's CPU into " + 
                                  "the brain. This allows the user to engineer custom hardware and software  " +
-                                 "for the Hacknet Node that provides better performance.\n\n" + 
-                                 "This augmentation:\n" + 
-                                 "Increases the amount of money produced by Hacknet Nodes by 15%\n" + 
+                                 "for the Hacknet Node that provides better performance.<br><br>" + 
+                                 "This augmentation:<br>" + 
+                                 "Increases the amount of money produced by Hacknet Nodes by 15%<br>" + 
                                  "Decreases the cost of purchasing a Hacknet Node Core by 10%");
     HacknetNodeCPUUpload.addToFactions(["Netburners"]);
     AddToAugmentations(HacknetNodeCPUUpload);
@@ -473,9 +473,9 @@ initAugmentations = function() {
     HacknetNodeCacheUpload.setRequirements(6000, 6000000);
     HacknetNodeCacheUpload.setInfo("Uploads the architecture and design details of a Hacknet Node's main-memory cache " + 
                                    "into the brain. This allows the user to engineer custom cache hardware for the  " + 
-                                   "Hacknet Node that offers better performance.\n\n" + 
-                                   "This augmentation:\n " + 
-                                   "Increases the amount of money produced by Hacknet Nodes by 10%\n" + 
+                                   "Hacknet Node that offers better performance.<br><br>" + 
+                                   "This augmentation:<br> " + 
+                                   "Increases the amount of money produced by Hacknet Nodes by 10%<br>" + 
                                    "Decreases the cost of leveling up a Hacknet Node by 10%");
     HacknetNodeCacheUpload.addToFactions(["Netburners"]);
     AddToAugmentations(HacknetNodeCacheUpload);
@@ -484,9 +484,9 @@ initAugmentations = function() {
     HacknetNodeNICUpload.setRequirements(2000, 2000000);
     HacknetNodeNICUpload.setInfo("Uploads the architecture and design details of a Hacknet Node's Network Interface Card (NIC) " + 
                                  "into the brain. This allows the user to engineer a custom NIC for the Hacknet Node that " + 
-                                 "offers better performance.\n\n" + 
-                                 "This augmentation:\n" + 
-                                 "Increases the amount of money produced by Hacknet Nodes by 5%\n" + 
+                                 "offers better performance.<br><br>" + 
+                                 "This augmentation:<br>" + 
+                                 "Increases the amount of money produced by Hacknet Nodes by 5%<br>" + 
                                  "Decreases the cost of purchasing a Hacknet Node by 5%");
     HacknetNodeNICUpload.addToFactions(["Netburners"]);
     AddToAugmentations(HacknetNodeNICUpload);
@@ -495,7 +495,7 @@ initAugmentations = function() {
     HacknetNodeKernelDNI.setRequirements(25000, 30000000);
     HacknetNodeKernelDNI.setInfo("Installs a Direct-Neural Interface jack into the arm that is capable of connecting to a " + 
                                  "Hacknet Node. This lets the user access and manipulate the Node's kernel using the mind's " + 
-                                 "electrochemical signals.\n\n" + 
+                                 "electrochemical signals.<br><br>" + 
                                  "This augmentation increases the amount of money produced by Hacknet Nodes by 50%.");
     HacknetNodeKernelDNI.addToFactions(["Netburners"]);
     AddToAugmentations(HacknetNodeKernelDNI);
@@ -504,7 +504,7 @@ initAugmentations = function() {
     HacknetNodeCoreDNI.setRequirements(40000, 50000000);
     HacknetNodeCoreDNI.setInfo("Installs a Direct-Neural Interface jack into the arm that is capable of connecting " +
                                "to a Hacknet Node. This lets the user access and manipulate the Node's processing logic using " + 
-                               "the mind's electrochemical signals.\n\n" + 
+                               "the mind's electrochemical signals.<br><br>" + 
                                "This augmentation increases the amount of money produced by Hacknet Nodes by 75%.");
     HacknetNodeCoreDNI.addToFactions(["Netburners"]);
     AddToAugmentations(HacknetNodeCoreDNI);
@@ -515,7 +515,7 @@ initAugmentations = function() {
     Neurotrainer1.setInfo("A decentralized cranial implant that improves the brain's ability to learn. It is " + 
                           "installed by releasing millions of nanobots into the human brain, each of which " + 
                           "attaches to a different neural pathway to enhance the brain's ability to retain " + 
-                          "and retrieve information.\n\n" + 
+                          "and retrieve information.<br><br>" + 
                           "This augmentation increases the player's experience gain rate for all stats by 5%");
     Neurotrainer1.addToFactions(["CyberSec"]);
     AddToAugmentations(Neurotrainer1);
@@ -524,7 +524,7 @@ initAugmentations = function() {
     Neurotrainer2.setRequirements(16000, 20000000);
     Neurotrainer2.setInfo("A decentralized cranial implant that improves the brain's ability to learn. This " + 
                           "is a more powerful version of the Neurotrainer I augmentation, but it does not " + 
-                          "require Neurotrainer I to be installed as a prerequisite.\n\n" + 
+                          "require Neurotrainer I to be installed as a prerequisite.<br><br>" + 
                           "This augmentation increases the player's experience gain rate for all stats by 10%");
     Neurotrainer2.addToFactions(["BitRunners", "NiteSec"]);
     AddToAugmentations(Neurotrainer2);
@@ -533,7 +533,7 @@ initAugmentations = function() {
     Neurotrainer3.setRequirements(40000, 100000000);
     Neurotrainer3.setInfo("A decentralized cranial implant that improves the brain's ability to learn. This " +
                           "is a more powerful version of the Neurotrainer I and Neurotrainer II augmentation, " + 
-                          "but it does not require either of them to be installed as a prerequisite.\n\n" + 
+                          "but it does not require either of them to be installed as a prerequisite.<br><br>" + 
                           "This augmentation increases the player's experience gain rate for all stats by 20%");
     Neurotrainer3.addToFactions(["NWO", "Four Sigma"]);
     AddToAugmentations(Neurotrainer3);
@@ -541,10 +541,10 @@ initAugmentations = function() {
     var Hypersight = new Augmentation("HyperSight Corneal Implant");
     Hypersight.setInfo("A bionic eye implant that grants sight capabilities far beyond those of a natural human. " +
                        "Embedded circuitry within the implant provides the ability to detect heat and movement " +
-                       "through solid objects such as wells, thus providing 'x-ray vision'-like capabilities.\n\n" + 
-                       "This augmentation: \n" + 
-                       "Increases the player's dexterity by 50%\n" + 
-                       "Increases the player's hacking speed by 1%" + 
+                       "through solid objects such as wells, thus providing 'x-ray vision'-like capabilities.<br><br>" + 
+                       "This augmentation: <br>" + 
+                       "Increases the player's dexterity by 50%<br>" + 
+                       "Increases the player's hacking speed by 1%<br>" + 
                        "Increases the amount of money the player gains from hacking by 10%");
     Hypersight.setRequirements(120000, 650000000);
     Hypersight.addToFactions(["Blade Industries", "KuaiGong International"]);

@@ -31,7 +31,7 @@ function displayCreateProgramContent() {
     if (Player.getHomeComputer().programs.indexOf(Programs.NukeProgram) == -1) {    
         portHackALink.style.display = "block";
         portHackALink.addEventListener("click", function() {
-            createProgram(Programs.PortHackProgram);
+            createProgram(Programs.PortHackProgram, CONSTANTS.MillisecondsPerQuarterHour);
         });
     }
     

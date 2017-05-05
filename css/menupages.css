@@ -295,15 +295,17 @@
     color: #66ff33;
 }
 
-#augmentations-list > li {
-    margin: 6px;
+#augmentations-list li {
     width: 80%;
+    background-color: #333;
 }
 
-#augmentations-list > li h2{
+#augmentations-list h2,
+#augmentations-list p {
+    margin: 4px;
     color: #66ff33;
-	padding-top: 10px;
-	padding-left: 10px;
+	padding: 8px;
+    width: 80%;
     background-color: #333;
     text-decoration: none;
 }

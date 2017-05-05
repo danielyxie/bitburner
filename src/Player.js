@@ -245,7 +245,7 @@ PlayerObject.prototype.calculatePercentMoneyHacked = function() {
 //
 // Note: Keep it at an integer for now,
 PlayerObject.prototype.calculateExpGain = function() {
-    return Math.round(this.getCurrentServer().hackDifficulty * this.hacking_exp_mult);
+    return (this.getCurrentServer().hackDifficulty * this.hacking_exp_mult);
 }
 
 //Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for

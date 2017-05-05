@@ -1501,9 +1501,10 @@ purchaseTorRouter = function() {
     var darkweb = new Server();
     darkweb.init(createRandomIp(), "darkweb", "", true, false, false, false, 1);
     AddToAllServers(darkweb);
+    SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
     
     Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
-    dialogBoxCreate("You have purchased a Tor router!", "You now have access to the dark web from your home computer", "Use the scan/netstat commands to search for the dark web connect.", "");
+    dialogBoxCreate("You have purchased a Tor router!", "You now have access to the dark web from your home computer", "Use the scan/netstat commands to search for the dark web connection.");
 }
 
 displayUniversityLocationContent = function(costMult) {
