@@ -9,8 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="css/workinprogress.css" />
     <link rel="stylesheet" type="text/css" href="css/popupboxes.css" />
    
-    <!-- We'll add in the jQuery library here - direct from
-    the Google CDN (Content Delivery Network). -->
+    <!--jQuery library-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	
 	<!-- Utils -->
@@ -53,6 +52,7 @@
     <script src="src/Crimes.js"></script>
     <script src="src/Prestige.js"></script>
     <script src="src/SaveObject.js"></script>
+    <script src="src/DarkWeb.js"></script>
 	
     <script src="src/engine.js"></script>
 	
@@ -88,8 +88,9 @@
 			
 			<li class="create-program-tab">
                 <a href="#" id="create-program-menu-link"> Create Program </a>
+                <span id="create-program-notification" class="notification-off"> </span>
             </li>
-			
+                
 			<li class="factions-tab">
                 <a href="#" id="factions-menu-link"> Factions </a>
             </li>
@@ -145,6 +146,8 @@
 	
 	<!-- Active scripts info page -->
 	<div id="active-scripts-container">
+        <p id="active-scripts-text"> This page displays a list of all scripts that are currently running across every machine. It also gives
+            information about their production </p>
 		<ul class="active-scripts-list" id="active-scripts-list" style="list-style: none;">
 		</ul>
 	</div>

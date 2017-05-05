@@ -557,6 +557,7 @@ var Engine = {
         autoSaveCounter:    300,            //Autosave every minute
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
         updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
+        createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
         serverGrowth: 450,                  //Process server growth every minute and a half
         checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
         passiveFactionGrowth: 600,
@@ -593,6 +594,19 @@ var Engine = {
             }
             
             Engine.Counters.updateDisplays = 3;
+        }
+        
+        if (Engine.Counters.createProgramNotifications <= 0) {
+            var num = getNumAvailableCreateProgram();
+            var elem = document.getElementById("create-program-notification");
+            if (num > 0) {
+                elem.innerHTML = num;
+                elem.setAttribute("class", "notification-on");
+            } else {
+                elem.innerHTML = "";
+                elem.setAttribute("class", "notification-off");
+            }
+            Engine.Counters.createProgramNotifications = 10;
         }
         
         if (Engine.Counters.serverGrowth <= 0) {
@@ -718,6 +732,7 @@ var Engine = {
         //Active scripts list
         Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
         
+        //Save and Delete buttons
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
             saveObject.saveGame();
@@ -817,6 +832,33 @@ var Engine = {
         
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");
+        
+        //Create Program buttons
+        var portHackALink   = document.getElementById("create-program-porthack");
+        var bruteSshALink   = document.getElementById("create-program-brutessh");
+        var ftpCrackALink   = document.getElementById("create-program-ftpcrack");
+        var relaySmtpALink  = document.getElementById("create-program-relaysmtp");
+        var httpWormALink   = document.getElementById("create-program-httpworm");
+        var sqlInjectALink  = document.getElementById("create-program-sqlinject");
+        portHackALink.addEventListener("click", function() {
+            createProgram(Programs.PortHackProgram, CONSTANTS.MillisecondsPerQuarterHour);
+        });
+        bruteSshALink.addEventListener("click", function() {
+            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerQuarterHour);
+        });
+        ftpCrackALink.addEventListener("click", function() {
+            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHalfHour);
+        });
+        relaySmtpALink.addEventListener("click", function() {
+            Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer2Hours);
+        });
+        httpWormALink.addEventListener("click", function() {
+            Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer4Hours);
+        });
+        sqlInjectALink.addEventListener("click", function() {
+            Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer8Hours);
+        });
+        
         
         //Location lists
         Engine.aevumLocationsList = document.getElementById("aevum-locations-list");

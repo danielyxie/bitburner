@@ -104,6 +104,12 @@
     overflow-y: scroll;
 }
 
+#active-scripts-text {
+    width: 80%;
+    margin: 6px;
+    padding: 4px;
+}
+
 .active-scripts-list > li {
     margin: 6px;
     width: 80%;

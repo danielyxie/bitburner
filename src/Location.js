@@ -1496,7 +1496,7 @@ purchaseTorRouter = function() {
         dialogBoxCreate("You cannot afford to purchase the Tor router");
         return;
     }
-    Player.money -= CONSTANTS.TorRouterCost;
+    Player.loseMoney(CONSTANTS.TorRouterCost);
     
     var darkweb = new Server();
     darkweb.init(createRandomIp(), "darkweb", "", true, false, false, false, 1);

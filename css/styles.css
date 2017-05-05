@@ -115,3 +115,29 @@ tr:focus {
     cursor: default;
 }
 
+
+/* Notification icon (for create program right now only) */
+.create-program-tab {
+    position:relative;
+}
+#create-program-notification {
+    font-size: 10px;
+  
+    position: absolute; /* Position the badge within the relatively positioned button */
+    top: 0;
+    right: 0;
+}
+
+.notification-on {
+    background-color: #fa3e3e;
+    color: white;
+    border-radius: 2px;
+    padding: 1px 3px;
+}
+
+.notification-off {
+    background-color: #333;
+    color: #333;
+    border-radius: 0px;
+    padding: 0px;
+}
