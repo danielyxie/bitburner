@@ -1003,22 +1003,22 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
         
             dialogBoxCreate("Crime successful! <br><br>" + 
                             "You gained:<br>"+ 
-                            "$" + this.workMoneyGained + "<br>" + 
-                            this.workHackExpGained + " hacking experience <br>" + 
-                            this.workStrExpGained + " strength experience<br>" + 
-                            this.workDefExpGained + " defense experience<br>" + 
-                            this.workDexExpGained + " dexterity experience<br>" + 
-                            this.workAgiExpGained + " agility experience<br>" + 
-                            this.workChaExpGained + " charisma experience");
+                            "$" + formatNumber(this.workMoneyGained, 2) + "<br>" + 
+                            formatNumber(this.workHackExpGained, 4) + " hacking experience <br>" + 
+                            formatNumber(this.workStrExpGained, 4) + " strength experience<br>" + 
+                            formatNumber(this.workDefExpGained, 4) + " defense experience<br>" + 
+                            formatNumber(this.workDexExpGained, 4) + " dexterity experience<br>" + 
+                            formatNumber(this.workAgiExpGained, 4) + " agility experience<br>" + 
+                            formatNumber(this.workChaExpGained, 4) + " charisma experience");
         } else {
             dialogBoxCreate("Crime failed! <br><br>" + 
                     "You gained:<br>"+ 
-                    this.workHackExpGained + " hacking experience <br>" + 
-                    this.workStrExpGained + " strength experience<br>" + 
-                    this.workDefExpGained + " defense experience<br>" + 
-                    this.workDexExpGained + " dexterity experience<br>" + 
-                    this.workAgiExpGained + " agility experience<br>" + 
-                    this.workChaExpGained + " charisma experience");
+                    formatNumber(this.workHackExpGained, 4) + " hacking experience <br>" + 
+                    formatNumber(this.workStrExpGained, 4) + " strength experience<br>" + 
+                    formatNumber(this.workDefExpGained, 4) + " defense experience<br>" + 
+                    formatNumber(this.workDexExpGained, 4) + " dexterity experience<br>" + 
+                    formatNumber(this.workAgiExpGained, 4) + " agility experience<br>" + 
+                    formatNumber(this.workChaExpGained, 4) + " charisma experience");
         }
     }
     

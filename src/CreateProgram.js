@@ -49,7 +49,7 @@ function displayCreateProgramContent() {
         Player.hacking_skill >= 100) {
         ftpCrackALink.style.display = "block";
         ftpCrackALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsHalfHour);
+            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHalfHour);
         });
     }
     

@@ -20,7 +20,7 @@ BitburnerSaveObject.prototype.saveGame = function() {
     this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
     this.AugmentationsSave          = JSON.stringify(Augmentations);
     
-    var saveString = JSON.stringify(this);
+    var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
     window.localStorage.setItem("bitburnerSave", saveString);
 }
 
@@ -29,7 +29,7 @@ loadGame = function(saveObj) {
         console.log("No save file to load");
         return false;
     }
-    var saveString = window.localStorage.getItem("bitburnerSave");
+    var saveString = decodeURIComponent(escape(atob(window.localStorage.getItem("bitburnerSave"))));
     saveObj = JSON.parse(saveString, Reviver);
     
     Player          = JSON.parse(saveObj.PlayerSave, Reviver);
