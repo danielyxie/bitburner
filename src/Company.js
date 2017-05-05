@@ -17,7 +17,7 @@ function Company() {
     //Player-related properties for company
     this.isPlayerEmployed   = false;
     this.playerPosition     = "";    //Name (only name, not object) of the current position player holds
-    this.playerReputation   = 0;  //"Reputation" within company, gain reputation by working for company
+    this.playerReputation   = 1;  //"Reputation" within company, gain reputation by working for company
 };
 
 Company.prototype.init = function(name, salaryMult, expMult, jobStatReqOffset) {
@@ -43,7 +43,7 @@ Company.prototype.addPositions = function(positions) {
 
 Company.prototype.hasPosition = function(pos) {
     for (var i = 0; i < this.companyPositions.length; ++i) {
-        if (pos.name == this.companyPositions[i]) {
+        if (pos.positionName == this.companyPositions[i]) {
             return true;
         }
     }
@@ -203,46 +203,46 @@ CompanyPositions = {
     //Constructor: CompanyPosition(name, reqHack, reqStr, reqDef, reqDex, reqAgi, reqCha, reqRep, salary)
 
     //Software
-    SoftwareIntern:             new CompanyPosition("Software Engineering Intern", 1, 1, 1, 1, 1, 1, 0, 1),
-    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 50, 1, 1, 1, 1, 1, 9000, 5),
-    SeniorDev:                  new CompanyPosition("Senior Software Engineer", 250, 1, 1, 1, 1, 50, 36000, 12),
-    LeadDev:                    new CompanyPosition("Lead Software Developer", 400, 1, 1, 1, 1, 100, 72000, 15),
+    SoftwareIntern:             new CompanyPosition("Software Engineering Intern", 1, 0, 0, 0, 0, 0, 0, 1.2),
+    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 51, 0, 0, 0, 0, 0, 9000, 6),
+    SeniorDev:                  new CompanyPosition("Senior Software Engineer", 251, 0, 0, 0, 0, 51, 36000, 15),
+    LeadDev:                    new CompanyPosition("Lead Software Developer", 401, 0, 0, 0, 0, 151, 144000, 20),
     
     //IT
-    ITIntern:                   new CompanyPosition("IT Intern", 1, 1, 1, 1, 1, 1, 0, .8),
-    ITAnalyst:                  new CompanyPosition("IT Analyst", 25, 1, 1, 1, 1, 1, 9000, 2),
-    ITManager:                  new CompanyPosition("IT Manager", 150, 1, 1, 1, 1, 50, 36000, 8),
-    SysAdmin:                   new CompanyPosition("Systems Administrator", 250, 1, 1, 1, 1, 75, 72000, 13),
-    SecurityEngineer:           new CompanyPosition("Security Engineer", 150, 1, 1, 1, 1, 25, 36000, 10),
-    NetworkEngineer:            new CompanyPosition("Network Engineer", 150, 1, 1, 1, 1, 25, 36000, 10),
-    NetworkAdministrator:       new CompanyPosition("Network Administrator", 250, 1, 1, 1, 1, 75, 72000, 12),
+    ITIntern:                   new CompanyPosition("IT Intern", 1, 0, 0, 0, 0, 0, 0, 1),
+    ITAnalyst:                  new CompanyPosition("IT Analyst", 26, 0, 0, 0, 0, 0, 9000, 4),
+    ITManager:                  new CompanyPosition("IT Manager", 151, 0, 0, 0, 0, 51, 36000, 14),
+    SysAdmin:                   new CompanyPosition("Systems Administrator", 251, 0, 0, 0, 0, 76, 144000, 14),
+    SecurityEngineer:           new CompanyPosition("Security Engineer", 151, 0, 0, 0, 0, 26, 36000, 12),
+    NetworkEngineer:            new CompanyPosition("Network Engineer", 151, 0, 0, 0, 0, 26, 36000, 12),
+    NetworkAdministrator:       new CompanyPosition("Network Administrator", 251, 0, 0, 0, 0, 76, 144000, 15),
     
     //Technology management
-    HeadOfSoftware:             new CompanyPosition("Head of Software", 500, 1, 1, 1, 1, 250, 108000, 30),
-    HeadOfEngineering:          new CompanyPosition("Head of Engineering", 500, 1, 1, 1, 1, 250, 10800, 30),
-    VicePresident:              new CompanyPosition("Vice President of Technology", 600, 1, 1, 1, 1, 400, 144000, 40),
-    CTO:                        new CompanyPosition("Chief Technology Officer", 750, 1, 1, 1, 1, 500, 216000, 50),
+    HeadOfSoftware:             new CompanyPosition("Head of Software", 501, 0, 0, 0, 0, 251, 288000, 35),
+    HeadOfEngineering:          new CompanyPosition("Head of Engineering", 501, 0, 0, 0, 0, 251, 576000, 40),
+    VicePresident:              new CompanyPosition("Vice President of Technology", 601, 0, 0, 0, 0, 401, 1152000, 45),
+    CTO:                        new CompanyPosition("Chief Technology Officer", 751, 0, 0, 0, 0, 501, 4608000, 50),
     
     //Business
-    BusinessIntern:             new CompanyPosition("Business Intern", 1, 1, 1, 1, 1, 1, 0, 1),
-    BusinessAnalyst:            new CompanyPosition("Business Analyst", 5, 1, 1, 1, 1, 50, 9000, 8),
-    BusinessManager:            new CompanyPosition("Business Manager", 50, 1, 1, 1, 1, 100, 36000, 15),
-    OperationsManager:          new CompanyPosition("Operations Manager", 50, 1, 1, 1, 1, 200, 72000, 20),
-    CFO:                        new CompanyPosition("Chief Financial Officer", 75, 1, 1, 1, 1, 500, 108000, 50),
-    CEO:                        new CompanyPosition("Chief Executive Officer", 100, 1, 1, 1, 1, 750, 216000, 100),
+    BusinessIntern:             new CompanyPosition("Business Intern", 1, 0, 0, 0, 0, 1, 0, 1.2),
+    BusinessAnalyst:            new CompanyPosition("Business Analyst", 6, 0, 0, 0, 0, 51, 9000, 10),
+    BusinessManager:            new CompanyPosition("Business Manager", 51, 0, 0, 0, 0, 101, 36000, 18),
+    OperationsManager:          new CompanyPosition("Operations Manager", 51, 0, 0, 0, 0, 201, 144000, 22),
+    CFO:                        new CompanyPosition("Chief Financial Officer", 76, 0, 0, 0, 0, 501, 576000, 50),
+    CEO:                        new CompanyPosition("Chief Executive Officer", 101, 0, 0, 0, 0, 751, 4608000, 100),
     
     //Non-tech/management jobs
-    Waiter:                     new CompanyPosition("Waiter", 1, 1, 1, 1, 1, 1, 0, .5),
-    Employee:                   new CompanyPosition("Employee", 1, 1, 1, 1, 1, 1, 0, .5),
-    PoliceOfficer:              new CompanyPosition("Police Officer", 10, 100, 100, 100, 100, 9000, 4),
-    PoliceChief:                new CompanyPosition("Police Chief", 100, 300, 300, 300, 300, 18000, 10),
-    SecurityGuard:              new CompanyPosition("Security Guard", 1, 50, 50, 50, 50, 0, 3),
-    SecurityOfficer:            new CompanyPosition("Security Officer", 25, 150, 150, 150, 150, 9000, 6),
-    SecuritySupervisor:         new CompanyPosition("Security Supervisor", 25, 250, 250, 250, 250, 36000, 12),
-    HeadOfSecurity:             new CompanyPosition("Head of Security", 50, 500, 500, 500, 500, 72000, 20),
-    FieldAgent:                 new CompanyPosition("Field Agent", 100, 100, 100, 100, 100, 9000, 4),
-    SecretAgent:                new CompanyPosition("Secret Agent", 200, 250, 250, 250, 250, 36000, 10),
-    SpecialOperative:           new CompanyPosition("Special Operative", 250, 500, 500, 500, 500, 108000, 20),
+    Waiter:                     new CompanyPosition("Waiter", 0, 0, 0, 0, 0, 0, 0, .75),
+    Employee:                   new CompanyPosition("Employee", 0, 0, 0, 0, 0, 0, 0, .75),
+    PoliceOfficer:              new CompanyPosition("Police Officer", 11, 101, 101, 101, 101, 51, 9000, 5),
+    PoliceChief:                new CompanyPosition("Police Chief", 101, 301, 301, 301, 301, 151, 36000, 12),
+    SecurityGuard:              new CompanyPosition("Security Guard", 0, 51, 51, 51, 51, 1, 0, 4),
+    SecurityOfficer:            new CompanyPosition("Security Officer", 26, 151, 151, 151, 151, 51, 9000, 8),
+    SecuritySupervisor:         new CompanyPosition("Security Supervisor", 26, 251, 251, 251, 251, 101, 36000, 15),
+    HeadOfSecurity:             new CompanyPosition("Head of Security", 51, 501, 501, 501, 501, 151, 144000, 22),
+    FieldAgent:                 new CompanyPosition("Field Agent", 101, 101, 101, 101, 101, 101, 9000, 6),
+    SecretAgent:                new CompanyPosition("Secret Agent", 201, 251, 251, 251, 251, 36000, 15),
+    SpecialOperative:           new CompanyPosition("Special Operative", 251, 501, 501, 501, 501, 144000, 25),
     
     init: function() {
         //Argument order: hack, str, def, dex, agi, cha
@@ -426,7 +426,7 @@ initCompanies = function() {
     /* Companies that also have servers */
     //Megacorporations
     var ECorp = new Company();
-    ECorp.init(Locations.AevumECorp, 3.0, 3.0, 250);
+    ECorp.init(Locations.AevumECorp, 3.0, 3.0, 249);
     ECorp.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -440,7 +440,7 @@ initCompanies = function() {
     AddToCompanies(ECorp);
     
     var MegaCorp = new Company();
-    MegaCorp.init(Locations.Sector12MegaCorp, 3.0, 3.0, 250);
+    MegaCorp.init(Locations.Sector12MegaCorp, 3.0, 3.0, 249);
     MegaCorp.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -454,7 +454,7 @@ initCompanies = function() {
     AddToCompanies(MegaCorp);
     
     var BachmanAndAssociates = new Company();
-    BachmanAndAssociates.init(Locations.AevumBachmanAndAssociates, 2.6, 2.6, 225);
+    BachmanAndAssociates.init(Locations.AevumBachmanAndAssociates, 2.6, 2.6, 224);
     BachmanAndAssociates.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -468,7 +468,7 @@ initCompanies = function() {
     AddToCompanies(BachmanAndAssociates);
     
     var BladeIndustries = new Company();
-    BladeIndustries.init(Locations.Sector12BladeIndustries, 2.75, 2.75, 225);        
+    BladeIndustries.init(Locations.Sector12BladeIndustries, 2.75, 2.75, 224);        
     BladeIndustries.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -482,7 +482,7 @@ initCompanies = function() {
     AddToCompanies(BladeIndustries);
     
     var NWO = new Company();
-    NWO.init(Locations.VolhavenNWO, 2.75, 2.75, 250);
+    NWO.init(Locations.VolhavenNWO, 2.75, 2.75, 249);
     NWO.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -496,7 +496,7 @@ initCompanies = function() {
     AddToCompanies(NWO);
     
     var ClarkeIncorporated = new Company();
-    ClarkeIncorporated.init(Locations.AevumClarkeIncorporated, 2.25, 2.25, 225);
+    ClarkeIncorporated.init(Locations.AevumClarkeIncorporated, 2.25, 2.25, 224);
     ClarkeIncorporated.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -510,7 +510,7 @@ initCompanies = function() {
     AddToCompanies(ClarkeIncorporated);
     
     var OmniTekIncorporated = new Company();
-    OmniTekIncorporated.init(Locations.VolhavenOmniTekIncorporated, 2.25, 2.25, 225);
+    OmniTekIncorporated.init(Locations.VolhavenOmniTekIncorporated, 2.25, 2.25, 224);
     OmniTekIncorporated.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -524,7 +524,7 @@ initCompanies = function() {
     AddToCompanies(OmniTekIncorporated);
     
     var FourSigma = new Company();
-    FourSigma.init(Locations.Sector12FourSigma, 2.5, 2.5, 225);
+    FourSigma.init(Locations.Sector12FourSigma, 2.5, 2.5, 224);
     FourSigma.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -538,7 +538,7 @@ initCompanies = function() {
     AddToCompanies(FourSigma);
     
     var KuaiGongInternational = new Company();
-    KuaiGongInternational.init(Locations.ChongqingKuaiGongInternational, 2.2, 2.2, 225);
+    KuaiGongInternational.init(Locations.ChongqingKuaiGongInternational, 2.2, 2.2, 224);
     KuaiGongInternational.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -553,7 +553,7 @@ initCompanies = function() {
     
     //Technology and communication companies ("Large" servers)
     var FulcrumTechnologies = new Company();
-    FulcrumTechnologies.init(Locations.AevumFulcrumTechnologies, 2.0, 2.0, 225);
+    FulcrumTechnologies.init(Locations.AevumFulcrumTechnologies, 2.0, 2.0, 224);
     FulcrumTechnologies.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -566,7 +566,7 @@ initCompanies = function() {
     AddToCompanies(FulcrumTechnologies);
     
     var StormTechnologies = new Company();
-    StormTechnologies.init(Locations.IshimaStormTechnologies, 1.8, 1.8, 200);
+    StormTechnologies.init(Locations.IshimaStormTechnologies, 1.8, 1.8, 199);
     StormTechnologies.addPositions([
         CompanyPositions.SoftwareIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -579,7 +579,7 @@ initCompanies = function() {
     AddToCompanies(StormTechnologies);
     
     var DefComm = new Company();
-    DefComm.init(Locations.NewTokyoDefComm, 1.75, 1.75, 200);
+    DefComm.init(Locations.NewTokyoDefComm, 1.75, 1.75, 199);
     DefComm.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -589,7 +589,7 @@ initCompanies = function() {
     AddToCompanies(DefComm);
     
     var HeliosLabs =  new Company();
-    HeliosLabs.init(Locations.VolhavenHeliosLabs, 1.8, 1.8, 200);
+    HeliosLabs.init(Locations.VolhavenHeliosLabs, 1.8, 1.8, 199);
     HeliosLabs.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -599,7 +599,7 @@ initCompanies = function() {
     AddToCompanies(HeliosLabs); 
     
     var VitaLife = new Company();
-    VitaLife.init(Locations.NewTokyoVitaLife, 1.8, 1.8, 200);
+    VitaLife.init(Locations.NewTokyoVitaLife, 1.8, 1.8, 199);
     VitaLife.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -610,7 +610,7 @@ initCompanies = function() {
     AddToCompanies(VitaLife);
     
     var IcarusMicrosystems = new Company();
-    IcarusMicrosystems.init(Locations.Sector12IcarusMicrosystems, 1.9, 1.9, 200);
+    IcarusMicrosystems.init(Locations.Sector12IcarusMicrosystems, 1.9, 1.9, 199);
     IcarusMicrosystems.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -621,7 +621,7 @@ initCompanies = function() {
     AddToCompanies(IcarusMicrosystems);
     
     var UniversalEnergy = new Company();
-    UniversalEnergy.init(Locations.Sector12UniversalEnergy, 2.0, 2.0, 200);
+    UniversalEnergy.init(Locations.Sector12UniversalEnergy, 2.0, 2.0, 199);
     UniversalEnergy.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -632,7 +632,7 @@ initCompanies = function() {
     AddToCompanies(UniversalEnergy); 
     
     var GalacticCybersystems = new Company();
-    GalacticCybersystems.init(Locations.AevumGalacticCybersystems, 1.9, 1.9, 200);
+    GalacticCybersystems.init(Locations.AevumGalacticCybersystems, 1.9, 1.9, 199);
     GalacticCybersystems.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -644,7 +644,7 @@ initCompanies = function() {
     
     //Defense Companies ("Large" Companies)
     var AeroCorp = new Company();
-    AeroCorp.init(Locations.AevumAeroCorp, 1.7, 1.7, 200);
+    AeroCorp.init(Locations.AevumAeroCorp, 1.7, 1.7, 199);
     AeroCorp.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -657,7 +657,7 @@ initCompanies = function() {
     AddToCompanies(AeroCorp);
     
     var OmniaCybersystems = new Company();
-    OmniaCybersystems.init(Locations.VolhavenOmniaCybersystems, 1.7, 1.7, 200);
+    OmniaCybersystems.init(Locations.VolhavenOmniaCybersystems, 1.7, 1.7, 199);
     OmniaCybersystems.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -670,7 +670,7 @@ initCompanies = function() {
     AddToCompanies(OmniaCybersystems);
     
     var SolarisSpaceSystems = new Company();
-    SolarisSpaceSystems.init(Locations.ChongqingSolarisSpaceSystems, 1.7, 1.7, 200);
+    SolarisSpaceSystems.init(Locations.ChongqingSolarisSpaceSystems, 1.7, 1.7, 199);
     SolarisSpaceSystems.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -683,7 +683,7 @@ initCompanies = function() {
     AddToCompanies(SolarisSpaceSystems);
     
     var DeltaOne = new Company();
-    DeltaOne.init(Locations.Sector12DeltaOne, 1.6, 1.6, 200);
+    DeltaOne.init(Locations.Sector12DeltaOne, 1.6, 1.6, 199);
     DeltaOne.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -697,7 +697,7 @@ initCompanies = function() {
     
     //Health, medicine, pharmaceutical companies ("Large" servers)
     var GlobalPharmaceuticals = new Company();
-    GlobalPharmaceuticals.init(Locations.NewTokyoGlobalPharmaceuticals, 1.8, 1.8, 225);
+    GlobalPharmaceuticals.init(Locations.NewTokyoGlobalPharmaceuticals, 1.8, 1.8, 224);
     GlobalPharmaceuticals.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -710,7 +710,7 @@ initCompanies = function() {
     AddToCompanies(GlobalPharmaceuticals);
     
     var NovaMedical = new Company();
-    NovaMedical.init(Locations.IshimaNovaMedical, 1.75, 1.75, 200);
+    NovaMedical.init(Locations.IshimaNovaMedical, 1.75, 1.75, 199);
     NovaMedical.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
@@ -724,7 +724,7 @@ initCompanies = function() {
 
     //Other large companies
     var CIA = new Company(); 
-    CIA.init(Locations.Sector12CIA, 2.0, 2.0, 150);
+    CIA.init(Locations.Sector12CIA, 2.0, 2.0, 149);
     CIA.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
@@ -736,7 +736,7 @@ initCompanies = function() {
     AddToCompanies(CIA);
     
     var NSA = new Company();
-    NSA.init(Locations.Sector12NSA, 2.0, 2.0, 150);
+    NSA.init(Locations.Sector12NSA, 2.0, 2.0, 149);
     NSA.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
@@ -748,7 +748,7 @@ initCompanies = function() {
     AddToCompanies(NSA);
     
     var WatchdogSecurity = new Company();
-    WatchdogSecurity.init(Locations.AevumWatchdogSecurity, 1.5, 1.5, 125);
+    WatchdogSecurity.init(Locations.AevumWatchdogSecurity, 1.5, 1.5, 124);
     WatchdogSecurity.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
@@ -761,7 +761,7 @@ initCompanies = function() {
     
     //"Medium level" companies
     var LexoCorp = new Company();
-    LexoCorp.init(Locations.VolhavenLexoCorp, 1.4, 1.4, 100);
+    LexoCorp.init(Locations.VolhavenLexoCorp, 1.4, 1.4, 99);
     LexoCorp.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
@@ -773,7 +773,7 @@ initCompanies = function() {
     AddToCompanies(LexoCorp);
     
     var RhoConstruction = new Company();
-    RhoConstruction.init(Locations.AevumRhoConstruction, 1.3, 1.3, 50);
+    RhoConstruction.init(Locations.AevumRhoConstruction, 1.3, 1.3, 49);
     RhoConstruction.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.BusinessIntern, CompanyPositions.BusinessAnalyst,
@@ -781,7 +781,7 @@ initCompanies = function() {
     AddToCompanies(RhoConstruction);
     
     var AlphaEnterprises = new Company();
-    AlphaEnterprises.init(Locations.Sector12AlphaEnterprises, 1.5, 1.5, 100);
+    AlphaEnterprises.init(Locations.Sector12AlphaEnterprises, 1.5, 1.5, 99);
     AlphaEnterprises.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.BusinessIntern, CompanyPositions.BusinessAnalyst,
@@ -789,14 +789,14 @@ initCompanies = function() {
     AddToCompanies(AlphaEnterprises);
     
     var AevumPolice = new Company();
-    AevumPolice.init(Locations.AevumPolice, 1.3, 1.3, 100);
+    AevumPolice.init(Locations.AevumPolice, 1.3, 1.3, 99);
     AevumPolice.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.SecurityGuard, CompanyPositions.PoliceOfficer]);
     AddToCompanies(AevumPolice);
     
     var SysCoreSecurities = new Company();
-    SysCoreSecurities.init(Locations.VolhavenSysCoreSecurities, 1.3, 1.3, 125);
+    SysCoreSecurities.init(Locations.VolhavenSysCoreSecurities, 1.3, 1.3, 124);
     SysCoreSecurities.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -806,7 +806,7 @@ initCompanies = function() {
     AddToCompanies(SysCoreSecurities);
     
     var CompuTek = new Company();
-    CompuTek.init(Locations.VolhavenCompuTek, 1.2, 1.2, 75);
+    CompuTek.init(Locations.VolhavenCompuTek, 1.2, 1.2, 74);
     CompuTek.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -816,7 +816,7 @@ initCompanies = function() {
     AddToCompanies(CompuTek);
     
     var NetLinkTechnologies = new Company();
-    NetLinkTechnologies.init(Locations.AevumNetLinkTechnologies, 1.2, 1.2, 100);
+    NetLinkTechnologies.init(Locations.AevumNetLinkTechnologies, 1.2, 1.2, 99);
     NetLinkTechnologies.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
@@ -826,7 +826,7 @@ initCompanies = function() {
     AddToCompanies(NetLinkTechnologies);
     
     var CarmichaelSecurity = new Company();
-    CarmichaelSecurity.init(Locations.Sector12CarmichaelSecurity, 1.2, 1.2, 75);
+    CarmichaelSecurity.init(Locations.Sector12CarmichaelSecurity, 1.2, 1.2, 74);
     CarmichaelSecurity.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
@@ -849,7 +849,7 @@ initCompanies = function() {
     AddToCompanies(JoesGuns);
     
     var OmegaSoftware = new Company();
-    OmegaSoftware.init(Locations.IshimaOmegaSoftware, 1.1, 1.1, 50);
+    OmegaSoftware.init(Locations.IshimaOmegaSoftware, 1.1, 1.1, 49);
     OmegaSoftware.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
         CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,

@@ -36,6 +36,5 @@ isValidIPAddress = function(ipaddress) {
 	{  
 		return true;
 	}  
-	console.log("Invalid IP address");  
 	return false  ;
 }  

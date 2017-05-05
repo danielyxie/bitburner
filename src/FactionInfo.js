@@ -115,6 +115,7 @@ FactionInfo = {
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
+    NetburnersInfo: "~~HACKNET BURNERS~~",
 	TianDiHuiInfo: "Obey Heaven and Work Righteousness",
 	
 	CyberSecInfo: "The Internet is the first thing that humanity has built that humanity doesn’t understand,\n" +

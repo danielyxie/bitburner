@@ -10,9 +10,9 @@ Locations = {
 	Ishima: 		"Ishima",
 	Volhaven: 		"Volhaven",
     
-    
     //Aevum Locations
     AevumTravelAgency:          "Aevum Travel Agency",
+    AevumSummitUniversity:      "Summit University",
     AevumECorp:                 "ECorp",
     AevumBachmanAndAssociates:  "Bachman & Associates",
     AevumClarkeIncorporated:    "Clarke Incorporated",
@@ -25,14 +25,17 @@ Locations = {
     AevumNetLinkTechnologies:   "NetLink Technologies",
     AevumCrushFitnessGym:       "Crush Fitness Gym",
     AevumSnapFitnessGym:        "Snap Fitness Gym",
+    AevumSlums:                 "Aevum Slums",
     
     //Chongqing locations
     ChongqingTravelAgency:          "Chongqing Travel Agency", 
     ChongqingKuaiGongInternational: "KuaiGong International",
     ChongqingSolarisSpaceSystems:   "Solaris Space Systems",
+    ChongqingSlums:                 "Chongqing Slums",
     
     //Sector 12
     Sector12TravelAgency:       "Sector-12 Travel Agency",
+    Sector12RothmanUniversity:  "Rothman University",
     Sector12MegaCorp:           "MegaCorp",
     Sector12BladeIndustries:    "Blade Industries",
     Sector12FourSigma:          "Four Sigma",
@@ -47,6 +50,7 @@ Locations = {
     Sector12JoesGuns:           "Joe's Guns",
     Sector12IronGym:            "Iron Gym",
     Sector12PowerhouseGym:      "Powerhouse Gym",
+    Sector12Slums:              "Sector-12 Slums",
     
     //New Tokyo
     NewTokyoTravelAgency:           "New Tokyo Travel Agency",
@@ -54,23 +58,27 @@ Locations = {
     NewTokyoVitaLife:               "VitaLife",
     NewTokyoGlobalPharmaceuticals:  "Global Pharmaceuticals",
     NewTokyoNoodleBar:              "Noodle Bar",
+    NewTokyoSlums:                  "New Tokyo Slums",
     
     //Ishima
     IshimaTravelAgency:         "Ishima Travel Agency",
     IshimaStormTechnologies:    "Storm Technologies",
     IshimaNovaMedical:          "Nova Medical",
     IshimaOmegaSoftware:        "Omega Software",
+    IshimaSlums:                "Ishima Slums",
     
     //Volhaven
-    VolhavenTravelAgency:           "Volhaven Travel Agency",
-    VolhavenOmniTekIncorporated:    "OmniTek Incorporated",
-    VolhavenNWO:                    "NWO",
-    VolhavenHeliosLabs:             "Helios Labs",
-    VolhavenOmniaCybersystems:      "Omnia Cybersystems",
-    VolhavenLexoCorp:               "LexoCorp",
-    VolhavenSysCoreSecurities:      "SysCore Securities",
-    VolhavenCompuTek:               "CompuTek",
-    VolhavenMilleniumFitnessGym:    "Millenium Fitness Gym",
+    VolhavenTravelAgency:               "Volhaven Travel Agency",
+    VolhavenZBInstituteOfTechnology:    "ZB Institute of Technology",
+    VolhavenOmniTekIncorporated:        "OmniTek Incorporated",
+    VolhavenNWO:                        "NWO",
+    VolhavenHeliosLabs:                 "Helios Labs",
+    VolhavenOmniaCybersystems:          "Omnia Cybersystems",
+    VolhavenLexoCorp:                   "LexoCorp",
+    VolhavenSysCoreSecurities:          "SysCore Securities",
+    VolhavenCompuTek:                   "CompuTek",
+    VolhavenMilleniumFitnessGym:        "Millenium Fitness Gym",
+    VolhavenSlums:                      "Volhaven Slums",
 }
 
 displayLocationContent = function() {
@@ -103,6 +111,13 @@ displayLocationContent = function() {
     var gymTrainDef         = document.getElementById("location-gym-train-def");
     var gymTrainDex         = document.getElementById("location-gym-train-dex");
     var gymTrainAgi         = document.getElementById("location-gym-train-agi");
+    
+    var studyComputerScience= document.getElementById("location-study-computer-science");
+    var classDataStructures = document.getElementById("location-data-structures-class");
+    var classNetworks       = document.getElementById("location-networks-class");
+    var classAlgorithms     = document.getElementById("location-algorithms-class");
+    var classManagement     = document.getElementById("location-management-class");
+    var classLeadership     = document.getElementById("location-leadership-class");
 
     var purchase1gb         = document.getElementById("location-purchase-1gb");
     var purchase2gb         = document.getElementById("location-purchase-2gb");
@@ -116,6 +131,7 @@ displayLocationContent = function() {
     var purchase512gb       = document.getElementById("location-purchase-512gb");
     var purchase1tb         = document.getElementById("location-purchase-1tb");
     var purchaseTor         = document.getElementById("location-purchase-tor");
+    var purchaseHomeRam     = document.getElementById("location-purchase-home-ram");
 
     var travelAgencyText    = document.getElementById("location-travel-agency-text");
     var travelToAevum       = document.getElementById("location-travel-to-aevum");
@@ -125,6 +141,14 @@ displayLocationContent = function() {
     var travelToIshima      = document.getElementById("location-travel-to-ishima");
     var travelToVolhaven    = document.getElementById("location-travel-to-volhaven");
 	
+    var slumsDescText       = document.getElementById("location-slums-description");
+    var slumsShoplift       = document.getElementById("location-slums-shoplift");
+    var slumsMug            = document.getElementById("location-slums-mug");
+    var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
+    var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
+    var slumsHomicide       = document.getElementById("location-slums-homicide");
+    var slumsKidnap         = document.getElementById("location-slums-kidnap");
+    
     var loc = Player.location;
     
     returnToWorld.addEventListener("click", function() {
@@ -163,6 +187,13 @@ displayLocationContent = function() {
     gymTrainDex.style.display = "none";
     gymTrainAgi.style.display = "none";
     
+    studyComputerScience.style.display = "none";
+    classDataStructures.style.display = "none";
+    classNetworks.style.display = "none";
+    classAlgorithms.style.display = "none";
+    classManagement.style.display = "none";
+    classLeadership.style.display = "none";
+    
     purchase1gb.style.display = "none";
     purchase2gb.style.display = "none";
     purchase4gb.style.display = "none";
@@ -175,6 +206,7 @@ displayLocationContent = function() {
     purchase512gb.style.display = "none";
     purchase1tb.style.display = "none";
     purchaseTor.style.display = "none";
+    purchaseHomeRam.style.display = "none";
     
     travelAgencyText.style.display = "none";
     travelToAevum.style.display = "none";
@@ -183,6 +215,14 @@ displayLocationContent = function() {
     travelToNewTokyo.style.display = "none";
     travelToIshima.style.display = "none";
     travelToVolhaven.style.display = "none";
+    
+    slumsDescText.style.display = "none";
+    slumsShoplift.style.display = "none";
+    slumsMug.style.display = "none";
+    slumsDealDrugs.style.display = "none";
+    slumsTrafficArms.style.display = "none";
+    slumsHomicide.style.display = "none";
+    slumsKidnap.style.display = "none";
     
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
@@ -233,6 +273,13 @@ displayLocationContent = function() {
             travelToVolhaven.style.display = "block";
             break;
             
+        case Locations.AevumSummitUniveristy:
+            var costMult = 3;
+            var expMult = 2;
+            displayUniversityLocationContent(costMult);
+            setUniversityLocationButtons(costMult, expMult);
+            break;
+            
         case Locations.AevumECorp:  
 			locationInfo.innerHTML = Companies[loc].info;
 			
@@ -248,6 +295,7 @@ displayLocationContent = function() {
             purchase512gb.style.display = "block";
             purchase1tb.style.display = "block";
             purchaseTor.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
             
         case Locations.AevumBachmanAndAssociates: 
@@ -286,6 +334,7 @@ displayLocationContent = function() {
             purchase512gb.style.display = "block";
             purchase1tb.style.display = "block";
             purchaseTor.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
 
         case Locations.AevumAeroCorp:        
@@ -347,6 +396,7 @@ displayLocationContent = function() {
             purchase4gb.style.display = "block";
             purchase8gb.style.display = "block";
             purchaseTor.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
 
         case Locations.AevumCrushFitnessGym:  
@@ -402,6 +452,13 @@ displayLocationContent = function() {
             travelToNewTokyo.style.display = "block";
             travelToIshima.style.display = "block";
             travelToVolhaven.style.display = "block";
+            break;
+            
+        case Locations.Sector12RothmanUniversity:
+            var costMult = 2;
+            var expMult = 1;
+            displayUniversityLocationContent(costMult);
+            setUniversityLocationButtons(costMult, expMult);
             break;
 
         case Locations.Sector12MegaCorp:  
@@ -499,6 +556,7 @@ displayLocationContent = function() {
             purchase2gb.style.display = "block";
             purchase4gb.style.display = "block";
             purchaseTor.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
 
         case Locations.Sector12CarmichaelSecurity:
@@ -611,6 +669,7 @@ displayLocationContent = function() {
             purchase64gb.style.display = "block";
             purchase128gb.style.display = "block";
             purchase256gb.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
 
         case Locations.IshimaNovaMedical:         
@@ -635,15 +694,23 @@ displayLocationContent = function() {
             purchase16gb.style.display = "block";
             purchase32gb.style.display = "block";
             purchaseTor.style.display = "block";
+            purchaseHomeRam.style.display = "block";
             break;
 
-        case Locations.VolhavenTravelAgency:     
+        case Locations.VolhavenTravelAgency:
             travelAgencyText.style.display = "block";
             travelToAevum.style.display = "block";
             travelToChongqing.style.display = "block";
             travelToSector12.style.display = "block";
             travelToNewTokyo.style.display = "block";
             travelToIshima.style.display = "block";
+            break;
+            
+        case Locations.VolhavenZBInstituteOfTechnology:
+            var costMult = 4;
+            var expMult = 3;
+            displayUniversityLocationContent(costMult);
+            setUniversityLocationButtons(costMult, expMult);
             break;
 
         case Locations.VolhavenOmniTekIncorporated:   
@@ -729,7 +796,7 @@ displayLocationContent = function() {
             purchase128gb.style.display = "block";
             purchase256gb.style.display = "block";
             purchaseTor.style.display = "block";
-            
+            purchaseHomeRam.style.display = "block";
             break;
 
         case Locations.VolhavenMilleniumFitnessGym:   
@@ -739,6 +806,35 @@ displayLocationContent = function() {
             gymTrainAgi.style.display = "block";
             break;
             
+        //All Slums
+        case Locations.AevumSlums:
+        case Locations.ChongqingSlums:
+        case Locations.Sector12Slums:
+        case Locations.NewTokyokSlums:
+        case Locations.IshimaSlums:
+        case Locations.VolhavenSlums:
+            var shopliftChance = determineCrimeChanceShoplift();
+            var mugChance = determineCrimeChanceMug();
+            var drugsChance = determineCrimeChanceDealDrugs();
+            var armsChance = determineCrimeChanceTraffickArms();
+            var homicideChance = determineCrimeChanceHomicide();
+            var kidnapChance = determineCrimeChanceKidnap();
+            
+            slumsDescText.style.display = "block";
+            slumsShoplift.style.display = "block";
+            slumsShoplift.innerHTML = "Shoplift (" + (shopliftChance*100).toFixed(3) + "% chance of success)";
+            slumsMug.style.display = "block";
+            slumsMug.innerHTML = "Mug someone (" + (mugChance*100).toFixed(3) + "% chance of success)";
+            slumsDealDrugs.style.display = "block";
+            slumsDealDrugs.innerHTML = "Deal Drugs (" + (drugsChance*100).toFixed(3) + "% chance of success)";
+            slumsTrafficArms.style.display = "block";
+            slumsTrafficArms.innerHTML = "Traffick Illegal Arms (" + (armsChance*100).toFixed(3) + "% chance of success)";
+            slumsHomicide.style.display = "block";
+            slumsHomicide.innerHTML = "Homicide (" + (homicideChance*100).toFixed(3) + "% chance of success)";
+            slumsKidnap.style.display = "block";
+            slumsKidnap.innerHTML = "Kidnap and Ransom (" + (kidnapChance*100).toFixed(3) + "% chance of success)";
+            
+            break;
         default:
             console.log("ERROR: INVALID LOCATION");
 
@@ -761,6 +857,13 @@ initLocationButtons = function() {
     aevumTravelAgency = document.getElementById("aevum-travelagency");
     aevumTravelAgency.addEventListener("click", function() {
         Player.location = Locations.AevumTravelAgency;
+        Engine.loadLocationContent();
+        return false;
+    });
+    
+    aevumSummitUniversity = document.getElementById("aevum-summituniversity");
+    aevumSummitUniversity.addEventListener("click", function() {
+       Player.location = Locations.AevumSummitUniversity;
         Engine.loadLocationContent();
         return false;
     });
@@ -848,6 +951,13 @@ initLocationButtons = function() {
         Engine.loadLocationContent();
         return false;
     });
+    
+    aevumSlums = document.getElementById("aevum-slums");
+    aevumSlums.addEventListener("click", function() {
+        Player.location = Locations.AevumSlums;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	chongqingTravelAgency = document.getElementById("chongqing-travelagency");
 	chongqingTravelAgency.addEventListener("click", function() {
@@ -869,6 +979,14 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    chongqingSlums = document.getElementById("chongqing-slums");
+    chongqingSlums.addEventListener("click", function() {
+        Player.location = Locations.ChongqingSlums;
+        Engine.loadLocationContent();
+        return false;
+    });
+    
 	
 	sector12TravelAgency = document.getElementById("sector12-travelagency");
 	sector12TravelAgency.addEventListener("click", function() {
@@ -877,6 +995,13 @@ initLocationButtons = function() {
         return false;
 	});
 	
+    sector12RothmanUniversity = document.getElementById("sector12-rothmanuniversity");
+    sector12RothmanUniversity.addEventListener("click", function() {
+        Player.location = Locations.Sector12RothmanUniversity;
+        Engine.loadLocationContent();
+        return false;
+    });
+    
 	sector12MegaCorp = document.getElementById("sector12-megacorp");
 	sector12MegaCorp.addEventListener("click", function() {
 		Player.location = Locations.Sector12MegaCorp;
@@ -974,6 +1099,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    sector12Slums = document.getElementById("sector12-slums");
+    sector12Slums.addEventListener("click", function() {
+        Player.location = Locations.Sector12Slums;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	newTokyoTravelAgency = document.getElementById("newtokyo-travelagency");
 	newTokyoTravelAgency.addEventListener("click", function() {
@@ -1009,6 +1141,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    newTokyoSlums = document.getElementById("newtokyo-slums");
+    newTokyoSlums.addEventListener("click", function() {
+        Player.location = Locations.NewTokyoSlums;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	ishimaTravelAgency = document.getElementById("ishima-travelagency");
 	ishimaTravelAgency.addEventListener("click", function() {
@@ -1037,6 +1176,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    ishimaSlums = document.getElementById("ishima-slums");
+    ishimaSlums.addEventListener("click", function() {
+        Player.location = Locations.IshimaSlums;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	volhavenTravelAgency = document.getElementById("volhaven-travelagency");
 	volhavenTravelAgency.addEventListener("click", function() {
@@ -1044,6 +1190,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    volhavenZBInstituteOfTechnology = document.getElementById("volhaven-zbinstituteoftechnology");
+    volhavenZBInstituteOfTechnology.addEventListener("click", function() {
+        Player.location = Locations.VolhavenZBInstituteOfTechnology;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	volhavenOmniTekIncorporated = document.getElementById("volhaven-omnitekincorporated");
 	volhavenOmniTekIncorporated.addEventListener("click", function() {
@@ -1101,6 +1254,13 @@ initLocationButtons = function() {
         return false;
 	});
     
+    volhavenSlums = document.getElementById("volhaven-slums");
+    volhavenSlums.addEventListener("click", function() {
+        Player.location = Locations.VolhavenSlums;
+        Engine.loadLocationContent();
+        return false;
+    });
+    
     
     //Buttons to interact at a location (apply for job/promotion, train, purchase, etc.)
     var softwareJob         = document.getElementById("location-software-job");
@@ -1132,6 +1292,7 @@ initLocationButtons = function() {
     var purchase512gb       = document.getElementById("location-purchase-512gb");
     var purchase1tb         = document.getElementById("location-purchase-1tb");
     var purchaseTor         = document.getElementById("location-purchase-tor");
+    var purchaseHomeRam     = document.getElementById("location-purchase-home-ram");
 
     var travelToAevum       = document.getElementById("location-travel-to-aevum");
     var travelToChongqing   = document.getElementById("location-travel-to-chongqing");
@@ -1139,6 +1300,13 @@ initLocationButtons = function() {
     var travelToNewTokyo    = document.getElementById("location-travel-to-newtokyo");
     var travelToIshima      = document.getElementById("location-travel-to-ishima");
     var travelToVolhaven    = document.getElementById("location-travel-to-volhaven");
+    
+    var slumsShoplift       = document.getElementById("location-slums-shoplift");
+    var slumsMug            = document.getElementById("location-slums-mug");
+    var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
+    var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
+    var slumsHomicide       = document.getElementById("location-slums-homicide");
+    var slumsKidnap         = document.getElementById("location-slums-kidnap");
     
     softwareJob.addEventListener("click", function() {
         Player.applyForSoftwareJob();
@@ -1186,22 +1354,22 @@ initLocationButtons = function() {
     });
     
     purchase1gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(1, 100000);
+        purchaseServerBoxCreate(1, 50000);
         return false;
     });
     
     purchase2gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(2, 250000);
+        purchaseServerBoxCreate(2, 100000);
         return false;
     });
     
     purchase4gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(4, 600000);
+        purchaseServerBoxCreate(4, 250000);
         return false;
     });
     
     purchase8gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(8, 1500000);
+        purchaseServerBoxCreate(8, 1000000);
         return false;
     });
     
@@ -1211,7 +1379,7 @@ initLocationButtons = function() {
     });
     
     purchase32gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(32, 9000000);
+        purchaseServerBoxCreate(32, 10000000);
         return false;
     });
     
@@ -1221,7 +1389,7 @@ initLocationButtons = function() {
     });
     
     purchase128gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(128, 45000000);
+        purchaseServerBoxCreate(128, 50000000);
         return false;
     });
     
@@ -1236,12 +1404,17 @@ initLocationButtons = function() {
     });
     
     purchase1tb.addEventListener("click", function() {
-        purchaseServerBoxCreate(1024, 600000000);
+        purchaseServerBoxCreate(1024, 750000000);
         return false;
     });
     
     purchaseTor.addEventListener("click", function() {
         purchaseTorRouter();
+        return false;
+    });
+    
+    purchaseHomeRam.addEventListener("click", function() {
+        purchaseRamForHomeBoxCreate();
         return false;
     });
     
@@ -1275,6 +1448,35 @@ initLocationButtons = function() {
         return false;
     });
     
+    slumsShoplift.addEventListener("click", function() {
+        commitShopliftCrime();
+        return false;
+    });
+    
+    slumsMug.addEventListener("click", function() {
+        commitMugCrime();
+        return false;
+    });
+    
+    slumsDealDrugs.addEventListener("click", function() {
+        commitDealDrugsCrime();
+        return false;
+    });
+    
+    slumsTrafficArms.addEventListener("click", function() {
+        commitTraffickArmsCrime();
+        return false;
+    });
+    
+    slumsHomicide.addEventListener("click", function() {
+        commitHomicideCrime();
+        return false;
+    });
+    
+    slumsKidnap.addEventListener("click", function() {
+        commitKidnapCrime();
+        return false;
+    });
 }   
 
 travelToCity = function(destCityName, cost) {
@@ -1303,3 +1505,90 @@ purchaseTorRouter = function() {
     Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
     dialogBoxCreate("You have purchased a Tor router!", "You now have access to the dark web from your home computer", "Use the scan/netstat commands to search for the dark web connect.", "");
 }
+
+displayUniversityLocationContent = function(costMult) {
+    var studyComputerScienceButton  = document.getElementById("location-study-computer-science");
+    var classDataStructuresButton   = document.getElementById("location-data-structures-class");
+    var classNetworksButton         = document.getElementById("location-networks-class");
+    var classAlgorithmsButton       = document.getElementById("location-algorithms-class");
+    var classManagementButton       = document.getElementById("location-management-class");
+    var classLeadershipButton       = document.getElementById("location-leadership-class");
+    studyComputerScienceButton.style.display = "block";
+    classDataStructuresButton.style.display = "block";
+    classNetworksButton.style.display = "block";
+    classAlgorithmsButton.style.display = "block";
+    classManagementButton.style.display = "block";
+    classLeadershipButton.style.display = "block";
+    
+    //Costs (per second)
+    var baseDataStructuresCost  = 1;
+    var baseNetworksCost        = 5;
+    var baseAlgorithmsCost      = 20;
+    var baseManagementCost      = 10;
+    var baseLeadershipCost      = 20;
+    
+    var dataStructuresCost  = baseDataStructuresCost    * costMult;
+    var networksCost        = baseNetworksCost          * costMult;
+    var algorithmsCost      = baseAlgorithmsCost        * costMult;
+    var managementCost      = baseManagementCost        * costMult;
+    var leadershipCost      = baseLeadershipCost        * costMult;
+    
+    //Update button text to show cost
+    classDataStructuresButton.innerHTML = "Take Data Structures course ($"  + dataStructuresCost + " / sec)";
+    classNetworksButton.innerHTML       = "Take Networks course ($"         + networksCost       + " / second)";
+    classAlgorithmsButton.innerHTML     = "Take Algorithms course ($"       + algorithmsCost     + " / second)";
+    classManagementButton.innerHTML     = "Take Management course ($"       + managementCost     + " / second)";
+    classLeadershipButton.innerHTML     = "Take Leadership course ($"       + leadershipCost     + " / second)";
+}
+
+setUniversityLocationButtons = function(costMult, expMult) {
+    var studyComputerScience= document.getElementById("location-study-computer-science");
+    var classDataStructures = document.getElementById("location-data-structures-class");
+    var classNetworks       = document.getElementById("location-networks-class");
+    var classAlgorithms     = document.getElementById("location-algorithms-class");
+    var classManagement     = document.getElementById("location-management-class");
+    var classLeadership     = document.getElementById("location-leadership-class");
+    
+    var newStudyCS = studyComputerScience.cloneNode(true);
+    studyComputerScience.parentNode.replaceChild(newStudyCS, studyComputerScience)
+    newStudyCS.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassStudyComputerScience);
+        return false;
+    });
+    
+    var newClassDataStructures = classDataStructures.cloneNode(true);
+    classDataStructures.parentNode.replaceChild(newClassDataStructures, classDataStructures);
+    newClassDataStructures.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassDataStructures);
+        return false;
+    });
+    
+    var newClassNetworks = classNetworks.cloneNode(true);
+    classNetworks.parentNode.replaceChild(newClassNetworks, classNetworks);
+    newClassNetworks.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassNetworks);
+        return false;
+    });
+    
+    var newClassAlgorithms = classAlgorithms.cloneNode(true);
+    classAlgorithms.parentNode.replaceChild(newClassAlgorithms, classAlgorithms);
+    newClassAlgorithms.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassAlgorithms);
+        return false;
+    });
+    
+    var newClassManagement = classManagement.cloneNode(true);
+    classManagement.parentNode.replaceChild(newClassManagement, classManagement);
+    newClassManagement.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassManagement);
+        return false;
+    });
+    
+    var newClassLeadership = classLeadership.cloneNode(true);
+    classLeadership.parentNode.replaceChild(newClassLeadership, classLeadership);
+    newClassLeadership.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassLeadership);
+        return false;
+    });
+}
+

@@ -1,10 +1,25 @@
 CONSTANTS = {
+    Version:                "0.1",
+    
 	//Max level for any skill. Determined by max numerical value in javascript and the skill level
 	//formula in Player.js
 	MaxSkillLevel: 			975,
     
     //How much reputation is needed to join a megacorporation's faction
     CorpFactionRepRequirement: 250000,
+    
+    /* Base costs */
+    BaseCostFor1GBOfRam: 50000,     //1 GB of RAM
+    
+    BaseCostForHacknetNode: 1000,
+    BaseCostForHacknetNodeCore: 1000000,
+    
+    /* Hacknet Node constants */
+    HacknetNodeMoneyGainPerLevel: 0.75,
+    HacknetNodePurchaseNextMult: 1.35,   //Multiplier when purchasing an additional hacknet node
+    HacknetNodeUpgradeLevelMult: 1.08,  //Multiplier for cost when upgrading level
+    HacknetNodeUpgradeRamMult: 1.2,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeCoreMult: 1.5,    //Multiplier for cost when buying another core
 	
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
@@ -12,6 +27,9 @@ CONSTANTS = {
 	
 	//Time (seconds) it takes to run one operation in Netscript OFFLINE
 	CodeOfflineExecutionTime: 10,
+    
+    //Server growth rate
+    ServerGrowthRate: 1.00075,
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 20,
@@ -31,12 +49,41 @@ CONSTANTS = {
     MillisecondsPer4Hours: 14400000,
     GameCyclesPer4Hours: 14400000 / 200,
     
+    MillisecondsPer2Hours: 7200000,
+    GameCyclesPer2Hours: 7200000 / 200,
+    
     MillisecondsPerHour: 3600000,
     GameCyclesPerHour: 3600000 / 200,
+    
+    MillisecondsPerHalfHour: 1800000,
+    GameCyclesPerHalfHour: 1800000 / 200,
+    
+    MillisecondsPerQuarterHour: 900000,
+    GameCyclesPerQuarterHour: 900000 / 200,
     
     FactionWorkHacking: "Faction Hacking Work",
     FactionWorkField: "Faction Field Work",
     FactionWorkSecurity: "Faction Security Work",
+    
+    WorkTypeCompany: "Working for Company",
+    WorkTypeFaction: "Working for Faction",
+    WorkTypeCreateProgram: "Working on Create a Program",
+    WorkTypeStudyClass: "Studying or Taking a class at university",
+    WorkTypeCrime: "Committing a crime",
+    
+    ClassStudyComputerScience: "studying Computer Science",
+    ClassDataStructures: "taking a Data Structures course",
+    ClassNetworks: "taking a Networks course",
+    ClassAlgorithms: "taking an Algorithms course",
+    ClassManagement: "taking a Management course",
+    ClassLeadership: "taking a Leadership course",
+    
+    CrimeShoplift: "shoplift",
+    CrimeMug: "mug someone",
+    CrimeDrugs: "deal drugs",
+    CrimeTraffickArms: "traffick illegal arms",
+    CrimeHomicide: "commit homicide",
+    CrimeKidnap: "kidnap someone for ransom",
     
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   "analyze                Get statistics and information about current machine <br>" + 
@@ -45,10 +92,11 @@ CONSTANTS = {
                 "connect [ip/hostname]  Connects to the machine given by its IP or hostname <br>" + 
                 "free                   Check the machine's memory (RAM) usage<br>" + 
                 "hack                   Hack the current machine<br>" +
-                "help                   Display this list<br>" + 
+                "help                   Display this help text<br>" + 
+                "home                   Connect to home computer<br>" + 
                 "hostname               Displays the hostname of the machine<br>" + 
                 "ifconfig               Displays the IP address of the machine<br>" +
-                "kill [script name]     Stops a script that is running<br>" +
+                "kill [script name]     Stops a script that is running on the current machine<br>" +
                 "ls                     Displays all programs and scripts on the machine<br>" + 
                 "nano [script name]     Text editor - Open up and edit a script<br>" + 
                 "netstat                Displays all available network connections<br>" +  

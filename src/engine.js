@@ -1,6 +1,6 @@
 var Engine = {
     Debug: true,
-    
+        
     //Clickable objects
     Clickables: {        
         //Main menu buttons
@@ -8,6 +8,7 @@ var Engine = {
         characterMainMenuButton:        null,
         scriptEditorMainMenuButton:     null,
         activeScriptsMainMenuButton:    null,
+        hacknetNodesMainMenuButton:     null,
         worldMainMenuButton:            null,
         createProgramMainMenuButton:    null,
         factionsMainMenuButton:         null,
@@ -43,6 +44,7 @@ var Engine = {
         characterContent:               null,
         scriptEditorContent:            null,
         activeScriptsContent:           null,
+        hacknetNodesContent:            null,
         worldContent:                   null,
         createProgramContent:           null,
         factionsContent:                null,
@@ -66,6 +68,7 @@ var Engine = {
         CharacterInfo:      "CharacterInfo",
         ScriptEditor:       "ScriptEditor",
         ActiveScripts:      "ActiveScripts",
+        HacknetNodes:       "HacknetNodes",
         World:              "World",
         CreateProgram:      "CreateProgram",
         Factions:           "Factions",
@@ -82,92 +85,6 @@ var Engine = {
     _lastUpdate: new Date().getTime(),
     _idleSpeed: 200,    //Speed (in ms) at which the main loop is updated
     
-    //Save function
-    saveGame: function() {
-        var PlayerSave              = JSON.stringify(Player);
-        var AllServersSave          = JSON.stringify(AllServers);
-        var CompaniesSave           = JSON.stringify(Companies);
-        var FactionsSave            = JSON.stringify(Factions);
-        var SpecialServerIpsSave    = JSON.stringify(SpecialServerIps);
-        var AugmentationsSave       = JSON.stringify(Augmentations);
-        
-        window.localStorage.setItem("netburnerPlayerSave", PlayerSave);
-        window.localStorage.setItem("netburnerAllServersSave", AllServersSave);
-        window.localStorage.setItem("netburnerCompaniesSave", CompaniesSave);
-        window.localStorage.setItem("netburnerFactionsSave", FactionsSave);
-        window.localStorage.setItem("netburnerSpecialServerIpsSave", SpecialServerIpsSave);
-        window.localStorage.setItem("netburnerAugmentationsSave", AugmentationsSave);
-        
-        console.log("Game saved to local storage");
-    },
-    
-    //Load saved game function
-    loadSave: function() {
-        //Check to see if file exists
-        if (!window.localStorage.getItem("netburnerPlayerSave")) {
-            console.log("No Player save to load");
-            return false;
-        } else if (!window.localStorage.getItem("netburnerAllServersSave")) {
-            console.log("No AllServers save to load");
-            return false;
-        } else if (!window.localStorage.getItem("netburnerCompaniesSave")) {
-            console.log("No Companies save to load");
-            return false;
-        } else if (!window.localStorage.getItem("netburnerFactionsSave")) {
-            console.log("No Factions save to load");
-            return false;
-        } else if (!window.localStorage.getItem("netburnerSpecialServerIpsSave")) {
-            console.log("No Special Server Ips save to load");
-            return false;
-        } else if (!window.localStorage.getItem("netburnerAugmentationsSave")) {
-            console.log("No Augmentations save to load");
-            return false;
-        } else {
-            var PlayerSave              = window.localStorage.getItem("netburnerPlayerSave");
-            var AllServersSave          = window.localStorage.getItem("netburnerAllServersSave");
-            var CompaniesSave           = window.localStorage.getItem("netburnerCompaniesSave");
-            var FactionsSave            = window.localStorage.getItem("netburnerFactionsSave");
-            var SpecialServerIpsSave    = window.localStorage.getItem("netburnerSpecialServerIpsSave");
-            var AugmentationsSave       = window.localStorage.getItem("netburnerAugmentationsSave");
-            
-            Player          = JSON.parse(PlayerSave, Reviver);
-            AllServers      = JSON.parse(AllServersSave, Reviver);
-            Companies       = JSON.parse(CompaniesSave, Reviver);
-            Factions        = JSON.parse(FactionsSave, Reviver);
-            SpecialServerIps = JSON.parse(SpecialServerIpsSave, Reviver);
-            Augmentations   = JSON.parse(AugmentationsSave, Reviver);
-            return true;
-        }
-    },
-    
-    //Delete saved game function
-    deleteSave: function() {
-        //TODO if a save doesn't exist..maybe I shouldn't return? I just keep going
-        //or else nothing gets deleted. TODO Fix this
-        if (window.localStorage.getItem("netburnerPlayerSave")) {
-            window.localStorage.removeItem("netburnerPlayerSave"); 
-        }
-        
-        if (window.localStorage.getItem("netburnerAllServersSave")) {
-            window.localStorage.removeItem("netburnerAllServersSave");
-        }
-        
-        if (window.localStorage.getItem("netburnerCompaniesSave")) {
-            window.localStorage.removeItem("netburnerCompaniesSave");
-        } 
-        
-        if (window.localStorage.getItem("netburnerFactionsSave")) {
-            window.localStorage.removeItem("netburnerFactionsSave");
-        }
-        
-        if (window.localStorage.getItem("netburnerSpecialServerIpsSave")) {
-            window.localStorage.removeItem("netburnerSpecialServerIpsSave");
-        }
-        
-        if (window.localStorage.getItem("netburnerAugmentationsSave")) {
-            window.localStorage.removeItem("netburnerAugmentationsSave");
-        }
-    },
     
     /* Load content when a main menu button is clicked */ 
     loadTerminalContent: function() {
@@ -200,6 +117,14 @@ var Engine = {
         Engine.Display.activeScriptsContent.style.visibility = "visible";
         
         Engine.currentPage = Engine.Page.ActiveScripts;
+    },
+    
+    loadHacknetNodesContent: function() {
+        Engine.hideAllContent();
+        Engine.Display.hacknetNodesContent.style.visibility = "visible";
+        displayHacknetNodesContent();
+        
+        Engine.currentPage = Engine.Page.HacknetNodes;
     },
     
     loadWorldContent: function() {
@@ -274,6 +199,7 @@ var Engine = {
         Engine.Display.characterContent.style.visibility = "hidden";
         Engine.Display.scriptEditorContent.style.visibility = "hidden";
         Engine.Display.activeScriptsContent.style.visibility = "hidden";
+        Engine.Display.hacknetNodesContent.style.visibility = "hidden";
         Engine.Display.worldContent.style.visibility = "hidden";
         Engine.Display.createProgramContent.style.visibility = "hidden";
         Engine.Display.factionsContent.style.visibility = "hidden";
@@ -299,23 +225,53 @@ var Engine = {
         if (Player.companyPosition != "") {
             companyPosition = Player.companyPosition.positionName;
         }
-        Engine.Display.characterInfo.innerHTML = 'Current City: ' + Player.city + '<br><br>' + 
-                                                 'Employer: ' + Player.companyName + '<br><br>' + 
-                                                 'Job Title: ' + companyPosition + '<br><br><br><br>' + 
-                                                 'Money: $' + (Player.money.toFixed(2)).toLocaleString() + '<br><br>' +
-                                                 'Hacking Level: ' + (Player.hacking_skill).toLocaleString() + '<br><br>' + 
-                                                 'Strength: ' + (Player.strength).toLocaleString() + '<br><br>' + 
-                                                 'Defense: ' + (Player.defense).toLocaleString() + '<br><br>' + 
-                                                 'Dexterity: ' + (Player.dexterity).toLocaleString() + '<br><br>' + 
-                                                 'Agility: ' + (Player.agility).toLocaleString() + '<br><br>' +
-                                                 'Charisma: ' + (Player.charisma).toLocaleString() + '<br><br>' +
-                                                 'Servers owned: ' + Player.purchasedServers.length + '<br><br>' + 
-                                                 'Hacking experience: ' + (Player.hacking_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
-                                                 'Strength experience: ' +  (Player.strength_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
-                                                 'Defense experience: ' + (Player.defense_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
-                                                 'Dexterity experience: ' + (Player.dexterity_exp.toFixed(4)).toLocaleString() + '<br><br>' + 
-                                                 'Agility experience: ' + (Player.agility_exp.toFixed(4)).toLocaleString() + '<br><br>' +
-                                                 'Charisma experience: ' + (Player.charisma_exp.toFixed(4)).toLocaleString();
+        Engine.Display.characterInfo.innerHTML = 
+       ('<b>General</b><br><br>' + 
+        'Current City: ' + Player.city + '<br><br>' + 
+        'Employer: ' + Player.companyName + '<br>' + 
+        'Job Title: ' + companyPosition + '<br><br>' + 
+        'Money: $' + formatNumber(Player.money, 2)+ '<br><br><br>' +
+        '<b>Stats</b><br><br>' + 
+        'Hacking Level: ' + (Player.hacking_skill).toLocaleString() + 
+                        " (" + formatNumber(Player.hacking_exp, 4) + ' experience)<br>' + 
+        'Strength:      ' + (Player.strength).toLocaleString() + 
+                   " (" + formatNumber(Player.strength_exp, 4) + ' experience)<br>' + 
+        'Defense:       ' + (Player.defense).toLocaleString() + 
+                  " (" + formatNumber(Player.defense_exp, 4) + ' experience)<br>' + 
+        'Dexterity:     ' + (Player.dexterity).toLocaleString() + 
+                   " (" + formatNumber(Player.dexterity_exp, 4) + ' experience)<br>' + 
+        'Agility:       ' + (Player.agility).toLocaleString() + 
+                  " (" + formatNumber(Player.agility_exp, 4) + ' experience)<br>' +
+        'Charisma:      ' + (Player.charisma).toLocaleString() +
+                   " (" + formatNumber(Player.charisma_exp, 4) + ' experience)<br><br><br>' +
+        '<b>Multipliers</b><br><br>' + 
+        'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' + 
+        'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' + 
+        'Hacking money multiplier:  ' + formatNumber(Player.hacking_money_mult * 100, 2) + '%<br><br>' + 
+        'Hacking Level multiplier:      ' + formatNumber(Player.hacking_mult * 100, 2) + '%<br>' +
+        'Hacking Experience multiplier: ' + formatNumber(Player.hacking_exp_mult * 100, 2) + '%<br><br>' + 
+        'Strength Level multiplier:      ' + formatNumber(Player.strength_mult * 100, 2) + '%<br>' + 
+        'Strength Experience multiplier: ' + formatNumber(Player.strength_exp_mult * 100, 2) + '%<br><br>' + 
+        'Defense Level multiplier:      ' + formatNumber(Player.defense_mult * 100, 2) + '%<br>' + 
+        'Defense Experience multiplier: ' + formatNumber(Player.defense_exp_mult * 100, 2) + '%<br><br>' + 
+        'Dexterity Level multiplier:      ' + formatNumber(Player.dexterity_mult * 100, 2) + '%<br>' + 
+        'Dexterity Experience multiplier: ' + formatNumber(Player.dexterity_exp_mult * 100, 2) + '%<br><br>' + 
+        'Agility Level multiplier:      ' + formatNumber(Player.agility_mult * 100, 2) + '%<br>' + 
+        'Agility Experience multiplier: ' + formatNumber(Player.agility_exp_mult * 100, 2) + '%<br><br>' + 
+        'Charisma Level multiplier:      ' + formatNumber(Player.charisma_mult * 100, 2) + '%<br>' + 
+        'Charisma Experience multiplier: ' + formatNumber(Player.charisma_exp_mult * 100, 2) + '%<br><br>' + 
+        'Hacknet Node production multiplier:         ' + formatNumber(Player.hacknet_node_money_mult * 100, 2) + '%<br>' +
+        'Hacknet Node purchase cost multiplier:      ' + formatNumber(Player.hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
+        'Hacknet Node RAM upgrade cost multiplier:   ' + formatNumber(Player.hacknet_node_ram_cost_mult * 100, 2) + '%<br>' + 
+        'Hacknet Node Core purchase cost multiplier: ' + formatNumber(Player.hacknet_node_core_cost_mult * 100, 2) + '%<br>' + 
+        'Hacknet Node level upgrade cost multiplier: ' + formatNumber(Player.hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' + 
+        'Company reputation gain multiplier: ' + formatNumber(Player.company_rep_mult * 100, 2) + '%<br>' + 
+        'Faction reputation gain multiplier: ' + formatNumber(Player.faction_rep_mult * 100, 2) + '%<br>' + 
+        'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br><br><br>' +
+        '<b>Misc</b><br><br>' + 
+        'Servers owned:       ' + Player.purchasedServers.length + '<br>' + 
+        'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>').replace( / /g, "&nbsp;" );
+        
     },
     
     /* Display locations in the world*/
@@ -423,22 +379,22 @@ var Engine = {
         var serverIpHostname = "Server: " + hostname + "(" + workerscript.serverIp + ")";
         
         //Online
-        var onlineTotalMoneyMade = "Total online production: $" + workerscript.scriptRef.onlineMoneyMade.toFixed(2);
-        var onlineTotalExpEarned = (Array(26).join(" ") + workerscript.scriptRef.onlineExpGained.toFixed(2) + " exp").replace( / /g, "&nbsp;");
+        var onlineTotalMoneyMade = "Total online production: $" + formatNumber(workerscript.scriptRef.onlineMoneyMade, 2);
+        var onlineTotalExpEarned = (Array(26).join(" ") + formatNumber(workerscript.scriptRef.onlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
         
         var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
-        var onlineMpsText = "Online production rate: $" + onlineMps.toFixed(2) + "/second";
+        var onlineMpsText = "Online production rate: $" + formatNumber(onlineMps, 2) + "/second";
         var onlineEps = workerscript.scriptRef.onlineExpGained / workerscript.scriptRef.onlineRunningTime;
-        var onlineEpsText = (Array(25).join(" ") + onlineEps.toFixed(4) + " exp/second").replace( / /g, "&nbsp;");
+        var onlineEpsText = (Array(25).join(" ") + formatNumber(onlineEps, 4) + " hacking exp/second").replace( / /g, "&nbsp;");
         
         //Offline
-        var offlineTotalMoneyMade = "Total offline production: $" + workerscript.scriptRef.offlineMoneyMade.toFixed(2);
-        var offlineTotalExpEarned = (Array(27).join(" ") + workerscript.scriptRef.offlineExpGained.toFixed(2) + " exp").replace( / /g, "&nbsp;");
+        var offlineTotalMoneyMade = "Total offline production: $" + formatNumber(workerscript.scriptRef.offlineMoneyMade, 2);
+        var offlineTotalExpEarned = (Array(27).join(" ") + formatNumber(workerscript.scriptRef.offlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
         
         var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
-        var offlineMpsText = "Offline production rate: $" + offlineMps.toFixed(2) + "/second";
+        var offlineMpsText = "Offline production rate: $" + formatNumber(offlineMps, 2) + "/second";
         var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
-        var offlineEpsText = (Array(26).join(" ") + offlineEps.toFixed(4) +  " exp/second").replace( / /g, "&nbsp;");
+        var offlineEpsText = (Array(26).join(" ") + formatNumber(offlineEps, 4) +  " hacking exp/second").replace( / /g, "&nbsp;");
         
         itemText.innerHTML = serverIpHostname + "<br>" + onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
                              onlineMpsText + "<br>" + onlineEpsText + "<br>" + offlineTotalMoneyMade + "<br>" + offlineTotalExpEarned + "<br>" +
@@ -457,22 +413,25 @@ var Engine = {
         
         //Re-add a link for each faction you are a member of
         for (var i = 0; i < Player.factions.length; ++i) {
-            var factionName = Player.factions[i];
-            
-            //Add the faction to the Factions page content
-            var item = document.createElement("li");
-            var aElem = document.createElement("a");
-            aElem.setAttribute("href", "#");
-            aElem.setAttribute("class", "a-link-button");
-            aElem.innerHTML = factionName;
-            aElem.addEventListener("click", function() {
-                Engine.loadFactionContent();
-                displayFactionContent(factionName);
-                return false;
-            });
-            item.appendChild(aElem);
-                            
-            factionsList.appendChild(item);
+            (function () {
+                var factionName = Player.factions[i];
+                
+                //Add the faction to the Factions page content
+                var item = document.createElement("li");
+                var aElem = document.createElement("a");
+                aElem.setAttribute("href", "#");
+                aElem.setAttribute("class", "a-link-button");
+                aElem.innerHTML = factionName;
+                aElem.addEventListener("click", function() {
+                    console.log("factionName:" + factionName)
+                    Engine.loadFactionContent();
+                    displayFactionContent(factionName);
+                    return false;
+                });
+                item.appendChild(aElem);
+                                
+                factionsList.appendChild(item);                
+            }()); //Immediate invocation
         }
     },
     
@@ -561,11 +520,16 @@ var Engine = {
             Player.startAction = false;
         }
         
+        //Working
         if (Player.isWorking) {
-            if (Player.currentWorkFactionName != "") {
+            if (Player.workType == CONSTANTS.WorkTypeFaction) {
                 Player.workForFaction(numCycles);
-            } else if (Player.createProgramName != "") {
+            } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
                 Player.createProgramWork(numCycles);
+            } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
+                Player.takeClass(numCycles);  
+            } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
+                Player.commitCrime(numCycles);
             } else {
                 Player.work(numCycles);
             }
@@ -582,6 +546,9 @@ var Engine = {
         
         //Update the running time of all active scripts
         updateOnlineScriptTimes(numCycles);
+        
+        //Hacknet Nodes
+        processAllHacknetNodeEarnings(numCycles);
     },
     
     //Counters for the main event loop. Represent the number of game cycles are required
@@ -589,9 +556,10 @@ var Engine = {
     Counters: {
         autoSaveCounter:    300,            //Autosave every minute
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
-        updateDisplays: 5,                  //Update displays such as Active Scripts display and character display
+        updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
         serverGrowth: 450,                  //Process server growth every minute and a half
         checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
+        passiveFactionGrowth: 600,
     },
     
     decrementAllCounters: function(numCycles = 1) {
@@ -606,7 +574,7 @@ var Engine = {
     //is necessary and then resets the counter
     checkCounters: function() {
         if (Engine.Counters.autoSaveCounter <= 0) {
-            Engine.saveGame();
+            saveObject.saveGame();
             Engine.Counters.autoSaveCounter = 300;
         }
         
@@ -620,9 +588,11 @@ var Engine = {
                 Engine.updateActiveScriptsItems();
             } else if (Engine.currentPage == Engine.Page.CharacterInfo) {
                 Engine.displayCharacterInfo();
-            } 
+            }  else if (Engine.currentPage == Engine.Page.HacknetNodes) {
+                updateHacknetNodesContent();
+            }
             
-            Engine.Counters.updateDisplays = 5;
+            Engine.Counters.updateDisplays = 3;
         }
         
         if (Engine.Counters.serverGrowth <= 0) {
@@ -638,6 +608,12 @@ var Engine = {
                 inviteToFaction(randFaction);
             }
             Engine.Counters.checkFactionInvitations = 1500;
+        }
+        
+        if (Engine.Counters.passiveFactionGrowth <= 0) {
+            var adjustedCycles = Math.floor((600 - Engine.Counters.passiveFactionGrowth));
+            processPassiveFactionRepGain(adjustedCycles);
+            Engine.Counters.passiveFactionGrowth = 600;
         }
     },
     
@@ -703,6 +679,12 @@ var Engine = {
             return false;
         });
         
+        Engine.Clickables.hacknetNodesMainMenuButton = document.getElementById("hacknet-nodes-menu-link");
+        Engine.Clickables.hacknetNodesMainMenuButton.addEventListener("click", function() {
+            Engine.loadHacknetNodesContent();
+            return false;
+        });
+        
         Engine.Clickables.worldMainMenuButton = document.getElementById("world-menu-link");
         Engine.Clickables.worldMainMenuButton.addEventListener("click", function() {
             Engine.loadWorldContent();
@@ -738,13 +720,13 @@ var Engine = {
         
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
-            Engine.saveGame();
+            saveObject.saveGame();
             return false;           
         });
         
         Engine.Clickables.deleteMainMenuButton = document.getElementById("delete-game-link");
         Engine.Clickables.deleteMainMenuButton.addEventListener("click", function() {
-            Engine.deleteSave();
+            saveObject.deleteGame();
             return false;
         });
         
@@ -808,6 +790,9 @@ var Engine = {
         Engine.Display.activeScriptsContent = document.getElementById("active-scripts-container");
         Engine.Display.activeScriptsContent.style.visibility = "hidden";
         
+        Engine.Display.hacknetNodesContent = document.getElementById("hacknet-nodes-container");
+        Engine.Display.hacknetNodesContent.style.visibility = "hidden";
+        
         Engine.Display.worldContent = document.getElementById("world-container");
         Engine.Display.worldContent.style.visibility = "hidden";
         
@@ -856,7 +841,7 @@ var Engine = {
         Engine.Display.scriptEditorText = document.getElementById("script-editor-text");
         
         //Load game from save or create new game
-        if (Engine.loadSave()) {
+        if (loadGame(saveObject)) {
             console.log("Loaded game from save");
             CompanyPositions.init();
 
@@ -865,9 +850,26 @@ var Engine = {
             var lastUpdate = Player.lastUpdate;
             var numCyclesOffline = Math.floor((thisUpdate - lastUpdate) / Engine._idleSpeed);
             
+            /* Process offline progress */
             processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
             loadAllRunningScripts();    //This also takes care of offline production for those scripts
-            Player.work(numCyclesOffline);
+            if (Player.isWorking) {
+                if (Player.workType == CONSTANTS.WorkTypeFaction) {
+                    Player.workForFaction(numCyclesOffline);
+                } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
+                    Player.createProgramWork(numCyclesOffline);
+                } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
+                    Player.takeClass(numCyclesOffline);
+                } else {
+                    Player.work(numCyclesOffline);
+                }
+            }
+            
+            //Hacknet Nodes offline progress
+            processAllHacknetNodeEarnings(numCyclesOffline);
+            
+            //Passive faction rep gain offline
+            processPassiveFactionRepGain(numCyclesOffline);
         } else {
             //No save found, start new game
             console.log("Initializing new game");
@@ -887,7 +889,16 @@ var Engine = {
         if (Player.isWorking) {
             var cancelButton = document.getElementById("work-in-progress-cancel-button");
             cancelButton.addEventListener("click", function() {
-                Player.finishWork(true);
+                if (Player.workType == CONSTANTS.WorkTypeFaction) {
+                    var fac = Factions[Player.currentWorkFactionName];
+                    Player.finishFactionWork(true, fac);
+                } else if (Player.WorkType == CONSTANTS.WorkTypeCreateProgram) {
+                    Player.finishCreateProgramWork(true, Player.createProgramName);
+                } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
+                    Player.finishClass();
+                } else {
+                    Player.finishWork(true);
+                }
             });
             Engine.loadWorkInProgressContent();
         }

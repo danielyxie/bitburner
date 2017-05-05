@@ -6,6 +6,11 @@
 //wait for that promise to finish before continuing
 function evaluate(exp, workerScript) {
 	var env = workerScript.env;
+    if (exp == null) {
+        return new Promise(function(resolve, reject) {
+            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Error: NULL expression");
+        });
+    }
     switch (exp.type) {
 		case "num":
 		case "str":
@@ -103,7 +108,7 @@ function evaluate(exp, workerScript) {
 			var numConds = exp.cond.length;
 			var numThens = exp.then.length;
 			if (numConds == 0 || numThens == 0 || numConds != numThens) {
-				throw new Error ("|" + workerScript.serverIp + "|" + workerScript.name + "|Number of conds and thens in if structure don't match (or there are none)");
+				reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Number of conds and thens in if structure don't match (or there are none)");
 			}
 			
 			for (var i = 0; i < numConds; i++) {
@@ -120,6 +125,7 @@ function evaluate(exp, workerScript) {
 				if (env.stopFlag) {reject(workerScript);}
 				
 				console.log("for loop encountered in evaluator");
+                workerScript.scriptRef.log("Entering for loop");
 				var pInit = new Promise(function(resolve, reject) {
 					setTimeout(function() {
 						var resInit = evaluate(exp.init, workerScript);
@@ -135,6 +141,7 @@ function evaluate(exp, workerScript) {
 					var pForLoop = evaluateFor(exp, workerScript);
 					pForLoop.then(function(forLoopRes) {
 						resolve("forLoopDone");
+                        workerScript.scriptRef.log("Exiting for loop");
 					}, function(e) {
 						reject(e);
 					});
@@ -163,7 +170,8 @@ function evaluate(exp, workerScript) {
 				evaluateProgPromise.then(function(w) {
 					resolve(workerScript);
 				}, function(e) {
-					reject(e);
+                    workerScript.errorMessage = e.toString();
+					reject(workerScript);
 				});
 			});
 			break;
@@ -186,7 +194,7 @@ function evaluate(exp, workerScript) {
 				setTimeout(function() {
 					if (exp.func.value == "hack") {
 						if (exp.args.length != 1) {
-							throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|Hack() call has incorrect number of arguments. Takes 1 argument");
+							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Hack() call has incorrect number of arguments. Takes 1 argument");
 						}
 						
 						//IP of server to hack
@@ -203,20 +211,28 @@ function evaluate(exp, workerScript) {
                                 server = AllServers[ip];
                             }
                             if (server == null) {
-                                resolve("Invalid IP or server hostname passed in");
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into hack() command");
                                 workerScript.scriptRef.log("Cannot hack(). Invalid IP or hostname passed in: " + ip);
+                                return;
                             }
                             
 							//Calculate the hacking time 
 							var hackingTime = scriptCalculateHackingTime(server); //This is in seconds
 							
+                            //No root access or skill level too low
 							if (server.hasAdminRights == false) {
-								console.log("Cannot hack server " + server.hostname);
-								resolve("Cannot hack, no admin rights");
-								workerScript.scriptRef.log("Cannot hack this server because user does not have root access");
+								workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user does not have root access");
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because it did not have root access to " + server.hostname);
+                                return;
 							}
                             
-                            workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime + " seconds");
+                            if (server.requiredHackingSkill > Player.hacking_skill) {
+                                workerScript.scriptRef.log("Cannot hack this server (" + server.hostaname + ") because user does not have root access");
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because player's hacking skill is not high enough to hack " + server.hostname);
+                                return;
+                            }
+                            
+                            workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds");
 							
 							var p = new Promise(function(resolve, reject) {
 								if (env.stopFlag) {reject(workerScript);}
@@ -240,7 +256,7 @@ function evaluate(exp, workerScript) {
                                         Player.gainHackingExp(expGainedOnSuccess);
 										workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
 										console.log("Script successfully hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
-                                        workerScript.scriptRef.log("Script successfully hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
+                                        workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + moneyGained + " and " + expGainedOnSuccess +  " exp");
 										resolve("Hack success");
 									} else {			
 										//Player only gains 25% exp for failure? TODO Can change this later to balance
@@ -248,7 +264,7 @@ function evaluate(exp, workerScript) {
 										workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
 										
 										console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + " exp");
-                                        workerScript.scriptRef.log("Script unsuccessful to hack " + server.hostname + ". Gained " + expGainedOnFailure + " exp");
+                                        workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + expGainedOnFailure + " exp");
 										resolve("Hack failure");
 									}
 								}, hackingTime * 1000);
@@ -265,7 +281,8 @@ function evaluate(exp, workerScript) {
 
 					} else if (exp.func.value == "sleep") {
 						if (exp.args.length != 1) {
-							throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|Sleep() call has incorrect number of arguments. Takes 1 argument.");
+							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|sleep() call has incorrect number of arguments. Takes 1 argument.");
+                            return;
 						}
 						
 						var sleepTimePromise = evaluate(exp.args[0], workerScript);
@@ -285,11 +302,9 @@ function evaluate(exp, workerScript) {
 						}, function(e) {
 							reject(e)
 						});
-
-						
 					} else if (exp.func.value == "print") {
 						if (exp.args.length != 1) {
-							throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "| Print() call has incorrect number of arguments. Takes 1 argument");
+							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|print() call has incorrect number of arguments. Takes 1 argument");
 						}
 						
 						var p = new Promise(function(resolve, reject) {
@@ -304,25 +319,74 @@ function evaluate(exp, workerScript) {
 						});
 					
 						p.then(function(res) {
-							post(res.toString());
+							workerScript.scriptRef.log(res.toString());
 							resolve("printExecuted");
 						}, function(e) {
 							reject(e);
 						});
-					}
+					} else if (exp.func.value == "grow") {
+                        if (exp.args.length != 1) {
+                            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|grow() call has incorrect number of arguments. Takes 1 argument");
+                        }
+                        
+                        //IP/hostname of server to hack
+						var ipPromise = evaluate(exp.args[0], workerScript);
+						
+						ipPromise.then(function(ip) {
+                            //Check if its a valid IP address. If it's not, assume its a hostname and
+                            //try to get the server. If its not a server, there is an error
+                            var server = null;
+                            if (!isValidIPAddress(ip)) {
+                                //It's not an IP address, so see if its a hostanme
+                                server = GetServerByHostname(ip);
+                            } else {
+                                server = AllServers[ip];
+                            }
+                            if (server == null) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into grow() command");
+                                workerScript.scriptRef.log("Cannot grow(). Invalid IP or hostname passed in: " + ip);
+                                return;
+                            }
+                            							
+                            //No root access or skill level too low
+							if (server.hasAdminRights == false) {
+								workerScript.scriptRef.log("Cannot grow this server (" + server.hostname + ") because user does not have root access");
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because it did not have root access to " + server.hostname);
+                                return;
+							}
+                            
+                            workerScript.scriptRef.log("Calling grow() on server " + server.hostname + " in 120 seconds");
+                            var p = new Promise(function(resolve, reject) {
+								if (env.stopFlag) {reject(workerScript);}
+                                console.log("Executing grow on " + server.hostname + " in 2 minutes ");
+								setTimeout(function() {
+									var growthPercentage = processSingleServerGrowth(server, 450);
+                                    resolve(growthPercentage);
+								}, 120 * 1000); //grow() takes flat 2 minutes right now
+							});
+                            
+                            p.then(function(growthPercentage) {
+								resolve("hackExecuted");
+                                workerScript.scriptRef.log("Using grow(), the money available on " + server.hostname + " was grown by " + (growthPercentage*100 - 100).toFixed(6) + "%");
+							}, function(e) {
+								reject(e);
+							});
+                        }, function(e) {
+							reject(e);
+						});
+                    }
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
 			break;
 
 		default:
-			throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "| Can't evaluate type " + exp.type);
+			reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Can't evaluate type " + exp.type);
     }
 }
 
 //Evaluate the looping part of a for loop (Initialization block is NOT done in here)
 function evaluateFor(exp, workerScript) {
 	var env = workerScript.env;
-	console.log("evaluateFor() called");
 	return new Promise(function(resolve, reject) {
 		if (env.stopFlag) {reject(workerScript);}
 		
@@ -330,7 +394,6 @@ function evaluateFor(exp, workerScript) {
 			setTimeout(function() {
 				var evaluatePromise = evaluate(exp.cond, workerScript);
 				evaluatePromise.then(function(resCond) {
-					console.log("Conditional evaluated to: " + resCond);
 					resolve(resCond);
 				}, function(e) {
 					reject(e);
@@ -340,13 +403,11 @@ function evaluateFor(exp, workerScript) {
 		
 		pCond.then(function(resCond) {
 			if (resCond) {
-				console.log("About to evaluate an iteration of for loop code");
 				//Run the for loop code
 				var pCode = new Promise(function(resolve, reject) {
 					setTimeout(function() {
 						var evaluatePromise = evaluate(exp.code, workerScript);
 						evaluatePromise.then(function(resCode) {
-							console.log("Evaluated an iteration of for loop code");
 							resolve(resCode);
 						}, function(e) {
 							reject(e);
@@ -360,7 +421,6 @@ function evaluateFor(exp, workerScript) {
 						setTimeout(function() {
 							var evaluatePromise = evaluate(exp.postloop, workerScript);
 							evaluatePromise.then(function(foo) {
-								console.log("Evaluated for loop postloop");
 								resolve("postLoopFinished");
 							}, function(e) {
 								reject(e);
@@ -383,7 +443,6 @@ function evaluateFor(exp, workerScript) {
 					reject(e);
 				});
 			} else {
-				console.log("Cond is false, stopping for loop");
 				resolve("endForLoop");	//Doesn't need to resolve to any particular value
 			}
 		}, function(e) {
@@ -395,7 +454,6 @@ function evaluateFor(exp, workerScript) {
 function evaluateWhile(exp, workerScript) {
 	var env = workerScript.env;
 	
-	console.log("evaluateWhile() called");
 	return new Promise(function(resolve, reject) {
 		if (env.stopFlag) {reject(workerScript);}
 		
@@ -403,7 +461,6 @@ function evaluateWhile(exp, workerScript) {
 			setTimeout(function() {
 				var evaluatePromise = evaluate(exp.cond, workerScript);
 				evaluatePromise.then(function(resCond) {
-					console.log("Conditional evaluated to: " + resCond);
 					resolve(resCond);
 				}, function(e) {
 					reject(e);	
@@ -418,7 +475,6 @@ function evaluateWhile(exp, workerScript) {
 					setTimeout(function() {
 						var evaluatePromise = evaluate(exp.code, workerScript);
 						evaluatePromise.then(function(resCode) {
-							console.log("Evaluated an iteration of while loop code");
 							resolve(resCode);
 						}, function(e) {
 							reject(e);
@@ -438,7 +494,6 @@ function evaluateWhile(exp, workerScript) {
 					reject(e);
 				});
 			} else {
-				console.log("Cond is false, stopping while loop");
 				resolve("endWhileLoop");	//Doesn't need to resolve to any particular value
 			}
 		}, function(e) {
@@ -450,12 +505,10 @@ function evaluateWhile(exp, workerScript) {
 function evaluateProg(exp, workerScript, index) {
 	var env = workerScript.env;
 	
-	console.log("evaluateProg() called");
 	return new Promise(function(resolve, reject) {
 		if (env.stopFlag) {reject(workerScript);}
 		
 		if (index >= exp.prog.length) {
-			console.log("Prog done. Resolving recursively");
 			resolve("progFinished");
 		} else {
 			//Evaluate this line of code in the prog
@@ -514,10 +567,22 @@ function apply_op(op, a, b) {
     throw new Error("Can't apply operator " + op);
 } 
 
+function isScriptErrorMessage(msg) {
+    splitMsg = msg.split("|");
+    if (splitMsg.length != 4){
+        return false;
+    }
+    var ip = splitMsg[1];
+    if (!isValidIPAddress(ip)) {
+        return false;
+    }
+    return true;
+}
+
 //The same as Player's calculateHackingChance() function but takes in the server as an argument
 function scriptCalculateHackingChance(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
-    var skillMult = (Player.hacking_chance_mult * Player.hacking_skill);
+    var skillMult = (2 * Player.hacking_chance_mult * Player.hacking_skill);
     var skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
     var chance = skillChance * difficultyMult;
     if (chance < 0) {return 0;}
@@ -527,8 +592,8 @@ function scriptCalculateHackingChance(server) {
 //The same as Player's calculateHackingTime() function but takes in the server as an argument
 function scriptCalculateHackingTime(server) {
 	var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-	var skillFactor = (difficultyMult + 1000) / (Player.hacking_skill + 50);
-	var hackingTime = skillFactor * Player.hacking_speed_mult; //This is in seconds
+	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
+	var hackingTime = skillFactor * Player.hacking_speed_mult * 5; //This is in seconds
 	return hackingTime;
 }
 
@@ -541,8 +606,7 @@ function scriptCalculateExpGain(server) {
 function scriptCalculatePercentMoneyHacked(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult;
-    console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
+    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 1000;
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;

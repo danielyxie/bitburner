@@ -2,45 +2,67 @@
  *  Script object
  */
 
-//Define key commands in script editor (ctrl x to close, etc.)
+//Initialize the 'save and close' button on script editor page
+function scriptEditorSaveCloseInit() {
+    var closeButton = document.getElementById("script-editor-save-and-close-button");
+    
+    closeButton.addEventListener("click", function() {
+        saveAndCloseScriptEditor();
+        return false;
+    });
+};
+
+document.addEventListener("DOMContentLoaded", scriptEditorSaveCloseInit, false);
+
+//Define key commands in script editor (ctrl o to save + close, etc.)
 $(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
 		//Ctrl + x
-        if (e.keyCode == 88 && e.ctrlKey) {			
-			var filename = document.getElementById("script-editor-filename").value;
-			
-			if (checkValidFilename(filename) == false) {
-				postScriptEditorStatus("Script filename can contain only alphanumerics, hyphens, and underscores");
-				return;
-			}
-			
-			filename += ".script";
-			
-			//If the current script matches one thats currently running, throw an error
-			for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
-				if (filename == Player.getCurrentServer().runningScripts[i].filename) {
-					postScriptEditorStatus("Cannot write to script that is currently running!");
-					return;
-				}
-			}
-			
-			//If the current script already exists on the server, overwrite it
-			for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
-				if (filename == Player.getCurrentServer().scripts[i].filename) {
-					Player.getCurrentServer().scripts[i].saveScript();
-					Engine.loadTerminalContent();
-					return;
-				}
-			}
-			
-			//If the current script does NOT exist, create a new one
-			var script = new Script();
-			script.saveScript();
-			Player.getCurrentServer().scripts.push(script);
-			Engine.loadTerminalContent();
+        if (e.keyCode == 66 && e.ctrlKey) {			
+			saveAndCloseScriptEditor();
         }
 	}
 });
+
+function saveAndCloseScriptEditor() {
+    var filename = document.getElementById("script-editor-filename").value;
+    
+    if (filename == "") {
+        //If no filename...just close and do nothing
+        Engine.loadTerminalContent();
+        return;
+    }
+        
+    if (checkValidFilename(filename) == false) {
+        dialogBoxCreate("Script filename can contain only alphanumerics, hyphens, and underscores");
+        return;
+    }
+    
+    filename += ".script";
+    
+    //If the current script matches one thats currently running, throw an error
+    for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
+        if (filename == Player.getCurrentServer().runningScripts[i].filename) {
+            dialogBoxCreate("Cannot write to script that is currently running!");
+            return;
+        }
+    }
+    
+    //If the current script already exists on the server, overwrite it
+    for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
+        if (filename == Player.getCurrentServer().scripts[i].filename) {
+            Player.getCurrentServer().scripts[i].saveScript();
+            Engine.loadTerminalContent();
+            return;
+        }
+    }
+    
+    //If the current script does NOT exist, create a new one
+    var script = new Script();
+    script.saveScript();
+    Player.getCurrentServer().scripts.push(script);
+    Engine.loadTerminalContent();
+}
 
 //Checks that the string contains only valid characters for a filename, which are alphanumeric,
 // underscores and hyphens
@@ -51,16 +73,6 @@ function checkValidFilename(filename) {
 		return true;
 	}
 	return false;
-}
-
-var ScriptEditorLastStatus = null;
-function postScriptEditorStatus(text) {
-	document.getElementById("script-editor-status").innerHTML = text;
-	
-	clearTimeout(ScriptEditorLastStatus);
-	ScriptEditorLastStatus = setTimeout(function() {
-		document.getElementById("script-editor-status").innerHTML = "";
-	}, 3000);
 }
 
 function Script() {    
@@ -123,7 +135,7 @@ Script.prototype.updateNumInstructions = function() {
 //Ideally, I would want it to be based on type of instructions as well
 // 	(e.g. hack() costs a lot but others dont)
 Script.prototype.updateRamUsage = function() {
-	this.ramUsage = this.numInstructions * .25;
+	this.ramUsage = this.numInstructions * 0.5;
 }
 
 Script.prototype.log = function(txt) {
@@ -189,8 +201,8 @@ scriptCalculateOfflineProduction = function(script) {
 	
 	//Calculate the "confidence" rating of the script's true production. This is based
 	//entirely off of time. We will arbitrarily say that if a script has been running for
-	//120 minutes (7200 sec) then we are completely confident in its ability
-	var confidence = (script.onlineRunningTime) / 7200;
+	//4 hours (14400 sec) then we are completely confident in its ability
+	var confidence = (script.onlineRunningTime) / 14400;
 	if (confidence >= 1) {confidence = 1;}
 	console.log("onlineRunningTime: " + script.onlineRunningTime.toString());
 	console.log("Confidence: " + confidence.toString());
@@ -202,11 +214,15 @@ scriptCalculateOfflineProduction = function(script) {
 	var expGain = (1/2) * (script.onlineExpGained / script.onlineRunningTime) * timePassed;
 	expGain *= confidence;
 	
-	//Account for production in Player and server
+	//Account for production in Player and server)
+    var server = AllServers[script.server];
+    if (production > server.moneyAvailable) {
+        production = server.moneyAvailable;
+    }
+    
 	Player.gainMoney(production);
-	Player.hacking_exp += expGain;
+	Player.gainHackingExp(expGain);
 	
-	var server = AllServers[script.server];
 	server.moneyAvailable -= production;
 	if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
 	

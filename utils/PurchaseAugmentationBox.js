@@ -28,6 +28,7 @@ purchaseAugmentationBoxSetText = function(txt) {
 
 //ram argument is in GB
 purchaseAugmentationBoxCreate = function(aug, fac) {
+    console.log("here");
     purchaseAugmentationBoxSetText("Would you like to purchase the " + aug.name + " Augmentation for $" + 
                                    (aug.baseCost * fac.augmentationPriceMult)  + "?");
     
@@ -137,8 +138,8 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
         } else if (Player.money >= (aug.baseCost * fac.augmentationPriceMult)) {
             applyAugmentation(aug, fac);
             //TODO Make this text better
-            dialogBoxCreate("You slowly drift to sleep as " + fac.name + "'s scientists put you under <br>" +
-                            " in order to install the " + aug.name + " Augmentation. <br>br>" +
+            dialogBoxCreate("You slowly drift to sleep as " + fac.name + "'s scientists put you under " +
+                            " in order to install the " + aug.name + " Augmentation. <br><br>" +
                             "You wake up in your home...you feel different...");
 
             prestigeAugmentation();

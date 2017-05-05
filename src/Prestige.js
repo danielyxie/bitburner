@@ -2,6 +2,7 @@
 
 //Prestige by purchasing augmentation
 function prestigeAugmentation() {
+    //Sum up lifetime/total statistics
     Player.total_hacking        += Player.hacking_skill;
     Player.lifetime_hacking     += Player.hacking_skill;
     Player.total_strength       += Player.strength;
@@ -15,6 +16,27 @@ function prestigeAugmentation() {
     Player.total_charisma       += Player.charisma;
     Player.lifetime_charisma    += Player.charisma;
     
+    //Crime statistics
+    Player.numTimesShopliftedTotal += Player.numTimesShoplifted;
+    Player.numTimesShopliftedLifetime += Player.numTimesShoplifted;
+    Player.numTimesShoplifted = 0;
+    Player.numPeopleMuggedTotal += Player.numPeopleMugged;
+    Player.numPeopleMuggedLifetime += Player.numPeopleMugged;
+    Player.numPeopleMugged = 0;
+    Player.numTimesDealtDrugsTotal += Player.numTimesDealtDrugs;
+    Player.numTimesDealtDrugsLifetime += Player.numTimesDealtDrugs;
+    Player.numTimesDealtDrugs = 0;
+    Player.numTimesTraffickArmsTotal += Player.numTimesTraffickArms;
+    Player.numTimesTraffickArmsLifetime += Player.numTimesTraffickArms;
+    Player.numTimesTraffickArms = 0;
+    Player.numPeopleKilledTotal += Player.numPeopleKilled;
+    Player.numPeopleKilledLifetime += Player.numPeopleKilled;
+    Player.numPeopleKilled = 0;
+    Player.numTimesKidnappedTotal += Player.numTimesKidnapped;
+    Player.numTimesKidnappedLifetime += Player.numTimesKidnapped;
+    Player.numTimesKidnapped = 0;
+    
+    //Reset stats
     Player.hacking_skill = 1;
     
     Player.strength = 1;
@@ -53,6 +75,9 @@ function prestigeAugmentation() {
     Player.isWorking = false;
     Player.currentWorkFactionName = "";
     Player.currentWorkFactionDescription = "";
+    this.createProgramName = "";
+    this.className = "";
+    this.crimeType = "";
     
     Player.workHackExpGainRate = 0;
     Player.workStrExpGainRate = 0;
@@ -82,6 +107,20 @@ function prestigeAugmentation() {
     }
     AllServers = {};
     
+    //Delete all running scripts objects
+    for (var i = 0; i < workerScripts.length; ++i) {
+        workerScripts[i].env.stopFlag = true;
+    }
+    //Delete active scripts display elements
+    var list = Engine.ActiveScriptsList.querySelectorAll('#active-scripts-list li');
+    for (var i = list.length-1; i >= 0; --i) {
+        Engine.deleteActiveScriptsItem(i);
+    }
+    workerScripts.length = 0;
+    
+    //Delete Hacknet Nodes
+    Player.hacknetNodes.length = 0;
+    
     //Delete Special Server IPs
     for (var member in SpecialServerIps) {
         delete SpecialServerIps[member];
@@ -107,4 +146,6 @@ function prestigeAugmentation() {
     initCompanies();
     initFactions();
     CompanyPositions.init();
+    
+    Engine.loadTerminalContent();
 }

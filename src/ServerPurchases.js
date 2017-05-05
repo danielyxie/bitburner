@@ -1,4 +1,7 @@
-/* Functions to handle Purchase of Servers */
+/* Functions to handle any server-related purchasing:
+ *  Purchasing new servers
+ *  Purchasing more RAM for home computer
+ */
 purchaseServer = function(ram, cost) {
     //Check if player has enough money
     if (cost > Player.money) {
@@ -25,7 +28,22 @@ purchaseServer = function(ram, cost) {
     homeComputer.serversOnNetwork.push(newServ.ip);
     newServ.serversOnNetwork.push(homeComputer.ip);
     
-    Player.money -= cost; 
+    Player.loseMoney(cost); 
     
     dialogBoxCreate("Server successfully purchased with hostname " + hostname);
+}
+
+
+purchaseRamForHomeComputer = function(cost) {
+    if (cost > Player.money) {
+        dialogBoxCreate("You do not have enough money to purchase additional RAM for your home computer");
+        return;
+    }
+    
+    var homeComputer = Player.getHomeComputer();
+    homeComputer.maxRam *= 2;
+    
+    Player.loseMoney(cost); 
+    
+    dialogBoxCreate("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
 }

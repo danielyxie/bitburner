@@ -17,19 +17,23 @@ var hackProgressPost = function(input) {
 	updateTerminalScroll();    
 }
 
+//Scroll to the bottom of the terminal's 'text area'
 function updateTerminalScroll() {
 	var element = document.getElementById("terminal-container");
 	element.scrollTop = element.scrollHeight;
 }
 
 var postNetburnerText = function() {
-	post("Netburner v0.1");
+	post("Bitburner v" + CONSTANTS.Version);
 }
 
 //Defines key commands in terminal
-$(document).keyup(function(event) {
+$(document).keydown(function(event) {
 	//Terminal
 	if (Engine.currentPage == Engine.Page.Terminal) {
+        var terminalInput = document.getElementById("terminal-input-text-box");
+        if (terminalInput != null && !event.ctrlKey && !event.shiftKey) {terminalInput.focus();}
+        
 		//Enter
 		if (event.keyCode == 13) {
 			var command = $('input[class=terminal-input]').val();
@@ -48,6 +52,69 @@ $(document).keyup(function(event) {
 			Engine._actionInProgress = false;
 			Terminal.finishAction(true);
 		}
+        
+        //Up key to cycle through past commands
+        if (event.keyCode == 38) {
+            if (terminalInput == null) {return;}
+            var i = Terminal.commandHistoryIndex;
+            var len = Terminal.commandHistory.length;
+            
+            if (len == 0) {return;}
+            if (i < 0 || i > len) {
+                Terminal.commandHistoryIndex = len;
+            } 
+            
+            if (i != 0) {
+                --Terminal.commandHistoryIndex;
+            }
+            var prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
+            terminalInput.value = prevCommand;
+            setTimeout(function(){terminalInput.selectionStart = terminalInput.selectionEnd = 10000; }, 0);
+        }
+        
+        //Down key
+        if (event.keyCode == 40) {
+            if (terminalInput == null) {return;}
+            var i = Terminal.commandHistoryIndex;
+            var len = Terminal.commandHistory.length;
+            
+            if (len == 0) {return;}
+            if (i < 0 || i > len) {
+                Terminal.commandHistoryIndex = len;
+            }
+            
+            //Latest command, put nothing
+            if (i == len || i == len-1) {
+                Terminal.commandHistoryIndex = len;
+                terminalInput.value = "";
+            } else {
+                ++Terminal.commandHistoryIndex;
+                var prevCommand = Terminal.commandHistory[Terminal.commandHistoryIndex];
+                terminalInput.value = prevCommand;
+            }
+        }
+        
+        //Tab (autocomplete)
+        if (event.keyCode == 9) {
+            if (terminalInput == null) {return;}
+            var input = terminalInput.value;
+            if (input == "") {return;}
+            input = input.trim();
+            input = input.replace(/\s\s+/g, ' ');
+            
+            var allPos = determineAllPossibilitiesForTabCompletion(input);
+            if (allPos.length == 0) {return;}
+            
+            var commandArray = input.split(" ");
+            
+            var arg = "";
+            if (commandArray.length == 0) {return;}
+            else if (commandArray.length > 1) {
+                arg = commandArray[1];
+            }
+            
+            tabCompletion(commandArray[0], arg, allPos);
+        }
 	}
 });
 
@@ -65,7 +132,11 @@ $(document).keydown(function(e) {
 		} else if (terminalCtrlPressed == true) {
 			//Don't focus
 		} else {
-			$('.terminal-input').focus();	
+            var inputTextBox = document.getElementById("terminal-input-text-box");
+            if (inputTextBox != null) {
+                inputTextBox.focus();
+            }
+			
 			terminalCtrlPressed = false;
 		}
 	}
@@ -78,10 +149,94 @@ $(document).keyup(function(e) {
 	}
 })
 
+//Implements a tab completion feature for terminal
+//  command - Command (first arg only)
+//  arg - Incomplete argument string that the function will try to complete, or will display
+//        a series of possible options for
+//  allPossibilities - Array of strings containing all possibilities that the
+//                     string can complete to
+function tabCompletion(command, arg, allPossibilities) {
+    if (!(allPossibilities.constructor === Array)) {return;}
+    if (!containsAllStrings(allPossibilities)) {return;}
+    
+    for (var i = allPossibilities.length-1; i >= 0; --i) {
+        if (!allPossibilities[i].startsWith(arg)) {
+            allPossibilities.splice(i, 1);
+        }
+    }
+    
+    if (allPossibilities.length == 0) {
+        return;
+    } else if (allPossibilities.length == 1) {
+        document.getElementById("terminal-input-text-box").value = command + " " + allPossibilities[0];
+        document.getElementById("terminal-input-text-box").focus();
+    } else {
+        var longestStartSubstr = longestCommonStart(allPossibilities);
+        //If the longest common starting substring of remaining possibilities is the same
+        //as whatevers already in terminal, just list all possible options. Otherwise,
+        //change the input in the terminal to the longest common starting substr
+        if (longestStartSubstr == arg) {
+            //List all possible options
+            var allOptionsStr = "";
+            for (var i = 0; i < allPossibilities.length; ++i) {
+                allOptionsStr += allPossibilities[i];
+                allOptionsStr += "   ";
+            }
+            post("> " + command + " " + arg);
+            post(allOptionsStr);
+        } else {
+            document.getElementById("terminal-input-text-box").value = command + " " + longestStartSubstr;
+            document.getElementById("terminal-input-text-box").focus();
+        }
+    }
+}
+
+function determineAllPossibilitiesForTabCompletion(input) {
+    var allPos = [];
+    var currServ = Player.getCurrentServer();
+    if (input.startsWith("connect ") || input.startsWith("telnet ")) {
+        //All network connections
+        for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
+            var serv = AllServers[currServ.serversOnNetwork[i]];
+            if (serv == null) {continue;}
+            allPos.push(serv.ip); //IP
+            allPos.push(serv.hostname); //Hostname
+        }
+        return allPos;
+    } 
+    
+    if (input.startsWith("kill ") || input.startsWith("nano ") ||
+        input.startsWith("tail ") || input.startsWith("rm ")) {
+        //All Scripts
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push(currServ.scripts[i].filename);
+        }
+        return allPos;
+    }
+    
+    if (input.startsWith("run ")) {
+        //All programs and scripts
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push(currServ.scripts[i].filename);
+        }
+        
+        //Programs are on home computer
+        var homeComputer = Player.getHomeComputer();
+        for(var i = 0; i < homeComputer.programs.length; ++i) {
+            allPos.push(homeComputer.programs[i]);
+        }
+        return allPos;
+    }
+    return allPos;
+}
+
 var Terminal = {
     //Flags to determine whether the player is currently running a hack or an analyze
     hackFlag:       false, 
     analyzeFlag:    false, 
+    
+    commandHistory: [],
+    commandHistoryIndex: 0,
     
     finishAction: function(cancelled = false) {
         if (Terminal.hackFlag) {
@@ -125,7 +280,7 @@ var Terminal = {
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" class="terminal-input"/>';
+        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);      
 
         Terminal.hackFlag = false;
@@ -176,11 +331,21 @@ var Terminal = {
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" class="terminal-input"/>';
+        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);      
     }, 
 	
 	executeCommand:  function(command) {
+        command = command.trim();
+        //Replace all extra whitespace in command with a single space
+        command = command.replace(/\s\s+/g, ' ');
+        
+        Terminal.commandHistory.push(command);
+        if (Terminal.commandHistory.length > 50) {
+            Terminal.commandHistory.splice(0, 1);
+        }
+        Terminal.commandHistoryIndex = Terminal.commandHistory.length;
+        
 		var commandArray = command.split(" ");
 		
 		if (commandArray.length == 0) {
@@ -272,7 +437,13 @@ var Terminal = {
 				post(CONSTANTS.HelpText);
 				break;
 			case "home":
-				//TODO return to home computer
+				if (commandArray.length != 1) {
+                    post("Incorrect usage of home command. Usage: home"); return;
+                }
+                Player.getCurrentServer().isConnectedTo = false;
+                Player.currentServer = Player.getHomeComputer().ip;
+                Player.getCurrentServer().isConnectedTo = true;
+                post("Connected to home");
 				break;
 			case "hostname":
 				if (commandArray.length != 1) {
@@ -297,7 +468,7 @@ var Terminal = {
 				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
 					if (Player.getCurrentServer().runningScripts[i] == scriptName) {						
 						killWorkerScript(scriptName, Player.getCurrentServer().ip); 
-						post("Killing " + scriptName + ". May take a few seconds");
+						post("Killing " + scriptName + ". May take up to a few minutes for the scripts to die...");
 						return;
 					} 
 				}
@@ -470,6 +641,7 @@ var Terminal = {
 				break;
 			case "top":
 				//TODO List each's script RAM usage
+                post("Not yet implemented");
 				break;
 			default:
 				post("Command not found");
@@ -508,9 +680,7 @@ var Terminal = {
 				}
 				break;
             case Programs.BruteSSHProgram:
-                if (s.hasAdminRights == false) {
-                    post("Permission denied. You do not have root access to this computer.");
-                } else if (s.sshPortOpen) {
+                if (s.sshPortOpen) {
                     post("SSH Port (22) is already open!");
                 } else {
                     s.sshPortOpen = true;
@@ -519,9 +689,7 @@ var Terminal = {
                 }
                 break;
             case Programs.FTPCrackProgram:
-                if (s.hasAdminRights == false) {
-                    post("Permission denied. You do not have root access to this computer.");
-                } else if (s.ftpPortOpen) {
+                if (s.ftpPortOpen) {
                     post("FTP Port (21) is already open!");
                 } else {
                     s.ftpPortOpen = true;
@@ -530,9 +698,7 @@ var Terminal = {
                 }
                 break;
             case Programs.RelaySMTPProgram:
-                if (s.hasAdminRights == false) {
-                    post("Permission denied. You do not have root access to this computer.");
-                } else if (s.smtpPortOpen) {
+                if (s.smtpPortOpen) {
                     post("SMTP Port (25) is already open!");
                 } else {
                     s.smtpPortOpen = true;
@@ -541,9 +707,7 @@ var Terminal = {
                 }
                 break;
             case Programs.HTTPWormProgram:
-                if (s.hasAdminRights == false) {
-                    post("permission denied. You do not have root access to this computer.");
-                } else if (s.httpPortOpen) {
+                if (s.httpPortOpen) {
                     post("HTTP Port (80) is already open!");
                 } else {
                     s.httpPortOpen = true;
@@ -552,9 +716,7 @@ var Terminal = {
                 }
                 break;
             case Programs.SQLInjectProgram:
-                if (s.hasAdminRights == false) {
-                    post("permission denied. You do not have root access to this computer.");
-                } else if (s.sqlPortOpen) {
+                if (s.sqlPortOpen) {
                     post("SQL Port (1433) is already open!");
                 } else {
                     s.sqlPortOpen = true;
@@ -604,6 +766,7 @@ var Terminal = {
 		
 		post("ERROR: No such script");
 	}
+    
 };
 
 

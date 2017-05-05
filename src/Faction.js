@@ -41,7 +41,6 @@ AddToFactions = function(faction) {
 	Factions[name] = faction;
 }
 
-//TODO Add faction information
 //TODO Augmentation price and rep requirement mult are 1 for everything right now,
 //      This might change in the future for balance
 initFactions = function() {
@@ -137,6 +136,9 @@ initFactions = function() {
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
+    var Netburners              = new Faction("Netburners");
+    Netburners.setInfo(FactionInfo.NetburnersInfo);
+    AddToFactions(Netburners);
 	var TianDiHui				= new Faction("Tian Di Hui");	//Society of the Heaven and Earth
     TianDiHui.setInfo(FactionInfo.TianDiHuiInfo);
 	AddToFactions(TianDiHui);
@@ -344,7 +346,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (speakersforthedeadFac.isBanned == false && speakersforthedeadFac.isMember == false && 
         this.hacking_skill >= 100 && this.strength >= 300 && this.defense >= 300 && 
         this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 10 &&
-        this.numPeopleKilledTotal >= 100 && this.companyName != Locations.Sector12CIA &&
+        this.numPeopleKilledTotal >= 100 && this.karma <= -50 && this.companyName != Locations.Sector12CIA &&
         this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(speakersforthedeadFac);
     }   
@@ -354,7 +356,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (thedarkarmyFac.isBanned == false && thedarkarmyFac.isMember == false && 
         this.hacking_skill >= 300 && this.strength >= 300 && this.defense >= 300 && 
         this.dexterity >= 300 && this.agility >= 300 && this.location == Locations.Chongqing && 
-        this.numPeopleKilled >= 5 && this.companyName != Locations.Sector12CIA && 
+        this.numPeopleKilled >= 5 && this.karma <= -50 && this.companyName != Locations.Sector12CIA && 
         this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(thedarkarmyFac);
     }
@@ -365,8 +367,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         this.hacking_skill >= 200 && this.strength >= 200 && this.defense >= 200 &&
         this.dexterity >= 200 && this.agility >= 200 && 
         (this.location == Locations.Aevum || this.location == Locations.Sector12) &&
-        this.money >= 10000000 && this.companyName != Locations.Sector12CIA && 
-        this.companyName != Locations.Sector12NSA) {
+        this.money >= 10000000 && this.karma <= -100 && 
+        this.companyName != Locations.Sector12CIA && this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(thesyndicateFac);
     }
     
@@ -376,9 +378,25 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         (this.companyPosition.positionName == CompanyPositions.CTO.positionName || 
          this.companyPosition.positionName == CompanyPositions.CFO.positionName || 
          this.companyPosition.positionName == CompanyPositions.CEO.positionName) &&
-         this.money >= 15000000) {
+         this.money >= 15000000 && this.karma <= -25) {
         invitedFactions.push(silhouetteFac);
-     }
+    }
+    
+    //Netburners
+    var netburnersFac = Factions["Netburners"];
+    var totalHacknetRam = 0;
+    var totalHacknetCores = 0;
+    var totalHacknetLevels = 0;
+    for (var i = 0; i < Player.hacknetNodes.length; ++i) {
+        totalHacknetLevels += Player.hacknetNodes[i].level;
+        totalHacknetRam += Player.hacknetNodes[i].ram;
+        totalHacknetCores += Player.hacknetNodes[i].numCores;
+    }
+    if (netburnersFac.isBanned == false && netburnersFac.isMember == false &&
+        this.hacking_skill >= 100 && totalHacknetRam >= 10 && 
+        totalHacknetCores >= 5 && totalHacknetLevels >= 100) {
+        invitedFactions.push(netburnersFac);
+    }
     
     //Tian Di Hui
     var tiandihuiFac = Factions["Tian Di Hui"];
@@ -504,7 +522,7 @@ displayFactionContent = function(factionName) {
 	var faction = Factions[factionName];
     document.getElementById("faction-name").innerHTML = factionName;
     document.getElementById("faction-info").innerHTML = faction.info;
-    document.getElementById("faction-reputation").innerHTML = "Reputation: " + faction.playerReputation.toFixed(3);
+    document.getElementById("faction-reputation").innerHTML = "Reputation: " + formatNumber(faction.playerReputation, 4);
 	
 	var hackDiv 			= document.getElementById("faction-hack-div");
 	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
@@ -688,6 +706,10 @@ displayFactionContent = function(factionName) {
                 hackDiv.style.display = "inline";
                 fieldWorkDiv.style.display = "inline";
                 securityWorkDiv.style.display = "none";
+            case "Netburners":
+                hackDiv.style.display = "inline";
+                fieldWorkDiv.style.display = "none";
+                securityWorkDiv.style.display = "none";
 			case "Tian Di Hui":
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "none";
@@ -717,31 +739,52 @@ displayFactionAugmentations = function(factionName) {
     }
     
     for (var i = 0; i < faction.augmentations.length; ++i) {
-        var aug = Augmentations[faction.augmentations[i]];
-        var item = document.createElement("li");
-        var span = document.createElement("span");
-        var aElem = document.createElement("a");
-        var pElem = document.createElement("p");
-        aElem.setAttribute("href", "#");
-        var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
-        if (faction.playerReputation >= req) {
-            aElem.setAttribute("class", "a-link-button");
-            pElem.innerHTML = "UNLOCKED";
-            //TODO Event listener for button to purchase augmentation
-        } else {
-            aElem.setAttribute("class", "a-link-button-inactive");
-            pElem.innerHTML = "LOCKED (Requires " + req + " faction reputation)";
-            pElem.style.color = "red";
-        }
-        aElem.style.display = "inline-block";
-        pElem.style.display = "inline-block";
-        aElem.innerHTML = aug.name;
-        
-        span.appendChild(aElem);
-        span.appendChild(pElem);
-        
-        item.appendChild(span);
-        
-        augmentationsList.appendChild(item);
+        (function () {
+            var aug = Augmentations[faction.augmentations[i]];
+            var item = document.createElement("li");
+            var span = document.createElement("span");
+            var aElem = document.createElement("a");
+            var pElem = document.createElement("p");
+            aElem.setAttribute("href", "#");
+            var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
+            if (faction.playerReputation >= req) {
+                aElem.setAttribute("class", "a-link-button");
+                pElem.innerHTML = "UNLOCKED - $" + formatNumber(aug.baseCost * faction.augmentationPriceMult, 2);
+                //TODO Event listener for button to purchase augmentation
+            } else {
+                aElem.setAttribute("class", "a-link-button-inactive");
+                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 4) + " faction reputation)";
+                pElem.style.color = "red";
+            }
+            aElem.style.display = "inline-block";
+            pElem.style.display = "inline-block";
+            aElem.innerHTML = aug.name;
+            
+            aElem.addEventListener("click", function() {
+                console.log("here");
+                purchaseAugmentationBoxCreate(aug, faction);
+            });
+            
+            span.appendChild(aElem);
+            span.appendChild(pElem);
+            
+            item.appendChild(span);
+            
+            augmentationsList.appendChild(item);
+        }()); //Immediate invocation closure
     }
+}
+
+function processPassiveFactionRepGain(numCycles) {
+    var numTimesGain = numCycles / 600;
+    for (var name in Factions) {
+		if (Factions.hasOwnProperty(name)) {
+			var faction = Factions[name];
+			
+			//TODO Get hard value of 1 rep per "rep gain cycle"" for now..
+            //maybe later make this based on
+            //a player's 'status' like how powerful they are and how much money they have
+            if (faction.isMember) {faction.playerReputation += numTimesGain;}
+		}
+	}
 }

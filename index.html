@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Netburner</title>
+    <title>Bitburner</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
     <link rel="stylesheet" type="text/css" href="css/terminal.css" />
 	<link rel="stylesheet" type="text/css" href="css/menupages.css" />
@@ -23,6 +23,7 @@
     <script src="utils/FactionInvitationBox.js"></script>
     <script src="utils/PurchaseAugmentationBox.js"></script>
     <script src="utils/TravelBox.js"></script>
+    <script src="utils/PurchaseRamForHomeBox.js"></script>
 	
 	<!-- Netscript -->
 	<script src="src/netscript/NetScriptWorker.js"></script>
@@ -44,10 +45,14 @@
 	<script src="src/Company.js"></script>
     <script src="src/CompanyJobApplication.js"></script>
 	<script src="src/Terminal.js"></script>
-    <script src="src/PurchaseServers.js"></script>
+    <script src="src/ServerPurchases.js"></script>
     <script src="src/CreateProgram.js"></script>
     <script src="src/Augmentations.js"></script>
     <script src="src/Perk.js"></script>
+    <script src="src/HacknetNode.js"></script>
+    <script src="src/Crimes.js"></script>
+    <script src="src/Prestige.js"></script>
+    <script src="src/SaveObject.js"></script>
 	
     <script src="src/engine.js"></script>
 	
@@ -71,6 +76,10 @@
 			
 			<li class="active-scripts-tab">
                 <a href="#" id="active-scripts-menu-link"> Active Scripts </a>
+            </li>
+            
+            <li class="hacknet-nodes-tab">
+                <a href="#" id="hacknet-nodes-menu-link"> Hacknet Nodes </a>
             </li>
 			
 			<li class="world-tab">
@@ -107,7 +116,10 @@
     <div id="terminal-container">
         <table id="terminal">
            <tr id="terminal-input">
-                <td id="terminal-input-td">$  <input type="text" class="terminal-input"/></td>
+                <td id="terminal-input-td" tabindex="2">$  
+                    <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"
+                           onfocus="this.value = this.value;"/>
+                </td>
            </tr>
            
         </table>
@@ -120,12 +132,15 @@
 	
 	<!-- Script editor -->
 	<div id="script-editor-container">
+        <div>
 		<p id="script-editor-filename-tag"> Script name: </p>
+        <span id="script-editor-save-and-close-button" float="right" class="a-link-button">Save & Close (Ctrl + b)</span>
+        </div>
             
-        <input id="script-editor-filename" type="text" maxlength="30"> </input>
+        <input id="script-editor-filename" type="text" maxlength="30" tabindex="1"> </input>
 		<br>
 		<br><br>
-		<textarea id="script-editor-text" style="border: none" autofocus> </textarea>
+		<textarea id="script-editor-text" tabindex="2" autofocus> </textarea>
 	</div>
 	
 	<!-- Active scripts info page -->
@@ -133,12 +148,36 @@
 		<ul class="active-scripts-list" id="active-scripts-list" style="list-style: none;">
 		</ul>
 	</div>
+    
+    <!-- Hacknet Nodes -->
+    <div id="hacknet-nodes-container">
+        <h1 id="hacknet-nodes-title"> Hacknet Nodes </h1>
+        <p id="hacknet-nodes-text"> 
+        The Hacknet is a global, decentralized network of machines. It is used by hackers all around
+        the world to anonymously share computing power and perform distributed cyberattacks without the
+        fear of being traced. 
+        <br><br>
+        Here, you can purchase a Hacknet Node, a specialized machine that can connect and contribute its
+        resources to the Hacknet network. This allows you to take a small percentage of profits
+        from hacks performed on the network. Essentially, you are renting out your Node's computing power. 
+        <br><br>
+        Each Hacknet Node you purchase will passively earn you money. Each Hacknet Node can be upgraded 
+        in order to increase its computing power and thereby increase the profit you earn from it. 
+        </p>
+        <a href="#" id="hacknet-nodes-purchase-button" class="a-link-button"> Purchase Hacknet Node </a>
+        <p id="hacknet-nodes-money"> </p>
+        <ul id="hacknet-nodes-list" style="list-style : none;">
+        </ul>
+    </div>
 
     <!-- World -->
 	<div id="world-container" class="world-container">
 		<ul id="aevum-locations-list">
 			<li id="aevum-travelagency-li">
                 <a href="#" id="aevum-travelagency" class="a-link-button"> Travel Agency </a>
+            </li>
+            <li id="aevum-summituniversity-li">
+                <a href="#" id="aevum-summituniversity" class="a-link-button"> Summit University </a>
             </li>
 			<li id="aevum-ecorp-li">
 				<a href="#" id="aevum-ecorp" class="a-link-button"> ECorp </a>
@@ -176,129 +215,153 @@
 			<li id="aevum-snapfitnessgym-li">
 				<a href="#" id="aevum-snapfitnessgym" class="a-link-button">Snap Fitness Gym</a>
 			</li>
+            <li id="aevum-slums-li">
+                <a href="#" id="aevum-slums" class="a-link-button">The Slums</a>
+            </li>
 		</ul>
 		
 		<ul id="chongqing-locations-list">
 			<li id="chongqing-travelagency-li">
 				<a href="#" id="chongqing-travelagency" class="a-link-button"> Travel Agency </a>
-			<li>
+			</li>
 			<li id="chonqging-kuaigonginternational-li">
 				<a href="#" id="chongqing-kuaigonginternational" class="a-link-button">KuaiGong International </a>
-			<li>
+			</li>
 			<li id="chongqing-solarisspacesystems-li">
 				<a href="#" id="chongqing-solarisspacesystems" class="a-link-button">Solaris Space Systems</a>
-			<li>
+			</li>
+            <li id="chongqing-slums-li">
+                <a href="#" id="chongqing-slums" class="a-link-button">The Slums</a>
+            </li>
 		</ul>
 		
 		<ul id="sector12-locations-list">
 			<li id="sector12-travelagency-li">
 				<a href="#" id="sector12-travelagency" class="a-link-button">Travel Agency </a>
-			<li>
+			</li>
+            <li id="sector12-rothmanuniversity-li">
+                <a href="#" id="sector12-rothmanuniversity" class="a-link-button"> Rothman University</a>
+            </li>
 			<li id="sector12-megacorp-li">
 				<a href="#" id="sector12-megacorp" class="a-link-button">MegaCorp</a>
-			<li>
+			</li>
 			<li id="sector12-bladeindustries-li">
 				<a href="#" id="sector12-bladeindustries" class="a-link-button"> Blade Industries</a>
-			<li>
+			</li>
 			<li id="sector12-foursigma-li">
 				<a href="#" id="sector12-foursigma" class="a-link-button">Four Sigma</a>
-			<li>
+			</li>
 			<li id="sector12-icarusmicrosystems-li">
 				<a href="#" id="sector12-icarusmicrosystems" class="a-link-button"> Icarus Microsystems</a>
-			<li>
+			</li>
 			<li id="sector12-universalenergy-li">
 				<a href="#" id="sector12-universalenergy" class="a-link-button">Universal Energy </a>
-			<li>
+			</li>
 			<li id="sector12-deltaone-li">
 				<a href="#" id="sector12-deltaone" class="a-link-button">DeltaOne </a>
-			<li>
+			</li>
 			<li id="sector12-cia-li">
 				<a href="#" id="sector12-cia" class="a-link-button">Central Intelligence Agency </a>
-			<li>
+			</li>
 			<li id="sector12-nsa-li">
 				<a href="#" id="sector12-nsa" class="a-link-button">National Security Agency </a>
-			<li>
+			</li>
 			<li id="sector12-alphaenterprises-li">
 				<a href="#" id="sector12-alphaenterprises" class="a-link-button">Alpha Enterprises</a>
-			<li>
+			</li>
 			<li id="sector12-carmichaelsecurity-li">
 				<a href="#" id="sector12-carmichaelsecurity" class="a-link-button"> Carmichael Security</a>
-			<li>
+			</li>
 			<li id="sector12-foodnstuff-li">
 				<a href="#" id="sector12-foodnstuff" class="a-link-button">FoodNStuff</a>
-			<li>
+			</li>
 			<li id="sector12-joesguns-li">
 				<a href="#" id="sector12-joesguns" class="a-link-button"> Joe's Guns</a>
-			<li>
+			</li>
 			<li id="sector12-irongym-li">
 				<a href="#" id="sector12-irongym" class="a-link-button">Iron Gym </a>
-			<li>
+			</li>
 			<li id="sector12-powerhousegym-li">
 				<a href="#" id="sector12-powerhousegym" class="a-link-button">Powerhouse Gym</a>
-			<li>
+			</li>
+            <li id="sector12-slums-li">
+                <a href="#" id="sector12-slums" class="a-link-button">The Slums</a>
+            </li>
 		</ul>
 		
 		<ul id="newtokyo-locations-list">
 			<li id="newtokyo-travelagency-li">
 				<a href="#" id="newtokyo-travelagency" class="a-link-button"> Travel Agency</a>
-			<li>
+			</li>
 			<li id="newtokyo-defcomm-li">
 				<a href="#" id="newtokyo-defcomm" class="a-link-button"> DefComm</a>
-			<li>
+			</li>
 			<li id="newtokyo-vitalife-li">
 				<a href="#" id="newtokyo-vitalife" class="a-link-button">VitaLife </a>
-			<li>
+			</li>
 			<li id="newtokyo-globalpharmaceuticals-li">
 				<a href="#" id="newtokyo-globalpharmaceuticals" class="a-link-button">Global Pharmaceuticals</a>
-			<li>
+			</li>
 			<li id="newtokyo-noodlebar-li">
 				<a href="#" id="newtokyo-noodlebar" class="a-link-button">Noodle Bar </a>
-			<li>
+			</li>
+            <li id="newtokyo-slums-li">
+                <a href="#" id="newtokyo-slums" class="a-link-button">The Slums</a>
+            </li>
 		</ul>
 		
 		<ul id="ishima-locations-list">
 			<li id="ishima-travelagency-li">
 				<a href="#" id="ishima-travelagency" class="a-link-button">Travel Agency </a>
-			<li>
+			</li>
 			<li id="ishima-stormtechnologies-li">
 				<a href="#" id="ishima-stormtechnologies" class="a-link-button">Storm Technologies</a>
-			<li>
+			</li>
 			<li id="ishima-novamedical-li">
 				<a href="#" id="ishima-novamedical" class="a-link-button">Nova Medical</a>
-			<li>
+			</li>
 			<li id="ishima-omegasoftware-li">
 				<a href="#" id="ishima-omegasoftware" class="a-link-button">Omega Software </a>
-			<li>
+			</li>
+            <li id="ishima-slums-li">
+                <a href="#" id="ishima-slums" class="a-link-button">The Slums</a>
+            </li>
 		</ul>
 		
 		<ul id="volhaven-locations-list">
 			<li id="volhaven-travelagency-li">
 				<a href="#" id="volhaven-travelagency" class="a-link-button">Travel Agency </a>
-			<li>
+			</li>
+            <li id="volhaven-zbinstituteoftechnology-li">
+                <a href="#" id="volhaven-zbinstituteoftechnology" class="a-link-button">ZB Insitute of Technology</a>
+            </li>
 			<li id="volhaven-omnitekincorporated-li">
 				<a href="#" id="volhaven-omnitekincorporated" class="a-link-button">OmniTek Incorporated </a>
-			<li>
+			</li>
 			<li id="volhaven-nwo-li">
 				<a href="#" id="volhaven-nwo" class="a-link-button">NWO</a>
-			<li>
+			</li>
 			<li id="volhaven-helislabs-li">
 				<a href="#" id="volhaven-helioslabs" class="a-link-button">Helios Labs</a>
-			<li>
+			</li>
 			<li id="volhaven-omniacybersystems-li">
 				<a href="#" id="volhaven-omniacybersystems" class="a-link-button">Omnia Cybersystems</a>
-			<li>
+			</li>
 			<li id="volhaven-lexocorp-li">
 				<a href="#" id="volhaven-lexocorp" class="a-link-button">LexoCorp</a>
-			<li>
+			</li>
 			<li id="volhaven-syscoresecurities-li">
 				<a href="#" id="volhaven-syscoresecurities" class="a-link-button">SysCore Securities</a>
-			<li>
+			</li>
 			<li id="volhaven-computek-li">
 				<a href="#" id="volhaven-computek" class="a-link-button">CompuTek</a>
-			<li>
+			</li>
 			<li id="volhaven-milleniumfitnessgym-li">
 				<a href="#" id="volhaven-milleniumfitnessgym" class="a-link-button">Millenium Fitness Gym</a>
-			<li>
+			</li>
+            <li id="volhaven-slums-li">
+                <a href="#" id="volhaven-slums" class="a-link-button">The Slums</a>
+            </li>
 		</ul>
 	</div>
 	
@@ -454,19 +517,28 @@
         <a href="#" id="location-gym-train-dex" class="a-link-button">Train Dexterity</a>
         <a href="#" id="location-gym-train-agi" class="a-link-button">Train Agility</a>
         
+        <!-- Study/Take classes at a university -->
+        <a href="#" id="location-study-computer-science" class="a-link-button">Study Computer Science (free)</a>
+        <a href="#" id="location-data-structures-class" class="a-link-button">Take Data Structures course</a>
+        <a href="#" id="location-networks-class" class="a-link-button">Take Networks course</a>
+        <a href="#" id="location-algorithms-class" class="a-link-button">Take Algorithms course</a>
+        <a href="#" id="location-management-class" class="a-link-button">Take Management course</a>
+        <a href="#" id="location-leadership-class" class="a-link-button">Take Leadership course</a>
+        
         <!-- Purchase servers -->
-        <a href="#" id="location-purchase-1gb" class="a-link-button"> Purchase 1GB Server - $100,000</a>
-        <a href="#" id="location-purchase-2gb" class="a-link-button"> Purchase 2GB Server - $250,000</a>
-        <a href="#" id="location-purchase-4gb" class="a-link-button"> Purchase 4GB Server - $600,000</a>
-        <a href="#" id="location-purchase-8gb" class="a-link-button"> Purchase 8GB Server - $1,500,000</a>
+        <a href="#" id="location-purchase-1gb" class="a-link-button"> Purchase 1GB Server - $50,000</a>
+        <a href="#" id="location-purchase-2gb" class="a-link-button"> Purchase 2GB Server - $100,000</a>
+        <a href="#" id="location-purchase-4gb" class="a-link-button"> Purchase 4GB Server - $250,000</a>
+        <a href="#" id="location-purchase-8gb" class="a-link-button"> Purchase 8GB Server - $1,000,000</a>
         <a href="#" id="location-purchase-16gb" class="a-link-button"> Purchase 16GB Server - $4,000,000</a>
-        <a href="#" id="location-purchase-32gb" class="a-link-button"> Purchase 32GB Server - $9,000,000</a>
+        <a href="#" id="location-purchase-32gb" class="a-link-button"> Purchase 32GB Server - $10,000,000</a>
         <a href="#" id="location-purchase-64gb" class="a-link-button"> Purchase 64GB Server - $20,000,000</a>
-        <a href="#" id="location-purchase-128gb" class="a-link-button"> Purchase 128GB Server - $45,000,000</a>
+        <a href="#" id="location-purchase-128gb" class="a-link-button"> Purchase 128GB Server - $50,000,000</a>
         <a href="#" id="location-purchase-256gb" class="a-link-button"> Purchase 256GB Server - $100,000,000</a>
         <a href="#" id="location-purchase-512gb" class="a-link-button"> Purchase 512GB Server - $250,000,000</a>
-        <a href="#" id="location-purchase-1tb" class="a-link-button"> Purchase 1TB Server - $600,000,000</a>
+        <a href="#" id="location-purchase-1tb" class="a-link-button"> Purchase 1TB Server - $750,000,000</a>
         <a href="#" id="location-purchase-tor" class="a-link-button"> Purchase TOR Router - $2,000,000</a>
+        <a href="#" id="location-purchase-home-ram" class="a-link-button"> Purchase RAM for Home computer </a>
         
         <!-- Travel agency -->
         <p id="location-travel-agency-text"> 
@@ -478,6 +550,22 @@
         <a href="#" id="location-travel-to-newtokyo" class="a-link-button"> Travel to New Tokyo</a>
         <a href="#" id="location-travel-to-ishima" class="a-link-button"> Travel to Ishima</a>
         <a href="#" id="location-travel-to-volhaven" class="a-link-button"> Travel to Volhaven</a>
+        
+        <!-- Slums -->
+        <p id="location-slums-description"> 
+            You have entered the Slums, a poverty-ridden district filled with gangs, criminals, and
+            other shadowy entities. The city's government and police have neglected this area for years... <br><br><br>
+            
+            In the Slums you can commit crimes to earn money and experience. Crime attempts are not always 
+            successful. Your chance at successfully committing a crime is determined by your stats. 
+        </p>
+        <a href="#" id="location-slums-shoplift" class="a-link-button"> Shoplift </a>
+        <a href="#" id="location-slums-mug" class="a-link-button"> Mug someone </a>
+        <a href="#" id="location-slums-deal-drugs" class="a-link-button"> Deal Drugs </a>
+        <a href="#" id="location-slums-traffic-arms" class="a-link-button"> Traffick Illegal Arms </a>
+        <a href="#" id="location-slums-homicide" class="a-link-button"> Homicide </a>
+        <a href="#" id="location-slums-kidnap" class="a-link-button"> Kidnap and Ransom </a>
+        
     </div>
     
     <!-- Dialog Box, displays status text only -->
@@ -485,8 +573,11 @@
         <div id="dialog-box-content">
             <span id="dialog-box-close-button">&times;</span>
             <p id="dialog-box-text-1" class="dialog-box-text"> </p>
+            <br>
             <p id="dialog-box-text-2" class="dialog-box-text"> </p>
+            <br>
             <p id="dialog-box-text-3" class="dialog-box-text"> </p>
+            <br>
             <p id="dialog-box-text-4" class="dialog-box-text"> </p>
         </div>
     </div>
@@ -499,6 +590,15 @@
             <input type="text" id="purchase-server-box-input" pattern="[a-zA-Z0-9-_]+ maxlength="30"> </input>
             <span id="purchase-server-box-confirm"> Purchase </span>
             <span id="purchase-server-box-cancel"> Cancel </span>
+        </div>
+    </div>
+    
+    <!-- Purchase RAM for Home Computer Pop-up Box -->
+    <div id="purchase-ram-for-home-box-container">
+        <div id="purchase-ram-for-home-box-content">
+            <p id="purchase-ram-for-home-box-text"> </p>
+            <span id="purchase-ram-for-home-box-confirm"> Purchase </span>
+            <span id="purchase-ram-for-home-box-cancel"> Cancel </span>
         </div>
     </div>
     
@@ -515,7 +615,7 @@
     <div id="purchase-augmentation-box-container">
         <div id="purchase-augmentation-box-content">
             <p id="purchase-augmentation-box-text"> </p>
-            <p> WARNING: Purchasing an Augmentation resets most of your progress, including: <br>
+            <p> <br> WARNING: Purchasing an Augmentation resets most of your progress, including: <br>
                 Stats/Skill levels and Experience <br>
                 Money <br>
                 Scripts <br>
@@ -523,7 +623,7 @@
                 Purchasing an Augmentation lets you start over with the perks and benefits granted by all
                 of the Augmentations you have ever purchased (purchasing an Augmentation does not reset the benefits
                 of Augmentations you have previously purchased).
-            <p>
+            </p>
             <span id="purchase-augmentation-box-confirm"> Purchase </span>
             <span id="purchase-augmentation-box-cancel"> Cancel </span>
         </div>

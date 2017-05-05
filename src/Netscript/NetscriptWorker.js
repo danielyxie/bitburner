@@ -12,6 +12,7 @@ function WorkerScript(script) {
 	this.output			= "";
 	this.ramUsage		= 0;
 	this.scriptRef		= script;
+    this.errorMessage   = "";
 }
 
 //Returns the server on which the workerScript is running
@@ -35,11 +36,7 @@ function runScriptsLoop() {
                 workerScripts[i].env.stopFlag = true;
 				continue;
 			}
-			
-			console.log("Starting new script: " + workerScripts[i].name);
-			console.log("AST of new script:");
-			console.log(ast);
-			
+						
 			workerScripts[i].running = true;
 			var p = evaluate(ast, workerScripts[i]);
 			//Once the code finishes (either resolved or rejected, doesnt matter), set its
@@ -64,9 +61,6 @@ function runScriptsLoop() {
 					var scriptName = errorTextArray[2];
 					var errorMsg = errorTextArray[3];
 					
-					//Post error message to terminal
-					//TODO Only post this if you're on the machine the script is running on?
-					post("Script runtime error: " + errorMsg);
                     dialogBoxCreate("Script runtime error: ", "Server Ip: " + serverIp, "Script name: " + scriptName, errorMsg);
 					
 					//Find the corresponding workerscript and set its flags to kill it
@@ -76,10 +70,20 @@ function runScriptsLoop() {
 							workerScripts[i].env.stopFlag = true;
 							return;
 						}
-					}
+					} 
+                } else if (w instanceof WorkerScript) {
+                    if (isScriptErrorMessage(w.errorMessage)) {
+                        var errorTextArray = w.errorMessage.split("|");
+                        if (errorTextArray.length != 4) {
+                            console.log("ERROR: Something wrong with Error text in evaluator...");
+                            console.log("Error text: " + errorText);
+                        }
+                        var serverIp = errorTextArray[1];
+                        var scriptName = errorTextArray[2];
+                        var errorMsg = errorTextArray[3];
 					
-				} else {
-					console.log("Stopping script" + w.name + " because it was manually stopped (rejected)")
+                        dialogBoxCreate("Script runtime error: ", "Server Ip: " + serverIp, "Script name: " + scriptName, errorMsg);
+                    }
 					w.running = false;
 					w.env.stopFlag = true;
 				}
@@ -120,7 +124,6 @@ function runScriptsLoop() {
 //all of its promises recursively, and when it does so it will no longer be running.
 //The runScriptsLoop() will then delete the script from worker scripts
 function killWorkerScript(scriptName, serverIp) {
-	console.log("killWorkerScript called for script " + scriptName + " on server " + serverIp);
 	for (var i = 0; i < workerScripts.length; i++) {
 		if (workerScripts[i].name == scriptName && workerScripts[i].serverIp == serverIp) {
 			workerScripts[i].env.stopFlag = true;
@@ -147,7 +150,6 @@ function addWorkerScript(script, server) {
 	
 	//Add the WorkerScript
 	workerScripts.push(s);
-	console.log("Pushed script onto workerScripts");
 	return;
 }
 
