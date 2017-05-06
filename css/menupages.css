@@ -9,13 +9,9 @@
     padding-left: 10px;
     margin-left: 10%;
     width: 99%;
-    overflow-y: scroll;
+	overflow: auto;
+	overflow-y: scroll;
 }
-
-#character-info {
-    overflow-y: scroll;
-}
-
 
 /* Script Editor */
 /* This temp element is used for auto adjusting filename field */
@@ -340,13 +336,19 @@ div.faction-clear {
 
 /* Tutorial */
 #tutorial-container {
-	color: #66ff33;
     position: fixed;
+    height: 100%;
     padding-top: 10px;
     padding-left: 10px;
-    height: 100%;
     margin-left: 10%;
-    width: 85%;
+    width: 99%;
+    overflow: auto;
+    overflow-y: scroll;
+}
+
+#tutorial-text {
+    width: 80%;
+    margin: 10px;
 }
 
 /* Location */

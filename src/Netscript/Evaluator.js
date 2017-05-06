@@ -55,7 +55,7 @@ function evaluate(exp, workerScript) {
 					} catch (e) {
 						throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
 					}
-					resolve("assignFinished");
+					resolve(false);
 				}, function(e) {
 					reject(e);
 				});
@@ -244,6 +244,7 @@ function evaluate(exp, workerScript) {
 									var expGainedOnSuccess = scriptCalculateExpGain(server);
 									var expGainedOnFailure = (expGainedOnSuccess / 4);
 									if (rand < hackChance) {	//Success!
+                                        if (env.stopFlag) {reject(workerScript); return;}
 										var moneyGained = scriptCalculatePercentMoneyHacked(server);
 										moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 										
@@ -259,7 +260,8 @@ function evaluate(exp, workerScript) {
 										console.log("Script successfully hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
                                         workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
 										resolve("Hack success");
-									} else {			
+									} else {	
+                                        if (env.stopFlag) {reject(workerScript); return;}
 										//Player only gains 25% exp for failure? TODO Can change this later to balance
                                         Player.gainHackingExp(expGainedOnFailure);
 										workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
@@ -359,7 +361,6 @@ function evaluate(exp, workerScript) {
                             workerScript.scriptRef.log("Calling grow() on server " + server.hostname + " in 120 seconds");
                             var p = new Promise(function(resolve, reject) {
 								if (env.stopFlag) {reject(workerScript);}
-                                console.log("Executing grow on " + server.hostname + " in 2 minutes ");
 								setTimeout(function() {
 									var growthPercentage = processSingleServerGrowth(server, 450);
                                     resolve(growthPercentage);

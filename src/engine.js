@@ -22,6 +22,7 @@ var Engine = {
         tutorialNetworkingButton:       null,
         tutorialHackingButton:          null,
         tutorialScriptsButton:          null,
+        tutorialNetscriptButton:        null,
         tutorialTravelingButton:        null,
         tutorialJobsButton:             null,
         tutorialFactionsButton:         null,
@@ -270,7 +271,7 @@ var Engine = {
         'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br><br><br>' +
         '<b>Misc</b><br><br>' + 
         'Servers owned:       ' + Player.purchasedServers.length + '<br>' + 
-        'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>').replace( / /g, "&nbsp;" );
+        'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br><br> ').replace( / /g, "&nbsp;" );
         
     },
     
@@ -470,6 +471,7 @@ var Engine = {
         Engine.Clickables.tutorialNetworkingButton.style.display = "block";
         Engine.Clickables.tutorialHackingButton.style.display = "block";
         Engine.Clickables.tutorialScriptsButton.style.display = "block";
+        Engine.Clickables.tutorialNetscriptButton.style.display = "block";
         Engine.Clickables.tutorialTravelingButton.style.display = "block";
         Engine.Clickables.tutorialJobsButton.style.display = "block";
         Engine.Clickables.tutorialFactionsButton.style.display = "block";
@@ -485,6 +487,7 @@ var Engine = {
         Engine.Clickables.tutorialNetworkingButton.style.display = "none";
         Engine.Clickables.tutorialHackingButton.style.display = "none";
         Engine.Clickables.tutorialScriptsButton.style.display = "none";
+        Engine.Clickables.tutorialNetscriptButton.style.display = "none";
         Engine.Clickables.tutorialTravelingButton.style.display = "none";
         Engine.Clickables.tutorialJobsButton.style.display = "none";
         Engine.Clickables.tutorialFactionsButton.style.display = "none";
@@ -808,6 +811,11 @@ var Engine = {
         Engine.Clickables.tutorialScriptsButton = document.getElementById("tutorial-scripts-link");
         Engine.Clickables.tutorialScriptsButton.addEventListener("click", function() {
             Engine.displayTutorialPage(CONSTANTS.TutorialScriptsText);
+        });
+        
+        Engine.Clickables.tutorialNetscriptButton = document.getElementById("tutorial-netscript-link");
+        Engine.Clickables.tutorialNetscriptButton.addEventListener("click", function() {
+            Engine.displayTutorialPage(CONSTANTS.TutorialNetscriptText);
         });
         
         Engine.Clickables.tutorialTravelingButton = document.getElementById("tutorial-traveling-link");

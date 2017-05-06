@@ -156,10 +156,11 @@ CONSTANTS = {
                          "encounter diminishing returns in your hacking (since you are only hacking a certain percentage). A server " + 
                          "will regain money at a slow rate over time. ",
                          
-    TutorialScriptsText: "Scripts can be used to automate the hacking process. Scripts must be written in the Netscript language " + 
-                         "and are saved as a file. Running a script requires RAM. The more complex a script is, the more RAM " + 
+    TutorialScriptsText: "Scripts can be used to automate the hacking process. Scripts must be written in the Netscript language. " + 
+                         "Documentation about the Netscript language can be found in the 'Netscript Programming Language' " + 
+                         "section of the 'Tutorial' tab. Running a script requires RAM. The more complex a script is, the more RAM " + 
                          "it requires to run. Scripts can be run on any server you have root access to. <br><br>" + 
-                         "Here are some commands that are useful when working with scripts: <br>" + 
+                         "Here are some Terminal commands that are useful when working with scripts: <br>" + 
                          "free - Shows the current server's RAM usage <br>" + 
                          "kill [script] - Stops a script that is running <br>" + 
                          "nano [script] - Edit a script <br>" + 
@@ -167,13 +168,64 @@ CONSTANTS = {
                          "run [script] - Run a script <br>" + 
                          "tail [script] - Displays a script's logs<br>" + 
                          "top - Displays all active scripts and their RAM usage <br><br>",
-    TutorialTravelingText:"There are six major cities in the world that you are able to travel to: <br> "  +
+    TutorialNetscriptText: "Netscript is a very simple programming language implemented for this game. The language has " + 
+                           "your basic programming constructs and several built-in commands that are used to hack. <br><br>" + 
+                           "<strong> Variables and data types </strong><br>" + 
+                           "The following data types are supported by Netscript: <br>" + 
+                           "numeric - Integers and floats (6, 10.4999)<br>" + 
+                           "string - Encapsulated by single or double quotes ('this is a string')<br>" + 
+                           "boolean - True or False<br><br>" + 
+                           "To create a variable, use the assign (=) operator. The language is not strongly typed. Examples: <br>" + 
+                           "i = 5;<br>" + 
+                           "s = 'this game is awesome!';<br><br>" + 
+                           "In the first example above, we are creating the variable i and assigning it a value of 5. In the second, " +
+                           "we are creating the variable s and assigning it the value of a string. Note that all expressions must be " + 
+                           "ended with a semicolon. <br><br>" +
+                           "<strong> Operators </strong> <br>" + 
+                           "The following operators are supported by Netscript: <br>" + 
+                           "&nbsp;+<br>" + 
+                           "&nbsp;-<br>" + 
+                           "&nbsp;*<br>" + 
+                           "&nbsp;/<br>" + 
+                           "&nbsp;%<br>" + 
+                           "&nbsp;&&<br>" + 
+                           "&nbsp;||<br>" + 
+                           "&nbsp;<<br>" + 
+                           "&nbsp;><br>" + 
+                           "&nbsp;<=<br>" + 
+                           "&nbsp;>=<br>" + 
+                           "&nbsp;==<br>" + 
+                           "&nbsp;!=<br><br>" + 
+                           "<strong> Functions </strong><br>" + 
+                           "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
+                           "you may use: <br><br> " + 
+                           "<i>hack(hostname/ip)</i><br>Core function that is used to hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
+                           "either the IP or hostname of the server you want to hack. <br>Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
+                           "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
+                           "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
+                           "must be a string with either the IP or hostname of the target server. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "<strong>While loop </strong><br>" +
+                           "A while loop is a control flow statement that repeatedly executes code as long as a condition is met. <br><br> " +
+                           "while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}<br><br>" + 
+                           "As long as <i>[cond]</i> remains true, the code block <i>[code]</i> will continuously execute. Example: <br><br>" + 
+                           "i = 0; <br> while (i < 10) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1;<br> }; <br><br>" + 
+                           "Note that a semicolon is needed at closing bracket of the while loop, UNLESS it is at the end of the code<br><br> " + 
+                           "<strong>For loop</strong><br>" + 
+                           "A for loop is another control flow statement that allows code to by repeated by iterations. The structure is: <br><br> " +
+                           "for (<i>[init]</i>; <i>[cond]</i>; <i>[post]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>code</i> <br> }<br><br>" + 
+                           "The <i>[init]</i> expression evaluates before the for loop begins. The for loop will continue to execute " +
+                           "as long as <i>[cond]</i> is met. The <i>[post]</i> expression will evaluate at the end of every iteration " + 
+                           "of the for loop. The following example shows code that will do the same thing as the while loop example above, " +
+                           "except using a for loop instead: <br><br>" + 
+                           "for (i = 0; i < 10; i = i+1) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>}; <br><br><br>",
+                           
+    TutorialTravelingText:"There are six major cities in the world that you are able to travel to: <br><br> "  +
                            "    Aevum<br>" + 
                            "    Chongqing<br>" + 
                            "    Sector-12<br>" + 
                            "    New Tokyo<br>" + 
                            "    Ishima<br>" + 
-                           "    Volhaven<br>" + 
+                           "    Volhaven<br><br>" + 
                            "To travel between cities, visit your current city's travel agency through the 'World' page. " + 
                            "From the travel agency you can travel to any other city. Doing so costs money. <br>" + 
                            "Each city has its own set of companies and unique locations. ",

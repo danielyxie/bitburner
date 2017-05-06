@@ -53,7 +53,7 @@ function prestigeAugmentation() {
     Player.agility_exp = 0;
     Player.charisma_exp = 0;
     
-    Player.money = 0;
+    Player.money = 1000;
     
     Player.homeComputer = "";
     
