@@ -290,7 +290,10 @@ var Engine = {
         Engine.ishimaLocationsList.style.display = "none";
         Engine.volhavenLocationsList.style.display = "none";
         
+        document.getElementById("world-city-name").innerHTML = Player.city;
+        var cityDesc = document.getElementById("world-city-desc"); //TODO
         switch(Player.city) {
+
             case Locations.Aevum:
                 Engine.aevumLocationsList.style.display = "inline";
                 break;
@@ -831,33 +834,34 @@ var Engine = {
         Engine.Clickables.tutorialBackButton.addEventListener("click", function() {
             Engine.displayTutorialContent();
         });
+        
+        //If DarkWeb already purchased, disable the button
+        if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
+            document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
+        }
     },
     
     /* Initialization */
     init: function() {
         //Main menu buttons and content
         Engine.Clickables.terminalMainMenuButton = clearEventListeners("terminal-menu-link");
-        //Engine.Clickables.terminalMainMenuButton = document.getElementById("terminal-menu-link");
         Engine.Clickables.terminalMainMenuButton.addEventListener("click", function() {
             Engine.loadTerminalContent();
             return false;
         });
         
         Engine.Clickables.characterMainMenuButton = clearEventListeners("character-menu-link");
-        //Engine.Clickables.characterMainMenuButton = document.getElementById("character-menu-link");
         Engine.Clickables.characterMainMenuButton.addEventListener("click", function() {
             Engine.loadCharacterContent();
             return false;
         });
         
         Engine.Clickables.scriptEditorMainMenuButton = clearEventListeners("create-script-menu-link");
-        //Engine.Clickables.scriptEditorMainMenuButton = document.getElementById("create-script-menu-link");
         Engine.Clickables.scriptEditorMainMenuButton.addEventListener("click", function() {
             Engine.loadScriptEditorContent();
             return false;
         });
         
-        //Engine.Clickables.activeScriptsMainMenuButton = document.getElementById("active-scripts-menu-link");
         Engine.Clickables.activeScriptsMainMenuButton = clearEventListeners("active-scripts-menu-link");
         Engine.Clickables.activeScriptsMainMenuButton.addEventListener("click", function() {
             Engine.loadActiveScriptsContent();
@@ -865,42 +869,36 @@ var Engine = {
         });
         
         Engine.Clickables.hacknetNodesMainMenuButton = clearEventListeners("hacknet-nodes-menu-link");
-        //Engine.Clickables.hacknetNodesMainMenuButton = document.getElementById("hacknet-nodes-menu-link");
         Engine.Clickables.hacknetNodesMainMenuButton.addEventListener("click", function() {
             Engine.loadHacknetNodesContent();
             return false;
         });
         
         Engine.Clickables.worldMainMenuButton = clearEventListeners("world-menu-link");
-        //Engine.Clickables.worldMainMenuButton = document.getElementById("world-menu-link");
         Engine.Clickables.worldMainMenuButton.addEventListener("click", function() {
             Engine.loadWorldContent();
             return false;
         });
         
         Engine.Clickables.createProgramMainMenuButton = clearEventListeners("create-program-menu-link");
-        //Engine.Clickables.createProgramMainMenuButton = document.getElementById("create-program-menu-link");
         Engine.Clickables.createProgramMainMenuButton.addEventListener("click", function() {
             Engine.loadCreateProgramContent();
             return false;
         });
         
         Engine.Clickables.factionsMainMenuButton = clearEventListeners("factions-menu-link");
-        //Engine.Clickables.factionsMainMenuButton = document.getElementById("factions-menu-link");
         Engine.Clickables.factionsMainMenuButton.addEventListener("click", function() {
             Engine.loadFactionsContent();
             return false;
         });
         
         Engine.Clickables.augmentationsMainMenuButton = clearEventListeners("augmentations-menu-link");
-        //Engine.Clickables.augmentationsMainMenuButton = document.getElementById("augmentations-menu-link");
         Engine.Clickables.augmentationsMainMenuButton.addEventListener("click", function() {
             Engine.loadAugmentationsContent();
             return false;
         });
         
         Engine.Clickables.tutorialMainMenuButton = clearEventListeners("tutorial-menu-link");
-        //Engine.Clickables.tutorialMainMenuButton = document.getElementById("tutorial-menu-link");
         Engine.Clickables.tutorialMainMenuButton.addEventListener("click", function() {
             Engine.loadTutorialContent();
             return false;

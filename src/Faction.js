@@ -527,26 +527,19 @@ leaveFaction = function(faction) {
 displayFactionContent = function(factionName) {
 	var faction = Factions[factionName];
     document.getElementById("faction-name").innerHTML = factionName;
-    document.getElementById("faction-info").innerHTML = faction.info;
+    document.getElementById("faction-info").innerHTML = "<i>" + faction.info + "</i>";
     document.getElementById("faction-reputation").innerHTML = "Reputation: " + formatNumber(faction.playerReputation, 4);
 	
 	var hackDiv 			= document.getElementById("faction-hack-div");
 	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
 	var securityWorkDiv 	= document.getElementById("faction-securitywork-div");
 	
-	var hackButton 			= document.getElementById("faction-hack-button");
-	var fieldWorkButton 	= document.getElementById("faction-fieldwork-button");
-	var securityWorkButton 	= document.getElementById("faction-securitywork-button");
-	
 	//Set new event listener for all of the work buttons
     //The old buttons need to be replaced to clear the old event listeners
-    var newHackButton = hackButton.cloneNode(true);
-    var newFieldWorkButton = fieldWorkButton.cloneNode(true);
-    var newSecurityWorkButton = securityWorkButton.cloneNode(true);
-    
-    hackButton.parentNode.replaceChild(newHackButton, hackButton);
-    fieldWorkButton.parentNode.replaceChild(newFieldWorkButton, fieldWorkButton);
-    securityWorkButton.parentNode.replaceChild(newSecurityWorkButton, securityWorkButton);
+    var newHackButton = clearEventListeners("faction-hack-button");
+    var newFieldWorkButton = clearEventListeners("faction-fieldwork-button");
+    var newSecurityWorkButton = clearEventListeners("faction-securitywork-button");
+
     
     newHackButton.addEventListener("click", function() {
         Player.startFactionHackWork(faction);
@@ -566,17 +559,13 @@ displayFactionContent = function(factionName) {
     
     //Set new event listener for the purchase augmentation buttons
     //The old button needs to be replaced to clear the old event listeners
-    var purchaseAugmentations = document.getElementById("faction-purchase-augmentations");    
-    var newPurchaseAugmentationsButton = purchaseAugmentations.cloneNode(true);
-    purchaseAugmentations.parentNode.replaceChild(newPurchaseAugmentationsButton, purchaseAugmentations);
+    var newPurchaseAugmentationsButton = clearEventListeners("faction-purchase-augmentations");
     
     newPurchaseAugmentationsButton.addEventListener("click", function() {
         Engine.hideAllContent();
         Engine.Display.factionAugmentationsContent.style.visibility = "visible";
         
-        var backButton = document.getElementById("faction-augmentations-back-button");
-        var newBackButton = backButton.cloneNode(true);
-        backButton.parentNode.replaceChild(newBackButton, backButton);
+        var newBackButton = clearEventListeners("faction-augmentations-back-button");
         newBackButton.addEventListener("click", function() {
             Engine.loadFactionContent();
             displayFactionContent(factionName);

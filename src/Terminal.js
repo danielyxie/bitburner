@@ -525,7 +525,7 @@ var Terminal = {
                 post("Host not found"); 
 				break;
 			case "free":
-				executeFreeCommand(commandArray);
+				Terminal.executeFreeCommand(commandArray);
 				break;
 			case "hack":
 				if (commandArray.length != 1) {

@@ -189,6 +189,12 @@
     width: 99%;
 }
 
+#world-city-name,
+#world-city-desc {
+    padding: 4px;
+    margin: 4px;
+}
+
 /* Create program */
 #create-program-container {
     position: fixed;
@@ -248,16 +254,28 @@
     margin: 6px;
 }
 
-#faction-hack-button-div, #faction-hack-text-div {
-	display:inline-block;
+#faction-hack-div,
+#faction-fieldwork-div,
+#faction-securitywork-div {
+    overflow: hidden;
+    height: 100%;
 }
 
-#faction-fieldwork-button-div, #faction-fieldwork-text-div {
-	display:inline-block;
+#faction-hack-div-wrapper,
+#faction-fieldwork-div-wrapper,
+#faction-securitywork-div-wrapper {
+    float: left;
+    border: 2px solid #333;
+    padding: 14px 6px 4px 6px; 
+    margin: 6px;
 }
 
-#faction-securitywork-button-div, #faction-securitywork-text-div {
-	display:inline-block;
+#faction-hack-button {
+    margin: 8px;
+}
+
+div.faction-clear {
+    clear: both;
 }
 
 #faction-container p {

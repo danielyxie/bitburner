@@ -333,7 +333,6 @@ function iTutorialEvaluateStep() {
 
 //Go to the next step and evaluate it
 function iTutorialNextStep() {
-    console.log("iTutorialNextStep() called with current step: " + currITutorialStep);
     switch(currITutorialStep) {
     case iTutorialSteps.Start:
         currITutorialStep = iTutorialSteps.GoToCharacterPage;

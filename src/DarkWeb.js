@@ -41,7 +41,7 @@ executeDarkwebTerminalCommand = function(commandArray) {
 listAllDarkwebItems = function() {
     for (var item in DarkWebItems) {
 		if (DarkWebItems.hasOwnProperty(item)) {
-            post(item);
+            post(DarkWebItems[item]);
 		}
 	}
 }
@@ -62,7 +62,7 @@ buyDarkwebItem = function(itemName) {
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.FTPCrackProgram);
-            post("You have purchased the BruteSSH.exe program. The new program " + 
+            post("You have purchased the FTPCrack.exe program. The new program " + 
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -72,7 +72,7 @@ buyDarkwebItem = function(itemName) {
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.RelaySMTPProgram);
-            post("You have purchased the BruteSSH.exe program. The new program " + 
+            post("You have purchased the relaySMTP.exe program. The new program " + 
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -82,7 +82,7 @@ buyDarkwebItem = function(itemName) {
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.HTTPWormProgram);
-            post("You have purchased the BruteSSH.exe program. The new program " + 
+            post("You have purchased the HTTPWorm.exe program. The new program " + 
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -92,7 +92,7 @@ buyDarkwebItem = function(itemName) {
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.SQLInjectProgram);
-            post("You have purchased the BruteSSH.exe program. The new program " + 
+            post("You have purchased the SQLInject.exe program. The new program " + 
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -124,7 +124,7 @@ parseDarkwebItemPrice = function(itemDesc) {
 }
 
 DarkWebItems = {
-    BruteSSHProgram:    Programs.BRUTESSHProgram + " - $50,000 - Opens up SSH Ports",
+    BruteSSHProgram:    Programs.BruteSSHProgram + " - $50,000 - Opens up SSH Ports",
     FTPCrackProgram:    Programs.FTPCrackProgram + " - $150,000 - Opens up FTP Ports",
     RelaySMTPProgram:   Programs.RelaySMTPProgram + " - $500,000 - Opens up SMTP Ports",
     HTTPWormProgram:    Programs.HTTPWormProgram + " - $3,000,000 - Opens up HTTP Ports",

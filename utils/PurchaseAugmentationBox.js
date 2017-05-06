@@ -28,17 +28,13 @@ purchaseAugmentationBoxSetText = function(txt) {
 
 //ram argument is in GB
 purchaseAugmentationBoxCreate = function(aug, fac) {
-    console.log("here");
     document.getElementById("purchase-augmentation-box-aug-name").innerHTML = aug.name;
     document.getElementById("purchase-augmentation-box-aug-info").innerHTML = aug.info;
-    purchaseAugmentationBoxSetText("Would you like to purchase the " + aug.name + " Augmentation for $" + 
+    purchaseAugmentationBoxSetText("<br>Would you like to purchase the " + aug.name + " Augmentation for $" + 
                                    formatNumber(aug.baseCost * fac.augmentationPriceMult, 2)  + "?");
     
     //Clear old event listeners from Confirm button
     var newConfirmButton = clearEventListeners("purchase-augmentation-box-confirm");
-    //var confirmButton = document.getElementById("purchase-augmentation-box-confirm");
-    //var newConfirmButton = confirmButton.cloneNode(true);
-    //confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
     
     newConfirmButton.addEventListener("click", function() {
         

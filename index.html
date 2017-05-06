@@ -177,6 +177,8 @@
 
     <!-- World -->
 	<div id="world-container" class="world-container">
+        <h2 id="world-city-name"> </h2>
+        <p id="world-city-desc"> </p>
 		<ul id="aevum-locations-list">
 			<li id="aevum-travelagency-li">
                 <a href="#" id="aevum-travelagency" class="a-link-button"> Travel Agency </a>
@@ -373,30 +375,12 @@
 	<!-- Create a program(executable) -->
 	<div id="create-program-container">
         <ul id="create-program-list"> 
-            <a class="create-program-a-link-button" id="create-program-porthack" href="#">
-                PortHack.exe
-            </a>
-            
-            <a class="create-program-a-link-button" id="create-program-brutessh" href="#">
-                BruteSSH.exe
-            </a>
-
-            <a class="create-program-a-link-button" id="create-program-ftpcrack" href="#">
-                FTPCrack.exe
-            </a>
-            
-            <a class="create-program-a-link-button" id="create-program-relaysmtp" href="#">
-                relaySMTP.exe
-            </a>
-            
-            <a class="create-program-a-link-button" id="create-program-httpworm" href="#">
-                HTTPWorm.exe
-            </a>
-            
-            <a class="create-program-a-link-button" id="create-program-sqlinject" href="#">
-                SQLInject.exe
-            </a>
-        
+            <a class="create-program-a-link-button" id="create-program-porthack" href="#">PortHack.exe</a>
+            <a class="create-program-a-link-button" id="create-program-brutessh" href="#">BruteSSH.exe</a>
+            <a class="create-program-a-link-button" id="create-program-ftpcrack" href="#">FTPCrack.exe</a>
+            <a class="create-program-a-link-button" id="create-program-relaysmtp" href="#">relaySMTP.exe</a>
+            <a class="create-program-a-link-button" id="create-program-httpworm" href="#">HTTPWorm.exe</a>            
+            <a class="create-program-a-link-button" id="create-program-sqlinject" href="#">SQLInject.exe</a>
         </ul>
 	</div>
 	
@@ -404,8 +388,7 @@
 	<div id="factions-container">
 		<h1> Factions </h1>
 		<p> Lists all factions you have joined </p>
-		<ul class="factions-list" id="factions-list">
-		</ul>
+		<ul class="factions-list" id="factions-list"></ul>
 	</div>
 	
 	<!-- Single Faction info (when you select a faction from the Factions menu) -->
@@ -419,45 +402,50 @@
 		Perform work/carry out assignments for your faction to help further its cause! Each
 		task takes a certain amount of time to complete, which is dependent on your stats. Completing
 		a task will earn you exp and increase your reputation with the faction. Note that you cannot
-		use your terminal or create scripts when you are performing a task!
+		use your terminal or create scripts when you are performing a task! <br><br><br><br>
 		</p>
 		
 		<div id="faction-hack-div">
-        <a href="#" id="faction-hack-button" class="a-link-button">Hacking Contracts</a>
-		<p id="faction-hack-text">
-			Complete hacking contracts for your faction! <br>
-			Your effectiveness, which determines how much reputation you gain for this faction, is based on your hacking skill. <br>
-			Gain hacking exp.
-		</p>
-		<div id="faction-hack-text-div">
-		</div>
+            <div id="faction-hack-div-wrapper">
+                <a href="#" id="faction-hack-button" class="a-link-button">Hacking Contracts</a>
+                <p id="faction-hack-text">
+                    Complete hacking contracts for your faction! <br>
+                    Your effectiveness, which determines how much reputation you gain for this faction, is based on your hacking skill. <br>
+                    You will gain hacking exp.
+                </p>
+            </div>
+            <div class="faction-clear"></div>
 		</div>
 		
 		<div id="faction-fieldwork-div">
-        <a href="#" id="faction-fieldwork-button" class="a-link-button">Field Work</a>
-		<div id="faction-fieldwork-text-div">
-		<p id="faction-fieldwork-text">
-			Carry out field missions for your faction. <br>
-			Your effectiveness, which determines how much reputation you gain for this faction, is based on all of your stats. <br>
-			Gains exp for all stats.
-		</p>
-		</div>
+            <div id="faction-fieldwork-div-wrapper">
+                <a href="#" id="faction-fieldwork-button" class="a-link-button">Field Work</a>
+                <p id="faction-fieldwork-text">
+                    Carry out field missions for your faction. <br>
+                    Your effectiveness, which determines how much reputation you gain for this faction, is based on all of your stats. <br>
+                    You will gain exp for all stats.
+                </p>
+            </div>
+            <div class="faction-clear"></div>
 		</div>
 		
 		<div id="faction-securitywork-div">
-        <a href="#" id="faction-securitywork-button" class="a-link-button">Security Work</a>
-		<div id="faction-securitywork-text-div">
-		<p id="faction-securitywork-text">
-			Serve in a security detail for your faction. <br>
-			Your effectiveness, which determines how much reputation you gain for this faction, is based on your combat stats. <br>
-			Gains exp for all combat stats.
-		</p>
-		</div>
+            <div id="faction-securitywork-div-wrapper">
+                <a href="#" id="faction-securitywork-button" class="a-link-button">Security Work</a>
+                <p id="faction-securitywork-text">
+                    Serve in a security detail for your faction. <br>
+                    Your effectiveness, which determines how much reputation you gain for this faction, is based on your combat stats. <br>
+                    You will gain exp for all combat stats.
+                </p>
+            </div>
+            <div class="faction-clear"></div>
 		</div>
 
         <p>
+            <br><br><br>
             As your reputation with this faction rises, you will unlock Augmentations, which you 
             can purchase to enhance your abilities.
+            <br><br>
         </p>
         <a href="#" id="faction-purchase-augmentations" class="a-link-button">Purchase Augmentations</a>
 	</div>
@@ -542,7 +530,7 @@
         <a href="#" id="location-purchase-256gb" class="a-link-button"> Purchase 256GB Server - $100,000,000</a>
         <a href="#" id="location-purchase-512gb" class="a-link-button"> Purchase 512GB Server - $250,000,000</a>
         <a href="#" id="location-purchase-1tb" class="a-link-button"> Purchase 1TB Server - $750,000,000</a>
-        <a href="#" id="location-purchase-tor" class="a-link-button"> Purchase TOR Router - $100,000</a>
+        <a href="#" id="location-purchase-tor" class="a-link-button"> Purchase TOaR Router - $100,000</a>
         <a href="#" id="location-purchase-home-ram" class="a-link-button"> Purchase RAM for Home computer </a>
         
         <!-- Travel agency -->
@@ -619,7 +607,7 @@
     <!-- Purchase Augmentation Pop-up Box -->
     <div id="purchase-augmentation-box-container">
         <div id="purchase-augmentation-box-content">
-            <h2 id="purchase-augmentation-box-aug-name"> <h2>
+            <h2 id="purchase-augmentation-box-aug-name"> </h2>
             <p id="purchase-augmentation-box-aug-info"> </p>
             <p id="purchase-augmentation-box-text"> </p>
             <p> <br> WARNING: Purchasing an Augmentation resets most of your progress, including: <br>

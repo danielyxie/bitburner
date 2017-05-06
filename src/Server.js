@@ -56,6 +56,14 @@ function Server() {
 //Initialize the properties of a server
 Server.prototype.init = function(ip, hostname, organizationName, onlineStatus, isConnectedTo, adminRights, purchasedByPlayer, maxRam) {
 	this.ip = ip;
+    
+    //Check if hostname is unique
+    var i = 0;
+    while (GetServerByHostname(hostname) != null) {
+        //Server already exists
+        hostname = hostname + "-" + i;
+        ++i;
+    }
 	this.hostname = hostname;
 	this.organizationName = organizationName;
 	this.isOnline = onlineStatus;

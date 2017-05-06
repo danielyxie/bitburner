@@ -4,6 +4,7 @@
 Locations = {
     //Cities
 	Aevum: 			"Aevum",
+    //AevumDesc:      ""
 	Chongqing: 		"Chongqing",
 	Sector12: 		"Sector-12",
 	NewTokyo: 		"New Tokyo",
@@ -1503,7 +1504,10 @@ purchaseTorRouter = function() {
     AddToAllServers(darkweb);
     SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
     
+    document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
+    
     Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
+    darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);
     dialogBoxCreate("You have purchased a Tor router!", "You now have access to the dark web from your home computer", "Use the scan/netstat commands to search for the dark web connection.");
 }
 
