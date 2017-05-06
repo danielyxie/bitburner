@@ -13,18 +13,17 @@ iTutorialSteps = {
     TerminalNuke: "Use the NUKE Program to gain root access to a server", 
     TerminalManualHack: "Use the hack command to manually hack a server",
     TerminalCreateScript: "Create a script using nano",
-    TerminalTypeScript: "This occurs in the Script Editor page...type the script then save and close","
+    TerminalTypeScript: "This occurs in the Script Editor page...type the script then save and close",
+    TerminalFree: "Use the free command to check RAM",
     TerminalRunScript: "Use the run command to run a script",
     TerminalGoToActiveScriptsPage: "Go to the ActiveScriptsPage",
     ActiveScriptsPage: "Introduction to the Active Scripts Page",
     ActiveScriptsToTerminal: "Go from Active Scripts Page Back to Terminal",
     TerminalTailScript: "Use the tail command to show a script's logs",
     GoToHacknetNodesPage: "Go to the Hacknet Nodes page", 
-    HacknetNodesIntroduction: "Introduction to Hacknet Nodes",
-    HacknetNodesPurchase: "Have the user purchase a Hacknet Node",
+    HacknetNodesIntroduction: "Introduction to Hacknet Nodesm and have user purchase one",
     HacknetNodesGoToWorldPage: "Go to the world page",
     WorldDescription: "Tell the user to explore..theres a lot of different stuff to do out there",
-    WorldGoToTutorialPage: "Go to the Tutorial Page",
     TutorialPageInfo: "The tutorial page contains a lot of info on different subjects",
     End: "End",
 }
@@ -33,24 +32,32 @@ var currITutorialStep = iTutorialSteps.Start;
 var iTutorialIsRunning = false;
 
 function iTutorialStart() {
+    //Don't autosave during this interactive tutorial
+    Engine.Counters.autoSaveCounter = 999000000000;
+    console.log("Interactive Tutorial started");
     currITutorialStep = iTutorialSteps.Start;
     iTutorialIsRunning = true;
     
     document.getElementById("interactive-tutorial-container").style.display = "block";
     
+    iTutorialEvaluateStep();
+    
     //Exit tutorial button
     var exitButton = clearEventListeners("interactive-tutorial-exit");
     exitButton.addEventListener("click", function() {
         iTutorialEnd();
+        return false;
     });
 }
 
 function iTutorialEvaluateStep() {
+    if (!iTutorialIsRunning) {console.log("Interactive Tutorial not running"); return;}
     switch(currITutorialStep) {
     case iTutorialSteps.Start:
-        iTutorialSetText("Welcome to Bitburner, a cyberpunk-themed incremental RPG! <br><br>" + 
+        iTutorialSetText("Welcome to Bitburner, a cyberpunk-themed incremental RPG! " +
+                         "The game takes place in a dark, dystopian future...The year is 2077...<br><br>" +         
                          "This tutorial will show you the basics of the game to help you get started. " + 
-                         "You may skip the tutorial at any time");
+                         "You may skip the tutorial at any time.");
         var next = clearEventListeners("interactive-tutorial-next");
         next.addEventListener("click", function() {
             iTutorialNextStep();
@@ -66,10 +73,11 @@ function iTutorialEvaluateStep() {
         next.style.display = "none";
         
         //Initialize everything necessary to open the "Character" page
-        Engine.Clickables.characterMainMenuButton = document.getElementById("character-menu-link");
-        Engine.Clickables.characterMainMenuButton.addEventListener("click", function() {
+        var charaterMainMenuButton = document.getElementById("character-menu-link");
+        charaterMainMenuButton.addEventListener("click", function() {
             Engine.loadCharacterContent();
             iTutorialNextStep(); //Opening the character page will go to the next step
+            clearEventListeners("character-menu-link");
             return false;
         });
         break;
@@ -91,58 +99,232 @@ function iTutorialEvaluateStep() {
         next.style.display = "none";
         
         //Initialize everything necessary to open the 'Terminal' Page
-        Engine.Clickables.terminalMainMenuButton = document.getElementById("terminal-menu-link");
-        Engine.Clickables.terminalMainMenuButton.addEventListener("click", function() {
+        var terminalMainMenuButton = document.getElementById("terminal-menu-link");
+        terminalMainMenuButton.addEventListener("click", function() {
             Engine.loadTerminalContent();
             iTutorialNextStep();
+            clearEventListeners("terminal-menu-link");
             return false;
         });
         break;
     case iTutorialSteps.TerminalIntro:
+        iTutorialSetText("The Terminal is used to interface with your home computer as well as " +
+                         "all of the other machines around the world. A lot of content in the game is " + 
+                         "accessible only through the Terminal, and is necessary for progressing. ");
+        var next = clearEventListeners("interactive-tutorial-next");
+        next.style.display = "inline-block";
+        next.addEventListener("click", function() {
+            iTutorialNextStep();
+            return false;
+        });
         break;
     case iTutorialSteps.TerminalHelp:
+        iTutorialSetText("Let's try it out. Start by entering the 'help' command into the Terminal " + 
+                         "(Don't forget to press Enter after typing the command)");
+        var next = clearEventListeners("interactive-tutorial-next");
+        next.style.display = "none";    
+        //next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalLs:
+        iTutorialSetText("The 'help' command displays a list of all available commands, how to use them, " + 
+                         "and a description of what they do. <br><br>Let's try another command. Enter the 'ls' command");
+        //next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalScan:
+        iTutorialSetText("'ls' is a basic command that shows all of the contents (programs/scripts) " +
+                         "on the computer. Right now, it shows that you have a program called 'NUKE.exe' on your computer. " + 
+                         "We'll get to what this does later. <br><br> Through your home computer's terminal, you can connect " + 
+                         "to other machines throughout the world. Let's do that now by first entering " + 
+                         "the 'scan' command (Alternatively, you can also enter the 'netstat' command " + 
+                         "which does the same thing). ");
+        //next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalConnect:
+        iTutorialSetText("The 'scan/netstat' command shows all available network connections. In other words, " +
+                         "it displays a list of all servers that can be connected to from your " + 
+                         "current machine. A server is identified by either its IP or its hostname. <br><br> " + 
+                         "To connect to a machine, use the 'connect [ip/hostname]' command. You can type in " + 
+                         "the ip or the hostname, but dont use both. (Alternatively, " + 
+                         "the 'telnet [ip/hostname]' command does the same thing).<br><br>" + 
+                         "Let's try this now by connecting to the 'foodnstuff' server (connect foodnstuff)");
+        //next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalAnalyze:
+        iTutorialSetText("You are now connected to another machine! What can you do now? You can hack it!<br><br> In the year 2077, currency has " + 
+                         "become digital and decentralized. People and corporations store their money " + 
+                         "on servers and computers. Using your hacking abilities, you can hack servers " + 
+                         "to steal money and gain experience. <br><br> " + 
+                         "Before you try to hack a server, you should run diagnostics using the 'analyze' command");
+        //next step triggered by terminal command     
         break;
     case iTutorialSteps.TerminalNuke:
+        iTutorialSetText("When the 'analyze' command finishes running it will show useful information " + 
+                         "about hacking the server. <br><br> For this server, the required hacking skill is only 1, " +
+                         "which means you are able to hack it right now. However, in order to hack a server " + 
+                         "you must first gain root access. The 'NUKE.exe' program that we saw earlier on your " +
+                         "home computer is a virus that will grant you root access to a machine if there are enough " +
+                         "open ports.<br><br> The 'analyze' results shows that there do not need to be any open ports " + 
+                         "on this machine for the NUKE virus to work, so go ahead and run the virus using the " + 
+                         "'run NUKE.exe' command.");
+        //next step triggered by terminal command  
         break;
     case iTutorialSteps.TerminalManualHack:
+        iTutorialSetText("You now have root access! You can hack the server using the 'hack' command. " + 
+                         "Try doing that now. ");
+        //next step triggered by terminal command 
         break;
     case iTutorialSteps.TerminalCreateScript:
+        iTutorialSetText("You are now attempting to hack the server. Note that performing a hack takes time and " + 
+                         "only has a certain percentage chance " + 
+                         "of success. This time and percentage is determined by a variety of factors, including " + 
+                         "your hacking skill and the server's security level. <br><br>" + 
+                         "Hacking is the core mechanic of the game and is necessary for progressing. However, " + 
+                         "you don't want to be hacking manually the entire time. You can automate your hacking " + 
+                         "by writing scripts! <br><br>To create a new script or edit an existing one, you can use the 'nano' " + 
+                         "command. Scripts must end with the '.script' extension. Let's make a script now by " +
+                         "entering 'nano foodnstuff.script' after the hack command finishes running (Sidenote: Pressing ctrl + c" + 
+                         " will end a command like hack early)");
+        //next step triggered by terminal command 
         break;
     case iTutorialSteps.TerminalTypeScript:
+        iTutorialSetText("This is the script editor. You can use it to program your scripts. Scripts are " + 
+                         "written in the Netscript language, a very simple programming language created for " + 
+                         "this game. There are details about the Netscript language in the documentation, which " +
+                         "can be accessed in the 'Tutorial' tab on the main navigation menu. For now, just copy " + 
+                         "and paste the following code into the script editor: <br><br>" +
+                         "while(true) { <br>" + 
+                         "hack('foodnstuff'); <br>" + 
+                         "}<br><br> " +
+                         "For anyone with basic programming experience, this code should be straightforward. " +
+                         "This script will continuously hack the 'foodnstuff' server. <br><br>" + 
+                         "To save and close the script editor, press the button in the top left, or press ctrl + b.");
+        //next step triggered in saveAndCloseScriptEditor() (Script.js)
+        break;
+    case iTutorialSteps.TerminalFree:
+        iTutorialSetText("Now we'll run the script. Scripts require a certain amount of RAM to run, and can be " + 
+                         "run on any machine which you have root access to. Different servers have different " + 
+                         "amounts of RAM. You can also purchase more RAM for your home server. <br><br> To check how much " +
+                         "RAM is available on this machine, enter the 'free' command.");
+        //next step triggered by terminal commmand
         break;
     case iTutorialSteps.TerminalRunScript:
+        iTutorialSetText("We have 2GB of free RAM on this machine, which is enough to run our " + 
+                         "script. Let's run our script using 'run foodnstuff.script'.");
+        //next step triggered by terminal commmand
         break;
     case iTutorialSteps.TerminalGoToActiveScriptsPage:
+        iTutorialSetText("Your script is now running! The script might take a few seconds to 'fully start up'. " + 
+                         "Your scripts will continuously run in the background and will automatically stop if " + 
+                         "the code ever completes (the 'foodnstuff.script' will never complete because it " + 
+                         "runs an infinite loop). <br><br>These scripts will passively earn you income and hacking experience. " + 
+                         "Your scripts will also earn money and experience while you are offline, although at a " +
+                         "much slower rate. <br><br> " + 
+                         "Let's check out some statistics of our active, running scripts by clicking the " + 
+                         "'Active Scripts' link in the main navigation menu. ");
+        var activeScriptsMainMenuButton = document.getElementById("active-scripts-menu-link");
+        activeScriptsMainMenuButton.addEventListener("click", function() {
+            Engine.loadActiveScriptsContent();
+            iTutorialNextStep();
+            clearEventListeners("active-scripts-menu-link");
+            return false;
+        });
         break;
     case iTutorialSteps.ActiveScriptsPage:
+        iTutorialSetText("This page displays stats/information about all of your scripts that are " +
+                         "running across every existing server. You can use this to gauge how well " + 
+                         "your scripts are doing. Let's go back to the Terminal now using the 'Terminal'" + 
+                         "link.");
+        //Initialize everything necessary to open the 'Terminal' Page
+        var terminalMainMenuButton = clearEventListeners("terminal-menu-link");
+        terminalMainMenuButton.addEventListener("click", function() {
+            Engine.loadTerminalContent();
+            iTutorialNextStep();
+            clearEventListeners("terminal-menu-link");
+            return false;
+        });
         break;
     case iTutorialSteps.ActiveScriptsToTerminal:
+        iTutorialSetText("One last thing about scripts, each active script contains logs that detail " + 
+                         "what it's doing. We can check these logs using the 'tail' command. Do that " + 
+                         "now for the script we just ran by typing 'tail foodnstuff.script'");
+        //next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalTailScript:
+        iTutorialSetText("The log for this script won't show much right now (it might show nothing at all) because it " + 
+                         "just started running...but check back again in a few minutes! <br><br>" + 
+                         "This pretty much covers the basics of hacking. To learn more about writing " + 
+                         "scripts using the Netscript language, select the 'Tutorial' link in the " +
+                         "main navigation menu to look at the documentation. For now, let's move on " + 
+                         "to something else!");
+        var next = clearEventListeners("interactive-tutorial-next");
+        next.style.display = "inline-block";
+        next.addEventListener("click", function() {
+            iTutorialNextStep();
+            return false;
+        });
         break;
     case iTutorialSteps.GoToHacknetNodesPage:
+        iTutorialSetText("Hacking is not the only way to earn money. One other way to passively " +
+                         "earn money is by purchasing and upgrading Hacknet Nodes. Let's go to " + 
+                         "the 'Hacknet Nodes' page through the main navigation menu now.");
+        var hacknetNodesButton = clearEventListeners("hacknet-nodes-menu-link");
+        var next = clearEventListeners("interactive-tutorial-next");
+        next.style.display = "none";
+        hacknetNodesButton.addEventListener("click", function() {
+            Engine.loadHacknetNodesContent();
+            iTutorialNextStep();
+            clearEventListeners("hacknet-nodes-menu-link");
+            return false;
+        });
         break;
     case iTutorialSteps.HacknetNodesIntroduction:
-        break;
-    case iTutorialSteps.HacknetNodesPurchase:
+        iTutorialSetText("From this page you can purchase new Hacknet Nodes and upgrade your " + 
+                         "existing ones. Let's purchase a new one now.");
+        //Next step triggered by purchaseHacknet() (HacknetNode.js)
         break;
     case iTutorialSteps.HacknetNodesGoToWorldPage:
+        iTutorialSetText("You just purchase a Hacknet Node! This Hacknet Node will passively " + 
+                         "earn you money over time, both online and offline. When you get enough " + 
+                         " money, you can upgrade " + 
+                         "your newly-purchased Hacknet Node below. <br><br>" + 
+                         "Let's go to the 'World' page through the main navigation menu.");
+        var worldButton = clearEventListeners("world-menu-link");
+        worldButton.addEventListener("click", function() {
+            Engine.loadWorldContent();
+            iTutorialNextStep();
+            clearEventListeners("world-menu-link");
+            return false;
+        });
         break;
     case iTutorialSteps.WorldDescription:
+        iTutorialSetText("This page lists all of the different locations you can currently " +
+                         "travel to. Each location has something that can you do. " + 
+                         "There's a lot of content out in the world, make sure " +
+                         "you explore and discover!<br><br>" + 
+                         "Lastly, click on the 'Tutorial' link in the main navigation menu.");
+        var tutorialButton = clearEventListeners("tutorial-menu-link");
+        tutorialButton.addEventListener("click", function() {
+            Engine.loadTutorialContent();
+            iTutorialNextStep();
+            clearEventListeners("tutorial-menu-link");
+            return false;
+        });
         break;
-    case iTutorialSteps.WorldGoToTutorialPage:
-        break;
+
     case iTutorialSteps.TutorialPageInfo:
+        iTutorialSetText("This page contains a lot of different documentation about the game's " + 
+                         "content and mechanics. If you have any questions about how something works " + 
+                         "make sure you check this out first. That's the end of the tutorial. " + 
+                         "Hope you enjoy the game!");
+        var next = clearEventListeners("interactive-tutorial-next");
+        next.style.display = "inline-block";
+        next.addEventListener("click", function() {
+            iTutorialNextStep();
+            return false;
+        });
         break;
     case iTutorialSteps.End:
+        iTutorialEnd();
         break;
     default:
         throw new Error("Invalid tutorial step");
@@ -151,6 +333,7 @@ function iTutorialEvaluateStep() {
 
 //Go to the next step and evaluate it
 function iTutorialNextStep() {
+    console.log("iTutorialNextStep() called with current step: " + currITutorialStep);
     switch(currITutorialStep) {
     case iTutorialSteps.Start:
         currITutorialStep = iTutorialSteps.GoToCharacterPage;
@@ -205,6 +388,10 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.TerminalTypeScript:
+        currITutorialStep = iTutorialSteps.TerminalFree;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalFree:
         currITutorialStep = iTutorialSteps.TerminalRunScript;
         iTutorialEvaluateStep();
         break;
@@ -233,10 +420,6 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.HacknetNodesIntroduction:
-        currITutorialStep = iTutorialSteps.HacknetNodesPurchase;
-        iTutorialEvaluateStep();
-        break;
-    case iTutorialSteps.HacknetNodesPurchase:
         currITutorialStep = iTutorialSteps.HacknetNodesGoToWorldPage;
         iTutorialEvaluateStep();
         break;
@@ -245,10 +428,6 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.WorldDescription:
-        currITutorialStep = iTutorialSteps.WorldGoToTutorialPage;
-        iTutorialEvaluateStep();
-        break;
-    case iTutorialSteps.WorldGoToTutorialPage:
         currITutorialStep = iTutorialSteps.TutorialPageInfo;
         iTutorialEvaluateStep();
         break;
@@ -264,8 +443,13 @@ function iTutorialNextStep() {
 }
 
 function iTutorialEnd() {
+    //Re-enable auto save
+    Engine.Counters.autoSaveCounter = 1;
+    console.log("Ending interactive tutorial");
+    Engine.init();
     currITutorialStep = iTutorialSteps.End;
     iTutorialIsRunning = false;
+    document.getElementById("interactive-tutorial-container").style.display = "none";
 }
 
 function iTutorialSetText(txt) {

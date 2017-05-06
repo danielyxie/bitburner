@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", scriptEditorSaveCloseInit, false);
 //Define key commands in script editor (ctrl o to save + close, etc.)
 $(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
-		//Ctrl + x
+		//Ctrl + b
         if (e.keyCode == 66 && e.ctrlKey) {			
 			saveAndCloseScriptEditor();
         }
@@ -26,6 +26,20 @@ $(document).keydown(function(e) {
 
 function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
+    if (iTutorialIsRunning && currITutorialStep == iTutorialSteps.TerminalTypeScript) {
+        if (filename != "foodnstuff") {
+            dialogBoxCreate("Leave the script name as 'foodnstuff'!");
+            return;
+        }
+        var code = document.getElementById("script-editor-text").value;
+        code = code.replace(/\s\s+/g, '');
+        console.log(code);
+        if (code.indexOf("while(true) {hack('foodnstuff');}") == -1) {
+            dialogBoxCreate("Please copy and paste the code from the tutorial!");
+            return;
+        }
+        iTutorialNextStep(); 
+    }
     
     if (filename == "") {
         //If no filename...just close and do nothing

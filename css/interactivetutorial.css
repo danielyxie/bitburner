@@ -2,20 +2,23 @@
 #interactive-tutorial-container {
     display: none;
     position: fixed; /* Stay in place */
-    left: 0;
+    right: 0;
     top: 0;
     height: 100%; /* Full height */
     margin: 20% auto;
     padding: 10px;
     border: 5px solid #FFFFFF;
-    width: 40%;
+    width: 35%;
     overflow: auto; /* Enable scroll if needed */
-    background-color: black; /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: #444; /* Fallback color */
+    color: white;
 }
 
 #interactive-tutorial-text {
-    
+    padding: 4px;
+    margin: 4px;
+    color: white;
+    background-color: #444;
 }
 
 #interactive-tutorial-exit,

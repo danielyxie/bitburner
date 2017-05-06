@@ -88,6 +88,17 @@ Reviver.constructors.HacknetNode = HacknetNode;
 
 
 purchaseHacknet = function() {
+    /* INTERACTIVE TUTORIAL */
+    if (iTutorialIsRunning) {
+        if (currITutorialStep == iTutorialSteps.HacknetNodesIntroduction) {
+            iTutorialNextStep();
+        } else {
+            return;
+        }
+    }
+    
+    /* END INTERACTIVE TUTORIAL */
+    
     var cost = getCostOfNextHacknetNode();
     if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
     if (cost > Player.money) {
@@ -117,9 +128,10 @@ getCostOfNextHacknetNode = function() {
 //Creates Hacknet Node DOM elements when the page is opened
 displayHacknetNodesContent = function() {
     //Update Hacknet Nodes button
-    var purchaseButton = document.getElementById("hacknet-nodes-purchase-button");
-    var newPurchaseButton = purchaseButton.cloneNode(true);
-    purchaseButton.parentNode.replaceChild(newPurchaseButton, purchaseButton);
+    var newPurchaseButton = clearEventListeners("hacknet-nodes-purchase-button");
+    //var purchaseButton = document.getElementById("hacknet-nodes-purchase-button");
+    //var newPurchaseButton = purchaseButton.cloneNode(true);
+    //purchaseButton.parentNode.replaceChild(newPurchaseButton, purchaseButton);
     
     newPurchaseButton.addEventListener("click", function() {
         purchaseHacknet();
