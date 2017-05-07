@@ -174,7 +174,7 @@ CONSTANTS = {
                            "The following data types are supported by Netscript: <br>" + 
                            "numeric - Integers and floats (6, 10.4999)<br>" + 
                            "string - Encapsulated by single or double quotes ('this is a string')<br>" + 
-                           "boolean - True or False<br><br>" + 
+                           "boolean - true or false<br><br>" + 
                            "To create a variable, use the assign (=) operator. The language is not strongly typed. Examples: <br>" + 
                            "i = 5;<br>" + 
                            "s = 'this game is awesome!';<br><br>" + 

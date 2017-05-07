@@ -47,7 +47,7 @@ listAllDarkwebItems = function() {
 }
 
 buyDarkwebItem = function(itemName) {
-    if (DarkWebItems.BruteSSHProgram.startsWith(itemName)) {
+    if (itemName.toLowerCase() == "brutessh.exe") {
         var price = parseDarkwebItemPrice(DarkWebItems.BruteSSHProgram);
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
@@ -57,7 +57,7 @@ buyDarkwebItem = function(itemName) {
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (DarkWebItems.FTPCrackProgram.startsWith(itemName)) {
+    } else if (itemName.toLowerCase() == "ftpcrack.exe") {
         var price = parseDarkwebItemPrice(DarkWebItems.FTPCrackProgram);
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
@@ -67,7 +67,7 @@ buyDarkwebItem = function(itemName) {
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (DarkWebItems.RelaySMTPProgram.startsWith(itemName)) {
+    } else if (itemName.toLowerCase() == "relaysmtp.exe") {
         var price = parseDarkwebItemPrice(DarkWebItems.RelaySMTPProgram);
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
@@ -77,7 +77,7 @@ buyDarkwebItem = function(itemName) {
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (DarkWebItems.HTTPWormProgram.startsWith(itemName)) {
+    } else if (itemName.toLowerCase() == "httpworm.exe") {
         var price = parseDarkwebItemPrice(DarkWebItems.HTTPWormProgram);
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
@@ -87,7 +87,7 @@ buyDarkwebItem = function(itemName) {
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (DarkWebItems.SQLInjectProgram.startsWith(itemName)) {
+    } else if (itemName.toLowerCase() == "sqlinject.exe") {
         var price = parseDarkwebItemPrice(DarkWebItems.SQLInjectProgram);
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);

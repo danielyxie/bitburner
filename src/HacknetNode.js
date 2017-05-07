@@ -28,7 +28,7 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
 HacknetNode.prototype.calculateLevelUpgradeCost = function() {
     //Upgrade cost = Base cost * multiplier ^ level
     var mult = CONSTANTS.HacknetNodeUpgradeLevelMult;
-    return CONSTANTS.BaseCostForHacknetNode * Math.pow(mult, this.level) * Player.hacknet_node_level_cost_mult;
+    return CONSTANTS.BaseCostForHacknetNode / 2 * Math.pow(mult, this.level) * Player.hacknet_node_level_cost_mult;
 }
 
 HacknetNode.prototype.purchaseLevelUpgrade = function() {

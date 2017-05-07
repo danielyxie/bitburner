@@ -1420,32 +1420,32 @@ initLocationButtons = function() {
     });
     
     travelToAevum.addEventListener("click", function() {
-        travelBoxCreate(Locations.Aevum, 1000000);
+        travelBoxCreate(Locations.Aevum, 200000);
         return false;
     });
     
     travelToChongqing.addEventListener("click", function() {
-        travelBoxCreate(Locations.Chongqing, 1000000);
+        travelBoxCreate(Locations.Chongqing, 200000);
         return false;
     });
     
     travelToSector12.addEventListener("click", function() {
-        travelBoxCreate(Locations.Sector12, 1000000);
+        travelBoxCreate(Locations.Sector12, 200000);
         return false;
     });
     
     travelToNewTokyo.addEventListener("click", function() {
-        travelBoxCreate(Locations.NewTokyo, 1000000);
+        travelBoxCreate(Locations.NewTokyo, 200000);
         return false;
     });
     
     travelToIshima.addEventListener("click", function() {
-        travelBoxCreate(Locations.Ishima, 1000000);
+        travelBoxCreate(Locations.Ishima, 200000);
         return false;
     });
     
     travelToVolhaven.addEventListener("click", function() {
-        travelBoxCreate(Locations.Volhaven, 1000000);
+        travelBoxCreate(Locations.Volhaven, 200000);
         return false;
     });
     

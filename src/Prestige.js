@@ -138,6 +138,9 @@ function prestigeAugmentation() {
         Factions[member].reset();
     }
     
+    //Re-initialize Augmentations - This will update any changes 
+    initAugmentations();
+    
     //Inititialization
     SpecialServerIps = new SpecialServerIpsMap();
     Player.init();

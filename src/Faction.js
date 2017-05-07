@@ -27,6 +27,7 @@ Faction.prototype.reset = function() {
     this.isMember = false;
     this.isBanned = false;
     this.playerReputation = 0;
+    this.augmentations = [];
 }
 
 Faction.prototype.toJSON = function() {
@@ -775,7 +776,7 @@ displayFactionAugmentations = function(factionName) {
 }
 
 function processPassiveFactionRepGain(numCycles) {
-    var numTimesGain = numCycles / 600;
+    var numTimesGain = (numCycles / 600) * Player.faction_rep_mult;
     for (var name in Factions) {
 		if (Factions.hasOwnProperty(name)) {
 			var faction = Factions[name];
