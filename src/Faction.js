@@ -316,7 +316,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Sector-12
     var sector12Fac = Factions["Sector-12"];
     if (sector12Fac.isBanned == false && sector12Fac.isMember == false && 
-        this.money >= 40000000 && this.location == Locations.Sector12) {
+        this.money >= 15000000 && this.location == Locations.Sector12) {
         invitedFactions.push(sector12Fac);
     }
     
@@ -736,7 +736,6 @@ displayFactionAugmentations = function(factionName) {
     }
     
     for (var i = 0; i < faction.augmentations.length; ++i) {
-        console.log("here");
         (function () {
             var aug = Augmentations[faction.augmentations[i]];
             var item = document.createElement("li");
@@ -745,7 +744,7 @@ displayFactionAugmentations = function(factionName) {
             var pElem = document.createElement("p");
             aElem.setAttribute("href", "#");
             var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
-            if (aug.owned) {
+            if (aug.name != AugmentationNames.NeuroFluxGovernor && aug.owned) {
                 aElem.setAttribute("class", "a-link-button-inactive");
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
@@ -759,9 +758,11 @@ displayFactionAugmentations = function(factionName) {
             aElem.style.display = "inline-block";
             pElem.style.display = "inline-block";
             aElem.innerHTML = aug.name;
+            if (aug.name == AugmentationNames.NeuroFluxGovernor) {
+                aElem.innerHTML += " - Level " + (aug.level + 1);
+            }
             
             aElem.addEventListener("click", function() {
-                console.log("here");
                 purchaseAugmentationBoxCreate(aug, faction);
             });
             

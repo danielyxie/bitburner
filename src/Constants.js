@@ -1,8 +1,9 @@
 CONSTANTS = {
     Version:                "0.1",
     
-	//Max level for any skill. Determined by max numerical value in javascript and the skill level
-	//formula in Player.js
+	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
+    //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
+    //the player will have this level assuming no multipliers. Multipliers can cause skills to go above this. 
 	MaxSkillLevel: 			975,
     
     //How much reputation is needed to join a megacorporation's faction
@@ -20,6 +21,10 @@ CONSTANTS = {
     HacknetNodeUpgradeLevelMult: 1.07,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.2,     //Multiplier for cost when upgrading RAM
     HacknetNodeUpgradeCoreMult: 1.5,    //Multiplier for cost when buying another core
+    
+    /* Augmentation */
+    //NeuroFlux Governor cost multiplier as you level up
+    NeuroFluxGovernorLevelMult: 1.1,
 	
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  

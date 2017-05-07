@@ -457,6 +457,9 @@ var Engine = {
             
             item.setAttribute("class", "installed-augmentation");
             hElem.innerHTML = augName;
+            if (augName == AugmentationNames.NeuroFluxGovernor) {
+                hElem += " - Level " + (aug.level);
+            }
             pElem.innerHTML = aug.info;
             
             item.appendChild(hElem);
@@ -713,9 +716,9 @@ var Engine = {
         } else {
             //No save found, start new game
             console.log("Initializing new game");
+            SpecialServerIps = new SpecialServerIpsMap();
             Engine.setDisplayElements();        //Sets variables for important DOM elements
             Engine.start();                     //Run main game loop and Scripts loop
-            SpecialServerIps = new SpecialServerIpsMap();
             Player.init();
             initForeignServers();
             initCompanies();

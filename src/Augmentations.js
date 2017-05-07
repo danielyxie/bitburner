@@ -8,6 +8,10 @@ function Augmentation(name) {
     //Price and reputation base requirements (can change based on faction multipliers)
     this.baseRepRequirement = 0;        
     this.baseCost = 0;
+    
+    //Level - Only applicable for some augmentations
+    //      NeuroFlux Governor
+    this.level = 0;
 }
 
 Augmentation.prototype.setInfo = function(inf) {
@@ -28,6 +32,19 @@ Augmentation.prototype.addToFactions = function(factionList) {
             continue;
         }
         faction.augmentations.push(this.name);
+    }
+}
+
+Augmentation.prototype.addToAllFactions = function() {
+    for (var fac in Factions) {
+        if (Factions.hasOwnProperty(fac)) {
+            var facObj = Factions[fac];
+            if (facObj == null) {
+                console.log("ERROR: Invalid faction object");
+                continue;
+            }
+            facObj.augmentations.push(this.name);
+        }
     }
 }
 
@@ -94,6 +111,7 @@ AugmentationNames = {
     HacknetNodeNICUpload:               "HacknetNode NIC Architecture Neural-Upload",
     HacknetNodeKernelDNI:               "Hacknet Node Kernel Direct-Neural Interface",
     HacknetNodeCoreDNI:                 "Hacknet Node Core Direct-Neural Interface",
+    NeuroFluxGovernor:                  "NeuroFlux Governor",
     Neurotrainer1:                      "Neurotrainer I",
     Neurotrainer2:                      "Neurotrainer II",
     Neurotrainer3:                      "Neurotrainer III",
@@ -320,7 +338,7 @@ initAugmentations = function() {
                             "and inflection, to pick up on subtle cues and aid in social interaction.<br><br>" + 
                             "This augmentation increases the player's charisma by 20%.");
     SpeechProcessor.addToFactions(["Tian Di Hui", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
-                                  "Ishima", "Volhaven"]);
+                                  "Ishima", "Volhaven", "Silhouette"]);
     if (augmentationExists(AugmentationNames.SpeechProcessor)) {
         SpeechProcessor.owned = Augmentations[AugmentationNames.SpeechProcessor].owned;
         delete Augmentations[AugmentationNames.SpeechProcessor];
@@ -390,7 +408,7 @@ initAugmentations = function() {
     ArtificialSynapticPotentiation.setRequirements(5000, 25000000);
     ArtificialSynapticPotentiation.setInfo("The body is injected with a chemical that artificially induces synaptic potentiation, " + 
                                            "otherwise known as the strengthening of synapses. This results in a enhanced cognitive abilities.<br><br>" + 
-                                           "This augmentation increases the player's hacking speed and hacking chance by 1%.");
+                                           "This augmentation increases the player's hacking speed and hacking chance by 2%.");
     ArtificialSynapticPotentiation.addToFactions(["The Black Hand", "NiteSec"]);
     if (augmentationExists(AugmentationNames.ArtificialSynapticPotentiation)) {
         ArtificialSynapticPotentiation.owned = Augmentations[AugmentationNames.ArtificialSynapticPotentiation].owned;
@@ -399,7 +417,7 @@ initAugmentations = function() {
     AddToAugmentations(ArtificialSynapticPotentiation);
     
     var EnhancedMyelinSheathing = new Augmentation(AugmentationNames.EnhancedMyelinSheathing);
-    EnhancedMyelinSheathing.setRequirements(300000, 850000000);
+    EnhancedMyelinSheathing.setRequirements(250000, 850000000);
     EnhancedMyelinSheathing.setInfo("Electrical signals are used to induce a new, artificial form of myelinogensis in the human body. " + 
                                     "This process results in the proliferation of new, synthetic myelin sheaths in the nervous " + 
                                     "system. These myelin sheaths can propogate neuro-signals much faster than their organic " + 
@@ -416,7 +434,7 @@ initAugmentations = function() {
     AddToAugmentations(EnhancedMyelinSheathing);
     
     var SynapticEnhancement = new Augmentation(AugmentationNames.SynapticEnhancement);
-    SynapticEnhancement.setRequirements(1500, 1500000);
+    SynapticEnhancement.setRequirements(1500, 1200000);
     SynapticEnhancement.setInfo("A small cranial implant that continuously uses weak electric signals to stimulate the brain and " +
                                 "induce stronger synaptic activity. This improves the the user's cognitive abilities.<br><br>" + 
                                 "This augmentation increases the player's hacking speed by 1%.");
@@ -428,7 +446,7 @@ initAugmentations = function() {
     AddToAugmentations(SynapticEnhancement);
     
     var NeuralRetentionEnhancement = new Augmentation(AugmentationNames.NeuralRetentionEnhancement);
-    NeuralRetentionEnhancement.setRequirements(60000, 100000000);
+    NeuralRetentionEnhancement.setRequirements(20000, 100000000);
     NeuralRetentionEnhancement.setInfo("Chemical injections are used to permanently alter and strengthen the brain's neuronal " +
                                        "circuits, strengthening its ability to retain information.<br><br>" + 
                                        "This augmentation increases the player's hacking experience gain rate by 40%.");
@@ -555,7 +573,7 @@ initAugmentations = function() {
     AddToAugmentations(ENMDMA);
     
     var Neuralstimulator = new Augmentation(AugmentationNames.Neuralstimulator);
-    Neuralstimulator.setRequirements(120000, 600000000);
+    Neuralstimulator.setRequirements(60000, 500000000);
     Neuralstimulator.setInfo("A cranial implant that intelligently stimulates certain areas of the brain " + 
                              "in order to improve cognitive functions<br><br>" + 
                              "This augmentation:<br>" + 
@@ -573,7 +591,7 @@ initAugmentations = function() {
     
     //Work Augmentations
     var NuoptimalInjectorImplant = new Augmentation(AugmentationNames.NuoptimalInjectorImplant);
-    NuoptimalInjectorImplant.setRequirements(6000, 15000000);
+    NuoptimalInjectorImplant.setRequirements(5000, 12000000);
     NuoptimalInjectorImplant.setInfo("This torso implant automatically injects nootropic supplements into " + 
                                      "the bloodstream to improve memory, increase focus, and provide other " + 
                                      "cognitive enhancements.<br><br>" + 
@@ -588,7 +606,7 @@ initAugmentations = function() {
     AddToAugmentations(NuoptimalInjectorImplant);
     
     var SpeechEnhancement = new Augmentation(AugmentationNames.SpeechEnhancement);
-    SpeechEnhancement.setRequirements(3000, 4000000);
+    SpeechEnhancement.setRequirements(2000, 3000000);
     SpeechEnhancement.setInfo("An advanced neural implant that improves your speaking abilities, making " + 
                               "you more convincing and likable in conversations and overall improving your " +
                               "social interactions.<br><br>" + 
@@ -753,6 +771,24 @@ initAugmentations = function() {
     AddToAugmentations(HacknetNodeCoreDNI);
     
     //Misc augmentations
+    var NeuroFluxGovernor = new Augmentation(AugmentationNames.NeuroFluxGovernor);
+    if (augmentationExists(AugmentationNames.NeuroFluxGovernor)) {
+        var oldAug = Augmentations[AugmentationNames.NeuroFluxGovernor];
+        NeuroFluxGovernor.owned = oldAug.owned;
+        NeuroFluxGovernor.level = oldAug.level;
+        var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level-1);
+        NeuroFluxGovernor.setRequirements(1500 * mult, 1500000 * mult);
+        delete Augmentations[AugmentationNames.NeuroFluxGovernor];
+    }
+    NeuroFluxGovernor.setInfo("A device that is embedded in the back of the neck. The NeuroFlux Governor " + 
+                              "monitors and regulates nervous impulses coming to and from the spinal column, " +
+                              "essentially 'governing' the body. By doing so, it improves the functionality of the " +
+                              "body's nervous system. <br><br> " + 
+                              "This is a special augmentation because it can be leveled up. Each level of this augmentation " +
+                              "increases all of the player's stats by 0.5%.")
+    NeuroFluxGovernor.addToAllFactions();
+    AddToAugmentations(NeuroFluxGovernor);
+        
     var Neurotrainer1 = new Augmentation(AugmentationNames.Neurotrainer1);
     Neurotrainer1.setRequirements(1000, 1000000);
     Neurotrainer1.setInfo("A decentralized cranial implant that improves the brain's ability to learn. It is " + 
@@ -768,7 +804,7 @@ initAugmentations = function() {
     AddToAugmentations(Neurotrainer1);
     
     var Neurotrainer2 = new Augmentation(AugmentationNames.Neurotrainer2);
-    Neurotrainer2.setRequirements(6000, 10000000);
+    Neurotrainer2.setRequirements(5000, 10000000);
     Neurotrainer2.setInfo("A decentralized cranial implant that improves the brain's ability to learn. This " + 
                           "is a more powerful version of the Neurotrainer I augmentation, but it does not " + 
                           "require Neurotrainer I to be installed as a prerequisite.<br><br>" + 
@@ -811,7 +847,7 @@ initAugmentations = function() {
 }
 
 applyAugmentation = function(aug, faction) {
-    if (aug.owned) {
+    if (aug.name != AugmentationNames.NeuroFluxGovernor && aug.owned) {
         throw new Error("This Augmentation is already owned/applied...somethings wrong");
         return;
     }
@@ -904,8 +940,8 @@ applyAugmentation = function(aug, faction) {
             Player.hacking_mult       *= 1.1;
             break;
         case AugmentationNames.ArtificialSynapticPotentiation:    //Med level
-            Player.hacking_speed_mult *= .99;
-            Player.hacking_chance_mult *= 1.01;
+            Player.hacking_speed_mult *= .98;
+            Player.hacking_chance_mult *= 1.02;
             break;
         case AugmentationNames.EnhancedMyelinSheathing:       //Med level
             Player.hacking_speed_mult *= .99;
@@ -1018,6 +1054,15 @@ applyAugmentation = function(aug, faction) {
             break;
         
         //Misc augmentations
+        case AugmentationNames.NeuroFluxGovernor:
+            Player.hacking_mult       *= 1.005;
+            Player.strength_mult      *= 1.005;
+            Player.defense_mult       *= 1.005;
+            Player.dexterity_mult     *= 1.005;
+            Player.agility_mult       *= 1.005;
+            Player.charisma_mult      *= 1.005;
+            ++aug.level;
+            break;    
         case AugmentationNames.Neurotrainer1:      //Low Level
             Player.hacking_exp_mult   *= 1.05;
             Player.strength_exp_mult  *= 1.05;
