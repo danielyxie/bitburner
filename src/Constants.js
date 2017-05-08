@@ -139,7 +139,7 @@ CONSTANTS = {
     TutorialHackingText: "In the year 2077, currency has become digital and decentralized. People and corporations " + 
                          "store their money on servers. By hacking these servers, you can steal their money and gain " + 
                          "experience. <br><br>" + 
-                         "Gaining root access <br>" + 
+                         "<strong>Gaining root access</strong> <br>" + 
                          "The key to hacking a server is to gain root access to that server. This can be done using " + 
                          "the NUKE virus (NUKE.exe). You start the game with a copy of the NUKE virus on your home " + 
                          "computer. The NUKE virus attacks the target server's open ports using buffer overflow " + 
@@ -155,7 +155,7 @@ CONSTANTS = {
                          "opened. <br>" +
                          "Once you have enough ports opened and have ran the NUKE virus to gain root access, the server " + 
                          "can then be hacked by simply calling the 'hack' command through terminal, or by using a script.<br><br>" + 
-                         "Hacking mechanics <br>" + 
+                         "<strong>Hacking mechanics</strong><br>" + 
                          "When you execute the hack command, either manually through the terminal or automatically through " + 
                          "a script, you attempt to hack the server. This action takes time. The more advanced a server's " + 
                          "security is, the more time it will take. Your hacking skill level also affects the hacking time, " + 
@@ -172,12 +172,12 @@ CONSTANTS = {
                          
     TutorialScriptsText: "Scripts can be used to automate the hacking process. Scripts must be written in the Netscript language. " + 
                          "Documentation about the Netscript language can be found in the 'Netscript Programming Language' " + 
-                         "section of the 'Tutorial' tab. Running a script requires RAM. The more complex a script is, the more RAM " + 
+                         "section of this 'Tutorial' page. <br><br>Running a script requires RAM. The more complex a script is, the more RAM " + 
                          "it requires to run. Scripts can be run on any server you have root access to. <br><br>" + 
                          "Here are some Terminal commands that are useful when working with scripts: <br>" + 
                          "free - Shows the current server's RAM usage <br>" + 
                          "kill [script] - Stops a script that is running <br>" + 
-                         "nano [script] - Edit a script <br>" + 
+                         "nano [script] - Create/Edit a script <br>" + 
                          "ps - Displays all scripts that are actively running on the current server<br>" + 
                          "run [script] - Run a script <br>" + 
                          "tail [script] - Displays a script's logs<br>" + 
@@ -223,6 +223,7 @@ CONSTANTS = {
                            "while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}<br><br>" + 
                            "As long as <i>[cond]</i> remains true, the code block <i>[code]</i> will continuously execute. Example: <br><br>" + 
                            "i = 0; <br> while (i < 10) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1;<br> }; <br><br>" + 
+                           "This code repeat the 'hack('foodnstuff')' command 10 times before it stops and exits. " + 
                            "Note that a semicolon is needed at closing bracket of the while loop, UNLESS it is at the end of the code<br><br> " + 
                            "<strong>For loop</strong><br>" + 
                            "A for loop is another control flow statement that allows code to by repeated by iterations. The structure is: <br><br> " +
@@ -241,17 +242,18 @@ CONSTANTS = {
                            "    Ishima<br>" + 
                            "    Volhaven<br><br>" + 
                            "To travel between cities, visit your current city's travel agency through the 'World' page. " + 
-                           "From the travel agency you can travel to any other city. Doing so costs money. <br>" + 
-                           "Each city has its own set of companies and unique locations. ",
+                           "From the travel agency you can travel to any other city. Doing so costs money. <br><br>" + 
+                           "Each city has its own set of companies and unique locations. Also, certain content is only available to you " +
+                           "if you are in certain cities, so get exploring!",
     TutorialJobsText: "Hacking is not the only way to gain money and experience! Located around the world are many " + 
                       "different companies which you can work for. By working for a company you can earn money, " + 
-                      "train your various labor skills, and unlock powerful passive perks. <br> " +
+                      "train your various labor skills, and unlock powerful passive perks. <br><br> " +
                       "To apply for a job, visit the company you want to work for through the 'World' menu. The company " + 
                       "page will have options that let you apply to positions in the company. There might be several different" + 
-                      "positions you can apply for, ranging from software engineer to business analyst to security officer. <br> " + 
+                      "positions you can apply for, ranging from software engineer to business analyst to security officer. <br><br> " + 
                       "When you apply for a job, you will get the offer if your stats are high enough. Your first position at " + 
                       "a company will be an entry-level position such as 'intern'. Once you get the job, an button will appear on " + 
-                      "the company page that allows you to work for the company. Click this button to start working. <br>" + 
+                      "the company page that allows you to work for the company. Click this button to start working. <br><br>" + 
                       "Working occurs in 8 hour shifts. Once you start working, you will begin earning money, experience, " + 
                       "and reputation. The rate at which you money and experience depends on the company and your position. " + 
                       "The amount of reputation you gain for your company is based on your job performance, which is affected by " +
@@ -259,22 +261,23 @@ CONSTANTS = {
                       "other actions such as using your terminal or visiting other locations (However, note that any scripts you have " + 
                       "running on servers will continue to run as you work!). It is possible to cancel your work shift before the " + 
                       "8 hours is up, but doing so will result in you gaining only half of all of the money, experience, and reputation " +
-                      "that you had earned up to that point. <br>" +
+                      "that you had earned up to that point. <br><br>" +
                       "As you continue to work at a company, you will gain more and more reputation at that company. When your stats " + 
                       "and reputation are high enough, you can get a promotion. You can apply for a promotion on the company page, just like " + 
-                      "you applied for the job originally. Higher positions at a company provide better salaries and stat gains",
+                      "you applied for the job originally. Higher positions at a company provide better salaries and stat gains.",
     TutorialFactionsText: "Throughout the game you may receive invitations from factions. There are many different factions, and each faction " +
                           "has different criteria for determining its potential members. Joining a faction and furthering its cause is crucial " + 
-                          "to progressing in the game and unlocking endgame content. <br> " + 
+                          "to progressing in the game and unlocking endgame content. <br><br> " + 
                           "It is possible to join multiple factions if you receive invitations from them. However, note that joining a faction " +
-                          "may prevent you from joining other rival factions. <br> " + 
+                          "may prevent you from joining other rival factions. <br><br> " + 
                           "The 'Factions' link on the menu brings up a list of all factions that you have joined. " + 
                           "You can select a Faction on this list to go to that Faction page. This page displays general " + 
                           "information about the Faction and also lets you perform work for the faction. " + 
                           "Working for a Faction is similar to working for a company except that you don't get paid a salary. " + 
                           "You will only earn reputation in your Faction and train your stats. Also, cancelling work early " + 
-                          "when working for a Faction does not result in reduced experience/reputation earnings. <br>" + 
-                          "Earning reputation for a Faction unlocks powerful upgrades. These upgrades vary from faction to faction. ",
+                          "when working for a Faction does NOT result in reduced experience/reputation earnings. <br>" + 
+                          "Earning reputation for a Faction unlocks powerful Augmentations. Purchasing and installing these Augmentations will " +
+                          "upgrade your abilities. The Augmentations that are available to unlock vary from faction to faction.",
     TutorialAugmentationsText: "Advances in science and medicine have lead to powerful new technologies that allow people to augment themselves " + 
                                "beyond normal human capabilities. There are many different types of Augmentations, ranging from cybernetic to " + 
                                "genetic to biological. Acquiring these Augmentations enhances the user's physical and mental faculties. <br>" + 
@@ -282,11 +285,24 @@ CONSTANTS = {
                                "corporations and organizations that create them. Therefore, the only way for the player to obtain Augmentations is " + 
                                "through Factions. After joining a Faction and earning enough reputation in it, you will be able to purchase " + 
                                "its Augmentations. Different Factions offer different Augmentations. Augmentations must be purchased in order to be installed, " + 
-                               "and they are fairly expensive. <br>" +
-                               "Unfortunately, installing an Augmentation has side effects. All of your stats and experience will be reset to 1. " +
-                               "You will lose all of your digital assets as well, such as your money, programs, scripts, and purchased servers. " + 
-                               "You will lose all of the reputation you have earned from every company and faction and will no longer be an employee " + 
-                               "or member of any. The only thing you will keep when you install an Augmentation is all of the past Augmentations " + 
-                               "you have installed. ",	
+                               "and they are fairly expensive. <br><br>" +
+                               "Unfortunately, installing an Augmentation has side effects. You will lose most of the progress you've made, including your " + 
+                               "skills, stats, and money. You will have to start over, but you will have all of the Augmentations you have installed to " +
+                               "help you progress. <br><br> " + 
+                               "To summarize, here is a list of everything you will LOSE when you install an Augmentation: <br><br>" + 
+                               "Stats/Skills<br>" + 
+                               "Money<br>" + 
+                               "Scripts on all servers EXCEPT your home computer<br>" + 
+                               "Purchased servers<br>" + 
+                               "Hacknet Nodes<br>" + 
+                               "Company/faction reputation<br>" + 
+                               "Jobs and Faction memberships<br>" + 
+                               "Programs<br>" +
+                               "TOR router<br>" + 
+                               "Gym memberships<br><br>" + 
+                               "Here is everything you will KEEP when you install an Augmentation: <br><br>" + 
+                               "Every Augmentation you have installed<br>"  +
+                               "Scripts on your home computer<br>" + 
+                               "RAM Upgrades on your home computer",
 	
 }

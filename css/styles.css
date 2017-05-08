@@ -90,10 +90,8 @@ tr:focus {
     color: #FFFFFF;
     padding: 6px;
     margin: 6px;
-    border-top: 1px solid #333333;
-    border-right: 1px solid #333333;
-    border-bottom: 1px solid #333333;
-    border-left: 1px solid #333333;
+    border: 1px solid #333333;
+    width: 50%;
 }
 
 .a-link-button:hover {
@@ -113,6 +111,7 @@ tr:focus {
     border-left: 1px solid #333333;
     pointer-events: none;
     cursor: default;
+    width: 50%;
 }
 
 

@@ -776,7 +776,10 @@ initAugmentations = function() {
         var oldAug = Augmentations[AugmentationNames.NeuroFluxGovernor];
         NeuroFluxGovernor.owned = oldAug.owned;
         NeuroFluxGovernor.level = oldAug.level;
-        var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level-1);
+        var mult = 1;
+        if (NeuroFluxGovernor.level > 1) {
+            mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level-1);
+        }
         NeuroFluxGovernor.setRequirements(1000 * mult, 1000000 * mult);
         delete Augmentations[AugmentationNames.NeuroFluxGovernor];
     } else {

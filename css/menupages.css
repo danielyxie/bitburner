@@ -209,11 +209,8 @@
     text-decoration: none;
     background-color: #555;
     color: #FFFFFF;
-    padding: 4px 4px 4px 4px;
-    border-top: 1px solid #333333;
-    border-right: 1px solid #333333;
-    border-bottom: 1px solid #333333;
-    border-left: 1px solid #333333;
+    padding: 4px;
+    border: 1px solid #333333;
     width: 50%;
 }
 
