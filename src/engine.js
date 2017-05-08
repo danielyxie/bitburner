@@ -458,7 +458,7 @@ var Engine = {
             item.setAttribute("class", "installed-augmentation");
             hElem.innerHTML = augName;
             if (augName == AugmentationNames.NeuroFluxGovernor) {
-                hElem += " - Level " + (aug.level);
+                hElem.innerHTML += " - Level " + (aug.level);
             }
             pElem.innerHTML = aug.info;
             

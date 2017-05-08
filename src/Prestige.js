@@ -32,9 +32,17 @@ function prestigeAugmentation() {
     Player.numPeopleKilledTotal += Player.numPeopleKilled;
     Player.numPeopleKilledLifetime += Player.numPeopleKilled;
     Player.numPeopleKilled = 0;
+    Player.numTimesGrandTheftAutoTotal += Player.numTimesGrandTheftAuto;
+    Player.numTimesGrandTheftAutoLifetime += Player.numTimesGrandTheftAuto;
+    Player.numTimesGrandTheftAuto = 0;
     Player.numTimesKidnappedTotal += Player.numTimesKidnapped;
     Player.numTimesKidnappedLifetime += Player.numTimesKidnapped;
     Player.numTimesKidnapped = 0;
+    Player.numTimesHeistTotal += Player.numTimesHeist;
+    Player.numTimesHeistLifetime += Player.numTimesHeist;
+    Player.numTimesHeist = 0;
+    
+    Player.karma = 0;
     
     //Reset stats
     Player.hacking_skill = 1;
@@ -99,22 +107,24 @@ function prestigeAugmentation() {
    
     Player.lastUpdate = new Date().getTime();
     
-    var homeComp = null;
+    var homeComp = Player.getHomeComputer();
     //Delete all servers except home computer
     for (var member in AllServers) {
-        //Don't delete home computer
-        if (member == Player.homeComputer) {
-            homeComp = AllServers[member];
-            continue;
-        } 
         delete AllServers[member];
     }
     AllServers = {};
     
     //Reset home computer (only the programs) and add to AllServers
     homeComp.programs.length = 0;
+    homeComp.runningScripts = [];
+    homeComp.serversOnNetwork = [];
+    homeComp.isConnectedTo = true;
+    homeComp.isOnline = true;
+    homeComp.ramUsed = 0;
     homeComp.programs.push(Programs.NukeProgram);
-    addToAllServers(homeComp);
+    Player.currentServer = homeComp.ip;
+    Player.homeComputer = homeComp.ip;
+    AddToAllServers(homeComp);
     
     //Delete all running scripts objects
     for (var i = 0; i < workerScripts.length; ++i) {

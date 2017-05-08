@@ -104,9 +104,15 @@ function PlayerObject() {
     this.numPeopleKilled                = 0;
     this.numPeopleKilledTotal           = 0;
     this.numPeopleKilledLifetime        = 0;
+    this.numTimesGrandTheftAuto         = 0;
+    this.numTimesGrandTheftAutoTotal    = 0;
+    this.numTimesGrandTheftAutoLifetime = 0;
     this.numTimesKidnapped              = 0;
     this.numTimesKidnappedTotal         = 0;
     this.numTimesKidnappedLifetime      = 0;
+    this.numTimesHeist                  = 0;
+    this.numTimesHeistTotal             = 0;
+    this.numTimesHeistLifetime          = 0;
     
     //Achievements and achievement progress
     
@@ -960,6 +966,7 @@ PlayerObject.prototype.commitCrime = function (numCycles) {
 PlayerObject.prototype.finishCrime = function(cancelled) {
     //Determine crime success/failure
     if (!cancelled) {
+        var statusText = ""; //TODO, unique message for each crime when you succeed
         if (determineCrimeSuccess(this.crimeType, this.workMoneyGained)) {
             //Handle Karma and crime statistics
             switch(this.crimeType) {
@@ -983,9 +990,21 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     ++this.numPeopleKilled;
                     this.karma -= 3;
                     break;
+                case CONSTANTS.CrimeGrandTheftAuto:
+                    ++this.numTimesGrandTheftAuto;
+                    this.karma -= 5;
+                    break;
                 case CONSTANTS.CrimeKidnap:
                     ++this.numTimesKidnapped;
-                    this.karma -= 3;
+                    this.karma -= 6;
+                    break;
+                case CONSTANTS.CrimeAssassination:
+                    ++this.numPeopleKilled;
+                    this.karma -= 10;
+                    break;
+                case CONSTANTS.CrimeHeist:
+                    ++this.numTimesHeist;
+                    this.karma -= 15;
                     break;
                 default:
                     dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
@@ -1019,9 +1038,11 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     formatNumber(this.workAgiExpGained, 4) + " agility experience<br>" + 
                     formatNumber(this.workChaExpGained, 4) + " charisma experience");
         }
+        
+        this.gainWorkExp();
     }
     
-    this.gainWorkExp();
+    
     
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";

@@ -11,7 +11,7 @@ function Augmentation(name) {
     
     //Level - Only applicable for some augmentations
     //      NeuroFlux Governor
-    this.level = 0;
+    this.level = 1;
 }
 
 Augmentation.prototype.setInfo = function(inf) {
@@ -781,6 +781,7 @@ initAugmentations = function() {
         delete Augmentations[AugmentationNames.NeuroFluxGovernor];
     } else {
         NeuroFluxGovernor.setRequirements(1000, 1000000);
+        NeuroFluxGovernor.level = 1;
     }
     NeuroFluxGovernor.setInfo("A device that is embedded in the back of the neck. The NeuroFlux Governor " + 
                               "monitors and regulates nervous impulses coming to and from the spinal column, " +

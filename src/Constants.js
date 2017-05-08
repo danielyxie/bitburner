@@ -94,7 +94,10 @@ CONSTANTS = {
     CrimeDrugs: "deal drugs",
     CrimeTraffickArms: "traffick illegal arms",
     CrimeHomicide: "commit homicide",
+    CrimeGrandTheftAuto: "commit grand theft auto",
     CrimeKidnap: "kidnap someone for ransom",
+    CrimeAssassination: "assassinate a high-profile target",
+    CrimeHeist: "pull off the ultimate heist",
     
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   "analyze                Get statistics and information about current machine <br>" + 

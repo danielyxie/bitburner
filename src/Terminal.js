@@ -765,7 +765,9 @@ var Terminal = {
         post("Hostname             IP                   Root Access");
         for (var i = 0; i < Player.getCurrentServer().serversOnNetwork.length; i++) {
             //Add hostname
-            var entry = Player.getCurrentServer().getServerOnNetwork(i).hostname;
+            var entry = Player.getCurrentServer().getServerOnNetwork(i);
+            if (entry == null) {continue;}
+            entry = entry.hostname;
             
             //Calculate padding and add IP
             var numSpaces = 21 - entry.length;

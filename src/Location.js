@@ -148,7 +148,10 @@ displayLocationContent = function() {
     var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
     var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
     var slumsHomicide       = document.getElementById("location-slums-homicide");
+    var slumsGta            = document.getElementById("location-slums-gta");
     var slumsKidnap         = document.getElementById("location-slums-kidnap");
+    var slumsAssassinate    = document.getElementById("location-slums-assassinate");
+    var slumsHeist          = document.getElementById("location-slums-heist");
     
     var loc = Player.location;
     
@@ -223,7 +226,10 @@ displayLocationContent = function() {
     slumsDealDrugs.style.display = "none";
     slumsTrafficArms.style.display = "none";
     slumsHomicide.style.display = "none";
+    slumsGta.style.display = "none";
     slumsKidnap.style.display = "none";
+    slumsAssassinate.style.display = "none";
+    slumsHeist.style.display = "none";
     
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
@@ -819,7 +825,10 @@ displayLocationContent = function() {
             var drugsChance = determineCrimeChanceDealDrugs();
             var armsChance = determineCrimeChanceTraffickArms();
             var homicideChance = determineCrimeChanceHomicide();
+            var gtaChance = determineCrimeChanceGrandTheftAuto();
             var kidnapChance = determineCrimeChanceKidnap();
+            var assassinateChance = determineCrimeChanceAssassination();
+            var heistChance = determineCrimeChanceHeist();
             
             slumsDescText.style.display = "block";
             slumsShoplift.style.display = "block";
@@ -832,9 +841,14 @@ displayLocationContent = function() {
             slumsTrafficArms.innerHTML = "Traffick Illegal Arms (" + (armsChance*100).toFixed(3) + "% chance of success)";
             slumsHomicide.style.display = "block";
             slumsHomicide.innerHTML = "Homicide (" + (homicideChance*100).toFixed(3) + "% chance of success)";
+            slumsGta.style.display = "block";
+            slumsGta.innerHTML = "Grand Theft Auto (" + (gtaChance*100).toFixed(3) + "% chance of success)";
             slumsKidnap.style.display = "block";
             slumsKidnap.innerHTML = "Kidnap and Ransom (" + (kidnapChance*100).toFixed(3) + "% chance of success)";
-            
+            slumsAssassinate.style.display = "block";
+            slumsAssassinate.innerHTML = "Assassinate (" + (assassinateChance*100).toFixed(3) + "% chance of success)";
+            slumsHeist.style.display = "block";
+            slumsHeist.innerHTML = "Heist (" + (heistChance*100).toFixed(3) + "% chance of success)";
             break;
         default:
             console.log("ERROR: INVALID LOCATION");
@@ -1307,7 +1321,10 @@ initLocationButtons = function() {
     var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
     var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
     var slumsHomicide       = document.getElementById("location-slums-homicide");
+    var slumsGta            = document.getElementById("location-slums-gta");
     var slumsKidnap         = document.getElementById("location-slums-kidnap");
+    var slumsAssassinate    = document.getElementById("location-slums-assassinate");
+    var slumsHeist          = document.getElementById("location-slums-heist");
     
     softwareJob.addEventListener("click", function() {
         Player.applyForSoftwareJob();
@@ -1474,8 +1491,23 @@ initLocationButtons = function() {
         return false;
     });
     
+    slumsGta.addEventListener("click", function() {
+        commitGrandTheftAutoCrime();
+        return false;
+    });
+    
     slumsKidnap.addEventListener("click", function() {
         commitKidnapCrime();
+        return false;
+    });
+    
+    slumsAssassinate.addEventListener("click", function() {
+        commitAssassinationCrime();
+        return false;
+    });
+    
+    slumsHeist.addEventListener("click", function() {
+        commitHeistCrime();
         return false;
     });
 }   
