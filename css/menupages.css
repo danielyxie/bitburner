@@ -201,6 +201,10 @@
     width: 99%;
 }
 
+#create-program-page-text {
+    width: 80%;
+}
+
 .create-program-a-link-button {
     text-decoration: none;
     background-color: #555;
@@ -210,6 +214,7 @@
     border-right: 1px solid #333333;
     border-bottom: 1px solid #333333;
     border-left: 1px solid #333333;
+    width: 50%;
 }
 
 .create-program-a-link-button-inactive {

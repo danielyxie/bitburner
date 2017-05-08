@@ -932,7 +932,7 @@ var Engine = {
         });
         
         //Create Program buttons
-        var portHackALink   = document.getElementById("create-program-porthack");
+        var portHackALink   = document.getElementById("create-program-nuke");
         var bruteSshALink   = document.getElementById("create-program-brutessh");
         var ftpCrackALink   = document.getElementById("create-program-ftpcrack");
         var relaySmtpALink  = document.getElementById("create-program-relaysmtp");

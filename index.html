@@ -376,13 +376,40 @@
 	
 	<!-- Create a program(executable) -->
 	<div id="create-program-container">
+        <p id="create-program-page-text"> 
+            This page displays any programs that you are able to create. Writing the code for a program takes time, which
+            can vary based on how complex the program is. Once you start working on a program you must see it all the way
+            through. If you cancel before the program is complete you will lose all your progress and have to start all over
+            if you want to code it again. 
+        </p>
+                                        
         <ul id="create-program-list"> 
-            <a class="create-program-a-link-button" id="create-program-porthack" href="#">PortHack.exe</a>
-            <a class="create-program-a-link-button" id="create-program-brutessh" href="#">BruteSSH.exe</a>
-            <a class="create-program-a-link-button" id="create-program-ftpcrack" href="#">FTPCrack.exe</a>
-            <a class="create-program-a-link-button" id="create-program-relaysmtp" href="#">relaySMTP.exe</a>
-            <a class="create-program-a-link-button" id="create-program-httpworm" href="#">HTTPWorm.exe</a>            
-            <a class="create-program-a-link-button" id="create-program-sqlinject" href="#">SQLInject.exe</a>
+            <a class="create-program-a-link-button tooltip" id="create-program-nuke" href="#">
+                NUKE.exe
+                <span class="tooltiptext"> This virus is used to gain root access to a machine if enough ports are opened. </span>
+            </a>
+            <a class="create-program-a-link-button tooltip" id="create-program-brutessh" href="#">
+                BruteSSH.exe
+                <span class="tooltiptext"> This program executes a brute force attack that opens SSH ports </span>
+            </a>
+            <a class="create-program-a-link-button tooltip" id="create-program-ftpcrack" href="#">
+                FTPCrack.exe
+                <span class="tooltiptext"> This program cracks open FTP ports</span>
+            </a>
+            <a class="create-program-a-link-button tooltip" id="create-program-relaysmtp" href="#">
+                relaySMTP.exe
+                <span class="tooltiptext"> This program opens SMTP ports by redirecting data </span>
+            </a>
+            
+            <a class="create-program-a-link-button tooltip" id="create-program-httpworm" href="#">
+                HTTPWorm.exe
+                <span class="tooltiptext"> This virus opens up HTTP ports </span>
+            </a>            
+            
+            <a class="create-program-a-link-button tooltip" id="create-program-sqlinject" href="#">
+                SQLInject.exe
+                <span class="tooltiptext"> This virus opens SQL ports</span>
+            </a>
         </ul>
 	</div>
 	

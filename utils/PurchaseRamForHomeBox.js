@@ -42,7 +42,7 @@ purchaseRamForHomeBoxCreate = function() {
     
     purchaseRamForHomeBoxSetText("Would you like to purchase additional RAM for your home computer? <br><br>" + 
                                  "This will upgrade your RAM from " + currentRam + "GB to " + newRam + "GB. <br><br>" + 
-                                 "This will cost $" + cost);
+                                 "This will cost $" + formatNumber(cost, 2));
     
     purchaseRamForHomeBoxOpen();
     

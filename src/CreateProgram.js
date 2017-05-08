@@ -11,14 +11,14 @@ Programs = {
 //TODO Right now the times needed to complete work are hard-coded...
 //maybe later make this dependent on hacking level or something
 function displayCreateProgramContent() {
-    var portHackALink   = document.getElementById("create-program-porthack");
+    var nukeALink       = document.getElementById("create-program-nuke");
     var bruteSshALink   = document.getElementById("create-program-brutessh");
     var ftpCrackALink   = document.getElementById("create-program-ftpcrack");
     var relaySmtpALink  = document.getElementById("create-program-relaysmtp");
     var httpWormALink   = document.getElementById("create-program-httpworm");
     var sqlInjectALink  = document.getElementById("create-program-sqlinject");
     
-    portHackALink.style.display = "none";
+    nukeALink.style.display = "none";
     bruteSshALink.style.display = "none"; 
     ftpCrackALink.style.display = "none";
     relaySmtpALink.style.display = "none";
@@ -27,7 +27,7 @@ function displayCreateProgramContent() {
         
     //PortHack.exe (in case you delete it lol)
     if (Player.getHomeComputer().programs.indexOf(Programs.NukeProgram) == -1) {    
-        portHackALink.style.display = "block";
+        nukeALink.style.display = "block";
     }
     
     //BruteSSH

@@ -172,7 +172,7 @@ PlayerObject.prototype.init = function() {
     AddToAllServers(t_homeComp);
     
     this.getHomeComputer().programs.push(Programs.NukeProgram);
-}    
+}
 
 PlayerObject.prototype.getCurrentServer = function() {
     return AllServers[this.currentServer];
@@ -792,19 +792,13 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     this.className = className;
     
     var gameCPS = 1000 / Engine._idleSpeed;
-    //Base costs/exp (per second)
-    var baseDataStructuresCost = 1;
-    var baseNetworksCost = 5;
-    var baseAlgorithmsCost = 20;
-    var baseManagementCost = 10;
-    var baseLeadershipCost = 20;
     
-    var baseStudyComputerScienceExp = 0.02;
-    var baseDataStructuresExp       = 0.1;
-    var baseNetworksExp             = 0.4;
-    var baseAlgorithmsExp           = 1.5;
-    var baseManagementExp           = 0.8;
-    var baseLeadershipExp           = 1.5;
+    var baseStudyComputerScienceExp = 0.05;
+    var baseDataStructuresExp       = 0.2;
+    var baseNetworksExp             = 0.8;
+    var baseAlgorithmsExp           = 2.0;
+    var baseManagementExp           = 1.0;
+    var baseLeadershipExp           = 2.0;
     
     //Find cost and exp gain per game cycle
     var cost = 0; 
@@ -815,23 +809,23 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
             hackExp = baseStudyComputerScienceExp * expMult / gameCPS;
             break;
         case CONSTANTS.ClassDataStructures:
-            cost = baseDataStructuresCost * costMult / gameCPS;
+            cost = CONSTANTS.ClassDataStructuresBaseCost * costMult / gameCPS;
             hackExp = baseDataStructuresExp * expMult / gameCPS;
             break;
         case CONSTANTS.ClassNetworks:
-            cost = baseNetworksCost * costMult / gameCPS; 
+            cost = CONSTANTS.ClassNetworksBaseCost * costMult / gameCPS; 
             hackExp = baseNetworksExp * expMult / gameCPS;
             break;
         case CONSTANTS.ClassAlgorithms:
-            cost = baseAlgorithmsCost * costMult / gameCPS;
+            cost = CONSTANTS.ClassAlgorithmsBaseCost * costMult / gameCPS;
             hackExp = baseAlgorithmsExp * expMult / gameCPS;
             break;
         case CONSTANTS.ClassManagement:
-            cost = baseManagementCost * costMult / gameCPS;
+            cost = CONSTANTS.ClassManagementBaseCost * costMult / gameCPS;
             chaExp = baseManagementExp * expMult / gameCPS;
             break;
         case CONSTANTS.ClassLeadership:
-            cost = baseLeadershipCost * costMult / gameCPS;
+            cost = CONSTANTS.ClassLeadershipBaseCost * costMult / gameCPS;
             chaExp = baseLeadershipExp * expMult / gameCPS;
             break;
         default:
@@ -951,11 +945,16 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
 PlayerObject.prototype.commitCrime = function (numCycles) {
     this.timeWorked += Engine._idleSpeed * numCycles;
     
-    if (this.timeWorked >= this.timeNeededToCompleteWork) {Player.finishCrime(false);}
+    if (this.timeWorked >= this.timeNeededToCompleteWork) {Player.finishCrime(false); return;}
+    
+    var percent = Math.round(Player.timeWorked / Player.timeNeededToCompleteWork * 100);
+    var numBars = Math.round(percent / 5);
+    var progressBar = "[" + Array(numBars+1).join("|") + Array(20 - numBars + 1).join(" ") + "]";
     
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are attempting to " + Player.crimeType + ".<br>" + 
-                    "Time remaining: " + convertTimeMsToTimeElapsedString(this.timeNeededToCompleteWork - this.timeWorked);
+                    "Time remaining: " + convertTimeMsToTimeElapsedString(this.timeNeededToCompleteWork - this.timeWorked) + "<br>" + 
+                    progressBar.replace( / /g, "&nbsp;" );
 }
 
 PlayerObject.prototype.finishCrime = function(cancelled) {

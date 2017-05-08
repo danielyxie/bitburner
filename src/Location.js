@@ -1525,18 +1525,12 @@ displayUniversityLocationContent = function(costMult) {
     classManagementButton.style.display = "block";
     classLeadershipButton.style.display = "block";
     
-    //Costs (per second)
-    var baseDataStructuresCost  = 1;
-    var baseNetworksCost        = 5;
-    var baseAlgorithmsCost      = 20;
-    var baseManagementCost      = 10;
-    var baseLeadershipCost      = 20;
-    
-    var dataStructuresCost  = baseDataStructuresCost    * costMult;
-    var networksCost        = baseNetworksCost          * costMult;
-    var algorithmsCost      = baseAlgorithmsCost        * costMult;
-    var managementCost      = baseManagementCost        * costMult;
-    var leadershipCost      = baseLeadershipCost        * costMult;
+    //Costs (per second)    
+    var dataStructuresCost  = CONSTANTS.ClassDataStructuresBaseCost    * costMult;
+    var networksCost        = CONSTANTS.ClassNetworksBaseCost          * costMult;
+    var algorithmsCost      = CONSTANTS.ClassAlgorithmsBaseCost        * costMult;
+    var managementCost      = CONSTANTS.ClassManagementBaseCost        * costMult;
+    var leadershipCost      = CONSTANTS.ClassLeadershipBaseCost        * costMult;
     
     //Update button text to show cost
     classDataStructuresButton.innerHTML = "Take Data Structures course ($"  + dataStructuresCost + " / sec)";

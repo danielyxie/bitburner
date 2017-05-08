@@ -54,9 +54,7 @@ function prestigeAugmentation() {
     Player.charisma_exp = 0;
     
     Player.money = 1000;
-    
-    Player.homeComputer = "";
-    
+        
     Player.city = Locations.Sector12;
     Player.location = "";
     
@@ -101,11 +99,22 @@ function prestigeAugmentation() {
    
     Player.lastUpdate = new Date().getTime();
     
-    //Delete all servers
+    var homeComp = null;
+    //Delete all servers except home computer
     for (var member in AllServers) {
+        //Don't delete home computer
+        if (member == Player.homeComputer) {
+            homeComp = AllServers[member];
+            continue;
+        } 
         delete AllServers[member];
     }
     AllServers = {};
+    
+    //Reset home computer (only the programs) and add to AllServers
+    homeComp.programs.length = 0;
+    homeComp.programs.push(Programs.NukeProgram);
+    addToAllServers(homeComp);
     
     //Delete all running scripts objects
     for (var i = 0; i < workerScripts.length; ++i) {
@@ -143,10 +152,8 @@ function prestigeAugmentation() {
     
     //Inititialization
     SpecialServerIps = new SpecialServerIpsMap();
-    Player.init();
     initForeignServers();
     initCompanies();
-    //CompanyPositions.init(); Dont think this is needed
     
     Engine.loadTerminalContent();
 }

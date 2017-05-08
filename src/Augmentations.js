@@ -436,7 +436,7 @@ initAugmentations = function() {
     var SynapticEnhancement = new Augmentation(AugmentationNames.SynapticEnhancement);
     SynapticEnhancement.setRequirements(1500, 1200000);
     SynapticEnhancement.setInfo("A small cranial implant that continuously uses weak electric signals to stimulate the brain and " +
-                                "induce stronger synaptic activity. This improves the the user's cognitive abilities.<br><br>" + 
+                                "induce stronger synaptic activity. This improves the user's cognitive abilities.<br><br>" + 
                                 "This augmentation increases the player's hacking speed by 1%.");
     SynapticEnhancement.addToFactions(["CyberSec"]);
     if (augmentationExists(AugmentationNames.SynapticEnhancement)) {
@@ -684,7 +684,7 @@ initAugmentations = function() {
     AddToAugmentations(PCDNINeuralNetwork);
     
     var ADRPheromone1 = new Augmentation(AugmentationNames.ADRPheromone1);
-    ADRPheromone1.setRequirements(2000, 2000000);
+    ADRPheromone1.setRequirements(1500, 2000000);
     ADRPheromone1.setInfo("The body is genetically re-engineered so that it produces the ADR-V1 pheromone, " +
                           "an artificial pheromone discovered by scientists. The ADR-V1 pheromone, when excreted " + 
                           "triggers feelings of admiration and approval in other people. <br><br>" + 
@@ -700,7 +700,7 @@ initAugmentations = function() {
     
     //HacknetNode Augmentations
     var HacknetNodeCPUUpload = new Augmentation(AugmentationNames.HacknetNodeCPUUpload);
-    HacknetNodeCPUUpload.setRequirements(4000, 5000000);
+    HacknetNodeCPUUpload.setRequirements(3000, 5000000);
     HacknetNodeCPUUpload.setInfo("Uploads the architecture and design details of a Hacknet Node's CPU into " + 
                                  "the brain. This allows the user to engineer custom hardware and software  " +
                                  "for the Hacknet Node that provides better performance.<br><br>" + 
@@ -715,7 +715,7 @@ initAugmentations = function() {
     AddToAugmentations(HacknetNodeCPUUpload);
     
     var HacknetNodeCacheUpload = new Augmentation(AugmentationNames.HacknetNodeCacheUpload);
-    HacknetNodeCacheUpload.setRequirements(2000, 2500000);
+    HacknetNodeCacheUpload.setRequirements(1500, 2500000);
     HacknetNodeCacheUpload.setInfo("Uploads the architecture and design details of a Hacknet Node's main-memory cache " + 
                                    "into the brain. This allows the user to engineer custom cache hardware for the  " + 
                                    "Hacknet Node that offers better performance.<br><br>" + 
@@ -730,7 +730,7 @@ initAugmentations = function() {
     AddToAugmentations(HacknetNodeCacheUpload);
     
     var HacknetNodeNICUpload = new Augmentation(AugmentationNames.HacknetNodeNICUpload);
-    HacknetNodeNICUpload.setRequirements(1000, 1000000);
+    HacknetNodeNICUpload.setRequirements(750, 1000000);
     HacknetNodeNICUpload.setInfo("Uploads the architecture and design details of a Hacknet Node's Network Interface Card (NIC) " + 
                                  "into the brain. This allows the user to engineer a custom NIC for the Hacknet Node that " + 
                                  "offers better performance.<br><br>" + 
@@ -745,7 +745,7 @@ initAugmentations = function() {
     AddToAugmentations(HacknetNodeNICUpload);
     
     var HacknetNodeKernelDNI = new Augmentation(AugmentationNames.HacknetNodeKernelDNI);
-    HacknetNodeKernelDNI.setRequirements(12000, 30000000);
+    HacknetNodeKernelDNI.setRequirements(8000, 30000000);
     HacknetNodeKernelDNI.setInfo("Installs a Direct-Neural Interface jack into the arm that is capable of connecting to a " + 
                                  "Hacknet Node. This lets the user access and manipulate the Node's kernel using the mind's " + 
                                  "electrochemical signals.<br><br>" + 
@@ -758,7 +758,7 @@ initAugmentations = function() {
     AddToAugmentations(HacknetNodeKernelDNI);
     
     var HacknetNodeCoreDNI = new Augmentation(AugmentationNames.HacknetNodeCoreDNI);
-    HacknetNodeCoreDNI.setRequirements(20000, 50000000);
+    HacknetNodeCoreDNI.setRequirements(12000, 50000000);
     HacknetNodeCoreDNI.setInfo("Installs a Direct-Neural Interface jack into the arm that is capable of connecting " +
                                "to a Hacknet Node. This lets the user access and manipulate the Node's processing logic using " + 
                                "the mind's electrochemical signals.<br><br>" + 
@@ -777,8 +777,10 @@ initAugmentations = function() {
         NeuroFluxGovernor.owned = oldAug.owned;
         NeuroFluxGovernor.level = oldAug.level;
         var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level-1);
-        NeuroFluxGovernor.setRequirements(1500 * mult, 1500000 * mult);
+        NeuroFluxGovernor.setRequirements(1000 * mult, 1000000 * mult);
         delete Augmentations[AugmentationNames.NeuroFluxGovernor];
+    } else {
+        NeuroFluxGovernor.setRequirements(1000, 1000000);
     }
     NeuroFluxGovernor.setInfo("A device that is embedded in the back of the neck. The NeuroFlux Governor " + 
                               "monitors and regulates nervous impulses coming to and from the spinal column, " +
@@ -790,7 +792,7 @@ initAugmentations = function() {
     AddToAugmentations(NeuroFluxGovernor);
         
     var Neurotrainer1 = new Augmentation(AugmentationNames.Neurotrainer1);
-    Neurotrainer1.setRequirements(1000, 1000000);
+    Neurotrainer1.setRequirements(1000, 750000);
     Neurotrainer1.setInfo("A decentralized cranial implant that improves the brain's ability to learn. It is " + 
                           "installed by releasing millions of nanobots into the human brain, each of which " + 
                           "attaches to a different neural pathway to enhance the brain's ability to retain " + 
@@ -804,7 +806,7 @@ initAugmentations = function() {
     AddToAugmentations(Neurotrainer1);
     
     var Neurotrainer2 = new Augmentation(AugmentationNames.Neurotrainer2);
-    Neurotrainer2.setRequirements(5000, 10000000);
+    Neurotrainer2.setRequirements(4000, 10000000);
     Neurotrainer2.setInfo("A decentralized cranial implant that improves the brain's ability to learn. This " + 
                           "is a more powerful version of the Neurotrainer I augmentation, but it does not " + 
                           "require Neurotrainer I to be installed as a prerequisite.<br><br>" + 

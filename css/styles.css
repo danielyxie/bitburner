@@ -141,3 +141,26 @@ tr:focus {
     border-radius: 0px;
     padding: 0px;
 }
+
+/* Tool tips (when hovering over an element */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    text-align: center;
+    padding: 4px;
+    
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}

@@ -18,13 +18,13 @@ CONSTANTS = {
     /* Hacknet Node constants */
     HacknetNodeMoneyGainPerLevel: 0.75,
     HacknetNodePurchaseNextMult: 1.35,   //Multiplier when purchasing an additional hacknet node
-    HacknetNodeUpgradeLevelMult: 1.07,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.2,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.5,    //Multiplier for cost when buying another core
+    HacknetNodeUpgradeLevelMult: 1.06,  //Multiplier for cost when upgrading level
+    HacknetNodeUpgradeRamMult: 1.15,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeCoreMult: 1.45,    //Multiplier for cost when buying another core
     
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
-    NeuroFluxGovernorLevelMult: 1.1,
+    NeuroFluxGovernorLevelMult: 1.08,
 	
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
@@ -82,6 +82,12 @@ CONSTANTS = {
     ClassAlgorithms: "taking an Algorithms course",
     ClassManagement: "taking a Management course",
     ClassLeadership: "taking a Leadership course",
+    
+    ClassDataStructuresBaseCost: 1,
+    ClassNetworksBaseCost: 5,
+    ClassAlgorithmsBaseCost: 20,
+    ClassManagementBaseCost: 10,
+    ClassLeadershipBaseCost: 20,
     
     CrimeShoplift: "shoplift",
     CrimeMug: "mug someone",
