@@ -158,7 +158,23 @@ Script.prototype.updateNumInstructions = function() {
 
 //Updates how much RAM the script uses when it is running.
 Script.prototype.updateRamUsage = function() {
-	this.ramUsage = this.numInstructions * 0.5;
+    var baseRam = 1;    //Each script requires 1GB to run regardless
+    var codeCopy = this.code.repeat(1);
+    codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
+    
+    var whileCount = numOccurrences(codeCopy, "while(");
+    var forCount = numOccurrences(codeCopy, "for(");
+    var ifCount = numOccurrences(codeCopy, "if(");
+    var hackCount = numOccurrences(codeCopy, "hack(");
+    var growCount = numOccurrences(codeCopy, "grow(");
+    
+    this.ramUsage =  baseRam + 
+                    ((whileCount * CONSTANTS.ScriptWhileRamCost) + 
+                    (forCount * CONSTANTS.ScriptForRamCost) + 
+                    (ifCount * CONSTANTS.ScriptIfRamCost) + 
+                    (hackCount * CONSTANTS.ScriptHackRamCost) + 
+                    (growCount * CONSTANTS.ScriptGrowRamCost));
+    console.log("ram usage: " + this.ramUsage);
 }
 
 Script.prototype.log = function(txt) {

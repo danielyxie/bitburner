@@ -28,9 +28,17 @@ CONSTANTS = {
     //NeuroFlux Governor cost multiplier as you level up
     NeuroFluxGovernorLevelMult: 1.09,
 	
+    
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
 	CodeInstructionRunTime:	1500, 
+    
+    //RAM Costs for differenc commands
+    ScriptWhileRamCost:         0.4,
+    ScriptForRamCost:           0.4,
+    ScriptIfRamCost:            0.1,
+    ScriptHackRamCost:          0.25,
+    ScriptGrowRamCost:          0.25,
     
     //Server growth rate
     ServerGrowthRate: 1.00075,

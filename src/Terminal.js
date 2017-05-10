@@ -794,9 +794,9 @@ var Terminal = {
         if (commandArray.length != 1) {
             post("Incorrect usage of free command. Usage: free"); return;
         }
-        post("Total: " + Player.getCurrentServer().maxRam.toString() + " GB");
-        post("Used: " + Player.getCurrentServer().ramUsed.toString() + " GB");
-        post("Available: " + (Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed).toString() + " GB");
+        post("Total: " + formatNumber(Player.getCurrentServer().maxRam, 2) + " GB");
+        post("Used: " + formatNumber(Player.getCurrentServer().ramUsed, 2) + " GB");
+        post("Available: " + formatNumber(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, 2) + " GB");
     },
 	
 	//First called when the "run [program]" command is called. Checks to see if you
