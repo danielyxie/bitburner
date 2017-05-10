@@ -27,7 +27,8 @@ FactionInfo = {
 				  "transporation on an unprecendented scale, in ways that no other company can.\n\n" + 
 				  "In our labs and factories and on the ground with customers, MegaCorp is ushering in a new era for the world.",
 				  
-	BachmanAndAssociatesInfo: "TODO",
+	BachmanAndAssociatesInfo: "Where Law and Business meet - thats where we are. <br><br>" + 
+                              "Legal Insight - Business Instinct - Experience Innovation",
 	
 	BladeIndustriesInfo: "TODO",
 	
@@ -39,7 +40,7 @@ FactionInfo = {
 	
 	FourSigmaInfo: "TODO",
 	
-	KuaiGongInternationalInfo: "TODO",
+	KuaiGongInternationalInfo: "Dream big. Work hard. Make history.",
     
     //Other Corporations
     FulcrumSecretTechnologiesInfo: "TODO",
@@ -116,6 +117,7 @@ FactionInfo = {
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
     NetburnersInfo: "~~//*><H4CK|\|3T 8URN3R5**>?>\\~~",
+    
 	TianDiHuiInfo: "Obey Heaven and Work Righteousness",
 	
 	CyberSecInfo: "The Internet is the first thing that humanity has built that humanity doesn’t understand,\n" +

@@ -31,9 +31,6 @@ CONSTANTS = {
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
 	CodeInstructionRunTime:	1500, 
-	
-	//Time (seconds) it takes to run one operation in Netscript OFFLINE
-	CodeOfflineExecutionTime: 10,
     
     //Server growth rate
     ServerGrowthRate: 1.00075,

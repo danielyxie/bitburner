@@ -128,12 +128,7 @@ function prestigeAugmentation() {
     //Reset statistics of all scripts on home computer
     for (var i = 0; i < homeComp.scripts.length; ++i) {
         var s = homeComp.scripts[i];
-        s.offlineRunningTime  	= 0.01;	//Seconds
-        s.offlineMoneyMade 		= 0;
-        s.offlineExpGained 		= 0;
-        s.onlineRunningTime 	= 0.01;	//Seconds
-        s.onlineMoneyMade 		= 0;
-        s.onlineExpGained 		= 0;
+        s.reset();
     }
     
     //Delete all running scripts objects
@@ -159,13 +154,17 @@ function prestigeAugmentation() {
     
     //Delete Companies
     for (var member in Companies) {
-        delete Companies[member];
+        if (Companies.hasOwnProperty(member)) {
+            delete Companies[member];
+        }
     }
     Companies = {};
     
     //Reset Factions
     for (var member in Factions) {
-        Factions[member].reset();
+        if (Factions.hasOwnProperty(member)) {
+            Factions[member].reset();    
+        }
     }
     
     //Re-initialize Augmentations - This will update any changes 

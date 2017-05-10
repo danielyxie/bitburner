@@ -543,6 +543,8 @@ var Engine = {
                 Player.takeClass(numCycles);  
             } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
                 Player.commitCrime(numCycles);
+            } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
+                Player.workPartTime(numCycles);
             } else {
                 Player.work(numCycles);
             }
@@ -703,6 +705,10 @@ var Engine = {
                     Player.createProgramWork(numCyclesOffline);
                 } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
                     Player.takeClass(numCyclesOffline);
+                } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
+                    Player.commitCrime(numCyclesOffline);
+                } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
+                    Player.workPartTime(numCycles);
                 } else {
                     Player.work(numCyclesOffline);
                 }
@@ -960,7 +966,7 @@ var Engine = {
         //Message at the top of terminal
         postNetburnerText();
         
-        //Player was working
+        //Player was working cancel button
         if (Player.isWorking) {
             var cancelButton = document.getElementById("work-in-progress-cancel-button");
             cancelButton.addEventListener("click", function() {
@@ -971,6 +977,10 @@ var Engine = {
                     Player.finishCreateProgramWork(true, Player.createProgramName);
                 } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
                     Player.finishClass();
+                } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
+                    Player.finishCrime(true);
+                } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
+                    Player.finishWorkPartTime();
                 } else {
                     Player.finishWork(true);
                 }

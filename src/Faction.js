@@ -747,13 +747,13 @@ displayFactionAugmentations = function(factionName) {
             aElem.setAttribute("href", "#");
             var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
             if (aug.name != AugmentationNames.NeuroFluxGovernor && aug.owned) {
-                aElem.setAttribute("class", "a-link-button-inactive");
+                aElem.setAttribute("class", "a-link-button-inactive tooltip");
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
                 aElem.setAttribute("class", "a-link-button tooltip");
                 pElem.innerHTML = "UNLOCKED - $" + formatNumber(aug.baseCost * faction.augmentationPriceMult, 2);
             } else {
-                aElem.setAttribute("class", "a-link-button-inactive");
+                aElem.setAttribute("class", "a-link-button-inactive tooltip");
                 pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 4) + " faction reputation)";
                 pElem.style.color = "red";
             }
@@ -764,7 +764,7 @@ displayFactionAugmentations = function(factionName) {
                 aElem.innerHTML += " - Level " + (aug.level + 1);
             }
             
-            aElem.innerHTML += "<span class='tooltiptext'>" + aug.info + " </span>";
+            aElem.innerHTML += '<span class="tooltiptext">' + aug.info + " </span>";
             
             aElem.addEventListener("click", function() {
                 purchaseAugmentationBoxCreate(aug, faction);

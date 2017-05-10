@@ -92,7 +92,7 @@ function determineCrimeChanceShoplift() {
     var chance = ((Player.strength / CONSTANTS.MaxSkillLevel + 
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel)) * 8;
+                   Player.agility / CONSTANTS.MaxSkillLevel)) * 10;
                    
     return Math.min(chance, 1);
 }
@@ -101,12 +101,12 @@ function determineCrimeChanceMug() {
     var chance = ((Player.strength / CONSTANTS.MaxSkillLevel + 
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel)) * 4;
+                   Player.agility / CONSTANTS.MaxSkillLevel)) * 5;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceDealDrugs() {
-    var chance = ((1.5*Player.charisma / CONSTANTS.MaxSkillLevel +
+    var chance = ((2*Player.charisma / CONSTANTS.MaxSkillLevel +
                    Player.strength / CONSTANTS.MaxSkillLevel + 
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +

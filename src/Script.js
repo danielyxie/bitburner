@@ -139,6 +139,17 @@ Script.prototype.saveScript = function() {
 	}
 }
 
+Script.prototype.reset = function() {
+    this.offlineRunningTime  	= 0.01;	//Seconds
+	this.offlineMoneyMade 		= 0;
+	this.offlineExpGained 		= 0;
+	this.onlineRunningTime 		= 0.01;	//Seconds
+	this.onlineMoneyMade 		= 0;
+	this.onlineExpGained 		= 0;
+	
+    this.moneyStolenMap         = new AllServersToMoneyMap();
+}
+
 //Calculates the number of instructions, which is just determined by number of semicolons
 Script.prototype.updateNumInstructions = function() {
 	var numSemicolons = this.code.split(";").length - 1;
@@ -146,9 +157,6 @@ Script.prototype.updateNumInstructions = function() {
 }
 
 //Updates how much RAM the script uses when it is running.
-//Right now, it is determined solely by the number of instructions
-//Ideally, I would want it to be based on type of instructions as well
-// 	(e.g. hack() costs a lot but others dont)
 Script.prototype.updateRamUsage = function() {
 	this.ramUsage = this.numInstructions * 0.5;
 }
@@ -225,8 +233,9 @@ scriptCalculateOfflineProduction = function(script) {
     var totalOfflineProduction = 0;
     for (var ip in script.moneyStolenMap) {
         if (script.moneyStolenMap.hasOwnProperty(ip)) {
-            if (script.moneyStolenMap[ip] == 0) {continue;}
+            if (script.moneyStolenMap[ip] == 0 || script.moneyStolenMap[ip] == null) {continue;}
             var serv = AllServers[ip];
+            if (serv == null) {continue;}
             var production = 0.5 * script.moneyStolenMap[ip] / script.onlineRunningTime * timePassed;
             production *= confidence;
             if (production > serv.moneyAvailable) {

@@ -900,7 +900,7 @@ displayLocationContent = function() {
             employeeJob.style.display = "none";
         } else if (currPos.positionName == CompanyPositions.Waiter.positionName) {
             waiterJob.style.display = "none";
-        } else if (currPos.positionName == CompanyPositions.PartTimeEmploye.positionName) {
+        } else if (currPos.positionName == CompanyPositions.PartTimeEmployee.positionName) {
             employeePartTimeJob.style.display = "none";
         } else if (currPos.positionName == CompanyPositions.PartTimeWaiter.positionName) {
             waiterPartTimeJob.style.display = "none";

@@ -26,7 +26,9 @@ TESTING TODO:
         Should add something where if you click it in the "Active Scripts" GUI you can see the logs too        
         
         Seems to work fine
-        
+    
+    Gyms - Later..don't need for MVP
+    
         
 Tasks TODO:
     Adding augmentations for Silhouette fac
@@ -42,11 +44,7 @@ Tasks TODO:
 	
     Create new menu page for purchased servers
     
-    Gyms - Later..don't need for MVP
-	
-	Update CONSTANTS.HelpText
 	Account for Max possible int when gaining exp (it will overflow)
-	Text in script editor that says ("ctrl + x" to save and quit)
 	
 	OPTIMIZATION
 		https://gamealchemist.wordpress.com/2013/05/01/lets-get-those-javascript-arrays-to-work-fast/

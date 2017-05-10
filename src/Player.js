@@ -562,24 +562,24 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
 }
 
 PlayerObject.prototype.finishWorkPartTime = function() {
-    this.gainWorkExp(cancMult);
+    this.gainWorkExp();
     
     var company = Companies[this.companyName];
-    company.playerReputation += (this.workRepGained / cancMult);
+    company.playerReputation += (this.workRepGained);
     
-    this.gainMoney(this.workMoneyGained / cancMult);
+    this.gainMoney(this.workMoneyGained);
     
     this.updateSkillLevels();
     
     var txt = "You earned a total of: <br>" + 
-              "$" + formatNumber(this.workMoneyGained / cancMult, 2) + "<br>" + 
-              formatNumber(this.workRepGained / cancMult, 4) + " reputation for the company <br>" + 
-              formatNumber(this.workHackExpGained / cancMult, 4) + " hacking exp <br>" + 
-              formatNumber(this.workStrExpGained / cancMult, 4) + " strength exp <br>" + 
-              formatNumber(this.workDefExpGained / cancMult, 4) + " defense exp <br>" +
-              formatNumber(this.workDexExpGained / cancMult, 4) + " dexterity exp <br>" + 
-              formatNumber(this.workAgiExpGained / cancMult, 4) + " agility exp <br>" + 
-              formatNumber(this.workChaExpGained / cancMult, 4) + " charisma exp<br>";
+              "$" + formatNumber(this.workMoneyGained, 2) + "<br>" + 
+              formatNumber(this.workRepGained, 4) + " reputation for the company <br>" + 
+              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" + 
+              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" + 
+              formatNumber(this.workDefExpGained, 4) + " defense exp <br>" +
+              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" + 
+              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" + 
+              formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
     txt = "You worked for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ".<br><br> " + txt;
     dialogBoxCreate(txt);
     

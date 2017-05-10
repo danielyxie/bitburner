@@ -149,7 +149,7 @@ tr:focus {
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 200px;
+    width: 300px;
     background-color: black;
     border: 2px solid white;
     color: white;
