@@ -23,9 +23,11 @@ function Perk(name, reqRep, info) {
     this.requiredRep    = reqRep;
     
     //Company/faction specific multipliers
-    this.mult1          = 1;
-    this.mult2          = 1;
-    this.mult3          = 1;
+    this.money_mult         = 1;
+    this.hacking_mult       = 1;
+    this.combat_stat_mult   = 1;
+    this.labor_stat_mult    = 1;
+    this.repmult            = 1;
     
     /* Properties below set when a Perk is gained by the player */
     this.applied        = false;

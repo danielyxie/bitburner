@@ -1,22 +1,22 @@
 /* Crimes.js */
 function commitShopliftCrime() {
     Player.crimeType = CONSTANTS.CrimeShoplift;
-    Player.startCrime(0, 0.5, 0.5, 0.5, 0.5, 0, 1000, 2000); //$500/s, .25 exp/s
+    Player.startCrime(0, 0.75, 0.75, 0.75, 0.75, 0, 1000, 2000); //$500/s, .375 exp/s
 }   
 
 function commitMugCrime() {
     Player.crimeType = CONSTANTS.CrimeMug;
-    Player.startCrime(0, 1, 1, 1, 1, 0, 3000, 4000); //$750/s, .2 exp/s
+    Player.startCrime(0, 1.5, 1.5, 1.5, 1.5, 0, 3000, 4000); //$750/s, .375 exp/s
 }   
 
 function commitDealDrugsCrime() {
     Player.crimeType = CONSTANTS.CrimeDrugs;
-    Player.startCrime(0, 2, 2, 2, 2, 2, 10000, 10000); //$1000/s, .2 exp/s
+    Player.startCrime(0, 4, 4, 4, 4, 4, 10000, 10000); //$1000/s, .4 exp/s
 }
 
 function commitTraffickArmsCrime() {
     Player.crimeType = CONSTANTS.CrimeTraffickArms;
-    Player.startCrime(0, 8, 8, 8, 8, 12, 60000, 40000); //$1500/s, .2 combat exp/s, .3 cha exp/s
+    Player.startCrime(0, 10, 10, 10, 10, 15, 60000, 40000); //$1500/s, .25 combat exp/s, .375 cha exp/s
 }
 
 function commitHomicideCrime() {
@@ -26,12 +26,12 @@ function commitHomicideCrime() {
 
 function commitGrandTheftAutoCrime() {
     Player.crimeType = CONSTANTS.CrimeGrandTheftAuto;
-    Player.startCrime(0, 8, 8, 8, 40, 20, 150000, 80000); //$1875/2, .1 exp/s, .5 exp/s, .25 exp/s
+    Player.startCrime(0, 10, 10, 10, 40, 20, 150000, 80000); //$1875/2, .125 exp/s, .5 exp/s, .25 exp/s
 }
 
 function commitKidnapCrime() {
     Player.crimeType = CONSTANTS.CrimeKidnap;
-    Player.startCrime(0, 20, 20, 20, 20, 20, 300000, 120000); //$2500/s. .167 exp/s
+    Player.startCrime(0, 30, 30, 30, 30, 30, 300000, 120000); //$2500/s. .25 exp/s
 }
 
 function commitAssassinationCrime() {
@@ -41,7 +41,7 @@ function commitAssassinationCrime() {
 
 function commitHeistCrime() {
     Player.crimeType = CONSTANTS.CrimeHeist;
-    Player.startCrime(90, 90, 90, 90, 90, 90, 25000000, 600000); //$41,666.67/s, .15exp/s
+    Player.startCrime(120, 120, 120, 120, 120, 120, 25000000, 600000); //$41,666.67/s, .2exp/s
 }
 
 function determineCrimeSuccess(crime, moneyGained) {
