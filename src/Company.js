@@ -189,6 +189,26 @@ CompanyPosition.prototype.isAgentJob = function() {
     return false;
 }
 
+CompanyPosition.prototype.isSoftwareConsultantJob = function() {
+    if (this.positionName == "Software Consultant" || 
+        this.positionName == "Senior Software Consultant") {return true;}
+    return false;
+}
+
+CompanyPosition.prototype.isBusinessConsultantJob = function() {
+    if (this.positionName == "Business Consultant" ||
+        this.positionName == "Senior Business Consultant") {return true;}
+    return false;
+}
+
+CompanyPosition.prototype.isPartTimeJob = function() {
+    if (this.isSoftwareConsultantJob() ||
+        this.isBusinessConsultantJob() || 
+        this.positionName == "Part-time Waiter" ||
+        this.positionName == "Part-time Employee") {return true;}
+    return false;
+}
+
 CompanyPosition.prototype.toJSON = function() {
     return Generic_toJSON("CompanyPosition", this);
 }
@@ -203,46 +223,58 @@ CompanyPositions = {
     //Constructor: CompanyPosition(name, reqHack, reqStr, reqDef, reqDex, reqAgi, reqCha, reqRep, salary)
 
     //Software
-    SoftwareIntern:             new CompanyPosition("Software Engineering Intern", 1, 0, 0, 0, 0, 0, 0, 1.2),
-    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 51, 0, 0, 0, 0, 0, 8000, 6),
-    SeniorDev:                  new CompanyPosition("Senior Software Engineer", 251, 0, 0, 0, 0, 51, 32000, 15),
-    LeadDev:                    new CompanyPosition("Lead Software Developer", 401, 0, 0, 0, 0, 151, 144000, 20),
+    SoftwareIntern:             new CompanyPosition("Software Engineering Intern", 1, 0, 0, 0, 0, 0, 0, 2),
+    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 51, 0, 0, 0, 0, 0, 8000, 10),
+    SeniorDev:                  new CompanyPosition("Senior Software Engineer", 251, 0, 0, 0, 0, 51, 32000, 40),
+    LeadDev:                    new CompanyPosition("Lead Software Developer", 401, 0, 0, 0, 0, 151, 144000, 120),
+    
+    //TODO Through darkweb, maybe?
+    FreelanceDeveloper:         new CompanyPosition("Freelance Developer", 0, 0, 0, 0, 0, 0, 0, 0),
+    
+    SoftwareConsultant:         new CompanyPosition("Software Consultant", 51, 0, 0, 0, 0, 0, 0, 8),
+    SeniorSoftwareConsultant:   new CompanyPosition("Senior Software Consultant", 251, 0, 0, 0, 0, 51, 0, 32),
     
     //IT
-    ITIntern:                   new CompanyPosition("IT Intern", 1, 0, 0, 0, 0, 0, 0, 1),
-    ITAnalyst:                  new CompanyPosition("IT Analyst", 26, 0, 0, 0, 0, 0, 6000, 4),
-    ITManager:                  new CompanyPosition("IT Manager", 151, 0, 0, 0, 0, 51, 24000, 14),
-    SysAdmin:                   new CompanyPosition("Systems Administrator", 251, 0, 0, 0, 0, 76, 120000, 14),
-    SecurityEngineer:           new CompanyPosition("Security Engineer", 151, 0, 0, 0, 0, 26, 28000, 12),
-    NetworkEngineer:            new CompanyPosition("Network Engineer", 151, 0, 0, 0, 0, 26, 28000, 12),
-    NetworkAdministrator:       new CompanyPosition("Network Administrator", 251, 0, 0, 0, 0, 76, 120000, 15),
+    ITIntern:                   new CompanyPosition("IT Intern", 1, 0, 0, 0, 0, 0, 0, 1.75),
+    ITAnalyst:                  new CompanyPosition("IT Analyst", 26, 0, 0, 0, 0, 0, 6000, 7.5),
+    ITManager:                  new CompanyPosition("IT Manager", 151, 0, 0, 0, 0, 51, 24000, 35),
+    SysAdmin:                   new CompanyPosition("Systems Administrator", 251, 0, 0, 0, 0, 76, 120000, 100),
+    SecurityEngineer:           new CompanyPosition("Security Engineer", 151, 0, 0, 0, 0, 26, 28000, 35),
+    NetworkEngineer:            new CompanyPosition("Network Engineer", 151, 0, 0, 0, 0, 26, 28000, 35),
+    NetworkAdministrator:       new CompanyPosition("Network Administrator", 251, 0, 0, 0, 0, 76, 120000, 100),
     
     //Technology management
-    HeadOfSoftware:             new CompanyPosition("Head of Software", 501, 0, 0, 0, 0, 251, 288000, 35),
-    HeadOfEngineering:          new CompanyPosition("Head of Engineering", 501, 0, 0, 0, 0, 251, 576000, 40),
-    VicePresident:              new CompanyPosition("Vice President of Technology", 601, 0, 0, 0, 0, 401, 1152000, 45),
-    CTO:                        new CompanyPosition("Chief Technology Officer", 751, 0, 0, 0, 0, 501, 4608000, 50),
+    HeadOfSoftware:             new CompanyPosition("Head of Software", 501, 0, 0, 0, 0, 251, 288000, 250),
+    HeadOfEngineering:          new CompanyPosition("Head of Engineering", 501, 0, 0, 0, 0, 251, 576000, 400),
+    VicePresident:              new CompanyPosition("Vice President of Technology", 601, 0, 0, 0, 0, 401, 1152000, 600),
+    CTO:                        new CompanyPosition("Chief Technology Officer", 751, 0, 0, 0, 0, 501, 4608000, 750),
     
     //Business
-    BusinessIntern:             new CompanyPosition("Business Intern", 1, 0, 0, 0, 0, 1, 0, 1.2),
-    BusinessAnalyst:            new CompanyPosition("Business Analyst", 6, 0, 0, 0, 0, 51, 8000, 10),
-    BusinessManager:            new CompanyPosition("Business Manager", 51, 0, 0, 0, 0, 101, 32000, 18),
-    OperationsManager:          new CompanyPosition("Operations Manager", 51, 0, 0, 0, 0, 201, 144000, 22),
-    CFO:                        new CompanyPosition("Chief Financial Officer", 76, 0, 0, 0, 0, 501, 576000, 50),
-    CEO:                        new CompanyPosition("Chief Executive Officer", 101, 0, 0, 0, 0, 751, 4608000, 100),
+    BusinessIntern:             new CompanyPosition("Business Intern", 1, 0, 0, 0, 0, 1, 0, 2.5),
+    BusinessAnalyst:            new CompanyPosition("Business Analyst", 6, 0, 0, 0, 0, 51, 8000, 15),
+    BusinessManager:            new CompanyPosition("Business Manager", 51, 0, 0, 0, 0, 101, 32000, 60),
+    OperationsManager:          new CompanyPosition("Operations Manager", 51, 0, 0, 0, 0, 226, 144000, 180),
+    CFO:                        new CompanyPosition("Chief Financial Officer", 76, 0, 0, 0, 0, 501, 576000, 600),
+    CEO:                        new CompanyPosition("Chief Executive Officer", 101, 0, 0, 0, 0, 751, 4608000, 1000),
+    
+    BusinessConsultant:         new CompanyPosition("Business Consultant", 6, 0, 0, 0, 0, 51, 0, 12),
+    SeniorBusinessConsultant:   new CompanyPosition("Senior Business Consultant", 51, 0, 0, 0, 0, 226, 0, 150),
     
     //Non-tech/management jobs
-    Waiter:                     new CompanyPosition("Waiter", 0, 0, 0, 0, 0, 0, 0, .75),
-    Employee:                   new CompanyPosition("Employee", 0, 0, 0, 0, 0, 0, 0, .75),
-    PoliceOfficer:              new CompanyPosition("Police Officer", 11, 101, 101, 101, 101, 51, 8000, 5),
-    PoliceChief:                new CompanyPosition("Police Chief", 101, 301, 301, 301, 301, 151, 32000, 12),
-    SecurityGuard:              new CompanyPosition("Security Guard", 0, 51, 51, 51, 51, 1, 0, 4),
-    SecurityOfficer:            new CompanyPosition("Security Officer", 26, 151, 151, 151, 151, 51, 8000, 8),
-    SecuritySupervisor:         new CompanyPosition("Security Supervisor", 26, 251, 251, 251, 251, 101, 32000, 15),
-    HeadOfSecurity:             new CompanyPosition("Head of Security", 51, 501, 501, 501, 501, 151, 144000, 22),
-    FieldAgent:                 new CompanyPosition("Field Agent", 101, 101, 101, 101, 101, 101, 8000, 6),
-    SecretAgent:                new CompanyPosition("Secret Agent", 201, 251, 251, 251, 251, 32000, 15),
-    SpecialOperative:           new CompanyPosition("Special Operative", 251, 501, 501, 501, 501, 144000, 25),
+    PartTimeWaiter:             new CompanyPosition("Part-time Waiter", 0, 0, 0, 0, 0, 0, 0, 1.5),
+    PartTimeEmployee:           new CompanyPosition("Part-time Employee", 0, 0, 0, 0, 0, 0, 0, 1.5),
+    
+    Waiter:                     new CompanyPosition("Waiter", 0, 0, 0, 0, 0, 0, 0, 2),
+    Employee:                   new CompanyPosition("Employee", 0, 0, 0, 0, 0, 0, 0, 2),
+    PoliceOfficer:              new CompanyPosition("Police Officer", 11, 101, 101, 101, 101, 51, 8000, 25),
+    PoliceChief:                new CompanyPosition("Police Chief", 101, 301, 301, 301, 301, 151, 32000, 100),
+    SecurityGuard:              new CompanyPosition("Security Guard", 0, 51, 51, 51, 51, 1, 0, 10),
+    SecurityOfficer:            new CompanyPosition("Security Officer", 26, 151, 151, 151, 151, 51, 8000, 40),
+    SecuritySupervisor:         new CompanyPosition("Security Supervisor", 26, 251, 251, 251, 251, 101, 32000, 80),
+    HeadOfSecurity:             new CompanyPosition("Head of Security", 51, 501, 501, 501, 501, 151, 144000, 250),
+    FieldAgent:                 new CompanyPosition("Field Agent", 101, 101, 101, 101, 101, 101, 8000, 30),
+    SecretAgent:                new CompanyPosition("Secret Agent", 201, 251, 251, 251, 251, 32000, 120),
+    SpecialOperative:           new CompanyPosition("Special Operative", 251, 501, 501, 501, 501, 144000, 300),
     
     init: function() {
         //Argument order: hack, str, def, dex, agi, cha
@@ -255,6 +287,11 @@ CompanyPositions = {
         CompanyPositions.SeniorDev.setExperienceGains(.4, 0, 0, 0, 0, .08);
         CompanyPositions.LeadDev.setPerformanceParameters(70, 0, 0, 0, 0, 30);
         CompanyPositions.LeadDev.setExperienceGains(.5, 0, 0, 0, 0, .1);
+        
+        CompanyPositions.SoftwareConsultant.setPerformanceParameters(80, 0, 0, 0, 0, 20);
+        CompanyPositions.SoftwareConsultant.setExperienceGains(.175, 0, 0, 0, 0, .03);
+        CompanyPositions.SeniorSoftwareConsultant.setPerformanceParameters(75, 0, 0, 0, 0, 25);
+        CompanyPositions.SeniorSoftwareConsultant.setExperienceGains(.35, 0, 0, 0, 0, .06);
         
         //Security
         CompanyPositions.ITIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10);
@@ -296,12 +333,21 @@ CompanyPositions = {
         CompanyPositions.CEO.setPerformanceParameters(10, 0, 0, 0, 0, 90);
         CompanyPositions.CEO.setExperienceGains(.1, 0, 0, 0, 0, 1.5);
         
+        CompanyPositions.BusinessConsultant.setPerformanceParameters(20, 0, 0, 0, 0, 80);
+        CompanyPositions.BusinessConsultant.setExperienceGains(.015, 0, 0, 0, 0, .15);
+        CompanyPositions.SeniorBusinessConsultant.setPerformanceParameters(15, 0, 0, 0, 0, 85);
+        CompanyPositions.SeniorBusinessConsultant.setExperienceGains(.015, 0, 0, 0, 0, .3);
+        
         //Non-tech/management jobs
-        //TODO These parameters might need to be balanced
+        CompanyPositions.PartTimeWaiter.setPerformanceParameters(0, 10, 0, 10, 10, 70);
+        CompanyPositions.PartTimeWaiter.setExperienceGains(0, .0075, .0075, .0075, .0075, .04);
+        CompanyPositions.PartTimeEmployee.setPerformanceParameters(0, 10, 0, 10, 10, 70);
+        CompanyPositions.PartTimeEmployee.setExperienceGains(0, .0075, .0075, .0075, .0075, .03);
+        
         CompanyPositions.Waiter.setPerformanceParameters(0, 10, 0, 10, 10, 70);
         CompanyPositions.Waiter.setExperienceGains(0, .01, .01, .01, .01, .05);
         CompanyPositions.Employee.setPerformanceParameters(0, 10, 0, 10, 10, 70);
-        CompanyPositions.Employee.setExperienceGains(0, .01, .01, .01, .01, .015);
+        CompanyPositions.Employee.setExperienceGains(0, .01, .01, .01, .01, .04);
         CompanyPositions.SecurityGuard.setPerformanceParameters(5, 20, 20, 20, 20, 15);
         CompanyPositions.SecurityGuard.setExperienceGains(.01, .02, .02, .02, .02, .01);
         CompanyPositions.PoliceOfficer.setPerformanceParameters(5, 20, 20, 20, 20, 15);
@@ -338,6 +384,11 @@ getNextCompanyPosition = function(currPos) {
     }
     if (currPos.positionName == CompanyPositions.LeadDev.positionname) {
         return CompanyPositions.HeadOfSoftware;
+    }
+    
+    //Software Consultant
+    if (currPos.positionName == CompanyPositions.SoftwareConsultant.positionName) {
+        return CompanyPositions.SeniorSoftwareConsultant;
     }
     
     //IT
@@ -393,6 +444,11 @@ getNextCompanyPosition = function(currPos) {
         return CompanyPositions.CEO;
     }
     
+    //Business consultant
+    if (currPos.positionName == CompanyPositions.BusinessConsultant.positionName) {
+        return CompanyPositions.SeniorBusinessConsultant;
+    }
+    
     //Police
     if (currPos.positionName == CompanyPositions.PoliceOffier.positionName) {
         return CompanyPositions.PoliceChief;
@@ -420,7 +476,7 @@ getNextCompanyPosition = function(currPos) {
     return null;
 }
 
-/* Initialize all companies. Only called when creating new game. Otherwise companies are
+/* Initialize all companies. Only called when creating new game/prestiging. Otherwise companies are
  * usually loaded from localStorage */
 initCompanies = function() {
     /* Companies that also have servers */
@@ -570,6 +626,7 @@ initCompanies = function() {
     StormTechnologies.addPositions([
         CompanyPositions.SoftwareIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+        CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
         CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
         CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
         CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
@@ -582,7 +639,8 @@ initCompanies = function() {
     DefComm.init(Locations.NewTokyoDefComm, 1.75, 1.75, 199);
     DefComm.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+        CompanyPositions.LeadDev, CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.CFO, CompanyPositions.CEO]);
@@ -592,7 +650,8 @@ initCompanies = function() {
     HeliosLabs.init(Locations.VolhavenHeliosLabs, 1.8, 1.8, 199);
     HeliosLabs.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+        CompanyPositions.LeadDev, CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.CFO, CompanyPositions.CEO]);
@@ -602,7 +661,8 @@ initCompanies = function() {
     VitaLife.init(Locations.NewTokyoVitaLife, 1.8, 1.8, 199);
     VitaLife.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+        CompanyPositions.LeadDev, CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
@@ -613,7 +673,8 @@ initCompanies = function() {
     IcarusMicrosystems.init(Locations.Sector12IcarusMicrosystems, 1.9, 1.9, 199);
     IcarusMicrosystems.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+        CompanyPositions.LeadDev, CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
@@ -624,7 +685,8 @@ initCompanies = function() {
     UniversalEnergy.init(Locations.Sector12UniversalEnergy, 2.0, 2.0, 199);
     UniversalEnergy.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+        CompanyPositions.LeadDev, CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
@@ -635,7 +697,8 @@ initCompanies = function() {
     GalacticCybersystems.init(Locations.AevumGalacticCybersystems, 1.9, 1.9, 199);
     GalacticCybersystems.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+        CompanyPositions.LeadDev, CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
@@ -701,6 +764,7 @@ initCompanies = function() {
     GlobalPharmaceuticals.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+        CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
         CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
         CompanyPositions.HeadOfSoftware, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
@@ -714,6 +778,7 @@ initCompanies = function() {
     NovaMedical.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.ITIntern, CompanyPositions.BusinessIntern,
         CompanyPositions.JuniorDev, CompanyPositions.SeniorDev, CompanyPositions.LeadDev,
+        CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
         CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
         CompanyPositions.HeadOfSoftware, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
@@ -751,7 +816,8 @@ initCompanies = function() {
     WatchdogSecurity.init(Locations.AevumWatchdogSecurity, 1.5, 1.5, 124);
     WatchdogSecurity.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
+        CompanyPositions.LeadDev,  CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.SecurityGuard, CompanyPositions.SecurityOfficer,
@@ -764,7 +830,8 @@ initCompanies = function() {
     LexoCorp.init(Locations.VolhavenLexoCorp, 1.4, 1.4, 99);
     LexoCorp.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
+        CompanyPositions.LeadDev,  CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.HeadOfSoftware, CompanyPositions.CTO,
         CompanyPositions.BusinessIntern, CompanyPositions.BusinessAnalyst,
@@ -784,7 +851,8 @@ initCompanies = function() {
     AlphaEnterprises.init(Locations.Sector12AlphaEnterprises, 1.5, 1.5, 99);
     AlphaEnterprises.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.BusinessIntern, CompanyPositions.BusinessAnalyst,
+        CompanyPositions.LeadDev,  CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.BusinessIntern, CompanyPositions.BusinessAnalyst,
         CompanyPositions.BusinessManager, CompanyPositions.OperationsManager]);
     AddToCompanies(AlphaEnterprises);
     
@@ -809,7 +877,8 @@ initCompanies = function() {
     CompuTek.init(Locations.VolhavenCompuTek, 1.2, 1.2, 74);
     CompuTek.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+        CompanyPositions.LeadDev,  CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.CTO]);
@@ -819,7 +888,8 @@ initCompanies = function() {
     NetLinkTechnologies.init(Locations.AevumNetLinkTechnologies, 1.2, 1.2, 99);
     NetLinkTechnologies.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
+        CompanyPositions.LeadDev,  CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.CTO]);
@@ -829,7 +899,8 @@ initCompanies = function() {
     CarmichaelSecurity.init(Locations.Sector12CarmichaelSecurity, 1.2, 1.2, 74);
     CarmichaelSecurity.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
+        CompanyPositions.LeadDev, CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant, 
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.SecurityGuard, CompanyPositions.SecurityOfficer,
@@ -840,26 +911,27 @@ initCompanies = function() {
     //"Low level" companies
     var FoodNStuff = new Company(); 
     FoodNStuff.init(Locations.Sector12FoodNStuff, 1, 1, 0);
-    FoodNStuff.addPositions([CompanyPositions.Employee]);
+    FoodNStuff.addPositions([CompanyPositions.Employee, CompanyPositions.PartTimeEmployee]);
     AddToCompanies(FoodNStuff);
     
     var JoesGuns = new Company();
     JoesGuns.init(Locations.Sector12JoesGuns, 1, 1, 0);
-    JoesGuns.addPositions([CompanyPositions.Employee]);
+    JoesGuns.addPositions([CompanyPositions.Employee, CompanyPositions.PartTimeEmployee]);
     AddToCompanies(JoesGuns);
     
     var OmegaSoftware = new Company();
     OmegaSoftware.init(Locations.IshimaOmegaSoftware, 1.1, 1.1, 49);
     OmegaSoftware.addPositions([
         CompanyPositions.SoftwareIntern, CompanyPositions.JuniorDev, CompanyPositions.SeniorDev,
-        CompanyPositions.LeadDev, CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
+        CompanyPositions.LeadDev, CompanyPositions.SoftwareConsultant, CompanyPositions.SeniorSoftwareConsultant,
+        CompanyPositions.ITIntern, CompanyPositions.ITAnalyst,
         CompanyPositions.ITManager, CompanyPositions.CTO, CompanyPositions.CEO]);
     AddToCompanies(OmegaSoftware);
     
     /* Companies that do not have servers */
     var NoodleBar = new Company();
     NoodleBar.init(Locations.NewTokyoNoodleBar, 1, 1, 0);
-    NoodleBar.addPositions([CompanyPositions.Waiter]);
+    NoodleBar.addPositions([CompanyPositions.Waiter, CompanyPositions.PartTimeWaiter]);
     AddToCompanies(NoodleBar);
 }
 

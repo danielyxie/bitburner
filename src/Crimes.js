@@ -26,7 +26,7 @@ function commitHomicideCrime() {
 
 function commitGrandTheftAutoCrime() {
     Player.crimeType = CONSTANTS.CrimeGrandTheftAuto;
-    Player.startCrime(8, 8, 8, 40, 20, 150000, 80000); //$1875/2, .1 exp/s, .5 exp/s, .25 exp/s
+    Player.startCrime(0, 8, 8, 8, 40, 20, 150000, 80000); //$1875/2, .1 exp/s, .5 exp/s, .25 exp/s
 }
 
 function commitKidnapCrime() {

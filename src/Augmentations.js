@@ -11,7 +11,7 @@ function Augmentation(name) {
     
     //Level - Only applicable for some augmentations
     //      NeuroFlux Governor
-    this.level = 1;
+    this.level = 0;
 }
 
 Augmentation.prototype.setInfo = function(inf) {
@@ -686,7 +686,7 @@ initAugmentations = function() {
     var ADRPheromone1 = new Augmentation(AugmentationNames.ADRPheromone1);
     ADRPheromone1.setRequirements(1500, 2000000);
     ADRPheromone1.setInfo("The body is genetically re-engineered so that it produces the ADR-V1 pheromone, " +
-                          "an artificial pheromone discovered by scientists. The ADR-V1 pheromone, when excreted " + 
+                          "an artificial pheromone discovered by scientists. The ADR-V1 pheromone, when excreted, " + 
                           "triggers feelings of admiration and approval in other people. <br><br>" + 
                           "This augmentation: <br>" + 
                           "Increases the amount of reputation the player gains when working for a company by 10% <br>" + 
@@ -776,27 +776,23 @@ initAugmentations = function() {
         var oldAug = Augmentations[AugmentationNames.NeuroFluxGovernor];
         NeuroFluxGovernor.owned = oldAug.owned;
         NeuroFluxGovernor.level = oldAug.level;
-        var mult = 1;
-        if (NeuroFluxGovernor.level > 1) {
-            mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level-1);
-        }
+        mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level);
         NeuroFluxGovernor.setRequirements(1000 * mult, 1000000 * mult);
         delete Augmentations[AugmentationNames.NeuroFluxGovernor];
     } else {
-        NeuroFluxGovernor.setRequirements(1000, 1000000);
-        NeuroFluxGovernor.level = 1;
+        NeuroFluxGovernor.setRequirements(750, 1000000);
     }
     NeuroFluxGovernor.setInfo("A device that is embedded in the back of the neck. The NeuroFlux Governor " + 
                               "monitors and regulates nervous impulses coming to and from the spinal column, " +
                               "essentially 'governing' the body. By doing so, it improves the functionality of the " +
                               "body's nervous system. <br><br> " + 
-                              "This is a special augmentation because it can be leveled up. Each level of this augmentation " +
-                              "increases all of the player's stats by 0.5%.")
+                              "This is a special augmentation because it can be leveled up infinitely. Each level of this augmentation " +
+                              "increases all of the player's stats and experience gains by 0.5%.")
     NeuroFluxGovernor.addToAllFactions();
     AddToAugmentations(NeuroFluxGovernor);
         
     var Neurotrainer1 = new Augmentation(AugmentationNames.Neurotrainer1);
-    Neurotrainer1.setRequirements(1000, 750000);
+    Neurotrainer1.setRequirements(500, 750000);
     Neurotrainer1.setInfo("A decentralized cranial implant that improves the brain's ability to learn. It is " + 
                           "installed by releasing millions of nanobots into the human brain, each of which " + 
                           "attaches to a different neural pathway to enhance the brain's ability to retain " + 
@@ -1061,12 +1057,18 @@ applyAugmentation = function(aug, faction) {
         
         //Misc augmentations
         case AugmentationNames.NeuroFluxGovernor:
-            Player.hacking_mult       *= 1.005;
-            Player.strength_mult      *= 1.005;
-            Player.defense_mult       *= 1.005;
-            Player.dexterity_mult     *= 1.005;
-            Player.agility_mult       *= 1.005;
-            Player.charisma_mult      *= 1.005;
+            Player.hacking_mult         *= 1.005;
+            Player.strength_mult        *= 1.005;
+            Player.defense_mult         *= 1.005;
+            Player.dexterity_mult       *= 1.005;
+            Player.agility_mult         *= 1.005;
+            Player.charisma_mult        *= 1.005;
+            Player.hacking_exp_mult     *= 1.005;
+            Player.strength_exp_mult    *= 1.005;
+            Player.defense_exp_mult     *= 1.005;
+            Player.dexterity_exp_mult   *= 1.005;
+            Player.agility_exp_mult     *= 1.005;
+            Player.charisma_exp_mult    *= 1.005;
             ++aug.level;
             break;    
         case AugmentationNames.Neurotrainer1:      //Low Level

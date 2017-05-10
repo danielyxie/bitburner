@@ -309,42 +309,42 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Chongqing
     var chongqingFac = Factions["Chongqing"];
     if (chongqingFac.isBanned == false && chongqingFac.isMember == false &&
-        this.money >= 20000000 && this.location == Locations.Chongqing) {
+        this.money >= 20000000 && this.city == Locations.Chongqing) {
         invitedFactions.push(chongqingFac);
     }
     
     //Sector-12
     var sector12Fac = Factions["Sector-12"];
     if (sector12Fac.isBanned == false && sector12Fac.isMember == false && 
-        this.money >= 15000000 && this.location == Locations.Sector12) {
+        this.money >= 15000000 && this.city == Locations.Sector12) {
         invitedFactions.push(sector12Fac);
     }
     
     //New Tokyo
     var newtokyoFac = Factions["New Tokyo"];
     if (newtokyoFac.isBanned == false && newtokyoFac.isMember == false && 
-        this.money >= 20000000 && this.location == Locations.NewTokyo) {
+        this.money >= 20000000 && this.city == Locations.NewTokyo) {
         invitedFactions.push(newtokyoFac);
     }
     
     //Aevum
     var aevumFac = Factions["Aevum"];
     if (aevumFac.isBanned == false && aevumFac.isMember == false && 
-        this.money >= 40000000 && this.location == Locations.Aevum) {
+        this.money >= 40000000 && this.city == Locations.Aevum) {
         invitedFactions.push(aevumFac);
     }
     
     //Ishima
     var ishimaFac = Factions["Ishima"];
     if (ishimaFac.isBanned == false && ishimaFac.isMember == false &&
-        this.money >= 30000000 && this.location == Locations.Ishima) {
+        this.money >= 30000000 && this.city == Locations.Ishima) {
         invitedFactions.push(ishimaFac);
     }
     
     //Volhaven
     var volhavenFac = Factions["Volhaven"];
     if (volhavenFac.isBanned == false && volhavenFac.isMember == false && 
-        this.money >= 50000000 && this.location == Locations.Volhaven) {
+        this.money >= 50000000 && this.city == Locations.Volhaven) {
         invitedFactions.push(volhavenFac);
     }
     
@@ -362,7 +362,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var thedarkarmyFac = Factions["The Dark Army"];
     if (thedarkarmyFac.isBanned == false && thedarkarmyFac.isMember == false && 
         this.hacking_skill >= 300 && this.strength >= 300 && this.defense >= 300 && 
-        this.dexterity >= 300 && this.agility >= 300 && this.location == Locations.Chongqing && 
+        this.dexterity >= 300 && this.agility >= 300 && this.city == Locations.Chongqing && 
         this.numPeopleKilled >= 5 && this.karma <= -50 && this.companyName != Locations.Sector12CIA && 
         this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(thedarkarmyFac);
@@ -373,7 +373,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (thesyndicateFac.isBanned == false && thesyndicateFac.isMember == false &&
         this.hacking_skill >= 200 && this.strength >= 200 && this.defense >= 200 &&
         this.dexterity >= 200 && this.agility >= 200 && 
-        (this.location == Locations.Aevum || this.location == Locations.Sector12) &&
+        (this.city == Locations.Aevum || this.city == Locations.Sector12) &&
         this.money >= 10000000 && this.karma <= -100 && 
         this.companyName != Locations.Sector12CIA && this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(thesyndicateFac);
@@ -406,11 +406,13 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
     
     //Tian Di Hui
+    console.log("here");
     var tiandihuiFac = Factions["Tian Di Hui"];
     if (tiandihuiFac.isBanned == false && tiandihuiFac.isMember == false && 
         this.money >= 1000000 && this.hacking_skill >= 50 &&
-        (this.location == Locations.Chongqing || this.location == Locations.NewTokyo || 
-         this.location == Locations.Ishima)) {
+        (this.city == Locations.Chongqing || this.city == Locations.NewTokyo || 
+         this.city == Locations.Ishima)) {
+        console.log("invited");
         invitedFactions.push(tiandihuiFac);
     }
     
@@ -748,7 +750,7 @@ displayFactionAugmentations = function(factionName) {
                 aElem.setAttribute("class", "a-link-button-inactive");
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
-                aElem.setAttribute("class", "a-link-button");
+                aElem.setAttribute("class", "a-link-button tooltip");
                 pElem.innerHTML = "UNLOCKED - $" + formatNumber(aug.baseCost * faction.augmentationPriceMult, 2);
             } else {
                 aElem.setAttribute("class", "a-link-button-inactive");
@@ -761,6 +763,8 @@ displayFactionAugmentations = function(factionName) {
             if (aug.name == AugmentationNames.NeuroFluxGovernor) {
                 aElem.innerHTML += " - Level " + (aug.level + 1);
             }
+            
+            aElem.innerHTML += "<span class='tooltiptext'>" + aug.info + " </span>";
             
             aElem.addEventListener("click", function() {
                 purchaseAugmentationBoxCreate(aug, faction);

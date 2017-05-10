@@ -125,6 +125,10 @@ PlayerObject.prototype.applyForSoftwareJob = function() {
     this.applyForJob(CompanyPositions.SoftwareIntern);
 }
 
+PlayerObject.prototype.applyForSoftwareConsultantJob = function() {
+    this.applyForJob(CompanyPositions.SoftwareConsultant);
+}
+
 PlayerObject.prototype.applyForItJob = function() {
 	this.applyForJob(CompanyPositions.ITIntern);
 }
@@ -154,6 +158,10 @@ PlayerObject.prototype.applyForBusinessJob = function() {
 	this.applyForJob(CompanyPositions.BusinessIntern);
 }
 
+PlayerObject.prototype.applyForBusinessConsultantJob = function() {
+    this.applyForJob(CompanyPositions.BusinessConsultant);
+}
+
 PlayerObject.prototype.applyForSecurityJob = function() {
     //TODO If case for POlice departments
 	this.applyForJob(CompanyPositions.SecurityGuard);
@@ -173,7 +181,19 @@ PlayerObject.prototype.applyForEmployeeJob = function() {
     if (this.isQualified(company, CompanyPositions.Employee)) {
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Employee;
-        dialogBoxCreate("Congratulations, you are now employed at ", this.companyName, "", "");
+        dialogBoxCreate("Congratulations, you are now employed at " + this.companyName);
+        Engine.loadLocationContent();
+    } else {
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
+    }
+}
+
+PlayerObject.prototype.applyForPartTimeEmployeeJob = function() {
+	var company = Companies[this.location]; //Company being applied to
+    if (this.isQualified(company, CompanyPositions.PartTimeEmployee)) {
+        this.companyName = company.companyName;
+        this.companyPosition = CompanyPositions.PartTimeEmployee;
+        dialogBoxCreate("Congratulations, you are now employed part-time at " + this.companyName);
         Engine.loadLocationContent();
     } else {
         dialogBoxCreate("Unforunately, you do not qualify for this position");
@@ -185,7 +205,19 @@ PlayerObject.prototype.applyForWaiterJob = function() {
     if (this.isQualified(company, CompanyPositions.Waiter)) {
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Waiter;
-        dialogBoxCreate("Congratulations, you are now employed as a waiter at ", this.companyName, "", "");
+        dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.companyName);
+        Engine.loadLocationContent();
+    } else {
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
+    }
+}
+
+PlayerObject.prototype.applyForPartTimeWaiterJob = function() {
+	var company = Companies[this.location]; //Company being applied to
+    if (this.isQualified(company, CompanyPositions.PartTimeWaiter)) {
+        this.companyName = company.companyName;
+        this.companyPosition = CompanyPositions.PartTimeWaiter;
+        dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.companyName);
         Engine.loadLocationContent();
     } else {
         dialogBoxCreate("Unforunately, you do not qualify for this position");

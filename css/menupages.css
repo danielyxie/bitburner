@@ -315,6 +315,7 @@ div.faction-clear {
     margin-left: 10%;
     width: 99%;
     color: #66ff33;
+    overflow-y: scroll;
 }
 
 #augmentations-list li {

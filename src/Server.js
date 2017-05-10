@@ -427,7 +427,7 @@ initForeignServers = function() {
     
     var NectarNightclubServer = new Server();
     NectarNightclubServer.init(createRandomIp(), "nectar-net", "Nectar Nightclub Network", true, false, false, false, 2);
-    NectarNightclubServer.setHackingParameters(20, 6500000, 20, 25);
+    NectarNightclubServer.setHackingParameters(20, 650000, 20, 25);
     NectarNightclubServer.setPortProperties(0);
     AddToAllServers(NectarNightclubServer);
     

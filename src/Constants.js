@@ -10,21 +10,23 @@ CONSTANTS = {
     CorpFactionRepRequirement: 250000,
     
     /* Base costs */
-    BaseCostFor1GBOfRam: 50000,     //1 GB of RAM
+    BaseCostFor1GBOfRamHome: 100000,
+    BaseCostFor1GBOfRamServer: 75000,     //1 GB of RAM
+    BaseCostFor1GBOfRamHacknetNode: 50000,
     
     BaseCostForHacknetNode: 1000,
     BaseCostForHacknetNodeCore: 1000000,
     
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 0.75,
+    HacknetNodeMoneyGainPerLevel: 1,
     HacknetNodePurchaseNextMult: 1.35,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.06,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.15,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeRamMult: 1.25,     //Multiplier for cost when upgrading RAM
     HacknetNodeUpgradeCoreMult: 1.45,    //Multiplier for cost when buying another core
     
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
-    NeuroFluxGovernorLevelMult: 1.08,
+    NeuroFluxGovernorLevelMult: 1.09,
 	
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
@@ -71,6 +73,7 @@ CONSTANTS = {
     FactionWorkSecurity: "Faction Security Work",
     
     WorkTypeCompany: "Working for Company",
+    WorkTypeCompanyPartTime: "Working for Company part-time",
     WorkTypeFaction: "Working for Faction",
     WorkTypeCreateProgram: "Working on Create a Program",
     WorkTypeStudyClass: "Studying or Taking a class at university",
@@ -82,12 +85,17 @@ CONSTANTS = {
     ClassAlgorithms: "taking an Algorithms course",
     ClassManagement: "taking a Management course",
     ClassLeadership: "taking a Leadership course",
+    ClassGymStrength: "training your strength at a gym",
+    ClassGymDefense: "training your defense at a gym",
+    ClassGymDexterity: "training your dexterity at a gym",
+    ClassGymAgility: "training your agility at a gym",
     
     ClassDataStructuresBaseCost: 1,
     ClassNetworksBaseCost: 5,
     ClassAlgorithmsBaseCost: 20,
     ClassManagementBaseCost: 10,
     ClassLeadershipBaseCost: 20,
+    ClassGymBaseCost: 15,
     
     CrimeShoplift: "shoplift",
     CrimeMug: "mug someone",
@@ -298,8 +306,7 @@ CONSTANTS = {
                                "Company/faction reputation<br>" + 
                                "Jobs and Faction memberships<br>" + 
                                "Programs<br>" +
-                               "TOR router<br>" + 
-                               "Gym memberships<br><br>" + 
+                               "TOR router<br><br>" + 
                                "Here is everything you will KEEP when you install an Augmentation: <br><br>" + 
                                "Every Augmentation you have installed<br>"  +
                                "Scripts on your home computer<br>" + 

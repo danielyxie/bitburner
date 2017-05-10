@@ -110,6 +110,7 @@ function Script() {
 	this.onlineMoneyMade 		= 0;
 	this.onlineExpGained 		= 0;
 	
+    this.moneyStolenMap         = new AllServersToMoneyMap();
 };
 
 //Get the script data from the Script Editor and save it to the object
@@ -211,41 +212,57 @@ scriptCalculateOfflineProduction = function(script) {
 	var thisUpdate = new Date().getTime();
 	var lastUpdate = Player.lastUpdate;
 	var timePassed = (thisUpdate - lastUpdate) / 1000;	//Seconds
-	console.log("Offline for " + timePassed.toString() + " seconds");
+	console.log("Offline for " + timePassed + " seconds");
 	
 	//Calculate the "confidence" rating of the script's true production. This is based
 	//entirely off of time. We will arbitrarily say that if a script has been running for
 	//4 hours (14400 sec) then we are completely confident in its ability
 	var confidence = (script.onlineRunningTime) / 14400;
 	if (confidence >= 1) {confidence = 1;}
-	console.log("onlineRunningTime: " + script.onlineRunningTime.toString());
-	console.log("Confidence: " + confidence.toString());
-	
-	//A script's offline production will always be at most half of its online production.
-	var production = (1/2) * (script.onlineMoneyMade / script.onlineRunningTime) * timePassed;
-	production *= confidence; 
-	
+	console.log("onlineRunningTime: " + script.onlineRunningTime);
+	console.log("Confidence: " + confidence);
+    
+    var totalOfflineProduction = 0;
+    for (var ip in script.moneyStolenMap) {
+        if (script.moneyStolenMap.hasOwnProperty(ip)) {
+            if (script.moneyStolenMap[ip] == 0) {continue;}
+            var serv = AllServers[ip];
+            var production = 0.5 * script.moneyStolenMap[ip] / script.onlineRunningTime * timePassed;
+            production *= confidence;
+            if (production > serv.moneyAvailable) {
+                production = serv.moneyAvailable;
+            }
+            totalOfflineProduction += production;
+            Player.gainMoney(production); 
+            console.log(script.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
+            serv.moneyAvailable -= production;
+            if (serv.moneyAvailable < 0) {serv.moneyAvailable = 0;}
+        }
+    }
+
+	//A script's offline production will always be at most half of its online production.	
 	var expGain = (1/2) * (script.onlineExpGained / script.onlineRunningTime) * timePassed;
 	expGain *= confidence;
 	
-	//Account for production in Player and server)
-    var server = AllServers[script.server];
-    if (production > server.moneyAvailable) {
-        production = server.moneyAvailable;
-    }
-    
-	Player.gainMoney(production);
 	Player.gainHackingExp(expGain);
 	
-	server.moneyAvailable -= production;
-	if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
-	
 	//Update script stats
-	script.offlineMoneyMade += production;
+	script.offlineMoneyMade += totalOfflineProduction;
 	script.offlineRunningTime += timePassed;
 	script.offlineExpGained += expGain;
 		
 	//DEBUG
 	var serverName = AllServers[script.server].hostname;
-	console.log(script.filename + " from server " + serverName + " generated $" + production.toString() + " while offline");
+	console.log(script.filename + " from server " + serverName + " generated $" + totalOfflineProduction + " TOTAL while offline");
+}
+
+//Creates a function that creates a map/dictionary with the IP of each existing server as
+//a key, and 0 as the value. This is used to keep track of how much money a script
+//hacks from that server
+function AllServersToMoneyMap() {
+    for (var ip in AllServers) {
+        if (AllServers.hasOwnProperty(ip)) {
+            this[ip] = 0;
+        }
+    }
 }

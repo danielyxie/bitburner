@@ -16,13 +16,15 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
     //How much extra $/s is gained per level
     var gainPerLevel = CONSTANTS.HacknetNodeMoneyGainPerLevel;
     
-    //Each CPU core doubles the speed. Every 1GB of ram adds 10% increase
+    //Each CPU core doubles the speed. Every 1GB of ram adds 20% increase
     this.moneyGainRatePerSecond = (this.level * gainPerLevel) * 
-                                  Math.pow(1.1, this.ram-1) * 
+                                  Math.pow(1.2, this.ram-1) * 
                                   this.numCores * Player.hacknet_node_money_mult;
     if (isNaN(this.moneyGainRatePerSecond)) {
         throw new Error("Money gain rate calculated for Hacknet Node is NaN");
     }
+    
+    updateTotalHacknetProduction();
 }
 
 HacknetNode.prototype.calculateLevelUpgradeCost = function() {
@@ -46,7 +48,7 @@ HacknetNode.prototype.calculateRamUpgradeCost = function() {
     //Calculate cost
     //Base cost of RAM is 50k per 1GB...but lets  have this increase by 10% for every time
     //the RAM has been upgraded
-    var cost = this.ram * CONSTANTS.BaseCostFor1GBOfRam;
+    var cost = this.ram * CONSTANTS.BaseCostFor1GBOfRamHacknetNode;
     var mult = Math.pow(CONSTANTS.HacknetNodeUpgradeRamMult, numUpgrades);
     return cost * mult * Player.hacknet_node_ram_cost_mult;
 }
@@ -116,6 +118,16 @@ purchaseHacknet = function() {
     Player.hacknetNodes.push(node);
     
     displayHacknetNodesContent();
+    updateTotalHacknetProduction();
+}
+
+//Calculates the total production from all HacknetNodes 
+updateTotalHacknetProduction = function() {
+    var total = 0;
+    for (var i = 0; i < Player.hacknetNodes.length; ++i) {
+        total += Player.hacknetNodes[i].moneyGainRatePerSecond;
+    }
+    Player.totalHacknetNodeProduction = total;
 }
 
 getCostOfNextHacknetNode = function() {
@@ -129,9 +141,6 @@ getCostOfNextHacknetNode = function() {
 displayHacknetNodesContent = function() {
     //Update Hacknet Nodes button
     var newPurchaseButton = clearEventListeners("hacknet-nodes-purchase-button");
-    //var purchaseButton = document.getElementById("hacknet-nodes-purchase-button");
-    //var newPurchaseButton = purchaseButton.cloneNode(true);
-    //purchaseButton.parentNode.replaceChild(newPurchaseButton, purchaseButton);
     
     newPurchaseButton.addEventListener("click", function() {
         purchaseHacknet();
@@ -164,7 +173,9 @@ updateHacknetNodesContent = function() {
     }
     
     //Update player's money
-    document.getElementById("hacknet-nodes-money").innerHTML = "Money: $" + formatNumber(Player.money, 2);
+    var moneyElem = document.getElementById("hacknet-nodes-money");
+    moneyElem.innerHTML = "Money: $" + formatNumber(Player.money, 2) + "<br>" + 
+                          "Total production from all Hacknet Nodes: $" + formatNumber(Player.totalHacknetNodeProduction, 2);
     
     //Update information in each owned hacknet node
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {

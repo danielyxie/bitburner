@@ -125,6 +125,16 @@ function prestigeAugmentation() {
     Player.currentServer = homeComp.ip;
     Player.homeComputer = homeComp.ip;
     AddToAllServers(homeComp);
+    //Reset statistics of all scripts on home computer
+    for (var i = 0; i < homeComp.scripts.length; ++i) {
+        var s = homeComp.scripts[i];
+        s.offlineRunningTime  	= 0.01;	//Seconds
+        s.offlineMoneyMade 		= 0;
+        s.offlineExpGained 		= 0;
+        s.onlineRunningTime 	= 0.01;	//Seconds
+        s.onlineMoneyMade 		= 0;
+        s.onlineExpGained 		= 0;
+    }
     
     //Delete all running scripts objects
     for (var i = 0; i < workerScripts.length; ++i) {
@@ -139,6 +149,7 @@ function prestigeAugmentation() {
     
     //Delete Hacknet Nodes
     Player.hacknetNodes.length = 0;
+    Player.totalHacknetNodeProduction = 0;
     
     //Delete Special Server IPs
     for (var member in SpecialServerIps) {
