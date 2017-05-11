@@ -713,6 +713,15 @@ GetServerByHostname = function(hostname) {
 	return null;
 }
 
+//Get server by IP or hostname. Returns null if invalid
+getServer = function(s) {
+    if (!isValidIPAddress(s)) {
+        return GetServerByHostname(s);
+    } else {
+        return AllServers[s];
+    }
+}
+
 //Debugging tool
 PrintAllServers = function() {
     for (var ip in AllServers) {

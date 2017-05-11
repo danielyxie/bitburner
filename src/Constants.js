@@ -10,9 +10,9 @@ CONSTANTS = {
     CorpFactionRepRequirement: 250000,
     
     /* Base costs */
-    BaseCostFor1GBOfRamHome: 100000,
-    BaseCostFor1GBOfRamServer: 75000,     //1 GB of RAM
-    BaseCostFor1GBOfRamHacknetNode: 50000,
+    BaseCostFor1GBOfRamHome: 80000,
+    BaseCostFor1GBOfRamServer: 60000,     //1 GB of RAM
+    BaseCostFor1GBOfRamHacknetNode: 40000,
     
     BaseCostForHacknetNode: 1000,
     BaseCostForHacknetNodeCore: 1000000,
@@ -39,6 +39,12 @@ CONSTANTS = {
     ScriptIfRamCost:            0.1,
     ScriptHackRamCost:          0.25,
     ScriptGrowRamCost:          0.25,
+    ScriptNukeRamCost:          0.05,
+    ScriptBrutesshRamCost:      0.05,
+    ScriptFtpcrackRamCost:      0.05,
+    ScriptRelaysmtpRamCost:     0.05,
+    ScriptHttpwormRamCost:      0.05,
+    ScriptSqlinjectRamCost:     0.05,
     
     //Server growth rate
     ServerGrowthRate: 1.00075,

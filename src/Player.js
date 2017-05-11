@@ -249,8 +249,6 @@ PlayerObject.prototype.calculatePercentMoneyHacked = function() {
 //Returns how much EXP the player gains on a successful hack
 //The formula is:
 //  difficulty * requiredLevel * hacking_multiplier
-//
-// Note: Keep it at an integer for now,
 PlayerObject.prototype.calculateExpGain = function() {
     return (this.getCurrentServer().hackDifficulty * this.hacking_exp_mult);
 }
@@ -261,15 +259,21 @@ PlayerObject.prototype.calculateExpGain = function() {
 PlayerObject.prototype.hack = function() {
     this.actionTime = this.calculateHackingTime();
     console.log("Hacking time: " + this.actionTime);
-    //Set the startAction flag so the engine starts the hacking process
-    this.startAction = true;
+    this.startAction = true; //Set the startAction flag so the engine starts the hacking process
 }
 
 PlayerObject.prototype.analyze = function() {
-    //TODO Analyze only takes 1 seconds for now..maybe change this in the future?
     this.actionTime = 1;
     this.startAction = true;
-}    
+}
+
+PlayerObject.prototype.hasProgram = function(programName) {
+    var home = Player.getHomeComputer();
+    for (var i = 0; i < home.programs.length; ++i) {
+        if (programName == home.programs[i]) {return true;}
+    }
+    return false;
+}
 
 PlayerObject.prototype.gainMoney = function(money) {
     if (isNaN(money)) {
@@ -645,7 +649,7 @@ PlayerObject.prototype.startFactionWork = function(faction) {
 PlayerObject.prototype.startFactionHackWork = function(faction) {
     this.resetWorkStatus();
     
-    this.workHackExpGainRate    = .02 * this.hacking_exp_mult;
+    this.workHackExpGainRate    = .175 * this.hacking_exp_mult;
     this.workRepGainRate        = this.hacking_skill / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
     
     this.factionWorkType = CONSTANTS.FactionWorkHacking;
@@ -657,12 +661,12 @@ PlayerObject.prototype.startFactionHackWork = function(faction) {
 PlayerObject.prototype.startFactionFieldWork = function(faction) {
     this.resetWorkStatus();
     
-    this.workHackExpGainRate    = .05 * this.hacking_exp_mult;
-    this.workStrExpGainRate     = .05 * this.strength_exp_mult;
-    this.workDefExpGainRate     = .05 * this.defense_exp_mult;
-    this.workDexExpGainRate     = .05 * this.dexterity_exp_mult;
-    this.workAgiExpGainRate     = .05 * this.agility_exp_mult;
-    this.workChaExpGainRate     = .05 * this.charisma_exp_mult;
+    this.workHackExpGainRate    = .1 * this.hacking_exp_mult;
+    this.workStrExpGainRate     = .1 * this.strength_exp_mult;
+    this.workDefExpGainRate     = .1 * this.defense_exp_mult;
+    this.workDexExpGainRate     = .1 * this.dexterity_exp_mult;
+    this.workAgiExpGainRate     = .1 * this.agility_exp_mult;
+    this.workChaExpGainRate     = .1 * this.charisma_exp_mult;
     this.workRepGainRate        = this.getFactionFieldWorkRepGain();
     
     this.factionWorkType = CONSTANTS.factionWorkField;
@@ -674,12 +678,12 @@ PlayerObject.prototype.startFactionFieldWork = function(faction) {
 PlayerObject.prototype.startFactionSecurityWork = function(faction) {
     this.resetWorkStatus();
 
-    this.workHackExpGainRate    = 0.01 * this.hacking_exp_mult;
-    this.workStrExpGainRate     = 0.01 * this.strength_exp_mult;
-    this.workDefExpGainRate     = 0.01 * this.defense_exp_mult;
-    this.workDexExpGainRate     = 0.01 * this.dexterity_exp_mult;
-    this.workAgiExpGainRate     = 0.01 * this.agility_exp_mult;
-    this.workChaExpGainRate     = 0.01 * this.charisma_exp_mult;
+    this.workHackExpGainRate    = 0.05 * this.hacking_exp_mult;
+    this.workStrExpGainRate     = 0.15 * this.strength_exp_mult;
+    this.workDefExpGainRate     = 0.15 * this.defense_exp_mult;
+    this.workDexExpGainRate     = 0.15 * this.dexterity_exp_mult;
+    this.workAgiExpGainRate     = 0.15 * this.agility_exp_mult;
+    this.workChaExpGainRate     = 0.00 * this.charisma_exp_mult;
     this.workRepGainRate        = this.getFactionSecurityWorkRepGain();
     
     this.factionWorkType = CONSTANTS.FactionWorkSecurity;

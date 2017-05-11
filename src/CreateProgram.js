@@ -25,7 +25,7 @@ function displayCreateProgramContent() {
     httpWormALink.style.display = "none";
     sqlInjectALink.style.display = "none";
         
-    //PortHack.exe (in case you delete it lol)
+    //NUKE.exe (in case you delete it lol)
     if (Player.getHomeComputer().programs.indexOf(Programs.NukeProgram) == -1) {    
         nukeALink.style.display = "block";
     }
@@ -46,14 +46,12 @@ function displayCreateProgramContent() {
     if (Player.getHomeComputer().programs.indexOf(Programs.RelaySMTPProgram) == -1 &&
         Player.hacking_skill >= 250) {
         relaySmtpALink.style.display = "block";
-        
     }
     
     //HTTPWorm
     if (Player.getHomeComputer().programs.indexOf(Programs.HTTPWormProgram) == -1 &&
         Player.hacking_skill >= 500) {
         httpWormALink.style.display = "block";
-
     }
     
     //SQLInject

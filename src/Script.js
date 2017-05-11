@@ -148,6 +148,7 @@ Script.prototype.reset = function() {
 	this.onlineExpGained 		= 0;
 	
     this.moneyStolenMap         = new AllServersToMoneyMap();
+    console.log("Reset moneyStolenMap: " + this.moneyStolenMap);
 }
 
 //Calculates the number of instructions, which is just determined by number of semicolons
@@ -167,13 +168,25 @@ Script.prototype.updateRamUsage = function() {
     var ifCount = numOccurrences(codeCopy, "if(");
     var hackCount = numOccurrences(codeCopy, "hack(");
     var growCount = numOccurrences(codeCopy, "grow(");
+    var nukeCount = numOccurrences(codeCopy, "nuke(");
+    var brutesshCount = numOccurrences(codeCopy, "brutessh(");
+    var ftpcrackCount = numOccurrences(codeCopy, "ftpcrack(");
+    var relaysmtpCount = numOccurrences(codeCopy, "relaysmtp(");
+    var httpwormCount = numOccurrences(codeCopy, "httpworm(");
+    var sqlinjectCount = numOccurrences(codeCopy, "sqlinject(");
     
     this.ramUsage =  baseRam + 
                     ((whileCount * CONSTANTS.ScriptWhileRamCost) + 
                     (forCount * CONSTANTS.ScriptForRamCost) + 
                     (ifCount * CONSTANTS.ScriptIfRamCost) + 
                     (hackCount * CONSTANTS.ScriptHackRamCost) + 
-                    (growCount * CONSTANTS.ScriptGrowRamCost));
+                    (growCount * CONSTANTS.ScriptGrowRamCost) + 
+                    (nukeCount * CONSTANTS.ScriptNukeRamCost) + 
+                    (brutesshCount * CONSTANTS.ScriptBrutesshRamCost) + 
+                    (ftpcrackCount * CONSTANTS.ScriptFtpcrackRamCost) + 
+                    (relaysmtpCount * CONSTANTS.ScriptRelaysmtpRamCost) + 
+                    (httpwormCount * CONSTANTS.ScriptHttpwormRamCost) + 
+                    (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost));
     console.log("ram usage: " + this.ramUsage);
 }
 

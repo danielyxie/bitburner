@@ -55,7 +55,7 @@ function evaluate(exp, workerScript) {
 					} catch (e) {
 						throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
 					}
-					resolve(false);
+					resolve(false); //Return false so this doesnt cause loops/ifs to evaluate
 				}, function(e) {
 					reject(e);
 				});
@@ -105,21 +105,32 @@ function evaluate(exp, workerScript) {
 
 		//TODO
 		case "if":
-			var numConds = exp.cond.length;
-			var numThens = exp.then.length;
-			if (numConds == 0 || numThens == 0 || numConds != numThens) {
-				reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Number of conds and thens in if structure don't match (or there are none)");
-			}
-			
-			for (var i = 0; i < numConds; i++) {
-				var cond = evaluate(exp.cond[i], workerScript);
-				if (cond) return evaluate(exp.then[i], workerScript);
-			}
-			
-			//Evaluate else if it exists, snce none of the conditionals
-			//were true
-			return exp.else ? evaluate(exp.else, workerScript) : false;
-				
+            return new Promise(function(resolve, reject) {
+                var numConds = exp.cond.length;
+                var numThens = exp.then.length;
+                if (numConds == 0 || numThens == 0 || numConds != numThens) {
+                    reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Number of conds and thens in if structure don't match (or there are none)");
+                }
+                
+                for (var i = 0; i < numConds; i++) {
+                    var cond = evaluate(exp.cond[i], workerScript);
+                    cond.then(function(condRes) {
+                        if (cond) {
+                            return evaluate(exp.then[i], workerScript);
+                        } 
+                    }, function(e) {
+                        reject(e);
+                    });
+                    
+                }
+                
+                //Evaluate else if it exists, snce none of the conditionals
+                //were true
+                if (exp.else) {
+                    return evaluate(exp.else, workerScript);
+                } 
+            });
+            break;
 		case "for":
 			return new Promise(function(resolve, reject) {
 				if (env.stopFlag) {reject(workerScript);}
@@ -177,11 +188,17 @@ function evaluate(exp, workerScript) {
 			break;
 
 		/* Currently supported function calls:
-		 * 		hack()
+		 * 		hack(server)
 		 *		sleep(N) - sleep N seconds
 		 *		print(x) - Prints a variable or constant
-		 *
-		 */
+		 *      grow(server)
+         *      nuke(server)
+         *      brutessh(server)
+         *      ftpcrack(server)
+         *      relaysmtp(server)
+         *      httpworm(server)
+         *      sqlinject(server)
+		 */ 
 		case "call":
 			//Define only valid function calls here, like hack() and stuff
 			//var func = evaluate(exp.func, env);
@@ -196,23 +213,13 @@ function evaluate(exp, workerScript) {
 						if (exp.args.length != 1) {
 							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Hack() call has incorrect number of arguments. Takes 1 argument");
 						}
-						
-						//IP of server to hack
 						var ipPromise = evaluate(exp.args[0], workerScript);
-						
+
 						ipPromise.then(function(ip) {
-                            //Check if its a valid IP address. If it's not, assume its a hostname and
-                            //try to get the server. If its not a server, there is an error
-                            var server = null;
-                            if (!isValidIPAddress(ip)) {
-                                //It's not an IP address, so see if its a hostanme
-                                server = GetServerByHostname(ip);
-                            } else {
-                                server = AllServers[ip];
-                            }
+                            var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into hack() command");
-                                workerScript.scriptRef.log("Cannot hack(). Invalid IP or hostname passed in: " + ip);
+                                workerScript.scriptRef.log("Cannot hack(). Invalid IP or hostname passed in: " + ip + ". Stopping...");
                                 return;
                             }
                             
@@ -287,9 +294,7 @@ function evaluate(exp, workerScript) {
 					} else if (exp.func.value == "sleep") {
 						if (exp.args.length != 1) {
 							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|sleep() call has incorrect number of arguments. Takes 1 argument.");
-                            return;
 						}
-						
 						var sleepTimePromise = evaluate(exp.args[0], workerScript);
 						sleepTimePromise.then(function(sleepTime) {
                             workerScript.scriptRef.log("Sleeping for " + sleepTime + " milliseconds");
@@ -333,20 +338,10 @@ function evaluate(exp, workerScript) {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|grow() call has incorrect number of arguments. Takes 1 argument");
                         }
-                        
-                        //IP/hostname of server to hack
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						
 						ipPromise.then(function(ip) {
-                            //Check if its a valid IP address. If it's not, assume its a hostname and
-                            //try to get the server. If its not a server, there is an error
-                            var server = null;
-                            if (!isValidIPAddress(ip)) {
-                                //It's not an IP address, so see if its a hostanme
-                                server = GetServerByHostname(ip);
-                            } else {
-                                server = AllServers[ip];
-                            }
+                            var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into grow() command");
                                 workerScript.scriptRef.log("Cannot grow(). Invalid IP or hostname passed in: " + ip);
@@ -374,6 +369,256 @@ function evaluate(exp, workerScript) {
                                 workerScript.scriptRef.log("Using grow(), the money available on " + server.hostname + " was grown by " + (growthPercentage*100 - 100).toFixed(6) + "%. Gained 1 hacking exp");
                                 Player.gainHackingExp(1);
                                 workerScript.scriptRef.onlineExpGained += 1;
+							}, function(e) {
+								reject(e);
+							});
+                        }, function(e) {
+							reject(e);
+						});
+                    } else if (exp.func.value == "nuke") {
+                        if (exp.args.length != 1) {
+                            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|nuke() call has incorrect number of arguments. Takes 1 argument");
+                        }
+						var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            var server = getServer(ip);
+                            if (server == null) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into nuke() command");
+                                workerScript.scriptRef.log("Cannot nuke(). Invalid IP or hostname passed in: " + ip);
+                                return;
+                            }
+                            
+                            if (!Player.hasProgram(Programs.NukeProgram)) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Player does not have NUKE program on home computer");
+                                return;
+                            }
+                            
+                            if (server.openPortCount < server.numOpenPortsRequired) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Not enough ports opened to use NUKE.exe virus");
+                                return;
+                            }
+                            
+                            workerScript.scriptRef.log("Running NUKE.exe on server " + server.hostname + " in 5 seconds");
+                            var p = new Promise(function(resolve, reject) {
+								if (env.stopFlag) {reject(workerScript);}
+								setTimeout(function() {
+                                    if (server.hasAdminRights) {
+                                        workerScript.scriptRef.log("Already have root access to " + server.hostname);
+                                    } else {
+                                        server.hasAdminRights = true;
+                                        workerScript.scriptRef.log("Executed NUKE.exe virus on " + server.hostname + " to gain root access");
+                                    }
+									resolve("nuke done");
+								}, 5 * 1000);
+							});
+                            
+                            p.then(function(res) {
+								resolve("nukeExecuted");
+							}, function(e) {
+								reject(e);
+							});
+                        }, function(e) {
+							reject(e);
+						});
+                    } else if (exp.func.value == "brutessh") {
+                        if (exp.args.length != 1) {
+                            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|brutessh() call has incorrect number of arguments. Takes 1 argument");
+                        }
+						var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            var server = getServer(ip);
+                            if (server == null) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into brutessh() command");
+                                workerScript.scriptRef.log("Cannot brutessh(). Invalid IP or hostname passed in: " + ip);
+                                return;
+                            }
+                            
+                            if (!Player.hasProgram(Programs.BruteSSHProgram)) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Player does not have BruteSSH.exe program on home computer");
+                                return;
+                            }
+                            
+                            workerScript.scriptRef.log("Running BruteSSH.exe on server " + server.hostname + " in 10 seconds");
+                            var p = new Promise(function(resolve, reject) {
+								if (env.stopFlag) {reject(workerScript);}
+								setTimeout(function() {
+                                    if (!server.sshPortOpen) {
+                                        workerScript.scriptRef.log("Executed BruteSSH.exe virus on " + server.hostname + " to open SSH port (22)");
+                                        server.sshPortOpen = true; 
+                                        ++server.openPortCount;
+                                    } else {
+                                        workerScript.scriptRef.log("SSH Port (22) already opened on " + server.hostname);
+                                    }
+                                    resolve("brutessh done");
+								}, 10 * 1000);
+							});
+                            
+                            p.then(function(res) {
+								resolve("bruteSSHExecuted");
+							}, function(e) {
+								reject(e);
+							});
+                        }, function(e) {
+							reject(e);
+						});
+                    } else if (exp.func.value == "ftpcrack") {
+                        if (exp.args.length != 1) {
+                            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|ftpcrack() call has incorrect number of arguments. Takes 1 argument");
+                        }
+						var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            var server = getServer(ip);
+                            if (server == null) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into ftpcrack() command");
+                                workerScript.scriptRef.log("Cannot ftpcrack(). Invalid IP or hostname passed in: " + ip);
+                                return;
+                            }
+                            
+                            if (!Player.hasProgram(Programs.FTPCrackProgram)) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Player does not have FTPCrack.exe program on home computer");
+                                return;
+                            }
+                            
+                            workerScript.scriptRef.log("Running FTPCrack.exe on server " + server.hostname + " in 15 seconds");
+                            var p = new Promise(function(resolve, reject) {
+								if (env.stopFlag) {reject(workerScript);}
+								setTimeout(function() {
+                                    if (!server.ftpPortOpen) {
+                                        workerScript.scriptRef.log("Executed FTPCrack.exe virus on " + server.hostname + " to open FTP port (21)");
+                                        server.ftpPortOpen = true; 
+                                        ++server.openPortCount;
+                                    } else {
+                                        workerScript.scriptRef.log("FTP Port (21) already opened on " + server.hostname);
+                                    }
+                                    resolve("ftpcrack done");
+								}, 15 * 1000);
+							});
+                            
+                            p.then(function(res) {
+								resolve("ftpcrackexecuted");
+							}, function(e) {
+								reject(e);
+							});
+                        }, function(e) {
+							reject(e);
+						});
+                    } else if (exp.func.value == "relaysmtp") {
+                        if (exp.args.length != 1) {
+                            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|relaysmtp() call has incorrect number of arguments. Takes 1 argument");
+                        }
+						var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            var server = getServer(ip);
+                            if (server == null) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into relaysmtp() command");
+                                workerScript.scriptRef.log("Cannot relaysmtp(). Invalid IP or hostname passed in: " + ip);
+                                return;
+                            }
+                            
+                            if (!Player.hasProgram(Programs.RelaySMTPProgram)) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Player does not have relaySMTP.exe program on home computer");
+                                return;
+                            }
+                            
+                            workerScript.scriptRef.log("Running relaySMTP.exe on server " + server.hostname + " in 20 seconds");
+                            var p = new Promise(function(resolve, reject) {
+								if (env.stopFlag) {reject(workerScript);}
+								setTimeout(function() {
+                                    if (!server.smtpPortOpen) {
+                                        workerScript.scriptRef.log("Executed relaySMTP.exe virus on " + server.hostname + " to open SMTP port (25)");
+                                        server.smtpPortOpen = true; 
+                                        ++server.openPortCount;
+                                    } else {
+                                        workerScript.scriptRef.log("SMTP Port (25) already opened on " + server.hostname);
+                                    }
+                                    resolve("relaysmtp done");
+								}, 20 * 1000);
+							});
+                            
+                            p.then(function(res) {
+								resolve("relaysmtpexecuted");
+							}, function(e) {
+								reject(e);
+							});
+                        }, function(e) {
+							reject(e);
+						});
+                    } else if (exp.func.value == "httpworm") {
+                        if (exp.args.length != 1) {
+                            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|httpworm() call has incorrect number of arguments. Takes 1 argument");
+                        }
+						var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            var server = getServer(ip);
+                            if (server == null) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into relaysmtp() command");
+                                workerScript.scriptRef.log("Cannot httpworm(). Invalid IP or hostname passed in: " + ip);
+                                return;
+                            }
+                            
+                            if (!Player.hasProgram(Programs.HTTPWormProgram)) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Player does not have HTTPWorm.exe program on home computer");
+                                return;
+                            }
+                            
+                            workerScript.scriptRef.log("Running HTTPWorm.exe on server " + server.hostname + " in 25 seconds");
+                            var p = new Promise(function(resolve, reject) {
+								if (env.stopFlag) {reject(workerScript);}
+								setTimeout(function() {
+                                    if (!server.httpPortOpen) {
+                                        workerScript.scriptRef.log("Executed HTTPWorm.exe virus on " + server.hostname + " to open HTTP port (25)");
+                                        server.httpPortOpen = true; 
+                                        ++server.openPortCount;
+                                    } else {
+                                        workerScript.scriptRef.log("HTTP Port (80) already opened on " + server.hostname);
+                                    }
+                                    resolve("httpworm done");
+								}, 25 * 1000);
+							});
+                            
+                            p.then(function(res) {
+								resolve("HTTPWormexecuted");
+							}, function(e) {
+								reject(e);
+							});
+                        }, function(e) {
+							reject(e);
+						});
+                    } else if (exp.func.value == "sqlinject") {
+                        if (exp.args.length != 1) {
+                            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|sqlinject() call has incorrect number of arguments. Takes 1 argument");
+                        }
+						var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            var server = getServer(ip);
+                            if (server == null) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into sqlinject() command");
+                                workerScript.scriptRef.log("Cannot sqlinject(). Invalid IP or hostname passed in: " + ip);
+                                return;
+                            }
+                            
+                            if (!Player.hasProgram(Programs.SQLInjectProgram)) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Player does not have SQLInject.exe program on home computer");
+                                return;
+                            }
+                            
+                            workerScript.scriptRef.log("Running SQLInject.exe on server " + server.hostname + " in 30 seconds");
+                            var p = new Promise(function(resolve, reject) {
+								if (env.stopFlag) {reject(workerScript);}
+								setTimeout(function() {
+                                    if (!server.sqlPortOpen) {
+                                        workerScript.scriptRef.log("Executed SQLInject.exe virus on " + server.hostname + " to open SQL port (1433)");
+                                        server.sqlPortOpen = true; 
+                                        ++server.openPortCount;
+                                    } else {
+                                        workerScript.scriptRef.log("SQL Port (1433) already opened on " + server.hostname);
+                                    }
+                                    resolve("sqlinject done");
+								}, 30 * 1000);
+							});
+                            
+                            p.then(function(res) {
+								resolve("sqlinjectexecuted");
 							}, function(e) {
 								reject(e);
 							});
