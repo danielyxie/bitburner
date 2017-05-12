@@ -237,6 +237,12 @@ CONSTANTS = {
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
                            "must be a string with either the IP or hostname of the target server. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. <br> Example: nuke('foodnstuff'); <br><br>" + 
+                           "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer <br> Example: brutessh('foodnstuff');<br><br>" + 
+                           "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer <br> Example: ftpcrack('foodnstuff');<br><br>" + 
+                           "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer <br> Example: relaysmtp('foodnstuff');<br><br>" + 
+                           "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer <br> Example: httpworm('foodnstuff');<br><br>" + 
+                           "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer <br> Example: sqlinject('foodnstuff');<br><br>" + 
                            "<strong>While loop </strong><br>" +
                            "A while loop is a control flow statement that repeatedly executes code as long as a condition is met. <br><br> " +
                            "while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}<br><br>" + 

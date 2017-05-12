@@ -276,12 +276,14 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var fulcrumSecretServer = AllServers[SpecialServerIps["Fulcrum Secret Technologies Server"]];
     if (fulcrumSecretServer == null) {
         console.log("Error: Could not find Fulcrum Secret Technologies Server");
+    } else {
+        if (fulcrumsecrettechonologiesFac.isBanned == false && fulcrumsecrettechonologiesFac.isMember == false &&
+            fulcrumSecretServer.hasAdminRights && 
+            this.companyName == Locations.AevumFulcrumTechnologies && companyRep >= 250000) {
+            invitedFactions.push(fulcrumsecrettechonologiesFac);
+        }
     }
-    if (fulcrumsecrettechonologiesFac.isBanned == false && fulcrumsecrettechonologiesFac.isMember == false &&
-        fulcrumSecretServer.hasAdminRights && 
-        this.companyName == Locations.AevumFulcrumTechnologies && companyRep >= 250000) {
-        invitedFactions.push(fulcrumsecrettechonologiesFac);
-    }
+    
     
     //BitRunners
     var bitrunnersFac = Factions["BitRunners"];

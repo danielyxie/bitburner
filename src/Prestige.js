@@ -129,6 +129,7 @@ function prestigeAugmentation() {
     AddToAllServers(homeComp);
     
     //Re-create foreign servers
+    SpecialServerIps = new SpecialServerIpsMap();   //Must be done before initForeignServers()
     initForeignServers();
     
     //Reset statistics of all scripts on home computer
@@ -186,7 +187,6 @@ function prestigeAugmentation() {
     //Re-initialize things - This will update any changes 
     initFactions();
     initAugmentations();
-    SpecialServerIps = new SpecialServerIpsMap();
     initCompanies();
     
     Engine.loadTerminalContent();

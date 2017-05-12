@@ -711,7 +711,7 @@ var Engine = {
                 } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
                     Player.commitCrime(numCyclesOffline);
                 } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
-                    Player.workPartTime(numCycles);
+                    Player.workPartTime(numCyclesOffline);
                 } else {
                     Player.work(numCyclesOffline);
                 }
