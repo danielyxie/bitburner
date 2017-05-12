@@ -23,13 +23,6 @@ Faction.prototype.setInfo = function(inf) {
 	this.info = inf;
 }
 
-Faction.prototype.reset = function() {
-    this.isMember = false;
-    this.isBanned = false;
-    this.playerReputation = 0;
-    this.augmentations = [];
-}
-
 Faction.prototype.toJSON = function() {
 	return Generic_toJSON("Faction", this);
 }
@@ -140,6 +133,12 @@ initFactions = function() {
     var Silhouette              = new Faction("Silhouette");
     Silhouette.setInfo(FactionInfo.SilhouetteInfo);
     AddToFactions(Silhouette);
+    var Tetrads                 = new Faction("Tetrads"); //Low-medium level asian crime gang
+    Tetrads.setInfo(FactionInfo.TetradsInfo);
+    AddToFactions(Tetrads);
+    var SlumSnakes              = new Faction("Slum Snakes"); //Low level crime gang
+    SlumSnakes.setInfo(FactionInfo.SlumSnakesInfo);
+    AddToFactions(SlumSnakes);
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
@@ -160,6 +159,7 @@ initFactions = function() {
 PlayerObject.prototype.checkForFactionInvitations = function() {
     if (Engine.Debug) {
         console.log("checkForFactionInvitations() called");
+        console.log("karma: " + this.karma);
     }
     invitedFactions = []; //Array which will hold all Factions th eplayer should be invited to
     
@@ -387,6 +387,23 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
          this.companyPosition.positionName == CompanyPositions.CEO.positionName) &&
          this.money >= 15000000 && this.karma <= -25) {
         invitedFactions.push(silhouetteFac);
+    }
+    
+    //Tetrads
+    var tetradsFac = Factions["Tetrads"];
+    if (tetradsFac.isBanned == false && tetradsFac.isMember == false && 
+        (this.city == Locations.Chongqing || this.city == Locations.NewTokyo || 
+        this.city == Locations.Ishima) && this.strength >= 75 && this.defense >= 75 &&
+        this.dexterity >= 75 && this.agility >= 75 && this.karma <= -20) {
+        invitedFactions.push(tetradsFac);
+    }
+    
+    //SlumSnakes
+    var slumsnakesFac = Factions["Slum Snakes"];
+    if (slumsnakesFac.isBanned == false && slumsnakesFac.isMember == false && 
+        this.strength >= 30 && this.defense >= 30 && this.dexterity >= 30 &&
+        this.agility >= 30 && this.karma <= -15 && this.money >= 1000000) {
+        invitedFactions.push(slumsnakesFac);
     }
     
     //Netburners

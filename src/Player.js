@@ -115,7 +115,7 @@ function PlayerObject() {
     this.numTimesHeistTotal             = 0;
     this.numTimesHeistLifetime          = 0;
     
-    //Achievements and achievement progress
+    this.crime_money_mult               = 1;
     
     //Flag to let the engine know the player is starting an action
     //  Current actions: hack, analyze
@@ -1042,7 +1042,7 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
     this.workDexExpGained   = dexExp * this.dexterity_exp_mult;
     this.workAgiExpGained   = agiExp * this.agility_exp_mult;
     this.workChaExpGained   = chaExp * this.charisma_exp_mult;
-    this.workMoneyGained    = money; //TODO multiplier for this?
+    this.workMoneyGained    = money * this.crime_money_mult;
     
     this.timeNeededToCompleteWork = time;
     

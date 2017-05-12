@@ -114,6 +114,8 @@ function prestigeAugmentation() {
     }
     AllServers = {};
     
+
+    
     //Reset home computer (only the programs) and add to AllServers
     homeComp.programs.length = 0;
     homeComp.runningScripts = [];
@@ -125,12 +127,17 @@ function prestigeAugmentation() {
     Player.currentServer = homeComp.ip;
     Player.homeComputer = homeComp.ip;
     AddToAllServers(homeComp);
+    
+    //Re-create foreign servers
+    initForeignServers();
+    
     //Reset statistics of all scripts on home computer
     for (var i = 0; i < homeComp.scripts.length; ++i) {
         var s = homeComp.scripts[i];
         s.reset();
         delete s.moneyStolenMap;
         s.moneyStolenMap = new AllServersToMoneyMap();
+        s.moneyStolenMap.printConsole();
     }
     
     //Delete all running scripts objects
@@ -165,16 +172,21 @@ function prestigeAugmentation() {
     //Reset Factions
     for (var member in Factions) {
         if (Factions.hasOwnProperty(member)) {
-            Factions[member].reset();    
+            delete Factions[member];
         }
     }
+    Factions = {};
     
-    //Re-initialize Augmentations - This will update any changes 
+    //Stop a Terminal action if there is onerror
+    if (Engine._actionInProgress) {
+        Engine._actionInProgress = false;
+        Terminal.finishAction(true);
+    }
+    
+    //Re-initialize things - This will update any changes 
+    initFactions();
     initAugmentations();
-    
-    //Inititialization
     SpecialServerIps = new SpecialServerIpsMap();
-    initForeignServers();
     initCompanies();
     
     Engine.loadTerminalContent();

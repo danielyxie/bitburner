@@ -113,6 +113,11 @@ FactionInfo = {
 	TheSyndicateInfo: "TODO",
 	
 	SilhouetteInfo: "Corporations are so big, you don't even know who you're working for. That's terror. Terror built into the system.",
+    
+    TetradsInfo: "Following the Mandate of HEaven and Carrying out the way",
+    
+    SlumSnakesInfo: "Slum Snakes rule!",
+    
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories

@@ -303,3 +303,17 @@ function AllServersToMoneyMap() {
         }
     }
 }
+
+AllServersToMoneyMap.prototype.printConsole = function() {
+    console.log("Printing AllServersToMoneyMap");
+    for (var ip in this) {
+        if (this.hasOwnProperty(ip)) {
+            var serv = AllServers[ip];
+            if (serv == null) {
+                console.log("Warning null server encountered with ip: " + ip);
+                continue;
+            }
+            console.log(ip + "(" + serv.hostname + "): " + this[ip]);
+        }
+    }
+}

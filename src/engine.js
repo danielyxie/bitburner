@@ -268,7 +268,8 @@ var Engine = {
         'Hacknet Node level upgrade cost multiplier: ' + formatNumber(Player.hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' + 
         'Company reputation gain multiplier: ' + formatNumber(Player.company_rep_mult * 100, 2) + '%<br>' + 
         'Faction reputation gain multiplier: ' + formatNumber(Player.faction_rep_mult * 100, 2) + '%<br>' + 
-        'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br><br><br>' +
+        'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br>' + 
+        'Crime money multiplier: ' + formatNumber(Player.crime_money_mult * 100, 2) + '%<br><br><br>' +
         '<b>Misc</b><br><br>' + 
         'Servers owned:       ' + Player.purchasedServers.length + '<br>' + 
         'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br><br> ').replace( / /g, "&nbsp;" );
@@ -606,6 +607,8 @@ var Engine = {
                 Engine.displayCharacterInfo();
             }  else if (Engine.currentPage == Engine.Page.HacknetNodes) {
                 updateHacknetNodesContent();
+            } else if (Engine.currentPage == Engine.Page.CreateProgram) {
+                displayCreateProgramContent();
             }
             
             Engine.Counters.updateDisplays = 3;
