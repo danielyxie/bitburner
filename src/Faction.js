@@ -723,10 +723,22 @@ displayFactionContent = function(factionName) {
                 hackDiv.style.display = "inline";
                 fieldWorkDiv.style.display = "inline";
                 securityWorkDiv.style.display = "none";
+                break;
+            case "Tetrads":
+                hackDiv.style.display = "none";
+                fieldWorkDiv.style.display = "inline";
+                securityWorkDiv.style.display = "inline";
+                break;
+            case "Slum Snakes":
+                hackDiv.style.display = "none";
+                fieldWorkDiv.style.display = "inline";
+                securityWorkDiv.style.display = "inline";
+                break;
             case "Netburners":
                 hackDiv.style.display = "inline";
                 fieldWorkDiv.style.display = "none";
                 securityWorkDiv.style.display = "none";
+                break;
 			case "Tian Di Hui":
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "none";

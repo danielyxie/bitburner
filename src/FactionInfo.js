@@ -121,7 +121,7 @@ FactionInfo = {
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
-    NetburnersInfo: "~~//*><H4CK|\|3T 8URN3R5**>?>\\~~",
+    NetburnersInfo: "~~//*>H4CK|\|3T 8URN3R5**>?>\\~~",
     
 	TianDiHuiInfo: "Obey Heaven and Work Righteousness",
 	
