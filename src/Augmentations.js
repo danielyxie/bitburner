@@ -119,7 +119,8 @@ AugmentationNames = {
     LuminCloaking1:                     "LuminCloaking-V1 Skin Implant",
     LuminCloaking2:                     "LuminCloaking-V2 Skin Implant",
     HemoRecirculator:                   "HemoRecirculator",
-    SmartSonar:                         "SmartSonar Implant"
+    SmartSonar:                         "SmartSonar Implant",
+    PowerRecirculator:                  "Power Recirculation Core"
 }
 
 initAugmentations = function() {
@@ -272,7 +273,7 @@ initAugmentations = function() {
     WiredReflexes.setRequirements(600, 500000);
     WiredReflexes.setInfo("Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system, " + 
                           "supercharging the body's ability to send signals through neurons. This results in increased reflex speed.<br><br>" + 
-                          "This augmentation increases the player's agility by 5%.");
+                          "This augmentation increases the player's agility and dexterity by 5%.");
     WiredReflexes.addToFactions(["Tian Di Hui", "Slum Snakes", "Sector-12", "Volhaven", "Aevum", "Ishima", 
                                 "The Syndicate", "The Dark Army", "Speakers for the Dead"]);
     if (augmentationExists(AugmentationNames.WiredReflexes)) {
@@ -907,6 +908,21 @@ initAugmentations = function() {
         delete Augmentations[AugmentationNames.SmartSonar];
     }
     AddToAugmentations(SmartSonar);
+    
+    var PowerRecirculator = new Augmentation(AugmentationNames.PowerRecirculator);
+    PowerRecirculator.setInfo("The body's nerves are attached with polypyrrole nanocircuits that " + 
+                              "are capable of of capture wasted energy (in the form of heat) " + 
+                              "and converting it back into usable power. <br><br>" + 
+                              "This augmentation: <br>" + 
+                              "Increases all of the player's stats by 5%<br>" + 
+                              "Increases the player's experience gain rate for all stats by 5%");
+    PowerRecirculator.setRequirements(20000, 40000000);
+    PowerRecirculator.addToFactions(["Tetrads", "The Dark Army", "The Syndicate", "NWO"]);
+    if (augmentationExists(AugmentationNames.PowerRecirculator)) {
+        PowerRecirculator.owned = Augmentations[AugmentationNames.PowerRecirculator].owned;
+        delete Augmentations[AugmentationNames.PowerRecirculator];
+    }
+    AddToAugmentations(PowerRecirculator);
 }
 
 applyAugmentation = function(aug, faction) {
@@ -956,6 +972,7 @@ applyAugmentation = function(aug, faction) {
             break;
         case AugmentationNames.WiredReflexes:          //Low level
             Player.agility_mult     *= 1.05;
+            Player.dexterity_mult   *= 1.05;
             break;
         case AugmentationNames.GrapheneBoneLacings:   //High level
             Player.strength_mult    *= 2;
@@ -1045,11 +1062,9 @@ applyAugmentation = function(aug, faction) {
             Player.hacking_mult           *= 1.1;
             break;
         case AugmentationNames.ENMAnalyzeEngine:    //High level
-            //Hacking speed 20%  - High level
             Player.hacking_speed_mult     *= 0.9;
             break;
         case AugmentationNames.ENMDMA:  //High level
-            //Money hacked 20%  - High level
             Player.hacking_money_mult     *= 1.5;
             Player.hacking_chance_mult    *= 1.2;
             break;
