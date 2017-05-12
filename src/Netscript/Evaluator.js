@@ -33,10 +33,11 @@ function evaluate(exp, workerScript) {
 		//Can currently only assign to "var"s
 		case "assign":
 			return new Promise(function(resolve, reject) {
+                console.log("Evaluating assign");
 				if (env.stopFlag) {reject(workerScript);}
 				
 				if (exp.left.type != "var")
-					throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "| Cannot assign to " + JSON.stringify(exp.left));
+					reject("|" + workerScript.serverIp + "|" + workerScript.name + "| Cannot assign to " + JSON.stringify(exp.left));
 				
 				var p = new Promise(function(resolve, reject) {
 					setTimeout(function() { 
@@ -53,6 +54,7 @@ function evaluate(exp, workerScript) {
 					try {
 						env.set(exp.left.value, expRight);
 					} catch (e) {
+                        console.log("here");
 						throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
 					}
 					resolve(false); //Return false so this doesnt cause loops/ifs to evaluate
@@ -106,29 +108,38 @@ function evaluate(exp, workerScript) {
 		//TODO
 		case "if":
             return new Promise(function(resolve, reject) {
+                console.log("Evaluating if");
                 var numConds = exp.cond.length;
                 var numThens = exp.then.length;
                 if (numConds == 0 || numThens == 0 || numConds != numThens) {
+                    console.log("Number of ifs and conds dont match. Rejecting");
                     reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Number of conds and thens in if structure don't match (or there are none)");
                 }
                 
-                for (var i = 0; i < numConds; i++) {
-                    var cond = evaluate(exp.cond[i], workerScript);
-                    cond.then(function(condRes) {
-                        if (cond) {
-                            return evaluate(exp.then[i], workerScript);
-                        } 
-                    }, function(e) {
-                        reject(e);
-                    });
-                    
-                }
-                
-                //Evaluate else if it exists, snce none of the conditionals
-                //were true
-                if (exp.else) {
-                    return evaluate(exp.else, workerScript);
-                } 
+                var evalIfPromise = evaluateIf(exp, workerScript, 0);
+                evalIfPromise.then(function(res) {
+                    if (res) {
+                        //One of the if/elif statements evaluated to true
+                        console.log("done with if");
+                        resolve("if statement done");
+                    } else {
+                        //None of the if/elif statements were true. Evaluate else if there is one
+                        if (exp.else) {
+                            var elseEval = evaluate(exp.else, workerScript);
+                            elseEval.then(function(res) {
+                                console.log("if statement done with else");
+                                resolve("if statement done with else");
+                            }, function(e) {
+                                reject(e);
+                            });
+                        } else {
+                            console.log("no else statement, resolving");
+                            resolve("if statement done");
+                        }
+                    }
+                }, function(e) {
+                    reject(e);
+                });
             });
             break;
 		case "for":
@@ -633,6 +644,48 @@ function evaluate(exp, workerScript) {
 		default:
 			reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Can't evaluate type " + exp.type);
     }
+}
+
+//Returns true if any of the if statements evaluated, false otherwise. Therefore, the else statement
+//should evaluate if this returns false
+function evaluateIf(exp, workerScript, i) {
+    var env = workerScript.env;
+    return new Promise(function(resolve, reject) {
+        if (i >= exp.cond.length) {
+            //Catch out of bounds errors
+            resolve(false);
+        } else {
+            console.log("Evaluating cond " + i + " in if");
+            var cond = evaluate(exp.cond[i], workerScript);
+            cond.then(function(condRes) {
+                console.log("cond evaluated to: " + condRes);
+                if (condRes) {
+                    console.log("Evaluating then: " + exp.then[i]);
+                    var evalThen = evaluate(exp.then[i], workerScript);
+                    evalThen.then(function(res) {
+                        console.log("If statement done");
+                        resolve(true);
+                    }, function(e) {
+                        reject(e);
+                    });
+                } else {
+                    //If this if statement isnt true, go on the next elif, or recursively resolve
+                    if (i == exp.cond.length-1) {
+                        resolve(false);
+                    } else {
+                        var recursiveCall = evaluateIf(exp, workerScript, i+1);
+                        recursiveCall.then(function(res) {
+                            resolve(res);
+                        }, function(e) {
+                            reject(e);
+                        });
+                    }
+                }
+            }, function(e) {
+                reject(e);
+            });
+        }
+    });
 }
 
 //Evaluate the looping part of a for loop (Initialization block is NOT done in here)

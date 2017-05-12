@@ -136,6 +136,8 @@ Script.prototype.saveScript = function() {
 		this.onlineRunningTime 		= 0.01;	//Seconds
 		this.onlineMoneyMade 		= 0;
 		this.lastUpdate				= 0;
+        
+        this.logs = [];
 	}
 }
 
@@ -146,9 +148,6 @@ Script.prototype.reset = function() {
 	this.onlineRunningTime 		= 0.01;	//Seconds
 	this.onlineMoneyMade 		= 0;
 	this.onlineExpGained 		= 0;
-	
-    this.moneyStolenMap         = new AllServersToMoneyMap();
-    console.log("Reset moneyStolenMap: " + this.moneyStolenMap);
 }
 
 //Calculates the number of instructions, which is just determined by number of semicolons
