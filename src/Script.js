@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", scriptEditorSaveCloseInit, false);
 //Define key commands in script editor (ctrl o to save + close, etc.)
 $(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
-		//Ctrl + x
+		//Ctrl + b
         if (e.keyCode == 66 && e.ctrlKey) {			
 			saveAndCloseScriptEditor();
         }
@@ -26,6 +26,20 @@ $(document).keydown(function(e) {
 
 function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
+    if (iTutorialIsRunning && currITutorialStep == iTutorialSteps.TerminalTypeScript) {
+        if (filename != "foodnstuff") {
+            dialogBoxCreate("Leave the script name as 'foodnstuff'!");
+            return;
+        }
+        var code = document.getElementById("script-editor-text").value;
+        code = code.replace(/\s\s+/g, '');
+        console.log(code);
+        if (code.indexOf("while(true) {hack('foodnstuff');}") == -1) {
+            dialogBoxCreate("Please copy and paste the code from the tutorial!");
+            return;
+        }
+        iTutorialNextStep(); 
+    }
     
     if (filename == "") {
         //If no filename...just close and do nothing
@@ -89,13 +103,14 @@ function Script() {
     this.numInstructions        = 0;
 	
 	//Stats to display on the Scripts menu, and used to determine offline progress
-	this.offlineRunningTime  	= 0;	//Seconds
+	this.offlineRunningTime  	= 0.01;	//Seconds
 	this.offlineMoneyMade 		= 0;
 	this.offlineExpGained 		= 0;
-	this.onlineRunningTime 		= 0;	//Seconds
+	this.onlineRunningTime 		= 0.01;	//Seconds
 	this.onlineMoneyMade 		= 0;
 	this.onlineExpGained 		= 0;
 	
+    this.moneyStolenMap         = new AllServersToMoneyMap();
 };
 
 //Get the script data from the Script Editor and save it to the object
@@ -116,12 +131,23 @@ Script.prototype.saveScript = function() {
 		this.updateRamUsage();
 		
 		//Clear the stats when the script is updated
-		this.offlineRunningTime  	= 0;	//Seconds
+		this.offlineRunningTime  	= 0.01;	//Seconds
 		this.offlineMoneyMade 		= 0;
-		this.onlineRunningTime 		= 0;	//Seconds
+		this.onlineRunningTime 		= 0.01;	//Seconds
 		this.onlineMoneyMade 		= 0;
 		this.lastUpdate				= 0;
+        
+        this.logs = [];
 	}
+}
+
+Script.prototype.reset = function() {
+    this.offlineRunningTime  	= 0.01;	//Seconds
+	this.offlineMoneyMade 		= 0;
+	this.offlineExpGained 		= 0;
+	this.onlineRunningTime 		= 0.01;	//Seconds
+	this.onlineMoneyMade 		= 0;
+	this.onlineExpGained 		= 0;
 }
 
 //Calculates the number of instructions, which is just determined by number of semicolons
@@ -131,11 +157,36 @@ Script.prototype.updateNumInstructions = function() {
 }
 
 //Updates how much RAM the script uses when it is running.
-//Right now, it is determined solely by the number of instructions
-//Ideally, I would want it to be based on type of instructions as well
-// 	(e.g. hack() costs a lot but others dont)
 Script.prototype.updateRamUsage = function() {
-	this.ramUsage = this.numInstructions * 0.5;
+    var baseRam = 1;    //Each script requires 1GB to run regardless
+    var codeCopy = this.code.repeat(1);
+    codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
+    
+    var whileCount = numOccurrences(codeCopy, "while(");
+    var forCount = numOccurrences(codeCopy, "for(");
+    var ifCount = numOccurrences(codeCopy, "if(");
+    var hackCount = numOccurrences(codeCopy, "hack(");
+    var growCount = numOccurrences(codeCopy, "grow(");
+    var nukeCount = numOccurrences(codeCopy, "nuke(");
+    var brutesshCount = numOccurrences(codeCopy, "brutessh(");
+    var ftpcrackCount = numOccurrences(codeCopy, "ftpcrack(");
+    var relaysmtpCount = numOccurrences(codeCopy, "relaysmtp(");
+    var httpwormCount = numOccurrences(codeCopy, "httpworm(");
+    var sqlinjectCount = numOccurrences(codeCopy, "sqlinject(");
+    
+    this.ramUsage =  baseRam + 
+                    ((whileCount * CONSTANTS.ScriptWhileRamCost) + 
+                    (forCount * CONSTANTS.ScriptForRamCost) + 
+                    (ifCount * CONSTANTS.ScriptIfRamCost) + 
+                    (hackCount * CONSTANTS.ScriptHackRamCost) + 
+                    (growCount * CONSTANTS.ScriptGrowRamCost) + 
+                    (nukeCount * CONSTANTS.ScriptNukeRamCost) + 
+                    (brutesshCount * CONSTANTS.ScriptBrutesshRamCost) + 
+                    (ftpcrackCount * CONSTANTS.ScriptFtpcrackRamCost) + 
+                    (relaysmtpCount * CONSTANTS.ScriptRelaysmtpRamCost) + 
+                    (httpwormCount * CONSTANTS.ScriptHttpwormRamCost) + 
+                    (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost));
+    console.log("ram usage: " + this.ramUsage);
 }
 
 Script.prototype.log = function(txt) {
@@ -197,41 +248,72 @@ scriptCalculateOfflineProduction = function(script) {
 	var thisUpdate = new Date().getTime();
 	var lastUpdate = Player.lastUpdate;
 	var timePassed = (thisUpdate - lastUpdate) / 1000;	//Seconds
-	console.log("Offline for " + timePassed.toString() + " seconds");
+	console.log("Offline for " + timePassed + " seconds");
 	
 	//Calculate the "confidence" rating of the script's true production. This is based
 	//entirely off of time. We will arbitrarily say that if a script has been running for
 	//4 hours (14400 sec) then we are completely confident in its ability
 	var confidence = (script.onlineRunningTime) / 14400;
 	if (confidence >= 1) {confidence = 1;}
-	console.log("onlineRunningTime: " + script.onlineRunningTime.toString());
-	console.log("Confidence: " + confidence.toString());
-	
-	//A script's offline production will always be at most half of its online production.
-	var production = (1/2) * (script.onlineMoneyMade / script.onlineRunningTime) * timePassed;
-	production *= confidence; 
-	
+	console.log("onlineRunningTime: " + script.onlineRunningTime);
+	console.log("Confidence: " + confidence);
+    
+    var totalOfflineProduction = 0;
+    for (var ip in script.moneyStolenMap) {
+        if (script.moneyStolenMap.hasOwnProperty(ip)) {
+            if (script.moneyStolenMap[ip] == 0 || script.moneyStolenMap[ip] == null) {continue;}
+            var serv = AllServers[ip];
+            if (serv == null) {continue;}
+            var production = 0.5 * script.moneyStolenMap[ip] / script.onlineRunningTime * timePassed;
+            production *= confidence;
+            if (production > serv.moneyAvailable) {
+                production = serv.moneyAvailable;
+            }
+            totalOfflineProduction += production;
+            Player.gainMoney(production); 
+            console.log(script.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
+            serv.moneyAvailable -= production;
+            if (serv.moneyAvailable < 0) {serv.moneyAvailable = 0;}
+        }
+    }
+
+	//A script's offline production will always be at most half of its online production.	
 	var expGain = (1/2) * (script.onlineExpGained / script.onlineRunningTime) * timePassed;
 	expGain *= confidence;
 	
-	//Account for production in Player and server)
-    var server = AllServers[script.server];
-    if (production > server.moneyAvailable) {
-        production = server.moneyAvailable;
-    }
-    
-	Player.gainMoney(production);
 	Player.gainHackingExp(expGain);
 	
-	server.moneyAvailable -= production;
-	if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
-	
 	//Update script stats
-	script.offlineMoneyMade += production;
+	script.offlineMoneyMade += totalOfflineProduction;
 	script.offlineRunningTime += timePassed;
 	script.offlineExpGained += expGain;
 		
 	//DEBUG
 	var serverName = AllServers[script.server].hostname;
-	console.log(script.filename + " from server " + serverName + " generated $" + production.toString() + " while offline");
+	console.log(script.filename + " from server " + serverName + " generated $" + totalOfflineProduction + " TOTAL while offline");
+}
+
+//Creates a function that creates a map/dictionary with the IP of each existing server as
+//a key, and 0 as the value. This is used to keep track of how much money a script
+//hacks from that server
+function AllServersToMoneyMap() {
+    for (var ip in AllServers) {
+        if (AllServers.hasOwnProperty(ip)) {
+            this[ip] = 0;
+        }
+    }
+}
+
+AllServersToMoneyMap.prototype.printConsole = function() {
+    console.log("Printing AllServersToMoneyMap");
+    for (var ip in this) {
+        if (this.hasOwnProperty(ip)) {
+            var serv = AllServers[ip];
+            if (serv == null) {
+                console.log("Warning null server encountered with ip: " + ip);
+                continue;
+            }
+            console.log(ip + "(" + serv.hostname + "): " + this[ip]);
+        }
+    }
 }

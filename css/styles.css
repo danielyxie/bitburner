@@ -90,10 +90,8 @@ tr:focus {
     color: #FFFFFF;
     padding: 6px;
     margin: 6px;
-    border-top: 1px solid #333333;
-    border-right: 1px solid #333333;
-    border-bottom: 1px solid #333333;
-    border-left: 1px solid #333333;
+    border: 1px solid #333333;
+    width: 50%;
 }
 
 .a-link-button:hover {
@@ -113,5 +111,55 @@ tr:focus {
     border-left: 1px solid #333333;
     pointer-events: none;
     cursor: default;
+    width: 50%;
 }
 
+
+/* Notification icon (for create program right now only) */
+.create-program-tab {
+    position:relative;
+}
+#create-program-notification {
+    font-size: 10px;
+  
+    position: absolute; /* Position the badge within the relatively positioned button */
+    top: 0;
+    right: 0;
+}
+
+.notification-on {
+    background-color: #fa3e3e;
+    color: white;
+    border-radius: 2px;
+    padding: 1px 3px;
+}
+
+.notification-off {
+    background-color: #333;
+    color: #333;
+    border-radius: 0px;
+    padding: 0px;
+}
+
+/* Tool tips (when hovering over an element */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    text-align: center;
+    padding: 4px;
+    
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}

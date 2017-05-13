@@ -1,0 +1,53 @@
+/* interactivetutorial.css */
+#interactive-tutorial-container {
+    display: none;
+    position: fixed; /* Stay in place */
+    right: 0;
+    top: 0;
+    height: 100%; /* Full height */
+    margin: 20% auto;
+    padding: 10px;
+    border: 5px solid #FFFFFF;
+    width: 35%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #444; /* Fallback color */
+    color: white;
+}
+
+#interactive-tutorial-text {
+    padding: 4px;
+    margin: 4px;
+    color: white;
+    background-color: #444;
+}
+
+#interactive-tutorial-exit,
+#interactive-tutorial-next {
+    color: #aaa;
+    font-size: 20px;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+#interactive-tutorial-exit {
+    float: left;
+}
+
+#interactive-tutorial-next {
+    float: right;
+}
+
+#interactive-tutorial-exit:hover,
+#interactive-tutorial-exit:focus,
+#interactive-tutorial-next:hover,
+#interactive-tutorial-next:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+

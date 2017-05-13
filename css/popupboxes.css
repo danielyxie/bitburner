@@ -16,7 +16,7 @@
 
 #dialog-box-content {
     background-color: black;
-    margin: 20% auto; /* 15% from the top and centered */
+    margin: 20% auto; /* 20% from the top and centered */
     padding: 10px;
     border: 5px solid #FFFFFF;
     width: 40%; /* Could be more or less, depending on screen size */

@@ -30,9 +30,10 @@ travelBoxCreate = function(destCityName, cost) {
     travelBoxSetText("Would you like to travel to " + destCityName + "? The trip will cost $" + cost + ".");
     
     //Clear old event listeners from Confirm button
-    var confirmButton = document.getElementById("travel-box-confirm");
-    var newConfirmButton = confirmButton.cloneNode(true);
-    confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
+    var newConfirmButton = clearEventListeners("travel-box-confirm");
+    //var confirmButton = document.getElementById("travel-box-confirm");
+    //var newConfirmButton = confirmButton.cloneNode(true);
+    //confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
     newConfirmButton.addEventListener("click", function() {
         travelBoxClose();
         travelToCity(destCityName, cost);

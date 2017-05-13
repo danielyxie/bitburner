@@ -2,17 +2,17 @@
 //of each faction
 FactionInfo = {
 	//Endgame
-	IlluminatiInfo: "Humanity never changes. No matter how civilized society becomes, it will eventually fall back\n" + 
-                    "into chaos. And out of this chaos, we will lead them to order.\n" + 
+	IlluminatiInfo: "Humanity never changes. No matter how civilized society becomes, it will eventually fall back " + 
+                    "into chaos. And out of this chaos, we will lead them to order. <br><br>" + 
                     "We are the Invisible Hand. We are forever.",
 					
-	DaedalusInfo: "If all of human \n" +
-				  "history is but a single lesson, it is that the individual may be remembered, but the organization \n" + 
-				  "persists and thrives. A single artist, a single general, a single hero or a single villain may all die,\n" + 
-				  "but it is impossible to kill a people, a nation, an idea -- except when that idea has grown weak and is \n" + 
-				  "overpowered by one that is stronger. -- The Doctrine of the Mighty\n\n" + 
-                  "Surrender yourself. Give up your empty individuality to become part of something great, something eternal.\n" +
-                  "Become a slave. Submit your mind, body, and soul. Only then can you set yourself free.\n\n" + 
+	DaedalusInfo: "If all of human " +
+				  "history is but a single lesson, it is that the individual may be remembered, but the organization " + 
+				  "persists and thrives. A single artist, a single general, a single hero or a single villain may all die, " + 
+				  "but it is impossible to kill a people, a nation, an idea -- except when that idea has grown weak and is " + 
+				  "overpowered by one that is stronger. -- The Doctrine of the Mighty<br><br>" + 
+                  "Surrender yourself. Give up your empty individuality to become part of something great, something eternal. " +
+                  "Become a slave. Submit your mind, body, and soul. Only then can you set yourself free.<br><br> " + 
                   "Only then can you discover immortality.",
 	
 	CovenantInfo: "Yesterday we obeyed kings and bent our necks to emperors. Today we kneel only to truth.",
@@ -25,9 +25,10 @@ FactionInfo = {
 	MegaCorpInfo: "MegaCorp does things that others don't. We imagine. We create. We invent. We build things that\n" +
 				  "others have never even dreamed of. Our work fills the world's needs for food, water, power, and\n" +
 				  "transporation on an unprecendented scale, in ways that no other company can.\n\n" + 
-				  "In its labs and factories and on the ground with customers, MegaCorp is ushering in a new era for the world.",
+				  "In our labs and factories and on the ground with customers, MegaCorp is ushering in a new era for the world.",
 				  
-	BachmanAndAssociatesInfo: "TODO",
+	BachmanAndAssociatesInfo: "Where Law and Business meet - thats where we are. <br><br>" + 
+                              "Legal Insight - Business Instinct - Experience Innovation",
 	
 	BladeIndustriesInfo: "TODO",
 	
@@ -39,7 +40,7 @@ FactionInfo = {
 	
 	FourSigmaInfo: "TODO",
 	
-	KuaiGongInternationalInfo: "TODO",
+	KuaiGongInternationalInfo: "Dream big. Work hard. Make history.",
     
     //Other Corporations
     FulcrumSecretTechnologiesInfo: "TODO",
@@ -112,10 +113,16 @@ FactionInfo = {
 	TheSyndicateInfo: "TODO",
 	
 	SilhouetteInfo: "Corporations are so big, you don't even know who you're working for. That's terror. Terror built into the system.",
+    
+    TetradsInfo: "Following the Mandate of HEaven and Carrying out the way",
+    
+    SlumSnakesInfo: "Slum Snakes rule!",
+    
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
-    NetburnersInfo: "~~HACKNET BURNERS~~",
+    NetburnersInfo: "~~//*>H4CK|\|3T 8URN3R5**>?>\\~~",
+    
 	TianDiHuiInfo: "Obey Heaven and Work Righteousness",
 	
 	CyberSecInfo: "The Internet is the first thing that humanity has built that humanity doesn’t understand,\n" +

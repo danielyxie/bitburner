@@ -114,9 +114,11 @@ function Parser(input) {
 		
 		//Conditional
         var cond = parse_expression();
+        console.log("cond: " + cond);
 		
 		//Body
         var then = parse_expression();
+        console.log("then: " + then);
         var ret = {
             type: "if",
             cond: [],

@@ -36,9 +36,10 @@ factionInvitationBoxCreate = function(faction) {
     factionInvitationSetText("You have received a faction invitation from " + faction.name);
     //TODO Faction invitation message
     
-    var yesButton = document.getElementById("faction-invitation-box-yes");
-    var newYesButton = yesButton.cloneNode(true);
-    yesButton.parentNode.replaceChild(newYesButton, yesButton);
+    var newYesButton = clearEventListeners("faction-invitation-box-yes");
+    //var yesButton = document.getElementById("faction-invitation-box-yes");
+    //var newYesButton = yesButton.cloneNode(true);
+    //yesButton.parentNode.replaceChild(newYesButton, yesButton);
     
     newYesButton.addEventListener("click", function() {
         joinFaction(faction);

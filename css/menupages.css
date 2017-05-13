@@ -9,13 +9,9 @@
     padding-left: 10px;
     margin-left: 10%;
     width: 99%;
-    overflow-y: scroll;
+	overflow: auto;
+	overflow-y: scroll;
 }
-
-#character-info {
-    overflow-y: scroll;
-}
-
 
 /* Script Editor */
 /* This temp element is used for auto adjusting filename field */
@@ -104,6 +100,12 @@
     overflow-y: scroll;
 }
 
+#active-scripts-text {
+    width: 80%;
+    margin: 6px;
+    padding: 4px;
+}
+
 .active-scripts-list > li {
     margin: 6px;
     width: 80%;
@@ -183,6 +185,12 @@
     width: 99%;
 }
 
+#world-city-name,
+#world-city-desc {
+    padding: 4px;
+    margin: 4px;
+}
+
 /* Create program */
 #create-program-container {
     position: fixed;
@@ -193,15 +201,17 @@
     width: 99%;
 }
 
+#create-program-page-text {
+    width: 80%;
+}
+
 .create-program-a-link-button {
     text-decoration: none;
     background-color: #555;
     color: #FFFFFF;
-    padding: 4px 4px 4px 4px;
-    border-top: 1px solid #333333;
-    border-right: 1px solid #333333;
-    border-bottom: 1px solid #333333;
-    border-left: 1px solid #333333;
+    padding: 4px;
+    border: 1px solid #333333;
+    width: 50%;
 }
 
 .create-program-a-link-button-inactive {
@@ -242,16 +252,28 @@
     margin: 6px;
 }
 
-#faction-hack-button-div, #faction-hack-text-div {
-	display:inline-block;
+#faction-hack-div,
+#faction-fieldwork-div,
+#faction-securitywork-div {
+    overflow: hidden;
+    height: 100%;
 }
 
-#faction-fieldwork-button-div, #faction-fieldwork-text-div {
-	display:inline-block;
+#faction-hack-div-wrapper,
+#faction-fieldwork-div-wrapper,
+#faction-securitywork-div-wrapper {
+    float: left;
+    border: 2px solid #333;
+    padding: 14px 6px 4px 6px; 
+    margin: 6px;
 }
 
-#faction-securitywork-button-div, #faction-securitywork-text-div {
-	display:inline-block;
+#faction-hack-button {
+    margin: 8px;
+}
+
+div.faction-clear {
+    clear: both;
 }
 
 #faction-container p {
@@ -293,17 +315,20 @@
     margin-left: 10%;
     width: 99%;
     color: #66ff33;
+    overflow-y: scroll;
 }
 
-#augmentations-list > li {
-    margin: 6px;
+#augmentations-list li {
     width: 80%;
+    background-color: #333;
 }
 
-#augmentations-list > li h2{
+#augmentations-list h2,
+#augmentations-list p {
+    margin: 4px;
     color: #66ff33;
-	padding-top: 10px;
-	padding-left: 10px;
+	padding: 8px;
+    width: 80%;
     background-color: #333;
     text-decoration: none;
 }
@@ -314,13 +339,19 @@
 
 /* Tutorial */
 #tutorial-container {
-	color: #66ff33;
     position: fixed;
+    height: 100%;
     padding-top: 10px;
     padding-left: 10px;
-    height: 100%;
     margin-left: 10%;
-    width: 85%;
+    width: 99%;
+    overflow: auto;
+    overflow-y: scroll;
+}
+
+#tutorial-text {
+    width: 80%;
+    margin: 10px;
 }
 
 /* Location */

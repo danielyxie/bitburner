@@ -2,7 +2,7 @@
  *  Defines Perks that are unlocked when you gain enough reputation in a 
  *  company or faction 
  */
-Perks = {
+PerkNames = {
     FreeCoffeeCompanyPerk:          "Free Coffee",
     FreeFoodCompanyPerk:            "Free Food", 
     NetworkingCompanyPerk:          "Networking",
@@ -17,15 +17,38 @@ Perks = {
     InsiderKnowledgeFactionPerk:    "Insider Knowledge",
 }
 
+PerkInfo = {
+    FreeCoffee:         "Your company provides free coffee, improving your focus " + 
+                        "and productivity",
+    FreeFood:           "Your company provides free healthy and nutritious food",
+    NetworkingCompany:  "Working at this company provides many opportunities to " + 
+                        "build your professional network!",
+    PersonalTrainer:    "Your company provides a free personal trainer to help you train",
+    KnowledgeBase:      "The company has a comprehensive knowledge base that " + 
+                        "you can use to learn",
+    Nootropics:         "Your company provides free nootropics, cognitive-enhancing drugs",
+    NetworkingFaction:  "Being a member of this faction provides many opportunities to " + 
+                        "build your network of contacts",
+    SupercomputerFaction: "You are able to use your Faction's private supercomputer, " + 
+                          "giving you unparalleled computing power",
+    VPN:                "You are able to use your Faction's high-speed VPN to more securely " + 
+                        "access the Internet",
+    PrivateServer:      "You are able to use your Faction's private server",
+    InsiderKnowledge:   "Other members of the faction give you insider information about other " +
+                        "companies and factions"
+}
+
 function Perk(name, reqRep, info) {
     this.name           = name;
     this.info           = info;
     this.requiredRep    = reqRep;
     
     //Company/faction specific multipliers
-    this.mult1          = 1;
-    this.mult2          = 1;
-    this.mult3          = 1;
+    this.money_mult         = 1;
+    this.hacking_mult       = 1;
+    this.combat_stat_mult   = 1;
+    this.labor_stat_mult    = 1;
+    this.repmult            = 1;
     
     /* Properties below set when a Perk is gained by the player */
     this.applied        = false;
@@ -65,6 +88,8 @@ Perk.fromJSON = function(value) {
 
 Reviver.constructors.Perk = Perk;
 
+    var freeCoffee = new Perk(PerkNames.FreeCoffeeCompanyPerk, 6000, PerkInfo.FreeCoffee);
+    
 /* Company Perks */
 //Free Coffee - Increased money and hacking exp gain
 //Free Food - Increased combat stat gain
@@ -79,31 +104,45 @@ Reviver.constructors.Perk = Perk;
 //High Speed VPN - Hack chance increase
 //Private Server - Gives you a server with a lot of RAM that you can use
 //Insider Knowledge - Ppl in faction from other companies have insider information that lets you hack 
-//                   other servers easier. Increase in hack chance
+//                   other servers easier. Increase in hack chance    
+
 
 applyPerk = function(perk) {
     switch (perk.name) {
-        case Perks.FreeCoffeeCompanyPerk:
+        case PerkNames.FreeCoffeeCompanyPerk:
+            //Increase money and hacking exp gain
+            Player.hacking_money_mult       += 1.1;
+            Player.hacking_exp_mult         += 1.1;
             break;
-        case Perks.FreeFoodCompanyPerk:
+        case PerkNames.FreeFoodCompanyPerk:
+            Player.strength_exp_mult        += 1.05;
+            Player.defense_exp_mult         += 1.05;
+            Player.dexterity_exp_mult       += 1.05;
+            Player.agility_exp_mult         += 1.05;
             break;
-        case Perks.NetworkingCompanyPerk:
+        case PerkNames.NetworkingCompanyPerk:
+            Player.company_rep_mult         += 1.1;
+            Player.charisma_exp_mult        += 1.2;
             break;
-        case Perks.PersonalTrainerCompanyPerk:
+        case PerkNames.PersonalTrainerCompanyPerk:
+            Player.strength_exp_mult        += 1.15;
+            Player.defense_exp_mult         += 1.15;
+            Player.dexterity_exp_mult       += 1.15;
+            Player.agility_exp_mult         += 1.15;
             break;
-        case Perks.KnowledgeBaseCompanyPerk:
+        case PerkNames.KnowledgeBaseCompanyPerk:
             break;
-        case Perks.NootropicsCompanyPerk:
+        case PerkNames.NootropicsCompanyPerk:
             break;
-        case Perks.NetworkingFactionPerk:
+        case PerkNames.NetworkingFactionPerk:
             break;
-        case Perks.SupercomputerFactionPerk:
+        case PerkNames.SupercomputerFactionPerk:
             break;
-        case Perks.VPNFactionPerk:
+        case PerkNames.VPNFactionPerk:
             break;
-        case Perks.PrivateServerFactionPerk:
+        case PerkNames.PrivateServerFactionPerk:
             break;
-        case Perks.InsiderKnowledgeFactionPerk:
+        case PerkNames.InsiderKnowledgeFactionPerk:
             break;
         default: 
             console.log("WARNING: Unrecognized perk: " + perk.name);

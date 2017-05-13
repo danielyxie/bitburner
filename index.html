@@ -8,9 +8,9 @@
 	<link rel="stylesheet" type="text/css" href="css/menupages.css" />
 	<link rel="stylesheet" type="text/css" href="css/workinprogress.css" />
     <link rel="stylesheet" type="text/css" href="css/popupboxes.css" />
+    <link rel="stylesheet" type="text/css" href="css/interactivetutorial.css" />
    
-    <!-- We'll add in the jQuery library here - direct from
-    the Google CDN (Content Delivery Network). -->
+    <!--jQuery library-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	
 	<!-- Utils -->
@@ -53,6 +53,8 @@
     <script src="src/Crimes.js"></script>
     <script src="src/Prestige.js"></script>
     <script src="src/SaveObject.js"></script>
+    <script src="src/DarkWeb.js"></script>
+    <script src="src/InteractiveTutorial.js"></script>
 	
     <script src="src/engine.js"></script>
 	
@@ -88,8 +90,9 @@
 			
 			<li class="create-program-tab">
                 <a href="#" id="create-program-menu-link"> Create Program </a>
+                <span id="create-program-notification" class="notification-off"> </span>
             </li>
-			
+                
 			<li class="factions-tab">
                 <a href="#" id="factions-menu-link"> Factions </a>
             </li>
@@ -127,7 +130,9 @@
     
 	<!-- Character Info page -->
     <div id="character-container">
-        <p id="character-info"> </p>
+        <div id="character-content">
+            <p id="character-info"> </p>
+        </div>
     </div>
 	
 	<!-- Script editor -->
@@ -145,6 +150,8 @@
 	
 	<!-- Active scripts info page -->
 	<div id="active-scripts-container">
+        <p id="active-scripts-text"> This page displays a list of all scripts that are currently running across every machine. It also gives
+            information about their production </p>
 		<ul class="active-scripts-list" id="active-scripts-list" style="list-style: none;">
 		</ul>
 	</div>
@@ -172,6 +179,8 @@
 
     <!-- World -->
 	<div id="world-container" class="world-container">
+        <h2 id="world-city-name"> </h2>
+        <p id="world-city-desc"> </p>
 		<ul id="aevum-locations-list">
 			<li id="aevum-travelagency-li">
                 <a href="#" id="aevum-travelagency" class="a-link-button"> Travel Agency </a>
@@ -367,31 +376,40 @@
 	
 	<!-- Create a program(executable) -->
 	<div id="create-program-container">
+        <p id="create-program-page-text"> 
+            This page displays any programs that you are able to create. Writing the code for a program takes time, which
+            can vary based on how complex the program is. Once you start working on a program you must see it all the way
+            through. If you cancel before the program is complete you will lose all your progress and have to start all over
+            if you want to code it again. 
+        </p>
+                                        
         <ul id="create-program-list"> 
-            <a class="create-program-a-link-button" id="create-program-porthack" href="#">
-                PortHack.exe
+            <a class="create-program-a-link-button tooltip" id="create-program-nuke" href="#">
+                NUKE.exe
+                <span class="tooltiptext"> This virus is used to gain root access to a machine if enough ports are opened. </span>
             </a>
-            
-            <a class="create-program-a-link-button" id="create-program-brutessh" href="#">
+            <a class="create-program-a-link-button tooltip" id="create-program-brutessh" href="#">
                 BruteSSH.exe
+                <span class="tooltiptext"> This program executes a brute force attack that opens SSH ports </span>
             </a>
-
-            <a class="create-program-a-link-button" id="create-program-ftpcrack" href="#">
+            <a class="create-program-a-link-button tooltip" id="create-program-ftpcrack" href="#">
                 FTPCrack.exe
+                <span class="tooltiptext"> This program cracks open FTP ports</span>
             </a>
-            
-            <a class="create-program-a-link-button" id="create-program-relaysmtp" href="#">
+            <a class="create-program-a-link-button tooltip" id="create-program-relaysmtp" href="#">
                 relaySMTP.exe
+                <span class="tooltiptext"> This program opens SMTP ports by redirecting data </span>
             </a>
             
-            <a class="create-program-a-link-button" id="create-program-httpworm" href="#">
+            <a class="create-program-a-link-button tooltip" id="create-program-httpworm" href="#">
                 HTTPWorm.exe
-            </a>
+                <span class="tooltiptext"> This virus opens up HTTP ports </span>
+            </a>            
             
-            <a class="create-program-a-link-button" id="create-program-sqlinject" href="#">
+            <a class="create-program-a-link-button tooltip" id="create-program-sqlinject" href="#">
                 SQLInject.exe
+                <span class="tooltiptext"> This virus opens SQL ports</span>
             </a>
-        
         </ul>
 	</div>
 	
@@ -399,8 +417,7 @@
 	<div id="factions-container">
 		<h1> Factions </h1>
 		<p> Lists all factions you have joined </p>
-		<ul class="factions-list" id="factions-list">
-		</ul>
+		<ul class="factions-list" id="factions-list"></ul>
 	</div>
 	
 	<!-- Single Faction info (when you select a faction from the Factions menu) -->
@@ -411,48 +428,53 @@
 		<p id="faction-reputation"></p>
 		
 		<p id="work-description-text"> 
-		Perform work/carry out assignments for your faction to help further its cause! Each
-		task takes a certain amount of time to complete, which is dependent on your stats. Completing
-		a task will earn you exp and increase your reputation with the faction. Note that you cannot
-		use your terminal or create scripts when you are performing a task!
+		Perform work/carry out assignments for your faction to help further its cause! By doing so
+        you will gain reputation for your faction. You will also gain reputation passively over time, 
+        although at a very slow rate. Note that you cannot
+		use your terminal or create scripts when you are performing a task! <br><br><br><br>
 		</p>
 		
 		<div id="faction-hack-div">
-        <a href="#" id="faction-hack-button" class="a-link-button">Hacking Contracts</a>
-		<p id="faction-hack-text">
-			Complete hacking contracts for your faction! <br>
-			Your effectiveness, which determines how much reputation you gain for this faction, is based on your hacking skill. <br>
-			Gain hacking exp.
-		</p>
-		<div id="faction-hack-text-div">
-		</div>
+            <div id="faction-hack-div-wrapper">
+                <a href="#" id="faction-hack-button" class="a-link-button">Hacking Contracts</a>
+                <p id="faction-hack-text">
+                    Complete hacking contracts for your faction! <br>
+                    Your effectiveness, which determines how much reputation you gain for this faction, is based on your hacking skill. <br>
+                    You will gain hacking exp.
+                </p>
+            </div>
+            <div class="faction-clear"></div>
 		</div>
 		
 		<div id="faction-fieldwork-div">
-        <a href="#" id="faction-fieldwork-button" class="a-link-button">Field Work</a>
-		<div id="faction-fieldwork-text-div">
-		<p id="faction-fieldwork-text">
-			Carry out field missions for your faction. <br>
-			Your effectiveness, which determines how much reputation you gain for this faction, is based on all of your stats. <br>
-			Gains exp for all stats.
-		</p>
-		</div>
+            <div id="faction-fieldwork-div-wrapper">
+                <a href="#" id="faction-fieldwork-button" class="a-link-button">Field Work</a>
+                <p id="faction-fieldwork-text">
+                    Carry out field missions for your faction. <br>
+                    Your effectiveness, which determines how much reputation you gain for this faction, is based on all of your stats. <br>
+                    You will gain exp for all stats.
+                </p>
+            </div>
+            <div class="faction-clear"></div>
 		</div>
 		
 		<div id="faction-securitywork-div">
-        <a href="#" id="faction-securitywork-button" class="a-link-button">Security Work</a>
-		<div id="faction-securitywork-text-div">
-		<p id="faction-securitywork-text">
-			Serve in a security detail for your faction. <br>
-			Your effectiveness, which determines how much reputation you gain for this faction, is based on your combat stats. <br>
-			Gains exp for all combat stats.
-		</p>
-		</div>
+            <div id="faction-securitywork-div-wrapper">
+                <a href="#" id="faction-securitywork-button" class="a-link-button">Security Work</a>
+                <p id="faction-securitywork-text">
+                    Serve in a security detail for your faction. <br>
+                    Your effectiveness, which determines how much reputation you gain for this faction, is based on your combat stats. <br>
+                    You will gain exp for all combat stats.
+                </p>
+            </div>
+            <div class="faction-clear"></div>
 		</div>
 
         <p>
+            <br><br><br>
             As your reputation with this faction rises, you will unlock Augmentations, which you 
             can purchase to enhance your abilities.
+            <br><br>
         </p>
         <a href="#" id="faction-purchase-augmentations" class="a-link-button">Purchase Augmentations</a>
 	</div>
@@ -477,9 +499,10 @@
 	<!-- Tutorial content -->
 	<div id="tutorial-container">
         <a href="#" id="tutorial-getting-started-link" class="a-link-button"> Getting Started </a>
-        <a href="#" id="tutorial-networking-link" class="a-link-button"> Networking </a>
+        <a href="#" id="tutorial-networking-link" class="a-link-button"> Servers & Networking </a>
         <a href="#" id="tutorial-hacking-link" class="a-link-button"> Hacking </a>
         <a href="#" id="tutorial-scripts-link" class="a-link-button"> Scripts </a>
+        <a href="#" id="tutorial-netscript-link" class="a-link-button"> Netscript Programming Language </a>
         <a href="#" id="tutorial-traveling-link" class="a-link-button"> Traveling </a>
         <a href="#" id="tutorial-jobs-link" class="a-link-button"> Jobs </a>
         <a href="#" id="tutorial-factions-link" class="a-link-button"> Factions </a>
@@ -500,14 +523,18 @@
         
         <!-- Jobs/Work at a company -->
         <a href="#" id="location-software-job" class="a-link-button"> Apply for Software Job</a>
+        <a href="#" id="location-software-consultant-job" class="a-link-button"> Apply for Software Consultant Job</a>
         <a href="#" id="location-it-job" class="a-link-button"> Apply for IT Job </a>
         <a href="#" id="location-security-engineer-job" class="a-link-button"> Apply for Security Engineer Job</a>
         <a href="#" id="location-network-engineer-job" class="a-link-button"> Apply for Network Engineer Job</a>
         <a href="#" id="location-business-job" class="a-link-button"> Apply for Business Job</a>
+        <a href="#" id="location-business-consultant-job" class="a-link-button"> Apply for Business Consultant Job </a>
         <a href="#" id="location-security-job" class="a-link-button"> Apply for Security Job</a>
         <a href="#" id="location-agent-job" class="a-link-button"> Apply to be an Agent</a>
         <a href="#" id="location-employee-job" class="a-link-button"> Apply to be an Employee </a>
+        <a href="#" id="location-parttime-employee-job" class="a-link-button"> Apply to be a Part-time Employee </a>
         <a href="#" id="location-waiter-job" class="a-link-button"> Apply to be a Waiter</a>
+        <a href="#" id="location-parttime-waiter-job" class="a-link-button"> Apply to be a Part-time Waiter</a>
         
         <a href="#" id="location-work" class="a-link-button"> Work </a>
         
@@ -526,23 +553,23 @@
         <a href="#" id="location-leadership-class" class="a-link-button">Take Leadership course</a>
         
         <!-- Purchase servers -->
-        <a href="#" id="location-purchase-1gb" class="a-link-button"> Purchase 1GB Server - $50,000</a>
-        <a href="#" id="location-purchase-2gb" class="a-link-button"> Purchase 2GB Server - $100,000</a>
-        <a href="#" id="location-purchase-4gb" class="a-link-button"> Purchase 4GB Server - $250,000</a>
-        <a href="#" id="location-purchase-8gb" class="a-link-button"> Purchase 8GB Server - $1,000,000</a>
-        <a href="#" id="location-purchase-16gb" class="a-link-button"> Purchase 16GB Server - $4,000,000</a>
-        <a href="#" id="location-purchase-32gb" class="a-link-button"> Purchase 32GB Server - $10,000,000</a>
-        <a href="#" id="location-purchase-64gb" class="a-link-button"> Purchase 64GB Server - $20,000,000</a>
-        <a href="#" id="location-purchase-128gb" class="a-link-button"> Purchase 128GB Server - $50,000,000</a>
-        <a href="#" id="location-purchase-256gb" class="a-link-button"> Purchase 256GB Server - $100,000,000</a>
-        <a href="#" id="location-purchase-512gb" class="a-link-button"> Purchase 512GB Server - $250,000,000</a>
-        <a href="#" id="location-purchase-1tb" class="a-link-button"> Purchase 1TB Server - $750,000,000</a>
-        <a href="#" id="location-purchase-tor" class="a-link-button"> Purchase TOR Router - $2,000,000</a>
+        <a href="#" id="location-purchase-1gb" class="a-link-button"> Purchase 1GB Server - $75,000</a>
+        <a href="#" id="location-purchase-2gb" class="a-link-button"> Purchase 2GB Server - $150,000</a>
+        <a href="#" id="location-purchase-4gb" class="a-link-button"> Purchase 4GB Server - $300,000</a>
+        <a href="#" id="location-purchase-8gb" class="a-link-button"> Purchase 8GB Server - $600,000</a>
+        <a href="#" id="location-purchase-16gb" class="a-link-button"> Purchase 16GB Server - $1,200,000</a>
+        <a href="#" id="location-purchase-32gb" class="a-link-button"> Purchase 32GB Server - $2,400,000</a>
+        <a href="#" id="location-purchase-64gb" class="a-link-button"> Purchase 64GB Server - $4,800,000</a>
+        <a href="#" id="location-purchase-128gb" class="a-link-button"> Purchase 128GB Server - $9,600,000</a>
+        <a href="#" id="location-purchase-256gb" class="a-link-button"> Purchase 256GB Server - $19,200,000</a>
+        <a href="#" id="location-purchase-512gb" class="a-link-button"> Purchase 512GB Server - $38,400,000</a>
+        <a href="#" id="location-purchase-1tb" class="a-link-button"> Purchase 1TB Server - $75,000,000</a>
+        <a href="#" id="location-purchase-tor" class="a-link-button"> Purchase TOR Router - $100,000</a>
         <a href="#" id="location-purchase-home-ram" class="a-link-button"> Purchase RAM for Home computer </a>
         
         <!-- Travel agency -->
         <p id="location-travel-agency-text"> 
-            From here, you can travel to any other city! A ticket costs $1,000,000. 
+            From here, you can travel to any other city! A ticket costs $200,000. 
         </p>
         <a href="#" id="location-travel-to-aevum" class="a-link-button"> Travel to Aevum </a>
         <a href="#" id="location-travel-to-chongqing" class="a-link-button"> Travel to Chongqing</a>
@@ -559,13 +586,15 @@
             In the Slums you can commit crimes to earn money and experience. Crime attempts are not always 
             successful. Your chance at successfully committing a crime is determined by your stats. 
         </p>
-        <a href="#" id="location-slums-shoplift" class="a-link-button"> Shoplift </a>
-        <a href="#" id="location-slums-mug" class="a-link-button"> Mug someone </a>
-        <a href="#" id="location-slums-deal-drugs" class="a-link-button"> Deal Drugs </a>
-        <a href="#" id="location-slums-traffic-arms" class="a-link-button"> Traffick Illegal Arms </a>
-        <a href="#" id="location-slums-homicide" class="a-link-button"> Homicide </a>
-        <a href="#" id="location-slums-kidnap" class="a-link-button"> Kidnap and Ransom </a>
-        
+        <a class="a-link-button tooltip" href="#" id="location-slums-shoplift"> Shoplift </a>
+        <a href="#" id="location-slums-mug" class="a-link-button tooltip"> Mug someone </a>
+        <a href="#" id="location-slums-deal-drugs" class="a-link-button tooltip"> Deal Drugs </a>
+        <a href="#" id="location-slums-traffic-arms" class="a-link-button tooltip"> Traffick Illegal Arms </a>
+        <a href="#" id="location-slums-homicide" class="a-link-button tooltip"> Homicide </a>
+        <a href="#" id="location-slums-gta" class="a-link-button tooltip"> Grand Theft Auto </a>
+        <a href="#" id="location-slums-kidnap" class="a-link-button tooltip"> Kidnap and Ransom </a>
+        <a href="#" id="location-slums-assassinate" class="a-link-button tooltip"> Assassinate </a>
+        <a href="#" id="location-slums-heist" class="a-link-button tooltip"> Heist </a>
     </div>
     
     <!-- Dialog Box, displays status text only -->
@@ -614,15 +643,19 @@
     <!-- Purchase Augmentation Pop-up Box -->
     <div id="purchase-augmentation-box-container">
         <div id="purchase-augmentation-box-content">
+            <h2 id="purchase-augmentation-box-aug-name"> </h2>
+            <p id="purchase-augmentation-box-aug-info"> </p>
             <p id="purchase-augmentation-box-text"> </p>
-            <p> <br> WARNING: Purchasing an Augmentation resets most of your progress, including: <br>
+            <p> <br> WARNING: Purchasing an Augmentation resets most of your progress, including: <br><br>
                 Stats/Skill levels and Experience <br>
                 Money <br>
-                Scripts <br>
+                Scripts on every computer but your home computer<br>
+                Purchased servers <br>
+                Hacknet Nodes <br>
                 Faction/Company reputation <br><br>
                 Purchasing an Augmentation lets you start over with the perks and benefits granted by all
-                of the Augmentations you have ever purchased (purchasing an Augmentation does not reset the benefits
-                of Augmentations you have previously purchased).
+                of the Augmentations you have ever purchased. Also, you will keep any scripts and RAM upgrades
+                on your home computer (but you will lose all programs besides NUKE.exe). 
             </p>
             <span id="purchase-augmentation-box-confirm"> Purchase </span>
             <span id="purchase-augmentation-box-cancel"> Cancel </span>
@@ -648,6 +681,13 @@
         <p id="work-in-progress-text"> </p>
         
         <span id="work-in-progress-cancel-button"> Cancel Work </span>
+    </div>
+    
+    <!-- Interactive Tutorial Text Screen -->
+    <div id="interactive-tutorial-container">
+        <p id="interactive-tutorial-text"> </p>
+        <span id="interactive-tutorial-exit"> Exit Tutorial </span>
+        <span id="interactive-tutorial-next"> Next </span>
     </div>
     
   </body>

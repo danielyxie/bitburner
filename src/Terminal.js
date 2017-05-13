@@ -40,7 +40,6 @@ $(document).keydown(function(event) {
 			if (command.length > 0) {
 				post("> " + command);
 				
-				//TODO Do i have to switch the order of these two?
 				Terminal.executeCommand(command);
 				$('input[class=terminal-input]').val("");
 			}
@@ -256,7 +255,7 @@ var Terminal = {
 			var rand = Math.random();
 			console.log("Hack success chance: " + hackChance +  ", rand: " + rand);
 			var expGainedOnSuccess = Player.calculateExpGain();
-			var expGainedOnFailure = Math.round(expGainedOnSuccess / 4);
+			var expGainedOnFailure = (expGainedOnSuccess / 4);
 			if (rand < hackChance) {	//Success!
 				var moneyGained = Player.calculatePercentMoneyHacked();
 				moneyGained = Math.floor(Player.getCurrentServer().moneyAvailable * moneyGained);
@@ -269,11 +268,11 @@ var Terminal = {
 				
                 Player.gainHackingExp(expGainedOnSuccess)
 				
-				post("Hack successful! Gained $" + moneyGained + " and " + expGainedOnSuccess + " hacking EXP");
+				post("Hack successful! Gained $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) + " hacking EXP");
 			} else {					//Failure
 				//Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure)
-				post("Failed to hack " + Player.getCurrentServer().hostname + ". Gained " + expGainedOnFailure + " hacking EXP");
+				post("Failed to hack " + Player.getCurrentServer().hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " hacking EXP");
 			}
 		}
         
@@ -289,12 +288,16 @@ var Terminal = {
     finishAnalyze: function(cancelled = false) {
 		if (cancelled == false) {
 			post(Player.getCurrentServer().hostname + ": ");
+            var rootAccess = "";
+            if (Player.getCurrentServer().hasAdminRights) {rootAccess = "YES";}
+            else {rootAccess = "NO";}
+            post("Root Access: " + rootAccess);
 			post("Required hacking skill: " + Player.getCurrentServer().requiredHackingSkill);
 			//TODO Make these actual estimates by adding a random offset to result?
 			//TODO Change the text to sound better
-			post("Estimated chance to hack: " + Math.round(Player.calculateHackingChance() * 100) + "%");
-			post("Estimated time to hack: " + Math.round(Player.calculateHackingTime()) + " seconds");
-			post("Estimed total money available on server: $" + Player.getCurrentServer().moneyAvailable);
+			post("Estimated chance to hack: " + formatNumber(addOffset(Player.calculateHackingChance() * 100, 5), 2) + "%");
+			post("Estimated time to hack: " + formatNumber(addOffset(Player.calculateHackingTime(), 5), 3) + " seconds");
+			post("Estimated total money available on server: $" + formatNumber(addOffset(Player.getCurrentServer().moneyAvailable, 5), 2));
 			post("Required number of open ports for NUKE: " + Player.getCurrentServer().numOpenPortsRequired);
             if (Player.getCurrentServer().sshPortOpen) {
 				post("SSH port: Open")
@@ -348,10 +351,127 @@ var Terminal = {
         
 		var commandArray = command.split(" ");
 		
-		if (commandArray.length == 0) {
-			return;
-		}
+		if (commandArray.length == 0) {return;}
+        
+        /****************** Interactive Tutorial Terminal Commands ******************/
+        if (iTutorialIsRunning) {
+            var foodnstuffServ = GetServerByHostname("foodnstuff");
+            if (foodnstuffServ == null) {throw new Error("Could not get foodnstuff server"); return;}
+            
+            switch(currITutorialStep) {
+            case iTutorialSteps.TerminalHelp:
+                if (commandArray[0] == "help") {
+                    post(CONSTANTS.HelpText);
+                    iTutorialNextStep();
+                } else {post("Wrong command! Try again!");}
+                break;
+            case iTutorialSteps.TerminalLs:
+                if (commandArray[0] == "ls") {
+                    Terminal.executeListCommand(commandArray);
+                    iTutorialNextStep();
+                } else {post("Wrong command! Try again!");}
+                break;
+            case iTutorialSteps.TerminalScan:
+                if (commandArray[0] == "scan") {
+                    Terminal.executeScanCommand(commandArray);
+                    iTutorialNextStep();
+                } else {post("Wrong command! Try again!");}
+                break;
+            case iTutorialSteps.TerminalConnect:
+                
+                if (commandArray.length == 2) {
+                    if ((commandArray[0] == "connect" || commandArray[0] == "telnet") &&
+                        (commandArray[1] == "foodnstuff" || commandArray[1] == foodnstuffServ.ip)) {
+                        Player.getCurrentServer().isConnectedTo = false;
+                        Player.currentServer = foodnstuffServ.ip;
+                        Player.getCurrentServer().isConnectedTo = true;
+                        post("Connected to foodnstuff");
+                        iTutorialNextStep();
+                    } else {post("Wrong command! Try again!"); return;}
+                } else {post("Wrong command! Try again!");}
+                break;
+            case iTutorialSteps.TerminalAnalyze:
+                if (commandArray[0] == "analyze") {    
+                    if (commandArray.length != 1) {
+                        post("Incorrect usage of analyze command. Usage: analyze"); return;
+                    }
+                    //Analyze the current server for information
+                    Terminal.analyzeFlag = true;
+                    post("Analyzing system...");
+                    hackProgressPost("Time left:");
+                    hackProgressBarPost("[");
+                    Player.analyze();
+                    
+                    //Disable terminal
+                    document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
+                    $('input[class=terminal-input]').prop('disabled', true);
+                    iTutorialNextStep();
+                } else {
+                    post("Wrong command! Try again!");
+                }
+                break;
+            case iTutorialSteps.TerminalNuke:
+                if (commandArray.length == 2 && 
+                    commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
+                    foodnstuffServ.hasAdminRights = true;
+                    post("NUKE successful! Gained root access to foodnstuff");
+                    iTutorialNextStep();
+                } else {post("Wrong command! Try again!");}
+                break;
+            case iTutorialSteps.TerminalManualHack:
+                if (commandArray.length == 1 && commandArray[0] == "hack") {
+                    Terminal.hackFlag = true;
+					hackProgressPost("Time left:");
+					hackProgressBarPost("[");
+					Player.hack();
+					
+					//Disable terminal
+					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
+					$('input[class=terminal-input]').prop('disabled', true);
+                    iTutorialNextStep();
+                } else {post("Wrong command! Try again!");}
+				break;
+            case iTutorialSteps.TerminalCreateScript:
+                if (commandArray.length == 2 && 
+                    commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
+                    Engine.loadScriptEditorContent("foodnstuff", "");
+                    iTutorialNextStep();
+                } else {post("Wrong command! Try again!");}
+            case iTutorialSteps.TerminalFree:
+                if (commandArray.length == 1 && commandArray[0] == "free") {
+                    Terminal.executeFreeCommand(commandArray);
+                    iTutorialNextStep();
+                }
+                break;
+            case iTutorialSteps.TerminalRunScript:
+                if (commandArray.length == 2 && 
+                    commandArray[0] == "run" && commandArray[1] == "foodnstuff.script") {
+                    Terminal.runScript("foodnstuff.script");
+                    iTutorialNextStep();
+                } else {post("Wrong command! Try again!");}
+                break;
+            case iTutorialSteps.ActiveScriptsToTerminal:
+                if (commandArray.length == 2 &&
+                    commandArray[0] == "tail" && commandArray[1] == "foodnstuff.script") {
+                    var currScripts = Player.getCurrentServer().scripts;
+                    for (var i = 0; i < currScripts.length; ++i) {
+                        if ("foodnstuff.script" == currScripts[i].filename) {
+                            currScripts[i].displayLog();
+                        }
+                    }
+                    iTutorialNextStep();
+                } else {post("Wrong command! Try again!");}
+                break;
+            default:    
+                post("Please follow the tutorial, or click 'Exit Tutorial' if you'd like to skip it");
+                return;
+            }
+            return;
+        }
+        
+        /****************** END INTERACTIVE TUTORIAL ******************/
 		
+        /* Command parser */
 		switch (commandArray[0]) {
 			case "analyze":
 				if (commandArray.length != 1) {
@@ -368,6 +488,9 @@ var Terminal = {
                 document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                 $('input[class=terminal-input]').prop('disabled', true);
 				break;
+            case "buy":
+                executeDarkwebTerminalCommand(commandArray);
+                break;
 			case "clear":
 			case "cls":
 				if (commandArray.length != 1) {
@@ -392,6 +515,9 @@ var Terminal = {
                         Player.currentServer = Player.getCurrentServer().getServerOnNetwork(i).ip;
                         Player.getCurrentServer().isConnectedTo = true;
                         post("Connected to " + ip);
+                        if (Player.getCurrentServer().hostname == "darkweb") {
+                            checkIfConnectedToDarkweb(); //Posts a 'help' message if connecting to dark web
+                        }
                         return;
                     }
                 }
@@ -399,12 +525,7 @@ var Terminal = {
                 post("Host not found"); 
 				break;
 			case "free":
-				if (commandArray.length != 1) {
-					post("Incorrect usage of free command. Usage: free"); return;
-				}
-                post("Total: " + Player.getCurrentServer().maxRam.toString() + " GB");
-                post("Used: " + Player.getCurrentServer().ramUsed.toString() + " GB");
-                post("Available: " + (Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed).toString() + " GB");
+				Terminal.executeFreeCommand(commandArray);
 				break;
 			case "hack":
 				if (commandArray.length != 1) {
@@ -475,27 +596,7 @@ var Terminal = {
 				post("No such script is running. Nothing to kill");
 				break;
 			case "ls":
-				if (commandArray.length != 1) {
-					post("Incorrect usage of ls command. Usage: ls"); return;
-				}
-				
-				//Display all programs and scripts
-				var allFiles = []; 
-				
-				//Get all of the programs and scripts on the machine into one temporary array
-				for (var i = 0; i < Player.getCurrentServer().programs.length; i++) {
-					allFiles.push(Player.getCurrentServer().programs[i]); 
-				}
-				for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
-					allFiles.push(Player.getCurrentServer().scripts[i].filename);
-				}
-				
-				//Sort the files alphabetically then print each
-				allFiles.sort();
-				
-				for (var i = 0; i < allFiles.length; i++) {
-					post(allFiles[i]);
-				}
+                Terminal.executeListCommand(commandArray);
 				break;
 			case "nano":
 				if (commandArray.length != 2) {
@@ -530,34 +631,7 @@ var Terminal = {
 				break;
 			case "netstat":
 			case "scan":
-                if (commandArray.length != 1) {
-                    post("Incorrect usage of netstat/scan command. Usage: netstat/scan"); return;
-                }
-				//Displays available network connections using TCP
-                post("Hostname             IP                   Root Access");
-                for (var i = 0; i < Player.getCurrentServer().serversOnNetwork.length; i++) {
-                    //Add hostname
-                    var entry = Player.getCurrentServer().getServerOnNetwork(i).hostname;
-                    
-                    //Calculate padding and add IP
-                    var numSpaces = 21 - entry.length;
-                    var spaces = Array(numSpaces+1).join(" ");
-                    entry += spaces;
-                    entry += Player.getCurrentServer().getServerOnNetwork(i).ip;
-                    
-                    //Calculate padding and add root access info
-                    var hasRoot;
-                    if (Player.getCurrentServer().getServerOnNetwork(i).hasAdminRights) {
-                        hasRoot = 'Y';
-                    } else {
-                        hasRoot = 'N';
-                    }
-                    numSpaces = 21 - Player.getCurrentServer().getServerOnNetwork(i).ip.length;
-                    spaces = Array(numSpaces+1).join(" ");
-                    entry += spaces;
-                    entry += hasRoot;
-                    post(entry);
-                }
+                Terminal.executeScanCommand(commandArray);
 				break;
 			case "ps":
 				if (commandArray.length != 1) {
@@ -616,6 +690,17 @@ var Terminal = {
 			case "scp":
 				//TODO
 				break;
+            case "sudov":
+                if (commandArray.length != 1) {
+                    post("Incorrect number of arguments. Usage: sudov"); return;
+                }
+                
+                if (Player.getCurrentServer().hasAdminRights) {
+                    post("You have ROOT access to this machine");
+                } else {
+                    post("You do NOT have root access to this machine");
+                }
+                break;
 			case "tail":
 				if (commandArray.length != 2) {
                     post("Incorrect number of arguments. Usage: tail [script]");
@@ -647,6 +732,72 @@ var Terminal = {
 				post("Command not found");
 		}
 	},
+    
+    executeListCommand: function(commandArray) {
+        if (commandArray.length != 1) {
+            post("Incorrect usage of ls command. Usage: ls"); return;
+        }
+        
+        //Display all programs and scripts
+        var allFiles = []; 
+        
+        //Get all of the programs and scripts on the machine into one temporary array
+        for (var i = 0; i < Player.getCurrentServer().programs.length; i++) {
+            allFiles.push(Player.getCurrentServer().programs[i]); 
+        }
+        for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
+            allFiles.push(Player.getCurrentServer().scripts[i].filename);
+        }
+        
+        //Sort the files alphabetically then print each
+        allFiles.sort();
+        
+        for (var i = 0; i < allFiles.length; i++) {
+            post(allFiles[i]);
+        }
+    },
+    
+    executeScanCommand: function(commandArray) {
+        if (commandArray.length != 1) {
+            post("Incorrect usage of netstat/scan command. Usage: netstat/scan"); return;
+        }
+        //Displays available network connections using TCP
+        post("Hostname             IP                   Root Access");
+        for (var i = 0; i < Player.getCurrentServer().serversOnNetwork.length; i++) {
+            //Add hostname
+            var entry = Player.getCurrentServer().getServerOnNetwork(i);
+            if (entry == null) {continue;}
+            entry = entry.hostname;
+            
+            //Calculate padding and add IP
+            var numSpaces = 21 - entry.length;
+            var spaces = Array(numSpaces+1).join(" ");
+            entry += spaces;
+            entry += Player.getCurrentServer().getServerOnNetwork(i).ip;
+            
+            //Calculate padding and add root access info
+            var hasRoot;
+            if (Player.getCurrentServer().getServerOnNetwork(i).hasAdminRights) {
+                hasRoot = 'Y';
+            } else {
+                hasRoot = 'N';
+            }
+            numSpaces = 21 - Player.getCurrentServer().getServerOnNetwork(i).ip.length;
+            spaces = Array(numSpaces+1).join(" ");
+            entry += spaces;
+            entry += hasRoot;
+            post(entry);
+        }
+    },
+    
+    executeFreeCommand: function(commandArray) {
+        if (commandArray.length != 1) {
+            post("Incorrect usage of free command. Usage: free"); return;
+        }
+        post("Total: " + formatNumber(Player.getCurrentServer().maxRam, 2) + " GB");
+        post("Used: " + formatNumber(Player.getCurrentServer().ramUsed, 2) + " GB");
+        post("Available: " + formatNumber(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, 2) + " GB");
+    },
 	
 	//First called when the "run [program]" command is called. Checks to see if you
 	//have the executable and, if you do, calls the executeProgram() function

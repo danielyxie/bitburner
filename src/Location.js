@@ -4,6 +4,7 @@
 Locations = {
     //Cities
 	Aevum: 			"Aevum",
+    //AevumDesc:      ""
 	Chongqing: 		"Chongqing",
 	Sector12: 		"Sector-12",
 	NewTokyo: 		"New Tokyo",
@@ -86,68 +87,75 @@ displayLocationContent = function() {
 		console.log("displayLocationContent() called with location " + Player.location)
 	}
     
-    var returnToWorld       = document.getElementById("location-return-to-world-button");
+    var returnToWorld        = document.getElementById("location-return-to-world-button");
     
-    var locationName        = document.getElementById("location-name");
+    var locationName            = document.getElementById("location-name");
 
-    var locationInfo        = document.getElementById("location-info");
+    var locationInfo            = document.getElementById("location-info");
 
-    var softwareJob         = document.getElementById("location-software-job");
-    var itJob               = document.getElementById("location-it-job");
-    var securityEngineerJob = document.getElementById("location-security-engineer-job");
-    var networkEngineerJob  = document.getElementById("location-network-engineer-job");
-    var businessJob         = document.getElementById("location-business-job");
-    var securityJob         = document.getElementById("location-security-job");
-    var agentJob            = document.getElementById("location-agent-job");
-    var employeeJob         = document.getElementById("location-employee-job");
-    var waiterJob           = document.getElementById("location-waiter-job");
-
-    var work                = document.getElementById("location-work");
-	
-	var jobTitle 			= document.getElementById("location-job-title");
-	var jobReputation 		= document.getElementById("location-job-reputation");
-
-    var gymTrainStr         = document.getElementById("location-gym-train-str");
-    var gymTrainDef         = document.getElementById("location-gym-train-def");
-    var gymTrainDex         = document.getElementById("location-gym-train-dex");
-    var gymTrainAgi         = document.getElementById("location-gym-train-agi");
+    var softwareJob             = document.getElementById("location-software-job");
+    var softwareConsultantJob   = document.getElementById("location-software-consultant-job")
+    var itJob                   = document.getElementById("location-it-job");
+    var securityEngineerJob     = document.getElementById("location-security-engineer-job");
+    var networkEngineerJob      = document.getElementById("location-network-engineer-job");
+    var businessJob             = document.getElementById("location-business-job");
+    var businessConsultantJob   = document.getElementById("location-business-consultant-job");
+    var securityJob             = document.getElementById("location-security-job");
+    var agentJob                = document.getElementById("location-agent-job");
+    var employeeJob             = document.getElementById("location-employee-job");
+    var employeePartTimeJob     = document.getElementById("location-parttime-employee-job");
+    var waiterJob               = document.getElementById("location-waiter-job");
+    var waiterPartTimeJob       = document.getElementById("location-parttime-waiter-job");
     
-    var studyComputerScience= document.getElementById("location-study-computer-science");
-    var classDataStructures = document.getElementById("location-data-structures-class");
-    var classNetworks       = document.getElementById("location-networks-class");
-    var classAlgorithms     = document.getElementById("location-algorithms-class");
-    var classManagement     = document.getElementById("location-management-class");
-    var classLeadership     = document.getElementById("location-leadership-class");
-
-    var purchase1gb         = document.getElementById("location-purchase-1gb");
-    var purchase2gb         = document.getElementById("location-purchase-2gb");
-    var purchase4gb         = document.getElementById("location-purchase-4gb");
-    var purchase8gb         = document.getElementById("location-purchase-8gb");
-    var purchase16gb        = document.getElementById("location-purchase-16gb");
-    var purchase32gb        = document.getElementById("location-purchase-32gb");
-    var purchase64gb        = document.getElementById("location-purchase-64gb");
-    var purchase128gb       = document.getElementById("location-purchase-128gb");
-    var purchase256gb       = document.getElementById("location-purchase-256gb");
-    var purchase512gb       = document.getElementById("location-purchase-512gb");
-    var purchase1tb         = document.getElementById("location-purchase-1tb");
-    var purchaseTor         = document.getElementById("location-purchase-tor");
-    var purchaseHomeRam     = document.getElementById("location-purchase-home-ram");
-
-    var travelAgencyText    = document.getElementById("location-travel-agency-text");
-    var travelToAevum       = document.getElementById("location-travel-to-aevum");
-    var travelToChongqing   = document.getElementById("location-travel-to-chongqing");
-    var travelToSector12    = document.getElementById("location-travel-to-sector12");
-    var travelToNewTokyo    = document.getElementById("location-travel-to-newtokyo");
-    var travelToIshima      = document.getElementById("location-travel-to-ishima");
-    var travelToVolhaven    = document.getElementById("location-travel-to-volhaven");
-	
-    var slumsDescText       = document.getElementById("location-slums-description");
-    var slumsShoplift       = document.getElementById("location-slums-shoplift");
-    var slumsMug            = document.getElementById("location-slums-mug");
-    var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
-    var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
-    var slumsHomicide       = document.getElementById("location-slums-homicide");
-    var slumsKidnap         = document.getElementById("location-slums-kidnap");
+    var work                    = clearEventListeners("location-work");
+        
+	var jobTitle 			    = document.getElementById("location-job-title");
+	var jobReputation 		    = document.getElementById("location-job-reputation");
+    
+    var gymTrainStr             = document.getElementById("location-gym-train-str");
+    var gymTrainDef             = document.getElementById("location-gym-train-def");
+    var gymTrainDex             = document.getElementById("location-gym-train-dex");
+    var gymTrainAgi             = document.getElementById("location-gym-train-agi");
+        
+    var studyComputerScience    = document.getElementById("location-study-computer-science");
+    var classDataStructures     = document.getElementById("location-data-structures-class");
+    var classNetworks           = document.getElementById("location-networks-class");
+    var classAlgorithms         = document.getElementById("location-algorithms-class");
+    var classManagement         = document.getElementById("location-management-class");
+    var classLeadership         = document.getElementById("location-leadership-class");
+    
+    var purchase1gb             = document.getElementById("location-purchase-1gb");
+    var purchase2gb             = document.getElementById("location-purchase-2gb");
+    var purchase4gb             = document.getElementById("location-purchase-4gb");
+    var purchase8gb             = document.getElementById("location-purchase-8gb");
+    var purchase16gb            = document.getElementById("location-purchase-16gb");
+    var purchase32gb            = document.getElementById("location-purchase-32gb");
+    var purchase64gb            = document.getElementById("location-purchase-64gb");
+    var purchase128gb           = document.getElementById("location-purchase-128gb");
+    var purchase256gb           = document.getElementById("location-purchase-256gb");
+    var purchase512gb           = document.getElementById("location-purchase-512gb");
+    var purchase1tb             = document.getElementById("location-purchase-1tb");
+    var purchaseTor             = document.getElementById("location-purchase-tor");
+    var purchaseHomeRam         = document.getElementById("location-purchase-home-ram");
+    
+    var travelAgencyText        = document.getElementById("location-travel-agency-text");
+    var travelToAevum           = document.getElementById("location-travel-to-aevum");
+    var travelToChongqing       = document.getElementById("location-travel-to-chongqing");
+    var travelToSector12        = document.getElementById("location-travel-to-sector12");
+    var travelToNewTokyo        = document.getElementById("location-travel-to-newtokyo");
+    var travelToIshima          = document.getElementById("location-travel-to-ishima");
+    var travelToVolhaven        = document.getElementById("location-travel-to-volhaven");
+        
+    var slumsDescText           = document.getElementById("location-slums-description");
+    var slumsShoplift           = document.getElementById("location-slums-shoplift");
+    var slumsMug                = document.getElementById("location-slums-mug");
+    var slumsDealDrugs          = document.getElementById("location-slums-deal-drugs");
+    var slumsTrafficArms        = document.getElementById("location-slums-traffic-arms");
+    var slumsHomicide           = document.getElementById("location-slums-homicide");
+    var slumsGta                = document.getElementById("location-slums-gta");
+    var slumsKidnap             = document.getElementById("location-slums-kidnap");
+    var slumsAssassinate        = document.getElementById("location-slums-assassinate");
+    var slumsHeist              = document.getElementById("location-slums-heist");
     
     var loc = Player.location;
     
@@ -161,14 +169,18 @@ displayLocationContent = function() {
     locationInfo.style.display = "block";
     
     softwareJob.style.display = "none";
+    softwareConsultantJob.style.display = "none";
     itJob.style.display = "none";
     securityEngineerJob.style.display = "none";
     networkEngineerJob.style.display = "none";
     businessJob.style.display = "none";
+    businessConsultantJob.style.display = "none";
     securityJob.style.display = "none";
     agentJob.style.display = "none";
     employeeJob.style.display = "none";
+    employeePartTimeJob.style.display = "none";
     waiterJob.style.display = "none";
+    waiterPartTimeJob.style.display = "none";
     
     softwareJob.innerHTML = "Apply for Software Job";
     itJob.innerHTML = "Apply for IT Job";
@@ -222,7 +234,10 @@ displayLocationContent = function() {
     slumsDealDrugs.style.display = "none";
     slumsTrafficArms.style.display = "none";
     slumsHomicide.style.display = "none";
+    slumsGta.style.display = "none";
     slumsKidnap.style.display = "none";
+    slumsAssassinate.style.display = "none";
+    slumsHeist.style.display = "none";
     
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
@@ -235,16 +250,22 @@ displayLocationContent = function() {
         jobReputation.innerHTML = "Company reputation: " + (company.playerReputation.toFixed(4)).toLocaleString();
         work.style.display = "block";
         
+        var currPos = Player.companyPosition;
+        
         work.addEventListener("click", function() {
-            Player.startWork();
+            if (currPos.isPartTimeJob()) {
+                Player.startWorkPartTime();
+            } else {
+                Player.startWork();
+            }
             return false;
         });
-        
-        var currPos = Player.companyPosition;
         
         //Change the text for the corresponding position from "Apply for X Job" to "Apply for promotion"
         if (currPos.isSoftwareJob()) {
             softwareJob.innerHTML = "Apply for a promotion (Software)";
+        } else if (currPos.isSoftwareConsultantJob()) {
+            softwareConsultantJob.innerHTML = "Apply for a promotion (Software Consultant)";
         } else if (currPos.isITJob()) {
             itJob.innerHTML = "Apply for a promotion (IT)";
         } else if (currPos.isSecurityEngineerJob()) {
@@ -253,6 +274,8 @@ displayLocationContent = function() {
             networkEngineerJob.innerHTML = "Apply for a promotion (Network Engineer)";
         } else if (currPos.isBusinessJob()) {
             businessJob.innerHTML = "Apply for a promotion (Business)";
+        } else if (currPos.isBusinessConsultantJob()) {
+            businessConsultantJob.innerHTML = "Apply for a promotion (Business Consultant)";
         } else if (currPos.isSecurityJob()) {
             securityJob.innerHTML = "Apply for a promotion (Security)";
         } else if (currPos.isAgentJob()) {
@@ -274,8 +297,7 @@ displayLocationContent = function() {
             break;
             
         case Locations.AevumSummitUniveristy:
-            var costMult = 3;
-            var expMult = 2;
+            var costMult = 4, expMult = 3;
             displayUniversityLocationContent(costMult);
             setUniversityLocationButtons(costMult, expMult);
             break;
@@ -352,6 +374,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -362,6 +385,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -387,6 +411,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -399,18 +424,16 @@ displayLocationContent = function() {
             purchaseHomeRam.style.display = "block";
             break;
 
-        case Locations.AevumCrushFitnessGym:  
-            gymTrainStr.style.display = "block";
-            gymTrainDef.style.display = "block";
-            gymTrainDex.style.display = "block";
-            gymTrainAgi.style.display = "block";
+        case Locations.AevumCrushFitnessGym:
+            var costMult = 2, expMult = 1.5;
+            displayGymLocationContent(costMult);
+            setGymLocationButtons(costMult, expMult);
             break;
 
         case Locations.AevumSnapFitnessGym:  			
-            gymTrainStr.style.display = "block";
-            gymTrainDef.style.display = "block";
-            gymTrainDex.style.display = "block";
-            gymTrainAgi.style.display = "block";
+            var costMult = 6, expMult = 4;
+            displayGymLocationContent(costMult);
+            setGymLocationButtons(costMult, expMult);
             break;
 
         case Locations.ChongqingTravelAgency:   
@@ -455,8 +478,7 @@ displayLocationContent = function() {
             break;
             
         case Locations.Sector12RothmanUniversity:
-            var costMult = 2;
-            var expMult = 1;
+            var costMult = 3, expMult = 2;
             displayUniversityLocationContent(costMult);
             setUniversityLocationButtons(costMult, expMult);
             break;
@@ -498,6 +520,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -508,6 +531,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -551,6 +575,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             businessJob.style.display = "block";
             purchase1gb.style.display = "block";
             purchase2gb.style.display = "block";
@@ -563,6 +588,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -574,26 +600,26 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             employeeJob.style.display = "block";
+            employeePartTimeJob.style.display = "block";
             break;
 
         case Locations.Sector12JoesGuns:
 			locationInfo.innerHTML = Companies[loc].info;
 			
             employeeJob.style.display = "block";
+            employeePartTimeJob.style.display = "block";
             break;
 
         case Locations.Sector12IronGym:
-            gymTrainStr.style.display = "block";
-            gymTrainDef.style.display = "block";
-            gymTrainDex.style.display = "block";
-            gymTrainAgi.style.display = "block";
+            var costMult = 1, expMult = 1;
+            displayGymLocationContent(costMult);
+            setGymLocationButtons(costMult, expMult);
             break;
 
         case Locations.Sector12PowerhouseGym:
-            gymTrainStr.style.display = "block";
-            gymTrainDef.style.display = "block";
-            gymTrainDex.style.display = "block";
-            gymTrainAgi.style.display = "block";
+            var costMult = 10, expMult = 7.5;
+            displayGymLocationContent(costMult);
+            setGymLocationButtons(costMult, expMult);
             break;
 
         case Locations.NewTokyoTravelAgency: 
@@ -609,6 +635,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -619,6 +646,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -629,6 +657,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -640,6 +669,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             waiterJob.style.display = "block";
+            waitPartTimeJob.style.display = "block";
             break;
         
 
@@ -656,6 +686,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -676,6 +707,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -686,6 +718,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             businessJob.style.display = "block";
             
@@ -707,8 +740,7 @@ displayLocationContent = function() {
             break;
             
         case Locations.VolhavenZBInstituteOfTechnology:
-            var costMult = 4;
-            var expMult = 3;
+            var costMult = 5, expMult = 4;
             displayUniversityLocationContent(costMult);
             setUniversityLocationButtons(costMult, expMult);
             break;
@@ -744,6 +776,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -765,6 +798,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -785,6 +819,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
+            softwareConsultantJob.style.display = "block";
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
@@ -800,10 +835,9 @@ displayLocationContent = function() {
             break;
 
         case Locations.VolhavenMilleniumFitnessGym:   
-            gymTrainStr.style.display = "block";
-            gymTrainDef.style.display = "block";
-            gymTrainDex.style.display = "block";
-            gymTrainAgi.style.display = "block";
+            var costMult = 3, expMult = 2.5;
+            displayGymLocationContent(costMult);
+            setGymLocationButtons(costMult, expMult);
             break;
             
         //All Slums
@@ -818,22 +852,39 @@ displayLocationContent = function() {
             var drugsChance = determineCrimeChanceDealDrugs();
             var armsChance = determineCrimeChanceTraffickArms();
             var homicideChance = determineCrimeChanceHomicide();
+            var gtaChance = determineCrimeChanceGrandTheftAuto();
             var kidnapChance = determineCrimeChanceKidnap();
+            var assassinateChance = determineCrimeChanceAssassination();
+            var heistChance = determineCrimeChanceHeist();
             
             slumsDescText.style.display = "block";
             slumsShoplift.style.display = "block";
             slumsShoplift.innerHTML = "Shoplift (" + (shopliftChance*100).toFixed(3) + "% chance of success)";
+            slumsShoplift.innerHTML += '<span class="tooltiptext"> Attempt to shoplift from a low-end retailers </span>';
             slumsMug.style.display = "block";
             slumsMug.innerHTML = "Mug someone (" + (mugChance*100).toFixed(3) + "% chance of success)";
+            slumsMug.innerHTML += '<span class="tooltiptext"> Attempt to mug a random person on the street </span>';
             slumsDealDrugs.style.display = "block";
             slumsDealDrugs.innerHTML = "Deal Drugs (" + (drugsChance*100).toFixed(3) + "% chance of success)";
+            slumsDealDrugs.innerHTML += '<span class="tooltiptext"> Attempt to deal drugs </span>';
             slumsTrafficArms.style.display = "block";
             slumsTrafficArms.innerHTML = "Traffick Illegal Arms (" + (armsChance*100).toFixed(3) + "% chance of success)";
+            slumsTrafficArms.innerHTML += '<span class="tooltiptext"> Attempt to smuggle illegal arms into the city and sell them to gangs and criminal organizations </span>';
             slumsHomicide.style.display = "block";
             slumsHomicide.innerHTML = "Homicide (" + (homicideChance*100).toFixed(3) + "% chance of success)";
+            slumsHomicide.innerHTML += '<span class="tooltiptext"> Attempt to murder a random person on the street</span>';
+            slumsGta.style.display = "block";
+            slumsGta.innerHTML = "Grand Theft Auto (" + (gtaChance*100).toFixed(3) + "% chance of success)";
+            slumsGta.innerHTML += '<span class="tooltiptext"> Attempt to commit grand theft auto </span>';
             slumsKidnap.style.display = "block";
             slumsKidnap.innerHTML = "Kidnap and Ransom (" + (kidnapChance*100).toFixed(3) + "% chance of success)";
-            
+            slumsKidnap.innerHTML += '<span class="tooltiptext"> Attempt to kidnap and ransom a high-profile target </span>';
+            slumsAssassinate.style.display = "block";
+            slumsAssassinate.innerHTML = "Assassinate (" + (assassinateChance*100).toFixed(3) + "% chance of success)";
+            slumsAssassinate.innerHTML += '<span class="tooltiptext"> Attempt to assassinate a high-profile target </span>';
+            slumsHeist.style.display = "block";
+            slumsHeist.innerHTML = "Heist (" + (heistChance*100).toFixed(3) + "% chance of success)";
+            slumsHeist.innerHTML += '<span class="tooltiptext"> Attempt to pull off the ultimate heist </span>';
             break;
         default:
             console.log("ERROR: INVALID LOCATION");
@@ -841,6 +892,7 @@ displayLocationContent = function() {
     }
     
     //Make the "Apply to be Employee and Waiter" texts disappear if you already hold the job
+    //Includes part-time stuff
     if (loc == Player.companyName) {
         var currPos = Player.companyPosition;
         
@@ -848,6 +900,10 @@ displayLocationContent = function() {
             employeeJob.style.display = "none";
         } else if (currPos.positionName == CompanyPositions.Waiter.positionName) {
             waiterJob.style.display = "none";
+        } else if (currPos.positionName == CompanyPositions.PartTimeEmployee.positionName) {
+            employeePartTimeJob.style.display = "none";
+        } else if (currPos.positionName == CompanyPositions.PartTimeWaiter.positionName) {
+            waiterPartTimeJob.style.display = "none";
         }
     }
 }
@@ -1263,22 +1319,21 @@ initLocationButtons = function() {
     
     
     //Buttons to interact at a location (apply for job/promotion, train, purchase, etc.)
-    var softwareJob         = document.getElementById("location-software-job");
-    var itJob               = document.getElementById("location-it-job");
-    var securityEngineerJob = document.getElementById("location-security-engineer-job");
-    var networkEngineerJob  = document.getElementById("location-network-engineer-job");
-    var businessJob         = document.getElementById("location-business-job");
-    var securityJob         = document.getElementById("location-security-job");
-    var agentJob            = document.getElementById("location-agent-job");
-    var employeeJob         = document.getElementById("location-employee-job");
-    var waiterJob           = document.getElementById("location-waiter-job");
+    var softwareJob             = document.getElementById("location-software-job");
+    var softwareConsultantJob   = document.getElementById("location-software-consultant-job")
+    var itJob                   = document.getElementById("location-it-job");
+    var securityEngineerJob     = document.getElementById("location-security-engineer-job");
+    var networkEngineerJob      = document.getElementById("location-network-engineer-job");
+    var businessJob             = document.getElementById("location-business-job");
+    var businessConsultantJob   = document.getElementById("location-business-consultant-job");
+    var securityJob             = document.getElementById("location-security-job");
+    var agentJob                = document.getElementById("location-agent-job");
+    var employeeJob             = document.getElementById("location-employee-job");
+    var employeePartTimeJob     = document.getElementById("location-parttime-employee-job");
+    var waiterJob               = document.getElementById("location-waiter-job");
+    var waiterPartTimeJob       = document.getElementById("location-parttime-waiter-job");
 
     var work                = document.getElementById("location-work");
-
-    var gymTrainStr         = document.getElementById("location-gym-train-str");
-    var gymTrainDef         = document.getElementById("location-gym-train-def");
-    var gymTrainDex         = document.getElementById("location-gym-train-dex");
-    var gymTrainAgi         = document.getElementById("location-gym-train-agi");
 
     var purchase1gb         = document.getElementById("location-purchase-1gb");
     var purchase2gb         = document.getElementById("location-purchase-2gb");
@@ -1306,10 +1361,18 @@ initLocationButtons = function() {
     var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
     var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
     var slumsHomicide       = document.getElementById("location-slums-homicide");
+    var slumsGta            = document.getElementById("location-slums-gta");
     var slumsKidnap         = document.getElementById("location-slums-kidnap");
+    var slumsAssassinate    = document.getElementById("location-slums-assassinate");
+    var slumsHeist          = document.getElementById("location-slums-heist");
     
     softwareJob.addEventListener("click", function() {
         Player.applyForSoftwareJob();
+        return false;
+    });
+    
+    softwareConsultantJob.addEventListener("click", function() {
+        Player.applyForSoftwareConsultantJob();
         return false;
     });
     
@@ -1333,6 +1396,11 @@ initLocationButtons = function() {
         return false; 
     });
     
+    businessConsultantJob.addEventListener("click", function() {
+        Player.applyForBusinessConsultantJob();
+        return false;
+    });
+    
     securityJob.addEventListener("click", function() {
         Player.applyForSecurityJob();
         return false; 
@@ -1348,63 +1416,73 @@ initLocationButtons = function() {
         return false; 
     });
     
+    employeePartTimeJob.addEventListener("click", function() {
+        Player.applyForPartTimeEmployeeJob();
+        return false;
+    });
+    
     waiterJob.addEventListener("click", function() {
         Player.applyForWaiterJob();
         return false; 
     });
     
+    waiterPartTimeJob.addEventListener("click", function() {
+        Player.applyForPartTimeWaiterJob();
+        return false;
+    });
+    
     purchase1gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(1, 50000);
+        purchaseServerBoxCreate(1, 1 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
     
     purchase2gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(2, 100000);
+        purchaseServerBoxCreate(2, 2 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
     
     purchase4gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(4, 250000);
+        purchaseServerBoxCreate(4, 4 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
     
     purchase8gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(8, 1000000);
+        purchaseServerBoxCreate(8, 8 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
     
     purchase16gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(16, 4000000);
+        purchaseServerBoxCreate(16, 16 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
     
     purchase32gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(32, 10000000);
+        purchaseServerBoxCreate(32, 32 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
     
     purchase64gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(64, 20000000);
+        purchaseServerBoxCreate(64, 64 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
     
     purchase128gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(128, 50000000);
+        purchaseServerBoxCreate(128, 128 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
     
     purchase256gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(256, 100000000);
+        purchaseServerBoxCreate(256, 256 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
     
     purchase512gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(512, 250000000);
+        purchaseServerBoxCreate(512, 512 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
     
     purchase1tb.addEventListener("click", function() {
-        purchaseServerBoxCreate(1024, 750000000);
+        purchaseServerBoxCreate(1024, 1024 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;
     });
     
@@ -1419,32 +1497,32 @@ initLocationButtons = function() {
     });
     
     travelToAevum.addEventListener("click", function() {
-        travelBoxCreate(Locations.Aevum, 1000000);
+        travelBoxCreate(Locations.Aevum, 200000);
         return false;
     });
     
     travelToChongqing.addEventListener("click", function() {
-        travelBoxCreate(Locations.Chongqing, 1000000);
+        travelBoxCreate(Locations.Chongqing, 200000);
         return false;
     });
     
     travelToSector12.addEventListener("click", function() {
-        travelBoxCreate(Locations.Sector12, 1000000);
+        travelBoxCreate(Locations.Sector12, 200000);
         return false;
     });
     
     travelToNewTokyo.addEventListener("click", function() {
-        travelBoxCreate(Locations.NewTokyo, 1000000);
+        travelBoxCreate(Locations.NewTokyo, 200000);
         return false;
     });
     
     travelToIshima.addEventListener("click", function() {
-        travelBoxCreate(Locations.Ishima, 1000000);
+        travelBoxCreate(Locations.Ishima, 200000);
         return false;
     });
     
     travelToVolhaven.addEventListener("click", function() {
-        travelBoxCreate(Locations.Volhaven, 1000000);
+        travelBoxCreate(Locations.Volhaven, 200000);
         return false;
     });
     
@@ -1473,8 +1551,23 @@ initLocationButtons = function() {
         return false;
     });
     
+    slumsGta.addEventListener("click", function() {
+        commitGrandTheftAutoCrime();
+        return false;
+    });
+    
     slumsKidnap.addEventListener("click", function() {
         commitKidnapCrime();
+        return false;
+    });
+    
+    slumsAssassinate.addEventListener("click", function() {
+        commitAssassinationCrime();
+        return false;
+    });
+    
+    slumsHeist.addEventListener("click", function() {
+        commitHeistCrime();
         return false;
     });
 }   
@@ -1496,14 +1589,18 @@ purchaseTorRouter = function() {
         dialogBoxCreate("You cannot afford to purchase the Tor router");
         return;
     }
-    Player.money -= CONSTANTS.TorRouterCost;
+    Player.loseMoney(CONSTANTS.TorRouterCost);
     
     var darkweb = new Server();
     darkweb.init(createRandomIp(), "darkweb", "", true, false, false, false, 1);
     AddToAllServers(darkweb);
+    SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
+    
+    document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
     
     Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
-    dialogBoxCreate("You have purchased a Tor router!", "You now have access to the dark web from your home computer", "Use the scan/netstat commands to search for the dark web connect.", "");
+    darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);
+    dialogBoxCreate("You have purchased a Tor router!", "You now have access to the dark web from your home computer", "Use the scan/netstat commands to search for the dark web connection.");
 }
 
 displayUniversityLocationContent = function(costMult) {
@@ -1520,75 +1617,101 @@ displayUniversityLocationContent = function(costMult) {
     classManagementButton.style.display = "block";
     classLeadershipButton.style.display = "block";
     
-    //Costs (per second)
-    var baseDataStructuresCost  = 1;
-    var baseNetworksCost        = 5;
-    var baseAlgorithmsCost      = 20;
-    var baseManagementCost      = 10;
-    var baseLeadershipCost      = 20;
-    
-    var dataStructuresCost  = baseDataStructuresCost    * costMult;
-    var networksCost        = baseNetworksCost          * costMult;
-    var algorithmsCost      = baseAlgorithmsCost        * costMult;
-    var managementCost      = baseManagementCost        * costMult;
-    var leadershipCost      = baseLeadershipCost        * costMult;
+    //Costs (per second)    
+    var dataStructuresCost  = CONSTANTS.ClassDataStructuresBaseCost    * costMult;
+    var networksCost        = CONSTANTS.ClassNetworksBaseCost          * costMult;
+    var algorithmsCost      = CONSTANTS.ClassAlgorithmsBaseCost        * costMult;
+    var managementCost      = CONSTANTS.ClassManagementBaseCost        * costMult;
+    var leadershipCost      = CONSTANTS.ClassLeadershipBaseCost        * costMult;
     
     //Update button text to show cost
     classDataStructuresButton.innerHTML = "Take Data Structures course ($"  + dataStructuresCost + " / sec)";
-    classNetworksButton.innerHTML       = "Take Networks course ($"         + networksCost       + " / second)";
-    classAlgorithmsButton.innerHTML     = "Take Algorithms course ($"       + algorithmsCost     + " / second)";
-    classManagementButton.innerHTML     = "Take Management course ($"       + managementCost     + " / second)";
-    classLeadershipButton.innerHTML     = "Take Leadership course ($"       + leadershipCost     + " / second)";
+    classNetworksButton.innerHTML       = "Take Networks course ($"         + networksCost       + " / sec)";
+    classAlgorithmsButton.innerHTML     = "Take Algorithms course ($"       + algorithmsCost     + " / sec)";
+    classManagementButton.innerHTML     = "Take Management course ($"       + managementCost     + " / sec)";
+    classLeadershipButton.innerHTML     = "Take Leadership course ($"       + leadershipCost     + " / sec)";
 }
 
 setUniversityLocationButtons = function(costMult, expMult) {
-    var studyComputerScience= document.getElementById("location-study-computer-science");
-    var classDataStructures = document.getElementById("location-data-structures-class");
-    var classNetworks       = document.getElementById("location-networks-class");
-    var classAlgorithms     = document.getElementById("location-algorithms-class");
-    var classManagement     = document.getElementById("location-management-class");
-    var classLeadership     = document.getElementById("location-leadership-class");
-    
-    var newStudyCS = studyComputerScience.cloneNode(true);
-    studyComputerScience.parentNode.replaceChild(newStudyCS, studyComputerScience)
+    var newStudyCS = clearEventListeners("location-study-computer-science");
     newStudyCS.addEventListener("click", function() {
         Player.startClass(costMult, expMult, CONSTANTS.ClassStudyComputerScience);
         return false;
     });
     
-    var newClassDataStructures = classDataStructures.cloneNode(true);
-    classDataStructures.parentNode.replaceChild(newClassDataStructures, classDataStructures);
+    var newClassDataStructures = clearEventListeners("location-data-structures-class");
     newClassDataStructures.addEventListener("click", function() {
         Player.startClass(costMult, expMult, CONSTANTS.ClassDataStructures);
         return false;
     });
     
-    var newClassNetworks = classNetworks.cloneNode(true);
-    classNetworks.parentNode.replaceChild(newClassNetworks, classNetworks);
+    var newClassNetworks = clearEventListeners("location-networks-class");
     newClassNetworks.addEventListener("click", function() {
         Player.startClass(costMult, expMult, CONSTANTS.ClassNetworks);
         return false;
     });
     
-    var newClassAlgorithms = classAlgorithms.cloneNode(true);
-    classAlgorithms.parentNode.replaceChild(newClassAlgorithms, classAlgorithms);
+    var newClassAlgorithms = clearEventListeners("location-algorithms-class");
     newClassAlgorithms.addEventListener("click", function() {
         Player.startClass(costMult, expMult, CONSTANTS.ClassAlgorithms);
         return false;
     });
     
-    var newClassManagement = classManagement.cloneNode(true);
-    classManagement.parentNode.replaceChild(newClassManagement, classManagement);
+    var newClassManagement = clearEventListeners("location-management-class");
     newClassManagement.addEventListener("click", function() {
         Player.startClass(costMult, expMult, CONSTANTS.ClassManagement);
         return false;
     });
     
-    var newClassLeadership = classLeadership.cloneNode(true);
-    classLeadership.parentNode.replaceChild(newClassLeadership, classLeadership);
+    var newClassLeadership = clearEventListeners("location-leadership-class");
     newClassLeadership.addEventListener("click", function() {
         Player.startClass(costMult, expMult, CONSTANTS.ClassLeadership);
         return false;
     });
 }
 
+displayGymLocationContent = function(costMult) {
+    var gymStrButton    = document.getElementById("location-gym-train-str");
+    var gymDefButton    = document.getElementById("location-gym-train-def");
+    var gymDexButton    = document.getElementById("location-gym-train-dex");
+    var gymAgiButton    = document.getElementById("location-gym-train-agi");
+    gymStrButton.style.display = "block";
+    gymDefButton.style.display = "block";
+    gymDexButton.style.display = "block";
+    gymAgiButton.style.display = "block";
+    
+    //Costs (per second)    
+    var cost = CONSTANTS.ClassGymBaseCost * costMult;
+    
+    //Update button text to show cost
+    gymStrButton.innerHTML = "Train Strength ($" + cost + " / sec)";
+    gymDefButton.innerHTML = "Train Defense ($" + cost + " / sec)";
+    gymDexButton.innerHTML = "Train Dexterity ($" + cost + " / sec)";
+    gymAgiButton.innerHTML = "Train Agility ($" + cost + " / sec)";
+}
+
+setGymLocationButtons = function(costMult, expMult) {
+    var gymStr = clearEventListeners("location-gym-train-str");
+    gymStr.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassGymStrength);
+        return false;
+    });
+    
+    var gymDef = clearEventListeners("location-gym-train-def");
+    gymDef.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassGymDefense);
+        return false;
+    });
+    
+    var gymDex = clearEventListeners("location-gym-train-dex");
+    gymDex.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassGymDexterity);
+        return false;
+    });
+    
+    var gymAgi = clearEventListeners("location-gym-train-agi");
+    gymAgi.addEventListener("click", function() {
+        Player.startClass(costMult, expMult, CONSTANTS.ClassGymAgility);
+        return false;
+    });
+}

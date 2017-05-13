@@ -9,6 +9,7 @@ function Reviver(key, value) {
 	var ctor;
     if (value == null) {
         console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
+        return 0;
     }
 	if (typeof value === "object" &&
 		typeof value.ctor === "string" &&

@@ -13,9 +13,6 @@ function dialogBoxInit() {
 document.addEventListener("DOMContentLoaded", dialogBoxInit, false);
 
 dialogBoxClose = function() {
-    if (Engine.Debug) {
-        console.log("Dialog Box Close called");
-    }
     var dialogBox = document.getElementById("dialog-box-container");
     dialogBox.style.display = "none";
 }

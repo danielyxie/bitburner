@@ -32,9 +32,17 @@ function prestigeAugmentation() {
     Player.numPeopleKilledTotal += Player.numPeopleKilled;
     Player.numPeopleKilledLifetime += Player.numPeopleKilled;
     Player.numPeopleKilled = 0;
+    Player.numTimesGrandTheftAutoTotal += Player.numTimesGrandTheftAuto;
+    Player.numTimesGrandTheftAutoLifetime += Player.numTimesGrandTheftAuto;
+    Player.numTimesGrandTheftAuto = 0;
     Player.numTimesKidnappedTotal += Player.numTimesKidnapped;
     Player.numTimesKidnappedLifetime += Player.numTimesKidnapped;
     Player.numTimesKidnapped = 0;
+    Player.numTimesHeistTotal += Player.numTimesHeist;
+    Player.numTimesHeistLifetime += Player.numTimesHeist;
+    Player.numTimesHeist = 0;
+    
+    Player.karma = 0;
     
     //Reset stats
     Player.hacking_skill = 1;
@@ -53,10 +61,8 @@ function prestigeAugmentation() {
     Player.agility_exp = 0;
     Player.charisma_exp = 0;
     
-    Player.money = 0;
-    
-    Player.homeComputer = "";
-    
+    Player.money = 1000;
+        
     Player.city = Locations.Sector12;
     Player.location = "";
     
@@ -101,11 +107,42 @@ function prestigeAugmentation() {
    
     Player.lastUpdate = new Date().getTime();
     
-    //Delete all servers
+    var homeComp = Player.getHomeComputer();
+    //Delete all servers except home computer
     for (var member in AllServers) {
         delete AllServers[member];
     }
     AllServers = {};
+    //Delete Special Server IPs
+    for (var member in SpecialServerIps) {
+        delete SpecialServerIps[member];
+    }
+    SpecialServersIps = null;
+    
+    //Reset home computer (only the programs) and add to AllServers
+    homeComp.programs.length = 0;
+    homeComp.runningScripts = [];
+    homeComp.serversOnNetwork = [];
+    homeComp.isConnectedTo = true;
+    homeComp.isOnline = true;
+    homeComp.ramUsed = 0;
+    homeComp.programs.push(Programs.NukeProgram);
+    Player.currentServer = homeComp.ip;
+    Player.homeComputer = homeComp.ip;
+    AddToAllServers(homeComp);
+    
+    //Re-create foreign servers
+    SpecialServerIps = new SpecialServerIpsMap();   //Must be done before initForeignServers()
+    initForeignServers();
+    
+    //Reset statistics of all scripts on home computer
+    for (var i = 0; i < homeComp.scripts.length; ++i) {
+        var s = homeComp.scripts[i];
+        s.reset();
+        delete s.moneyStolenMap;
+        s.moneyStolenMap = new AllServersToMoneyMap();
+        s.moneyStolenMap.printConsole();
+    }
     
     //Delete all running scripts objects
     for (var i = 0; i < workerScripts.length; ++i) {
@@ -120,32 +157,34 @@ function prestigeAugmentation() {
     
     //Delete Hacknet Nodes
     Player.hacknetNodes.length = 0;
-    
-    //Delete Special Server IPs
-    for (var member in SpecialServerIps) {
-        delete SpecialServerIps[member];
-    }
-    SpecialServersIps = null;
+    Player.totalHacknetNodeProduction = 0;
     
     //Delete Companies
     for (var member in Companies) {
-        delete Companies[member];
+        if (Companies.hasOwnProperty(member)) {
+            delete Companies[member];
+        }
     }
     Companies = {};
     
-    //Delete Factions
+    //Reset Factions
     for (var member in Factions) {
-        delete Factions[member];
+        if (Factions.hasOwnProperty(member)) {
+            delete Factions[member];
+        }
     }
     Factions = {};
     
-    //Inititialization
-    SpecialServerIps = new SpecialServerIpsMap();
-    Player.init();
-    initForeignServers();
-    initCompanies();
+    //Stop a Terminal action if there is onerror
+    if (Engine._actionInProgress) {
+        Engine._actionInProgress = false;
+        Terminal.finishAction(true);
+    }
+    
+    //Re-initialize things - This will update any changes 
     initFactions();
-    CompanyPositions.init();
+    initAugmentations();
+    initCompanies();
     
     Engine.loadTerminalContent();
 }
