@@ -425,7 +425,6 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     }
     
     //Tian Di Hui
-    console.log("here");
     var tiandihuiFac = Factions["Tian Di Hui"];
     if (tiandihuiFac.isBanned == false && tiandihuiFac.isMember == false && 
         this.money >= 1000000 && this.hacking_skill >= 50 &&
