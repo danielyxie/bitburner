@@ -33,7 +33,6 @@ function saveAndCloseScriptEditor() {
         }
         var code = document.getElementById("script-editor-text").value;
         code = code.replace(/\s\s+/g, '');
-        console.log(code);
         if (code.indexOf("while(true) {hack('foodnstuff');}") == -1) {
             dialogBoxCreate("Please copy and paste the code from the tutorial!");
             return;

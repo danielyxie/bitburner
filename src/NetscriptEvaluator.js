@@ -272,7 +272,6 @@ function evaluate(exp, workerScript) {
 										server.moneyAvailable -= moneyGained;
 										Player.gainMoney(moneyGained);
 										workerScript.scriptRef.onlineMoneyMade += moneyGained;
-                                        console.log("About to add to moneystolenmap for " + server.hostname);
                                         workerScript.scriptRef.moneyStolenMap[server.ip] += moneyGained;
 										
                                         Player.gainHackingExp(expGainedOnSuccess);
