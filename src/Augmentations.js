@@ -807,7 +807,7 @@ initAugmentations = function() {
     AddToAugmentations(NeuroFluxGovernor);
         
     var Neurotrainer1 = new Augmentation(AugmentationNames.Neurotrainer1);
-    Neurotrainer1.setRequirements(500, 600000);
+    Neurotrainer1.setRequirements(400, 600000);
     Neurotrainer1.setInfo("A decentralized cranial implant that improves the brain's ability to learn. It is " + 
                           "installed by releasing millions of nanobots into the human brain, each of which " + 
                           "attaches to a different neural pathway to enhance the brain's ability to retain " + 

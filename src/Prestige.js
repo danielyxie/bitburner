@@ -113,8 +113,11 @@ function prestigeAugmentation() {
         delete AllServers[member];
     }
     AllServers = {};
-    
-
+    //Delete Special Server IPs
+    for (var member in SpecialServerIps) {
+        delete SpecialServerIps[member];
+    }
+    SpecialServersIps = null;
     
     //Reset home computer (only the programs) and add to AllServers
     homeComp.programs.length = 0;
@@ -155,12 +158,6 @@ function prestigeAugmentation() {
     //Delete Hacknet Nodes
     Player.hacknetNodes.length = 0;
     Player.totalHacknetNodeProduction = 0;
-    
-    //Delete Special Server IPs
-    for (var member in SpecialServerIps) {
-        delete SpecialServerIps[member];
-    }
-    SpecialServersIps = null;
     
     //Delete Companies
     for (var member in Companies) {
