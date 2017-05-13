@@ -761,7 +761,6 @@ displayFactionContent = function(factionName) {
 displayFactionAugmentations = function(factionName) {
     document.getElementById("faction-augmentations-page-desc").innerHTML = "Lists all augmentations that are available to purchase from " + factionName;
     var faction = Factions[factionName];
-    console.log("fac augs: " + faction.augmentations);
     
     var augmentationsList = document.getElementById("faction-augmentations-list");
     while (augmentationsList.firstChild) {
