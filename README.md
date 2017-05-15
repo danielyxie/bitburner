@@ -52,19 +52,18 @@ Tasks TODO:
         
         
 Private beta feedback
-    2 things right off the bat, I'd suggest putting a "Back" button in the tutorial 
-    window, and you could highlight or otherwise point out which tab the tutorial is 
-    suggesting I click on next
-    Maybe have a different colour for each tab, and then in the tutorial window it
-    can have the name of the tab with that colour
+    I'd suggest putting a "Back" button in the tutorial 
+    window,
     
     Also not really a big deal, but I'm at 110% zoom on chrome and the tutorial window
     covers some of the text
     
     For the last thing of the tutorial, I would just have a button like "Finish Tutorial" rather than "Next"
     
-    Command to see a script's RAM cost
+    I'd put a little popup or something when you click save, so you know
     
     Netscript commands: 
     I just got two from the top of my head: a function to get the current cash on the server, and a function to know how much a hack would take
     Like, if I want to grow each time I take 5000$ from the server, that would be practical
+    
+    Now, only other suggestion before sleep would be to be able to buy multiple Hacknet upgrades in one click

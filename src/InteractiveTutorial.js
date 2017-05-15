@@ -48,17 +48,28 @@ function iTutorialStart() {
         iTutorialEnd();
         return false;
     });
+    
+    //Back button
+    var backButton = clearEventListeners("interactive-tutorial-back");
+    backButton.style.display = "none";
+    backButton.addEventListener("click", function() {
+        iTutorialPrevStep();
+        return false;
+    });
 }
 
 function iTutorialEvaluateStep() {
     if (!iTutorialIsRunning) {console.log("Interactive Tutorial not running"); return;}
     switch(currITutorialStep) {
     case iTutorialSteps.Start:
+        Engine.loadTerminalContent();
+        
         iTutorialSetText("Welcome to Bitburner, a cyberpunk-themed incremental RPG! " +
                          "The game takes place in a dark, dystopian future...The year is 2077...<br><br>" +         
                          "This tutorial will show you the basics of the game to help you get started. " + 
                          "You may skip the tutorial at any time.");
         var next = clearEventListeners("interactive-tutorial-next");
+        next.style.display = "inline-block";
         next.addEventListener("click", function() {
             iTutorialNextStep();
             return false;
@@ -71,6 +82,9 @@ function iTutorialEvaluateStep() {
         //No next button
         var next = clearEventListeners("interactive-tutorial-next");
         next.style.display = "none";
+        
+        //Flash Character tab
+        document.getElementById("character-menu-link").setAttribute("class", "flashing-button");
         
         //Initialize everything necessary to open the "Character" page
         var charaterMainMenuButton = document.getElementById("character-menu-link");
@@ -97,6 +111,8 @@ function iTutorialEvaluateStep() {
         //No next button
         var next = clearEventListeners("interactive-tutorial-next");
         next.style.display = "none";
+        
+        document.getElementById("terminal-menu-link").setAttribute("class", "flashing-button");
         
         //Initialize everything necessary to open the 'Terminal' Page
         var terminalMainMenuButton = document.getElementById("terminal-menu-link");
@@ -221,6 +237,7 @@ function iTutorialEvaluateStep() {
                          "much slower rate. <br><br> " + 
                          "Let's check out some statistics of our active, running scripts by clicking the " + 
                          "'Active Scripts' link in the main navigation menu. ");
+        document.getElementById("active-scripts-menu-link").setAttribute("class", "flashing-button");             
         var activeScriptsMainMenuButton = document.getElementById("active-scripts-menu-link");
         activeScriptsMainMenuButton.addEventListener("click", function() {
             Engine.loadActiveScriptsContent();
@@ -234,6 +251,7 @@ function iTutorialEvaluateStep() {
                          "running across every existing server. You can use this to gauge how well " + 
                          "your scripts are doing. Let's go back to the Terminal now using the 'Terminal'" + 
                          "link.");
+        document.getElementById("terminal-menu-link").setAttribute("class", "flashing-button");
         //Initialize everything necessary to open the 'Terminal' Page
         var terminalMainMenuButton = clearEventListeners("terminal-menu-link");
         terminalMainMenuButton.addEventListener("click", function() {
@@ -267,6 +285,7 @@ function iTutorialEvaluateStep() {
         iTutorialSetText("Hacking is not the only way to earn money. One other way to passively " +
                          "earn money is by purchasing and upgrading Hacknet Nodes. Let's go to " + 
                          "the 'Hacknet Nodes' page through the main navigation menu now.");
+        document.getElementById("hacknet-nodes-menu-link").setAttribute("class", "flashing-button");
         var hacknetNodesButton = clearEventListeners("hacknet-nodes-menu-link");
         var next = clearEventListeners("interactive-tutorial-next");
         next.style.display = "none";
@@ -288,6 +307,7 @@ function iTutorialEvaluateStep() {
                          " money, you can upgrade " + 
                          "your newly-purchased Hacknet Node below. <br><br>" + 
                          "Let's go to the 'World' page through the main navigation menu.");
+        document.getElementById("world-menu-link").setAttribute("class", "flashing-button");
         var worldButton = clearEventListeners("world-menu-link");
         worldButton.addEventListener("click", function() {
             Engine.loadWorldContent();
@@ -302,6 +322,7 @@ function iTutorialEvaluateStep() {
                          "There's a lot of content out in the world, make sure " +
                          "you explore and discover!<br><br>" + 
                          "Lastly, click on the 'Tutorial' link in the main navigation menu.");
+        document.getElementById("tutorial-menu-link").setAttribute("class", "flashing-button");
         var tutorialButton = clearEventListeners("tutorial-menu-link");
         tutorialButton.addEventListener("click", function() {
             Engine.loadTutorialContent();
@@ -319,6 +340,10 @@ function iTutorialEvaluateStep() {
         var next = clearEventListeners("interactive-tutorial-next");
         next.style.display = "inline-block";
         next.innerHTML = "Finish Tutorial";
+        
+        var backButton = clearEventListeners("interactive-tutorial-back");
+        backButton.style.display = "none";
+        
         next.addEventListener("click", function() {
             iTutorialNextStep();
             return false;
@@ -340,6 +365,7 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.GoToCharacterPage:
+        document.getElementById("character-menu-link").removeAttribute("class");
         currITutorialStep = iTutorialSteps.CharacterPage;
         iTutorialEvaluateStep();
         break;
@@ -348,6 +374,7 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.CharacterGoToTerminalPage:
+        document.getElementById("terminal-menu-link").removeAttribute("class");
         currITutorialStep = iTutorialSteps.TerminalIntro;
         iTutorialEvaluateStep();
         break;
@@ -400,10 +427,12 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.TerminalGoToActiveScriptsPage:
+        document.getElementById("active-scripts-menu-link").removeAttribute("class");
         currITutorialStep = iTutorialSteps.ActiveScriptsPage;
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.ActiveScriptsPage:
+        document.getElementById("terminal-menu-link").removeAttribute("class");
         currITutorialStep = iTutorialSteps.ActiveScriptsToTerminal;
         iTutorialEvaluateStep();
         break;
@@ -416,6 +445,7 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.GoToHacknetNodesPage:
+        document.getElementById("hacknet-nodes-menu-link").removeAttribute("class");
         currITutorialStep = iTutorialSteps.HacknetNodesIntroduction;
         iTutorialEvaluateStep();
         break;
@@ -424,15 +454,127 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.HacknetNodesGoToWorldPage:
+        document.getElementById("world-menu-link").removeAttribute("class");
         currITutorialStep = iTutorialSteps.WorldDescription;
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.WorldDescription:
+        document.getElementById("tutorial-menu-link").removeAttribute("class");
         currITutorialStep = iTutorialSteps.TutorialPageInfo;
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.TutorialPageInfo:
         currITutorialStep = iTutorialSteps.End;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.End:
+        break;  
+    default:
+        throw new Error("Invalid tutorial step");
+    }
+}
+
+//Go to previous step and evaluate
+function iTutorialPrevStep() {
+    switch(currITutorialStep) {
+    case iTutorialSteps.Start:
+        currITutorialStep = iTutorialSteps.Start;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.GoToCharacterPage:
+        currITutorialStep = iTutorialSteps.Start;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.CharacterPage:
+        currITutorialStep = iTutorialSteps.GoToCharacterPage;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.CharacterGoToTerminalPage:
+        currITutorialStep = iTutorialSteps.CharacterPage;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalIntro:
+        currITutorialStep = iTutorialSteps.CharacterGoToTerminalPage;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalHelp:
+        currITutorialStep = iTutorialSteps.TerminalIntro;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalLs:
+        currITutorialStep = iTutorialSteps.TerminalHelp;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalScan:
+        currITutorialStep = iTutorialSteps.TerminalLs;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalConnect:
+        currITutorialStep = iTutorialSteps.TerminalScan;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalAnalyze:
+        currITutorialStep = iTutorialSteps.TerminalConnect;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalNuke:
+        currITutorialStep = iTutorialSteps.TerminalAnalyze;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalManualHack:
+        currITutorialStep = iTutorialSteps.TerminalNuke;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalCreateScript:
+        currITutorialStep = iTutorialSteps.TerminalManualHack;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalTypeScript:
+        currITutorialStep = iTutorialSteps.TerminalCreateScript;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalFree:
+        currITutorialStep = iTutorialSteps.TerminalTypeScript;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalRunScript:
+        currITutorialStep = iTutorialSteps.TerminalFree;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalGoToActiveScriptsPage:
+        currITutorialStep = iTutorialSteps.TerminalRunScript;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.ActiveScriptsPage:
+        currITutorialStep = iTutorialSteps.TerminalGoToActiveScriptsPage;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.ActiveScriptsToTerminal:
+        currITutorialStep = iTutorialSteps.ActiveScriptsPage;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalTailScript:
+        currITutorialStep = iTutorialSteps.ActiveScriptsToTerminal;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.GoToHacknetNodesPage:
+        currITutorialStep = iTutorialSteps.TerminalTailScript;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.HacknetNodesIntroduction:
+        currITutorialStep = iTutorialSteps.GoToHacknetNodesPage;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.HacknetNodesGoToWorldPage:
+        currITutorialStep = iTutorialSteps.HacknetNodesIntroduction;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.WorldDescription:
+        currITutorialStep = iTutorialSteps.HacknetNodesGoToWorldPage;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TutorialPageInfo:
+        currITutorialStep = iTutorialSteps.WorldDescription;
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.End:
