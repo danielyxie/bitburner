@@ -186,5 +186,9 @@ function prestigeAugmentation() {
     initAugmentations();
     initCompanies();
     
+    //Clear terminal
+    $("#terminal tr:not(:last)").remove();
+    postNetburnerText();
+    
     Engine.loadTerminalContent();
 }
