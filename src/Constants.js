@@ -198,13 +198,18 @@ CONSTANTS = {
                          "section of this 'Tutorial' page. <br><br>Running a script requires RAM. The more complex a script is, the more RAM " + 
                          "it requires to run. Scripts can be run on any server you have root access to. <br><br>" + 
                          "Here are some Terminal commands that are useful when working with scripts: <br>" + 
-                         "free - Shows the current server's RAM usage <br>" + 
+                         "free - Shows the current server's RAM usage and availability <br>" + 
                          "kill [script] - Stops a script that is running <br>" + 
+                         "mem [script] - Check how much RAM a script requires to run<br>" +
                          "nano [script] - Create/Edit a script <br>" + 
                          "ps - Displays all scripts that are actively running on the current server<br>" + 
                          "run [script] - Run a script <br>" + 
                          "tail [script] - Displays a script's logs<br>" + 
-                         "top - Displays all active scripts and their RAM usage <br><br>",
+                         "top - Displays all active scripts and their RAM usage <br><br>" + 
+                         "<strong>Note that because of the way the Netscript interpreter is implemented, " + 
+                         "whenever you reload or re-open the game all of the scripts that you are running will " +
+                         "start running from the BEGINNING of the code. The game does not keep track of where exactly " +
+                         "the execution of a script is when it saves/loads. </strong><br><br>",
     TutorialNetscriptText: "Netscript is a very simple programming language implemented for this game. The language has " + 
                            "your basic programming constructs and several built-in commands that are used to hack. <br><br>" + 
                            "<u><h1> Variables and data types </h1></u><br>" + 
@@ -250,6 +255,13 @@ CONSTANTS = {
                            "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer <br> Example: relaysmtp('foodnstuff');<br><br>" + 
                            "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer <br> Example: httpworm('foodnstuff');<br><br>" + 
                            "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer <br> Example: sqlinject('foodnstuff');<br><br>" + 
+                           "<i>run(script)</i> <br> Run a script as a separate process. The argument that is passed in is the name of the script as a string. This function can only " + 
+                           "be used to run scripts located on the same server. Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
+                           "of RAM to run this command.<br>Example: run('hack-foodnstuff.script'); <br> The example above will try and launch the 'hack-foodnstuff.script' script on " + 
+                           "the current server, if it exists. <br><br>" + 
+                           "<i>getHackingLevel() </i><br> Returns the Player's current hacking level <br><br> " + 
+                           "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
+                           "hostname or IP of the target server. <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
                            "<u><h1>While loops </h1></u><br>" +
                            "A while loop is a control flow statement that repeatedly executes code as long as a condition is met. <br><br> " +
                            "<i>while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}</i><br><br>" + 
@@ -267,7 +279,21 @@ CONSTANTS = {
                            "of the for loop. The following example shows code that will do the same thing as the while loop example above, " +
                            "except using a for loop instead: <br><br>" + 
                            "<i>for (i = 0; i < 10; i = i+1) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>}; </i><br><br>" + 
-                           "<u><h1> If statements </h1></u>",
+                           "<u><h1> If statements </h1></u><br>" + 
+                           "If/Elif/Else statements are conditional statements used to perform different actions based on different conditions: <br><br>" + 
+                           "<i>if (condition1) {<br>&nbsp;&nbsp;&nbsp;&nbsp;code1<br>} elif (condition2) {<br>&nbsp;&nbsp;&nbsp;&nbsp;code2<br>} else {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;code3<br>}</i><br><br>" + 
+                           "In the code above, first <i>condition1</i> will be checked. If this condition is true, then <i>code1</i> will execute and the " +
+                           "rest of the if/elif/else statement will be skipped. If <i>condition1</i> is NOT true, then the code will then go on to check " + 
+                           "<i>condition2</i>. If <i>condition2</i> is true, then <i>code2</i> will be executed, and the rest of the if/elif/else statement " +
+                           "will be skipped. If none of the conditions are true, then the code within the else block (<i>code3</i>) will be executed. " + 
+                           "Note that a conditional statement can have any number of elif statements. <br><br>" + 
+                           "Example: <br><br>" + 
+                           "if(getServerMoneyAvailable('foodnstuff') > 200000) {<br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>" + 
+                           "} else {<br>&nbsp;&nbsp;&nbsp;&nbsp;grow('foodnstuff');<br>};<br><br>" + 
+                           "The code above will use the getServerMoneyAvailable() function to check how much money there is on the 'foodnstuff' server. " + 
+                           "If there is more than $200,000, then it will try to hack that server. If there is $200,000 or less on the server, " + 
+                           "then the code will call grow('foodnstuff') instead and add more money to the server.<br><br>",
                            
     TutorialTravelingText:"There are six major cities in the world that you are able to travel to: <br><br> "  +
                            "    Aevum<br>" + 

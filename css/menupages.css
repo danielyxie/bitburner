@@ -23,11 +23,11 @@
 #script-editor-container {
 	position: fixed;
 	padding-top: 10px;
-	padding-left: 10px;
 	height: 100%;
 	margin-left: 10%;
-    width: 75%;
+    width: 99%;
     color: #66ff33;
+    overflow-y: scroll;
 }
 
 #script-editor-filename-tag {
@@ -36,14 +36,12 @@
 	float: left;
 }
 
-#script-editor-save-and-close-button {
-    float: right;
-    display: inline-block;
-}
-
+#script-editor-save-and-close-button,
 #script-editor-netscript-doc-button {
     float: right;
     display: inline-block;
+    width: 50%;
+    margin-right: 25%;
 }
 
 #script-editor-netscript-doc-warning {
@@ -58,9 +56,9 @@
 	float: left;
 	resize: none;
 	color: #66ff33;
-	width: 100%;
-    margin: 4px;
-    padding: 4px;
+	width: 75%;
+    margin: 10px;
+    padding: 5px;
 	
     border: 2px solid white; 
     -webkit-box-shadow: 
@@ -81,10 +79,10 @@
 
 #script-editor-text {
 	color: #66ff33;
-	width: 100%;
+	width: 75%;
 	height: 100%;
-    margin: 4px;
-    padding: 4px;
+    margin: 10px;
+    padding: 5px;
 	
     border: 2px solid white; 
     -webkit-box-shadow: 

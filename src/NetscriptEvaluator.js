@@ -351,8 +351,8 @@ function evaluate(exp, workerScript) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|grow() call has incorrect number of arguments. Takes 1 argument");
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
-						
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into grow() command");
@@ -393,6 +393,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into nuke() command");
@@ -438,6 +439,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into brutessh() command");
@@ -479,6 +481,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into ftpcrack() command");
@@ -520,6 +523,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into relaysmtp() command");
@@ -561,6 +565,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into relaysmtp() command");
@@ -602,6 +607,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into sqlinject() command");
@@ -638,7 +644,6 @@ function evaluate(exp, workerScript) {
 							reject(e);
 						});
                     } else if (exp.func.value == "run") {
-                        console.log("run() called");
                         if (exp.args.length != 1) {
                             reject("|"+workerScript.serverIp+"|"+workerScript.name+"|run() call has incorrect number of arguments. Takes 1 argument");
                         }
@@ -661,12 +666,12 @@ function evaluate(exp, workerScript) {
                             reject(e);
                         });
                     } else if (exp.func.value == "getHackingLevel") {
-                        console.log("getHackingLevel called");
                         if (exp.args.length != 0) {
                             reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getHackingLevel() call has incorrect number of arguments. Takes 0 arguments");
                         }
                         setTimeout(function() {
-                            console.log("About to resolve getHackingLevel");
+                            Player.updateSkillLevels();
+                            workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
                             resolve(Player.hacking_skill);
                         }, CONSTANTS.CodeInstructionRunTime);
                     } else if (exp.func.value == "getServerMoneyAvailable") {
@@ -682,6 +687,7 @@ function evaluate(exp, workerScript) {
                                     workerScript.scriptRef.log("Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
                                     return;
                                 }
+                                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + server.moneyAvailable);
                                 resolve(server.moneyAvailable);
                             }, CONSTANTS.CodeInstructionRunTime);
                         }, function(e) {
@@ -926,12 +932,15 @@ function apply_op(op, a, b) {
 //Run a script from inside a script using run() command
 function runScriptFromScript(server, scriptname, workerScript) {
     return new Promise(function(resolve, reject) {
+        var env = workerScript.env;
+        if (env.stopFlag) {reject(workerScript);}
         setTimeout(function() {
             //Check if the script is already running
             for (var i = 0; i < server.runningScripts.length; ++i) {
                 if (server.runningScripts[i] == scriptname) {
                     workerScript.scriptRef.log(scriptname + " is already running on " + server.hostname);
                     resolve(false);
+                    return;
                 }
             }
             
@@ -957,6 +966,7 @@ function runScriptFromScript(server, scriptname, workerScript) {
                         server.runningScripts.push(script.filename);	//Push onto runningScripts
                         addWorkerScript(script, server);
                         resolve(true);
+                        return;
                     }
                 }
             }
