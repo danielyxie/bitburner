@@ -130,7 +130,8 @@ CONSTANTS = {
                 "hostname               Displays the hostname of the machine<br>" + 
                 "ifconfig               Displays the IP address of the machine<br>" +
                 "kill [script name]     Stops a script that is running on the current machine<br>" +
-                "ls                     Displays all programs and scripts on the machine<br>" + 
+                "ls                     Displays all programs and scripts on the machine<br>" +
+                "mem [script name]      Displays the amount of RAM the script requires to run<br>" + 
                 "nano [script name]     Text editor - Open up and edit a script<br>" + 
                 "netstat                Displays all available network connections<br>" +  
                 "ps                     Display all scripts that are currently running<br>" + 
