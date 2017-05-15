@@ -209,6 +209,8 @@ function evaluate(exp, workerScript) {
          *      relaysmtp(server)
          *      httpworm(server)
          *      sqlinject(server)
+         *      getHackingLevel()
+         *      run(script))
 		 */ 
 		case "call":
 			//Define only valid function calls here, like hack() and stuff
@@ -635,6 +637,53 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
 							reject(e);
 						});
+                    } else if (exp.func.value == "run") {
+                        if (exp.args.length != 1) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|run() call has incorrect number of arguments. Takes 1 argument");
+                        }
+                        var scriptNamePromise = evaluate(exp.args[0], workerScript);
+                        scriptNamePromise.then(function(scriptname) {
+                            var serverIp = workerScript.serverIp;
+                            var scriptServer = AllServers[serverIp];
+                            if (scriptServer == null) {
+                                reject("|"+workerScript.serverIp+"|"+workerScript.name+"|Could not find server. This is a bug in the game. Report to game dev");
+                            }
+                            
+                            var runScriptPromise = runScriptFromScript(scriptServer, scriptname, workerScript);
+                            runScriptPromise.then(function(res) {
+                                resolve(res);
+                            }, function(e) {
+                                reject(e);
+                            });
+                            
+                        }, function(e) {
+                            reject(e);
+                        });
+                    } else if (exp.func.value == "getHackingLevel") {
+                        if (exp.args.length != 0) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getHackingLevel() call has incorrect number of arguments. Takes 0 arguments");
+                        }
+                        setTimeout(function() {
+                            resolve(Player.hacking_skill);
+                        }, CONSTANTS.CodeInstructionRunTime);
+                    } else if (exp.func.value == "getServerMoneyAvailable") {
+                        if (exp.args.length != 1) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getServerMoneyAvailable() call has incorrect number of arguments. Takes 1 arguments");
+                        }
+                        var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            setTimeout(function() {
+                                var server = getServer(ip);
+                                if (server == null) {
+                                    reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into getServerMoneyAvailable() command");
+                                    workerScript.scriptRef.log("Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
+                                    return;
+                                }
+                                resolve(server.moneyAvailable);
+                            }, CONSTANTS.CodeInstructionRunTime);
+                        }, function(e) {
+							reject(e);
+						});
                     }
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
@@ -868,7 +917,50 @@ function apply_op(op, a, b) {
       case "!=": return a !== b;
     }
     throw new Error("Can't apply operator " + op);
-} 
+}
+
+//Run a script from inside a script using run() command
+function runScriptFromScript(server, scriptname, workerScript) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            //Check if the script is already running
+            for (var i = 0; i < server.runningScripts.length; ++i) {
+                if (server.runningScripts[i] == scriptname) {
+                    workerScript.scriptRef.log(scriptname + " is already running on " + server.hostname);
+                    resolve(false);
+                }
+            }
+            
+            //Check if the script exists and if it does run it
+            for (var i = 0; i < server.scripts.length; ++i) {
+                if (server.scripts[i].filename == scriptname) {
+                    //Check for admin rights and that there is enough RAM availble to run
+                    var ramUsage = server.scripts[i].ramUsage;
+                    var ramAvailable = server.maxRam - server.ramUsed;
+                    
+                    if (server.hasAdminRights == false) {
+                        workerScript.scriptRef.log("Cannot run script " + scriptname + " because you do not have root access!");
+                        resolve(false);
+                        return;
+                    } else if (ramUsage > ramAvailable){
+                        workerScript.scriptRef.log("Cannot run script " + scriptname + " because there is not enough available RAM!");
+                        resolve(false);
+                        return;
+                    } else {
+                        //Able to run script
+                        workerScript.scriptRef.log("Running script: " + scriptname + ". May take a few seconds to start up...");
+                        var script = server.scripts[i];
+                        server.runningScripts.push(script.filename);	//Push onto runningScripts
+                        addWorkerScript(script, server);
+                        resolve(true);
+                    }
+                }
+            }
+            workerScript.scriptRef.log("Could not find script " + scriptname + " on " + server.hostname);
+            resolve(false);
+        }, CONSTANTS.CodeInstructionRunTime);
+    });
+}
 
 function isScriptErrorMessage(msg) {
     splitMsg = msg.split("|");
@@ -913,4 +1005,4 @@ function scriptCalculatePercentMoneyHacked(server) {
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;
-} 
+}

@@ -175,7 +175,7 @@ updateHacknetNodesContent = function() {
     //Update player's money
     var moneyElem = document.getElementById("hacknet-nodes-money");
     moneyElem.innerHTML = "Money: $" + formatNumber(Player.money, 2) + "<br>" + 
-                          "Total production from all Hacknet Nodes: $" + formatNumber(Player.totalHacknetNodeProduction, 2);
+                          "Total production from all Hacknet Nodes: $" + formatNumber(Player.totalHacknetNodeProduction, 2) + " / second";
     
     //Update information in each owned hacknet node
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
