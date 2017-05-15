@@ -5,7 +5,7 @@
     right: 0;
     top: 0;
     height: 100%; /* Full height */
-    margin: 20% auto;
+    margin: 35% auto;
     padding: 10px;
     border: 5px solid #FFFFFF;
     width: 35%;
@@ -22,7 +22,8 @@
 }
 
 #interactive-tutorial-exit,
-#interactive-tutorial-next {
+#interactive-tutorial-next,
+#interactive-tutorial-back {
     color: #aaa;
     font-size: 20px;
     font-weight: bold;
@@ -38,6 +39,11 @@
     float: left;
 }
 
+#interactive-tutorial-back {
+    margin-right: 20%;
+    float: right;
+}
+
 #interactive-tutorial-next {
     float: right;
 }
@@ -45,7 +51,9 @@
 #interactive-tutorial-exit:hover,
 #interactive-tutorial-exit:focus,
 #interactive-tutorial-next:hover,
-#interactive-tutorial-next:focus {
+#interactive-tutorial-next:focus,
+#interactive-tutorial-back:hover,
+#interactive-tutorial-back:focus {
     color: white;
     text-decoration: none;
     cursor: pointer;
