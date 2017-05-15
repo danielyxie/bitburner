@@ -12,7 +12,7 @@ CONSTANTS = {
     /* Base costs */
     BaseCostFor1GBOfRamHome: 50000,
     BaseCostFor1GBOfRamServer: 40000,     //1 GB of RAM
-    BaseCostFor1GBOfRamHacknetNode: 25000,
+    BaseCostFor1GBOfRamHacknetNode: 30000,
     
     BaseCostForHacknetNode: 1000,
     BaseCostForHacknetNodeCore: 1000000,

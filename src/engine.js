@@ -691,6 +691,21 @@ var Engine = {
         }
     },
     
+    _prevTimeout: null,
+    createStatusText: function(txt) {
+        if (Engine._prevTimeout != null) {
+            clearTimeout(Engine._prevTimeout);
+            Engine._prevTimeout = null;
+        }
+        var statusText = document.getElementById("status-text")
+        statusText.setAttribute("class", "status-text");
+        statusText.innerHTML = txt;
+        Engine._prevTimeout = setTimeout(function() {
+            statusText.removeAttribute("class");
+            statusText.innerHTML = "";
+        }, 3000);
+    },
+    
     load: function() {
         //Load game from save or create new game
         if (loadGame(saveObject)) {    
@@ -729,6 +744,11 @@ var Engine = {
             
             //Passive faction rep gain offline
             processPassiveFactionRepGain(numCyclesOffline);
+            
+            //Update total playtime
+            var time = numCyclesOffline * Engine._idleSpeed;
+            if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
+            Player.totalPlaytime += time;
         } else {
             //No save found, start new game
             console.log("Initializing new game");

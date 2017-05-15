@@ -22,6 +22,8 @@ BitburnerSaveObject.prototype.saveGame = function() {
     
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
     window.localStorage.setItem("bitburnerSave", saveString);
+    
+    Engine.createStatusText("Game saved!");
 }
 
 loadGame = function(saveObj) {
@@ -45,6 +47,7 @@ BitburnerSaveObject.prototype.deleteGame = function() {
     if (window.localStorage.getItem("bitburnerSave")) {
         window.localStorage.removeItem("bitburnerSave");
     }
+    Engine.createStatusText("Game deleted!");
 }
 
 
