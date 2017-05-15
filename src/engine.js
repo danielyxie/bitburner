@@ -714,13 +714,13 @@ var Engine = {
             console.log("Loaded game from save");
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
-            Engine.start();                 //Run main game loop and Scripts loop
             CompanyPositions.init();
 
             //Calculate the number of cycles have elapsed while offline
-            var thisUpdate = new Date().getTime();
+            Engine._lastUpdate = new Date().getTime();
             var lastUpdate = Player.lastUpdate;
-            var numCyclesOffline = Math.floor((thisUpdate - lastUpdate) / Engine._idleSpeed);
+            var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
+            Player.lastUpdate = new Date().getTime();
             
             /* Process offline progress */
             processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
@@ -751,6 +751,8 @@ var Engine = {
             var time = numCyclesOffline * Engine._idleSpeed;
             if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
             Player.totalPlaytime += time;
+            
+            Engine.start();                 //Run main game loop and Scripts loop
         } else {
             //No save found, start new game
             console.log("Initializing new game");

@@ -167,7 +167,7 @@ function PlayerObject() {
     this.hacknet_node_level_cost_mult       = 1;
 	
 	//Used to store the last update time. 
-	this.lastUpdate = new Date().getTime();
+	this.lastUpdate = 0;
     this.totalPlaytime = 0;
 };
 
@@ -989,7 +989,7 @@ PlayerObject.prototype.takeClass = function(numCycles) {
     var cyclesPerSec = 1000 / Engine._idleSpeed;
         
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You have been " + className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ".<br><br>" +
+    txt.innerHTML = "You have been " + className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "This has cost you: <br>" + 
                     "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyLossRate * cyclesPerSec, 2) + " / sec) <br><br>" + 
                     "You have gained: <br>" + 
