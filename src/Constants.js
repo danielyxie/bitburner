@@ -10,8 +10,8 @@ CONSTANTS = {
     CorpFactionRepRequirement: 250000,
     
     /* Base costs */
-    BaseCostFor1GBOfRamHome: 50000,
-    BaseCostFor1GBOfRamServer: 40000,     //1 GB of RAM
+    BaseCostFor1GBOfRamHome: 40000,
+    BaseCostFor1GBOfRamServer: 35000,     //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
     
     BaseCostForHacknetNode: 1000,
