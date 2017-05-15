@@ -18,7 +18,7 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
     
     //Each CPU core doubles the speed. Every 1GB of ram adds 15% increase
     this.moneyGainRatePerSecond = (this.level * gainPerLevel) * 
-                                  Math.pow(1.15, this.ram-1) * 
+                                  Math.pow(1.05, this.ram-1) * 
                                   this.numCores * Player.hacknet_node_money_mult;
     if (isNaN(this.moneyGainRatePerSecond)) {
         this.moneyGainRatePerSecond = 0;
@@ -39,6 +39,7 @@ HacknetNode.prototype.purchaseLevelUpgrade = function() {
     if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
     if (cost > Player.money) {return;}
     Player.loseMoney(cost);
+    if (this.level >= CONSTANTS.HacknetNodeMaxLevel) {return;}
     ++this.level;
     this.updateMoneyGainRate();
 }
@@ -59,6 +60,7 @@ HacknetNode.prototype.purchaseRamUpgrade = function() {
     if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
     if (cost > Player.money) {return;}
     Player.loseMoney(cost);
+    if (this.ram >= CONSTANTS.HacknetNodeMaxRam) {return;}
     this.ram *= 2; //Ram is always doubled
     this.updateMoneyGainRate();
 }
@@ -74,6 +76,7 @@ HacknetNode.prototype.purchaseCoreUpgrade = function() {
     if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
     if (cost > Player.money) {return;}
     Player.loseMoney(cost);
+    if (this.numCores >= CONSTANTS.HacknetNodeMaxCores) {return;}
     ++this.numCores;
     this.updateMoneyGainRate();
 }
@@ -258,34 +261,52 @@ updateHacknetNodeDomElement = function(nodeObj) {
                     "RAM:        " + nodeObj.ram + "GB<br>" + 
                     "Cores:      " + nodeObj.numCores;
                     
+    //Upgrade level
     var upgradeLevelButton = document.getElementById("hacknet-node-upgrade-level-" + nodeName);
     if (upgradeLevelButton == null) {throw new Error("Cannot find upgrade level button element");}
-    var upgradeLevelCost = nodeObj.calculateLevelUpgradeCost();
-    upgradeLevelButton.innerHTML = "Upgrade Hacknet Node Level - $" + formatNumber(upgradeLevelCost, 2);
-    if (upgradeLevelCost > Player.money) {
+    if (nodeObj.level >= CONSTANTS.HacknetNodeMaxLevel) {
+        upgradeLevelButton.innerHTML = "MAX LEVEL";
         upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
     } else {
-        upgradeLevelButton.setAttribute("class", "a-link-button");
+        var upgradeLevelCost = nodeObj.calculateLevelUpgradeCost();
+        upgradeLevelButton.innerHTML = "Upgrade Hacknet Node Level - $" + formatNumber(upgradeLevelCost, 2);
+        if (upgradeLevelCost > Player.money ) {
+            upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
+        } else {
+            upgradeLevelButton.setAttribute("class", "a-link-button");
+        }
     }
     
+    //Upgrade RAM
     var upgradeRamButton = document.getElementById("hacknet-node-upgrade-ram-" + nodeName);
     if (upgradeRamButton == null) {throw new Error("Cannot find upgrade ram button element");}
-    var upgradeRamCost = nodeObj.calculateRamUpgradeCost();
-    upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM -$" + formatNumber(upgradeRamCost, 2);
-    if (upgradeRamCost > Player.money) {
+    if (nodeObj.ram >= CONSTANTS.HacknetNodeMaxRam) {
+        upgradeRamButton.innerHTML = "MAX RAM";
         upgradeRamButton.setAttribute("class", "a-link-button-inactive");
     } else {
-        upgradeRamButton.setAttribute("class", "a-link-button");
+        var upgradeRamCost = nodeObj.calculateRamUpgradeCost();
+        upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM -$" + formatNumber(upgradeRamCost, 2);
+        if (upgradeRamCost > Player.money) {
+            upgradeRamButton.setAttribute("class", "a-link-button-inactive");
+        } else {
+            upgradeRamButton.setAttribute("class", "a-link-button");
+        }
     }
     
+    //Upgrade Cores
     var upgradeCoreButton = document.getElementById("hacknet-node-upgrade-core-" + nodeName);
     if (upgradeCoreButton == null) {throw new Error("Cannot find upgrade cores button element");}
-    var upgradeCoreCost = nodeObj.calculateCoreUpgradeCost();
-    upgradeCoreButton.innerHTML = "Purchase additional CPU Core - $" + formatNumber(upgradeCoreCost, 2);
-    if (upgradeCoreCost > Player.money) {
+    if (nodeObj.numCores >= CONSTANTS.HacknetNodeMaxCores) {
+        upgradeCoreButton.innerHTML = "MAX CORES";
         upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
     } else {
-        upgradeCoreButton.setAttribute("class", "a-link-button");
+        var upgradeCoreCost = nodeObj.calculateCoreUpgradeCost();
+        upgradeCoreButton.innerHTML = "Purchase additional CPU Core - $" + formatNumber(upgradeCoreCost, 2);
+        if (upgradeCoreCost > Player.money) {
+            upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
+        } else {
+            upgradeCoreButton.setAttribute("class", "a-link-button");
+        }
     }
 }
 
