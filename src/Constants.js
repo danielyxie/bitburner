@@ -273,12 +273,12 @@ CONSTANTS = {
                            "This while loop above is an infinite loop (continuously runs until the script is manually stopped) that repeatedly runs the 'hack('foodnstuff')' command. " +
                            "Note that a semicolon is needed at closing bracket of the while loop, UNLESS it is at the end of the code<br><br> " + 
                            "<u><h1>For loops</h1></u><br>" + 
-                           "A for loop is another control flow statement that allows code to by repeated by iterations. The structure is: <br><br> " +
+                           "A for loop is another control flow statement that allows code to be repeated by iterations. The structure is: <br><br> " +
                            "<i>for (<i>[init]</i>; <i>[cond]</i>; <i>[post]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>code</i> <br> }; </i><br><br>" + 
                            "The <i>[init]</i> expression evaluates before the for loop begins. The for loop will continue to execute " +
                            "as long as <i>[cond]</i> is met. The <i>[post]</i> expression will evaluate at the end of every iteration " + 
-                           "of the for loop. The following example shows code that will do the same thing as the while loop example above, " +
-                           "except using a for loop instead: <br><br>" + 
+                           "of the for loop. The following example shows code that will run the 'hack('foodnstuff');' command 10 times " +
+                           " using a for loop: <br><br>" + 
                            "<i>for (i = 0; i < 10; i = i+1) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>}; </i><br><br>" + 
                            "<u><h1> If statements </h1></u><br>" + 
                            "If/Elif/Else statements are conditional statements used to perform different actions based on different conditions: <br><br>" + 
@@ -322,8 +322,10 @@ CONSTANTS = {
                       "your stats. Different positions value different stats. When you are working, you are unable to perform any " +
                       "other actions such as using your terminal or visiting other locations (However, note that any scripts you have " + 
                       "running on servers will continue to run as you work!). It is possible to cancel your work shift before the " + 
-                      "8 hours is up, but doing so will result in you gaining only half of all of the money, experience, and reputation " +
-                      "that you had earned up to that point. <br><br>" +
+                      "8 hours is up. However, if you have a full-time job, then cancelling a shift early will result in you gaining " + 
+                      "only half of all of the money, experience, and reputation " +
+                      "that you had earned up to that point. There are also part-time/consultant jobs available where you will not " + 
+                      " be penalized if you cancel a work shift early. However, these positions pay less than full-time positions.<br><br>" +
                       "As you continue to work at a company, you will gain more and more reputation at that company. When your stats " + 
                       "and reputation are high enough, you can get a promotion. You can apply for a promotion on the company page, just like " + 
                       "you applied for the job originally. Higher positions at a company provide better salaries and stat gains.",

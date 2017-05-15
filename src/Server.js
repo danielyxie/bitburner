@@ -452,7 +452,7 @@ initForeignServers = function() {
     var HaraKiriSushiBarServer = new Server();
     HaraKiriSushiBarServer.setHackingParameters(40, 2000000, 15, 40);
     HaraKiriSushiBarServer.init(createRandomIp(), "harakiri-sushi", "HaraKiri Sushi Bar Network", true, false, false, false, 4);
-    HaraKiriSushiBarServer.setPortProperties(1);
+    HaraKiriSushiBarServer.setPortProperties(0);
     AddToAllServers(HaraKiriSushiBarServer);
     
     var PhantasyServer = new Server();
