@@ -64,3 +64,7 @@ Private beta feedback
     For the last thing of the tutorial, I would just have a button like "Finish Tutorial" rather than "Next"
     
     Command to see a script's RAM cost
+    
+    Netscript commands: 
+    I just got two from the top of my head: a function to get the current cash on the server, and a function to know how much a hack would take
+    Like, if I want to grow each time I take 5000$ from the server, that would be practical
