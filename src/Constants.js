@@ -232,11 +232,13 @@ CONSTANTS = {
                            "<u><h1> Functions </h1></u><br>" + 
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " + 
-                           "<i>hack(hostname/ip)</i><br>Core function that is used to hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
-                           "either the IP or hostname of the server you want to hack. <br>Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
+                           "<i>hack(hostname/ip)</i><br>Core function that is used to try and hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
+                           "either the IP or hostname of the server you want to hack. Attempting to hack a server takes time. This time is dependent on your hacking skill and the server's " +
+                           "security level. <br>Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
-                           "must be a string with either the IP or hostname of the target server. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "must be a string with either the IP or hostname of the target server. The grow() command takes a flat 2 minutes to execute " + 
+                           "and grants 1 hacking exp when complete. <br> Example: grow('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer <br> Example: brutessh('foodnstuff');<br><br>" + 
@@ -261,8 +263,7 @@ CONSTANTS = {
                            "of the for loop. The following example shows code that will do the same thing as the while loop example above, " +
                            "except using a for loop instead: <br><br>" + 
                            "<i>for (i = 0; i < 10; i = i+1) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>}; </i><br><br>" + 
-                           "<u><h1> If statements </h1></u>" + 
-                           "",
+                           "<u><h1> If statements </h1></u>",
                            
     TutorialTravelingText:"There are six major cities in the world that you are able to travel to: <br><br> "  +
                            "    Aevum<br>" + 

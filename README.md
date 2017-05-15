@@ -62,3 +62,5 @@ Private beta feedback
     covers some of the text
     
     For the last thing of the tutorial, I would just have a button like "Finish Tutorial" rather than "Next"
+    
+    Command to see a script's RAM cost
