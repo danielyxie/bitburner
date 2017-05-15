@@ -57,9 +57,7 @@ Private beta feedback
     
     Also not really a big deal, but I'm at 110% zoom on chrome and the tutorial window
     covers some of the text
-    
-    For the last thing of the tutorial, I would just have a button like "Finish Tutorial" rather than "Next"
-    
+        
     I'd put a little popup or something when you click save, so you know
     
     Netscript commands: 

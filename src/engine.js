@@ -273,7 +273,8 @@ var Engine = {
         'Crime money multiplier: ' + formatNumber(Player.crime_money_mult * 100, 2) + '%<br><br><br>' +
         '<b>Misc</b><br><br>' + 
         'Servers owned:       ' + Player.purchasedServers.length + '<br>' + 
-        'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br><br> ').replace( / /g, "&nbsp;" );
+        'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
+        'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime) + '<br><br><br>').replace( / /g, "&nbsp;" );
         
     },
     
@@ -524,6 +525,11 @@ var Engine = {
     },
     
     updateGame: function(numCycles = 1) {
+        //Update total playtime
+        var time = numCycles * Engine._idleSpeed;
+        if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
+        Player.totalPlaytime += time;
+        
         //Start Manual hack 
         if (Player.startAction == true) {
             Engine._totalActionTime = Player.actionTime;
@@ -1001,6 +1007,12 @@ var Engine = {
             });
             Engine.loadWorkInProgressContent();
         }
+        
+        //DEBUG
+        document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
+            Player.getHomeComputer().runningScripts = [];
+            return false;
+        });
     },
     
     start: function() {

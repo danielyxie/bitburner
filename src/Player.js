@@ -168,6 +168,7 @@ function PlayerObject() {
 	
 	//Used to store the last update time. 
 	this.lastUpdate = new Date().getTime();
+    this.totalPlaytime = 0;
 };
 
 PlayerObject.prototype.init = function() {

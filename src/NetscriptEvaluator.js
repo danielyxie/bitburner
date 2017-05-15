@@ -638,6 +638,7 @@ function evaluate(exp, workerScript) {
 							reject(e);
 						});
                     } else if (exp.func.value == "run") {
+                        console.log("run() called");
                         if (exp.args.length != 1) {
                             reject("|"+workerScript.serverIp+"|"+workerScript.name+"|run() call has incorrect number of arguments. Takes 1 argument");
                         }
@@ -660,10 +661,12 @@ function evaluate(exp, workerScript) {
                             reject(e);
                         });
                     } else if (exp.func.value == "getHackingLevel") {
+                        console.log("getHackingLevel called");
                         if (exp.args.length != 0) {
                             reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getHackingLevel() call has incorrect number of arguments. Takes 0 arguments");
                         }
                         setTimeout(function() {
+                            console.log("About to resolve getHackingLevel");
                             resolve(Player.hacking_skill);
                         }, CONSTANTS.CodeInstructionRunTime);
                     } else if (exp.func.value == "getServerMoneyAvailable") {
@@ -687,6 +690,7 @@ function evaluate(exp, workerScript) {
                     }
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
+            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Unrecognized function call");
 			break;
 
 		default:

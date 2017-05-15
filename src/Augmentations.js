@@ -760,7 +760,7 @@ initAugmentations = function() {
     AddToAugmentations(HacknetNodeNICUpload);
     
     var HacknetNodeKernelDNI = new Augmentation(AugmentationNames.HacknetNodeKernelDNI);
-    HacknetNodeKernelDNI.setRequirements(4000, 90000000);
+    HacknetNodeKernelDNI.setRequirements(4000, 12000000);
     HacknetNodeKernelDNI.setInfo("Installs a Direct-Neural Interface jack into the arm that is capable of connecting to a " + 
                                  "Hacknet Node. This lets the user access and manipulate the Node's kernel using the mind's " + 
                                  "electrochemical signals.<br><br>" + 

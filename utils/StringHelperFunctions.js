@@ -32,6 +32,9 @@ function convertTimeMsToTimeElapsedString(time) {
     //Convert ms to seconds, since we only have second-level precision
     time = Math.floor(time / 1000);
     
+    var days = Math.floor(time / 86400);
+    time %= 86400;
+    
     var hours = Math.floor(time / 3600);
     time %= 3600;
     
@@ -40,7 +43,12 @@ function convertTimeMsToTimeElapsedString(time) {
     
     var seconds = time;
     
-    return hours + " hours " + minutes + " minutes " + seconds + " seconds";
+    var res = "";
+    if (days) {res += days + " days";}
+    if (hours) {res += hours + " hours ";}
+    if (minutes) {res += minutes + " minutes ";}
+    if (seconds) {res += seconds + " seconds ";}
+    return res;
 }
 
 //Finds the longest common starting substring in a set of strings
