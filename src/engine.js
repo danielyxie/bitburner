@@ -516,9 +516,9 @@ var Engine = {
                 
         if (diff > 0) {
             //Update the game engine by the calculated number of cycles
-            Engine.updateGame(diff);
             Engine._lastUpdate = _thisUpdate - offset;
             Player.lastUpdate = _thisUpdate - offset;
+            Engine.updateGame(diff);
         }       
         
         window.requestAnimationFrame(Engine.idleTimer);
@@ -721,7 +721,6 @@ var Engine = {
             var lastUpdate = Player.lastUpdate;
             var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
             
-            
             /* Process offline progress */
             processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
             loadAllRunningScripts();    //This also takes care of offline production for those scripts
@@ -741,8 +740,6 @@ var Engine = {
                     Player.work(numCyclesOffline);
                 }
             }
-            
-            
             
             //Hacknet Nodes offline progress
             processAllHacknetNodeEarnings(numCyclesOffline);
