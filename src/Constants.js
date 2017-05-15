@@ -45,7 +45,7 @@ CONSTANTS = {
     ScriptRelaysmtpRamCost:         0.05,
     ScriptHttpwormRamCost:          0.05,
     ScriptSqlinjectRamCost:         0.05,
-    ScriptRunRamCost:               0.5,
+    ScriptRunRamCost:               0.75,
     ScriptGetHackingLevelRamCost:   0.1,
     ScriptGetServerMoneyRamCost:    0.1,
     

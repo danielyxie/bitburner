@@ -225,6 +225,7 @@ function evaluate(exp, workerScript) {
 					if (exp.func.value == "hack") {
 						if (exp.args.length != 1) {
 							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Hack() call has incorrect number of arguments. Takes 1 argument");
+                            return;
 						}
 						var ipPromise = evaluate(exp.args[0], workerScript);
 
@@ -306,6 +307,7 @@ function evaluate(exp, workerScript) {
 					} else if (exp.func.value == "sleep") {
 						if (exp.args.length != 1) {
 							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|sleep() call has incorrect number of arguments. Takes 1 argument.");
+                            return;
 						}
 						var sleepTimePromise = evaluate(exp.args[0], workerScript);
 						sleepTimePromise.then(function(sleepTime) {
@@ -327,6 +329,7 @@ function evaluate(exp, workerScript) {
 					} else if (exp.func.value == "print") {
 						if (exp.args.length != 1) {
 							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|print() call has incorrect number of arguments. Takes 1 argument");
+                            return;
 						}
 						
 						var p = new Promise(function(resolve, reject) {
@@ -349,6 +352,7 @@ function evaluate(exp, workerScript) {
 					} else if (exp.func.value == "grow") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|grow() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
@@ -390,6 +394,7 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "nuke") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|nuke() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
@@ -436,6 +441,7 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "brutessh") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|brutessh() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
@@ -478,6 +484,7 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "ftpcrack") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|ftpcrack() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
@@ -520,6 +527,7 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "relaysmtp") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|relaysmtp() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
@@ -562,6 +570,7 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "httpworm") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|httpworm() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
@@ -604,6 +613,7 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "sqlinject") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|sqlinject() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
@@ -646,6 +656,7 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "run") {
                         if (exp.args.length != 1) {
                             reject("|"+workerScript.serverIp+"|"+workerScript.name+"|run() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
                         var scriptNamePromise = evaluate(exp.args[0], workerScript);
                         scriptNamePromise.then(function(scriptname) {
@@ -653,6 +664,7 @@ function evaluate(exp, workerScript) {
                             var scriptServer = AllServers[serverIp];
                             if (scriptServer == null) {
                                 reject("|"+workerScript.serverIp+"|"+workerScript.name+"|Could not find server. This is a bug in the game. Report to game dev");
+                                return;
                             }
                             
                             var runScriptPromise = runScriptFromScript(scriptServer, scriptname, workerScript);
@@ -668,6 +680,7 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "getHackingLevel") {
                         if (exp.args.length != 0) {
                             reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getHackingLevel() call has incorrect number of arguments. Takes 0 arguments");
+                            return;
                         }
                         setTimeout(function() {
                             Player.updateSkillLevels();

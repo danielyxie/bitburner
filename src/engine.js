@@ -993,7 +993,7 @@ var Engine = {
                 if (Player.workType == CONSTANTS.WorkTypeFaction) {
                     var fac = Factions[Player.currentWorkFactionName];
                     Player.finishFactionWork(true, fac);
-                } else if (Player.WorkType == CONSTANTS.WorkTypeCreateProgram) {
+                } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
                     Player.finishCreateProgramWork(true, Player.createProgramName);
                 } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
                     Player.finishClass();

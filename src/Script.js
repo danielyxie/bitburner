@@ -164,6 +164,7 @@ Script.prototype.updateRamUsage = function() {
     var runCount = numOccurrences(codeCopy, "run(");
     var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
     var getServerMoneyAvailableCount = numOccurrences(codeCopy, "getServerMoneyAvailable(");
+    var numOperators = numNetscriptOperators(codeCopy);
     
     this.ramUsage =  baseRam + 
                     ((whileCount * CONSTANTS.ScriptWhileRamCost) + 
