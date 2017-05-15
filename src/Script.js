@@ -10,6 +10,14 @@ function scriptEditorSaveCloseInit() {
         saveAndCloseScriptEditor();
         return false;
     });
+    
+    var netscriptDocButton = document.getElementById("script-editor-netscript-doc-button");
+    netscriptDocButton.addEventListener("click", function() {
+        Engine.loadTutorialContent();
+        Engine.displayTutorialContent();
+        Engine.displayTutorialPage(CONSTANTS.TutorialNetscriptText);
+        return false;
+    });
 };
 
 document.addEventListener("DOMContentLoaded", scriptEditorSaveCloseInit, false);

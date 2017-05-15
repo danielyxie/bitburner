@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.3",
+    Version:                "0.4",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -203,7 +203,7 @@ CONSTANTS = {
                          "top - Displays all active scripts and their RAM usage <br><br>",
     TutorialNetscriptText: "Netscript is a very simple programming language implemented for this game. The language has " + 
                            "your basic programming constructs and several built-in commands that are used to hack. <br><br>" + 
-                           "<strong> Variables and data types </strong><br>" + 
+                           "<u><h1> Variables and data types </h1></u><br>" + 
                            "The following data types are supported by Netscript: <br>" + 
                            "numeric - Integers and floats (6, 10.4999)<br>" + 
                            "string - Encapsulated by single or double quotes ('this is a string')<br>" + 
@@ -214,7 +214,7 @@ CONSTANTS = {
                            "In the first example above, we are creating the variable i and assigning it a value of 5. In the second, " +
                            "we are creating the variable s and assigning it the value of a string. Note that all expressions must be " + 
                            "ended with a semicolon. <br><br>" +
-                           "<strong> Operators </strong> <br>" + 
+                           "<u><h1> Operators</h1> </u><br>" + 
                            "The following operators are supported by Netscript: <br>" + 
                            "&nbsp;+<br>" + 
                            "&nbsp;-<br>" + 
@@ -229,7 +229,7 @@ CONSTANTS = {
                            "&nbsp;>=<br>" + 
                            "&nbsp;==<br>" + 
                            "&nbsp;!=<br><br>" + 
-                           "<strong> Functions </strong><br>" + 
+                           "<u><h1> Functions </h1></u><br>" + 
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " + 
                            "<i>hack(hostname/ip)</i><br>Core function that is used to hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
@@ -237,28 +237,30 @@ CONSTANTS = {
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
                            "must be a string with either the IP or hostname of the target server. <br> Example: grow('foodnstuff');<br><br>" + 
-                           "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command <br><br>" + 
+                           "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer <br> Example: brutessh('foodnstuff');<br><br>" + 
                            "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer <br> Example: ftpcrack('foodnstuff');<br><br>" + 
                            "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer <br> Example: relaysmtp('foodnstuff');<br><br>" + 
                            "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer <br> Example: httpworm('foodnstuff');<br><br>" + 
                            "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer <br> Example: sqlinject('foodnstuff');<br><br>" + 
-                           "<strong>While loop </strong><br>" +
+                           "<u><h1>While loops </h1></u><br>" +
                            "A while loop is a control flow statement that repeatedly executes code as long as a condition is met. <br><br> " +
-                           "while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}<br><br>" + 
+                           "<i>while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}</i><br><br>" + 
                            "As long as <i>[cond]</i> remains true, the code block <i>[code]</i> will continuously execute. Example: <br><br>" + 
-                           "i = 0; <br> while (i < 10) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1;<br> }; <br><br>" + 
-                           "This code repeat the 'hack('foodnstuff')' command 10 times before it stops and exits. " + 
+                           "<i>i = 0; <br> while (i < 10) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1;<br> }; </i><br><br>" + 
+                           "This code above repeats the 'hack('foodnstuff')' command 10 times before it stops and exits. <br><br>" + 
+                           "<i>while(true) { <br>&nbsp;&nbsp;&nbsp;&nbsp; hack('foodnstuff'); <br> }; </i><br><br> " + 
+                           "This while loop above is an infinite loop (continuously runs until the script is manually stopped) that repeatedly runs the 'hack('foodnstuff')' command. " +
                            "Note that a semicolon is needed at closing bracket of the while loop, UNLESS it is at the end of the code<br><br> " + 
-                           "<strong>For loop</strong><br>" + 
+                           "<u><h1>For loops</h1></u><br>" + 
                            "A for loop is another control flow statement that allows code to by repeated by iterations. The structure is: <br><br> " +
-                           "for (<i>[init]</i>; <i>[cond]</i>; <i>[post]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>code</i> <br> }<br><br>" + 
+                           "<i>for (<i>[init]</i>; <i>[cond]</i>; <i>[post]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>code</i> <br> }; </i><br><br>" + 
                            "The <i>[init]</i> expression evaluates before the for loop begins. The for loop will continue to execute " +
                            "as long as <i>[cond]</i> is met. The <i>[post]</i> expression will evaluate at the end of every iteration " + 
                            "of the for loop. The following example shows code that will do the same thing as the while loop example above, " +
                            "except using a for loop instead: <br><br>" + 
-                           "for (i = 0; i < 10; i = i+1) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>}; <br><br><br>",
+                           "<i>for (i = 0; i < 10; i = i+1) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>}; </i><br><br><br>",
                            
     TutorialTravelingText:"There are six major cities in the world that you are able to travel to: <br><br> "  +
                            "    Aevum<br>" + 

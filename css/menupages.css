@@ -41,6 +41,19 @@
     display: inline-block;
 }
 
+#script-editor-netscript-doc-button {
+    float: right;
+    display: inline-block;
+}
+
+#script-editor-netscript-doc-warning {
+    background-color: #555;
+    color: #FFFFFF;
+}
+#script-editor-netscript-doc-warning:hover {
+    background-color: #666;
+}
+
 #script-editor-filename {	
 	float: left;
 	resize: none;
