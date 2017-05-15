@@ -142,7 +142,7 @@ function determineCrimeChanceGrandTheftAuto() {
 }
 
 function determineCrimeChanceKidnap() {
-        return   ((Player.charisma / CONSTANTS.MaxSkillLevel +
+    var chance =  ((Player.charisma / CONSTANTS.MaxSkillLevel +
                    Player.strength / CONSTANTS.MaxSkillLevel + 
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
