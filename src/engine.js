@@ -698,9 +698,11 @@ var Engine = {
             Engine._prevTimeout = null;
         }
         var statusText = document.getElementById("status-text")
+        statusText.style.display = "inline-block";
         statusText.setAttribute("class", "status-text");
         statusText.innerHTML = txt;
         Engine._prevTimeout = setTimeout(function() {
+            statusText.style.display = "none";
             statusText.removeAttribute("class");
             statusText.innerHTML = "";
         }, 3000);

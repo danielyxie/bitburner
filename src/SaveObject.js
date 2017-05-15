@@ -23,6 +23,7 @@ BitburnerSaveObject.prototype.saveGame = function() {
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
     window.localStorage.setItem("bitburnerSave", saveString);
     
+    console.log("Game saved!");
     Engine.createStatusText("Game saved!");
 }
 
