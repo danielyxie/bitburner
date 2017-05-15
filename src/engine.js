@@ -941,6 +941,16 @@ var Engine = {
             return false;
         });
         
+        
+        //Script Editor Netscript documentation button
+        var netscriptDocButton = document.getElementById("script-editor-netscript-doc-button");
+        netscriptDocButton.addEventListener("click", function() {
+            Engine.loadTutorialContent();
+            Engine.displayTutorialContent();
+            Engine.displayTutorialPage(CONSTANTS.TutorialNetscriptText);
+            return false;
+        });
+        
         //Create Program buttons
         var portHackALink   = document.getElementById("create-program-nuke");
         var bruteSshALink   = document.getElementById("create-program-brutessh");

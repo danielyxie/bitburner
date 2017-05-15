@@ -138,7 +138,7 @@ CONSTANTS = {
                 "run [script/program]   Execute a program or a script<br>" + 
                 "scan                   See 'netstat' command<br>" +
                 "sudov                  Shows whether or not you have root access on this computer<br>" + 
-                "tail [script]          Display script logs (logs contain details about active scripts)" +
+                "tail [script]          Display script logs (logs contain details about active scripts)<br>" +
                 "telnet [ip/hostname]   See 'connect' command<br>" +
                 "top                    Display all running scripts and their RAM usage<br>",
                 
@@ -179,10 +179,10 @@ CONSTANTS = {
                          "a script, you attempt to hack the server. This action takes time. The more advanced a server's " + 
                          "security is, the more time it will take. Your hacking skill level also affects the hacking time, " + 
                          "with a higher hacking skill leading to shorter hacking times. Also, running the hack command " + 
-                         "manually through terminal is faster than hacking from a script. <br>" + 
+                         "manually through terminal is faster than hacking from a script. <br><br>" + 
                          "Your attempt to hack a server will not always succeed. The chance you have to successfully hack a " + 
                          "server is also determined by the server's security and your hacking skill level. Even if your " + 
-                         "hacking attempt is unsuccessful, you will still gain experience points. <br>" + 
+                         "hacking attempt is unsuccessful, you will still gain experience points. <br><br>" + 
                          "When you successfully hack a server. You steal a certain percentage of that server's total money. This " + 
                          "percentage is determined by the server's security and your hacking skill level. The amount of money " + 
                          "on a server is not limitless. So, if you constantly hack a server and deplete its money, then you will " +
@@ -260,7 +260,9 @@ CONSTANTS = {
                            "as long as <i>[cond]</i> is met. The <i>[post]</i> expression will evaluate at the end of every iteration " + 
                            "of the for loop. The following example shows code that will do the same thing as the while loop example above, " +
                            "except using a for loop instead: <br><br>" + 
-                           "<i>for (i = 0; i < 10; i = i+1) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>}; </i><br><br><br>",
+                           "<i>for (i = 0; i < 10; i = i+1) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>}; </i><br><br>" + 
+                           "<u><h1> If statements </h1></u>" + 
+                           "",
                            
     TutorialTravelingText:"There are six major cities in the world that you are able to travel to: <br><br> "  +
                            "    Aevum<br>" + 

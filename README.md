@@ -48,3 +48,17 @@ Tasks TODO:
 	
 	OPTIMIZATION
 		https://gamealchemist.wordpress.com/2013/05/01/lets-get-those-javascript-arrays-to-work-fast/
+        
+        
+        
+Private beta feedback
+    2 things right off the bat, I'd suggest putting a "Back" button in the tutorial 
+    window, and you could highlight or otherwise point out which tab the tutorial is 
+    suggesting I click on next
+    Maybe have a different colour for each tab, and then in the tutorial window it
+    can have the name of the tab with that colour
+    
+    Also not really a big deal, but I'm at 110% zoom on chrome and the tutorial window
+    covers some of the text
+    
+    For the last thing of the tutorial, I would just have a button like "Finish Tutorial" rather than "Next"
