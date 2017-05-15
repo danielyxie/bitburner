@@ -135,6 +135,9 @@ function prestigeAugmentation() {
     SpecialServerIps = new SpecialServerIpsMap();   //Must be done before initForeignServers()
     initForeignServers();
     
+    //Darkweb is purchase-able
+    document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button");
+    
     //Reset statistics of all scripts on home computer
     for (var i = 0; i < homeComp.scripts.length; ++i) {
         var s = homeComp.scripts[i];

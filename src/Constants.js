@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.8",
+    Version:                "0.9",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -18,11 +18,15 @@ CONSTANTS = {
     BaseCostForHacknetNodeCore: 1000000,
     
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1,
+    HacknetNodeMoneyGainPerLevel: 0.75,
     HacknetNodePurchaseNextMult: 1.35,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.06,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.25,     //Multiplier for cost when upgrading RAM
     HacknetNodeUpgradeCoreMult: 1.45,    //Multiplier for cost when buying another core
+    
+    HacknetNodeMaxLevel: 500,
+    HacknetNodeMaxRam: 64,
+    HacknetNodeMaxCores: 16,
     
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
