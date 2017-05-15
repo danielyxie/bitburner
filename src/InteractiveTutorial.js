@@ -197,7 +197,7 @@ function iTutorialEvaluateStep() {
                          "}<br><br> " +
                          "For anyone with basic programming experience, this code should be straightforward. " +
                          "This script will continuously hack the 'foodnstuff' server. <br><br>" + 
-                         "To save and close the script editor, press the button in the top left, or press ctrl + b.");
+                         "To save and close the script editor, press the button in the top right, or press ctrl + b.");
         //next step triggered in saveAndCloseScriptEditor() (Script.js)
         break;
     case iTutorialSteps.TerminalFree:
@@ -208,7 +208,7 @@ function iTutorialEvaluateStep() {
         //next step triggered by terminal commmand
         break;
     case iTutorialSteps.TerminalRunScript:
-        iTutorialSetText("We have 2GB of free RAM on this machine, which is enough to run our " + 
+        iTutorialSetText("We have 4GB of free RAM on this machine, which is enough to run our " + 
                          "script. Let's run our script using 'run foodnstuff.script'.");
         //next step triggered by terminal commmand
         break;
@@ -318,6 +318,7 @@ function iTutorialEvaluateStep() {
                          "Hope you enjoy the game!");
         var next = clearEventListeners("interactive-tutorial-next");
         next.style.display = "inline-block";
+        next.innerHTML = "Finish Tutorial";
         next.addEventListener("click", function() {
             iTutorialNextStep();
             return false;

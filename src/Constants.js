@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.4",
+    Version:                "0.5",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -138,7 +138,7 @@ CONSTANTS = {
                 "run [script/program]   Execute a program or a script<br>" + 
                 "scan                   See 'netstat' command<br>" +
                 "sudov                  Shows whether or not you have root access on this computer<br>" + 
-                "tail [script]          Display script logs (logs contain details about active scripts)" +
+                "tail [script]          Display script logs (logs contain details about active scripts)<br>" +
                 "telnet [ip/hostname]   See 'connect' command<br>" +
                 "top                    Display all running scripts and their RAM usage<br>",
                 
@@ -179,10 +179,10 @@ CONSTANTS = {
                          "a script, you attempt to hack the server. This action takes time. The more advanced a server's " + 
                          "security is, the more time it will take. Your hacking skill level also affects the hacking time, " + 
                          "with a higher hacking skill leading to shorter hacking times. Also, running the hack command " + 
-                         "manually through terminal is faster than hacking from a script. <br>" + 
+                         "manually through terminal is faster than hacking from a script. <br><br>" + 
                          "Your attempt to hack a server will not always succeed. The chance you have to successfully hack a " + 
                          "server is also determined by the server's security and your hacking skill level. Even if your " + 
-                         "hacking attempt is unsuccessful, you will still gain experience points. <br>" + 
+                         "hacking attempt is unsuccessful, you will still gain experience points. <br><br>" + 
                          "When you successfully hack a server. You steal a certain percentage of that server's total money. This " + 
                          "percentage is determined by the server's security and your hacking skill level. The amount of money " + 
                          "on a server is not limitless. So, if you constantly hack a server and deplete its money, then you will " +
@@ -232,11 +232,13 @@ CONSTANTS = {
                            "<u><h1> Functions </h1></u><br>" + 
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " + 
-                           "<i>hack(hostname/ip)</i><br>Core function that is used to hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
-                           "either the IP or hostname of the server you want to hack. <br>Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
+                           "<i>hack(hostname/ip)</i><br>Core function that is used to try and hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
+                           "either the IP or hostname of the server you want to hack. Attempting to hack a server takes time. This time is dependent on your hacking skill and the server's " +
+                           "security level. <br>Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
-                           "must be a string with either the IP or hostname of the target server. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "must be a string with either the IP or hostname of the target server. The grow() command takes a flat 2 minutes to execute " + 
+                           "and grants 1 hacking exp when complete. <br> Example: grow('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer <br> Example: brutessh('foodnstuff');<br><br>" + 
@@ -260,7 +262,8 @@ CONSTANTS = {
                            "as long as <i>[cond]</i> is met. The <i>[post]</i> expression will evaluate at the end of every iteration " + 
                            "of the for loop. The following example shows code that will do the same thing as the while loop example above, " +
                            "except using a for loop instead: <br><br>" + 
-                           "<i>for (i = 0; i < 10; i = i+1) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>}; </i><br><br><br>",
+                           "<i>for (i = 0; i < 10; i = i+1) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>}; </i><br><br>" + 
+                           "<u><h1> If statements </h1></u>",
                            
     TutorialTravelingText:"There are six major cities in the world that you are able to travel to: <br><br> "  +
                            "    Aevum<br>" + 

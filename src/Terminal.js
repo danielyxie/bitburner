@@ -205,7 +205,8 @@ function determineAllPossibilitiesForTabCompletion(input) {
     } 
     
     if (input.startsWith("kill ") || input.startsWith("nano ") ||
-        input.startsWith("tail ") || input.startsWith("rm ")) {
+        input.startsWith("tail ") || input.startsWith("rm ") ||
+        input.startsWith("mem ")) {
         //All Scripts
         for (var i = 0; i < currServ.scripts.length; ++i) {
             allPos.push(currServ.scripts[i].filename);
@@ -598,6 +599,20 @@ var Terminal = {
 			case "ls":
                 Terminal.executeListCommand(commandArray);
 				break;
+            case "mem":
+                if (commandArray.length != 2) {
+                    post("Incorrect usage of mem command. usage: mem [scriptname]"); return;
+                }
+                var scriptName = commandArray[1];
+                var currServ = Player.getCurrentServer();
+                for (var i = 0; i < currServ.scripts.length; ++i) {
+                    if (scriptName == currServ.scripts[i].filename) {
+                        post("This script requires " + formatNumber(currServ.scripts[i].ramUsage, 2) + "GB of RAM to run");
+                        return;
+                    }
+                }
+                post("ERR: No such script exists!");
+                break;
 			case "nano":
 				if (commandArray.length != 2) {
 					post("Incorrect usage of nano command. Usage: nano [scriptname]"); return;
