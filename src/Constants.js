@@ -48,6 +48,7 @@ CONSTANTS = {
     ScriptRunRamCost:               0.75,
     ScriptGetHackingLevelRamCost:   0.1,
     ScriptGetServerMoneyRamCost:    0.1,
+    ScriptOperatorRamCost:          0.01,
     
     //Server growth rate
     ServerGrowthRate: 1.00075,

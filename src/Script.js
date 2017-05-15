@@ -180,8 +180,12 @@ Script.prototype.updateRamUsage = function() {
                     (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost) + 
                     (runCount * CONSTANTS.ScriptRunRamCost) + 
                     (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
-                    (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost));
+                    (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
+                    (numOperators * CONSTANTS.ScriptOperatorRamCost));
     console.log("ram usage: " + this.ramUsage);
+    if (isNaN(this.ramUsage)) {
+        dialogBoxCreate("ERROR in calculating ram usage. This is a bug, please report to game develoepr");
+    }
 }
 
 Script.prototype.log = function(txt) {

@@ -81,7 +81,7 @@ function formatNumber(num, numFractionDigits) {
     });
 }
 
-//Counters the number of times a substring occurs in a string
+//Count the number of times a substring occurs in a string
 function numOccurrences(string, subString) {
     string += "";
     subString += "";
@@ -97,4 +97,27 @@ function numOccurrences(string, subString) {
         } else break;
     }
     return n;
+}
+
+//Counters the number of Netscript operators in a string
+function numNetscriptOperators(string) {
+    var total = 0;
+    total += numOccurrences(string, "+");
+    total += numOccurrences(string, "-");
+    total += numOccurrences(string, "*");
+    total += numOccurrences(string, "/");
+    total += numOccurrences(string, "%");
+    total += numOccurrences(string, "&&");
+    total += numOccurrences(string, "||");
+    total += numOccurrences(string, "<");
+    total += numOccurrences(string, ">");
+    total += numOccurrences(string, "<=");
+    total += numOccurrences(string, ">=");
+    total += numOccurrences(string, "==");
+    total += numOccurrences(string, "!=");
+    if (isNaN(total)) {
+        dialogBoxCreate("ERROR in counting number of operators in script. This is a bug, please report to game developer");
+        total = 0;
+    }
+    return total;
 }
