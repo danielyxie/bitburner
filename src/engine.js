@@ -110,6 +110,7 @@ var Engine = {
             document.getElementById("script-editor-filename").value = filename;
         }
         document.getElementById("script-editor-text").value = code;
+        
         Engine.currentPage = Engine.Page.ScriptEditor;
     },
     
