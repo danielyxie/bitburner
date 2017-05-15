@@ -296,7 +296,7 @@ displayLocationContent = function() {
             travelToVolhaven.style.display = "block";
             break;
             
-        case Locations.AevumSummitUniveristy:
+        case Locations.AevumSummitUniversity:
             var costMult = 4, expMult = 3;
             displayUniversityLocationContent(costMult);
             setUniversityLocationButtons(costMult, expMult);

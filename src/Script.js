@@ -96,11 +96,6 @@ function Script() {
     this.logs       = [];   //Script logging. Array of strings, with each element being a log entry
     
     /* Properties to calculate offline progress. Only applies for infinitely looping scripts */
-    
-    //Number of instructions ("lines") in the code. Any call ending in a ; 
-    //is considered one instruction. Used to calculate ramUsage
-    this.numInstructions        = 0;
-	
 	//Stats to display on the Scripts menu, and used to determine offline progress
 	this.offlineRunningTime  	= 0.01;	//Seconds
 	this.offlineMoneyMade 		= 0;
@@ -125,8 +120,7 @@ Script.prototype.saveScript = function() {
 		//Server
 		this.server = Player.currentServer;
 		
-		//Calculate/update number of instructions, ram usage, execution time, etc. 
-		this.updateNumInstructions();
+		//Calculate/update ram usage, execution time, etc. 
 		this.updateRamUsage();
 		
 		//Clear the stats when the script is updated
@@ -147,12 +141,7 @@ Script.prototype.reset = function() {
 	this.onlineRunningTime 		= 0.01;	//Seconds
 	this.onlineMoneyMade 		= 0;
 	this.onlineExpGained 		= 0;
-}
-
-//Calculates the number of instructions, which is just determined by number of semicolons
-Script.prototype.updateNumInstructions = function() {
-	var numSemicolons = this.code.split(";").length - 1;
-	this.numInstructions = numSemicolons;
+    this.logs = [];
 }
 
 //Updates how much RAM the script uses when it is running.
@@ -172,6 +161,10 @@ Script.prototype.updateRamUsage = function() {
     var relaysmtpCount = numOccurrences(codeCopy, "relaysmtp(");
     var httpwormCount = numOccurrences(codeCopy, "httpworm(");
     var sqlinjectCount = numOccurrences(codeCopy, "sqlinject(");
+    var runCount = numOccurrences(codeCopy, "run(");
+    var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
+    var getServerMoneyAvailableCount = numOccurrences(codeCopy, "getServerMoneyAvailable(");
+    var numOperators = numNetscriptOperators(codeCopy);
     
     this.ramUsage =  baseRam + 
                     ((whileCount * CONSTANTS.ScriptWhileRamCost) + 
@@ -184,8 +177,15 @@ Script.prototype.updateRamUsage = function() {
                     (ftpcrackCount * CONSTANTS.ScriptFtpcrackRamCost) + 
                     (relaysmtpCount * CONSTANTS.ScriptRelaysmtpRamCost) + 
                     (httpwormCount * CONSTANTS.ScriptHttpwormRamCost) + 
-                    (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost));
+                    (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost) + 
+                    (runCount * CONSTANTS.ScriptRunRamCost) + 
+                    (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
+                    (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
+                    (numOperators * CONSTANTS.ScriptOperatorRamCost));
     console.log("ram usage: " + this.ramUsage);
+    if (isNaN(this.ramUsage)) {
+        dialogBoxCreate("ERROR in calculating ram usage. This is a bug, please report to game develoepr");
+    }
 }
 
 Script.prototype.log = function(txt) {
@@ -304,7 +304,6 @@ function AllServersToMoneyMap() {
 }
 
 AllServersToMoneyMap.prototype.printConsole = function() {
-    console.log("Printing AllServersToMoneyMap");
     for (var ip in this) {
         if (this.hasOwnProperty(ip)) {
             var serv = AllServers[ip];
@@ -312,7 +311,6 @@ AllServersToMoneyMap.prototype.printConsole = function() {
                 console.log("Warning null server encountered with ip: " + ip);
                 continue;
             }
-            console.log(ip + "(" + serv.hostname + "): " + this[ip]);
         }
     }
 }

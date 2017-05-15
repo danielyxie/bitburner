@@ -112,6 +112,10 @@
 			<li class="delete-game-tab">
 				<a href="#" id="delete-game-link"> Delete Game </a>
 			</li>
+            
+            <li class="debug-delete-scripts-tab">
+                <a href="#" id="debug-delete-scripts-link"> (DEBUG) Delete Active Scripts </a>
+            </li>
         </ul>
     </div>
     
@@ -148,6 +152,7 @@
 		<br>
 		<br><br>
 		<textarea id="script-editor-text" tabindex="2" autofocus> </textarea>
+        <p> <br><br> </p>
 	</div>
 	
 	<!-- Active scripts info page -->
@@ -691,6 +696,11 @@
         <span id="interactive-tutorial-exit"> Exit Tutorial </span>
         <span id="interactive-tutorial-next"> Next </span>
         <span id="interactive-tutorial-back"> Back </span>
+    </div>
+    
+    <!-- Status text --> 
+    <div id="status-text-container">
+        <p id="status-text"> </p>
     </div>
     
   </body>

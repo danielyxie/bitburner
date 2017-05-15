@@ -209,6 +209,8 @@ function evaluate(exp, workerScript) {
          *      relaysmtp(server)
          *      httpworm(server)
          *      sqlinject(server)
+         *      getHackingLevel()
+         *      run(script))
 		 */ 
 		case "call":
 			//Define only valid function calls here, like hack() and stuff
@@ -223,6 +225,7 @@ function evaluate(exp, workerScript) {
 					if (exp.func.value == "hack") {
 						if (exp.args.length != 1) {
 							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Hack() call has incorrect number of arguments. Takes 1 argument");
+                            return;
 						}
 						var ipPromise = evaluate(exp.args[0], workerScript);
 
@@ -304,6 +307,7 @@ function evaluate(exp, workerScript) {
 					} else if (exp.func.value == "sleep") {
 						if (exp.args.length != 1) {
 							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|sleep() call has incorrect number of arguments. Takes 1 argument.");
+                            return;
 						}
 						var sleepTimePromise = evaluate(exp.args[0], workerScript);
 						sleepTimePromise.then(function(sleepTime) {
@@ -325,6 +329,7 @@ function evaluate(exp, workerScript) {
 					} else if (exp.func.value == "print") {
 						if (exp.args.length != 1) {
 							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|print() call has incorrect number of arguments. Takes 1 argument");
+                            return;
 						}
 						
 						var p = new Promise(function(resolve, reject) {
@@ -347,10 +352,11 @@ function evaluate(exp, workerScript) {
 					} else if (exp.func.value == "grow") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|grow() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
-						
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into grow() command");
@@ -388,9 +394,11 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "nuke") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|nuke() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into nuke() command");
@@ -433,9 +441,11 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "brutessh") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|brutessh() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into brutessh() command");
@@ -474,9 +484,11 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "ftpcrack") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|ftpcrack() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into ftpcrack() command");
@@ -515,9 +527,11 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "relaysmtp") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|relaysmtp() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into relaysmtp() command");
@@ -556,9 +570,11 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "httpworm") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|httpworm() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into relaysmtp() command");
@@ -597,9 +613,11 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "sqlinject") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|sqlinject() call has incorrect number of arguments. Takes 1 argument");
+                            return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into sqlinject() command");
@@ -635,9 +653,63 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
 							reject(e);
 						});
+                    } else if (exp.func.value == "run") {
+                        if (exp.args.length != 1) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|run() call has incorrect number of arguments. Takes 1 argument");
+                            return;
+                        }
+                        var scriptNamePromise = evaluate(exp.args[0], workerScript);
+                        scriptNamePromise.then(function(scriptname) {
+                            var serverIp = workerScript.serverIp;
+                            var scriptServer = AllServers[serverIp];
+                            if (scriptServer == null) {
+                                reject("|"+workerScript.serverIp+"|"+workerScript.name+"|Could not find server. This is a bug in the game. Report to game dev");
+                                return;
+                            }
+                            
+                            var runScriptPromise = runScriptFromScript(scriptServer, scriptname, workerScript);
+                            runScriptPromise.then(function(res) {
+                                resolve(res);
+                            }, function(e) {
+                                reject(e);
+                            });
+                            
+                        }, function(e) {
+                            reject(e);
+                        });
+                    } else if (exp.func.value == "getHackingLevel") {
+                        if (exp.args.length != 0) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getHackingLevel() call has incorrect number of arguments. Takes 0 arguments");
+                            return;
+                        }
+                        setTimeout(function() {
+                            Player.updateSkillLevels();
+                            workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
+                            resolve(Player.hacking_skill);
+                        }, CONSTANTS.CodeInstructionRunTime);
+                    } else if (exp.func.value == "getServerMoneyAvailable") {
+                        if (exp.args.length != 1) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getServerMoneyAvailable() call has incorrect number of arguments. Takes 1 arguments");
+                        }
+                        var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            setTimeout(function() {
+                                var server = getServer(ip);
+                                if (server == null) {
+                                    reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into getServerMoneyAvailable() command");
+                                    workerScript.scriptRef.log("Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
+                                    return;
+                                }
+                                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + server.moneyAvailable);
+                                resolve(server.moneyAvailable);
+                            }, CONSTANTS.CodeInstructionRunTime);
+                        }, function(e) {
+							reject(e);
+						});
                     }
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
+            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Unrecognized function call");
 			break;
 
 		default:
@@ -868,7 +940,54 @@ function apply_op(op, a, b) {
       case "!=": return a !== b;
     }
     throw new Error("Can't apply operator " + op);
-} 
+}
+
+//Run a script from inside a script using run() command
+function runScriptFromScript(server, scriptname, workerScript) {
+    return new Promise(function(resolve, reject) {
+        var env = workerScript.env;
+        if (env.stopFlag) {reject(workerScript);}
+        setTimeout(function() {
+            //Check if the script is already running
+            for (var i = 0; i < server.runningScripts.length; ++i) {
+                if (server.runningScripts[i] == scriptname) {
+                    workerScript.scriptRef.log(scriptname + " is already running on " + server.hostname);
+                    resolve(false);
+                    return;
+                }
+            }
+            
+            //Check if the script exists and if it does run it
+            for (var i = 0; i < server.scripts.length; ++i) {
+                if (server.scripts[i].filename == scriptname) {
+                    //Check for admin rights and that there is enough RAM availble to run
+                    var ramUsage = server.scripts[i].ramUsage;
+                    var ramAvailable = server.maxRam - server.ramUsed;
+                    
+                    if (server.hasAdminRights == false) {
+                        workerScript.scriptRef.log("Cannot run script " + scriptname + " because you do not have root access!");
+                        resolve(false);
+                        return;
+                    } else if (ramUsage > ramAvailable){
+                        workerScript.scriptRef.log("Cannot run script " + scriptname + " because there is not enough available RAM!");
+                        resolve(false);
+                        return;
+                    } else {
+                        //Able to run script
+                        workerScript.scriptRef.log("Running script: " + scriptname + ". May take a few seconds to start up...");
+                        var script = server.scripts[i];
+                        server.runningScripts.push(script.filename);	//Push onto runningScripts
+                        addWorkerScript(script, server);
+                        resolve(true);
+                        return;
+                    }
+                }
+            }
+            workerScript.scriptRef.log("Could not find script " + scriptname + " on " + server.hostname);
+            resolve(false);
+        }, CONSTANTS.CodeInstructionRunTime);
+    });
+}
 
 function isScriptErrorMessage(msg) {
     splitMsg = msg.split("|");
@@ -913,4 +1032,4 @@ function scriptCalculatePercentMoneyHacked(server) {
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;
-} 
+}

@@ -109,16 +109,13 @@ function Parser(input) {
 	 * else: {"type": "var", "value": "foo"}
 	 */
     function parse_if() {
-		console.log("Parsing if token");
         checkKeywordAndSkip("if");
 		
 		//Conditional
         var cond = parse_expression();
-        console.log("cond: " + cond);
 		
 		//Body
         var then = parse_expression();
-        console.log("then: " + then);
         var ret = {
             type: "if",
             cond: [],

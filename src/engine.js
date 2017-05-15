@@ -273,7 +273,8 @@ var Engine = {
         'Crime money multiplier: ' + formatNumber(Player.crime_money_mult * 100, 2) + '%<br><br><br>' +
         '<b>Misc</b><br><br>' + 
         'Servers owned:       ' + Player.purchasedServers.length + '<br>' + 
-        'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br><br> ').replace( / /g, "&nbsp;" );
+        'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
+        'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime) + '<br><br><br>').replace( / /g, "&nbsp;" );
         
     },
     
@@ -524,6 +525,11 @@ var Engine = {
     },
     
     updateGame: function(numCycles = 1) {
+        //Update total playtime
+        var time = numCycles * Engine._idleSpeed;
+        if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
+        Player.totalPlaytime += time;
+        
         //Start Manual hack 
         if (Player.startAction == true) {
             Engine._totalActionTime = Player.actionTime;
@@ -685,6 +691,23 @@ var Engine = {
         }
     },
     
+    _prevTimeout: null,
+    createStatusText: function(txt) {
+        if (Engine._prevTimeout != null) {
+            clearTimeout(Engine._prevTimeout);
+            Engine._prevTimeout = null;
+        }
+        var statusText = document.getElementById("status-text")
+        statusText.style.display = "inline-block";
+        statusText.setAttribute("class", "status-text");
+        statusText.innerHTML = txt;
+        Engine._prevTimeout = setTimeout(function() {
+            statusText.style.display = "none";
+            statusText.removeAttribute("class");
+            statusText.innerHTML = "";
+        }, 3000);
+    },
+    
     load: function() {
         //Load game from save or create new game
         if (loadGame(saveObject)) {    
@@ -723,6 +746,11 @@ var Engine = {
             
             //Passive faction rep gain offline
             processPassiveFactionRepGain(numCyclesOffline);
+            
+            //Update total playtime
+            var time = numCyclesOffline * Engine._idleSpeed;
+            if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
+            Player.totalPlaytime += time;
         } else {
             //No save found, start new game
             console.log("Initializing new game");
@@ -987,7 +1015,7 @@ var Engine = {
                 if (Player.workType == CONSTANTS.WorkTypeFaction) {
                     var fac = Factions[Player.currentWorkFactionName];
                     Player.finishFactionWork(true, fac);
-                } else if (Player.WorkType == CONSTANTS.WorkTypeCreateProgram) {
+                } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
                     Player.finishCreateProgramWork(true, Player.createProgramName);
                 } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
                     Player.finishClass();
@@ -1001,6 +1029,12 @@ var Engine = {
             });
             Engine.loadWorkInProgressContent();
         }
+        
+        //DEBUG
+        document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
+            Player.getHomeComputer().runningScripts = [];
+            return false;
+        });
     },
     
     start: function() {

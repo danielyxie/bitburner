@@ -31,6 +31,7 @@ function runScriptsLoop() {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
 			try {
 				var ast = Parser(Tokenizer(InputStream(workerScripts[i].code)));
+                //console.log(ast);
 			} catch (e) {
                 dialogBoxCreate("Syntax ERROR in " + workerScripts[i].name + ":", e, "", "");
                 workerScripts[i].env.stopFlag = true;

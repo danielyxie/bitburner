@@ -165,7 +165,7 @@ tr:focus {
     visibility: visible;
 }
 
-/* Flashing button */
+/* Flashing button (Red) */
 @-webkit-keyframes glowing {
     0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
     50% { background-color: #FF0000; -webkit-box-shadow: 0 0 40px #FF0000; }
@@ -195,4 +195,30 @@ tr:focus {
     -moz-animation: glowing 1500ms infinite;
     -o-animation: glowing 1500ms infinite;
     animation: glowing 1500ms infinite;
+}
+
+/* Status text */
+@-webkit-keyframes status-text{
+    from{
+        opacity:1;
+        top:0px;
+    }
+    to{
+        opacity:0;
+        top:0px;
+    }
+}
+
+.status-text{
+    display:inline;
+    position:fixed;
+    top:0px;
+    -webkit-animation:status-text 3s 1;
+}
+
+#status-text {
+    font-size: 20px;
+    color: #FFFFFF;
+    right: 0;
+    bottom: 0;    
 }

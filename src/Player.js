@@ -168,6 +168,7 @@ function PlayerObject() {
 	
 	//Used to store the last update time. 
 	this.lastUpdate = new Date().getTime();
+    this.totalPlaytime = 0;
 };
 
 PlayerObject.prototype.init = function() {
@@ -584,7 +585,7 @@ PlayerObject.prototype.finishWorkPartTime = function() {
               formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" + 
               formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" + 
               formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
-    txt = "You worked for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ".<br><br> " + txt;
+    txt = "You worked for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br> " + txt;
     dialogBoxCreate(txt);
     
     var mainMenu = document.getElementById("mainmenu-container");
