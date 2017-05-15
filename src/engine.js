@@ -720,12 +720,13 @@ var Engine = {
             Engine._lastUpdate = new Date().getTime();
             var lastUpdate = Player.lastUpdate;
             var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
-            Player.lastUpdate = new Date().getTime();
+            
             
             /* Process offline progress */
             processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
             loadAllRunningScripts();    //This also takes care of offline production for those scripts
             if (Player.isWorking) {
+                console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
                 if (Player.workType == CONSTANTS.WorkTypeFaction) {
                     Player.workForFaction(numCyclesOffline);
                 } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
@@ -741,6 +742,8 @@ var Engine = {
                 }
             }
             
+            
+            
             //Hacknet Nodes offline progress
             processAllHacknetNodeEarnings(numCyclesOffline);
             
@@ -752,6 +755,7 @@ var Engine = {
             if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
             Player.totalPlaytime += time;
             
+            Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
         } else {
             //No save found, start new game
