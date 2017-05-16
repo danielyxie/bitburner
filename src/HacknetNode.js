@@ -16,9 +16,8 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
     //How much extra $/s is gained per level
     var gainPerLevel = CONSTANTS.HacknetNodeMoneyGainPerLevel;
     
-    //Each CPU core doubles the speed. Every 1GB of ram adds 15% increase
     this.moneyGainRatePerSecond = (this.level * gainPerLevel) * 
-                                  Math.pow(1.07, this.ram-1) * 
+                                  Math.pow(1.06, this.ram-1) * 
                                   ((this.numCores + 1) / 2) * Player.hacknet_node_money_mult;
     if (isNaN(this.moneyGainRatePerSecond)) {
         this.moneyGainRatePerSecond = 0;
@@ -28,19 +27,28 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
     updateTotalHacknetProduction();
 }
 
-HacknetNode.prototype.calculateLevelUpgradeCost = function() {
-    //Upgrade cost = Base cost * multiplier ^ level
+HacknetNode.prototype.calculateLevelUpgradeCost = function(levels=1) {
+    if (levels < 1) {return 0;}
     var mult = CONSTANTS.HacknetNodeUpgradeLevelMult;
-    return CONSTANTS.BaseCostForHacknetNode / 2 * Math.pow(mult, this.level) * Player.hacknet_node_level_cost_mult;
+    var totalMultiplier = 0; //Summed 
+    var currLevel = this.level;
+    for (var i = 0; i < levels; ++i) {
+        totalMultiplier += Math.pow(mult, currLevel); 
+        ++currLevel;
+    }
+    return CONSTANTS.BaseCostForHacknetNode / 2 * totalMultiplier * Player.hacknet_node_level_cost_mult;
 }
 
-HacknetNode.prototype.purchaseLevelUpgrade = function() {
-    var cost = this.calculateLevelUpgradeCost();
+HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
+    var cost = this.calculateLevelUpgradeCost(levels);
     if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
     if (cost > Player.money) {return;}
     Player.loseMoney(cost);
-    if (this.level >= CONSTANTS.HacknetNodeMaxLevel) {return;}
-    ++this.level;
+    if (this.level + levels >= CONSTANTS.HacknetNodeMaxLevel) {
+        this.level = CONSTANTS.HacknetNodeMaxLevel;
+        return;
+    }
+    this.level += levels;
     this.updateMoneyGainRate();
 }
 
@@ -48,11 +56,10 @@ HacknetNode.prototype.calculateRamUpgradeCost = function() {
     var numUpgrades = Math.log2(this.ram);
     
     //Calculate cost
-    //Base cost of RAM is 50k per 1GB...but lets  have this increase by 10% for every time
-    //the RAM has been upgraded
-    var cost = this.ram * CONSTANTS.BaseCostFor1GBOfRamHacknetNode;
+    //Base cost of RAM is 50k per 1GB, increased by some multiplier for each time RAM is upgraded
+    var baseCost = this.ram * CONSTANTS.BaseCostFor1GBOfRamHacknetNode;
     var mult = Math.pow(CONSTANTS.HacknetNodeUpgradeRamMult, numUpgrades);
-    return cost * mult * Player.hacknet_node_ram_cost_mult;
+    return baseCost * mult * Player.hacknet_node_ram_cost_mult;
 }
 
 HacknetNode.prototype.purchaseRamUpgrade = function() {
@@ -141,6 +148,10 @@ getCostOfNextHacknetNode = function() {
     return CONSTANTS.BaseCostForHacknetNode * Math.pow(mult, numOwned) * Player.hacknet_node_purchase_cost_mult;
 }
 
+selectHacknetNodePurchaseMultiplier = function() {
+    
+}
+
 //Creates Hacknet Node DOM elements when the page is opened
 displayHacknetNodesContent = function() {
     //Update Hacknet Nodes button
@@ -150,6 +161,13 @@ displayHacknetNodesContent = function() {
         purchaseHacknet();
         return false;
     });
+    
+    //Handle Purchase multiplier buttons
+    var mult1x = clearEventListeners("hacknet-nodes-1x-multiplier");
+    var mult5x = clearEventListenrs("hacknet-nodes-1x-multiplier");
+    if (Player.hacknetNodes.length == 0) {
+        
+    }
     
     //Remove all old hacknet Node DOM elements
     var hacknetNodesList = document.getElementById("hacknet-nodes-list");

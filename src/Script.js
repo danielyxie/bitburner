@@ -21,11 +21,11 @@ function scriptEditorInit() {
                 var start = this.selectionStart;
                 var end = this.selectionEnd;
 
-                // set textarea value to: text before caret + tab + text after caret
+                //Set textarea value to: text before caret + four spaces + text after caret
                 spaces = "    ";
                 this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
 
-                // put caret at right position again
+                //Put caret at after the four spaces
                 this.selectionStart = this.selectionEnd = start + spaces.length;
             }
         }

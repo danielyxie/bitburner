@@ -19,10 +19,10 @@ CONSTANTS = {
     
     /* Hacknet Node constants */
     HacknetNodeMoneyGainPerLevel: 1,
-    HacknetNodePurchaseNextMult: 1.30,   //Multiplier when purchasing an additional hacknet node
+    HacknetNodePurchaseNextMult: 1.33,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.06,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.20,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.40,    //Multiplier for cost when buying another core
+    HacknetNodeUpgradeRamMult: 1.23,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeCoreMult: 1.43,    //Multiplier for cost when buying another core
     
     HacknetNodeMaxLevel: 200,
     HacknetNodeMaxRam: 64,

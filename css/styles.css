@@ -89,8 +89,8 @@ tr:focus {
     text-decoration: none;
     background-color: #555;
     color: #FFFFFF;
-    padding: 6px;
-    margin: 6px;
+    padding: 5px;
+    margin: 5px;
     border: 1px solid #333333;
     width: 50%;
 }

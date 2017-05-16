@@ -160,6 +160,19 @@
     padding: 10px;
 }
 
+#hacknet-nodes-purchase-button {
+    display: block;
+}
+
+#hacknet-nodes-money-multipliers-div {
+    display: inline-block;
+    width: 80%;
+}
+
+#hacknet-nodes-multipliers {
+    float: right;
+}
+
 .hacknet-node {
     margin: 6px;
     padding: 6px;
