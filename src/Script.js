@@ -3,16 +3,29 @@
  */
 
 //Initialize the 'save and close' button on script editor page
-function scriptEditorSaveCloseInit() {
+function scriptEditorInit() {
     var closeButton = document.getElementById("script-editor-save-and-close-button");
     
     closeButton.addEventListener("click", function() {
         saveAndCloseScriptEditor();
         return false;
     });
+    
+    var textareas = document.getElementsByTagName('textarea');
+    var count = textareas.length;
+    for(var i=0;i<count;i++){
+        textareas[i].onkeydown = function(e){
+            if(e.keyCode==9 || e.which==9){
+                e.preventDefault();
+                var s = this.selectionStart;
+                this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+                this.selectionEnd = s+1; 
+            }
+        }
+    }
 };
 
-document.addEventListener("DOMContentLoaded", scriptEditorSaveCloseInit, false);
+document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 
 //Define key commands in script editor (ctrl o to save + close, etc.)
 $(document).keydown(function(e) {
@@ -32,8 +45,8 @@ function saveAndCloseScriptEditor() {
             return;
         }
         var code = document.getElementById("script-editor-text").value;
-        code = code.replace(/\s\s+/g, '');
-        if (code.indexOf("while(true) {hack('foodnstuff');}") == -1) {
+        code = code.replace(/\s/g, "");
+        if (code.indexOf("while(true){hack('foodnstuff');}") == -1) {
             dialogBoxCreate("Please copy and paste the code from the tutorial!");
             return;
         }
@@ -112,7 +125,7 @@ Script.prototype.saveScript = function() {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
 		//Update code and filename
 		var code = document.getElementById("script-editor-text").value;
-		this.code = code;
+		this.code = code.replace(/^\s+|\s+$/g, '');
 		
 		var filename = document.getElementById("script-editor-filename").value + ".script";
 		this.filename = filename;
