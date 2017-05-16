@@ -433,6 +433,7 @@ PlayerObject.prototype.startWork = function() {
     
     //Remove all old event listeners from Cancel button
     var newCancelButton = clearEventListeners("work-in-progress-cancel-button");
+    newCancelButton.innerHTML = "Cancel Work";
     newCancelButton.addEventListener("click", function() {
         Player.finishWork(true);
         return false;
@@ -508,6 +509,7 @@ PlayerObject.prototype.startWorkPartTime = function() {
     this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
     
     var newCancelButton = clearEventListeners("work-in-progress-cancel-button");
+    newCancelButton.innerHTML = "Stop Working";
     newCancelButton.addEventListener("click", function() {
         Player.finishWorkPartTime();
         return false;
@@ -632,13 +634,9 @@ PlayerObject.prototype.startFactionWork = function(faction) {
     
     this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer20Hours;
     
-    var cancelButton = document.getElementById("work-in-progress-cancel-button");
-    
-    //Remove all old event listeners from Cancel button
-    var newCancelButton = cancelButton.cloneNode(true);
-    cancelButton.parentNode.replaceChild(newCancelButton, cancelButton);
-    
-    newCancelButton.addEventListener("click", function() {
+    var cancelButton = clearEventListeners("work-in-progress-cancel-button");  
+    cancelButton.innerHTML = "Stop Faction Work";
+    cancelButton.addEventListener("click", function() {
         Player.finishFactionWork(true, faction);
         return false;
     });
@@ -836,13 +834,9 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time) {
     
     this.createProgramName = programName;
     
-    var cancelButton = document.getElementById("work-in-progress-cancel-button");
-    
-    //Remove all old event listeners from Cancel button
-    var newCancelButton = cancelButton.cloneNode(true);
-    cancelButton.parentNode.replaceChild(newCancelButton, cancelButton);
-    
-    newCancelButton.addEventListener("click", function() {
+    var cancelButton = clearEventListeners("work-in-progress-cancel-button");
+    cancelButton.innerHTML = "Cancel work on creating program";
+    cancelButton.addEventListener("click", function() {
         Player.finishCreateProgramWork(true, programName);
         return false;
     });
@@ -957,13 +951,16 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     this.workAgiExpGainRate     = agiExp * this.agility_exp_mult;
     this.workChaExpGainRate     = chaExp * this.charisma_exp_mult;
     
-    var cancelButton = document.getElementById("work-in-progress-cancel-button");
-    
-    //Remove all old event listeners from Cancel button
-    var newCancelButton = cancelButton.cloneNode(true);
-    cancelButton.parentNode.replaceChild(newCancelButton, cancelButton);
-    
-    newCancelButton.addEventListener("click", function() {
+    var cancelButton = clearEventListeners("work-in-progress-cancel-button");
+    if (className == CONSTANTS.ClassGymStrength || 
+        className == CONSTANTS.ClassGymDefense || 
+        className == CONSTANTS.ClassGymDexterity || 
+        className == CONSTANTS.ClassGymAgility) {
+        cancelButton.innerHTML = "Stop training at gym";
+    } else {
+        cancelButton.innerHTML = "Stop taking course";
+    }
+    cancelButton.addEventListener("click", function() {
         Player.finishClass();
         return false;
     });
@@ -1049,6 +1046,7 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
     
     //Remove all old event listeners from Cancel button
     var newCancelButton = clearEventListeners("work-in-progress-cancel-button")
+    newCancelButton.innerHTML = "Cancel crime"
     newCancelButton.addEventListener("click", function() {
         Player.finishCrime(true);
         return false;

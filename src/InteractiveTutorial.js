@@ -151,8 +151,7 @@ function iTutorialEvaluateStep() {
                          "on the computer. Right now, it shows that you have a program called 'NUKE.exe' on your computer. " + 
                          "We'll get to what this does later. <br><br> Through your home computer's terminal, you can connect " + 
                          "to other machines throughout the world. Let's do that now by first entering " + 
-                         "the 'scan' command (Alternatively, you can also enter the 'netstat' command " + 
-                         "which does the same thing). ");
+                         "the 'scan' command. ");
         //next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalConnect:
@@ -160,8 +159,7 @@ function iTutorialEvaluateStep() {
                          "it displays a list of all servers that can be connected to from your " + 
                          "current machine. A server is identified by either its IP or its hostname. <br><br> " + 
                          "To connect to a machine, use the 'connect [ip/hostname]' command. You can type in " + 
-                         "the ip or the hostname, but dont use both. (Alternatively, " + 
-                         "the 'telnet [ip/hostname]' command does the same thing).<br><br>" + 
+                         "the ip or the hostname, but dont use both.<br><br>" + 
                          "Let's try this now by connecting to the 'foodnstuff' server (connect foodnstuff)");
         //next step triggered by terminal command
         break;
