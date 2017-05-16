@@ -220,6 +220,19 @@ displayLocationContent = function() {
     purchaseTor.style.display = "none";
     purchaseHomeRam.style.display = "none";
     
+    purchase1gb.innerHTML = "Purchase 1GB Server - $" + formatNumber(1*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase2gb.innerHTML = "Purchase 2GB Server - $" + formatNumber(2*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase4gb.innerHTML = "Purchase 4GB Server - $" + formatNumber(4*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase8gb.innerHTML = "Purchase 8GB Server - $" + formatNumber(8*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase16gb.innerHTML = "Purchase 16GB Server - $" + formatNumber(16*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase32gb.innerHTML = "Purchase 32GB Server - $" + formatNumber(32*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase64gb.innerHTML = "Purchase 64GB Server - $" + formatNumber(64*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase128gb.innerHTML = "Purchase 128GB Server - $" + formatNumber(128*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase256gb.innerHTML = "Purchase 256GB Server - $" + formatNumber(256*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase512gb.innerHTML = "Purchase 512GB Server - $" + formatNumber(512*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchase1tb.innerHTML = "Purchase 1TB Server - $" + formatNumber(1024*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
+    purchaseTor.innerHTML = "Purchase TOR Router - $" + formatNumber(CONSTANTS.TorRouterCost, 2);
+    
     travelAgencyText.style.display = "none";
     travelToAevum.style.display = "none";
     travelToChongqing.style.display = "none";

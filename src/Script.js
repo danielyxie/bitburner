@@ -11,6 +11,7 @@ function scriptEditorInit() {
         return false;
     });
     
+    //Allow tabs (four spaces) in all textareas)
     var textareas = document.getElementsByTagName('textarea');
     var count = textareas.length;
     for(var i=0;i<count;i++){
