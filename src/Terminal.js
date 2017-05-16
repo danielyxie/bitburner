@@ -27,6 +27,15 @@ var postNetburnerText = function() {
 	post("Bitburner v" + CONSTANTS.Version);
 }
 
+/*
+$(document).keyup(function(event) {
+    //Enter
+    if (event.keyCode == 13) {
+
+    }
+});
+*/
+
 //Defines key commands in terminal
 $(document).keydown(function(event) {
 	//Terminal
@@ -36,6 +45,7 @@ $(document).keydown(function(event) {
         
 		//Enter
 		if (event.keyCode == 13) {
+            event.preventDefault();
 			var command = $('input[class=terminal-input]').val();
 			if (command.length > 0) {
 				post("> " + command);
@@ -501,7 +511,6 @@ var Terminal = {
 				postNetburnerText();
 				break;	
 			case "connect":
-            case "telnet":
 				//Disconnect from current server in terminal and connect to new one
                 if (commandArray.length != 2) {
                     post("Incorrect usage of connect/telnet command. Usage: connect/telnet [ip/hostname]");
@@ -644,7 +653,6 @@ var Terminal = {
 				}
 				Engine.loadScriptEditorContent(scriptname, "");
 				break;
-			case "netstat":
 			case "scan":
                 Terminal.executeScanCommand(commandArray);
 				break;

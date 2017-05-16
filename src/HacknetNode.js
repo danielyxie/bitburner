@@ -18,7 +18,7 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
     
     //Each CPU core doubles the speed. Every 1GB of ram adds 15% increase
     this.moneyGainRatePerSecond = (this.level * gainPerLevel) * 
-                                  Math.pow(1.05, this.ram-1) * 
+                                  Math.pow(1.07, this.ram-1) * 
                                   ((this.numCores + 1) / 2) * Player.hacknet_node_money_mult;
     if (isNaN(this.moneyGainRatePerSecond)) {
         this.moneyGainRatePerSecond = 0;

@@ -41,9 +41,6 @@ Private beta feedback
     
     Now, only other suggestion before sleep would be to be able to buy multiple Hacknet upgrades in one click
     
-1) - multiple commands to do the same thing? (why?) <--- there are a few of these in the initial help... clear/cls, scan/netstat, connect/telnet... Maybe just pick one to unclutter it?
 2) - "Wrong Command! Try Again!" seemed a bit out of place for a terminal.  Trying to repro this, it seems you may have already fixed it?
-3) - If you can help it, please don't require the code to be exactly pasted from the tutorial to finish the tutorial. I copied the code and then "corrected" the brackets and spacing... and it wouldn't let me continue. :D
 5) - As a programmer... you cannot take the TAB key from us in the script editor. :neutral_face:  Not sure how the game itself is coded, but if you've got to EAT a ghost-tab just to give me one in-editor... let me tab out my code in-script, or I'll go mad.
 6) - Maybe show total $ somewhere onscreen at all (or most) times.  $/sec would also be good to know, depending on if you want the player to know that. Bottom of the menu on the left is an empty enough place to keep these.
-7) - default the focus to in-editor when you nano up a new script, so you can start typing immediately upon commanding one to be created.
