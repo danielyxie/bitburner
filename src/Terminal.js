@@ -374,19 +374,19 @@ var Terminal = {
                 if (commandArray[0] == "help") {
                     post(CONSTANTS.HelpText);
                     iTutorialNextStep();
-                } else {post("Wrong command! Try again!");}
+                } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalLs:
                 if (commandArray[0] == "ls") {
                     Terminal.executeListCommand(commandArray);
                     iTutorialNextStep();
-                } else {post("Wrong command! Try again!");}
+                } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalScan:
                 if (commandArray[0] == "scan") {
                     Terminal.executeScanCommand(commandArray);
                     iTutorialNextStep();
-                } else {post("Wrong command! Try again!");}
+                } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalConnect:
                 
@@ -399,7 +399,7 @@ var Terminal = {
                         post("Connected to foodnstuff");
                         iTutorialNextStep();
                     } else {post("Wrong command! Try again!"); return;}
-                } else {post("Wrong command! Try again!");}
+                } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalAnalyze:
                 if (commandArray[0] == "analyze") {    
@@ -418,7 +418,7 @@ var Terminal = {
                     $('input[class=terminal-input]').prop('disabled', true);
                     iTutorialNextStep();
                 } else {
-                    post("Wrong command! Try again!");
+                    post("Bad command. Please follow the tutorial");
                 }
                 break;
             case iTutorialSteps.TerminalNuke:
@@ -427,7 +427,7 @@ var Terminal = {
                     foodnstuffServ.hasAdminRights = true;
                     post("NUKE successful! Gained root access to foodnstuff");
                     iTutorialNextStep();
-                } else {post("Wrong command! Try again!");}
+                } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalManualHack:
                 if (commandArray.length == 1 && commandArray[0] == "hack") {
@@ -440,14 +440,14 @@ var Terminal = {
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
                     iTutorialNextStep();
-                } else {post("Wrong command! Try again!");}
+                } else {post("Bad command. Please follow the tutorial");}
 				break;
             case iTutorialSteps.TerminalCreateScript:
                 if (commandArray.length == 2 && 
                     commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
                     Engine.loadScriptEditorContent("foodnstuff", "");
                     iTutorialNextStep();
-                } else {post("Wrong command! Try again!");}
+                } else {post("Bad command. Please follow the tutorial");}
             case iTutorialSteps.TerminalFree:
                 if (commandArray.length == 1 && commandArray[0] == "free") {
                     Terminal.executeFreeCommand(commandArray);
@@ -459,7 +459,7 @@ var Terminal = {
                     commandArray[0] == "run" && commandArray[1] == "foodnstuff.script") {
                     Terminal.runScript("foodnstuff.script");
                     iTutorialNextStep();
-                } else {post("Wrong command! Try again!");}
+                } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.ActiveScriptsToTerminal:
                 if (commandArray.length == 2 &&
@@ -471,7 +471,7 @@ var Terminal = {
                         }
                     }
                     iTutorialNextStep();
-                } else {post("Wrong command! Try again!");}
+                } else {post("Bad command. Please follow the tutorial");}
                 break;
             default:    
                 post("Please follow the tutorial, or click 'Exit Tutorial' if you'd like to skip it");

@@ -41,6 +41,4 @@ Private beta feedback
     
     Now, only other suggestion before sleep would be to be able to buy multiple Hacknet upgrades in one click
     
-2) - "Wrong Command! Try Again!" seemed a bit out of place for a terminal.  Trying to repro this, it seems you may have already fixed it?
-5) - As a programmer... you cannot take the TAB key from us in the script editor. :neutral_face:  Not sure how the game itself is coded, but if you've got to EAT a ghost-tab just to give me one in-editor... let me tab out my code in-script, or I'll go mad.
 6) - Maybe show total $ somewhere onscreen at all (or most) times.  $/sec would also be good to know, depending on if you want the player to know that. Bottom of the menu on the left is an empty enough place to keep these.
