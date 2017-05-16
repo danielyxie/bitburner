@@ -15,7 +15,7 @@ CONSTANTS = {
     BaseCostFor1GBOfRamHacknetNode: 30000,
     
     BaseCostForHacknetNode: 1000,
-    BaseCostForHacknetNodeCore: 1000000,
+    BaseCostForHacknetNodeCore: 250000,
     
     /* Hacknet Node constants */
     HacknetNodeMoneyGainPerLevel: 1,

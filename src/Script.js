@@ -17,9 +17,15 @@ function scriptEditorInit() {
         textareas[i].onkeydown = function(e){
             if(e.keyCode==9 || e.which==9){
                 e.preventDefault();
-                var s = this.selectionStart;
-                this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
-                this.selectionEnd = s+1; 
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+
+                // set textarea value to: text before caret + tab + text after caret
+                spaces = "    ";
+                this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
+
+                // put caret at right position again
+                this.selectionStart = this.selectionEnd = start + spaces.length;
             }
         }
     }
