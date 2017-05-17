@@ -514,7 +514,7 @@ initAugmentations = function() {
                     "Increases the player's chance of successfully performing a hack by 3%<br>" + 
                     "Increases the player's hacking experience gain rate by 10%<br>" + 
                     "Increases the player's hacking skill by 10%");
-    ENMCore.addToFactions(["BitRunners", "The Black Hand", "NiteSec", "ECorp", "MegaCorp", 
+    ENMCore.addToFactions(["BitRunners", "The Black Hand", "ECorp", "MegaCorp", 
                           "Fulcrum Secret Technologies", "NWO", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.ENMCore)) {
         ENMCore.owned = Augmentations[AugmentationNames.ENMCore].owned;
@@ -534,7 +534,7 @@ initAugmentations = function() {
                       "Increases the player's chance of successfully performing a hack by 5%<br>" + 
                       "Increases the player's hacking experience gain rate by 50%<br>" + 
                       "Increases the player's hacking skill by 15%");
-    ENMCoreV2.addToFactions(["ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
+    ENMCoreV2.addToFactions(["BitRunners", "ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                             "Blade Industries", "OmniTek Incorporated", "KuaiGong International"]);
     if (augmentationExists(AugmentationNames.ENMCoreV2)) {
         ENMCoreV2.owned = Augmentations[AugmentationNames.ENMCoreV2].owned;
@@ -928,6 +928,12 @@ initAugmentations = function() {
         delete Augmentations[AugmentationNames.PowerRecirculator];
     }
     AddToAugmentations(PowerRecirculator);
+    
+    //Unique AUGS (Each Faction gets one unique augmentation)
+    //Factions that already have unique augs up to this point:
+    //  Slum Snakes, CyberSec, Netburners, Fulcrum Secret Technologies,
+    //  Silhouette
+    
 }
 
 applyAugmentation = function(aug, faction) {

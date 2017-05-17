@@ -304,7 +304,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //NiteSec
     var nitesecFac = Factions["NiteSec"];
     if (nitesecFac.isBanned == false && nitesecFac.isMember == false && 
-        this.hacking_skill >= 500 && homeComp.maxRam >= 32) {
+        this.hacking_skill >= 200 && homeComp.maxRam >= 8) {
         invitedFactions.push(nitesecFac);
     }
     
@@ -404,7 +404,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var slumsnakesFac = Factions["Slum Snakes"];
     if (slumsnakesFac.isBanned == false && slumsnakesFac.isMember == false && 
         this.strength >= 30 && this.defense >= 30 && this.dexterity >= 30 &&
-        this.agility >= 30 && this.karma <= -15 && this.money >= 1000000) {
+        this.agility >= 30 && this.karma <= -10 && this.money >= 1000000) {
         invitedFactions.push(slumsnakesFac);
     }
     

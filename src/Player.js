@@ -826,12 +826,17 @@ PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
 }
 
 /* Creating a Program */
-PlayerObject.prototype.startCreateProgramWork = function(programName, time) {
+PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqLevel) {
     this.resetWorkStatus();
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeCreateProgram;
     
-    this.timeNeededToCompleteWork = time;
+    //Time needed to complete work affected by hacking skill (linearly based on
+    //ratio of (your skill - required level) to MAX skill)
+    var timeMultiplier = (CONSTANTS.MaxSkillLevel - (this.hacking_skill - reqLevel)) / CONSTANTS.MaxSkillLevel;
+    if (timeMultiplier > 1) {timeMultiplier = 1;}
+    if (timeMultiplier < 0.01) {timeMultiplier = 0.01;}
+    this.timeNeededToCompleteWork = timeMultiplier & time;
     
     this.createProgramName = programName;
     

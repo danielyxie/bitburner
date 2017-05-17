@@ -991,22 +991,22 @@ var Engine = {
         var httpWormALink   = document.getElementById("create-program-httpworm");
         var sqlInjectALink  = document.getElementById("create-program-sqlinject");
         portHackALink.addEventListener("click", function() {
-            createProgram(Programs.PortHackProgram, CONSTANTS.MillisecondsPerQuarterHour);
+            Player.startCreateProgramWork(Programs.NukeProgram, CONSTANTS.MillisecondsPerQuarterHour, 1);
         });
         bruteSshALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerQuarterHour);
+            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerQuarterHour, 50);
         });
         ftpCrackALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHalfHour);
+            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHalfHour, 100);
         });
         relaySmtpALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer2Hours);
+            Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer2Hours, 250);
         });
         httpWormALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer4Hours);
+            Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer4Hours, 500);
         });
         sqlInjectALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer8Hours);
+            Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer8Hours, 750);
         });
                 
         //Message at the top of terminal
