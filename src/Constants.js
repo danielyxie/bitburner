@@ -155,9 +155,9 @@ CONSTANTS = {
                             "and you can purchase additional servers as you progress through the game. Connecting to other servers " + 
                             "and hacking them can be a major source of income and experience. Servers can also be used to run " + 
                             "scripts which can automatically hack servers for you. <br><br>" + 
-                            "In order to navigate between machines, use the 'scan' or 'netstat' commands to see all servers " +
-                            "that are reachable from your current server. Then, you can use the 'connect [hostname/ip]' or " + 
-                            "'telnet [hostname/ip]' commands to connect to one of the available machines. <br><br>" + 
+                            "In order to navigate between machines, use the 'scan' command to see all servers " +
+                            "that are reachable from your current server. Then, you can use the 'connect [hostname/ip]' " + 
+                            "command to connect to one of the available machines. <br><br>" + 
                             "The 'hostname' and 'ifconfig' commands can be used to display the hostname/IP of the " +
                             "server you are currently connected to.",
                             
@@ -168,7 +168,7 @@ CONSTANTS = {
                          "The key to hacking a server is to gain root access to that server. This can be done using " + 
                          "the NUKE virus (NUKE.exe). You start the game with a copy of the NUKE virus on your home " + 
                          "computer. The NUKE virus attacks the target server's open ports using buffer overflow " + 
-                         "exploits. When successful, you are granted root administrative access to the machine. <br>" + 
+                         "exploits. When successful, you are granted root administrative access to the machine. <br><br>" + 
                          "Typically, in order for the NUKE virus to succeed, the target server needs to have at least " + 
                          "one of its ports opened. Some servers have no security and will not need any ports opened. Some " +
                          "will have very high security and will need many ports opened. In order to open ports on another " + 
@@ -212,12 +212,12 @@ CONSTANTS = {
                          "whenever you reload or re-open the game all of the scripts that you are running will " +
                          "start running from the BEGINNING of the code. The game does not keep track of where exactly " +
                          "the execution of a script is when it saves/loads. </strong><br><br>",
-    TutorialNetscriptText: "Netscript is a very simple programming language implemented for this game. The language has " + 
+    TutorialNetscriptText: "Netscript is a programming language implemented for this game. The language has " + 
                            "your basic programming constructs and several built-in commands that are used to hack. <br><br>" + 
                            "<u><h1> Variables and data types </h1></u><br>" + 
                            "The following data types are supported by Netscript: <br>" + 
-                           "numeric - Integers and floats (6, 10.4999)<br>" + 
-                           "string - Encapsulated by single or double quotes ('this is a string')<br>" + 
+                           "numeric - Integers and floats (eg. 6, 10.4999)<br>" + 
+                           "string - Encapsulated by single or double quotes (eg. 'this is a string')<br>" + 
                            "boolean - true or false<br><br>" + 
                            "To create a variable, use the assign (=) operator. The language is not strongly typed. Examples: <br>" + 
                            "i = 5;<br>" + 
@@ -244,12 +244,14 @@ CONSTANTS = {
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " + 
                            "<i>hack(hostname/ip)</i><br>Core function that is used to try and hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
-                           "either the IP or hostname of the server you want to hack. Attempting to hack a server takes time. This time is dependent on your hacking skill and the server's " +
-                           "security level. <br>Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
+                           "either the IP or hostname of the server you want to hack. A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. " +
+                           "For example, you can create a script that hacks the 'foodnstuff' server and run it on your home computer. <br>" + 
+                          "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
-                           "must be a string with either the IP or hostname of the target server. The grow() command takes a flat 2 minutes to execute " + 
-                           "and grants 1 hacking exp when complete. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "must be a string with either the IP or hostname of the target server. The grow() command requires root access to the target server, but " +
+                           "there is no required hacking level to run the command. The grow() command takes a flat 2 minutes to execute " + 
+                           "and grants 1 hacking exp when it completes. <br> Example: grow('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer <br> Example: brutessh('foodnstuff');<br><br>" + 
@@ -312,7 +314,7 @@ CONSTANTS = {
                       "different companies which you can work for. By working for a company you can earn money, " + 
                       "train your various labor skills, and unlock powerful passive perks. <br><br> " +
                       "To apply for a job, visit the company you want to work for through the 'World' menu. The company " + 
-                      "page will have options that let you apply to positions in the company. There might be several different" + 
+                      "page will have options that let you apply to positions in the company. There might be several different " + 
                       "positions you can apply for, ranging from software engineer to business analyst to security officer. <br><br> " + 
                       "When you apply for a job, you will get the offer if your stats are high enough. Your first position at " + 
                       "a company will be an entry-level position such as 'intern'. Once you get the job, an button will appear on " + 
@@ -340,7 +342,7 @@ CONSTANTS = {
                           "information about the Faction and also lets you perform work for the faction. " + 
                           "Working for a Faction is similar to working for a company except that you don't get paid a salary. " + 
                           "You will only earn reputation in your Faction and train your stats. Also, cancelling work early " + 
-                          "when working for a Faction does NOT result in reduced experience/reputation earnings. <br>" + 
+                          "when working for a Faction does NOT result in reduced experience/reputation earnings. <br><br>" + 
                           "Earning reputation for a Faction unlocks powerful Augmentations. Purchasing and installing these Augmentations will " +
                           "upgrade your abilities. The Augmentations that are available to unlock vary from faction to faction.",
     TutorialAugmentationsText: "Advances in science and medicine have lead to powerful new technologies that allow people to augment themselves " + 

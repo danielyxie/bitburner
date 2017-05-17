@@ -14,6 +14,10 @@
     color: white;
 }
 
+#interactive-tutorial-container > strong {
+    background-color: #444;
+}
+
 #interactive-tutorial-text {
     padding: 4px;
     margin: 4px;
