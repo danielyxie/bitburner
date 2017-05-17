@@ -209,7 +209,7 @@ PlayerObject.prototype.updateSkillLevels = function() {
 
 //Calculates the chance of hacking a server
 //The formula is:
-//  (hacking_chance_multiplier * hacking_skill - requiredLevel)      100 - difficulty       
+//  (2 * hacking_chance_multiplier * hacking_skill - requiredLevel)      100 - difficulty       
 //  -----------------------------------------------------------  *  -----------------
 //        (hacking_chance_multiplier * hacking_skill)                      100
 PlayerObject.prototype.calculateHackingChance = function() {
@@ -217,8 +217,9 @@ PlayerObject.prototype.calculateHackingChance = function() {
     var skillMult = (2 * this.hacking_chance_mult * this.hacking_skill);
     var skillChance = (skillMult - this.getCurrentServer().requiredHackingSkill) / skillMult;
     var chance = skillChance * difficultyMult;
+    if (chance > 1) {return 1;}
     if (chance < 0) {return 0;} 
-    else {return chance;}
+    return chance;}
 }
 
 //Calculate the time it takes to hack a server in seconds. Returns the time

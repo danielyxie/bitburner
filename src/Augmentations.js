@@ -350,7 +350,7 @@ initAugmentations = function() {
     SpeechProcessor.setRequirements(3500, 25000000);
     SpeechProcessor.setInfo("A cochlear implant with an embedded computer that analyzes incoming speech. " +
                             "The embedded computer processes characteristics of incoming speech, such as tone " +
-                            "and inflection, to pick up on subtle cues and aid in social interaction.<br><br>" + 
+                            "and inflection, to pick up on subtle cues and aid in social interactions.<br><br>" + 
                             "This augmentation increases the player's charisma by 20%.");
     SpeechProcessor.addToFactions(["Tian Di Hui", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
                                   "Ishima", "Volhaven", "Silhouette"]);
@@ -423,7 +423,10 @@ initAugmentations = function() {
     ArtificialSynapticPotentiation.setRequirements(2500, 15000000);
     ArtificialSynapticPotentiation.setInfo("The body is injected with a chemical that artificially induces synaptic potentiation, " + 
                                            "otherwise known as the strengthening of synapses. This results in a enhanced cognitive abilities.<br><br>" + 
-                                           "This augmentation increases the player's hacking speed and hacking chance by 3%.");
+                                           "This augmentation: <br>" + 
+                                           "Increases the player's hacking speed by 3% <br> " +
+                                           "Increases the player's hacking chance by 5%<br>" + 
+                                           "Increases the player's hacking experience gain rate by 5%");
     ArtificialSynapticPotentiation.addToFactions(["The Black Hand", "NiteSec"]);
     if (augmentationExists(AugmentationNames.ArtificialSynapticPotentiation)) {
         ArtificialSynapticPotentiation.owned = Augmentations[AugmentationNames.ArtificialSynapticPotentiation].owned;
@@ -438,9 +441,9 @@ initAugmentations = function() {
                                     "system. These myelin sheaths can propogate neuro-signals much faster than their organic " + 
                                     "counterparts, leading to greater processing speeds and better brain function.<br><br>" + 
                                     "This augmentation:<br>" + 
-                                    "Increases the player's hacking speed by 2%<br>" + 
-                                    "Increases the player's hacking skill by 5%<br>" + 
-                                    "Increases the player's hacking experience gain rate by 10%");
+                                    "Increases the player's hacking speed by 3%<br>" + 
+                                    "Increases the player's hacking skill by 10%<br>" + 
+                                    "Increases the player's hacking experience gain rate by 15%");
     EnhancedMyelinSheathing.addToFactions(["Fulcrum Secret Technologies", "BitRunners", "The Black Hand"]);
     if (augmentationExists(AugmentationNames.EnhancedMyelinSheathing)) {
         EnhancedMyelinSheathing.owned = Augmentations[AugmentationNames.EnhancedMyelinSheathing].owned;
@@ -801,8 +804,10 @@ initAugmentations = function() {
                               "monitors and regulates nervous impulses coming to and from the spinal column, " +
                               "essentially 'governing' the body. By doing so, it improves the functionality of the " +
                               "body's nervous system. <br><br> " + 
-                              "This is a special augmentation because it can be leveled up infinitely. Each level of this augmentation " +
-                              "increases all of the player's stats and experience gains by 1%.")
+                              "This is a special augmentation because it can be leveled up infinitely. Each level of this augmentation: <br> " +
+                              "Increases all of the player's stats by 1%<br>" + 
+                              "Increases the player's experience gain rate for all stats by 1%<br>" + 
+                              "Increases the amount of reputation the player gains from companies and factions by 1%")
     NeuroFluxGovernor.addToAllFactions();
     AddToAugmentations(NeuroFluxGovernor);
         
@@ -1020,13 +1025,14 @@ applyAugmentation = function(aug, faction) {
             Player.hacking_mult       *= 1.15;
             break;
         case AugmentationNames.ArtificialSynapticPotentiation:    //Med level
-            Player.hacking_speed_mult *= .97;
-            Player.hacking_chance_mult *= 1.03;
+            Player.hacking_speed_mult   *= .97;
+            Player.hacking_chance_mult  *= 1.05;
+            Player.hacking_exp_mult     *= 1.05;
             break;
         case AugmentationNames.EnhancedMyelinSheathing:       //Med level
-            Player.hacking_speed_mult *= .98;
-            Player.hacking_exp_mult   *= 1.1;
-            Player.hacking_mult       *= 1.05;
+            Player.hacking_speed_mult *= .97;
+            Player.hacking_exp_mult   *= 1.15;
+            Player.hacking_mult       *= 1.1;
             break;
         case AugmentationNames.SynapticEnhancement:    //Low Level
             Player.hacking_speed_mult *= .97;
@@ -1145,6 +1151,8 @@ applyAugmentation = function(aug, faction) {
             Player.dexterity_exp_mult   *= 1.01;
             Player.agility_exp_mult     *= 1.01;
             Player.charisma_exp_mult    *= 1.01;
+            Player.company_rep_mult     *= 1.01;
+            Player.faction_rep_mult     *= 1.01;
             ++aug.level;
             break;    
         case AugmentationNames.Neurotrainer1:      //Low Level
