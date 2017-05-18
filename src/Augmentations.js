@@ -28,7 +28,7 @@ Augmentation.prototype.addToFactions = function(factionList) {
     for (var i = 0; i < factionList.length; ++i) {
         var faction = Factions[factionList[i]];
         if (faction == null) {
-            console.log("Error: Could not find faction with this name:" + factionList[i]);
+            console.log("ERROR: Could not find faction with this name:" + factionList[i]);
             continue;
         }
         faction.augmentations.push(this.name);
@@ -120,7 +120,30 @@ AugmentationNames = {
     LuminCloaking2:                     "LuminCloaking-V2 Skin Implant",
     HemoRecirculator:                   "HemoRecirculator",
     SmartSonar:                         "SmartSonar Implant",
-    PowerRecirculator:                  "Power Recirculation Core"
+    PowerRecirculator:                  "Power Recirculation Core",
+    QLink:                              "QLink",
+    SPTN97:                             "SPTN-97 Gene Modification",
+    HiveMind:                           "ECorp HVMind Implant",
+    CordiARCReactor:                    "CordiARC Fusion Reactor",
+    SmartJaw:                           "SmartJaw",
+    Neotra:                             "Neotra",
+    Xanipher:                           "Xanipher",
+    nextSENS:                           "nextSENS Gene Modification",
+    OmniTekInfoLoad:                    "OmniTek InfoLoad",
+    PhotosyntheticCells:                "Photosynthetic Cells",
+    Neurolink:                          "BitRunners Neurolink",
+    TheBlackHand:                       "The Black Hand",
+    CRTX42-AA:                          "CRTX42-AA Gene Modification",
+    Neuregen:                           "Neuregen Gene Modification",
+    CashRoot:                           "CashRoot",
+    NutriGen:                           "NutriGen Implant",
+    INFRARet:                           "INFRARET Enhancement",
+    DermaFoce:                          "DermaForce Particle Barrier",
+    GrapheneBrachiBlades:               "Graphene BranchiBlades Upgrade",
+    GrapheneBionicArms:                 "Graphene Bionic Arms Upgrade",
+    BrachiBlades:                       "BrachiBlades",
+    BionicArms:                         "Bionic Arms",
+    SNA:                                "Social Negotiation Assistant (S.N.A)"
 }
 
 initAugmentations = function() {
@@ -916,7 +939,7 @@ initAugmentations = function() {
     
     var PowerRecirculator = new Augmentation(AugmentationNames.PowerRecirculator);
     PowerRecirculator.setInfo("The body's nerves are attached with polypyrrole nanocircuits that " + 
-                              "are capable of of capture wasted energy (in the form of heat) " + 
+                              "are capable of capturing wasted energy (in the form of heat) " + 
                               "and converting it back into usable power. <br><br>" + 
                               "This augmentation: <br>" + 
                               "Increases all of the player's stats by 10%<br>" + 
@@ -934,6 +957,196 @@ initAugmentations = function() {
     //  Slum Snakes, CyberSec, Netburners, Fulcrum Secret Technologies,
     //  Silhouette
     
+	//Illuminati
+    var QLink = new Augmentation(AugmentationNames.QLink);
+    QLink.setInfo("A brain implant that wirelessly connects you to the Illuminati's " +
+                  "quantum supercomputer, allowing you to access and use its incredible " =
+                  "computing power. <br><br>" + 
+                  "This augmentation: <br>" + 
+                  "Increases the player's hacking speed by 10%<br>" + 
+                  "Increases the player's hacking chance by 30%<br>" + 
+                  "Increases the amount of money the player gains from hacking by 100%");
+    QLink.setRequirements(750000, 1000000000);
+    QLink.addToFactions(["Illuminati"]);
+    if (augmentationExists(AugmentationNames.QLink)) {
+        QLink.owned = Augmentations[AugmentationNames.QLink].owned;
+        delete Augmentations[AugmentationNames.QLink];
+    }
+    AddToAugmentations(QLink);
+    
+	//Daedalus
+    //TODO The Red Pill - Second prestige
+    
+	//Covenant
+    var SPTN97 = new Augmentation(AugmentationNames.SPTN97);
+    SPTN97.setInfo("The SPTN-97 gene is injected into the genome. The SPTN-97 gene is an " + 
+                   "artificially-synthesized gene that was developed by DARPA to create " + 
+                   "super-soldiers through genetic modification. The gene was outlawed in " +
+                   "2056.<br><br>" + 
+                   "This augmentation: <br>" + 
+                   "Increases all of the player's combat stats by 75%<br>" + 
+                   "Increases the player's hacking by 25%");
+    SPTN97.setRequirements(500000, 850000000);
+    SPTN97.addToFactions(["The Covenant"]);
+    if (augmentationExists(AugmentationNames.SPTN97)) {
+        SPTN97.owned = Augmentations[AugmentationNames.SPTN97].owned;
+        delete Augmentations[AugmentationNames.SPTN97];
+    }
+    AddToAugmentations(SPTN97);
+    
+	//ECorp
+    var HiveMind = new Augmentation(AugmentationNames.HiveMind);
+    HiveMind.setInfo("A brain implant developed by ECorp. They do not reveal what " + 
+                     "exactly the implant does, but they promise that it will greatly " + 
+                     "enhance your abilities.");
+    HiveMind.setRequirements(600000, 925000000);
+    HiveMind.addToFactions(["ECorp"]);
+    if (augmentationExists(AugmentationNames.HiveMind)) {
+        HiveMind.owned = Augmentations[AugmentationNames.HiveMind].owned;
+        delete Augmentations[AugmentationNames.HiveMind];
+    }
+    AddToAugmentations(HiveMind);
+    
+	//MegaCorp
+    var CordiARCReactor = new Augmentation(AugmentationNames.CordiARCReactor);
+    CordiARCReactor.setInfo("The thoracic cavity is equipped with a small chamber designed " +
+                            "to hold and sustain hydrogen plasma. The plasma is used to generate " + 
+                            "fusion power through nuclear fusion, providing limitless amount of clean " +
+                            "energy for the body. <br><br>" + 
+                            "This augmentation:<br>" +
+                            "Increases all of the player's combat stats by 40%<br>" + 
+                            "Increases all of the player's combat stat experience gain rate by 40%");
+    CordiARCReactor.setRequirements(450000, 900000000);
+    CordiARCReactor.addToFactions(["MegaCorp"]);
+    if (augmentationExists(AugmentationNames.CordiARCReactor) {
+        CordiARCReactor.owned = Augmentations[AugmentationNames.CordiARCReactor].owned;
+        delete Augmentations[AugmentationNames.CordiARCReactor];
+    }
+    AddToAugmentations(CordiARCReactor);
+    
+	//BachmanAndAssociates
+    var SmartJaw = new Augmentation(AugmentationNames.SmartJaw);
+    SmartJaw.setInfo("A bionic jaw that contains advanced hardware and software " + 
+                     "capable of psychoanalyzing and profiling the personality of " +
+                     "others using optimal imaging software. <br><br>" + 
+                     "This augmentation: <br>" + 
+                     "Increases the player's charisma by 30%. <br>" + 
+                     "Increases the player's charisma experience gain rate by 30%<br>" + 
+                     "Increases the amount of reputation the player gains for a company by 25%<br>" + 
+                     "Increases the amount of reputation the player gains for a faction by 25%");
+    SmartJaw.setRequirements(150000, 400000000);
+    SmartJaw.addToFactions(["Bachman & Associates"]);
+    if (augmentationExists(AugmentationNames.SmartJaw) {
+        SmartJaw.owned = Augmentations[AugmentationNames.SmartJaw].owned;
+        delete Augmentations[AugmentationNames.SmartJaw];
+    }
+    AddToAugmentations(SmartJaw);
+    
+	//BladeIndustries
+    var Neotra = new Augmentation(AugmentationNames.Neotra);
+    Neotra.setInfo("A highly-advanced techno-organic drug that is injected into the skeletal " + 
+                   "and integumentary system. The drug permanently modifies the DNA of the " + 
+                   "body's skin and bone cells, granting them the ability to repair " +
+                   "and restructure themselves. <br><br>" + 
+                   "This augmentation increases the player's strength and defense by 75%");
+    Neotra.setRequirements(225000, 500000000);
+    Neotra.addToFactions(["Blade Industries"]);
+    if (augmentationExists(AugmentationNames.Neotra)) {
+        Neotra.owned = Augmentations[AugmentationNames.Neotra].owned;
+        delete Augmentations[AugmentationNames.Neotra];
+    }
+    AddToAugmentations(Neotra);
+    
+	//NWO 
+    var Xanipher = new Augmentation(AugmentationNames.Xanipher);
+    Xanipher.setInfo("A concoction of advanced nanobots that is orally ingested into the " +)
+                     "body. These nanobots induce physiological change and significantly " + 
+                     "improve the body's functionining in all aspects. <br><br>" + 
+                     "This augmentation: <br>" + 
+                     "Increases all of the player's stats by 25%<br>" + 
+                     "Increases the player's experience gain rate for all stats by 20%");
+    Xanipher.setRequirements(350000, 700000000);
+    Xanipher.addToFactions(["NWO"]);
+    if (augmentationExists(AugmentationNames.Xanipher)) {
+        Xanipher.owned = Augmentations[AugmentationNames.Xanipher].owned;
+        delete Augmentations[AugmentationNames.Xanipher];
+    }
+    AddToAugmentations(Xanipher);
+    
+    //ClarkeIncorporated
+    var nextSENS = new Augmentation(AugmentationNames.nextSENS);
+    nextSENS.setInfo("The body is genetically re-engineered to maintain a state " + 
+                     "of negligible senescence, preventing the body from " + 
+                     "deteriorating with age. <br><br>" + 
+                     "This augmentation increases all of the player's stats by 20%");
+    nextSENS.setRequirements(200000, 300000000); 
+    nextSENS.addToFactions(["Clarke Incorporated"]);
+    if (augmentationExists(AugmentationNames.nextSENS)) {
+        nextSENS.owned = Augmentations[AugmentationNames.nextSENS].owned;
+        delete Augmentations[AugmentationNames.nextSENS];
+    }
+    
+	//OmniTekIncorporated
+    OmniTekUpload - Uploads OmniTek Incorporated's database of tech/computing
+    information directly into your brain. Increases hacking skill 
+    
+	//FourSigma
+    //TODO Later when Intelligence is added in . Some aug that greatly increases int
+    
+	//KuaiGongInternational
+    Photosynthetic cells - Body's cells can use photosynthesis to generate their
+    own energy. Improves stamina, strength, etc. 
+    
+	//BitRunners
+    Neurolink - Direct Neural link to BitRunner's information servers
+    
+	//BlackHand
+    "The Black Hand" - Bionic hand that grants super strength and dexterity but
+    also is equipped with other technology somehow that lets you hack..or cmmit crimes
+    
+	//NiteSec
+    CRTX42-AA - Augments the visual cortex ( improving spatial visualization and manipulation capabilities)
+                and the pre-frontal cortex 
+   
+	//Chongqing
+    Neuregen - Genetically modified so that neurons in the brain never die out and
+    continuously regenerate and strengthen themselves. Increases hacking and eventually
+    intelligence
+    
+	//Sector12
+    Cash Root-Augmentation that lets you start the game with significantly more money..maybe 1,000,000?
+    
+	//NewTokyo
+    NutriGen - A thermo-powered artificial nutrition generator. Endogenously 
+    synthesises glucose, amino acids, and vitamins and redistributes them across
+    the body. Powered by the body's naturally generated heat. Improves combat stats
+    
+	//Aevum
+    //TODO Later Something that lets you learn advanced math...this increases int
+           //and profits as a trader/from trading
+    
+    //Ishima
+    Infrared vision in eyes - Increase crime chance. Increase dexterity
+    
+	//Volhaven
+    Exo-ParticleBarrier - Technology that creates an energy barrier around you (high-density
+                    muon). Improves defense
+    
+	//SpeakersForTheDead
+    Graphene Branchi Blades
+    
+	//DarkArmy
+    Graphene Bionic Arms
+    
+	//TheSyndicate
+    BrachiBlades = retractable blades in arms, increases str and def
+    
+    //Tetrads
+    Bionic Arms
+    
+	//TianDiHui
+    Augmentation that improves negotiation, leading to increased wages, faction rep, and company rep
+
 }
 
 applyAugmentation = function(aug, faction) {

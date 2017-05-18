@@ -2,8 +2,8 @@
  *  Script object
  */
 
-//Initialize the 'save and close' button on script editor page
 function scriptEditorInit() {
+    //Initialize save and close button
     var closeButton = document.getElementById("script-editor-save-and-close-button");
     
     closeButton.addEventListener("click", function() {
@@ -11,7 +11,7 @@ function scriptEditorInit() {
         return false;
     });
     
-    //Allow tabs (four spaces) in all textareas)
+    //Allow tabs (four spaces) in all textareas
     var textareas = document.getElementsByTagName('textarea');
     var count = textareas.length;
     for(var i=0;i<count;i++){
@@ -31,7 +31,6 @@ function scriptEditorInit() {
         }
     }
 };
-
 document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 
 //Define key commands in script editor (ctrl o to save + close, etc.)
