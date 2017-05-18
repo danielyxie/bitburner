@@ -296,8 +296,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //The Black Hand
     var theblackhandFac = Factions["The Black Hand"];
     if (theblackhandFac.isBanned == false && theblackhandFac.isMember == false &&
-        this.hacking_skill >= 400 && this.strength >= 300 && this.defense >= 300 &&
-        this.agility >= 300 && this.dexterity >= 300 && homeComp.maxRam >= 16) {
+        this.hacking_skill >= 400 && this.strength >= 200 && this.defense >= 200 &&
+        this.agility >= 200 && this.dexterity >= 200 && homeComp.maxRam >= 16) {
         invitedFactions.push(theblackhandFac);
     }
     

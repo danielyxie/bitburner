@@ -964,7 +964,7 @@ initAugmentations = function() {
                   "computing power. <br><br>" + 
                   "This augmentation: <br>" + 
                   "Increases the player's hacking speed by 10%<br>" + 
-                  "Increases the player's hacking chance by 30%<br>" + 
+                  "Increases the player's chance of successfully performing a hack by 30%<br>" + 
                   "Increases the amount of money the player gains from hacking by 100%");
     QLink.setRequirements(750000, 1000000000);
     QLink.addToFactions(["Illuminati"]);
@@ -985,7 +985,7 @@ initAugmentations = function() {
                    "2056.<br><br>" + 
                    "This augmentation: <br>" + 
                    "Increases all of the player's combat stats by 75%<br>" + 
-                   "Increases the player's hacking by 25%");
+                   "Increases the player's hacking skill by 25%");
     SPTN97.setRequirements(500000, 850000000);
     SPTN97.addToFactions(["The Covenant"]);
     if (augmentationExists(AugmentationNames.SPTN97)) {
@@ -1085,20 +1085,60 @@ initAugmentations = function() {
         nextSENS.owned = Augmentations[AugmentationNames.nextSENS].owned;
         delete Augmentations[AugmentationNames.nextSENS];
     }
+    AddToAugmentations(nextSENS); 
     
 	//OmniTekIncorporated
-    OmniTekUpload - Uploads OmniTek Incorporated's database of tech/computing
-    information directly into your brain. Increases hacking skill 
+    var OmniTekInfoLoad = new Augmentation(AugmentationNames.OmniTekInfoLoad);
+    OmniTekInfoLoad.setInfo("OmniTek's data and information repository is uploaded " + 
+                            "into your brain, enhancing your programming and " +
+                            "hacking abilities. <br><br>" + 
+                            "This augmentation:<br>" + 
+                            "Increases the player's hacking skill by 30%<br>" + 
+                            "Increases the player's hacking experience gain rate by 30%");
+    OmniTekInfoLoad.setRequirements(250000, 400000000)
+    OmniTekInfoLoad.addToFactions(["OmniTek Incorporated"]);
+    if (augmentationExists(AugmentationNames.OmniTekInfoLoad)) {
+        OmniTekInfoLoad.owned = Augmentations[AugmentationNames.OmniTekInfoLoad].owned;
+        delete Augmentations[AugmentationNames.OmniTekInfoLoad];
+    }
+    AddToAugmentations(OmniTekInfoLoad);
     
 	//FourSigma
     //TODO Later when Intelligence is added in . Some aug that greatly increases int
     
 	//KuaiGongInternational
-    Photosynthetic cells - Body's cells can use photosynthesis to generate their
-    own energy. Improves stamina, strength, etc. 
+    var PhotosyntheticCells = new Augmentation(AugmentationNames.PhotosyntheticCells);
+    PhotosyntheticCells.setInfo("Chloroplasts are added to epidermal stem cells and are applied " + 
+                                "to the body using a skin graft. The result is photosynthetic " + 
+                                "skin cells, allowing users to generate their own energy " + 
+                                "and nutrition using solar-power. <br><br>" + 
+                                "This augmentation increases the player's strength, defense, and agility by 50%");
+    PhotosyntheticCells.setRequirements(300000, 475000000);
+    PhotosyntheticCells.addToFactions(["KuaiGong International"]);
+    if (augmentationExists(AugmentationNames.PhotosyntheticCells)) {
+        PhotosyntheticCells.owned = Augmentations[AugmentationNames.PhotosyntheticCells].owned;
+        delete Augmentations[AugmentationNames.PhotosyntheticCells];
+    }
+    AddToAugmentations(PhotosyntheticCells);
     
 	//BitRunners
-    Neurolink - Direct Neural link to BitRunner's information servers
+    var Neurolink = new Augmentation(AugmentationNames.Neurolink);
+    Neurolink.setInfo("A brain implant that provides a direct neural link between your " + 
+                      "mind and BitRunners' data servers, which reportedly contain " +
+                      "the largest database of hacking tools and information in the world. <br><br>" + 
+                      "This augmentation: <br>" + 
+                      "Increases the player's hacking skill by 20%<br>" + 
+                      "Increases the palyer's hacking experience gain rate by 25%<br>" + 
+                      "Increases the player's chance of successfully performing a hack by 10%<br>" +
+                      "Increases the player's hacking speed by 5%<br>" + 
+                      "Lets the player start with the FTPCrack.exe and relaySMTP.exe programs after a reset");
+    Neurolink.setRequirements(350000, 750000000);
+    Neurolink.addToFactions(["BitRunners"]);
+    if (augmentationExists(AugmentationNames.Neurolink)) {
+        Neurolink.owned = Augmentations[AugmentationNames.Neurolink].owned;
+        delete Augmentations[AugmentationNames.Neurolink];
+    }
+    AddToAugmentations(Neurolink);
     
 	//BlackHand
     "The Black Hand" - Bionic hand that grants super strength and dexterity but
