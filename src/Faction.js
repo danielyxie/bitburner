@@ -284,7 +284,6 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         }
     }
     
-    
     //BitRunners
     var bitrunnersFac = Factions["BitRunners"];
     var homeComp = Player.getHomeComputer();
@@ -358,7 +357,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         this.numPeopleKilledTotal >= 100 && this.karma <= -50 && this.companyName != Locations.Sector12CIA &&
         this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(speakersforthedeadFac);
-    }   
+    }
         
     //The Dark Army
     var thedarkarmyFac = Factions["The Dark Army"];
