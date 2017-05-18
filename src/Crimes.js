@@ -78,6 +78,7 @@ function determineCrimeSuccess(crime, moneyGained) {
             dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
             return;
     }
+    chance *= Player.crime_success_mult;
     if (Math.random() <= chance) {
         //Success
         Player.gainMoney(moneyGained);

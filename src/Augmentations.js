@@ -1030,8 +1030,8 @@ initAugmentations = function() {
                      "capable of psychoanalyzing and profiling the personality of " +
                      "others using optimal imaging software. <br><br>" + 
                      "This augmentation: <br>" + 
-                     "Increases the player's charisma by 30%. <br>" + 
-                     "Increases the player's charisma experience gain rate by 30%<br>" + 
+                     "Increases the player's charisma by 50%. <br>" + 
+                     "Increases the player's charisma experience gain rate by 50%<br>" + 
                      "Increases the amount of reputation the player gains for a company by 25%<br>" + 
                      "Increases the amount of reputation the player gains for a faction by 25%");
     SmartJaw.setRequirements(150000, 400000000);
@@ -1079,7 +1079,7 @@ initAugmentations = function() {
                      "of negligible senescence, preventing the body from " + 
                      "deteriorating with age. <br><br>" + 
                      "This augmentation increases all of the player's stats by 20%");
-    nextSENS.setRequirements(200000, 300000000); 
+    nextSENS.setRequirements(175000, 300000000); 
     nextSENS.addToFactions(["Clarke Incorporated"]);
     if (augmentationExists(AugmentationNames.nextSENS)) {
         nextSENS.owned = Augmentations[AugmentationNames.nextSENS].owned;
@@ -1226,7 +1226,6 @@ initAugmentations = function() {
            //and profits as a trader/from trading
     
     //Ishima
-    Infrared vision in eyes - Increase crime chance. Increase dexterity
     var INFRARet = new Augmentation(AugmentationNames.INFRARet);
     INFRARet.setInfo("A retina implant consisting of a tiny chip that sits behind the " + 
                      "retina. This implant lets people visually detect infrared radiation. <br><br>"  + 
@@ -1494,7 +1493,6 @@ applyAugmentation = function(aug, faction) {
             Player.hacking_mult       *= 1.1;
             break;
         case AugmentationNames.PCDNIOptimizer:   //High level
-            //Allows u to better optimize code/pc when connecting with PC DNI..helps with software/IT jobs
             Player.company_rep_mult   *= 1.25;
             Player.hacking_mult       *= 1.25;
             break;    
@@ -1608,6 +1606,128 @@ applyAugmentation = function(aug, faction) {
             Player.dexterity_exp_mult   *= 1.1;
             Player.agility_exp_mult     *= 1.1;
             Player.charisma_exp_mult    *= 1.1;
+            break;
+        //Unique augmentations (for factions)
+        case AugmentationNames.QLink:
+            Player.hacking_speed_mult   *= 0.9;
+            Player.hacking_chance_mult  *= 1.3;
+            Player.hacking_money_mult   *= 2;
+            break;
+        case AugmentationNames.SPTN97:
+            Player.strength_mult        *= 1.75;
+            Player.defense_mult         *= 1.75;
+            Player.dexterity_mult       *= 1.75;
+            Player.agility_mult         *= 1.75;
+            Player.hacking_mult         *= 1.25;
+            break;
+        case AugmentationNames.HiveMind:
+            Player.hacking_grow_mult    *= 3;
+            break;
+        case AugmentationNames.CordiARCReactor:
+            Player.strength_mult        *= 1.4;
+            Player.defense_mult         *= 1.4;
+            Player.dexterity_mult       *= 1.4;
+            Player.agility_mult         *= 1.4;
+            Player.strength_exp_mult    *= 1.4;
+            Player.defense_exp_mult     *= 1.4;
+            Player.dexterity_exp_mult   *= 1.4;
+            Player.agility_exp_mult     *= 1.4;
+            break;
+        case AugmentationNames.SmartJaw:
+            Player.charisma_mult        *= 1.5;
+            Player.charisma_exp_mult    *= 1.5;
+            Player.company_rep_mult     *= 1.25;
+            Player.faction_rep_mult     *= 1.25;
+            break;
+        case AugmentationNames.Neotra:
+            Player.strength_mult        *= 1.75;
+            Player.defense_mult         *= 1.75;
+            break;
+        case AugmentationNames.Xanipher:
+            Player.hacking_mult         *= 1.25;
+            Player.strength_mult        *= 1.25;
+            Player.defense_mult         *= 1.25;
+            Player.dexterity_mult       *= 1.25;
+            Player.agility_mult         *= 1.25;
+            Player.charisma_mult        *= 1.25;
+            Player.hacking_exp_mult     *= 1.2;
+            Player.strength_exp_mult    *= 1.2;
+            Player.defense_exp_mult     *= 1.2;
+            Player.dexterity_exp_mult   *= 1.2;
+            Player.agility_exp_mult     *= 1.2;
+            Player.charisma_exp_mult    *= 1.2;
+            break;
+        case AugmentationNames.nextSENS:
+            Player.hacking_mult         *= 1.2;
+            Player.strength_mult        *= 1.2;
+            Player.defense_mult         *= 1.2;
+            Player.dexterity_mult       *= 1.2;
+            Player.agility_mult         *= 1.2;
+            Player.charisma_mult        *= 1.2;
+            break;
+        case AugmentationNames.OmniTekInfoLoad:
+            Player.hacking_mult         *= 1.3;
+            Player.hacking_exp_mult     *= 1.3;
+            break;
+        case AugmentationNames.PhotosyntheticCells:
+            Player.strength_mult        *= 1.5;
+            Player.defense_mult         *= 1.5;
+            Player.agility_mult         *= 1.5;
+            break;
+        case AugmentationNames.Neurolink:
+            Player.hacking_mult         *= 1.2;
+            Player.hacking_exp_mult     *= 1.25;
+            Player.hacking_chance_mult  *= 1.1;
+            Player.hacking_speed_mult   *= 0.95;
+            break;
+        case AugmentationNames.TheBlackHand:
+            Player.strength_mult        *= 1.2;
+            Player.dexterity_mult       *= 1.2;
+            Player.hacking_mult         *= 1.1;
+            Player.hacking_speed_mult   *= 0.98;
+            Player.hacking_money_mult   *= 1.1;
+            break;
+        case AugmentationNames.CRTX42AA:
+            Player.hacking_mult         *= 1.1;
+            Player.hacking_exp_mult     *= 1.2;
+            break;
+        case AugmentationNames.Neuregen:
+            Player.hacking_exp_mult     *= 1.75;
+            break;
+        case AugmentationNames.NutriGen:
+            Player.strength_exp_mult    *= 1.2;
+            Player.defense_exp_mult     *= 1.2;
+            Player.dexterity_exp_mult   *= 1.2;
+            Player.agility_exp_mult     *= 1.2;
+            break;
+        case AugmentationNames.INFRARet:
+            Player.crime_success_mult   *= 1.25;
+            Player.crime_money_mult     *= 1.1;
+            Player.dexterity_mult       *= 1.1;
+            break;
+        case AugmentationNames.DermaForce:
+            Player.defense_mult         *= 1.5;
+            break;
+        case AugmentationNames.GrapheneBrachiBlades:
+            Player.strength_mult        *= 1.75;
+            Player.defense_mult         *= 1.75;
+            break;
+        case AugmentationNames.GrapheneBionicArms:
+            Player.strength_mult        *= 2;
+            Player.dexterity_mult       *= 2;
+            break;
+        case AugmentationNames.BrachiBlades:
+            Player.strength_mult        *= 1.25;
+            Player.defense_mult         *= 1.25;
+            break;
+        case AugmentationNames.BionicArms:
+            Player.strength_mult        *= 1.5;
+            Player.dexterity_mult       *= 1.5;
+            break;
+        case AugmentationNames.SNA:
+            Player.work_money_mult      *= 1.1;
+            Player.company_rep_mult     *= 1.2;
+            Player.faction_rep_mult     *= 1.2;
             break;
         default:
             throw new Error("ERROR: No such augmentation!");

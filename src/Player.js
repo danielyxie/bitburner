@@ -17,6 +17,7 @@ function PlayerObject() {
     this.hacking_chance_mult    = 1;  //Increase through ascensions/augmentations
     this.hacking_speed_mult     = 1;  //Decrease through ascensions/augmentations
     this.hacking_money_mult     = 1;  //Increase through ascensions/augmentations. Can't go above 1
+    this.hacking_grow_mult      = 1;
     
     //Note: "Lifetime" refers to current ascension, "total" refers to the entire game history
     //Accumulative  stats and skills
@@ -116,6 +117,7 @@ function PlayerObject() {
     this.numTimesHeistLifetime          = 0;
     
     this.crime_money_mult               = 1;
+    this.crime_success_mult             = 1;
     
     //Flag to let the engine know the player is starting an action
     //  Current actions: hack, analyze
