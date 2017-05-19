@@ -1028,7 +1028,7 @@ initAugmentations = function() {
     var SmartJaw = new Augmentation(AugmentationNames.SmartJaw);
     SmartJaw.setInfo("A bionic jaw that contains advanced hardware and software " + 
                      "capable of psychoanalyzing and profiling the personality of " +
-                     "others using optimal imaging software. <br><br>" + 
+                     "others using optical imaging software. <br><br>" + 
                      "This augmentation: <br>" + 
                      "Increases the player's charisma by 50%. <br>" + 
                      "Increases the player's charisma experience gain rate by 50%<br>" + 
@@ -1111,7 +1111,7 @@ initAugmentations = function() {
     PhotosyntheticCells.setInfo("Chloroplasts are added to epidermal stem cells and are applied " + 
                                 "to the body using a skin graft. The result is photosynthetic " + 
                                 "skin cells, allowing users to generate their own energy " + 
-                                "and nutrition using solar-power. <br><br>" + 
+                                "and nutrition using solar power. <br><br>" + 
                                 "This augmentation increases the player's strength, defense, and agility by 50%");
     PhotosyntheticCells.setRequirements(225000, 425000000);
     PhotosyntheticCells.addToFactions(["KuaiGong International"]);
@@ -1128,7 +1128,7 @@ initAugmentations = function() {
                       "the largest database of hacking tools and information in the world. <br><br>" + 
                       "This augmentation: <br>" + 
                       "Increases the player's hacking skill by 20%<br>" + 
-                      "Increases the palyer's hacking experience gain rate by 25%<br>" + 
+                      "Increases the player's hacking experience gain rate by 25%<br>" + 
                       "Increases the player's chance of successfully performing a hack by 10%<br>" +
                       "Increases the player's hacking speed by 5%<br>" + 
                       "Lets the player start with the FTPCrack.exe and relaySMTP.exe programs after a reset");
@@ -1260,8 +1260,17 @@ initAugmentations = function() {
     GrapheneBrachiBlades.setInfo("An upgrade to the BrachiBlades augmentation. It infuses " + 
                                  "the retractable blades with an advanced graphene material " + 
                                  "to make them much stronger and lighter. <br><br>" + 
-                                 "This augmentation increases the player's strength and defense by 75%");
+                                 "This augmentation:<br>" + 
+                                 "Increases the player's strength and defense by 50%<br>" +
+                                 "Increases the player's crime success rate by 10%<br>" + 
+                                 "Increases the amount of money the player gains from crimes by 20%");
     GrapheneBrachiBlades.setRequirements(90000, 400000000);
+    GrapheneBrachiBlades.addToFactions(["Speakers for the Dead"]);
+    if (augmentationExists(AugmentationNames.GrapheneBrachiBlades)) {
+        GrapheneBrachiBlades.owned = Augmentations[AugmentationNames.GrapheneBrachiBlades].owned;
+        delete Augmentations[AugmentationNames.GrapheneBrachiBlades];
+    }
+    AddToAugmentations(GrapheneBrachiBlades);
     
 	//DarkArmy
     var GrapheneBionicArms = new Augmentation(AugmentationNames.GrapheneBionicArms);
@@ -1280,7 +1289,10 @@ initAugmentations = function() {
 	//TheSyndicate
     var BrachiBlades = new Augmentation(AugmentationNames.BrachiBlades);
     BrachiBlades.setInfo("A set of retractable plasteel blades are implanted in the arm, underneath the skin. " +
-                         "<br><br>This augmentation increases the player's strength and defense by 25%");
+                         "<br><br>This augmentation: <br>" + 
+                         "Increases the player's strength and defense by 20%<br>" + 
+                         "Increases the player's crime success rate by 10%<br>" + 
+                         "Increases thea mount of money the player gains from crimes by 10%");
     BrachiBlades.setRequirements(5000, 14000000);
     BrachiBlades.addToFactions(["The Syndicate"]);
     if (augmentationExists(AugmentationNames.BrachiBlades)) {
@@ -1315,7 +1327,7 @@ initAugmentations = function() {
     SNA.addToFactions(["Tian Di Hui"]);
     if (augmentationExists(AugmentationNames.SNA)) {
         SNA.owned = Augmentations[AugmentationNames.SNA].owned;
-        delete Augmentations[AugmentationNames];
+        delete Augmentations[AugmentationNames.SNA];
     }
     AddToAugmentations(SNA);
 }
@@ -1709,16 +1721,20 @@ applyAugmentation = function(aug, faction) {
             Player.defense_mult         *= 1.5;
             break;
         case AugmentationNames.GrapheneBrachiBlades:
-            Player.strength_mult        *= 1.75;
-            Player.defense_mult         *= 1.75;
+            Player.strength_mult        *= 1.5;
+            Player.defense_mult         *= 1.5;
+            Player.crime_success_mult   *= 1.1;
+            Player.crime_money_mult     *= 1.2;
             break;
         case AugmentationNames.GrapheneBionicArms:
             Player.strength_mult        *= 2;
             Player.dexterity_mult       *= 2;
             break;
         case AugmentationNames.BrachiBlades:
-            Player.strength_mult        *= 1.25;
-            Player.defense_mult         *= 1.25;
+            Player.strength_mult        *= 1.2;
+            Player.defense_mult         *= 1.2;
+            Player.crime_success_mult   *= 1.1;
+            Player.crime_money_mult     *= 1.1;
             break;
         case AugmentationNames.BionicArms:
             Player.strength_mult        *= 1.5;
