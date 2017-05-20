@@ -225,6 +225,7 @@ tr:focus {
 
 /* Character Overview */
 #character-overview-container {
+    display: none;
     position: fixed; /* Stay in place */
     right: 0;
     top: 0;

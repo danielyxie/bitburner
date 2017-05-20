@@ -239,6 +239,7 @@ Reviver.constructors.Script = Script;
 //into worker scripts so that they will start running
 loadAllRunningScripts = function() {
 	var count = 0;
+    var total = 0;
 	for (var property in AllServers) {
 		if (AllServers.hasOwnProperty(property)) {
 			var server = AllServers[property];
@@ -254,10 +255,11 @@ loadAllRunningScripts = function() {
 				addWorkerScript(script, server);
 				
 				//Offline production
-				scriptCalculateOfflineProduction(script);
+				total += scriptCalculateOfflineProduction(script);
 			}
 		}
 	}
+    return total;
 	console.log("Loaded " + count.toString() + " running scripts");
 }
 
@@ -305,7 +307,7 @@ scriptCalculateOfflineProduction = function(script) {
 	script.offlineMoneyMade += totalOfflineProduction;
 	script.offlineRunningTime += timePassed;
 	script.offlineExpGained += expGain;
-		
+    return totalOfflineProduction;
 	//DEBUG
 	var serverName = AllServers[script.server].hostname;
 	console.log(script.filename + " from server " + serverName + " generated $" + totalOfflineProduction + " TOTAL while offline");

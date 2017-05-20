@@ -1307,8 +1307,8 @@ initAugmentations = function() {
                        "the user's organic arms. <br><br>" + 
                        "This augmentation increases the user's strength and dexterity by 50%");
     BionicArms.setRequirements(25000, 45000000);
-    BionicArms.addTofactions(["Tetrads"]);
-    if (augmetationExists(AugmentationNames.BionicArms)) {
+    BionicArms.addToFactions(["Tetrads"]);
+    if (augmentationExists(AugmentationNames.BionicArms)) {
         BionicArms.owned = Augmentations[AugmentationNames.BionicArms].owned;
         delete Augmentations[AugmentationNames.BionicArms];
     }

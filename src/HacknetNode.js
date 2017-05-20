@@ -415,9 +415,11 @@ updateHacknetNodeDomElement = function(nodeObj) {
 }
 
 processAllHacknetNodeEarnings = function(numCycles) {
+    var total = 0;
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
-        processSingleHacknetNodeEarnings(numCycles, Player.hacknetNodes[i]);
+        total += processSingleHacknetNodeEarnings(numCycles, Player.hacknetNodes[i]);
     }
+    return total;
 }
 
 processSingleHacknetNodeEarnings = function(numCycles, nodeObj) {
@@ -428,4 +430,14 @@ processSingleHacknetNodeEarnings = function(numCycles, nodeObj) {
     nodeObj.totalMoneyGenerated += totalEarnings;
     nodeObj.onlineTimeSeconds += (numCycles * (Engine._idleSpeed / 1000));
     Player.gainMoney(totalEarnings);
+    return totalEarnings;
+}
+
+getHacknetNode = function(name) {
+    for (var i = 0; i < Player.hacknetNodes.length; ++i) {
+        if (Player.hacknetNodes[i].name == name) {
+            return player.hacknetNodes[i];
+        }
+    }
+    return null;
 }

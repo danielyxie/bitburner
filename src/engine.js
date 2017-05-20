@@ -736,7 +736,7 @@ var Engine = {
             
             /* Process offline progress */
             processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
-            loadAllRunningScripts();    //This also takes care of offline production for those scripts
+            var offlineProductionFromScripts = loadAllRunningScripts();    //This also takes care of offline production for those scripts
             if (Player.isWorking) {
                 console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
                 if (Player.workType == CONSTANTS.WorkTypeFaction) {
@@ -755,7 +755,7 @@ var Engine = {
             }
             
             //Hacknet Nodes offline progress
-            processAllHacknetNodeEarnings(numCyclesOffline);
+            var offlineProductionFromHacknetNodes = processAllHacknetNodeEarnings(numCyclesOffline);
             
             //Passive faction rep gain offline
             processPassiveFactionRepGain(numCyclesOffline);
@@ -767,6 +767,9 @@ var Engine = {
             
             Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
+            dialogBoxCreate("While you were offline, your scripts generated $" + 
+                            formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" + 
+                            formatNumber(offlineProductionFromHacknetNodes, 2));
         } else {
             //No save found, start new game
             console.log("Initializing new game");
@@ -1045,6 +1048,18 @@ var Engine = {
             });
             Engine.loadWorkInProgressContent();
         }
+        
+        //character overview screen
+        document.getElementById("character-overview-container").style.display = "block";
+        
+        //Remove classes from links (they might be set from tutorial)
+        document.getElementById("terminal-menu-link").removeAttribute("class");
+        document.getElementById("character-menu-link").removeAttribute("class");
+        document.getElementById("create-script-menu-link").removeAttribute("class");
+        document.getElementById("active-scripts-menu-link").removeAttribute("class");
+        document.getElementById("hacknet-nodes-menu-link").removeAttribute("class");
+        document.getElementById("world-menu-link").removeAttribute("class");
+        document.getElementById("tutorial-menu-link").removeAttribute("class");
         
         //DEBUG
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
