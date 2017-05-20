@@ -960,7 +960,7 @@ initAugmentations = function() {
 	//Illuminati
     var QLink = new Augmentation(AugmentationNames.QLink);
     QLink.setInfo("A brain implant that wirelessly connects you to the Illuminati's " +
-                  "quantum supercomputer, allowing you to access and use its incredible " =
+                  "quantum supercomputer, allowing you to access and use its incredible " +
                   "computing power. <br><br>" + 
                   "This augmentation: <br>" + 
                   "Increases the player's hacking speed by 10%<br>" + 
@@ -1018,7 +1018,7 @@ initAugmentations = function() {
                             "Increases all of the player's combat stat experience gain rate by 40%");
     CordiARCReactor.setRequirements(450000, 900000000);
     CordiARCReactor.addToFactions(["MegaCorp"]);
-    if (augmentationExists(AugmentationNames.CordiARCReactor) {
+    if (augmentationExists(AugmentationNames.CordiARCReactor)) {
         CordiARCReactor.owned = Augmentations[AugmentationNames.CordiARCReactor].owned;
         delete Augmentations[AugmentationNames.CordiARCReactor];
     }
@@ -1036,7 +1036,7 @@ initAugmentations = function() {
                      "Increases the amount of reputation the player gains for a faction by 25%");
     SmartJaw.setRequirements(150000, 400000000);
     SmartJaw.addToFactions(["Bachman & Associates"]);
-    if (augmentationExists(AugmentationNames.SmartJaw) {
+    if (augmentationExists(AugmentationNames.SmartJaw)) {
         SmartJaw.owned = Augmentations[AugmentationNames.SmartJaw].owned;
         delete Augmentations[AugmentationNames.SmartJaw];
     }
@@ -1059,7 +1059,7 @@ initAugmentations = function() {
     
 	//NWO 
     var Xanipher = new Augmentation(AugmentationNames.Xanipher);
-    Xanipher.setInfo("A concoction of advanced nanobots that is orally ingested into the " +)
+    Xanipher.setInfo("A concoction of advanced nanobots that is orally ingested into the " +
                      "body. These nanobots induce physiological change and significantly " + 
                      "improve the body's functionining in all aspects. <br><br>" + 
                      "This augmentation: <br>" + 
@@ -1208,7 +1208,7 @@ initAugmentations = function() {
 	//NewTokyo
     var NutriGen = new Augmentation(AugmentationNames.NutriGen);
     NutriGen.setInfo("A thermo-powered artificial nutrition generator. Endogenously " + 
-                     "synthesizes glucose, amino acids, and vitamins and redistributes them " 
+                     "synthesizes glucose, amino acids, and vitamins and redistributes them " +
                      "across the body. The device is powered by the body's naturally wasted " + 
                      "energy in the form of heat.<br><br>" + 
                      "This augmentation: <br>" + 
@@ -1315,7 +1315,6 @@ initAugmentations = function() {
     AddToAugmentations(BionicArms);
     
 	//TianDiHui
-    Augmentation that improves negotiation, leading to increased wages, faction rep, and company rep
     var SNA = new Augmentation(AugmentationNames.SNA);
     SNA.setInfo("A cranial implant that affects the user's personality, making them better " +
                 "at negotiation in social situations. <br><br>" + 

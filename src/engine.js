@@ -222,6 +222,18 @@ var Engine = {
         Engine.volhavenLocationsList.style.display = "none";
     },
     
+    displayCharacterOverviewInfo: function() {
+        document.getElementById("character-overview-text").innerHTML = 
+        ("Money: $" + formatNumber(Player.money, 2) + "<br>" + 
+         "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" + 
+         "Str:   " + (Player.strength).toLocaleString() + "<br>" + 
+         "Def:   " + (Player.defense).toLocaleString() + "<br>" + 
+         "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" + 
+         "Agi:   " + (Player.agility).toLocaleString() + "<br>" + 
+         "Cha:   " + (Player.charisma).toLocaleString()
+        ).replace( / /g, "&nbsp;" );
+    },
+    
     /* Display character info */
     displayCharacterInfo: function() {
         var companyPosition = "";
@@ -276,7 +288,6 @@ var Engine = {
         'Servers owned:       ' + Player.purchasedServers.length + '<br>' + 
         'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
         'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime) + '<br><br><br>').replace( / /g, "&nbsp;" );
-        
     },
     
     /* Display locations in the world*/
@@ -609,6 +620,7 @@ var Engine = {
         }
         
         if (Engine.Counters.updateDisplays <= 0) {
+            Engine.displayCharacterOverviewInfo();
             if (Engine.currentPage == Engine.Page.ActiveScripts) {
                 Engine.updateActiveScriptsItems();
             } else if (Engine.currentPage == Engine.Page.CharacterInfo) {

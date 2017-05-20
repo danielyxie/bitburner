@@ -222,3 +222,25 @@ tr:focus {
     right: 0;
     bottom: 0;    
 }
+
+/* Character Overview */
+#character-overview-container {
+    position: fixed; /* Stay in place */
+    right: 0;
+    top: 0;
+    height: 100%; /* Full height */
+    margin: 45% auto;
+    padding: 5px;
+    border: 2px solid #66ff33;
+    width: 20%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #444; /* Fallback color */
+    z-index: 1;
+}
+
+#character-overview-text {
+    padding: 4px;
+    margin: 4px;
+    color: white;
+    background-color: #444;
+}

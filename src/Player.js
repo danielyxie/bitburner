@@ -221,7 +221,7 @@ PlayerObject.prototype.calculateHackingChance = function() {
     var chance = skillChance * difficultyMult;
     if (chance > 1) {return 1;}
     if (chance < 0) {return 0;} 
-    return chance;}
+    return chance;
 }
 
 //Calculate the time it takes to hack a server in seconds. Returns the time
