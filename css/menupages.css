@@ -274,24 +274,43 @@
     margin: 6px;
 }
 
+
+
 #faction-hack-div,
 #faction-fieldwork-div,
-#faction-securitywork-div {
+#faction-securitywork-div,
+#faction-donate-div {
     overflow: hidden;
+    width: 80%;
     height: 100%;
 }
 
 #faction-hack-div-wrapper,
 #faction-fieldwork-div-wrapper,
-#faction-securitywork-div-wrapper {
+#faction-securitywork-div-wrapper,
+#faction-donate-div-wrapper {
     float: left;
     border: 2px solid #333;
     padding: 14px 6px 4px 6px; 
     margin: 6px;
 }
 
-#faction-hack-button {
+#faction-hack-button,
+#faction-fieldwork-button,
+#faction-securitywork-button {
     margin: 8px;
+}
+
+#faction-donate-amount-txt, 
+#faction-donate-input {
+    padding: 6px;
+    margin: 6px;
+    display: inline-block;
+    color: #66ff33;
+}
+
+#faction-donate-amount-txt {
+    width:50%;
 }
 
 div.faction-clear {
@@ -301,6 +320,7 @@ div.faction-clear {
 #faction-container p {
     padding: 6px;
     margin: 6px;
+    width: 80%;
 }
 
 /* Faction Augmentations */

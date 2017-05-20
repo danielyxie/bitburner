@@ -1,4 +1,21 @@
 //Netburner Faction class
+function factionInit() {
+    $('#faction-donate-input').on('input', function() {
+        if (Engine.currentPage == Engine.Page.Faction) {
+            var val = document.getElementById("faction-donate-input").value;
+            if (isPositiveNumber(val)) {
+                var numMoneyDonate = Number(val);
+                document.getElementById("faction-donate-rep-gain").innerHTML = 
+                    "This donation will result in " + formatNumber(numMoneyDonate/1000, 3) + " reputation gain";
+            } else {
+                document.getElementById("faction-donate-rep-gain").innerHTML = 
+                    "This donation will result in 0 reputation gain";
+            }
+        }
+    });
+}
+document.addEventListener("DOMContentLoaded", factionInit, false);
+
 function Faction(name) {
 	this.name 				= name;
     this.augmentations 		= [];   //Name of augmentation only
@@ -553,13 +570,14 @@ displayFactionContent = function(factionName) {
 	var hackDiv 			= document.getElementById("faction-hack-div");
 	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
 	var securityWorkDiv 	= document.getElementById("faction-securitywork-div");
+    var donateDiv           = document.getElementById("faction-donate-div");
 	
 	//Set new event listener for all of the work buttons
     //The old buttons need to be replaced to clear the old event listeners
     var newHackButton = clearEventListeners("faction-hack-button");
     var newFieldWorkButton = clearEventListeners("faction-fieldwork-button");
     var newSecurityWorkButton = clearEventListeners("faction-securitywork-button");
-
+    var newDonateWorkButton = clearEventListeners("faction-donate-button");
     
     newHackButton.addEventListener("click", function() {
         Player.startFactionHackWork(faction);
@@ -576,6 +594,24 @@ displayFactionContent = function(factionName) {
         return false;
     });
     
+    newDonateWorkButton.addEventListener("click", function() {
+        var donateAmountVal = document.getElementById("faction-donate-input").value;
+        if (isPositiveNumber(donateAmountVal)) {
+            var numMoneyDonate = Number(donateAmountVal);
+            if (Player.money < numMoneyDonate) {
+                dialogBoxCreate("You cannot afford to donate this much money!");
+                return;
+            }
+            Player.loseMoney(numMoneyDonate);
+            var repGain = numMoneyDonate / 1000;
+            faction.playerReputation += repGain;
+            dialogBoxCreate("You just donated $" + formatNumber(numMoneyDonate, 2) + " to " + 
+                            faction.name + " to gain " + formatNumber(repGain, 3) + " reputation"); 
+        } else {
+            dialogBoxCreate("Invalid amount entered!");
+        }
+        return false;
+    });
     
     //Set new event listener for the purchase augmentation buttons
     //The old button needs to be replaced to clear the old event listeners
@@ -596,6 +632,7 @@ displayFactionContent = function(factionName) {
     });
 	
 	if (faction.isMember) {
+        donateDiv.style.display = "inline";
 		switch(faction.name) {
 			case "Illuminati":
 				hackDiv.style.display = "inline";
