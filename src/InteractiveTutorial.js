@@ -609,7 +609,7 @@ function iTutorialPrevStep() {
 
 function iTutorialEnd() {
     //Re-enable auto save
-    Engine.Counters.autoSaveCounter = 1;
+    Engine.Counters.autoSaveCounter = 300;
     console.log("Ending interactive tutorial");
     Engine.init();
     currITutorialStep = iTutorialSteps.End;
