@@ -363,6 +363,8 @@ PlayerObject.prototype.resetWorkStatus = function() {
     this.currentWorkFactionDescription = "";
     this.createProgramName = "";
     this.className = "";
+    
+    document.getElementById("work-in-progress-text").innerHTML = "";
 }
 
 PlayerObject.prototype.gainWorkExp = function(divMult = 1) {

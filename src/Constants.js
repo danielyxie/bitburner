@@ -18,7 +18,7 @@ CONSTANTS = {
     BaseCostForHacknetNodeCore: 400000,
     
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1,
+    HacknetNodeMoneyGainPerLevel: 1.25,
     HacknetNodePurchaseNextMult: 1.33,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.06,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.23,     //Multiplier for cost when upgrading RAM
@@ -210,7 +210,14 @@ CONSTANTS = {
                          "run [script] - Run a script <br>" + 
                          "tail [script] - Displays a script's logs<br>" + 
                          "top - Displays all active scripts and their RAM usage <br><br>" + 
-                         "<strong>Note that because of the way the Netscript interpreter is implemented, " + 
+                         "<u><h1> Notes about how scripts work offline </h1> </u><br>" + 
+                         "<strong> The scripts that you write and execute are interpreted in Javascript. For this " + 
+                         "reason, it is not possible for these scripts to run while offline (when the game is closed). " +
+                         "It is important to note that for this reason, conditionals such as if/else statements and certain " + 
+                         "commands such as purchaseHacknetNode() or nuke() will not work while the game is offline.<br><br>" +                          
+                         "However, Scripts WILL continue to generate money and hacking exp for you while the game is offline. This " +
+                         "offline production is based off of the scripts' production while the game is online.<br><br> " + 
+                         "Also, note that because of the way the Netscript interpreter is implemented, " + 
                          "whenever you reload or re-open the game all of the scripts that you are running will " +
                          "start running from the BEGINNING of the code. The game does not keep track of where exactly " +
                          "the execution of a script is when it saves/loads. </strong><br><br>",
@@ -255,23 +262,23 @@ CONSTANTS = {
                            "there is no required hacking level to run the command. The grow() command takes a flat 2 minutes to execute " + 
                            "and grants 1 hacking exp when it completes. <br> Example: grow('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
-                           "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. <br> Example: nuke('foodnstuff'); <br><br>" + 
-                           "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer <br> Example: brutessh('foodnstuff');<br><br>" + 
-                           "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer <br> Example: ftpcrack('foodnstuff');<br><br>" + 
-                           "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer <br> Example: relaysmtp('foodnstuff');<br><br>" + 
-                           "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer <br> Example: httpworm('foodnstuff');<br><br>" + 
-                           "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer <br> Example: sqlinject('foodnstuff');<br><br>" + 
+                           "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
+                           "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" + 
+                           "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer. Does NOT work while offline <br> Example: ftpcrack('foodnstuff');<br><br>" + 
+                           "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer. Does NOT work while offline <br> Example: relaysmtp('foodnstuff');<br><br>" + 
+                           "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer. Does NOT work while offline <br> Example: httpworm('foodnstuff');<br><br>" + 
+                           "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer. Does NOT work while offline  <br> Example: sqlinject('foodnstuff');<br><br>" + 
                            "<i>run(script)</i> <br> Run a script as a separate process. The argument that is passed in is the name of the script as a string. This function can only " + 
                            "be used to run scripts located on the same server. Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
-                           "of RAM to run this command.<br>Example: run('hack-foodnstuff.script'); <br> The example above will try and launch the 'hack-foodnstuff.script' script on " + 
+                           "of RAM to run this command. Does NOT work while offline <br>Example: run('hack-foodnstuff.script'); <br> The example above will try and launch the 'hack-foodnstuff.script' script on " + 
                            "the current server, if it exists. <br><br>" + 
-                           "<i>getHackingLevel() </i><br> Returns the Player's current hacking level <br><br> " + 
+                           "<i>getHackingLevel() </i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
-                           "hostname or IP of the target server. <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
+                           "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
                            "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a string with the name of the new Hacknet Node. If the player cannot afford to purchase " +
-                           "a new hacknet node then the function will return an empty string<br><br>" + 
+                           "a new hacknet node then the function will return an empty string. Does NOT work offline<br><br>" + 
                            "<i>upgradeHacknetNode(name)</i><br> Upgrades the level of a Hacknet Node. The argument passed in must be a string with the name of the Hacknet Node to upgrade. " + 
-                           "If the Hacknet Node is successfully upgraded the function will return true. It will return false otherwise. Example: <br>" + 
+                           "If the Hacknet Node is successfully upgraded the function will return true. It will return false otherwise. Does NOT work offline. Example: <br>" + 
                            "var node = purchaseHacknetNode();<br>" + 
                            "if (node != '') {<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;var i = 0;<br>" + 
