@@ -240,7 +240,7 @@ tr:focus {
     position: absolute; /* Stay in place */
     right: 0;
     top: 0;
-    height: 250px; /* Full height */
+    height: 150px; /* Full height */
     /*margin: 50% auto;*/
     padding: 5px;
     border: 2px solid #66ff33;

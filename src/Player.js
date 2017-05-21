@@ -838,7 +838,7 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
     var timeMultiplier = (CONSTANTS.MaxSkillLevel - (this.hacking_skill - reqLevel)) / CONSTANTS.MaxSkillLevel;
     if (timeMultiplier > 1) {timeMultiplier = 1;}
     if (timeMultiplier < 0.01) {timeMultiplier = 0.01;}
-    this.timeNeededToCompleteWork = timeMultiplier & time;
+    this.timeNeededToCompleteWork = timeMultiplier * time;
     
     this.createProgramName = programName;
     

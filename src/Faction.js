@@ -607,6 +607,7 @@ displayFactionContent = function(factionName) {
             faction.playerReputation += repGain;
             dialogBoxCreate("You just donated $" + formatNumber(numMoneyDonate, 2) + " to " + 
                             faction.name + " to gain " + formatNumber(repGain, 3) + " reputation"); 
+            displayFactionContent(factionName);
         } else {
             dialogBoxCreate("Invalid amount entered!");
         }
@@ -822,12 +823,13 @@ displayFactionAugmentations = function(factionName) {
                 pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 4) + " faction reputation)";
                 pElem.style.color = "red";
             }
-            aElem.style.display = "inline-block";
-            pElem.style.display = "inline-block";
+            aElem.style.display = "inline";
+            pElem.style.display = "inline";
             aElem.innerHTML = aug.name;
             if (aug.name == AugmentationNames.NeuroFluxGovernor) {
                 aElem.innerHTML += " - Level " + (aug.level + 1);
             }
+            span.style.display = "inline-block"
             
             aElem.innerHTML += '<span class="tooltiptext">' + aug.info + " </span>";
             

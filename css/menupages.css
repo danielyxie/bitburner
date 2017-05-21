@@ -119,7 +119,7 @@
 
 .active-scripts-list > li {
     margin: 6px;
-    width: 80%;
+    width: 70%;
 }
 
 .active-scripts-list>li h2{
@@ -166,7 +166,7 @@
 
 #hacknet-nodes-money-multipliers-div {
     display: inline-block;
-    width: 80%;
+    width: 70%;
 }
 
 #hacknet-nodes-multipliers {
@@ -281,7 +281,7 @@
 #faction-securitywork-div,
 #faction-donate-div {
     overflow: hidden;
-    width: 80%;
+    width: 70%;
     height: 100%;
 }
 
@@ -320,7 +320,7 @@ div.faction-clear {
 #faction-container p {
     padding: 6px;
     margin: 6px;
-    width: 80%;
+    width: 70%;
 }
 
 /* Faction Augmentations */
@@ -339,6 +339,11 @@ div.faction-clear {
 #faction-augmentations-container ul,
 #faction-augmentations-container h1{
     margin: 8px;
+    padding: 4px;
+}
+
+#faction-augmentations-list > li{
+    margin: 4px;
     padding: 4px;
 }
 
@@ -361,7 +366,7 @@ div.faction-clear {
 }
 
 #augmentations-list li {
-    width: 80%;
+    width: 70%;
     background-color: #333;
 }
 
@@ -370,7 +375,7 @@ div.faction-clear {
     margin: 4px;
     color: #66ff33;
 	padding: 8px;
-    width: 80%;
+    width: 70%;
     background-color: #333;
     text-decoration: none;
 }
@@ -407,7 +412,7 @@ div.faction-clear {
 }
 
 #location-slums-description {
-    width: 80%;
+    width: 70%;
     margin: 10px;
 }
 
