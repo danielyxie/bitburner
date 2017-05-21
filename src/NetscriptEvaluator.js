@@ -720,7 +720,7 @@ function evaluate(exp, workerScript) {
                             }
                             if (cost > Player.money) {
                                 workerScript.scriptRef.log("Could not afford to purchase new Hacknet Node");
-                                resolve(-1);
+                                resolve("");
                             }
                                 
                             //Auto generate a name for the node for now...TODO
@@ -732,7 +732,7 @@ function evaluate(exp, workerScript) {
                             Player.loseMoney(cost);
                             Player.hacknetNodes.push(node);
                             workerScript.scriptRef.log("Purchased new Hacknet Node with name: " + name);
-                            resolve(numOwned);
+                            resolve(name);
                         }, CONSTANTS.CodeInstructionRunTime);
                     } else if (exp.func.value == "upgradeHacknetNode") {
                         if (exp.args.length != 1) {

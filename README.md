@@ -35,11 +35,5 @@ Tasks TODO:
 Private beta feedback
     I'd suggest putting a "Back" button in the tutorial 
     window,
-        
-6) - Maybe show total $ somewhere onscreen at all (or most) times.  $/sec would also be good to know, depending on if you want the player to know that. Bottom of the menu on the left is an empty enough place to keep these.
-
-Donate to faction for reputatino
-
-Quick overview screen
 
 test for open beta

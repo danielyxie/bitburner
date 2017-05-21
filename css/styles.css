@@ -214,26 +214,37 @@ tr:focus {
     position:fixed;
     top:0px;
     -webkit-animation:status-text 3s 1;
+    background-color: transparent;
+}
+
+#status-text-container {
+    background-color: transparent;
 }
 
 #status-text {
     font-size: 20px;
     color: #FFFFFF;
     right: 0;
-    bottom: 0;    
+    bottom: 0;
+    padding: 4px;
+    background-color: transparent;
+    z-index: 2;
 }
 
 /* Character Overview */
+#character-overview-wrapper {
+    position: relative;
+}
 #character-overview-container {
     display: none;
-    position: fixed; /* Stay in place */
+    position: absolute; /* Stay in place */
     right: 0;
     top: 0;
-    height: 100%; /* Full height */
-    margin: 45% auto;
+    height: 250px; /* Full height */
+    /*margin: 50% auto;*/
     padding: 5px;
     border: 2px solid #66ff33;
-    width: 20%;
+    width: 18%;
     overflow: auto; /* Enable scroll if needed */
     background-color: #444; /* Fallback color */
     z-index: 1;
@@ -241,7 +252,7 @@ tr:focus {
 
 #character-overview-text {
     padding: 4px;
-    margin: 4px;
+    margin: 12px;
     color: white;
     background-color: #444;
 }

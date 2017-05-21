@@ -39,7 +39,7 @@
 #script-editor-save-and-close-button,
 #script-editor-netscript-doc-button {
     float: right;
-    display: inline-block;
+    display: block;
     width: 50%;
     margin-right: 25%;
 }
@@ -56,7 +56,7 @@
 	float: left;
 	resize: none;
 	color: #66ff33;
-	width: 75%;
+	width: 70%;
     margin: 10px;
     padding: 5px;
 	
@@ -79,7 +79,7 @@
 
 #script-editor-text {
 	color: #66ff33;
-	width: 75%;
+	width: 70%;
 	height: 100%;
     margin: 10px;
     padding: 5px;
@@ -112,7 +112,7 @@
 }
 
 #active-scripts-text {
-    width: 80%;
+    width: 70%;
     margin: 6px;
     padding: 4px;
 }
@@ -155,7 +155,7 @@
 
 #hacknet-nodes-text,
 #hacknet-nodes-money {
-    width: 80%;
+    width: 70%;
     margin: 10px;
     padding: 10px;
 }
@@ -224,7 +224,7 @@
 }
 
 #create-program-page-text {
-    width: 80%;
+    width: 70%;
 }
 
 .create-program-a-link-button {
@@ -392,7 +392,7 @@ div.faction-clear {
 }
 
 #tutorial-text {
-    width: 80%;
+    width: 70%;
     margin: 10px;
 }
 

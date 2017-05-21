@@ -48,10 +48,12 @@ CONSTANTS = {
     ScriptRelaysmtpRamCost:         0.05,
     ScriptHttpwormRamCost:          0.05,
     ScriptSqlinjectRamCost:         0.05,
-    ScriptRunRamCost:               0.75,
+    ScriptRunRamCost:               0.8,
     ScriptGetHackingLevelRamCost:   0.1,
     ScriptGetServerMoneyRamCost:    0.1,
     ScriptOperatorRamCost:          0.01,
+    ScriptPurchaseHacknetRamCost:   1.0,
+    ScriptUpgradeHacknetRamCost:    1.0,
     
     //Server growth rate
     ServerGrowthRate: 1.00075,
@@ -266,6 +268,19 @@ CONSTANTS = {
                            "<i>getHackingLevel() </i><br> Returns the Player's current hacking level <br><br> " + 
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
+                           "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a string with the name of the new Hacknet Node. If the player cannot afford to purchase " +
+                           "a new hacknet node then the function will return an empty string<br><br>" + 
+                           "<i>upgradeHacknetNode(name)</i><br> Upgrades the level of a Hacknet Node. The argument passed in must be a string with the name of the Hacknet Node to upgrade. " + 
+                           "If the Hacknet Node is successfully upgraded the function will return true. It will return false otherwise. Example: <br>" + 
+                           "var node = purchaseHacknetNode();<br>" + 
+                           "if (node != '') {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;var i = 0;<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;while(i < 10) {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (upgradeHacknetNode(node)) {i = i + 1;}<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;}; <br>" + 
+                           "};<br><br>" + 
+                           "The example code above will attempt to purchase a new Hacknet Node. If the Hacknet Node is purchased, then it will " +
+                           "continuously try to level it up until it is leveled up 10 times. <br><br>" + 
                            "<u><h1>While loops </h1></u><br>" +
                            "A while loop is a control flow statement that repeatedly executes code as long as a condition is met. <br><br> " +
                            "<i>while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}</i><br><br>" + 

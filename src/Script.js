@@ -184,6 +184,8 @@ Script.prototype.updateRamUsage = function() {
     var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
     var getServerMoneyAvailableCount = numOccurrences(codeCopy, "getServerMoneyAvailable(");
     var numOperators = numNetscriptOperators(codeCopy);
+    var purchaseHacknetCount = numOccurrences(codeCopy, "purchaseHacknetNode(");
+    var upgradeHacknetCount = numOccurrences(codeCopy, "upgradeHacknetNode(");
     
     this.ramUsage =  baseRam + 
                     ((whileCount * CONSTANTS.ScriptWhileRamCost) + 
@@ -200,7 +202,9 @@ Script.prototype.updateRamUsage = function() {
                     (runCount * CONSTANTS.ScriptRunRamCost) + 
                     (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
                     (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
-                    (numOperators * CONSTANTS.ScriptOperatorRamCost));
+                    (numOperators * CONSTANTS.ScriptOperatorRamCost) +
+                    (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) + 
+                    (upgradeHacknetCount * CONSTANTS.ScriptUpgradeHacknetRamCost));
     console.log("ram usage: " + this.ramUsage);
     if (isNaN(this.ramUsage)) {
         dialogBoxCreate("ERROR in calculating ram usage. This is a bug, please report to game develoepr");
