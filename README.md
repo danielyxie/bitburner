@@ -35,10 +35,5 @@ Tasks TODO:
 Private beta feedback
     I'd suggest putting a "Back" button in the tutorial 
     window,
-    
-    Also not really a big deal, but I'm at 110% zoom on chrome and the tutorial window
-    covers some of the text
-    
-    Now, only other suggestion before sleep would be to be able to buy multiple Hacknet upgrades in one click
-    
-6) - Maybe show total $ somewhere onscreen at all (or most) times.  $/sec would also be good to know, depending on if you want the player to know that. Bottom of the menu on the left is an empty enough place to keep these.
+
+test for open beta

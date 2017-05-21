@@ -17,6 +17,7 @@ function PlayerObject() {
     this.hacking_chance_mult    = 1;  //Increase through ascensions/augmentations
     this.hacking_speed_mult     = 1;  //Decrease through ascensions/augmentations
     this.hacking_money_mult     = 1;  //Increase through ascensions/augmentations. Can't go above 1
+    this.hacking_grow_mult      = 1;
     
     //Note: "Lifetime" refers to current ascension, "total" refers to the entire game history
     //Accumulative  stats and skills
@@ -116,6 +117,7 @@ function PlayerObject() {
     this.numTimesHeistLifetime          = 0;
     
     this.crime_money_mult               = 1;
+    this.crime_success_mult             = 1;
     
     //Flag to let the engine know the player is starting an action
     //  Current actions: hack, analyze
@@ -209,7 +211,7 @@ PlayerObject.prototype.updateSkillLevels = function() {
 
 //Calculates the chance of hacking a server
 //The formula is:
-//  (hacking_chance_multiplier * hacking_skill - requiredLevel)      100 - difficulty       
+//  (2 * hacking_chance_multiplier * hacking_skill - requiredLevel)      100 - difficulty       
 //  -----------------------------------------------------------  *  -----------------
 //        (hacking_chance_multiplier * hacking_skill)                      100
 PlayerObject.prototype.calculateHackingChance = function() {
@@ -217,8 +219,9 @@ PlayerObject.prototype.calculateHackingChance = function() {
     var skillMult = (2 * this.hacking_chance_mult * this.hacking_skill);
     var skillChance = (skillMult - this.getCurrentServer().requiredHackingSkill) / skillMult;
     var chance = skillChance * difficultyMult;
+    if (chance > 1) {return 1;}
     if (chance < 0) {return 0;} 
-    else {return chance;}
+    return chance;
 }
 
 //Calculate the time it takes to hack a server in seconds. Returns the time
@@ -360,6 +363,8 @@ PlayerObject.prototype.resetWorkStatus = function() {
     this.currentWorkFactionDescription = "";
     this.createProgramName = "";
     this.className = "";
+    
+    document.getElementById("work-in-progress-text").innerHTML = "";
 }
 
 PlayerObject.prototype.gainWorkExp = function(divMult = 1) {
@@ -825,12 +830,17 @@ PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
 }
 
 /* Creating a Program */
-PlayerObject.prototype.startCreateProgramWork = function(programName, time) {
+PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqLevel) {
     this.resetWorkStatus();
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeCreateProgram;
     
-    this.timeNeededToCompleteWork = time;
+    //Time needed to complete work affected by hacking skill (linearly based on
+    //ratio of (your skill - required level) to MAX skill)
+    var timeMultiplier = (CONSTANTS.MaxSkillLevel - (this.hacking_skill - reqLevel)) / CONSTANTS.MaxSkillLevel;
+    if (timeMultiplier > 1) {timeMultiplier = 1;}
+    if (timeMultiplier < 0.01) {timeMultiplier = 0.01;}
+    this.timeNeededToCompleteWork = timeMultiplier * time;
     
     this.createProgramName = programName;
     

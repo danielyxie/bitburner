@@ -2,8 +2,8 @@
  *  Script object
  */
 
-//Initialize the 'save and close' button on script editor page
 function scriptEditorInit() {
+    //Initialize save and close button
     var closeButton = document.getElementById("script-editor-save-and-close-button");
     
     closeButton.addEventListener("click", function() {
@@ -11,20 +11,26 @@ function scriptEditorInit() {
         return false;
     });
     
+    //Allow tabs (four spaces) in all textareas
     var textareas = document.getElementsByTagName('textarea');
     var count = textareas.length;
     for(var i=0;i<count;i++){
         textareas[i].onkeydown = function(e){
             if(e.keyCode==9 || e.which==9){
                 e.preventDefault();
-                var s = this.selectionStart;
-                this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
-                this.selectionEnd = s+1; 
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+
+                //Set textarea value to: text before caret + four spaces + text after caret
+                spaces = "    ";
+                this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
+
+                //Put caret at after the four spaces
+                this.selectionStart = this.selectionEnd = start + spaces.length;
             }
         }
     }
 };
-
 document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 
 //Define key commands in script editor (ctrl o to save + close, etc.)
@@ -178,6 +184,8 @@ Script.prototype.updateRamUsage = function() {
     var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
     var getServerMoneyAvailableCount = numOccurrences(codeCopy, "getServerMoneyAvailable(");
     var numOperators = numNetscriptOperators(codeCopy);
+    var purchaseHacknetCount = numOccurrences(codeCopy, "purchaseHacknetNode(");
+    var upgradeHacknetCount = numOccurrences(codeCopy, "upgradeHacknetNode(");
     
     this.ramUsage =  baseRam + 
                     ((whileCount * CONSTANTS.ScriptWhileRamCost) + 
@@ -194,7 +202,9 @@ Script.prototype.updateRamUsage = function() {
                     (runCount * CONSTANTS.ScriptRunRamCost) + 
                     (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
                     (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
-                    (numOperators * CONSTANTS.ScriptOperatorRamCost));
+                    (numOperators * CONSTANTS.ScriptOperatorRamCost) +
+                    (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) + 
+                    (upgradeHacknetCount * CONSTANTS.ScriptUpgradeHacknetRamCost));
     console.log("ram usage: " + this.ramUsage);
     if (isNaN(this.ramUsage)) {
         dialogBoxCreate("ERROR in calculating ram usage. This is a bug, please report to game develoepr");
@@ -233,6 +243,7 @@ Reviver.constructors.Script = Script;
 //into worker scripts so that they will start running
 loadAllRunningScripts = function() {
 	var count = 0;
+    var total = 0;
 	for (var property in AllServers) {
 		if (AllServers.hasOwnProperty(property)) {
 			var server = AllServers[property];
@@ -248,10 +259,11 @@ loadAllRunningScripts = function() {
 				addWorkerScript(script, server);
 				
 				//Offline production
-				scriptCalculateOfflineProduction(script);
+				total += scriptCalculateOfflineProduction(script);
 			}
 		}
 	}
+    return total;
 	console.log("Loaded " + count.toString() + " running scripts");
 }
 
@@ -299,7 +311,7 @@ scriptCalculateOfflineProduction = function(script) {
 	script.offlineMoneyMade += totalOfflineProduction;
 	script.offlineRunningTime += timePassed;
 	script.offlineExpGained += expGain;
-		
+    return totalOfflineProduction;
 	//DEBUG
 	var serverName = AllServers[script.server].hostname;
 	console.log(script.filename + " from server " + serverName + " generated $" + totalOfflineProduction + " TOTAL while offline");

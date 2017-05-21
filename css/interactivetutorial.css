@@ -1,17 +1,24 @@
 /* interactivetutorial.css */
+#interactive-tutorial-wrapper {
+    position:relative;
+}
+
 #interactive-tutorial-container {
     display: none;
-    position: fixed; /* Stay in place */
+    position: absolute; /* Stay in place */
     right: 0;
     top: 0;
-    height: 100%; /* Full height */
-    margin: 30% auto;
+    height: 400px; /* Full height */
     padding: 10px;
     border: 5px solid #FFFFFF;
-    width: 35%;
+    width: 25%;
     overflow: auto; /* Enable scroll if needed */
     background-color: #444; /* Fallback color */
     color: white;
+}
+
+#interactive-tutorial-container > strong {
+    background-color: #444;
 }
 
 #interactive-tutorial-text {

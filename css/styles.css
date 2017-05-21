@@ -89,8 +89,8 @@ tr:focus {
     text-decoration: none;
     background-color: #555;
     color: #FFFFFF;
-    padding: 6px;
-    margin: 6px;
+    padding: 5px;
+    margin: 5px;
     border: 1px solid #333333;
     width: 50%;
 }
@@ -104,8 +104,8 @@ tr:focus {
     text-decoration: none;
     background-color: #333;
     color: #FFFFFF;
-    padding: 6px;
-    margin: 6px;
+    padding: 5px;
+    margin: 5px;
     border-top: 1px solid #333333;
     border-right: 1px solid #333333;
     border-bottom: 1px solid #333333;
@@ -214,11 +214,45 @@ tr:focus {
     position:fixed;
     top:0px;
     -webkit-animation:status-text 3s 1;
+    background-color: transparent;
+}
+
+#status-text-container {
+    background-color: transparent;
 }
 
 #status-text {
     font-size: 20px;
     color: #FFFFFF;
     right: 0;
-    bottom: 0;    
+    bottom: 0;
+    padding: 4px;
+    background-color: transparent;
+    z-index: 2;
+}
+
+/* Character Overview */
+#character-overview-wrapper {
+    position: relative;
+}
+#character-overview-container {
+    display: none;
+    position: absolute; /* Stay in place */
+    right: 0;
+    top: 0;
+    height: 150px; /* Full height */
+    /*margin: 50% auto;*/
+    padding: 5px;
+    border: 2px solid #66ff33;
+    width: 18%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #444; /* Fallback color */
+    z-index: 1;
+}
+
+#character-overview-text {
+    padding: 4px;
+    margin: 12px;
+    color: white;
+    background-color: #444;
 }

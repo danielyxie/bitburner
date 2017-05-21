@@ -127,6 +127,16 @@ function prestigeAugmentation() {
     homeComp.isOnline = true;
     homeComp.ramUsed = 0;
     homeComp.programs.push(Programs.NukeProgram);
+    if (augmentationExists(AugmentationNames.Neurolink) && 
+        Augmentations[AugmentationNames.Neurolink].owned) {
+        homeComp.programs.push(Programs.FTPCrackProgram);
+        homeComp.programs.push(Programs.RelaySMTPProgram);
+    } 
+    if (augmentationExists(AugmentationNames.CashRoot) && 
+        Augmentations[AugmentationNames.CashRoot].owned) {
+        Player.money = 1000000;
+        homeComp.programs.push(Programs.BruteSSHProgram);
+    }
     Player.currentServer = homeComp.ip;
     Player.homeComputer = homeComp.ip;
     AddToAllServers(homeComp);

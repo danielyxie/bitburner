@@ -1,4 +1,21 @@
 //Netburner Faction class
+function factionInit() {
+    $('#faction-donate-input').on('input', function() {
+        if (Engine.currentPage == Engine.Page.Faction) {
+            var val = document.getElementById("faction-donate-input").value;
+            if (isPositiveNumber(val)) {
+                var numMoneyDonate = Number(val);
+                document.getElementById("faction-donate-rep-gain").innerHTML = 
+                    "This donation will result in " + formatNumber(numMoneyDonate/1000, 3) + " reputation gain";
+            } else {
+                document.getElementById("faction-donate-rep-gain").innerHTML = 
+                    "This donation will result in 0 reputation gain";
+            }
+        }
+    });
+}
+document.addEventListener("DOMContentLoaded", factionInit, false);
+
 function Faction(name) {
 	this.name 				= name;
     this.augmentations 		= [];   //Name of augmentation only
@@ -284,7 +301,6 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         }
     }
     
-    
     //BitRunners
     var bitrunnersFac = Factions["BitRunners"];
     var homeComp = Player.getHomeComputer();
@@ -296,15 +312,15 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //The Black Hand
     var theblackhandFac = Factions["The Black Hand"];
     if (theblackhandFac.isBanned == false && theblackhandFac.isMember == false &&
-        this.hacking_skill >= 400 && this.strength >= 300 && this.defense >= 300 &&
-        this.agility >= 300 && this.dexterity >= 300 && homeComp.maxRam >= 16) {
+        this.hacking_skill >= 400 && this.strength >= 200 && this.defense >= 200 &&
+        this.agility >= 200 && this.dexterity >= 200 && homeComp.maxRam >= 16) {
         invitedFactions.push(theblackhandFac);
     }
     
     //NiteSec
     var nitesecFac = Factions["NiteSec"];
     if (nitesecFac.isBanned == false && nitesecFac.isMember == false && 
-        this.hacking_skill >= 500 && homeComp.maxRam >= 32) {
+        this.hacking_skill >= 200 && homeComp.maxRam >= 8) {
         invitedFactions.push(nitesecFac);
     }
     
@@ -358,7 +374,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         this.numPeopleKilledTotal >= 100 && this.karma <= -50 && this.companyName != Locations.Sector12CIA &&
         this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(speakersforthedeadFac);
-    }   
+    }
         
     //The Dark Army
     var thedarkarmyFac = Factions["The Dark Army"];
@@ -404,7 +420,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var slumsnakesFac = Factions["Slum Snakes"];
     if (slumsnakesFac.isBanned == false && slumsnakesFac.isMember == false && 
         this.strength >= 30 && this.defense >= 30 && this.dexterity >= 30 &&
-        this.agility >= 30 && this.karma <= -15 && this.money >= 1000000) {
+        this.agility >= 30 && this.karma <= -10 && this.money >= 1000000) {
         invitedFactions.push(slumsnakesFac);
     }
     
@@ -554,13 +570,14 @@ displayFactionContent = function(factionName) {
 	var hackDiv 			= document.getElementById("faction-hack-div");
 	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
 	var securityWorkDiv 	= document.getElementById("faction-securitywork-div");
+    var donateDiv           = document.getElementById("faction-donate-div");
 	
 	//Set new event listener for all of the work buttons
     //The old buttons need to be replaced to clear the old event listeners
     var newHackButton = clearEventListeners("faction-hack-button");
     var newFieldWorkButton = clearEventListeners("faction-fieldwork-button");
     var newSecurityWorkButton = clearEventListeners("faction-securitywork-button");
-
+    var newDonateWorkButton = clearEventListeners("faction-donate-button");
     
     newHackButton.addEventListener("click", function() {
         Player.startFactionHackWork(faction);
@@ -577,6 +594,25 @@ displayFactionContent = function(factionName) {
         return false;
     });
     
+    newDonateWorkButton.addEventListener("click", function() {
+        var donateAmountVal = document.getElementById("faction-donate-input").value;
+        if (isPositiveNumber(donateAmountVal)) {
+            var numMoneyDonate = Number(donateAmountVal);
+            if (Player.money < numMoneyDonate) {
+                dialogBoxCreate("You cannot afford to donate this much money!");
+                return;
+            }
+            Player.loseMoney(numMoneyDonate);
+            var repGain = numMoneyDonate / 1000;
+            faction.playerReputation += repGain;
+            dialogBoxCreate("You just donated $" + formatNumber(numMoneyDonate, 2) + " to " + 
+                            faction.name + " to gain " + formatNumber(repGain, 3) + " reputation"); 
+            displayFactionContent(factionName);
+        } else {
+            dialogBoxCreate("Invalid amount entered!");
+        }
+        return false;
+    });
     
     //Set new event listener for the purchase augmentation buttons
     //The old button needs to be replaced to clear the old event listeners
@@ -597,6 +633,7 @@ displayFactionContent = function(factionName) {
     });
 	
 	if (faction.isMember) {
+        donateDiv.style.display = "inline";
 		switch(faction.name) {
 			case "Illuminati":
 				hackDiv.style.display = "inline";
@@ -786,12 +823,13 @@ displayFactionAugmentations = function(factionName) {
                 pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 4) + " faction reputation)";
                 pElem.style.color = "red";
             }
-            aElem.style.display = "inline-block";
-            pElem.style.display = "inline-block";
+            aElem.style.display = "inline";
+            pElem.style.display = "inline";
             aElem.innerHTML = aug.name;
             if (aug.name == AugmentationNames.NeuroFluxGovernor) {
                 aElem.innerHTML += " - Level " + (aug.level + 1);
             }
+            span.style.display = "inline-block"
             
             aElem.innerHTML += '<span class="tooltiptext">' + aug.info + " </span>";
             

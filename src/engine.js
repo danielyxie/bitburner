@@ -222,6 +222,18 @@ var Engine = {
         Engine.volhavenLocationsList.style.display = "none";
     },
     
+    displayCharacterOverviewInfo: function() {
+        document.getElementById("character-overview-text").innerHTML = 
+        ("Money: $" + formatNumber(Player.money, 2) + "<br>" + 
+         "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" + 
+         "Str:   " + (Player.strength).toLocaleString() + "<br>" + 
+         "Def:   " + (Player.defense).toLocaleString() + "<br>" + 
+         "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" + 
+         "Agi:   " + (Player.agility).toLocaleString() + "<br>" + 
+         "Cha:   " + (Player.charisma).toLocaleString()
+        ).replace( / /g, "&nbsp;" );
+    },
+    
     /* Display character info */
     displayCharacterInfo: function() {
         var companyPosition = "";
@@ -276,7 +288,6 @@ var Engine = {
         'Servers owned:       ' + Player.purchasedServers.length + '<br>' + 
         'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
         'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime) + '<br><br><br>').replace( / /g, "&nbsp;" );
-        
     },
     
     /* Display locations in the world*/
@@ -609,6 +620,7 @@ var Engine = {
         }
         
         if (Engine.Counters.updateDisplays <= 0) {
+            Engine.displayCharacterOverviewInfo();
             if (Engine.currentPage == Engine.Page.ActiveScripts) {
                 Engine.updateActiveScriptsItems();
             } else if (Engine.currentPage == Engine.Page.CharacterInfo) {
@@ -724,7 +736,7 @@ var Engine = {
             
             /* Process offline progress */
             processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
-            loadAllRunningScripts();    //This also takes care of offline production for those scripts
+            var offlineProductionFromScripts = loadAllRunningScripts();    //This also takes care of offline production for those scripts
             if (Player.isWorking) {
                 console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
                 if (Player.workType == CONSTANTS.WorkTypeFaction) {
@@ -743,7 +755,7 @@ var Engine = {
             }
             
             //Hacknet Nodes offline progress
-            processAllHacknetNodeEarnings(numCyclesOffline);
+            var offlineProductionFromHacknetNodes = processAllHacknetNodeEarnings(numCyclesOffline);
             
             //Passive faction rep gain offline
             processPassiveFactionRepGain(numCyclesOffline);
@@ -755,6 +767,9 @@ var Engine = {
             
             Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
+            dialogBoxCreate("While you were offline, your scripts generated $" + 
+                            formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" + 
+                            formatNumber(offlineProductionFromHacknetNodes, 2));
         } else {
             //No save found, start new game
             console.log("Initializing new game");
@@ -991,22 +1006,22 @@ var Engine = {
         var httpWormALink   = document.getElementById("create-program-httpworm");
         var sqlInjectALink  = document.getElementById("create-program-sqlinject");
         portHackALink.addEventListener("click", function() {
-            createProgram(Programs.PortHackProgram, CONSTANTS.MillisecondsPerQuarterHour);
+            Player.startCreateProgramWork(Programs.NukeProgram, CONSTANTS.MillisecondsPerQuarterHour, 1);
         });
         bruteSshALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerQuarterHour);
+            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerQuarterHour, 50);
         });
         ftpCrackALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHalfHour);
+            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHalfHour, 100);
         });
         relaySmtpALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer2Hours);
+            Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer2Hours, 250);
         });
         httpWormALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer4Hours);
+            Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer4Hours, 500);
         });
         sqlInjectALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer8Hours);
+            Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer8Hours, 750);
         });
                 
         //Message at the top of terminal
@@ -1033,6 +1048,18 @@ var Engine = {
             });
             Engine.loadWorkInProgressContent();
         }
+        
+        //character overview screen
+        document.getElementById("character-overview-container").style.display = "block";
+        
+        //Remove classes from links (they might be set from tutorial)
+        document.getElementById("terminal-menu-link").removeAttribute("class");
+        document.getElementById("character-menu-link").removeAttribute("class");
+        document.getElementById("create-script-menu-link").removeAttribute("class");
+        document.getElementById("active-scripts-menu-link").removeAttribute("class");
+        document.getElementById("hacknet-nodes-menu-link").removeAttribute("class");
+        document.getElementById("world-menu-link").removeAttribute("class");
+        document.getElementById("tutorial-menu-link").removeAttribute("class");
         
         //DEBUG
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {

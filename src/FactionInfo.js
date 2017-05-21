@@ -125,9 +125,9 @@ FactionInfo = {
     
 	TianDiHuiInfo: "Obey Heaven and Work Righteousness",
 	
-	CyberSecInfo: "The Internet is the first thing that humanity has built that humanity doesn’t understand,\n" +
-				  "the largest experiment in anarchy that we have ever had. And as the world becomes increasingly \n" + 
-				  "dominated by the internet, society approaches the brink of total chaos. \n\n" +
+	CyberSecInfo: "The Internet is the first thing that humanity has built that humanity doesn’t understand, " +
+				  "the largest experiment in anarchy that we have ever had. And as the world becomes increasingly " + 
+				  "dominated by the internet, society approaches the brink of total chaos. " +
 				  "We serve only to protect society, to protect humanity, to protect the world from its imminent collapse.",
 	
 }

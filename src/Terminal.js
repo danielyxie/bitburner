@@ -45,7 +45,7 @@ $(document).keydown(function(event) {
         
 		//Enter
 		if (event.keyCode == 13) {
-            event.preventDefault();
+            event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
 			if (command.length > 0) {
 				post("> " + command);

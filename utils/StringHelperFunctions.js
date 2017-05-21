@@ -44,10 +44,10 @@ function convertTimeMsToTimeElapsedString(time) {
     var seconds = time;
     
     var res = "";
-    if (days) {res += days + " days";}
+    if (days) {res += days + " days ";}
     if (hours) {res += hours + " hours ";}
     if (minutes) {res += minutes + " minutes ";}
-    if (seconds) {res += seconds + " seconds ";}
+    res += seconds + " seconds ";
     return res;
 }
 
@@ -66,6 +66,11 @@ function longestCommonStart(strings) {
 //Returns whether a variable is a string
 function isString(str) {
     return (typeof str === 'string' || str instanceof String);
+}
+
+//Returns true if string contains only digits (meaning it would be a positive number)
+function isPositiveNumber(str) {
+    return /^\d+$/.test(str);
 }
 
 //Returns whether an array contains entirely of string objects

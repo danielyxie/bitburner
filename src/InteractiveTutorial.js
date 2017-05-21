@@ -12,6 +12,7 @@ iTutorialSteps = {
     TerminalAnalyze: "Use the analyze command to display details about this server",
     TerminalNuke: "Use the NUKE Program to gain root access to a server", 
     TerminalManualHack: "Use the hack command to manually hack a server",
+    TerminalHackingMechanics: "Briefly explain hacking mechanics",
     TerminalCreateScript: "Create a script using nano",
     TerminalTypeScript: "This occurs in the Script Editor page...type the script then save and close",
     TerminalFree: "Use the free command to check RAM",
@@ -155,7 +156,7 @@ function iTutorialEvaluateStep() {
         //next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalConnect:
-        iTutorialSetText("The 'scan/netstat' command shows all available network connections. In other words, " +
+        iTutorialSetText("The 'scan' command shows all available network connections. In other words, " +
                          "it displays a list of all servers that can be connected to from your " + 
                          "current machine. A server is identified by either its IP or its hostname. <br><br> " + 
                          "To connect to a machine, use the 'connect [ip/hostname]' command. You can type in " + 
@@ -187,24 +188,40 @@ function iTutorialEvaluateStep() {
                          "Try doing that now. ");
         //next step triggered by terminal command 
         break;
-    case iTutorialSteps.TerminalCreateScript:
+    case iTutorialSteps.TerminalHackingMechanics:
         iTutorialSetText("You are now attempting to hack the server. Note that performing a hack takes time and " + 
                          "only has a certain percentage chance " + 
-                         "of success. This time and percentage is determined by a variety of factors, including " + 
+                         "of success. This time and success chance is determined by a variety of factors, including " + 
                          "your hacking skill and the server's security level. <br><br>" + 
-                         "Hacking is the core mechanic of the game and is necessary for progressing. However, " + 
+                         "If your attempt to hack the server is successful, you will steal a certain percentage " +
+                         "of the server's total money. This percentage is affected by your hacking skill and " +
+                         "the server's security level. <br><br> The amount of money on a server is not limitless. So, if " + 
+                         "you constantly hack a server and deplete its money, then you will encounter " + 
+                         "diminishing returns in your hacking.<br>");
+        var next = clearEventListeners("interactive-tutorial-next");
+        next.style.display = "inline-block";
+        next.addEventListener("click", function() {
+            iTutorialNextStep();
+            return false;
+        });                 
+        break;
+    case iTutorialSteps.TerminalCreateScript:
+        iTutorialSetText("Hacking is the core mechanic of the game and is necessary for progressing. However, " + 
                          "you don't want to be hacking manually the entire time. You can automate your hacking " + 
                          "by writing scripts! <br><br>To create a new script or edit an existing one, you can use the 'nano' " + 
                          "command. Scripts must end with the '.script' extension. Let's make a script now by " +
                          "entering 'nano foodnstuff.script' after the hack command finishes running (Sidenote: Pressing ctrl + c" + 
                          " will end a command like hack early)");
+        var next = clearEventListeners("interactive-tutorial-next");
+        next.style.display = "none";
         //next step triggered by terminal command 
         break;
     case iTutorialSteps.TerminalTypeScript:
         iTutorialSetText("This is the script editor. You can use it to program your scripts. Scripts are " + 
-                         "written in the Netscript language, a very simple programming language created for " + 
-                         "this game. There are details about the Netscript language in the documentation, which " +
-                         "can be accessed in the 'Tutorial' tab on the main navigation menu. For now, just copy " + 
+                         "written in the Netscript language, a programming language created for " + 
+                         "this game. <strong style='background-color:#444;'>There are details about the Netscript language in the documentation, which " +
+                         "can be accessed in the 'Tutorial' tab on the main navigation menu. I highly suggest you check " + 
+                         "it out after this tutorial. </strong> For now, just copy " + 
                          "and paste the following code into the script editor: <br><br>" +
                          "while(true) { <br>" + 
                          "hack('foodnstuff'); <br>" + 
@@ -230,7 +247,7 @@ function iTutorialEvaluateStep() {
         iTutorialSetText("Your script is now running! The script might take a few seconds to 'fully start up'. " + 
                          "Your scripts will continuously run in the background and will automatically stop if " + 
                          "the code ever completes (the 'foodnstuff.script' will never complete because it " + 
-                         "runs an infinite loop). <br><br>These scripts will passively earn you income and hacking experience. " + 
+                         "runs an infinite loop). <br><br>These scripts can passively earn you income and hacking experience. " + 
                          "Your scripts will also earn money and experience while you are offline, although at a " +
                          "much slower rate. <br><br> " + 
                          "Let's check out some statistics of our active, running scripts by clicking the " + 
@@ -300,7 +317,7 @@ function iTutorialEvaluateStep() {
         //Next step triggered by purchaseHacknet() (HacknetNode.js)
         break;
     case iTutorialSteps.HacknetNodesGoToWorldPage:
-        iTutorialSetText("You just purchase a Hacknet Node! This Hacknet Node will passively " + 
+        iTutorialSetText("You just purchased a Hacknet Node! This Hacknet Node will passively " + 
                          "earn you money over time, both online and offline. When you get enough " + 
                          " money, you can upgrade " + 
                          "your newly-purchased Hacknet Node below. <br><br>" + 
@@ -405,6 +422,10 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.TerminalManualHack:
+        currITutorialStep = iTutorialSteps.TerminalHackingMechanics;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalHackingMechanics:
         currITutorialStep = iTutorialSteps.TerminalCreateScript;
         iTutorialEvaluateStep();
         break;
@@ -521,6 +542,10 @@ function iTutorialPrevStep() {
         break;
     case iTutorialSteps.TerminalManualHack:
         currITutorialStep = iTutorialSteps.TerminalNuke;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalHackingMechanics:
+        currITutorialStep = iTutorialSteps.TerminalManualHack;
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.TerminalCreateScript:

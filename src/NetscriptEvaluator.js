@@ -690,6 +690,7 @@ function evaluate(exp, workerScript) {
                     } else if (exp.func.value == "getServerMoneyAvailable") {
                         if (exp.args.length != 1) {
                             reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getServerMoneyAvailable() call has incorrect number of arguments. Takes 1 arguments");
+                            return;
                         }
                         var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
@@ -706,6 +707,69 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
 							reject(e);
 						});
+                    } else if (exp.func.value == "purchaseHacknetNode") {
+                        if (exp.args.length != 0) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|purchaseHacknetNode() call has incorrect number of arguments. Takes 0 arguments");
+                            return;
+                        }
+                        setTimeout(function() {
+                            var cost = getCostOfNextHacknetNode();
+                            if (isNaN(cost)) {
+                                reject("|"+workerScript.serverIp+"|"+workerScript.name+"|Could not calculate cost in purchaseHacknetNode(). This is a bug please report to game dev");
+                                return;
+                            }
+                            if (cost > Player.money) {
+                                workerScript.scriptRef.log("Could not afford to purchase new Hacknet Node");
+                                resolve("");
+                            }
+                                
+                            //Auto generate a name for the node for now...TODO
+                            var numOwned = Player.hacknetNodes.length;
+                            var name = "hacknet-node-" + numOwned;
+                            var node = new HacknetNode(name);
+                            node.updateMoneyGainRate();
+                            
+                            Player.loseMoney(cost);
+                            Player.hacknetNodes.push(node);
+                            workerScript.scriptRef.log("Purchased new Hacknet Node with name: " + name);
+                            resolve(name);
+                        }, CONSTANTS.CodeInstructionRunTime);
+                    } else if (exp.func.value == "upgradeHacknetNode") {
+                        if (exp.args.length != 1) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|upgradeHacknetNode() call has incorrect number of arguments. Takes 1 argument");
+                            return;
+                        }
+                        var namePromise = evaluate(exp.args[0], workerScript);
+                        namePromise.then(function(name) {
+                            var node = getHacknetNode(name);
+                            if (node == null) {
+                                reject("|"+workerScript.serverIp+"|"+workerScript.name+"|Invalid Hacknet Node name passed into upgradeHacknetNode()");
+                                return;
+                            }
+                            var cost = node.calculateLevelUpgradeCost(1);
+                            if (isNaN(cost)) {
+                                reject("|"+workerScript.serverIp+"|"+workerScript.name+"|Could not calculate cost in upgradeHacknetNode(). This is a bug please report to game dev");
+                                return;
+                            }
+                            if (cost > Player.money) {
+                                workerScript.scriptRef.log("Could not afford to upgrade Hacknet Node: " + name);
+                                resolve(false);
+                                return;
+                            }
+                            if (node.level >= CONSTANTS.HacknetNodeMaxLevel) {
+                                workerScript.scriptRef.log("Hacknet Node " + name + " already at max level");
+                                node.level = CONSTANTS.HacknetNodeMaxLevel;
+                                resolve(false);
+                                return;
+                            }
+                            Player.loseMoney(cost);
+                            node.level += 1;
+                            node.updateMoneyGainRate();
+                            workerScript.scriptRef.log("Hacknet node " + name + " upgraded to level " + node.level + "!");
+                            resolve(true);
+                        }, function(e) {
+                            reject(e);
+                        });
                     }
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
