@@ -13,16 +13,11 @@ TESTING TODO:
    
 Tasks TODO:
     Adding augmentations for Silhouette fac
-    Factions Info page isn't formatted correctly
-    
-    Augmentations that decrease time to make programs
-    
+        
     New server hostname in Purchase Server Pop-up Box needs limits..don't think the ones set in HTML work
     
 	Secret Servers
-	
-	Hack time formula needs rebalancing I think, so does hack exp formula
-	
+		
     Create new menu page for purchased servers
     
 	Account for Max possible int when gaining exp (it will overflow)
@@ -30,7 +25,12 @@ Tasks TODO:
 	OPTIMIZATION
 		https://gamealchemist.wordpress.com/2013/05/01/lets-get-those-javascript-arrays-to-work-fast/
         
-        
+    Every time you hack a server its "difficulty" variable goes up a small amount, like 0.005 maybe. 
+    You can weaken() a server to get the security back down
+    
+    Add a few more servers maybe? Every 25 levels after 50?
+    
+
         
 Private beta feedback
     I'd suggest putting a "Back" button in the tutorial 
@@ -42,3 +42,8 @@ but for people who have no clue about coding etc. how about, later in the game, 
 should make it more easy for the average user
 
 but the 50% penalty for not working 8 hours is a bit harsh
+
+
+    btw
+make nano more like nano
+not some kind of weird gui based editor
