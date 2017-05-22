@@ -472,16 +472,7 @@ joinFaction = function(faction) {
     Player.factions.push(faction.name);
     
     //Determine what factions you are banned from now that you have joined this faction
-    if (faction.name == "BitRunners") {
-        Factions["The Black Hand"].isBanned = true;
-        Factions["NiteSec"].isBanned = true;
-    } else if (faction.name == "The Black Hand") {
-        Factions["BitRunners"].isBanned = true;
-        Factions["NiteSec"].isBanned = true;
-    } else if (faction.name == "NiteSec") {
-        Factions["BitRunners"].isBanned = true;
-        Factions["The Black Hand"].isBanned = true;
-    } else if (faction.name == "Chongqing") {
+    if (faction.name == "Chongqing") {
         Factions["Sector-12"].isBanned = true;
         Factions["Aevum"].isBanned = true;
         Factions["Volhaven"].isBanned = true;
@@ -520,16 +511,7 @@ leaveFaction = function(faction) {
     }
     
     //Unban from faction
-    if (faction.name == "BitRunners") {
-        Factions["The Black Hand"].isBanned = false;
-        Factions["NiteSec"].isBanned = false;
-    } else if (faction.name == "The Black Hand") {
-        Factions["BitRunners"].isBanned = false;
-        Factions["NiteSec"].isBanned = false;
-    } else if (faction.name == "NiteSec") {
-        Factions["BitRunners"].isBanned = false;
-        Factions["The Black Hand"].isBanned = false;
-    } else if (faction.name == "Chongqing") {
+    if (faction.name == "Chongqing") {
         Factions["Sector-12"].isBanned = false;
         Factions["Aevum"].isBanned = false;
         Factions["Volhaven"].isBanned = false;
