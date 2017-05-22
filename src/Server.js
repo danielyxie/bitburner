@@ -421,7 +421,7 @@ initForeignServers = function() {
     
     var Zer0NightclubServer = new Server();
     Zer0NightclubServer.init(createRandomIp(), "zer0", "ZER0 Nightclub", true, false, false, false, 2);
-    Zer0NightclubServer.setHackingParameters(75, 5500000, 25, 40);
+    Zer0NightclubServer.setHackingParameters(75, 7500000, 25, 40);
     Zer0NightclubServer.setPortProperties(1);
     AddToAllServers(Zer0NightclubServer);
     
@@ -476,31 +476,31 @@ initForeignServers = function() {
     //Gyms
     var CrushFitnessGymServer = new Server();
     CrushFitnessGymServer.init(createRandomIp(), "crush-fitness", "Crush Fitness", true, false, false, false, 0);
-    CrushFitnessGymServer.setHackingParameters(250, 30000000, 40, 25);
+    CrushFitnessGymServer.setHackingParameters(250, 40000000, 40, 30);
     CrushFitnessGymServer.setPortProperties(2);
     AddToAllServers(CrushFitnessGymServer);
     
     var IronGymServer = new Server();
     IronGymServer.init(createRandomIp(), "iron-gym", "Iron Gym Network", true, false, false, false, 0);
-    IronGymServer.setHackingParameters(100, 15000000, 30, 15);
+    IronGymServer.setHackingParameters(100, 20000000, 30, 20);
     IronGymServer.setPortProperties(1);
     AddToAllServers(IronGymServer);
     
     var MilleniumFitnessGymServer = new Server();
     MilleniumFitnessGymServer.init(createRandomIp(), "millenium-fitness", "Millenium Fitness Network", true, false, false, false, 0);
-    MilleniumFitnessGymServer.setHackingParameters(500, 50000000, 50, 30);
+    MilleniumFitnessGymServer.setHackingParameters(500, 100000000, 50, 35);
     MilleniumFitnessGymServer.setPortProperties(3);
     AddToAllServers(MilleniumFitnessGymServer);
     
     var PowerhouseGymServer = new Server();
     PowerhouseGymServer.init(createRandomIp(), "powerhouse-fitness", "Powerhouse Fitness", true, false, false, false, 0);
-    PowerhouseGymServer.setHackingParameters(1000, 100000000, 60, 50);
+    PowerhouseGymServer.setHackingParameters(1000, 300000000, 60, 55);
     PowerhouseGymServer.setPortProperties(5);
     AddToAllServers(PowerhouseGymServer);
 
     var SnapFitnessGymServer = new Server();
     SnapFitnessGymServer.init(createRandomIp(), "snap-fitness", "Snap Fitness", true, false, false, false, 0);
-    SnapFitnessGymServer.setHackingParameters(750, 75000000, 50, 45);
+    SnapFitnessGymServer.setHackingParameters(750, 150000000, 50, 50);
     SnapFitnessGymServer.setPortProperties(4);
     AddToAllServers(SnapFitnessGymServer);
 	
