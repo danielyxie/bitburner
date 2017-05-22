@@ -183,14 +183,18 @@ displayLocationContent = function() {
     waiterPartTimeJob.style.display = "none";
     
     softwareJob.innerHTML = "Apply for Software Job";
+    softwareConsultantJob.innerHTML = "Apply for a Software Consultant job";
     itJob.innerHTML = "Apply for IT Job";
     securityEngineerJob.innerHTML = "Apply for Security Engineer Job";
     networkEngineerJob.innerHTML = "Apply for Network Engineer Job";
     businessJob.innerHTML = "Apply for Business Job";
+    businessConsultantJob.innerHTML = "Apply for a Business Consultant Job";
     securityJob.innerHTML = "Apply for Security Job";
     agentJob.innerHTML = "Apply for Agent Job";
     employeeJob.innerHTML = "Apply to be an Employee";
+    employeePartTimeJob.innerHTML = "Apply to be a Part-time Employee";
     waiterJob.innerHTML = "Apply to be a Waiter";
+    waiterPartTimeJob.innerHTML = "Apply to be a Part-time Waiter"
     
     work.style.display = "none";
     
