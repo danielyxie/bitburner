@@ -403,104 +403,104 @@ initForeignServers = function() {
     //"Low level" targets
     var FoodNStuffServer = new Server();
     FoodNStuffServer.init(createRandomIp(), "foodnstuff", "Food N Stuff Supermarket", true, false, false, false, 4);
-    FoodNStuffServer.setHackingParameters(1, 600000, 10, 5);
+    FoodNStuffServer.setHackingParameters(1, 750000, 10, 5);
     FoodNStuffServer.setPortProperties(0);
     AddToAllServers(FoodNStuffServer);
     
     var SigmaCosmeticsServer = new Server();
     SigmaCosmeticsServer.init(createRandomIp(), "sigma-cosmetics", "Sigma Cosmetics", true, false, false, false, 4);
-    SigmaCosmeticsServer.setHackingParameters(5, 900000, 10, 10);
+    SigmaCosmeticsServer.setHackingParameters(5, 1000000, 10, 10);
     SigmaCosmeticsServer.setPortProperties(0);
     AddToAllServers(SigmaCosmeticsServer);
     
     var JoesGunsServer = new Server();
     JoesGunsServer.init(createRandomIp(), "joesguns", "Joe's Guns", true, false, false, false, 4);
-    JoesGunsServer.setHackingParameters(10, 1200000, 20, 20);
+    JoesGunsServer.setHackingParameters(10, 1500000, 20, 20);
     JoesGunsServer.setPortProperties(0);
     AddToAllServers(JoesGunsServer);
     
     var Zer0NightclubServer = new Server();
     Zer0NightclubServer.init(createRandomIp(), "zer0", "ZER0 Nightclub", true, false, false, false, 2);
-    Zer0NightclubServer.setHackingParameters(75, 5500000, 25, 40);
+    Zer0NightclubServer.setHackingParameters(75, 7500000, 25, 40);
     Zer0NightclubServer.setPortProperties(1);
     AddToAllServers(Zer0NightclubServer);
     
     var NectarNightclubServer = new Server();
     NectarNightclubServer.init(createRandomIp(), "nectar-net", "Nectar Nightclub Network", true, false, false, false, 4);
-    NectarNightclubServer.setHackingParameters(20, 1400000, 20, 25);
+    NectarNightclubServer.setHackingParameters(20, 1750000, 20, 25);
     NectarNightclubServer.setPortProperties(0);
     AddToAllServers(NectarNightclubServer);
     
     var NeoNightclubServer = new Server();
     NeoNightclubServer.init(createRandomIp(), "neo-net", "Neo Nightclub Network", true, false, false, false, 2);
-    NeoNightclubServer.setHackingParameters(50, 3000000, 25, 25);
+    NeoNightclubServer.setHackingParameters(50, 3500000, 25, 25);
     NeoNightclubServer.setPortProperties(1);
     AddToAllServers(NeoNightclubServer);
     
     var SilverHelixServer = new Server();
     SilverHelixServer.init(createRandomIp(), "silver-helix", "Silver Helix", true, false, false, false, 2);
-    SilverHelixServer.setHackingParameters(150, 50000000, 30, 30);
+    SilverHelixServer.setHackingParameters(150, 55000000, 30, 30);
     SilverHelixServer.setPortProperties(2);
     AddToAllServers(SilverHelixServer);
     
     var HongFangTeaHouseServer = new Server();
     HongFangTeaHouseServer.init(createRandomIp(), "hong-fang-tea", "HongFang Teahouse", true, false, false, false, 4);
-    HongFangTeaHouseServer.setHackingParameters(30, 1750000, 15, 15);
+    HongFangTeaHouseServer.setHackingParameters(30, 2000000, 15, 15);
     HongFangTeaHouseServer.setPortProperties(0);
     AddToAllServers(HongFangTeaHouseServer);
     
     var HaraKiriSushiBarServer = new Server();
-    HaraKiriSushiBarServer.setHackingParameters(40, 2500000, 15, 40);
+    HaraKiriSushiBarServer.setHackingParameters(40, 3000000, 15, 40);
     HaraKiriSushiBarServer.init(createRandomIp(), "harakiri-sushi", "HaraKiri Sushi Bar Network", true, false, false, false, 4);
     HaraKiriSushiBarServer.setPortProperties(0);
     AddToAllServers(HaraKiriSushiBarServer);
     
     var PhantasyServer = new Server();
     PhantasyServer.init(createRandomIp(), "phantasy", "Phantasy Club", true, false, false, false, 0);
-    PhantasyServer.setHackingParameters(100, 25000000, 20, 35);
+    PhantasyServer.setHackingParameters(100, 27500000, 20, 35);
     PhantasyServer.setPortProperties(2);
     AddToAllServers(PhantasyServer);
     
     var MaxHardwareServer = new Server();
     MaxHardwareServer.init(createRandomIp(), "max-hardware", "Max Hardware Store", true, false, false, false, 0);
-    MaxHardwareServer.setHackingParameters(80, 10000000, 15, 25);
+    MaxHardwareServer.setHackingParameters(80, 11000000, 15, 25);
     MaxHardwareServer.setPortProperties(1);
     AddToAllServers(MaxHardwareServer);
     
     var OmegaSoftwareServer = new Server();
     OmegaSoftwareServer.init(createRandomIp(), "omega-net", "Omega Software", true, false, false, false, 8);
-    OmegaSoftwareServer.setHackingParameters(200, 80000000, 30, 35);
+    OmegaSoftwareServer.setHackingParameters(200, 85000000, 30, 35);
     OmegaSoftwareServer.setPortProperties(2);
     AddToAllServers(OmegaSoftwareServer);
 
     //Gyms
     var CrushFitnessGymServer = new Server();
     CrushFitnessGymServer.init(createRandomIp(), "crush-fitness", "Crush Fitness", true, false, false, false, 0);
-    CrushFitnessGymServer.setHackingParameters(250, 10000000, 40, 25);
+    CrushFitnessGymServer.setHackingParameters(250, 40000000, 40, 30);
     CrushFitnessGymServer.setPortProperties(2);
     AddToAllServers(CrushFitnessGymServer);
     
     var IronGymServer = new Server();
     IronGymServer.init(createRandomIp(), "iron-gym", "Iron Gym Network", true, false, false, false, 0);
-    IronGymServer.setHackingParameters(100, 5000000, 30, 15);
+    IronGymServer.setHackingParameters(100, 20000000, 30, 20);
     IronGymServer.setPortProperties(1);
     AddToAllServers(IronGymServer);
     
     var MilleniumFitnessGymServer = new Server();
     MilleniumFitnessGymServer.init(createRandomIp(), "millenium-fitness", "Millenium Fitness Network", true, false, false, false, 0);
-    MilleniumFitnessGymServer.setHackingParameters(500, 2500000, 50, 30);
+    MilleniumFitnessGymServer.setHackingParameters(500, 100000000, 50, 35);
     MilleniumFitnessGymServer.setPortProperties(3);
     AddToAllServers(MilleniumFitnessGymServer);
     
     var PowerhouseGymServer = new Server();
     PowerhouseGymServer.init(createRandomIp(), "powerhouse-fitness", "Powerhouse Fitness", true, false, false, false, 0);
-    PowerhouseGymServer.setHackingParameters(1000, 100000000, 60, 50);
+    PowerhouseGymServer.setHackingParameters(1000, 300000000, 60, 55);
     PowerhouseGymServer.setPortProperties(5);
     AddToAllServers(PowerhouseGymServer);
 
     var SnapFitnessGymServer = new Server();
     SnapFitnessGymServer.init(createRandomIp(), "snap-fitness", "Snap Fitness", true, false, false, false, 0);
-    SnapFitnessGymServer.setHackingParameters(750, 75000000, 50, 45);
+    SnapFitnessGymServer.setHackingParameters(750, 150000000, 50, 50);
     SnapFitnessGymServer.setPortProperties(4);
     AddToAllServers(SnapFitnessGymServer);
 	

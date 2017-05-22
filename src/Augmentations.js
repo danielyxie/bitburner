@@ -151,7 +151,7 @@ initAugmentations = function() {
     var HemoRecirculator = new Augmentation(AugmentationNames.HemoRecirculator);
     HemoRecirculator.setInfo("A heart implant that greatly increases the body's ability to effectively use and pump " + 
                              "blood. <br><br> This augmentation increases all of the player's combat stats by 15%.")
-    HemoRecirculator.setRequirements(6000, 10000000);
+    HemoRecirculator.setRequirements(4000, 8000000);
     HemoRecirculator.addToFactions(["Tetrads", "The Dark Army", "The Syndicate"]);
     if (augmentationExists(AugmentationNames.HemoRecirculator)) {
         HemoRecirculator.owned = Augmentations[AugmentationNames.HemoRecirculator].owned;
@@ -160,7 +160,7 @@ initAugmentations = function() {
     AddToAugmentations(HemoRecirculator);
     
     var Targeting1 = new Augmentation(AugmentationNames.Targeting1);
-    Targeting1.setRequirements(2500, 3000000);
+    Targeting1.setRequirements(2000, 2500000);
     Targeting1.setInfo("This cranial implant is embedded within the player's inner ear structure and optic nerves. It regulates and enhances the user's " + 
                        "balance and hand-eye coordination. It is also capable of augmenting reality by projecting digital information " + 
                        "directly onto the retina. These enhancements allow the player to better lock-on and keep track of enemies. <br><br>" +
@@ -174,7 +174,7 @@ initAugmentations = function() {
     AddToAugmentations(Targeting1);
 
     var Targeting2 = new Augmentation(AugmentationNames.Targeting2);
-    Targeting2.setRequirements(4000, 9000000);
+    Targeting2.setRequirements(3500, 7500000);
     Targeting2.setInfo("This is an upgrade of the Augmented Targeting I cranial implant, which is capable of augmenting reality " + 
                        "and enhances the user's balance and hand-eye coordination. <br><br>This upgrade increases the player's dexterity " + 
                        "by an additional 30%.");
@@ -187,7 +187,7 @@ initAugmentations = function() {
     AddToAugmentations(Targeting2);
     
     var Targeting3 = new Augmentation(AugmentationNames.Targeting3);
-    Targeting3.setRequirements(12000, 20000000);
+    Targeting3.setRequirements(11000, 20000000);
     Targeting3.setInfo("This is an upgrade of the Augmented Targeting II cranial implant, which is capable of augmenting reality " + 
                        "and enhances the user's balance and hand-eye coordination. <br><br>This upgrade increases the player's dexterity " +
                        "by an additional 50%.");
@@ -227,7 +227,7 @@ initAugmentations = function() {
     AddToAugmentations(SynfibrilMuscle)
     
     var CombatRib1 = new Augmentation(AugmentationNames.CombatRib1);
-    CombatRib1.setRequirements(3500, 5000000);
+    CombatRib1.setRequirements(2500, 4000000);
     CombatRib1.setInfo("The human body's ribs are replaced with artificial ribs that automatically and continuously release cognitive " + 
                        "and performance-enhancing drugs into the bloodstream, improving the user's abilities in combat.<br><br>" + 
                        "This augmentation increases the player's strength and defense by 15%.");
@@ -240,7 +240,7 @@ initAugmentations = function() {
     AddToAugmentations(CombatRib1);
     
     var CombatRib2 = new Augmentation(AugmentationNames.CombatRib2);
-    CombatRib2.setRequirements(8000, 12000000);
+    CombatRib2.setRequirements(7000, 10000000);
     CombatRib2.setInfo("This is an upgrade to the Combat Rib I augmentation, and is capable of releasing even more potent combat-enhancing " + 
                        "drugs into the bloodstream<br><br>. This upgrade increases the player's strength and defense by an additional 25%.")
     CombatRib2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
@@ -264,7 +264,7 @@ initAugmentations = function() {
     AddToAugmentations(CombatRib3);
     
     var NanofiberWeave = new Augmentation(AugmentationNames.NanofiberWeave);
-    NanofiberWeave.setRequirements(15000, 15000000);
+    NanofiberWeave.setRequirements(14000, 15000000);
     NanofiberWeave.setInfo("Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning. " + 
                            "This improves the skin's ability to regenerate itself and protect the body from external stresses and forces.<br><br>" + 
                            "This augmentation increases the player's strength and defense by 40%.");
@@ -277,7 +277,7 @@ initAugmentations = function() {
     AddToAugmentations(NanofiberWeave);
     
     var SubdermalArmor = new Augmentation(AugmentationNames.SubdermalArmor);
-    SubdermalArmor.setRequirements(600000, 750000000);
+    SubdermalArmor.setRequirements(350000, 550000000);
     SubdermalArmor.setInfo("The NEMEAN Subdermal Weave is a thin, light-weight, graphene plating that houses a dilatant fluid. " +
                            "The material is implanted underneath the skin, and is the most advanced form of defensive enhancement " +
                            "that has ever been created. The dilatant fluid, despite being thin and light, is extremely effective " + 
@@ -293,7 +293,7 @@ initAugmentations = function() {
     AddToAugmentations(SubdermalArmor);
     
     var WiredReflexes = new Augmentation(AugmentationNames.WiredReflexes);
-    WiredReflexes.setRequirements(600, 500000);
+    WiredReflexes.setRequirements(400, 400000);
     WiredReflexes.setInfo("Synthetic nerve-enhancements are injected into all major parts of the somatic nervous system, " + 
                           "supercharging the body's ability to send signals through neurons. This results in increased reflex speed.<br><br>" + 
                           "This augmentation increases the player's agility and dexterity by 10%.");
@@ -318,7 +318,7 @@ initAugmentations = function() {
     AddToAugmentations(GrapheneBoneLacings);
     
     var BionicSpine = new Augmentation(AugmentationNames.BionicSpine);
-    BionicSpine.setRequirements(30000, 25000000);
+    BionicSpine.setRequirements(18000, 22000000);
     BionicSpine.setInfo("An artificial spine created from plasteel and carbon fibers that completely replaces the organic spine. " + 
                         "Not only is the Bionic Spine physically stronger than a human spine, but it is also capable of digitally " + 
                         "stimulating and regulating the neural signals that are sent and received by the spinal cord. This results in " + 
@@ -345,7 +345,7 @@ initAugmentations = function() {
     AddToAugmentations(GrapheneBionicSpine);
     
     var BionicLegs = new Augmentation(AugmentationNames.BionicLegs);
-    BionicLegs.setRequirements(80000, 60000000);
+    BionicLegs.setRequirements(60000, 60000000);
     BionicLegs.setInfo("Cybernetic legs created from plasteel and carbon fibers that completely replace the user's organic legs. <br><br>" + 
                        "This augmentation increases the player's agility by 75%.");
     BionicLegs.addToFactions(["Speakers for the Dead", "The Syndicate", "KuaiGong International",
@@ -357,7 +357,7 @@ initAugmentations = function() {
     AddToAugmentations(BionicLegs);
     
     var GrapheneBionicLegs = new Augmentation(AugmentationNames.GrapheneBionicLegs);
-    GrapheneBionicLegs.setRequirements(400000, 800000000);
+    GrapheneBionicLegs.setRequirements(300000, 750000000);
     GrapheneBionicLegs.setInfo("An upgrade to the Bionic Legs augmentation. It fuses the implant with an advanced graphene " + 
                                "material to make it much stronger and lighter.<br><br>" + 
                                "This augmentation increases the player's agility by an additional 200%.");
@@ -370,7 +370,7 @@ initAugmentations = function() {
     
     //Labor stat augmentations
     var SpeechProcessor = new Augmentation(AugmentationNames.SpeechProcessor); //Cochlear imlant?
-    SpeechProcessor.setRequirements(3500, 25000000);
+    SpeechProcessor.setRequirements(3000, 7500000);
     SpeechProcessor.setInfo("A cochlear implant with an embedded computer that analyzes incoming speech. " +
                             "The embedded computer processes characteristics of incoming speech, such as tone " +
                             "and inflection, to pick up on subtle cues and aid in social interactions.<br><br>" + 
@@ -397,7 +397,7 @@ initAugmentations = function() {
     AddToAugmentations(TITN41Injection);
     
     var EnhancedSocialInteractionImplant = new Augmentation(AugmentationNames.EnhancedSocialInteractionImplant);
-    EnhancedSocialInteractionImplant.setRequirements(200000, 300000000);
+    EnhancedSocialInteractionImplant.setRequirements(150000, 200000000);
     EnhancedSocialInteractionImplant.setInfo("A cranial implant that greatly assists in the user's ability to analyze social situations " + 
                                              "and interactions. The system uses a wide variety of factors such as facial expression, body " + 
                                              "language, and the voice's tone/inflection to determine the best course of action during social" + 
@@ -414,7 +414,7 @@ initAugmentations = function() {
     
     //Hacking augmentations
     var BitWire = new Augmentation(AugmentationNames.BitWire);
-    BitWire.setRequirements(1750, 2000000);
+    BitWire.setRequirements(1500, 2000000);
     BitWire.setInfo("A small brain implant embedded in the cerebrum. This regulates and improves the brain's computing " + 
                     "capabilities. <br><br> This augmentation increases the player's hacking skill by 10%");
     BitWire.addToFactions(["CyberSec", "BitRunners", "NiteSec"]);
@@ -425,7 +425,7 @@ initAugmentations = function() {
     AddToAugmentations(BitWire);
     
     var ArtificialBioNeuralNetwork = new Augmentation(AugmentationNames.ArtificialBioNeuralNetwork);
-    ArtificialBioNeuralNetwork.setRequirements(120000, 600000000);
+    ArtificialBioNeuralNetwork.setRequirements(110000, 500000000);
     ArtificialBioNeuralNetwork.setInfo("A network consisting of millions of nanoprocessors is embedded into the brain. " +
                                        "The network is meant to mimick the way a biological brain solves a problem, which each " + 
                                        "nanoprocessor acting similar to the way a neuron would in a neural network. However, these " + 
@@ -443,7 +443,7 @@ initAugmentations = function() {
     AddToAugmentations(ArtificialBioNeuralNetwork);
     
     var ArtificialSynapticPotentiation = new Augmentation(AugmentationNames.ArtificialSynapticPotentiation);
-    ArtificialSynapticPotentiation.setRequirements(2500, 15000000);
+    ArtificialSynapticPotentiation.setRequirements(2500, 14000000);
     ArtificialSynapticPotentiation.setInfo("The body is injected with a chemical that artificially induces synaptic potentiation, " + 
                                            "otherwise known as the strengthening of synapses. This results in a enhanced cognitive abilities.<br><br>" + 
                                            "This augmentation: <br>" + 
@@ -458,7 +458,7 @@ initAugmentations = function() {
     AddToAugmentations(ArtificialSynapticPotentiation);
     
     var EnhancedMyelinSheathing = new Augmentation(AugmentationNames.EnhancedMyelinSheathing);
-    EnhancedMyelinSheathing.setRequirements(60000, 250000000);
+    EnhancedMyelinSheathing.setRequirements(40000, 225000000);
     EnhancedMyelinSheathing.setInfo("Electrical signals are used to induce a new, artificial form of myelinogensis in the human body. " + 
                                     "This process results in the proliferation of new, synthetic myelin sheaths in the nervous " + 
                                     "system. These myelin sheaths can propogate neuro-signals much faster than their organic " + 
@@ -475,7 +475,7 @@ initAugmentations = function() {
     AddToAugmentations(EnhancedMyelinSheathing);
     
     var SynapticEnhancement = new Augmentation(AugmentationNames.SynapticEnhancement);
-    SynapticEnhancement.setRequirements(900, 1200000);
+    SynapticEnhancement.setRequirements(800, 1100000);
     SynapticEnhancement.setInfo("A small cranial implant that continuously uses weak electric signals to stimulate the brain and " +
                                 "induce stronger synaptic activity. This improves the user's cognitive abilities.<br><br>" + 
                                 "This augmentation increases the player's hacking speed by 3%.");
@@ -487,7 +487,7 @@ initAugmentations = function() {
     AddToAugmentations(SynapticEnhancement);
     
     var NeuralRetentionEnhancement = new Augmentation(AugmentationNames.NeuralRetentionEnhancement);
-    NeuralRetentionEnhancement.setRequirements(10000, 50000000);
+    NeuralRetentionEnhancement.setRequirements(8000, 40000000);
     NeuralRetentionEnhancement.setInfo("Chemical injections are used to permanently alter and strengthen the brain's neuronal " +
                                        "circuits, strengthening its ability to retain information.<br><br>" + 
                                        "This augmentation increases the player's hacking experience gain rate by 40%.");
@@ -786,7 +786,7 @@ initAugmentations = function() {
     AddToAugmentations(HacknetNodeNICUpload);
     
     var HacknetNodeKernelDNI = new Augmentation(AugmentationNames.HacknetNodeKernelDNI);
-    HacknetNodeKernelDNI.setRequirements(4000, 12000000);
+    HacknetNodeKernelDNI.setRequirements(3000, 6000000);
     HacknetNodeKernelDNI.setInfo("Installs a Direct-Neural Interface jack into the arm that is capable of connecting to a " + 
                                  "Hacknet Node. This lets the user access and manipulate the Node's kernel using the mind's " + 
                                  "electrochemical signals.<br><br>" + 
@@ -799,7 +799,7 @@ initAugmentations = function() {
     AddToAugmentations(HacknetNodeKernelDNI);
     
     var HacknetNodeCoreDNI = new Augmentation(AugmentationNames.HacknetNodeCoreDNI);
-    HacknetNodeCoreDNI.setRequirements(6000, 20000000);
+    HacknetNodeCoreDNI.setRequirements(5000, 10000000);
     HacknetNodeCoreDNI.setInfo("Installs a Direct-Neural Interface jack into the arm that is capable of connecting " +
                                "to a Hacknet Node. This lets the user access and manipulate the Node's processing logic using " + 
                                "the mind's electrochemical signals.<br><br>" + 
@@ -929,7 +929,7 @@ initAugmentations = function() {
                        "Increases the player's dexterity by 10%<br>" + 
                        "Increases the player's dexterity experience gain rate by 15%<br>" + 
                        "Increases the amount of money the player gains from crimes by 25%");
-    SmartSonar.setRequirements(10000, 12000000);
+    SmartSonar.setRequirements(9000, 10000000);
     SmartSonar.addToFactions(["Slum Snakes"]);
     if (augmentationExists(AugmentationNames.SmartSonar)) {
         SmartSonar.owned = Augmentations[AugmentationNames.SmartSonar].owned;
@@ -944,7 +944,7 @@ initAugmentations = function() {
                               "This augmentation: <br>" + 
                               "Increases all of the player's stats by 10%<br>" + 
                               "Increases the player's experience gain rate for all stats by 10%");
-    PowerRecirculator.setRequirements(20000, 50000000);
+    PowerRecirculator.setRequirements(10000, 30000000);
     PowerRecirculator.addToFactions(["Tetrads", "The Dark Army", "The Syndicate", "NWO"]);
     if (augmentationExists(AugmentationNames.PowerRecirculator)) {
         PowerRecirculator.owned = Augmentations[AugmentationNames.PowerRecirculator].owned;

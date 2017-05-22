@@ -37,3 +37,8 @@ Private beta feedback
     window,
 
 test for open beta
+
+but for people who have no clue about coding etc. how about, later in the game, let them buy full scripts? 
+should make it more easy for the average user
+
+but the 50% penalty for not working 8 hours is a bit harsh
