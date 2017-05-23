@@ -21,8 +21,8 @@ CONSTANTS = {
     HacknetNodeMoneyGainPerLevel: 1.25,
     HacknetNodePurchaseNextMult: 1.33,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.21,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.41,    //Multiplier for cost when buying another core
+    HacknetNodeUpgradeRamMult: 1.22,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeCoreMult: 1.42,    //Multiplier for cost when buying another core
     
     HacknetNodeMaxLevel: 200,
     HacknetNodeMaxRam: 64,
@@ -110,12 +110,12 @@ CONSTANTS = {
     ClassGymDexterity: "training your dexterity at a gym",
     ClassGymAgility: "training your agility at a gym",
     
-    ClassDataStructuresBaseCost: 1,
-    ClassNetworksBaseCost: 5,
-    ClassAlgorithmsBaseCost: 20,
-    ClassManagementBaseCost: 10,
-    ClassLeadershipBaseCost: 20,
-    ClassGymBaseCost: 15,
+    ClassDataStructuresBaseCost: 2,
+    ClassNetworksBaseCost: 10,
+    ClassAlgorithmsBaseCost: 40,
+    ClassManagementBaseCost: 20,
+    ClassLeadershipBaseCost: 40,
+    ClassGymBaseCost: 30,
     
     CrimeShoplift: "shoplift",
     CrimeMug: "mug someone",

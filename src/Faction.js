@@ -790,18 +790,19 @@ displayFactionAugmentations = function(factionName) {
             var aug = Augmentations[faction.augmentations[i]];
             var item = document.createElement("li");
             var span = document.createElement("span");
+            var aDiv = document.createElement("div");
             var aElem = document.createElement("a");
             var pElem = document.createElement("p");
             aElem.setAttribute("href", "#");
             var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
             if (aug.name != AugmentationNames.NeuroFluxGovernor && aug.owned) {
-                aElem.setAttribute("class", "a-link-button-inactive tooltip");
+                aElem.setAttribute("class", "a-link-button-inactive");
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
-                aElem.setAttribute("class", "a-link-button tooltip");
+                aElem.setAttribute("class", "a-link-button");
                 pElem.innerHTML = "UNLOCKED - $" + formatNumber(aug.baseCost * faction.augmentationPriceMult, 2);
             } else {
-                aElem.setAttribute("class", "a-link-button-inactive tooltip");
+                aElem.setAttribute("class", "a-link-button-inactive");
                 pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 4) + " faction reputation)";
                 pElem.style.color = "red";
             }
@@ -813,13 +814,16 @@ displayFactionAugmentations = function(factionName) {
             }
             span.style.display = "inline-block"
             
-            aElem.innerHTML += '<span class="tooltiptext">' + aug.info + " </span>";
+            //The div will have the tooltip. 
+            aDiv.setAttribute("class", "tooltip");
+            aDiv.innerHTML = '<span class="tooltiptext">' + aug.info + " </span>";
+            aDiv.appendChild(aElem);
             
             aElem.addEventListener("click", function() {
                 purchaseAugmentationBoxCreate(aug, faction);
             });
             
-            span.appendChild(aElem);
+            span.appendChild(aDiv);
             span.appendChild(pElem);
             
             item.appendChild(span);

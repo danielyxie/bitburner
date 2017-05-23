@@ -92,7 +92,7 @@ tr:focus {
     padding: 5px;
     margin: 5px;
     border: 1px solid #333333;
-    width: 50%;
+    /*width: 30%;*/
 }
 
 .a-link-button:hover {
@@ -112,7 +112,7 @@ tr:focus {
     border-left: 1px solid #333333;
     pointer-events: none;
     cursor: default;
-    width: 50%;
+    /*width: 50%;*/
 }
 
 
@@ -156,9 +156,10 @@ tr:focus {
     color: white;
     text-align: center;
     padding: 4px;
+    left: 101%;
     
     position: absolute;
-    z-index: 1;
+    z-index: 3;
 }
 
 .tooltip:hover .tooltiptext {
