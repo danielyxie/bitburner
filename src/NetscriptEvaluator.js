@@ -654,6 +654,27 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
 							reject(e);
 						});
+                    } else if (exp.func.value == "hasRootAccess") {
+                        if (exp.args.length != 1) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|hasRootAccess() call has incorrect number of arguments. Takes 1 argument");
+                            return;
+                        }
+                        var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
+                            setTimeout(function() {
+                                var server = getServer(ip);
+                                if (server == null) {
+                                    reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into hasRootAccess() command");
+                                    workerScript.scriptRef.log("Cannot hasRootAccess(). Invalid IP or hostname passed in: " + ip);
+                                    return;
+                                }
+                                workerScript.scriptRef.log("hasRootAccess() returned " + server.hasAdminRights);
+                                resolve(server.hasAdminRights);
+                            }, CONSTANTS.CodeInstructionRunTime);
+                        }, function(e) {
+							reject(e);
+						});
                     } else if (exp.func.value == "run") {
                         if (exp.args.length != 1) {
                             reject("|"+workerScript.serverIp+"|"+workerScript.name+"|run() call has incorrect number of arguments. Takes 1 argument");
@@ -661,6 +682,7 @@ function evaluate(exp, workerScript) {
                         }
                         var scriptNamePromise = evaluate(exp.args[0], workerScript);
                         scriptNamePromise.then(function(scriptname) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var serverIp = workerScript.serverIp;
                             var scriptServer = AllServers[serverIp];
                             if (scriptServer == null) {
@@ -684,6 +706,7 @@ function evaluate(exp, workerScript) {
                             return;
                         }
                         setTimeout(function() {
+                            if (env.stopFlag) {reject(workerScript);}
                             Player.updateSkillLevels();
                             workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
                             resolve(Player.hacking_skill);
@@ -771,6 +794,16 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
                             reject(e);
                         });
+                    } else if (exp.func.value == "getNumHacknetNodes") {
+                        if (exp.args.length != 0) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getNumHacknetNodes() call has incorrect number of arguments. Takes 0 arguments");
+                            return;
+                        }
+                        setTimeout(function() {
+                            if (env.stopFlag) {reject(workerScript);}
+                            workerScript.scriptRef.log("getNumHacknetNodes() returned " + Player.hacknetNodes.length);
+                            resolve(Player.hacknetNodes.length);
+                        }, CONSTANTS.CodeInstructionRunTime);
                     }
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
@@ -990,7 +1023,7 @@ function apply_op(op, a, b) {
         return x;
     }
     switch (op) {
-      case "+": return num(a) + num(b);
+      case "+": return a + b;
       case "-": return num(a) - num(b);
       case "*": return num(a) * num(b);
       case "/": return num(a) / div(b);

@@ -274,6 +274,9 @@ CONSTANTS = {
                            "be used to run scripts located on the same server. Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
                            "of RAM to run this command. Does NOT work while offline <br>Example: run('hack-foodnstuff.script'); <br> The example above will try and launch the 'hack-foodnstuff.script' script on " + 
                            "the current server, if it exists. <br><br>" + 
+                           "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " + 
+                           "The argument passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline.<br> " + 
+                           "Example: if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" + 
                            "<i>getHackingLevel() </i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
@@ -290,6 +293,7 @@ CONSTANTS = {
                            "};<br><br>" + 
                            "The example code above will attempt to purchase a new Hacknet Node. If the Hacknet Node is purchased, then it will " +
                            "continuously try to level it up until it is leveled up 10 times. <br><br>" + 
+                           "<i>getNumHacknetNodes()</i><br> returns the number of Hacknet Nodes that the Player owns. Does NOT work while offline<br><br>" + 
                            "<u><h1>While loops </h1></u><br>" +
                            "A while loop is a control flow statement that repeatedly executes code as long as a condition is met. <br><br> " +
                            "<i>while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}</i><br><br>" + 

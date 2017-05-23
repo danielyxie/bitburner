@@ -849,9 +849,9 @@ var Terminal = {
             post("<strong>" + serv.hostname + "</strong>");
             var c = "N";
             if (serv.hasAdminRights) {c = "Y";}
-            post("----Root Access: " + c);
-            post("----Required hacking skill: " + serv.requiredHackingSkill);
-            post("----Number open ports required to NUKE: " + serv.numOpenPortsRequired);
+            post("--Root Access: " + c);
+            post("--Required hacking skill: " + serv.requiredHackingSkill);
+            post("--Number open ports required to NUKE: " + serv.numOpenPortsRequired);
             post(" ");
         }
     },
