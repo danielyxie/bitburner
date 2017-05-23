@@ -21,8 +21,8 @@ CONSTANTS = {
     HacknetNodeMoneyGainPerLevel: 1.25,
     HacknetNodePurchaseNextMult: 1.33,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.23,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.43,    //Multiplier for cost when buying another core
+    HacknetNodeUpgradeRamMult: 1.21,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeCoreMult: 1.41,    //Multiplier for cost when buying another core
     
     HacknetNodeMaxLevel: 200,
     HacknetNodeMaxRam: 64,
@@ -276,7 +276,7 @@ CONSTANTS = {
                            "the current server, if it exists. <br><br>" + 
                            "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " + 
                            "The argument passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline.<br> " + 
-                           "Example: if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" + 
+                           "Example:<br>if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" + 
                            "<i>getHackingLevel() </i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
