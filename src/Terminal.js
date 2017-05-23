@@ -360,7 +360,11 @@ var Terminal = {
         }
         Terminal.commandHistoryIndex = Terminal.commandHistory.length;
         
+        //Only split the first space
 		var commandArray = command.split(" ");
+        if (commandArray.length > 1) {
+            commandArray = [commandArray.shift(), commandArray.join(" ")];
+        }
 		
 		if (commandArray.length == 0) {return;}
         
@@ -484,6 +488,16 @@ var Terminal = {
 		
         /* Command parser */
 		switch (commandArray[0]) {
+            case "alias":
+                if (commandArray.length == 1) {
+                    printAliases();
+                } else if (commandArray.length == 2) {
+                    
+                } else {
+                    post("Incorrect usage of alias command. Usage: alias [aliasname='value'"); return;
+                }
+                
+                break;
 			case "analyze":
 				if (commandArray.length != 1) {
 					post("Incorrect usage of analyze command. Usage: analyze"); return;

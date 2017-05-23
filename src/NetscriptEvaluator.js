@@ -248,7 +248,7 @@ function evaluate(exp, workerScript) {
 							}
                             
                             if (server.requiredHackingSkill > Player.hacking_skill) {
-                                workerScript.scriptRef.log("Cannot hack this server (" + server.hostaname + ") because user does not have root access");
+                                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because player's hacking skill is not high enough to hack " + server.hostname);
                                 return;
                             }
@@ -701,7 +701,7 @@ function evaluate(exp, workerScript) {
                                     workerScript.scriptRef.log("Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
                                     return;
                                 }
-                                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + server.moneyAvailable);
+                                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2));
                                 resolve(server.moneyAvailable);
                             }, CONSTANTS.CodeInstructionRunTime);
                         }, function(e) {
