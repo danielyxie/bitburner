@@ -492,9 +492,13 @@ var Terminal = {
                 if (commandArray.length == 1) {
                     printAliases();
                 } else if (commandArray.length == 2) {
-                    
+                    if (parseAliasDeclaration(commandArray[1])) {
+                        
+                    } else {
+                        post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); return;
+                    }
                 } else {
-                    post("Incorrect usage of alias command. Usage: alias [aliasname='value'"); return;
+                    post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); return;
                 }
                 
                 break;
