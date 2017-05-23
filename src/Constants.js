@@ -281,9 +281,9 @@ CONSTANTS = {
                            "a new hacknet node then the function will return an empty string. Does NOT work offline<br><br>" + 
                            "<i>upgradeHacknetNode(name)</i><br> Upgrades the level of a Hacknet Node. The argument passed in must be a string with the name of the Hacknet Node to upgrade. " + 
                            "If the Hacknet Node is successfully upgraded the function will return true. It will return false otherwise. Does NOT work offline. Example: <br>" + 
-                           "var node = purchaseHacknetNode();<br>" + 
+                           "node = purchaseHacknetNode();<br>" + 
                            "if (node != '') {<br>" + 
-                           "&nbsp;&nbsp;&nbsp;&nbsp;var i = 0;<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;i = 0;<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;while(i < 10) {<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (upgradeHacknetNode(node)) {i = i + 1;}<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;}; <br>" + 

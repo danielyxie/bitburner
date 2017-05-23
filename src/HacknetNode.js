@@ -436,7 +436,7 @@ processSingleHacknetNodeEarnings = function(numCycles, nodeObj) {
 getHacknetNode = function(name) {
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
         if (Player.hacknetNodes[i].name == name) {
-            return player.hacknetNodes[i];
+            return Player.hacknetNodes[i];
         }
     }
     return null;
