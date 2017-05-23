@@ -360,7 +360,15 @@ var Terminal = {
         }
         Terminal.commandHistoryIndex = Terminal.commandHistory.length;
         
+        //Process any aliases
+        command = substituteAliases(command);
+        console.log("command after alises: " + command);
+        
+        //Only split the first space
 		var commandArray = command.split(" ");
+        if (commandArray.length > 1) {
+            commandArray = [commandArray.shift(), commandArray.join(" ")];
+        }
 		
 		if (commandArray.length == 0) {return;}
         
@@ -484,6 +492,20 @@ var Terminal = {
 		
         /* Command parser */
 		switch (commandArray[0]) {
+            case "alias":
+                if (commandArray.length == 1) {
+                    printAliases();
+                } else if (commandArray.length == 2) {
+                    if (parseAliasDeclaration(commandArray[1])) {
+                        
+                    } else {
+                        post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); return;
+                    }
+                } else {
+                    post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); return;
+                }
+                
+                break;
 			case "analyze":
 				if (commandArray.length != 1) {
 					post("Incorrect usage of analyze command. Usage: analyze"); return;
@@ -653,9 +675,6 @@ var Terminal = {
 				}
 				Engine.loadScriptEditorContent(scriptname, "");
 				break;
-			case "scan":
-                Terminal.executeScanCommand(commandArray);
-				break;
 			case "ps":
 				if (commandArray.length != 1) {
 					post("Incorrect usage of ps command. Usage: ps"); return;
@@ -710,6 +729,12 @@ var Terminal = {
 					}
 				}
 				break;
+            case "scan":
+                Terminal.executeScanCommand(commandArray);
+				break;
+            case "scan-analyze":
+                Terminal.executeScanAnalyzeCommand(commandArray);
+                break;
 			case "scp":
 				//TODO
 				break;
@@ -810,6 +835,24 @@ var Terminal = {
             entry += spaces;
             entry += hasRoot;
             post(entry);
+        }
+    },
+    
+    executeScanAnalyzeCommand: function(commandArray) {
+        if (commandArray.length != 1) {
+            post("Incorrect usage of scan-analyze command. usage: scan-analyze"); return;
+        }
+        var currServ = Player.getCurrentServer();
+        for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
+            var serv = currServ.getServerOnNetwork(i);
+            if (serv == null) {continue;}
+            post("<strong>" + serv.hostname + "</strong>");
+            var c = "N";
+            if (serv.hasAdminRights) {c = "Y";}
+            post("--Root Access: " + c);
+            post("--Required hacking skill: " + serv.requiredHackingSkill);
+            post("--Number open ports required to NUKE: " + serv.numOpenPortsRequired);
+            post(" ");
         }
     },
     

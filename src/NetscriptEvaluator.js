@@ -248,7 +248,7 @@ function evaluate(exp, workerScript) {
 							}
                             
                             if (server.requiredHackingSkill > Player.hacking_skill) {
-                                workerScript.scriptRef.log("Cannot hack this server (" + server.hostaname + ") because user does not have root access");
+                                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because player's hacking skill is not high enough to hack " + server.hostname);
                                 return;
                             }
@@ -375,6 +375,7 @@ function evaluate(exp, workerScript) {
                             var p = new Promise(function(resolve, reject) {
 								if (env.stopFlag) {reject(workerScript);}
 								setTimeout(function() {
+                                    server.moneyAvailable += 1; //It can be grown even if it has no money
 									var growthPercentage = processSingleServerGrowth(server, 450);
                                     resolve(growthPercentage);
 								}, 120 * 1000); //grow() takes flat 2 minutes right now
@@ -653,6 +654,27 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
 							reject(e);
 						});
+                    } else if (exp.func.value == "hasRootAccess") {
+                        if (exp.args.length != 1) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|hasRootAccess() call has incorrect number of arguments. Takes 1 argument");
+                            return;
+                        }
+                        var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript);}
+                            setTimeout(function() {
+                                var server = getServer(ip);
+                                if (server == null) {
+                                    reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into hasRootAccess() command");
+                                    workerScript.scriptRef.log("Cannot hasRootAccess(). Invalid IP or hostname passed in: " + ip);
+                                    return;
+                                }
+                                workerScript.scriptRef.log("hasRootAccess() returned " + server.hasAdminRights);
+                                resolve(server.hasAdminRights);
+                            }, CONSTANTS.CodeInstructionRunTime);
+                        }, function(e) {
+							reject(e);
+						});
                     } else if (exp.func.value == "run") {
                         if (exp.args.length != 1) {
                             reject("|"+workerScript.serverIp+"|"+workerScript.name+"|run() call has incorrect number of arguments. Takes 1 argument");
@@ -660,6 +682,7 @@ function evaluate(exp, workerScript) {
                         }
                         var scriptNamePromise = evaluate(exp.args[0], workerScript);
                         scriptNamePromise.then(function(scriptname) {
+                            if (env.stopFlag) {reject(workerScript);}
                             var serverIp = workerScript.serverIp;
                             var scriptServer = AllServers[serverIp];
                             if (scriptServer == null) {
@@ -683,6 +706,7 @@ function evaluate(exp, workerScript) {
                             return;
                         }
                         setTimeout(function() {
+                            if (env.stopFlag) {reject(workerScript);}
                             Player.updateSkillLevels();
                             workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
                             resolve(Player.hacking_skill);
@@ -701,7 +725,7 @@ function evaluate(exp, workerScript) {
                                     workerScript.scriptRef.log("Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
                                     return;
                                 }
-                                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + server.moneyAvailable);
+                                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2));
                                 resolve(server.moneyAvailable);
                             }, CONSTANTS.CodeInstructionRunTime);
                         }, function(e) {
@@ -770,6 +794,16 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
                             reject(e);
                         });
+                    } else if (exp.func.value == "getNumHacknetNodes") {
+                        if (exp.args.length != 0) {
+                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getNumHacknetNodes() call has incorrect number of arguments. Takes 0 arguments");
+                            return;
+                        }
+                        setTimeout(function() {
+                            if (env.stopFlag) {reject(workerScript);}
+                            workerScript.scriptRef.log("getNumHacknetNodes() returned " + Player.hacknetNodes.length);
+                            resolve(Player.hacknetNodes.length);
+                        }, CONSTANTS.CodeInstructionRunTime);
                     }
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
@@ -989,7 +1023,7 @@ function apply_op(op, a, b) {
         return x;
     }
     switch (op) {
-      case "+": return num(a) + num(b);
+      case "+": return a + b;
       case "-": return num(a) - num(b);
       case "*": return num(a) * num(b);
       case "/": return num(a) / div(b);
@@ -1092,7 +1126,7 @@ function scriptCalculateExpGain(server) {
 function scriptCalculatePercentMoneyHacked(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 1000;
+    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 950;
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;

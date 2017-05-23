@@ -790,7 +790,7 @@ initAugmentations = function() {
     HacknetNodeKernelDNI.setInfo("Installs a Direct-Neural Interface jack into the arm that is capable of connecting to a " + 
                                  "Hacknet Node. This lets the user access and manipulate the Node's kernel using the mind's " + 
                                  "electrochemical signals.<br><br>" + 
-                                 "This augmentation increases the amount of money produced by Hacknet Nodes by 50%.");
+                                 "This augmentation increases the amount of money produced by Hacknet Nodes by 30%.");
     HacknetNodeKernelDNI.addToFactions(["Netburners"]);
     if (augmentationExists(AugmentationNames.HacknetNodeKernelDNI)) {
         HacknetNodeKernelDNI.owned = Augmentations[AugmentationNames.HacknetNodeKernelDNI].owned;
@@ -803,7 +803,7 @@ initAugmentations = function() {
     HacknetNodeCoreDNI.setInfo("Installs a Direct-Neural Interface jack into the arm that is capable of connecting " +
                                "to a Hacknet Node. This lets the user access and manipulate the Node's processing logic using " + 
                                "the mind's electrochemical signals.<br><br>" + 
-                               "This augmentation increases the amount of money produced by Hacknet Nodes by 75%.");
+                               "This augmentation increases the amount of money produced by Hacknet Nodes by 50%.");
     HacknetNodeCoreDNI.addToFactions(["Netburners"]);
     if (augmentationExists(AugmentationNames.HacknetNodeCoreDNI)) {
         HacknetNodeCoreDNI.owned = Augmentations[AugmentationNames.HacknetNodeCoreDNI].owned;
@@ -1531,10 +1531,10 @@ applyAugmentation = function(aug, faction) {
             Player.hacknet_node_purchase_cost_mult    *= 0.9;
             break;
         case AugmentationNames.HacknetNodeKernelDNI:
-            Player.hacknet_node_money_mult            *= 1.50;
+            Player.hacknet_node_money_mult            *= 1.30;
             break;
         case AugmentationNames.HacknetNodeCoreDNI:
-            Player.hacknet_node_money_mult            *= 1.75;
+            Player.hacknet_node_money_mult            *= 1.50;
             break;
         
         //Misc augmentations
@@ -1705,6 +1705,8 @@ applyAugmentation = function(aug, faction) {
         case AugmentationNames.Neuregen:
             Player.hacking_exp_mult     *= 1.75;
             break;
+        case AugmentationNames.CashRoot:
+            break;
         case AugmentationNames.NutriGen:
             Player.strength_exp_mult    *= 1.2;
             Player.defense_exp_mult     *= 1.2;
@@ -1751,6 +1753,11 @@ applyAugmentation = function(aug, faction) {
 
     aug.owned = true;
     aug.factionInstalledBy = faction.name;
+    if (aug.name == AugmentationNames.NeuroFluxGovernor &&
+        Player.augmentations.indexOf(AugmentationNames.NeuroFluxGovernor) != -1) {
+        //Already have this aug, just upgrade the level
+        return;
+    }
     Player.augmentations.push(aug.name);
     ++Player.numAugmentations;
 }

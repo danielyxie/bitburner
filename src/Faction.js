@@ -6,7 +6,7 @@ function factionInit() {
             if (isPositiveNumber(val)) {
                 var numMoneyDonate = Number(val);
                 document.getElementById("faction-donate-rep-gain").innerHTML = 
-                    "This donation will result in " + formatNumber(numMoneyDonate/1000, 3) + " reputation gain";
+                    "This donation will result in " + formatNumber(numMoneyDonate/1000 * Player.faction_rep_mult, 3) + " reputation gain";
             } else {
                 document.getElementById("faction-donate-rep-gain").innerHTML = 
                     "This donation will result in 0 reputation gain";
@@ -585,7 +585,7 @@ displayFactionContent = function(factionName) {
                 return;
             }
             Player.loseMoney(numMoneyDonate);
-            var repGain = numMoneyDonate / 1000;
+            var repGain = numMoneyDonate / 1000 * Player.faction_rep_mult;
             faction.playerReputation += repGain;
             dialogBoxCreate("You just donated $" + formatNumber(numMoneyDonate, 2) + " to " + 
                             faction.name + " to gain " + formatNumber(repGain, 3) + " reputation"); 
@@ -790,19 +790,20 @@ displayFactionAugmentations = function(factionName) {
             var aug = Augmentations[faction.augmentations[i]];
             var item = document.createElement("li");
             var span = document.createElement("span");
+            var aDiv = document.createElement("div");
             var aElem = document.createElement("a");
             var pElem = document.createElement("p");
             aElem.setAttribute("href", "#");
             var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
             if (aug.name != AugmentationNames.NeuroFluxGovernor && aug.owned) {
-                aElem.setAttribute("class", "a-link-button-inactive tooltip");
+                aElem.setAttribute("class", "a-link-button-inactive");
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
-                aElem.setAttribute("class", "a-link-button tooltip");
+                aElem.setAttribute("class", "a-link-button");
                 pElem.innerHTML = "UNLOCKED - $" + formatNumber(aug.baseCost * faction.augmentationPriceMult, 2);
             } else {
-                aElem.setAttribute("class", "a-link-button-inactive tooltip");
-                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 4) + " faction reputation)";
+                aElem.setAttribute("class", "a-link-button-inactive");
+                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 4) + " faction reputation) - $" + formatNumber(aug.baseCost * faction.augmentationPriceMult, 2);
                 pElem.style.color = "red";
             }
             aElem.style.display = "inline";
@@ -813,13 +814,16 @@ displayFactionAugmentations = function(factionName) {
             }
             span.style.display = "inline-block"
             
-            aElem.innerHTML += '<span class="tooltiptext">' + aug.info + " </span>";
+            //The div will have the tooltip. 
+            aDiv.setAttribute("class", "tooltip");
+            aDiv.innerHTML = '<span class="tooltiptext">' + aug.info + " </span>";
+            aDiv.appendChild(aElem);
             
             aElem.addEventListener("click", function() {
                 purchaseAugmentationBoxCreate(aug, faction);
             });
             
-            span.appendChild(aElem);
+            span.appendChild(aDiv);
             span.appendChild(pElem);
             
             item.appendChild(span);

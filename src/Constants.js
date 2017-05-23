@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.14",
+    Version:                "0.15",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -21,8 +21,8 @@ CONSTANTS = {
     HacknetNodeMoneyGainPerLevel: 1.25,
     HacknetNodePurchaseNextMult: 1.33,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.21,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.41,    //Multiplier for cost when buying another core
+    HacknetNodeUpgradeRamMult: 1.22,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeCoreMult: 1.42,    //Multiplier for cost when buying another core
     
     HacknetNodeMaxLevel: 200,
     HacknetNodeMaxRam: 64,
@@ -110,12 +110,12 @@ CONSTANTS = {
     ClassGymDexterity: "training your dexterity at a gym",
     ClassGymAgility: "training your agility at a gym",
     
-    ClassDataStructuresBaseCost: 1,
-    ClassNetworksBaseCost: 5,
-    ClassAlgorithmsBaseCost: 20,
-    ClassManagementBaseCost: 10,
-    ClassLeadershipBaseCost: 20,
-    ClassGymBaseCost: 15,
+    ClassDataStructuresBaseCost: 2,
+    ClassNetworksBaseCost: 10,
+    ClassAlgorithmsBaseCost: 40,
+    ClassManagementBaseCost: 20,
+    ClassLeadershipBaseCost: 40,
+    ClassGymBaseCost: 30,
     
     CrimeShoplift: "shoplift",
     CrimeMug: "mug someone",
@@ -128,7 +128,8 @@ CONSTANTS = {
     CrimeHeist: "pull off the ultimate heist",
     
     //Text that is displayed when the 'help' command is ran in Terminal
-    HelpText:   "analyze                Get statistics and information about current machine <br>" + 
+    HelpText:   'alias [name="value"]   Create aliases for Terminal commands, or list existing aliases<br>' + 
+                "analyze                Get statistics and information about current machine <br>" + 
                 "clear                  Clear all text on the terminal <br>" +
                 "cls                    See 'clear' command <br>" +
                 "connect [ip/hostname]  Connects to the machine given by its IP or hostname <br>" + 
@@ -146,6 +147,7 @@ CONSTANTS = {
                 "rm                     Delete a script/program from the machine. (WARNING: Permanent)<br>" + 
                 "run [script/program]   Execute a program or a script<br>" + 
                 "scan                   Displays all available network connections<br>" +
+                "scan-analyze           Displays hacking-related information for all available network connections<br>" + 
                 "sudov                  Shows whether or not you have root access on this computer<br>" + 
                 "tail [script]          Display script logs (logs contain details about active scripts)<br>" +
                 "top                    Display all running scripts and their RAM usage<br>",
@@ -272,6 +274,9 @@ CONSTANTS = {
                            "be used to run scripts located on the same server. Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
                            "of RAM to run this command. Does NOT work while offline <br>Example: run('hack-foodnstuff.script'); <br> The example above will try and launch the 'hack-foodnstuff.script' script on " + 
                            "the current server, if it exists. <br><br>" + 
+                           "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " + 
+                           "The argument passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline.<br> " + 
+                           "Example:<br>if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" + 
                            "<i>getHackingLevel() </i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
@@ -279,15 +284,16 @@ CONSTANTS = {
                            "a new hacknet node then the function will return an empty string. Does NOT work offline<br><br>" + 
                            "<i>upgradeHacknetNode(name)</i><br> Upgrades the level of a Hacknet Node. The argument passed in must be a string with the name of the Hacknet Node to upgrade. " + 
                            "If the Hacknet Node is successfully upgraded the function will return true. It will return false otherwise. Does NOT work offline. Example: <br>" + 
-                           "var node = purchaseHacknetNode();<br>" + 
+                           "node = purchaseHacknetNode();<br>" + 
                            "if (node != '') {<br>" + 
-                           "&nbsp;&nbsp;&nbsp;&nbsp;var i = 0;<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;i = 0;<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;while(i < 10) {<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (upgradeHacknetNode(node)) {i = i + 1;}<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;}; <br>" + 
                            "};<br><br>" + 
                            "The example code above will attempt to purchase a new Hacknet Node. If the Hacknet Node is purchased, then it will " +
                            "continuously try to level it up until it is leveled up 10 times. <br><br>" + 
+                           "<i>getNumHacknetNodes()</i><br> returns the number of Hacknet Nodes that the Player owns. Does NOT work while offline<br><br>" + 
                            "<u><h1>While loops </h1></u><br>" +
                            "A while loop is a control flow statement that repeatedly executes code as long as a condition is met. <br><br> " +
                            "<i>while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}</i><br><br>" + 

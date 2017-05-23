@@ -162,7 +162,7 @@
 }
 
 #hacknet-nodes-purchase-button {
-    display: block;
+    display: inline-block;
 }
 
 #hacknet-nodes-money-multipliers-div {
@@ -234,7 +234,7 @@
     color: #FFFFFF;
     padding: 4px;
     border: 1px solid #333333;
-    width: 50%;
+    /*width: 30%;*/
 }
 
 .create-program-a-link-button-inactive {
@@ -259,6 +259,7 @@
     margin-left: 10%;
     width: 99%;
     color: #66ff33;
+    overflow-y: auto;
 }
 
 #faction-container {
@@ -268,6 +269,7 @@
     height: 100%;
     margin-left: 10%;
     width: 90%;
+    overflow-y: auto;
 }
 
 #factions-list li {

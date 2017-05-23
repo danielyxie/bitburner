@@ -154,7 +154,6 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
             }
         } else if (Player.money >= (aug.baseCost * fac.augmentationPriceMult)) {
             applyAugmentation(aug, fac);
-            //TODO Make this text better
             dialogBoxCreate("You slowly drift to sleep as " + fac.name + "'s scientists put you under " +
                             " in order to install the " + aug.name + " Augmentation. <br><br>" +
                             "You wake up in your home...you feel different...");
