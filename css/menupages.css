@@ -259,6 +259,7 @@
     margin-left: 10%;
     width: 99%;
     color: #66ff33;
+    overflow-y: auto;
 }
 
 #faction-container {
@@ -268,6 +269,7 @@
     height: 100%;
     margin-left: 10%;
     width: 90%;
+    overflow-y: auto;
 }
 
 #factions-list li {

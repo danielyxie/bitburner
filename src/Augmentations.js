@@ -1705,6 +1705,8 @@ applyAugmentation = function(aug, faction) {
         case AugmentationNames.Neuregen:
             Player.hacking_exp_mult     *= 1.75;
             break;
+        case AugmentationNames.CashRoot:
+            break;
         case AugmentationNames.NutriGen:
             Player.strength_exp_mult    *= 1.2;
             Player.defense_exp_mult     *= 1.2;
