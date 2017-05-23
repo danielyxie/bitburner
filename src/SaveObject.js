@@ -43,7 +43,7 @@ loadGame = function(saveObj) {
     Factions        = JSON.parse(saveObj.FactionsSave, Reviver);
     SpecialServerIps = JSON.parse(saveObj.SpecialServerIpsSave, Reviver);
     Augmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
-    if (saveObj.hasOwnProperty(AliasesSave)) {
+    if (saveObj.hasOwnProperty("AliasesSave")) {
         try {
             Aliases         = JSON.parse(saveObj.AliasesSave, Reviver);
         } catch(e) {

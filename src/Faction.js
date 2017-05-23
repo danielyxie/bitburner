@@ -6,7 +6,7 @@ function factionInit() {
             if (isPositiveNumber(val)) {
                 var numMoneyDonate = Number(val);
                 document.getElementById("faction-donate-rep-gain").innerHTML = 
-                    "This donation will result in " + formatNumber(numMoneyDonate/1000, 3) + " reputation gain";
+                    "This donation will result in " + formatNumber(numMoneyDonate/1000 * Player.faction_rep_mult, 3) + " reputation gain";
             } else {
                 document.getElementById("faction-donate-rep-gain").innerHTML = 
                     "This donation will result in 0 reputation gain";
@@ -585,7 +585,7 @@ displayFactionContent = function(factionName) {
                 return;
             }
             Player.loseMoney(numMoneyDonate);
-            var repGain = numMoneyDonate / 1000;
+            var repGain = numMoneyDonate / 1000 * Player.faction_rep_mult;
             faction.playerReputation += repGain;
             dialogBoxCreate("You just donated $" + formatNumber(numMoneyDonate, 2) + " to " + 
                             faction.name + " to gain " + formatNumber(repGain, 3) + " reputation"); 

@@ -675,9 +675,6 @@ var Terminal = {
 				}
 				Engine.loadScriptEditorContent(scriptname, "");
 				break;
-			case "scan":
-                Terminal.executeScanCommand(commandArray);
-				break;
 			case "ps":
 				if (commandArray.length != 1) {
 					post("Incorrect usage of ps command. Usage: ps"); return;
@@ -732,12 +729,11 @@ var Terminal = {
 					}
 				}
 				break;
+            case "scan":
+                Terminal.executeScanCommand(commandArray);
+				break;
             case "scan-analyze":
-                if (commandArray.length != 1) {
-                    post("Incorrect number of arguments. Usage: scan-analyze");
-                } else {
-                    Terminal.executeScanAnalyzeCommand();
-                }
+                Terminal.executeScanAnalyzeCommand(commandArray);
                 break;
 			case "scp":
 				//TODO
@@ -839,6 +835,24 @@ var Terminal = {
             entry += spaces;
             entry += hasRoot;
             post(entry);
+        }
+    },
+    
+    executeScanAnalyzeCommand: function(commandArray) {
+        if (commandArray.length != 1) {
+            post("Incorrect usage of scan-analyze command. usage: scan-analyze"); return;
+        }
+        var currServ = Player.getCurrentServer();
+        for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
+            var serv = currServ.getServerOnNetwork(i);
+            if (serv == null) {continue;}
+            post("<strong>" + serv.hostname + "</strong>");
+            var c = "N";
+            if (serv.hasAdminRights) {c = "Y";}
+            post("----Root Access: " + c);
+            post("----Required hacking skill: " + serv.requiredHackingSkill);
+            post("----Number open ports required to NUKE: " + serv.numOpenPortsRequired);
+            post(" ");
         }
     },
     

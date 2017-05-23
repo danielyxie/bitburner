@@ -219,6 +219,7 @@ function Parser(input) {
 
             var tok = input.next();
             if (tok.type == "var" || tok.type == "num" || tok.type == "str")
+                console.log("encountered var in parse_atom");
                 return tok;
             unexpected();
         });
