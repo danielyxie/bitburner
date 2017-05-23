@@ -22,7 +22,7 @@ CONSTANTS = {
     HacknetNodePurchaseNextMult: 1.33,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.22,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.42,    //Multiplier for cost when buying another core
+    HacknetNodeUpgradeCoreMult: 1.45,    //Multiplier for cost when buying another core
     
     HacknetNodeMaxLevel: 200,
     HacknetNodeMaxRam: 64,
