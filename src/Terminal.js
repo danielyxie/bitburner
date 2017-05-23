@@ -360,6 +360,10 @@ var Terminal = {
         }
         Terminal.commandHistoryIndex = Terminal.commandHistory.length;
         
+        //Process any aliases
+        command = substituteAliases(command);
+        console.log("command after alises: " + command);
+        
         //Only split the first space
 		var commandArray = command.split(" ");
         if (commandArray.length > 1) {

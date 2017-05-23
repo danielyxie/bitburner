@@ -128,7 +128,8 @@ CONSTANTS = {
     CrimeHeist: "pull off the ultimate heist",
     
     //Text that is displayed when the 'help' command is ran in Terminal
-    HelpText:   "analyze                Get statistics and information about current machine <br>" + 
+    HelpText:   'alias [name="value"]   Create aliases for Terminal commands, or list existing aliases<br>' + 
+                "analyze                Get statistics and information about current machine <br>" + 
                 "clear                  Clear all text on the terminal <br>" +
                 "cls                    See 'clear' command <br>" +
                 "connect [ip/hostname]  Connects to the machine given by its IP or hostname <br>" + 
