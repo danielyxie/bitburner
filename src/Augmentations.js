@@ -1753,6 +1753,11 @@ applyAugmentation = function(aug, faction) {
 
     aug.owned = true;
     aug.factionInstalledBy = faction.name;
+    if (aug.name == AugmentationNames.NeuroFluxGovernor &&
+        Player.augmentations.indexOf(AugmentationNames.NeuroFluxGovernor) != -1) {
+        //Already have this aug, just upgrade the level
+        return;
+    }
     Player.augmentations.push(aug.name);
     ++Player.numAugmentations;
 }

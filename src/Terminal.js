@@ -732,6 +732,13 @@ var Terminal = {
 					}
 				}
 				break;
+            case "scan-analyze":
+                if (commandArray.length != 1) {
+                    post("Incorrect number of arguments. Usage: scan-analyze");
+                } else {
+                    Terminal.executeScanAnalyzeCommand();
+                }
+                break;
 			case "scp":
 				//TODO
 				break;
