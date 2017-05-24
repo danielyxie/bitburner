@@ -999,17 +999,17 @@ var Engine = {
         });
         
         //Create Program buttons
-        var portHackALink   = document.getElementById("create-program-nuke");
+        var nukeALink       = document.getElementById("create-program-nuke");
         var bruteSshALink   = document.getElementById("create-program-brutessh");
         var ftpCrackALink   = document.getElementById("create-program-ftpcrack");
         var relaySmtpALink  = document.getElementById("create-program-relaysmtp");
         var httpWormALink   = document.getElementById("create-program-httpworm");
         var sqlInjectALink  = document.getElementById("create-program-sqlinject");
-        portHackALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.NukeProgram, CONSTANTS.MillisecondsPerQuarterHour, 1);
+        nukeALink.addEventListener("click", function() {
+            Player.startCreateProgramWork(Programs.NukeProgram, CONSTANTS.MillisecondsPerFiveMinutes, 1);
         });
         bruteSshALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerQuarterHour, 50);
+            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerFiveMinutes * 2, 50);
         });
         ftpCrackALink.addEventListener("click", function() {
             Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHalfHour, 100);

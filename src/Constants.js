@@ -18,7 +18,7 @@ CONSTANTS = {
     BaseCostForHacknetNodeCore: 500000,
     
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.5,
+    HacknetNodeMoneyGainPerLevel: 1.75,
     HacknetNodePurchaseNextMult: 1.33,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.22,     //Multiplier for cost when upgrading RAM
@@ -87,6 +87,9 @@ CONSTANTS = {
     
     MillisecondsPerQuarterHour: 900000,
     GameCyclesPerQuarterHour: 900000 / 200,
+    
+    MillisecondsPerFiveMinutes: 300000,
+    GameCyclesPerFiveMinutes: 300000 / 200,
     
     FactionWorkHacking: "Faction Hacking Work",
     FactionWorkField: "Faction Field Work",
