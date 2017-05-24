@@ -15,10 +15,10 @@ CONSTANTS = {
     BaseCostFor1GBOfRamHacknetNode: 30000,
     
     BaseCostForHacknetNode: 1000,
-    BaseCostForHacknetNodeCore: 400000,
+    BaseCostForHacknetNodeCore: 500000,
     
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.25,
+    HacknetNodeMoneyGainPerLevel: 1.5,
     HacknetNodePurchaseNextMult: 1.33,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.22,     //Multiplier for cost when upgrading RAM

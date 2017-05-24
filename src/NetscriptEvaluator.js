@@ -745,6 +745,7 @@ function evaluate(exp, workerScript) {
                             if (cost > Player.money) {
                                 workerScript.scriptRef.log("Could not afford to purchase new Hacknet Node");
                                 resolve("");
+                                return;
                             }
                                 
                             //Auto generate a name for the node for now...TODO
@@ -1127,7 +1128,7 @@ function scriptCalculateExpGain(server) {
 function scriptCalculatePercentMoneyHacked(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 950;
+    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 875;
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;
