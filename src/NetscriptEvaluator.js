@@ -371,14 +371,17 @@ function evaluate(exp, workerScript) {
                                 return;
 							}
                             
-                            workerScript.scriptRef.log("Calling grow() on server " + server.hostname + " in 120 seconds");
+                            var growTime = scriptCalculateGrowTime(server);
+                            console.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds")
+                            workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds");
+                            
                             var p = new Promise(function(resolve, reject) {
 								if (env.stopFlag) {reject(workerScript);}
 								setTimeout(function() {
                                     server.moneyAvailable += 1; //It can be grown even if it has no money
 									var growthPercentage = processSingleServerGrowth(server, 450);
                                     resolve(growthPercentage);
-								}, 120 * 1000); //grow() takes flat 2 minutes right now
+								}, growTime);
 							});
                             
                             p.then(function(growthPercentage) {
@@ -1104,9 +1107,9 @@ function isScriptErrorMessage(msg) {
 //The same as Player's calculateHackingChance() function but takes in the server as an argument
 function scriptCalculateHackingChance(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
-    var skillMult = (2 * Player.hacking_chance_mult * Player.hacking_skill);
+    var skillMult = (2 * Player.hacking_skill);
     var skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
-    var chance = skillChance * difficultyMult;
+    var chance = skillChance * difficultyMult * Player.hacking_chance_mult;
     if (chance < 0) {return 0;}
     else {return chance;}
 }
@@ -1132,4 +1135,12 @@ function scriptCalculatePercentMoneyHacked(server) {
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;
+}
+
+//Amount of time to execute grow()
+function scriptCalculateGrowTime(server) {
+    var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
+	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
+	var growTime = skillFactor * 20; //This is in seconds
+	return growTime * 1000;
 }

@@ -27,15 +27,6 @@ var postNetburnerText = function() {
 	post("Bitburner v" + CONSTANTS.Version);
 }
 
-/*
-$(document).keyup(function(event) {
-    //Enter
-    if (event.keyCode == 13) {
-
-    }
-});
-*/
-
 //Defines key commands in terminal
 $(document).keydown(function(event) {
 	//Terminal
