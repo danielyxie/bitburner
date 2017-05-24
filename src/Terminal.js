@@ -387,10 +387,23 @@ var Terminal = {
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
+            case iTutorialSteps.TerminalScanAnalyze1:
+                if (commandArray.length == 1 && commandArray[0] == "scan-analyze") {
+                    Terminal.executeScanAnalyzeCommand(1);
+                    iTutorialNextStep();
+                } else {post("Bad command. Please follow the tutorial");}
+                break;
+            case iTutorialSteps.TerminalScanAnalyze2:
+                if (commandArray.length == 2 && commandArray[0] == "scan-analyze" &&
+                    commandArray[1] == "2") {
+                    Terminal.executeScanAnalyzeCommand(2);
+                    iTutorialNextStep();
+                } else {post("Bad command. Please follow the tutorial");}
+                break;
+                break;
             case iTutorialSteps.TerminalConnect:
-                
                 if (commandArray.length == 2) {
-                    if ((commandArray[0] == "connect" || commandArray[0] == "telnet") &&
+                    if ((commandArray[0] == "connect") &&
                         (commandArray[1] == "foodnstuff" || commandArray[1] == foodnstuffServ.ip)) {
                         Player.getCurrentServer().isConnectedTo = false;
                         Player.currentServer = foodnstuffServ.ip;

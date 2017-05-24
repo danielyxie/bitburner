@@ -150,7 +150,7 @@ CONSTANTS = {
                 "rm                     Delete a script/program from the machine. (WARNING: Permanent)<br>" + 
                 "run [script/program]   Execute a program or a script<br>" + 
                 "scan                   Displays all available network connections<br>" +
-                "scan-analyze           Displays hacking-related information for all available network connections<br>" + 
+                "scan-analyze [depth]   Displays hacking-related information for all servers up to <i>depth</i> nodes away<br>" + 
                 "sudov                  Shows whether or not you have root access on this computer<br>" + 
                 "tail [script]          Display script logs (logs contain details about active scripts)<br>" +
                 "top                    Display all running scripts and their RAM usage<br>",
