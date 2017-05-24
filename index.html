@@ -143,17 +143,19 @@
 	
 	<!-- Script editor -->
 	<div id="script-editor-container">
-        <div>
-		<p id="script-editor-filename-tag"> Script name: </p>
-        <span id="script-editor-save-and-close-button" class="a-link-button">Save & Close (Ctrl + b)</span>
-        <span id="script-editor-netscript-doc-button" class="a-link-button"> Netscript Documentation 
-        <p id="script-editor-netscript-doc-warning" style="font-size:12px"> Warning: You will lose unsaved content! </p> </span>
+        <div id="script-editor-wrapper">
+        <div id="script-editor-filename-wrapper">
+            <p id="script-editor-filename-tag"> <strong style="background-color:#555;">Script name: </strong></p>
+            <input id="script-editor-filename" type="text" maxlength="30" tabindex="1"> </input>
         </div>
-            
-        <input id="script-editor-filename" type="text" maxlength="30" tabindex="1"> </input>
-		<br>
-		<br><br>
 		<textarea id="script-editor-text" tabindex="2" autofocus> </textarea>
+        <div id="script-editor-buttons-wrapper">
+            <span id="script-editor-save-and-close-button" class="a-link-button">Save & Close (Ctrl + b)</span>
+            <span id="script-editor-netscript-doc-button" class="a-link-button"> Netscript Documentation 
+                <p id="script-editor-netscript-doc-warning" style="font-size:12px"> Warning: You will lose unsaved content! </p> 
+            </span>
+        </div>
+        </div>
         <p> <br><br> </p>
 	</div>
 	

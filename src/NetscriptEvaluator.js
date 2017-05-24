@@ -755,6 +755,7 @@ function evaluate(exp, workerScript) {
                             
                             Player.loseMoney(cost);
                             Player.hacknetNodes.push(node);
+                            displayHacknetNodesContent();
                             workerScript.scriptRef.log("Purchased new Hacknet Node with name: " + name);
                             resolve(name);
                         }, CONSTANTS.CodeInstructionRunTime);
