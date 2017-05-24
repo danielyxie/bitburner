@@ -223,58 +223,58 @@ CompanyPositions = {
     //Constructor: CompanyPosition(name, reqHack, reqStr, reqDef, reqDex, reqAgi, reqCha, reqRep, salary)
 
     //Software
-    SoftwareIntern:             new CompanyPosition("Software Engineering Intern", 1, 0, 0, 0, 0, 0, 0, 8),
-    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 51, 0, 0, 0, 0, 0, 8000, 20),
-    SeniorDev:                  new CompanyPosition("Senior Software Engineer", 251, 0, 0, 0, 0, 51, 32000, 40),
-    LeadDev:                    new CompanyPosition("Lead Software Developer", 401, 0, 0, 0, 0, 151, 144000, 120),
+    SoftwareIntern:             new CompanyPosition("Software Engineering Intern", 1, 0, 0, 0, 0, 0, 0, 12),
+    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 51, 0, 0, 0, 0, 0, 8000, 25),
+    SeniorDev:                  new CompanyPosition("Senior Software Engineer", 251, 0, 0, 0, 0, 51, 32000, 50),
+    LeadDev:                    new CompanyPosition("Lead Software Developer", 401, 0, 0, 0, 0, 151, 144000, 150),
     
     //TODO Through darkweb, maybe?
     FreelanceDeveloper:         new CompanyPosition("Freelance Developer", 0, 0, 0, 0, 0, 0, 0, 0),
     
-    SoftwareConsultant:         new CompanyPosition("Software Consultant", 51, 0, 0, 0, 0, 0, 0, 15),
-    SeniorSoftwareConsultant:   new CompanyPosition("Senior Software Consultant", 251, 0, 0, 0, 0, 51, 0, 30),
+    SoftwareConsultant:         new CompanyPosition("Software Consultant", 51, 0, 0, 0, 0, 0, 0, 16),
+    SeniorSoftwareConsultant:   new CompanyPosition("Senior Software Consultant", 251, 0, 0, 0, 0, 51, 0, 32),
     
     //IT
-    ITIntern:                   new CompanyPosition("IT Intern", 1, 0, 0, 0, 0, 0, 0, 1.75),
-    ITAnalyst:                  new CompanyPosition("IT Analyst", 26, 0, 0, 0, 0, 0, 6000, 7.5),
+    ITIntern:                   new CompanyPosition("IT Intern", 1, 0, 0, 0, 0, 0, 0, 10),
+    ITAnalyst:                  new CompanyPosition("IT Analyst", 26, 0, 0, 0, 0, 0, 6000, 20),
     ITManager:                  new CompanyPosition("IT Manager", 151, 0, 0, 0, 0, 51, 24000, 35),
     SysAdmin:                   new CompanyPosition("Systems Administrator", 251, 0, 0, 0, 0, 76, 120000, 100),
-    SecurityEngineer:           new CompanyPosition("Security Engineer", 151, 0, 0, 0, 0, 26, 28000, 35),
-    NetworkEngineer:            new CompanyPosition("Network Engineer", 151, 0, 0, 0, 0, 26, 28000, 35),
+    SecurityEngineer:           new CompanyPosition("Security Engineer", 151, 0, 0, 0, 0, 26, 28000, 38),
+    NetworkEngineer:            new CompanyPosition("Network Engineer", 151, 0, 0, 0, 0, 26, 28000, 38),
     NetworkAdministrator:       new CompanyPosition("Network Administrator", 251, 0, 0, 0, 0, 76, 120000, 100),
     
     //Technology management
-    HeadOfSoftware:             new CompanyPosition("Head of Software", 501, 0, 0, 0, 0, 251, 288000, 250),
-    HeadOfEngineering:          new CompanyPosition("Head of Engineering", 501, 0, 0, 0, 0, 251, 576000, 400),
-    VicePresident:              new CompanyPosition("Vice President of Technology", 601, 0, 0, 0, 0, 401, 1152000, 600),
-    CTO:                        new CompanyPosition("Chief Technology Officer", 751, 0, 0, 0, 0, 501, 4608000, 750),
+    HeadOfSoftware:             new CompanyPosition("Head of Software", 501, 0, 0, 0, 0, 251, 288000, 275),
+    HeadOfEngineering:          new CompanyPosition("Head of Engineering", 501, 0, 0, 0, 0, 251, 576000, 500),
+    VicePresident:              new CompanyPosition("Vice President of Technology", 601, 0, 0, 0, 0, 401, 1152000, 750),
+    CTO:                        new CompanyPosition("Chief Technology Officer", 751, 0, 0, 0, 0, 501, 4608000, 900),
     
     //Business
-    BusinessIntern:             new CompanyPosition("Business Intern", 1, 0, 0, 0, 0, 1, 0, 10),
-    BusinessAnalyst:            new CompanyPosition("Business Analyst", 6, 0, 0, 0, 0, 51, 8000, 25),
-    BusinessManager:            new CompanyPosition("Business Manager", 51, 0, 0, 0, 0, 101, 32000, 60),
-    OperationsManager:          new CompanyPosition("Operations Manager", 51, 0, 0, 0, 0, 226, 144000, 180),
-    CFO:                        new CompanyPosition("Chief Financial Officer", 76, 0, 0, 0, 0, 501, 576000, 600),
-    CEO:                        new CompanyPosition("Chief Executive Officer", 101, 0, 0, 0, 0, 751, 4608000, 1000),
+    BusinessIntern:             new CompanyPosition("Business Intern", 1, 0, 0, 0, 0, 1, 0, 13),
+    BusinessAnalyst:            new CompanyPosition("Business Analyst", 6, 0, 0, 0, 0, 51, 8000, 32),
+    BusinessManager:            new CompanyPosition("Business Manager", 51, 0, 0, 0, 0, 101, 32000, 75),
+    OperationsManager:          new CompanyPosition("Operations Manager", 51, 0, 0, 0, 0, 226, 144000, 220),
+    CFO:                        new CompanyPosition("Chief Financial Officer", 76, 0, 0, 0, 0, 501, 576000, 675),
+    CEO:                        new CompanyPosition("Chief Executive Officer", 101, 0, 0, 0, 0, 751, 4608000, 1100),
     
-    BusinessConsultant:         new CompanyPosition("Business Consultant", 6, 0, 0, 0, 0, 51, 0, 18),
-    SeniorBusinessConsultant:   new CompanyPosition("Senior Business Consultant", 51, 0, 0, 0, 0, 226, 0, 135),
+    BusinessConsultant:         new CompanyPosition("Business Consultant", 6, 0, 0, 0, 0, 51, 0, 21),
+    SeniorBusinessConsultant:   new CompanyPosition("Senior Business Consultant", 51, 0, 0, 0, 0, 226, 0, 150),
     
     //Non-tech/management jobs
-    PartTimeWaiter:             new CompanyPosition("Part-time Waiter", 0, 0, 0, 0, 0, 0, 0, 6),
-    PartTimeEmployee:           new CompanyPosition("Part-time Employee", 0, 0, 0, 0, 0, 0, 0, 6),
+    PartTimeWaiter:             new CompanyPosition("Part-time Waiter", 0, 0, 0, 0, 0, 0, 0, 7),
+    PartTimeEmployee:           new CompanyPosition("Part-time Employee", 0, 0, 0, 0, 0, 0, 0, 7),
     
     Waiter:                     new CompanyPosition("Waiter", 0, 0, 0, 0, 0, 0, 0, 9),
     Employee:                   new CompanyPosition("Employee", 0, 0, 0, 0, 0, 0, 0, 9),
-    PoliceOfficer:              new CompanyPosition("Police Officer", 11, 101, 101, 101, 101, 51, 8000, 25),
-    PoliceChief:                new CompanyPosition("Police Chief", 101, 301, 301, 301, 301, 151, 32000, 100),
+    PoliceOfficer:              new CompanyPosition("Police Officer", 11, 101, 101, 101, 101, 51, 8000, 28),
+    PoliceChief:                new CompanyPosition("Police Chief", 101, 301, 301, 301, 301, 151, 32000, 110),
     SecurityGuard:              new CompanyPosition("Security Guard", 0, 51, 51, 51, 51, 1, 0, 16),
-    SecurityOfficer:            new CompanyPosition("Security Officer", 26, 151, 151, 151, 151, 51, 8000, 40),
-    SecuritySupervisor:         new CompanyPosition("Security Supervisor", 26, 251, 251, 251, 251, 101, 32000, 80),
+    SecurityOfficer:            new CompanyPosition("Security Officer", 26, 151, 151, 151, 151, 51, 8000, 50),
+    SecuritySupervisor:         new CompanyPosition("Security Supervisor", 26, 251, 251, 251, 251, 101, 32000, 100),
     HeadOfSecurity:             new CompanyPosition("Head of Security", 51, 501, 501, 501, 501, 151, 144000, 250),
-    FieldAgent:                 new CompanyPosition("Field Agent", 101, 101, 101, 101, 101, 101, 8000, 30),
-    SecretAgent:                new CompanyPosition("Secret Agent", 201, 251, 251, 251, 251, 32000, 120),
-    SpecialOperative:           new CompanyPosition("Special Operative", 251, 501, 501, 501, 501, 144000, 300),
+    FieldAgent:                 new CompanyPosition("Field Agent", 101, 101, 101, 101, 101, 101, 8000, 40),
+    SecretAgent:                new CompanyPosition("Secret Agent", 201, 251, 251, 251, 251, 32000, 150),
+    SpecialOperative:           new CompanyPosition("Special Operative", 251, 501, 501, 501, 501, 144000, 375),
     
     init: function() {
         //Argument order: hack, str, def, dex, agi, cha
