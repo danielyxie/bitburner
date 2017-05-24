@@ -724,7 +724,18 @@ var Terminal = {
                 Terminal.executeScanCommand(commandArray);
 				break;
             case "scan-analyze":
-                Terminal.executeScanAnalyzeCommand(commandArray);
+                if (commandArray.length == 1) {
+                    Terminal.executeScanAnalyzeCommand(1);
+                } else if (commandArray.length == 2) {
+                    var depth = Number(commandArray[1]);
+                    if (isNaN(depth)) {
+                        post("Incorrect usage of scan-analyze command. depth argument must be numeric");
+                        return;
+                    }
+                    Terminal.executeScanAnalyzeCommand(depth);
+                } else {
+                    post("Incorrect usage of scan-analyze command. usage: scan-analyze [depth]");
+                }                    
                 break;
 			case "scp":
 				//TODO
@@ -829,10 +840,39 @@ var Terminal = {
         }
     },
     
-    executeScanAnalyzeCommand: function(commandArray) {
-        if (commandArray.length != 1) {
-            post("Incorrect usage of scan-analyze command. usage: scan-analyze"); return;
+    executeScanAnalyzeCommand: function(depth=1) {
+        //We'll use the AllServersToMoneyMap as a visited() array
+        //TODO Later refactor this to a generic name
+        //TODO Using array as stack for now, can make more efficient
+        var visited = new AllServersToMoneyMap();
+        var stack = [];
+        var depthQueue = [0];
+        var currServ = Player.getCurrentServer();
+        stack.push(currServ);
+        while(stack.length != 0) {
+            var s = stack.pop();
+            var d = depthQueue.pop();
+            if (visited[s.ip] || d > depth) {
+                continue;
+            } else {
+                visited[s.ip] = 1;
+            }
+            for (var i = s.serversOnNetwork.length-1; i >= 0; --i) {
+                stack.push(s.getServerOnNetwork(i));
+                depthQueue.push(d+1);
+            }
+            if (d == 0) {continue;} //Don't print current server
+            var titleNumDashes = Array((d-1) * 2 + 1).join("-");
+            post("<strong>" + titleNumDashes +  s.hostname + "</strong>");
+            var numDashes = Array(d * 2 + 1).join("-");
+            var c = "N";
+            if (s.hasAdminRights) {c = "Y";}
+            post(numDashes + "Root Access: " + c);
+            post(numDashes + "Required hacking skill: " + s.requiredHackingSkill);
+            post(numDashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired);
+            post(numDashes + "RAM: " + s.maxRam);
         }
+        /*
         var currServ = Player.getCurrentServer();
         for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
             var serv = currServ.getServerOnNetwork(i);
@@ -846,6 +886,7 @@ var Terminal = {
             post("--RAM: " + serv.maxRam);
             post(" ");
         }
+        */
     },
     
     executeFreeCommand: function(commandArray) {
