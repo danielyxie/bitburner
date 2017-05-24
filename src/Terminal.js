@@ -728,8 +728,19 @@ var Terminal = {
                     Terminal.executeScanAnalyzeCommand(1);
                 } else if (commandArray.length == 2) {
                     var depth = Number(commandArray[1]);
-                    if (isNaN(depth)) {
-                        post("Incorrect usage of scan-analyze command. depth argument must be numeric");
+                    if (isNaN(depth) || depth < 0) {
+                        post("Incorrect usage of scan-analyze command. depth argument must be positive numeric");
+                        return;
+                    }
+                    if (depth > 3 && !Player.hasProgram(Programs.DeepscanV1) && 
+                        !Player.hasProgram(Programs.DeepscanV2)) {
+                        post("You cannot scan-analyze with that high of a depth. Maximum depth is 3");
+                        return;
+                    } else if (depth > 5 && !Player.hasProgram(Programs.DeepscanV2)) {
+                        post("You cannot scan-analyze with that high of a depth. Maximum depth is 5");
+                        return;
+                    } else if (depth > 10) {
+                        post("You cannot scan-analyze with that high of a depth. Maximum depth is 10");
                         return;
                     }
                     Terminal.executeScanAnalyzeCommand(depth);
@@ -844,6 +855,9 @@ var Terminal = {
         //We'll use the AllServersToMoneyMap as a visited() array
         //TODO Later refactor this to a generic name
         //TODO Using array as stack for now, can make more efficient
+        post("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
+        post(" ");
+        post(" ");
         var visited = new AllServersToMoneyMap();
         var stack = [];
         var depthQueue = [0];
@@ -862,31 +876,17 @@ var Terminal = {
                 depthQueue.push(d+1);
             }
             if (d == 0) {continue;} //Don't print current server
-            var titleNumDashes = Array((d-1) * 2 + 1).join("-");
-            post("<strong>" + titleNumDashes +  s.hostname + "</strong>");
-            var numDashes = Array(d * 2 + 1).join("-");
-            var c = "N";
-            if (s.hasAdminRights) {c = "Y";}
-            post(numDashes + "Root Access: " + c);
-            post(numDashes + "Required hacking skill: " + s.requiredHackingSkill);
-            post(numDashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired);
-            post(numDashes + "RAM: " + s.maxRam);
-        }
-        /*
-        var currServ = Player.getCurrentServer();
-        for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
-            var serv = currServ.getServerOnNetwork(i);
-            if (serv == null) {continue;}
-            post("<strong>" + serv.hostname + "</strong>");
-            var c = "N";
-            if (serv.hasAdminRights) {c = "Y";}
-            post("--Root Access: " + c);
-            post("--Required hacking skill: " + serv.requiredHackingSkill);
-            post("--Number of open ports required to NUKE: " + serv.numOpenPortsRequired);
-            post("--RAM: " + serv.maxRam);
+            var titleDashes = Array((d-1) * 4 + 1).join("-");
+            post("<strong>" + titleDashes + ">" + s.hostname + "</strong>");
+            var dashes = titleDashes + "--";
+            //var dashes = Array(d * 2 + 1).join("-");
+            var c = "NO";
+            if (s.hasAdminRights) {c = "YES";}
+            post(dashes + "Root Access: " + c + ", Required hacking skill: " + s.requiredHackingSkill);
+            post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired);
+            post(dashes + "RAM: " + s.maxRam);
             post(" ");
         }
-        */
     },
     
     executeFreeCommand: function(commandArray) {
