@@ -175,7 +175,7 @@ function iTutorialEvaluateStep() {
         break;
     case iTutorialSteps.TerminalConnect:
         iTutorialSetText("Now you can see information about all servers that are up to two nodes away, as well " +
-                         "as figure out how to connect to those servers through the network. You can only connect to " +
+                         "as figure out how to navigate to those servers through the network. You can only connect to " +
                          "a server that is one node away. To connect to a machine, use the 'connect [ip/hostname]' command. You can type in " + 
                          "the ip or the hostname, but dont use both.<br><br>" + 
                          "From the results of the 'scan-analyze' command, we can see that the 'foodnstuff' server is " +
