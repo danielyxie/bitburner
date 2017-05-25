@@ -286,20 +286,49 @@ CONSTANTS = {
                            "<i>getHackingLevel() </i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
-                           "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a string with the name of the new Hacknet Node. If the player cannot afford to purchase " +
-                           "a new hacknet node then the function will return an empty string. Does NOT work offline<br><br>" + 
-                           "<i>upgradeHacknetNode(name)</i><br> Upgrades the level of a Hacknet Node. The argument passed in must be a string with the name of the Hacknet Node to upgrade. " + 
-                           "If the Hacknet Node is successfully upgraded the function will return true. It will return false otherwise. Does NOT work offline. Example: <br>" + 
-                           "node = purchaseHacknetNode();<br>" + 
-                           "if (node != '') {<br>" + 
-                           "&nbsp;&nbsp;&nbsp;&nbsp;i = 0;<br>" + 
-                           "&nbsp;&nbsp;&nbsp;&nbsp;while(i < 10) {<br>" + 
-                           "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (upgradeHacknetNode(node)) {i = i + 1;}<br>" + 
-                           "&nbsp;&nbsp;&nbsp;&nbsp;}; <br>" + 
+                           "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " + 
+                           "at the end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford to purchase " +
+                           "a new Hacknet Node then the function will return false. Does NOT work offline<br><br>" + 
+                           "<u><h1>Hacknet Nodes API</h1></u><br>" + 
+                           "Netscript provides the following API for accessing and upgrading your Hacknet Nodes through scripts. This API does NOT work offline.<br><br>" + 
+                           "<i>hacknetnodes</i><br> A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " + 
+                           "indexes. These indexes correspond to the number at the end of the name of the Hacknet Node. For example, the first Hacknet Node you purchase " + 
+                           "will have the same 'hacknet-node-0' and can be accessed with hacknetnodes[0]. The fourth Hacknet Node you purchase will have the name " + 
+                           "'hacknet-node-3' and can be accessed with hacknetnodes[3]. <br><br>" + 
+                           "<i>hacknetnodes.length</i><br> Returns the number of Hacknet Nodes that the player owns<br><br>" + 
+                           "<i>hacknetnodes[i].level</i><br> Returns the level of the corresponding Hacknet Node<br><br>" +
+                           "<i>hacknetnodes[i].ram</i><br> Returns the amount of RAM on the corresponding Hacknet Node<br><br>" +
+                           "<i>hacknetnodes[i].cores</i><br> Returns the number of cores on the corresponding Hacknet Node<br><br>" +
+                           "<i>hacknetnodes[i].upgradeLevel(n)</i><br> Tries to upgrade the level of the corresponding Hacknet Node n times. The argument n must be a " + 
+                           "positive integer. Returns true if the Hacknet Node's level is successfully upgraded n times, and false otherwise.<br><br>" + 
+                           "<i>hacknetnodes[i].upgradeRam()</i><br> Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " + 
+                           "RAM is successfully upgraded, and false otherwise. <br><br>" + 
+                           "<i>hacknetnodes[i].upgradeCore()</i><br> Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " + 
+                           "additional core is successfully purchase, and false otherwise. <br><br>" + 
+                           "Example: The following is an example of one way a script can be used to automate the purchasing and upgrading of Hacknet Nodes. " +
+                           "This script purchases new Hacknet Nodes until the player has four. Then, it iteratively upgrades each of those four Hacknet Nodes " +
+                           "to a level of at least 75, RAM to at least 8GB, and number of cores to at least 2.<br><br>" + 
+                           "while(hacknetnodes.length < 4) {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;purchaseHacknetNode();<br>" + 
+                           "};<br>" + 
+                           "for (i = 0; i < 4; i = i+1) {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;while (hacknetnodes[i].level <=  75) {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hacknetnodes[i].upgradeLevel(5);<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sleep(10000);<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;};<br>" + 
+                           "};<br>" + 
+                           "for (i = 0; i < 4; i = i+1) {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;while (hacknetnodes[i].ram < 8) {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hacknetnodes[i].upgradeRam();<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sleep(10000);<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;};<br>" + 
+                           "};<br>" + 
+                           "for (i = 0; i < 4; i = i+1) {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;while (hacknetnodes[i].cores < 2) {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hacknetnodes[i].upgradeCore();<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sleep(10000);<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;};<br>" + 
                            "};<br><br>" + 
-                           "The example code above will attempt to purchase a new Hacknet Node. If the Hacknet Node is purchased, then it will " +
-                           "continuously try to level it up until it is leveled up 10 times. <br><br>" + 
-                           "<i>getNumHacknetNodes()</i><br> returns the number of Hacknet Nodes that the Player owns. Does NOT work while offline<br><br>" + 
                            "<u><h1>While loops </h1></u><br>" +
                            "A while loop is a control flow statement that repeatedly executes code as long as a condition is met. <br><br> " +
                            "<i>while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}</i><br><br>" + 

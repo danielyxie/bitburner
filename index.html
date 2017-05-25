@@ -24,6 +24,7 @@
     <script src="utils/PurchaseAugmentationBox.js"></script>
     <script src="utils/TravelBox.js"></script>
     <script src="utils/PurchaseRamForHomeBox.js"></script>
+    <script src="utils/GameOptions.js"></script>
 	
 	<!-- Netscript -->
 	<script src="src/NetscriptWorker.js"></script>
@@ -105,19 +106,10 @@
 			<li class="tutorial-tab">
 				<a href="#" id="tutorial-menu-link"> Tutorial </a>
 			</li>
-			
-			<li class="save-game-tab">
-				<a href="#" id="save-game-link"> Save Game </a>
-			</li>
-			
-			<li class="delete-game-tab">
-				<a href="#" id="delete-game-link"> Delete Game </a>
-			</li>
             
-            <li class="debug-delete-scripts-tab">
-                <a href="#" id="debug-delete-scripts-link"> (DEBUG) Delete Active Scripts </a>
+            <li class="options-tab">
+                <a id="options-menu-link"> Options </a>
             </li>
-            
         </ul>
     </div>
     
@@ -739,12 +731,25 @@
     <div id="character-overview-wrapper">
     <div id="character-overview-container">
         <p id="character-overview-text">  </p>
+        <span id="character-overview-save-button"> Save Game </span>
     </div>
     </div>
     
     <!-- Status text --> 
     <div id="status-text-container">
         <p id="status-text">Test </p>
+    </div>
+    
+    <!-- Game Options -->
+    <div id="game-options-container">
+        <div id="game-options-content" class="game-options-box">
+            <span id="game-options-close-button">&times;</span>
+            <h1> Game Options </h1>
+            <br>
+            <a id="save-game-link" class="a-link-button" style="display:block;"> Save Game </a>
+            <a id="delete-game-link" class="a-link-button" style="display:block;"> Delete Game </a>
+            <a id="debug-delete-scripts-link" class="a-link-button" style="display:block;"> (DEBUG) Delete Active Scripts </a>
+        </div>
     </div>
     
   </body>

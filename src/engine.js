@@ -988,6 +988,12 @@ var Engine = {
             return false;
         });
         
+        //Character Overview Save button
+        var charOverviewSaveButton = document.getElementById("character-overview-save-button");
+        charOverviewSaveButton.addEventListener("click", function() {
+            saveObject.saveGame();
+            return false;
+        });
         
         //Script Editor Netscript documentation button
         var netscriptDocButton = document.getElementById("script-editor-netscript-doc-button");

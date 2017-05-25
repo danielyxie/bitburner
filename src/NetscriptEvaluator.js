@@ -995,13 +995,13 @@ function evaluateHacknetNode(exp, workerScript) {
                             if (exp.op.args.length == 1) {
                                 var argPromise = evaluate(exp.op.args[0], workerScript);
                                 argPromise.then(function(arg) {
-                                    if (isNaN(arg)) {
-                                        reject(makeRuntimeRejectMsg(workerScript, "Argument passed into upgradeLevel() is not numeric"));
+                                    if (isNaN(arg) || arg < 0) {
+                                        reject(makeRuntimeRejectMsg(workerScript, "Invalid argument passed into upgradeLevel()"));
                                         return;
                                     }
                                     var res = nodeObj.purchaseLevelUpgrade(arg);
                                     if (res) {
-                                        workerScript.scriptRef.log("Upgraded " + nodeObj.name + arg + " times to level " + nodeObj.level);
+                                        workerScript.scriptRef.log("Upgraded " + nodeObj.name + " " + arg + " times to level " + nodeObj.level);
                                     }
                                     resolve(res);
                                 }, function(e) {

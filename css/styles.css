@@ -241,7 +241,7 @@ tr:focus {
     position: absolute; /* Stay in place */
     right: 0;
     top: 0;
-    height: 150px; /* Full height */
+    height: 175px; /* Full height */
     /*margin: 50% auto;*/
     padding: 5px;
     border: 2px solid #66ff33;
@@ -256,4 +256,23 @@ tr:focus {
     margin: 12px;
     color: white;
     background-color: #444;
+}
+
+#character-overview-save-button {
+    color: #aaa;
+    font-size: 16px;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+#character-overview-save-button:hover,
+#character-overview-save-button:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
 }
