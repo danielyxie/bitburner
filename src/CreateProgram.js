@@ -35,42 +35,35 @@ function displayCreateProgramContent() {
     if (Player.getHomeComputer().programs.indexOf(Programs.NukeProgram) == -1) {    
         nukeALink.style.display = "inline-block";
     }
-    
     //BruteSSH
     if (Player.getHomeComputer().programs.indexOf(Programs.BruteSSHProgram) == -1 &&
         Player.hacking_skill >= 50) {
         bruteSshALink.style.display = "inline-block";   
     }
-    
     //FTPCrack
     if (Player.getHomeComputer().programs.indexOf(Programs.FTPCrackProgram) == -1 &&
         Player.hacking_skill >= 100) {
         ftpCrackALink.style.display = "inline-block";
     }
-    
     //relaySMTP
     if (Player.getHomeComputer().programs.indexOf(Programs.RelaySMTPProgram) == -1 &&
         Player.hacking_skill >= 250) {
         relaySmtpALink.style.display = "inline-block";
     }
-    
     //HTTPWorm
     if (Player.getHomeComputer().programs.indexOf(Programs.HTTPWormProgram) == -1 &&
         Player.hacking_skill >= 500) {
         httpWormALink.style.display = "inline-block";
     }
-    
     //SQLInject
     if (Player.getHomeComputer().programs.indexOf(Programs.SQLInjectProgram) == -1 &&
         Player.hacking_skill >= 750) {
         sqlInjectALink.style.display = "inline-block";
     }
-    
     //Deepscan V1 and V2
     if (!Player.hasProgram(Programs.DeepscanV1) && Player.hacking_skill >= 75) {
         deepscanv1ALink.style.display = "inline-block";
     }
-    
     if (!Player.hasProgram(Programs.DeepscanV2) && Player.hacking_skill >= 400) {
         deepscanv2ALink.style.display = "inline-block";
     }

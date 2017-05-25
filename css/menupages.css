@@ -262,6 +262,10 @@ background-color: #555;
     width: 70%;
 }
 
+#create-program-list {
+    width: 70%;
+}
+
 .create-program-a-link-button {
     text-decoration: none;
     background-color: #555;

@@ -870,7 +870,6 @@ var Terminal = {
         //TODO Using array as stack for now, can make more efficient
         post("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
         post(" ");
-        post(" ");
         var visited = new AllServersToMoneyMap();
         var stack = [];
         var depthQueue = [0];
