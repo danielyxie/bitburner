@@ -305,7 +305,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var bitrunnersFac = Factions["BitRunners"];
     var homeComp = Player.getHomeComputer();
     if (bitrunnersFac.isBanned == false && bitrunnersFac.isMember == false &&
-        this.hacking_skill >= 600 && homeComp.maxRam >= 32) {
+        this.hacking_skill >= 600 && homeComp.maxRam >= 128) {
         invitedFactions.push(bitrunnersFac);
     }
     
@@ -313,14 +313,14 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var theblackhandFac = Factions["The Black Hand"];
     if (theblackhandFac.isBanned == false && theblackhandFac.isMember == false &&
         this.hacking_skill >= 400 && this.strength >= 200 && this.defense >= 200 &&
-        this.agility >= 200 && this.dexterity >= 200 && homeComp.maxRam >= 16) {
+        this.agility >= 200 && this.dexterity >= 200 && homeComp.maxRam >= 64) {
         invitedFactions.push(theblackhandFac);
     }
     
     //NiteSec
     var nitesecFac = Factions["NiteSec"];
     if (nitesecFac.isBanned == false && nitesecFac.isMember == false && 
-        this.hacking_skill >= 200 && homeComp.maxRam >= 8) {
+        this.hacking_skill >= 200 && homeComp.maxRam >= 32) {
         invitedFactions.push(nitesecFac);
     }
     

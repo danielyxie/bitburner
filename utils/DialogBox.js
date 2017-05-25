@@ -1,7 +1,17 @@
 /* Pop up Dialog Box */
+
+//Close dialog box when clicking outside
+$(document).click(function(event) {
+    if (dialogBoxOpened) {        
+        if ( $(event.target).closest(".dialog-box").get(0) == null ) {         
+            dialogBoxClose();         
+        }
+    }
+});
+
+var dialogBoxOpened = false;
 function dialogBoxInit() {
     var closeButton = document.getElementById("dialog-box-close-button");
-    var dialogBox = document.getElementById("dialog-box-container");
     
     //Close Dialog box
     closeButton.addEventListener("click", function() {
@@ -13,6 +23,7 @@ function dialogBoxInit() {
 document.addEventListener("DOMContentLoaded", dialogBoxInit, false);
 
 dialogBoxClose = function() {
+    dialogBoxOpened = false;
     var dialogBox = document.getElementById("dialog-box-container");
     dialogBox.style.display = "none";
 }
@@ -20,6 +31,10 @@ dialogBoxClose = function() {
 dialogBoxOpen = function() {
     var dialogBox = document.getElementById("dialog-box-container");
     dialogBox.style.display = "block";
+    setTimeout(function() {
+        dialogBoxOpened = true;
+    }, 500);
+    
 }
 
 dialogBoxSetText = function(txt1, txt2="", txt3="", txt4="") {

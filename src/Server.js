@@ -462,7 +462,7 @@ initForeignServers = function() {
     AddToAllServers(PhantasyServer);
     
     var MaxHardwareServer = new Server();
-    MaxHardwareServer.init(createRandomIp(), "max-hardware", "Max Hardware Store", true, false, false, false, 0);
+    MaxHardwareServer.init(createRandomIp(), "max-hardware", "Max Hardware Store", true, false, false, false, 2);
     MaxHardwareServer.setHackingParameters(80, 11000000, 15, 25);
     MaxHardwareServer.setPortProperties(1);
     AddToAllServers(MaxHardwareServer);
@@ -481,7 +481,7 @@ initForeignServers = function() {
     AddToAllServers(CrushFitnessGymServer);
     
     var IronGymServer = new Server();
-    IronGymServer.init(createRandomIp(), "iron-gym", "Iron Gym Network", true, false, false, false, 0);
+    IronGymServer.init(createRandomIp(), "iron-gym", "Iron Gym Network", true, false, false, false, 2);
     IronGymServer.setHackingParameters(100, 20000000, 30, 20);
     IronGymServer.setPortProperties(1);
     AddToAllServers(IronGymServer);

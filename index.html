@@ -24,6 +24,7 @@
     <script src="utils/PurchaseAugmentationBox.js"></script>
     <script src="utils/TravelBox.js"></script>
     <script src="utils/PurchaseRamForHomeBox.js"></script>
+    <script src="utils/GameOptions.js"></script>
 	
 	<!-- Netscript -->
 	<script src="src/NetscriptWorker.js"></script>
@@ -105,19 +106,10 @@
 			<li class="tutorial-tab">
 				<a href="#" id="tutorial-menu-link"> Tutorial </a>
 			</li>
-			
-			<li class="save-game-tab">
-				<a href="#" id="save-game-link"> Save Game </a>
-			</li>
-			
-			<li class="delete-game-tab">
-				<a href="#" id="delete-game-link"> Delete Game </a>
-			</li>
             
-            <li class="debug-delete-scripts-tab">
-                <a href="#" id="debug-delete-scripts-link"> (DEBUG) Delete Active Scripts </a>
+            <li class="options-tab">
+                <a id="options-menu-link"> Options </a>
             </li>
-            
         </ul>
     </div>
     
@@ -143,17 +135,19 @@
 	
 	<!-- Script editor -->
 	<div id="script-editor-container">
-        <div>
-		<p id="script-editor-filename-tag"> Script name: </p>
-        <span id="script-editor-save-and-close-button" class="a-link-button">Save & Close (Ctrl + b)</span>
-        <span id="script-editor-netscript-doc-button" class="a-link-button"> Netscript Documentation 
-        <p id="script-editor-netscript-doc-warning" style="font-size:12px"> Warning: You will lose unsaved content! </p> </span>
+        <div id="script-editor-wrapper">
+        <div id="script-editor-filename-wrapper">
+            <p id="script-editor-filename-tag"> <strong style="background-color:#555;">Script name: </strong></p>
+            <input id="script-editor-filename" type="text" maxlength="30" tabindex="1"> </input>
         </div>
-            
-        <input id="script-editor-filename" type="text" maxlength="30" tabindex="1"> </input>
-		<br>
-		<br><br>
 		<textarea id="script-editor-text" tabindex="2" autofocus> </textarea>
+        <div id="script-editor-buttons-wrapper">
+            <span id="script-editor-save-and-close-button" class="a-link-button">Save & Close (Ctrl + b)</span>
+            <span id="script-editor-netscript-doc-button" class="a-link-button"> Netscript Documentation 
+                <p id="script-editor-netscript-doc-warning" style="font-size:12px"> Warning: You will lose unsaved content! </p> 
+            </span>
+        </div>
+        </div>
         <p> <br><br> </p>
 	</div>
 	
@@ -418,15 +412,21 @@
                 relaySMTP.exe
                 <span class="tooltiptext"> This program opens SMTP ports by redirecting data </span>
             </a>
-            
             <a class="create-program-a-link-button tooltip" id="create-program-httpworm" href="#">
                 HTTPWorm.exe
                 <span class="tooltiptext"> This virus opens up HTTP ports </span>
             </a>            
-            
             <a class="create-program-a-link-button tooltip" id="create-program-sqlinject" href="#">
                 SQLInject.exe
                 <span class="tooltiptext"> This virus opens SQL ports</span>
+            </a>
+            <a class="create-program-a-link-button tooltip" id="create-program-deepscanv1" href="#">
+                DeepscanV1.exe
+                <span class="tooltiptext"> This program allows you to use the scan-analyze command with a depth up to 5</span>
+            </a>
+            <a class="create-program-a-link-button tooltip" id="create-program-deepscanv2" href="#">
+                DeepscanV2.exe
+                <span class="tooltiptext"> This program allows you to use the scan-analyze command with a depth up to 10</span>
             </a>
         </ul>
 	</div>
@@ -633,7 +633,7 @@
     
     <!-- Dialog Box, displays status text only -->
     <div id="dialog-box-container">
-        <div id="dialog-box-content">
+        <div id="dialog-box-content" class="dialog-box">
             <span id="dialog-box-close-button">&times;</span>
             <p id="dialog-box-text-1" class="dialog-box-text"> </p>
             <br>
@@ -731,12 +731,25 @@
     <div id="character-overview-wrapper">
     <div id="character-overview-container">
         <p id="character-overview-text">  </p>
+        <span id="character-overview-save-button"> Save Game </span>
     </div>
     </div>
     
     <!-- Status text --> 
     <div id="status-text-container">
         <p id="status-text">Test </p>
+    </div>
+    
+    <!-- Game Options -->
+    <div id="game-options-container">
+        <div id="game-options-content" class="game-options-box">
+            <span id="game-options-close-button">&times;</span>
+            <h1> Game Options </h1>
+            <br>
+            <a id="save-game-link" class="a-link-button" style="display:block;"> Save Game </a>
+            <a id="delete-game-link" class="a-link-button" style="display:block;"> Delete Game </a>
+            <a id="debug-delete-scripts-link" class="a-link-button" style="display:block;"> (DEBUG) Delete Active Scripts </a>
+        </div>
     </div>
     
   </body>

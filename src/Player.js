@@ -176,7 +176,7 @@ function PlayerObject() {
 PlayerObject.prototype.init = function() {
     /* Initialize Player's home computer */
     var t_homeComp = new Server();
-    t_homeComp.init(createRandomIp(), "home", "Home PC", true, true, true, true, 2);
+    t_homeComp.init(createRandomIp(), "home", "Home PC", true, true, true, true, 8);
     this.homeComputer = t_homeComp.ip;
     this.currentServer = t_homeComp.ip;
     AddToAllServers(t_homeComp);
@@ -243,7 +243,7 @@ PlayerObject.prototype.calculateHackingTime = function() {
 PlayerObject.prototype.calculatePercentMoneyHacked = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
     var skillMult = (this.hacking_skill - (this.getCurrentServer().requiredHackingSkill - 1)) / this.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 950;
+    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 875;
     console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}

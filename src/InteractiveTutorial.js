@@ -8,6 +8,8 @@ iTutorialSteps = {
     TerminalHelp: "Using the help command to display all options in terminal",
     TerminalLs: "Use the ls command to show all programs/scripts. Right now we have NUKE.exe",
     TerminalScan: "Using the scan command to display all available connections",
+    TerminalScanAnalyze1: "Use the scan-analyze command to show hacking related information",
+    TerminalScanAnalyze2: "Use the scan-analyze command with a depth of 3",
     TerminalConnect: "Using the telnet/connect command to connect to another server",
     TerminalAnalyze: "Use the analyze command to display details about this server",
     TerminalNuke: "Use the NUKE Program to gain root access to a server", 
@@ -155,13 +157,29 @@ function iTutorialEvaluateStep() {
                          "the 'scan' command. ");
         //next step triggered by terminal command
         break;
-    case iTutorialSteps.TerminalConnect:
+    case iTutorialSteps.TerminalScanAnalyze1:
         iTutorialSetText("The 'scan' command shows all available network connections. In other words, " +
                          "it displays a list of all servers that can be connected to from your " + 
-                         "current machine. A server is identified by either its IP or its hostname. <br><br> " + 
-                         "To connect to a machine, use the 'connect [ip/hostname]' command. You can type in " + 
+                         "current machine. A server is identified by either its IP or its hostname. <br><br> " +
+                         "That's great and all, but there's so many servers. Which one should you go to? " + 
+                         "The 'scan-analyze' command gives some more detailed information about servers on the " + 
+                         "network. Try it now");
+        //next step triggered by terminal command
+        break;
+    case iTutorialSteps.TerminalScanAnalyze2:
+        iTutorialSetText("You just ran 'scan-analyze' with a depth of one. This command shows more detailed " + 
+                         "information about each server that you can connect to (servers that are a distance of " + 
+                         "one node away). <br><br> It is also possible to run 'scan-analyze' with " +
+                         "a higher depth. Let's try a depth of two with the following command: 'scan-analyze 2'.")
+        //next step triggered by terminal command
+        break;
+    case iTutorialSteps.TerminalConnect:
+        iTutorialSetText("Now you can see information about all servers that are up to two nodes away, as well " +
+                         "as figure out how to navigate to those servers through the network. You can only connect to " +
+                         "a server that is one node away. To connect to a machine, use the 'connect [ip/hostname]' command. You can type in " + 
                          "the ip or the hostname, but dont use both.<br><br>" + 
-                         "Let's try this now by connecting to the 'foodnstuff' server (connect foodnstuff)");
+                         "From the results of the 'scan-analyze' command, we can see that the 'foodnstuff' server is " +
+                         "only one node away. Let's connect so it now using: 'connect foodnstuff'");
         //next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalAnalyze:
@@ -228,7 +246,7 @@ function iTutorialEvaluateStep() {
                          "}<br><br> " +
                          "For anyone with basic programming experience, this code should be straightforward. " +
                          "This script will continuously hack the 'foodnstuff' server. <br><br>" + 
-                         "To save and close the script editor, press the button in the top right, or press ctrl + b.");
+                         "To save and close the script editor, press the button in the bottom left, or press ctrl + b.");
         //next step triggered in saveAndCloseScriptEditor() (Script.js)
         break;
     case iTutorialSteps.TerminalFree:
@@ -406,6 +424,14 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.TerminalScan:
+        currITutorialStep = iTutorialSteps.TerminalScanAnalyze1;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalScanAnalyze1:
+        currITutorialStep = iTutorialSteps.TerminalScanAnalyze2;
+        iTutorialEvaluateStep();
+        break;
+    case iTutorialSteps.TerminalScanAnalyze2:
         currITutorialStep = iTutorialSteps.TerminalConnect;
         iTutorialEvaluateStep();
         break;

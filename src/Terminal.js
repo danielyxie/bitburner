@@ -27,15 +27,6 @@ var postNetburnerText = function() {
 	post("Bitburner v" + CONSTANTS.Version);
 }
 
-/*
-$(document).keyup(function(event) {
-    //Enter
-    if (event.keyCode == 13) {
-
-    }
-});
-*/
-
 //Defines key commands in terminal
 $(document).keydown(function(event) {
 	//Terminal
@@ -396,10 +387,23 @@ var Terminal = {
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
+            case iTutorialSteps.TerminalScanAnalyze1:
+                if (commandArray.length == 1 && commandArray[0] == "scan-analyze") {
+                    Terminal.executeScanAnalyzeCommand(1);
+                    iTutorialNextStep();
+                } else {post("Bad command. Please follow the tutorial");}
+                break;
+            case iTutorialSteps.TerminalScanAnalyze2:
+                if (commandArray.length == 2 && commandArray[0] == "scan-analyze" &&
+                    commandArray[1] == "2") {
+                    Terminal.executeScanAnalyzeCommand(2);
+                    iTutorialNextStep();
+                } else {post("Bad command. Please follow the tutorial");}
+                break;
+                break;
             case iTutorialSteps.TerminalConnect:
-                
                 if (commandArray.length == 2) {
-                    if ((commandArray[0] == "connect" || commandArray[0] == "telnet") &&
+                    if ((commandArray[0] == "connect") &&
                         (commandArray[1] == "foodnstuff" || commandArray[1] == foodnstuffServ.ip)) {
                         Player.getCurrentServer().isConnectedTo = false;
                         Player.currentServer = foodnstuffServ.ip;
@@ -733,7 +737,29 @@ var Terminal = {
                 Terminal.executeScanCommand(commandArray);
 				break;
             case "scan-analyze":
-                Terminal.executeScanAnalyzeCommand(commandArray);
+                if (commandArray.length == 1) {
+                    Terminal.executeScanAnalyzeCommand(1);
+                } else if (commandArray.length == 2) {
+                    var depth = Number(commandArray[1]);
+                    if (isNaN(depth) || depth < 0) {
+                        post("Incorrect usage of scan-analyze command. depth argument must be positive numeric");
+                        return;
+                    }
+                    if (depth > 3 && !Player.hasProgram(Programs.DeepscanV1) && 
+                        !Player.hasProgram(Programs.DeepscanV2)) {
+                        post("You cannot scan-analyze with that high of a depth. Maximum depth is 3");
+                        return;
+                    } else if (depth > 5 && !Player.hasProgram(Programs.DeepscanV2)) {
+                        post("You cannot scan-analyze with that high of a depth. Maximum depth is 5");
+                        return;
+                    } else if (depth > 10) {
+                        post("You cannot scan-analyze with that high of a depth. Maximum depth is 10");
+                        return;
+                    }
+                    Terminal.executeScanAnalyzeCommand(depth);
+                } else {
+                    post("Incorrect usage of scan-analyze command. usage: scan-analyze [depth]");
+                }                    
                 break;
 			case "scp":
 				//TODO
@@ -838,20 +864,39 @@ var Terminal = {
         }
     },
     
-    executeScanAnalyzeCommand: function(commandArray) {
-        if (commandArray.length != 1) {
-            post("Incorrect usage of scan-analyze command. usage: scan-analyze"); return;
-        }
+    executeScanAnalyzeCommand: function(depth=1) {
+        //We'll use the AllServersToMoneyMap as a visited() array
+        //TODO Later refactor this to a generic name
+        //TODO Using array as stack for now, can make more efficient
+        post("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
+        post(" ");
+        var visited = new AllServersToMoneyMap();
+        var stack = [];
+        var depthQueue = [0];
         var currServ = Player.getCurrentServer();
-        for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
-            var serv = currServ.getServerOnNetwork(i);
-            if (serv == null) {continue;}
-            post("<strong>" + serv.hostname + "</strong>");
-            var c = "N";
-            if (serv.hasAdminRights) {c = "Y";}
-            post("--Root Access: " + c);
-            post("--Required hacking skill: " + serv.requiredHackingSkill);
-            post("--Number open ports required to NUKE: " + serv.numOpenPortsRequired);
+        stack.push(currServ);
+        while(stack.length != 0) {
+            var s = stack.pop();
+            var d = depthQueue.pop();
+            if (visited[s.ip] || d > depth) {
+                continue;
+            } else {
+                visited[s.ip] = 1;
+            }
+            for (var i = s.serversOnNetwork.length-1; i >= 0; --i) {
+                stack.push(s.getServerOnNetwork(i));
+                depthQueue.push(d+1);
+            }
+            if (d == 0) {continue;} //Don't print current server
+            var titleDashes = Array((d-1) * 4 + 1).join("-");
+            post("<strong>" + titleDashes + ">" + s.hostname + "</strong>");
+            var dashes = titleDashes + "--";
+            //var dashes = Array(d * 2 + 1).join("-");
+            var c = "NO";
+            if (s.hasAdminRights) {c = "YES";}
+            post(dashes + "Root Access: " + c + ", Required hacking skill: " + s.requiredHackingSkill);
+            post(dashes + "Number of open ports required to NUKE: " + s.numOpenPortsRequired);
+            post(dashes + "RAM: " + s.maxRam);
             post(" ");
         }
     },

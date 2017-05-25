@@ -6,7 +6,7 @@
  *      {type: "punc", value: "(" }           	// punctuation: parens, comma, semicolon etc.
  *      {type: "num", value: 5 }              	// numbers (including floats)
  *      {type: "str", value: "Hello World!" } 	// strings
- *      {type: "kw", value: "for/if/" }        	// keywords, see defs below
+ *      {type: "kw", value: "for/if/..." }      // keywords, see defs below
  *      {type: "var", value: "a" }            	// identifiers/variables
  *      {type: "op", value: "!=" }            	// operator characters
  *		{type: "bool", value: "true" } 			// Booleans
@@ -46,7 +46,7 @@ function Tokenizer(input) {
     }
     
     function is_punc(ch) {
-        return ",;(){}[]".indexOf(ch) >= 0;
+        return ",;(){}[].".indexOf(ch) >= 0;
     }
     
     function is_whitespace(ch) {
