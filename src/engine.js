@@ -1080,6 +1080,7 @@ var Engine = {
         
         //DEBUG
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
+            console.log("Deleting running scripts on home computer");
             Player.getHomeComputer().runningScripts = [];
             return false;
         });

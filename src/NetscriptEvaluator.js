@@ -23,6 +23,17 @@ function evaluate(exp, workerScript) {
 		case "var":
 			return new Promise(function(resolve, reject) {
 				if (env.stopFlag) {reject(workerScript);}
+                if (exp.value == "hacknetnodes") {
+                    setTimeout(function() {
+                        var pEvaluateHacknetNode = evaluateHacknetNode(exp, workerScript);
+                        pEvaluateHacknetNode.then(function(res) {
+                            resolve(res);
+                        }, function(e) {
+                            reject(e);
+                        });
+                    }, CONSTANTS.CodeInstructionRunTime);
+                    return;
+                }
 				try {
 					resolve(env.get(exp.value));
 				} catch (e) {
@@ -747,7 +758,7 @@ function evaluate(exp, workerScript) {
                             }
                             if (cost > Player.money) {
                                 workerScript.scriptRef.log("Could not afford to purchase new Hacknet Node");
-                                resolve("");
+                                resolve(false);
                                 return;
                             }
                                 
@@ -761,62 +772,15 @@ function evaluate(exp, workerScript) {
                             Player.hacknetNodes.push(node);
                             displayHacknetNodesContent();
                             workerScript.scriptRef.log("Purchased new Hacknet Node with name: " + name);
-                            resolve(name);
+                            resolve(numOwned);
                         }, CONSTANTS.CodeInstructionRunTime);
-                    } else if (exp.func.value == "upgradeHacknetNode") {
-                        if (exp.args.length != 1) {
-                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|upgradeHacknetNode() call has incorrect number of arguments. Takes 1 argument");
-                            return;
-                        }
-                        var namePromise = evaluate(exp.args[0], workerScript);
-                        namePromise.then(function(name) {
-                            var node = getHacknetNode(name);
-                            if (node == null) {
-                                reject("|"+workerScript.serverIp+"|"+workerScript.name+"|Invalid Hacknet Node name passed into upgradeHacknetNode()");
-                                return;
-                            }
-                            var cost = node.calculateLevelUpgradeCost(1);
-                            if (isNaN(cost)) {
-                                reject("|"+workerScript.serverIp+"|"+workerScript.name+"|Could not calculate cost in upgradeHacknetNode(). This is a bug please report to game dev");
-                                return;
-                            }
-                            if (cost > Player.money) {
-                                workerScript.scriptRef.log("Could not afford to upgrade Hacknet Node: " + name);
-                                resolve(false);
-                                return;
-                            }
-                            if (node.level >= CONSTANTS.HacknetNodeMaxLevel) {
-                                workerScript.scriptRef.log("Hacknet Node " + name + " already at max level");
-                                node.level = CONSTANTS.HacknetNodeMaxLevel;
-                                resolve(false);
-                                return;
-                            }
-                            Player.loseMoney(cost);
-                            node.level += 1;
-                            node.updateMoneyGainRate();
-                            workerScript.scriptRef.log("Hacknet node " + name + " upgraded to level " + node.level + "!");
-                            resolve(true);
-                        }, function(e) {
-                            reject(e);
-                        });
-                    } else if (exp.func.value == "getNumHacknetNodes") {
-                        if (exp.args.length != 0) {
-                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getNumHacknetNodes() call has incorrect number of arguments. Takes 0 arguments");
-                            return;
-                        }
-                        setTimeout(function() {
-                            if (env.stopFlag) {reject(workerScript);}
-                            workerScript.scriptRef.log("getNumHacknetNodes() returned " + Player.hacknetNodes.length);
-                            resolve(Player.hacknetNodes.length);
-                        }, CONSTANTS.CodeInstructionRunTime);
-                    }
+                    } 
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Unrecognized function call");
 			break;
-
 		default:
-			reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Can't evaluate type " + exp.type);
+            break;
     }
 }
 
@@ -980,6 +944,109 @@ function evaluateWhile(exp, workerScript) {
 	});
 }
 
+function evaluateHacknetNode(exp, workerScript) {
+    var env = workerScript.env;
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            if (exp.index == null) {
+                if ((exp.op.type == "call" && exp.op.value == "length") ||
+                    (exp.op.type == "var" && exp.op.value == "length")) {
+                    resolve(Player.hacknetNodes.length);
+                    workerScript.scriptRef.log("hacknetnodes.length returned " + Player.hacknetNodes.length);
+                    return;                    
+                } else {
+                    workerScript.scriptRef.log("Invalid/null index for hacknetnodes");
+                    reject(makeRuntimeRejectMsg(workerScript, "Invalid/null index. hacknetnodes array must be accessed with an index"));
+                    return;
+                }
+                
+            }
+            var indexPromise = evaluate(exp.index.value, workerScript);
+            indexPromise.then(function(index) {
+                if (isNaN(index) || index >= Player.hacknetNodes.length || index < 0) {
+                    workerScript.scriptRef.log("Invalid index value for hacknetnodes[]");
+                    reject(makeRuntimeRejectMsg(workerScript, "Invalid index value for hacknetnodes[]."));
+                    return;
+                }
+                var nodeObj = Player.hacknetNodes[index];
+                if (exp.op == null) {
+                    reject(makeRuntimeRejectMsg(workerScript, "No operator or property called for hacknetnodes. Usage: hacknetnodes[i].property/operator"));
+                    return;
+                } else if (exp.op.type == "var") {
+                    //Get properties: level, ram, cores
+                    switch(exp.op.value) {
+                        case "level":
+                            resolve(nodeObj.level);
+                            break;
+                        case "ram":
+                            resolve(nodeObj.ram);
+                            break;
+                        case "cores":
+                            resolve(nodeObj.numCores);
+                            break;
+                        default: 
+                            reject(makeRuntimeRejectMsg(workerScript, "Unrecognized property for Hacknet Node. Valid properties: ram, cores, level"));
+                            break;
+                    }
+                    
+                } else if (exp.op.type == "call") {
+                    switch(exp.op.func.value) {
+                        case "upgradeLevel":
+                            if (exp.op.args.length == 1) {
+                                var argPromise = evaluate(exp.op.args[0], workerScript);
+                                argPromise.then(function(arg) {
+                                    if (isNaN(arg)) {
+                                        reject(makeRuntimeRejectMsg(workerScript, "Argument passed into upgradeLevel() is not numeric"));
+                                        return;
+                                    }
+                                    var res = nodeObj.purchaseLevelUpgrade(arg);
+                                    if (res) {
+                                        workerScript.scriptRef.log("Upgraded " + nodeObj.name + arg + " times to level " + nodeObj.level);
+                                    }
+                                    resolve(res);
+                                }, function(e) {
+                                    reject(e);
+                                });
+                            } else {
+                                var res = nodeObj.purchaseLevelUpgrade(1);
+                                if (res) {
+                                    workerScript.scriptRef.log("Upgraded " + nodeObj.name + " once to level " + nodeObj.level);
+                                }
+                                resolve(res);
+                            }
+                            break;
+                        case "upgradeRam":
+                            var res = nodeObj.purchaseRamUpgrade();
+                            if (res) {
+                                workerScript.scriptRef.log("Upgraded " + nodeObj.name + "'s RAM to " + nodeObj.ram + "GB");
+                            }
+                            resolve(res);
+                            break;
+                        case "upgradeCore":
+                            var res = nodeObj.purchaseCoreUpgrade();
+                            if (res) {
+                                workerScript.scriptRef.log("Upgraded " + nodeObj.name + "'s number of cores to " + nodeObj.numCores);
+                            }
+                            resolve(res);
+                            break;
+                        default:
+                            reject(makeRuntimeRejectMsg(workerScript, "Unrecognized function/operator for hacknet node. Valid functions: upgradeLevel(n), upgradeRam(), upgradeCore()"));
+                            break;
+                    }
+                } else {
+                    reject(makeRuntimeRejectMsg(workerScript, "Unrecognized operation for hacknet node"));
+                    return;
+                }
+            }, function(e) {
+                reject(e);
+            });
+            
+        }, CONSTANTS.CodeInstructionRunTime);
+    }, function(e) {
+        reject(e);
+    });
+}
+
 function evaluateProg(exp, workerScript, index) {
 	var env = workerScript.env;
 	
@@ -1014,6 +1081,10 @@ function evaluateProg(exp, workerScript, index) {
 			});
 		}
 	});
+}
+
+function makeRuntimeRejectMsg(workerScript, msg) {
+    return "|"+workerScript.serverIp+"|"+workerScript.name+"|" + msg;
 }
 
 function apply_op(op, a, b) {

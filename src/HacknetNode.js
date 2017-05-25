@@ -73,15 +73,16 @@ HacknetNode.prototype.calculateLevelUpgradeCost = function(levels=1) {
 
 HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
     var cost = this.calculateLevelUpgradeCost(levels);
-    if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
-    if (cost > Player.money) {return;}
+    if (isNaN(cost)) {return false;}
+    if (cost > Player.money) {return false;}
     Player.loseMoney(cost);
     if (this.level + levels >= CONSTANTS.HacknetNodeMaxLevel) {
         this.level = CONSTANTS.HacknetNodeMaxLevel;
-        return;
+        return false;
     }
     this.level += levels;
     this.updateMoneyGainRate();
+    return true;
 }
 
 HacknetNode.prototype.calculateRamUpgradeCost = function() {
@@ -96,12 +97,13 @@ HacknetNode.prototype.calculateRamUpgradeCost = function() {
 
 HacknetNode.prototype.purchaseRamUpgrade = function() {
     var cost = this.calculateRamUpgradeCost();
-    if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
-    if (cost > Player.money) {return;}
+    if (isNaN(cost)) {return false;}
+    if (cost > Player.money) {return false;}
     Player.loseMoney(cost);
-    if (this.ram >= CONSTANTS.HacknetNodeMaxRam) {return;}
+    if (this.ram >= CONSTANTS.HacknetNodeMaxRam) {return false;}
     this.ram *= 2; //Ram is always doubled
     this.updateMoneyGainRate();
+    return true;
 }
 
 HacknetNode.prototype.calculateCoreUpgradeCost = function() {
@@ -112,12 +114,13 @@ HacknetNode.prototype.calculateCoreUpgradeCost = function() {
 
 HacknetNode.prototype.purchaseCoreUpgrade = function() {
     var cost = this.calculateCoreUpgradeCost();
-    if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
-    if (cost > Player.money) {return;}
+    if (isNaN(cost)) {return false;}
+    if (cost > Player.money) {return false;}
     Player.loseMoney(cost);
-    if (this.numCores >= CONSTANTS.HacknetNodeMaxCores) {return;}
+    if (this.numCores >= CONSTANTS.HacknetNodeMaxCores) {return false;}
     ++this.numCores;
     this.updateMoneyGainRate();
+    return true;
 }
 
 /* Saving and loading HackNets */

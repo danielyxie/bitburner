@@ -187,8 +187,48 @@ function Parser(input) {
 			cond: cond,
 			code: code
 		}
-		
 	}
+    
+    /* hacknetnodes[i].operator
+     */
+    function parse_hacknetnodes() {
+        var index = null;
+        if (is_punc("[")) {
+            index = parse_expression();
+            if (index.type != "index") {
+                console.log("Failed here");
+                unexpected();
+            }
+        }
+        
+        if (is_punc(".")) {
+            checkPuncAndSkip(".");
+            var op = maybe_call(function() {
+                var tok = input.next();
+                return tok;
+            });
+            return {
+                type: "var",
+                value: "hacknetnodes",
+                index: index,
+                op: op,
+            }
+        }
+        console.log("Failed here");
+        unexpected();
+    }
+    
+    function parse_arrayindex() {
+        var index = delimited("[", "]", ";", parse_expression);
+        var val = 0;
+        if (index.length == 1 && (index[0].type == "num" || index[0].type == "var")) {
+            val = index[0];
+        } else {
+            console.log("WARNING: Extra indices passed in")
+        }
+            
+        return { type: "index", value: val };
+    }
 	
     function parse_bool() {
         return {
@@ -211,13 +251,16 @@ function Parser(input) {
                 return exp;
             }
             if (is_punc("{")) return parse_prog();
+            if (is_punc("[")) return parse_arrayindex();
             if (is_kw("if")) return parse_if();
 			if (is_kw("for")) return parse_for();
 			if (is_kw("while")) return parse_while();
+            //if (is_kw("hacknetnodes")) return parse_hacknetnodes();
 			//Note, let for loops be function calls (call node types)
             if (is_kw("true") || is_kw("false")) return parse_bool();
-
+            
             var tok = input.next();
+            if (tok.type == "var" && tok.value == "hacknetnodes") return parse_hacknetnodes();
             if (tok.type == "var" || tok.type == "num" || tok.type == "str")
                 return tok;
             unexpected();

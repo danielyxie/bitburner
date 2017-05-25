@@ -52,8 +52,11 @@ CONSTANTS = {
     ScriptGetHackingLevelRamCost:   0.1,
     ScriptGetServerMoneyRamCost:    0.1,
     ScriptOperatorRamCost:          0.01,
-    ScriptPurchaseHacknetRamCost:   1.0,
-    ScriptUpgradeHacknetRamCost:    1.0,
+    ScriptPurchaseHacknetRamCost:   1.5,
+    ScriptHacknetNodesRamCost:      1.0, //Base cost for accessing hacknet nodes array
+    ScriptHNUpgLevelRamCost:        0.4, 
+    ScriptHNUpgRamRamCost:          0.6,
+    ScriptHNUpgCoreRamCost:         0.8,
     
     //Server growth rate
     ServerGrowthRate: 1.00075,
