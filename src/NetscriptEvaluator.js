@@ -63,7 +63,6 @@ function evaluate(exp, workerScript) {
 				p.then(function(expRight) {
 					try {
 						env.set(exp.left.value, expRight);
-                        workerScript.scriptRef.log("Variable " + exp.left.value + " set to " + expRight);
 					} catch (e) {
 						reject("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
 					}

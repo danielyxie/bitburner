@@ -107,7 +107,6 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
         }
     }
 	
-    
     this.companyName = company.companyName;
     this.companyPosition = pos;
     
