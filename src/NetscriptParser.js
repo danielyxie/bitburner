@@ -151,14 +151,14 @@ function Parser(input) {
 	 * code: prog node
 	 */
 	function parse_for() {
-		console.log("Parsing for token");
 		checkKeywordAndSkip("for");
 
-		splitExpressions = delimited("(", ")", ";", parse_expression);
+		temp = delimited("(", ")", ";", parse_expression);
+        var splitExpressions = temp.slice();
 		code = parse_expression();
 		
 		if (splitExpressions.length != 3) {
-			throw new Error("for statement has incorrect number of arugments");
+			throw new Error("for statement has incorrect number of arguments");
 		}
 		
 		//TODO Check type of the init, cond, and postloop nodes 
@@ -196,7 +196,6 @@ function Parser(input) {
         if (is_punc("[")) {
             index = parse_expression();
             if (index.type != "index") {
-                console.log("Failed here");
                 unexpected();
             }
         }
@@ -214,7 +213,6 @@ function Parser(input) {
                 op: op,
             }
         }
-        console.log("Failed here");
         unexpected();
     }
     

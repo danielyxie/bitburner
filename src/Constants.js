@@ -18,7 +18,7 @@ CONSTANTS = {
     BaseCostForHacknetNodeCore: 500000,
     
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.75,
+    HacknetNodeMoneyGainPerLevel: 1.65,
     HacknetNodePurchaseNextMult: 1.33,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.22,     //Multiplier for cost when upgrading RAM
@@ -30,7 +30,7 @@ CONSTANTS = {
     
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
-    NeuroFluxGovernorLevelMult: 1.09,
+    NeuroFluxGovernorLevelMult: 1.18,
     
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
@@ -59,7 +59,7 @@ CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     
     //Server growth rate
-    ServerGrowthRate: 1.00075,
+    ServerGrowthRate: 1.001,
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 40,
@@ -283,6 +283,7 @@ CONSTANTS = {
                            "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " + 
                            "The argument passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline.<br> " + 
                            "Example:<br>if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" + 
+                           "<i>getHostname()<i><br>Returns a string with the hostname of the server that the script is running on<br><br>" + 
                            "<i>getHackingLevel() </i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 

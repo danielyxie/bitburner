@@ -539,7 +539,7 @@ var Terminal = {
 			case "connect":
 				//Disconnect from current server in terminal and connect to new one
                 if (commandArray.length != 2) {
-                    post("Incorrect usage of connect/telnet command. Usage: connect/telnet [ip/hostname]");
+                    post("Incorrect usage of connect command. Usage: connect [ip/hostname]");
                     return;
                 }
                 

@@ -1394,7 +1394,7 @@ initLocationButtons = function() {
     });
     
     itJob.addEventListener("click", function() {
-        Player.applyForSoftwareJob()
+        Player.applyForItJob();
         return false; 
     });
     

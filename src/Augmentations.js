@@ -3,7 +3,6 @@ function Augmentation(name) {
     this.name = name;
     this.info = "";
     this.owned = false;                 //Whether the player has it (you can only have each augmentation once)
-    this.factionInstalledBy = "";       //Which faction the Player got this from
 
     //Price and reputation base requirements (can change based on faction multipliers)
     this.baseRepRequirement = 0;        
@@ -818,7 +817,7 @@ initAugmentations = function() {
         NeuroFluxGovernor.owned = oldAug.owned;
         NeuroFluxGovernor.level = oldAug.level;
         mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level);
-        NeuroFluxGovernor.setRequirements(250 * mult, 500000 * mult);
+        NeuroFluxGovernor.setRequirements(300 * mult, 600000 * mult);
         delete Augmentations[AugmentationNames.NeuroFluxGovernor];
     } else {
         NeuroFluxGovernor.setRequirements(250, 500000);
@@ -827,10 +826,8 @@ initAugmentations = function() {
                               "monitors and regulates nervous impulses coming to and from the spinal column, " +
                               "essentially 'governing' the body. By doing so, it improves the functionality of the " +
                               "body's nervous system. <br><br> " + 
-                              "This is a special augmentation because it can be leveled up infinitely. Each level of this augmentation: <br> " +
-                              "Increases all of the player's stats by 1%<br>" + 
-                              "Increases the player's experience gain rate for all stats by 1%<br>" + 
-                              "Increases the amount of reputation the player gains from companies and factions by 1%")
+                              "This is a special augmentation because it can be leveled up infinitely. Each level of this augmentation " + 
+                              "increases ALL of the player's multipliers by 1%");
     NeuroFluxGovernor.addToAllFactions();
     AddToAugmentations(NeuroFluxGovernor);
         
@@ -1331,8 +1328,8 @@ initAugmentations = function() {
     AddToAugmentations(SNA);
 }
 
-applyAugmentation = function(aug, faction) {
-    if (aug.name != AugmentationNames.NeuroFluxGovernor && aug.owned) {
+applyAugmentation = function(aug, reapply=false) {
+    if (reapply == false && aug.name != AugmentationNames.NeuroFluxGovernor && aug.owned) {
         throw new Error("This Augmentation is already owned/applied...somethings wrong");
         return;
     }
@@ -1539,21 +1536,42 @@ applyAugmentation = function(aug, faction) {
         
         //Misc augmentations
         case AugmentationNames.NeuroFluxGovernor:
-            Player.hacking_mult         *= 1.01;
-            Player.strength_mult        *= 1.01;
-            Player.defense_mult         *= 1.01;
-            Player.dexterity_mult       *= 1.01;
-            Player.agility_mult         *= 1.01;
-            Player.charisma_mult        *= 1.01;
-            Player.hacking_exp_mult     *= 1.01;
-            Player.strength_exp_mult    *= 1.01;
-            Player.defense_exp_mult     *= 1.01;
-            Player.dexterity_exp_mult   *= 1.01;
-            Player.agility_exp_mult     *= 1.01;
-            Player.charisma_exp_mult    *= 1.01;
-            Player.company_rep_mult     *= 1.01;
-            Player.faction_rep_mult     *= 1.01;
-            ++aug.level;
+            Player.hacking_chance_mult *= 1.01;
+            Player.hacking_speed_mult  *= 0.99;
+            Player.hacking_money_mult  *= 1.01;
+            //Player.hacking_grow_mult   *= 1.01;
+            Player.hacking_mult        *= 1.01;
+
+            Player.strength_mult       *= 1.01;
+            Player.defense_mult        *= 1.01;
+            Player.dexterity_mult      *= 1.01;
+            Player.agility_mult        *= 1.01;
+            Player.charisma_mult       *= 1.01;
+
+            Player.hacking_exp_mult    *= 1.01;
+            Player.strength_exp_mult   *= 1.01;
+            Player.defense_exp_mult    *= 1.01;
+            Player.dexterity_exp_mult  *= 1.01;
+            Player.agility_exp_mult    *= 1.01;
+            Player.charisma_exp_mult   *= 1.01;
+
+            Player.company_rep_mult    *= 1.01;
+            Player.faction_rep_mult    *= 1.01;
+
+            Player.crime_money_mult    *= 1.01;
+            Player.crime_success_mult  *= 1.01;
+
+            Player.hacknet_node_money_mult            *= 1.01;
+            Player.hacknet_node_purchase_cost_mult    *= 1.01;
+            Player.hacknet_node_ram_cost_mult         *= 1.01;
+            Player.hacknet_node_core_cost_mult        *= 1.01;
+            Player.hacknet_node_level_cost_mult       *= 1.01;
+
+            Player.work_money_mult    *= 1.01;
+        
+            if (!reapply) {
+                ++aug.level;
+            }
             break;    
         case AugmentationNames.Neurotrainer1:      //Low Level
             Player.hacking_exp_mult   *= 1.1;
@@ -1752,14 +1770,68 @@ applyAugmentation = function(aug, faction) {
     }
 
     aug.owned = true;
-    aug.factionInstalledBy = faction.name;
     if (aug.name == AugmentationNames.NeuroFluxGovernor &&
         Player.augmentations.indexOf(AugmentationNames.NeuroFluxGovernor) != -1) {
         //Already have this aug, just upgrade the level
         return;
     }
-    Player.augmentations.push(aug.name);
-    ++Player.numAugmentations;
+    
+    if (!reapply) {
+        Player.augmentations.push(aug.name);
+        ++Player.numAugmentations;
+    }
+}
+
+PlayerObject.prototype.reapplyAllAugmentations = function() {
+    console.log("Re-applying augmentations");
+    //Reset multipliers
+    this.hacking_chance_mult    = 1;  //Increase through ascensions/augmentations
+    this.hacking_speed_mult     = 1;  //Decrease through ascensions/augmentations
+    this.hacking_money_mult     = 1;  //Increase through ascensions/augmentations. Can't go above 1
+    this.hacking_grow_mult      = 1;
+    
+    this.hacking_mult       = 1;
+    this.strength_mult      = 1;
+    this.defense_mult       = 1;
+    this.dexterity_mult     = 1;
+    this.agility_mult       = 1;
+    this.charisma_mult      = 1;
+    
+    this.hacking_exp_mult    = 1;
+    this.strength_exp_mult   = 1;
+    this.defense_exp_mult    = 1;
+    this.dexterity_exp_mult  = 1;
+    this.agility_exp_mult    = 1;
+    this.charisma_exp_mult   = 1;
+
+    this.company_rep_mult    = 1;
+    this.faction_rep_mult    = 1;
+    
+    this.crime_money_mult       = 1;
+    this.crime_success_mult     = 1;
+    
+    this.hacknet_node_money_mult            = 1;
+    this.hacknet_node_purchase_cost_mult    = 1;
+    this.hacknet_node_ram_cost_mult         = 1;
+    this.hacknet_node_core_cost_mult        = 1;
+    this.hacknet_node_level_cost_mult       = 1;
+    
+    this.work_money_mult = 1;
+    
+    for (i = 0; i < this.augmentations.length; ++i) {
+        var aug = Augmentations[this.augmentations[i]];
+        if (aug == null) {
+            console.log("WARNING: Invalid augmentation name");
+            continue;
+        }
+        if (aug.name == AugmentationNames.NeuroFluxGovernor) {
+            for (j = 0; j < aug.level; ++j) {
+                applyAugmentation(aug, true);
+            }
+            continue;
+        }
+        applyAugmentation(aug, true);
+    }
 }
 
 function augmentationExists(name) {

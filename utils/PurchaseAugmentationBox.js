@@ -153,7 +153,7 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
                 dialogBoxCreate("You must first install the Bionic Arms augmentation before installing this upgrade");
             }
         } else if (Player.money >= (aug.baseCost * fac.augmentationPriceMult)) {
-            applyAugmentation(aug, fac);
+            applyAugmentation(aug);
             dialogBoxCreate("You slowly drift to sleep as " + fac.name + "'s scientists put you under " +
                             " in order to install the " + aug.name + " Augmentation. <br><br>" +
                             "You wake up in your home...you feel different...");
