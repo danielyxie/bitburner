@@ -169,7 +169,6 @@ function evaluate(exp, workerScript) {
 					var pForLoop = evaluateFor(exp, workerScript);
 					pForLoop.then(function(forLoopRes) {
 						resolve("forLoopDone");
-                        workerScript.scriptRef.log("Exiting for loop");
 					}, function(e) {
 						reject(e);
 					});

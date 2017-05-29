@@ -49,6 +49,8 @@ CONSTANTS = {
     ScriptHttpwormRamCost:          0.05,
     ScriptSqlinjectRamCost:         0.05,
     ScriptRunRamCost:               0.8,
+    ScriptHasRootAccessRamCost:     0.05,
+    ScriptGetHostnameRamCost:       0.1,
     ScriptGetHackingLevelRamCost:   0.1,
     ScriptGetServerMoneyRamCost:    0.1,
     ScriptOperatorRamCost:          0.01,

@@ -182,6 +182,8 @@ Script.prototype.updateRamUsage = function() {
     var httpwormCount = numOccurrences(codeCopy, "httpworm(");
     var sqlinjectCount = numOccurrences(codeCopy, "sqlinject(");
     var runCount = numOccurrences(codeCopy, "run(");
+    var hasRootAccessCount = numOccurrences(codeCopy, "hasRootAccess(");
+    var getHostnameCount = numOccurrences(codeCopy, "getHostname(");
     var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
     var getServerMoneyAvailableCount = numOccurrences(codeCopy, "getServerMoneyAvailable(");
     var numOperators = numNetscriptOperators(codeCopy);
@@ -204,6 +206,8 @@ Script.prototype.updateRamUsage = function() {
                     (httpwormCount * CONSTANTS.ScriptHttpwormRamCost) + 
                     (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost) + 
                     (runCount * CONSTANTS.ScriptRunRamCost) + 
+                    (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) + 
+                    (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
                     (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
                     (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
                     (numOperators * CONSTANTS.ScriptOperatorRamCost) +
