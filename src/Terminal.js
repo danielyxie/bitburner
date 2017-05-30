@@ -762,7 +762,46 @@ var Terminal = {
                 }                    
                 break;
 			case "scp":
-				//TODO
+				if (commandArray.length != 2) {
+                    post("Incorrect usage of scp command. Usage: scp [scriptname] [destination hostname/ip]");
+                    return;
+                }
+                var args = commandArray[1].split(" ");
+                if (args.length != 2) {
+                    post("Incorrect usage of scp command. Usage: scp [scriptname] [destination hostname/ip]");
+                    return;
+                }
+                var scriptname = args[0];
+                var server = getServer(args[1]);
+                if (server == null) {
+                    post("Invalid destination. " + args[1] + " not found");
+                    return;
+                }
+                var ip = server.ip;
+                
+                //Check that a script with this filename does not already exist
+                for (var i = 0; i < server.scripts.length; ++i) {
+                    if (scriptname == server.scripts[i].filename) {
+                        post(server.hostname + " already contains a script named " + scriptname);
+                        return;
+                    }
+                }
+                
+                var currServ = Player.getCurrentServer();
+                for (var i = 0; i < currServ.scripts.length; ++i) {
+                    if (scriptname == currServ.scripts[i].filename){ 
+                        
+                        var newScript = new Script();
+                        newScript.filename = scriptname;
+                        newScript.code = currServ.scripts[i].code;
+                        newScript.ramUsage = currServ.scripts[i].ramUsage;
+                        newScript.server = ip;
+                        server.scripts.push(newScript);
+                        post(scriptname + " copied over to " + server.hostname);
+                        return;
+                    }
+                }
+                post("Script not found");
 				break;
             case "sudov":
                 if (commandArray.length != 1) {
