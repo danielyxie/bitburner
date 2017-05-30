@@ -16,24 +16,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
     var pos = entryPosType;
     
     if (!this.isQualified(company, pos)) {
-        var offset = company.jobStatReqOffset;
-        var reqHacking = pos.requiredHacking > 0       ? pos.requiredHacking+offset   : 0;
-        var reqStrength = pos.requiredStrength > 0     ? pos.requiredStrength+offset  : 0;
-        var reqDefense = pos.requiredDefense > 0       ? pos.requiredDefense+offset   : 0;
-        var reqDexterity = pos.requiredDexterity > 0   ? pos.requiredDexterity+offset : 0;
-        var reqAgility = pos.requiredDexterity > 0     ? pos.requiredDexterity+offset : 0;
-        var reqCharisma = pos.requiredCharisma > 0     ? pos.requiredCharisma+offset  : 0;
-        var reqRep = pos.requiredReputation;
-        var reqText = "(Requires ";
-        if (reqHacking > 0)     {reqText += (reqHacking +       " hacking, ");}
-        if (reqStrength > 0)    {reqText += (reqStrength +      " strength, ");}
-        if (reqDefense > 0)     {reqText += (reqDefense +       " defense, ");}
-        if (reqDexterity > 0)   {reqText += (reqDexterity +     " dexterity, ");}
-        if (reqAgility > 0)     {reqText += (reqAgility +       " agility, ");}
-        if (reqCharisma > 0)    {reqText += (reqCharisma +      " charisma, ");}
-        if (reqRep > 1)         {reqText += (reqRep +           " reputation, ");}
-        reqText = reqText.substring(0, reqText.length - 2);
-        reqText += ")";
+        var reqText = getJobRequirementText(company, pos);
         dialogBoxCreate("Unforunately, you do not qualify for this position", reqText);
         return;
     }
@@ -67,24 +50,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
         if (currCompany.companyName == company.companyName &&
             pos.positionName == currPositionName) {
             var nextPos = getNextCompanyPosition(pos);
-            var offset = company.jobStatReqOffset;
-            var reqHacking = nextPos.requiredHacking > 0       ? nextPos.requiredHacking+offset   : 0;
-            var reqStrength = nextPos.requiredStrength > 0     ? nextPos.requiredStrength+offset  : 0;
-            var reqDefense = nextPos.requiredDefense > 0       ? nextPos.requiredDefense+offset   : 0;
-            var reqDexterity = nextPos.requiredDexterity > 0   ? nextPos.requiredDexterity+offset : 0;
-            var reqAgility = nextPos.requiredDexterity > 0     ? nextPos.requiredDexterity+offset : 0;
-            var reqCharisma = nextPos.requiredCharisma > 0     ? nextPos.requiredCharisma+offset  : 0;
-            var reqRep = nextPos.requiredReputation;
-            var reqText = "(Requires ";
-            if (reqHacking > 0)     {reqText += (reqHacking +       " hacking, ");}
-            if (reqStrength > 0)    {reqText += (reqStrength +      " strength, ");}
-            if (reqDefense > 0)     {reqText += (reqDefense +       " defense, ");}
-            if (reqDexterity > 0)   {reqText += (reqDexterity +     " dexterity, ");}
-            if (reqAgility > 0)     {reqText += (reqAgility +       " agility, ");}
-            if (reqCharisma > 0)    {reqText += (reqCharisma +      " charisma, ");}
-            if (reqRep > 1)         {reqText += (reqRep +           " reputation, ");}
-            reqText = reqText.substring(0, reqText.length - 2);
-            reqText += ")";
+            var reqText = getJobRequirementText(company, nextPos);
             dialogBoxCreate("Unfortunately, you do not qualify for a promotion", reqText);
             
             return; //Same job, do nothing
@@ -118,6 +84,29 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
     }
     
     Engine.loadLocationContent();
+}
+
+function getJobRequirementText(company, pos) {
+    var reqText = "";
+    var offset = company.jobStatReqOffset;
+    var reqHacking = pos.requiredHacking > 0       ? pos.requiredHacking+offset   : 0;
+    var reqStrength = pos.requiredStrength > 0     ? pos.requiredStrength+offset  : 0;
+    var reqDefense = pos.requiredDefense > 0       ? pos.requiredDefense+offset   : 0;
+    var reqDexterity = pos.requiredDexterity > 0   ? pos.requiredDexterity+offset : 0;
+    var reqAgility = pos.requiredDexterity > 0     ? pos.requiredDexterity+offset : 0;
+    var reqCharisma = pos.requiredCharisma > 0     ? pos.requiredCharisma+offset  : 0;
+    var reqRep = pos.requiredReputation;
+    var reqText = "(Requires ";
+    if (reqHacking > 0)     {reqText += (reqHacking +       " hacking, ");}
+    if (reqStrength > 0)    {reqText += (reqStrength +      " strength, ");}
+    if (reqDefense > 0)     {reqText += (reqDefense +       " defense, ");}
+    if (reqDexterity > 0)   {reqText += (reqDexterity +     " dexterity, ");}
+    if (reqAgility > 0)     {reqText += (reqAgility +       " agility, ");}
+    if (reqCharisma > 0)    {reqText += (reqCharisma +      " charisma, ");}
+    if (reqRep > 1)         {reqText += (reqRep +           " reputation, ");}
+    reqText = reqText.substring(0, reqText.length - 2);
+    reqText += ")";
+    return reqText;
 }
 
 PlayerObject.prototype.applyForSoftwareJob = function() {
