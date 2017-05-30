@@ -111,24 +111,24 @@ applyPerk = function(perk) {
     switch (perk.name) {
         case PerkNames.FreeCoffeeCompanyPerk:
             //Increase money and hacking exp gain
-            Player.hacking_money_mult       += 1.1;
-            Player.hacking_exp_mult         += 1.1;
+            Player.hacking_money_mult       *= 1.25;
+            Player.hacking_exp_mult         *= 1.25;
             break;
         case PerkNames.FreeFoodCompanyPerk:
-            Player.strength_exp_mult        += 1.05;
-            Player.defense_exp_mult         += 1.05;
-            Player.dexterity_exp_mult       += 1.05;
-            Player.agility_exp_mult         += 1.05;
+            Player.strength_exp_mult        *= 1.2;
+            Player.defense_exp_mult         *= 1.2;
+            Player.dexterity_exp_mult       *= 1.2;
+            Player.agility_exp_mult         *= 1.2;
             break;
         case PerkNames.NetworkingCompanyPerk:
-            Player.company_rep_mult         += 1.1;
-            Player.charisma_exp_mult        += 1.2;
+            Player.company_rep_mult         *= 1.1;
+            Player.charisma_exp_mult        *= 1.2;
             break;
         case PerkNames.PersonalTrainerCompanyPerk:
-            Player.strength_exp_mult        += 1.15;
-            Player.defense_exp_mult         += 1.15;
-            Player.dexterity_exp_mult       += 1.15;
-            Player.agility_exp_mult         += 1.15;
+            Player.strength_exp_mult        *= 1.15;
+            Player.defense_exp_mult         *= 1.15;
+            Player.dexterity_exp_mult       *= 1.15;
+            Player.agility_exp_mult         *= 1.15;
             break;
         case PerkNames.KnowledgeBaseCompanyPerk:
             break;
