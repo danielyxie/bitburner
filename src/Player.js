@@ -1095,7 +1095,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     ++this.numTimesShoplifted;
                     break;
                 case CONSTANTS.CrimeMug:
-                    this.karma -= 0.2;
+                    this.karma -= 0.25;
                     ++this.numPeopleMugged;
                     break;
                 case CONSTANTS.CrimeDrugs:

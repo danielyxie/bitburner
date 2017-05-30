@@ -305,15 +305,15 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var bitrunnersFac = Factions["BitRunners"];
     var homeComp = Player.getHomeComputer();
     if (bitrunnersFac.isBanned == false && bitrunnersFac.isMember == false &&
-        this.hacking_skill >= 600 && homeComp.maxRam >= 128) {
+        this.hacking_skill >= 500 && homeComp.maxRam >= 128) {
         invitedFactions.push(bitrunnersFac);
     }
     
     //The Black Hand
     var theblackhandFac = Factions["The Black Hand"];
     if (theblackhandFac.isBanned == false && theblackhandFac.isMember == false &&
-        this.hacking_skill >= 400 && this.strength >= 200 && this.defense >= 200 &&
-        this.agility >= 200 && this.dexterity >= 200 && homeComp.maxRam >= 64) {
+        this.hacking_skill >= 300 && this.strength >= 100 && this.defense >= 100 &&
+        this.agility >= 100 && this.dexterity >= 100 && homeComp.maxRam >= 64) {
         invitedFactions.push(theblackhandFac);
     }
     
