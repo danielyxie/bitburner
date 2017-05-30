@@ -18,27 +18,28 @@ FactionInfo = {
 	CovenantInfo: "Yesterday we obeyed kings and bent our necks to emperors. Today we kneel only to truth.",
 	
 	//Megacorporations, each forms its own faction
-	ECorpInfo: "ECorp's mission is simple: to connect the world of today with the technology of tomorrow.\n" + 
-			   "With our wide range of Internet-related software and commercial hardware, ECorp makes the world's\n" + 
+	ECorpInfo: "ECorp's mission is simple: to connect the world of today with the technology of tomorrow. " + 
+			   "With our wide range of Internet-related software and commercial hardware, ECorp makes the world's " + 
 			   "information universally accessible.",
 			   
-	MegaCorpInfo: "MegaCorp does things that others don't. We imagine. We create. We invent. We build things that\n" +
-				  "others have never even dreamed of. Our work fills the world's needs for food, water, power, and\n" +
-				  "transporation on an unprecendented scale, in ways that no other company can.\n\n" + 
+	MegaCorpInfo: "MegaCorp does things that others don't. We imagine. We create. We invent. We build things that " +
+				  "others have never even dreamed of. Our work fills the world's needs for food, water, power, and " +
+				  "transporation on an unprecendented scale, in ways that no other company can.<br><br>" + 
 				  "In our labs and factories and on the ground with customers, MegaCorp is ushering in a new era for the world.",
 				  
 	BachmanAndAssociatesInfo: "Where Law and Business meet - thats where we are. <br><br>" + 
                               "Legal Insight - Business Instinct - Experience Innovation",
 	
-	BladeIndustriesInfo: "TODO",
+	BladeIndustriesInfo: "Augmentation is salvation",
 	
 	NWOInfo: "The human being created civilization not because of willingness but of a need to be assimilated into higher orders of structure and meaning.",
 	
-	ClarkeIncorporatedInfo: "TODO",
+	ClarkeIncorporatedInfo: "Unlocking the power of the genome",
 	
 	OmniTekIncorporatedInfo: "Simply put, our mission is to design and build robots that make a difference",
 	
-	FourSigmaInfo: "TODO",
+	FourSigmaInfo: "The scientific method is the best way to approach investing. Big strategies backed up with big data. Driven by " + 
+                   "deep learning and innovative ideas. And improved by iteration. That's Four Sigma.",
 	
 	KuaiGongInternationalInfo: "Dream big. Work hard. Make history.",
     
@@ -46,18 +47,18 @@ FactionInfo = {
     FulcrumSecretTechnologiesInfo: "TODO",
 	
 	//Hacker groups
-	BitRunnersInfo: "Our entire lives are controlled by bits. All of our actions, our thoughts, our personal information. \n"+
-				    "It's all transformed into bits, stored in bits, communicated through bits. It’s impossible for any person\n" +
-					"to move, to live, to operate at any level without the use of bits.\n\n" +
-					"And when a person moves, lives, and operates, they leave behind their bits, mere traces of seemingly\n" +
-					"meaningly fragments of information. But these bits can be reconstructed. Transformed. Used.\n\n" +
+	BitRunnersInfo: "Our entire lives are controlled by bits. All of our actions, our thoughts, our personal information.  "+
+				    "It's all transformed into bits, stored in bits, communicated through bits. It’s impossible for any person " +
+					"to move, to live, to operate at any level without the use of bits.  " +
+					"And when a person moves, lives, and operates, they leave behind their bits, mere traces of seemingly " +
+					"meaningly fragments of information. But these bits can be reconstructed. Transformed. Used.<br><br>" +
 					"Those who run the bits, run the world",
 					
 	
-	BlackHandInfo: "This is real freedom, freedom to own property, make a profit, make your life. \n" + 
-				   "The West, so afraid of strong government, now has no government. Only financial power.\n" + 
-				   "And those at the top rule with an invisible hand. They built a society where the rich get richer,\n" +
-				   "and everyone else suffers. \n\n" +
+	BlackHandInfo: "This is real freedom, freedom to own property, make a profit, make your life.  " + 
+				   "The West, so afraid of strong government, now has no government. Only financial power. " + 
+				   "And those at the top rule with an invisible hand. They built a society where the rich get richer, " +
+				   "and everyone else suffers.<br><br>" +
 				   "So much pain. So many lives. Their darkness must end.", 
 	
 	NiteSecInfo:
@@ -98,26 +99,25 @@ FactionInfo = {
 "             $$$$$$$$$$$$$$$$$         $$b :   <br>",
 	
 	//City factions, essentially governments
-	ChongqingInfo: "TODO",
-	Sector12Info: "TODO",
-	HongKongInfo: "TODO",
-	AevumInfo: "TODO",
-    IshimaInfo: "TODO",
-	VolhavenInfo: "TODO",
+	ChongqingInfo: "Serve the people",
+	Sector12Info: "The City of the Future",
+	HongKongInfo: "Asia's World City",
+	AevumInfo: "The Silicon City",
+    IshimaInfo: "The East Asian Order of the Future",
+	VolhavenInfo: "Benefit, Honour, and Glory",
 	
 	//Criminal Organizations/Gangs
 	SpeakersForTheDeadInfo:	"It is better to reign in hell than to serve in heaven.",
 	
 	DarkArmyInfo: "The World doesn't care about right or wrong. It's all about power.",
 	
-	TheSyndicateInfo: "TODO",
+	TheSyndicateInfo: "Honor holds you back",
 	
 	SilhouetteInfo: "Corporations are so big, you don't even know who you're working for. That's terror. Terror built into the system.",
     
-    TetradsInfo: "Following the Mandate of HEaven and Carrying out the way",
+    TetradsInfo: "Following the Mandate of Heaven and Carrying out the Way",
     
     SlumSnakesInfo: "Slum Snakes rule!",
-    
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories

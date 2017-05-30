@@ -107,6 +107,11 @@ function prestigeAugmentation() {
    
     Player.lastUpdate = new Date().getTime();
     
+    //Delete all running scripts objects
+    for (var i = 0; i < workerScripts.length; ++i) {
+        workerScripts[i].env.stopFlag = true;
+    }
+    
     var homeComp = Player.getHomeComputer();
     //Delete all servers except home computer
     for (var member in AllServers) {
@@ -157,10 +162,6 @@ function prestigeAugmentation() {
         s.moneyStolenMap.printConsole();
     }
     
-    //Delete all running scripts objects
-    for (var i = 0; i < workerScripts.length; ++i) {
-        workerScripts[i].env.stopFlag = true;
-    }
     //Delete active scripts display elements
     var list = Engine.ActiveScriptsList.querySelectorAll('#active-scripts-list li');
     for (var i = list.length-1; i >= 0; --i) {

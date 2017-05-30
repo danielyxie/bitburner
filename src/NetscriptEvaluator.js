@@ -16,13 +16,13 @@ function evaluate(exp, workerScript) {
 		case "str":
 		case "bool":
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject(workerScript);}
+				if (env.stopFlag) {reject(workerScript); return;}
 				resolve(exp.value);
 			});
 			break;
 		case "var":
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject(workerScript);}
+				if (env.stopFlag) {reject(workerScript); return;}
                 if (exp.value == "hacknetnodes") {
                     setTimeout(function() {
                         var pEvaluateHacknetNode = evaluateHacknetNode(exp, workerScript);
@@ -44,7 +44,7 @@ function evaluate(exp, workerScript) {
 		//Can currently only assign to "var"s
 		case "assign":
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject(workerScript);}
+				if (env.stopFlag) {reject(workerScript); return;}
 				
 				if (exp.left.type != "var")
 					reject("|" + workerScript.serverIp + "|" + workerScript.name + "| Cannot assign to " + JSON.stringify(exp.left));
@@ -74,7 +74,7 @@ function evaluate(exp, workerScript) {
 			
 		case "binary":
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject(workerScript);}
+				if (env.stopFlag) {reject(workerScript); return;}
 				
 				var pLeft = new Promise(function(resolve, reject) {
 					setTimeout(function() {
@@ -152,7 +152,7 @@ function evaluate(exp, workerScript) {
             break;
 		case "for":
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject(workerScript);}
+				if (env.stopFlag) {reject(workerScript); return;}
 				
 				var pInit = new Promise(function(resolve, reject) {
 					setTimeout(function() {
@@ -179,7 +179,7 @@ function evaluate(exp, workerScript) {
 			break;
 		case "while":
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject(workerScript);}
+				if (env.stopFlag) {reject(workerScript); return;}
 				
 				var pEvaluateWhile = evaluateWhile(exp, workerScript);
 				pEvaluateWhile.then(function(whileLoopRes) {
@@ -191,7 +191,7 @@ function evaluate(exp, workerScript) {
 			break;
 		case "prog":
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject(workerScript);}
+				if (env.stopFlag) {reject(workerScript); return;}
 				
 				var evaluateProgPromise = evaluateProg(exp, workerScript, 0);
 				evaluateProgPromise.then(function(w) {
@@ -224,10 +224,11 @@ function evaluate(exp, workerScript) {
 			//	return evaluate(arg, env);
 			//}));
 			return new Promise(function(resolve, reject) {
-				if (env.stopFlag) {reject(workerScript);}
+				if (env.stopFlag) {reject(workerScript); return;}
 				
 				setTimeout(function() {
 					if (exp.func.value == "hack") {
+                        if (env.stopFlag) {reject(workerScript); return;}
 						if (exp.args.length != 1) {
 							reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Hack() call has incorrect number of arguments. Takes 1 argument");
                             return;
@@ -235,6 +236,7 @@ function evaluate(exp, workerScript) {
 						var ipPromise = evaluate(exp.args[0], workerScript);
 
 						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript); return;}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into hack() command");
@@ -261,10 +263,10 @@ function evaluate(exp, workerScript) {
                             workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds");
 							
 							var p = new Promise(function(resolve, reject) {
-								if (env.stopFlag) {reject(workerScript);}
+								if (env.stopFlag) {reject(workerScript); return;}
 								console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds.");
 								setTimeout(function() {
-                                    if (env.stopFlag) {reject(workerScript);}
+                                    if (env.stopFlag) {reject(workerScript); return;}
 									var hackChance = scriptCalculateHackingChance(server);
 									var rand = Math.random();
 									var expGainedOnSuccess = scriptCalculateExpGain(server);
@@ -355,13 +357,14 @@ function evaluate(exp, workerScript) {
 							reject(e);
 						});
 					} else if (exp.func.value == "grow") {
+                        if (env.stopFlag) {reject(workerScript); return;}
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|grow() call has incorrect number of arguments. Takes 1 argument");
                             return;
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
-                            if (env.stopFlag) {reject(workerScript);}
+                            if (env.stopFlag) {reject(workerScript); return;}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into grow() command");
@@ -381,7 +384,7 @@ function evaluate(exp, workerScript) {
                             workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds");
                             
                             var p = new Promise(function(resolve, reject) {
-								if (env.stopFlag) {reject(workerScript);}
+								if (env.stopFlag) {reject(workerScript); return;}
 								setTimeout(function() {
                                     server.moneyAvailable += 1; //It can be grown even if it has no money
 									var growthPercentage = processSingleServerGrowth(server, 450);
@@ -407,7 +410,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
-                            if (env.stopFlag) {reject(workerScript);}
+                            if (env.stopFlag) {reject(workerScript); return;}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into nuke() command");
@@ -427,7 +430,7 @@ function evaluate(exp, workerScript) {
                             
                             workerScript.scriptRef.log("Running NUKE.exe on server " + server.hostname + " in 5 seconds");
                             var p = new Promise(function(resolve, reject) {
-								if (env.stopFlag) {reject(workerScript);}
+								if (env.stopFlag) {reject(workerScript); return;}
 								setTimeout(function() {
                                     if (server.hasAdminRights) {
                                         workerScript.scriptRef.log("Already have root access to " + server.hostname);
@@ -454,7 +457,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
-                            if (env.stopFlag) {reject(workerScript);}
+                            if (env.stopFlag) {reject(workerScript); return;}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into brutessh() command");
@@ -469,7 +472,7 @@ function evaluate(exp, workerScript) {
                             
                             workerScript.scriptRef.log("Running BruteSSH.exe on server " + server.hostname + " in 10 seconds");
                             var p = new Promise(function(resolve, reject) {
-								if (env.stopFlag) {reject(workerScript);}
+								if (env.stopFlag) {reject(workerScript); return;}
 								setTimeout(function() {
                                     if (!server.sshPortOpen) {
                                         workerScript.scriptRef.log("Executed BruteSSH.exe virus on " + server.hostname + " to open SSH port (22)");
@@ -497,7 +500,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
-                            if (env.stopFlag) {reject(workerScript);}
+                            if (env.stopFlag) {reject(workerScript); return;}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into ftpcrack() command");
@@ -512,7 +515,7 @@ function evaluate(exp, workerScript) {
                             
                             workerScript.scriptRef.log("Running FTPCrack.exe on server " + server.hostname + " in 15 seconds");
                             var p = new Promise(function(resolve, reject) {
-								if (env.stopFlag) {reject(workerScript);}
+								if (env.stopFlag) {reject(workerScript); return;}
 								setTimeout(function() {
                                     if (!server.ftpPortOpen) {
                                         workerScript.scriptRef.log("Executed FTPCrack.exe virus on " + server.hostname + " to open FTP port (21)");
@@ -540,7 +543,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
-                            if (env.stopFlag) {reject(workerScript);}
+                            if (env.stopFlag) {reject(workerScript); return;}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into relaysmtp() command");
@@ -555,7 +558,7 @@ function evaluate(exp, workerScript) {
                             
                             workerScript.scriptRef.log("Running relaySMTP.exe on server " + server.hostname + " in 20 seconds");
                             var p = new Promise(function(resolve, reject) {
-								if (env.stopFlag) {reject(workerScript);}
+								if (env.stopFlag) {reject(workerScript); return;}
 								setTimeout(function() {
                                     if (!server.smtpPortOpen) {
                                         workerScript.scriptRef.log("Executed relaySMTP.exe virus on " + server.hostname + " to open SMTP port (25)");
@@ -583,7 +586,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
-                            if (env.stopFlag) {reject(workerScript);}
+                            if (env.stopFlag) {reject(workerScript); return;}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into relaysmtp() command");
@@ -598,7 +601,7 @@ function evaluate(exp, workerScript) {
                             
                             workerScript.scriptRef.log("Running HTTPWorm.exe on server " + server.hostname + " in 25 seconds");
                             var p = new Promise(function(resolve, reject) {
-								if (env.stopFlag) {reject(workerScript);}
+								if (env.stopFlag) {reject(workerScript); return;}
 								setTimeout(function() {
                                     if (!server.httpPortOpen) {
                                         workerScript.scriptRef.log("Executed HTTPWorm.exe virus on " + server.hostname + " to open HTTP port (25)");
@@ -626,7 +629,7 @@ function evaluate(exp, workerScript) {
                         }
 						var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
-                            if (env.stopFlag) {reject(workerScript);}
+                            if (env.stopFlag) {reject(workerScript); return;}
                             var server = getServer(ip);
                             if (server == null) {
                                 reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into sqlinject() command");
@@ -641,7 +644,7 @@ function evaluate(exp, workerScript) {
                             
                             workerScript.scriptRef.log("Running SQLInject.exe on server " + server.hostname + " in 30 seconds");
                             var p = new Promise(function(resolve, reject) {
-								if (env.stopFlag) {reject(workerScript);}
+								if (env.stopFlag) {reject(workerScript); return;}
 								setTimeout(function() {
                                     if (!server.sqlPortOpen) {
                                         workerScript.scriptRef.log("Executed SQLInject.exe virus on " + server.hostname + " to open SQL port (1433)");
@@ -669,7 +672,7 @@ function evaluate(exp, workerScript) {
                         }
                         var ipPromise = evaluate(exp.args[0], workerScript);
 						ipPromise.then(function(ip) {
-                            if (env.stopFlag) {reject(workerScript);}
+                            if (env.stopFlag) {reject(workerScript); return;}
                             setTimeout(function() {
                                 var server = getServer(ip);
                                 if (server == null) {
@@ -690,7 +693,7 @@ function evaluate(exp, workerScript) {
                         }
                         var scriptNamePromise = evaluate(exp.args[0], workerScript);
                         scriptNamePromise.then(function(scriptname) {
-                            if (env.stopFlag) {reject(workerScript);}
+                            if (env.stopFlag) {reject(workerScript); return;}
                             var scriptServer = getServer(workerScript.serverIp);
                             if (scriptServer == null) {
                                 reject("|"+workerScript.serverIp+"|"+workerScript.name+"|Could not find server. This is a bug in the game. Report to game dev");
@@ -778,7 +781,7 @@ function evaluate(exp, workerScript) {
                             return;
                         }
                         setTimeout(function() {
-                            if (env.stopFlag) {reject(workerScript);}
+                            if (env.stopFlag) {reject(workerScript); return;}
                             Player.updateSkillLevels();
                             workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
                             resolve(Player.hacking_skill);
@@ -832,6 +835,8 @@ function evaluate(exp, workerScript) {
                             workerScript.scriptRef.log("Purchased new Hacknet Node with name: " + name);
                             resolve(numOwned);
                         }, CONSTANTS.CodeInstructionRunTime);
+                    } else {
+                        reject(makeRuntimeRejectMsg(workerScript, "Invalid function: " + exp.func.value));
                     } 
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
@@ -887,7 +892,7 @@ function evaluateIf(exp, workerScript, i) {
 function evaluateFor(exp, workerScript) {
 	var env = workerScript.env;
 	return new Promise(function(resolve, reject) {
-		if (env.stopFlag) {reject(workerScript);}
+		if (env.stopFlag) {reject(workerScript); return;}
 		
 		var pCond = new Promise(function(resolve, reject) {
 			setTimeout(function() {
@@ -954,7 +959,7 @@ function evaluateWhile(exp, workerScript) {
 	var env = workerScript.env;
 	
 	return new Promise(function(resolve, reject) {
-		if (env.stopFlag) {reject(workerScript);}
+		if (env.stopFlag) {reject(workerScript); return;}
 		
 		var pCond = new Promise(function(resolve, reject) {
 			setTimeout(function() {
@@ -1108,7 +1113,7 @@ function evaluateProg(exp, workerScript, index) {
 	var env = workerScript.env;
 	
 	return new Promise(function(resolve, reject) {
-		if (env.stopFlag) {reject(workerScript);}
+		if (env.stopFlag) {reject(workerScript); return;}
 		
 		if (index >= exp.prog.length) {
 			resolve("progFinished");
@@ -1177,7 +1182,7 @@ function apply_op(op, a, b) {
 function runScriptFromScript(server, scriptname, workerScript) {
     return new Promise(function(resolve, reject) {
         var env = workerScript.env;
-        if (env.stopFlag) {reject(workerScript);}
+        if (env.stopFlag) {reject(workerScript); return;}
         setTimeout(function() {
             //Check if the script is already running
             for (var i = 0; i < server.runningScripts.length; ++i) {
@@ -1259,7 +1264,7 @@ function scriptCalculateExpGain(server) {
 function scriptCalculatePercentMoneyHacked(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 725;
+    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 700;
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;
