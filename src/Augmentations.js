@@ -1562,10 +1562,10 @@ applyAugmentation = function(aug, reapply=false) {
             Player.crime_success_mult  *= 1.01;
 
             Player.hacknet_node_money_mult            *= 1.01;
-            Player.hacknet_node_purchase_cost_mult    *= 1.01;
-            Player.hacknet_node_ram_cost_mult         *= 1.01;
-            Player.hacknet_node_core_cost_mult        *= 1.01;
-            Player.hacknet_node_level_cost_mult       *= 1.01;
+            Player.hacknet_node_purchase_cost_mult    *= 0.99;
+            Player.hacknet_node_ram_cost_mult         *= 0.99;
+            Player.hacknet_node_core_cost_mult        *= 0.99;
+            Player.hacknet_node_level_cost_mult       *= 0.99;
 
             Player.work_money_mult    *= 1.01;
         
