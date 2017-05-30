@@ -78,7 +78,7 @@ function determineCrimeSuccess(crime, moneyGained) {
             dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
             return;
     }
-    chance *= Player.crime_success_mult;
+    
     if (Math.random() <= chance) {
         //Success
         Player.gainMoney(moneyGained);
@@ -94,7 +94,7 @@ function determineCrimeChanceShoplift() {
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
                    Player.agility / CONSTANTS.MaxSkillLevel)) * 10;
-                   
+    chance *= Player.crime_success_mult;               
     return Math.min(chance, 1);
 }
 
@@ -103,6 +103,7 @@ function determineCrimeChanceMug() {
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
                    Player.agility / CONSTANTS.MaxSkillLevel)) * 5;
+    chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }
 
@@ -112,6 +113,7 @@ function determineCrimeChanceDealDrugs() {
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
                    Player.agility / CONSTANTS.MaxSkillLevel));
+    chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }
 
@@ -121,6 +123,7 @@ function determineCrimeChanceTraffickArms() {
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
                    Player.agility / CONSTANTS.MaxSkillLevel)) / 2;
+    chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }
 
@@ -128,7 +131,8 @@ function determineCrimeChanceHomicide() {
     var chance = ((Player.strength / CONSTANTS.MaxSkillLevel + 
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel));  
+                   Player.agility / CONSTANTS.MaxSkillLevel));
+    chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }
 
@@ -138,7 +142,8 @@ function determineCrimeChanceGrandTheftAuto() {
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    4 * Player.dexterity / CONSTANTS.MaxSkillLevel +
                    Player.agility / CONSTANTS.MaxSkillLevel + 
-                   2 * Player.charisma / CONSTANTS.MaxSkillLevel)) / 8;  
+                   2 * Player.charisma / CONSTANTS.MaxSkillLevel)) / 8;
+    chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }
 
@@ -148,6 +153,7 @@ function determineCrimeChanceKidnap() {
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
                    Player.agility / CONSTANTS.MaxSkillLevel)) / 6;
+    chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }
 
@@ -155,7 +161,8 @@ function determineCrimeChanceAssassination() {
     var chance = ((Player.strength / CONSTANTS.MaxSkillLevel + 
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel)) / 8;  
+                   Player.agility / CONSTANTS.MaxSkillLevel)) / 8;
+    chance *= Player.crime_success_mult;
     return Math.min(chance, 1);    
 }
 
@@ -165,6 +172,7 @@ function determineCrimeChanceHeist() {
                    Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
                    Player.agility / CONSTANTS.MaxSkillLevel + 
-                   Player.charisma / CONSTANTS.MaxSkillLevel)) / 18;  
+                   Player.charisma / CONSTANTS.MaxSkillLevel)) / 18;
+    chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }
