@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.17.5",
+    Version:                "0.17.6",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -19,10 +19,10 @@ CONSTANTS = {
     
     /* Hacknet Node constants */
     HacknetNodeMoneyGainPerLevel: 1.65,
-    HacknetNodePurchaseNextMult: 1.33,   //Multiplier when purchasing an additional hacknet node
+    HacknetNodePurchaseNextMult: 1.38,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.22,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.45,    //Multiplier for cost when buying another core
+    HacknetNodeUpgradeRamMult: 1.24,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeCoreMult: 1.48,    //Multiplier for cost when buying another core
     
     HacknetNodeMaxLevel: 200,
     HacknetNodeMaxRam: 64,
