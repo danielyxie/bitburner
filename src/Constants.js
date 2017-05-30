@@ -147,15 +147,16 @@ CONSTANTS = {
                 "home                   Connect to home computer<br>" + 
                 "hostname               Displays the hostname of the machine<br>" + 
                 "ifconfig               Displays the IP address of the machine<br>" +
-                "kill [script name]     Stops a script that is running on the current machine<br>" +
+                "kill [script]          Stops a script that is running on the current machine<br>" +
                 "ls                     Displays all programs and scripts on the machine<br>" +
-                "mem [script name]      Displays the amount of RAM the script requires to run<br>" + 
-                "nano [script name]     Text editor - Open up and edit a script<br>" + 
+                "mem [script]           Displays the amount of RAM the script requires to run<br>" + 
+                "nano [script]          Text editor - Open up and edit a script<br>" + 
                 "ps                     Display all scripts that are currently running<br>" + 
                 "rm                     Delete a script/program from the machine. (WARNING: Permanent)<br>" + 
                 "run [script/program]   Execute a program or a script<br>" + 
                 "scan                   Displays all available network connections<br>" +
                 "scan-analyze [depth]   Displays hacking-related information for all servers up to <i>depth</i> nodes away<br>" + 
+                "scp [script] [server]  Copies a script to a destination server (specified by ip or hostname)<br>" + 
                 "sudov                  Shows whether or not you have root access on this computer<br>" + 
                 "tail [script]          Display script logs (logs contain details about active scripts)<br>" +
                 "top                    Display all running scripts and their RAM usage<br>",

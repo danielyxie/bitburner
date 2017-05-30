@@ -707,6 +707,58 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
                             reject(e);
                         });
+                    } else if (exp.func.value == "scp") {
+                        if (exp.args.length != 1) {
+                            reject(makeRuntimeRejectMsg(workerScript, "scp() call has incorrect number of arguments. Takes 2 arguments"));
+                            return;
+                        }
+                        var scriptNamePromise = evaluate(exp.args[0], workerScript);
+                        scriptNamePromise.then(function(scriptname) {
+                            var ipPromise = evaluate(exp.args[1], workerScript);
+                            ipPromise.then(function(ip) {
+                                var destServer = getServer(ip);
+                                if (destServer == null) {
+                                    reject(makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into scp() command: " + ip));
+                                    return;
+                                }
+                                
+                                //Check that a script with this filename does not already exist
+                                for (var i = 0; i < destServer.scripts.length; ++i) {
+                                    if (scriptname == destServer.scripts[i].filename) {
+                                        workerScript.scriptRef.log(destServ.hostname + " already contains a script named  " + scriptname);
+                                        resolve(false);
+                                        return;
+                                    }
+                                }
+                                
+                                var currServ = getServer(workerScript.serverIp);
+                                if (currServ == null) {
+                                    reject(makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer"));
+                                    return;
+                                }
+                                for (var i = 0; i < currServ.scripts.length; ++i) {
+                                    if (scriptname == currServ.scripts[i].filename) {
+                                        var newScript = new Script();
+                                        newScript.filename = scriptname;
+                                        newScript.code = currServ.scripts[i].code;
+                                        newScript.ramUsage = currServ.scripts[i].ramUsage;
+                                        newScript.server = ip;
+                                        server.scripts.push(newScript);
+                                        workerScript.scriptRef.log(scriptname + " copied over to " + server.hostname);
+                                        resolve(true);
+                                        return;
+                                    }
+                                }
+                                workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
+                                resolve(false);
+                                
+                            }, function(e) {
+                                reject(e);
+                            });
+                        }, function(e) {
+                            reject(e);
+                        });
+                        
                     } else if (exp.func.value == "getHostname") {
                         if (exp.args.length != 0) {
                             reject(makeRuntimeRejectMsg(workerScript, "getHostname() call has incorrect number of arguments. Takes 0 arguments"));

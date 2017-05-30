@@ -789,8 +789,7 @@ var Terminal = {
                 
                 var currServ = Player.getCurrentServer();
                 for (var i = 0; i < currServ.scripts.length; ++i) {
-                    if (scriptname == currServ.scripts[i].filename){ 
-                        
+                    if (scriptname == currServ.scripts[i].filename) { 
                         var newScript = new Script();
                         newScript.filename = scriptname;
                         newScript.code = currServ.scripts[i].code;

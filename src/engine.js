@@ -1092,6 +1092,7 @@ var Engine = {
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
             console.log("Deleting running scripts on home computer");
             Player.getHomeComputer().runningScripts = [];
+            dialogBoxCreate("Forcefully deleted scripts. Please refresh page");
             return false;
         });
     },
