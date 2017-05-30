@@ -78,7 +78,8 @@ HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
     Player.loseMoney(cost);
     if (this.level + levels >= CONSTANTS.HacknetNodeMaxLevel) {
         this.level = CONSTANTS.HacknetNodeMaxLevel;
-        return false;
+        this.updateMoneyGainRate();
+        return true;
     }
     this.level += levels;
     this.updateMoneyGainRate();
@@ -99,8 +100,8 @@ HacknetNode.prototype.purchaseRamUpgrade = function() {
     var cost = this.calculateRamUpgradeCost();
     if (isNaN(cost)) {return false;}
     if (cost > Player.money) {return false;}
-    Player.loseMoney(cost);
     if (this.ram >= CONSTANTS.HacknetNodeMaxRam) {return false;}
+    Player.loseMoney(cost);
     this.ram *= 2; //Ram is always doubled
     this.updateMoneyGainRate();
     return true;
@@ -116,8 +117,8 @@ HacknetNode.prototype.purchaseCoreUpgrade = function() {
     var cost = this.calculateCoreUpgradeCost();
     if (isNaN(cost)) {return false;}
     if (cost > Player.money) {return false;}
-    Player.loseMoney(cost);
     if (this.numCores >= CONSTANTS.HacknetNodeMaxCores) {return false;}
+    Player.loseMoney(cost);
     ++this.numCores;
     this.updateMoneyGainRate();
     return true;
