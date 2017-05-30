@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 $(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
 		//Ctrl + b
-        if (e.keyCode == 66 && e.ctrlKey) {			
+        if (e.keyCode == 66 && e.ctrlKey) {
+            e.preventDefault();
 			saveAndCloseScriptEditor();
         }
 	}
@@ -181,6 +182,9 @@ Script.prototype.updateRamUsage = function() {
     var httpwormCount = numOccurrences(codeCopy, "httpworm(");
     var sqlinjectCount = numOccurrences(codeCopy, "sqlinject(");
     var runCount = numOccurrences(codeCopy, "run(");
+    var scpCount = numOccurrences(codeCopy, "scp(");
+    var hasRootAccessCount = numOccurrences(codeCopy, "hasRootAccess(");
+    var getHostnameCount = numOccurrences(codeCopy, "getHostname(");
     var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
     var getServerMoneyAvailableCount = numOccurrences(codeCopy, "getServerMoneyAvailable(");
     var numOperators = numNetscriptOperators(codeCopy);
@@ -203,6 +207,9 @@ Script.prototype.updateRamUsage = function() {
                     (httpwormCount * CONSTANTS.ScriptHttpwormRamCost) + 
                     (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost) + 
                     (runCount * CONSTANTS.ScriptRunRamCost) + 
+                    (scpCount * CONSTANTS.ScriptScpRamCost) + 
+                    (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) + 
+                    (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
                     (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
                     (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
                     (numOperators * CONSTANTS.ScriptOperatorRamCost) +

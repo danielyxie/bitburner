@@ -861,7 +861,7 @@ displayLocationContent = function() {
         case Locations.AevumSlums:
         case Locations.ChongqingSlums:
         case Locations.Sector12Slums:
-        case Locations.NewTokyokSlums:
+        case Locations.NewTokyoSlums:
         case Locations.IshimaSlums:
         case Locations.VolhavenSlums:
             var shopliftChance = determineCrimeChanceShoplift();
@@ -1394,7 +1394,7 @@ initLocationButtons = function() {
     });
     
     itJob.addEventListener("click", function() {
-        Player.applyForSoftwareJob()
+        Player.applyForItJob();
         return false; 
     });
     

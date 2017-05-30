@@ -102,18 +102,28 @@ $(document).keydown(function(event) {
             input = input.trim();
             input = input.replace(/\s\s+/g, ' ');
             
-            var allPos = determineAllPossibilitiesForTabCompletion(input);
+            var commandArray = input.split(" ");
+            var index = commandArray.length - 2;
+            if (index < 0) {index = 0;}
+            var allPos = determineAllPossibilitiesForTabCompletion(input, index);
             if (allPos.length == 0) {return;}
             
-            var commandArray = input.split(" ");
+            
             
             var arg = "";
+            var command = "";
             if (commandArray.length == 0) {return;}
-            else if (commandArray.length > 1) {
+            else if (commandArray.length == 2) {
+                command = commandArray[0];
                 arg = commandArray[1];
+            } else if (commandArray.length == 3) {
+                command = commandArray[0] + " " + commandArray[1];
+                arg = commandArray[2];
+            } else {
+                command = commandArray[0];
             }
             
-            tabCompletion(commandArray[0], arg, allPos);
+            tabCompletion(command, arg, allPos);
         }
 	}
 });
@@ -155,7 +165,8 @@ $(document).keyup(function(e) {
 //        a series of possible options for
 //  allPossibilities - Array of strings containing all possibilities that the
 //                     string can complete to
-function tabCompletion(command, arg, allPossibilities) {
+//  index - index of argument that is being "tab completed". By default is 0, the first argument
+function tabCompletion(command, arg, allPossibilities, index=0) {
     if (!(allPossibilities.constructor === Array)) {return;}
     if (!containsAllStrings(allPossibilities)) {return;}
     
@@ -191,9 +202,19 @@ function tabCompletion(command, arg, allPossibilities) {
     }
 }
 
-function determineAllPossibilitiesForTabCompletion(input) {
+function determineAllPossibilitiesForTabCompletion(input, index=0) {
     var allPos = [];
     var currServ = Player.getCurrentServer();
+    
+    if (input.startsWith("scp ") && index == 1) {
+        for (var iphostname in AllServers) {
+            if (AllServers.hasOwnProperty(iphostname)) {
+                allPos.push(AllServers[iphostname].ip);
+                allPos.push(AllServers[iphostname].hostname);
+            }
+        }
+    }
+    
     if (input.startsWith("connect ") || input.startsWith("telnet ")) {
         //All network connections
         for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
@@ -207,7 +228,8 @@ function determineAllPossibilitiesForTabCompletion(input) {
     
     if (input.startsWith("kill ") || input.startsWith("nano ") ||
         input.startsWith("tail ") || input.startsWith("rm ") ||
-        input.startsWith("mem ")) {
+        input.startsWith("mem ") || 
+        (input.startsWith("scp ") && index == 0)) {
         //All Scripts
         for (var i = 0; i < currServ.scripts.length; ++i) {
             allPos.push(currServ.scripts[i].filename);
@@ -539,7 +561,7 @@ var Terminal = {
 			case "connect":
 				//Disconnect from current server in terminal and connect to new one
                 if (commandArray.length != 2) {
-                    post("Incorrect usage of connect/telnet command. Usage: connect/telnet [ip/hostname]");
+                    post("Incorrect usage of connect command. Usage: connect [ip/hostname]");
                     return;
                 }
                 
@@ -762,7 +784,45 @@ var Terminal = {
                 }                    
                 break;
 			case "scp":
-				//TODO
+				if (commandArray.length != 2) {
+                    post("Incorrect usage of scp command. Usage: scp [scriptname] [destination hostname/ip]");
+                    return;
+                }
+                var args = commandArray[1].split(" ");
+                if (args.length != 2) {
+                    post("Incorrect usage of scp command. Usage: scp [scriptname] [destination hostname/ip]");
+                    return;
+                }
+                var scriptname = args[0];
+                var server = getServer(args[1]);
+                if (server == null) {
+                    post("Invalid destination. " + args[1] + " not found");
+                    return;
+                }
+                var ip = server.ip;
+                
+                //Check that a script with this filename does not already exist
+                for (var i = 0; i < server.scripts.length; ++i) {
+                    if (scriptname == server.scripts[i].filename) {
+                        post(server.hostname + " already contains a script named " + scriptname);
+                        return;
+                    }
+                }
+                
+                var currServ = Player.getCurrentServer();
+                for (var i = 0; i < currServ.scripts.length; ++i) {
+                    if (scriptname == currServ.scripts[i].filename) { 
+                        var newScript = new Script();
+                        newScript.filename = scriptname;
+                        newScript.code = currServ.scripts[i].code;
+                        newScript.ramUsage = currServ.scripts[i].ramUsage;
+                        newScript.server = ip;
+                        server.scripts.push(newScript);
+                        post(scriptname + " copied over to " + server.hostname);
+                        return;
+                    }
+                }
+                post("Script not found");
 				break;
             case "sudov":
                 if (commandArray.length != 1) {

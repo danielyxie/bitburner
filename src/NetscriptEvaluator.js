@@ -44,7 +44,6 @@ function evaluate(exp, workerScript) {
 		//Can currently only assign to "var"s
 		case "assign":
 			return new Promise(function(resolve, reject) {
-                console.log("Evaluating assign");
 				if (env.stopFlag) {reject(workerScript);}
 				
 				if (exp.left.type != "var")
@@ -65,8 +64,7 @@ function evaluate(exp, workerScript) {
 					try {
 						env.set(exp.left.value, expRight);
 					} catch (e) {
-                        console.log("here");
-						throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
+						reject("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
 					}
 					resolve(false); //Return false so this doesnt cause loops/ifs to evaluate
 				}, function(e) {
@@ -119,7 +117,6 @@ function evaluate(exp, workerScript) {
 		//TODO
 		case "if":
             return new Promise(function(resolve, reject) {
-                console.log("Evaluating if");
                 var numConds = exp.cond.length;
                 var numThens = exp.then.length;
                 if (numConds == 0 || numThens == 0 || numConds != numThens) {
@@ -157,13 +154,11 @@ function evaluate(exp, workerScript) {
 			return new Promise(function(resolve, reject) {
 				if (env.stopFlag) {reject(workerScript);}
 				
-				console.log("for loop encountered in evaluator");
-                workerScript.scriptRef.log("Entering for loop");
 				var pInit = new Promise(function(resolve, reject) {
 					setTimeout(function() {
 						var resInit = evaluate(exp.init, workerScript);
 						resInit.then(function(foo) {
-							resolve(resInit);
+							resolve(foo);
 						}, function(e) {
 							reject(e);
 						});
@@ -174,7 +169,6 @@ function evaluate(exp, workerScript) {
 					var pForLoop = evaluateFor(exp, workerScript);
 					pForLoop.then(function(forLoopRes) {
 						resolve("forLoopDone");
-                        workerScript.scriptRef.log("Exiting for loop");
 					}, function(e) {
 						reject(e);
 					});
@@ -670,7 +664,7 @@ function evaluate(exp, workerScript) {
 						});
                     } else if (exp.func.value == "hasRootAccess") {
                         if (exp.args.length != 1) {
-                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|hasRootAccess() call has incorrect number of arguments. Takes 1 argument");
+                            reject(makeRuntimeRejectMsg(workerScript, "hasRootAccess() call has incorrect number of arguments. Takes 1 argument"));
                             return;
                         }
                         var ipPromise = evaluate(exp.args[0], workerScript);
@@ -691,14 +685,13 @@ function evaluate(exp, workerScript) {
 						});
                     } else if (exp.func.value == "run") {
                         if (exp.args.length != 1) {
-                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|run() call has incorrect number of arguments. Takes 1 argument");
+                            reject(makeRuntimeRejectMsg(workerScript, "run() call has incorrect number of arguments. Takes 1 argument"));
                             return;
                         }
                         var scriptNamePromise = evaluate(exp.args[0], workerScript);
                         scriptNamePromise.then(function(scriptname) {
                             if (env.stopFlag) {reject(workerScript);}
-                            var serverIp = workerScript.serverIp;
-                            var scriptServer = AllServers[serverIp];
+                            var scriptServer = getServer(workerScript.serverIp);
                             if (scriptServer == null) {
                                 reject("|"+workerScript.serverIp+"|"+workerScript.name+"|Could not find server. This is a bug in the game. Report to game dev");
                                 return;
@@ -714,6 +707,71 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
                             reject(e);
                         });
+                    } else if (exp.func.value == "scp") {
+                        if (exp.args.length != 2) {
+                            reject(makeRuntimeRejectMsg(workerScript, "scp() call has incorrect number of arguments. Takes 2 arguments"));
+                            return;
+                        }
+                        var scriptNamePromise = evaluate(exp.args[0], workerScript);
+                        scriptNamePromise.then(function(scriptname) {
+                            var ipPromise = evaluate(exp.args[1], workerScript);
+                            ipPromise.then(function(ip) {
+                                var destServer = getServer(ip);
+                                if (destServer == null) {
+                                    reject(makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into scp() command: " + ip));
+                                    return;
+                                }
+                                
+                                //Check that a script with this filename does not already exist
+                                for (var i = 0; i < destServer.scripts.length; ++i) {
+                                    if (scriptname == destServer.scripts[i].filename) {
+                                        workerScript.scriptRef.log(destServer.hostname + " already contains a script named  " + scriptname);
+                                        resolve(false);
+                                        return;
+                                    }
+                                }
+                                
+                                var currServ = getServer(workerScript.serverIp);
+                                if (currServ == null) {
+                                    reject(makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer"));
+                                    return;
+                                }
+                                for (var i = 0; i < currServ.scripts.length; ++i) {
+                                    if (scriptname == currServ.scripts[i].filename) {
+                                        var newScript = new Script();
+                                        newScript.filename = scriptname;
+                                        newScript.code = currServ.scripts[i].code;
+                                        newScript.ramUsage = currServ.scripts[i].ramUsage;
+                                        newScript.server = destServer.ip;
+                                        destServer.scripts.push(newScript);
+                                        workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                                        resolve(true);
+                                        return;
+                                    }
+                                }
+                                workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
+                                resolve(false);
+                                
+                            }, function(e) {
+                                reject(e);
+                            });
+                        }, function(e) {
+                            reject(e);
+                        });
+                        
+                    } else if (exp.func.value == "getHostname") {
+                        if (exp.args.length != 0) {
+                            reject(makeRuntimeRejectMsg(workerScript, "getHostname() call has incorrect number of arguments. Takes 0 arguments"));
+                            return;
+                        }
+                        setTimeout(function() {
+                            var scriptServer = getServer(workerScript.serverIp);
+                            if (scriptServer == null) {
+                                reject(makeRuntimeRejectMsg(workerScript, "Could not find server. This is a bug in the game. Report to game dev"));
+                                return;
+                            }
+                            resolve(scriptServer.hostname);
+                        }, CONSTANTS.CodeInstructionRunTime);
                     } else if (exp.func.value == "getHackingLevel") {
                         if (exp.args.length != 0) {
                             reject("|"+workerScript.serverIp+"|"+workerScript.name+"|getHackingLevel() call has incorrect number of arguments. Takes 0 arguments");
@@ -793,7 +851,6 @@ function evaluateIf(exp, workerScript, i) {
             //Catch out of bounds errors
             resolve(false);
         } else {
-            console.log("Evaluating cond " + i + " in if");
             var cond = evaluate(exp.cond[i], workerScript);
             cond.then(function(condRes) {
                 console.log("cond evaluated to: " + condRes);
@@ -1202,7 +1259,7 @@ function scriptCalculateExpGain(server) {
 function scriptCalculatePercentMoneyHacked(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 875;
+    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 725;
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;

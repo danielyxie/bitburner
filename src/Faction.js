@@ -371,7 +371,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (speakersforthedeadFac.isBanned == false && speakersforthedeadFac.isMember == false && 
         this.hacking_skill >= 100 && this.strength >= 300 && this.defense >= 300 && 
         this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 10 &&
-        this.numPeopleKilledTotal >= 100 && this.karma <= -50 && this.companyName != Locations.Sector12CIA &&
+        this.numPeopleKilledTotal >= 100 && this.karma <= -45 && this.companyName != Locations.Sector12CIA &&
         this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(speakersforthedeadFac);
     }
@@ -381,7 +381,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (thedarkarmyFac.isBanned == false && thedarkarmyFac.isMember == false && 
         this.hacking_skill >= 300 && this.strength >= 300 && this.defense >= 300 && 
         this.dexterity >= 300 && this.agility >= 300 && this.city == Locations.Chongqing && 
-        this.numPeopleKilled >= 5 && this.karma <= -50 && this.companyName != Locations.Sector12CIA && 
+        this.numPeopleKilled >= 5 && this.karma <= -45 && this.companyName != Locations.Sector12CIA && 
         this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(thedarkarmyFac);
     }
@@ -392,7 +392,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         this.hacking_skill >= 200 && this.strength >= 200 && this.defense >= 200 &&
         this.dexterity >= 200 && this.agility >= 200 && 
         (this.city == Locations.Aevum || this.city == Locations.Sector12) &&
-        this.money >= 10000000 && this.karma <= -100 && 
+        this.money >= 10000000 && this.karma <= -90 && 
         this.companyName != Locations.Sector12CIA && this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(thesyndicateFac);
     }
@@ -403,7 +403,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         (this.companyPosition.positionName == CompanyPositions.CTO.positionName || 
          this.companyPosition.positionName == CompanyPositions.CFO.positionName || 
          this.companyPosition.positionName == CompanyPositions.CEO.positionName) &&
-         this.money >= 15000000 && this.karma <= -25) {
+         this.money >= 15000000 && this.karma <= -22) {
         invitedFactions.push(silhouetteFac);
     }
     
@@ -412,7 +412,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (tetradsFac.isBanned == false && tetradsFac.isMember == false && 
         (this.city == Locations.Chongqing || this.city == Locations.NewTokyo || 
         this.city == Locations.Ishima) && this.strength >= 75 && this.defense >= 75 &&
-        this.dexterity >= 75 && this.agility >= 75 && this.karma <= -20) {
+        this.dexterity >= 75 && this.agility >= 75 && this.karma <= -18) {
         invitedFactions.push(tetradsFac);
     }
     
@@ -420,7 +420,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var slumsnakesFac = Factions["Slum Snakes"];
     if (slumsnakesFac.isBanned == false && slumsnakesFac.isMember == false && 
         this.strength >= 30 && this.defense >= 30 && this.dexterity >= 30 &&
-        this.agility >= 30 && this.karma <= -10 && this.money >= 1000000) {
+        this.agility >= 30 && this.karma <= -9 && this.money >= 1000000) {
         invitedFactions.push(slumsnakesFac);
     }
     
@@ -446,7 +446,6 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         this.money >= 1000000 && this.hacking_skill >= 50 &&
         (this.city == Locations.Chongqing || this.city == Locations.NewTokyo || 
          this.city == Locations.Ishima)) {
-        console.log("invited");
         invitedFactions.push(tiandihuiFac);
     }
     
@@ -457,6 +456,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         invitedFactions.push(cybersecFac);
     }
     
+    console.log("invited factions: " + invitedFactions);
     return invitedFactions;
 }
 

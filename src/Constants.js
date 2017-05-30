@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.16",
+    Version:                "0.17",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -18,7 +18,7 @@ CONSTANTS = {
     BaseCostForHacknetNodeCore: 500000,
     
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.75,
+    HacknetNodeMoneyGainPerLevel: 1.65,
     HacknetNodePurchaseNextMult: 1.33,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.22,     //Multiplier for cost when upgrading RAM
@@ -30,7 +30,7 @@ CONSTANTS = {
     
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
-    NeuroFluxGovernorLevelMult: 1.09,
+    NeuroFluxGovernorLevelMult: 1.14,
     
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
@@ -49,6 +49,9 @@ CONSTANTS = {
     ScriptHttpwormRamCost:          0.05,
     ScriptSqlinjectRamCost:         0.05,
     ScriptRunRamCost:               0.8,
+    ScriptScpRamCost:               0.5,
+    ScriptHasRootAccessRamCost:     0.05,
+    ScriptGetHostnameRamCost:       0.1,
     ScriptGetHackingLevelRamCost:   0.1,
     ScriptGetServerMoneyRamCost:    0.1,
     ScriptOperatorRamCost:          0.01,
@@ -59,7 +62,7 @@ CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     
     //Server growth rate
-    ServerGrowthRate: 1.00075,
+    ServerGrowthRate: 1.001,
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 40,
@@ -145,15 +148,16 @@ CONSTANTS = {
                 "home                   Connect to home computer<br>" + 
                 "hostname               Displays the hostname of the machine<br>" + 
                 "ifconfig               Displays the IP address of the machine<br>" +
-                "kill [script name]     Stops a script that is running on the current machine<br>" +
+                "kill [script]          Stops a script that is running on the current machine<br>" +
                 "ls                     Displays all programs and scripts on the machine<br>" +
-                "mem [script name]      Displays the amount of RAM the script requires to run<br>" + 
-                "nano [script name]     Text editor - Open up and edit a script<br>" + 
+                "mem [script]           Displays the amount of RAM the script requires to run<br>" + 
+                "nano [script]          Text editor - Open up and edit a script<br>" + 
                 "ps                     Display all scripts that are currently running<br>" + 
                 "rm                     Delete a script/program from the machine. (WARNING: Permanent)<br>" + 
                 "run [script/program]   Execute a program or a script<br>" + 
                 "scan                   Displays all available network connections<br>" +
                 "scan-analyze [depth]   Displays hacking-related information for all servers up to <i>depth</i> nodes away<br>" + 
+                "scp [script] [server]  Copies a script to a destination server (specified by ip or hostname)<br>" + 
                 "sudov                  Shows whether or not you have root access on this computer<br>" + 
                 "tail [script]          Display script logs (logs contain details about active scripts)<br>" +
                 "top                    Display all running scripts and their RAM usage<br>",
@@ -283,6 +287,7 @@ CONSTANTS = {
                            "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " + 
                            "The argument passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline.<br> " + 
                            "Example:<br>if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" + 
+                           "<i>getHostname()<i><br>Returns a string with the hostname of the server that the script is running on<br><br>" + 
                            "<i>getHackingLevel() </i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 

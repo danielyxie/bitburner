@@ -277,12 +277,13 @@ var Engine = {
         'Charisma Experience multiplier: ' + formatNumber(Player.charisma_exp_mult * 100, 2) + '%<br><br>' + 
         'Hacknet Node production multiplier:         ' + formatNumber(Player.hacknet_node_money_mult * 100, 2) + '%<br>' +
         'Hacknet Node purchase cost multiplier:      ' + formatNumber(Player.hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
-        'Hacknet Node RAM upgrade cost multiplier:   ' + formatNumber(Player.hacknet_node_ram_cost_mult * 100, 2) + '%<br>' + 
-        'Hacknet Node Core purchase cost multiplier: ' + formatNumber(Player.hacknet_node_core_cost_mult * 100, 2) + '%<br>' + 
-        'Hacknet Node level upgrade cost multiplier: ' + formatNumber(Player.hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' + 
-        'Company reputation gain multiplier: ' + formatNumber(Player.company_rep_mult * 100, 2) + '%<br>' + 
-        'Faction reputation gain multiplier: ' + formatNumber(Player.faction_rep_mult * 100, 2) + '%<br>' + 
-        'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br>' + 
+        'Hacknet Node RAM upgrade cost multiplier:   ' + formatNumber(Player.hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
+        'Hacknet Node Core purchase cost multiplier: ' + formatNumber(Player.hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
+        'Hacknet Node level upgrade cost multiplier: ' + formatNumber(Player.hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
+        'Company reputation gain multiplier: ' + formatNumber(Player.company_rep_mult * 100, 2) + '%<br>' +
+        'Faction reputation gain multiplier: ' + formatNumber(Player.faction_rep_mult * 100, 2) + '%<br>' +
+        'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br>' +
+        'Crime success multiplier: ' + formatNumber(Player.crime_success_mult * 100, 2) + '%<br>' +
         'Crime money multiplier: ' + formatNumber(Player.crime_money_mult * 100, 2) + '%<br><br><br>' +
         '<b>Misc</b><br><br>' + 
         'Servers owned:       ' + Player.purchasedServers.length + '<br>' + 
@@ -594,7 +595,7 @@ var Engine = {
         updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
         createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
         serverGrowth: 450,                  //Process server growth every minute and a half
-        checkFactionInvitations: 1500,      //Check whether you qualify for any faction invitations every 5 minutes
+        checkFactionInvitations: 1000,      //Check whether you qualify for any faction invitations every 5 minutes
         passiveFactionGrowth: 600,
     },
     
@@ -659,7 +660,7 @@ var Engine = {
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
                 inviteToFaction(randFaction);
             }
-            Engine.Counters.checkFactionInvitations = 1500;
+            Engine.Counters.checkFactionInvitations = 1000;
         }
         
         if (Engine.Counters.passiveFactionGrowth <= 0) {
@@ -764,6 +765,9 @@ var Engine = {
             var time = numCyclesOffline * Engine._idleSpeed;
             if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
             Player.totalPlaytime += time;
+            
+            //Re-apply augmentations
+            Player.reapplyAllAugmentations();
             
             Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
@@ -1088,6 +1092,7 @@ var Engine = {
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
             console.log("Deleting running scripts on home computer");
             Player.getHomeComputer().runningScripts = [];
+            dialogBoxCreate("Forcefully deleted scripts. Please refresh page");
             return false;
         });
     },

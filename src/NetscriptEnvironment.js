@@ -25,8 +25,10 @@ Environment.prototype = {
 	
 	//Get the current value of a variable
     get: function(name) {
-        if (name in this.vars)
+        if (name in this.vars) {
             return this.vars[name];
+        }
+        console.log("here");
         throw new Error("Undefined variable " + name);
     },
 	
@@ -37,8 +39,10 @@ Environment.prototype = {
 		//
 		// If scope is null (aka existing variable with name could not be found)
 		// and this is NOT the global scope, throw error
-        if (!scope && this.parent)
+        if (!scope && this.parent) {
+            console.log("Here");
             throw new Error("Undefined variable " + name);
+        }
         return (scope || this).vars[name] = value;
     },
 	
