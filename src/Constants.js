@@ -30,7 +30,7 @@ CONSTANTS = {
     
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
-    NeuroFluxGovernorLevelMult: 1.18,
+    NeuroFluxGovernorLevelMult: 1.14,
     
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
@@ -49,6 +49,7 @@ CONSTANTS = {
     ScriptHttpwormRamCost:          0.05,
     ScriptSqlinjectRamCost:         0.05,
     ScriptRunRamCost:               0.8,
+    ScriptScpRamCost:               0.5,
     ScriptHasRootAccessRamCost:     0.05,
     ScriptGetHostnameRamCost:       0.1,
     ScriptGetHackingLevelRamCost:   0.1,

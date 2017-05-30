@@ -708,7 +708,7 @@ function evaluate(exp, workerScript) {
                             reject(e);
                         });
                     } else if (exp.func.value == "scp") {
-                        if (exp.args.length != 1) {
+                        if (exp.args.length != 2) {
                             reject(makeRuntimeRejectMsg(workerScript, "scp() call has incorrect number of arguments. Takes 2 arguments"));
                             return;
                         }
@@ -725,7 +725,7 @@ function evaluate(exp, workerScript) {
                                 //Check that a script with this filename does not already exist
                                 for (var i = 0; i < destServer.scripts.length; ++i) {
                                     if (scriptname == destServer.scripts[i].filename) {
-                                        workerScript.scriptRef.log(destServ.hostname + " already contains a script named  " + scriptname);
+                                        workerScript.scriptRef.log(destServer.hostname + " already contains a script named  " + scriptname);
                                         resolve(false);
                                         return;
                                     }
@@ -742,9 +742,9 @@ function evaluate(exp, workerScript) {
                                         newScript.filename = scriptname;
                                         newScript.code = currServ.scripts[i].code;
                                         newScript.ramUsage = currServ.scripts[i].ramUsage;
-                                        newScript.server = ip;
-                                        server.scripts.push(newScript);
-                                        workerScript.scriptRef.log(scriptname + " copied over to " + server.hostname);
+                                        newScript.server = destServer.ip;
+                                        destServer.scripts.push(newScript);
+                                        workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
                                         resolve(true);
                                         return;
                                     }
@@ -1259,7 +1259,7 @@ function scriptCalculateExpGain(server) {
 function scriptCalculatePercentMoneyHacked(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 825;
+    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 725;
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;
