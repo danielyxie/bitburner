@@ -763,11 +763,13 @@ function evaluate(exp, workerScript) {
                         });
                         
                     } else if (exp.func.value == "getHostname") {
+                        if (env.stopFlag) {reject(workerScript); return;}
                         if (exp.args.length != 0) {
                             reject(makeRuntimeRejectMsg(workerScript, "getHostname() call has incorrect number of arguments. Takes 0 arguments"));
                             return;
                         }
                         setTimeout(function() {
+                            if (env.stopFlag) {reject(workerScript); return;}
                             var scriptServer = getServer(workerScript.serverIp);
                             if (scriptServer == null) {
                                 reject(makeRuntimeRejectMsg(workerScript, "Could not find server. This is a bug in the game. Report to game dev"));
@@ -1274,6 +1276,6 @@ function scriptCalculatePercentMoneyHacked(server) {
 function scriptCalculateGrowTime(server) {
     var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
 	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
-	var growTime = skillFactor * 16; //This is in seconds
+	var growTime = skillFactor * Player.hacking_speed_mult * 16; //This is in seconds
 	return growTime * 1000;
 }

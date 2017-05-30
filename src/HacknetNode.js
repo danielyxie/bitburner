@@ -78,7 +78,8 @@ HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
     Player.loseMoney(cost);
     if (this.level + levels >= CONSTANTS.HacknetNodeMaxLevel) {
         this.level = CONSTANTS.HacknetNodeMaxLevel;
-        return false;
+        this.updateMoneyGainRate();
+        return true;
     }
     this.level += levels;
     this.updateMoneyGainRate();
@@ -99,8 +100,8 @@ HacknetNode.prototype.purchaseRamUpgrade = function() {
     var cost = this.calculateRamUpgradeCost();
     if (isNaN(cost)) {return false;}
     if (cost > Player.money) {return false;}
-    Player.loseMoney(cost);
     if (this.ram >= CONSTANTS.HacknetNodeMaxRam) {return false;}
+    Player.loseMoney(cost);
     this.ram *= 2; //Ram is always doubled
     this.updateMoneyGainRate();
     return true;
@@ -116,8 +117,8 @@ HacknetNode.prototype.purchaseCoreUpgrade = function() {
     var cost = this.calculateCoreUpgradeCost();
     if (isNaN(cost)) {return false;}
     if (cost > Player.money) {return false;}
-    Player.loseMoney(cost);
     if (this.numCores >= CONSTANTS.HacknetNodeMaxCores) {return false;}
+    Player.loseMoney(cost);
     ++this.numCores;
     this.updateMoneyGainRate();
     return true;
@@ -214,20 +215,21 @@ updateHacknetNodesMultiplierButtons = function() {
 getMaxNumberLevelUpgrades = function(nodeObj) {
     if (nodeObj.calculateLevelUpgradeCost(1) > Player.money) {return 0;}
     var min = 1;
-    var max = 199;
+    var max = CONSTANTS.HacknetNodeMaxLevel-1;
+    var levelsToMax = CONSTANTS.HacknetNodeMaxLevel - nodeObj.level;
     
     while (min <= max) {
         var curr = (min + max) / 2 | 0;
-        if (curr != 200 && 
+        if (curr != CONSTANTS.HacknetNodeMaxLevel && 
             nodeObj.calculateLevelUpgradeCost(curr) < Player.money &&
             nodeObj.calculateLevelUpgradeCost(curr+1) > Player.money) {
-            return curr;
+            return Math.min(levelsToMax, curr);
         } else if (nodeObj.calculateLevelUpgradeCost(curr) > Player.money) {
             max = curr - 1;
         } else if (nodeObj.calculateLevelUpgradeCost(curr) < Player.money) {
             min = curr + 1;
         } else {
-            return curr;
+            return Math.min(levelsToMax, curr);
         }
     }
 }

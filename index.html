@@ -60,51 +60,62 @@
 	
     <script src="src/engine.js"></script>
 	
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-100157497-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
   </head>
   <body>
     <div id="mainmenu-container">
         <!-- Main menu -->
         <ul class="mainmenu">
             <li class="terminal-tab">
-                <a href="#" id="terminal-menu-link"> Terminal </a>
+                <a id="terminal-menu-link"> Terminal </a>
             </li>
             
             <li class="character-tab">
-                <a href="#"  id="character-menu-link"> Character </a>
+                <a id="character-menu-link"> Character </a>
             </li>
 			
 			<!-- These scripts stuff should be hidden until level 2, but leave them visible for now to test -->
 			<li class="create-script-tab">
-                <a href="#" id="create-script-menu-link"> Create Script </a>
+                <a id="create-script-menu-link"> Create Script </a>
             </li>
 			
 			<li class="active-scripts-tab">
-                <a href="#" id="active-scripts-menu-link"> Active Scripts </a>
+                <a id="active-scripts-menu-link"> Active Scripts </a>
             </li>
             
             <li class="hacknet-nodes-tab">
-                <a href="#" id="hacknet-nodes-menu-link"> Hacknet Nodes </a>
+                <a id="hacknet-nodes-menu-link"> Hacknet Nodes </a>
             </li>
 			
 			<li class="world-tab">
-                <a href="#" id="world-menu-link"> World </a>
+                <a id="world-menu-link"> World </a>
             </li>
 			
 			<li class="create-program-tab">
-                <a href="#" id="create-program-menu-link"> Create Program </a>
+                <a id="create-program-menu-link"> Create Program </a>
                 <span id="create-program-notification" class="notification-off"> </span>
             </li>
                 
 			<li class="factions-tab">
-                <a href="#" id="factions-menu-link"> Factions </a>
+                <a id="factions-menu-link"> Factions </a>
             </li>
 			
 			<li class="augmentations-tab">
-				<a href="#" id="augmentations-menu-link"> Augmentations </a>
+				<a id="augmentations-menu-link"> Augmentations </a>
             </li>
 			
 			<li class="tutorial-tab">
-				<a href="#" id="tutorial-menu-link"> Tutorial </a>
+				<a id="tutorial-menu-link"> Tutorial </a>
 			</li>
             
             <li class="options-tab">
@@ -174,7 +185,7 @@
         Each Hacknet Node you purchase will passively earn you money. Each Hacknet Node can be upgraded 
         in order to increase its computing power and thereby increase the profit you earn from it. 
         </p>
-        <a href="#" id="hacknet-nodes-purchase-button" class="a-link-button"> Purchase Hacknet Node </a>
+        <a id="hacknet-nodes-purchase-button" class="a-link-button"> Purchase Hacknet Node </a>
         <br>
         <div id="hacknet-nodes-money-multipliers-div">"
             <p id="hacknet-nodes-money"> </p>
@@ -195,193 +206,193 @@
         <p id="world-city-desc"> </p>
 		<ul id="aevum-locations-list">
 			<li id="aevum-travelagency-li">
-                <a href="#" id="aevum-travelagency" class="a-link-button"> Travel Agency </a>
+                <a id="aevum-travelagency" class="a-link-button"> Travel Agency </a>
             </li>
             <li id="aevum-summituniversity-li">
-                <a href="#" id="aevum-summituniversity" class="a-link-button"> Summit University </a>
+                <a id="aevum-summituniversity" class="a-link-button"> Summit University </a>
             </li>
 			<li id="aevum-ecorp-li">
-				<a href="#" id="aevum-ecorp" class="a-link-button"> ECorp </a>
+				<a id="aevum-ecorp" class="a-link-button"> ECorp </a>
 			</li>
 			<li id="aevum-bachmanandassociates-li">
-				<a href="#" id="aevum-bachmanandassociates" class="a-link-button"> Bachman & Associates</a>
+				<a id="aevum-bachmanandassociates" class="a-link-button"> Bachman & Associates</a>
 			</li>
 			<li id="aevum-clarkeincorporated-li">
-				<a href="#" id="aevum-clarkeincorporated" class="a-link-button"> Clarke Incorporated </a>
+				<a id="aevum-clarkeincorporated" class="a-link-button"> Clarke Incorporated </a>
 			</li>
 			<li id="aevum-fulcrumtechnologies-li">
-				<a href="#" id="aevum-fulcrumtechnologies" class="a-link-button"> Fulcrum Technologies </a>
+				<a id="aevum-fulcrumtechnologies" class="a-link-button"> Fulcrum Technologies </a>
 			</li>
 			<li id="aevum-aerocorp-li">
-				<a href="#" id="aevum-aerocorp" class="a-link-button"> AeroCorp </a>
+				<a id="aevum-aerocorp" class="a-link-button"> AeroCorp </a>
 			</li>
 			<li id="aevum-galacticcybersystems-li">
-				<a href="#" id="aevum-galacticcybersystems" class="a-link-button"> Galactic Cybersystems </a>
+				<a id="aevum-galacticcybersystems" class="a-link-button"> Galactic Cybersystems </a>
 			</li>
 			<li id="aevum-watchdogsecurity-li">
-				<a href="#" id="aevum-watchdogsecurity" class="a-link-button">Watchdog Security </a>
+				<a id="aevum-watchdogsecurity" class="a-link-button">Watchdog Security </a>
 			</li>
 			<li id="aevum-rhoconstruction-li">
-				<a href="#" id="aevum-rhoconstruction" class="a-link-button">Rho Construction </a>
+				<a id="aevum-rhoconstruction" class="a-link-button">Rho Construction </a>
 			</li>
 			<li id="aevum-aevumpolice-li">
-				<a href="#" id="aevum-aevumpolice" class="a-link-button">Aevum Police</a>
+				<a id="aevum-aevumpolice" class="a-link-button">Aevum Police</a>
 			</li>
 			<li id="aevum-netlinktechnologies-li">
-				<a href="#" id="aevum-netlinktechnologies" class="a-link-button">NetLink Technologies</a>
+				<a id="aevum-netlinktechnologies" class="a-link-button">NetLink Technologies</a>
 			</li>
 			<li id="aevum-crushfitnessgym-li">
-				<a href="#" id="aevum-crushfitnessgym" class="a-link-button">Crush Fitness Gym </a>
+				<a id="aevum-crushfitnessgym" class="a-link-button">Crush Fitness Gym </a>
 			</li>
 			<li id="aevum-snapfitnessgym-li">
-				<a href="#" id="aevum-snapfitnessgym" class="a-link-button">Snap Fitness Gym</a>
+				<a id="aevum-snapfitnessgym" class="a-link-button">Snap Fitness Gym</a>
 			</li>
             <li id="aevum-slums-li">
-                <a href="#" id="aevum-slums" class="a-link-button">The Slums</a>
+                <a id="aevum-slums" class="a-link-button">The Slums</a>
             </li>
 		</ul>
 		
 		<ul id="chongqing-locations-list">
 			<li id="chongqing-travelagency-li">
-				<a href="#" id="chongqing-travelagency" class="a-link-button"> Travel Agency </a>
+				<a id="chongqing-travelagency" class="a-link-button"> Travel Agency </a>
 			</li>
 			<li id="chonqging-kuaigonginternational-li">
-				<a href="#" id="chongqing-kuaigonginternational" class="a-link-button">KuaiGong International </a>
+				<a id="chongqing-kuaigonginternational" class="a-link-button">KuaiGong International </a>
 			</li>
 			<li id="chongqing-solarisspacesystems-li">
-				<a href="#" id="chongqing-solarisspacesystems" class="a-link-button">Solaris Space Systems</a>
+				<a id="chongqing-solarisspacesystems" class="a-link-button">Solaris Space Systems</a>
 			</li>
             <li id="chongqing-slums-li">
-                <a href="#" id="chongqing-slums" class="a-link-button">The Slums</a>
+                <a id="chongqing-slums" class="a-link-button">The Slums</a>
             </li>
 		</ul>
 		
 		<ul id="sector12-locations-list">
 			<li id="sector12-travelagency-li">
-				<a href="#" id="sector12-travelagency" class="a-link-button">Travel Agency </a>
+				<a id="sector12-travelagency" class="a-link-button">Travel Agency </a>
 			</li>
             <li id="sector12-rothmanuniversity-li">
-                <a href="#" id="sector12-rothmanuniversity" class="a-link-button"> Rothman University</a>
+                <a id="sector12-rothmanuniversity" class="a-link-button"> Rothman University</a>
             </li>
 			<li id="sector12-megacorp-li">
-				<a href="#" id="sector12-megacorp" class="a-link-button">MegaCorp</a>
+				<a id="sector12-megacorp" class="a-link-button">MegaCorp</a>
 			</li>
 			<li id="sector12-bladeindustries-li">
-				<a href="#" id="sector12-bladeindustries" class="a-link-button"> Blade Industries</a>
+				<a id="sector12-bladeindustries" class="a-link-button"> Blade Industries</a>
 			</li>
 			<li id="sector12-foursigma-li">
-				<a href="#" id="sector12-foursigma" class="a-link-button">Four Sigma</a>
+				<a id="sector12-foursigma" class="a-link-button">Four Sigma</a>
 			</li>
 			<li id="sector12-icarusmicrosystems-li">
-				<a href="#" id="sector12-icarusmicrosystems" class="a-link-button"> Icarus Microsystems</a>
+				<a id="sector12-icarusmicrosystems" class="a-link-button"> Icarus Microsystems</a>
 			</li>
 			<li id="sector12-universalenergy-li">
-				<a href="#" id="sector12-universalenergy" class="a-link-button">Universal Energy </a>
+				<a id="sector12-universalenergy" class="a-link-button">Universal Energy </a>
 			</li>
 			<li id="sector12-deltaone-li">
-				<a href="#" id="sector12-deltaone" class="a-link-button">DeltaOne </a>
+				<a id="sector12-deltaone" class="a-link-button">DeltaOne </a>
 			</li>
 			<li id="sector12-cia-li">
-				<a href="#" id="sector12-cia" class="a-link-button">Central Intelligence Agency </a>
+				<a id="sector12-cia" class="a-link-button">Central Intelligence Agency </a>
 			</li>
 			<li id="sector12-nsa-li">
-				<a href="#" id="sector12-nsa" class="a-link-button">National Security Agency </a>
+				<a id="sector12-nsa" class="a-link-button">National Security Agency </a>
 			</li>
 			<li id="sector12-alphaenterprises-li">
-				<a href="#" id="sector12-alphaenterprises" class="a-link-button">Alpha Enterprises</a>
+				<a id="sector12-alphaenterprises" class="a-link-button">Alpha Enterprises</a>
 			</li>
 			<li id="sector12-carmichaelsecurity-li">
-				<a href="#" id="sector12-carmichaelsecurity" class="a-link-button"> Carmichael Security</a>
+				<a id="sector12-carmichaelsecurity" class="a-link-button"> Carmichael Security</a>
 			</li>
 			<li id="sector12-foodnstuff-li">
-				<a href="#" id="sector12-foodnstuff" class="a-link-button">FoodNStuff</a>
+				<a id="sector12-foodnstuff" class="a-link-button">FoodNStuff</a>
 			</li>
 			<li id="sector12-joesguns-li">
-				<a href="#" id="sector12-joesguns" class="a-link-button"> Joe's Guns</a>
+				<a id="sector12-joesguns" class="a-link-button"> Joe's Guns</a>
 			</li>
 			<li id="sector12-irongym-li">
-				<a href="#" id="sector12-irongym" class="a-link-button">Iron Gym </a>
+				<a id="sector12-irongym" class="a-link-button">Iron Gym </a>
 			</li>
 			<li id="sector12-powerhousegym-li">
-				<a href="#" id="sector12-powerhousegym" class="a-link-button">Powerhouse Gym</a>
+				<a id="sector12-powerhousegym" class="a-link-button">Powerhouse Gym</a>
 			</li>
             <li id="sector12-slums-li">
-                <a href="#" id="sector12-slums" class="a-link-button">The Slums</a>
+                <a id="sector12-slums" class="a-link-button">The Slums</a>
             </li>
 		</ul>
 		
 		<ul id="newtokyo-locations-list">
 			<li id="newtokyo-travelagency-li">
-				<a href="#" id="newtokyo-travelagency" class="a-link-button"> Travel Agency</a>
+				<a id="newtokyo-travelagency" class="a-link-button"> Travel Agency</a>
 			</li>
 			<li id="newtokyo-defcomm-li">
-				<a href="#" id="newtokyo-defcomm" class="a-link-button"> DefComm</a>
+				<a id="newtokyo-defcomm" class="a-link-button"> DefComm</a>
 			</li>
 			<li id="newtokyo-vitalife-li">
-				<a href="#" id="newtokyo-vitalife" class="a-link-button">VitaLife </a>
+				<a id="newtokyo-vitalife" class="a-link-button">VitaLife </a>
 			</li>
 			<li id="newtokyo-globalpharmaceuticals-li">
-				<a href="#" id="newtokyo-globalpharmaceuticals" class="a-link-button">Global Pharmaceuticals</a>
+				<a id="newtokyo-globalpharmaceuticals" class="a-link-button">Global Pharmaceuticals</a>
 			</li>
 			<li id="newtokyo-noodlebar-li">
-				<a href="#" id="newtokyo-noodlebar" class="a-link-button">Noodle Bar </a>
+				<a id="newtokyo-noodlebar" class="a-link-button">Noodle Bar </a>
 			</li>
             <li id="newtokyo-slums-li">
-                <a href="#" id="newtokyo-slums" class="a-link-button">The Slums</a>
+                <a id="newtokyo-slums" class="a-link-button">The Slums</a>
             </li>
 		</ul>
 		
 		<ul id="ishima-locations-list">
 			<li id="ishima-travelagency-li">
-				<a href="#" id="ishima-travelagency" class="a-link-button">Travel Agency </a>
+				<a id="ishima-travelagency" class="a-link-button">Travel Agency </a>
 			</li>
 			<li id="ishima-stormtechnologies-li">
-				<a href="#" id="ishima-stormtechnologies" class="a-link-button">Storm Technologies</a>
+				<a id="ishima-stormtechnologies" class="a-link-button">Storm Technologies</a>
 			</li>
 			<li id="ishima-novamedical-li">
-				<a href="#" id="ishima-novamedical" class="a-link-button">Nova Medical</a>
+				<a id="ishima-novamedical" class="a-link-button">Nova Medical</a>
 			</li>
 			<li id="ishima-omegasoftware-li">
-				<a href="#" id="ishima-omegasoftware" class="a-link-button">Omega Software </a>
+				<a id="ishima-omegasoftware" class="a-link-button">Omega Software </a>
 			</li>
             <li id="ishima-slums-li">
-                <a href="#" id="ishima-slums" class="a-link-button">The Slums</a>
+                <a id="ishima-slums" class="a-link-button">The Slums</a>
             </li>
 		</ul>
 		
 		<ul id="volhaven-locations-list">
 			<li id="volhaven-travelagency-li">
-				<a href="#" id="volhaven-travelagency" class="a-link-button">Travel Agency </a>
+				<a id="volhaven-travelagency" class="a-link-button">Travel Agency </a>
 			</li>
             <li id="volhaven-zbinstituteoftechnology-li">
-                <a href="#" id="volhaven-zbinstituteoftechnology" class="a-link-button">ZB Insitute of Technology</a>
+                <a id="volhaven-zbinstituteoftechnology" class="a-link-button">ZB Insitute of Technology</a>
             </li>
 			<li id="volhaven-omnitekincorporated-li">
-				<a href="#" id="volhaven-omnitekincorporated" class="a-link-button">OmniTek Incorporated </a>
+				<a id="volhaven-omnitekincorporated" class="a-link-button">OmniTek Incorporated </a>
 			</li>
 			<li id="volhaven-nwo-li">
-				<a href="#" id="volhaven-nwo" class="a-link-button">NWO</a>
+				<a id="volhaven-nwo" class="a-link-button">NWO</a>
 			</li>
 			<li id="volhaven-helislabs-li">
-				<a href="#" id="volhaven-helioslabs" class="a-link-button">Helios Labs</a>
+				<a id="volhaven-helioslabs" class="a-link-button">Helios Labs</a>
 			</li>
 			<li id="volhaven-omniacybersystems-li">
-				<a href="#" id="volhaven-omniacybersystems" class="a-link-button">Omnia Cybersystems</a>
+				<a id="volhaven-omniacybersystems" class="a-link-button">Omnia Cybersystems</a>
 			</li>
 			<li id="volhaven-lexocorp-li">
-				<a href="#" id="volhaven-lexocorp" class="a-link-button">LexoCorp</a>
+				<a id="volhaven-lexocorp" class="a-link-button">LexoCorp</a>
 			</li>
 			<li id="volhaven-syscoresecurities-li">
-				<a href="#" id="volhaven-syscoresecurities" class="a-link-button">SysCore Securities</a>
+				<a id="volhaven-syscoresecurities" class="a-link-button">SysCore Securities</a>
 			</li>
 			<li id="volhaven-computek-li">
-				<a href="#" id="volhaven-computek" class="a-link-button">CompuTek</a>
+				<a id="volhaven-computek" class="a-link-button">CompuTek</a>
 			</li>
 			<li id="volhaven-milleniumfitnessgym-li">
-				<a href="#" id="volhaven-milleniumfitnessgym" class="a-link-button">Millenium Fitness Gym</a>
+				<a id="volhaven-milleniumfitnessgym" class="a-link-button">Millenium Fitness Gym</a>
 			</li>
             <li id="volhaven-slums-li">
-                <a href="#" id="volhaven-slums" class="a-link-button">The Slums</a>
+                <a id="volhaven-slums" class="a-link-button">The Slums</a>
             </li>
 		</ul>
 	</div>
@@ -454,7 +465,7 @@
 		
 		<div id="faction-hack-div">
             <div id="faction-hack-div-wrapper">
-                <a href="#" id="faction-hack-button" class="a-link-button">Hacking Contracts</a>
+                <a id="faction-hack-button" class="a-link-button">Hacking Contracts</a>
                 <p id="faction-hack-text">
                     Complete hacking contracts for your faction.
                     Your effectiveness, which determines how much reputation you gain for this faction, is based on your hacking skill.
@@ -466,7 +477,7 @@
 		
 		<div id="faction-fieldwork-div">
             <div id="faction-fieldwork-div-wrapper">
-                <a href="#" id="faction-fieldwork-button" class="a-link-button">Field Work</a>
+                <a id="faction-fieldwork-button" class="a-link-button">Field Work</a>
                 <p id="faction-fieldwork-text">
                     Carry out field missions for your faction.
                     Your effectiveness, which determines how much reputation you gain for this faction, is based on all of your stats.
@@ -478,7 +489,7 @@
 		
 		<div id="faction-securitywork-div">
             <div id="faction-securitywork-div-wrapper">
-                <a href="#" id="faction-securitywork-button" class="a-link-button">Security Work</a>
+                <a id="faction-securitywork-button" class="a-link-button">Security Work</a>
                 <p id="faction-securitywork-text">
                     Serve in a security detail for your faction.
                     Your effectiveness, which determines how much reputation you gain for this faction, is based on your combat stats.
@@ -490,7 +501,7 @@
         
         <div id="faction-donate-div">
             <div id="faction-donate-div-wrapper">
-                <a href="#" id="faction-donate-button" class="a-link-button">Donate Money</a>
+                <a id="faction-donate-button" class="a-link-button">Donate Money</a>
                 <p id="faction-donate-text">
                     Donate money to your faction. You will gain reputation based on how much money you donate
                 </p>
@@ -510,11 +521,11 @@
             can purchase to enhance your abilities.
             <br><br>
         </p>
-        <a href="#" id="faction-purchase-augmentations" class="a-link-button">Purchase Augmentations</a>
+        <a id="faction-purchase-augmentations" class="a-link-button">Purchase Augmentations</a>
 	</div>
 
     <div id="faction-augmentations-container">
-        <a href="#" id="faction-augmentations-back-button" class="a-link-button"> Back </a>
+        <a id="faction-augmentations-back-button" class="a-link-button"> Back </a>
 		<h1> Faction Augmentations </h1>
 		<p id="faction-augmentations-page-desc"> Lists all augmentations that are available to purchase from </p>
         
@@ -532,23 +543,23 @@
 	
 	<!-- Tutorial content -->
 	<div id="tutorial-container">
-        <a href="#" id="tutorial-getting-started-link" class="a-link-button"> Getting Started </a>
-        <a href="#" id="tutorial-networking-link" class="a-link-button"> Servers & Networking </a>
-        <a href="#" id="tutorial-hacking-link" class="a-link-button"> Hacking </a>
-        <a href="#" id="tutorial-scripts-link" class="a-link-button"> Scripts </a>
-        <a href="#" id="tutorial-netscript-link" class="a-link-button"> Netscript Programming Language </a>
-        <a href="#" id="tutorial-traveling-link" class="a-link-button"> Traveling </a>
-        <a href="#" id="tutorial-jobs-link" class="a-link-button"> Jobs </a>
-        <a href="#" id="tutorial-factions-link" class="a-link-button"> Factions </a>
-        <a href="#" id="tutorial-augmentations-link" class="a-link-button"> Augmentations </a>
+        <a id="tutorial-getting-started-link" class="a-link-button"> Getting Started </a>
+        <a id="tutorial-networking-link" class="a-link-button"> Servers & Networking </a>
+        <a id="tutorial-hacking-link" class="a-link-button"> Hacking </a>
+        <a id="tutorial-scripts-link" class="a-link-button"> Scripts </a>
+        <a id="tutorial-netscript-link" class="a-link-button"> Netscript Programming Language </a>
+        <a id="tutorial-traveling-link" class="a-link-button"> Traveling </a>
+        <a id="tutorial-jobs-link" class="a-link-button"> Jobs </a>
+        <a id="tutorial-factions-link" class="a-link-button"> Factions </a>
+        <a id="tutorial-augmentations-link" class="a-link-button"> Augmentations </a>
         
-        <a href="#" id="tutorial-back-button" class="a-link-button"> Back </a>
+        <a id="tutorial-back-button" class="a-link-button"> Back </a>
         <p id="tutorial-text"> </p>
 	</div>
     
     <!-- Location (visiting a location in World) -->
     <div id="location-container">
-        <a href="#" id="location-return-to-world-button" class="a-link-button"> Return to World </a>
+        <a id="location-return-to-world-button" class="a-link-button"> Return to World </a>
         <h1 id="location-name"></h1>
         <p id="location-info"> </p>
         
@@ -556,61 +567,61 @@
         <p id="location-job-reputation"> </p>
         
         <!-- Jobs/Work at a company -->
-        <a href="#" id="location-software-job" class="a-link-button"> Apply for Software Job</a>
-        <a href="#" id="location-software-consultant-job" class="a-link-button"> Apply for Software Consultant Job</a>
-        <a href="#" id="location-it-job" class="a-link-button"> Apply for IT Job </a>
-        <a href="#" id="location-security-engineer-job" class="a-link-button"> Apply for Security Engineer Job</a>
-        <a href="#" id="location-network-engineer-job" class="a-link-button"> Apply for Network Engineer Job</a>
-        <a href="#" id="location-business-job" class="a-link-button"> Apply for Business Job</a>
-        <a href="#" id="location-business-consultant-job" class="a-link-button"> Apply for Business Consultant Job </a>
-        <a href="#" id="location-security-job" class="a-link-button"> Apply for Security Job</a>
-        <a href="#" id="location-agent-job" class="a-link-button"> Apply to be an Agent</a>
-        <a href="#" id="location-employee-job" class="a-link-button"> Apply to be an Employee </a>
-        <a href="#" id="location-parttime-employee-job" class="a-link-button"> Apply to be a Part-time Employee </a>
-        <a href="#" id="location-waiter-job" class="a-link-button"> Apply to be a Waiter</a>
-        <a href="#" id="location-parttime-waiter-job" class="a-link-button"> Apply to be a Part-time Waiter</a>
+        <a id="location-software-job" class="a-link-button"> Apply for Software Job</a>
+        <a id="location-software-consultant-job" class="a-link-button"> Apply for Software Consultant Job</a>
+        <a id="location-it-job" class="a-link-button"> Apply for IT Job </a>
+        <a id="location-security-engineer-job" class="a-link-button"> Apply for Security Engineer Job</a>
+        <a id="location-network-engineer-job" class="a-link-button"> Apply for Network Engineer Job</a>
+        <a id="location-business-job" class="a-link-button"> Apply for Business Job</a>
+        <a id="location-business-consultant-job" class="a-link-button"> Apply for Business Consultant Job </a>
+        <a id="location-security-job" class="a-link-button"> Apply for Security Job</a>
+        <a id="location-agent-job" class="a-link-button"> Apply to be an Agent</a>
+        <a id="location-employee-job" class="a-link-button"> Apply to be an Employee </a>
+        <a id="location-parttime-employee-job" class="a-link-button"> Apply to be a Part-time Employee </a>
+        <a id="location-waiter-job" class="a-link-button"> Apply to be a Waiter</a>
+        <a id="location-parttime-waiter-job" class="a-link-button"> Apply to be a Part-time Waiter</a>
         
-        <a href="#" id="location-work" class="a-link-button"> Work </a>
+        <a id="location-work" class="a-link-button"> Work </a>
         
         <!-- Gym -->
-        <a href="#" id="location-gym-train-str" class="a-link-button">Train Strength</a>
-        <a href="#" id="location-gym-train-def" class="a-link-button">Train Defense </a>
-        <a href="#" id="location-gym-train-dex" class="a-link-button">Train Dexterity</a>
-        <a href="#" id="location-gym-train-agi" class="a-link-button">Train Agility</a>
+        <a id="location-gym-train-str" class="a-link-button">Train Strength</a>
+        <a id="location-gym-train-def" class="a-link-button">Train Defense </a>
+        <a id="location-gym-train-dex" class="a-link-button">Train Dexterity</a>
+        <a id="location-gym-train-agi" class="a-link-button">Train Agility</a>
         
         <!-- Study/Take classes at a university -->
-        <a href="#" id="location-study-computer-science" class="a-link-button">Study Computer Science (free)</a>
-        <a href="#" id="location-data-structures-class" class="a-link-button">Take Data Structures course</a>
-        <a href="#" id="location-networks-class" class="a-link-button">Take Networks course</a>
-        <a href="#" id="location-algorithms-class" class="a-link-button">Take Algorithms course</a>
-        <a href="#" id="location-management-class" class="a-link-button">Take Management course</a>
-        <a href="#" id="location-leadership-class" class="a-link-button">Take Leadership course</a>
+        <a id="location-study-computer-science" class="a-link-button">Study Computer Science (free)</a>
+        <a id="location-data-structures-class" class="a-link-button">Take Data Structures course</a>
+        <a id="location-networks-class" class="a-link-button">Take Networks course</a>
+        <a id="location-algorithms-class" class="a-link-button">Take Algorithms course</a>
+        <a id="location-management-class" class="a-link-button">Take Management course</a>
+        <a id="location-leadership-class" class="a-link-button">Take Leadership course</a>
         
         <!-- Purchase servers -->
-        <a href="#" id="location-purchase-1gb" class="a-link-button"> Purchase 1GB Server - $75,000</a>
-        <a href="#" id="location-purchase-2gb" class="a-link-button"> Purchase 2GB Server - $150,000</a>
-        <a href="#" id="location-purchase-4gb" class="a-link-button"> Purchase 4GB Server - $300,000</a>
-        <a href="#" id="location-purchase-8gb" class="a-link-button"> Purchase 8GB Server - $600,000</a>
-        <a href="#" id="location-purchase-16gb" class="a-link-button"> Purchase 16GB Server - $1,200,000</a>
-        <a href="#" id="location-purchase-32gb" class="a-link-button"> Purchase 32GB Server - $2,400,000</a>
-        <a href="#" id="location-purchase-64gb" class="a-link-button"> Purchase 64GB Server - $4,800,000</a>
-        <a href="#" id="location-purchase-128gb" class="a-link-button"> Purchase 128GB Server - $9,600,000</a>
-        <a href="#" id="location-purchase-256gb" class="a-link-button"> Purchase 256GB Server - $19,200,000</a>
-        <a href="#" id="location-purchase-512gb" class="a-link-button"> Purchase 512GB Server - $38,400,000</a>
-        <a href="#" id="location-purchase-1tb" class="a-link-button"> Purchase 1TB Server - $75,000,000</a>
-        <a href="#" id="location-purchase-tor" class="a-link-button"> Purchase TOR Router - $100,000</a>
-        <a href="#" id="location-purchase-home-ram" class="a-link-button"> Purchase additional RAM for Home computer </a>
+        <a id="location-purchase-1gb" class="a-link-button"> Purchase 1GB Server - $75,000</a>
+        <a id="location-purchase-2gb" class="a-link-button"> Purchase 2GB Server - $150,000</a>
+        <a id="location-purchase-4gb" class="a-link-button"> Purchase 4GB Server - $300,000</a>
+        <a id="location-purchase-8gb" class="a-link-button"> Purchase 8GB Server - $600,000</a>
+        <a id="location-purchase-16gb" class="a-link-button"> Purchase 16GB Server - $1,200,000</a>
+        <a id="location-purchase-32gb" class="a-link-button"> Purchase 32GB Server - $2,400,000</a>
+        <a id="location-purchase-64gb" class="a-link-button"> Purchase 64GB Server - $4,800,000</a>
+        <a id="location-purchase-128gb" class="a-link-button"> Purchase 128GB Server - $9,600,000</a>
+        <a id="location-purchase-256gb" class="a-link-button"> Purchase 256GB Server - $19,200,000</a>
+        <a id="location-purchase-512gb" class="a-link-button"> Purchase 512GB Server - $38,400,000</a>
+        <a id="location-purchase-1tb" class="a-link-button"> Purchase 1TB Server - $75,000,000</a>
+        <a id="location-purchase-tor" class="a-link-button"> Purchase TOR Router - $100,000</a>
+        <a id="location-purchase-home-ram" class="a-link-button"> Purchase additional RAM for Home computer </a>
         
         <!-- Travel agency -->
         <p id="location-travel-agency-text"> 
             From here, you can travel to any other city! A ticket costs $200,000. 
         </p>
-        <a href="#" id="location-travel-to-aevum" class="a-link-button"> Travel to Aevum </a>
-        <a href="#" id="location-travel-to-chongqing" class="a-link-button"> Travel to Chongqing</a>
-        <a href="#" id="location-travel-to-sector12" class="a-link-button"> Travel to Sector-12</a>
-        <a href="#" id="location-travel-to-newtokyo" class="a-link-button"> Travel to New Tokyo</a>
-        <a href="#" id="location-travel-to-ishima" class="a-link-button"> Travel to Ishima</a>
-        <a href="#" id="location-travel-to-volhaven" class="a-link-button"> Travel to Volhaven</a>
+        <a id="location-travel-to-aevum" class="a-link-button"> Travel to Aevum </a>
+        <a id="location-travel-to-chongqing" class="a-link-button"> Travel to Chongqing</a>
+        <a id="location-travel-to-sector12" class="a-link-button"> Travel to Sector-12</a>
+        <a id="location-travel-to-newtokyo" class="a-link-button"> Travel to New Tokyo</a>
+        <a id="location-travel-to-ishima" class="a-link-button"> Travel to Ishima</a>
+        <a id="location-travel-to-volhaven" class="a-link-button"> Travel to Volhaven</a>
         
         <!-- Slums -->
         <p id="location-slums-description"> 
@@ -620,15 +631,15 @@
             In the Slums you can commit crimes to earn money and experience. Crime attempts are not always 
             successful. Your chance at successfully committing a crime is determined by your stats. 
         </p>
-        <a class="a-link-button tooltip" href="#" id="location-slums-shoplift"> Shoplift </a>
-        <a href="#" id="location-slums-mug" class="a-link-button tooltip"> Mug someone </a>
-        <a href="#" id="location-slums-deal-drugs" class="a-link-button tooltip"> Deal Drugs </a>
-        <a href="#" id="location-slums-traffic-arms" class="a-link-button tooltip"> Traffick Illegal Arms </a>
-        <a href="#" id="location-slums-homicide" class="a-link-button tooltip"> Homicide </a>
-        <a href="#" id="location-slums-gta" class="a-link-button tooltip"> Grand Theft Auto </a>
-        <a href="#" id="location-slums-kidnap" class="a-link-button tooltip"> Kidnap and Ransom </a>
-        <a href="#" id="location-slums-assassinate" class="a-link-button tooltip"> Assassinate </a>
-        <a href="#" id="location-slums-heist" class="a-link-button tooltip"> Heist </a>
+        <a class="a-link-button tooltip" id="location-slums-shoplift"> Shoplift </a>
+        <a id="location-slums-mug" class="a-link-button tooltip"> Mug someone </a>
+        <a id="location-slums-deal-drugs" class="a-link-button tooltip"> Deal Drugs </a>
+        <a id="location-slums-traffic-arms" class="a-link-button tooltip"> Traffick Illegal Arms </a>
+        <a id="location-slums-homicide" class="a-link-button tooltip"> Homicide </a>
+        <a id="location-slums-gta" class="a-link-button tooltip"> Grand Theft Auto </a>
+        <a id="location-slums-kidnap" class="a-link-button tooltip"> Kidnap and Ransom </a>
+        <a id="location-slums-assassinate" class="a-link-button tooltip"> Assassinate </a>
+        <a id="location-slums-heist" class="a-link-button tooltip"> Heist </a>
     </div>
     
     <!-- Dialog Box, displays status text only -->
