@@ -363,9 +363,12 @@ var Engine = {
     
     //Update the ActiveScriptsItems array
     updateActiveScriptsItems: function() {
+        var total = 0;
         for (var i = 0; i < workerScripts.length; ++i) {
-            Engine.updateActiveScriptsItemContent(i, workerScripts[i]);
+            total += Engine.updateActiveScriptsItemContent(i, workerScripts[i]);
         }
+        document.getElementById("active-scripts-total-prod").innerHTML =
+            "Total online production rate: $" + formatNumber(total, 2) + " / second";
     },
     
     //Updates the content of the given item in the Active Scripts list
@@ -382,8 +385,8 @@ var Engine = {
             item.removeChild(item.firstChild);
         }
         
-        //Add the updated text back
-        Engine.createActiveScriptsText(workerscript, item);
+        //Add the updated text back. Returns the total online production rate
+        return Engine.createActiveScriptsText(workerscript, item);
     },
     
     createActiveScriptsText: function(workerscript, item) {
@@ -421,6 +424,9 @@ var Engine = {
                              offlineMpsText + "<br>" + offlineEpsText + "<br>";
         
         item.appendChild(itemText);
+        
+        //Return total online production rate
+        return onlineMps;
     },
     
     displayFactionsInfo: function() {

@@ -77,9 +77,8 @@ HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
     if (cost > Player.money) {return false;}
     Player.loseMoney(cost);
     if (this.level + levels >= CONSTANTS.HacknetNodeMaxLevel) {
-        this.level = CONSTANTS.HacknetNodeMaxLevel;
-        this.updateMoneyGainRate();
-        return true;
+        var diff = Math.max(0, CONSTANTS.HacknetNodeMaxLevel - this.level);
+        return this.purchaseLevelUpgrade(diff);
     }
     this.level += levels;
     this.updateMoneyGainRate();
@@ -373,7 +372,8 @@ updateHacknetNodeDomElement = function(nodeObj) {
             //Max
             multiplier = getMaxNumberLevelUpgrades(nodeObj);
         } else {
-            multiplier = hacknetNodePurchaseMultiplier;
+            var levelsToMax = CONSTANTS.HacknetNodeMaxLevel - nodeObj.level;
+            multiplier = Math.min(levelsToMax, hacknetNodePurchaseMultiplier);
         }
         
         var upgradeLevelCost = nodeObj.calculateLevelUpgradeCost(multiplier);

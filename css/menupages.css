@@ -145,7 +145,8 @@ background-color: #555;
     overflow-y: scroll;
 }
 
-#active-scripts-text {
+#active-scripts-text,
+#active-scripts-total-prod {
     width: 70%;
     margin: 6px;
     padding: 4px;

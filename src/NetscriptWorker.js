@@ -57,6 +57,7 @@ function runScriptsLoop() {
 					if (errorTextArray.length != 4) {
 						console.log("ERROR: Something wrong with Error text in evaluator...");
 						console.log("Error text: " + errorText);
+                        return;
 					}
 					var serverIp = errorTextArray[1];
 					var scriptName = errorTextArray[2];
@@ -78,6 +79,7 @@ function runScriptsLoop() {
                         if (errorTextArray.length != 4) {
                             console.log("ERROR: Something wrong with Error text in evaluator...");
                             console.log("Error text: " + errorText);
+                            return;
                         }
                         var serverIp = errorTextArray[1];
                         var scriptName = errorTextArray[2];
@@ -87,7 +89,28 @@ function runScriptsLoop() {
                     }
 					w.running = false;
 					w.env.stopFlag = true;
-				}
+				} else if (isScriptErrorMessage(w)) {
+                    var errorTextArray = errorText.split("|");
+					if (errorTextArray.length != 4) {
+						console.log("ERROR: Something wrong with Error text in evaluator...");
+						console.log("Error text: " + errorText);
+                        return;
+					}
+					var serverIp = errorTextArray[1];
+					var scriptName = errorTextArray[2];
+					var errorMsg = errorTextArray[3];
+					
+                    dialogBoxCreate("Script runtime error: ", "Server Ip: " + serverIp, "Script name: " + scriptName, errorMsg);
+					
+					//Find the corresponding workerscript and set its flags to kill it
+					for (var i = 0; i < workerScripts.length; ++i) {
+						if (workerScripts[i].serverIp == serverIp && workerScripts[i].name == scriptName) {
+							workerScripts[i].running = false;
+							workerScripts[i].env.stopFlag = true;
+							return;
+						}
+					} 
+                }
 			});
 		}
 	}
