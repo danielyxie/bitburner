@@ -262,7 +262,8 @@ var Engine = {
         '<b>Multipliers</b><br><br>' + 
         'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' + 
         'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' + 
-        'Hacking money multiplier:  ' + formatNumber(Player.hacking_money_mult * 100, 2) + '%<br><br>' + 
+        'Hacking Money multiplier:  ' + formatNumber(Player.hacking_money_mult * 100, 2) + '%<br>' + 
+        'Hacking Growth multiplier: ' + formatNumber(Player.hacking_grow_mult * 100, 2) + '%<br><br>' + 
         'Hacking Level multiplier:      ' + formatNumber(Player.hacking_mult * 100, 2) + '%<br>' +
         'Hacking Experience multiplier: ' + formatNumber(Player.hacking_exp_mult * 100, 2) + '%<br><br>' + 
         'Strength Level multiplier:      ' + formatNumber(Player.strength_mult * 100, 2) + '%<br>' + 
@@ -363,9 +364,12 @@ var Engine = {
     
     //Update the ActiveScriptsItems array
     updateActiveScriptsItems: function() {
+        var total = 0;
         for (var i = 0; i < workerScripts.length; ++i) {
-            Engine.updateActiveScriptsItemContent(i, workerScripts[i]);
+            total += Engine.updateActiveScriptsItemContent(i, workerScripts[i]);
         }
+        document.getElementById("active-scripts-total-prod").innerHTML =
+            "Total online production rate: $" + formatNumber(total, 2) + " / second";
     },
     
     //Updates the content of the given item in the Active Scripts list
@@ -382,8 +386,8 @@ var Engine = {
             item.removeChild(item.firstChild);
         }
         
-        //Add the updated text back
-        Engine.createActiveScriptsText(workerscript, item);
+        //Add the updated text back. Returns the total online production rate
+        return Engine.createActiveScriptsText(workerscript, item);
     },
     
     createActiveScriptsText: function(workerscript, item) {
@@ -421,6 +425,9 @@ var Engine = {
                              offlineMpsText + "<br>" + offlineEpsText + "<br>";
         
         item.appendChild(itemText);
+        
+        //Return total online production rate
+        return onlineMps;
     },
     
     displayFactionsInfo: function() {
@@ -1088,11 +1095,18 @@ var Engine = {
         document.getElementById("world-menu-link").removeAttribute("class");
         document.getElementById("tutorial-menu-link").removeAttribute("class");
         
-        //DEBUG
+        //DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
             console.log("Deleting running scripts on home computer");
             Player.getHomeComputer().runningScripts = [];
-            dialogBoxCreate("Forcefully deleted scripts. Please refresh page");
+            dialogBoxCreate("Forcefully deleted all running scripts on home computer. Please save and refresh page");
+            return false;
+        });
+        
+        //DEBUG Soft Reset
+        document.getElementById("debug-soft-reset").addEventListener("click", function() {
+            dialogBoxCreate("Soft Reset!");
+            prestigeAugmentation();
             return false;
         });
     },

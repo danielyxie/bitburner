@@ -49,8 +49,8 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
     var gainPerLevel = CONSTANTS.HacknetNodeMoneyGainPerLevel;
     
     this.moneyGainRatePerSecond = (this.level * gainPerLevel) * 
-                                  Math.pow(1.039, this.ram-1) * 
-                                  ((this.numCores + 3) / 4.1) * Player.hacknet_node_money_mult;
+                                  Math.pow(1.03, this.ram-1) * 
+                                  ((this.numCores + 5) / 6) * Player.hacknet_node_money_mult;
     if (isNaN(this.moneyGainRatePerSecond)) {
         this.moneyGainRatePerSecond = 0;
         dialogBoxCreate("Error in calculating Hacknet Node production. Please report to game developer");
@@ -77,9 +77,8 @@ HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
     if (cost > Player.money) {return false;}
     Player.loseMoney(cost);
     if (this.level + levels >= CONSTANTS.HacknetNodeMaxLevel) {
-        this.level = CONSTANTS.HacknetNodeMaxLevel;
-        this.updateMoneyGainRate();
-        return true;
+        var diff = Math.max(0, CONSTANTS.HacknetNodeMaxLevel - this.level);
+        return this.purchaseLevelUpgrade(diff);
     }
     this.level += levels;
     this.updateMoneyGainRate();
@@ -373,7 +372,8 @@ updateHacknetNodeDomElement = function(nodeObj) {
             //Max
             multiplier = getMaxNumberLevelUpgrades(nodeObj);
         } else {
-            multiplier = hacknetNodePurchaseMultiplier;
+            var levelsToMax = CONSTANTS.HacknetNodeMaxLevel - nodeObj.level;
+            multiplier = Math.min(levelsToMax, hacknetNodePurchaseMultiplier);
         }
         
         var upgradeLevelCost = nodeObj.calculateLevelUpgradeCost(multiplier);

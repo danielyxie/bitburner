@@ -108,6 +108,17 @@ Server.prototype.getScript = function(scriptName) {
 	return null; 
 }
 
+//Strengthens a server's security level (difficulty) by the specified amount
+Server.prototype.fortify = function(amt) {
+    this.hackDifficulty += amt; 
+    if (this.hackDifficulty > 99) {this.hackDifficulty = 99;}
+}
+
+Server.prototype.weaken = function(amt) {
+    this.hackDifficulty -= amt; 
+    if (this.hackDifficulty < 1) {this.hackDifficulty = 1;}
+}
+
 //Functions for loading and saving a Server
 Server.prototype.toJSON = function() {
 	return Generic_toJSON("Server", this);
@@ -420,7 +431,7 @@ initForeignServers = function() {
     AddToAllServers(JoesGunsServer);
     
     var Zer0NightclubServer = new Server();
-    Zer0NightclubServer.init(createRandomIp(), "zer0", "ZER0 Nightclub", true, false, false, false, 2);
+    Zer0NightclubServer.init(createRandomIp(), "zer0", "ZER0 Nightclub", true, false, false, false, 4);
     Zer0NightclubServer.setHackingParameters(75, 7500000, 25, 40);
     Zer0NightclubServer.setPortProperties(1);
     AddToAllServers(Zer0NightclubServer);
@@ -432,7 +443,7 @@ initForeignServers = function() {
     AddToAllServers(NectarNightclubServer);
     
     var NeoNightclubServer = new Server();
-    NeoNightclubServer.init(createRandomIp(), "neo-net", "Neo Nightclub Network", true, false, false, false, 2);
+    NeoNightclubServer.init(createRandomIp(), "neo-net", "Neo Nightclub Network", true, false, false, false, 4);
     NeoNightclubServer.setHackingParameters(50, 4500000, 25, 25);
     NeoNightclubServer.setPortProperties(1);
     AddToAllServers(NeoNightclubServer);
@@ -462,7 +473,7 @@ initForeignServers = function() {
     AddToAllServers(PhantasyServer);
     
     var MaxHardwareServer = new Server();
-    MaxHardwareServer.init(createRandomIp(), "max-hardware", "Max Hardware Store", true, false, false, false, 2);
+    MaxHardwareServer.init(createRandomIp(), "max-hardware", "Max Hardware Store", true, false, false, false, 4);
     MaxHardwareServer.setHackingParameters(80, 11000000, 15, 25);
     MaxHardwareServer.setPortProperties(1);
     AddToAllServers(MaxHardwareServer);
@@ -481,7 +492,7 @@ initForeignServers = function() {
     AddToAllServers(CrushFitnessGymServer);
     
     var IronGymServer = new Server();
-    IronGymServer.init(createRandomIp(), "iron-gym", "Iron Gym Network", true, false, false, false, 2);
+    IronGymServer.init(createRandomIp(), "iron-gym", "Iron Gym Network", true, false, false, false, 4);
     IronGymServer.setHackingParameters(100, 20000000, 30, 20);
     IronGymServer.setPortProperties(1);
     AddToAllServers(IronGymServer);
@@ -651,7 +662,7 @@ processServerGrowth = function(numCycles) {
 			var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage;
 			
 			//Apply serverGrowth for the calculated number of growth cycles
-			var serverGrowth = Math.pow(CONSTANTS.ServerGrowthRate, numServerGrowthCyclesAdjusted) * Player.hacking_grow_mult;
+			var serverGrowth = Math.pow(CONSTANTS.ServerGrowthRate, numServerGrowthCyclesAdjusted * Player.hacking_grow_mult) ;
             if (serverGrowth < 1) {
                 console.log("WARN: serverGrowth calculated to be less than 1");
                 serverGrowth = 1;
@@ -674,7 +685,7 @@ processSingleServerGrowth = function(server, numCycles) {
     var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage;
     
     //Apply serverGrowth for the calculated number of growth cycles
-    var serverGrowth = Math.pow(CONSTANTS.ServerGrowthRate, numServerGrowthCyclesAdjusted) * Player.hacking_grow_mult;
+    var serverGrowth = Math.pow(CONSTANTS.ServerGrowthRate, numServerGrowthCyclesAdjusted * Player.hacking_grow_mult) ;
     if (serverGrowth < 1) {
         console.log("WARN: serverGrowth calculated to be less than 1");
         serverGrowth = 1;

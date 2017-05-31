@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.17.7",
+    Version:                "0.18",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -18,11 +18,11 @@ CONSTANTS = {
     BaseCostForHacknetNodeCore: 500000,
     
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.65,
-    HacknetNodePurchaseNextMult: 1.38,   //Multiplier when purchasing an additional hacknet node
+    HacknetNodeMoneyGainPerLevel: 1.5,
+    HacknetNodePurchaseNextMult: 1.39,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.24,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.48,    //Multiplier for cost when buying another core
+    HacknetNodeUpgradeRamMult: 1.26,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeCoreMult: 1.49,    //Multiplier for cost when buying another core
     
     HacknetNodeMaxLevel: 200,
     HacknetNodeMaxRam: 64,
@@ -42,6 +42,7 @@ CONSTANTS = {
     ScriptIfRamCost:                0.1,
     ScriptHackRamCost:              0.25,
     ScriptGrowRamCost:              0.25,
+    ScriptWeakenRamCost:            0.25,
     ScriptNukeRamCost:              0.05,
     ScriptBrutesshRamCost:          0.05,
     ScriptFtpcrackRamCost:          0.05,
@@ -49,11 +50,13 @@ CONSTANTS = {
     ScriptHttpwormRamCost:          0.05,
     ScriptSqlinjectRamCost:         0.05,
     ScriptRunRamCost:               0.8,
+    ScriptExecRamCost:              1.1,
     ScriptScpRamCost:               0.5,
     ScriptHasRootAccessRamCost:     0.05,
     ScriptGetHostnameRamCost:       0.1,
     ScriptGetHackingLevelRamCost:   0.1,
     ScriptGetServerMoneyRamCost:    0.1,
+    ScriptGetServerSecurityRamCost: 0.2,
     ScriptOperatorRamCost:          0.01,
     ScriptPurchaseHacknetRamCost:   1.5,
     ScriptHacknetNodesRamCost:      1.0, //Base cost for accessing hacknet nodes array
@@ -61,8 +64,13 @@ CONSTANTS = {
     ScriptHNUpgRamRamCost:          0.6,
     ScriptHNUpgCoreRamCost:         0.8,
     
-    //Server growth rate
-    ServerGrowthRate: 1.001,
+    //Server constants
+    ServerGrowthRate: 1.002,   //Growth rate
+    ServerFortifyAmount: 0.001, //Amount by which server's security increases when its hacked
+    ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
+    
+    //Augmentation Constants
+    AugmentationCostMultiplier: 3,  //Used for balancing costs without having to readjust every Augmentation cost
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 40,
@@ -178,7 +186,7 @@ CONSTANTS = {
     TutorialHackingText: "In the year 2077, currency has become digital and decentralized. People and corporations " + 
                          "store their money on servers. By hacking these servers, you can steal their money and gain " + 
                          "experience. <br><br>" + 
-                         "<strong>Gaining root access</strong> <br>" + 
+                         "<h1>Gaining root access</h1> <br>" + 
                          "The key to hacking a server is to gain root access to that server. This can be done using " + 
                          "the NUKE virus (NUKE.exe). You start the game with a copy of the NUKE virus on your home " + 
                          "computer. The NUKE virus attacks the target server's open ports using buffer overflow " + 
@@ -191,10 +199,10 @@ CONSTANTS = {
                          "a seller. <br><br>" +
                          "In order to determine how many ports need to be opened to successfully NUKE a server, connect to " + 
                          "that server and run the 'analyze' command. This will also show you which ports have already been " + 
-                         "opened. <br>" +
+                         "opened. <br><br>" +
                          "Once you have enough ports opened and have ran the NUKE virus to gain root access, the server " + 
                          "can then be hacked by simply calling the 'hack' command through terminal, or by using a script.<br><br>" + 
-                         "<strong>Hacking mechanics</strong><br>" + 
+                         "<h1>Hacking mechanics</h1><br>" + 
                          "When you execute the hack command, either manually through the terminal or automatically through " + 
                          "a script, you attempt to hack the server. This action takes time. The more advanced a server's " + 
                          "security is, the more time it will take. Your hacking skill level also affects the hacking time, " + 
@@ -207,7 +215,18 @@ CONSTANTS = {
                          "percentage is determined by the server's security and your hacking skill level. The amount of money " + 
                          "on a server is not limitless. So, if you constantly hack a server and deplete its money, then you will " +
                          "encounter diminishing returns in your hacking (since you are only hacking a certain percentage). A server " + 
-                         "will regain money at a slow rate over time. ",
+                         "will regain money at a slow rate over time. <br><br>" +
+                         "<h1>Server Security</h1><br>" + 
+                         "Each server has a security level, which is denoted by a number between 1 and 100. A higher number means " + 
+                         "the server has stronger security. As mentioned above, a server's security level is an important factor " + 
+                         "to consider when hacking. You can check a server's security level using the 'analyze' command, although this " +
+                         "only gives an estimate (with 5% uncertainty). You can also check a server's security in a script, using the " + 
+                         "<i>getServerSecurityLevel(server)</i> function in Netscript. See the Netscript documentation for more details. " + 
+                         "This function will give you an exact value for a server's security. <br><br>" + 
+                         "Whenever a server is hacked manually or through a script, its security level increases by a small amount. This will " + 
+                         "make it harder for you to hack the server, and decrease the amount of money you can steal. You can lower a " + 
+                         "server's security level in a script using the <i>weaken(server)</i> function in Netscript. See the Netscript " + 
+                         "documentation for more details",
                          
     TutorialScriptsText: "Scripts can be used to automate the hacking process. Scripts must be written in the Netscript language. " + 
                          "Documentation about the Netscript language can be found in the 'Netscript Programming Language' " + 
@@ -267,12 +286,15 @@ CONSTANTS = {
                            "<i>hack(hostname/ip)</i><br>Core function that is used to try and hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
                            "either the IP or hostname of the server you want to hack. A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. " +
                            "For example, you can create a script that hacks the 'foodnstuff' server and run it on your home computer. <br>" + 
-                          "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
+                           "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
                            "must be a string with either the IP or hostname of the target server. The grow() command requires root access to the target server, but " +
-                           "there is no required hacking level to run the command. The grow() command takes a flat 2 minutes to execute " + 
-                           "and grants 1 hacking exp when it completes. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "there is no required hacking level to run the command. " + 
+                           "Grants 1 hacking exp when it completes. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "<i>weaken(hostname/ip)</i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " + 
+                           "in must be a string with either the IP or hostname of the target server. This command requires root access to the target server, but " + 
+                           "there is no required hacking level to run the command. Grants 5 hacking exp when it completes. <br> Example: weaken('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" + 
@@ -284,16 +306,22 @@ CONSTANTS = {
                            "be used to run scripts located on the same server. Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
                            "of RAM to run this command. Does NOT work while offline <br>Example: run('hack-foodnstuff.script'); <br> The example above will try and launch the 'hack-foodnstuff.script' script on " + 
                            "the current server, if it exists. <br><br>" + 
+                           "<i>exec(script, hostname/ip)</i><br>Run a script as a separate process on another server. The first argument is the name of the script as a string. The " + 
+                           "second argument is a string with the hostname or IP of the 'target server' on which to run the script. The specified script must exist on the target server. Returns " + 
+                           "true if the script is successfully started, and false otherwise. Does NOT work while offline<br> " + 
+                           "Example: exec('generic-hack.script', 'foodnstuff'); <br> The example above will try to launch the script 'generic-hack.script' on the 'foodnstuff' server.<br><br>" + 
                            "<i>scp(script, hostname/ip)</i><br>Copies a script to another server. The first argument is a string with the filename of the script " + 
                            "to be copied. The second argument is a string with the hostname or IP of the destination server. Returns true if the script is successfully " + 
                            "copied over and false otherwise. <br> Example: scp('hack-template.script', 'foodnstuff');<br><br>" + 
                            "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " + 
                            "The argument passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline.<br> " + 
                            "Example:<br>if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" + 
-                           "<i>getHostname()<i><br>Returns a string with the hostname of the server that the script is running on<br><br>" + 
-                           "<i>getHackingLevel() </i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
+                           "<i>getHostname()</i><br>Returns a string with the hostname of the server that the script is running on<br><br>" + 
+                           "<i>getHackingLevel()</i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
+                           "<i>getServerSecurityLevel(hostname/ip)</i><br>Returns the security level of a server. The argument passed in must be a string with either the " + 
+                           "hostname or IP of the target server. A server's security is denoted by a number between 1 and 100. Does NOT work while offline.<br><br>" + 
                            "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " + 
                            "at the end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford to purchase " +
                            "a new Hacknet Node then the function will return false. Does NOT work offline<br><br>" + 
@@ -397,7 +425,7 @@ CONSTANTS = {
                       "other actions such as using your terminal or visiting other locations (However, note that any scripts you have " + 
                       "running on servers will continue to run as you work!). It is possible to cancel your work shift before the " + 
                       "8 hours is up. However, if you have a full-time job, then cancelling a shift early will result in you gaining " + 
-                      "only half of all of the money, experience, and reputation " +
+                      "only half of the reputation " +
                       "that you had earned up to that point. There are also part-time/consultant jobs available where you will not " + 
                       " be penalized if you cancel a work shift early. However, these positions pay less than full-time positions.<br><br>" +
                       "As you continue to work at a company, you will gain more and more reputation at that company. When your stats " + 
