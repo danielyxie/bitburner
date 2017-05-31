@@ -288,6 +288,7 @@ function evaluate(exp, workerScript) {
 										workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
 										console.log("Script successfully hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
                                         workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
+                                        server.fortify(CONSTANTS.ServerFortifyAmount);
 										resolve("Hack success");
 									} else {	
                                         if (env.stopFlag) {reject(workerScript); return;}

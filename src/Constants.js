@@ -62,8 +62,10 @@ CONSTANTS = {
     ScriptHNUpgRamRamCost:          0.6,
     ScriptHNUpgCoreRamCost:         0.8,
     
-    //Server growth rate
-    ServerGrowthRate: 1.0018,
+    //Server constants
+    ServerGrowthRate: 1.0018,   //Growth rate
+    ServerFortifyAmount: 0.001, //Amount by which server's security increases when its hacked
+    ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 40,

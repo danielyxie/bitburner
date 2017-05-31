@@ -108,6 +108,17 @@ Server.prototype.getScript = function(scriptName) {
 	return null; 
 }
 
+//Strengthens a server's security level (difficulty) by the specified amount
+Server.prototype.fortify = function(amt) {
+    this.hackDifficulty += amt; 
+    if (this.hackDifficulty > 99) {this.hackDifficulty = 99;}
+}
+
+Server.prototype.weaken = function(amt) {
+    this.hackDifficulty -= amt; 
+    if (this.hackDifficulty < 1) {this.hackDifficulty = 1;}
+}
+
 //Functions for loading and saving a Server
 Server.prototype.toJSON = function() {
 	return Generic_toJSON("Server", this);
