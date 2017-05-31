@@ -66,7 +66,7 @@ CONSTANTS = {
     
     //Server constants
     ServerGrowthRate: 1.0015,   //Growth rate
-    ServerFortifyAmount: 0.002, //Amount by which server's security increases when its hacked
+    ServerFortifyAmount: 0.001, //Amount by which server's security increases when its hacked
     ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
     
     //Maximum number of log entries for a script
