@@ -49,8 +49,8 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
     var gainPerLevel = CONSTANTS.HacknetNodeMoneyGainPerLevel;
     
     this.moneyGainRatePerSecond = (this.level * gainPerLevel) * 
-                                  Math.pow(1.037, this.ram-1) * 
-                                  ((this.numCores + 4) / 5) * Player.hacknet_node_money_mult;
+                                  Math.pow(1.035, this.ram-1) * 
+                                  ((this.numCores + 5) / 6) * Player.hacknet_node_money_mult;
     if (isNaN(this.moneyGainRatePerSecond)) {
         this.moneyGainRatePerSecond = 0;
         dialogBoxCreate("Error in calculating Hacknet Node production. Please report to game developer");

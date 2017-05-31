@@ -18,7 +18,7 @@ CONSTANTS = {
     BaseCostForHacknetNodeCore: 500000,
     
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.65,
+    HacknetNodeMoneyGainPerLevel: 1.5,
     HacknetNodePurchaseNextMult: 1.39,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.26,     //Multiplier for cost when upgrading RAM
@@ -65,9 +65,12 @@ CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     
     //Server constants
-    ServerGrowthRate: 1.0015,   //Growth rate
+    ServerGrowthRate: 1.002,   //Growth rate
     ServerFortifyAmount: 0.001, //Amount by which server's security increases when its hacked
     ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
+    
+    //Augmentation Constants
+    AugmentationCostMultiplier: 2,  //Used for balancing costs without having to readjust every Augmentation cost
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 40,
@@ -287,8 +290,11 @@ CONSTANTS = {
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
                            "must be a string with either the IP or hostname of the target server. The grow() command requires root access to the target server, but " +
-                           "there is no required hacking level to run the command. The grow() command takes a flat 2 minutes to execute " + 
-                           "and grants 1 hacking exp when it completes. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "there is no required hacking level to run the command. " + 
+                           "Grants 1 hacking exp when it completes. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "<i>weaken(hostname/ip)</i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " + 
+                           "in must be a string with either the IP or hostname of the target server. This command requires root access to the target server, but " + 
+                           "there is no required hacking level to run the command. Grants 5 hacking exp when it completes. <br> Example: weaken('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" + 
@@ -310,10 +316,12 @@ CONSTANTS = {
                            "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " + 
                            "The argument passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline.<br> " + 
                            "Example:<br>if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" + 
-                           "<i>getHostname()<i><br>Returns a string with the hostname of the server that the script is running on<br><br>" + 
-                           "<i>getHackingLevel() </i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
+                           "<i>getHostname()</i><br>Returns a string with the hostname of the server that the script is running on<br><br>" + 
+                           "<i>getHackingLevel()</i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
+                           "<i>getServerSecurityLevel(hostname/ip)</i><br>Returns the security level of a server. The argument passed in must be a string with either the " + 
+                           "hostname or IP of the target server. A server's security is denoted by a number between 1 and 100. Does NOT work while offline.<br><br>" + 
                            "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " + 
                            "at the end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford to purchase " +
                            "a new Hacknet Node then the function will return false. Does NOT work offline<br><br>" + 

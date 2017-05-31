@@ -585,7 +585,7 @@ displayFactionContent = function(factionName) {
                 return;
             }
             Player.loseMoney(numMoneyDonate);
-            var repGain = numMoneyDonate / 1000 * Player.faction_rep_mult;
+            var repGain = numMoneyDonate / 1000000 * Player.faction_rep_mult;
             faction.playerReputation += repGain;
             dialogBoxCreate("You just donated $" + formatNumber(numMoneyDonate, 2) + " to " + 
                             faction.name + " to gain " + formatNumber(repGain, 3) + " reputation"); 

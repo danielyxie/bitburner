@@ -880,7 +880,7 @@ function evaluate(exp, workerScript) {
                                     workerScript.scriptRef.log("Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
                                     return;
                                 }
-                                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2));
+                                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2) + " for " + server.hostname);
                                 resolve(server.moneyAvailable);
                             }, CONSTANTS.CodeInstructionRunTime);
                         }, function(e) {
@@ -900,7 +900,7 @@ function evaluate(exp, workerScript) {
                                     workerScript.scriptRef.log("Cannot getServerSecurityLevel(). Invalid IP or hostname passed in: " + ip);
                                     return;
                                 }
-                                workerScript.scriptRef.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3));
+                                workerScript.scriptRef.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3) + " for " + server.hostname);
                                 resolve(server.hackDifficulty);
                             }, CONSTANTS.CodeInstructionRunTime);
                         }, function(e) {
