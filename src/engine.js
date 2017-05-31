@@ -262,7 +262,8 @@ var Engine = {
         '<b>Multipliers</b><br><br>' + 
         'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' + 
         'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' + 
-        'Hacking money multiplier:  ' + formatNumber(Player.hacking_money_mult * 100, 2) + '%<br><br>' + 
+        'Hacking Money multiplier:  ' + formatNumber(Player.hacking_money_mult * 100, 2) + '%<br>' + 
+        'Hacking Growth multiplier: ' + formatNumber(Player.hacking_grow_mult * 100, 2) + '%<br><br>' + 
         'Hacking Level multiplier:      ' + formatNumber(Player.hacking_mult * 100, 2) + '%<br>' +
         'Hacking Experience multiplier: ' + formatNumber(Player.hacking_exp_mult * 100, 2) + '%<br><br>' + 
         'Strength Level multiplier:      ' + formatNumber(Player.strength_mult * 100, 2) + '%<br>' + 
