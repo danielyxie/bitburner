@@ -1693,7 +1693,7 @@ applyAugmentation = function(aug, reapply=false) {
             Player.hacking_chance_mult *= 1.01;
             Player.hacking_speed_mult  *= 0.99;
             Player.hacking_money_mult  *= 1.01;
-            //Player.hacking_grow_mult   *= 1.01;
+            Player.hacking_grow_mult   *= 1.01;
             Player.hacking_mult        *= 1.01;
 
             Player.strength_mult       *= 1.01;

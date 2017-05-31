@@ -175,6 +175,7 @@ Script.prototype.updateRamUsage = function() {
     var ifCount = numOccurrences(codeCopy, "if(");
     var hackCount = numOccurrences(codeCopy, "hack(");
     var growCount = numOccurrences(codeCopy, "grow(");
+    var weakenCount = numOccurrences(codeCopy, "weaken(");
     var nukeCount = numOccurrences(codeCopy, "nuke(");
     var brutesshCount = numOccurrences(codeCopy, "brutessh(");
     var ftpcrackCount = numOccurrences(codeCopy, "ftpcrack(");
@@ -188,6 +189,7 @@ Script.prototype.updateRamUsage = function() {
     var getHostnameCount = numOccurrences(codeCopy, "getHostname(");
     var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
     var getServerMoneyAvailableCount = numOccurrences(codeCopy, "getServerMoneyAvailable(");
+    var getServerSecurityCount = numOccurrences(codeCopy, "getServerSecurityLevel(");
     var numOperators = numNetscriptOperators(codeCopy);
     var purchaseHacknetCount = numOccurrences(codeCopy, "purchaseHacknetNode(");
     var hacknetnodesArrayCount = numOccurrences(codeCopy, "hacknetnodes[");
@@ -201,6 +203,7 @@ Script.prototype.updateRamUsage = function() {
                     (ifCount * CONSTANTS.ScriptIfRamCost) + 
                     (hackCount * CONSTANTS.ScriptHackRamCost) + 
                     (growCount * CONSTANTS.ScriptGrowRamCost) + 
+                    (weakenCount * CONSTANTS.ScriptWeakenRamCost) + 
                     (nukeCount * CONSTANTS.ScriptNukeRamCost) + 
                     (brutesshCount * CONSTANTS.ScriptBrutesshRamCost) + 
                     (ftpcrackCount * CONSTANTS.ScriptFtpcrackRamCost) + 
@@ -214,6 +217,7 @@ Script.prototype.updateRamUsage = function() {
                     (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
                     (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
                     (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
+                    (getServerSecurityCount * CONSTANTS.ScriptGetServerSecurityRamCost) +
                     (numOperators * CONSTANTS.ScriptOperatorRamCost) +
                     (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) + 
                     (hacknetnodesArrayCount * CONSTANTS.ScriptHacknetNodesRamCost) +

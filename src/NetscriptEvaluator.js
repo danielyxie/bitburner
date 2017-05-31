@@ -404,6 +404,52 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
 							reject(e);
 						});
+                    } else if (exp.func.value == "weaken") {
+                        if (env.stopFlag) {reject(workerScript); return;}
+                        if (exp.args.length != 1) {
+                            reject("|" + workerScript.serverIp + "|" + workerScript.name + "|weaken() call has incorrect number of arguments. Takes 1 argument");
+                            return;
+                        }
+                        var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            if (env.stopFlag) {reject(workerScript); return;}
+                            var server = getServer(ip);
+                            if (server == null) {
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Invalid IP or hostname passed into weaken() command");
+                                workerScript.scriptRef.log("Cannot weaken(). Invalid IP or hostname passed in: " + ip);
+                                return;
+                            }
+                            							
+                            //No root access or skill level too low
+							if (server.hasAdminRights == false) {
+								workerScript.scriptRef.log("Cannot weaken this server (" + server.hostname + ") because user does not have root access");
+                                reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Script crashed because it did not have root access to " + server.hostname);
+                                return;
+							}
+                            
+                            var weakenTime = scriptCalculateWeakenTime(server);
+                            console.log("Executing weaken() on server " + server.hostname + " in " + formatNumber(weakenTime/1000, 3) + " seconds")
+                            workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " + formatNumber(weakenTime/1000, 3) + " seconds");
+                            
+                            var p = new Promise(function(resolve, reject) {
+								if (env.stopFlag) {reject(workerScript); return;}
+								setTimeout(function() {
+                                    server.weaken(CONSTANTS.ServerWeakenAmount);
+                                    resolve(CONSTANTS.ServerWeakenAmount);
+								}, weakenTime);
+							});
+                            
+                            p.then(function(amt) {
+                                workerScript.scriptRef.log("Using weaken(), " + server.hostname + "'s security level was decreased by " + amt + ". Gained 5 hacking exp");
+                                Player.gainHackingExp(5);
+                                workerScript.scriptRef.onlineExpGained += 5;
+                                resolve("hackExecuted");
+							}, function(e) {
+								reject(e);
+							});
+                        }, function(e) {
+							reject(e);
+						});
                     } else if (exp.func.value == "nuke") {
                         if (exp.args.length != 1) {
                             reject("|" + workerScript.serverIp + "|" + workerScript.name + "|nuke() call has incorrect number of arguments. Takes 1 argument");
@@ -840,15 +886,35 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
 							reject(e);
 						});
+                    } else if (exp.func.value == "getServerSecurityLevel") {
+                        if (exp.args.length != 1) {
+                            reject(makeRuntimeRejectMsg(workerScript, "getServerSecurityLevel() call has incorrect number of arguments. Takes 1 arguments"));
+                            return;
+                        }
+                        var ipPromise = evaluate(exp.args[0], workerScript);
+						ipPromise.then(function(ip) {
+                            setTimeout(function() {
+                                var server = getServer(ip);
+                                if (server == null) {
+                                    reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerSecurityLevel() command"));
+                                    workerScript.scriptRef.log("Cannot getServerSecurityLevel(). Invalid IP or hostname passed in: " + ip);
+                                    return;
+                                }
+                                workerScript.scriptRef.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3));
+                                resolve(server.hackDifficulty);
+                            }, CONSTANTS.CodeInstructionRunTime);
+                        }, function(e) {
+							reject(e);
+						});
                     } else if (exp.func.value == "purchaseHacknetNode") {
                         if (exp.args.length != 0) {
-                            reject("|"+workerScript.serverIp+"|"+workerScript.name+"|purchaseHacknetNode() call has incorrect number of arguments. Takes 0 arguments");
+                            reject(makeRuntimeRejectMsg(workerScript, "purchaseHacknetNode() call has incorrect number of arguments. Takes 0 arguments"));
                             return;
                         }
                         setTimeout(function() {
                             var cost = getCostOfNextHacknetNode();
                             if (isNaN(cost)) {
-                                reject("|"+workerScript.serverIp+"|"+workerScript.name+"|Could not calculate cost in purchaseHacknetNode(). This is a bug please report to game dev");
+                                reject(makeRuntimeRejectMsg(workerScript, "Could not calculate cost in purchaseHacknetNode(). This is a bug please report to game dev"));
                                 return;
                             }
                             if (cost > Player.money) {
@@ -1304,10 +1370,18 @@ function scriptCalculatePercentMoneyHacked(server) {
     return percentMoneyHacked;
 }
 
-//Amount of time to execute grow()
+//Amount of time to execute grow() in milliseconds
 function scriptCalculateGrowTime(server) {
     var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
 	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
 	var growTime = skillFactor * Player.hacking_speed_mult * 16; //This is in seconds
 	return growTime * 1000;
+}
+
+//Amount of time to execute weaken() in milliseconds
+function scriptCalculateWeakenTime(server) {
+    var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
+	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
+	var weakenTime = skillFactor * Player.hacking_speed_mult * 100; //This is in seconds
+	return weakenTime * 1000;
 }

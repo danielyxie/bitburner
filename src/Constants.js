@@ -42,6 +42,7 @@ CONSTANTS = {
     ScriptIfRamCost:                0.1,
     ScriptHackRamCost:              0.25,
     ScriptGrowRamCost:              0.25,
+    ScriptWeakenRamCost:            0.5,
     ScriptNukeRamCost:              0.05,
     ScriptBrutesshRamCost:          0.05,
     ScriptFtpcrackRamCost:          0.05,
@@ -49,12 +50,13 @@ CONSTANTS = {
     ScriptHttpwormRamCost:          0.05,
     ScriptSqlinjectRamCost:         0.05,
     ScriptRunRamCost:               0.8,
-    ScriptExecRamCost:              1.0,
+    ScriptExecRamCost:              1.1,
     ScriptScpRamCost:               0.5,
     ScriptHasRootAccessRamCost:     0.05,
     ScriptGetHostnameRamCost:       0.1,
     ScriptGetHackingLevelRamCost:   0.1,
     ScriptGetServerMoneyRamCost:    0.1,
+    ScriptGetServerSecurityRamCost: 0.2,
     ScriptOperatorRamCost:          0.01,
     ScriptPurchaseHacknetRamCost:   1.5,
     ScriptHacknetNodesRamCost:      1.0, //Base cost for accessing hacknet nodes array
@@ -63,8 +65,8 @@ CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     
     //Server constants
-    ServerGrowthRate: 1.0018,   //Growth rate
-    ServerFortifyAmount: 0.001, //Amount by which server's security increases when its hacked
+    ServerGrowthRate: 1.0012,   //Growth rate
+    ServerFortifyAmount: 0.002, //Amount by which server's security increases when its hacked
     ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
     
     //Maximum number of log entries for a script
@@ -181,7 +183,7 @@ CONSTANTS = {
     TutorialHackingText: "In the year 2077, currency has become digital and decentralized. People and corporations " + 
                          "store their money on servers. By hacking these servers, you can steal their money and gain " + 
                          "experience. <br><br>" + 
-                         "<strong>Gaining root access</strong> <br>" + 
+                         "<h1>Gaining root access</h1> <br>" + 
                          "The key to hacking a server is to gain root access to that server. This can be done using " + 
                          "the NUKE virus (NUKE.exe). You start the game with a copy of the NUKE virus on your home " + 
                          "computer. The NUKE virus attacks the target server's open ports using buffer overflow " + 
@@ -194,10 +196,10 @@ CONSTANTS = {
                          "a seller. <br><br>" +
                          "In order to determine how many ports need to be opened to successfully NUKE a server, connect to " + 
                          "that server and run the 'analyze' command. This will also show you which ports have already been " + 
-                         "opened. <br>" +
+                         "opened. <br><br>" +
                          "Once you have enough ports opened and have ran the NUKE virus to gain root access, the server " + 
                          "can then be hacked by simply calling the 'hack' command through terminal, or by using a script.<br><br>" + 
-                         "<strong>Hacking mechanics</strong><br>" + 
+                         "<h1>Hacking mechanics</h1><br>" + 
                          "When you execute the hack command, either manually through the terminal or automatically through " + 
                          "a script, you attempt to hack the server. This action takes time. The more advanced a server's " + 
                          "security is, the more time it will take. Your hacking skill level also affects the hacking time, " + 
@@ -210,7 +212,18 @@ CONSTANTS = {
                          "percentage is determined by the server's security and your hacking skill level. The amount of money " + 
                          "on a server is not limitless. So, if you constantly hack a server and deplete its money, then you will " +
                          "encounter diminishing returns in your hacking (since you are only hacking a certain percentage). A server " + 
-                         "will regain money at a slow rate over time. ",
+                         "will regain money at a slow rate over time. <br><br>" +
+                         "<h1>Server Security</h1><br>" + 
+                         "Each server has a security level, which is denoted by a number between 1 and 100. A higher number means " + 
+                         "the server has stronger security. As mentioned above, a server's security level is an important factor " + 
+                         "to consider when hacking. You can check a server's security level using the 'analyze' command, although this " +
+                         "only gives an estimate (with 5% uncertainty). You can also check a server's security in a script, using the " + 
+                         "<i>getServerSecurityLevel(server)</i> function in Netscript. See the Netscript documentation for more details. " + 
+                         "This function will give you an exact value for a server's security. <br><br>" + 
+                         "Whenever a server is hacked manually or through a script, its security level increases by a small amount. This will " + 
+                         "make it harder for you to hack the server, and decrease the amount of money you can steal. You can lower a " + 
+                         "server's security level in a script using the <i>weaken(server)</i> function in Netscript. See the Netscript " + 
+                         "documentation for more details",
                          
     TutorialScriptsText: "Scripts can be used to automate the hacking process. Scripts must be written in the Netscript language. " + 
                          "Documentation about the Netscript language can be found in the 'Netscript Programming Language' " + 

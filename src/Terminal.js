@@ -319,7 +319,7 @@ var Terminal = {
             else {rootAccess = "NO";}
             post("Root Access: " + rootAccess);
 			post("Required hacking skill: " + Player.getCurrentServer().requiredHackingSkill);
-			post("Estimated server security level(1-100): " + formatNumber(addOffset(Player.getCurrentServer().hackDifficulty, 5), 0));
+			post("Estimated server security level(1-100): " + formatNumber(addOffset(Player.getCurrentServer().hackDifficulty, 5), 3));
 			post("Estimated chance to hack: " + formatNumber(addOffset(Player.calculateHackingChance() * 100, 5), 2) + "%");
 			post("Estimated time to hack: " + formatNumber(addOffset(Player.calculateHackingTime(), 5), 3) + " seconds");
 			post("Estimated total money available on server: $" + formatNumber(addOffset(Player.getCurrentServer().moneyAvailable, 5), 2));
