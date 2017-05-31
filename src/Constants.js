@@ -49,6 +49,7 @@ CONSTANTS = {
     ScriptHttpwormRamCost:          0.05,
     ScriptSqlinjectRamCost:         0.05,
     ScriptRunRamCost:               0.8,
+    ScriptExecRamCost:              1.0,
     ScriptScpRamCost:               0.5,
     ScriptHasRootAccessRamCost:     0.05,
     ScriptGetHostnameRamCost:       0.1,
@@ -267,7 +268,7 @@ CONSTANTS = {
                            "<i>hack(hostname/ip)</i><br>Core function that is used to try and hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
                            "either the IP or hostname of the server you want to hack. A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. " +
                            "For example, you can create a script that hacks the 'foodnstuff' server and run it on your home computer. <br>" + 
-                          "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
+                           "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
                            "must be a string with either the IP or hostname of the target server. The grow() command requires root access to the target server, but " +
@@ -284,6 +285,10 @@ CONSTANTS = {
                            "be used to run scripts located on the same server. Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
                            "of RAM to run this command. Does NOT work while offline <br>Example: run('hack-foodnstuff.script'); <br> The example above will try and launch the 'hack-foodnstuff.script' script on " + 
                            "the current server, if it exists. <br><br>" + 
+                           "<i>exec(script, hostname/ip)</i><br>Run a script as a separate process on another server. The first argument is the name of the script as a string. The " + 
+                           "second argument is a string with the hostname or IP of the 'target server' on which to run the script. The specified script must exist on the target server. Returns " + 
+                           "true if the script is successfully started, and false otherwise. Does NOT work while offline<br> " + 
+                           "Example: exec('generic-hack.script', 'foodnstuff'); <br> The example above will try to launch the script 'generic-hack.script' on the 'foodnstuff' server.<br><br>" + 
                            "<i>scp(script, hostname/ip)</i><br>Copies a script to another server. The first argument is a string with the filename of the script " + 
                            "to be copied. The second argument is a string with the hostname or IP of the destination server. Returns true if the script is successfully " + 
                            "copied over and false otherwise. <br> Example: scp('hack-template.script', 'foodnstuff');<br><br>" + 

@@ -710,6 +710,35 @@ function evaluate(exp, workerScript) {
                         }, function(e) {
                             reject(e);
                         });
+                    } else if (exp.func.value == "exec") {
+                        if (exp.args.length != 2) {
+                            reject(makeRuntimeRejectMsg(workerScript, "exec() call has incorrect number of arguments. Takes 2 arguments"));
+                            return;
+                        }
+                        var scriptNamePromise = evaluate(exp.args[0], workerScript);
+                        scriptNamePromise.then(function(scriptname) {
+                            if (env.stopFlag) {reject(workerScript); return;}
+                            var ipPromise = evaluate(exp.args[1], workerScript);
+                            ipPromise.then(function(ip) {
+                                if (env.stopFlag) {reject(workerScript); return;}
+                                var server = getServer(ip);
+                                if (server == null) {
+                                    reject(makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into exec() command: " + ip));
+                                    return;
+                                }
+                                
+                                var runScriptPromise = runScriptFromScript(server, scriptname, workerScript); 
+                                runScriptPromise.then(function(res) {
+                                    resolve(res);
+                                }, function(e) {
+                                    reject(e);
+                                });
+                            }, function(e) {
+                                reject(e);
+                            });
+                        }, function(e) {
+                            reject(e);
+                        });
                     } else if (exp.func.value == "scp") {
                         if (exp.args.length != 2) {
                             reject(makeRuntimeRejectMsg(workerScript, "scp() call has incorrect number of arguments. Takes 2 arguments"));
@@ -717,8 +746,10 @@ function evaluate(exp, workerScript) {
                         }
                         var scriptNamePromise = evaluate(exp.args[0], workerScript);
                         scriptNamePromise.then(function(scriptname) {
+                            if (env.stopFlag) {reject(workerScript); return;}
                             var ipPromise = evaluate(exp.args[1], workerScript);
                             ipPromise.then(function(ip) {
+                                if (env.stopFlag) {reject(workerScript); return;}
                                 var destServer = getServer(ip);
                                 if (destServer == null) {
                                     reject(makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into scp() command: " + ip));
@@ -1203,16 +1234,16 @@ function runScriptFromScript(server, scriptname, workerScript) {
                     var ramAvailable = server.maxRam - server.ramUsed;
                     
                     if (server.hasAdminRights == false) {
-                        workerScript.scriptRef.log("Cannot run script " + scriptname + " because you do not have root access!");
+                        workerScript.scriptRef.log("Cannot run script " + scriptname + " on " + server.hostname + " because you do not have root access!");
                         resolve(false);
                         return;
                     } else if (ramUsage > ramAvailable){
-                        workerScript.scriptRef.log("Cannot run script " + scriptname + " because there is not enough available RAM!");
+                        workerScript.scriptRef.log("Cannot run script " + scriptname + " on " + server.hostname + " because there is not enough available RAM!");
                         resolve(false);
                         return;
                     } else {
                         //Able to run script
-                        workerScript.scriptRef.log("Running script: " + scriptname + ". May take a few seconds to start up...");
+                        workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + ". May take a few seconds to start up...");
                         var script = server.scripts[i];
                         server.runningScripts.push(script.filename);	//Push onto runningScripts
                         addWorkerScript(script, server);
