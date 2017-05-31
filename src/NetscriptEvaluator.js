@@ -1266,7 +1266,7 @@ function scriptCalculateExpGain(server) {
 function scriptCalculatePercentMoneyHacked(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 425;
+    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 350;
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;

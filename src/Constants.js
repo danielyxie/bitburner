@@ -62,7 +62,7 @@ CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     
     //Server growth rate
-    ServerGrowthRate: 1.001,
+    ServerGrowthRate: 1.0015,
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 40,
