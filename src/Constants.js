@@ -42,7 +42,7 @@ CONSTANTS = {
     ScriptIfRamCost:                0.1,
     ScriptHackRamCost:              0.25,
     ScriptGrowRamCost:              0.25,
-    ScriptWeakenRamCost:            0.5,
+    ScriptWeakenRamCost:            0.25,
     ScriptNukeRamCost:              0.05,
     ScriptBrutesshRamCost:          0.05,
     ScriptFtpcrackRamCost:          0.05,
@@ -65,7 +65,7 @@ CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     
     //Server constants
-    ServerGrowthRate: 1.0012,   //Growth rate
+    ServerGrowthRate: 1.0015,   //Growth rate
     ServerFortifyAmount: 0.002, //Amount by which server's security increases when its hacked
     ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
     

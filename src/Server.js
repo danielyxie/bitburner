@@ -431,7 +431,7 @@ initForeignServers = function() {
     AddToAllServers(JoesGunsServer);
     
     var Zer0NightclubServer = new Server();
-    Zer0NightclubServer.init(createRandomIp(), "zer0", "ZER0 Nightclub", true, false, false, false, 2);
+    Zer0NightclubServer.init(createRandomIp(), "zer0", "ZER0 Nightclub", true, false, false, false, 4);
     Zer0NightclubServer.setHackingParameters(75, 7500000, 25, 40);
     Zer0NightclubServer.setPortProperties(1);
     AddToAllServers(Zer0NightclubServer);
@@ -443,7 +443,7 @@ initForeignServers = function() {
     AddToAllServers(NectarNightclubServer);
     
     var NeoNightclubServer = new Server();
-    NeoNightclubServer.init(createRandomIp(), "neo-net", "Neo Nightclub Network", true, false, false, false, 2);
+    NeoNightclubServer.init(createRandomIp(), "neo-net", "Neo Nightclub Network", true, false, false, false, 4);
     NeoNightclubServer.setHackingParameters(50, 4500000, 25, 25);
     NeoNightclubServer.setPortProperties(1);
     AddToAllServers(NeoNightclubServer);
@@ -473,7 +473,7 @@ initForeignServers = function() {
     AddToAllServers(PhantasyServer);
     
     var MaxHardwareServer = new Server();
-    MaxHardwareServer.init(createRandomIp(), "max-hardware", "Max Hardware Store", true, false, false, false, 2);
+    MaxHardwareServer.init(createRandomIp(), "max-hardware", "Max Hardware Store", true, false, false, false, 4);
     MaxHardwareServer.setHackingParameters(80, 11000000, 15, 25);
     MaxHardwareServer.setPortProperties(1);
     AddToAllServers(MaxHardwareServer);
@@ -492,7 +492,7 @@ initForeignServers = function() {
     AddToAllServers(CrushFitnessGymServer);
     
     var IronGymServer = new Server();
-    IronGymServer.init(createRandomIp(), "iron-gym", "Iron Gym Network", true, false, false, false, 2);
+    IronGymServer.init(createRandomIp(), "iron-gym", "Iron Gym Network", true, false, false, false, 4);
     IronGymServer.setHackingParameters(100, 20000000, 30, 20);
     IronGymServer.setPortProperties(1);
     AddToAllServers(IronGymServer);
