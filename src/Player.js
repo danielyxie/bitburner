@@ -243,7 +243,7 @@ PlayerObject.prototype.calculateHackingTime = function() {
 PlayerObject.prototype.calculatePercentMoneyHacked = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
     var skillMult = (this.hacking_skill - (this.getCurrentServer().requiredHackingSkill - 1)) / this.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 350;
+    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 150;
     console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
@@ -367,47 +367,44 @@ PlayerObject.prototype.resetWorkStatus = function() {
     document.getElementById("work-in-progress-text").innerHTML = "";
 }
 
-PlayerObject.prototype.gainWorkExp = function(divMult = 1) {
-    this.gainHackingExp(this.workHackExpGained / divMult);
-    this.gainStrengthExp(this.workStrExpGained / divMult);
-    this.gainDefenseExp(this.workDefExpGained / divMult);
-    this.gainDexterityExp(this.workDexExpGained / divMult);
-    this.gainAgilityExp(this.workAgiExpGained / divMult);
-    this.gainCharismaExp(this.workChaExpGained / divMult);
+PlayerObject.prototype.gainWorkExp = function() {
+    this.gainHackingExp(this.workHackExpGained);
+    this.gainStrengthExp(this.workStrExpGained);
+    this.gainDefenseExp(this.workDefExpGained);
+    this.gainDexterityExp(this.workDexExpGained);
+    this.gainAgilityExp(this.workAgiExpGained);
+    this.gainCharismaExp(this.workChaExpGained);
 }
 
 /* Working for Company */
 PlayerObject.prototype.finishWork = function(cancelled) {
     //Since the work was cancelled early, player only gains half of what they've earned so far
-    var cancMult = 1;
-    if (cancelled) {cancMult = 2;}
-    
-    if (Engine.Debug) {
-        console.log("Player finishWork() called with " + this.workMoneyGained / cancMult + " $ gained");
+    if (cancelled) {
+        this.workRepGained /= 2;
     }
 
-    this.gainWorkExp(cancMult);
+    this.gainWorkExp();
     
     var company = Companies[this.companyName];
-    company.playerReputation += (this.workRepGained / cancMult);
+    company.playerReputation += (this.workRepGained);
     
-    this.gainMoney(this.workMoneyGained / cancMult);
+    this.gainMoney(this.workMoneyGained);
     
     this.updateSkillLevels();
     
     var txt = "You earned a total of: <br>" + 
-              "$" + formatNumber(this.workMoneyGained / cancMult, 2) + "<br>" + 
-              formatNumber(this.workRepGained / cancMult, 4) + " reputation for the company <br>" + 
-              formatNumber(this.workHackExpGained / cancMult, 4) + " hacking exp <br>" + 
-              formatNumber(this.workStrExpGained / cancMult, 4) + " strength exp <br>" + 
-              formatNumber(this.workDefExpGained / cancMult, 4) + " defense exp <br>" +
-              formatNumber(this.workDexExpGained / cancMult, 4) + " dexterity exp <br>" + 
-              formatNumber(this.workAgiExpGained / cancMult, 4) + " agility exp <br>" + 
-              formatNumber(this.workChaExpGained / cancMult, 4) + " charisma exp<br>";
+              "$" + formatNumber(this.workMoneyGained, 2) + "<br>" + 
+              formatNumber(this.workRepGained, 4) + " reputation for the company <br>" + 
+              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" + 
+              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" + 
+              formatNumber(this.workDefExpGained, 4) + " defense exp <br>" +
+              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" + 
+              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" + 
+              formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
               
     if (cancelled) {
         txt = "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
-              "Since you cancelled your work early, you only gained half of the experience, money, and reputation you earned. <br><br>" + txt;  
+              "Since you cancelled your work early, you only gained half of the reputation you earned. <br><br>" + txt;  
     } else {
         txt = "You worked a full shift of 8 hours! <br><br> " +
               "You earned a total of: <br>" + txt;
@@ -492,8 +489,8 @@ PlayerObject.prototype.work = function(numCycles) {
                     formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" + 
                     formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
                     formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" + 
-                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" + 
-                    "but you will only gain half of the experience, money, and reputation you've earned so far."
+                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, " + 
+                    "but you will only gain half of the reputation you've earned so far."
                     
 }
 

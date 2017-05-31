@@ -19,10 +19,10 @@ CONSTANTS = {
     
     /* Hacknet Node constants */
     HacknetNodeMoneyGainPerLevel: 1.65,
-    HacknetNodePurchaseNextMult: 1.38,   //Multiplier when purchasing an additional hacknet node
+    HacknetNodePurchaseNextMult: 1.39,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.24,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.48,    //Multiplier for cost when buying another core
+    HacknetNodeUpgradeRamMult: 1.26,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeCoreMult: 1.49,    //Multiplier for cost when buying another core
     
     HacknetNodeMaxLevel: 200,
     HacknetNodeMaxRam: 64,
@@ -62,7 +62,7 @@ CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     
     //Server growth rate
-    ServerGrowthRate: 1.0015,
+    ServerGrowthRate: 1.0018,
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 40,
@@ -397,7 +397,7 @@ CONSTANTS = {
                       "other actions such as using your terminal or visiting other locations (However, note that any scripts you have " + 
                       "running on servers will continue to run as you work!). It is possible to cancel your work shift before the " + 
                       "8 hours is up. However, if you have a full-time job, then cancelling a shift early will result in you gaining " + 
-                      "only half of all of the money, experience, and reputation " +
+                      "only half of the reputation " +
                       "that you had earned up to that point. There are also part-time/consultant jobs available where you will not " + 
                       " be penalized if you cancel a work shift early. However, these positions pay less than full-time positions.<br><br>" +
                       "As you continue to work at a company, you will gain more and more reputation at that company. When your stats " + 

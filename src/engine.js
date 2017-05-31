@@ -1094,11 +1094,18 @@ var Engine = {
         document.getElementById("world-menu-link").removeAttribute("class");
         document.getElementById("tutorial-menu-link").removeAttribute("class");
         
-        //DEBUG
+        //DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
             console.log("Deleting running scripts on home computer");
             Player.getHomeComputer().runningScripts = [];
-            dialogBoxCreate("Forcefully deleted scripts. Please refresh page");
+            dialogBoxCreate("Forcefully deleted all running scripts on home computer. Please save and refresh page");
+            return false;
+        });
+        
+        //DEBUG Soft Reset
+        document.getElementById("debug-soft-reset").addEventListener("click", function() {
+            dialogBoxCreate("Soft Reset!");
+            prestigeAugmentation();
             return false;
         });
     },

@@ -760,7 +760,19 @@
             <br>
             <a id="save-game-link" class="a-link-button" style="display:block;"> Save Game </a>
             <a id="delete-game-link" class="a-link-button" style="display:block;"> Delete Game </a>
-            <a id="debug-delete-scripts-link" class="a-link-button" style="display:block;"> (DEBUG) Delete Active Scripts </a>
+            <a id="debug-delete-scripts-link" class="a-link-button tooltip" style="display:block;"> 
+                (DEBUG) Delete Active Scripts 
+                <span class="tooltiptext"> 
+                    Debug option used to forcefully kill all active running scripts, in case there is a bug or some unexpected issue with the game. After
+                    using this, save the game and then reload the page. 
+                </span>
+            </a>
+            <a id="debug-soft-reset" class="a-link-button tooltip" style="display:block;">
+                (DEBUG) Soft Reset
+                <span class="tooltiptext">
+                    Perform a soft reset. Resets everything as if you had just purchased an Augmentation
+                </span>
+            </a>
         </div>
     </div>
     

@@ -98,6 +98,13 @@ AugmentationNames = {
     ENMAnalyzeEngine:                   "Embedded Netburner Module Analyze Engine",
     ENMDMA:                             "Embedded Netburner Module Direct Memory Access Upgrade",
     Neuralstimulator:                   "Neuralstimulator",
+    NeuralAccelerator:                  "Neural Accelerator",
+    CranialSignalProcessorsG1:          "Cranial Signal Processors - Gen I",
+    CranialSignalProcessorsG2:          "Cranial Signal Processors - Gen II",
+    CranialSignalProcessorsG3:          "Cranial Signal Processors - Gen III",
+    CranialSignalProcessorsG4:          "Cranial Signal Processors - Gen IV",
+    CranialSignalProcessorsG5:          "Cranial Signal Processors - Gen V",
+    NeuronalDensification:              "Neuronal Densification",
     NuoptimalInjectorImplant:           "Nuoptimal Nootropic Injector Implant",
     SpeechEnhancement:                  "Speech Enhancement",
     FocusWire:                          "FocusWire",
@@ -416,7 +423,7 @@ initAugmentations = function() {
     BitWire.setRequirements(1500, 2000000);
     BitWire.setInfo("A small brain implant embedded in the cerebrum. This regulates and improves the brain's computing " + 
                     "capabilities. <br><br> This augmentation increases the player's hacking skill by 10%");
-    BitWire.addToFactions(["CyberSec", "BitRunners", "NiteSec"]);
+    BitWire.addToFactions(["CyberSec", "NiteSec"]);
     if (augmentationExists(AugmentationNames.BitWire)) {
         BitWire.owned = Augmentations[AugmentationNames.BitWire].owned;
         delete Augmentations[AugmentationNames.BitWire];
@@ -629,6 +636,120 @@ initAugmentations = function() {
     }
     AddToAugmentations(Neuralstimulator);
     
+    var NeuralAccelerator = new Augmentation(AugmentationNames.NeuralAccelerator);
+    NeuralAccelerator.setRequirements(80000, 300000000);
+    NeuralAccelerator.setInfo("A microprocessor that accelerates the processing " + 
+                              "speed of biological neural networks. This is a cranial implant that is embedded inside the brain. <br><br>" + 
+                              "This augmentation: <br>" + 
+                              "Increases the player's hacking skill by 20%<br>" + 
+                              "Increases the player's hacking experience gain rate by 20%<br>" + 
+                              "Increases the amount of money the player gains from hacking by 20%");
+    NeuralAccelerator.addToFactions(["BitRunners"]);
+    if (augmentationExists(AugmentationNames.NeuralAccelerator)) {
+        NeuralAccelerator.owned = Augmentations[AugmentationNames.NeuralAccelerator].owned;
+        delete Augmentations[AugmentationNames.NeuralAccelerator];
+    }
+    AddToAugmentations(NeuralAccelerator);
+    
+    var CranialSignalProcessorsG1 = new Augmentation(AugmentationNames.CranialSignalProcessorsG1);
+    CranialSignalProcessorsG1.setRequirements(4000, 15000000);
+    CranialSignalProcessorsG1.setInfo("The first generation of Cranial Signal Processors. Cranial Signal Processors " + 
+                                      "are a set of specialized microprocessors that are attached to " + 
+                                      "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
+                                      "so that the brain doesn't have to. <br><br>" + 
+                                      "This augmentation: <br>" + 
+                                      "Increases the player's hacking speed by 1%<br>" + 
+                                      "Increases the player's hacking skill by 10%");
+    CranialSignalProcessorsG1.addToFactions(["CyberSec"]);
+    if (augmentationExists(AugmentationNames.CranialSignalProcessorsG1)) {
+        CranialSignalProcessorsG1.owned = Augmentations[AugmentationNames.CranialSignalProcessorsG1].owned;
+        delete Augmentations[AugmentationNames.CranialSignalProcessorsG1];
+    }
+    AddToAugmentations(CranialSignalProcessorsG1);
+    
+    var CranialSignalProcessorsG2 = new Augmentation(AugmentationNames.CranialSignalProcessorsG2);
+    CranialSignalProcessorsG2.setRequirements(7500, 21000000);
+    CranialSignalProcessorsG2.setInfo("The second generation of Cranial Signal Processors. Cranial Signal Processors " + 
+                                      "are a set of specialized microprocessors that are attached to " + 
+                                      "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
+                                      "so that the brain doesn't have to. <br><br>" + 
+                                      "This augmentation: <br>" + 
+                                      "Increases the player's hacking speed by 2%<br>" + 
+                                      "Increases the player's chance of successfully performing a hack by 5%<br>" + 
+                                      "Increases the player's hacking skill by 10%");
+    CranialSignalProcessorsG2.addToFactions(["NiteSec"]);
+    if (augmentationExists(AugmentationNames.CranialSignalProcessorsG2)) {
+        CranialSignalProcessorsG2.owned = Augmentations[AugmentationNames.CranialSignalProcessorsG2].owned;
+        delete Augmentations[AugmentationNames.CranialSignalProcessorsG2];
+    }
+    AddToAugmentations(CranialSignalProcessorsG2);
+    
+    var CranialSignalProcessorsG3 = new Augmentation(AugmentationNames.CranialSignalProcessorsG3);
+    CranialSignalProcessorsG3.setRequirements(20000, 90000000);
+    CranialSignalProcessorsG3.setInfo("The third generation of Cranial Signal Processors. Cranial Signal Processors " + 
+                                      "are a set of specialized microprocessors that are attached to " + 
+                                      "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
+                                      "so that the brain doesn't have to. <br><br>" + 
+                                      "This augmentation:<br>" + 
+                                      "Increases the player's hacking speed by 2%<br>" + 
+                                      "Increases the amount of money the player gains from hacking by 20%<br>" + 
+                                      "Increases the player's hacking skill by 10%");
+    CranialSignalProcessorsG3.addToFactions(["NiteSec", "The Black Hand"]);
+    if (augmentationExists(AugmentationNames.CranialSignalProcessorsG3)) {
+        CranialSignalProcessorsG3.owned = Augmentations[AugmentationNames.CranialSignalProcessorsG3].owned;
+        delete Augmentations[AugmentationNames.CranialSignalProcessorsG3];
+    }
+    AddToAugmentations(CranialSignalProcessorsG3);
+    
+    var CranialSignalProcessorsG4 = new Augmentation(AugmentationNames.CranialSignalProcessorsG4);
+    CranialSignalProcessorsG4.setRequirements(50000, 200000000);
+    CranialSignalProcessorsG4.setInfo("The fourth generation of Cranial Signal Processors. Cranial Signal Processors " + 
+                                      "are a set of specialized microprocessors that are attached to " + 
+                                      "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
+                                      "so that the brain doesn't have to. <br><br>" + 
+                                      "This augmentation: <br>" + 
+                                      "Increases the player's hacking speed by 2%<br>" + 
+                                      "Increases the amount of money the player gains from hacking by 25%<br>" + 
+                                      "Increases the amount of money the player can inject into servers using grow() by 25%");
+    CranialSignalProcessorsG4.addToFactions(["The Black Hand"]);
+    if (augmentationExists(AugmentationNames.CranialSignalProcessorsG4)) {
+        CranialSignalProcessorsG4.owned = Augmentations[AugmentationNames.CranialSignalProcessorsG4].owned;
+        delete Augmentations[AugmentationNames.CranialSignalProcessorsG4];
+    }
+    AddToAugmentations(CranialSignalProcessorsG4);
+    
+    var CranialSignalProcessorsG5 = new Augmentation(AugmentationNames.CranialSignalProcessorsG5);
+    CranialSignalProcessorsG5.setRequirements(100000, 350000000);
+    CranialSignalProcessorsG5.setInfo("The fifth generation of Cranial Signal Processors. Cranial Signal Processors " + 
+                                      "are a set of specialized microprocessors that are attached to " + 
+                                      "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +
+                                      "so that the brain doesn't have to. <br><br>" + 
+                                      "This augmentation:<br>" + 
+                                      "Increases the player's hacking skill by 60%<br>" +
+                                      "Increases the amount of money the player can inject into servers using grow() by 50%");
+    CranialSignalProcessorsG5.addToFactions(["BitRunners"]);
+    if (augmentationExists(AugmentationNames.CranialSignalProcessorsG5)) {
+        CranialSignalProcessorsG5.owned = Augmentations[AugmentationNames.CranialSignalProcessorsG5].owned;
+        delete Augmentations[AugmentationNames.CranialSignalProcessorsG5];
+    }
+    AddToAugmentations(CranialSignalProcessorsG5);
+    
+    var NeuronalDensification = new Augmentation(AugmentationNames.NeuronalDensification);
+    NeuronalDensification.setRequirements(75000, 250000000);
+    NeuronalDensification.setInfo("The brain is surgically re-engineered to have increased neuronal density " +
+                                  "by decreasing the neuron gap junction. Then, the body is genetically modified " + 
+                                  "to enhance the production and capabilities of its neural stem cells. <br><br>" + 
+                                  "This augmentation: <br>" + 
+                                  "Increases the player's hacking skill by 30%<br>" + 
+                                  "Increases the player's hacking experience gain rate by 30%<br>"+ 
+                                  "Increases the player's hacking speed by 3%");
+    NeuronalDensification.addToFactions(["Clarke Incorporated"]);
+    if (augmentationExists(AugmentationNames.NeuronalDensification)) {
+        NeuronalDensification.owned = Augmentations[AugmentationNames.NeuronalDensification].owned;
+        delete Augmentations[AugmentationNames.NeuronalDensification];
+    }
+    AddToAugmentations(NeuronalDensification);
+    
     //Work Augmentations
     var NuoptimalInjectorImplant = new Augmentation(AugmentationNames.NuoptimalInjectorImplant);
     NuoptimalInjectorImplant.setRequirements(2000, 2500000);
@@ -745,7 +866,7 @@ initAugmentations = function() {
                                  "the brain. This allows the user to engineer custom hardware and software  " +
                                  "for the Hacknet Node that provides better performance.<br><br>" + 
                                  "This augmentation:<br>" + 
-                                 "Increases the amount of money produced by Hacknet Nodes by 20%<br>" + 
+                                 "Increases the amount of money produced by Hacknet Nodes by 15%<br>" + 
                                  "Decreases the cost of purchasing a Hacknet Node Core by 15%");
     HacknetNodeCPUUpload.addToFactions(["Netburners"]);
     if (augmentationExists(AugmentationNames.HacknetNodeCPUUpload)) {
@@ -760,7 +881,7 @@ initAugmentations = function() {
                                    "into the brain. This allows the user to engineer custom cache hardware for the  " + 
                                    "Hacknet Node that offers better performance.<br><br>" + 
                                    "This augmentation:<br> " + 
-                                   "Increases the amount of money produced by Hacknet Nodes by 15%<br>" + 
+                                   "Increases the amount of money produced by Hacknet Nodes by 10%<br>" + 
                                    "Decreases the cost of leveling up a Hacknet Node by 15%");
     HacknetNodeCacheUpload.addToFactions(["Netburners"]);
     if (augmentationExists(AugmentationNames.HacknetNodeCacheUpload)) {
@@ -1477,6 +1598,39 @@ applyAugmentation = function(aug, reapply=false) {
             Player.hacking_chance_mult    *= 1.1;
             Player.hacking_exp_mult       *= 1.25;
             break;
+        case AugmentationNames.NeuralAccelerator:
+            Player.hacking_mult         *= 1.2;
+            Player.hacking_exp_mult     *= 1.2;
+            Player.hacking_money_mult   *= 1.2;
+            break;
+        case AugmentationNames.CranialSignalProcessorsG1:
+            Player.hacking_speed_mult   *= 0.99;
+            Player.hacking_mult         *= 1.1;
+            break;
+        case AugmentationNames.CranialSignalProcessorsG2:
+            Player.hacking_speed_mult   *= 0.98;
+            Player.hacking_chance_mult  *= 1.05;
+            Player.hacking_mult         *= 1.1;
+            break;
+        case AugmentationNames.CranialSignalProcessorsG3:
+            Player.hacking_speed_mult   *= 0.98;
+            Player.hacking_money_mult   *= 1.2;
+            Player.hacking_mult         *= 1.1;
+            break;
+        case AugmentationNames.CranialSignalProcessorsG4:
+            Player.hacking_speed_mult   *= 0.98;
+            Player.hacking_money_mult   *= 1.25;
+            Player.hacking_grow_mult    *= 1.25;
+            break;
+        case AugmentationNames.CranialSignalProcessorsG5:
+            Player.hacking_mult         *= 1.6;
+            Player.hacking_grow_mult    *= 1.5;
+            break;
+        case AugmentationNames.NeuronalDensification:
+            Player.hacking_mult         *= 1.3;
+            Player.hacking_exp_mult     *= 1.3;
+            Player.hacking_speed_mult   *= 0.97;
+            break;
 
         //Work augmentations
         case AugmentationNames.NuoptimalInjectorImplant:    //Low medium level
@@ -1516,11 +1670,11 @@ applyAugmentation = function(aug, reapply=false) {
         
         //Hacknet Node Augmentations
         case AugmentationNames.HacknetNodeCPUUpload:
-            Player.hacknet_node_money_mult            *= 1.2;
+            Player.hacknet_node_money_mult            *= 1.15;
             Player.hacknet_node_purchase_cost_mult    *= 0.85;
             break;
         case AugmentationNames.HacknetNodeCacheUpload:
-            Player.hacknet_node_money_mult            *= 1.15;
+            Player.hacknet_node_money_mult            *= 1.10;
             Player.hacknet_node_level_cost_mult       *= 0.85;
             break;
         case AugmentationNames.HacknetNodeNICUpload:
