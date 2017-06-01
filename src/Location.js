@@ -1617,7 +1617,7 @@ purchaseTorRouter = function() {
     
     Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
     darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);
-    dialogBoxCreate("You have purchased a Tor router!", "You now have access to the dark web from your home computer", "Use the scan/netstat commands to search for the dark web connection.");
+    dialogBoxCreate("You have purchased a Tor router!<br>You now have access to the dark web from your home computer<br>Use the scan/netstat commands to search for the dark web connection.");
 }
 
 displayUniversityLocationContent = function(costMult) {

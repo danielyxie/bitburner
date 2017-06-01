@@ -159,10 +159,46 @@ Script.prototype.reset = function() {
 	this.onlineExpGained 		= 0;
     this.logs = [];
     
-    this.moneyStolenMap.reset();
-    this.numTimesHackMap.reset();
-    this.numTimesGrowMap.reset();
-    this.numTimesWeakenMap.reset();
+    if (this.moneyStolenMap != null) {
+        try {
+            this.moneyStolenMap.reset();
+        } catch(e) {
+            this.moneyStolenMap = null;
+        }
+    } else {
+        this.moneyStolenMap = new AllServersMap();
+    }
+    
+    if (this.numTimesHackMap != null) {
+        try {
+            this.numTimesHackMap.reset();
+        } catch(e) {
+            this.numTimesHackMap = null;
+        }
+    } else {
+        this.numTimesHackMap = new AllServersMap();
+    }
+    
+    if (this.numTimesGrowMap != null) {
+        try {
+            this.numTimesGrowMap.reset();
+        } catch(e) {
+            this.numTimesGrowMap = null;
+        }
+    } else {
+        this.numTimesGrowMap = new AllServersMap();
+    }
+    
+    if (this.numTimesWeakenMap != null) {
+        try {
+            this.numTimesWeakenMap.reset();
+        } catch(e) {
+            this.numTimesWeakenMap = null;
+        }
+    } else {
+        this.numTimesWeakenMap = new AllServersMap();
+    }
+    
 }
 
 //Updates how much RAM the script uses when it is running.
@@ -435,3 +471,14 @@ AllServersMap.prototype.printConsole = function() {
         }
     }
 }
+
+AllServersMap.prototype.toJSON = function() {
+    return Generic_toJSON("AllServersMap", this);
+}
+
+
+AllServersMap.fromJSON = function(value) {
+    return Generic_fromJSON(AllServersMap, value.data);
+}
+
+Reviver.constructors.AllServersMap = AllServersMap;

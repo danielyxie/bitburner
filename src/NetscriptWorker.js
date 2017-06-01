@@ -63,7 +63,7 @@ function runScriptsLoop() {
 					var scriptName = errorTextArray[2];
 					var errorMsg = errorTextArray[3];
 					
-                    dialogBoxCreate("Script runtime error: ", "Server Ip: " + serverIp, "Script name: " + scriptName, errorMsg);
+                    dialogBoxCreate("Script runtime error:<br>Server Ip: " + serverIp + "<br>Script name: " + scriptName + "<br>" + errorMsg);
 					
 					//Find the corresponding workerscript and set its flags to kill it
 					for (var i = 0; i < workerScripts.length; ++i) {
@@ -85,7 +85,7 @@ function runScriptsLoop() {
                         var scriptName = errorTextArray[2];
                         var errorMsg = errorTextArray[3];
 					
-                        dialogBoxCreate("Script runtime error: ", "Server Ip: " + serverIp, "Script name: " + scriptName, errorMsg);
+                        dialogBoxCreate("Script runtime error: <br>Server Ip: " + serverIp + "<br>Script name: " + scriptName + "<br>" + errorMsg);
                     }
 					w.running = false;
 					w.env.stopFlag = true;
@@ -100,7 +100,7 @@ function runScriptsLoop() {
 					var scriptName = errorTextArray[2];
 					var errorMsg = errorTextArray[3];
 					
-                    dialogBoxCreate("Script runtime error: ", "Server Ip: " + serverIp, "Script name: " + scriptName, errorMsg);
+                    dialogBoxCreate("Script runtime error: <br>Server Ip: " + serverIp + "<br>Script name: " + scriptName + "<br>" + errorMsg);
 					
 					//Find the corresponding workerscript and set its flags to kill it
 					for (var i = 0; i < workerScripts.length; ++i) {

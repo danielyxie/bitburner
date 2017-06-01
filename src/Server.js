@@ -520,6 +520,11 @@ initForeignServers = function() {
 	BitRunnersServer.init(createRandomIp(), "run4theh111z", "The Runners", true, false, false, false,  0);
 	BitRunnersServer.setPortProperties(4);
 	AddToAllServers(BitRunnersServer);
+    
+    var TheBlackHandServer = new Server();
+    TheBlackHandServer.init(createRandomIp(), "I.I.I.I", "I.I.I.I", true, false, false, false, false, 0);
+    TheBlackHandServer.setPortProperties(3);
+    AddToAllServers(TheBlackHandServer);
 	
 	var NiteSecServer = new Server();
 	NiteSecServer.init(createRandomIp(), "avmnite-02h", "NiteSec", true, false, false, false, 0);
