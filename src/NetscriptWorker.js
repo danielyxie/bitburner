@@ -33,7 +33,7 @@ function runScriptsLoop() {
 				var ast = Parser(Tokenizer(InputStream(workerScripts[i].code)));
                 //console.log(ast);
 			} catch (e) {
-                dialogBoxCreate("Syntax ERROR in " + workerScripts[i].name + ":", e, "", "");
+                dialogBoxCreate("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
                 workerScripts[i].env.stopFlag = true;
 				continue;
 			}

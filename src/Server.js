@@ -22,6 +22,7 @@ function Server() {
 	this.scripts 		= 	[];
 	this.runningScripts = 	[]; 	//Names (and only names) of scripts being run
 	this.programs 		= 	[];
+    this.messages       =   [];
     
 	/* Hacking information (only valid for "foreign" aka non-purchased servers) */
 	

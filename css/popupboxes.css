@@ -12,20 +12,6 @@
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-/*
-.dialog-box-container {
-    display: block;
-    position: relative;
-    z-index: 2;
-    margin: auto;
-    width: 50%;
-    height: 100%;
-    vertical-align: middle;
-    overflow: auto;
-    background-color: black;
-    background-color: rgba(0,0,0,0.4);
-}
-*/
 .dialog-box-container {
     display: block;
     position: absolute;
