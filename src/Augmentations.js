@@ -497,7 +497,7 @@ initAugmentations = function() {
     NeuralRetentionEnhancement.setInfo("Chemical injections are used to permanently alter and strengthen the brain's neuronal " +
                                        "circuits, strengthening its ability to retain information.<br><br>" + 
                                        "This augmentation increases the player's hacking experience gain rate by 40%.");
-    NeuralRetentionEnhancement.addToFactions(["CyberSec", "NiteSec"]);
+    NeuralRetentionEnhancement.addToFactions(["NiteSec"]);
     if (augmentationExists(AugmentationNames.NeuralRetentionEnhancement)) {
         NeuralRetentionEnhancement.owned = Augmentations[AugmentationNames.NeuralRetentionEnhancement].owned;
         delete Augmentations[AugmentationNames.NeuralRetentionEnhancement];
