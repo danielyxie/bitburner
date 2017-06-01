@@ -157,9 +157,6 @@ function prestigeAugmentation() {
     for (var i = 0; i < homeComp.scripts.length; ++i) {
         var s = homeComp.scripts[i];
         s.reset();
-        delete s.moneyStolenMap;
-        s.moneyStolenMap = new AllServersToMoneyMap();
-        s.moneyStolenMap.printConsole();
     }
     
     //Delete active scripts display elements

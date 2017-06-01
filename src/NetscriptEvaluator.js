@@ -282,7 +282,7 @@ function evaluate(exp, workerScript) {
 										server.moneyAvailable -= moneyGained;
 										Player.gainMoney(moneyGained);
 										workerScript.scriptRef.onlineMoneyMade += moneyGained;
-                                        workerScript.scriptRef.moneyStolenMap[server.ip] += moneyGained;
+                                        workerScript.scriptRef.recordHack(server.ip, moneyGained);
 										
                                         Player.gainHackingExp(expGainedOnSuccess);
 										workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
@@ -389,6 +389,7 @@ function evaluate(exp, workerScript) {
 								setTimeout(function() {
                                     server.moneyAvailable += 1; //It can be grown even if it has no money
 									var growthPercentage = processSingleServerGrowth(server, 450);
+                                    workerScript.scriptRef.recordGrow(server.ip);
                                     resolve(growthPercentage);
 								}, growTime);
 							});
@@ -435,6 +436,7 @@ function evaluate(exp, workerScript) {
 								if (env.stopFlag) {reject(workerScript); return;}
 								setTimeout(function() {
                                     server.weaken(CONSTANTS.ServerWeakenAmount);
+                                    workerScript.scriptRef.recordWeaken(server.ip);
                                     resolve(CONSTANTS.ServerWeakenAmount);
 								}, weakenTime);
 							});
