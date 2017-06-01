@@ -6,7 +6,7 @@ function factionInit() {
             if (isPositiveNumber(val)) {
                 var numMoneyDonate = Number(val);
                 document.getElementById("faction-donate-rep-gain").innerHTML = 
-                    "This donation will result in " + formatNumber(numMoneyDonate/1000 * Player.faction_rep_mult, 3) + " reputation gain";
+                    "This donation will result in " + formatNumber(numMoneyDonate/1000000 * Player.faction_rep_mult, 3) + " reputation gain";
             } else {
                 document.getElementById("faction-donate-rep-gain").innerHTML = 
                     "This donation will result in 0 reputation gain";

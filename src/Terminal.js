@@ -926,12 +926,12 @@ var Terminal = {
     },
     
     executeScanAnalyzeCommand: function(depth=1) {
-        //We'll use the AllServersToMoneyMap as a visited() array
+        //We'll use the AllServersMap as a visited() array
         //TODO Later refactor this to a generic name
         //TODO Using array as stack for now, can make more efficient
         post("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
         post(" ");
-        var visited = new AllServersToMoneyMap();
+        var visited = new AllServersMap();
         var stack = [];
         var depthQueue = [0];
         var currServ = Player.getCurrentServer();
