@@ -17,7 +17,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
     
     if (!this.isQualified(company, pos)) {
         var reqText = getJobRequirementText(company, pos);
-        dialogBoxCreate("Unforunately, you do not qualify for this position", reqText);
+        dialogBoxCreate("Unforunately, you do not qualify for this position<br>" + reqText);
         return;
     }
     
@@ -51,7 +51,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
             pos.positionName == currPositionName) {
             var nextPos = getNextCompanyPosition(pos);
             var reqText = getJobRequirementText(company, nextPos);
-            dialogBoxCreate("Unfortunately, you do not qualify for a promotion", reqText);
+            dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
             
             return; //Same job, do nothing
         }
@@ -77,7 +77,8 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
     this.companyPosition = pos;
     
     if (leaveCompany) {
-        dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.positionName + "!", 
+        dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + 
+                        pos.positionName + "!<br>" + 
                         "You lost 1000 reputatation at your old company " + oldCompanyName + " because you left.");    
     } else {
         dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.positionName + "!");
@@ -126,7 +127,7 @@ PlayerObject.prototype.applyForSecurityEngineerJob = function() {
     if (this.isQualified(company, CompanyPositions.SecurityEngineer)) {
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.SecurityEngineer;
-        dialogBoxCreate("Congratulations, you were offered a position at ", this.companyName, " as a Security Engineer!" , "");
+        dialogBoxCreate("Congratulations, you were offered a position at ", this.companyName, " as a Security Engineer!");
         Engine.loadLocationContent();
     } else {
         dialogBoxCreate("Unforunately, you do not qualify for this position");

@@ -12,20 +12,43 @@
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-#dialog-box-content {
-    z-index: 1;
+/*
+.dialog-box-container {
+    display: block;
+    position: relative;
+    z-index: 2;
+    margin: auto;
+    width: 50%;
+    height: 100%;
+    vertical-align: middle;
+    overflow: auto;
     background-color: black;
-    margin: 20% auto; /* 20% from the top and centered */
+    background-color: rgba(0,0,0,0.4);
+}
+*/
+.dialog-box-container {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    /*margin: auto;*/
+    width: 50%;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    margin: -10% 0 0 -25%;
+    overflow: auto;
+    background-color: black;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.dialog-box-content {
+    z-index: 2;
+    background-color: black;
     padding: 10px;
     border: 5px solid #FFFFFF;
-    width: 40%; /* Could be more or less, depending on screen size */
 }
 
-.dialog-box-text {
-    color: #66ff33;
-}
-
-#dialog-box-close-button {
+.dialog-box-close-button {
     color: #aaa;
     float: right;
     font-size: 20px;
@@ -38,8 +61,8 @@
     box-shadow: 1px 1px 3px #000;
 }
 
-#dialog-box-close-button:hover,
-#dialog-box-close-button:focus {
+.dialog-box-close-button:hover,
+.dialog-box-close-button:focus {
     color: white;
     text-decoration: none;
     cursor: pointer;
