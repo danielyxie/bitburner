@@ -49,7 +49,7 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
     var gainPerLevel = CONSTANTS.HacknetNodeMoneyGainPerLevel;
     
     this.moneyGainRatePerSecond = (this.level * gainPerLevel) * 
-                                  Math.pow(1.03, this.ram-1) * 
+                                  Math.pow(1.035, this.ram-1) * 
                                   ((this.numCores + 5) / 6) * Player.hacknet_node_money_mult;
     if (isNaN(this.moneyGainRatePerSecond)) {
         this.moneyGainRatePerSecond = 0;
@@ -76,7 +76,7 @@ HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
     if (isNaN(cost)) {return false;}
     if (cost > Player.money) {return false;}
     Player.loseMoney(cost);
-    if (this.level + levels >= CONSTANTS.HacknetNodeMaxLevel) {
+    if (this.level + levels > CONSTANTS.HacknetNodeMaxLevel) {
         var diff = Math.max(0, CONSTANTS.HacknetNodeMaxLevel - this.level);
         return this.purchaseLevelUpgrade(diff);
     }

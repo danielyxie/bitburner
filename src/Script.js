@@ -406,7 +406,7 @@ scriptCalculateOfflineProduction = function(script) {
             if (serv == null) {continue;}
             var timesHacked = Math.round(0.5 * script.numTimesHackMap[ip] / script.onlineRunningTime * timePassed);
             console.log(script.filename + " hacked " + serv.hostname + " " + timesHacked + " times while offline");
-            script.log(script.filename + " hacked " + serv.hostname + " " + timesHacked + " times while offline");
+            script.log("Hacked " + serv.hostname + " " + timesHacked + " times while offline");
             serv.fortify(CONSTANTS.ServerFortifyAmount * timesHacked);
         }
     }
@@ -419,7 +419,7 @@ scriptCalculateOfflineProduction = function(script) {
             if (serv == null) {continue;}
             var timesWeakened = Math.round(0.5 * script.numTimesWeakenMap[ip] / script.onlineRunningTime * timePassed);
             console.log(script.filename + " called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
-            script.log(script.filename + " called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
+            script.log("Called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
             serv.weaken(CONSTANTS.ServerWeakenAmount * timesWeakened);
         }
     }
@@ -432,11 +432,11 @@ scriptCalculateOfflineProduction = function(script) {
             if (serv == null) {continue;}
             var timesGrown = Math.round(0.5 * script.numTimesGrowMap[ip] / script.onlineRunningTime * timePassed);
             console.log(script.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
-            script.log(script.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
-            //TODO
+            script.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
+            var growth = processSingleServerGrowth(serv, timesGrown * 450);
+            script.log(serv.hostname + " grown by " + formatNumber(growth * 100 - 100, 6) + "% from grow() calls made while offline");
         }
     }
-    
     
     return totalOfflineProduction;
 }

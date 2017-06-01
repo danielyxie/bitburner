@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.18.2",
+    Version:                "0.18.3",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -18,7 +18,7 @@ CONSTANTS = {
     BaseCostForHacknetNodeCore: 500000,
     
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.5,
+    HacknetNodeMoneyGainPerLevel: 1.6,
     HacknetNodePurchaseNextMult: 1.39,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.26,     //Multiplier for cost when upgrading RAM
@@ -247,7 +247,11 @@ CONSTANTS = {
                          "It is important to note that for this reason, conditionals such as if/else statements and certain " + 
                          "commands such as purchaseHacknetNode() or nuke() will not work while the game is offline.<br><br>" +                          
                          "However, Scripts WILL continue to generate money and hacking exp for you while the game is offline. This " +
-                         "offline production is based off of the scripts' production while the game is online.<br><br> " + 
+                         "offline production is based off of the scripts' production while the game is online. <br><br>" + 
+                         "grow() and weaken() are two Netscript commands that will also be applied when the game is offline, although at a slower rate " + 
+                         "compared to if the game was open. This is done by having each script keep track of the  " + 
+                         "rate at which the grow() and weaken() commands are called when the game is online. These calculated rates are used to determine how many times " + 
+                         "these function calls would be made while the game is offline. <br><br> " + 
                          "Also, note that because of the way the Netscript interpreter is implemented, " + 
                          "whenever you reload or re-open the game all of the scripts that you are running will " +
                          "start running from the BEGINNING of the code. The game does not keep track of where exactly " +
@@ -291,10 +295,10 @@ CONSTANTS = {
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
                            "must be a string with either the IP or hostname of the target server. The grow() command requires root access to the target server, but " +
                            "there is no required hacking level to run the command. " + 
-                           "Grants 1 hacking exp when it completes. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "Grants 1 hacking exp when it completes. Works offline at a slower rate. <br> Example: grow('foodnstuff');<br><br>" + 
                            "<i>weaken(hostname/ip)</i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " + 
                            "in must be a string with either the IP or hostname of the target server. This command requires root access to the target server, but " + 
-                           "there is no required hacking level to run the command. Grants 5 hacking exp when it completes. <br> Example: weaken('foodnstuff');<br><br>" + 
+                           "there is no required hacking level to run the command. Grants 5 hacking exp when it completes. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" + 
