@@ -384,7 +384,6 @@ var Terminal = {
         
         //Process any aliases
         command = substituteAliases(command);
-        console.log("command after alises: " + command);
         
         //Only split the first space
 		var commandArray = command.split(" ");
@@ -828,28 +827,40 @@ var Terminal = {
                 }
                 var ip = server.ip;
                 
-                //Check that a script with this filename does not already exist
+                var currServ = Player.getCurrentServer();
+                
+                //Get the current script
+                var sourceScript = null;
+                for (var i = 0; i < currServ.scripts.length; ++i) {
+                    if (scriptname == currServ.scripts[i].filename) {
+                        sourceScript = currServ.scripts[i];
+                        break;
+                    }
+                }
+                if (sourceScript == null) {
+                    post("ERROR: scp() failed. No such script exists");
+                    return;
+                }
+                
+                //Overwrite script if it exists
                 for (var i = 0; i < server.scripts.length; ++i) {
                     if (scriptname == server.scripts[i].filename) {
-                        post(server.hostname + " already contains a script named " + scriptname);
+                        post("WARNING: " + scriptname + " already exists on " + server.hostname + " and will be overwritten");
+                        var oldScript = server.scripts[i];
+                        oldScript.code = sourceScript.code;
+                        oldScript.ramUsage = sourceScript.ramUsage;
+                        post(scriptname + " overwriten on " + server.hostname);
                         return;
                     }
                 }
                 
-                var currServ = Player.getCurrentServer();
-                for (var i = 0; i < currServ.scripts.length; ++i) {
-                    if (scriptname == currServ.scripts[i].filename) { 
-                        var newScript = new Script();
-                        newScript.filename = scriptname;
-                        newScript.code = currServ.scripts[i].code;
-                        newScript.ramUsage = currServ.scripts[i].ramUsage;
-                        newScript.server = ip;
-                        server.scripts.push(newScript);
-                        post(scriptname + " copied over to " + server.hostname);
-                        return;
-                    }
-                }
-                post("Script not found");
+                var newScript = new Script();
+                newScript.filename = scriptname;
+                newScript.code = sourceScript.code;
+                newScript.ramUsage = sourceScript.ramUsage;
+                newScript.server = ip;
+                server.scripts.push(newScript);
+                post(scriptname + " copied over to " + server.hostname);  
 				break;
             case "sudov":
                 if (commandArray.length != 1) {

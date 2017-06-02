@@ -33,6 +33,7 @@ function runScriptsLoop() {
 				var ast = Parser(Tokenizer(InputStream(workerScripts[i].code)));
                 //console.log(ast);
 			} catch (e) {
+                console.log("Error parsing script: " + workerScripts[i].name);
                 dialogBoxCreate("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
                 workerScripts[i].env.stopFlag = true;
 				continue;
