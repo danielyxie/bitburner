@@ -19,9 +19,9 @@ CONSTANTS = {
     
     /* Hacknet Node constants */
     HacknetNodeMoneyGainPerLevel: 1.6,
-    HacknetNodePurchaseNextMult: 1.39,   //Multiplier when purchasing an additional hacknet node
-    HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.26,     //Multiplier for cost when upgrading RAM
+    HacknetNodePurchaseNextMult: 1.42,   //Multiplier when purchasing an additional hacknet node
+    HacknetNodeUpgradeLevelMult: 1.045,  //Multiplier for cost when upgrading level
+    HacknetNodeUpgradeRamMult: 1.28,     //Multiplier for cost when upgrading RAM
     HacknetNodeUpgradeCoreMult: 1.49,    //Multiplier for cost when buying another core
     
     HacknetNodeMaxLevel: 200,
@@ -66,7 +66,7 @@ CONSTANTS = {
     
     //Server constants
     ServerGrowthRate: 1.002,   //Growth rate
-    ServerFortifyAmount: 0.001, //Amount by which server's security increases when its hacked
+    ServerFortifyAmount: 0.002, //Amount by which server's security increases when its hacked
     ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
     
     //Augmentation Constants
