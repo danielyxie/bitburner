@@ -280,7 +280,6 @@ var Terminal = {
 	finishHack: function(cancelled = false) {
 		if (cancelled == false) {
             var server = Player.getCurrentServer();
-			server.manuallyHacked = true;
 			
 			//Calculate whether hack was successful
 			var hackChance = Player.calculateHackingChance();
@@ -289,6 +288,7 @@ var Terminal = {
 			var expGainedOnSuccess = Player.calculateExpGain();
 			var expGainedOnFailure = (expGainedOnSuccess / 4);
 			if (rand < hackChance) {	//Success!
+                server.manuallyHacked = true;
 				var moneyGained = Player.calculatePercentMoneyHacked();
 				moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 				
