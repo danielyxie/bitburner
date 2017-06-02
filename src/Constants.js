@@ -70,7 +70,8 @@ CONSTANTS = {
     ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
     
     //Augmentation Constants
-    AugmentationCostMultiplier: 3,  //Used for balancing costs without having to readjust every Augmentation cost
+    AugmentationCostMultiplier: 4,  //Used for balancing costs without having to readjust every Augmentation cost
+    AugmentationRepMultiplier: 1.2, //Used for balancing rep cost without having to readjust every value
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 40,
@@ -147,6 +148,7 @@ CONSTANTS = {
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   'alias [name="value"]   Create aliases for Terminal commands, or list existing aliases<br>' + 
                 "analyze                Get statistics and information about current machine <br>" + 
+                "cat [message]          Display a .msg file<br>" + 
                 "clear                  Clear all text on the terminal <br>" +
                 "cls                    See 'clear' command <br>" +
                 "connect [ip/hostname]  Connects to the machine given by its IP or hostname <br>" + 

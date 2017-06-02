@@ -250,6 +250,13 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         }
         return allPos;
     }
+    
+    if (input.startsWith("cat ")) {
+        for (var i = 0; i < currServ.messages.length; ++i) {
+            allPos.push(currServ.messages[i].filename);
+        }
+        return allPos;
+    }
     return allPos;
 }
 
@@ -272,7 +279,8 @@ var Terminal = {
     //Complete the hack/analyze command
 	finishHack: function(cancelled = false) {
 		if (cancelled == false) {
-			console.log("Hack done. Determining success/failure of hack. Re-enabling terminal and changing the id of the hack progress bar");
+            var server = Player.getCurrentServer();
+			server.manuallyHacked = true;
 			
 			//Calculate whether hack was successful
 			var hackChance = Player.calculateHackingChance();
@@ -282,23 +290,23 @@ var Terminal = {
 			var expGainedOnFailure = (expGainedOnSuccess / 4);
 			if (rand < hackChance) {	//Success!
 				var moneyGained = Player.calculatePercentMoneyHacked();
-				moneyGained = Math.floor(Player.getCurrentServer().moneyAvailable * moneyGained);
+				moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 				
 				//Safety check
 				if (moneyGained <= 0) {moneyGained = 0;}
 				
-				Player.getCurrentServer().moneyAvailable -= moneyGained;
+				server.moneyAvailable -= moneyGained;
 				Player.gainMoney(moneyGained);
 				
                 Player.gainHackingExp(expGainedOnSuccess)
                 
-                Player.getCurrentServer().fortify(CONSTANTS.ServerFortifyAmount);
+                server.fortify(CONSTANTS.ServerFortifyAmount);
 				
 				post("Hack successful! Gained $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) + " hacking EXP");
 			} else {					//Failure
 				//Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure)
-				post("Failed to hack " + Player.getCurrentServer().hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " hacking EXP");
+				post("Failed to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " hacking EXP");
 			}
 		}
         
@@ -550,6 +558,24 @@ var Terminal = {
 				break;
             case "buy":
                 executeDarkwebTerminalCommand(commandArray);
+                break;
+            case "cat":
+                if (commandArray.length != 2) {
+                    post("Incorrect usage of cat command. Usage: cat [message]"); return;
+                }
+                var filename = commandArray[1];
+                //Can only edit script files
+				if (filename.endsWith(".msg") == false) {
+					post("Error: Only .msg files are viewable with cat (filename must end with .msg)"); return;
+				}
+                var s = Player.getCurrentServer();
+                for (var i = 0; i < s.messages.length; ++i) {
+                    if (s.messages[i].filename == filename) {
+                        showMessage(s.messages[i]);
+                        return;
+                    }
+                }
+                post("Error: No such file " + filename);
                 break;
 			case "clear":
 			case "cls":
@@ -877,11 +903,15 @@ var Terminal = {
         var allFiles = []; 
         
         //Get all of the programs and scripts on the machine into one temporary array
-        for (var i = 0; i < Player.getCurrentServer().programs.length; i++) {
-            allFiles.push(Player.getCurrentServer().programs[i]); 
+        var s = Player.getCurrentServer();
+        for (var i = 0; i < s.programs.length; i++) {
+            allFiles.push(s.programs[i]); 
         }
-        for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
-            allFiles.push(Player.getCurrentServer().scripts[i].filename);
+        for (var i = 0; i < s.scripts.length; i++) {
+            allFiles.push(s.scripts[i].filename);
+        }
+        for (var i = 0; i < s.messages.length; i++) {
+            allFiles.push(s.messages[i].filename);
         }
         
         //Sort the files alphabetically then print each

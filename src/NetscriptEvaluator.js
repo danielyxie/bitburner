@@ -120,7 +120,6 @@ function evaluate(exp, workerScript) {
                 var numConds = exp.cond.length;
                 var numThens = exp.then.length;
                 if (numConds == 0 || numThens == 0 || numConds != numThens) {
-                    console.log("Number of ifs and conds dont match. Rejecting");
                     reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Number of conds and thens in if structure don't match (or there are none)");
                 }
                 
@@ -128,20 +127,17 @@ function evaluate(exp, workerScript) {
                 evalIfPromise.then(function(res) {
                     if (res) {
                         //One of the if/elif statements evaluated to true
-                        console.log("done with if");
                         resolve("if statement done");
                     } else {
                         //None of the if/elif statements were true. Evaluate else if there is one
                         if (exp.else) {
                             var elseEval = evaluate(exp.else, workerScript);
                             elseEval.then(function(res) {
-                                console.log("if statement done with else");
                                 resolve("if statement done with else");
                             }, function(e) {
                                 reject(e);
                             });
                         } else {
-                            console.log("no else statement, resolving");
                             resolve("if statement done");
                         }
                     }
@@ -960,12 +956,9 @@ function evaluateIf(exp, workerScript, i) {
         } else {
             var cond = evaluate(exp.cond[i], workerScript);
             cond.then(function(condRes) {
-                console.log("cond evaluated to: " + condRes);
                 if (condRes) {
-                    console.log("Evaluating then: " + exp.then[i]);
                     var evalThen = evaluate(exp.then[i], workerScript);
                     evalThen.then(function(res) {
-                        console.log("If statement done");
                         resolve(true);
                     }, function(e) {
                         reject(e);

@@ -18,7 +18,7 @@ Augmentation.prototype.setInfo = function(inf) {
 }
 
 Augmentation.prototype.setRequirements = function(rep, cost) {
-    this.baseRepRequirement = rep;
+    this.baseRepRequirement = rep * CONSTANTS.AugmentationRepMultiplier;
     this.baseCost = cost * CONSTANTS.AugmentationCostMultiplier;
 }
 

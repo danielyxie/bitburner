@@ -290,12 +290,12 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
     var fulcrumsecrettechonologiesFac = Factions["Fulcrum Secret Technologies"];
-    var fulcrumSecretServer = AllServers[SpecialServerIps["Fulcrum Secret Technologies Server"]];
+    var fulcrumSecretServer = AllServers[SpecialServerIps[SpecialServerNames.FulcrumSecretTechnologies]];
     if (fulcrumSecretServer == null) {
-        console.log("Error: Could not find Fulcrum Secret Technologies Server");
+        console.log("ERROR: Could not find Fulcrum Secret Technologies Server");
     } else {
         if (fulcrumsecrettechonologiesFac.isBanned == false && fulcrumsecrettechonologiesFac.isMember == false &&
-            fulcrumSecretServer.hasAdminRights && 
+            fulcrumSecretServer.manuallyHacked && 
             this.companyName == Locations.AevumFulcrumTechnologies && companyRep >= 250000) {
             invitedFactions.push(fulcrumsecrettechonologiesFac);
         }
@@ -303,23 +303,31 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //BitRunners
     var bitrunnersFac = Factions["BitRunners"];
-    var homeComp = Player.getHomeComputer();
-    if (bitrunnersFac.isBanned == false && bitrunnersFac.isMember == false &&
-        this.hacking_skill >= 500 && homeComp.maxRam >= 128) {
+    var homeComp = this.getHomeComputer();
+    var bitrunnersServer = AllServers[SpecialServerIps[SpecialServerNames.BitRunnersServer]];
+    if (bitrunnersServer == null) {
+        console.log("ERROR: Could not find BitRunners Server");
+    } else if (bitrunnersFac.isBanned == false && bitrunnersFac.isMember == false && bitrunnersServer.manuallyHacked &&
+            this.hacking_skill >= 500 && homeComp.maxRam >= 128) {
         invitedFactions.push(bitrunnersFac);
     }
     
     //The Black Hand
     var theblackhandFac = Factions["The Black Hand"];
-    if (theblackhandFac.isBanned == false && theblackhandFac.isMember == false &&
-        this.hacking_skill >= 300 && this.strength >= 100 && this.defense >= 100 &&
-        this.agility >= 100 && this.dexterity >= 100 && homeComp.maxRam >= 64) {
+    var blackhandServer = AllServers[SpecialServerIps[SpecialServerNames.TheBlackHandServer]];
+    if (blackhandServer == null) {
+        console.log("ERROR: Could not find The Black Hand Server");
+    } else if (!theblackhandFac.isBanned && !theblackhandFac.isMember && blackhandServer.manuallyHacked &&
+        this.hacking_skill >= 350 && homeComp.maxRam >= 64) {
         invitedFactions.push(theblackhandFac);
     }
     
     //NiteSec
     var nitesecFac = Factions["NiteSec"];
-    if (nitesecFac.isBanned == false && nitesecFac.isMember == false && 
+    var nitesecServer = AllServers[SpecialServerIps[SpecialServerNames.NiteSecServer]];
+    if (nitesecServer == null) {
+        console.log("ERROR: Could not find NiteSec Server");
+    } else if (!nitesecFac.isBanned && !nitesecFac.isMember && nitesecServer.manuallyHacked &&
         this.hacking_skill >= 200 && homeComp.maxRam >= 32) {
         invitedFactions.push(nitesecFac);
     }
@@ -451,7 +459,10 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //CyberSec
     var cybersecFac = Factions["CyberSec"];
-    if (cybersecFac.isBanned == false && cybersecFac.isMember == false && 
+    var cybersecServer = AllServers[SpecialServerIps[SpecialServerNames.CyberSecServer]];
+    if (cybersecServer == null) {
+        console.log("ERROR: Could not find CyberSec Server");
+    } else if (!cybersecFac.isBanned && !cybersecFac.isMember && cybersecServer.manuallyHacked &&
         this.hacking_skill >= 50) {
         invitedFactions.push(cybersecFac);
     }

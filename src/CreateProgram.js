@@ -8,6 +8,7 @@ Programs = {
     SQLInjectProgram:   "SQLInject.exe",
     DeepscanV1:         "DeepscanV1.exe",
     DeepscanV2:         "DeepscanV2.exe",
+    Flight:             "fl1ght.exe",
 }
 
 //TODO Right now the times needed to complete work are hard-coded...

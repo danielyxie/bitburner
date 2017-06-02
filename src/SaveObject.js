@@ -11,6 +11,7 @@ function BitburnerSaveObject() {
     this.SpecialServerIpsSave       = "";
     this.AugmentationsSave          = "";
     this.AliasesSave                = "";
+    this.MessagesSave               = "";
 }
 
 BitburnerSaveObject.prototype.saveGame = function() {
@@ -21,6 +22,7 @@ BitburnerSaveObject.prototype.saveGame = function() {
     this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
     this.AugmentationsSave          = JSON.stringify(Augmentations);
     this.AliasesSave                = JSON.stringify(Aliases);
+    this.MessagesSave               = JSON.stringify(Messages);
     
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
     window.localStorage.setItem("bitburnerSave", saveString);
@@ -52,7 +54,15 @@ loadGame = function(saveObj) {
     } else {
         Aliases = {};
     }
-    
+    if (saveObj.hasOwnProperty("MessagesSave")) {
+        try {
+            Messages        = JSON.parse(saveObj.MessagesSave, Reviver);
+        } catch(e) {
+            initMessages();
+        }
+    } else {
+        initMessages();
+    }
     
     return true;
 }
