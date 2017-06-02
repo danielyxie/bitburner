@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.19.2",
+    Version:                "0.19.3",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -237,9 +237,9 @@ CONSTANTS = {
                          "You by no means need to be an expert. All you need is some familiarity with basic programming " + 
                          "constructs like for/while loops, if statements, " + 
                          "functions, variables, etc. The Netscript programming language most resembles the Javascript language. " + 
-                         "Therefore, a good beginner's programming tutorial to read might <a href='https://www.w3schools.com/js/default.asp'>" +
+                         "Therefore, a good beginner's programming tutorial to read might be <a href='https://www.w3schools.com/js/default.asp' target='_blank'>" +
                          "this one</a>. Note that while the Netscript language is similar to Javascript, it is not the exact same, so the " + 
-                         "syntax will vary. </strong> <br><br>" + 
+                         "syntax will vary a little bit. </strong> <br><br>" + 
                          "Running a script requires RAM. The more complex a script is, the more RAM " + 
                          "it requires to run. Scripts can be run on any server you have root access to. <br><br>" + 
                          "Here are some Terminal commands that are useful when working with scripts: <br>" + 
