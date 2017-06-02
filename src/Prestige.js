@@ -201,5 +201,8 @@ function prestigeAugmentation() {
     $("#terminal tr:not(:last)").remove();
     postNetburnerText();
     
+    //Messages
+    initMessages();
+    
     Engine.loadTerminalContent();
 }

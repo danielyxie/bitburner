@@ -29,7 +29,6 @@ var dialogBoxOpened = false;
 var dialogBoxCount = 0;
 
 dialogBoxCreate = function(txt) {
-    console.log("created");
     var container = document.createElement("div");
     container.setAttribute("class", "dialog-box-container");
     
