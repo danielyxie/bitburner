@@ -104,12 +104,10 @@ var Engine = {
     loadScriptEditorContent: function(filename = "", code = "") {
         Engine.hideAllContent();
         Engine.Display.scriptEditorContent.style.visibility = "visible";
-        if (filename == "") {
-            document.getElementById("script-editor-filename").value = "untitled";
-        } else {
+        if (filename != "") {
             document.getElementById("script-editor-filename").value = filename;
+            document.getElementById("script-editor-text").value = code;
         }
-        document.getElementById("script-editor-text").value = code;
         document.getElementById("script-editor-text").focus();
         
         Engine.currentPage = Engine.Page.ScriptEditor;

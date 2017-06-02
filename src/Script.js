@@ -61,8 +61,7 @@ function saveAndCloseScriptEditor() {
     }
     
     if (filename == "") {
-        //If no filename...just close and do nothing
-        Engine.loadTerminalContent();
+        dialogBoxCreate("You must specify a filename!");
         return;
     }
         
