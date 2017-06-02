@@ -801,36 +801,48 @@ function evaluate(exp, workerScript) {
                                     return;
                                 }
                                 
-                                //Check that a script with this filename does not already exist
-                                for (var i = 0; i < destServer.scripts.length; ++i) {
-                                    if (scriptname == destServer.scripts[i].filename) {
-                                        workerScript.scriptRef.log(destServer.hostname + " already contains a script named  " + scriptname);
-                                        resolve(false);
-                                        return;
-                                    }
-                                }
-                                
                                 var currServ = getServer(workerScript.serverIp);
                                 if (currServ == null) {
                                     reject(makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer"));
                                     return;
                                 }
+                                
+                                var sourceScript = null;
                                 for (var i = 0; i < currServ.scripts.length; ++i) {
                                     if (scriptname == currServ.scripts[i].filename) {
-                                        var newScript = new Script();
-                                        newScript.filename = scriptname;
-                                        newScript.code = currServ.scripts[i].code;
-                                        newScript.ramUsage = currServ.scripts[i].ramUsage;
-                                        newScript.server = destServer.ip;
-                                        destServer.scripts.push(newScript);
-                                        workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                                        sourceScript = currServ.scripts[i];
+                                        break;
+                                    }
+                                }
+                                if (sourceScript == null) {
+                                    workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
+                                    resolve(false);
+                                    return;
+                                }
+                                
+                                //Overwrite script if it already exists
+                                for (var i = 0; i < destServer.scripts.length; ++i) {
+                                    if (scriptname == destServer.scripts[i].filename) {
+                                        workerScript.scriptRef.log("WARNING: " + scriptname + " already exists on " + destServer.hostname + " and it will be overwritten.");
+                                        workerScript.scriptRef.log(scriptname + " overwritten on " + destServer.hostname);
+                                        var oldScript = destServer.scripts[i];
+                                        oldScript.code = sourceScript.code;
+                                        oldScript.ramUsage = sourceScript.ramUsage;
                                         resolve(true);
                                         return;
                                     }
                                 }
-                                workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
-                                resolve(false);
-                                
+                               
+                                //Create new script if it does not already exist
+                                var newScript = new Script();
+                                newScript.filename = scriptname;
+                                newScript.code = sourceScript.code;
+                                newScript.ramUsage = sourceScript.ramUsage;
+                                newScript.server = destServer.ip;
+                                destServer.scripts.push(newScript);
+                                workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                                resolve(true);
+                                return;
                             }, function(e) {
                                 reject(e);
                             });

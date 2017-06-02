@@ -384,7 +384,6 @@ var Terminal = {
         
         //Process any aliases
         command = substituteAliases(command);
-        console.log("command after alises: " + command);
         
         //Only split the first space
 		var commandArray = command.split(" ");
