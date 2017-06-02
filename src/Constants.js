@@ -70,7 +70,7 @@ CONSTANTS = {
     ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
     
     //Augmentation Constants
-    AugmentationCostMultiplier: 4,  //Used for balancing costs without having to readjust every Augmentation cost
+    AugmentationCostMultiplier: 4.5,  //Used for balancing costs without having to readjust every Augmentation cost
     AugmentationRepMultiplier: 1.2, //Used for balancing rep cost without having to readjust every value
     
     //Maximum number of log entries for a script
