@@ -158,6 +158,8 @@ function prestigeAugmentation() {
         var s = homeComp.scripts[i];
         s.reset();
     }
+    //Delete messages on home computer
+    homeComp.messages.length = 0;
     
     //Delete active scripts display elements
     var list = Engine.ActiveScriptsList.querySelectorAll('#active-scripts-list li');

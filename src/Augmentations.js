@@ -652,7 +652,7 @@ initAugmentations = function() {
     AddToAugmentations(NeuralAccelerator);
     
     var CranialSignalProcessorsG1 = new Augmentation(AugmentationNames.CranialSignalProcessorsG1);
-    CranialSignalProcessorsG1.setRequirements(4000, 16000000);
+    CranialSignalProcessorsG1.setRequirements(4000, 14000000);
     CranialSignalProcessorsG1.setInfo("The first generation of Cranial Signal Processors. Cranial Signal Processors " + 
                                       "are a set of specialized microprocessors that are attached to " + 
                                       "neurons in the brain. These chips process neural signals to quickly and automatically perform specific computations " +

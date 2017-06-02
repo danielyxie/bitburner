@@ -242,7 +242,7 @@ function iTutorialEvaluateStep() {
                          "it out after this tutorial. </strong> For now, just copy " + 
                          "and paste the following code into the script editor: <br><br>" +
                          "while(true) { <br>" + 
-                         "hack('foodnstuff'); <br>" + 
+                         "&nbsp;&nbsp;hack('foodnstuff'); <br>" + 
                          "}<br><br> " +
                          "For anyone with basic programming experience, this code should be straightforward. " +
                          "This script will continuously hack the 'foodnstuff' server. <br><br>" + 
@@ -351,7 +351,7 @@ function iTutorialEvaluateStep() {
         break;
     case iTutorialSteps.WorldDescription:
         iTutorialSetText("This page lists all of the different locations you can currently " +
-                         "travel to. Each location has something that can you do. " + 
+                         "travel to. Each location has something that you can do. " + 
                          "There's a lot of content out in the world, make sure " +
                          "you explore and discover!<br><br>" + 
                          "Lastly, click on the 'Tutorial' link in the main navigation menu.");

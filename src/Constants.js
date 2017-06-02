@@ -232,7 +232,15 @@ CONSTANTS = {
                          
     TutorialScriptsText: "Scripts can be used to automate the hacking process. Scripts must be written in the Netscript language. " + 
                          "Documentation about the Netscript language can be found in the 'Netscript Programming Language' " + 
-                         "section of this 'Tutorial' page. <br><br>Running a script requires RAM. The more complex a script is, the more RAM " + 
+                         "section of this 'Tutorial' page. <br><br> " +
+                         "<strong>It is highly recommended that you have a basic background in programming to start writing scripts. " + 
+                         "You by no means need to be an expert. All you need is some familiarity with basic programming " + 
+                         "constructs like for/while loops, if statements, " + 
+                         "functions, variables, etc. The Netscript programming language most resembles the Javascript language. " + 
+                         "Therefore, a good beginner's programming tutorial to read might <a href='https://www.w3schools.com/js/default.asp'>" +
+                         "this one</a>. Note that while the Netscript language is similar to Javascript, it is not the exact same, so the " + 
+                         "syntax will vary. </strong> <br><br>" + 
+                         "Running a script requires RAM. The more complex a script is, the more RAM " + 
                          "it requires to run. Scripts can be run on any server you have root access to. <br><br>" + 
                          "Here are some Terminal commands that are useful when working with scripts: <br>" + 
                          "free - Shows the current server's RAM usage and availability <br>" + 
