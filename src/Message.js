@@ -70,7 +70,7 @@ function checkForMessagesToSend() {
         sendMessage(jumper4);
     } else if (bitrunnersTest && !bitrunnersTest.recvd && Player.hacking_skill >= 500) {
         sendMessage(bitrunnersTest);
-    } if (!jumper5 && !jumper5.recvd && Player.hacking_skill >= 900) {
+    } if (jumper5 && !jumper5.recvd && Player.hacking_skill >= 900) {
         sendMessage(jumper5);
         Player.getHomeComputer.programs.push(Programs.Flight);
     }
