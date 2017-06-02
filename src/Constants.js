@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.19.3",
+    Version:                "0.19.4",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -248,6 +248,7 @@ CONSTANTS = {
                          "mem [script] - Check how much RAM a script requires to run<br>" +
                          "nano [script] - Create/Edit a script <br>" + 
                          "ps - Displays all scripts that are actively running on the current server<br>" + 
+                         "rm [script] - Delete a script<br>" + 
                          "run [script] - Run a script <br>" + 
                          "tail [script] - Displays a script's logs<br>" + 
                          "top - Displays all active scripts and their RAM usage <br><br>" + 

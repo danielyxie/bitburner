@@ -51,14 +51,6 @@
     margin-right: 2px;
 }
 
-#script-editor-netscript-doc-warning {
-    background-color: #555;
-    color: #FFFFFF;
-}
-#script-editor-netscript-doc-warning:hover {
-    background-color: #666;
-}
-
 #script-editor-wrapper {
     height:100%;
     width: 70%;
