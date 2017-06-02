@@ -70,9 +70,9 @@ function checkForMessagesToSend() {
         sendMessage(jumper4);
     } else if (bitrunnersTest && !bitrunnersTest.recvd && Player.hacking_skill >= 500) {
         sendMessage(bitrunnersTest);
-        Player.getHomeComputer.programs.push(Programs.Flight);
     } if (!jumper5 && !jumper5.recvd && Player.hacking_skill >= 900) {
         sendMessage(jumper5);
+        Player.getHomeComputer.programs.push(Programs.Flight);
     }
 }
 
@@ -88,7 +88,7 @@ MessageFilenames = {
     Jumper2:    "j2.msg",
     Jumper3:    "j3.msg",
     Jumper4:    "j4.msg",
-    Jumper5:    "j4.msg",
+    Jumper5:    "j5.msg",
     CyberSecTest:   "csec-test.msg",
     NiteSecTest:    "nitesec-test.msg",
     BitRunnersTest: "19dfj3l1nd.msg",
@@ -103,8 +103,7 @@ function initMessages()  {
                                  "I know you can sense it. I know you're searching for it. " + 
                                  "It's why you spend night after " + 
                                  "night at your computer. <br><br>It's real, I've seen it. And I can " + 
-                                 "help you find it. But not right now. You're not ready yet. Keep searching, " + 
-                                 "but don't fly too close to the sun.<br><br>-jump3R"));
+                                 "help you find it. But not right now. You're not ready yet.<br><br>-jump3R"));
     AddToAllMessages(new Message(MessageFilenames.Jumper1,
                                  "Soon you will be contacted by a hacking group known as CyberSec. " +
                                  "They can help you with your search. <br><br>" +

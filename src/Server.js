@@ -524,14 +524,14 @@ initForeignServers = function() {
     
     var TheBlackHandServer = new Server();
     TheBlackHandServer.init(createRandomIp(), "I.I.I.I", "I.I.I.I", true, false, false, false, false, 0);
-    TheBlackHandServer.setHackingParameters(getRandomInt(305, 350), 0, 0, 0);
+    TheBlackHandServer.setHackingParameters(getRandomInt(303, 325), 0, 0, 0);
     TheBlackHandServer.setPortProperties(3);
     AddToAllServers(TheBlackHandServer);
     SpecialServerIps.addIp(SpecialServerNames.TheBlackHandServer, TheBlackHandServer.ip);
 	
 	var NiteSecServer = new Server();
 	NiteSecServer.init(createRandomIp(), "avmnite-02h", "NiteSec", true, false, false, false, 0);
-    NiteSecServer.setHackingParameters(getRandomInt(202, 230), 0, 0, 0);
+    NiteSecServer.setHackingParameters(getRandomInt(202, 220), 0, 0, 0);
 	NiteSecServer.setPortProperties(2);
 	AddToAllServers(NiteSecServer);
     SpecialServerIps.addIp(SpecialServerNames.NiteSecServer, NiteSecServer.ip);
