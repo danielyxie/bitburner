@@ -128,12 +128,12 @@ CONSTANTS = {
     ClassGymDexterity: "training your dexterity at a gym",
     ClassGymAgility: "training your agility at a gym",
     
-    ClassDataStructuresBaseCost: 2,
-    ClassNetworksBaseCost: 10,
-    ClassAlgorithmsBaseCost: 40,
-    ClassManagementBaseCost: 20,
-    ClassLeadershipBaseCost: 40,
-    ClassGymBaseCost: 30,
+    ClassDataStructuresBaseCost: 5,
+    ClassNetworksBaseCost: 25,
+    ClassAlgorithmsBaseCost: 100,
+    ClassManagementBaseCost: 50,
+    ClassLeadershipBaseCost: 100,
+    ClassGymBaseCost: 100,
     
     CrimeShoplift: "shoplift",
     CrimeMug: "mug someone",
