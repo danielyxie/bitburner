@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.18.3",
+    Version:                "0.19.0",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -19,9 +19,9 @@ CONSTANTS = {
     
     /* Hacknet Node constants */
     HacknetNodeMoneyGainPerLevel: 1.6,
-    HacknetNodePurchaseNextMult: 1.39,   //Multiplier when purchasing an additional hacknet node
-    HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.26,     //Multiplier for cost when upgrading RAM
+    HacknetNodePurchaseNextMult: 1.42,   //Multiplier when purchasing an additional hacknet node
+    HacknetNodeUpgradeLevelMult: 1.045,  //Multiplier for cost when upgrading level
+    HacknetNodeUpgradeRamMult: 1.28,     //Multiplier for cost when upgrading RAM
     HacknetNodeUpgradeCoreMult: 1.49,    //Multiplier for cost when buying another core
     
     HacknetNodeMaxLevel: 200,
@@ -66,11 +66,12 @@ CONSTANTS = {
     
     //Server constants
     ServerGrowthRate: 1.002,   //Growth rate
-    ServerFortifyAmount: 0.001, //Amount by which server's security increases when its hacked
+    ServerFortifyAmount: 0.002, //Amount by which server's security increases when its hacked
     ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
     
     //Augmentation Constants
-    AugmentationCostMultiplier: 3,  //Used for balancing costs without having to readjust every Augmentation cost
+    AugmentationCostMultiplier: 4.5,  //Used for balancing costs without having to readjust every Augmentation cost
+    AugmentationRepMultiplier: 1.2, //Used for balancing rep cost without having to readjust every value
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 40,
@@ -127,12 +128,12 @@ CONSTANTS = {
     ClassGymDexterity: "training your dexterity at a gym",
     ClassGymAgility: "training your agility at a gym",
     
-    ClassDataStructuresBaseCost: 2,
-    ClassNetworksBaseCost: 10,
-    ClassAlgorithmsBaseCost: 40,
-    ClassManagementBaseCost: 20,
-    ClassLeadershipBaseCost: 40,
-    ClassGymBaseCost: 30,
+    ClassDataStructuresBaseCost: 6,
+    ClassNetworksBaseCost: 30,
+    ClassAlgorithmsBaseCost: 120,
+    ClassManagementBaseCost: 60,
+    ClassLeadershipBaseCost: 120,
+    ClassGymBaseCost: 100,
     
     CrimeShoplift: "shoplift",
     CrimeMug: "mug someone",
@@ -147,6 +148,7 @@ CONSTANTS = {
     //Text that is displayed when the 'help' command is ran in Terminal
     HelpText:   'alias [name="value"]   Create aliases for Terminal commands, or list existing aliases<br>' + 
                 "analyze                Get statistics and information about current machine <br>" + 
+                "cat [message]          Display a .msg file<br>" + 
                 "clear                  Clear all text on the terminal <br>" +
                 "cls                    See 'clear' command <br>" +
                 "connect [ip/hostname]  Connects to the machine given by its IP or hostname <br>" + 

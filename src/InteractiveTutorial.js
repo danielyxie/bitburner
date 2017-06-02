@@ -367,8 +367,8 @@ function iTutorialEvaluateStep() {
 
     case iTutorialSteps.TutorialPageInfo:
         iTutorialSetText("This page contains a lot of different documentation about the game's " + 
-                         "content and mechanics. If you have any questions about how something works " + 
-                         "make sure you check this out first. That's the end of the tutorial. " + 
+                         "content and mechanics. <strong> I know it's a lot, but I highly suggest you read " + 
+                         "(or at least skim) through this before you start playing </strong>. That's the end of the tutorial. " + 
                          "Hope you enjoy the game!");
         var next = clearEventListeners("interactive-tutorial-next");
         next.style.display = "inline-block";

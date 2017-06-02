@@ -602,8 +602,9 @@ var Engine = {
         updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
         createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
         serverGrowth: 450,                  //Process server growth every minute and a half
-        checkFactionInvitations: 1000,      //Check whether you qualify for any faction invitations every 5 minutes
+        checkFactionInvitations: 250,      //Check whether you qualify for any faction invitations every 5 minutes
         passiveFactionGrowth: 600,
+        messages: 300,
     },
     
     decrementAllCounters: function(numCycles = 1) {
@@ -667,13 +668,18 @@ var Engine = {
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
                 inviteToFaction(randFaction);
             }
-            Engine.Counters.checkFactionInvitations = 1000;
+            Engine.Counters.checkFactionInvitations = 250;
         }
         
         if (Engine.Counters.passiveFactionGrowth <= 0) {
             var adjustedCycles = Math.floor((600 - Engine.Counters.passiveFactionGrowth));
             processPassiveFactionRepGain(adjustedCycles);
             Engine.Counters.passiveFactionGrowth = 600;
+        }
+        
+        if (Engine.Counters.messages <= 0) {
+            checkForMessagesToSend();
+            Engine.Counters.messages = 300;
         }
     },
     

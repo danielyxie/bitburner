@@ -1,6 +1,15 @@
 /* Holds IP of Special Servers */
-function SpecialServerIpsMap() {
+SpecialServerNames = {
+    FulcrumSecretTechnologies:  "Fulcrum Secret Technologies Server",
+    CyberSecServer:             "CyberSec Server",
+    NiteSecServer:              "NiteSec Server",
+    TheBlackHandServer:         "The Black Hand Server",
+    BitRunnersServer:           "BitRunners Server",
+    TheDarkArmyServer:          "The Dark Army Server",
+    DaedalusServer:             "Daedalus Server",
+    WorldDaemon:                "w0r1d_d43m0n",
 }
+function SpecialServerIpsMap() {}
 
 SpecialServerIpsMap.prototype.addIp = function(name, ip) {
     this[name] = ip;

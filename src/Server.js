@@ -13,6 +13,7 @@ function Server() {
 	//Access information
 	this.hasAdminRights		=	false;	//Whether player has admin rights
 	this.purchasedByPlayer	=	false;
+    this.manuallyHacked     =   false;  //Flag that tracks whether or not the server has been hacked at least once
 	
 	//RAM, CPU speed and Scripts
 	this.maxRam			=	1;  //GB 
@@ -131,8 +132,6 @@ Server.fromJSON = function(value) {
 
 Reviver.constructors.Server = Server;
 
-//world_daemon:               new Server(),   //Final server for 2nd tier prestige. Discover that the world is a simulation
-
 initForeignServers = function() {
     //MegaCorporations
     var ECorpServer = new Server();
@@ -201,8 +200,7 @@ initForeignServers = function() {
     FulcrumSecretTechnologiesServer.setHackingParameters(999, 1000000, 99, 1);
     FulcrumSecretTechnologiesServer.setPortProperties(5);
     AddToAllServers(FulcrumSecretTechnologiesServer);
-	
-	SpecialServerIps.addIp("Fulcrum Secret Technologies Server", FulcrumSecretTechnologiesServer.ip);
+	SpecialServerIps.addIp(SpecialServerNames.FulcrumSecretTechnologies, FulcrumSecretTechnologiesServer.ip);
     
     var StormTechnologiesServer = new Server();
     StormTechnologiesServer.init(createRandomIp(), "stormtech", "Storm Technologies", true, false, false, false, 0);
@@ -519,47 +517,72 @@ initForeignServers = function() {
 	//Faction servers, cannot hack money from these
 	var BitRunnersServer = new Server();
 	BitRunnersServer.init(createRandomIp(), "run4theh111z", "The Runners", true, false, false, false,  0);
+    BitRunnersServer.setHackingParameters(getRandomInt(505, 550), 0, 0, 0);
 	BitRunnersServer.setPortProperties(4);
 	AddToAllServers(BitRunnersServer);
+    SpecialServerIps.addIp(SpecialServerNames.BitRunnersServer, BitRunnersServer.ip);
     
     var TheBlackHandServer = new Server();
     TheBlackHandServer.init(createRandomIp(), "I.I.I.I", "I.I.I.I", true, false, false, false, false, 0);
+    TheBlackHandServer.setHackingParameters(getRandomInt(303, 325), 0, 0, 0);
     TheBlackHandServer.setPortProperties(3);
     AddToAllServers(TheBlackHandServer);
+    SpecialServerIps.addIp(SpecialServerNames.TheBlackHandServer, TheBlackHandServer.ip);
 	
 	var NiteSecServer = new Server();
 	NiteSecServer.init(createRandomIp(), "avmnite-02h", "NiteSec", true, false, false, false, 0);
+    NiteSecServer.setHackingParameters(getRandomInt(202, 220), 0, 0, 0);
 	NiteSecServer.setPortProperties(2);
 	AddToAllServers(NiteSecServer);
+    SpecialServerIps.addIp(SpecialServerNames.NiteSecServer, NiteSecServer.ip);
 	
 	var DarkArmyServer = new Server();
     DarkArmyServer.init(createRandomIp(), ".", ".", true, false, false, false, 0);
-	DarkArmyServer.setPortProperties(5);
+    DarkArmyServer.setHackingParameters(getRandomInt(505, 550), 0, 0, 0);
+	DarkArmyServer.setPortProperties(4);
 	AddToAllServers(DarkArmyServer);
+    SpecialServerIps.addIp(SpecialServerNames.TheDarkArmyServer, DarkArmyServer.ip);
 	
 	var CyberSecServer = new Server();
 	CyberSecServer.init(createRandomIp(), "CSEC", "CyberSec", true, false, false, false, 0);
-	CyberSecServer.setPortProperties(2);
+    CyberSecServer.setHackingParameters(getRandomInt(51, 60), 0, 0, 0);
+	CyberSecServer.setPortProperties(1);
 	AddToAllServers(CyberSecServer);
+    SpecialServerIps.addIp(SpecialServerNames.CyberSecServer, CyberSecServer.ip);
+    
+    var DaedalusServer = new Server();
+    DaedalusServer.init(createRandomIp(), "Icarus", "Icarus", true, false, false, false, 0);
+    DaedalusServer.setHackingParameters(925, 0, 0, 0);
+    DaedalusServer.setPortProperties(5);
+    AddToAllServers(DaedalusServer);
+    SpecialServerIps.addIp(SpecialServerNames.DaedalusServer, DaedalusServer.ip);
+    
+    //Super special Servers
+    var WorldDaemon = new Server();
+    WorldDaemon.init(createRandomIp(), SpecialServerNames.WorldDaemon, SpecialServerNames.WorldDaemon, true, false, false, false, 0);
+    WorldDaemon.setHackingParameters(950, 0, 0, 0);
+    WorldDaemon.setPortProperties(5);
+    AddToAllServers(WorldDaemon);
+    SpecialServerIps.addIp(SpecialServerNames.WorldDaemon, WorldDaemon.ip);
 	
 	
     /* Create a randomized network for all the foreign servers */
     //Groupings for creating a randomized network
     var NetworkGroup1 =     [IronGymServer, FoodNStuffServer, SigmaCosmeticsServer, JoesGunsServer, HongFangTeaHouseServer, HaraKiriSushiBarServer];
-    var NetworkGroup2 =     [MaxHardwareServer, NectarNightclubServer, Zer0NightclubServer];
+    var NetworkGroup2 =     [MaxHardwareServer, NectarNightclubServer, Zer0NightclubServer, CyberSecServer];
     var NetworkGroup3 =     [OmegaSoftwareServer, PhantasyServer, SilverHelixServer, NeoNightclubServer];
-    var NetworkGroup4 =     [CrushFitnessGymServer, NetLinkTechnologiesServer, CompuTekServer, TheHubServer, JohnsonOrthopedicsServer];
-    var NetworkGroup5 =     [CatalystVenturesServer, SysCoreSecuritiesServer, SummitUniversityServer, ZBInstituteOfTechnologyServer, RothmanUniversityServer];
+    var NetworkGroup4 =     [CrushFitnessGymServer, NetLinkTechnologiesServer, CompuTekServer, TheHubServer, JohnsonOrthopedicsServer, NiteSecServer];
+    var NetworkGroup5 =     [CatalystVenturesServer, SysCoreSecuritiesServer, SummitUniversityServer, ZBInstituteOfTechnologyServer, RothmanUniversityServer, TheBlackHandServer];
     var NetworkGroup6 =     [LexoCorpServer, RhoConstructionServer, AlphaEnterprisesServer, AevumPoliceServer, MilleniumFitnessGymServer, CyberSecServer, NiteSecServer];
     var NetworkGroup7 =     [GlobalPharmaceuticalsServer, AeroCorpServer, GalacticCyberSystemsServer, SnapFitnessGymServer];
-    var NetworkGroup8 =     [DeltaOneServer, UnitaLifeGroupServer, OmniaCybersystemsServer];
+    var NetworkGroup8 =     [DeltaOneServer, UnitaLifeGroupServer, OmniaCybersystemsServer, BitRunnersServer];
     var NetworkGroup9 =     [ZeusMedicalServer, SolarisSpaceSystemsServer, UniversalEnergyServer, IcarusMicrosystemsServer, DefCommServer];
     var NetworkGroup10 =    [NovaMedicalServer, ZBDefenseServer, TaiYangDigitalServer, InfoCommServer];
     var NetworkGroup11 =    [AppliedEnergeticsServer, MicrodyneTechnologiesServer, TitanLabsServer, BitRunnersServer];
     var NetworkGroup12 =    [VitaLifeServer, HeliosLabsServer, StormTechnologiesServer, FulcrumTechnologiesServer];
     var NetworkGroup13 =    [KuaiGongInternationalServer, FourSigmaServer, OmniTekIncorporatedServer, DarkArmyServer];
     var NetworkGroup14 =    [PowerhouseGymServer, ClarkeIncorporatedServer, NWOServer, BladeIndustriesServer, BachmanAndAssociatesServer];
-    var NetworkGroup15 =    [FulcrumSecretTechnologiesServer, MegaCorpServer, ECorpServer];
+    var NetworkGroup15 =    [FulcrumSecretTechnologiesServer, MegaCorpServer, ECorpServer, DaedalusServer];
     
     for (var i = 0; i < NetworkGroup2.length; i++) {
         var randomServerFromPrevGroup = NetworkGroup1[Math.floor(Math.random() * NetworkGroup1.length)];
