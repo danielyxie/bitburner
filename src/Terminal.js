@@ -191,7 +191,7 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
     } else if (allPossibilities.length == 1) {    
         if (arg == "") {
             //Autocomplete command
-            val = allPossibilities[0];
+            val = allPossibilities[0] + " ";
         } else {
             val = command + " " + allPossibilities[0];
         }
