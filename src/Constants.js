@@ -484,5 +484,80 @@ CONSTANTS = {
                                "Every Augmentation you have installed<br>"  +
                                "Scripts on your home computer<br>" + 
                                "RAM Upgrades on your home computer",
+                               
+    Changelog:
+    "v0.15 <br>" + 
+    "-Slightly reduced production multiplier for Hacknet Node RAM<br>" + 
+    "-Faction pages now scroll<br>" + 
+    "-Slightly increased amount of money gained from hacking<br>" + 
+    "-Added 'alias' command<br>" + 
+    "-Added 'scan-analyze' terminal command - used to get basic hacking info about all immediate network connections<br>" + 
+    "-Fixed bugs with upgradeHacknetNode() and purchaseHacknetNode() commands<br>" + 
+    "-Added getNumHacknetNodes() and hasRootAccess(hostname/ip) commands to Netscript<br>" + 
+    "-Increased Cost of university classes/gym<br>" + 
+    "-You can now see what an Augmentation does and its price even while its locked<br><br>" + 
+    "v0.16<br>" + 
+    "-New Script Editor interface <br>" + 
+    "-Rebalanced hacknet node - Increased base production but halved the multiplier from additional cores. This should boost its early-game production but nerf its late-game production<br>" + 
+    "-Player now starts with 8GB of RAM on home computer<br>" + 
+    "-'scan-analyze' terminal command displays RAM on servers<br>" + 
+    "-Slightly buffed the amount of money the player steals when hacking servers (by about ~8%)<br>" + 
+    "-Time to execute grow() now depends on hacking skill and server security, rather than taking a flat 2 minutes.<br>" + 
+    "-Clicking outside of a pop-up dialog box will now close it<br>" + 
+    "-BruteSSH.exe takes 33% less time to create<br>" + 
+    "-'iron-gym' and 'max-hardware' servers now have 2GB of RAM<br>" + 
+    "-Buffed job salaries across the board<br>" + 
+    "-Updated Tutorial<br>" + 
+    "-Created a Hacknet Node API for Netscript that allows you to access and upgrade your Hacknet Nodes. See the Netscript documentation for more details. WARNING The old upgradeHacknetNode() and getNumHacknetNodes() functions waere removed so any script that has these will no longer work <br><br>" + 
+    "v0.17<br>" + 
+    "-Greatly increased amount of money gained for crimes (by about 400% for most crimes)<br>" + 
+    "-Criminal factions require slightly less negative karma to get invited to<br>" + 
+    "-Increased the percentage of money stolen from servers when hacking<br>" + 
+    "-Increased the starting amount of money available on beginning servers (servers with <50 required hacking))<br>" + 
+    "-Increased the growth rate of servers (both naturally and manually when using the grow() command in a script)<br>" + 
+    "-Added getHostname() command in Netscript that returns the hostname of the server a script is running on<br>" + 
+    "-jQuery preventDefault() called when pressing ctrl+b in script editor<br>" + 
+    "-The Neuroflux Governor augmentation (the one that can be repeatedly leveled up) now increases ALL multipliers by 1%. To balance it out, it's price multiplier when it levels up was increased<br>" + 
+    "-Hacknet Node base production decreased from $1.75/s to $1.65/s<br>" + 
+    "-Fixed issue with nested for loops in Netscript (stupid Javascript references)<br>" + 
+    "-Added 'scp' command to Terminal and Netscript<br>" + 
+    "-Slightly nerfed Hacknet Node Kernel DNI and Hacknet Node Core DNI Augmentations<br>" + 
+    "-Increased TOR Router cost to $200k<br><br>" + 
+    "v0.17.1 <br>" + 
+    "-Fixed issue with purchasing Augmentations that are 'upgrades' and require previous Augmentations to be installed<br>" + 
+    "-Increased the percentage of money stolen from servers when hacking<br><br>" + 
+    "v0.18<br>" + 
+    "-Major rebalancing (sorry didn't record specifics. But in general hacking gives more money " + 
+    "and hacknet nodes give less)<br>" + 
+    "-Server growth rate (both natural and manual using grow()) doubled<br>" + 
+    "-Added option to Soft Reset<br>" + 
+    "-Cancelling a full time job early now only results in halved gains for reputation. Exp and money earnings are gained in full<br>" + 
+    "-Added exec() Netscript command, used to run scripts on other servers. <br>" + 
+    "-NEW HACKING MECHANICS: Whenever a server is hacked, its 'security level' is increased by a very small amount. " + 
+    "The security level is denoted by a number between 1-100. A higher security level makes it harder " + 
+    "to hack a server and also decreases the amount of money you steal from it. Two Netscript functions, " + 
+    "weaken() and getServerSecurityLevel() level, were added. The weaken(server) function lowers a server's " + 
+    "security level. See the Netscript documentation for more details<br>" + 
+    "-When donating to factions, the base rate is now $1,000,000 for 1 reputation point. Before, it was " + 
+    "$1,000 for 1 reputation point.<br>" + 
+    "-Monetary costs for all Augmentations increased. They are now about ~3.3 - 3.75 times more expensive than before<br><br>" + 
+    "v0.19<br>" + 
+    "-Hacknet Nodes have slightly higher base production, and slightly increased RAM multiplier. " + 
+    "But they are also a bit more expensive at higher levels<br>" + 
+    "-Calling grow() and weaken() in a script will now work offline, at slower rates than while online (The script now " + 
+    "keeps track of the rate at which grow() and weaken() are called when the game is open. These calculated rates " + 
+    "are used to determine how many times the calls would be made while the game is offline)<br>" + 
+    "-Augmentations now cost 20% more reputation and 50% more money<br>" + 
+    "-Changed the mechanic for getting invited to the hacking factions (CyberSec, NiteSec, The Black Hand, BitRunners) " + 
+    "Now when you get to the required level to join these factions you will get a message giving " + 
+    "you instructions on what to do in order to get invited.<br>" + 
+    "-Added a bit of backstory/plot into the game. It's not fully fleshed out yet but it will be " + 
+    "used in the future<br>" + 
+    "-Made the effects of many Augmentations slightly more powerful<br>" + 
+    "-Slightly increased company job wages across the board (~5-10% for each position)<br>" + 
+    "-Gyms and classes are now significantly more expensive<br>" + 
+    "-Doubled the amount by which a server's security increases when it is hacked. Now, it will<br>" + 
+    "increase by 0.002. Calling weaken() on a server will lower the security by 0.1.",
+    
 	
 }

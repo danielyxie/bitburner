@@ -525,7 +525,7 @@ var Terminal = {
         /****************** END INTERACTIVE TUTORIAL ******************/
 		
         /* Command parser */
-		switch (commandArray[0]) {
+		switch (commandArray[0].toLowerCase()) {
             case "alias":
                 if (commandArray.length == 1) {
                     printAliases();
