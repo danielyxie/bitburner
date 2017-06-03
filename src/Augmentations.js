@@ -753,7 +753,7 @@ initAugmentations = function() {
     
     //Work Augmentations
     var NuoptimalInjectorImplant = new Augmentation(AugmentationNames.NuoptimalInjectorImplant);
-    NuoptimalInjectorImplant.setRequirements(2000, 3000000);
+    NuoptimalInjectorImplant.setRequirements(2000, 4000000);
     NuoptimalInjectorImplant.setInfo("This torso implant automatically injects nootropic supplements into " + 
                                      "the bloodstream to improve memory, increase focus, and provide other " + 
                                      "cognitive enhancements.<br><br>" + 
@@ -846,7 +846,7 @@ initAugmentations = function() {
     AddToAugmentations(PCDNINeuralNetwork);
     
     var ADRPheromone1 = new Augmentation(AugmentationNames.ADRPheromone1);
-    ADRPheromone1.setRequirements(1250, 2600000);
+    ADRPheromone1.setRequirements(1500, 3500000);
     ADRPheromone1.setInfo("The body is genetically re-engineered so that it produces the ADR-V1 pheromone, " +
                           "an artificial pheromone discovered by scientists. The ADR-V1 pheromone, when excreted, " + 
                           "triggers feelings of admiration and approval in other people. <br><br>" + 

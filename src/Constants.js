@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.19.6",
+    Version:                "0.19.7",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -299,12 +299,14 @@ CONSTANTS = {
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " + 
                            "<i>hack(hostname/ip)</i><br>Core function that is used to try and hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
-                           "either the IP or hostname of the server you want to hack. A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. " +
+                           "either the IP or hostname of the server you want to hack. The runtime for this command depends on your hacking level and the target server's security level. " + 
+                           " A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. " +
                            "For example, you can create a script that hacks the 'foodnstuff' server and run it on your home computer. <br>" + 
                            "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
-                           "must be a string with either the IP or hostname of the target server. The grow() command requires root access to the target server, but " +
+                           "must be a string with either the IP or hostname of the target server. The runtime for this command depends on your hacking level and the target server's security level. " +
+                           "The grow() command requires root access to the target server, but " +
                            "there is no required hacking level to run the command. " + 
                            "Grants 1 hacking exp when it completes. Works offline at a slower rate. <br> Example: grow('foodnstuff');<br><br>" + 
                            "<i>weaken(hostname/ip)</i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " + 
@@ -563,7 +565,10 @@ CONSTANTS = {
     "-scp() command in Terminal/script will now overwrite files at the destination <br>" + 
     "-Terminal commands are no longer case-sensitive (only the commands themselves such as 'run' or 'nano'. Filenames are " + 
     "still case sensitive<br>" + 
-    "-Tab automcompletion will now work on commands",
+    "-Tab automcompletion will now work on commands<br><br>" + 
+    "v0.19.7<br>" + 
+    "-Added changelog to Options menu<br>" + 
+    "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs",
     
 	
 }
