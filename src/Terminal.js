@@ -169,7 +169,6 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
     if (!containsAllStrings(allPossibilities)) {return;}
     
     command = command.toLowerCase();
-    arg = arg.toLowerCase();
     
     if (arg == "") {
         for (var i = allPossibilities.length-1; i >= 0; --i) {
@@ -358,6 +357,7 @@ var Terminal = {
     finishAnalyze: function(cancelled = false) {
 		if (cancelled == false) {
 			post(Player.getCurrentServer().hostname + ": ");
+            post("Organization name: " + Player.getCurrentServer().organizationName);
             var rootAccess = "";
             if (Player.getCurrentServer().hasAdminRights) {rootAccess = "YES";}
             else {rootAccess = "NO";}

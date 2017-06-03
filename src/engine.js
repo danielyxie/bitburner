@@ -1099,6 +1099,13 @@ var Engine = {
         document.getElementById("world-menu-link").removeAttribute("class");
         document.getElementById("tutorial-menu-link").removeAttribute("class");
         
+        //Changelog
+        document.getElementById("changelog-link").addEventListener("click", function() {
+            gameOptionsBoxClose();
+            dialogBoxCreate(CONSTANTS.Changelog);
+            return false;
+        });
+        
         //DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
             console.log("Deleting running scripts on home computer");
