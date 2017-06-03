@@ -104,11 +104,9 @@ $(document).keydown(function(event) {
             
             var commandArray = input.split(" ");
             var index = commandArray.length - 2;
-            if (index < 0) {index = 0;}
+            if (index < -1) {index = 0;}
             var allPos = determineAllPossibilitiesForTabCompletion(input, index);
             if (allPos.length == 0) {return;}
-            
-            
             
             var arg = "";
             var command = "";
@@ -170,41 +168,79 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
     if (!(allPossibilities.constructor === Array)) {return;}
     if (!containsAllStrings(allPossibilities)) {return;}
     
-    for (var i = allPossibilities.length-1; i >= 0; --i) {
-        if (!allPossibilities[i].startsWith(arg)) {
-            allPossibilities.splice(i, 1);
+    command = command.toLowerCase();
+    arg = arg.toLowerCase();
+    
+    if (arg == "") {
+        for (var i = allPossibilities.length-1; i >= 0; --i) {
+            if (!allPossibilities[i].startsWith(command)) {
+                allPossibilities.splice(i, 1);
+            }
+        }
+    } else {
+        for (var i = allPossibilities.length-1; i >= 0; --i) {
+            if (!allPossibilities[i].startsWith(arg)) {
+                allPossibilities.splice(i, 1);
+            }
         }
     }
     
+    var val = "";
     if (allPossibilities.length == 0) {
         return;
-    } else if (allPossibilities.length == 1) {
-        document.getElementById("terminal-input-text-box").value = command + " " + allPossibilities[0];
+    } else if (allPossibilities.length == 1) {    
+        if (arg == "") {
+            //Autocomplete command
+            val = allPossibilities[0];
+        } else {
+            val = command + " " + allPossibilities[0];
+        }
+        document.getElementById("terminal-input-text-box").value = val;
         document.getElementById("terminal-input-text-box").focus();
     } else {
         var longestStartSubstr = longestCommonStart(allPossibilities);
         //If the longest common starting substring of remaining possibilities is the same
         //as whatevers already in terminal, just list all possible options. Otherwise,
         //change the input in the terminal to the longest common starting substr
-        if (longestStartSubstr == arg) {
-            //List all possible options
-            var allOptionsStr = "";
-            for (var i = 0; i < allPossibilities.length; ++i) {
-                allOptionsStr += allPossibilities[i];
-                allOptionsStr += "   ";
-            }
-            post("> " + command + " " + arg);
-            post(allOptionsStr);
-        } else {
-            document.getElementById("terminal-input-text-box").value = command + " " + longestStartSubstr;
-            document.getElementById("terminal-input-text-box").focus();
+        var allOptionsStr = "";
+        for (var i = 0; i < allPossibilities.length; ++i) {
+            allOptionsStr += allPossibilities[i];
+            allOptionsStr += "   ";
         }
+        if (arg == "") {
+            if (longestStartSubstr == command) {
+                post("> " + command);
+                post(allOptionsStr);
+            } else {
+                document.getElementById("terminal-input-text-box").value = longestStartSubstr;
+                document.getElementById("terminal-input-text-box").focus();
+            }
+        } else {
+            if (longestStartSubstr == arg) {
+                //List all possible options
+                post("> " + command + " " + arg);
+                post(allOptionsStr);
+            } else {
+                document.getElementById("terminal-input-text-box").value = command + " " + longestStartSubstr;
+                document.getElementById("terminal-input-text-box").focus();
+            }
+        }
+        
     }
 }
 
 function determineAllPossibilitiesForTabCompletion(input, index=0) {
     var allPos = [];
     var currServ = Player.getCurrentServer();
+    input = input.toLowerCase();
+    
+    //Autocomplete the command
+    if (index == -1) {
+        return ["alias", "analyze", "cat", "clear", "cls", "connect", "free", 
+                "hack", "help", "home", "hostname", "ifconfig", "kill", 
+                "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze", 
+                "scp", "sudov", "tail", "top"];
+    }
     
     if (input.startsWith("scp ") && index == 1) {
         for (var iphostname in AllServers) {

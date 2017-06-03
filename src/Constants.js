@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.19.5",
+    Version:                "0.19.6",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -556,8 +556,14 @@ CONSTANTS = {
     "-Made the effects of many Augmentations slightly more powerful<br>" + 
     "-Slightly increased company job wages across the board (~5-10% for each position)<br>" + 
     "-Gyms and classes are now significantly more expensive<br>" + 
-    "-Doubled the amount by which a server's security increases when it is hacked. Now, it will<br>" + 
-    "increase by 0.002. Calling weaken() on a server will lower the security by 0.1.",
+    "-Doubled the amount by which a server's security increases when it is hacked. Now, it will " + 
+    "increase by 0.002. Calling weaken() on a server will lower the security by 0.1.<br><br>" + 
+    "v0.19.6<br>" + 
+    "-Script editor now saves its state even when you change tabs <br>" + 
+    "-scp() command in Terminal/script will now overwrite files at the destination <br>" + 
+    "-Terminal commands are no longer case-sensitive (only the commands themselves such as 'run' or 'nano'. Filenames are " + 
+    "still case sensitive<br>" + 
+    "-Tab automcompletion will now work on commands",
     
 	
 }
