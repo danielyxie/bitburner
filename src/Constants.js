@@ -568,7 +568,11 @@ CONSTANTS = {
     "-Tab automcompletion will now work on commands<br><br>" + 
     "v0.19.7<br>" + 
     "-Added changelog to Options menu<br>" + 
-    "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs",
+    "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs<br><br>" + 
+    "",
+    
+    LatestUpdate: 
+    "",
     
 	
 }
