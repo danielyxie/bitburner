@@ -299,7 +299,8 @@ background-color: #555;
     padding-left: 10px;
     height: 100%;
     margin-left: 10%;
-    width: 90%;
+    width: 99%;
+    overflow: auto;
     overflow-y: auto;
 }
 
@@ -307,8 +308,6 @@ background-color: #555;
     padding: 6px;
     margin: 6px;
 }
-
-
 
 #faction-hack-div,
 #faction-fieldwork-div,

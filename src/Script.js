@@ -150,6 +150,8 @@ Script.prototype.saveScript = function() {
 }
 
 Script.prototype.reset = function() {
+    this.updateRamUsage();
+    
     this.offlineRunningTime  	= 0.01;	//Seconds
 	this.offlineMoneyMade 		= 0;
 	this.offlineExpGained 		= 0;
