@@ -488,6 +488,11 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.20.0<br>" + 
+    "Refactor Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
+    "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
+    "now each one should only take 750 milliseconds). <br> " +
+    ""
     "v0.19.7<br>" + 
     "-Added changelog to Options menu<br>" + 
     "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs<br><br>" + 

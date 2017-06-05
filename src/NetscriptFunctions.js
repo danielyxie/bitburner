@@ -252,90 +252,76 @@ function netscriptRunNukeProgram(exp, workerScript, server) {
     if (server.openPortCount < server.numOpenPortsRequired) {
         return Promise.reject(makeRuntimeRejectMsg(workerScript, "Not enough ports opened to use NUKE.exe virus"));
     }
-    
-    workerScript.scriptRef.log("Running NUKE.exe on server " + server.hostname + " in 5 seconds");
-    setTimeout(function() {
-        if (server.hasAdminRights) {
-            workerScript.scriptRef.log("Already have root access to " + server.hostname);
-        } else {
-            server.hasAdminRights = true;
-            workerScript.scriptRef.log("Executed NUKE.exe virus on " + server.hostname + " to gain root access");
-        }
-        return Promise.resolve(true);
-    }, 5 * 1000);
+    if (server.hasAdminRights) {
+        workerScript.scriptRef.log("Already have root access to " + server.hostname);
+    } else {
+        server.hasAdminRights = true;
+        workerScript.scriptRef.log("Executed NUKE.exe virus on " + server.hostname + " to gain root access");
+    }
+    return Promise.resolve(true);
 }
 
 function netscriptRunBrutesshProgram(exp, workerScript, server) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
-    setTimeout(function() {
-        if (!server.sshPortOpen) {
-            workerScript.scriptRef.log("Executed BruteSSH.exe virus on " + server.hostname + " to open SSH port (22)");
-            server.sshPortOpen = true; 
-            ++server.openPortCount;
-        } else {
-            workerScript.scriptRef.log("SSH Port (22) already opened on " + server.hostname);
-        }
-        return Promise.resolve(true);
-    }, 10 * 1000);
+    if (!server.sshPortOpen) {
+        workerScript.scriptRef.log("Executed BruteSSH.exe virus on " + server.hostname + " to open SSH port (22)");
+        server.sshPortOpen = true; 
+        ++server.openPortCount;
+    } else {
+        workerScript.scriptRef.log("SSH Port (22) already opened on " + server.hostname);
+    }
+    return Promise.resolve(true);
 }
 
 function netscriptRunFtpcrackProgram(exp, workerScript, server) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
-    setTimeout(function() {
-        if (!server.ftpPortOpen) {
-            workerScript.scriptRef.log("Executed FTPCrack.exe virus on " + server.hostname + " to open FTP port (21)");
-            server.ftpPortOpen = true; 
-            ++server.openPortCount;
-        } else {
-            workerScript.scriptRef.log("FTP Port (21) already opened on " + server.hostname);
-        }
-        return Promise.resolve(true);
-    }, 15 * 1000);
+    if (!server.ftpPortOpen) {
+        workerScript.scriptRef.log("Executed FTPCrack.exe virus on " + server.hostname + " to open FTP port (21)");
+        server.ftpPortOpen = true; 
+        ++server.openPortCount;
+    } else {
+        workerScript.scriptRef.log("FTP Port (21) already opened on " + server.hostname);
+    }
+    return Promise.resolve(true);
 }
 
 function netscriptRunRelaysmtpProgram(exp, workerScript, server) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
-    setTimeout(function() {
-        if (!server.smtpPortOpen) {
-            workerScript.scriptRef.log("Executed relaySMTP.exe virus on " + server.hostname + " to open SMTP port (25)");
-            server.smtpPortOpen = true; 
-            ++server.openPortCount;
-        } else {
-            workerScript.scriptRef.log("SMTP Port (25) already opened on " + server.hostname);
-        }
-        return Promise.resolve(true);
-    }, 20 * 1000);
+    if (!server.smtpPortOpen) {
+        workerScript.scriptRef.log("Executed relaySMTP.exe virus on " + server.hostname + " to open SMTP port (25)");
+        server.smtpPortOpen = true; 
+        ++server.openPortCount;
+    } else {
+        workerScript.scriptRef.log("SMTP Port (25) already opened on " + server.hostname);
+    }
+    return Promise.resolve(true);
 }
 
 function netscriptRunHttpwormProgram(exp, workerScript, server) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
-    setTimeout(function() {
-        if (!server.httpPortOpen) {
-            workerScript.scriptRef.log("Executed HTTPWorm.exe virus on " + server.hostname + " to open HTTP port (25)");
-            server.httpPortOpen = true; 
-            ++server.openPortCount;
-        } else {
-            workerScript.scriptRef.log("HTTP Port (80) already opened on " + server.hostname);
-        }
-        return Promise.resolve(true);
-    }, 25 * 1000);
+    if (!server.httpPortOpen) {
+        workerScript.scriptRef.log("Executed HTTPWorm.exe virus on " + server.hostname + " to open HTTP port (25)");
+        server.httpPortOpen = true; 
+        ++server.openPortCount;
+    } else {
+        workerScript.scriptRef.log("HTTP Port (80) already opened on " + server.hostname);
+    }
+    return Promise.resolve(true);
 }
 
 function netscriptRunSqlinjectProgram(exp, workerScript, server) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
-    setTimeout(function() {
-        if (!server.sqlPortOpen) {
-            workerScript.scriptRef.log("Executed SQLInject.exe virus on " + server.hostname + " to open SQL port (1433)");
-            server.sqlPortOpen = true; 
-            ++server.openPortCount;
-        } else {
-            workerScript.scriptRef.log("SQL Port (1433) already opened on " + server.hostname);
-        }
-        return Promise.resolve(true);
-    }, 30 * 1000);
+    if (!server.sqlPortOpen) {
+        workerScript.scriptRef.log("Executed SQLInject.exe virus on " + server.hostname + " to open SQL port (1433)");
+        server.sqlPortOpen = true; 
+        ++server.openPortCount;
+    } else {
+        workerScript.scriptRef.log("SQL Port (1433) already opened on " + server.hostname);
+    }
+    return Promise.resolve(true);
 }
