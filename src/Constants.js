@@ -36,9 +36,9 @@ CONSTANTS = {
 	//Time (ms) it takes to run one operation in Netscript.  
 	CodeInstructionRunTime:	750, 
     
-    //RAM Costs for differenc commands
-    ScriptWhileRamCost:             0.15,
-    ScriptForRamCost:               0.15,
+    //RAM Costs for different commands
+    ScriptWhileRamCost:             0.2,
+    ScriptForRamCost:               0.2,
     ScriptIfRamCost:                0.1,
     ScriptHackRamCost:              0.15,
     ScriptGrowRamCost:              0.15,
@@ -306,12 +306,16 @@ CONSTANTS = {
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
                            "must be a string with either the IP or hostname of the target server. The runtime for this command depends on your hacking level and the target server's security level. " +
-                           "The grow() command requires root access to the target server, but " +
-                           "there is no required hacking level to run the command. " + 
-                           "Grants 1 hacking exp when it completes. Works offline at a slower rate. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "When grow() completes, the money available on a target server will be increased by a certain, fixed percentage. This percentage " + 
+                           "is determined by the server's growth rate and varies between servers. Generally, higher-level servers have higher growth rates. <br><br> " + 
+                           "Like hack(), grow() can be called on any server, regardless of where the script is running. " + 
+                           "The grow() command requires root access to the target server, but there is no required hacking level to run the command. " + 
+                           "It grants 1 hacking exp when it completes. Works offline at a slower rate. <br> Example: grow('foodnstuff');<br><br>" + 
                            "<i>weaken(hostname/ip)</i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " + 
-                           "in must be a string with either the IP or hostname of the target server. This command requires root access to the target server, but " + 
-                           "there is no required hacking level to run the command. Grants 5 hacking exp when it completes. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
+                           "in must be a string with either the IP or hostname of the target server. The runtime for this command depends on your " + 
+                           "hacking level and the target server's security level. <br><br> Like hack() and grow(), weaken() can be called on " + 
+                           "any server, regardless of where the script is running. This command requires root access to the target server, but " + 
+                           "there is no required hacking level to run the command. Grants 3 hacking exp when it completes. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" + 
@@ -339,6 +343,17 @@ CONSTANTS = {
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
                            "<i>getServerSecurityLevel(hostname/ip)</i><br>Returns the security level of a server. The argument passed in must be a string with either the " + 
                            "hostname or IP of the target server. A server's security is denoted by a number between 1 and 100. Does NOT work while offline.<br><br>" + 
+                           "<i>getServerRequiredHackingLevel(hostname/ip)</i><br> Returns the required hacking level of a server. The argument passed in must be a string with either the " + 
+                           "hostname or IP or the target server. Does NOT work while offline <br><br>" + 
+                           "<i>fileExists(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " + 
+                           "The first argument must be a string with the name of the file. A file can either be a script or a program. A script name is case-sensitive, but a " +
+                           "program is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " + 
+                           "The second argument is a string with the hostname or IP of the server on which to search for the program. This second argument is optional. " + 
+                           "If it is not specified, then the function will search through the current server for the file. <br> " + 
+                           "Example: fileExists('foo.script', 'foodnstuff');<br>" + 
+                           "Example: fileExists('ftpcrack.exe');<br><br>" + 
+                           "The first example above will return true if the script named 'foo.script' exists on the 'foodnstuff' server, and false otherwise. The second example above will " +
+                           "return true if the current server (the server on which the script is running) contains the FTPCrack.exe program, and false otherwise. <br><br>" + 
                            "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " + 
                            "at the end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford to purchase " +
                            "a new Hacknet Node then the function will return false. Does NOT work offline<br><br>" + 
@@ -495,7 +510,12 @@ CONSTANTS = {
     "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br>" + 
     "-Lowered base growth rate by 25%(which affects amount of money gained from grow())<br>" + 
     "-Hacking experience granted by grow() halved<b>" + 
-    "-Weaken() is now 10% faster, but only grants 3 base hacking exp upon completion instead of 5 <br>"
+    "-Weaken() is now 10% faster, but only grants 3 base hacking exp upon completion instead of 5 <br>" + 
+    "-Rebalancing of script RAM costs. Base RAM Cost for a script increased from 1GB to 1.5GB. Loops, hack(), grow() " + 
+    "and weaken() all cost slightly less RAM than before <br>" + 
+    "-Added getServerRequiredHackingLevel(server) Netscript command. <br>" + 
+    "-Added fileExists(file, [server]) Netscript command, which is used to check if a script/program exists on a " +
+    "specified server<br>" + 
     "v0.19.7<br>" + 
     "-Added changelog to Options menu<br>" + 
     "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs<br><br>" + 

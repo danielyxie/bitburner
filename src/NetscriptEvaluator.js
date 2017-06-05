@@ -52,8 +52,6 @@ function evaluate(exp, workerScript) {
                     reject(e);
                 });
                 break;
-
-            //TODO
             case "if":
                 var numConds = exp.cond.length;
                 var numThens = exp.then.length;
@@ -110,21 +108,6 @@ function evaluate(exp, workerScript) {
                     reject(workerScript);
                 });
                 break;
-
-            /* Currently supported function calls:
-             * 		hack(server)
-             *		sleep(N) - sleep N seconds
-             *		print(x) - Prints a variable or constant
-             *      grow(server)
-             *      nuke(server)
-             *      brutessh(server)
-             *      ftpcrack(server)
-             *      relaysmtp(server)
-             *      httpworm(server)
-             *      sqlinject(server)
-             *      getHackingLevel()
-             *      run(script))
-             */ 
             case "call":
                 if (exp.func.value == "hack") {
                     var p = netscriptHack(exp, workerScript);
@@ -373,12 +356,64 @@ function evaluate(exp, workerScript) {
                     ipPromise.then(function(ip) {
                         var server = getServer(ip);
                         if (server == null) {
-                            workerScript.scriptRef.log("Cannot getServerSecurityLevel(). Invalid IP or hostname passed in: " + ip);
+                            workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
                             return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerSecurityLevel() command"));;
                         }
                         workerScript.scriptRef.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3) + " for " + server.hostname);
                         resolve(server.hackDifficulty);
                     }, function(e) {
+                        reject(e);
+                    });
+                } else if (exp.func.value == "getServerRequiredHackingLevel") {
+                    if (exp.args.length != 1) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "getServerRequiredHackingLevel() call has incorrect number of arguments. Takes 1 argument"));
+                    }
+                    var ipPromise = evaluate(exp.args[0], workerScript);
+                    ipPromise.then(function(ip) {
+                        var server = getServer(ip);
+                        if (server == null) {
+                            workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerRequiredHackingLevel() command"));
+                        }
+                        workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + formatNumber(server.requiredHackingSkill, 0) + " for " + server.hsostname);
+                        resolve(server.requiredHackingSkill);
+                    }, function(e) {
+                        reject(e);
+                    });
+                } else if (exp.func.value == "fileExists") {
+                    if (exp.args.length != 1 && exp.args.length != 2) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "fileExists() call has incorrect number of arguments. Takes 1 or 2 arguments")); 
+                    }
+                    var argPromises = exp.args.map(function(arg) {
+                        return evaluate(arg, workerScript);
+                    });
+                    
+                    var filename = "";
+                    Promise.all(argPromises).then(function(args) {
+                        if (env.stopFlag) {return reject(workerScript);}
+                        filename = args[0];
+                        if (exp.args.length == 2) {
+                            return Promise.resolve(workerScript.serverIp);
+                        } else {
+                            return evaluate(exp.args[1], workerScript);
+                        }
+                    }).then(function(ip) {
+                        var server = getServer(ip);
+                        if (server == null) {
+                            workerScript.scriptRef.log("fileExists() failed. Invalid IP or hostname passed in: " + ip);
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into fileExists() command"));
+                        }
+                        
+                        for (var i = 0; i < server.scripts.length; ++i) {
+                            if (filename == server.scripts[i].filename) {
+                                return resolve(true);
+                            }
+                        }
+                        if (Player.hasProgram(filename)) {
+                            return resolve(true);
+                        }
+                        return reject(false);
+                    }).catch(function(e) {
                         reject(e);
                     });
                 } else if (exp.func.value == "purchaseHacknetNode") {

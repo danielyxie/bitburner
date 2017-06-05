@@ -274,7 +274,7 @@ PlayerObject.prototype.analyze = function() {
 PlayerObject.prototype.hasProgram = function(programName) {
     var home = Player.getHomeComputer();
     for (var i = 0; i < home.programs.length; ++i) {
-        if (programName == home.programs[i]) {return true;}
+        if (programName.toLowerCase() == home.programs[i].toLowerCase()) {return true;}
     }
     return false;
 }
