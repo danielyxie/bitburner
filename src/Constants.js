@@ -162,6 +162,7 @@ CONSTANTS = {
                 "hostname               Displays the hostname of the machine<br>" + 
                 "ifconfig               Displays the IP address of the machine<br>" +
                 "kill [script]          Stops a script that is running on the current machine<br>" +
+                "killall                Stops all running scripts on the current machine<br>" + 
                 "ls                     Displays all programs and scripts on the machine<br>" +
                 "mem [script]           Displays the amount of RAM the script requires to run<br>" + 
                 "nano [script]          Text editor - Open up and edit a script<br>" + 

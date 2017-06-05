@@ -236,7 +236,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     //Autocomplete the command
     if (index == -1) {
         return ["alias", "analyze", "cat", "clear", "cls", "connect", "free", 
-                "hack", "help", "home", "hostname", "ifconfig", "kill", 
+                "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
                 "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze", 
                 "scp", "sudov", "tail", "top"];
     }
@@ -715,6 +715,13 @@ var Terminal = {
 				}
 				post("No such script is running. Nothing to kill");
 				break;
+            case "killall":
+                var s = Player.getCurrentServer();
+                for (var i = s.runningScripts.length; i >= 0; --i) {
+                    killWorkerScript(s.runningScripts[i], s.ip);
+                }
+                post("Killing all running scripts. May take up to a few minutes for the scripts to die...");
+                break;
 			case "ls":
                 Terminal.executeListCommand(commandArray);
 				break;

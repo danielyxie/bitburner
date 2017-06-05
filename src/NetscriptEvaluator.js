@@ -256,6 +256,10 @@ function evaluate(exp, workerScript) {
                     }).catch(function(e) {
                         reject(e);
                     });
+                } else if (exp.func.value == "kill") {
+                    
+                } else if (exp.func.value == "killall") {
+                    
                 } else if (exp.func.value == "scp") {
                     if (exp.args.length != 2) {
                         return reject(makeRuntimeRejectMsg(workerScript, "scp() call has incorrect number of arguments. Takes 2 arguments"));
