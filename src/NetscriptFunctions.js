@@ -1,5 +1,5 @@
 /* Netscript Functions 
- * Implementation for Netscript functions */
+ * Implementation for Netscript features */
 function netscriptAssign(exp, workerScript) {
     var env = workerScript.env;
     return new Promise(function(resolve, reject) {

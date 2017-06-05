@@ -204,7 +204,7 @@ Script.prototype.reset = function() {
 
 //Updates how much RAM the script uses when it is running.
 Script.prototype.updateRamUsage = function() {
-    var baseRam = 1;    //Each script requires 1GB to run regardless
+    var baseRam = 1.5;    //Each script requires 1GB to run regardless
     var codeCopy = this.code.repeat(1);
     codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
     

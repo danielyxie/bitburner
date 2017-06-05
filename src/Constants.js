@@ -37,12 +37,12 @@ CONSTANTS = {
 	CodeInstructionRunTime:	750, 
     
     //RAM Costs for differenc commands
-    ScriptWhileRamCost:             0.4,
-    ScriptForRamCost:               0.4,
+    ScriptWhileRamCost:             0.15,
+    ScriptForRamCost:               0.15,
     ScriptIfRamCost:                0.1,
-    ScriptHackRamCost:              0.25,
-    ScriptGrowRamCost:              0.25,
-    ScriptWeakenRamCost:            0.25,
+    ScriptHackRamCost:              0.15,
+    ScriptGrowRamCost:              0.15,
+    ScriptWeakenRamCost:            0.15,
     ScriptNukeRamCost:              0.05,
     ScriptBrutesshRamCost:          0.05,
     ScriptFtpcrackRamCost:          0.05,
@@ -495,7 +495,7 @@ CONSTANTS = {
     "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br>" + 
     "-Lowered base growth rate by 25%(which affects amount of money gained from grow())<br>" + 
     "-Hacking experience granted by grow() halved<b>" + 
-    "-Weaken() is now 10% faster, but only grants 3 hacking exp upon completion instead of 5 <br>"
+    "-Weaken() is now 10% faster, but only grants 3 base hacking exp upon completion instead of 5 <br>"
     "v0.19.7<br>" + 
     "-Added changelog to Options menu<br>" + 
     "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs<br><br>" + 
