@@ -123,9 +123,9 @@ function evaluate(exp, workerScript) {
                     var sleepTimePromise = evaluate(exp.args[0], workerScript);
                     sleepTimePromise.then(function(sleepTime) {
                         workerScript.scriptRef.log("Sleeping for " + sleepTime + " milliseconds");
-                        setTimeout(function() {
+                        return netscriptDelay(sleepTime).then(function() {
                             return Promise.resolve(true);
-                        }, sleepTime);
+                        });
                     }).then(function(res) {
                         resolve(true);
                     }).catch(function(e) {
@@ -412,7 +412,41 @@ function evaluate(exp, workerScript) {
                         if (Player.hasProgram(filename)) {
                             return resolve(true);
                         }
-                        return reject(false);
+                        return resolve(false);
+                    }).catch(function(e) {
+                        reject(e);
+                    });
+                } else if (exp.func.value == "isRunning") {
+                    if (exp.args.length != 1 && exp.args.length != 2) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "isRunning() call has incorrect number of arguments. Takes 1 or 2 arguments")); 
+                    }
+                    var argPromises = exp.args.map(function(arg) {
+                        return evaluate(arg, workerScript);
+                    });
+                    
+                    var filename = "";
+                    Promise.all(argPromises).then(function(args) {
+                        if (env.stopFlag) {return reject(workerScript);}
+                        filename = args[0];
+                        if (exp.args.length == 2) {
+                            return Promise.resolve(workerScript.serverIp);
+                        } else {
+                            return evaluate(exp.args[1], workerScript);
+                        }
+                    }).then(function(ip) {
+                        var server = getServer(ip);
+                        if (server == null) {
+                            workerScript.scriptRef.log("isRunning() failed. Invalid IP or hostname passed in: " + ip);
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into isRunning() command"));
+                        }
+                        
+                        for (var i = 0; i < server.runningScripts.length; ++i) {
+                            if (filename == server.runningScripts[i]) {
+                                return resolve(true);
+                            }
+                        }
+                        
+                        return resolve(false);
                     }).catch(function(e) {
                         reject(e);
                     });

@@ -54,9 +54,12 @@ CONSTANTS = {
     ScriptScpRamCost:               0.5,
     ScriptHasRootAccessRamCost:     0.05,
     ScriptGetHostnameRamCost:       0.1,
-    ScriptGetHackingLevelRamCost:   0.1,
+    ScriptGetHackingLevelRamCost:   0.05,
     ScriptGetServerMoneyRamCost:    0.1,
-    ScriptGetServerSecurityRamCost: 0.2,
+    ScriptGetServerSecurityRamCost: 0.1,
+    ScriptGetServerReqdHackRamCost: 0.1,
+    ScriptFileExistsRamCost:        0.1,
+    ScriptIsRunningRamCost:         0.1,
     ScriptOperatorRamCost:          0.01,
     ScriptPurchaseHacknetRamCost:   1.5,
     ScriptHacknetNodesRamCost:      1.0, //Base cost for accessing hacknet nodes array
@@ -349,11 +352,19 @@ CONSTANTS = {
                            "The first argument must be a string with the name of the file. A file can either be a script or a program. A script name is case-sensitive, but a " +
                            "program is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " + 
                            "The second argument is a string with the hostname or IP of the server on which to search for the program. This second argument is optional. " + 
-                           "If it is not specified, then the function will search through the current server for the file. <br> " + 
+                           "If it is omitted, then the function will search through the current server (the server running the script that calls this function) for the file. <br> " + 
                            "Example: fileExists('foo.script', 'foodnstuff');<br>" + 
                            "Example: fileExists('ftpcrack.exe');<br><br>" + 
                            "The first example above will return true if the script named 'foo.script' exists on the 'foodnstuff' server, and false otherwise. The second example above will " +
-                           "return true if the current server (the server on which the script is running) contains the FTPCrack.exe program, and false otherwise. <br><br>" + 
+                           "return true if the current server (the server on which this function runs) contains the FTPCrack.exe program, and false otherwise. <br><br>" + 
+                           "<i>isRunning(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified script is running on a server. " + 
+                           "The first argument must be a string with the name of the script. The script name is case sensitive. The second argument is a string with the " +
+                           "hostname or IP of the target server. The function will check whether the script is running on that target server. The second argument is optional. " + 
+                           "If it is omitted, then the function will check if the script is running on the current server (the server running the script that calls this function). <br>" + 
+                           "Example: isRunning('foo.script', 'foodnstuff');<br>" + 
+                           "Example: isRunning('foo.script'); <br><br>" + 
+                           "The first example above will return true if there is a script called 'foo.script' is running on the 'foodnstuff' server, and false otherwise. The second " + 
+                           "example above will return true if there is a script called 'foo.script' running on the current server, and false otherwise. <br><br>" + 
                            "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " + 
                            "at the end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford to purchase " +
                            "a new Hacknet Node then the function will return false. Does NOT work offline<br><br>" + 

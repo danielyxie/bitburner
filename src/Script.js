@@ -228,6 +228,9 @@ Script.prototype.updateRamUsage = function() {
     var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
     var getServerMoneyAvailableCount = numOccurrences(codeCopy, "getServerMoneyAvailable(");
     var getServerSecurityCount = numOccurrences(codeCopy, "getServerSecurityLevel(");
+    var getServerReqdHackingCount = numOccurrences(codeCopy, "getServerRequiredHackingLevel(");
+    var fileExistsCount = numOccurrences(codeCopy, "fileExists(");
+    var isRunningCount = numOccurrences(codeCopy, "isRunning(");
     var numOperators = numNetscriptOperators(codeCopy);
     var purchaseHacknetCount = numOccurrences(codeCopy, "purchaseHacknetNode(");
     var hacknetnodesArrayCount = numOccurrences(codeCopy, "hacknetnodes[");
@@ -256,6 +259,9 @@ Script.prototype.updateRamUsage = function() {
                     (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
                     (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
                     (getServerSecurityCount * CONSTANTS.ScriptGetServerSecurityRamCost) +
+                    (getServerReqdHackingCount * CONSTANTS.ScriptGetServerReqdHackRamCost) + 
+                    (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) + 
+                    (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
                     (numOperators * CONSTANTS.ScriptOperatorRamCost) +
                     (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) + 
                     (hacknetnodesArrayCount * CONSTANTS.ScriptHacknetNodesRamCost) +
