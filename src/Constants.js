@@ -65,7 +65,7 @@ CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     
     //Server constants
-    ServerGrowthRate: 1.002,   //Growth rate
+    ServerGrowthRate: 1.0015,   //Growth rate
     ServerFortifyAmount: 0.002, //Amount by which server's security increases when its hacked
     ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
     
@@ -489,10 +489,13 @@ CONSTANTS = {
                                
     Changelog:
     "v0.20.0<br>" + 
-    "Refactor Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
+    "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
     "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
     "now each one should only take 750 milliseconds). <br> " +
-    ""
+    "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br>" + 
+    "-Lowered base growth rate by 25%(which affects amount of money gained from grow())<br>" + 
+    "-Hacking experience granted by grow() halved<b>" + 
+    "-Weaken() is now 10% faster, but only grants 3 hacking exp upon completion instead of 5 <br>"
     "v0.19.7<br>" + 
     "-Added changelog to Options menu<br>" + 
     "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs<br><br>" + 

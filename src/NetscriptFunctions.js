@@ -147,6 +147,11 @@ function netscriptGrow(exp, workerScript) {
             server.moneyAvailable += 1; //It can be grown even if it has no money
             var growthPercentage = processSingleServerGrowth(server, 450);
             workerScript.scriptRef.recordGrow(server.ip);
+            workerScript.scriptRef.log("Available money on " + server.hostname + " grown by " 
+                                       + formatNumber(growthPercentage*100 - 100, 6) + "%");
+            var expGain = 0.5 * Player.hacking_exp_mult;
+            workerScript.scriptRef.log("Gained " + expGain + " hacking experience");
+            Player.gainHackingExp(expGain);   
             return Promise.resolve(growthPercentage);
         }); 
     }).then(function(res) {
@@ -188,6 +193,11 @@ function netscriptWeaken(exp, workerScript) {
             if (env.stopFlag) {return Promise.reject(workerScript);}
             server.weaken(CONSTANTS.ServerWeakenAmount);
             workerScript.scriptRef.recordWeaken(server.ip);
+            workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty);
+            workerScript.scriptRef.log("Gained 3 hacking experience");
+            var expGain = 3 * Player.hacking_exp_mult;
+            workerScript.scriptRef.log("Gained " + expGain + " hacking experience");
+            Player.gainHackingExp(expGain); 
             return Promise.resolve(CONSTANTS.ServerWeakenAmount);
         });
     }).then(function(res) {
