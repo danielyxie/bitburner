@@ -257,9 +257,61 @@ function evaluate(exp, workerScript) {
                         reject(e);
                     });
                 } else if (exp.func.value == "kill") {
+                    if (exp.args.length != 1 && exp.args.length != 2) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "kill() call has incorrect number of arguments. Takes 1 or 2 arguments")); 
+                    }
+                    var argPromises = exp.args.map(function(arg) {
+                        return evaluate(arg, workerScript);
+                    });
                     
+                    var filename = "";
+                    Promise.all(argPromises).then(function(args) {
+                        if (env.stopFlag) {return reject(workerScript);}
+                        filename = args[0];
+                        if (exp.args.length == 2) {
+                            return Promise.resolve(workerScript.serverIp);
+                        } else {
+                            return evaluate(exp.args[1], workerScript);
+                        }
+                    }).then(function(ip) {
+                        var server = getServer(ip);
+                        if (server == null) {
+                            workerScript.scriptRef.log("kill() failed. Invalid IP or hostname passed in: " + ip);
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into kill() command"));
+                        }
+                        
+                        for (var i = 0; i < server.runningScripts.length; ++i) {
+                            if (filename == server.runningScripts[i].filename) {
+                                killWorkerScript(filename, server.ip);
+                                workerScript.scriptRef.log("Killing " + scriptName + ". May take up to a few minutes for the scripts to die...");
+                                return resolve(true);
+                            }
+                        }
+                        workerScript.scriptRef.log("kill() failed. No such script "+ scriptName + " on " + server.hostname);
+                        return resolve(false);
+                    }).catch(function(e) {
+                        reject(e);
+                    });
                 } else if (exp.func.value == "killall") {
-                    
+                    if (exp.args.length != 1) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "killall() call has incorrect number of arguments. Takes 1 argument"));
+                    }
+                    var ipPromise = evaluate(exp.args[0], workerScript);
+                    ipPromise.then(function(ip) {
+                        if (env.stopFlag) {return reject(workerScript);}
+                        var server = getServer(ip);
+                        if (server == null) {
+                            workerScript.scriptRef.log("killall() failed. Invalid IP or hostname passed in: " + ip);
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into killall() command"));
+                        }
+                        workerScript.scriptRef.log("killall(): Killing all scrips on " + server.hostname);
+                        for (var i = server.runningScripts.length; i >= 0; --i) {
+                            killWorkerScript(server.runningScripts[i], server.ip);
+                        }
+                        resolve(true);
+                    }, function(e) {
+                        reject(e);
+                    });
                 } else if (exp.func.value == "scp") {
                     if (exp.args.length != 2) {
                         return reject(makeRuntimeRejectMsg(workerScript, "scp() call has incorrect number of arguments. Takes 2 arguments"));
@@ -921,7 +973,7 @@ function scriptCalculatePercentMoneyHacked(server) {
 function scriptCalculateGrowTime(server) {
     var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
 	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
-	var growTime = skillFactor * Player.hacking_speed_mult * 17; //This is in seconds
+	var growTime = skillFactor * Player.hacking_speed_mult * 16; //This is in seconds
 	return growTime * 1000;
 }
 
@@ -929,6 +981,6 @@ function scriptCalculateGrowTime(server) {
 function scriptCalculateWeakenTime(server) {
     var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
 	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
-	var weakenTime = skillFactor * Player.hacking_speed_mult * 45; //This is in seconds
+	var weakenTime = skillFactor * Player.hacking_speed_mult * 40; //This is in seconds
 	return weakenTime * 1000;
 }

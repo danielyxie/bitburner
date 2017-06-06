@@ -1042,7 +1042,7 @@ var Engine = {
             return false;
         });
         relaySmtpALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.RelaySMTPProgram. CONSTANTS.MillisecondsPer2Hours, 250);
+            Player.startCreateProgramWork(Programs.RelaySMTPProgram, CONSTANTS.MillisecondsPer2Hours, 250);
             return false;
         });
         httpWormALink.addEventListener("click", function() {

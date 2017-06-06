@@ -40,7 +40,7 @@ CONSTANTS = {
     ScriptWhileRamCost:             0.2,
     ScriptForRamCost:               0.2,
     ScriptIfRamCost:                0.1,
-    ScriptHackRamCost:              0.15,
+    ScriptHackRamCost:              0.1,
     ScriptGrowRamCost:              0.15,
     ScriptWeakenRamCost:            0.15,
     ScriptNukeRamCost:              0.05,
@@ -53,7 +53,7 @@ CONSTANTS = {
     ScriptExecRamCost:              1.1,
     ScriptScpRamCost:               0.5,
     ScriptHasRootAccessRamCost:     0.05,
-    ScriptGetHostnameRamCost:       0.1,
+    ScriptGetHostnameRamCost:       0.05,
     ScriptGetHackingLevelRamCost:   0.05,
     ScriptGetServerMoneyRamCost:    0.1,
     ScriptGetServerSecurityRamCost: 0.1,
@@ -335,6 +335,18 @@ CONSTANTS = {
                            "second argument is a string with the hostname or IP of the 'target server' on which to run the script. The specified script must exist on the target server. Returns " + 
                            "true if the script is successfully started, and false otherwise. Does NOT work while offline<br> " + 
                            "Example: exec('generic-hack.script', 'foodnstuff'); <br> The example above will try to launch the script 'generic-hack.script' on the 'foodnstuff' server.<br><br>" + 
+                           "<i>kill(script, [hostname/ip])</i><br> Kills a script on a server. The first argument must be a string with the name of the script. The name is case-sensitive. " + 
+                           "The second argument must be a string with the hostname or IP of the target server. The function will try to kill the specified script on the target server. " + 
+                           "The second argument is optional. If it is omitted, then the function will try to kill the specified script on the current server (the server running " + 
+                           "the script that calls this function). If the script is found on the specified server and is running, then it will be killed and this function " + 
+                           "will return true. Otherwise, this function will return false. <br> " + 
+                           "Example: kill('foo.script', 'foodnstuff');<br>" + 
+                           "Example: kill('foo.script');<br>" + 
+                           "The first example above will look for a script called 'foo.script' on the 'foodnstuff' server. If the script exists and is running, then it will " + 
+                           "be killed and the function will return true. Otherwise false will be returned. The second example above will do the same thing, except on the " +
+                           "current server (the server running the script that calls the kill() function).<br><br>" + 
+                           "<i>killall(hostname/ip)</i><br> Kills all running scripts on the specified server. This function takes a single argument which " + 
+                           "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" + 
                            "<i>scp(script, hostname/ip)</i><br>Copies a script to another server. The first argument is a string with the filename of the script " + 
                            "to be copied. The second argument is a string with the hostname or IP of the destination server. Returns true if the script is successfully " + 
                            "copied over and false otherwise. <br> Example: scp('hack-template.script', 'foodnstuff');<br><br>" + 
@@ -520,6 +532,7 @@ CONSTANTS = {
     "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
     "now each one should only take 750 milliseconds). <br> " +
     "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br>" + 
+    "-Slightly lowered the runtime of weaken()<br>" + 
     "-Lowered base growth rate by 25%(which affects amount of money gained from grow())<br>" + 
     "-Hacking experience granted by grow() halved<b>" + 
     "-Weaken() is now 10% faster, but only grants 3 base hacking exp upon completion instead of 5 <br>" + 
@@ -528,6 +541,8 @@ CONSTANTS = {
     "-Added getServerRequiredHackingLevel(server) Netscript command. <br>" + 
     "-Added fileExists(file, [server]) Netscript command, which is used to check if a script/program exists on a " +
     "specified server<br>" + 
+    "-Added killall Terminal command. Kills all running scripts on the current machine<br> " +
+    "-Added kill() and killall() Netscript commands. Used to kill scripts on specified machines. See Netscript documentation<br>" + 
     "v0.19.7<br>" + 
     "-Added changelog to Options menu<br>" + 
     "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs<br><br>" + 

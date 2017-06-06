@@ -412,11 +412,14 @@ var Terminal = {
         //Replace all extra whitespace in command with a single space
         command = command.replace(/\s\s+/g, ' ');
         
-        Terminal.commandHistory.push(command);
-        if (Terminal.commandHistory.length > 50) {
-            Terminal.commandHistory.splice(0, 1);
+        
+        if (Terminal.commandHistory[Terminal.commandHistory.length-1] != command) {
+            Terminal.commandHistory.push(command);
+            if (Terminal.commandHistory.length > 50) {
+                Terminal.commandHistory.splice(0, 1);
+            }
+            Terminal.commandHistoryIndex = Terminal.commandHistory.length;
         }
-        Terminal.commandHistoryIndex = Terminal.commandHistory.length;
         
         //Process any aliases
         command = substituteAliases(command);

@@ -204,7 +204,7 @@ Script.prototype.reset = function() {
 
 //Updates how much RAM the script uses when it is running.
 Script.prototype.updateRamUsage = function() {
-    var baseRam = 1.5;
+    var baseRam = 1.4;
     var codeCopy = this.code.repeat(1);
     codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
     
