@@ -754,6 +754,7 @@ function evaluateHacknetNode(exp, workerScript) {
                                         reject(makeRuntimeRejectMsg(workerScript, "Invalid argument passed into upgradeLevel()"));
                                         return;
                                     }
+                                    arg = Math.round(arg);
                                     var res = nodeObj.purchaseLevelUpgrade(arg);
                                     if (res) {
                                         workerScript.scriptRef.log("Upgraded " + nodeObj.name + " " + arg + " times to level " + nodeObj.level);

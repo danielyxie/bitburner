@@ -133,12 +133,12 @@ function runScriptsLoop() {
 			
 			//Free RAM
 			AllServers[ip].ramUsed -= workerScripts[i].ramUsage;
+            
+            //Delete script from Active Scripts
+			deleteActiveScriptsItem(workerScripts[i]);
 				
 			//Delete script from workerScripts
 			workerScripts.splice(i, 1);
-			
-			//Delete script from Active Scripts
-			Engine.deleteActiveScriptsItem(i);
 		}
 	}
 	
@@ -171,7 +171,7 @@ function addWorkerScript(script, server) {
 	s.ramUsage 	= script.ramUsage;
 	
 	//Add the WorkerScript to the Active Scripts list
-	Engine.addActiveScriptsItem(s);
+	addActiveScriptsItem(s);
 	
 	//Add the WorkerScript
 	workerScripts.push(s);

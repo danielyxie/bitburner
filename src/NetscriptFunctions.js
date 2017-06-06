@@ -151,6 +151,7 @@ function netscriptGrow(exp, workerScript) {
                                        + formatNumber(growthPercentage*100 - 100, 6) + "%");
             var expGain = 0.5 * Player.hacking_exp_mult;
             workerScript.scriptRef.log("Gained " + expGain + " hacking experience");
+            workerScript.scriptRef.onlineExpGained += expGain;
             Player.gainHackingExp(expGain);   
             return Promise.resolve(growthPercentage);
         }); 
@@ -197,6 +198,7 @@ function netscriptWeaken(exp, workerScript) {
             workerScript.scriptRef.log("Gained 3 hacking experience");
             var expGain = 3 * Player.hacking_exp_mult;
             workerScript.scriptRef.log("Gained " + expGain + " hacking experience");
+            workerScript.scriptRef.onlineExpGained += expGain;
             Player.gainHackingExp(expGain); 
             return Promise.resolve(CONSTANTS.ServerWeakenAmount);
         });

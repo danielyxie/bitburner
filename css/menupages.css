@@ -144,26 +144,112 @@ background-color: #555;
     padding: 4px;
 }
 
-.active-scripts-list > li {
-    margin: 6px;
-    width: 70%;
+.active-scripts-server-header {
+    background-color: #444;
+    font-size: 20px;
+    color: white;
+    margin: 6px 6px 0px 6px;
+    padding: 6px;
+    cursor: pointer;
+    width: 60%;
+    text-align: left;
+    border: none;
+    outline: none;
 }
 
-.active-scripts-list>li h2{
+.active-scripts-server-header.active,
+.active-scripts-server-header:hover {
+    background-color: #555;
+}
+
+.active-scripts-server-header.active:hover {
+    background-color: #666;
+}
+
+.active-scripts-server-header:after {
+    content: '\02795'; /* "plus" sign (+) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.active-scripts-server-header.active:after {
+    content: "\2796"; /* "minus" sign (-) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.active-scripts-server-panel {
+    margin: 0px 6px 6px 6px;
+    padding: 6px;
+    width: 55%;
+    margin-left: 5%;
+    display: none;
+}
+
+.active-scripts-server-panel div,
+.active-scripts-server-panel ul,
+.active-scripts-server-panel ul > li {
+    background-color: #555;
+}
+
+.active-scripts-script-header {
+    background-color: #555;
     color: #66ff33;
-	padding-top: 10px;
-	padding-left: 10px;
-    background-color: #333;
-    text-decoration: none;
+    padding: 4px;
+    padding-left: 10px;
+    cursor: pointer;
+    width: auto;
+    text-align: left;
+    border: none;
+    outline: none;
 }
 
-.active-scripts-list>li p {
-	color: #66ff33;
-	padding: 10px;
-	padding-left: 40px;
-    background-color: #333;
-    text-decoration: none;
+.active-scripts-script-header:hover,
+.active-scripts-script-header.active:hover {
+    background-color: #666;
 }
+
+.active-scripts-script-header.active {
+    background-color: #555;
+}
+
+.active-scripts-script-header:after {
+    content: '\02795'; /* "plus" sign (+) */
+    font-size: 13px;
+    color: #66ff33;
+    float: right;
+    margin-left: 5px;
+}
+
+.active-scripts-script-header.active:after {
+    content: "\2796"; /* "minus" sign (-) */
+    font-size: 13px;
+    color: #66ff33;
+    float: right;
+    margin-left: 5px;
+}
+
+.active-scripts-script-panel {
+    padding: 0 18px;
+    background-color: #555;
+    width: auto;
+    display: none;
+}
+
+.active-scripts-script-panel p,
+.active-scripts-script-panel h2,
+.active-scripts-script-panel ul,
+.active-scripts-script-panel li {
+    background-color: #555;
+    width: auto;
+    color: white;
+    margin-left: 5%;
+}
+
 
 /* Hacknet Nodes */
 #hacknet-nodes-container {

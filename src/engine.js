@@ -116,6 +116,7 @@ var Engine = {
     loadActiveScriptsContent: function() {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.visibility = "visible";
+        setActiveScriptsClickHandlers();
         
         Engine.currentPage = Engine.Page.ActiveScripts;
     },
@@ -334,100 +335,6 @@ var Engine = {
         }
     },
     
-    /* Functions used to update information on the Active Scripts page */
-    ActiveScriptsList:             null,
-    
-    //Creates and adds the <li> object for a given workerScript
-    addActiveScriptsItem: function(workerscript) {
-        var item = document.createElement("li");
-        
-        Engine.createActiveScriptsText(workerscript, item);
-        
-        //Add the li element onto the list
-        if (Engine.ActiveScriptsList == null) {
-            Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
-        }
-        Engine.ActiveScriptsList.appendChild(item);
-    },
-    
-    deleteActiveScriptsItem: function(i) {
-        var list = Engine.ActiveScriptsList.querySelectorAll('#active-scripts-list li');
-        if (i >= list.length) {
-            throw new Error("Trying to delete an out-of-range Active Scripts item");
-        }
-        
-        var li = list[i];
-        li.parentNode.removeChild(li);
-    },
-    
-    //Update the ActiveScriptsItems array
-    updateActiveScriptsItems: function() {
-        var total = 0;
-        for (var i = 0; i < workerScripts.length; ++i) {
-            total += Engine.updateActiveScriptsItemContent(i, workerScripts[i]);
-        }
-        document.getElementById("active-scripts-total-prod").innerHTML =
-            "Total online production rate: $" + formatNumber(total, 2) + " / second";
-    },
-    
-    //Updates the content of the given item in the Active Scripts list
-    updateActiveScriptsItemContent: function(i, workerscript) {
-        var list = Engine.ActiveScriptsList.getElementsByTagName("li");
-        if (i >= list.length) {
-            throw new Error("Trying to update an out-of-range Active Scripts Item");
-        }
-        
-        var item = list[i];
-        
-        //Clear the item
-        while (item.firstChild) {
-            item.removeChild(item.firstChild);
-        }
-        
-        //Add the updated text back. Returns the total online production rate
-        return Engine.createActiveScriptsText(workerscript, item);
-    },
-    
-    createActiveScriptsText: function(workerscript, item) {
-        //Script name
-        var scriptName = document.createElement("h2");
-        scriptName.appendChild(document.createTextNode(workerscript.name));
-        item.appendChild(scriptName);
-        
-        var itemText = document.createElement("p");
-        
-        //Server ip/hostname
-        var hostname = workerscript.getServer().hostname;
-        var serverIpHostname = "Server: " + hostname + "(" + workerscript.serverIp + ")";
-        
-        //Online
-        var onlineTotalMoneyMade = "Total online production: $" + formatNumber(workerscript.scriptRef.onlineMoneyMade, 2);
-        var onlineTotalExpEarned = (Array(26).join(" ") + formatNumber(workerscript.scriptRef.onlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
-        
-        var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
-        var onlineMpsText = "Online production rate: $" + formatNumber(onlineMps, 2) + "/second";
-        var onlineEps = workerscript.scriptRef.onlineExpGained / workerscript.scriptRef.onlineRunningTime;
-        var onlineEpsText = (Array(25).join(" ") + formatNumber(onlineEps, 4) + " hacking exp/second").replace( / /g, "&nbsp;");
-        
-        //Offline
-        var offlineTotalMoneyMade = "Total offline production: $" + formatNumber(workerscript.scriptRef.offlineMoneyMade, 2);
-        var offlineTotalExpEarned = (Array(27).join(" ") + formatNumber(workerscript.scriptRef.offlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
-        
-        var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
-        var offlineMpsText = "Offline production rate: $" + formatNumber(offlineMps, 2) + "/second";
-        var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
-        var offlineEpsText = (Array(26).join(" ") + formatNumber(offlineEps, 4) +  " hacking exp/second").replace( / /g, "&nbsp;");
-        
-        itemText.innerHTML = serverIpHostname + "<br>" + onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
-                             onlineMpsText + "<br>" + onlineEpsText + "<br>" + offlineTotalMoneyMade + "<br>" + offlineTotalExpEarned + "<br>" +
-                             offlineMpsText + "<br>" + offlineEpsText + "<br>";
-        
-        item.appendChild(itemText);
-        
-        //Return total online production rate
-        return onlineMps;
-    },
-    
     displayFactionsInfo: function() {
         var factionsList = document.getElementById("factions-list");
         
@@ -599,8 +506,7 @@ var Engine = {
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
         updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
         createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
-        serverGrowth: 450,                  //Process server growth every minute and a half
-        checkFactionInvitations: 250,      //Check whether you qualify for any faction invitations every 5 minutes
+        checkFactionInvitations: 250,       //Check whether you qualify for any faction invitations every 5 minutes
         passiveFactionGrowth: 600,
         messages: 300,
     },
@@ -629,7 +535,7 @@ var Engine = {
         if (Engine.Counters.updateDisplays <= 0) {
             Engine.displayCharacterOverviewInfo();
             if (Engine.currentPage == Engine.Page.ActiveScripts) {
-                Engine.updateActiveScriptsItems();
+                updateActiveScriptsItems();
             } else if (Engine.currentPage == Engine.Page.CharacterInfo) {
                 Engine.displayCharacterInfo();
             }  else if (Engine.currentPage == Engine.Page.HacknetNodes) {
@@ -652,12 +558,6 @@ var Engine = {
                 elem.setAttribute("class", "notification-off");
             }
             Engine.Counters.createProgramNotifications = 10;
-        }
-        
-        if (Engine.Counters.serverGrowth <= 0) {
-            var numCycles = Math.floor((450 - Engine.Counters.serverGrowth));
-            processServerGrowth(numCycles);
-            Engine.Counters.serverGrowth = 450;
         }
         
         if (Engine.Counters.checkFactionInvitations <= 0) {
@@ -747,7 +647,6 @@ var Engine = {
             var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
             
             /* Process offline progress */
-            processServerGrowth(numCyclesOffline);    //Should be done before offline production for scripts
             var offlineProductionFromScripts = loadAllRunningScripts();    //This also takes care of offline production for those scripts
             if (Player.isWorking) {
                 console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");

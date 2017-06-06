@@ -11,6 +11,7 @@ purchaseServer = function(ram, cost) {
     
     var newServ = new Server();
     var hostname = document.getElementById("purchase-server-box-input").value;
+    hostname = hostname.replace(/\s\s+/g, '');
     if (hostname == "") {
         dialogBoxCreate("You must enter a hostname for your new server!");
         return;
