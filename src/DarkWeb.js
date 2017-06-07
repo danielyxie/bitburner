@@ -124,9 +124,9 @@ parseDarkwebItemPrice = function(itemDesc) {
 }
 
 DarkWebItems = {
-    BruteSSHProgram:    Programs.BruteSSHProgram + " - $50,000 - Opens up SSH Ports",
-    FTPCrackProgram:    Programs.FTPCrackProgram + " - $150,000 - Opens up FTP Ports",
-    RelaySMTPProgram:   Programs.RelaySMTPProgram + " - $500,000 - Opens up SMTP Ports",
-    HTTPWormProgram:    Programs.HTTPWormProgram + " - $3,000,000 - Opens up HTTP Ports",
-    SQLInjectProgram:   Programs.SQLInjectProgram + " - $25,000,000 - Opens up SQL Ports",
+    BruteSSHProgram:    Programs.BruteSSHProgram + " - $500,000 - Opens up SSH Ports",
+    FTPCrackProgram:    Programs.FTPCrackProgram + " - $1,500,000 - Opens up FTP Ports",
+    RelaySMTPProgram:   Programs.RelaySMTPProgram + " - $5,000,000 - Opens up SMTP Ports",
+    HTTPWormProgram:    Programs.HTTPWormProgram + " - $30,000,000 - Opens up HTTP Ports",
+    SQLInjectProgram:   Programs.SQLInjectProgram + " - $250,000,000 - Opens up SQL Ports",
 }
