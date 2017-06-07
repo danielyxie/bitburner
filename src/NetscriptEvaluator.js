@@ -280,15 +280,16 @@ function evaluate(exp, workerScript) {
                             return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into kill() command"));
                         }
                         
-                        for (var i = 0; i < server.runningScripts.length; ++i) {
-                            if (filename == server.runningScripts[i].filename) {
-                                killWorkerScript(filename, server.ip);
-                                workerScript.scriptRef.log("Killing " + scriptName + ". May take up to a few minutes for the scripts to die...");
-                                return resolve(true);
-                            }
+                        var res = killWorkerScript(filename, server.ip);
+                        if (res) {
+                            workerScript.scriptRef.log("Killing " + filename + ". May take up to a few minutes for the scripts to die...");
+                            return Promise.resolve(true);
+                        } else {
+                            workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname);
+                            return Promise.resolve(false);
                         }
-                        workerScript.scriptRef.log("kill() failed. No such script "+ scriptName + " on " + server.hostname);
-                        return resolve(false);
+                    }).then(function(res) {
+                        resolve(res);
                     }).catch(function(e) {
                         reject(e);
                     });
@@ -304,7 +305,7 @@ function evaluate(exp, workerScript) {
                             workerScript.scriptRef.log("killall() failed. Invalid IP or hostname passed in: " + ip);
                             return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into killall() command"));
                         }
-                        workerScript.scriptRef.log("killall(): Killing all scrips on " + server.hostname);
+                        workerScript.scriptRef.log("killall(): Killing all scripts on " + server.hostname + ". May take a few minutes for the scripts to die");
                         for (var i = server.runningScripts.length; i >= 0; --i) {
                             killWorkerScript(server.runningScripts[i], server.ip);
                         }
@@ -344,7 +345,7 @@ function evaluate(exp, workerScript) {
                         }
                         if (sourceScript == null) {
                             workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
-                            return resolve(false);
+                            return Promise.resolve(false);
                         }
                         
                         //Overwrite script if it already exists
@@ -355,8 +356,7 @@ function evaluate(exp, workerScript) {
                                 var oldScript = destServer.scripts[i];
                                 oldScript.code = sourceScript.code;
                                 oldScript.ramUsage = sourceScript.ramUsage;
-                                resolve(true);
-                                return;
+                                return Promise.resolve(true);
                             }
                         }
                        
@@ -368,7 +368,10 @@ function evaluate(exp, workerScript) {
                         newScript.server = destServer.ip;
                         destServer.scripts.push(newScript);
                         workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
-                        return resolve(true);
+                        return Promise.resolve(true);
+                        return;
+                    }).then(function(res) {
+                        resolve(res);    
                     }).catch(function(e) {
                         reject(e);
                     });
@@ -431,7 +434,7 @@ function evaluate(exp, workerScript) {
                             workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
                             return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerRequiredHackingLevel() command"));
                         }
-                        workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + formatNumber(server.requiredHackingSkill, 0) + " for " + server.hsostname);
+                        workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + formatNumber(server.requiredHackingSkill, 0) + " for " + server.hostname);
                         resolve(server.requiredHackingSkill);
                     }, function(e) {
                         reject(e);

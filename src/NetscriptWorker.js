@@ -111,6 +111,8 @@ function runScriptsLoop() {
 							return;
 						}
 					} 
+                } else {
+                    dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
                 }
 			});
 		}
@@ -152,8 +154,10 @@ function killWorkerScript(scriptName, serverIp) {
 	for (var i = 0; i < workerScripts.length; i++) {
 		if (workerScripts[i].name == scriptName && workerScripts[i].serverIp == serverIp) {
 			workerScripts[i].env.stopFlag = true;
+            return true;
 		}
 	}
+    return false;
 }
 
 //Queues a script to be run 

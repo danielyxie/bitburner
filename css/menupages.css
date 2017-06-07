@@ -184,7 +184,7 @@ background-color: #555;
 
 .active-scripts-server-panel {
     margin: 0px 6px 6px 6px;
-    padding: 6px;
+    padding: 0px 6px 6px 6px;
     width: 55%;
     margin-left: 5%;
     display: none;
