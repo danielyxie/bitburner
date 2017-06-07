@@ -308,7 +308,7 @@ CONSTANTS = {
                            "either the IP or hostname of the server you want to hack. The runtime for this command depends on your hacking level and the target server's security level. " + 
                            " A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. " +
                            "For example, you can create a script that hacks the 'foodnstuff' server and run that script on any server in the game. A successful hack() on " + 
-                           "a server will raise that server's security level by " + this.ServerFortifyAmount + ". Returns true if the hack is successful and " + 
+                           "a server will raise that server's security level by 0.002. Returns true if the hack is successful and " + 
                            "false otherwise. <br>" + 
                            "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
@@ -318,16 +318,16 @@ CONSTANTS = {
                            "is determined by the server's growth rate and varies between servers. Generally, higher-level servers have higher growth rates. <br><br> " + 
                            "Like hack(), grow() can be called on any server, regardless of where the script is running. " + 
                            "The grow() command requires root access to the target server, but there is no required hacking level to run the command. " + 
-                           "It grants 0.5 hacking exp when it completes. It also raises the security level of the target server by " + (2 * this.ServerFortifyAmount) + ". " +
+                           "It grants 0.5 hacking exp when it completes. It also raises the security level of the target server by 0.004. " +
                            "Returns the number by which the money on the server was multiplied for the growth. " + 
                            "Works offline at a slower rate. <br> Example: grow('foodnstuff');<br><br>" + 
                            "<i>weaken(hostname/ip)</i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " + 
                            "in must be a string with either the IP or hostname of the target server. The runtime for this command depends on your " + 
                            "hacking level and the target server's security level. This function lowers the security level of the target server by " + 
-                            this.ServerWeakenAmount + ".<br><br> Like hack() and grow(), weaken() can be called on " + 
+                           "0.1.<br><br> Like hack() and grow(), weaken() can be called on " + 
                            "any server, regardless of where the script is running. This command requires root access to the target server, but " + 
                            "there is no required hacking level to run the command. Grants 3 hacking exp when it completes. Returns " + 
-                           this.ServerWeakenAmount + ". Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
+                           "0.1. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" + 
@@ -555,7 +555,7 @@ CONSTANTS = {
     "-Increased monetary cost of RAM (Upgrading home computer and purchasing servers will now be more expensive)<br><br>" + 
     "-NEW GROWTH MECHANICS - The rate of growth on a server now depends on a server's security level. A higher security level " +
     "will result in lower growth on a server when using the grow() command. Furthermore, calling grow() on a server raises that " + 
-    "server's security level by " + (2 * this.ServerFortifyAmount) + ". For reference, if a server has a security level of 10 " + 
+    "server's security level by 0.004. For reference, if a server has a security level of 10 " + 
     "it will have approximately the same growth rate as before. <br><br>" + 
     "-Server growth no longer happens naturally<br><br>" + 
     "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br><br>" + 
@@ -644,30 +644,30 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
-    "v0.20.0<br>" + 
+     "v0.20.0<br>" + 
     "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
     "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
-    "now each one should only take 750 milliseconds). <br> " +
-    "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br>" + 
-    "-Hacking experience granted by grow() halved<br>" + 
-    "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br>" + 
+    "now each one should only take 750 milliseconds). <br><br>" +
+    "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br><br>" + 
+    "-Hacking experience granted by grow() halved<br><br>" + 
+    "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br><br>" + 
     "-Rebalancing of script RAM costs. Base RAM Cost for a script increased from 1GB to 1.5GB. Loops, hack(), grow() " + 
-    "and weaken() all cost slightly less RAM than before <br>" + 
-    "-Added getServerRequiredHackingLevel(server) Netscript command. <br>" + 
+    "and weaken() all cost slightly less RAM than before <br><br>" + 
+    "-Added getServerRequiredHackingLevel(server) Netscript command. <br><br>" + 
     "-Added fileExists(file, [server]) Netscript command, which is used to check if a script/program exists on a " +
-    "specified server<br>" + 
-    "-Added isRunning(script, [server]) Netscript command, which is used to check if a script is running on the specified server<br>" + 
-    "-Added killall Terminal command. Kills all running scripts on the current machine<br> " +
-    "-Added kill() and killall() Netscript commands. Used to kill scripts on specified machines. See Netscript documentation<br>" + 
-    "-Re-designed 'Active Scripts' tab<br>" + 
-    "-Hacknet Node base production rate lowered from 1.6 to 1.55 ($/second)<br>" +
-    "-Increased monetary cost of RAM (Upgrading home computer and purchasing servers will now be more expensive)<br>" + 
+    "specified server<br><br>" + 
+    "-Added isRunning(script, [server]) Netscript command, which is used to check if a script is running on the specified server<br><br>" + 
+    "-Added killall Terminal command. Kills all running scripts on the current machine<br><br>" +
+    "-Added kill() and killall() Netscript commands. Used to kill scripts on specified machines. See Netscript documentation<br><br>" + 
+    "-Re-designed 'Active Scripts' tab<br><br>" + 
+    "-Hacknet Node base production rate lowered from 1.6 to 1.55 ($/second)<br><br>" +
+    "-Increased monetary cost of RAM (Upgrading home computer and purchasing servers will now be more expensive)<br><br>" + 
     "-NEW GROWTH MECHANICS - The rate of growth on a server now depends on a server's security level. A higher security level " +
     "will result in lower growth on a server when using the grow() command. Furthermore, calling grow() on a server raises that " + 
-    "server's security level by " + (2 * this.ServerFortifyAmount) + ". For reference, if a server has a security level of 10 " + 
-    "it will have approximately the same growth rate as before. <br>" + 
-    "-Server growth no longer happens naturally<br>" + 
-    "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br>" + 
-    "-Hacking now grants 10% less hacking experience<br> " + 
-    "-You can now edit scripts that are running<br><br>",
+    "server's security level by 0.004. For reference, if a server has a security level of 10 " + 
+    "it will have approximately the same growth rate as before. <br><br>" + 
+    "-Server growth no longer happens naturally<br><br>" + 
+    "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br><br>" + 
+    "-Hacking now grants 10% less hacking experience<br><br>" + 
+    "-You can now edit scripts that are running<br>",
 }

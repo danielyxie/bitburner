@@ -67,9 +67,7 @@ loadGame = function(saveObj) {
     }
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
-            console.log("here");
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
-            console.log("version from save: " + ver);
             if (ver != CONSTANTS.Version) {
                 createNewUpdateText();
             }
