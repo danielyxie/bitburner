@@ -268,7 +268,7 @@ function evaluate(exp, workerScript) {
                     Promise.all(argPromises).then(function(args) {
                         if (env.stopFlag) {return reject(workerScript);}
                         filename = args[0];
-                        if (exp.args.length == 2) {
+                        if (exp.args.length == 1) {
                             return Promise.resolve(workerScript.serverIp);
                         } else {
                             return evaluate(exp.args[1], workerScript);
@@ -448,7 +448,7 @@ function evaluate(exp, workerScript) {
                     Promise.all(argPromises).then(function(args) {
                         if (env.stopFlag) {return reject(workerScript);}
                         filename = args[0];
-                        if (exp.args.length == 2) {
+                        if (exp.args.length == 1) {
                             return Promise.resolve(workerScript.serverIp);
                         } else {
                             return evaluate(exp.args[1], workerScript);
@@ -484,7 +484,7 @@ function evaluate(exp, workerScript) {
                     Promise.all(argPromises).then(function(args) {
                         if (env.stopFlag) {return reject(workerScript);}
                         filename = args[0];
-                        if (exp.args.length == 2) {
+                        if (exp.args.length == 1) {
                             return Promise.resolve(workerScript.serverIp);
                         } else {
                             return evaluate(exp.args[1], workerScript);

@@ -74,8 +74,8 @@ CONSTANTS = {
     ServerWeakenAmount: 0.1,        //Amount by which server's security decreases when weakened
     
     //Augmentation Constants
-    AugmentationCostMultiplier: 4.5,  //Used for balancing costs without having to readjust every Augmentation cost
-    AugmentationRepMultiplier: 1.2, //Used for balancing rep cost without having to readjust every value
+    AugmentationCostMultiplier: 5,  //Used for balancing costs without having to readjust every Augmentation cost
+    AugmentationRepMultiplier: 1.5, //Used for balancing rep cost without having to readjust every value
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 40,
@@ -560,7 +560,8 @@ CONSTANTS = {
     "-Server growth no longer happens naturally<br><br>" + 
     "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br><br>" + 
     "-Hacking now grants 10% less hacking experience<br><br>" + 
-    "-You can now edit scripts that are running<br><br><br><br>" + 
+    "-You can now edit scripts that are running<br><br>+ " +
+    "-Augmentations cost ~11% more money and 25% more faction reputation<br><br>" + 
     "v0.19.7<br>" + 
     "-Added changelog to Options menu<br>" + 
     "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs<br><br>" + 
@@ -644,7 +645,7 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
-     "v0.20.0<br>" + 
+    "v0.20.0<br>" + 
     "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
     "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
     "now each one should only take 750 milliseconds). <br><br>" +
@@ -669,5 +670,6 @@ CONSTANTS = {
     "-Server growth no longer happens naturally<br><br>" + 
     "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br><br>" + 
     "-Hacking now grants 10% less hacking experience<br><br>" + 
-    "-You can now edit scripts that are running<br>",
+    "-You can now edit scripts that are running<br><br>+ " +
+    "-Augmentations cost ~11% more money and 25% more faction reputation<br><br>",
 }
