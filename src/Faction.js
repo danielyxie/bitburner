@@ -25,6 +25,7 @@ function Faction(name) {
 	this.isMember 			= false; 	//Whether player is member
     this.isBanned           = false;    //Whether or not player is banned from joining this faction
     this.playerReputation 	= 0;  		//"Reputation" within faction
+    this.alreadyInvited     = false;
     
     //Multipliers for unlocking and purchasing augmentations
     this.augmentationPriceMult = 1;

@@ -37,6 +37,8 @@ function Server() {
 	
 	//Parameters used in formulas that dictate how moneyAvailable and requiredHackingSkill change. 
 	this.hackDifficulty			= 1;	//Affects hack success rate and how the requiredHackingSkill increases over time (1-100)
+    this.baseDifficulty         = 1;    //Starting difficulty
+    this.minDifficulty          = 1;
 	this.serverGrowth			= 0;	//Affects how the moneyAvailable increases (0-100)
 	this.timesHacked 			= 0;
 	
@@ -80,6 +82,8 @@ Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvai
 	this.moneyAvailable = moneyAvailable;
     this.moneyMax = 50 * moneyAvailable;
 	this.hackDifficulty = hackDifficulty;
+    this.baseDifficulty = hackDifficulty;
+    this.minDifficulty = Math.max(1, hackDifficulty - 25);
 	this.serverGrowth = serverGrowth;
 }
 

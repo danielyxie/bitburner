@@ -104,8 +104,14 @@ function evaluate(exp, workerScript) {
                 evaluateProgPromise.then(function(w) {
                     resolve(workerScript);
                 }, function(e) {
-                    workerScript.errorMessage = e.toString();
-                    reject(workerScript);
+                    if (typeof e === 'string' || e instanceof String) {
+                        workerScript.errorMessage = e;
+                        reject(workerScript);   
+                    } else if (e instanceof WorkerScript) {
+                        reject(e);
+                    } else {
+                        reject(workerScript);
+                    }
                 });
                 break;
             case "call":
