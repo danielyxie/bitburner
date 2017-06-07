@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.19.7",
+    Version:                "0.20.0",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -538,29 +538,29 @@ CONSTANTS = {
     "v0.20.0<br>" + 
     "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
     "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
-    "now each one should only take 750 milliseconds). <br> " +
-    "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br>" + 
-    "-Hacking experience granted by grow() halved<br>" + 
-    "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br>" + 
+    "now each one should only take 750 milliseconds). <br><br>" +
+    "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br><br>" + 
+    "-Hacking experience granted by grow() halved<br><br>" + 
+    "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br><br>" + 
     "-Rebalancing of script RAM costs. Base RAM Cost for a script increased from 1GB to 1.5GB. Loops, hack(), grow() " + 
-    "and weaken() all cost slightly less RAM than before <br>" + 
-    "-Added getServerRequiredHackingLevel(server) Netscript command. <br>" + 
+    "and weaken() all cost slightly less RAM than before <br><br>" + 
+    "-Added getServerRequiredHackingLevel(server) Netscript command. <br><br>" + 
     "-Added fileExists(file, [server]) Netscript command, which is used to check if a script/program exists on a " +
-    "specified server<br>" + 
-    "-Added isRunning(script, [server]) Netscript command, which is used to check if a script is running on the specified server<br>" + 
-    "-Added killall Terminal command. Kills all running scripts on the current machine<br> " +
-    "-Added kill() and killall() Netscript commands. Used to kill scripts on specified machines. See Netscript documentation<br>" + 
-    "-Re-designed 'Active Scripts' tab<br>" + 
-    "-Hacknet Node base production rate lowered from 1.6 to 1.55 ($/second)<br>" +
-    "-Increased monetary cost of RAM (Upgrading home computer and purchasing servers will now be more expensive)<br>" + 
+    "specified server<br><br>" + 
+    "-Added isRunning(script, [server]) Netscript command, which is used to check if a script is running on the specified server<br><br>" + 
+    "-Added killall Terminal command. Kills all running scripts on the current machine<br><br>" +
+    "-Added kill() and killall() Netscript commands. Used to kill scripts on specified machines. See Netscript documentation<br><br>" + 
+    "-Re-designed 'Active Scripts' tab<br><br>" + 
+    "-Hacknet Node base production rate lowered from 1.6 to 1.55 ($/second)<br><br>" +
+    "-Increased monetary cost of RAM (Upgrading home computer and purchasing servers will now be more expensive)<br><br>" + 
     "-NEW GROWTH MECHANICS - The rate of growth on a server now depends on a server's security level. A higher security level " +
     "will result in lower growth on a server when using the grow() command. Furthermore, calling grow() on a server raises that " + 
     "server's security level by " + (2 * this.ServerFortifyAmount) + ". For reference, if a server has a security level of 10 " + 
-    "it will have approximately the same growth rate as before. <br>" + 
-    "-Server growth no longer happens naturally<br>" + 
-    "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br>" + 
-    "-Hacking now grants 10% less hacking experience<br> " + 
-    "-You can now edit scripts that are running<br>" + 
+    "it will have approximately the same growth rate as before. <br><br>" + 
+    "-Server growth no longer happens naturally<br><br>" + 
+    "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br><br>" + 
+    "-Hacking now grants 10% less hacking experience<br><br>" + 
+    "-You can now edit scripts that are running<br><br><br><br>" + 
     "v0.19.7<br>" + 
     "-Added changelog to Options menu<br>" + 
     "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs<br><br>" + 
@@ -644,7 +644,30 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
-    "",
-    
-	
+    "v0.20.0<br>" + 
+    "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
+    "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
+    "now each one should only take 750 milliseconds). <br> " +
+    "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br>" + 
+    "-Hacking experience granted by grow() halved<br>" + 
+    "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br>" + 
+    "-Rebalancing of script RAM costs. Base RAM Cost for a script increased from 1GB to 1.5GB. Loops, hack(), grow() " + 
+    "and weaken() all cost slightly less RAM than before <br>" + 
+    "-Added getServerRequiredHackingLevel(server) Netscript command. <br>" + 
+    "-Added fileExists(file, [server]) Netscript command, which is used to check if a script/program exists on a " +
+    "specified server<br>" + 
+    "-Added isRunning(script, [server]) Netscript command, which is used to check if a script is running on the specified server<br>" + 
+    "-Added killall Terminal command. Kills all running scripts on the current machine<br> " +
+    "-Added kill() and killall() Netscript commands. Used to kill scripts on specified machines. See Netscript documentation<br>" + 
+    "-Re-designed 'Active Scripts' tab<br>" + 
+    "-Hacknet Node base production rate lowered from 1.6 to 1.55 ($/second)<br>" +
+    "-Increased monetary cost of RAM (Upgrading home computer and purchasing servers will now be more expensive)<br>" + 
+    "-NEW GROWTH MECHANICS - The rate of growth on a server now depends on a server's security level. A higher security level " +
+    "will result in lower growth on a server when using the grow() command. Furthermore, calling grow() on a server raises that " + 
+    "server's security level by " + (2 * this.ServerFortifyAmount) + ". For reference, if a server has a security level of 10 " + 
+    "it will have approximately the same growth rate as before. <br>" + 
+    "-Server growth no longer happens naturally<br>" + 
+    "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br>" + 
+    "-Hacking now grants 10% less hacking experience<br> " + 
+    "-You can now edit scripts that are running<br><br>",
 }

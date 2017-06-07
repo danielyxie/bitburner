@@ -67,15 +67,17 @@ loadGame = function(saveObj) {
     }
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
+            console.log("here");
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
+            console.log("version from save: " + ver);
             if (ver != CONSTANTS.Version) {
-                //TODO Create update pop up
+                createNewUpdateText();
             }
         } catch(e) {
-            Engine.version  = CONSTANTS.Version;
+            createNewUpdateText();
         }
     } else {
-        Engine.version = CONSTANTS.Version;
+        createNewUpdateText();
     }
     
     return true;
@@ -86,6 +88,13 @@ BitburnerSaveObject.prototype.deleteGame = function() {
         window.localStorage.removeItem("bitburnerSave");
     }
     Engine.createStatusText("Game deleted!");
+}
+
+createNewUpdateText = function() {
+    dialogBoxCreate("New update!<br>" + 
+                    "Please report any bugs/issues through the github repository " + 
+                    "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" + 
+                    CONSTANTS.LatestUpdate);
 }
 
 
