@@ -12,6 +12,7 @@ function BitburnerSaveObject() {
     this.AugmentationsSave          = "";
     this.AliasesSave                = "";
     this.MessagesSave               = "";
+    this.VersionSave                = "";
 }
 
 BitburnerSaveObject.prototype.saveGame = function() {
@@ -23,6 +24,7 @@ BitburnerSaveObject.prototype.saveGame = function() {
     this.AugmentationsSave          = JSON.stringify(Augmentations);
     this.AliasesSave                = JSON.stringify(Aliases);
     this.MessagesSave               = JSON.stringify(Messages);
+    this.VersionSave                = JSON.stringify(CONSTANTS.Version);
     
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
     window.localStorage.setItem("bitburnerSave", saveString);
@@ -63,6 +65,18 @@ loadGame = function(saveObj) {
     } else {
         initMessages();
     }
+    if (saveObj.hasOwnProperty("VersionSave")) {
+        try {
+            var ver = JSON.parse(saveObj.VersionSave, Reviver);
+            if (ver != CONSTANTS.Version) {
+                createNewUpdateText();
+            }
+        } catch(e) {
+            createNewUpdateText();
+        }
+    } else {
+        createNewUpdateText();
+    }
     
     return true;
 }
@@ -72,6 +86,13 @@ BitburnerSaveObject.prototype.deleteGame = function() {
         window.localStorage.removeItem("bitburnerSave");
     }
     Engine.createStatusText("Game deleted!");
+}
+
+createNewUpdateText = function() {
+    dialogBoxCreate("New update!<br>" + 
+                    "Please report any bugs/issues through the github repository " + 
+                    "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" + 
+                    CONSTANTS.LatestUpdate);
 }
 
 

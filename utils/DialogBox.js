@@ -1,32 +1,64 @@
 /* Pop up Dialog Box */
+dialogBoxes = [];
 
 //Close dialog box when clicking outside
+/*
 $(document).click(function(event) {
     if (dialogBoxOpened) {
         if (!$(event.target).closest('.dialog-box-container').length){
             --dialogBoxCount;
+            dialogBoxes.splice(0, 1);
             $(".dialog-box-container").remove();
-            if (dialogBoxCount == 0) {
+            
+            if (dialogBoxes.length == 0) {
                 dialogBoxOpened = false;
+            } else {
+                dialogBoxes[0].style.display +
+            }
+        }
+    }
+});*/
+$(document).click(function(event) {
+    if (dialogBoxOpened && dialogBoxes.length >= 1) {
+        if (!$(event.target).closest(dialogBoxes[0]).length){
+            dialogBoxes[0].remove();
+            dialogBoxes.splice(0, 1);
+            if (dialogBoxes.length == 0) {
+                dialogBoxOpened = false;
+            } else {
+                dialogBoxes[0].style.visibility = "visible";
             }
         }
     }
 });
 
+
 //Dialog box close buttons
+/*
 $(document).on('click', '.dialog-box-close-button', function( event ) {
     console.log("clicked close button");
     if (dialogBoxOpened) {
         $(this).closest('.dialog-box-container').remove();
         --dialogBoxCount;
-        if (dialogBoxCount == 0) {
+        if (dialogBoxes.length == 0) {
             dialogBoxOpened = false;
+        }
+    }
+});
+*/
+$(document).on('click', '.dialog-box-close-button', function( event ) {
+    if (dialogBoxOpened && dialogBoxes.length >= 1) {
+        dialogBoxes[0].remove();
+        dialogBoxes.splice(0, 1);
+        if (dialogBoxes.length == 0) {
+            dialogBoxOpened = false;
+        } else {
+            dialogBoxes[0].style.visibility = "visible";
         }
     }
 });
 
 var dialogBoxOpened = false;
-var dialogBoxCount = 0;
 
 dialogBoxCreate = function(txt) {
     var container = document.createElement("div");
@@ -47,9 +79,12 @@ dialogBoxCreate = function(txt) {
     container.appendChild(content);
     
     document.body.appendChild(container);
+    if (dialogBoxes.length >= 1) {
+        container.style.visibility = "hidden";
+    }
+    dialogBoxes.push(container);
     
     setTimeout(function() {
         dialogBoxOpened = true;
-        ++dialogBoxCount;
-    }, 500);
+    }, 400);
 }

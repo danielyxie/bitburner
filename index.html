@@ -33,6 +33,7 @@
 	<script src="src/NetscriptParser.js"></script>
 	<script src="src/NetscriptEvaluator.js"></script>
 	<script src="src/NetscriptEnvironment.js"></script>
+    <script src="src/NetscriptFunctions.js"></script>
     
 	<!-- Main game files -->
 	<script src="src/Constants.js"></script>
@@ -58,6 +59,7 @@
     <script src="src/InteractiveTutorial.js"></script>
     <script src="src/Alias.js"></script>
     <script src="src/Message.js"></script>
+    <script src="src/ActiveScriptsUI.js"></script>
 	
     <script src="src/engine.js"></script>
 	
@@ -163,8 +165,9 @@
 	
 	<!-- Active scripts info page -->
 	<div id="active-scripts-container">
-        <p id="active-scripts-text"> This page displays a list of all scripts that are currently running across every machine. It also gives
-            information about their production </p>
+        <p id="active-scripts-text"> This page displays a list of all of your scripts that are currently running across every machine. It also
+        provides information about each script's production. The scripts are categorized by the hostname of the servers on which
+        they are running. </p>
         <p id="active-scripts-total-prod"> Total online production rate: </p>
 		<ul class="active-scripts-list" id="active-scripts-list" style="list-style: none;">
 		</ul>
@@ -516,12 +519,13 @@
 		</div>
 
         <p>
-            <br><br><br>
+            <br>
             As your reputation with this faction rises, you will unlock Augmentations, which you 
             can purchase to enhance your abilities.
             <br><br>
         </p>
         <a id="faction-purchase-augmentations" class="a-link-button">Purchase Augmentations</a>
+        <br><br><br><br>
 	</div>
 
     <div id="faction-augmentations-container">

@@ -814,7 +814,7 @@ displayFactionAugmentations = function(factionName) {
                 pElem.innerHTML = "UNLOCKED - $" + formatNumber(aug.baseCost * faction.augmentationPriceMult, 2);
             } else {
                 aElem.setAttribute("class", "a-link-button-inactive");
-                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 4) + " faction reputation) - $" + formatNumber(aug.baseCost * faction.augmentationPriceMult, 2);
+                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 1) + " faction reputation) - $" + formatNumber(aug.baseCost * faction.augmentationPriceMult, 2);
                 pElem.style.color = "red";
             }
             aElem.style.display = "inline";

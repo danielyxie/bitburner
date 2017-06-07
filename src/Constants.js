@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.19.7",
+    Version:                "0.20.0",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -11,14 +11,14 @@ CONSTANTS = {
     
     /* Base costs */
     BaseCostFor1GBOfRamHome: 40000,
-    BaseCostFor1GBOfRamServer: 35000,     //1 GB of RAM
+    BaseCostFor1GBOfRamServer: 50000,     //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
     
     BaseCostForHacknetNode: 1000,
     BaseCostForHacknetNodeCore: 500000,
     
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.6,
+    HacknetNodeMoneyGainPerLevel: 1.55,
     HacknetNodePurchaseNextMult: 1.42,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.045,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.28,     //Multiplier for cost when upgrading RAM
@@ -34,15 +34,15 @@ CONSTANTS = {
     
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
-	CodeInstructionRunTime:	1500, 
+	CodeInstructionRunTime:	500, 
     
-    //RAM Costs for differenc commands
-    ScriptWhileRamCost:             0.4,
-    ScriptForRamCost:               0.4,
+    //RAM Costs for different commands
+    ScriptWhileRamCost:             0.2,
+    ScriptForRamCost:               0.2,
     ScriptIfRamCost:                0.1,
-    ScriptHackRamCost:              0.25,
-    ScriptGrowRamCost:              0.25,
-    ScriptWeakenRamCost:            0.25,
+    ScriptHackRamCost:              0.1,
+    ScriptGrowRamCost:              0.15,
+    ScriptWeakenRamCost:            0.15,
     ScriptNukeRamCost:              0.05,
     ScriptBrutesshRamCost:          0.05,
     ScriptFtpcrackRamCost:          0.05,
@@ -53,10 +53,13 @@ CONSTANTS = {
     ScriptExecRamCost:              1.1,
     ScriptScpRamCost:               0.5,
     ScriptHasRootAccessRamCost:     0.05,
-    ScriptGetHostnameRamCost:       0.1,
-    ScriptGetHackingLevelRamCost:   0.1,
+    ScriptGetHostnameRamCost:       0.05,
+    ScriptGetHackingLevelRamCost:   0.05,
     ScriptGetServerMoneyRamCost:    0.1,
-    ScriptGetServerSecurityRamCost: 0.2,
+    ScriptGetServerSecurityRamCost: 0.1,
+    ScriptGetServerReqdHackRamCost: 0.1,
+    ScriptFileExistsRamCost:        0.1,
+    ScriptIsRunningRamCost:         0.1,
     ScriptOperatorRamCost:          0.01,
     ScriptPurchaseHacknetRamCost:   1.5,
     ScriptHacknetNodesRamCost:      1.0, //Base cost for accessing hacknet nodes array
@@ -65,13 +68,14 @@ CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     
     //Server constants
-    ServerGrowthRate: 1.002,   //Growth rate
-    ServerFortifyAmount: 0.002, //Amount by which server's security increases when its hacked
-    ServerWeakenAmount: 0.1,    //Amount by which server's security decreases when weakened
+    ServerBaseGrowthRate: 1.02,     //Unadjusted Growth rate
+    ServerMaxGrowthRate: 1.003,     //Maximum possible growth rate (max rate accounting for server security)
+    ServerFortifyAmount: 0.002,     //Amount by which server's security increases when its hacked/grown
+    ServerWeakenAmount: 0.1,        //Amount by which server's security decreases when weakened
     
     //Augmentation Constants
-    AugmentationCostMultiplier: 4.5,  //Used for balancing costs without having to readjust every Augmentation cost
-    AugmentationRepMultiplier: 1.2, //Used for balancing rep cost without having to readjust every value
+    AugmentationCostMultiplier: 5,  //Used for balancing costs without having to readjust every Augmentation cost
+    AugmentationRepMultiplier: 1.5, //Used for balancing rep cost without having to readjust every value
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 40,
@@ -159,6 +163,7 @@ CONSTANTS = {
                 "hostname               Displays the hostname of the machine<br>" + 
                 "ifconfig               Displays the IP address of the machine<br>" +
                 "kill [script]          Stops a script that is running on the current machine<br>" +
+                "killall                Stops all running scripts on the current machine<br>" + 
                 "ls                     Displays all programs and scripts on the machine<br>" +
                 "mem [script]           Displays the amount of RAM the script requires to run<br>" + 
                 "nano [script]          Text editor - Open up and edit a script<br>" + 
@@ -216,8 +221,8 @@ CONSTANTS = {
                          "When you successfully hack a server. You steal a certain percentage of that server's total money. This " + 
                          "percentage is determined by the server's security and your hacking skill level. The amount of money " + 
                          "on a server is not limitless. So, if you constantly hack a server and deplete its money, then you will " +
-                         "encounter diminishing returns in your hacking (since you are only hacking a certain percentage). A server " + 
-                         "will regain money at a slow rate over time. <br><br>" +
+                         "encounter diminishing returns in your hacking (since you are only hacking a certain percentage). You can " +
+                         "increase the amount of money on a server using a script and the grow() function in Netscript.<br><br>" +
                          "<h1>Server Security</h1><br>" + 
                          "Each server has a security level, which is denoted by a number between 1 and 100. A higher number means " + 
                          "the server has stronger security. As mentioned above, a server's security level is an important factor " + 
@@ -225,7 +230,8 @@ CONSTANTS = {
                          "only gives an estimate (with 5% uncertainty). You can also check a server's security in a script, using the " + 
                          "<i>getServerSecurityLevel(server)</i> function in Netscript. See the Netscript documentation for more details. " + 
                          "This function will give you an exact value for a server's security. <br><br>" + 
-                         "Whenever a server is hacked manually or through a script, its security level increases by a small amount. This will " + 
+                         "Whenever a server is hacked manually or through a script, its security level increases by a small amount. Calling " + 
+                         "the grow() command in a script will also increase security level of the target server.  These actions will " + 
                          "make it harder for you to hack the server, and decrease the amount of money you can steal. You can lower a " + 
                          "server's security level in a script using the <i>weaken(server)</i> function in Netscript. See the Netscript " + 
                          "documentation for more details",
@@ -301,17 +307,27 @@ CONSTANTS = {
                            "<i>hack(hostname/ip)</i><br>Core function that is used to try and hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
                            "either the IP or hostname of the server you want to hack. The runtime for this command depends on your hacking level and the target server's security level. " + 
                            " A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. " +
-                           "For example, you can create a script that hacks the 'foodnstuff' server and run it on your home computer. <br>" + 
+                           "For example, you can create a script that hacks the 'foodnstuff' server and run that script on any server in the game. A successful hack() on " + 
+                           "a server will raise that server's security level by 0.002. Returns true if the hack is successful and " + 
+                           "false otherwise. <br>" + 
                            "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
                            "must be a string with either the IP or hostname of the target server. The runtime for this command depends on your hacking level and the target server's security level. " +
-                           "The grow() command requires root access to the target server, but " +
-                           "there is no required hacking level to run the command. " + 
-                           "Grants 1 hacking exp when it completes. Works offline at a slower rate. <br> Example: grow('foodnstuff');<br><br>" + 
+                           "When grow() completes, the money available on a target server will be increased by a certain, fixed percentage. This percentage " + 
+                           "is determined by the server's growth rate and varies between servers. Generally, higher-level servers have higher growth rates. <br><br> " + 
+                           "Like hack(), grow() can be called on any server, regardless of where the script is running. " + 
+                           "The grow() command requires root access to the target server, but there is no required hacking level to run the command. " + 
+                           "It grants 0.5 hacking exp when it completes. It also raises the security level of the target server by 0.004. " +
+                           "Returns the number by which the money on the server was multiplied for the growth. " + 
+                           "Works offline at a slower rate. <br> Example: grow('foodnstuff');<br><br>" + 
                            "<i>weaken(hostname/ip)</i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " + 
-                           "in must be a string with either the IP or hostname of the target server. This command requires root access to the target server, but " + 
-                           "there is no required hacking level to run the command. Grants 5 hacking exp when it completes. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
+                           "in must be a string with either the IP or hostname of the target server. The runtime for this command depends on your " + 
+                           "hacking level and the target server's security level. This function lowers the security level of the target server by " + 
+                           "0.1.<br><br> Like hack() and grow(), weaken() can be called on " + 
+                           "any server, regardless of where the script is running. This command requires root access to the target server, but " + 
+                           "there is no required hacking level to run the command. Grants 3 hacking exp when it completes. Returns " + 
+                           "0.1. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" + 
@@ -327,6 +343,18 @@ CONSTANTS = {
                            "second argument is a string with the hostname or IP of the 'target server' on which to run the script. The specified script must exist on the target server. Returns " + 
                            "true if the script is successfully started, and false otherwise. Does NOT work while offline<br> " + 
                            "Example: exec('generic-hack.script', 'foodnstuff'); <br> The example above will try to launch the script 'generic-hack.script' on the 'foodnstuff' server.<br><br>" + 
+                           "<i>kill(script, [hostname/ip])</i><br> Kills a script on a server. The first argument must be a string with the name of the script. The name is case-sensitive. " + 
+                           "The second argument must be a string with the hostname or IP of the target server. The function will try to kill the specified script on the target server. " + 
+                           "The second argument is optional. If it is omitted, then the function will try to kill the specified script on the current server (the server running " + 
+                           "the script that calls this function). If the script is found on the specified server and is running, then it will be killed and this function " + 
+                           "will return true. Otherwise, this function will return false. <br> " + 
+                           "Example: kill('foo.script', 'foodnstuff');<br>" + 
+                           "Example: kill('foo.script');<br>" + 
+                           "The first example above will look for a script called 'foo.script' on the 'foodnstuff' server. If the script exists and is running, then it will " + 
+                           "be killed and the function will return true. Otherwise false will be returned. The second example above will do the same thing, except on the " +
+                           "current server (the server running the script that calls the kill() function).<br><br>" + 
+                           "<i>killall(hostname/ip)</i><br> Kills all running scripts on the specified server. This function takes a single argument which " + 
+                           "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" + 
                            "<i>scp(script, hostname/ip)</i><br>Copies a script to another server. The first argument is a string with the filename of the script " + 
                            "to be copied. The second argument is a string with the hostname or IP of the destination server. Returns true if the script is successfully " + 
                            "copied over and false otherwise. <br> Example: scp('hack-template.script', 'foodnstuff');<br><br>" + 
@@ -339,6 +367,25 @@ CONSTANTS = {
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
                            "<i>getServerSecurityLevel(hostname/ip)</i><br>Returns the security level of a server. The argument passed in must be a string with either the " + 
                            "hostname or IP of the target server. A server's security is denoted by a number between 1 and 100. Does NOT work while offline.<br><br>" + 
+                           "<i>getServerRequiredHackingLevel(hostname/ip)</i><br> Returns the required hacking level of a server. The argument passed in must be a string with either the " + 
+                           "hostname or IP or the target server. Does NOT work while offline <br><br>" + 
+                           "<i>fileExists(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " + 
+                           "The first argument must be a string with the name of the file. A file can either be a script or a program. A script name is case-sensitive, but a " +
+                           "program is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " + 
+                           "The second argument is a string with the hostname or IP of the server on which to search for the program. This second argument is optional. " + 
+                           "If it is omitted, then the function will search through the current server (the server running the script that calls this function) for the file. <br> " + 
+                           "Example: fileExists('foo.script', 'foodnstuff');<br>" + 
+                           "Example: fileExists('ftpcrack.exe');<br><br>" + 
+                           "The first example above will return true if the script named 'foo.script' exists on the 'foodnstuff' server, and false otherwise. The second example above will " +
+                           "return true if the current server (the server on which this function runs) contains the FTPCrack.exe program, and false otherwise. <br><br>" + 
+                           "<i>isRunning(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified script is running on a server. " + 
+                           "The first argument must be a string with the name of the script. The script name is case sensitive. The second argument is a string with the " +
+                           "hostname or IP of the target server. The function will check whether the script is running on that target server. The second argument is optional. " + 
+                           "If it is omitted, then the function will check if the script is running on the current server (the server running the script that calls this function). <br>" + 
+                           "Example: isRunning('foo.script', 'foodnstuff');<br>" + 
+                           "Example: isRunning('foo.script'); <br><br>" + 
+                           "The first example above will return true if there is a script called 'foo.script' is running on the 'foodnstuff' server, and false otherwise. The second " + 
+                           "example above will return true if there is a script called 'foo.script' running on the current server, and false otherwise. <br><br>" + 
                            "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " + 
                            "at the end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford to purchase " +
                            "a new Hacknet Node then the function will return false. Does NOT work offline<br><br>" + 
@@ -488,61 +535,42 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
-    "v0.15 <br>" + 
-    "-Slightly reduced production multiplier for Hacknet Node RAM<br>" + 
-    "-Faction pages now scroll<br>" + 
-    "-Slightly increased amount of money gained from hacking<br>" + 
-    "-Added 'alias' command<br>" + 
-    "-Added 'scan-analyze' terminal command - used to get basic hacking info about all immediate network connections<br>" + 
-    "-Fixed bugs with upgradeHacknetNode() and purchaseHacknetNode() commands<br>" + 
-    "-Added getNumHacknetNodes() and hasRootAccess(hostname/ip) commands to Netscript<br>" + 
-    "-Increased Cost of university classes/gym<br>" + 
-    "-You can now see what an Augmentation does and its price even while its locked<br><br>" + 
-    "v0.16<br>" + 
-    "-New Script Editor interface <br>" + 
-    "-Rebalanced hacknet node - Increased base production but halved the multiplier from additional cores. This should boost its early-game production but nerf its late-game production<br>" + 
-    "-Player now starts with 8GB of RAM on home computer<br>" + 
-    "-'scan-analyze' terminal command displays RAM on servers<br>" + 
-    "-Slightly buffed the amount of money the player steals when hacking servers (by about ~8%)<br>" + 
-    "-Time to execute grow() now depends on hacking skill and server security, rather than taking a flat 2 minutes.<br>" + 
-    "-Clicking outside of a pop-up dialog box will now close it<br>" + 
-    "-BruteSSH.exe takes 33% less time to create<br>" + 
-    "-'iron-gym' and 'max-hardware' servers now have 2GB of RAM<br>" + 
-    "-Buffed job salaries across the board<br>" + 
-    "-Updated Tutorial<br>" + 
-    "-Created a Hacknet Node API for Netscript that allows you to access and upgrade your Hacknet Nodes. See the Netscript documentation for more details. WARNING The old upgradeHacknetNode() and getNumHacknetNodes() functions waere removed so any script that has these will no longer work <br><br>" + 
-    "v0.17<br>" + 
-    "-Greatly increased amount of money gained for crimes (by about 400% for most crimes)<br>" + 
-    "-Criminal factions require slightly less negative karma to get invited to<br>" + 
-    "-Increased the percentage of money stolen from servers when hacking<br>" + 
-    "-Increased the starting amount of money available on beginning servers (servers with <50 required hacking))<br>" + 
-    "-Increased the growth rate of servers (both naturally and manually when using the grow() command in a script)<br>" + 
-    "-Added getHostname() command in Netscript that returns the hostname of the server a script is running on<br>" + 
-    "-jQuery preventDefault() called when pressing ctrl+b in script editor<br>" + 
-    "-The Neuroflux Governor augmentation (the one that can be repeatedly leveled up) now increases ALL multipliers by 1%. To balance it out, it's price multiplier when it levels up was increased<br>" + 
-    "-Hacknet Node base production decreased from $1.75/s to $1.65/s<br>" + 
-    "-Fixed issue with nested for loops in Netscript (stupid Javascript references)<br>" + 
-    "-Added 'scp' command to Terminal and Netscript<br>" + 
-    "-Slightly nerfed Hacknet Node Kernel DNI and Hacknet Node Core DNI Augmentations<br>" + 
-    "-Increased TOR Router cost to $200k<br><br>" + 
-    "v0.17.1 <br>" + 
-    "-Fixed issue with purchasing Augmentations that are 'upgrades' and require previous Augmentations to be installed<br>" + 
-    "-Increased the percentage of money stolen from servers when hacking<br><br>" + 
-    "v0.18<br>" + 
-    "-Major rebalancing (sorry didn't record specifics. But in general hacking gives more money " + 
-    "and hacknet nodes give less)<br>" + 
-    "-Server growth rate (both natural and manual using grow()) doubled<br>" + 
-    "-Added option to Soft Reset<br>" + 
-    "-Cancelling a full time job early now only results in halved gains for reputation. Exp and money earnings are gained in full<br>" + 
-    "-Added exec() Netscript command, used to run scripts on other servers. <br>" + 
-    "-NEW HACKING MECHANICS: Whenever a server is hacked, its 'security level' is increased by a very small amount. " + 
-    "The security level is denoted by a number between 1-100. A higher security level makes it harder " + 
-    "to hack a server and also decreases the amount of money you steal from it. Two Netscript functions, " + 
-    "weaken() and getServerSecurityLevel() level, were added. The weaken(server) function lowers a server's " + 
-    "security level. See the Netscript documentation for more details<br>" + 
-    "-When donating to factions, the base rate is now $1,000,000 for 1 reputation point. Before, it was " + 
-    "$1,000 for 1 reputation point.<br>" + 
-    "-Monetary costs for all Augmentations increased. They are now about ~3.3 - 3.75 times more expensive than before<br><br>" + 
+    "v0.20.0<br>" + 
+    "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
+    "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
+    "now each one should only take ~500 milliseconds). <br><br>" +
+    "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br><br>" + 
+    "-Hacking experience granted by grow() halved<br><br>" + 
+    "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br><br>" + 
+    "-Rebalancing of script RAM costs. Base RAM Cost for a script increased from 1GB to 1.5GB. Loops, hack(), grow() " + 
+    "and weaken() all cost slightly less RAM than before <br><br>" + 
+    "-Added getServerRequiredHackingLevel(server) Netscript command. <br><br>" + 
+    "-Added fileExists(file, [server]) Netscript command, which is used to check if a script/program exists on a " +
+    "specified server<br><br>" + 
+    "-Added isRunning(script, [server]) Netscript command, which is used to check if a script is running on the specified server<br><br>" + 
+    "-Added killall Terminal command. Kills all running scripts on the current machine<br><br>" +
+    "-Added kill() and killall() Netscript commands. Used to kill scripts on specified machines. See Netscript documentation<br><br>" + 
+    "-Re-designed 'Active Scripts' tab<br><br>" + 
+    "-Hacknet Node base production rate lowered from 1.6 to 1.55 ($/second)<br><br>" +
+    "-Increased monetary cost of RAM (Upgrading home computer and purchasing servers will now be more expensive)<br><br>" + 
+    "-NEW GROWTH MECHANICS - The rate of growth on a server now depends on a server's security level. A higher security level " +
+    "will result in lower growth on a server when using the grow() command. Furthermore, calling grow() on a server raises that " + 
+    "server's security level by 0.004. For reference, if a server has a security level of 10 " + 
+    "it will have approximately the same growth rate as before. <br><br>" + 
+    "-Server growth no longer happens naturally<br><br>" + 
+    "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br><br>" + 
+    "-Hacking now grants 10% less hacking experience<br><br>" + 
+    "-You can now edit scripts that are running<br><br>" +
+    "-Augmentations cost ~11% more money and 25% more faction reputation<br><br>" + 
+    "v0.19.7<br>" + 
+    "-Added changelog to Options menu<br>" + 
+    "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs<br><br>" + 
+    "v0.19.6<br>" + 
+    "-Script editor now saves its state even when you change tabs <br>" + 
+    "-scp() command in Terminal/script will now overwrite files at the destination <br>" + 
+    "-Terminal commands are no longer case-sensitive (only the commands themselves such as 'run' or 'nano'. Filenames are " + 
+    "still case sensitive<br>" + 
+    "-Tab automcompletion will now work on commands<br><br>" + 
     "v0.19<br>" + 
     "-Hacknet Nodes have slightly higher base production, and slightly increased RAM multiplier. " + 
     "But they are also a bit more expensive at higher levels<br>" + 
@@ -560,15 +588,88 @@ CONSTANTS = {
     "-Gyms and classes are now significantly more expensive<br>" + 
     "-Doubled the amount by which a server's security increases when it is hacked. Now, it will " + 
     "increase by 0.002. Calling weaken() on a server will lower the security by 0.1.<br><br>" + 
-    "v0.19.6<br>" + 
-    "-Script editor now saves its state even when you change tabs <br>" + 
-    "-scp() command in Terminal/script will now overwrite files at the destination <br>" + 
-    "-Terminal commands are no longer case-sensitive (only the commands themselves such as 'run' or 'nano'. Filenames are " + 
-    "still case sensitive<br>" + 
-    "-Tab automcompletion will now work on commands<br><br>" + 
-    "v0.19.7<br>" + 
-    "-Added changelog to Options menu<br>" + 
-    "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs",
+    "v0.18<br>" + 
+    "-Major rebalancing (sorry didn't record specifics. But in general hacking gives more money " + 
+    "and hacknet nodes give less)<br>" + 
+    "-Server growth rate (both natural and manual using grow()) doubled<br>" + 
+    "-Added option to Soft Reset<br>" + 
+    "-Cancelling a full time job early now only results in halved gains for reputation. Exp and money earnings are gained in full<br>" + 
+    "-Added exec() Netscript command, used to run scripts on other servers. <br>" + 
+    "-NEW HACKING MECHANICS: Whenever a server is hacked, its 'security level' is increased by a very small amount. " + 
+    "The security level is denoted by a number between 1-100. A higher security level makes it harder " + 
+    "to hack a server and also decreases the amount of money you steal from it. Two Netscript functions, " + 
+    "weaken() and getServerSecurityLevel() level, were added. The weaken(server) function lowers a server's " + 
+    "security level. See the Netscript documentation for more details<br>" + 
+    "-When donating to factions, the base rate is now $1,000,000 for 1 reputation point. Before, it was " + 
+    "$1,000 for 1 reputation point.<br>" + 
+    "-Monetary costs for all Augmentations increased. They are now about ~3.3 - 3.75 times more expensive than before<br><br>" + 
+    "v0.17.1 <br>" + 
+    "-Fixed issue with purchasing Augmentations that are 'upgrades' and require previous Augmentations to be installed<br>" + 
+    "-Increased the percentage of money stolen from servers when hacking<br><br>" + 
+    "v0.17<br>" + 
+    "-Greatly increased amount of money gained for crimes (by about 400% for most crimes)<br>" + 
+    "-Criminal factions require slightly less negative karma to get invited to<br>" + 
+    "-Increased the percentage of money stolen from servers when hacking<br>" + 
+    "-Increased the starting amount of money available on beginning servers (servers with <50 required hacking))<br>" + 
+    "-Increased the growth rate of servers (both naturally and manually when using the grow() command in a script)<br>" + 
+    "-Added getHostname() command in Netscript that returns the hostname of the server a script is running on<br>" + 
+    "-jQuery preventDefault() called when pressing ctrl+b in script editor<br>" + 
+    "-The Neuroflux Governor augmentation (the one that can be repeatedly leveled up) now increases ALL multipliers by 1%. To balance it out, it's price multiplier when it levels up was increased<br>" + 
+    "-Hacknet Node base production decreased from $1.75/s to $1.65/s<br>" + 
+    "-Fixed issue with nested for loops in Netscript (stupid Javascript references)<br>" + 
+    "-Added 'scp' command to Terminal and Netscript<br>" + 
+    "-Slightly nerfed Hacknet Node Kernel DNI and Hacknet Node Core DNI Augmentations<br>" + 
+    "-Increased TOR Router cost to $200k<br><br>" + 
+    "v0.16<br>" + 
+    "-New Script Editor interface <br>" + 
+    "-Rebalanced hacknet node - Increased base production but halved the multiplier from additional cores. This should boost its early-game production but nerf its late-game production<br>" + 
+    "-Player now starts with 8GB of RAM on home computer<br>" + 
+    "-'scan-analyze' terminal command displays RAM on servers<br>" + 
+    "-Slightly buffed the amount of money the player steals when hacking servers (by about ~8%)<br>" + 
+    "-Time to execute grow() now depends on hacking skill and server security, rather than taking a flat 2 minutes.<br>" + 
+    "-Clicking outside of a pop-up dialog box will now close it<br>" + 
+    "-BruteSSH.exe takes 33% less time to create<br>" + 
+    "-'iron-gym' and 'max-hardware' servers now have 2GB of RAM<br>" + 
+    "-Buffed job salaries across the board<br>" + 
+    "-Updated Tutorial<br>" + 
+    "-Created a Hacknet Node API for Netscript that allows you to access and upgrade your Hacknet Nodes. See the Netscript documentation for more details. WARNING The old upgradeHacknetNode() and getNumHacknetNodes() functions waere removed so any script that has these will no longer work <br><br>" + 
+    "v0.15 <br>" + 
+    "-Slightly reduced production multiplier for Hacknet Node RAM<br>" + 
+    "-Faction pages now scroll<br>" + 
+    "-Slightly increased amount of money gained from hacking<br>" + 
+    "-Added 'alias' command<br>" + 
+    "-Added 'scan-analyze' terminal command - used to get basic hacking info about all immediate network connections<br>" + 
+    "-Fixed bugs with upgradeHacknetNode() and purchaseHacknetNode() commands<br>" + 
+    "-Added getNumHacknetNodes() and hasRootAccess(hostname/ip) commands to Netscript<br>" + 
+    "-Increased Cost of university classes/gym<br>" + 
+    "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
-	
+    LatestUpdate: 
+    "v0.20.0<br>" + 
+    "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
+    "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
+    "now each one should only take ~500 milliseconds). <br><br>" +
+    "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br><br>" + 
+    "-Hacking experience granted by grow() halved<br><br>" + 
+    "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br><br>" + 
+    "-Rebalancing of script RAM costs. Base RAM Cost for a script increased from 1GB to 1.5GB. Loops, hack(), grow() " + 
+    "and weaken() all cost slightly less RAM than before <br><br>" + 
+    "-Added getServerRequiredHackingLevel(server) Netscript command. <br><br>" + 
+    "-Added fileExists(file, [server]) Netscript command, which is used to check if a script/program exists on a " +
+    "specified server<br><br>" + 
+    "-Added isRunning(script, [server]) Netscript command, which is used to check if a script is running on the specified server<br><br>" + 
+    "-Added killall Terminal command. Kills all running scripts on the current machine<br><br>" +
+    "-Added kill() and killall() Netscript commands. Used to kill scripts on specified machines. See Netscript documentation<br><br>" + 
+    "-Re-designed 'Active Scripts' tab<br><br>" + 
+    "-Hacknet Node base production rate lowered from 1.6 to 1.55 ($/second)<br><br>" +
+    "-Increased monetary cost of RAM (Upgrading home computer and purchasing servers will now be more expensive)<br><br>" + 
+    "-NEW GROWTH MECHANICS - The rate of growth on a server now depends on a server's security level. A higher security level " +
+    "will result in lower growth on a server when using the grow() command. Furthermore, calling grow() on a server raises that " + 
+    "server's security level by 0.004. For reference, if a server has a security level of 10 " + 
+    "it will have approximately the same growth rate as before. <br><br>" + 
+    "-Server growth no longer happens naturally<br><br>" + 
+    "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br><br>" + 
+    "-Hacking now grants 10% less hacking experience<br><br>" + 
+    "-You can now edit scripts that are running<br><br>" +
+    "-Augmentations cost ~11% more money and 25% more faction reputation<br><br>",
 }

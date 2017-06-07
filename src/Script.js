@@ -150,6 +150,8 @@ Script.prototype.saveScript = function() {
 }
 
 Script.prototype.reset = function() {
+    this.updateRamUsage();
+    
     this.offlineRunningTime  	= 0.01;	//Seconds
 	this.offlineMoneyMade 		= 0;
 	this.offlineExpGained 		= 0;
@@ -202,7 +204,7 @@ Script.prototype.reset = function() {
 
 //Updates how much RAM the script uses when it is running.
 Script.prototype.updateRamUsage = function() {
-    var baseRam = 1;    //Each script requires 1GB to run regardless
+    var baseRam = 1.4;
     var codeCopy = this.code.repeat(1);
     codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
     
@@ -226,6 +228,9 @@ Script.prototype.updateRamUsage = function() {
     var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
     var getServerMoneyAvailableCount = numOccurrences(codeCopy, "getServerMoneyAvailable(");
     var getServerSecurityCount = numOccurrences(codeCopy, "getServerSecurityLevel(");
+    var getServerReqdHackingCount = numOccurrences(codeCopy, "getServerRequiredHackingLevel(");
+    var fileExistsCount = numOccurrences(codeCopy, "fileExists(");
+    var isRunningCount = numOccurrences(codeCopy, "isRunning(");
     var numOperators = numNetscriptOperators(codeCopy);
     var purchaseHacknetCount = numOccurrences(codeCopy, "purchaseHacknetNode(");
     var hacknetnodesArrayCount = numOccurrences(codeCopy, "hacknetnodes[");
@@ -254,6 +259,9 @@ Script.prototype.updateRamUsage = function() {
                     (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
                     (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
                     (getServerSecurityCount * CONSTANTS.ScriptGetServerSecurityRamCost) +
+                    (getServerReqdHackingCount * CONSTANTS.ScriptGetServerReqdHackRamCost) + 
+                    (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) + 
+                    (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
                     (numOperators * CONSTANTS.ScriptOperatorRamCost) +
                     (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) + 
                     (hacknetnodesArrayCount * CONSTANTS.ScriptHacknetNodesRamCost) +

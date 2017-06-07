@@ -243,7 +243,7 @@ PlayerObject.prototype.calculateHackingTime = function() {
 PlayerObject.prototype.calculatePercentMoneyHacked = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
     var skillMult = (this.hacking_skill - (this.getCurrentServer().requiredHackingSkill - 1)) / this.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 150;
+    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 200;
     console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
@@ -254,7 +254,7 @@ PlayerObject.prototype.calculatePercentMoneyHacked = function() {
 //The formula is:
 //  difficulty * requiredLevel * hacking_multiplier
 PlayerObject.prototype.calculateExpGain = function() {
-    return (this.getCurrentServer().hackDifficulty * this.hacking_exp_mult);
+    return (this.getCurrentServer().hackDifficulty * this.hacking_exp_mult * 0.9);
 }
 
 //Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for
@@ -274,7 +274,7 @@ PlayerObject.prototype.analyze = function() {
 PlayerObject.prototype.hasProgram = function(programName) {
     var home = Player.getHomeComputer();
     for (var i = 0; i < home.programs.length; ++i) {
-        if (programName == home.programs[i]) {return true;}
+        if (programName.toLowerCase() == home.programs[i].toLowerCase()) {return true;}
     }
     return false;
 }

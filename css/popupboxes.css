@@ -18,19 +18,20 @@
     z-index: 2;
     width: 50%;
     height: auto;
-    top: 50%;
+    max-height: 40%;
+    top: 40%;
     left: 50%;
     margin: -10% 0 0 -25%;
     overflow: auto;
     background-color: black;
     background-color: rgba(0,0,0,0.4);
+    border: 5px solid #FFFFFF;
 }
 
 .dialog-box-content {
     z-index: 2;
     background-color: black;
     padding: 10px;
-    border: 5px solid #FFFFFF;
 }
 
 .dialog-box-close-button {

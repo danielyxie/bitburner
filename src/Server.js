@@ -31,10 +31,9 @@ function Server() {
 	//by a separate formula 
 	this.requiredHackingSkill	= 1; 	
 	
-	//Total money available on this server. How much of this you hack will be determined
-	//by a formula related to hacking skill. The money available on a server will steadily increase
-	//over time, and it will decrease when you hack it
+	//Total money available on this server
 	this.moneyAvailable 		= 0;
+    this.moneyMax               = 0;
 	
 	//Parameters used in formulas that dictate how moneyAvailable and requiredHackingSkill change. 
 	this.hackDifficulty			= 1;	//Affects hack success rate and how the requiredHackingSkill increases over time (1-100)
@@ -79,6 +78,7 @@ Server.prototype.init = function(ip, hostname, organizationName, onlineStatus, i
 Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvailable, hackDifficulty, serverGrowth) {
 	this.requiredHackingSkill = requiredHackingSkill;
 	this.moneyAvailable = moneyAvailable;
+    this.moneyMax = 50 * moneyAvailable;
 	this.hackDifficulty = hackDifficulty;
 	this.serverGrowth = serverGrowth;
 }
@@ -675,52 +675,34 @@ initForeignServers = function() {
     }
 }
 
-
-//Server growth
-processServerGrowth = function(numCycles) {
-    //Server growth processed once every 450 game cycles
-	var numServerGrowthCycles = Math.max(Math.floor(numCycles / 450), 0);
-	
-	for (var ip in AllServers) {
-		if (AllServers.hasOwnProperty(ip)) {
-			var server = AllServers[ip];
-			
-			//Get the number of server growth cycles that will be applied based on the
-			//server's serverGrowth property
-			var serverGrowthPercentage = server.serverGrowth / 100;
-			var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage;
-			
-			//Apply serverGrowth for the calculated number of growth cycles
-			var serverGrowth = Math.pow(CONSTANTS.ServerGrowthRate, numServerGrowthCyclesAdjusted * Player.hacking_grow_mult) ;
-            if (serverGrowth < 1) {
-                console.log("WARN: serverGrowth calculated to be less than 1");
-                serverGrowth = 1;
-            }
-			//console.log("serverGrowth ratio: " + serverGrowth);
-			server.moneyAvailable *= serverGrowth;
-		}
-	}
-	console.log("Server growth processed for " + numServerGrowthCycles + " cycles");
-}
-
 //Applied server growth for a single server. Returns the percentage growth
 processSingleServerGrowth = function(server, numCycles) {
     //Server growth processed once every 450 game cycles
 	var numServerGrowthCycles = Math.max(Math.floor(numCycles / 450), 0);
     
-    //Get the number of server growth cycles that will be applied based on the
-    //server's serverGrowth property
+    //Get adjusted growth rate, which accounts for server security
+    var growthRate = CONSTANTS.ServerBaseGrowthRate; 
+    var adjGrowthRate = 1 + (growthRate - 1) / server.hackDifficulty; 
+    if (adjGrowthRate > CONSTANTS.ServerMaxGrowthRate) {adjGrowthRate = CONSTANTS.ServerMaxGrowthRate;}
+    console.log("Adjusted growth rate: " + adjGrowthRate);
+    
+    //Calculate adjusted server growth rate based on parameters
     var serverGrowthPercentage = server.serverGrowth / 100;
     var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage;
     
     //Apply serverGrowth for the calculated number of growth cycles
-    var serverGrowth = Math.pow(CONSTANTS.ServerGrowthRate, numServerGrowthCyclesAdjusted * Player.hacking_grow_mult) ;
+    var serverGrowth = Math.pow(adjGrowthRate, numServerGrowthCyclesAdjusted * Player.hacking_grow_mult) ;
     if (serverGrowth < 1) {
         console.log("WARN: serverGrowth calculated to be less than 1");
         serverGrowth = 1;
     }
+    
     server.moneyAvailable *= serverGrowth;
-
+    if (server.moneyMax && server.moneyAvailable >= server.moneyMax) {
+        server.moneyAvailable = server.moneyMax;
+        return 1;
+    }
+    server.fortify(2 * CONSTANTS.ServerFortifyAmount);
     return serverGrowth;
 }
 

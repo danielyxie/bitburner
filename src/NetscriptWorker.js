@@ -111,6 +111,8 @@ function runScriptsLoop() {
 							return;
 						}
 					} 
+                } else {
+                    dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
                 }
 			});
 		}
@@ -133,12 +135,12 @@ function runScriptsLoop() {
 			
 			//Free RAM
 			AllServers[ip].ramUsed -= workerScripts[i].ramUsage;
+            
+            //Delete script from Active Scripts
+			deleteActiveScriptsItem(workerScripts[i]);
 				
 			//Delete script from workerScripts
 			workerScripts.splice(i, 1);
-			
-			//Delete script from Active Scripts
-			Engine.deleteActiveScriptsItem(i);
 		}
 	}
 	
@@ -152,8 +154,10 @@ function killWorkerScript(scriptName, serverIp) {
 	for (var i = 0; i < workerScripts.length; i++) {
 		if (workerScripts[i].name == scriptName && workerScripts[i].serverIp == serverIp) {
 			workerScripts[i].env.stopFlag = true;
+            return true;
 		}
 	}
+    return false;
 }
 
 //Queues a script to be run 
@@ -171,7 +175,7 @@ function addWorkerScript(script, server) {
 	s.ramUsage 	= script.ramUsage;
 	
 	//Add the WorkerScript to the Active Scripts list
-	Engine.addActiveScriptsItem(s);
+	addActiveScriptsItem(s);
 	
 	//Add the WorkerScript
 	workerScripts.push(s);

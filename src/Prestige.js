@@ -109,8 +109,10 @@ function prestigeAugmentation() {
     
     //Delete all running scripts objects
     for (var i = 0; i < workerScripts.length; ++i) {
+        deleteActiveScriptsItem(workerScripts[i]);
         workerScripts[i].env.stopFlag = true;
     }
+    workerScripts.length = 0;
     
     var homeComp = Player.getHomeComputer();
     //Delete all servers except home computer
@@ -160,13 +162,6 @@ function prestigeAugmentation() {
     }
     //Delete messages on home computer
     homeComp.messages.length = 0;
-    
-    //Delete active scripts display elements
-    var list = Engine.ActiveScriptsList.querySelectorAll('#active-scripts-list li');
-    for (var i = list.length-1; i >= 0; --i) {
-        Engine.deleteActiveScriptsItem(i);
-    }
-    workerScripts.length = 0;
     
     //Delete Hacknet Nodes
     Player.hacknetNodes.length = 0;

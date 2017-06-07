@@ -236,7 +236,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     //Autocomplete the command
     if (index == -1) {
         return ["alias", "analyze", "cat", "clear", "cls", "connect", "free", 
-                "hack", "help", "home", "hostname", "ifconfig", "kill", 
+                "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
                 "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze", 
                 "scp", "sudov", "tail", "top"];
     }
@@ -412,9 +412,12 @@ var Terminal = {
         //Replace all extra whitespace in command with a single space
         command = command.replace(/\s\s+/g, ' ');
         
-        Terminal.commandHistory.push(command);
-        if (Terminal.commandHistory.length > 50) {
-            Terminal.commandHistory.splice(0, 1);
+        //Terminal history
+        if (Terminal.commandHistory[Terminal.commandHistory.length-1] != command) {
+            Terminal.commandHistory.push(command);
+            if (Terminal.commandHistory.length > 50) {
+                Terminal.commandHistory.splice(0, 1);
+            }
         }
         Terminal.commandHistoryIndex = Terminal.commandHistory.length;
         
@@ -715,6 +718,13 @@ var Terminal = {
 				}
 				post("No such script is running. Nothing to kill");
 				break;
+            case "killall":
+                var s = Player.getCurrentServer();
+                for (var i = s.runningScripts.length; i >= 0; --i) {
+                    killWorkerScript(s.runningScripts[i], s.ip);
+                }
+                post("Killing all running scripts. May take up to a few minutes for the scripts to die...");
+                break;
 			case "ls":
                 Terminal.executeListCommand(commandArray);
 				break;
@@ -746,13 +756,6 @@ var Terminal = {
 				
 				//Script name is the filename without the .script at the end
 				var scriptname = filename.substr(0, filename.indexOf(".script"));
-				
-				//Cannot edit scripts that are currently running
-				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
-					if (filename == Player.getCurrentServer().runningScripts[i]) {
-						post("Cannot open/edit scripts that are currently running!"); return;
-					}
-				}
 				
 				//Check if the script already exists
 				for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
