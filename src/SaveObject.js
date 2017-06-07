@@ -33,13 +33,19 @@ BitburnerSaveObject.prototype.saveGame = function() {
     Engine.createStatusText("Game saved!");
 }
 
-loadGame = function(saveObj) {
-    if (!window.localStorage.getItem("bitburnerSave")) {
-        console.log("No save file to load");
-        return false;
+loadGame = function(saveObj, imported=false) {
+    var saveString = "";
+    if (imported) {
+        
+    } else {
+        if (!window.localStorage.getItem("bitburnerSave")) {
+            console.log("No save file to load");
+            return false;
+        }
+        var saveString = decodeURIComponent(escape(atob(window.localStorage.getItem("bitburnerSave"))));
     }
-    var saveString = decodeURIComponent(escape(atob(window.localStorage.getItem("bitburnerSave"))));
-    saveObj = JSON.parse(saveString, Reviver);
+    
+    saveObj         = JSON.parse(saveString, Reviver);
     
     Player          = JSON.parse(saveObj.PlayerSave, Reviver);
     AllServers      = JSON.parse(saveObj.AllServersSave, Reviver);
@@ -79,6 +85,10 @@ loadGame = function(saveObj) {
     }
     
     return true;
+}
+
+BitburnerSaveObject.prototype.exportGame = function() {
+    
 }
 
 BitburnerSaveObject.prototype.deleteGame = function() {
