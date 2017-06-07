@@ -1,4 +1,5 @@
 var Engine = {
+    version: "",
     Debug: true,
         
     //Clickable objects
@@ -698,7 +699,7 @@ var Engine = {
             initAugmentations();
             
             //Start interactive tutorial
-            iTutorialStart();
+            iTutorialStart();            
         }
     },
     

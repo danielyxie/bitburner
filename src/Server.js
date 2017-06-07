@@ -31,10 +31,9 @@ function Server() {
 	//by a separate formula 
 	this.requiredHackingSkill	= 1; 	
 	
-	//Total money available on this server. How much of this you hack will be determined
-	//by a formula related to hacking skill. The money available on a server will steadily increase
-	//over time, and it will decrease when you hack it
+	//Total money available on this server
 	this.moneyAvailable 		= 0;
+    this.moneyMax               = 0;
 	
 	//Parameters used in formulas that dictate how moneyAvailable and requiredHackingSkill change. 
 	this.hackDifficulty			= 1;	//Affects hack success rate and how the requiredHackingSkill increases over time (1-100)
@@ -79,6 +78,7 @@ Server.prototype.init = function(ip, hostname, organizationName, onlineStatus, i
 Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvailable, hackDifficulty, serverGrowth) {
 	this.requiredHackingSkill = requiredHackingSkill;
 	this.moneyAvailable = moneyAvailable;
+    this.moneyMax = 50 * moneyAvailable;
 	this.hackDifficulty = hackDifficulty;
 	this.serverGrowth = serverGrowth;
 }
@@ -696,7 +696,12 @@ processSingleServerGrowth = function(server, numCycles) {
         console.log("WARN: serverGrowth calculated to be less than 1");
         serverGrowth = 1;
     }
+    
     server.moneyAvailable *= serverGrowth;
+    if (server.moneyMax && server.moneyAvailable >= server.moneyMax) {
+        server.moneyAvailable = server.moneyMax;
+        return 1;
+    }
     server.fortify(2 * CONSTANTS.ServerFortifyAmount);
     return serverGrowth;
 }

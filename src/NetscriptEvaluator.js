@@ -957,7 +957,7 @@ function scriptCalculateHackingTime(server) {
 
 //The same as Player's calculateExpGain() function but takes in the server as an argument 
 function scriptCalculateExpGain(server) {
-	return (server.hackDifficulty * Player.hacking_exp_mult);
+	return (server.hackDifficulty * Player.hacking_exp_mult * 0.9);
 }
 
 //The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument

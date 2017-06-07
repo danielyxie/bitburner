@@ -307,8 +307,9 @@ CONSTANTS = {
                            "<i>hack(hostname/ip)</i><br>Core function that is used to try and hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
                            "either the IP or hostname of the server you want to hack. The runtime for this command depends on your hacking level and the target server's security level. " + 
                            " A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. " +
-                           "For example, you can create a script that hacks the 'foodnstuff' server and run that script on any server in the game. Calling hack() on " + 
-                           "a server will raise that server's security level by " + this.ServerFortifyAmount + ".<br>" + 
+                           "For example, you can create a script that hacks the 'foodnstuff' server and run that script on any server in the game. A successful hack() on " + 
+                           "a server will raise that server's security level by " + this.ServerFortifyAmount + ". Returns true if the hack is successful and " + 
+                           "false otherwise. <br>" + 
                            "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
                            "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
@@ -318,13 +319,15 @@ CONSTANTS = {
                            "Like hack(), grow() can be called on any server, regardless of where the script is running. " + 
                            "The grow() command requires root access to the target server, but there is no required hacking level to run the command. " + 
                            "It grants 0.5 hacking exp when it completes. It also raises the security level of the target server by " + (2 * this.ServerFortifyAmount) + ". " +
+                           "Returns the number by which the money on the server was multiplied for the growth. " + 
                            "Works offline at a slower rate. <br> Example: grow('foodnstuff');<br><br>" + 
                            "<i>weaken(hostname/ip)</i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " + 
                            "in must be a string with either the IP or hostname of the target server. The runtime for this command depends on your " + 
                            "hacking level and the target server's security level. This function lowers the security level of the target server by " + 
                             this.ServerWeakenAmount + ".<br><br> Like hack() and grow(), weaken() can be called on " + 
                            "any server, regardless of where the script is running. This command requires root access to the target server, but " + 
-                           "there is no required hacking level to run the command. Grants 3 hacking exp when it completes. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
+                           "there is no required hacking level to run the command. Grants 3 hacking exp when it completes. Returns " + 
+                           this.ServerWeakenAmount + ". Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" + 
@@ -537,7 +540,7 @@ CONSTANTS = {
     "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
     "now each one should only take 750 milliseconds). <br> " +
     "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br>" + 
-    "-Hacking experience granted by grow() halved<b>" + 
+    "-Hacking experience granted by grow() halved<br>" + 
     "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br>" + 
     "-Rebalancing of script RAM costs. Base RAM Cost for a script increased from 1GB to 1.5GB. Loops, hack(), grow() " + 
     "and weaken() all cost slightly less RAM than before <br>" + 
@@ -555,6 +558,9 @@ CONSTANTS = {
     "server's security level by " + (2 * this.ServerFortifyAmount) + ". For reference, if a server has a security level of 10 " + 
     "it will have approximately the same growth rate as before. <br>" + 
     "-Server growth no longer happens naturally<br>" + 
+    "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br>" + 
+    "-Hacking now grants 10% less hacking experience<br> " + 
+    "-You can now edit scripts that are running<br>" + 
     "v0.19.7<br>" + 
     "-Added changelog to Options menu<br>" + 
     "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs<br><br>" + 

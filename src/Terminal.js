@@ -757,13 +757,6 @@ var Terminal = {
 				//Script name is the filename without the .script at the end
 				var scriptname = filename.substr(0, filename.indexOf(".script"));
 				
-				//Cannot edit scripts that are currently running
-				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
-					if (filename == Player.getCurrentServer().runningScripts[i]) {
-						post("Cannot open/edit scripts that are currently running!"); return;
-					}
-				}
-				
 				//Check if the script already exists
 				for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
 					if (filename == Player.getCurrentServer().scripts[i].filename) {
