@@ -535,6 +535,10 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.20.1<br>" + 
+    "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
+    "-Added Deepscan programs to Dark Web<br>" + 
+    "-" + 
     "v0.20.0<br>" + 
     "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
     "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 

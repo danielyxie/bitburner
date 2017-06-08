@@ -890,7 +890,7 @@ var Engine = {
         //Active scripts list
         Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
         
-        //Save and Delete buttons
+        //Save, Delete, Import/Export buttons
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
             saveObject.saveGame();
@@ -900,6 +900,11 @@ var Engine = {
         Engine.Clickables.deleteMainMenuButton = document.getElementById("delete-game-link");
         Engine.Clickables.deleteMainMenuButton.addEventListener("click", function() {
             saveObject.deleteGame();
+            return false;
+        });
+        
+        document.getElementById("export-game-link").addEventListener("click", function() {
+            saveObject.exportGame();
             return false;
         });
         
