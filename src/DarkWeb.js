@@ -47,7 +47,7 @@ listAllDarkwebItems = function() {
 }
 
 buyDarkwebItem = function(itemName) {
-    if (itemName.toLowerCase() == "brutessh.exe") {
+    if (itemName.toLowerCase() == Programs.BruteSSHProgram.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.BruteSSHProgram);
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
@@ -57,7 +57,7 @@ buyDarkwebItem = function(itemName) {
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (itemName.toLowerCase() == "ftpcrack.exe") {
+    } else if (itemName.toLowerCase() == Programs.FTPCrackProgram.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.FTPCrackProgram);
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
@@ -67,7 +67,7 @@ buyDarkwebItem = function(itemName) {
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (itemName.toLowerCase() == "relaysmtp.exe") {
+    } else if (itemName.toLowerCase() == Programs.RelaySMTPProgram.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.RelaySMTPProgram);
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
@@ -77,7 +77,7 @@ buyDarkwebItem = function(itemName) {
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (itemName.toLowerCase() == "httpworm.exe") {
+    } else if (itemName.toLowerCase() == Programs.HTTPWormProgram.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.HTTPWormProgram);
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
@@ -87,12 +87,32 @@ buyDarkwebItem = function(itemName) {
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (itemName.toLowerCase() == "sqlinject.exe") {
+    } else if (itemName.toLowerCase() == Programs.SQLInjectProgram.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.SQLInjectProgram);
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.SQLInjectProgram);
             post("You have purchased the SQLInject.exe program. The new program " + 
+                 "can be found on your home computer.");
+        } else {
+            post("Not enough money to purchase " + itemName);
+        }
+    } else if (itemName.toLowerCase() == Programs.DeepscanV1.toLowerCase()) {
+        var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV1Program);
+        if (price > 0 && Player.money >= price) {
+            Player.loseMoney(price);
+            Player.getHomeComputer().programs.push(Programs.DeepscanV1);
+            post("You have purchased the DeepscanV1.exe program. The new program " + 
+                 "can be found on your home computer.");
+        } else {
+            post("Not enough money to purchase " + itemName);
+        }
+    } else if (itemName.toLowerCase() == Programs.DeepscanV2.toLowerCase()) {
+        var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV2Program);
+        if (price > 0 && Player.money >= price) {
+            Player.loseMoney(price);
+            Player.getHomeComputer().programs.push(Programs.DeepscanV2);
+            post("You have purchased the DeepscanV2.exe program. The new program " + 
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -129,4 +149,6 @@ DarkWebItems = {
     RelaySMTPProgram:   Programs.RelaySMTPProgram + " - $5,000,000 - Opens up SMTP Ports",
     HTTPWormProgram:    Programs.HTTPWormProgram + " - $30,000,000 - Opens up HTTP Ports",
     SQLInjectProgram:   Programs.SQLInjectProgram + " - $250,000,000 - Opens up SQL Ports",
+    DeepScanV1Program:  Programs.DeepscanV1 + " - $500,000 - Enables 'scan-analyze' with a depth up to 5",
+    DeepScanV2Program:  Programs.DeepscanV2 + " - $25,000,000 - Enables 'scan-analyze' with a depth up to 10",
 }

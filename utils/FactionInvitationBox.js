@@ -1,16 +1,4 @@
 /* Faction Invitation Pop-up box */
-function factionInvitationBoxInit() {
-    var cancelButton = document.getElementById("faction-invitation-box-no");
-    
-    //Close Dialog box
-    cancelButton.addEventListener("click", function() {
-        factionInvitationBoxClose();
-        return false;
-    });
-};
-
-document.addEventListener("DOMContentLoaded", factionInvitationBoxInit, false);
-
 factionInvitationBoxClose = function() {
     var factionInvitationBox = document.getElementById("faction-invitation-box-container");
     factionInvitationBox.style.display = "none";
@@ -37,13 +25,16 @@ factionInvitationBoxCreate = function(faction) {
     //TODO Faction invitation message
     
     var newYesButton = clearEventListeners("faction-invitation-box-yes");
-    //var yesButton = document.getElementById("faction-invitation-box-yes");
-    //var newYesButton = yesButton.cloneNode(true);
-    //yesButton.parentNode.replaceChild(newYesButton, yesButton);
-    
     newYesButton.addEventListener("click", function() {
         joinFaction(faction);
         factionInvitationBoxClose();
+        return false;
+    });
+    
+    var noButton = clearEventListeners("faction-invitation-box-no");
+    noButton.addEventListener("click", function() {
+        factionInvitationBoxClose();
+        faction.alreadyInvited = true;
         return false;
     });
     
