@@ -199,6 +199,9 @@ loadImportedGame = function(saveObj, saveString) {
     //Re-apply augmentations
     Player.reapplyAllAugmentations();
     
+    //Clear terminal
+    $("#terminal tr:not(:last)").remove();
+    
     Player.lastUpdate = Engine._lastUpdate;
     Engine.start();                 //Run main game loop and Scripts loop
     dialogBoxCreate("While you were offline, your scripts generated $" + 
