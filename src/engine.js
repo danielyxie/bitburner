@@ -1016,6 +1016,7 @@ var Engine = {
             console.log("Deleting running scripts on home computer");
             Player.getHomeComputer().runningScripts = [];
             dialogBoxCreate("Forcefully deleted all running scripts on home computer. Please save and refresh page");
+            gameOptionsBoxClose();
             return false;
         });
         
@@ -1023,6 +1024,7 @@ var Engine = {
         document.getElementById("debug-soft-reset").addEventListener("click", function() {
             dialogBoxCreate("Soft Reset!");
             prestigeAugmentation();
+            gameOptionsBoxClose();
             return false;
         });
     },

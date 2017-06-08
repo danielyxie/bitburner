@@ -153,6 +153,7 @@ loadImportedGame = function(saveObj, saveString) {
     }
     
     dialogBoxCreate("Imported game");
+    gameOptionsBoxClose();
     return true;
 }
 
