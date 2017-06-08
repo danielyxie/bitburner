@@ -154,6 +154,56 @@ loadImportedGame = function(saveObj, saveString) {
     
     dialogBoxCreate("Imported game");
     gameOptionsBoxClose();
+    
+    //Re-start game
+    console.log("Importing game");
+    Engine.setDisplayElements();    //Sets variables for important DOM elements
+    Engine.init();                  //Initialize buttons, work, etc.
+    CompanyPositions.init();
+
+    //Calculate the number of cycles have elapsed while offline
+    Engine._lastUpdate = new Date().getTime();
+    var lastUpdate = Player.lastUpdate;
+    var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
+    
+    /* Process offline progress */
+    var offlineProductionFromScripts = loadAllRunningScripts();    //This also takes care of offline production for those scripts
+    if (Player.isWorking) {
+        console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
+        if (Player.workType == CONSTANTS.WorkTypeFaction) {
+            Player.workForFaction(numCyclesOffline);
+        } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
+            Player.createProgramWork(numCyclesOffline);
+        } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
+            Player.takeClass(numCyclesOffline);
+        } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
+            Player.commitCrime(numCyclesOffline);
+        } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
+            Player.workPartTime(numCyclesOffline);
+        } else {
+            Player.work(numCyclesOffline);
+        }
+    }
+    
+    //Hacknet Nodes offline progress
+    var offlineProductionFromHacknetNodes = processAllHacknetNodeEarnings(numCyclesOffline);
+    
+    //Passive faction rep gain offline
+    processPassiveFactionRepGain(numCyclesOffline);
+    
+    //Update total playtime
+    var time = numCyclesOffline * Engine._idleSpeed;
+    if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
+    Player.totalPlaytime += time;
+    
+    //Re-apply augmentations
+    Player.reapplyAllAugmentations();
+    
+    Player.lastUpdate = Engine._lastUpdate;
+    Engine.start();                 //Run main game loop and Scripts loop
+    dialogBoxCreate("While you were offline, your scripts generated $" + 
+                    formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" + 
+                    formatNumber(offlineProductionFromHacknetNodes, 2));
     return true;
 }
 

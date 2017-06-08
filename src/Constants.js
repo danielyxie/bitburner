@@ -541,7 +541,7 @@ CONSTANTS = {
     "-Declining a faction invite will stop you from receiving invitations from that faction for the rest of the run<br>" + 
     "-(BETA) Added functionality to export/import saves. WARNING This is only lightly tested. You cannot choose where to save your file " + 
     "it just goes to the default save location. Also I have no idea what will happen if you try to import a file " + 
-    "that is not a valid save. I will address these in later updates<br>" + 
+    "that is not a valid save. I will address these in later updates<br><br>" + 
     "v0.20.0<br>" + 
     "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
     "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
@@ -652,6 +652,13 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
+    "v0.20.1<br>" + 
+    "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
+    "-Added Deepscan programs to Dark Web<br>" + 
+    "-Declining a faction invite will stop you from receiving invitations from that faction for the rest of the run<br>" + 
+    "-(BETA) Added functionality to export/import saves. WARNING This is only lightly tested. You cannot choose where to save your file " + 
+    "it just goes to the default save location. Also I have no idea what will happen if you try to import a file " + 
+    "that is not a valid save. I will address these in later updates<br><br>" + 
     "v0.20.0<br>" + 
     "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
     "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
