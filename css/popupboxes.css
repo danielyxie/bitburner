@@ -298,3 +298,8 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+#import-game-file-selector {
+    display:none;
+}
+

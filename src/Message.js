@@ -43,7 +43,6 @@ function addMessageToServer(msg, serverHostname) {
 
 //Checks if any of the 'timed' messages should be sent
 function checkForMessagesToSend() {
-    console.log("checkForMessagesToSend() called");
     var jumper0 = Messages[MessageFilenames.Jumper0];
     var jumper1 = Messages[MessageFilenames.Jumper1];
     var jumper2 = Messages[MessageFilenames.Jumper2];
@@ -72,7 +71,7 @@ function checkForMessagesToSend() {
         sendMessage(bitrunnersTest);
     } if (jumper5 && !jumper5.recvd && Player.hacking_skill >= 900) {
         sendMessage(jumper5);
-        Player.getHomeComputer.programs.push(Programs.Flight);
+        Player.getHomeComputer().programs.push(Programs.Flight);
     }
 }
 

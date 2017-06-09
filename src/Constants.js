@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.20.0",
+    Version:                "0.20.1",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -34,7 +34,7 @@ CONSTANTS = {
     
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
-	CodeInstructionRunTime:	750, 
+	CodeInstructionRunTime:	500, 
     
     //RAM Costs for different commands
     ScriptWhileRamCost:             0.2,
@@ -535,10 +535,17 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.20.1<br>" + 
+    "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
+    "-Added Deepscan programs to Dark Web<br>" + 
+    "-Declining a faction invite will stop you from receiving invitations from that faction for the rest of the run<br>" + 
+    "-(BETA) Added functionality to export/import saves. WARNING This is only lightly tested. You cannot choose where to save your file " + 
+    "it just goes to the default save location. Also I have no idea what will happen if you try to import a file " + 
+    "that is not a valid save. I will address these in later updates<br><br>" + 
     "v0.20.0<br>" + 
     "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
     "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
-    "now each one should only take 750 milliseconds). <br><br>" +
+    "now each one should only take ~500 milliseconds). <br><br>" +
     "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br><br>" + 
     "-Hacking experience granted by grow() halved<br><br>" + 
     "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br><br>" + 
@@ -560,7 +567,7 @@ CONSTANTS = {
     "-Server growth no longer happens naturally<br><br>" + 
     "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br><br>" + 
     "-Hacking now grants 10% less hacking experience<br><br>" + 
-    "-You can now edit scripts that are running<br><br>+ " +
+    "-You can now edit scripts that are running<br><br>" +
     "-Augmentations cost ~11% more money and 25% more faction reputation<br><br>" + 
     "v0.19.7<br>" + 
     "-Added changelog to Options menu<br>" + 
@@ -645,10 +652,17 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
+    "v0.20.1<br>" + 
+    "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
+    "-Added Deepscan programs to Dark Web<br>" + 
+    "-Declining a faction invite will stop you from receiving invitations from that faction for the rest of the run<br>" + 
+    "-(BETA) Added functionality to export/import saves. WARNING This is only lightly tested. You cannot choose where to save your file " + 
+    "it just goes to the default save location. Also I have no idea what will happen if you try to import a file " + 
+    "that is not a valid save. I will address these in later updates<br><br>" + 
     "v0.20.0<br>" + 
     "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
     "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
-    "now each one should only take 750 milliseconds). <br><br>" +
+    "now each one should only take ~500 milliseconds). <br><br>" +
     "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br><br>" + 
     "-Hacking experience granted by grow() halved<br><br>" + 
     "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br><br>" + 
@@ -670,6 +684,6 @@ CONSTANTS = {
     "-Server growth no longer happens naturally<br><br>" + 
     "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br><br>" + 
     "-Hacking now grants 10% less hacking experience<br><br>" + 
-    "-You can now edit scripts that are running<br><br>+ " +
+    "-You can now edit scripts that are running<br><br>" +
     "-Augmentations cost ~11% more money and 25% more faction reputation<br><br>",
 }

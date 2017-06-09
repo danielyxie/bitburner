@@ -25,6 +25,7 @@ function Faction(name) {
 	this.isMember 			= false; 	//Whether player is member
     this.isBanned           = false;    //Whether or not player is banned from joining this faction
     this.playerReputation 	= 0;  		//"Reputation" within faction
+    this.alreadyInvited     = false;
     
     //Multipliers for unlocking and purchasing augmentations
     this.augmentationPriceMult = 1;
@@ -188,7 +189,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //Illuminati
     var illuminatiFac = Factions["Illuminati"];
-    if (illuminatiFac.isBanned == false && illuminatiFac.isMember == false &&
+    if (!illuminatiFac.isBanned && !illuminatiFac.isMember && !illuminatiFac.alreadyInvited && 
         this.numAugmentations >= 10 && 
         this.money >= 10000000000 && this.total_money >= 20000000000 &&
         this.hacking_skill >= 800 && this.total_hacking >= 7000 &&
@@ -201,7 +202,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         
     //Daedalus
     var daedalusFac = Factions["Daedalus"];
-    if (daedalusFac.isBanned == false && daedalusFac.isMember == false &&
+    if (!daedalusFac.isBanned && !daedalusFac.isMember && !daedalusFac.alreadyInvited && 
         this.numAugmentations >= 15 && 
         this.money >= 1000000000 && this.total_money >= 10000000000 &&
         this.hacking_skill >= 1000 && this.total_hacking >= 10000 &&
@@ -214,7 +215,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //The Covenant
     var covenantFac = Factions["The Covenant"];
-    if (covenantFac.isBanned == false && covenantFac.isMember == false &&
+    if (!covenantFac.isBanned && !covenantFac.isMember && !covenantFac.alreadyInvited &&
         this.numAugmentations >= 12 &&
         this.money >= 5000000000 && this.total_money >= 10000000000 &&
         this.hacking_skill >= 850 && this.total_hack >= 5000 && 
@@ -227,63 +228,65 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //ECorp
     var ecorpFac = Factions["ECorp"];
-    if (ecorpFac.isBanned == false && ecorpFac.isMember == false && 
+    if (!ecorpFac.isBanned && !ecorpFac.isMember && !ecorpFac.alreadyInvited && 
         this.companyName == Locations.AevumECorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(ecorpFac);
     }
     
     //MegaCorp
     var megacorpFac = Factions["MegaCorp"];
-    if (megacorpFac.isBanned == false && megacorpFac.isMember == false && 
+    if (!megacorpFac.isBanned && !megacorpFac.isMember && !megacorpFac.alreadyInvited &&
         this.companyName == Locations.Sector12MegaCorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(megacorpFac);
     }
         
     //Bachman & Associates
     var bachmanandassociatesFac = Factions["Bachman & Associates"];
-    if (bachmanandassociatesFac.isBanned == false && bachmanandassociatesFac.isMember == false &&
+    if (!bachmanandassociatesFac.isBanned && !bachmanandassociatesFac.isMember &&
+        !bachmanandassociatesFac.alreadyInvited && 
         this.companyName == Locations.AevumBachmanAndAssociates && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(bachmanandassociatesFac);
     }
     
     //Blade Industries
     var bladeindustriesFac = Factions["Blade Industries"];
-    if (bladeindustriesFac.isBanned == false && bladeindustriesFac.isMember == false && 
+    if (!bladeindustriesFac.isBanned && !bladeindustriesFac.isMember && !bladeindustriesFac.alreadyInvited && 
         this.companyName == Locations.Sector12BladeIndustries && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(bladeindustriesFac);
     }
     
     //NWO
     var nwoFac = Factions["NWO"];
-    if (nwoFac.isBanned == false && nwoFac.isMember == false && 
+    if (!nwoFac.isBanned && !nwoFac.isMember && !nwoFac.alreadyInvited && 
         this.companyName == Locations.VolhavenNWO && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(nwoFac);
     }
     
     //Clarke Incorporated
     var clarkeincorporatedFac = Factions["Clarke Incorporated"];
-    if (clarkeincorporatedFac.isBanned == false && clarkeincorporatedFac.isMember == false &&
+    if (!clarkeincorporatedFac.isBanned && !clarkeincorporatedFac.isMember && !clarkeincorporatedFac.alreadyInvited && 
         this.companyName == Locations.AevumClarkeIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(clarkeincorporatedFac);
     }
     
     //OmniTek Incorporated
     var omnitekincorporatedFac = Factions["OmniTek Incorporated"];
-    if (omnitekincorporatedFac.isBanned == false && omnitekincorporatedFac.isMember == false &&
+    if (!omnitekincorporatedFac.isBanned && !omnitekincorporatedFac.isMember && !omnitekincorporatedFac.alreadyInvited && 
         this.companyName == Locations.VolhavenOmniTekIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(omnitekincorporatedFac);
     }
     
     //Four Sigma
     var foursigmaFac = Factions["Four Sigma"];
-    if (foursigmaFac.isBanned == false && foursigmaFac.isMember == false && 
+    if (!foursigmaFac.isBanned && !foursigmaFac.isMember && !foursigmaFac.alreadyInvited && 
         this.companyName == Locations.Sector12FourSigma && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(foursigmaFac);
     }
     
     //KuaiGong International
     var kuaigonginternationalFac = Factions["KuaiGong International"];
-    if (kuaigonginternationalFac.isBanned == false && kuaigonginternationalFac.isMember == false &&
+    if (!kuaigonginternationalFac.isBanned && !kuaigonginternationalFac.isMember &&
+        !kuaigonginternationalFac.alreadyInvited && 
         this.companyName == Locations.ChongqingKuaiGongInternational && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
         invitedFactions.push(kuaigonginternationalFac);
     }
@@ -294,7 +297,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (fulcrumSecretServer == null) {
         console.log("ERROR: Could not find Fulcrum Secret Technologies Server");
     } else {
-        if (fulcrumsecrettechonologiesFac.isBanned == false && fulcrumsecrettechonologiesFac.isMember == false &&
+        if (!fulcrumsecrettechonologiesFac.isBanned && !fulcrumsecrettechonologiesFac.isMember &&
+            !fulcrumsecrettechonologiesFac.alreadyInvited && 
             fulcrumSecretServer.manuallyHacked && 
             this.companyName == Locations.AevumFulcrumTechnologies && companyRep >= 250000) {
             invitedFactions.push(fulcrumsecrettechonologiesFac);
@@ -307,8 +311,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var bitrunnersServer = AllServers[SpecialServerIps[SpecialServerNames.BitRunnersServer]];
     if (bitrunnersServer == null) {
         console.log("ERROR: Could not find BitRunners Server");
-    } else if (bitrunnersFac.isBanned == false && bitrunnersFac.isMember == false && bitrunnersServer.manuallyHacked &&
-            this.hacking_skill >= 500 && homeComp.maxRam >= 128) {
+    } else if (!bitrunnersFac.isBanned && !bitrunnersFac.isMember && bitrunnersServer.manuallyHacked &&
+               !bitrunnersFac.alreadyInvited && this.hacking_skill >= 500 && homeComp.maxRam >= 128) {
         invitedFactions.push(bitrunnersFac);
     }
     
@@ -318,7 +322,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (blackhandServer == null) {
         console.log("ERROR: Could not find The Black Hand Server");
     } else if (!theblackhandFac.isBanned && !theblackhandFac.isMember && blackhandServer.manuallyHacked &&
-        this.hacking_skill >= 350 && homeComp.maxRam >= 64) {
+               !theblackhandFac.alreadyInvited && this.hacking_skill >= 350 && homeComp.maxRam >= 64) {
         invitedFactions.push(theblackhandFac);
     }
     
@@ -328,55 +332,55 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (nitesecServer == null) {
         console.log("ERROR: Could not find NiteSec Server");
     } else if (!nitesecFac.isBanned && !nitesecFac.isMember && nitesecServer.manuallyHacked &&
-        this.hacking_skill >= 200 && homeComp.maxRam >= 32) {
+               !nitesecFac.alreadyInvited && this.hacking_skill >= 200 && homeComp.maxRam >= 32) {
         invitedFactions.push(nitesecFac);
     }
     
     //Chongqing
     var chongqingFac = Factions["Chongqing"];
-    if (chongqingFac.isBanned == false && chongqingFac.isMember == false &&
+    if (!chongqingFac.isBanned && !chongqingFac.isMember && !chongqingFac.alreadyInvited &&
         this.money >= 20000000 && this.city == Locations.Chongqing) {
         invitedFactions.push(chongqingFac);
     }
     
     //Sector-12
     var sector12Fac = Factions["Sector-12"];
-    if (sector12Fac.isBanned == false && sector12Fac.isMember == false && 
+    if (!sector12Fac.isBanned && !sector12Fac.isMember && !sector12Fac.alreadyInvited && 
         this.money >= 15000000 && this.city == Locations.Sector12) {
         invitedFactions.push(sector12Fac);
     }
     
     //New Tokyo
     var newtokyoFac = Factions["New Tokyo"];
-    if (newtokyoFac.isBanned == false && newtokyoFac.isMember == false && 
+    if (!newtokyoFac.isBanned && !newtokyoFac.isMember && !newtokyoFac.alreadyInvited &&
         this.money >= 20000000 && this.city == Locations.NewTokyo) {
         invitedFactions.push(newtokyoFac);
     }
     
     //Aevum
     var aevumFac = Factions["Aevum"];
-    if (aevumFac.isBanned == false && aevumFac.isMember == false && 
+    if (!aevumFac.isBanned && !aevumFac.isMember  && !aevumFac.alreadyInvited &&
         this.money >= 40000000 && this.city == Locations.Aevum) {
         invitedFactions.push(aevumFac);
     }
     
     //Ishima
     var ishimaFac = Factions["Ishima"];
-    if (ishimaFac.isBanned == false && ishimaFac.isMember == false &&
+    if (!ishimaFac.isBanned && !ishimaFac.isMember && !ishimaFac.alreadyInvited &&
         this.money >= 30000000 && this.city == Locations.Ishima) {
         invitedFactions.push(ishimaFac);
     }
     
     //Volhaven
     var volhavenFac = Factions["Volhaven"];
-    if (volhavenFac.isBanned == false && volhavenFac.isMember == false && 
+    if (!volhavenFac.isBanned && !volhavenFac.isMember && !volhavenFac.alreadyInvited &&
         this.money >= 50000000 && this.city == Locations.Volhaven) {
         invitedFactions.push(volhavenFac);
     }
     
     //Speakers for the Dead
     var speakersforthedeadFac = Factions["Speakers for the Dead"];
-    if (speakersforthedeadFac.isBanned == false && speakersforthedeadFac.isMember == false && 
+    if (!speakersforthedeadFac.isBanned && !speakersforthedeadFac.isMember && !speakersforthedeadFac.alreadyInvited &&
         this.hacking_skill >= 100 && this.strength >= 300 && this.defense >= 300 && 
         this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 10 &&
         this.numPeopleKilledTotal >= 100 && this.karma <= -45 && this.companyName != Locations.Sector12CIA &&
@@ -386,7 +390,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         
     //The Dark Army
     var thedarkarmyFac = Factions["The Dark Army"];
-    if (thedarkarmyFac.isBanned == false && thedarkarmyFac.isMember == false && 
+    if (!thedarkarmyFac.isBanned && !thedarkarmyFac.isMember && !thedarkarmyFac.alreadyInvited && 
         this.hacking_skill >= 300 && this.strength >= 300 && this.defense >= 300 && 
         this.dexterity >= 300 && this.agility >= 300 && this.city == Locations.Chongqing && 
         this.numPeopleKilled >= 5 && this.karma <= -45 && this.companyName != Locations.Sector12CIA && 
@@ -396,7 +400,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //The Syndicate
     var thesyndicateFac = Factions["The Syndicate"];
-    if (thesyndicateFac.isBanned == false && thesyndicateFac.isMember == false &&
+    if (!thesyndicateFac.isBanned && !thesyndicateFac.isMember && !thesyndicateFac.alreadyInvited && 
         this.hacking_skill >= 200 && this.strength >= 200 && this.defense >= 200 &&
         this.dexterity >= 200 && this.agility >= 200 && 
         (this.city == Locations.Aevum || this.city == Locations.Sector12) &&
@@ -407,7 +411,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //Silhouette
     var silhouetteFac = Factions["Silhouette"];
-    if (silhouetteFac.isBanned == false && silhouetteFac.isMember == false && 
+    if (!silhouetteFac.isBanned && !silhouetteFac.isMember && !silhouetteFac.alreadyInvited &&
         (this.companyPosition.positionName == CompanyPositions.CTO.positionName || 
          this.companyPosition.positionName == CompanyPositions.CFO.positionName || 
          this.companyPosition.positionName == CompanyPositions.CEO.positionName) &&
@@ -417,7 +421,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //Tetrads
     var tetradsFac = Factions["Tetrads"];
-    if (tetradsFac.isBanned == false && tetradsFac.isMember == false && 
+    if (!tetradsFac.isBanned && !tetradsFac.isMember && !tetradsFac.alreadyInvited && 
         (this.city == Locations.Chongqing || this.city == Locations.NewTokyo || 
         this.city == Locations.Ishima) && this.strength >= 75 && this.defense >= 75 &&
         this.dexterity >= 75 && this.agility >= 75 && this.karma <= -18) {
@@ -426,7 +430,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //SlumSnakes
     var slumsnakesFac = Factions["Slum Snakes"];
-    if (slumsnakesFac.isBanned == false && slumsnakesFac.isMember == false && 
+    if (!slumsnakesFac.isBanned && !slumsnakesFac.isMember && !slumsnakesFac.alreadyInvited &&
         this.strength >= 30 && this.defense >= 30 && this.dexterity >= 30 &&
         this.agility >= 30 && this.karma <= -9 && this.money >= 1000000) {
         invitedFactions.push(slumsnakesFac);
@@ -442,7 +446,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         totalHacknetRam += Player.hacknetNodes[i].ram;
         totalHacknetCores += Player.hacknetNodes[i].numCores;
     }
-    if (netburnersFac.isBanned == false && netburnersFac.isMember == false &&
+    if (!netburnersFac.isBanned && !netburnersFac.isMember && !netburnersFac.alreadyInvited &&
         this.hacking_skill >= 80 && totalHacknetRam >= 8 && 
         totalHacknetCores >= 4 && totalHacknetLevels >= 100) {
         invitedFactions.push(netburnersFac);
@@ -450,7 +454,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     
     //Tian Di Hui
     var tiandihuiFac = Factions["Tian Di Hui"];
-    if (tiandihuiFac.isBanned == false && tiandihuiFac.isMember == false && 
+    if (!tiandihuiFac.isBanned &&  !tiandihuiFac.isMember && !tiandihuiFac.alreadyInvited &&
         this.money >= 1000000 && this.hacking_skill >= 50 &&
         (this.city == Locations.Chongqing || this.city == Locations.NewTokyo || 
          this.city == Locations.Ishima)) {
@@ -463,18 +467,14 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (cybersecServer == null) {
         console.log("ERROR: Could not find CyberSec Server");
     } else if (!cybersecFac.isBanned && !cybersecFac.isMember && cybersecServer.manuallyHacked &&
-        this.hacking_skill >= 50) {
+               !cybersecFac.alreadyInvited && this.hacking_skill >= 50) {
         invitedFactions.push(cybersecFac);
     }
     
-    console.log("invited factions: " + invitedFactions);
     return invitedFactions;
 }
 
 inviteToFaction = function(faction) {
-    if (Engine.Debug) {
-        console.log("inviteToFaction() called with faction: " + faction.name);
-    }
     factionInvitationBoxCreate(faction);
 }
 

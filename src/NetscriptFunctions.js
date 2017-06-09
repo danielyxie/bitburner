@@ -212,7 +212,7 @@ function netscriptRunProgram(exp, workerScript, programName) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
     if (exp.args.length != 1) {
-        return Promise.reject(makeRuntimeRejectMsg(workerScript, "nuke() call has incorrect number of arguments. Takes 1 argument"));
+        return Promise.reject(makeRuntimeRejectMsg(workerScript, "Program call has incorrect number of arguments. Takes 1 argument"));
     }
     var ipPromise = evaluate(exp.args[0], workerScript);
     return ipPromise.then(function(ip) {

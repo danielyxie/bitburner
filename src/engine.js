@@ -890,7 +890,7 @@ var Engine = {
         //Active scripts list
         Engine.ActiveScriptsList = document.getElementById("active-scripts-list");
         
-        //Save and Delete buttons
+        //Save, Delete, Import/Export buttons
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
             saveObject.saveGame();
@@ -900,6 +900,11 @@ var Engine = {
         Engine.Clickables.deleteMainMenuButton = document.getElementById("delete-game-link");
         Engine.Clickables.deleteMainMenuButton.addEventListener("click", function() {
             saveObject.deleteGame();
+            return false;
+        });
+        
+        document.getElementById("export-game-link").addEventListener("click", function() {
+            saveObject.exportGame();
             return false;
         });
         
@@ -1011,6 +1016,7 @@ var Engine = {
             console.log("Deleting running scripts on home computer");
             Player.getHomeComputer().runningScripts = [];
             dialogBoxCreate("Forcefully deleted all running scripts on home computer. Please save and refresh page");
+            gameOptionsBoxClose();
             return false;
         });
         
@@ -1018,6 +1024,7 @@ var Engine = {
         document.getElementById("debug-soft-reset").addEventListener("click", function() {
             dialogBoxCreate("Soft Reset!");
             prestigeAugmentation();
+            gameOptionsBoxClose();
             return false;
         });
     },
