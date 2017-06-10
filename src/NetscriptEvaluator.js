@@ -28,11 +28,46 @@ function evaluate(exp, workerScript) {
                         reject(e);
                     });
                     return;
+                } else if (exp.value == "array") {
+                    //A raw array. This will be called under something like this:
+                    //  x = Array[1, 2, 3];
+                    if (exp.array && exp.array instanceof Array) {
+                        resolve(exp.array);
+                    } else {
+                        reject(makeRuntimeRejectMsg(workerScript, "Invalid array instantiation"));
+                    }
+                    return; 
                 }
                 try {
-                    resolve(env.get(exp.value));
+                    var res = env.get(exp.value);
+                    console.log(res);
+                    if (exp.index) {
+                        //If theres an index field, then this variable is supposed to be an array 
+                        //and the user needs to be indexing it
+                        if (res.constructor === Array || res instanceof Array) {
+                            //Do array stuff here
+                            var iPromise = evaluate(exp.index.value, workerScript);
+                            iPromise.then(function(i) {
+                                console.log("Index resolved with value: " + i);
+                                if (i >= res.length || i < 0) {
+                                    return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
+                                } else {
+                                    //Evaluate here
+                                    return evaluate(res[i], workerScript);
+                                }
+                            }).then(function(res) {
+                                resolve(res);
+                            }).catch(function(e) {
+                                reject(e);
+                            });
+                        } else {
+                            reject(makeRuntimeRejectMsg(workerScript, "Trying to access a non-array variable using the [] operator"));
+                        }
+                    } else {
+                        resolve(res);
+                    }
                 } catch (e) {
-                    throw new Error("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
+                    reject("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
                 }
                 break;
             //Can currently only assign to "var"s
@@ -236,6 +271,7 @@ function evaluate(exp, workerScript) {
                         }
                         
                         var runScriptPromise = runScriptFromScript(scriptServer, scriptname, workerScript);
+                        return runScriptPromise;
                     }).then(function(res) {
                         resolve(res);
                     }).catch(function(e) {

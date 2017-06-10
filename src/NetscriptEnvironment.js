@@ -28,7 +28,6 @@ Environment.prototype = {
         if (name in this.vars) {
             return this.vars[name];
         }
-        console.log("here");
         throw new Error("Undefined variable " + name);
     },
 	

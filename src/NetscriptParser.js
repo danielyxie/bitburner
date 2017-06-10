@@ -211,9 +211,18 @@ function Parser(input) {
                 value: "hacknetnodes",
                 index: index,
                 op: op,
-            }
+            };
         }
         unexpected();
+    }
+    
+    function parse_array() {        
+        //Declaring a new array with Array[1,2,3]
+        var array = delimited("[", "]", ",", parse_expression);
+        return {type: "var", 
+                value: "array",
+                array: array
+                };
     }
     
     function parse_arrayindex() {
@@ -222,6 +231,7 @@ function Parser(input) {
         if (index.length == 1 && (index[0].type == "num" || index[0].type == "var")) {
             val = index[0];
         } else {
+            val = 0;
             console.log("WARNING: Extra indices passed in")
         }
             
@@ -253,12 +263,21 @@ function Parser(input) {
             if (is_kw("if")) return parse_if();
 			if (is_kw("for")) return parse_for();
 			if (is_kw("while")) return parse_while();
-            //if (is_kw("hacknetnodes")) return parse_hacknetnodes();
-			//Note, let for loops be function calls (call node types)
             if (is_kw("true") || is_kw("false")) return parse_bool();
             
             var tok = input.next();
             if (tok.type == "var" && tok.value == "hacknetnodes") return parse_hacknetnodes();
+            if (tok.type == "var" && tok.value == "Array") return parse_array();
+            if (tok.type == "var" && is_punc("[")) {
+                //Returns a variable node except with an extra "index" field so 
+                //we can identify it as an index
+                var index = parse_arrayindex();
+                if (index.type != "index") {
+                    unexpected();
+                }
+                tok.index = index;
+                return tok;
+            }
             if (tok.type == "var" || tok.type == "num" || tok.type == "str")
                 return tok;
             unexpected();
