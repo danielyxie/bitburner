@@ -34,7 +34,7 @@ CONSTANTS = {
     
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
-	CodeInstructionRunTime:	100, 
+	CodeInstructionRunTime:	200, 
     
     //RAM Costs for different commands
     ScriptWhileRamCost:             0.2,
@@ -582,7 +582,8 @@ CONSTANTS = {
     "A script can be run multithreaded using the 'run [script] -t n' Terminal command or by passing in an argument to the " + 
     "run() and exec() Netscript commands. See documentation.<br>" + 
     "-RAM is slightly (~10%) more expensive (affects purchasing server and upgrading RAM on home computer)<br>" + 
-    "-NeuroFlux Governor augmentation cost multiplier decreased<br><br>" + 
+    "-NeuroFlux Governor augmentation cost multiplier decreased<br>" + 
+    "-Netscript default operation runtime lowered to 200ms (was 500ms previously)<br><br>" + 
     "v0.20.1<br>" + 
     "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
     "-Added Deepscan programs to Dark Web<br>" + 
@@ -709,7 +710,8 @@ CONSTANTS = {
     "A script can be run multithreaded using the 'run [script] -t n' Terminal command or by passing in an argument to the " + 
     "run() and exec() Netscript commands. See documentation.<br>" + 
     "-RAM is slightly (~10%) more expensive (affects purchasing server and upgrading RAM on home computer)<br>" + 
-    "-NeuroFlux Governor augmentation cost multiplier decreased<br><br>" + 
+    "-NeuroFlux Governor augmentation cost multiplier decreased<br>" + 
+    "-Netscript default operation runtime lowered to 200ms (was 500ms previously)<br><br>" + 
     "v0.20.1<br>" + 
     "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
     "-Added Deepscan programs to Dark Web<br>" + 
