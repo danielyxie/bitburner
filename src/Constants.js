@@ -10,8 +10,8 @@ CONSTANTS = {
     CorpFactionRepRequirement: 250000,
     
     /* Base costs */
-    BaseCostFor1GBOfRamHome: 40000,
-    BaseCostFor1GBOfRamServer: 50000,     //1 GB of RAM
+    BaseCostFor1GBOfRamHome: 45000,
+    BaseCostFor1GBOfRamServer: 55000,     //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
     
     BaseCostForHacknetNode: 1000,
@@ -30,7 +30,7 @@ CONSTANTS = {
     
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
-    NeuroFluxGovernorLevelMult: 1.14,
+    NeuroFluxGovernorLevelMult: 1.13,
     
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
