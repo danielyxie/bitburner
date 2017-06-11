@@ -1,5 +1,6 @@
 /* Netscript Functions 
  * Implementation for Netscript features */
+ /*
 function netscriptAssign(exp, workerScript) {
     var env = workerScript.env;
     return new Promise(function(resolve, reject) {
@@ -39,6 +40,58 @@ function netscriptAssign(exp, workerScript) {
                         }
                         console.log(res);
                         return resolve(true);
+                    }).then(function(finalRes) {
+                        resolve(finalRes);
+                    }).catch(function(e) {
+                        return reject(e);
+                    });
+                } else {
+                    return reject(makeRuntimeRejectMsg(workerScript, "Trying to access a non-array variable using the [] operator"));
+                }
+            } catch(e) {
+                return reject(makeRuntimeRejectMsg(workerScript, e.toString()));
+            }
+        } else {
+            var expRightPromise = evaluate(exp.right, workerScript);
+            expRightPromise.then(function(expRight) {
+                try {
+                    env.set(exp.left.value, expRight);
+                } catch (e) {
+                    return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
+                }
+                resolve(false); //Return false so this doesnt cause conditionals to evaluate
+            }, function(e) {
+                reject(e);
+            });
+        }
+    });
+}
+*/
+function netscriptAssign(exp, workerScript) {
+    var env = workerScript.env;
+    return new Promise(function(resolve, reject) {
+        if (env.stopFlag) {return reject(workerScript);}
+        
+        if (exp.left.type != "var") {
+            return reject(makeRuntimeRejectMsg(workerScript, "Cannot assign to " + JSON.stringify(exp.left)));
+        }
+        
+        //Assigning an element in an array
+        if (exp.left.index) {
+            try {
+                var res = env.get(exp.left.value);
+                if (res.constructor === Array || res instanceof Array) {
+                    var i = 0;
+                    var iPromise = evaluate(exp.left.index.value, workerScript);
+                    iPromise.then(function(idx) {
+                        if (idx >= res.length || idx < 0) {
+                            return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
+                        } else {
+                            //Clone res to be exp.right
+                            i = idx;
+                            res[i] = Object.assign({}, exp.right);
+                            return evaluate(exp.right, workerScript);
+                        }
                     }).then(function(finalRes) {
                         resolve(finalRes);
                     }).catch(function(e) {

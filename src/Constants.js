@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.20.1",
+    Version:                "0.20.2",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -251,11 +251,11 @@ CONSTANTS = {
                          "Here are some Terminal commands that are useful when working with scripts: <br>" + 
                          "free - Shows the current server's RAM usage and availability <br>" + 
                          "kill [script] - Stops a script that is running <br>" + 
-                         "mem [script] - Check how much RAM a script requires to run<br>" +
+                         "mem [script] [-t] [n] - Check how much RAM a script requires to run with n threads<br>" +
                          "nano [script] - Create/Edit a script <br>" + 
                          "ps - Displays all scripts that are actively running on the current server<br>" + 
                          "rm [script] - Delete a script<br>" + 
-                         "run [script] - Run a script <br>" + 
+                         "run [script] [-t] [n] - Run a script with n threads<br>" + 
                          "tail [script] - Displays a script's logs<br>" + 
                          "top - Displays all active scripts and their RAM usage <br><br>" + 
                          "<u><h1> Multithreading scripts </h1></u><br>" + 
@@ -268,7 +268,7 @@ CONSTANTS = {
                          "base cost * n * (1.02 ^ n) <br>" + 
                          "where the base cost is the amount of RAM required to run the script with a single thread. In the terminal, you can run the " + 
                          "'mem [scriptname] -t n' command to see how much RAM a script requires with n threads. <br><br>" + 
-                         "Every method for running a script has an option for making it multihreaded. To runa  script with " + 
+                         "Every method for running a script has an option for making it multihreaded. To run a script with " + 
                          "n threads from a Terminal: <br>" + 
                          "run [scriptname] -t n<br><br>" + 
                          "Using Netscript commands: <br>" + 
@@ -318,13 +318,22 @@ CONSTANTS = {
                            "&nbsp;==<br>" + 
                            "&nbsp;!=<br><br>" + 
                            "<u><h1> Arrays </h1></u><br>" + 
+                           "Note: Currently arrays are fixed-size once they are declared. Eventually, functionality will be added to make these " + 
+                           "dynamic arrays <br><br>" + 
                            "Arrays are special container objects. Arrays can holy many values under a single name. Each value in the array " + 
                            "can be accessed using an index number. The following example shows how to declare an array: <br><br>" + 
-                           "var thisIsAnArray = Array[1, 2, 3, 'bitburner!', false];<br><br>" +
+                           "thisIsAnArray = Array[1, 2, 3, 'bitburner!', false];<br><br>" +
                            "Note that the values in an array can be different types. To access this array we just declared, we can use the index " + 
                            "operator on the array's name: <br><br>" + 
                            "print(thisIsAnArray[0]); <br>" + 
-                           "thisIsAnArray[1] = 5" +
+                           "thisIsAnArray[1] = 5<br>" +
+                           "thisIsAnArray[3] = 'string concatenation ' + 123<br><br>" + 
+                           "Note that arrays are indexed starting at index 0. Using an index that is too large or less than 0 will result in an " + 
+                           "out of bounds runtime error. <br><br>" + 
+                           "If an element in an array is assigned to a value that includes a variable, then it holds a reference to that variable. " + 
+                           "What this means is that if the variable changes, the array element will also change accordingly. For example:<br><br>" + 
+                           "x = 10;<br>testArr = Array[x];<br>print(testArr[0]);<br>x = 20;<br>print(testArr[0]);<br><br>" + 
+                           "This code will print: <br><br>10<br>20<br><br>" + 
                            "<u><h1> Functions </h1></u><br>" + 
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " + 
@@ -361,14 +370,14 @@ CONSTANTS = {
                            "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer. Does NOT work while offline  <br> Example: sqlinject('foodnstuff');<br><br>" + 
                            "<i>run(script, [numThreads])</i> <br> Run a script as a separate process. The first argument that is passed in is the name of the script as a string. This function can only " + 
                            "be used to run scripts located on the current server (the server running the script that calls this function). The second argument " + 
-                           "is optional, and it specifies how many threads to run the script with. If it is omitted, then the script is run single-threaded. " + 
+                           "is optional, and it specifies how many threads to run the script with. If it is omitted, then the script will be run single-threaded. " + 
                            "This second argument must be a number that is greater than 0. " + 
                            "Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
                            "of RAM to run this command. Does NOT work while offline <br>Example: run('hack-foodnstuff.script'); <br> The example above will try and launch the 'hack-foodnstuff.script' script on " + 
                            "the current server, if it exists. <br><br>" + 
                            "<i>exec(script, hostname/ip, [numThreads])</i><br>Run a script as a separate process on another server. The first argument is the name of the script as a string. The " + 
                            "second argument is a string with the hostname or IP of the 'target server' on which to run the script. The specified script must exist on the target server. " + 
-                           "The third argument is optional, and it specifies how many threads to run the script with. If it is omitted, then the script is run single-threaded. " + 
+                           "The third argument is optional, and it specifies how many threads to run the script with. If it is omitted, then the script will be run single-threaded. " + 
                            "This argument must be a number that is greater than 0. Returns " + 
                            "true if the script is successfully started, and false otherwise. Does NOT work while offline<br> " + 
                            "Example: exec('generic-hack.script', 'foodnstuff'); <br> The example above will try to launch the script 'generic-hack.script' on the 'foodnstuff' server.<br><br>" + 

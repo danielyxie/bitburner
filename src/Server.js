@@ -706,7 +706,7 @@ processSingleServerGrowth = function(server, numCycles) {
         server.moneyAvailable = server.moneyMax;
         return 1;
     }
-    server.fortify(2 * CONSTANTS.ServerFortifyAmount);
+    server.fortify(2 * CONSTANTS.ServerFortifyAmount * numServerGrowthCycles);
     return serverGrowth;
 }
 

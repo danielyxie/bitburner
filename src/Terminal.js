@@ -730,7 +730,7 @@ var Terminal = {
 				break;
             case "mem":
                 if (commandArray.length != 2) {
-                    post("Incorrect usage of mem command. usage: mem [scriptname]"); return;
+                    post("Incorrect usage of mem command. usage: mem [scriptname] [-t] [number threads]"); return;
                 }
                 var scriptName = commandArray[1];
                 var numThreads = 1;
@@ -825,7 +825,7 @@ var Terminal = {
 			case "run":
 				//Run a program or a script
 				if (commandArray.length != 2) {
-					post("Incorrect number of arguments. Usage: run [program/script]");
+					post("Incorrect number of arguments. Usage: run [program/script] [-t] [number threads]");
 				} else {
 					var executableName = commandArray[1];
 					//Check if its a script or just a program/executable 
@@ -1153,13 +1153,6 @@ var Terminal = {
 	
 	runScript: function(scriptName) {
 		var server = Player.getCurrentServer();
-		//Check if this script is already running
-		for (var i = 0; i < server.runningScripts.length; i++) {
-			if (server.runningScripts[i] == scriptName) {
-				post("ERROR: This script is already running. Cannot run multiple instances");
-				return;
-			}
-		}
 		
         var numThreads = 1;
         //Get the number of threads
@@ -1176,6 +1169,14 @@ var Terminal = {
             }
             scriptName = results[0];
         }
+        
+        //Check if this script is already running
+		for (var i = 0; i < server.runningScripts.length; i++) {
+			if (server.runningScripts[i] == scriptName) {
+				post("ERROR: This script is already running. Cannot run multiple instances");
+				return;
+			}
+		}
         
 		//Check if the script exists and if it does run it
 		for (var i = 0; i < server.scripts.length; i++) {
