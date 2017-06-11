@@ -6,6 +6,8 @@
 //wait for that promise to finish before continuing
 function evaluate(exp, workerScript) {
     return new Promise(function(resolve, reject) {
+    var threads = workerScript.scriptRef.threads;
+    if (isNaN(threads) || threads < 1) {threads = 1;}
 	var env = workerScript.env;
     if (env.stopFlag) {return reject(workerScript);}
     if (exp == null) {
@@ -48,7 +50,6 @@ function evaluate(exp, workerScript) {
                             //Do array stuff here
                             var iPromise = evaluate(exp.index.value, workerScript);
                             iPromise.then(function(i) {
-                                console.log("Index resolved with value: " + i);
                                 if (i >= res.length || i < 0) {
                                     return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
                                 } else {

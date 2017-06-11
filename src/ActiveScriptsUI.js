@@ -190,8 +190,7 @@ function createActiveScriptsText(workerscript, item) {
     var itemText = document.createElement("p");
     
     //Server ip/hostname
-    var hostname = workerscript.getServer().hostname;
-    var serverIpHostname = "Server: " + hostname + "(" + workerscript.serverIp + ")";
+    var serverIpHostname = "Threads: " + workerscript.scriptRef.threads;
     
     //Online
     var onlineTotalMoneyMade = "Total online production: $" + formatNumber(workerscript.scriptRef.onlineMoneyMade, 2);

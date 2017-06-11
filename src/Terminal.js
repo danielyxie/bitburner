@@ -733,10 +733,28 @@ var Terminal = {
                     post("Incorrect usage of mem command. usage: mem [scriptname]"); return;
                 }
                 var scriptName = commandArray[1];
+                var numThreads = 1;
+                if (scriptName.indexOf(" -t ") != -1) {
+                    var results = scriptName.split(" ");
+                    if (results.length != 3) {
+                        post("Invalid use of run command. Usage: mem [script] [-t] [number threads]");
+                        return;
+                    }
+                    numThreads = Math.round(Number(results[2]));
+                    if (isNaN(numThreads) || numThreads < 1) {
+                        post("Invalid number of threads specified. Number of threads must be greater than 1");
+                        return;
+                    }
+                    scriptName = results[0];
+                }
+                
                 var currServ = Player.getCurrentServer();
                 for (var i = 0; i < currServ.scripts.length; ++i) {
                     if (scriptName == currServ.scripts[i].filename) {
-                        post("This script requires " + formatNumber(currServ.scripts[i].ramUsage, 2) + "GB of RAM to run");
+                        var scriptBaseRamUsage = currServ.scripts[i].ramUsage;
+                        var ramUsage = scriptBaseRamUsage * numThreads * Math.pow(1.02, numThreads-1);
+                        
+                        post("This script requires " + formatNumber(ramUsage, 2) + "GB of RAM to run for " + numThreads + " thread(s)");
                         return;
                     }
                 }
@@ -1143,23 +1161,41 @@ var Terminal = {
 			}
 		}
 		
+        var numThreads = 1;
+        //Get the number of threads
+        if (scriptName.indexOf(" -t ") != -1) {
+            var results = scriptName.split(" ");
+            if (results.length != 3) {
+                post("Invalid use of run command. Usage: run [script] [-t] [number threads]");
+                return;
+            }
+            numThreads = Math.round(Number(results[2]));
+            if (isNaN(numThreads) || numThreads < 1) {
+                post("Invalid number of threads specified. Number of threads must be greater than 0");
+                return;
+            }
+            scriptName = results[0];
+        }
+        
 		//Check if the script exists and if it does run it
 		for (var i = 0; i < server.scripts.length; i++) {
 			if (server.scripts[i].filename == scriptName) {
 				//Check for admin rights and that there is enough RAM availble to run
-				var ramUsage = server.scripts[i].ramUsage;
+                var script = server.scripts[i];
+                script.threads = numThreads;
+				var ramUsage = script.ramUsage * numThreads * Math.pow(1.02, numThreads-1);
 				var ramAvailable = server.maxRam - server.ramUsed;
 				
 				if (server.hasAdminRights == false) {
 					post("Need root access to run script");
 					return;
 				} else if (ramUsage > ramAvailable){
-					post("This machine does not have enough RAM to run this script. Script requires " + ramUsage + "GB of RAM");
+					post("This machine does not have enough RAM to run this script with " +
+                         script.threads + " threads. Script requires " + ramUsage + "GB of RAM");
 					return;
 				}else {
 					//Able to run script
-					post("Running script. May take a few seconds to start up the process...");
-					var script = server.scripts[i];
+					post("Running script with " + script.threads +  " thread(s). May take a few seconds to start up the process...");
 					server.runningScripts.push(script.filename);	//Push onto runningScripts
 					addWorkerScript(script, server);
 					return;
