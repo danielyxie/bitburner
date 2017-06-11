@@ -580,7 +580,9 @@ CONSTANTS = {
     "hack(), grow(), and weaken() commands by n. However, running a script with multiple threads has drawbacks in terms of " + 
     "RAM usage. A script's ram usage when it is 'multithreaded' is calculated as: base cost * numThreads * (1.02 ^ numThreads). " + 
     "A script can be run multithreaded using the 'run [script] -t n' Terminal command or by passing in an argument to the " + 
-    "run() and exec() Netscript commands. See documentation.<br><br>" + 
+    "run() and exec() Netscript commands. See documentation.<br>" + 
+    "-RAM is slightly (~10%) more expensive (affects purchasing server and upgrading RAM on home computer)<br>" + 
+    "-NeuroFlux Governor augmentation cost multiplier decreased<br><br>" + 
     "v0.20.1<br>" + 
     "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
     "-Added Deepscan programs to Dark Web<br>" + 
@@ -705,7 +707,9 @@ CONSTANTS = {
     "hack(), grow(), and weaken() commands by n. However, running a script with multiple threads has drawbacks in terms of " + 
     "RAM usage. A script's ram usage when it is 'multithreaded' is calculated as: base cost * numThreads * (1.02 ^ numThreads). " + 
     "A script can be run multithreaded using the 'run [script] -t n' Terminal command or by passing in an argument to the " + 
-    "run() and exec() Netscript commands. See documentation.<br><br>" + 
+    "run() and exec() Netscript commands. See documentation.<br>" + 
+    "-RAM is slightly (~10%) more expensive (affects purchasing server and upgrading RAM on home computer)<br>" + 
+    "-NeuroFlux Governor augmentation cost multiplier decreased<br><br>" + 
     "v0.20.1<br>" + 
     "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
     "-Added Deepscan programs to Dark Web<br>" + 
