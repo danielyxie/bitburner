@@ -165,7 +165,13 @@ function addWorkerScript(script, server) {
 	var filename = script.filename;
 	
 	//Update server's ram usage
-    var ramUsage = script.ramUsage * script.threads * Math.pow(1.02, script.threads-1);
+    var threads = 1;
+    if (script.threads && !isNaN(script.threads)) {
+        threads = script.threads;
+    } else {
+        script.threads = 1;
+    }
+    var ramUsage = script.ramUsage * threads * Math.pow(1.02, threads-1);
 	server.ramUsed += ramUsage;
 	
 	//Create the WorkerScript
