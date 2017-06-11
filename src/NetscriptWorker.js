@@ -165,14 +165,15 @@ function addWorkerScript(script, server) {
 	var filename = script.filename;
 	
 	//Update server's ram usage
-	server.ramUsed += script.ramUsage;
+    var ramUsage = script.ramUsage * script.threads * Math.pow(1.02, script.threads-1);
+	server.ramUsed += ramUsage;
 	
 	//Create the WorkerScript
 	var s = new WorkerScript(script);
 	s.name 		= filename;
 	s.code 		= script.code;
 	s.serverIp 	= server.ip;
-	s.ramUsage 	= script.ramUsage;
+	s.ramUsage 	= ramUsage;
 	
 	//Add the WorkerScript to the Active Scripts list
 	addActiveScriptsItem(s);

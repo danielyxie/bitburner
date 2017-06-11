@@ -1,5 +1,6 @@
 /* Netscript Functions 
  * Implementation for Netscript features */
+ /*
 function netscriptAssign(exp, workerScript) {
     var env = workerScript.env;
     return new Promise(function(resolve, reject) {
@@ -9,17 +10,112 @@ function netscriptAssign(exp, workerScript) {
             return reject(makeRuntimeRejectMsg(workerScript, "Cannot assign to " + JSON.stringify(exp.left)));
         }
         
-        var expRightPromise = evaluate(exp.right, workerScript);
-        expRightPromise.then(function(expRight) {
+        //Assigning an element in an array
+        if (exp.left.index) {
             try {
-                env.set(exp.left.value, expRight);
-            } catch (e) {
-                return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
+                var res = env.get(exp.left.value);
+                if (res.constructor === Array || res instanceof Array) {
+                    var i = 0;
+                    var iPromise = evaluate(exp.left.index.value, workerScript);
+                    iPromise.then(function(idx) {
+                        if (idx >= res.length || idx < 0) {
+                            return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
+                        } else {
+                            //TODO evaluate exp.right here....and then determine its type and
+                            //set the type and value below accordingly
+                            i = idx;
+                            return evaluate(exp.right, workerScript);
+                        }
+                    }).then(function(right) {
+                        console.log("evaluate right with result: " + right);
+                        if (right === true || right === false) {
+                            res[i].type = "bool";
+                            res[i].value = right;
+                        } else if (!isNaN(right) || typeof right == 'number') {
+                            res[i].type = "num";
+                            res[i].value = right;
+                        } else {    //String
+                            res[i].type = "str";
+                            res[i].value = right.toString();
+                        }
+                        console.log(res);
+                        return resolve(true);
+                    }).then(function(finalRes) {
+                        resolve(finalRes);
+                    }).catch(function(e) {
+                        return reject(e);
+                    });
+                } else {
+                    return reject(makeRuntimeRejectMsg(workerScript, "Trying to access a non-array variable using the [] operator"));
+                }
+            } catch(e) {
+                return reject(makeRuntimeRejectMsg(workerScript, e.toString()));
             }
-            resolve(false); //Return false so this doesnt cause conditionals to evaluate
-        }, function(e) {
-            reject(e);
-        });
+        } else {
+            var expRightPromise = evaluate(exp.right, workerScript);
+            expRightPromise.then(function(expRight) {
+                try {
+                    env.set(exp.left.value, expRight);
+                } catch (e) {
+                    return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
+                }
+                resolve(false); //Return false so this doesnt cause conditionals to evaluate
+            }, function(e) {
+                reject(e);
+            });
+        }
+    });
+}
+*/
+function netscriptAssign(exp, workerScript) {
+    var env = workerScript.env;
+    return new Promise(function(resolve, reject) {
+        if (env.stopFlag) {return reject(workerScript);}
+        
+        if (exp.left.type != "var") {
+            return reject(makeRuntimeRejectMsg(workerScript, "Cannot assign to " + JSON.stringify(exp.left)));
+        }
+        
+        //Assigning an element in an array
+        if (exp.left.index) {
+            try {
+                var res = env.get(exp.left.value);
+                if (res.constructor === Array || res instanceof Array) {
+                    var i = 0;
+                    var iPromise = evaluate(exp.left.index.value, workerScript);
+                    iPromise.then(function(idx) {
+                        if (idx >= res.length || idx < 0) {
+                            return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
+                        } else {
+                            //Clone res to be exp.right
+                            i = idx;
+                            res[i] = Object.assign({}, exp.right);
+                            return evaluate(exp.right, workerScript);
+                        }
+                    }).then(function(finalRes) {
+                        resolve(finalRes);
+                    }).catch(function(e) {
+                        return reject(e);
+                    });
+                } else {
+                    return reject(makeRuntimeRejectMsg(workerScript, "Trying to access a non-array variable using the [] operator"));
+                }
+            } catch(e) {
+                return reject(makeRuntimeRejectMsg(workerScript, e.toString()));
+            }
+        } else {
+            var expRightPromise = evaluate(exp.right, workerScript);
+            expRightPromise.then(function(expRight) {
+                try {
+                    env.set(exp.left.value, expRight);
+                } catch (e) {
+                    return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
+                }
+                resolve(false); //Return false so this doesnt cause conditionals to evaluate
+            }, function(e) {
+                reject(e);
+            });
+        }
     });
 }
 
@@ -43,6 +139,8 @@ function netscriptBinary(exp, workerScript) {
 function netscriptHack(exp, workerScript) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
+    var threads = workerScript.scriptRef.threads;
+    if (isNaN(threads) || threads < 1) {threads = 1;}
     
     if (exp.args.length != 1) {
         return Promise.reject(makeRuntimeRejectMsg(workerScript, "Hack() call has incorrect number of arguments. Takes 1 argument"));
@@ -69,19 +167,19 @@ function netscriptHack(exp, workerScript) {
             return Promise.reject(makeRuntimeRejectMsg(workerScript, "Script crashed because player's hacking skill is not high enough to hack " + server.hostname));
         }
         
-        workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds");
+        workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
         return Promise.resolve([server, hackingTime]);
     }).then(function([server, hackingTime]) {
-        console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds.");
+        console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds (t=" + threads + ")");
         return netscriptDelay(hackingTime* 1000).then(function() {
             if (env.stopFlag) {return Promise.reject(workerScript);}
             var hackChance = scriptCalculateHackingChance(server);
             var rand = Math.random();
-            var expGainedOnSuccess = scriptCalculateExpGain(server);
+            var expGainedOnSuccess = scriptCalculateExpGain(server) * threads;
             var expGainedOnFailure = (expGainedOnSuccess / 4);
             if (rand < hackChance) {	//Success!
                 var moneyGained = scriptCalculatePercentMoneyHacked(server);
-                moneyGained = Math.floor(server.moneyAvailable * moneyGained);
+                moneyGained = Math.floor(server.moneyAvailable * moneyGained) * threads;
                 
                 //Safety check
                 if (moneyGained <= 0) {moneyGained = 0;}
@@ -89,21 +187,19 @@ function netscriptHack(exp, workerScript) {
                 server.moneyAvailable -= moneyGained;
                 Player.gainMoney(moneyGained);
                 workerScript.scriptRef.onlineMoneyMade += moneyGained;
-                workerScript.scriptRef.recordHack(server.ip, moneyGained);
-                
+                workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
                 Player.gainHackingExp(expGainedOnSuccess);
                 workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
                 console.log("Script successfully hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
-                workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
-                server.fortify(CONSTANTS.ServerFortifyAmount);
+                workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
+                server.fortify(CONSTANTS.ServerFortifyAmount * threads);
                 return Promise.resolve(true);
             } else {	
                 //Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure);
                 workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
-                
                 console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp");
-                workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp");
+                workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
                 return Promise.resolve(false);
             }
         });
@@ -117,6 +213,8 @@ function netscriptHack(exp, workerScript) {
 function netscriptGrow(exp, workerScript) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
+    var threads = workerScript.scriptRef.threads;
+    if (isNaN(threads) || threads < 1) {threads = 1;}
     if (exp.args.length != 1) {
         return Promise.reject(makeRuntimeRejectMsg(workerScript, "grow() call has incorrect number of arguments. Takes 1 argument"));
     }
@@ -137,20 +235,20 @@ function netscriptGrow(exp, workerScript) {
         
         var growTime = scriptCalculateGrowTime(server);
         console.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds")
-        workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds");
+        workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds (t=" + threads + ")");
         
         return Promise.resolve([server, growTime]);
     }).then(function([server, growTime]) {
         if (env.stopFlag) {return Promise.reject(workerScript);}
         return netscriptDelay(growTime).then(function() {
             if (env.stopFlag) {return Promise.reject(workerScript);}
-            server.moneyAvailable += 1; //It can be grown even if it has no money
-            var growthPercentage = processSingleServerGrowth(server, 450);
-            workerScript.scriptRef.recordGrow(server.ip);
-            var expGain = 0.5 * Player.hacking_exp_mult;
+            server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
+            var growthPercentage = processSingleServerGrowth(server, 450 * threads);
+            workerScript.scriptRef.recordGrow(server.ip, threads);
+            var expGain = 0.5 * Player.hacking_exp_mult * threads;
             workerScript.scriptRef.log("Available money on " + server.hostname + " grown by " 
                                        + formatNumber(growthPercentage*100 - 100, 6) + "%. Gained " + 
-                                       formatNumber(expGain, 4) + " hacking exp");            
+                                       formatNumber(expGain, 4) + " hacking exp (t=" + threads +")");            
             workerScript.scriptRef.onlineExpGained += expGain;
             Player.gainHackingExp(expGain);   
             return Promise.resolve(growthPercentage);
@@ -165,6 +263,8 @@ function netscriptGrow(exp, workerScript) {
 function netscriptWeaken(exp, workerScript) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
+    var threads = workerScript.scriptRef.threads;
+    if (isNaN(threads) || threads < 1) {threads = 1;}
     if (exp.args.length != 1) {
         return Promise.reject(makeRuntimeRejectMsg(workerScript, "weaken() call has incorrect number of arguments. Takes 1 argument"));
     }
@@ -185,21 +285,22 @@ function netscriptWeaken(exp, workerScript) {
         
         var weakenTime = scriptCalculateWeakenTime(server);
         console.log("Executing weaken() on server " + server.hostname + " in " + formatNumber(weakenTime/1000, 3) + " seconds")
-        workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " + formatNumber(weakenTime/1000, 3) + " seconds");
+        workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " + 
+                                   formatNumber(weakenTime/1000, 3) + " seconds (t=" + threads + ")");
         
         return Promise.resolve([server, weakenTime]);
     }).then(function([server, weakenTime]) {
         if (env.stopFlag) {return Promise.reject(workerScript);}
         return netscriptDelay(weakenTime).then(function() {
             if (env.stopFlag) {return Promise.reject(workerScript);}
-            server.weaken(CONSTANTS.ServerWeakenAmount);
-            workerScript.scriptRef.recordWeaken(server.ip);
-            var expGain = 3 * Player.hacking_exp_mult;
+            server.weaken(CONSTANTS.ServerWeakenAmount * threads);
+            workerScript.scriptRef.recordWeaken(server.ip, threads);
+            var expGain = 3 * Player.hacking_exp_mult * threads;
             workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty + 
-                                       ". Gained " + formatNumber(expGain, 4) + " hacking exp");
+                                       ". Gained " + formatNumber(expGain, 4) + " hacking exp (t=" + threads + ")");
             workerScript.scriptRef.onlineExpGained += expGain;
             Player.gainHackingExp(expGain); 
-            return Promise.resolve(CONSTANTS.ServerWeakenAmount);
+            return Promise.resolve(CONSTANTS.ServerWeakenAmount * threads);
         });
     }).then(function(res) {
         return Promise.resolve(res);

@@ -1476,7 +1476,6 @@ applyAugmentation = function(aug, reapply=false) {
             Player.defense_mult     *= 1.8;
             break;
         case AugmentationNames.CombatRib1:
-            //Str and Defense 5%
             Player.strength_mult    *= 1.15;
             Player.defense_mult     *= 1.15;
             break;

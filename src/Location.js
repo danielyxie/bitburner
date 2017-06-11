@@ -124,7 +124,6 @@ displayLocationContent = function() {
     var classManagement         = document.getElementById("location-management-class");
     var classLeadership         = document.getElementById("location-leadership-class");
     
-    var purchase1gb             = document.getElementById("location-purchase-1gb");
     var purchase2gb             = document.getElementById("location-purchase-2gb");
     var purchase4gb             = document.getElementById("location-purchase-4gb");
     var purchase8gb             = document.getElementById("location-purchase-8gb");
@@ -210,7 +209,6 @@ displayLocationContent = function() {
     classManagement.style.display = "none";
     classLeadership.style.display = "none";
     
-    purchase1gb.style.display = "none";
     purchase2gb.style.display = "none";
     purchase4gb.style.display = "none";
     purchase8gb.style.display = "none";
@@ -224,7 +222,6 @@ displayLocationContent = function() {
     purchaseTor.style.display = "none";
     purchaseHomeRam.style.display = "none";
     
-    purchase1gb.innerHTML = "Purchase 1GB Server - $" + formatNumber(1*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
     purchase2gb.innerHTML = "Purchase 2GB Server - $" + formatNumber(2*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
     purchase4gb.innerHTML = "Purchase 4GB Server - $" + formatNumber(4*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
     purchase8gb.innerHTML = "Purchase 8GB Server - $" + formatNumber(8*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
@@ -433,7 +430,6 @@ displayLocationContent = function() {
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
             
-            purchase1gb.style.display = "block";
             purchase2gb.style.display = "block";
             purchase4gb.style.display = "block";
             purchase8gb.style.display = "block";
@@ -594,7 +590,6 @@ displayLocationContent = function() {
             softwareJob.style.display = "block";
             softwareConsultantJob.style.display = "block";
             businessJob.style.display = "block";
-            purchase1gb.style.display = "block";
             purchase2gb.style.display = "block";
             purchase4gb.style.display = "block";
             purchaseTor.style.display = "block";
@@ -1352,7 +1347,6 @@ initLocationButtons = function() {
 
     var work                = document.getElementById("location-work");
 
-    var purchase1gb         = document.getElementById("location-purchase-1gb");
     var purchase2gb         = document.getElementById("location-purchase-2gb");
     var purchase4gb         = document.getElementById("location-purchase-4gb");
     var purchase8gb         = document.getElementById("location-purchase-8gb");
@@ -1447,12 +1441,7 @@ initLocationButtons = function() {
         Player.applyForPartTimeWaiterJob();
         return false;
     });
-    
-    purchase1gb.addEventListener("click", function() {
-        purchaseServerBoxCreate(1, 1 * CONSTANTS.BaseCostFor1GBOfRamServer);
-        return false;
-    });
-    
+
     purchase2gb.addEventListener("click", function() {
         purchaseServerBoxCreate(2, 2 * CONSTANTS.BaseCostFor1GBOfRamServer);
         return false;

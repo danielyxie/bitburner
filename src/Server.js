@@ -464,8 +464,8 @@ initForeignServers = function() {
     AddToAllServers(HongFangTeaHouseServer);
     
     var HaraKiriSushiBarServer = new Server();
-    HaraKiriSushiBarServer.setHackingParameters(40, 3500000, 15, 40);
     HaraKiriSushiBarServer.init(createRandomIp(), "harakiri-sushi", "HaraKiri Sushi Bar Network", true, false, false, false, 4);
+    HaraKiriSushiBarServer.setHackingParameters(40, 3500000, 15, 40);
     HaraKiriSushiBarServer.setPortProperties(0);
     AddToAllServers(HaraKiriSushiBarServer);
     
@@ -527,7 +527,7 @@ initForeignServers = function() {
     SpecialServerIps.addIp(SpecialServerNames.BitRunnersServer, BitRunnersServer.ip);
     
     var TheBlackHandServer = new Server();
-    TheBlackHandServer.init(createRandomIp(), "I.I.I.I", "I.I.I.I", true, false, false, false, false, 0);
+    TheBlackHandServer.init(createRandomIp(), "I.I.I.I", "I.I.I.I", true, false, false, false, 0);
     TheBlackHandServer.setHackingParameters(getRandomInt(303, 325), 0, 0, 0);
     TheBlackHandServer.setPortProperties(3);
     AddToAllServers(TheBlackHandServer);
@@ -706,7 +706,7 @@ processSingleServerGrowth = function(server, numCycles) {
         server.moneyAvailable = server.moneyMax;
         return 1;
     }
-    server.fortify(2 * CONSTANTS.ServerFortifyAmount);
+    server.fortify(2 * CONSTANTS.ServerFortifyAmount * numServerGrowthCycles);
     return serverGrowth;
 }
 

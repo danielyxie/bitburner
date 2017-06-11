@@ -507,7 +507,7 @@ var Engine = {
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
         updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
         createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
-        checkFactionInvitations: 250,       //Check whether you qualify for any faction invitations every 5 minutes
+        checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations every 5 minutes
         passiveFactionGrowth: 600,
         messages: 300,
     },
@@ -567,7 +567,7 @@ var Engine = {
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
                 inviteToFaction(randFaction);
             }
-            Engine.Counters.checkFactionInvitations = 250;
+            Engine.Counters.checkFactionInvitations = 100;
         }
         
         if (Engine.Counters.passiveFactionGrowth <= 0) {

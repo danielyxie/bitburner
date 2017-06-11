@@ -126,6 +126,8 @@ function Script() {
     this.numTimesHackMap        = new AllServersMap();
     this.numTimesGrowMap        = new AllServersMap();
     this.numTimesWeakenMap      = new AllServersMap();
+    
+    this.threads                = 1;
 };
 
 //Get the script data from the Script Editor and save it to the object
@@ -291,7 +293,7 @@ Script.prototype.displayLog = function() {
 }
     
 //Update the moneyStolen and numTimesHack maps when hacking
-Script.prototype.recordHack = function(serverIp, moneyGained) {
+Script.prototype.recordHack = function(serverIp, moneyGained, n=1) {
     if (this.moneyStolenMap == null) {
         this.moneyStolenMap = new AllServersMap();
     }
@@ -299,23 +301,23 @@ Script.prototype.recordHack = function(serverIp, moneyGained) {
         this.numTimesHackMap = new AllServersMap();
     }
     this.moneyStolenMap[serverIp] += moneyGained;
-    this.numTimesHackMap[serverIp] += 1;
+    this.numTimesHackMap[serverIp] += n;
 }
 
 //Update the grow map when calling grow()
-Script.prototype.recordGrow = function(serverIp) {
+Script.prototype.recordGrow = function(serverIp, n=1) {
     if (this.numTimesGrowMap == null) {
         this.numTimesGrowMap = new AllServersMap();
     }
-    this.numTimesGrowMap[serverIp] += 1;
+    this.numTimesGrowMap[serverIp] += n;
 }
 
 //Update the weaken map when calling weaken() {
-Script.prototype.recordWeaken = function(serverIp) {
+Script.prototype.recordWeaken = function(serverIp, n=1) {
     if (this.numTimesWeakenMap == null) {
         this.numTimesWeakenMap = new AllServersMap();
     }
-    this.numTimesWeakenMap[serverIp] += 1;
+    this.numTimesWeakenMap[serverIp] += n;
 }
 
 Script.prototype.toJSON = function() {
