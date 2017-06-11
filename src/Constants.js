@@ -165,11 +165,11 @@ CONSTANTS = {
                 "kill [script]          Stops a script that is running on the current machine<br>" +
                 "killall                Stops all running scripts on the current machine<br>" + 
                 "ls                     Displays all programs and scripts on the machine<br>" +
-                "mem [script]           Displays the amount of RAM the script requires to run<br>" + 
+                "mem [script] [-t] [n]  Displays the amount of RAM the script requires to run with n threads<br>" + 
                 "nano [script]          Text editor - Open up and edit a script<br>" + 
                 "ps                     Display all scripts that are currently running<br>" + 
                 "rm                     Delete a script/program from the machine. (WARNING: Permanent)<br>" + 
-                "run [script/program]   Execute a program or a script<br>" + 
+                "run [name] [-t] [n]    Execute a program or a script with n threads<br>" + 
                 "scan                   Displays all available network connections<br>" +
                 "scan-analyze [depth]   Displays hacking-related information for all servers up to <i>depth</i> nodes away<br>" + 
                 "scp [script] [server]  Copies a script to a destination server (specified by ip or hostname)<br>" + 
@@ -652,6 +652,8 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
+    "v0.20.2<br>" + 
+    ""
     "v0.20.1<br>" + 
     "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
     "-Added Deepscan programs to Dark Web<br>" + 

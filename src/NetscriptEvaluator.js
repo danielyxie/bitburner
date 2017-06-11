@@ -6,8 +6,6 @@
 //wait for that promise to finish before continuing
 function evaluate(exp, workerScript) {
     return new Promise(function(resolve, reject) {
-    var threads = workerScript.scriptRef.threads;
-    if (isNaN(threads) || threads < 1) {threads = 1;}
 	var env = workerScript.env;
     if (env.stopFlag) {return reject(workerScript);}
     if (exp == null) {
@@ -260,18 +258,29 @@ function evaluate(exp, workerScript) {
                         reject(e);
                     });
                 } else if (exp.func.value == "run") {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "run() call has incorrect number of arguments. Takes 1 argument"));
+                    if (exp.args.length != 1 && exp.args.length != 2) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "run() call has incorrect number of arguments. Takes 1 or 2 arguments"));
                     }
-                    var scriptNamePromise = evaluate(exp.args[0], workerScript);
-                    scriptNamePromise.then(function(scriptname) {
+                    var argPromises = exp.args.map(function(arg) {
+                        return evaluate(arg, workerScript);
+                    });
+                    
+                    Promise.all(argPromises).then(function(args) {
                         if (env.stopFlag) {return reject(workerScript);}
+                        var scriptname = args[0];
+                        var threads = 1;
+                        if (exp.args.length == 2) {
+                            threads = args[1];
+                        }
+                        if (isNaN(threads) || threads < 1) {
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0"));
+                        }
                         var scriptServer = getServer(workerScript.serverIp);
                         if (scriptServer == null) {
                             return reject(makeRuntimeRejectMsg(workerScript, "Could not find server. This is a bug in the game. Report to game dev"));
                         }
                         
-                        var runScriptPromise = runScriptFromScript(scriptServer, scriptname, workerScript);
+                        var runScriptPromise = runScriptFromScript(scriptServer, scriptname, workerScript, threads);
                         return runScriptPromise;
                     }).then(function(res) {
                         resolve(res);
@@ -279,7 +288,7 @@ function evaluate(exp, workerScript) {
                         reject(e);
                     });
                 } else if (exp.func.value == "exec") {
-                    if (exp.args.length != 2) {
+                    if (exp.args.length != 2 && exp.args.length != 3) {
                         return reject(makeRuntimeRejectMsg(workerScript, "exec() call has incorrect number of arguments. Takes 2 arguments"));
                     }
                     var argPromises = exp.args.map(function(arg) {
@@ -288,12 +297,19 @@ function evaluate(exp, workerScript) {
                     
                     Promise.all(argPromises).then(function(args) {
                         if (env.stopFlag) {return reject(workerScript);}
+                        var threads = 1;
+                        if (exp.args.length == 3) {
+                            threads = args[2];
+                        }
+                        if (isNaN(threads) || threads < 1) {
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into exec(). Must be numeric and greater than 0"));
+                        }
                         var server = getServer(args[1]);
                         if (server == null) {
                             return reject(makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into exec() command: " + args[1]));
                         }
                         
-                        return runScriptFromScript(server, args[0], workerScript); 
+                        return runScriptFromScript(server, args[0], workerScript, threads); 
                     }).then(function(res) {
                         resolve(res);
                     }).catch(function(e) {
@@ -925,7 +941,7 @@ function apply_op(op, a, b) {
 }
 
 //Run a script from inside a script using run() command
-function runScriptFromScript(server, scriptname, workerScript) {
+function runScriptFromScript(server, scriptname, workerScript, threads=1) {
     return new Promise(function(resolve, reject) {
         var env = workerScript.env;
         if (env.stopFlag) {reject(workerScript); return;}
@@ -944,6 +960,7 @@ function runScriptFromScript(server, scriptname, workerScript) {
                 if (server.scripts[i].filename == scriptname) {
                     //Check for admin rights and that there is enough RAM availble to run
                     var ramUsage = server.scripts[i].ramUsage;
+                    ramUsage = ramUsage * threads * Math.pow(1.02, threads-1);
                     var ramAvailable = server.maxRam - server.ramUsed;
                     
                     if (server.hasAdminRights == false) {
@@ -951,13 +968,14 @@ function runScriptFromScript(server, scriptname, workerScript) {
                         resolve(false);
                         return;
                     } else if (ramUsage > ramAvailable){
-                        workerScript.scriptRef.log("Cannot run script " + scriptname + " on " + server.hostname + " because there is not enough available RAM!");
+                        workerScript.scriptRef.log("Cannot run script " + scriptname + "(t=" + threads + ") on " + server.hostname + " because there is not enough available RAM!");
                         resolve(false);
                         return;
                     } else {
                         //Able to run script
-                        workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + ". May take a few seconds to start up...");
+                        workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads. May take a few seconds to start up...");
                         var script = server.scripts[i];
+                        script.threads = threads;
                         server.runningScripts.push(script.filename);	//Push onto runningScripts
                         addWorkerScript(script, server);
                         resolve(true);
