@@ -319,7 +319,12 @@ CONSTANTS = {
                            "&nbsp;!=<br><br>" + 
                            "<u><h1> Arrays </h1></u><br>" + 
                            "Arrays are special container objects. Arrays can holy many values under a single name. Each value in the array " + 
-                           "can be accessed using an index number. To declare and access" + 
+                           "can be accessed using an index number. The following example shows how to declare an array: <br><br>" + 
+                           "var thisIsAnArray = Array[1, 2, 3, 'bitburner!', false];<br><br>" +
+                           "Note that the values in an array can be different types. To access this array we just declared, we can use the index " + 
+                           "operator on the array's name: <br><br>" + 
+                           "print(thisIsAnArray[0]); <br>" + 
+                           "thisIsAnArray[1] = 5" +
                            "<u><h1> Functions </h1></u><br>" + 
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " + 

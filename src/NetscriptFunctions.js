@@ -14,22 +14,37 @@ function netscriptAssign(exp, workerScript) {
             try {
                 var res = env.get(exp.left.value);
                 if (res.constructor === Array || res instanceof Array) {
+                    var i = 0;
                     var iPromise = evaluate(exp.left.index.value, workerScript);
-                    iPromise.then(function(i) {
-                        if (i >= res.length || i < 0) {
+                    iPromise.then(function(idx) {
+                        if (idx >= res.length || idx < 0) {
                             return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
                         } else {
-                            res[i].type = exp.right.type;
-                            res[i].value = exp.right.value;
-                            return resolve(false);
+                            //TODO evaluate exp.right here....and then determine its type and
+                            //set the type and value below accordingly
+                            i = idx;
+                            return evaluate(exp.right, workerScript);
                         }
-                    }).then(function(res) {
-                        return resolve(res);
+                    }).then(function(right) {
+                        console.log("evaluate right with result: " + right);
+                        if (right === true || right === false) {
+                            res[i].type = "bool";
+                            res[i].value = right;
+                        } else if (!isNaN(right) || typeof right == 'number') {
+                            res[i].type = "num";
+                            res[i].value = right;
+                        } else {    //String
+                            res[i].type = "str";
+                            res[i].value = right.toString();
+                        }
+                        console.log(res);
+                        return resolve(true);
+                    }).then(function(finalRes) {
+                        resolve(finalRes);
                     }).catch(function(e) {
                         return reject(e);
                     });
                 } else {
-                    console.log("here");
                     return reject(makeRuntimeRejectMsg(workerScript, "Trying to access a non-array variable using the [] operator"));
                 }
             } catch(e) {
