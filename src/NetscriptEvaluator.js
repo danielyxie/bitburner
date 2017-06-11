@@ -40,18 +40,15 @@ function evaluate(exp, workerScript) {
                 }
                 try {
                     var res = env.get(exp.value);
-                    console.log(res);
                     if (exp.index) {
                         //If theres an index field, then this variable is supposed to be an array 
                         //and the user needs to be indexing it
                         if (res.constructor === Array || res instanceof Array) {
-                            //Do array stuff here
                             var iPromise = evaluate(exp.index.value, workerScript);
                             iPromise.then(function(i) {
                                 if (i >= res.length || i < 0) {
                                     return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
                                 } else {
-                                    //Evaluate here
                                     return evaluate(res[i], workerScript);
                                 }
                             }).then(function(res) {

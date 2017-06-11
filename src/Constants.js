@@ -34,7 +34,7 @@ CONSTANTS = {
     
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
-	CodeInstructionRunTime:	500, 
+	CodeInstructionRunTime:	100, 
     
     //RAM Costs for different commands
     ScriptWhileRamCost:             0.2,
@@ -258,6 +258,22 @@ CONSTANTS = {
                          "run [script] - Run a script <br>" + 
                          "tail [script] - Displays a script's logs<br>" + 
                          "top - Displays all active scripts and their RAM usage <br><br>" + 
+                         "<u><h1> Multithreading scripts </h1></u><br>" + 
+                         "Scripts can be multithreaded. A multithreaded script runs the script's code once in each thread. The result is that " + 
+                         "every call to the hack(), grow(), and weaken() Netscript functions will have its effect multiplied by the number of scripts. " + 
+                         "For example, if a normal single-threaded script is able to hack $10,000, then running the same script with 5 threads would " + 
+                         "yield $50,000. <br><br> " +
+                         "Each additional thread to a script will slightly increase the RAM usage for that thread. The total cost of running a script with " + 
+                         "n threads can be calculated with: <br>" + 
+                         "base cost * n * (1.02 ^ n) <br>" + 
+                         "where the base cost is the amount of RAM required to run the script with a single thread. In the terminal, you can run the " + 
+                         "'mem [scriptname] -t n' command to see how much RAM a script requires with n threads. <br><br>" + 
+                         "Every method for running a script has an option for making it multihreaded. To runa  script with " + 
+                         "n threads from a Terminal: <br>" + 
+                         "run [scriptname] -t n<br><br>" + 
+                         "Using Netscript commands: <br>" + 
+                         "run('scriptname.script', m);<br> " +
+                         "exec('scriptname.script, 'targetServer', n);<br><br>" + 
                          "<u><h1> Notes about how scripts work offline </h1> </u><br>" + 
                          "<strong> The scripts that you write and execute are interpreted in Javascript. For this " + 
                          "reason, it is not possible for these scripts to run while offline (when the game is closed). " +
@@ -301,6 +317,9 @@ CONSTANTS = {
                            "&nbsp;>=<br>" + 
                            "&nbsp;==<br>" + 
                            "&nbsp;!=<br><br>" + 
+                           "<u><h1> Arrays </h1></u><br>" + 
+                           "Arrays are special container objects. Arrays can holy many values under a single name. Each value in the array " + 
+                           "can be accessed using an index number. To declare and access" + 
                            "<u><h1> Functions </h1></u><br>" + 
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " + 
@@ -335,12 +354,17 @@ CONSTANTS = {
                            "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer. Does NOT work while offline <br> Example: relaysmtp('foodnstuff');<br><br>" + 
                            "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer. Does NOT work while offline <br> Example: httpworm('foodnstuff');<br><br>" + 
                            "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer. Does NOT work while offline  <br> Example: sqlinject('foodnstuff');<br><br>" + 
-                           "<i>run(script)</i> <br> Run a script as a separate process. The argument that is passed in is the name of the script as a string. This function can only " + 
-                           "be used to run scripts located on the same server. Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
+                           "<i>run(script, [numThreads])</i> <br> Run a script as a separate process. The first argument that is passed in is the name of the script as a string. This function can only " + 
+                           "be used to run scripts located on the current server (the server running the script that calls this function). The second argument " + 
+                           "is optional, and it specifies how many threads to run the script with. If it is omitted, then the script is run single-threaded. " + 
+                           "This second argument must be a number that is greater than 0. " + 
+                           "Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
                            "of RAM to run this command. Does NOT work while offline <br>Example: run('hack-foodnstuff.script'); <br> The example above will try and launch the 'hack-foodnstuff.script' script on " + 
                            "the current server, if it exists. <br><br>" + 
-                           "<i>exec(script, hostname/ip)</i><br>Run a script as a separate process on another server. The first argument is the name of the script as a string. The " + 
-                           "second argument is a string with the hostname or IP of the 'target server' on which to run the script. The specified script must exist on the target server. Returns " + 
+                           "<i>exec(script, hostname/ip, [numThreads])</i><br>Run a script as a separate process on another server. The first argument is the name of the script as a string. The " + 
+                           "second argument is a string with the hostname or IP of the 'target server' on which to run the script. The specified script must exist on the target server. " + 
+                           "The third argument is optional, and it specifies how many threads to run the script with. If it is omitted, then the script is run single-threaded. " + 
+                           "This argument must be a number that is greater than 0. Returns " + 
                            "true if the script is successfully started, and false otherwise. Does NOT work while offline<br> " + 
                            "Example: exec('generic-hack.script', 'foodnstuff'); <br> The example above will try to launch the script 'generic-hack.script' on the 'foodnstuff' server.<br><br>" + 
                            "<i>kill(script, [hostname/ip])</i><br> Kills a script on a server. The first argument must be a string with the name of the script. The name is case-sensitive. " + 
@@ -400,7 +424,7 @@ CONSTANTS = {
                            "<i>hacknetnodes[i].ram</i><br> Returns the amount of RAM on the corresponding Hacknet Node<br><br>" +
                            "<i>hacknetnodes[i].cores</i><br> Returns the number of cores on the corresponding Hacknet Node<br><br>" +
                            "<i>hacknetnodes[i].upgradeLevel(n)</i><br> Tries to upgrade the level of the corresponding Hacknet Node n times. The argument n must be a " + 
-                           "positive integer. Returns true if the Hacknet Node's level is successfully upgraded n times, and false otherwise.<br><br>" + 
+                           "positive integer. Returns true if the Hacknet Node's level is successfully upgraded n times or up to the max level (200), and false otherwise.<br><br>" + 
                            "<i>hacknetnodes[i].upgradeRam()</i><br> Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " + 
                            "RAM is successfully upgraded, and false otherwise. <br><br>" + 
                            "<i>hacknetnodes[i].upgradeCore()</i><br> Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " + 
@@ -535,6 +559,14 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.20.2<br>" + 
+    "-Fixed several small bugs<br>" + 
+    "-Added basic array functionality to Netscript<br>" + 
+    "-Added ability to run scripts with multiple threads. Running a script with n threads will multiply the effects of all " + 
+    "hack(), grow(), and weaken() commands by n. However, running a script with multiple threads has drawbacks in terms of " + 
+    "RAM usage. A script's ram usage when it is 'multithreaded' is calculated as: base cost * numThreads * (1.02 ^ numThreads). " + 
+    "A script can be run multithreaded using the 'run [script] -t n' Terminal command or by passing in an argument to the " + 
+    "run() and exec() Netscript commands. See documentation.<br><br>" + 
     "v0.20.1<br>" + 
     "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
     "-Added Deepscan programs to Dark Web<br>" + 
@@ -653,7 +685,13 @@ CONSTANTS = {
     
     LatestUpdate: 
     "v0.20.2<br>" + 
-    ""
+    "-Fixed several small bugs<br>" + 
+    "-Added basic array functionality to Netscript<br>" + 
+    "-Added ability to run scripts with multiple threads. Running a script with n threads will multiply the effects of all " + 
+    "hack(), grow(), and weaken() commands by n. However, running a script with multiple threads has drawbacks in terms of " + 
+    "RAM usage. A script's ram usage when it is 'multithreaded' is calculated as: base cost * numThreads * (1.02 ^ numThreads). " + 
+    "A script can be run multithreaded using the 'run [script] -t n' Terminal command or by passing in an argument to the " + 
+    "run() and exec() Netscript commands. See documentation.<br><br>" + 
     "v0.20.1<br>" + 
     "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
     "-Added Deepscan programs to Dark Web<br>" + 

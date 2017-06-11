@@ -9,17 +9,45 @@ function netscriptAssign(exp, workerScript) {
             return reject(makeRuntimeRejectMsg(workerScript, "Cannot assign to " + JSON.stringify(exp.left)));
         }
         
-        var expRightPromise = evaluate(exp.right, workerScript);
-        expRightPromise.then(function(expRight) {
+        //Assigning an element in an array
+        if (exp.left.index) {
             try {
-                env.set(exp.left.value, expRight);
-            } catch (e) {
-                return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
+                var res = env.get(exp.left.value);
+                if (res.constructor === Array || res instanceof Array) {
+                    var iPromise = evaluate(exp.left.index.value, workerScript);
+                    iPromise.then(function(i) {
+                        if (i >= res.length || i < 0) {
+                            return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
+                        } else {
+                            res[i].type = exp.right.type;
+                            res[i].value = exp.right.value;
+                            return resolve(false);
+                        }
+                    }).then(function(res) {
+                        return resolve(res);
+                    }).catch(function(e) {
+                        return reject(e);
+                    });
+                } else {
+                    console.log("here");
+                    return reject(makeRuntimeRejectMsg(workerScript, "Trying to access a non-array variable using the [] operator"));
+                }
+            } catch(e) {
+                return reject(makeRuntimeRejectMsg(workerScript, e.toString()));
             }
-            resolve(false); //Return false so this doesnt cause conditionals to evaluate
-        }, function(e) {
-            reject(e);
-        });
+        } else {
+            var expRightPromise = evaluate(exp.right, workerScript);
+            expRightPromise.then(function(expRight) {
+                try {
+                    env.set(exp.left.value, expRight);
+                } catch (e) {
+                    return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
+                }
+                resolve(false); //Return false so this doesnt cause conditionals to evaluate
+            }, function(e) {
+                reject(e);
+            });
+        }
     });
 }
 
