@@ -319,8 +319,8 @@ CONSTANTS = {
                            "&nbsp;!=<br><br>" + 
                            "<u><h1> Arrays </h1></u><br>" + 
                            "Note: Currently arrays are fixed-size once they are declared. Eventually, functionality will be added to make these " + 
-                           "dynamic arrays <br><br>" + 
-                           "Arrays are special container objects. Arrays can holy many values under a single name. Each value in the array " + 
+                           "dynamic arrays. <br><br>" + 
+                           "Arrays are special container objects. Arrays can hold many values under a single name. Each value in the array " + 
                            "can be accessed using an index number. The following example shows how to declare an array: <br><br>" + 
                            "thisIsAnArray = Array[1, 2, 3, 'bitburner!', false];<br><br>" +
                            "Note that the values in an array can be different types. To access this array we just declared, we can use the index " + 
