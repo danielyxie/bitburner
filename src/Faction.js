@@ -218,7 +218,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (!covenantFac.isBanned && !covenantFac.isMember && !covenantFac.alreadyInvited &&
         this.numAugmentations >= 12 &&
         this.money >= 5000000000 && this.total_money >= 10000000000 &&
-        this.hacking_skill >= 850 && this.total_hack >= 5000 && 
+        this.hacking_skill >= 850 && this.total_hacking >= 5000 && 
         this.strength >= 850 && this.total_strength >= 5000 &&
         this.defense >= 850 && this.total_defense >= 5000 &&
         this.dexterity >= 850 && this.total_dexterity >= 5000 &&
