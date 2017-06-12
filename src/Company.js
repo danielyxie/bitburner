@@ -450,7 +450,7 @@ getNextCompanyPosition = function(currPos) {
     }
     
     //Police
-    if (currPos.positionName == CompanyPositions.PoliceOffier.positionName) {
+    if (currPos.positionName == CompanyPositions.PoliceOfficer.positionName) {
         return CompanyPositions.PoliceChief;
     }
     
