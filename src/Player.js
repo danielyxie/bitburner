@@ -213,7 +213,7 @@ PlayerObject.prototype.updateSkillLevels = function() {
 //The formula is:
 //  (2 * hacking_chance_multiplier * hacking_skill - requiredLevel)      100 - difficulty       
 //  -----------------------------------------------------------  *  -----------------
-//        (hacking_chance_multiplier * hacking_skill)                      100
+//        (2 * hacking_chance_multiplier * hacking_skill)                      100
 PlayerObject.prototype.calculateHackingChance = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
     var skillMult = (2 * this.hacking_chance_mult * this.hacking_skill);

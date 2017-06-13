@@ -1198,6 +1198,10 @@ var Terminal = {
 					//Able to run script
 					post("Running script with " + script.threads +  " thread(s). May take a few seconds to start up the process...");
 					server.runningScripts.push(script.filename);	//Push onto runningScripts
+                    
+                    //Initialize the maps for counting grow/hack/weaken
+                    //script.moneyStolenMap = new AllServersMap();
+                    
 					addWorkerScript(script, server);
 					return;
 				}
