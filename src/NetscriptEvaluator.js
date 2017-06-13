@@ -974,6 +974,10 @@ function runScriptFromScript(server, scriptname, workerScript, threads=1) {
                         var script = server.scripts[i];
                         script.threads = threads;
                         server.runningScripts.push(script.filename);	//Push onto runningScripts
+                        script.moneyStolenMap       = new AllServersMap();
+                        script.numTimesHackMap      = new AllServersMap();
+                        script.numTimesGrowMap      = new AllServersMap();
+                        script.numTimesWeakenMap    = new AllServersMap();
                         addWorkerScript(script, server);
                         resolve(true);
                         return;

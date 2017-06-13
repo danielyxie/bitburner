@@ -1237,7 +1237,10 @@ var Terminal = {
 					server.runningScripts.push(script.filename);	//Push onto runningScripts
                     
                     //Initialize the maps for counting grow/hack/weaken
-                    //script.moneyStolenMap = new AllServersMap();
+                    script.moneyStolenMap       = new AllServersMap();
+                    script.numTimesHackMap      = new AllServersMap();
+                    script.numTimesGrowMap      = new AllServersMap();
+                    script.numTimesWeakenMap    = new AllServersMap();
                     
 					addWorkerScript(script, server);
 					return;

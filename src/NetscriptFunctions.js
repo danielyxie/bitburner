@@ -181,10 +181,12 @@ function netscriptHack(exp, workerScript) {
                 var moneyGained = scriptCalculatePercentMoneyHacked(server);
                 moneyGained = Math.floor(server.moneyAvailable * moneyGained) * threads;
                 
-                //Safety check
+                //Over-the-top safety checks
                 if (moneyGained <= 0) {moneyGained = 0;}
-                
+                if (moneyGained > server.moneyAvailable) {moneyGained = server.moneyAvailable;}
                 server.moneyAvailable -= moneyGained;
+                if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
+                
                 Player.gainMoney(moneyGained);
                 workerScript.scriptRef.onlineMoneyMade += moneyGained;
                 workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);

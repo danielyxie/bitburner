@@ -237,6 +237,7 @@ tr:focus {
     right: 0;
     bottom: 0;
     padding: 4px;
+    margin-right: 14px;
     background-color: transparent;
     z-index: 2;
 }
@@ -250,7 +251,7 @@ tr:focus {
     position: absolute; /* Stay in place */
     right: 0;
     top: 0;
-    height: 175px; /* Full height */
+    height: 185px; /* Full height */
     /*margin: 50% auto;*/
     padding: 5px;
     border: 2px solid var(--my-highlight-color);
@@ -262,12 +263,13 @@ tr:focus {
 
 #character-overview-text {
     padding: 4px;
-    margin: 12px;
+    margin: 10px;
     color: white;
     background-color: #444;
 }
 
-#character-overview-save-button {
+#character-overview-save-button,
+#character-overview-options-button {
     color: #aaa;
     font-size: 16px;
     font-weight: bold;
@@ -280,8 +282,14 @@ tr:focus {
 }
 
 #character-overview-save-button:hover,
-#character-overview-save-button:focus {
+#character-overview-save-button:focus,
+#character-overview-options-button:hover,
+#character-overview-options-button:focus {
     color: white;
     text-decoration: none;
     cursor: pointer;
+}
+
+#character-overview-options-button {
+    display: inline-block;
 }

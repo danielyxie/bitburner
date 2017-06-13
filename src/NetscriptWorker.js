@@ -133,10 +133,10 @@ function runScriptsLoop() {
 				}
 			}
 			//Reset the correspondings script's maps to save space
-            //workerScripts[i].scriptRef.moneyStolenMap = {};
-            //workerScripts[i].scriptRef.numTimesHackMap = {};
-            //workerScripts[i].scriptRef.numTimesGrowMap = {};
-            //workerScripts[i].scriptRef.numTimesWeakenMap = {};
+            workerScripts[i].scriptRef.moneyStolenMap = {};
+            workerScripts[i].scriptRef.numTimesHackMap = {};
+            workerScripts[i].scriptRef.numTimesGrowMap = {};
+            workerScripts[i].scriptRef.numTimesWeakenMap = {};
             
 			//Free RAM
 			AllServers[ip].ramUsed -= workerScripts[i].ramUsage;

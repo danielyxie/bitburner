@@ -372,8 +372,20 @@ scriptCalculateOfflineProduction = function(script) {
 	//4 hours (14400 sec) then we are completely confident in its ability
 	var confidence = (script.onlineRunningTime) / 14400;
 	if (confidence >= 1) {confidence = 1;}
-	console.log("onlineRunningTime: " + script.onlineRunningTime);
-	console.log("Confidence: " + confidence);
+    
+    //Grow
+    for (var ip in script.numTimesGrowMap) {
+        if (script.numTimesGrowMap.hasOwnProperty(ip)) {
+            if (script.numTimesGrowMap[ip] == 0 || script.numTimesGrowMap[ip] == null) {continue;}
+            var serv = AllServers[ip];
+            if (serv == null) {continue;}
+            var timesGrown = Math.round(0.5 * script.numTimesGrowMap[ip] / script.onlineRunningTime * timePassed);
+            console.log(script.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
+            script.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
+            var growth = processSingleServerGrowth(serv, timesGrown * 450);
+            script.log(serv.hostname + " grown by " + formatNumber(growth * 100 - 100, 6) + "% from grow() calls made while offline");
+        }
+    }
     
     var totalOfflineProduction = 0;
     for (var ip in script.moneyStolenMap) {
@@ -430,20 +442,6 @@ scriptCalculateOfflineProduction = function(script) {
             console.log(script.filename + " called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
             script.log("Called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
             serv.weaken(CONSTANTS.ServerWeakenAmount * timesWeakened);
-        }
-    }
-    
-    //Grow
-    for (var ip in script.numTimesGrowMap) {
-        if (script.numTimesGrowMap.hasOwnProperty(ip)) {
-            if (script.numTimesGrowMap[ip] == 0 || script.numTimesGrowMap[ip] == null) {continue;}
-            var serv = AllServers[ip];
-            if (serv == null) {continue;}
-            var timesGrown = Math.round(0.5 * script.numTimesGrowMap[ip] / script.onlineRunningTime * timePassed);
-            console.log(script.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
-            script.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
-            var growth = processSingleServerGrowth(serv, timesGrown * 450);
-            script.log(serv.hostname + " grown by " + formatNumber(growth * 100 - 100, 6) + "% from grow() calls made while offline");
         }
     }
     
