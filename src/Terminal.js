@@ -2,18 +2,18 @@
 
 /* Write text to terminal */
 var post = function(input) {
-    $("#terminal-input").before('<tr class="posted"><td style="color: #66ff33;">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
+    $("#terminal-input").before('<tr class="posted"><td style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
 	updateTerminalScroll();
 }
 
 //Same thing as post but the td cells have ids so they can be animated for the hack progress bar
 var hackProgressBarPost = function(input) {
-    $("#terminal-input").before('<tr class="posted"><td id="hack-progress-bar" style="color: #66ff33;">' + input + '</td></tr>');
+    $("#terminal-input").before('<tr class="posted"><td id="hack-progress-bar" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
 	updateTerminalScroll();
 }
 
 var hackProgressPost = function(input) {
-    $("#terminal-input").before('<tr class="posted"><td id="hack-progress" style="color: #66ff33;">' + input + '</td></tr>');
+    $("#terminal-input").before('<tr class="posted"><td id="hack-progress" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
 	updateTerminalScroll();    
 }
 
@@ -238,7 +238,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         return ["alias", "analyze", "cat", "clear", "cls", "connect", "free", 
                 "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
                 "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze", 
-                "scp", "sudov", "tail", "top"];
+                "scp", "sudov", "tail", "theme", "top"];
     }
     
     if (input.startsWith("scp ") && index == 1) {
@@ -953,6 +953,43 @@ var Terminal = {
                     post("Error: No such script exists");
                 }
 				break;
+            case "theme":
+                //todo support theme saving                
+                var args = commandArray[1] ? commandArray[1].split(" ") : [];
+                if(args.length != 1 && args.length != 3) {
+                    post("Incorrect number of arguments. Usage: theme [default|muted|solarized] | [background color hex] [text color hex] [highlight color hex]");
+                }else if(args.length == 1){
+                    var themeName = args[0];
+                    if(themeName == "default"){
+                        document.body.style.setProperty('--my-highlight-color',"#ffffff");
+                        document.body.style.setProperty('--my-font-color',"#66ff33");
+                        document.body.style.setProperty('--my-background-color',"#000000");
+                    }else if(themeName == "muted"){
+                        document.body.style.setProperty('--my-highlight-color',"#ffffff");
+                        document.body.style.setProperty('--my-font-color',"#66ff33");
+                        document.body.style.setProperty('--my-background-color',"#252527");
+                    }else if(themeName == "solarized"){
+                        document.body.style.setProperty('--my-highlight-color',"#6c71c4");
+                        document.body.style.setProperty('--my-font-color',"#839496");
+                        document.body.style.setProperty('--my-background-color',"#002b36");
+                    }else{
+                        post("Theme not found");
+                    }                    
+                }else{
+                    inputBackgroundHex = args[0];
+                    inputTextHex = args[1];
+                    inputHighlightHex = args[2];
+                    if(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputBackgroundHex) &&
+                       /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputTextHex) &&
+                       /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputHighlightHex)){
+                        document.body.style.setProperty('--my-highlight-color',inputHighlightHex);
+                        document.body.style.setProperty('--my-font-color',inputTextHex);
+                        document.body.style.setProperty('--my-background-color',inputBackgroundHex);
+                    }else{
+                        post("Invalid Hex Input for theme");
+                    }                    
+                }
+                break;
 			case "top":
 				//TODO List each's script RAM usage
                 post("Not yet implemented");
