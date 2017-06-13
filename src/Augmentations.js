@@ -1518,7 +1518,7 @@ applyAugmentation = function(aug, reapply=false) {
             Player.agility_mult     *= 1.75;
             break;
         case AugmentationNames.GrapheneBionicLegs:    //High level
-            player.agility_mult     *= 3.0;
+            Player.agility_mult     *= 3.0;
             break;
             
         //Labor stats augmentations
