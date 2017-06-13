@@ -8,8 +8,9 @@
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: black; /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    /*background-color: black; /* Fallback color */
+    /*background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: var(--my-background-color);
 }
 
 .dialog-box-container {
@@ -23,15 +24,15 @@
     left: 50%;
     margin: -10% 0 0 -25%;
     overflow: auto;
-    background-color: black;
-    background-color: rgba(0,0,0,0.4);
-    border: 5px solid #FFFFFF;
+    background-color: var(--my-background-color);
+    border: 5px solid var(--my-highlight-color);
 }
 
 .dialog-box-content {
     z-index: 2;
-    background-color: black;
+    background-color: var(--my-background-color);
     padding: 10px;
+    border: 5px solid var(--my-highlight-color);;
 }
 
 .dialog-box-close-button {
@@ -60,12 +61,12 @@
 }
 
 #purchase-server-box-content {
-    background-color: black;
+    background-color: background-color: var(--my-background-color);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 12px;
-    border: 5px solid #FFFFFF;
+    border: 5px solid var(--my-highlight-color);;
     width: 80%; /* Could be more or less, depending on screen size */
-    color: #66ff33;
+    color: var(--my-font-color);
 }
 
 #purchase-server-box-input {
@@ -85,14 +86,14 @@
 
 #purchase-server-box-confirm:hover,
 #purchase-server-box-confirm:focus {
-    color: #66ff33;
+    color: var(--my-font-color);
     text-decoration: none;
     cursor: pointer;
 }
 
 #purchase-server-box-cancel:hover,
 #purchase-server-box-cancel:focus {
-    color: #66ff33;
+    color: var(--my-font-color);
     text-decoration: none;
     cursor: pointer;
 }
@@ -103,12 +104,12 @@
 }
 
 #purchase-ram-for-home-box-content {
-    background-color: black;
+    background-color: var(--my-background-color);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 12px;
-    border: 5px solid #FFFFFF;
+    border: 5px solid var(--my-highlight-color);
     width: 50%; /* Could be more or less, depending on screen size */
-    color: #66ff33;
+    color: var(--my-font-color);
 }
 
 #purchase-ram-for-home-box-confirm,
@@ -124,14 +125,14 @@
 
 #purchase-ram-for-home-box-confirm:hover,
 #purchase-ram-for-home-box-confirm:focus {
-    color: #66ff33;
+    color: var(--my-font-color);
     text-decoration: none;
     cursor: pointer;
 }
 
 #purchase-ram-for-home-box-cancel:hover,
 #purchase-ram-for-home-box-cancel:focus {
-    color: #66ff33;
+    color: var(--my-font-color);
     text-decoration: none;
     cursor: pointer;
 }
@@ -142,12 +143,12 @@
 }
 
 #purchase-augmentation-box-content {
-    background-color: black;
+    background-color: var(--my-background-color);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 8px;
-    border: 5px solid #FFFFFF;
+    border: 5px solid var(--my-highlight-color);;
     width: 80%; /* Could be more or less, depending on screen size */
-    color: #66ff33;
+    color: var(--my-font-color);
 }
 
 #purchase-augmentation-box-confirm,
@@ -163,14 +164,14 @@
 
 #purchase-augmentation-box-confirm:hover,
 #purchase-augmentation-box-confirm:focus {
-    color: #66ff33;
+    color: var(--my-font-color);
     text-decoration: none;
     cursor: pointer;
 }
 
 #purchase-augmentation-box-cancel:hover,
 #purchase-augmentation-box-cancel:focus {
-    color: #66ff33;
+    color: var(--my-font-color);
     text-decoration: none;
     cursor: pointer;
 }
@@ -181,12 +182,12 @@
 }
 
 #faction-invitation-box-content {
-    background-color: black;
+    background-color: var(--my-background-color);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 10px;
-    border: 5px solid #FFFFFF;
+    border: 5px solid var(--my-highlight-color);;
     width: 80%; /* Could be more or less, depending on screen size */
-    color: #66ff33;
+    color: var(--my-font-color);
 }
 
 #faction-invitation-box-warning {
@@ -225,12 +226,12 @@
 }
 
 #travel-box-content {
-    background-color: black;
+    background-color: var(--my-background-color);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 10px;
-    border: 5px solid #FFFFFF;
+    border: 5px solid var(--my-highlight-color);;
     width: 50%; /* Could be more or less, depending on screen size */
-    color: #66ff33;
+    color: var(--my-font-color);
 }
 
 #travel-box-text {
@@ -268,12 +269,12 @@
 }
 
 #game-options-content {
-    background-color: black;
+    background-color: var(--my-background-color);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 10px;
-    border: 5px solid #FFFFFF;
+    border: 5px solid var(--my-highlight-color);
     width: 50%; /* Could be more or less, depending on screen size */
-    color: #66ff33;
+    color: var(--my-font-color);
 }
 
 #game-options-close-button {
@@ -301,3 +302,4 @@
 #import-game-file-selector {
     display:none;
 }
+

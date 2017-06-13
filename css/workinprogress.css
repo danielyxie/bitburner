@@ -1,5 +1,5 @@
 #work-in-progress-container {
-    color: #66ff33;
+    color: var(--my-font-color);
     position: fixed;
 	padding-top: 10px;
 	padding-left: 10px;
@@ -8,7 +8,7 @@
 }
 
 #work-in-progress-text {
-    color: #66ff33;
+    color: var(--my-font-color);
     width: 70%;
 }
 
