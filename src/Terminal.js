@@ -595,7 +595,9 @@ var Terminal = {
                 $('input[class=terminal-input]').prop('disabled', true);
 				break;
             case "buy":
-                executeDarkwebTerminalCommand(commandArray);
+                if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
+                    executeDarkwebTerminalCommand(commandArray);
+                }
                 break;
             case "cat":
                 if (commandArray.length != 2) {

@@ -573,6 +573,10 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.21.0<br>" + 
+    "-Added basic theme functionality - All credit goes to /u/0x726564646974 who implemented the awesome feature<br>" + 
+    "-Optimized Script objects, which were causing save errors when the player had too many scripts<br>" + 
+    "-Fixed bug where you could purchase Darkweb items without TOR router"
     "v0.20.2<br>" + 
     "-Fixed several small bugs<br>" + 
     "-Added basic array functionality to Netscript<br>" + 
