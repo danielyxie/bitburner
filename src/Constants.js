@@ -582,6 +582,7 @@ CONSTANTS = {
     "-Changed tail command so that it brings up a display box with dynamic log contents. To get " + 
     "old functionality where the logs are printed to the Terminal, use the new 'check' command<br>" + 
     "-A script's logs now get cleared when the script is run<br>"+ 
+    "-Added autocompletion for buying Programs in Darkweb<br>" + 
     "v0.20.2<br>" + 
     "-Fixed several small bugs<br>" + 
     "-Added basic array functionality to Netscript<br>" + 

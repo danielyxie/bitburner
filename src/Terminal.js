@@ -235,10 +235,16 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     
     //Autocomplete the command
     if (index == -1) {
-        return ["alias", "analyze", "cat", "clear", "cls", "connect", "free", 
+        return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "free", 
                 "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
                 "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze", 
                 "scp", "sudov", "tail", "theme", "top"];
+    }
+    
+    if (input.startsWith ("buy ")) {
+        return [Programs.BruteSSHProgram, Programs.FTPCrackProgram, Programs.RelaySMTPProgram,
+                Programs.HTTPWormProgram, Programs.SQLInjectProgram, Programs.DeepscanV1,
+                Programs.DeepscanV2];
     }
     
     if (input.startsWith("scp ") && index == 1) {
@@ -263,7 +269,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     
     if (input.startsWith("kill ") || input.startsWith("nano ") ||
         input.startsWith("tail ") || input.startsWith("rm ") ||
-        input.startsWith("mem ") || 
+        input.startsWith("mem ") || input.startsWith("check ") ||
         (input.startsWith("scp ") && index == 0)) {
         //All Scripts
         for (var i = 0; i < currServ.scripts.length; ++i) {
@@ -597,6 +603,8 @@ var Terminal = {
             case "buy":
                 if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
                     executeDarkwebTerminalCommand(commandArray);
+                } else {
+                    post("You need to be connected to the Dark Web to use the buy command");
                 }
                 break;
             case "cat":
