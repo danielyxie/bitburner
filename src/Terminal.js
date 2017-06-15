@@ -617,6 +617,29 @@ var Terminal = {
                 }
                 post("Error: No such file " + filename);
                 break;
+            case "check":
+                if (commandArray.length != 2) {
+                    post("Incorrect number of arguments. Usage: check [script]");
+                } else {
+                    var scriptName = commandArray[1];
+                    
+                    //Can only check script files
+                    if (scriptName.endsWith(".script") == false) {
+                        post("Error: check can only be called on .script files (filename must end with .script)"); return;
+                    }
+                    
+                    //Check that the script exists on this machine
+                    var currScripts = Player.getCurrentServer().scripts;
+                    for (var i = 0; i < currScripts.length; ++i) {
+                        if (scriptName == currScripts[i].filename) {
+                            currScripts[i].displayLog();
+                            return;
+                        }
+                    }
+                    
+                    post("Error: No such script exists");
+                }
+                break;
 			case "clear":
 			case "cls":
 				if (commandArray.length != 1) {
@@ -947,7 +970,7 @@ var Terminal = {
                     var currScripts = Player.getCurrentServer().scripts;
                     for (var i = 0; i < currScripts.length; ++i) {
                         if (scriptName == currScripts[i].filename) {
-                            currScripts[i].displayLog();
+                            logBoxCreate(currScripts[i]);
                             return;
                         }
                     }
@@ -959,7 +982,8 @@ var Terminal = {
                 //todo support theme saving                
                 var args = commandArray[1] ? commandArray[1].split(" ") : [];
                 if(args.length != 1 && args.length != 3) {
-                    post("Incorrect number of arguments. Usage: theme [default|muted|solarized] | [background color hex] [text color hex] [highlight color hex]");
+                    post("Incorrect number of arguments.");
+                    post("Usage: theme [default|muted|solarized] | [background color hex] [text color hex] [highlight color hex]");
                 }else if(args.length == 1){
                     var themeName = args[0];
                     if(themeName == "default"){
@@ -1243,6 +1267,9 @@ var Terminal = {
                     script.numTimesHackMap      = new AllServersMap();
                     script.numTimesGrowMap      = new AllServersMap();
                     script.numTimesWeakenMap    = new AllServersMap();
+                    
+                    //Clear logs
+                    script.logs = [];
                     
 					addWorkerScript(script, server);
 					return;

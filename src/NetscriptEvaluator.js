@@ -40,25 +40,13 @@ function evaluate(exp, workerScript) {
                 }
                 try {
                     var res = env.get(exp.value);
-                    if (exp.index) {
-                        //If theres an index field, then this variable is supposed to be an array 
-                        //and the user needs to be indexing it
-                        if (res.constructor === Array || res instanceof Array) {
-                            var iPromise = evaluate(exp.index.value, workerScript);
-                            iPromise.then(function(i) {
-                                if (i >= res.length || i < 0) {
-                                    return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
-                                } else {
-                                    return evaluate(res[i], workerScript);
-                                }
-                            }).then(function(res) {
-                                resolve(res);
-                            }).catch(function(e) {
-                                reject(e);
-                            });
-                        } else {
-                            reject(makeRuntimeRejectMsg(workerScript, "Trying to access a non-array variable using the [] operator"));
-                        }
+                    if (res.constructor === Array || res instanceof Array) {
+                        var evalArrayPromise = netscriptArray(exp, workerScript);
+                        evalArrayPromise.then(function(res) {
+                            resolve(res);
+                        }, function(e) {
+                            reject(e);
+                        });
                     } else {
                         resolve(res);
                     }
@@ -763,7 +751,7 @@ function evaluateHacknetNode(exp, workerScript) {
     return new Promise(function(resolve, reject) {
         setTimeout(function() {
             if (exp.index == null) {
-                if ((exp.op.type == "call" && exp.op.value == "length") ||
+                if ((exp.op.type == "call" && exp.op.func.value == "length") ||
                     (exp.op.type == "var" && exp.op.value == "length")) {
                     resolve(Player.hacknetNodes.length);
                     workerScript.scriptRef.log("hacknetnodes.length returned " + Player.hacknetNodes.length);
@@ -978,6 +966,7 @@ function runScriptFromScript(server, scriptname, workerScript, threads=1) {
                         script.numTimesHackMap      = new AllServersMap();
                         script.numTimesGrowMap      = new AllServersMap();
                         script.numTimesWeakenMap    = new AllServersMap();
+                        script.logs = [];
                         addWorkerScript(script, server);
                         resolve(true);
                         return;
@@ -1022,7 +1011,10 @@ function scriptCalculateHackingTime(server) {
 
 //The same as Player's calculateExpGain() function but takes in the server as an argument 
 function scriptCalculateExpGain(server) {
-	return (server.hackDifficulty * Player.hacking_exp_mult * 0.9);
+    if (server.baseDifficulty == null) {
+        server.baseDifficulty = server.hackDifficulty;
+    }
+	return (server.baseDifficulty * Player.hacking_exp_mult * 0.5 + 4);
 }
 
 //The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument

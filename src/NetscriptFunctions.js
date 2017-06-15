@@ -1,72 +1,76 @@
 /* Netscript Functions 
  * Implementation for Netscript features */
- /*
-function netscriptAssign(exp, workerScript) {
+function netscriptArray(exp, workerScript) {
     var env = workerScript.env;
+    var arr = env.get(exp.value);
     return new Promise(function(resolve, reject) {
-        if (env.stopFlag) {return reject(workerScript);}
-        
-        if (exp.left.type != "var") {
-            return reject(makeRuntimeRejectMsg(workerScript, "Cannot assign to " + JSON.stringify(exp.left)));
-        }
-        
-        //Assigning an element in an array
-        if (exp.left.index) {
-            try {
-                var res = env.get(exp.left.value);
-                if (res.constructor === Array || res instanceof Array) {
-                    var i = 0;
-                    var iPromise = evaluate(exp.left.index.value, workerScript);
-                    iPromise.then(function(idx) {
-                        if (idx >= res.length || idx < 0) {
-                            return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
-                        } else {
-                            //TODO evaluate exp.right here....and then determine its type and
-                            //set the type and value below accordingly
-                            i = idx;
-                            return evaluate(exp.right, workerScript);
-                        }
-                    }).then(function(right) {
-                        console.log("evaluate right with result: " + right);
-                        if (right === true || right === false) {
-                            res[i].type = "bool";
-                            res[i].value = right;
-                        } else if (!isNaN(right) || typeof right == 'number') {
-                            res[i].type = "num";
-                            res[i].value = right;
-                        } else {    //String
-                            res[i].type = "str";
-                            res[i].value = right.toString();
-                        }
-                        console.log(res);
-                        return resolve(true);
-                    }).then(function(finalRes) {
-                        resolve(finalRes);
-                    }).catch(function(e) {
-                        return reject(e);
-                    });
+        if (exp.index == null || exp.index == undefined) {
+            if ((exp.op.type == "call" && exp.op.func.value == "length") ||
+                (exp.op.type == "var" && exp.op.value == "length")) {
+                return resolve(arr.length);
+            } else if ((exp.op.type == "call" && exp.op.func.value == "clear") ||
+                       (exp.op.type == "var" && exp.op.value == "clear")) {
+                    arr.length = 0;
+                    return resolve(true);
+            } else if (exp.op.type == "call" && exp.op.func.value == "push") {
+                if (exp.op.args.length == 1) {
+                    var entry = Object.assign({}, exp.op.args[0]);
+                    arr.push(entry);
+                    return resolve(true);
                 } else {
-                    return reject(makeRuntimeRejectMsg(workerScript, "Trying to access a non-array variable using the [] operator"));
+                    return reject(makeRuntimeRejectMsg(workerScript, "Invalid number of arguments passed into array.push() command. Takes 1 argument"));
                 }
-            } catch(e) {
-                return reject(makeRuntimeRejectMsg(workerScript, e.toString()));
+            } else {
+                return reject(makeRuntimeRejectMsg(workerScript, "Invalid operation on an array"));
             }
-        } else {
-            var expRightPromise = evaluate(exp.right, workerScript);
-            expRightPromise.then(function(expRight) {
-                try {
-                    env.set(exp.left.value, expRight);
-                } catch (e) {
-                    return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
-                }
-                resolve(false); //Return false so this doesnt cause conditionals to evaluate
-            }, function(e) {
-                reject(e);
-            });
         }
+            
+        //The array is being indexed
+        var indexPromise = evaluate(exp.index.value, workerScript);
+        indexPromise.then(function(i) {
+            if (isNaN(i)) {
+                return reject(makeRuntimeRejectMsg(workerScript, "Invalid access to array. Index is not a number: " + idx));
+            } else if (i >= arr.length || i < 0) {
+                return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
+            } else {
+                if (exp.op && exp.op.type == "call") {
+                    switch(exp.op.func.value) {
+                        case "insert":
+                            if (exp.op.args.length == 1) {
+                                var entry = Object.assign({}, exp.op.args[0]);
+                                arr.splice(i, 0, entry);
+                                return resolve(arr.length);
+                            } else {
+                                return reject(makeRuntimeRejectMsg(workerScript, "Invalid number of arguments passed into array insert() call. Takes 1 argument"));
+                            }
+                            break;
+                        case "remove":
+                            if (exp.op.args.length == 0) {
+                                return resolve(arr.splice(i, 1));
+                            } else {
+                                return reject(makeRuntimeRejectMsg(workerScript, "Invalid number of arguments passed into array remove() call. Takes 1 argument"));
+                            }
+                            break;
+                        default:
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid call on array element: " + exp.op.func.value));
+                            break;
+                    }
+                } else {
+                    //Return the indexed element
+                    var resPromise = evaluate(arr[i], workerScript);
+                    resPromise.then(function(res) {
+                        resolve(res);
+                    }, function(e) {
+                        reject(e);
+                    });
+                }
+            }
+        }, function(e) {
+            reject(e);
+        });
     });
 }
-*/
+
 function netscriptAssign(exp, workerScript) {
     var env = workerScript.env;
     return new Promise(function(resolve, reject) {
@@ -84,7 +88,9 @@ function netscriptAssign(exp, workerScript) {
                     var i = 0;
                     var iPromise = evaluate(exp.left.index.value, workerScript);
                     iPromise.then(function(idx) {
-                        if (idx >= res.length || idx < 0) {
+                        if (isNaN(idx)) {
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid access to array. Index is not a number: " + idx));
+                        } else if (idx >= res.length || idx < 0) {
                             return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
                         } else {
                             //Clone res to be exp.right

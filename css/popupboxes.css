@@ -10,10 +10,11 @@
     overflow: auto; /* Enable scroll if needed */
     /*background-color: black; /* Fallback color */
     /*background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    background-color: var(--my-background-color);
+    background-color: rbga(var(--my-background-color), 0.4);
 }
 
-.dialog-box-container {
+.dialog-box-container,
+#log-box-container {
     display: block;
     position: absolute;
     z-index: 2;
@@ -28,14 +29,15 @@
     border: 5px solid var(--my-highlight-color);
 }
 
-.dialog-box-content {
+.dialog-box-content,
+#log-box-content {
     z-index: 2;
     background-color: var(--my-background-color);
     padding: 10px;
-    border: 5px solid var(--my-highlight-color);;
 }
 
-.dialog-box-close-button {
+.dialog-box-close-button,
+#log-box-close {
     color: #aaa;
     float: right;
     font-size: 20px;
@@ -49,7 +51,9 @@
 }
 
 .dialog-box-close-button:hover,
-.dialog-box-close-button:focus {
+.dialog-box-close-button:focus,
+#log-box-close:hover,
+#log-box-close:focus {
     color: white;
     text-decoration: none;
     cursor: pointer;
@@ -61,7 +65,7 @@
 }
 
 #purchase-server-box-content {
-    background-color: background-color: var(--my-background-color);
+    background-color: var(--my-background-color);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 12px;
     border: 5px solid var(--my-highlight-color);;

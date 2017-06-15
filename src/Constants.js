@@ -78,7 +78,7 @@ CONSTANTS = {
     AugmentationRepMultiplier: 1.5, //Used for balancing rep cost without having to readjust every value
     
     //Maximum number of log entries for a script
-    MaxLogCapacity: 40,
+    MaxLogCapacity: 50,
     
     //How much a TOR router costs
     TorRouterCost: 200000,
@@ -153,6 +153,7 @@ CONSTANTS = {
     HelpText:   'alias [name="value"]   Create aliases for Terminal commands, or list existing aliases<br>' + 
                 "analyze                Get statistics and information about current machine <br>" + 
                 "cat [message]          Display a .msg file<br>" + 
+                "check [script]         Print script logs to Terminal<br>" + 
                 "clear                  Clear all text on the terminal <br>" +
                 "cls                    See 'clear' command <br>" +
                 "connect [ip/hostname]  Connects to the machine given by its IP or hostname <br>" + 
@@ -576,7 +577,11 @@ CONSTANTS = {
     "v0.21.0<br>" + 
     "-Added basic theme functionality - All credit goes to /u/0x726564646974 who implemented the awesome feature<br>" + 
     "-Optimized Script objects, which were causing save errors when the player had too many scripts<br>" + 
-    "-Fixed bug where you could purchase Darkweb items without TOR router"
+    "-Fixed bug where you could purchase Darkweb items without TOR router<br>" + 
+    "-Slightly increased cost multiplier for Home Computer RAM<br>" + 
+    "-Changed tail command so that it brings up a display box with dynamic log contents. To get " + 
+    "old functionality where the logs are printed to the Terminal, use the new 'check' command<br>" + 
+    "-A script's logs now get cleared when the script is run<br>"+ 
     "v0.20.2<br>" + 
     "-Fixed several small bugs<br>" + 
     "-Added basic array functionality to Netscript<br>" + 

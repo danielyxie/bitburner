@@ -545,6 +545,10 @@ var Engine = {
                 displayCreateProgramContent();
             }
             
+            if (logBoxOpened) {
+                logBoxUpdateText();
+            }
+            
             Engine.Counters.updateDisplays = 3;
         }
         
