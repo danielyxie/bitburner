@@ -238,7 +238,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         return ["alias", "analyze", "cat", "clear", "cls", "connect", "free", 
                 "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
                 "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze", 
-                "scp", "sudov", "tail", "top"];
+                "scp", "sudov", "tail", "top"].concat(Object.keys(Aliases));
     }
     
     if (input.startsWith("scp ") && index == 1) {
