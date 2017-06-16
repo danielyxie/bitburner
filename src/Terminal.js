@@ -957,32 +957,31 @@ var Terminal = {
                 if(commandArray.length != 1) {
                   post("Incorrect usage of top command. Usage: top"); return;
                 }
-                
+
                 post("Script                    RAM Usage                 Threads");
+
                 var currRunningScripts = Player.getCurrentServer().runningScripts;
-                for(i = 0; i < currRunningScripts.length; i++) {
-                    //Check if script is on current server
-                    for(j = 0; j < Player.getCurrentServer().scripts.length; j++) {
-                        if(currRunningScripts[i] === Player.getCurrentServer().scripts[j].filename) {
+                //Iterate through active scripts on current server
+                for(var i = 0; i < currRunningScripts.length; i++) {
+                    //Iterate through scripts on current server
+                    for(var j = 0; j < Player.getCurrentServer().scripts.length; j++) {
+                        if(currRunningScripts[i] === Player.getCurrentServer().scripts[j].filename) { //If the script is active
                             var script = Player.getCurrentServer().scripts[j];
 
-                            //Add script name
-                            var entry = script.filename;
+                            //Calculate name padding
+                            var numSpacesScript = 26 - script.filename.length; // 26 is the width of each column
+                            var spacesScript = Array(numSpacesScript+1).join(" ");
 
-                            //Calculate padding and add RAM usage
-                            var numSpaces = 26 - entry.length;
-                            var spaces = Array(numSpaces+1).join(" ");
-                            entry += spaces;
-                            var ramUsage = (script.ramUsage * script.threads * Math.pow(1.02, script.threads - 1)).toFixed(3);
-                            entry += ramUsage + "GB";
+                            //Calculate and transform RAM usage
+                            var ramUsage = script.ramUsage * script.threads * Math.pow(1.02, script.threads - 1);
+                            ramUsage = ramUsage.toFixed(3) + "GB"; //Rounds RAM to three decimal places
 
-                            //Calculate padding and add thread count
-                            numSpaces = 26 - (ramUsage.length + 2);
-                            spaces = Array(numSpaces+1).join(" ");
-                            entry += spaces;
-                            entry += script.threads;
+                            //Calculate RAM padding
+                            var numSpacesRAM = 26 - ramUsage.length;
+                            var spacesRAM = Array(numSpacesRAM+1).join(" ");
 
-                            post(entry);
+                            var entry = [script.filename, spacesScript, ramUsage, spacesRAM, script.threads];
+                            post(entry.join(""));
                         }
                     }
                 }
