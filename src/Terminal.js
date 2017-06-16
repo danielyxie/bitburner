@@ -954,8 +954,38 @@ var Terminal = {
                 }
 				break;
 			case "top":
-				//TODO List each's script RAM usage
-                post("Not yet implemented");
+                if(commandArray.length != 1) {
+                  post("Incorrect usage of top command. Usage: top"); return;
+                }
+                
+                post("Script                    RAM Usage                 Threads");
+                var currRunningScripts = Player.getCurrentServer().runningScripts;
+                for(i = 0; i < currRunningScripts.length; i++) {
+                    //Check if script is on current server
+                    for(j = 0; j < Player.getCurrentServer().scripts.length; j++) {
+                        if(currRunningScripts[i] === Player.getCurrentServer().scripts[j].filename) {
+                            var script = Player.getCurrentServer().scripts[j];
+
+                            //Add script name
+                            var entry = script.filename;
+
+                            //Calculate padding and add RAM usage
+                            var numSpaces = 26 - entry.length;
+                            var spaces = Array(numSpaces+1).join(" ");
+                            entry += spaces;
+                            var ramUsage = (script.ramUsage * script.threads * Math.pow(1.02, script.threads - 1)).toFixed(3);
+                            entry += ramUsage + "GB";
+
+                            //Calculate padding and add thread count
+                            numSpaces = 26 - (ramUsage.length + 2);
+                            spaces = Array(numSpaces+1).join(" ");
+                            entry += spaces;
+                            entry += script.threads;
+
+                            post(entry);
+                        }
+                    }
+                }
 				break;
 			default:
 				post("Command not found");
