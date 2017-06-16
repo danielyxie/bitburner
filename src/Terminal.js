@@ -954,37 +954,35 @@ var Terminal = {
                 }
 				break;
 			case "top":
-                if(commandArray.length != 1) {
-                  post("Incorrect usage of top command. Usage: top"); return;
-                }
+				if(commandArray.length != 1) {
+				  post("Incorrect usage of top command. Usage: top"); return;
+				}
 
-                post("Script                    RAM Usage                 Threads");
+				post("Script                    Threads         RAM Usage");
 
-                var currRunningScripts = Player.getCurrentServer().runningScripts;
-                //Iterate through active scripts on current server
-                for(var i = 0; i < currRunningScripts.length; i++) {
-                    //Iterate through scripts on current server
-                    for(var j = 0; j < Player.getCurrentServer().scripts.length; j++) {
-                        if(currRunningScripts[i] === Player.getCurrentServer().scripts[j].filename) { //If the script is active
-                            var script = Player.getCurrentServer().scripts[j];
+				var currRunningScripts = Player.getCurrentServer().runningScripts;
+				var currScripts = Player.getCurrentServer().scripts;
+				//Iterate through scripts on current server
+				for(var i = 0; i < currScripts.length; i++) {
+				    if(currRunningScripts.includes(currScripts[i].filename)) { //If the script is running
+					var script = currScripts[i];
 
-                            //Calculate name padding
-                            var numSpacesScript = 26 - script.filename.length; // 26 is the width of each column
-                            var spacesScript = Array(numSpacesScript+1).join(" ");
+					//Calculate name padding
+					var numSpacesScript = 26 - script.filename.length; //26 -> width of name column
+					var spacesScript = Array(numSpacesScript+1).join(" ");
 
-                            //Calculate and transform RAM usage
-                            var ramUsage = script.ramUsage * script.threads * Math.pow(1.02, script.threads - 1);
-                            ramUsage = ramUsage.toFixed(3) + "GB"; //Rounds RAM to three decimal places
+					//Calculate thread padding
+					var numSpacesThread = 16 - (script.threads + "").length; //16 -> width of thread column
+					var spacesThread = Array(numSpacesThread+1).join(" ");
 
-                            //Calculate RAM padding
-                            var numSpacesRAM = 26 - ramUsage.length;
-                            var spacesRAM = Array(numSpacesRAM+1).join(" ");
+					//Calculate and transform RAM usage
+					var ramUsage = script.ramUsage * script.threads * Math.pow(1.02, script.threads - 1);
+					ramUsage = ramUsage + "GB";
 
-                            var entry = [script.filename, spacesScript, ramUsage, spacesRAM, script.threads];
-                            post(entry.join(""));
-                        }
-                    }
-                }
+					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
+					post(entry.join(""));
+				    }
+				}
 				break;
 			default:
 				post("Command not found");
