@@ -176,6 +176,7 @@ CONSTANTS = {
                 "scp [script] [server]          Copies a script to a destination server (specified by ip or hostname)<br>" + 
                 "sudov                          Shows whether or not you have root access on this computer<br>" + 
                 "tail [script] [args...]        Display dynamic logs for the script with the specified name and arguments<br>" +
+                "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" + 
                 "top                            Display all running scripts and their RAM usage<br>",
                 
     /* Tutorial related things */
@@ -653,7 +654,7 @@ CONSTANTS = {
     "<br>run foodnstuff.script 2<br>These will be considered two different scripts. To kill the first script you must " + 
     "run <br>kill foodnstuff.script 1<br> and to kill the second you must run <br>kill foodnstuff.script 2<br> Similar concepts " + 
     "apply for Terminal Commands such as tail, and Netscript commands such as run(), exec(), kill(), isRunning(), etc.<br>" + 
-    "-Added basic theme functionality - All credit goes to /u/0x726564646974 who implemented the awesome feature<br>" + 
+    "-Added basic theme functionality using the 'theme' Terminal command - All credit goes to /u/0x726564646974 who implemented the awesome feature<br>" + 
     "-Optimized Script objects, which were causing save errors when the player had too many scripts<br>" + 
     "-Formula for determining exp gained from hacking was changed<br>" + 
     "-Fixed bug where you could purchase Darkweb items without TOR router<br>" + 
@@ -802,7 +803,7 @@ CONSTANTS = {
     "<br>run foodnstuff.script 2<br>These will be considered two different scripts. To kill the first script you must " + 
     "run <br>kill foodnstuff.script 1<br> and to kill the second you must run <br>kill foodnstuff.script 2<br> Similar concepts " + 
     "apply for Terminal Commands such as tail, and Netscript commands such as run(), exec(), kill(), isRunning(), etc.<br>" + 
-    "-Added basic theme functionality - All credit goes to /u/0x726564646974 who implemented the awesome feature<br>" + 
+    "-Added basic theme functionality using the 'theme' Terminal command - All credit goes to /u/0x726564646974 who implemented the awesome feature<br>" + 
     "-Optimized Script objects, which were causing save errors when the player had too many scripts<br>" + 
     "-Formula for determining exp gained from hacking was changed<br>" + 
     "-Fixed bug where you could purchase Darkweb items without TOR router<br>" + 

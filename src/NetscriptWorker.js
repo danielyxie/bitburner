@@ -140,7 +140,7 @@ function addWorkerScript(runningScriptObj, server) {
     if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
         threads = runningScriptObj.threads;
     } else {
-        script.threads = 1;
+        runningScriptObj.threads = 1;
     }
     var ramUsage = runningScriptObj.scriptRef.ramUsage * threads * Math.pow(1.02, threads-1);
 	server.ramUsed += ramUsage;
