@@ -38,8 +38,8 @@
 
 .dialog-box-close-button,
 #log-box-close {
-    color: #aaa;
     float: right;
+    color: #aaa;
     font-size: 20px;
     font-weight: bold;
     -webkit-border-radius: 12px;
@@ -48,6 +48,11 @@
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
+}
+
+#log-box-close {
+    position: fixed;
+    right: 27%;
 }
 
 .dialog-box-close-button:hover,

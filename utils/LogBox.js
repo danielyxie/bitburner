@@ -10,6 +10,12 @@ $(document).click(function(event) {
     }
 });
 */
+
+$(document).keydown(function(event) {
+    if (logBoxOpened && event.keyCode == 27) {
+        logBoxClose();
+    }
+});
  
 function logBoxInit() {
     var closeButton = document.getElementById("log-box-close");
