@@ -289,6 +289,7 @@ var Engine = {
         '<b>Misc</b><br><br>' + 
         'Servers owned:       ' + Player.purchasedServers.length + '<br>' + 
         'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
+        'Time played since last Augmentation: ' + convertTimeMsToTimeElapsedString(Player.playtimeSinceLastAug) + '<br>' +
         'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime) + '<br><br><br>').replace( / /g, "&nbsp;" );
     },
     
@@ -454,7 +455,9 @@ var Engine = {
         //Update total playtime
         var time = numCycles * Engine._idleSpeed;
         if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
+        if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
         Player.totalPlaytime += time;
+        Player.playtimeSinceLastAug += time;
         
         //Start Manual hack 
         if (Player.startAction == true) {
@@ -679,7 +682,9 @@ var Engine = {
             //Update total playtime
             var time = numCyclesOffline * Engine._idleSpeed;
             if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
+            if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
             Player.totalPlaytime += time;
+            Player.playtimeSinceLastAug += time;
             
             //Re-apply augmentations
             Player.reapplyAllAugmentations();

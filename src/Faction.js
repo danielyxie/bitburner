@@ -688,6 +688,11 @@ displayFactionContent = function(factionName) {
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
+            case "Fulcrum Secret Technologies":
+                hackDiv.style.display = "inline";
+				fieldWorkDiv.style.display = "none";
+				securityWorkDiv.style.display = "inline";
+                break;
 			case "BitRunners":
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "none";
