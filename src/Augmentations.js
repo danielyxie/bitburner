@@ -1411,7 +1411,7 @@ initAugmentations = function() {
                          "<br><br>This augmentation: <br>" + 
                          "Increases the player's strength and defense by 20%<br>" + 
                          "Increases the player's crime success rate by 10%<br>" + 
-                         "Increases thea mount of money the player gains from crimes by 10%");
+                         "Increases the amount of money the player gains from crimes by 10%");
     BrachiBlades.setRequirements(5000, 18000000);
     BrachiBlades.addToFactions(["The Syndicate"]);
     if (augmentationExists(AugmentationNames.BrachiBlades)) {

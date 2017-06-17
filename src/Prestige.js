@@ -107,7 +107,7 @@ function prestigeAugmentation() {
    
     Player.lastUpdate = new Date().getTime();
     
-    //Delete all running scripts objects
+    //Delete all Worker Scripts objects
     for (var i = 0; i < workerScripts.length; ++i) {
         deleteActiveScriptsItem(workerScripts[i]);
         workerScripts[i].env.stopFlag = true;
@@ -158,7 +158,6 @@ function prestigeAugmentation() {
     //Reset statistics of all scripts on home computer
     for (var i = 0; i < homeComp.scripts.length; ++i) {
         var s = homeComp.scripts[i];
-        s.reset();
     }
     //Delete messages on home computer
     homeComp.messages.length = 0;

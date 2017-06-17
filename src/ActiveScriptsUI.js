@@ -117,7 +117,12 @@ function addActiveScriptsItem(workerscript) {
     }
     
     //Create the element itself. Each element is an accordion collapsible
-    var itemName = "active-scripts-" + server.hostname + "-" + workerscript.name;
+    var itemNameArray = ["active", "scripts", server.hostname, workerscript.name];
+    for (var i = 0; i < workerscript.args.length; ++i) {
+        itemNameArray.push(workerscript.args[i].toString());
+    }
+    var itemName = itemNameArray.join("-");
+    //var itemName = "active-scripts-" + server.hostname + "-" + workerscript.name;
     var item = document.createElement("li");
     item.setAttribute("id", itemName);
     
@@ -147,7 +152,12 @@ function deleteActiveScriptsItem(workerscript) {
         console.log("ERROR: Invalid server IP for workerscript.");
         return;
     }
-    var itemName = "active-scripts-" + server.hostname + "-" + workerscript.name;
+    var itemNameArray = ["active", "scripts", server.hostname, workerscript.name];
+    for (var i = 0; i < workerscript.args.length; ++i) {
+        itemNameArray.push(workerscript.args[i].toString());
+    }
+    var itemName = itemNameArray.join("-");
+    //var itemName = "active-scripts-" + server.hostname + "-" + workerscript.name;
     var li = document.getElementById(itemName);
     if (li == null) {
         console.log("could not find Active scripts li element for: " + workerscript.name);
@@ -174,7 +184,12 @@ function updateActiveScriptsItemContent(workerscript) {
         console.log("ERROR: Invalid server IP for workerscript.");
         return;
     }
-    var itemName = "active-scripts-" + server.hostname + "-" + workerscript.name;
+    var itemNameArray = ["active", "scripts", server.hostname, workerscript.name];
+    for (var i = 0; i < workerscript.args.length; ++i) {
+        itemNameArray.push(workerscript.args[i].toString());
+    }
+    var itemName = itemNameArray.join("-");
+    //var itemName = "active-scripts-" + server.hostname + "-" + workerscript.name;
     var itemContent = document.getElementById(itemName + "-content")
     
     //Clear the item
@@ -190,7 +205,8 @@ function createActiveScriptsText(workerscript, item) {
     var itemText = document.createElement("p");
     
     //Server ip/hostname
-    var serverIpHostname = "Threads: " + workerscript.scriptRef.threads;
+    var threads = "Threads: " + workerscript.scriptRef.threads;
+    var args = "Args: " + printArray(workerscript.args);
     
     //Online
     var onlineTotalMoneyMade = "Total online production: $" + formatNumber(workerscript.scriptRef.onlineMoneyMade, 2);
@@ -210,7 +226,7 @@ function createActiveScriptsText(workerscript, item) {
     var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
     var offlineEpsText = (Array(26).join(" ") + formatNumber(offlineEps, 4) +  " hacking exp/second").replace( / /g, "&nbsp;");
     
-    itemText.innerHTML = serverIpHostname + "<br>" + onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
+    itemText.innerHTML = threads + "<br>" + args + "<br>" + onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
                          onlineMpsText + "<br>" + onlineEpsText + "<br>" + offlineTotalMoneyMade + "<br>" + offlineTotalExpEarned + "<br>" +
                          offlineMpsText + "<br>" + offlineEpsText + "<br>";
     

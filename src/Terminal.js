@@ -570,6 +570,7 @@ var Terminal = {
         /****************** END INTERACTIVE TUTORIAL ******************/
 		
         /* Command parser */
+        var s = Player.getCurrentServer();
 		switch (commandArray[0].toLowerCase()) {
             case "alias":
                 if (commandArray.length == 1) {
@@ -616,7 +617,6 @@ var Terminal = {
 				if (filename.endsWith(".msg") == false) {
 					post("Error: Only .msg files are viewable with cat (filename must end with .msg)"); return;
 				}
-                var s = Player.getCurrentServer();
                 for (var i = 0; i < s.messages.length; ++i) {
                     if (s.messages[i].filename == filename) {
                         showMessage(s.messages[i]);
@@ -626,26 +626,28 @@ var Terminal = {
                 post("Error: No such file " + filename);
                 break;
             case "check":
-                if (commandArray.length != 2) {
-                    post("Incorrect number of arguments. Usage: check [script]");
+                if (commandArray.length < 2) {
+                    post("Incorrect number of arguments. Usage: check [script] [arg1] [arg2]...");
                 } else {
-                    var scriptName = commandArray[1];
+                    var results = commandArray[1].split(" ");
+                    var scriptName = results[0];
+                    var args = [];
+                    for (var i = 1; i < results.length; ++i) {
+                        args.push(results[i]);
+                    }
                     
-                    //Can only check script files
+                    //Can only tail script files
                     if (scriptName.endsWith(".script") == false) {
-                        post("Error: check can only be called on .script files (filename must end with .script)"); return;
+                        post("Error: tail can only be called on .script files (filename must end with .script)"); return;
                     }
                     
                     //Check that the script exists on this machine
-                    var currScripts = Player.getCurrentServer().scripts;
-                    for (var i = 0; i < currScripts.length; ++i) {
-                        if (scriptName == currScripts[i].filename) {
-                            currScripts[i].displayLog();
-                            return;
-                        }
+                    var runningScript = findRunningScript(scriptName, args, s);
+                    if (runningScript == null) {
+                        post("Error: No such script exists");
+                        return;
                     }
-                    
-                    post("Error: No such script exists");
+                    logBoxCreate(runningScript);
                 }
                 break;
 			case "clear":
@@ -737,23 +739,25 @@ var Terminal = {
 				post(Player.getCurrentServer().ip);
 				break;
 			case "kill":
-				if (commandArray.length != 2) {
-					post("Incorrect usage of kill command. Usage: kill [scriptname]"); return;
+				if (commandArray.length < 2) {
+					post("Incorrect usage of kill command. Usage: kill [scriptname] [arg1] [arg2]..."); return;
 				}
-				
-				var scriptName = commandArray[1];
-				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
-					if (Player.getCurrentServer().runningScripts[i] == scriptName) {						
-						killWorkerScript(scriptName, Player.getCurrentServer().ip); 
-						post("Killing " + scriptName + ". May take up to a few minutes for the scripts to die...");
-						return;
-					} 
-				}
-				post("No such script is running. Nothing to kill");
+                var results = commandArray[1].split(" ");
+				var scriptName = results[0];
+                var args = [];
+                for (var i = 1; i < results.length; ++i) {
+                    args.push(results[i]);
+                }
+                var runningScript = findRunningScript(scriptName, args, s);
+                if (runningScript == null) {
+                    post("No such script is running. Nothing to kill");
+                    return;
+                }
+                killWorkerScript(runningScript, s.ip);
+                post("Killing " + scriptName + ". May take up to a few minutes for the scripts to die...");
 				break;
             case "killall":
-                var s = Player.getCurrentServer();
-                for (var i = s.runningScripts.length; i >= 0; --i) {
+                for (var i = s.runningScripts.length-1; i >= 0; --i) {
                     killWorkerScript(s.runningScripts[i], s.ip);
                 }
                 post("Killing all running scripts. May take up to a few minutes for the scripts to die...");
@@ -821,8 +825,13 @@ var Terminal = {
 				if (commandArray.length != 1) {
 					post("Incorrect usage of ps command. Usage: ps"); return;
 				}
-				for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
-					post(Player.getCurrentServer().runningScripts[i]);
+				for (var i = 0; i < s.runningScripts.length; i++) {
+                    var rsObj = s.runningScripts[i];
+                    var res = rsObj.filename;
+                    for (var j = 0; j < rsObj.args.length; ++j) {
+                        res += (" " + rsObj.args[j].toString());
+                    }
+					post(res);
 				}
 				break;
 			case "rm":
@@ -832,7 +841,6 @@ var Terminal = {
                 
                 //Check programs
                 var delTarget = commandArray[1];
-                var s = Player.getCurrentServer();
                 for (var i = 0; i < s.programs.length; ++i) {
                     if (s.programs[i] == delTarget) {
                        s.programs.splice(i, 1);
@@ -844,11 +852,13 @@ var Terminal = {
                 for (var i = 0; i < s.scripts.length; ++i) {
                     if (s.scripts[i].filename == delTarget) {
                         //Check that the script isnt currently running
-                        if (s.runningScripts.indexOf(delTarget) > -1) {
-                            post("Cannot delete a script that is currently running!");
-                        } else {
-                            s.scripts.splice(i, 1);
+                        for (var j = 0; j < s.runningScripts.length; ++j) {
+                            if (s.runningScripts[j].filename == delTarget) {
+                                post("Cannot delete a script that is currently running!");
+                                return;
+                            }
                         }
+                        s.scripts.splice(i, 1);
                         return;
                     }
                 }
@@ -858,7 +868,7 @@ var Terminal = {
 			case "run":
 				//Run a program or a script
 				if (commandArray.length != 2) {
-					post("Incorrect number of arguments. Usage: run [program/script] [-t] [number threads]");
+					post("Incorrect number of arguments. Usage: run [program/script] [-t] [num threads] [arg1] [arg2]...");
 				} else {
 					var executableName = commandArray[1];
 					//Check if its a script or just a program/executable 
@@ -964,10 +974,15 @@ var Terminal = {
                 }
                 break;
 			case "tail":
-				if (commandArray.length != 2) {
-                    post("Incorrect number of arguments. Usage: tail [script]");
+				if (commandArray.length < 2) {
+                    post("Incorrect number of arguments. Usage: tail [script] [arg1] [arg2]...");
                 } else {
-                    var scriptName = commandArray[1];
+                    var results = commandArray[1].split(" ");
+                    var scriptName = results[0];
+                    var args = [];
+                    for (var i = 1; i < results.length; ++i) {
+                        args.push(results[i]);
+                    }
                     
                     //Can only tail script files
                     if (scriptName.endsWith(".script") == false) {
@@ -975,15 +990,12 @@ var Terminal = {
                     }
                     
                     //Check that the script exists on this machine
-                    var currScripts = Player.getCurrentServer().scripts;
-                    for (var i = 0; i < currScripts.length; ++i) {
-                        if (scriptName == currScripts[i].filename) {
-                            logBoxCreate(currScripts[i]);
-                            return;
-                        }
+                    var runningScript = findRunningScript(scriptName, args, s);
+                    if (runningScript == null) {
+                        post("Error: No such script exists");
+                        return;
                     }
-                    
-                    post("Error: No such script exists");
+                    logBoxCreate(runningScript);
                 }
 				break;
             case "theme":
@@ -1226,35 +1238,71 @@ var Terminal = {
 		var server = Player.getCurrentServer();
 		
         var numThreads = 1;
-        //Get the number of threads
-        if (scriptName.indexOf(" -t ") != -1) {
-            var results = scriptName.split(" ");
-            if (results.length != 3) {
-                post("Invalid use of run command. Usage: run [script] [-t] [number threads]");
-                return;
-            }
-            numThreads = Math.round(Number(results[2]));
-            if (isNaN(numThreads) || numThreads < 1) {
-                post("Invalid number of threads specified. Number of threads must be greater than 0");
-                return;
-            }
-            scriptName = results[0];
+        var args = [];
+        var results = scriptName.split(" ");
+        if (results.length <= 0) {
+            post("This is a bug. Please contact developer");
         }
+        scriptName = results[0];
+        if (results.length > 1) {
+            if (results.length >= 3 && results[1] == "-t") {
+                numThreads = Math.round(Number(results[2]));
+                if (isNaN(numThreads) || numThreads < 1) {
+                    post("Invalid number of threads specified. Number of threads must be greater than 0");
+                    return;
+                }
+                for (var i = 3; i < results.length; ++i) {
+                    var arg = results[i];
+                    
+                    //Forced string
+                    if ((arg.startsWith("'") && arg.endsWith("'")) ||
+                        (arg.startsWith('"') && arg.endsWith('"'))) {
+                        args.push(arg.slice(1, -1));
+                        continue;
+                    }
+                    //Number
+                    var tempNum = Number(arg);
+                    if (!isNaN(tempNum)) {
+                        args.push(tempNum);
+                        continue;
+                    }
+                    //Otherwise string
+                    args.push(arg);
+                }
+            } else {
+                for (var i = 1; i < results.length; ++i) {
+                    var arg = results[i];
+                    
+                    //Forced string
+                    if ((arg.startsWith("'") && arg.endsWith("'")) ||
+                        (arg.startsWith('"') && arg.endsWith('"'))) {
+                        args.push(arg.slice(1, -1));
+                        continue;
+                    }
+                    //Number
+                    var tempNum = Number(arg);
+                    if (!isNaN(tempNum)) {
+                        args.push(tempNum);
+                        continue;
+                    }
+                    //Otherwise string
+                    args.push(arg);
+                }
+            }
+        } 
+    
         
         //Check if this script is already running
-		for (var i = 0; i < server.runningScripts.length; i++) {
-			if (server.runningScripts[i] == scriptName) {
-				post("ERROR: This script is already running. Cannot run multiple instances");
-				return;
-			}
-		}
+        if (findRunningScript(scriptName, args, server) != null) {
+            post("ERROR: This script is already running. Cannot run multiple instances");
+            return;
+        }
         
 		//Check if the script exists and if it does run it
 		for (var i = 0; i < server.scripts.length; i++) {
 			if (server.scripts[i].filename == scriptName) {
 				//Check for admin rights and that there is enough RAM availble to run
                 var script = server.scripts[i];
-                script.threads = numThreads;
 				var ramUsage = script.ramUsage * numThreads * Math.pow(1.02, numThreads-1);
 				var ramAvailable = server.maxRam - server.ramUsed;
 				
@@ -1263,23 +1311,17 @@ var Terminal = {
 					return;
 				} else if (ramUsage > ramAvailable){
 					post("This machine does not have enough RAM to run this script with " +
-                         script.threads + " threads. Script requires " + ramUsage + "GB of RAM");
+                         numThreads + " threads. Script requires " + ramUsage + "GB of RAM");
 					return;
-				}else {
+				} else {
 					//Able to run script
-					post("Running script with " + script.threads +  " thread(s). May take a few seconds to start up the process...");
-					server.runningScripts.push(script.filename);	//Push onto runningScripts
+					post("Running script with " + numThreads +  " thread(s) and args: " + printArray(args) + ".");
+                    post("May take a few seconds to start up the process...");
+                    var runningScriptObj = new RunningScript(script, args);
+                    runningScriptObj.threads = numThreads;
+					server.runningScripts.push(runningScriptObj);
                     
-                    //Initialize the maps for counting grow/hack/weaken
-                    script.moneyStolenMap       = new AllServersMap();
-                    script.numTimesHackMap      = new AllServersMap();
-                    script.numTimesGrowMap      = new AllServersMap();
-                    script.numTimesWeakenMap    = new AllServersMap();
-                    
-                    //Clear logs
-                    script.logs = [];
-                    
-					addWorkerScript(script, server);
+					addWorkerScript(runningScriptObj, server);
 					return;
 				}
 			}

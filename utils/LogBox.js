@@ -1,6 +1,7 @@
 /* Log Box */
 
 //Close box when clicking outside
+/*
 $(document).click(function(event) {
     if (logBoxOpened) {        
         if ( $(event.target).closest("#log-box-container").get(0) == null ) {         
@@ -8,7 +9,7 @@ $(document).click(function(event) {
         }
     }
 });
- 
+*/
  
 function logBoxInit() {
     var closeButton = document.getElementById("log-box-close");

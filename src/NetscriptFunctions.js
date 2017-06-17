@@ -424,7 +424,7 @@ function netscriptRunHttpwormProgram(exp, workerScript, server) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
     if (!server.httpPortOpen) {
-        workerScript.scriptRef.log("Executed HTTPWorm.exe virus on " + server.hostname + " to open HTTP port (25)");
+        workerScript.scriptRef.log("Executed HTTPWorm.exe virus on " + server.hostname + " to open HTTP port (80)");
         server.httpPortOpen = true; 
         ++server.openPortCount;
     } else {

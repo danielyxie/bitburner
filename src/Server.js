@@ -21,7 +21,7 @@ function Server() {
 	this.cpuSpeed		= 	1;	//MHz
 	
 	this.scripts 		= 	[];
-	this.runningScripts = 	[]; 	//Names (and only names) of scripts being run
+	this.runningScripts = 	[]; 	//Stores RunningScript objects
 	this.programs 		= 	[];
     this.messages       =   [];
     
