@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.20.2",
+    Version:                "0.21.0",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -431,7 +431,7 @@ CONSTANTS = {
                            "second argument is a string with the hostname or IP of the 'target server' on which to run the script. The specified script must exist on the target server. " + 
                            "The third argument is optional, and it specifies how many threads to run the script with. If it is omitted, then the script will be run single-threaded. " + 
                            "This argument must be a number that is greater than 0. Any additional arguments will specify arguments to pass into the new script that is being run. If " + 
-                           "arguments are specified for the enw script, then the third argument numThreads must be filled in with a value.<br><br>Returns " + 
+                           "arguments are specified for the new script, then the third argument numThreads must be filled in with a value.<br><br>Returns " + 
                            "true if the script is successfully started, and false otherwise. Does NOT work while offline<br><br> " + 
                            "The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run 'generic-hack.script' " + 
                            "on the 'foodnstuff' server:<br><br>" + 
