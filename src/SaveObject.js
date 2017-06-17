@@ -221,7 +221,9 @@ loadImportedGame = function(saveObj, saveString) {
     //Update total playtime
     var time = numCyclesOffline * Engine._idleSpeed;
     if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
+    if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
     Player.totalPlaytime += time;
+    Player.playtimeSinceLastAug += time;
     
     //Re-apply augmentations
     Player.reapplyAllAugmentations();
