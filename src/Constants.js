@@ -643,6 +643,9 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.21.1<br>" + 
+    "-IF YOUR GAME BREAKS, DO THE FOLLOWING: Options -> Soft Reset -> Save Game -> Reload Page. Sorry about that! <br>" + 
+    "-Autocompletion for aliases - courtesy of Github user LTCNugget" + 
     "v0.21.0<br>" + 
     "-Added dynamic arrays. See Netscript documentation<br>" + 
     "-Added ability to pass arguments into scripts. See documentation<br>" + 
@@ -793,6 +796,9 @@ CONSTANTS = {
     
     LatestUpdate: 
     "v0.21.0<br>" + 
+    "-All scripts automatically killed for the sake of update compatibility<br>" + 
+    "-IF YOUR GAME BREAKS, DO THE FOLLOWING: Options -> Soft Reset -> Save Game -> Reload Page. Sorry about that! <br>" + 
+    "-Autocompletion for aliases - courtesy of Github user LTCNugget<br><br>" + 
     "-Added dynamic arrays. See Netscript documentation<br>" + 
     "-Added ability to pass arguments into scripts. See documentation<br>" + 
     "-The implementation/function signature of functions that deal with scripts have changed. Therefore, some old scripts might not " + 
