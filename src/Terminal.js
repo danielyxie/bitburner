@@ -238,7 +238,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "free", 
                 "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
                 "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze", 
-                "scp", "sudov", "tail", "theme", "top"];
+                "scp", "sudov", "tail", "theme", "top"].concat(Object.keys(Aliases));
     }
     
     if (input.startsWith ("buy ")) {
@@ -1003,7 +1003,7 @@ var Terminal = {
                 var args = commandArray[1] ? commandArray[1].split(" ") : [];
                 if(args.length != 1 && args.length != 3) {
                     post("Incorrect number of arguments.");
-                    post("Usage: theme [default|muted|solarized] | [background color hex] [text color hex] [highlight color hex]");
+                    post("Usage: theme [default|muted|solarized] | #[background color hex] #[text color hex] #[highlight color hex]");
                 }else if(args.length == 1){
                     var themeName = args[0];
                     if(themeName == "default"){
