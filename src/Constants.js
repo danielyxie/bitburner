@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.20.2",
+    Version:                "0.21.0",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -78,7 +78,7 @@ CONSTANTS = {
     AugmentationRepMultiplier: 1.5, //Used for balancing rep cost without having to readjust every value
     
     //Maximum number of log entries for a script
-    MaxLogCapacity: 40,
+    MaxLogCapacity: 50,
     
     //How much a TOR router costs
     TorRouterCost: 200000,
@@ -150,32 +150,34 @@ CONSTANTS = {
     CrimeHeist: "pull off the ultimate heist",
     
     //Text that is displayed when the 'help' command is ran in Terminal
-    HelpText:   'alias [name="value"]   Create aliases for Terminal commands, or list existing aliases<br>' + 
-                "analyze                Get statistics and information about current machine <br>" + 
-                "cat [message]          Display a .msg file<br>" + 
-                "clear                  Clear all text on the terminal <br>" +
-                "cls                    See 'clear' command <br>" +
-                "connect [ip/hostname]  Connects to the machine given by its IP or hostname <br>" + 
-                "free                   Check the machine's memory (RAM) usage<br>" + 
-                "hack                   Hack the current machine<br>" +
-                "help                   Display this help text<br>" + 
-                "home                   Connect to home computer<br>" + 
-                "hostname               Displays the hostname of the machine<br>" + 
-                "ifconfig               Displays the IP address of the machine<br>" +
-                "kill [script]          Stops a script that is running on the current machine<br>" +
-                "killall                Stops all running scripts on the current machine<br>" + 
-                "ls                     Displays all programs and scripts on the machine<br>" +
-                "mem [script] [-t] [n]  Displays the amount of RAM the script requires to run with n threads<br>" + 
-                "nano [script]          Text editor - Open up and edit a script<br>" + 
-                "ps                     Display all scripts that are currently running<br>" + 
-                "rm                     Delete a script/program from the machine. (WARNING: Permanent)<br>" + 
-                "run [name] [-t] [n]    Execute a program or a script with n threads<br>" + 
-                "scan                   Displays all available network connections<br>" +
-                "scan-analyze [depth]   Displays hacking-related information for all servers up to <i>depth</i> nodes away<br>" + 
-                "scp [script] [server]  Copies a script to a destination server (specified by ip or hostname)<br>" + 
-                "sudov                  Shows whether or not you have root access on this computer<br>" + 
-                "tail [script]          Display script logs (logs contain details about active scripts)<br>" +
-                "top                    Display all running scripts and their RAM usage<br>",
+    HelpText:   'alias [name="value"]           Create aliases for Terminal commands, or list existing aliases<br>' + 
+                "analyze                        Get statistics and information about current machine <br>" + 
+                "cat [message]                  Display a .msg file<br>" + 
+                "check [script] [args...]       Print logs to Terminal for the script with the specified name and arguments<br>" + 
+                "clear                          Clear all text on the terminal <br>" +
+                "cls                            See 'clear' command <br>" +
+                "connect [ip/hostname]          Connects to the machine given by its IP or hostname <br>" + 
+                "free                           Check the machine's memory (RAM) usage<br>" + 
+                "hack                           Hack the current machine<br>" +
+                "help                           Display this help text<br>" + 
+                "home                           Connect to home computer<br>" + 
+                "hostname                       Displays the hostname of the machine<br>" + 
+                "ifconfig                       Displays the IP address of the machine<br>" +
+                "kill [script] [args...]        Stops a script on the current server with the specified name and arguments<br>" +
+                "killall                        Stops all running scripts on the current machine<br>" + 
+                "ls                             Displays all programs and scripts on the machine<br>" +
+                "mem [script] [-t] [n]          Displays the amount of RAM the script requires to run with n threads<br>" + 
+                "nano [script]                  Text editor - Open up and edit a script<br>" + 
+                "ps                             Display all scripts that are currently running<br>" + 
+                "rm                             Delete a script/program from the machine. (WARNING: Permanent)<br>" + 
+                "run [name] [-t] [n] [args...]  Execute a program or a script with n threads and the specified arguments<br>" + 
+                "scan                           Displays all available network connections<br>" +
+                "scan-analyze [depth]           Displays hacking-related information for all servers up to <i>depth</i> nodes away<br>" + 
+                "scp [script] [server]          Copies a script to a destination server (specified by ip or hostname)<br>" + 
+                "sudov                          Shows whether or not you have root access on this computer<br>" + 
+                "tail [script] [args...]        Display dynamic logs for the script with the specified name and arguments<br>" +
+                "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" + 
+                "top                            Display all running scripts and their RAM usage<br>",
                 
     /* Tutorial related things */
 	TutorialGettingStartedText: "Todo...",
@@ -248,16 +250,30 @@ CONSTANTS = {
                          "syntax will vary a little bit. </strong> <br><br>" + 
                          "Running a script requires RAM. The more complex a script is, the more RAM " + 
                          "it requires to run. Scripts can be run on any server you have root access to. <br><br>" + 
-                         "Here are some Terminal commands that are useful when working with scripts: <br>" + 
-                         "free - Shows the current server's RAM usage and availability <br>" + 
-                         "kill [script] - Stops a script that is running <br>" + 
-                         "mem [script] [-t] [n] - Check how much RAM a script requires to run with n threads<br>" +
-                         "nano [script] - Create/Edit a script <br>" + 
-                         "ps - Displays all scripts that are actively running on the current server<br>" + 
-                         "rm [script] - Delete a script<br>" + 
-                         "run [script] [-t] [n] - Run a script with n threads<br>" + 
-                         "tail [script] - Displays a script's logs<br>" + 
-                         "top - Displays all active scripts and their RAM usage <br><br>" + 
+                         "Here are some Terminal commands that are useful when working with scripts: <br><br>" + 
+                         "<i>check [script] [args...]</i><br>Prints the logs of the script specified by the name and arguments to Terminal. Arguments should be separated " + 
+                         "by a space. Note that scripts are uniquely " + 
+                         "identified by their arguments as well as their name. For example, if you ran a script 'foo.script' with the argument 'foodnstuff' then in order to 'check' it you must " + 
+                         "also add the 'foodnstuff' argument to the check command as so: <br>check foo.script foodnstuff<br><br>" + 
+                         "<i>free</i><br>Shows the current server's RAM usage and availability <br><br>" + 
+                         "<i>kill [script] [args...]</i><br>Stops a script that is running with the specified script name and arguments. " + 
+                         "Arguments should be separated by a space. Note that " +
+                         "scripts are uniquely identified by their arguments as well as their name. For example, if you ran a script 'foo.script' with the " + 
+                         "argument 1 and 2, then just typing 'kill foo.script' will not work. You have to use 'kill foo.script 1 2'. <br><br>" + 
+                         "<i>mem [script] [-t] [n]</i><br>Check how much RAM a script requires to run with n threads<br><br>" +
+                         "<i>nano [script]</i><br>Create/Edit a script. The name of the script must end with the '.script' extension <br><br>" + 
+                         "<i>ps</i><br>Displays all scripts that are actively running on the current server<br><br>" + 
+                         "<i>rm [script]</i><br>Delete a script<br><br>" + 
+                         "<i>run [script] [-t] [n] [args...]</i><br>Run a script with n threads and the specified arguments. Each argument should be separated by a space. " + 
+                         "Both the arguments and thread specification are optional. If neither are specified, then the script will be run single-threaded with no arguments.<br>" + 
+                         "Examples:<br>run foo.script<br>The command above will run 'foo.script' single-threaded with no arguments." + 
+                         "<br>run foo.script -t 10<br>The command above will run 'foo.script' with 10 threads and no arguments." + 
+                         "<br>run foo.script foodnstuff sigma-cosmetics 10<br>The command above will run 'foo.script' single-threaded with three arguments: [foodnstuff, sigma-cosmetics, 10]" +
+                         "<br>run foo.script -t 50 foodnstuff<br>The command above will run 'foo.script' with 50 threads and a single argument: [foodnstuff]<br><br>" + 
+                         "<i>tail [script] [args...]</i><br>Displays the logs of the script specified by the name and arguments. Note that scripts are uniquely " + 
+                         "identified by their arguments as well as their name. For example, if you ran a script 'foo.script' with the argument 'foodnstuff' then in order to 'tail' it you must " + 
+                         "also add the 'foodnstuff' argument to the tail command as so: <br>tail foo.script foodnstuff<br><br>" + 
+                         "<i>top</i><br>Displays all active scripts and their RAM usage <br><br>" + 
                          "<u><h1> Multithreading scripts </h1></u><br>" + 
                          "Scripts can be multithreaded. A multithreaded script runs the script's code once in each thread. The result is that " + 
                          "every call to the hack(), grow(), and weaken() Netscript functions will have its effect multiplied by the number of scripts. " + 
@@ -318,22 +334,52 @@ CONSTANTS = {
                            "&nbsp;==<br>" + 
                            "&nbsp;!=<br><br>" + 
                            "<u><h1> Arrays </h1></u><br>" + 
-                           "Note: Currently arrays are fixed-size once they are declared. Eventually, functionality will be added to make these " + 
-                           "dynamic arrays <br><br>" + 
-                           "Arrays are special container objects. Arrays can holy many values under a single name. Each value in the array " + 
+                           "Arrays are special container objects. Arrays can hold many values under a single name. Each value in the array " + 
                            "can be accessed using an index number. The following example shows how to declare an array: <br><br>" + 
                            "thisIsAnArray = Array[1, 2, 3, 'bitburner!', false];<br><br>" +
                            "Note that the values in an array can be different types. To access this array we just declared, we can use the index " + 
                            "operator on the array's name: <br><br>" + 
                            "print(thisIsAnArray[0]); <br>" + 
-                           "thisIsAnArray[1] = 5<br>" +
-                           "thisIsAnArray[3] = 'string concatenation ' + 123<br><br>" + 
+                           "thisIsAnArray[1] = 5;<br>" +
+                           "thisIsAnArray[3] = 'string concatenation ' + 123;<br><br>" + 
                            "Note that arrays are indexed starting at index 0. Using an index that is too large or less than 0 will result in an " + 
                            "out of bounds runtime error. <br><br>" + 
                            "If an element in an array is assigned to a value that includes a variable, then it holds a reference to that variable. " + 
                            "What this means is that if the variable changes, the array element will also change accordingly. For example:<br><br>" + 
                            "x = 10;<br>testArr = Array[x];<br>print(testArr[0]);<br>x = 20;<br>print(testArr[0]);<br><br>" + 
                            "This code will print: <br><br>10<br>20<br><br>" + 
+                           "<strong>Array functions</strong><br>" + 
+                           "Arrays have built-in functions/properties that can be used to more easily access and manipulate the containers. <br><br>"+
+                           "<i>length/length()</i><br>Returns the number of elements in the array.<br>" + 
+                           "The example below will print out 5:<br><br>" + 
+                           "arr = Array[1, 2, 3, 4, 5];<br>print(arr.length);<br><br>" + 
+                           "<i>clear/clear()</i><br>Removes all elements from the array.<br>" + 
+                           "The example below creates an array with three strings and then uses clear to remove all of those strings. The result is that 'arr' will be " +
+                           "an empty array.<br><br>" + 
+                           "arr = Array['str1', 'str2', 'str3'];<br>arr.clear();<br><br>" +
+                           "<i>push(e)</i><br>Adds the element e to the end of the array.<br>" + 
+                           "The example below will create an array holding one element: the number 1. It will then push the number 2 onto the array. The result " + 
+                           "is that 'arr' will be an array of size 2 with arr[0] == 1 and arr[1] == 2<br><br>" + 
+                           "arr = Array[1];<br>arr.push(2);<br><br>" + 
+                           "<i>insert(e)</i><br>Inserts an element e into an array at a specified index. Every element in the array that is at or after " + 
+                           "the specified index is shifted down. The array must be indexed with the [] operator when using this function.<br>" + 
+                           "The following example will insert the number 2 into index 1 of the array. The result afterwards is that 'arr' will hold the values [1, 2, 3, 4].<br><br>" + 
+                           "arr = Array[1, 3, 4];<br>arr[1].insert(2);<br><br>" +
+                           "<i>remove()</i><br>Removes an element from a specified index. Every element in the array that is after the specified index " + 
+                           "will be shifted up. The array must be indexed with the [] operator when using this function.<br>" + 
+                           "The following example will remove the first element of the array. The result afterwards is that 'arr' will hold the values [2, 3].<br><br>" + 
+                           "arr = Array[1, 2, 3];<br>arr[0].remove();<br><br>" + 
+                           "<u><h1> Script Arguments </h1></u><br>" + 
+                           "Arguments passed into a script can be accessed using a special array called 'args'. The arguments can be accessed like a normal array using the [] " + 
+                           "operator. (args[0], args[1], args[2]...) <br><br>" + 
+                           "For example, let's say we want to make a generic script 'generic-run.script' and we plan to pass two arguments into that script. The first argument will be the name of " + 
+                           "another script, and the second argument will be a number. This generic script will run the script specified in the first argument " + 
+                           "with the amount of threads specified in the second element. The code would look like:<br><br>" + 
+                           "run(args[0], args[1]);<br><br>" + 
+                           "It is also possible to get the number of arguments that was passed into a script using:<br><br>" + 
+                           "args.length<br><br>" + 
+                           "Note that none of the other functions that typically work with arrays, such as remove(), insert(), clear(), etc., will work on the " + 
+                           "args array.<br><br>" +
                            "<u><h1> Functions </h1></u><br>" + 
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " + 
@@ -361,36 +407,56 @@ CONSTANTS = {
                            "any server, regardless of where the script is running. This command requires root access to the target server, but " + 
                            "there is no required hacking level to run the command. Grants 3 hacking exp when it completes. Returns " + 
                            "0.1. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
-                           "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command )<br><br>" + 
+                           "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br>" + 
+                           "WARNING: Do NOT call print() on an array. The script will crash. You can, however, call print on single elements of an array. For example, if " + 
+                           "the variable 'a' is an array, then do NOT call print(a), but it is okay to call print(a[0]).<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" + 
                            "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer. Does NOT work while offline <br> Example: ftpcrack('foodnstuff');<br><br>" + 
                            "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer. Does NOT work while offline <br> Example: relaysmtp('foodnstuff');<br><br>" + 
                            "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer. Does NOT work while offline <br> Example: httpworm('foodnstuff');<br><br>" + 
                            "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer. Does NOT work while offline  <br> Example: sqlinject('foodnstuff');<br><br>" + 
-                           "<i>run(script, [numThreads])</i> <br> Run a script as a separate process. The first argument that is passed in is the name of the script as a string. This function can only " + 
+                           "<i>run(script, [numThreads], [args...])</i> <br> Run a script as a separate process. The first argument that is passed in is the name of the script as a string. This function can only " + 
                            "be used to run scripts located on the current server (the server running the script that calls this function). The second argument " + 
-                           "is optional, and it specifies how many threads to run the script with. If it is omitted, then the script will be run single-threaded. " + 
-                           "This second argument must be a number that is greater than 0. " + 
+                           "is optional, and it specifies how many threads to run the script with. This argument must be a number greater than 0. If it is omitted, then the script will be run single-threaded. Any additional arguments will specify " + 
+                           "arguments to pass into the new script that is being run. If arguments are specified for the new script, then the second argument numThreads argument must be filled in with a value.<br><br>" + 
                            "Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
-                           "of RAM to run this command. Does NOT work while offline <br>Example: run('hack-foodnstuff.script'); <br> The example above will try and launch the 'hack-foodnstuff.script' script on " + 
-                           "the current server, if it exists. <br><br>" + 
-                           "<i>exec(script, hostname/ip, [numThreads])</i><br>Run a script as a separate process on another server. The first argument is the name of the script as a string. The " + 
+                           "of RAM to run this command. Does NOT work while offline <br><br>" + 
+                           "The simplest way to use the run command is to call it with just the script name. The following example will run 'foo.script' single-threaded with no arguments:<br><br>" + 
+                           "run('foo.script');<br><br>" + 
+                           "The following example will run 'foo.script' but with 5 threads instead of single-threaded:<br><br>" + 
+                           "run('foo.script', 5);<br><br>" + 
+                           "The following example will run 'foo.script' single-threaded, and will pass the string 'foodnstuff' into the script as an argument:<br><br>" + 
+                           "run('foo.script', 1, 'foodnstuff');<br><br>" + 
+                           "<i>exec(script, hostname/ip, [numThreads], [args...])</i><br>Run a script as a separate process on another server. The first argument is the name of the script as a string. The " + 
                            "second argument is a string with the hostname or IP of the 'target server' on which to run the script. The specified script must exist on the target server. " + 
                            "The third argument is optional, and it specifies how many threads to run the script with. If it is omitted, then the script will be run single-threaded. " + 
-                           "This argument must be a number that is greater than 0. Returns " + 
-                           "true if the script is successfully started, and false otherwise. Does NOT work while offline<br> " + 
-                           "Example: exec('generic-hack.script', 'foodnstuff'); <br> The example above will try to launch the script 'generic-hack.script' on the 'foodnstuff' server.<br><br>" + 
-                           "<i>kill(script, [hostname/ip])</i><br> Kills a script on a server. The first argument must be a string with the name of the script. The name is case-sensitive. " + 
-                           "The second argument must be a string with the hostname or IP of the target server. The function will try to kill the specified script on the target server. " + 
-                           "The second argument is optional. If it is omitted, then the function will try to kill the specified script on the current server (the server running " + 
-                           "the script that calls this function). If the script is found on the specified server and is running, then it will be killed and this function " + 
-                           "will return true. Otherwise, this function will return false. <br> " + 
-                           "Example: kill('foo.script', 'foodnstuff');<br>" + 
-                           "Example: kill('foo.script');<br>" + 
-                           "The first example above will look for a script called 'foo.script' on the 'foodnstuff' server. If the script exists and is running, then it will " + 
-                           "be killed and the function will return true. Otherwise false will be returned. The second example above will do the same thing, except on the " +
-                           "current server (the server running the script that calls the kill() function).<br><br>" + 
+                           "This argument must be a number that is greater than 0. Any additional arguments will specify arguments to pass into the new script that is being run. If " + 
+                           "arguments are specified for the new script, then the third argument numThreads must be filled in with a value.<br><br>Returns " + 
+                           "true if the script is successfully started, and false otherwise. Does NOT work while offline<br><br> " + 
+                           "The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run 'generic-hack.script' " + 
+                           "on the 'foodnstuff' server:<br><br>" + 
+                           "exec('generic-hack.script', 'foodnstuff');<br><br>" + 
+                           "The following example will try to run the script 'generic-hack.script' on the 'joesguns' server with 10 threads:<br><br>" + 
+                           "exec('generic-hack.script', 'joesguns', 10);<br><br>" + 
+                           "The following example will try to run the script 'foo.script' on the 'foodnstuff' server with 5 threads. It will also pass the number 1 and the string 'test' in as arguments " +
+                           "to the script.<br><br>" + 
+                           "exec('foo.script', 'foodnstuff', 5, 1, 'test');<br><br>" + 
+                           "<i>kill(script, hostname/ip, [args...])</i><br> Kills the script on the target server specified by the script's name and arguments. Remember that " + 
+                           "scripts are uniquely identified by both their name and arguments. For example, if 'foo.script' is run with the argument 1, then this is not the "  +
+                           "same as 'foo.script' run with the argument 2, even though they have the same code. <br><br>" + 
+                           "The first argument must be a string with the name of the script. The name is case-sensitive. " + 
+                           "The second argument must be a string with the hostname or IP of the target server. Any additional arguments to the function will specify the arguments passed " + 
+                           "into the script that should be killed. <br><br>The function will try to kill the specified script on the target server. " + 
+                           "If the script is found on the specified server and is running, then it will be killed and this function " + 
+                           "will return true. Otherwise, this function will return false. <br><br>" + 
+                           "Examples:<br>" + 
+                           "If you are trying to kill a script named 'foo.script' on the 'foodnstuff' server that was ran with no arguments, use this:<br><br>" + 
+                           "kill('foo.script', 'foodnstuff');<br><br>" + 
+                           "If you are trying to kill a script named 'foo.script' on the current server that was ran with no arguments, use this:<br><br>" + 
+                           "kill('foo.script', getHostname());<br><br>" + 
+                           "If you are trying to kill a script named 'foo.script' on the current server that was ran with the arguments 1 and 'foodnstuff', use this:<br><br>" + 
+                           "kill('foo.script', getHostname(), 1, 'foodnstuff');<br><br>" + 
                            "<i>killall(hostname/ip)</i><br> Kills all running scripts on the specified server. This function takes a single argument which " + 
                            "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" + 
                            "<i>scp(script, hostname/ip)</i><br>Copies a script to another server. The first argument is a string with the filename of the script " + 
@@ -416,14 +482,18 @@ CONSTANTS = {
                            "Example: fileExists('ftpcrack.exe');<br><br>" + 
                            "The first example above will return true if the script named 'foo.script' exists on the 'foodnstuff' server, and false otherwise. The second example above will " +
                            "return true if the current server (the server on which this function runs) contains the FTPCrack.exe program, and false otherwise. <br><br>" + 
-                           "<i>isRunning(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified script is running on a server. " + 
+                           "<i>isRunning(filename, hostname/ip, [args...])</i><br> Returns a boolean (true or false) indicating whether the specified script is running on a server. " + 
+                           "Remember that a script is uniquely identified by both its name and its arguments. <br><br>" + 
                            "The first argument must be a string with the name of the script. The script name is case sensitive. The second argument is a string with the " +
-                           "hostname or IP of the target server. The function will check whether the script is running on that target server. The second argument is optional. " + 
-                           "If it is omitted, then the function will check if the script is running on the current server (the server running the script that calls this function). <br>" + 
+                           "hostname or IP of the target server. Any additional arguments passed to the function will specify the arguments passed into the target script. " +
+                           "The function will check whether the script is running on that target server.<br>" + 
                            "Example: isRunning('foo.script', 'foodnstuff');<br>" + 
-                           "Example: isRunning('foo.script'); <br><br>" + 
-                           "The first example above will return true if there is a script called 'foo.script' is running on the 'foodnstuff' server, and false otherwise. The second " + 
-                           "example above will return true if there is a script called 'foo.script' running on the current server, and false otherwise. <br><br>" + 
+                           "Example: isRunning('foo.script', getHostname());<br>" + 
+                           "Example: isRunning('foo.script', 'joesguns', 1, 5, 'test');<br><br>" + 
+                           "The first example above will return true if there is a script named 'foo.script' with no arguments running on the 'foodnstuff' server, and false otherwise. The second " + 
+                           "example above will return true if there is a script named 'foo.script' with no arguments running on the current server, and false otherwise. " + 
+                           "The third example above will return true if there is a script named 'foo.script' with the arguments 1, 5, and 'test' running on the 'joesguns' server, and " + 
+                           "false otherwise.<br><br>" + 
                            "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " + 
                            "at the end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford to purchase " +
                            "a new Hacknet Node then the function will return false. Does NOT work offline<br><br>" + 
@@ -573,6 +643,27 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.21.0<br>" + 
+    "-Added dynamic arrays. See Netscript documentation<br>" + 
+    "-Added ability to pass arguments into scripts. See documentation<br>" + 
+    "-The implementation/function signature of functions that deal with scripts have changed. Therefore, some old scripts might not " + 
+    "work anymore. Some of these functions include run(), exec(), isRunning(), kill(), and some others I may have forgot about. " + 
+    "Please check the updated Netscript documentation if you run into issues." + 
+    "-Note that scripts are now uniquely identified by the script name and their arguments. For example, you can run " + 
+    "a script using <br>run foodnstuff.script 1<br> and you can also run the same script with a different argument " + 
+    "<br>run foodnstuff.script 2<br>These will be considered two different scripts. To kill the first script you must " + 
+    "run <br>kill foodnstuff.script 1<br> and to kill the second you must run <br>kill foodnstuff.script 2<br> Similar concepts " + 
+    "apply for Terminal Commands such as tail, and Netscript commands such as run(), exec(), kill(), isRunning(), etc.<br>" + 
+    "-Added basic theme functionality using the 'theme' Terminal command - All credit goes to /u/0x726564646974 who implemented the awesome feature<br>" + 
+    "-Optimized Script objects, which were causing save errors when the player had too many scripts<br>" + 
+    "-Formula for determining exp gained from hacking was changed<br>" + 
+    "-Fixed bug where you could purchase Darkweb items without TOR router<br>" + 
+    "-Slightly increased cost multiplier for Home Computer RAM<br>" +
+    "-Fixed bug where you could hack too much money from a server (and bring its money available below zero)<br>" + 
+    "-Changed tail command so that it brings up a display box with dynamic log contents. To get " + 
+    "old functionality where the logs are printed to the Terminal, use the new 'check' command<br>" + 
+    "-As a result of the change above, you can no longer call tail/check on scripts that are not running<br>" + 
+    "-Added autocompletion for buying Programs in Darkweb<br>" + 
     "v0.20.2<br>" + 
     "-Fixed several small bugs<br>" + 
     "-Added basic array functionality to Netscript<br>" + 
@@ -701,49 +792,25 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
-    "v0.20.2<br>" + 
-    "-Fixed several small bugs<br>" + 
-    "-Added basic array functionality to Netscript<br>" + 
-    "-Added ability to run scripts with multiple threads. Running a script with n threads will multiply the effects of all " + 
-    "hack(), grow(), and weaken() commands by n. However, running a script with multiple threads has drawbacks in terms of " + 
-    "RAM usage. A script's ram usage when it is 'multithreaded' is calculated as: base cost * numThreads * (1.02 ^ numThreads). " + 
-    "A script can be run multithreaded using the 'run [script] -t n' Terminal command or by passing in an argument to the " + 
-    "run() and exec() Netscript commands. See documentation.<br>" + 
-    "-RAM is slightly (~10%) more expensive (affects purchasing server and upgrading RAM on home computer)<br>" + 
-    "-NeuroFlux Governor augmentation cost multiplier decreased<br>" + 
-    "-Netscript default operation runtime lowered to 200ms (was 500ms previously)<br><br>" + 
-    "v0.20.1<br>" + 
-    "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
-    "-Added Deepscan programs to Dark Web<br>" + 
-    "-Declining a faction invite will stop you from receiving invitations from that faction for the rest of the run<br>" + 
-    "-(BETA) Added functionality to export/import saves. WARNING This is only lightly tested. You cannot choose where to save your file " + 
-    "it just goes to the default save location. Also I have no idea what will happen if you try to import a file " + 
-    "that is not a valid save. I will address these in later updates<br><br>" + 
-    "v0.20.0<br>" + 
-    "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
-    "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
-    "now each one should only take ~500 milliseconds). <br><br>" +
-    "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br><br>" + 
-    "-Hacking experience granted by grow() halved<br><br>" + 
-    "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br><br>" + 
-    "-Rebalancing of script RAM costs. Base RAM Cost for a script increased from 1GB to 1.5GB. Loops, hack(), grow() " + 
-    "and weaken() all cost slightly less RAM than before <br><br>" + 
-    "-Added getServerRequiredHackingLevel(server) Netscript command. <br><br>" + 
-    "-Added fileExists(file, [server]) Netscript command, which is used to check if a script/program exists on a " +
-    "specified server<br><br>" + 
-    "-Added isRunning(script, [server]) Netscript command, which is used to check if a script is running on the specified server<br><br>" + 
-    "-Added killall Terminal command. Kills all running scripts on the current machine<br><br>" +
-    "-Added kill() and killall() Netscript commands. Used to kill scripts on specified machines. See Netscript documentation<br><br>" + 
-    "-Re-designed 'Active Scripts' tab<br><br>" + 
-    "-Hacknet Node base production rate lowered from 1.6 to 1.55 ($/second)<br><br>" +
-    "-Increased monetary cost of RAM (Upgrading home computer and purchasing servers will now be more expensive)<br><br>" + 
-    "-NEW GROWTH MECHANICS - The rate of growth on a server now depends on a server's security level. A higher security level " +
-    "will result in lower growth on a server when using the grow() command. Furthermore, calling grow() on a server raises that " + 
-    "server's security level by 0.004. For reference, if a server has a security level of 10 " + 
-    "it will have approximately the same growth rate as before. <br><br>" + 
-    "-Server growth no longer happens naturally<br><br>" + 
-    "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br><br>" + 
-    "-Hacking now grants 10% less hacking experience<br><br>" + 
-    "-You can now edit scripts that are running<br><br>" +
-    "-Augmentations cost ~11% more money and 25% more faction reputation<br><br>",
+    "v0.21.0<br>" + 
+    "-Added dynamic arrays. See Netscript documentation<br>" + 
+    "-Added ability to pass arguments into scripts. See documentation<br>" + 
+    "-The implementation/function signature of functions that deal with scripts have changed. Therefore, some old scripts might not " + 
+    "work anymore. Some of these functions include run(), exec(), isRunning(), kill(), and some others I may have forgot about. " + 
+    "Please check the updated Netscript documentation if you run into issues." + 
+    "-Note that scripts are now uniquely identified by the script name and their arguments. For example, you can run " + 
+    "a script using <br>run foodnstuff.script 1<br> and you can also run the same script with a different argument " + 
+    "<br>run foodnstuff.script 2<br>These will be considered two different scripts. To kill the first script you must " + 
+    "run <br>kill foodnstuff.script 1<br> and to kill the second you must run <br>kill foodnstuff.script 2<br> Similar concepts " + 
+    "apply for Terminal Commands such as tail, and Netscript commands such as run(), exec(), kill(), isRunning(), etc.<br>" + 
+    "-Added basic theme functionality using the 'theme' Terminal command - All credit goes to /u/0x726564646974 who implemented the awesome feature<br>" + 
+    "-Optimized Script objects, which were causing save errors when the player had too many scripts<br>" + 
+    "-Formula for determining exp gained from hacking was changed<br>" + 
+    "-Fixed bug where you could purchase Darkweb items without TOR router<br>" + 
+    "-Slightly increased cost multiplier for Home Computer RAM<br>" +
+    "-Fixed bug where you could hack too much money from a server (and bring its money available below zero)<br>" + 
+    "-Changed tail command so that it brings up a display box with dynamic log contents. To get " + 
+    "old functionality where the logs are printed to the Terminal, use the new 'check' command<br>" + 
+    "-As a result of the change above, you can no longer call tail/check on scripts that are not running<br>" + 
+    "-Added autocompletion for buying Programs in Darkweb<br>",
 }

@@ -2,22 +2,6 @@
 dialogBoxes = [];
 
 //Close dialog box when clicking outside
-/*
-$(document).click(function(event) {
-    if (dialogBoxOpened) {
-        if (!$(event.target).closest('.dialog-box-container').length){
-            --dialogBoxCount;
-            dialogBoxes.splice(0, 1);
-            $(".dialog-box-container").remove();
-            
-            if (dialogBoxes.length == 0) {
-                dialogBoxOpened = false;
-            } else {
-                dialogBoxes[0].style.display +
-            }
-        }
-    }
-});*/
 $(document).click(function(event) {
     if (dialogBoxOpened && dialogBoxes.length >= 1) {
         if (!$(event.target).closest(dialogBoxes[0]).length){
@@ -34,18 +18,6 @@ $(document).click(function(event) {
 
 
 //Dialog box close buttons
-/*
-$(document).on('click', '.dialog-box-close-button', function( event ) {
-    console.log("clicked close button");
-    if (dialogBoxOpened) {
-        $(this).closest('.dialog-box-container').remove();
-        --dialogBoxCount;
-        if (dialogBoxes.length == 0) {
-            dialogBoxOpened = false;
-        }
-    }
-});
-*/
 $(document).on('click', '.dialog-box-close-button', function( event ) {
     if (dialogBoxOpened && dialogBoxes.length >= 1) {
         dialogBoxes[0].remove();

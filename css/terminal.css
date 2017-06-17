@@ -4,7 +4,7 @@
 	height: 100%;
     width: 99%;
 	overflow: auto;
-	overflow-y: scroll;
+	overflow-y: scroll;    
 }
 
 #terminal {
@@ -15,11 +15,12 @@
     font-size: 16px;
 	overflow: auto;
 	overflow-y: scroll;
+    background-color: var(--my-background-color);
 }
 
 #terminal-input {
-    background-color: black;
-    color: #66ff33;
+    background-color: var(--my-background-color);
+    color: var(--my-font-color);
     transition: height 1s;
 }
 
@@ -29,10 +30,10 @@
 	padding: 0px !important;
 	margin: 0px !important;
 	border: 0px;
-	background-color: black;
+	background-color: var(--my-background-color);
 	font-size: 16px;
 	outline: none;
-    color: #66ff33;
+    color: var(--my-font-color);
 }
 
 

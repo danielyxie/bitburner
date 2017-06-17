@@ -72,14 +72,6 @@ function saveAndCloseScriptEditor() {
     
     filename += ".script";
     
-    //If the current script matches one thats currently running, throw an error
-    for (var i = 0; i < Player.getCurrentServer().runningScripts.length; i++) {
-        if (filename == Player.getCurrentServer().runningScripts[i].filename) {
-            dialogBoxCreate("Cannot write to script that is currently running!");
-            return;
-        }
-    }
-    
     //If the current script already exists on the server, overwrite it
     for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
         if (filename == Player.getCurrentServer().scripts[i].filename) {
@@ -112,22 +104,6 @@ function Script() {
     this.code       = "";
     this.ramUsage   = 0;
 	this.server 	= "";	//IP of server this script is on
-    this.logs       = [];   //Script logging. Array of strings, with each element being a log entry
-    
-	//Stats to display on the Scripts menu, and used to determine offline progress
-	this.offlineRunningTime  	= 0.01;	//Seconds
-	this.offlineMoneyMade 		= 0;
-	this.offlineExpGained 		= 0;
-	this.onlineRunningTime 		= 0.01;	//Seconds
-	this.onlineMoneyMade 		= 0;
-	this.onlineExpGained 		= 0;
-	
-    this.moneyStolenMap         = new AllServersMap();
-    this.numTimesHackMap        = new AllServersMap();
-    this.numTimesGrowMap        = new AllServersMap();
-    this.numTimesWeakenMap      = new AllServersMap();
-    
-    this.threads                = 1;
 };
 
 //Get the script data from the Script Editor and save it to the object
@@ -145,63 +121,7 @@ Script.prototype.saveScript = function() {
 		
 		//Calculate/update ram usage, execution time, etc. 
 		this.updateRamUsage();
-		
-		//Clear the stats when the script is updated
-        this.reset();
 	}
-}
-
-Script.prototype.reset = function() {
-    this.updateRamUsage();
-    
-    this.offlineRunningTime  	= 0.01;	//Seconds
-	this.offlineMoneyMade 		= 0;
-	this.offlineExpGained 		= 0;
-	this.onlineRunningTime 		= 0.01;	//Seconds
-	this.onlineMoneyMade 		= 0;
-	this.onlineExpGained 		= 0;
-    this.logs = [];
-    
-    if (this.moneyStolenMap != null) {
-        try {
-            this.moneyStolenMap.reset();
-        } catch(e) {
-            this.moneyStolenMap = null;
-        }
-    } else {
-        this.moneyStolenMap = new AllServersMap();
-    }
-    
-    if (this.numTimesHackMap != null) {
-        try {
-            this.numTimesHackMap.reset();
-        } catch(e) {
-            this.numTimesHackMap = null;
-        }
-    } else {
-        this.numTimesHackMap = new AllServersMap();
-    }
-    
-    if (this.numTimesGrowMap != null) {
-        try {
-            this.numTimesGrowMap.reset();
-        } catch(e) {
-            this.numTimesGrowMap = null;
-        }
-    } else {
-        this.numTimesGrowMap = new AllServersMap();
-    }
-    
-    if (this.numTimesWeakenMap != null) {
-        try {
-            this.numTimesWeakenMap.reset();
-        } catch(e) {
-            this.numTimesWeakenMap = null;
-        }
-    } else {
-        this.numTimesWeakenMap = new AllServersMap();
-    }
-    
 }
 
 //Updates how much RAM the script uses when it is running.
@@ -276,50 +196,6 @@ Script.prototype.updateRamUsage = function() {
     }
 }
 
-Script.prototype.log = function(txt) {
-    if (this.logs.length > CONSTANTS.MaxLogCapacity) {
-        //Delete first element and add new log entry to the end.
-        //TODO Eventually it might be better to replace this with circular array
-        //to improve performance
-        this.logs.shift();
-    }
-    this.logs.push(txt);
-}
-
-Script.prototype.displayLog = function() {
-    for (var i = 0; i < this.logs.length; ++i) {
-        post(this.logs[i]);
-    }
-}
-    
-//Update the moneyStolen and numTimesHack maps when hacking
-Script.prototype.recordHack = function(serverIp, moneyGained, n=1) {
-    if (this.moneyStolenMap == null) {
-        this.moneyStolenMap = new AllServersMap();
-    }
-    if (this.numTimesHackMap == null) {
-        this.numTimesHackMap = new AllServersMap();
-    }
-    this.moneyStolenMap[serverIp] += moneyGained;
-    this.numTimesHackMap[serverIp] += n;
-}
-
-//Update the grow map when calling grow()
-Script.prototype.recordGrow = function(serverIp, n=1) {
-    if (this.numTimesGrowMap == null) {
-        this.numTimesGrowMap = new AllServersMap();
-    }
-    this.numTimesGrowMap[serverIp] += n;
-}
-
-//Update the weaken map when calling weaken() {
-Script.prototype.recordWeaken = function(serverIp, n=1) {
-    if (this.numTimesWeakenMap == null) {
-        this.numTimesWeakenMap = new AllServersMap();
-    }
-    this.numTimesWeakenMap[serverIp] += n;
-}
-
 Script.prototype.toJSON = function() {
     return Generic_toJSON("Script", this);
 }
@@ -330,7 +206,6 @@ Script.fromJSON = function(value) {
 }
 
 Reviver.constructors.Script = Script;
-
 
 //Called when the game is loaded. Loads all running scripts (from all servers)
 //into worker scripts so that they will start running
@@ -346,13 +221,10 @@ loadAllRunningScripts = function() {
 			
 			for (var j = 0; j < server.runningScripts.length; ++j) {
 				count++;
-				//runningScripts array contains only names, so find the actual script object
-				var script = server.getScript(server.runningScripts[j]);
-				if (script == null) {continue;}
-				addWorkerScript(script, server);
+				addWorkerScript(server.runningScripts[j], server);
 				
 				//Offline production
-				total += scriptCalculateOfflineProduction(script);
+				total += scriptCalculateOfflineProduction(server.runningScripts[j]);
 			}
 		}
 	}
@@ -360,7 +232,7 @@ loadAllRunningScripts = function() {
 	console.log("Loaded " + count.toString() + " running scripts");
 }
 
-scriptCalculateOfflineProduction = function(script) {
+scriptCalculateOfflineProduction = function(runningScriptObj) {
 	//The Player object stores the last update time from when we were online
 	var thisUpdate = new Date().getTime();
 	var lastUpdate = Player.lastUpdate;
@@ -370,26 +242,38 @@ scriptCalculateOfflineProduction = function(script) {
 	//Calculate the "confidence" rating of the script's true production. This is based
 	//entirely off of time. We will arbitrarily say that if a script has been running for
 	//4 hours (14400 sec) then we are completely confident in its ability
-	var confidence = (script.onlineRunningTime) / 14400;
+	var confidence = (runningScriptObj.onlineRunningTime) / 14400;
 	if (confidence >= 1) {confidence = 1;}
-	console.log("onlineRunningTime: " + script.onlineRunningTime);
-	console.log("Confidence: " + confidence);
     
-    var totalOfflineProduction = 0;
-    for (var ip in script.moneyStolenMap) {
-        if (script.moneyStolenMap.hasOwnProperty(ip)) {
-            if (script.moneyStolenMap[ip] == 0 || script.moneyStolenMap[ip] == null) {continue;}
+    //Grow
+    for (var ip in runningScriptObj.numTimesGrowMap) {
+        if (runningScriptObj.numTimesGrowMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.numTimesGrowMap[ip] == 0 || runningScriptObj.numTimesGrowMap[ip] == null) {continue;}
             var serv = AllServers[ip];
             if (serv == null) {continue;}
-            var production = 0.5 * script.moneyStolenMap[ip] / script.onlineRunningTime * timePassed;
+            var timesGrown = Math.round(0.5 * runningScriptObj.numTimesGrowMap[ip] / runningScriptObj.onlineRunningTime * timePassed);
+            console.log(runningScriptObj.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
+            runningScriptObj.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
+            var growth = processSingleServerGrowth(serv, timesGrown * 450);
+            runningScriptObj.log(serv.hostname + " grown by " + formatNumber(growth * 100 - 100, 6) + "% from grow() calls made while offline");
+        }
+    }
+    
+    var totalOfflineProduction = 0;
+    for (var ip in runningScriptObj.moneyStolenMap) {
+        if (runningScriptObj.moneyStolenMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.moneyStolenMap[ip] == 0 || runningScriptObj.moneyStolenMap[ip] == null) {continue;}
+            var serv = AllServers[ip];
+            if (serv == null) {continue;}
+            var production = 0.5 * runningScriptObj.moneyStolenMap[ip] / runningScriptObj.onlineRunningTime * timePassed;
             production *= confidence;
             if (production > serv.moneyAvailable) {
                 production = serv.moneyAvailable;
             }
             totalOfflineProduction += production;
             Player.gainMoney(production); 
-            console.log(script.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
-            script.log(script.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
+            console.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
+            runningScriptObj.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
             serv.moneyAvailable -= production;
             if (serv.moneyAvailable < 0) {serv.moneyAvailable = 0;}
         }
@@ -397,60 +281,148 @@ scriptCalculateOfflineProduction = function(script) {
 
     //Offline EXP gain
 	//A script's offline production will always be at most half of its online production.	
-	var expGain = 0.5 * (script.onlineExpGained / script.onlineRunningTime) * timePassed;
+	var expGain = 0.5 * (runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime) * timePassed;
 	expGain *= confidence;
 	
 	Player.gainHackingExp(expGain);
-	
+    	
 	//Update script stats
-	script.offlineMoneyMade += totalOfflineProduction;
-	script.offlineRunningTime += timePassed;
-	script.offlineExpGained += expGain;
+	runningScriptObj.offlineMoneyMade += totalOfflineProduction;
+	runningScriptObj.offlineRunningTime += timePassed;
+	runningScriptObj.offlineExpGained += expGain;
     
     //Fortify a server's security based on how many times it was hacked
-    for (var ip in script.numTimesHackMap) {
-        if (script.numTimesHackMap.hasOwnProperty(ip)) {
-            if (script.numTimesHackMap[ip] == 0 || script.numTimesHackMap[ip] == null) {continue;}
+    for (var ip in runningScriptObj.numTimesHackMap) {
+        if (runningScriptObj.numTimesHackMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.numTimesHackMap[ip] == 0 || runningScriptObj.numTimesHackMap[ip] == null) {continue;}
             var serv = AllServers[ip];
             if (serv == null) {continue;}
-            var timesHacked = Math.round(0.5 * script.numTimesHackMap[ip] / script.onlineRunningTime * timePassed);
-            console.log(script.filename + " hacked " + serv.hostname + " " + timesHacked + " times while offline");
-            script.log("Hacked " + serv.hostname + " " + timesHacked + " times while offline");
+            var timesHacked = Math.round(0.5 * runningScriptObj.numTimesHackMap[ip] / runningScriptObj.onlineRunningTime * timePassed);
+            console.log(runningScriptObj.filename + " hacked " + serv.hostname + " " + timesHacked + " times while offline");
+            runningScriptObj.log("Hacked " + serv.hostname + " " + timesHacked + " times while offline");
             serv.fortify(CONSTANTS.ServerFortifyAmount * timesHacked);
         }
     }
     
     //Weaken
-    for (var ip in script.numTimesWeakenMap) {
-        if (script.numTimesWeakenMap.hasOwnProperty(ip)) {
-            if (script.numTimesWeakenMap[ip] == 0 || script.numTimesWeakenMap[ip] == null) {continue;}
+    for (var ip in runningScriptObj.numTimesWeakenMap) {
+        if (runningScriptObj.numTimesWeakenMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.numTimesWeakenMap[ip] == 0 || runningScriptObj.numTimesWeakenMap[ip] == null) {continue;}
             var serv = AllServers[ip];
             if (serv == null) {continue;}
-            var timesWeakened = Math.round(0.5 * script.numTimesWeakenMap[ip] / script.onlineRunningTime * timePassed);
-            console.log(script.filename + " called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
-            script.log("Called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
+            var timesWeakened = Math.round(0.5 * runningScriptObj.numTimesWeakenMap[ip] / runningScriptObj.onlineRunningTime * timePassed);
+            console.log(runningScriptObj.filename + " called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
+            runningScriptObj.log("Called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
             serv.weaken(CONSTANTS.ServerWeakenAmount * timesWeakened);
-        }
-    }
-    
-    //Grow
-    for (var ip in script.numTimesGrowMap) {
-        if (script.numTimesGrowMap.hasOwnProperty(ip)) {
-            if (script.numTimesGrowMap[ip] == 0 || script.numTimesGrowMap[ip] == null) {continue;}
-            var serv = AllServers[ip];
-            if (serv == null) {continue;}
-            var timesGrown = Math.round(0.5 * script.numTimesGrowMap[ip] / script.onlineRunningTime * timePassed);
-            console.log(script.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
-            script.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
-            var growth = processSingleServerGrowth(serv, timesGrown * 450);
-            script.log(serv.hostname + " grown by " + formatNumber(growth * 100 - 100, 6) + "% from grow() calls made while offline");
         }
     }
     
     return totalOfflineProduction;
 }
 
-//Creates a function that creates a map/dictionary with the IP of each existing server as
+//Returns a RunningScript object matching the filename and arguments on the
+//designated server, and false otherwise
+function findRunningScript(filename, args, server) {
+    for (var i = 0; i < server.runningScripts.length; ++i) {
+        if (server.runningScripts[i].filename == filename &&
+            compareArrays(server.runningScripts[i].args, args)) {
+            return server.runningScripts[i];
+        }
+    }
+    return null;
+}
+
+function RunningScript(script, args) {
+    if (script == null || script == undefined) {return;}
+    this.filename   = script.filename;
+    this.args       = args;
+    this.scriptRef  = script;
+    this.server     = script.server;    //IP Address only
+    
+    this.logs       = [];   //Script logging. Array of strings, with each element being a log entry
+    
+	//Stats to display on the Scripts menu, and used to determine offline progress
+	this.offlineRunningTime  	= 0.01;	//Seconds
+	this.offlineMoneyMade 		= 0;
+	this.offlineExpGained 		= 0;
+	this.onlineRunningTime 		= 0.01;	//Seconds
+	this.onlineMoneyMade 		= 0;
+	this.onlineExpGained 		= 0;
+    
+    this.threads                = 1;
+    
+    this.moneyStolenMap         = new AllServersMap();
+    this.numTimesHackMap        = new AllServersMap();
+    this.numTimesGrowMap        = new AllServersMap();
+    this.numTimesWeakenMap      = new AllServersMap();
+}
+
+RunningScript.prototype.reset = function() {
+    this.scriptRef.updateRamUsage();
+    
+    this.offlineRunningTime  	= 0.01;	//Seconds
+	this.offlineMoneyMade 		= 0;
+	this.offlineExpGained 		= 0;
+	this.onlineRunningTime 		= 0.01;	//Seconds
+	this.onlineMoneyMade 		= 0;
+	this.onlineExpGained 		= 0;
+    this.logs = [];
+}
+
+RunningScript.prototype.log = function(txt) {
+    if (this.logs.length > CONSTANTS.MaxLogCapacity) {
+        //Delete first element and add new log entry to the end.
+        //TODO Eventually it might be better to replace this with circular array
+        //to improve performance
+        this.logs.shift();
+    }
+    this.logs.push(txt);
+}
+
+RunningScript.prototype.displayLog = function() {
+    for (var i = 0; i < this.logs.length; ++i) {
+        post(this.logs[i]);
+    }
+}
+    
+//Update the moneyStolen and numTimesHack maps when hacking
+RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
+    if (this.moneyStolenMap == null) {
+        this.moneyStolenMap = new AllServersMap();
+    }
+    if (this.numTimesHackMap == null) {
+        this.numTimesHackMap = new AllServersMap();
+    }
+    this.moneyStolenMap[serverIp] += moneyGained;
+    this.numTimesHackMap[serverIp] += n;
+}
+
+//Update the grow map when calling grow()
+RunningScript.prototype.recordGrow = function(serverIp, n=1) {
+    if (this.numTimesGrowMap == null) {
+        this.numTimesGrowMap = new AllServersMap();
+    }
+    this.numTimesGrowMap[serverIp] += n;
+}
+
+//Update the weaken map when calling weaken() {
+RunningScript.prototype.recordWeaken = function(serverIp, n=1) {
+    if (this.numTimesWeakenMap == null) {
+        this.numTimesWeakenMap = new AllServersMap();
+    }
+    this.numTimesWeakenMap[serverIp] += n;
+}
+
+RunningScript.prototype.toJSON = function() {
+    return Generic_toJSON("RunningScript", this);
+}
+
+
+RunningScript.fromJSON = function(value) {
+    return Generic_fromJSON(RunningScript, value.data);
+}
+
+//Creates an object that creates a map/dictionary with the IP of each existing server as
 //a key, and 0 as the value. This is used to keep track of how much money a script
 //hacks from that server
 function AllServersMap() {

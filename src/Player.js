@@ -213,7 +213,7 @@ PlayerObject.prototype.updateSkillLevels = function() {
 //The formula is:
 //  (2 * hacking_chance_multiplier * hacking_skill - requiredLevel)      100 - difficulty       
 //  -----------------------------------------------------------  *  -----------------
-//        (hacking_chance_multiplier * hacking_skill)                      100
+//        (2 * hacking_chance_multiplier * hacking_skill)                      100
 PlayerObject.prototype.calculateHackingChance = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
     var skillMult = (2 * this.hacking_chance_mult * this.hacking_skill);
@@ -254,7 +254,11 @@ PlayerObject.prototype.calculatePercentMoneyHacked = function() {
 //The formula is:
 //  difficulty * requiredLevel * hacking_multiplier
 PlayerObject.prototype.calculateExpGain = function() {
-    return (this.getCurrentServer().hackDifficulty * this.hacking_exp_mult * 0.9);
+    var s = this.getCurrentServer();
+    if (s.baseDifficulty == null) {
+        s.baseDifficulty = s.hackDifficulty;
+    }
+    return (s.baseDifficulty * this.hacking_exp_mult * 0.5 + 4);
 }
 
 //Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for

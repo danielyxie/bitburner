@@ -33,3 +33,20 @@ function clearEventListeners(elemId) {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+//Returns true if all elements are equal, and false otherwise
+//Assumes both arguments are arrays and that there are no nested arrays
+function compareArrays(a1, a2) {
+    if (a1.length != a2.length) {
+        return false;
+    }
+    
+    for (var i = 0; i < a1.length; ++i) {
+        if (a1[i] != a2[i]) {return false;}
+    }
+    return true;
+}
+
+function printArray(a) {
+    return "[" + a.join(", ") + "]";
+}

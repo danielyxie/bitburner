@@ -216,8 +216,8 @@ function Parser(input) {
         unexpected();
     }
     
-    function parse_array() {        
-        //Declaring a new array with Array[1,2,3]
+    //Declaring a new array with Array[1,2,3]
+    function parse_arraydecl() {        
         var array = delimited("[", "]", ",", parse_expression);
         return {type: "var", 
                 value: "array",
@@ -225,14 +225,38 @@ function Parser(input) {
                 };
     }
     
+    //Parsing an operation on an array, such as accessing, push(), etc.
+    //tok is a reference to a token of type var
+    function parse_arrayop(tok) {
+        //Returns a variable node except with an extra "index" field so 
+        //we can identify it as an index
+        if (is_punc("[")) {
+            var index = parse_arrayindex();
+            if (index.type != "index") {
+                unexpected();
+            }
+        }
+        
+        var op = null;
+        if (is_punc(".")) {
+            checkPuncAndSkip(".");
+            op = maybe_call(function() {
+                var callTok = input.next();
+                return callTok;
+            });
+        }
+        tok.index = index;
+        tok.op = op; //Will be null if no operation
+        return tok;
+    }
+    
     function parse_arrayindex() {
         var index = delimited("[", "]", ";", parse_expression);
         var val = 0;
-        if (index.length == 1 && (index[0].type == "num" || index[0].type == "var")) {
+        if (index.length == 1) {
             val = index[0];
         } else {
-            val = 0;
-            console.log("WARNING: Extra indices passed in")
+            unexpected();
         }
             
         return { type: "index", value: val };
@@ -267,16 +291,9 @@ function Parser(input) {
             
             var tok = input.next();
             if (tok.type == "var" && tok.value == "hacknetnodes") return parse_hacknetnodes();
-            if (tok.type == "var" && tok.value == "Array") return parse_array();
-            if (tok.type == "var" && is_punc("[")) {
-                //Returns a variable node except with an extra "index" field so 
-                //we can identify it as an index
-                var index = parse_arrayindex();
-                if (index.type != "index") {
-                    unexpected();
-                }
-                tok.index = index;
-                return tok;
+            if (tok.type == "var" && tok.value == "Array") return parse_arraydecl();
+            if (tok.type == "var" && (is_punc("[") || is_punc("."))) {
+                return parse_arrayop(tok);
             }
             if (tok.type == "var" || tok.type == "num" || tok.type == "str")
                 return tok;

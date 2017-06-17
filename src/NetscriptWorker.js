@@ -3,16 +3,17 @@
 //TODO Tested For and while and generic call statements. Have not tested if statements 
 
 /* Actual Worker Code */
-function WorkerScript(script) {
-	this.name 			= "";
+function WorkerScript(runningScriptObj) {
+	this.name 			= runningScriptObj.filename;
 	this.running 		= false;
 	this.serverIp 		= null;
-	this.code 			= "";
+	this.code 			= runningScriptObj.scriptRef.code;
 	this.env 			= new Environment();
 	this.output			= "";
 	this.ramUsage		= 0;
-	this.scriptRef		= script;
+	this.scriptRef		= runningScriptObj;
     this.errorMessage   = "";
+    this.args           = runningScriptObj.args;
 }
 
 //Returns the server on which the workerScript is running
@@ -47,33 +48,12 @@ function runScriptsLoop() {
 				console.log("Stopping script " + w.name + " because it finished running naturally");
 				w.running = false;
 				w.env.stopFlag = true;
+                w.scriptRef.log("Script finished running");
 			}, function(w) {
 				if (w instanceof Error) {
-					//Error text format: |serverip|scriptname|error message
-					var errorText = w.toString();
-                    if (Engine.Debug) {
-                        console.log("Error in script: " + errorText);
-                    }
-					var errorTextArray = errorText.split("|");
-					if (errorTextArray.length != 4) {
-						console.log("ERROR: Something wrong with Error text in evaluator...");
-						console.log("Error text: " + errorText);
-                        return;
-					}
-					var serverIp = errorTextArray[1];
-					var scriptName = errorTextArray[2];
-					var errorMsg = errorTextArray[3];
-					
-                    dialogBoxCreate("Script runtime error:<br>Server Ip: " + serverIp + "<br>Script name: " + scriptName + "<br>" + errorMsg);
-					
-					//Find the corresponding workerscript and set its flags to kill it
-					for (var i = 0; i < workerScripts.length; ++i) {
-						if (workerScripts[i].serverIp == serverIp && workerScripts[i].name == scriptName) {
-							workerScripts[i].running = false;
-							workerScripts[i].env.stopFlag = true;
-							return;
-						}
-					} 
+                    dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
+					console.log("ERROR: Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN");
+                    return;
                 } else if (w instanceof WorkerScript) {
                     if (isScriptErrorMessage(w.errorMessage)) {
                         var errorTextArray = w.errorMessage.split("|");
@@ -86,31 +66,20 @@ function runScriptsLoop() {
                         var scriptName = errorTextArray[2];
                         var errorMsg = errorTextArray[3];
 					
-                        dialogBoxCreate("Script runtime error: <br>Server Ip: " + serverIp + "<br>Script name: " + scriptName + "<br>" + errorMsg);
+                        dialogBoxCreate("Script runtime error: <br>Server Ip: " + serverIp + 
+                                        "<br>Script name: " + scriptName + 
+                                        "<br>Args:" + printArray(w.args) + "<br>" + errorMsg);
+                        w.scriptRef.log("Script crashed with runtime error");
+                    } else {
+                        w.scriptRef.log("Script killed");
                     }
 					w.running = false;
 					w.env.stopFlag = true;
+                    
 				} else if (isScriptErrorMessage(w)) {
-                    var errorTextArray = errorText.split("|");
-					if (errorTextArray.length != 4) {
-						console.log("ERROR: Something wrong with Error text in evaluator...");
-						console.log("Error text: " + errorText);
-                        return;
-					}
-					var serverIp = errorTextArray[1];
-					var scriptName = errorTextArray[2];
-					var errorMsg = errorTextArray[3];
-					
-                    dialogBoxCreate("Script runtime error: <br>Server Ip: " + serverIp + "<br>Script name: " + scriptName + "<br>" + errorMsg);
-					
-					//Find the corresponding workerscript and set its flags to kill it
-					for (var i = 0; i < workerScripts.length; ++i) {
-						if (workerScripts[i].serverIp == serverIp && workerScripts[i].name == scriptName) {
-							workerScripts[i].running = false;
-							workerScripts[i].env.stopFlag = true;
-							return;
-						}
-					} 
+                    dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
+					console.log("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN");
+                    return;
                 } else {
                     dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
                 }
@@ -127,12 +96,13 @@ function runScriptsLoop() {
 			var ip = workerScripts[i].serverIp;
 			var name = workerScripts[i].name;
 			for (var j = 0; j < AllServers[ip].runningScripts.length; j++) {
-				if (AllServers[ip].runningScripts[j] == name) {
+				if (AllServers[ip].runningScripts[j].filename == name &&
+                    compareArrays(AllServers[ip].runningScripts[j].args, workerScripts[i].args)) {
 					AllServers[ip].runningScripts.splice(j, 1);
 					break;
 				}
 			}
-			
+            
 			//Free RAM
 			AllServers[ip].ramUsed -= workerScripts[i].ramUsage;
             
@@ -150,9 +120,10 @@ function runScriptsLoop() {
 //Queues a script to be killed by settings its stop flag to true. Then, the code will reject
 //all of its promises recursively, and when it does so it will no longer be running.
 //The runScriptsLoop() will then delete the script from worker scripts
-function killWorkerScript(scriptName, serverIp) {
+function killWorkerScript(runningScriptObj, serverIp) {
 	for (var i = 0; i < workerScripts.length; i++) {
-		if (workerScripts[i].name == scriptName && workerScripts[i].serverIp == serverIp) {
+		if (workerScripts[i].name == runningScriptObj.filename && workerScripts[i].serverIp == serverIp &&
+            compareArrays(workerScripts[i].args, runningScriptObj.args)) {
 			workerScripts[i].env.stopFlag = true;
             return true;
 		}
@@ -161,23 +132,21 @@ function killWorkerScript(scriptName, serverIp) {
 }
 
 //Queues a script to be run 
-function addWorkerScript(script, server) {
-	var filename = script.filename;
+function addWorkerScript(runningScriptObj, server) {
+	var filename = runningScriptObj.filename;
 	
 	//Update server's ram usage
     var threads = 1;
-    if (script.threads && !isNaN(script.threads)) {
-        threads = script.threads;
+    if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
+        threads = runningScriptObj.threads;
     } else {
-        script.threads = 1;
+        runningScriptObj.threads = 1;
     }
-    var ramUsage = script.ramUsage * threads * Math.pow(1.02, threads-1);
+    var ramUsage = runningScriptObj.scriptRef.ramUsage * threads * Math.pow(1.02, threads-1);
 	server.ramUsed += ramUsage;
 	
 	//Create the WorkerScript
-	var s = new WorkerScript(script);
-	s.name 		= filename;
-	s.code 		= script.code;
+	var s = new WorkerScript(runningScriptObj);
 	s.serverIp 	= server.ip;
 	s.ramUsage 	= ramUsage;
 	

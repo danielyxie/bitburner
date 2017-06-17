@@ -545,6 +545,10 @@ var Engine = {
                 displayCreateProgramContent();
             }
             
+            if (logBoxOpened) {
+                logBoxUpdateText();
+            }
+            
             Engine.Counters.updateDisplays = 3;
         }
         
@@ -908,10 +912,14 @@ var Engine = {
             return false;
         });
         
-        //Character Overview Save button
-        var charOverviewSaveButton = document.getElementById("character-overview-save-button");
-        charOverviewSaveButton.addEventListener("click", function() {
+        //Character Overview buttons
+        document.getElementById("character-overview-save-button").addEventListener("click", function() {
             saveObject.saveGame();
+            return false;
+        });
+        
+        document.getElementById("character-overview-options-button").addEventListener("click", function() {
+            gameOptionsBoxOpen();
             return false;
         });
         
