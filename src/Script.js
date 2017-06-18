@@ -245,13 +245,15 @@ scriptCalculateOfflineProduction = function(runningScriptObj) {
 	var confidence = (runningScriptObj.onlineRunningTime) / 14400;
 	if (confidence >= 1) {confidence = 1;}
     
+    //Data map: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
+    
     //Grow
-    for (var ip in runningScriptObj.numTimesGrowMap) {
-        if (runningScriptObj.numTimesGrowMap.hasOwnProperty(ip)) {
-            if (runningScriptObj.numTimesGrowMap[ip] == 0 || runningScriptObj.numTimesGrowMap[ip] == null) {continue;}
+    for (var ip in runningScriptObj.dataMap) {
+        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.dataMap[ip][2] == 0 || runningScriptObj.dataMap[ip][2] == null) {continue;}
             var serv = AllServers[ip];
             if (serv == null) {continue;}
-            var timesGrown = Math.round(0.5 * runningScriptObj.numTimesGrowMap[ip] / runningScriptObj.onlineRunningTime * timePassed);
+            var timesGrown = Math.round(0.5 * runningScriptObj.dataMap[ip][2] / runningScriptObj.onlineRunningTime * timePassed);
             console.log(runningScriptObj.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             runningScriptObj.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
             var growth = processSingleServerGrowth(serv, timesGrown * 450);
@@ -260,12 +262,12 @@ scriptCalculateOfflineProduction = function(runningScriptObj) {
     }
     
     var totalOfflineProduction = 0;
-    for (var ip in runningScriptObj.moneyStolenMap) {
-        if (runningScriptObj.moneyStolenMap.hasOwnProperty(ip)) {
-            if (runningScriptObj.moneyStolenMap[ip] == 0 || runningScriptObj.moneyStolenMap[ip] == null) {continue;}
+    for (var ip in runningScriptObj.dataMap) {
+        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.dataMap[ip][0] == 0 || runningScriptObj.dataMap[ip][0] == null) {continue;}
             var serv = AllServers[ip];
             if (serv == null) {continue;}
-            var production = 0.5 * runningScriptObj.moneyStolenMap[ip] / runningScriptObj.onlineRunningTime * timePassed;
+            var production = 0.5 * runningScriptObj.dataMap[ip][0] / runningScriptObj.onlineRunningTime * timePassed;
             production *= confidence;
             if (production > serv.moneyAvailable) {
                 production = serv.moneyAvailable;
@@ -292,12 +294,12 @@ scriptCalculateOfflineProduction = function(runningScriptObj) {
 	runningScriptObj.offlineExpGained += expGain;
     
     //Fortify a server's security based on how many times it was hacked
-    for (var ip in runningScriptObj.numTimesHackMap) {
-        if (runningScriptObj.numTimesHackMap.hasOwnProperty(ip)) {
-            if (runningScriptObj.numTimesHackMap[ip] == 0 || runningScriptObj.numTimesHackMap[ip] == null) {continue;}
+    for (var ip in runningScriptObj.dataMap) {
+        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.dataMap[ip][1] == 0 || runningScriptObj.dataMap[ip][1] == null) {continue;}
             var serv = AllServers[ip];
             if (serv == null) {continue;}
-            var timesHacked = Math.round(0.5 * runningScriptObj.numTimesHackMap[ip] / runningScriptObj.onlineRunningTime * timePassed);
+            var timesHacked = Math.round(0.5 * runningScriptObj.dataMap[ip][1] / runningScriptObj.onlineRunningTime * timePassed);
             console.log(runningScriptObj.filename + " hacked " + serv.hostname + " " + timesHacked + " times while offline");
             runningScriptObj.log("Hacked " + serv.hostname + " " + timesHacked + " times while offline");
             serv.fortify(CONSTANTS.ServerFortifyAmount * timesHacked);
@@ -305,12 +307,12 @@ scriptCalculateOfflineProduction = function(runningScriptObj) {
     }
     
     //Weaken
-    for (var ip in runningScriptObj.numTimesWeakenMap) {
-        if (runningScriptObj.numTimesWeakenMap.hasOwnProperty(ip)) {
-            if (runningScriptObj.numTimesWeakenMap[ip] == 0 || runningScriptObj.numTimesWeakenMap[ip] == null) {continue;}
+    for (var ip in runningScriptObj.dataMap) {
+        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.dataMap[ip][3] == 0 || runningScriptObj.dataMap[ip][3] == null) {continue;}
             var serv = AllServers[ip];
             if (serv == null) {continue;}
-            var timesWeakened = Math.round(0.5 * runningScriptObj.numTimesWeakenMap[ip] / runningScriptObj.onlineRunningTime * timePassed);
+            var timesWeakened = Math.round(0.5 * runningScriptObj.dataMap[ip][3] / runningScriptObj.onlineRunningTime * timePassed);
             console.log(runningScriptObj.filename + " called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
             runningScriptObj.log("Called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
             serv.weaken(CONSTANTS.ServerWeakenAmount * timesWeakened);
@@ -351,10 +353,8 @@ function RunningScript(script, args) {
     
     this.threads                = 1;
     
-    this.moneyStolenMap         = new AllServersMap();
-    this.numTimesHackMap        = new AllServersMap();
-    this.numTimesGrowMap        = new AllServersMap();
-    this.numTimesWeakenMap      = new AllServersMap();
+    //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
+    this.dataMap                = new AllServersMap([0, 0, 0, 0]);
 }
 
 RunningScript.prototype.reset = function() {
@@ -387,30 +387,30 @@ RunningScript.prototype.displayLog = function() {
     
 //Update the moneyStolen and numTimesHack maps when hacking
 RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
-    if (this.moneyStolenMap == null) {
-        this.moneyStolenMap = new AllServersMap();
+    if (this.dataMap == null) {
+        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
+        this.dataMap = new AllServersMap([0, 0, 0, 0]);
     }
-    if (this.numTimesHackMap == null) {
-        this.numTimesHackMap = new AllServersMap();
-    }
-    this.moneyStolenMap[serverIp] += moneyGained;
-    this.numTimesHackMap[serverIp] += n;
+    this.dataMap[serverIp][0] += moneyGained;
+    this.dataMap[serverIp][1] += n;
 }
 
 //Update the grow map when calling grow()
 RunningScript.prototype.recordGrow = function(serverIp, n=1) {
-    if (this.numTimesGrowMap == null) {
-        this.numTimesGrowMap = new AllServersMap();
+    if (this.dataMap == null) {
+        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
+        this.dataMap = new AllServersMap([0, 0, 0, 0]);
     }
-    this.numTimesGrowMap[serverIp] += n;
+    this.dataMap[serverIp][2] += n;
 }
 
 //Update the weaken map when calling weaken() {
 RunningScript.prototype.recordWeaken = function(serverIp, n=1) {
-    if (this.numTimesWeakenMap == null) {
-        this.numTimesWeakenMap = new AllServersMap();
+    if (this.dataMap == null) {
+        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
+        this.dataMap = new AllServersMap([0, 0, 0, 0]);
     }
-    this.numTimesWeakenMap[serverIp] += n;
+    this.dataMap[serverIp][3] += n;
 }
 
 RunningScript.prototype.toJSON = function() {
@@ -426,12 +426,14 @@ RunningScript.fromJSON = function(value) {
 //a key. Initializes every key with a specified value that can either by a number or an array
 function AllServersMap(init = 0) {
     if (init.constructor === Array || init instanceof Array) {
-        this.initValue = init.splice();
+        this.initValue = init.splice(); //Make a copy
+    } else {
+        this.initValue = 0;
     }
     
     for (var ip in AllServers) {
         if (AllServers.hasOwnProperty(ip)) {
-            this[ip] = init;
+            this[ip] = this.initValue;
         }
     }
 }

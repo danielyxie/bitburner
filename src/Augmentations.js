@@ -260,7 +260,7 @@ initAugmentations = function() {
     var CombatRib3 = new Augmentation(AugmentationNames.CombatRib3);
     CombatRib3.setRequirements(12000, 22000000);
     CombatRib3.setInfo("This is an upgrade to the Combat Rib II augmentation, and is capable of releasing even more potent combat-enhancing " + 
-                       "drugs into the bloodstream<br><br>. This upgrade increases the player's strength and defense by an additional 25%.");
+                       "drugs into the bloodstream<br><br>. This upgrade increases the player's strength and defense by an additional 20%.");
     CombatRib3.addToFactions(["The Dark Army", "The Syndicate", "OmniTek Incorporated",
                              "KuaiGong International", "Blade Industries", "The Covenant"]);
     if (augmentationExists(AugmentationNames.CombatRib3)) {
@@ -315,7 +315,7 @@ initAugmentations = function() {
     GrapheneBoneLacings.setRequirements(450000, 850000000);
     GrapheneBoneLacings.setInfo("A graphene-based material is grafted and fused into the user's bones, significantly increasing " +
                                 "their density and tensile strength.<br><br>" + 
-                                "This augmentation increases the player's strength and defense by 90%.");
+                                "This augmentation increases the player's strength and defense by 85%.");
     GrapheneBoneLacings.addToFactions(["Fulcrum Secret Technologies", "The Covenant"]);
     if (augmentationExists(AugmentationNames.GrapheneBoneLacings)) {
         GrapheneBoneLacings.owned = Augmentations[AugmentationNames.GrapheneBoneLacings].owned;
@@ -329,7 +329,7 @@ initAugmentations = function() {
                         "Not only is the Bionic Spine physically stronger than a human spine, but it is also capable of digitally " + 
                         "stimulating and regulating the neural signals that are sent and received by the spinal cord. This results in " + 
                         "greatly improved senses and reaction speeds.<br><br>" + 
-                        "This augmentation increases all of the player's combat stats by 20%.");
+                        "This augmentation increases all of the player's combat stats by 18%.");
     BionicSpine.addToFactions(["Speakers for the Dead", "The Syndicate", "KuaiGong International",
                               "OmniTek Incorporated", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.BionicSpine)) {
@@ -342,7 +342,7 @@ initAugmentations = function() {
     GrapheneBionicSpine.setRequirements(650000, 1200000000);
     GrapheneBionicSpine.setInfo("An upgrade to the Bionic Spine augmentation. It fuses the implant with an advanced graphene " + 
                                 "material to make it much stronger and lighter.<br><br>" + 
-                                "This augmentation increases all of the player's combat stats by 70%.");
+                                "This augmentation increases all of the player's combat stats by 65%.");
     GrapheneBionicSpine.addToFactions(["Fulcrum Secret Technologies", "ECorp"]);
     if (augmentationExists(AugmentationNames.GrapheneBionicSpine)) {
         GrapheneBionicSpine.owned = Augmentations[AugmentationNames.GrapheneBionicSpine].owned;
@@ -1167,7 +1167,7 @@ initAugmentations = function() {
                    "and integumentary system. The drug permanently modifies the DNA of the " + 
                    "body's skin and bone cells, granting them the ability to repair " +
                    "and restructure themselves. <br><br>" + 
-                   "This augmentation increases the player's strength and defense by 75%");
+                   "This augmentation increases the player's strength and defense by 65%");
     Neotra.setRequirements(225000, 550000000);
     Neotra.addToFactions(["Blade Industries"]);
     if (augmentationExists(AugmentationNames.Neotra)) {
@@ -1231,7 +1231,7 @@ initAugmentations = function() {
                                 "to the body using a skin graft. The result is photosynthetic " + 
                                 "skin cells, allowing users to generate their own energy " + 
                                 "and nutrition using solar power. <br><br>" + 
-                                "This augmentation increases the player's strength, defense, and agility by 50%");
+                                "This augmentation increases the player's strength, defense, and agility by 40%");
     PhotosyntheticCells.setRequirements(225000, 525000000);
     PhotosyntheticCells.addToFactions(["KuaiGong International"]);
     if (augmentationExists(AugmentationNames.PhotosyntheticCells)) {
@@ -1266,7 +1266,7 @@ initAugmentations = function() {
                          "with hardware and firmware that lets the user connect to, access and hack " + 
                          "devices and machines just by touching them. <br><br>" + 
                          "This augmentation: <br>" + 
-                         "Increases the player's strength and dexterity by 20%<br>" + 
+                         "Increases the player's strength and dexterity by 15%<br>" + 
                          "Increases the player's hacking skill by 10%<br>" + 
                          "Increases the player's hacking speed by 2%<br>" + 
                          "Increases the amount of money the player gains from hacking by 10%");
@@ -1380,9 +1380,9 @@ initAugmentations = function() {
                                  "the retractable blades with an advanced graphene material " + 
                                  "to make them much stronger and lighter. <br><br>" + 
                                  "This augmentation:<br>" + 
-                                 "Increases the player's strength and defense by 50%<br>" +
+                                 "Increases the player's strength and defense by 40%<br>" +
                                  "Increases the player's crime success rate by 10%<br>" + 
-                                 "Increases the amount of money the player gains from crimes by 25%");
+                                 "Increases the amount of money the player gains from crimes by 30%");
     GrapheneBrachiBlades.setRequirements(90000, 500000000);
     GrapheneBrachiBlades.addToFactions(["Speakers for the Dead"]);
     if (augmentationExists(AugmentationNames.GrapheneBrachiBlades)) {
@@ -1396,7 +1396,7 @@ initAugmentations = function() {
     GrapheneBionicArms.setInfo("An upgrade to the Bionic Arms augmentation. It infuses the " + 
                                "prosthetic arms with an advanced graphene material " + 
                                "to make them much stronger and lighter. <br><br>" + 
-                               "This augmentation increases the player's strength and dexterity by 90%");
+                               "This augmentation increases the player's strength and dexterity by 85%");
     GrapheneBionicArms.setRequirements(200000, 750000000);
     GrapheneBionicArms.addToFactions(["The Dark Army"]);
     if (augmentationExists(AugmentationNames.GrapheneBionicArms)) {
@@ -1409,9 +1409,9 @@ initAugmentations = function() {
     var BrachiBlades = new Augmentation(AugmentationNames.BrachiBlades);
     BrachiBlades.setInfo("A set of retractable plasteel blades are implanted in the arm, underneath the skin. " +
                          "<br><br>This augmentation: <br>" + 
-                         "Increases the player's strength and defense by 20%<br>" + 
+                         "Increases the player's strength and defense by 15%<br>" + 
                          "Increases the player's crime success rate by 10%<br>" + 
-                         "Increases the amount of money the player gains from crimes by 10%");
+                         "Increases the amount of money the player gains from crimes by 15%");
     BrachiBlades.setRequirements(5000, 18000000);
     BrachiBlades.addToFactions(["The Syndicate"]);
     if (augmentationExists(AugmentationNames.BrachiBlades)) {
@@ -1424,7 +1424,7 @@ initAugmentations = function() {
     var BionicArms = new Augmentation(AugmentationNames.BionicArms);
     BionicArms.setInfo("Cybernetic arms created from plasteel and carbon fibers that completely replace " + 
                        "the user's organic arms. <br><br>" + 
-                       "This augmentation increases the user's strength and dexterity by 50%");
+                       "This augmentation increases the user's strength and dexterity by 30%");
     BionicArms.setRequirements(25000, 55000000);
     BionicArms.addToFactions(["Tetrads"]);
     if (augmentationExists(AugmentationNames.BionicArms)) {
@@ -1484,8 +1484,8 @@ applyAugmentation = function(aug, reapply=false) {
             Player.defense_mult     *= 1.15;
             break;
         case AugmentationNames.CombatRib3:
-            Player.strength_mult    *= 1.25;
-            Player.defense_mult     *= 1.25;
+            Player.strength_mult    *= 1.20;
+            Player.defense_mult     *= 1.20;
             break;
         case AugmentationNames.NanofiberWeave:         //Med level
             Player.strength_mult    *= 1.25;
@@ -1499,20 +1499,20 @@ applyAugmentation = function(aug, reapply=false) {
             Player.dexterity_mult   *= 1.05;
             break;
         case AugmentationNames.GrapheneBoneLacings:   //High level
-            Player.strength_mult    *= 1.9;
-            Player.defense_mult     *= 1.9;
+            Player.strength_mult    *= 1.85;
+            Player.defense_mult     *= 1.85;
             break;
         case AugmentationNames.BionicSpine:            //Med level
-            Player.strength_mult    *= 1.2;
-            Player.defense_mult     *= 1.2;
-            Player.agility_mult     *= 1.2;
-            Player.dexterity_mult   *= 1.2;
+            Player.strength_mult    *= 1.18;
+            Player.defense_mult     *= 1.18;
+            Player.agility_mult     *= 1.18;
+            Player.dexterity_mult   *= 1.18;
             break;
         case AugmentationNames.GrapheneBionicSpine:   //High level
-            Player.strength_mult    *= 1.7;
-            Player.defense_mult     *= 1.7;
-            Player.agility_mult     *= 1.7;
-            Player.dexterity_mult   *= 1.7;
+            Player.strength_mult    *= 1.65;
+            Player.defense_mult     *= 1.65;
+            Player.agility_mult     *= 1.65;
+            Player.dexterity_mult   *= 1.65;
             break;
         case AugmentationNames.BionicLegs:             //Med level
             Player.agility_mult     *= 1.6;
@@ -1824,8 +1824,8 @@ applyAugmentation = function(aug, reapply=false) {
             Player.faction_rep_mult     *= 1.25;
             break;
         case AugmentationNames.Neotra:
-            Player.strength_mult        *= 1.75;
-            Player.defense_mult         *= 1.75;
+            Player.strength_mult        *= 1.65;
+            Player.defense_mult         *= 1.65;
             break;
         case AugmentationNames.Xanipher:
             Player.hacking_mult         *= 1.2;
@@ -1854,9 +1854,9 @@ applyAugmentation = function(aug, reapply=false) {
             Player.hacking_exp_mult     *= 1.25;
             break;
         case AugmentationNames.PhotosyntheticCells:
-            Player.strength_mult        *= 1.5;
-            Player.defense_mult         *= 1.5;
-            Player.agility_mult         *= 1.5;
+            Player.strength_mult        *= 1.4;
+            Player.defense_mult         *= 1.4;
+            Player.agility_mult         *= 1.4;
             break;
         case AugmentationNames.Neurolink:
             Player.hacking_mult         *= 1.15;
@@ -1865,8 +1865,8 @@ applyAugmentation = function(aug, reapply=false) {
             Player.hacking_speed_mult   *= 1.05;
             break;
         case AugmentationNames.TheBlackHand:
-            Player.strength_mult        *= 1.2;
-            Player.dexterity_mult       *= 1.2;
+            Player.strength_mult        *= 1.15;
+            Player.dexterity_mult       *= 1.15;
             Player.hacking_mult         *= 1.1;
             Player.hacking_speed_mult   *= 1.02;
             Player.hacking_money_mult   *= 1.1;
@@ -1895,24 +1895,24 @@ applyAugmentation = function(aug, reapply=false) {
             Player.defense_mult         *= 1.5;
             break;
         case AugmentationNames.GrapheneBrachiBlades:
-            Player.strength_mult        *= 1.5;
-            Player.defense_mult         *= 1.5;
+            Player.strength_mult        *= 1.4;
+            Player.defense_mult         *= 1.4;
             Player.crime_success_mult   *= 1.1;
-            Player.crime_money_mult     *= 1.25;
+            Player.crime_money_mult     *= 1.3;
             break;
         case AugmentationNames.GrapheneBionicArms:
-            Player.strength_mult        *= 1.9;
-            Player.dexterity_mult       *= 1.9;
+            Player.strength_mult        *= 1.85;
+            Player.dexterity_mult       *= 1.85;
             break;
         case AugmentationNames.BrachiBlades:
-            Player.strength_mult        *= 1.2;
-            Player.defense_mult         *= 1.2;
+            Player.strength_mult        *= 1.15;
+            Player.defense_mult         *= 1.15;
             Player.crime_success_mult   *= 1.1;
-            Player.crime_money_mult     *= 1.1;
+            Player.crime_money_mult     *= 1.15;
             break;
         case AugmentationNames.BionicArms:
-            Player.strength_mult        *= 1.5;
-            Player.dexterity_mult       *= 1.5;
+            Player.strength_mult        *= 1.3;
+            Player.dexterity_mult       *= 1.3;
             break;
         case AugmentationNames.SNA:
             Player.work_money_mult      *= 1.1;
