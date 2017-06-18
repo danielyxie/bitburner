@@ -233,7 +233,7 @@ PlayerObject.prototype.calculateHackingChance = function() {
 PlayerObject.prototype.calculateHackingTime = function() {
     var difficultyMult = this.getCurrentServer().requiredHackingSkill * this.getCurrentServer().hackDifficulty;
     var skillFactor = (2.5 * difficultyMult + 200) / (this.hacking_skill + 100);
-    return skillFactor * this.hacking_speed_mult * 5;
+    return 5 * skillFactor / this.hacking_speed_mult;
 }
 
 //Calculates the PERCENTAGE of a server's money that the player will hack from the server if successful
@@ -259,7 +259,7 @@ PlayerObject.prototype.calculateExpGain = function() {
     if (s.baseDifficulty == null) {
         s.baseDifficulty = s.hackDifficulty;
     }
-    return (s.baseDifficulty * this.hacking_exp_mult * 0.5 + 4);
+    return (s.baseDifficulty * this.hacking_exp_mult * 0.5 + 1);
 }
 
 //Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for

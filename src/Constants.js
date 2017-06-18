@@ -643,9 +643,18 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.21.2<br>" + 
+    "-Significantly nerfed most augmentations<br>" + 
+    "-The hacking speed multiplier now increases rather than decreases. The hacking time is divided by your hacking speed " + 
+    "multiplier rather than multiplied. In other words, a higher hacking speed multiplier is better now<br>" + 
+    "-Servers now have a minimum server security, which is approximately one third of their starting server security<br>" + 
+    "-If you do not steal any money from a server, then you gain hacking experience equal to the amount you would have gained " + 
+    "had you failed the hack<br>" + 
+    "-grow() and weaken() now give hacking experience based on the server's base security level, rather than a flat exp amount<br>" + 
+    "-Slightly reduced amount of exp gained from hack(), weaken(), and grow()<br>" +
     "v0.21.1<br>" + 
     "-IF YOUR GAME BREAKS, DO THE FOLLOWING: Options -> Soft Reset -> Save Game -> Reload Page. Sorry about that! <br>" + 
-    "-Autocompletion for aliases - courtesy of Github user LTCNugget" + 
+    "-Autocompletion for aliases - courtesy of Github user LTCNugget<br><br>" + 
     "v0.21.0<br>" + 
     "-Added dynamic arrays. See Netscript documentation<br>" + 
     "-Added ability to pass arguments into scripts. See documentation<br>" + 

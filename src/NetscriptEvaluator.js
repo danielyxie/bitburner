@@ -1023,7 +1023,7 @@ function scriptCalculateHackingChance(server) {
 function scriptCalculateHackingTime(server) {
 	var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
 	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
-	var hackingTime = skillFactor * Player.hacking_speed_mult * 5; //This is in seconds
+	var hackingTime = 5 * skillFactor / Player.hacking_speed_mult; //This is in seconds
 	return hackingTime;
 }
 
@@ -1032,7 +1032,7 @@ function scriptCalculateExpGain(server) {
     if (server.baseDifficulty == null) {
         server.baseDifficulty = server.hackDifficulty;
     }
-	return (server.baseDifficulty * Player.hacking_exp_mult * 0.5 + 4);
+	return (server.baseDifficulty * Player.hacking_exp_mult * 0.5 + 1);
 }
 
 //The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument

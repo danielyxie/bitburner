@@ -83,7 +83,7 @@ Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvai
     this.moneyMax = 50 * moneyAvailable;
 	this.hackDifficulty = hackDifficulty;
     this.baseDifficulty = hackDifficulty;
-    this.minDifficulty = Math.max(1, hackDifficulty - 25);
+    this.minDifficulty = Math.max(1, Math.round(hackDifficulty / 3));
 	this.serverGrowth = serverGrowth;
 }
 
@@ -122,6 +122,7 @@ Server.prototype.fortify = function(amt) {
 
 Server.prototype.weaken = function(amt) {
     this.hackDifficulty -= amt; 
+    if (this.hackDifficulty < this.minDifficulty) {this.hackDifficulty = this.minDifficulty;}
     if (this.hackDifficulty < 1) {this.hackDifficulty = 1;}
 }
 
