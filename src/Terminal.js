@@ -551,12 +551,13 @@ var Terminal = {
             case iTutorialSteps.ActiveScriptsToTerminal:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "tail" && commandArray[1] == "foodnstuff.script") {
-                    var currScripts = Player.getCurrentServer().scripts;
-                    for (var i = 0; i < currScripts.length; ++i) {
-                        if ("foodnstuff.script" == currScripts[i].filename) {
-                            currScripts[i].displayLog();
-                        }
+                    //Check that the script exists on this machine
+                    var runningScript = findRunningScript("foodnstuff.script", [], Player.getCurrentServer());
+                    if (runningScript == null) {
+                        post("Error: No such script exists");
+                        return;
                     }
+                    logBoxCreate(runningScript);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;

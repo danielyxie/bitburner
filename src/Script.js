@@ -423,12 +423,15 @@ RunningScript.fromJSON = function(value) {
 }
 
 //Creates an object that creates a map/dictionary with the IP of each existing server as
-//a key, and 0 as the value. This is used to keep track of how much money a script
-//hacks from that server
-function AllServersMap() {
+//a key. Initializes every key with a specified value that can either by a number or an array
+function AllServersMap(init = 0) {
+    if (init.constructor === Array || init instanceof Array) {
+        this.initValue = init.splice();
+    }
+    
     for (var ip in AllServers) {
         if (AllServers.hasOwnProperty(ip)) {
-            this[ip] = 0;
+            this[ip] = init;
         }
     }
 }

@@ -654,7 +654,7 @@ CONSTANTS = {
     "-grow() and weaken() now give hacking experience based on the server's base security level, rather than a flat exp amount<br>" + 
     "-Slightly reduced amount of exp gained from hack(), weaken(), and grow()<br>" +
     "-Rebalanced formulas that determine crime success<br>" + 
-    "-Reduced RAM cost for multithreading a script. The RAM multiplier for each thread was reduced from 1.02 to 1.01<br>"
+    "-Reduced RAM cost for multithreading a script. The RAM multiplier for each thread was reduced from 1.02 to 1.01<br>" + 
     "v0.21.1<br>" + 
     "-IF YOUR GAME BREAKS, DO THE FOLLOWING: Options -> Soft Reset -> Save Game -> Reload Page. Sorry about that! <br>" + 
     "-Autocompletion for aliases - courtesy of Github user LTCNugget<br><br>" + 
