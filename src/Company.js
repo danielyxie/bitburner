@@ -271,10 +271,10 @@ CompanyPositions = {
     SecurityGuard:              new CompanyPosition("Security Guard", 0, 51, 51, 51, 51, 1, 0, 20),
     SecurityOfficer:            new CompanyPosition("Security Officer", 26, 151, 151, 151, 151, 51, 8000, 75),
     SecuritySupervisor:         new CompanyPosition("Security Supervisor", 26, 251, 251, 251, 251, 101, 32000, 275),
-    HeadOfSecurity:             new CompanyPosition("Head of Security", 51, 501, 501, 501, 501, 151, 144000, 550),
-    FieldAgent:                 new CompanyPosition("Field Agent", 101, 101, 101, 101, 101, 101, 8000, 55),
-    SecretAgent:                new CompanyPosition("Secret Agent", 201, 251, 251, 251, 251, 32000, 190),
-    SpecialOperative:           new CompanyPosition("Special Operative", 251, 501, 501, 501, 501, 144000, 425),
+    HeadOfSecurity:             new CompanyPosition("Head of Security",  51, 501, 501, 501, 501, 151, 144000, 550),
+    FieldAgent:                 new CompanyPosition("Field Agent",       101, 101, 101, 101, 101, 101, 8000, 55),
+    SecretAgent:                new CompanyPosition("Secret Agent",      201, 251, 251, 251, 251, 201, 32000, 190),
+    SpecialOperative:           new CompanyPosition("Special Operative", 251, 501, 501, 501, 501, 251, 144000, 425),
     
     init: function() {
         //Argument order: hack, str, def, dex, agi, cha

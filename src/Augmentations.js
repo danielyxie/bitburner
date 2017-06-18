@@ -209,7 +209,7 @@ initAugmentations = function() {
     SyntheticHeart.setRequirements(300000, 575000000);
     SyntheticHeart.setInfo("This advanced artificial heart, created from plasteel and graphene, is capable of pumping more blood " + 
                            "at much higher efficiencies than a normal human heart.<br><br> This augmentation increases the player's agility " +
-                           "and strength by 100%");
+                           "and strength by 80%");
     SyntheticHeart.addToFactions(["KuaiGong International", "Fulcrum Secret Technologies", "Speakers for the Dead",
                                  "NWO", "The Covenant", "Daedalus", "Illuminati"]);
     if (augmentationExists(AugmentationNames.SyntheticHeart)) {
@@ -223,7 +223,7 @@ initAugmentations = function() {
     SynfibrilMuscle.setInfo("The myofibrils in human muscles are injected with special chemicals that react with the proteins inside " + 
                             "the myofibrils, altering their underlying structure. The end result is muscles that are stronger and more elastic. " + 
                             "Scientists have named these artificially enhanced units 'synfibrils'.<br><br> This augmentation increases the player's " +
-                            "strength and defense by 60%.");
+                            "strength and defense by 50%.");
     SynfibrilMuscle.addToFactions(["KuaiGong International", "Fulcrum Secret Technologies", "Speakers for the Dead",
                                   "NWO", "The Covenant", "Daedalus", "Illuminati", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.SynfibrilMuscle)) {
@@ -315,7 +315,7 @@ initAugmentations = function() {
     GrapheneBoneLacings.setRequirements(450000, 850000000);
     GrapheneBoneLacings.setInfo("A graphene-based material is grafted and fused into the user's bones, significantly increasing " +
                                 "their density and tensile strength.<br><br>" + 
-                                "This augmentation increases the player's strength and defense by 110%.");
+                                "This augmentation increases the player's strength and defense by 90%.");
     GrapheneBoneLacings.addToFactions(["Fulcrum Secret Technologies", "The Covenant"]);
     if (augmentationExists(AugmentationNames.GrapheneBoneLacings)) {
         GrapheneBoneLacings.owned = Augmentations[AugmentationNames.GrapheneBoneLacings].owned;
@@ -342,7 +342,7 @@ initAugmentations = function() {
     GrapheneBionicSpine.setRequirements(650000, 1200000000);
     GrapheneBionicSpine.setInfo("An upgrade to the Bionic Spine augmentation. It fuses the implant with an advanced graphene " + 
                                 "material to make it much stronger and lighter.<br><br>" + 
-                                "This augmentation increases all of the player's combat stats by 80%.");
+                                "This augmentation increases all of the player's combat stats by 70%.");
     GrapheneBionicSpine.addToFactions(["Fulcrum Secret Technologies", "ECorp"]);
     if (augmentationExists(AugmentationNames.GrapheneBionicSpine)) {
         GrapheneBionicSpine.owned = Augmentations[AugmentationNames.GrapheneBionicSpine].owned;
@@ -472,7 +472,7 @@ initAugmentations = function() {
                                     "This augmentation:<br>" + 
                                     "Increases the player's hacking speed by 3%<br>" + 
                                     "Increases the player's hacking skill by 8%<br>" + 
-                                    "Increases the player's hacking experience gain rate by 15%");
+                                    "Increases the player's hacking experience gain rate by 12%");
     EnhancedMyelinSheathing.addToFactions(["Fulcrum Secret Technologies", "BitRunners", "The Black Hand"]);
     if (augmentationExists(AugmentationNames.EnhancedMyelinSheathing)) {
         EnhancedMyelinSheathing.owned = Augmentations[AugmentationNames.EnhancedMyelinSheathing].owned;
@@ -496,7 +496,7 @@ initAugmentations = function() {
     NeuralRetentionEnhancement.setRequirements(8000, 50000000);
     NeuralRetentionEnhancement.setInfo("Chemical injections are used to permanently alter and strengthen the brain's neuronal " +
                                        "circuits, strengthening its ability to retain information.<br><br>" + 
-                                       "This augmentation increases the player's hacking experience gain rate by 35%.");
+                                       "This augmentation increases the player's hacking experience gain rate by 25%.");
     NeuralRetentionEnhancement.addToFactions(["NiteSec"]);
     if (augmentationExists(AugmentationNames.NeuralRetentionEnhancement)) {
         NeuralRetentionEnhancement.owned = Augmentations[AugmentationNames.NeuralRetentionEnhancement].owned;
@@ -580,7 +580,7 @@ initAugmentations = function() {
                       "Increases the player's hacking speed by 5%<br>" + 
                       "Increases the amount of money the player gains from hacking by 40%<br>" + 
                       "Increases the player's chance of successfully performing a hack by 10%<br>" + 
-                      "Increases the player's hacking experience gain rate by 50%<br>" + 
+                      "Increases the player's hacking experience gain rate by 35%<br>" + 
                       "Increases the player's hacking skill by 10%");
     ENMCoreV3.addToFactions(["ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                             "Daedalus", "The Covenant", "Illuminati"]);
@@ -1396,7 +1396,7 @@ initAugmentations = function() {
     GrapheneBionicArms.setInfo("An upgrade to the Bionic Arms augmentation. It infuses the " + 
                                "prosthetic arms with an advanced graphene material " + 
                                "to make them much stronger and lighter. <br><br>" + 
-                               "This augmentation increases the player's strength and dexterity by 125%");
+                               "This augmentation increases the player's strength and dexterity by 90%");
     GrapheneBionicArms.setRequirements(200000, 750000000);
     GrapheneBionicArms.addToFactions(["The Dark Army"]);
     if (augmentationExists(AugmentationNames.GrapheneBionicArms)) {
@@ -1468,12 +1468,12 @@ applyAugmentation = function(aug, reapply=false) {
             Player.dexterity_mult *= 1.40;
             break;
         case AugmentationNames.SyntheticHeart:         //High level
-            Player.agility_mult *= 2.0;
-            Player.strength_mult *= 2.0;
+            Player.agility_mult *= 1.8;
+            Player.strength_mult *= 1.8;
             break;
         case AugmentationNames.SynfibrilMuscle:        //Medium-high level
-            Player.strength_mult    *= 1.6;
-            Player.defense_mult     *= 1.6;
+            Player.strength_mult    *= 1.5;
+            Player.defense_mult     *= 1.5;
             break;
         case AugmentationNames.CombatRib1:
             Player.strength_mult    *= 1.1;
@@ -1499,8 +1499,8 @@ applyAugmentation = function(aug, reapply=false) {
             Player.dexterity_mult   *= 1.05;
             break;
         case AugmentationNames.GrapheneBoneLacings:   //High level
-            Player.strength_mult    *= 2.10;
-            Player.defense_mult     *= 2.10;
+            Player.strength_mult    *= 1.9;
+            Player.defense_mult     *= 1.9;
             break;
         case AugmentationNames.BionicSpine:            //Med level
             Player.strength_mult    *= 1.2;
@@ -1509,10 +1509,10 @@ applyAugmentation = function(aug, reapply=false) {
             Player.dexterity_mult   *= 1.2;
             break;
         case AugmentationNames.GrapheneBionicSpine:   //High level
-            Player.strength_mult    *= 1.8;
-            Player.defense_mult     *= 1.8;
-            Player.agility_mult     *= 1.8;
-            Player.dexterity_mult   *= 1.8;
+            Player.strength_mult    *= 1.7;
+            Player.defense_mult     *= 1.7;
+            Player.agility_mult     *= 1.7;
+            Player.dexterity_mult   *= 1.7;
             break;
         case AugmentationNames.BionicLegs:             //Med level
             Player.agility_mult     *= 1.6;
@@ -1550,14 +1550,14 @@ applyAugmentation = function(aug, reapply=false) {
             break;
         case AugmentationNames.EnhancedMyelinSheathing:       //Med level
             Player.hacking_speed_mult *= 1.03;
-            Player.hacking_exp_mult   *= 1.15;
+            Player.hacking_exp_mult   *= 1.12;
             Player.hacking_mult       *= 1.08;
             break;
         case AugmentationNames.SynapticEnhancement:    //Low Level
             Player.hacking_speed_mult *= 1.03;
             break;
         case AugmentationNames.NeuralRetentionEnhancement:    //Med level
-            Player.hacking_exp_mult   *= 1.35;
+            Player.hacking_exp_mult   *= 1.25;
             break;
         case AugmentationNames.DataJack:                        //Med low level
             Player.hacking_money_mult *= 1.3;
@@ -1583,7 +1583,7 @@ applyAugmentation = function(aug, reapply=false) {
             Player.hacking_speed_mult     *= 1.05;
             Player.hacking_money_mult     *= 1.4;
             Player.hacking_chance_mult    *= 1.1;
-            Player.hacking_exp_mult       *= 1.5;
+            Player.hacking_exp_mult       *= 1.35;
             Player.hacking_mult           *= 1.1;
             break;
         case AugmentationNames.ENMAnalyzeEngine:    //High level
@@ -1901,8 +1901,8 @@ applyAugmentation = function(aug, reapply=false) {
             Player.crime_money_mult     *= 1.25;
             break;
         case AugmentationNames.GrapheneBionicArms:
-            Player.strength_mult        *= 2.25;
-            Player.dexterity_mult       *= 2.25;
+            Player.strength_mult        *= 1.9;
+            Player.dexterity_mult       *= 1.9;
             break;
         case AugmentationNames.BrachiBlades:
             Player.strength_mult        *= 1.2;
@@ -1995,5 +1995,10 @@ function augmentationExists(name) {
 
 //Used for testing balance
 function giveAllAugmentations() {
+    for (var name in Augmentations) {
+        var aug = Augmentations[name];
+        if (aug == null) {continue;}
+        Player.augmentations.push(name);
+    }
     Player.reapplyAllAugmentations();
 }

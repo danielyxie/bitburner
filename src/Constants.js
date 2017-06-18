@@ -68,8 +68,8 @@ CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     
     //Server constants
-    ServerBaseGrowthRate: 1.02,     //Unadjusted Growth rate
-    ServerMaxGrowthRate: 1.003,     //Maximum possible growth rate (max rate accounting for server security)
+    ServerBaseGrowthRate: 1.03,     //Unadjusted Growth rate
+    ServerMaxGrowthRate: 1.0045,     //Maximum possible growth rate (max rate accounting for server security)
     ServerFortifyAmount: 0.002,     //Amount by which server's security increases when its hacked/grown
     ServerWeakenAmount: 0.1,        //Amount by which server's security decreases when weakened
     
@@ -650,8 +650,10 @@ CONSTANTS = {
     "-Servers now have a minimum server security, which is approximately one third of their starting server security<br>" + 
     "-If you do not steal any money from a server, then you gain hacking experience equal to the amount you would have gained " + 
     "had you failed the hack<br>" + 
+    "-The effects of grow() increased by 50%<br>" + 
     "-grow() and weaken() now give hacking experience based on the server's base security level, rather than a flat exp amount<br>" + 
     "-Slightly reduced amount of exp gained from hack(), weaken(), and grow()<br>" +
+    "-Rebalanced formulas that determine crime success<br>" + 
     "v0.21.1<br>" + 
     "-IF YOUR GAME BREAKS, DO THE FOLLOWING: Options -> Soft Reset -> Save Game -> Reload Page. Sorry about that! <br>" + 
     "-Autocompletion for aliases - courtesy of Github user LTCNugget<br><br>" + 
