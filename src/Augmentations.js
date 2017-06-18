@@ -472,7 +472,7 @@ initAugmentations = function() {
                                     "This augmentation:<br>" + 
                                     "Increases the player's hacking speed by 3%<br>" + 
                                     "Increases the player's hacking skill by 8%<br>" + 
-                                    "Increases the player's hacking experience gain rate by 12%");
+                                    "Increases the player's hacking experience gain rate by 10%");
     EnhancedMyelinSheathing.addToFactions(["Fulcrum Secret Technologies", "BitRunners", "The Black Hand"]);
     if (augmentationExists(AugmentationNames.EnhancedMyelinSheathing)) {
         EnhancedMyelinSheathing.owned = Augmentations[AugmentationNames.EnhancedMyelinSheathing].owned;
@@ -509,7 +509,7 @@ initAugmentations = function() {
     DataJack.setInfo("A brain implant that provides an interface for direct, wireless communication between a computer's main " + 
                      "memory and the mind. This implant allows the user to not only access a computer's memory, but also alter " + 
                      "and delete it.<br><br>" + 
-                     "This augmentation increases the amount of money the player gains from hacking by 30%");
+                     "This augmentation increases the amount of money the player gains from hacking by 25%");
     DataJack.addToFactions(["BitRunners", "The Black Hand", "NiteSec", "Chongqing", "New Tokyo"]);
     if (augmentationExists(AugmentationNames.DataJack)) {
         DataJack.owned = Augmentations[AugmentationNames.DataJack].owned;
@@ -561,7 +561,7 @@ initAugmentations = function() {
                       "Increases the player's hacking speed by 5%<br>" + 
                       "Increases the amount of money the player gains from hacking by 30%<br>" + 
                       "Increases the player's chance of successfully performing a hack by 5%<br>" + 
-                      "Increases the player's hacking experience gain rate by 20%<br>" + 
+                      "Increases the player's hacking experience gain rate by 15%<br>" + 
                       "Increases the player's hacking skill by 8%");
     ENMCoreV2.addToFactions(["BitRunners", "ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                             "Blade Industries", "OmniTek Incorporated", "KuaiGong International"]);
@@ -580,7 +580,7 @@ initAugmentations = function() {
                       "Increases the player's hacking speed by 5%<br>" + 
                       "Increases the amount of money the player gains from hacking by 40%<br>" + 
                       "Increases the player's chance of successfully performing a hack by 10%<br>" + 
-                      "Increases the player's hacking experience gain rate by 35%<br>" + 
+                      "Increases the player's hacking experience gain rate by 25%<br>" + 
                       "Increases the player's hacking skill by 10%");
     ENMCoreV3.addToFactions(["ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                             "Daedalus", "The Covenant", "Illuminati"]);
@@ -626,7 +626,7 @@ initAugmentations = function() {
                              "This augmentation:<br>" + 
                              "Increases the player's hacking speed by 2%<br>" + 
                              "Increases the player's chance of successfully performing a hack by 10%<br>" + 
-                             "Increases the player's hacking experience gain rate by 20%");
+                             "Increases the player's hacking experience gain rate by 12%");
     Neuralstimulator.addToFactions(["The Black Hand", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
                                    "Ishima", "Volhaven", "Bachman & Associates", "Clarke Incorporated", 
                                    "Four Sigma"]);
@@ -742,7 +742,7 @@ initAugmentations = function() {
                                   "to enhance the production and capabilities of its neural stem cells. <br><br>" + 
                                   "This augmentation: <br>" + 
                                   "Increases the player's hacking skill by 15%<br>" + 
-                                  "Increases the player's hacking experience gain rate by 20%<br>"+ 
+                                  "Increases the player's hacking experience gain rate by 10%<br>"+ 
                                   "Increases the player's hacking speed by 3%");
     NeuronalDensification.addToFactions(["Clarke Incorporated"]);
     if (augmentationExists(AugmentationNames.NeuronalDensification)) {
@@ -1550,7 +1550,7 @@ applyAugmentation = function(aug, reapply=false) {
             break;
         case AugmentationNames.EnhancedMyelinSheathing:       //Med level
             Player.hacking_speed_mult *= 1.03;
-            Player.hacking_exp_mult   *= 1.12;
+            Player.hacking_exp_mult   *= 1.1;
             Player.hacking_mult       *= 1.08;
             break;
         case AugmentationNames.SynapticEnhancement:    //Low Level
@@ -1560,7 +1560,7 @@ applyAugmentation = function(aug, reapply=false) {
             Player.hacking_exp_mult   *= 1.25;
             break;
         case AugmentationNames.DataJack:                        //Med low level
-            Player.hacking_money_mult *= 1.3;
+            Player.hacking_money_mult *= 1.25;
             break;
         case AugmentationNames.ENM:       //Medium level
             Player.hacking_mult           *= 1.08;
@@ -1576,14 +1576,14 @@ applyAugmentation = function(aug, reapply=false) {
             Player.hacking_speed_mult     *= 1.05;
             Player.hacking_money_mult     *= 1.3;
             Player.hacking_chance_mult    *= 1.05;
-            Player.hacking_exp_mult       *= 1.2;
+            Player.hacking_exp_mult       *= 1.15;
             Player.hacking_mult           *= 1.08;
             break;
         case AugmentationNames.ENMCoreV3:   //High level
             Player.hacking_speed_mult     *= 1.05;
             Player.hacking_money_mult     *= 1.4;
             Player.hacking_chance_mult    *= 1.1;
-            Player.hacking_exp_mult       *= 1.35;
+            Player.hacking_exp_mult       *= 1.25;
             Player.hacking_mult           *= 1.1;
             break;
         case AugmentationNames.ENMAnalyzeEngine:    //High level
@@ -1596,7 +1596,7 @@ applyAugmentation = function(aug, reapply=false) {
         case AugmentationNames.Neuralstimulator:    //Medium Level
             Player.hacking_speed_mult     *= 1.02;
             Player.hacking_chance_mult    *= 1.1;
-            Player.hacking_exp_mult       *= 1.2;
+            Player.hacking_exp_mult       *= 1.12;
             break;
         case AugmentationNames.NeuralAccelerator:
             Player.hacking_mult         *= 1.1;
@@ -1629,7 +1629,7 @@ applyAugmentation = function(aug, reapply=false) {
             break;
         case AugmentationNames.NeuronalDensification:
             Player.hacking_mult         *= 1.15;
-            Player.hacking_exp_mult     *= 1.2;
+            Player.hacking_exp_mult     *= 1.1;
             Player.hacking_speed_mult   *= 1.03;
             break;
 

@@ -789,7 +789,7 @@ var Terminal = {
                 for (var i = 0; i < currServ.scripts.length; ++i) {
                     if (scriptName == currServ.scripts[i].filename) {
                         var scriptBaseRamUsage = currServ.scripts[i].ramUsage;
-                        var ramUsage = scriptBaseRamUsage * numThreads * Math.pow(1.02, numThreads-1);
+                        var ramUsage = scriptBaseRamUsage * numThreads * Math.pow(1.01, numThreads-1);
                         
                         post("This script requires " + formatNumber(ramUsage, 2) + "GB of RAM to run for " + numThreads + " thread(s)");
                         return;
@@ -1303,7 +1303,7 @@ var Terminal = {
 			if (server.scripts[i].filename == scriptName) {
 				//Check for admin rights and that there is enough RAM availble to run
                 var script = server.scripts[i];
-				var ramUsage = script.ramUsage * numThreads * Math.pow(1.02, numThreads-1);
+				var ramUsage = script.ramUsage * numThreads * Math.pow(1.01, numThreads-1);
 				var ramAvailable = server.maxRam - server.ramUsed;
 				
 				if (server.hasAdminRights == false) {

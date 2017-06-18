@@ -971,7 +971,7 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
                     //Check for admin rights and that there is enough RAM availble to run
                     var script = server.scripts[i];
                     var ramUsage = script.ramUsage;
-                    ramUsage = ramUsage * threads * Math.pow(1.02, threads-1);
+                    ramUsage = ramUsage * threads * Math.pow(1.01, threads-1);
                     var ramAvailable = server.maxRam - server.ramUsed;
                     
                     if (server.hasAdminRights == false) {
