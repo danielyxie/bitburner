@@ -19,7 +19,8 @@ BitburnerSaveObject.prototype.saveGame = function() {
     this.PlayerSave                 = JSON.stringify(Player);
     
     //Delete all logs from all running scripts 
-    TempAllServers = jQuery.extend(true, {}, AllServers);   //Deep copy
+    var TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
+    //var TempAllServers = jQuery.extend(true, {}, AllServers);   //Deep copy
     for (var ip in TempAllServers) {
         var server = TempAllServers[ip];
         if (server == null) {continue;}

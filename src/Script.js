@@ -424,16 +424,14 @@ RunningScript.fromJSON = function(value) {
 
 //Creates an object that creates a map/dictionary with the IP of each existing server as
 //a key. Initializes every key with a specified value that can either by a number or an array
-function AllServersMap(init = 0) {
-    if (init.constructor === Array || init instanceof Array) {
-        this.initValue = init.splice(); //Make a copy
-    } else {
-        this.initValue = 0;
-    }
-    
+function AllServersMap(arr=false) {
     for (var ip in AllServers) {
         if (AllServers.hasOwnProperty(ip)) {
-            this[ip] = this.initValue;
+            if (arr) {
+                this[ip] = [0, 0, 0, 0];
+            } else {
+                this[ip] = 0;
+            }
         }
     }
 }

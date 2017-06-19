@@ -200,5 +200,7 @@ function prestigeAugmentation() {
     //Messages
     initMessages();
     
+    Player.playtimeSinceLastAug = 0;
+    
     Engine.loadTerminalContent();
 }

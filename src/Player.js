@@ -259,7 +259,7 @@ PlayerObject.prototype.calculateExpGain = function() {
     if (s.baseDifficulty == null) {
         s.baseDifficulty = s.hackDifficulty;
     }
-    return (s.baseDifficulty * this.hacking_exp_mult * 0.5 + 1);
+    return (s.baseDifficulty * this.hacking_exp_mult * 0.5 + 3);
 }
 
 //Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for

@@ -239,6 +239,7 @@ background-color: #555;
     background-color: #555;
     width: auto;
     display: none;
+    margin-bottom: 6px;
 }
 
 .active-scripts-script-panel p,
@@ -251,6 +252,26 @@ background-color: #555;
     margin-left: 5%;
 }
 
+.active-scripts-button {
+    color: #aaa;
+    font-size: 16px;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+    margin: 4px;
+    padding: 4px;
+}
+
+.active-scripts-button:hover,
+.active-scripts-button:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 /* Hacknet Nodes */
 #hacknet-nodes-container {

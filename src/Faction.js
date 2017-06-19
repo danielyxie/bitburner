@@ -175,10 +175,6 @@ initFactions = function() {
 //those requirements and will return an array of all factions that the Player should
 //receive an invitation to
 PlayerObject.prototype.checkForFactionInvitations = function() {
-    if (Engine.Debug) {
-        console.log("checkForFactionInvitations() called");
-        console.log("karma: " + this.karma);
-    }
     invitedFactions = []; //Array which will hold all Factions th eplayer should be invited to
     
     var company = Companies[this.companyName];
@@ -190,39 +186,35 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Illuminati
     var illuminatiFac = Factions["Illuminati"];
     if (!illuminatiFac.isBanned && !illuminatiFac.isMember && !illuminatiFac.alreadyInvited && 
-        this.numAugmentations >= 10 && 
-        this.money >= 10000000000 && this.total_money >= 20000000000 &&
-        this.hacking_skill >= 800 && this.total_hacking >= 7000 &&
-        this.strength >= 900 && this.total_strength >= 10000 && 
-        this.defense >= 900 && this.total_defense >= 10000 &&
-        this.dexterity >= 900 && this.total_dexterity >= 10000 && 
-        this.agility >= 900 && this.total_agility >= 10000) {
+        this.numAugmentations >= 30 && 
+        this.money >= 150000000000 &&
+        this.hacking_skill >= 1200 &&
+        this.strength >= 1000 && this.defense >= 1000 && 
+        this.dexterity >= 1000 && this.agility >= 1000) {
         invitedFactions.push(illuminatiFac);
     }
         
     //Daedalus
     var daedalusFac = Factions["Daedalus"];
     if (!daedalusFac.isBanned && !daedalusFac.isMember && !daedalusFac.alreadyInvited && 
-        this.numAugmentations >= 15 && 
-        this.money >= 1000000000 && this.total_money >= 10000000000 &&
-        this.hacking_skill >= 1000 && this.total_hacking >= 10000 &&
-        this.strength >= 500 && this.total_strength >= 8000 && 
-        this.defense >= 500 && this.total_defense >= 8000 &&
-        this.dexterity >= 500 && this.total_dexterity >= 8000 && 
-        this.agility >= 500 && this.total_agility >= 8000) {
+        this.numAugmentations >= 30 && 
+        this.money >= 100000000000 &&
+        (this.hacking_skill >= 2500 ||
+            (this.strength >= 1500 && this.defense >= 1500 && 
+             this.dexterity >= 1500 && this.agility >= 1500))) {
         invitedFactions.push(daedalusFac);
     }
     
     //The Covenant
     var covenantFac = Factions["The Covenant"];
     if (!covenantFac.isBanned && !covenantFac.isMember && !covenantFac.alreadyInvited &&
-        this.numAugmentations >= 12 &&
-        this.money >= 5000000000 && this.total_money >= 10000000000 &&
-        this.hacking_skill >= 850 && this.total_hacking >= 5000 && 
-        this.strength >= 850 && this.total_strength >= 5000 &&
-        this.defense >= 850 && this.total_defense >= 5000 &&
-        this.dexterity >= 850 && this.total_dexterity >= 5000 &&
-        this.agility >= 850 && this.total_agility >= 5000) {
+        this.numAugmentations >= 30 &&
+        this.money >= 75000000000 &&
+        this.hacking_skill >= 850 &&
+        this.strength >= 850 &&
+        this.defense >= 850 &&
+        this.dexterity >= 850 &&
+        this.agility >= 850) {
         invitedFactions.push(covenantFac);
     }
     

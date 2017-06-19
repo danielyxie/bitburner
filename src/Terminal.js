@@ -648,7 +648,7 @@ var Terminal = {
                         post("Error: No such script exists");
                         return;
                     }
-                    logBoxCreate(runningScript);
+                    runningScript.displayLog();
                 }
                 break;
 			case "clear":

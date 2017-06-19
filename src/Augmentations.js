@@ -209,7 +209,7 @@ initAugmentations = function() {
     SyntheticHeart.setRequirements(300000, 575000000);
     SyntheticHeart.setInfo("This advanced artificial heart, created from plasteel and graphene, is capable of pumping more blood " + 
                            "at much higher efficiencies than a normal human heart.<br><br> This augmentation increases the player's agility " +
-                           "and strength by 80%");
+                           "and strength by 50%");
     SyntheticHeart.addToFactions(["KuaiGong International", "Fulcrum Secret Technologies", "Speakers for the Dead",
                                  "NWO", "The Covenant", "Daedalus", "Illuminati"]);
     if (augmentationExists(AugmentationNames.SyntheticHeart)) {
@@ -223,7 +223,7 @@ initAugmentations = function() {
     SynfibrilMuscle.setInfo("The myofibrils in human muscles are injected with special chemicals that react with the proteins inside " + 
                             "the myofibrils, altering their underlying structure. The end result is muscles that are stronger and more elastic. " + 
                             "Scientists have named these artificially enhanced units 'synfibrils'.<br><br> This augmentation increases the player's " +
-                            "strength and defense by 50%.");
+                            "strength and defense by 35%.");
     SynfibrilMuscle.addToFactions(["KuaiGong International", "Fulcrum Secret Technologies", "Speakers for the Dead",
                                   "NWO", "The Covenant", "Daedalus", "Illuminati", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.SynfibrilMuscle)) {
@@ -315,7 +315,7 @@ initAugmentations = function() {
     GrapheneBoneLacings.setRequirements(450000, 850000000);
     GrapheneBoneLacings.setInfo("A graphene-based material is grafted and fused into the user's bones, significantly increasing " +
                                 "their density and tensile strength.<br><br>" + 
-                                "This augmentation increases the player's strength and defense by 85%.");
+                                "This augmentation increases the player's strength and defense by 75%.");
     GrapheneBoneLacings.addToFactions(["Fulcrum Secret Technologies", "The Covenant"]);
     if (augmentationExists(AugmentationNames.GrapheneBoneLacings)) {
         GrapheneBoneLacings.owned = Augmentations[AugmentationNames.GrapheneBoneLacings].owned;
@@ -1167,7 +1167,7 @@ initAugmentations = function() {
                    "and integumentary system. The drug permanently modifies the DNA of the " + 
                    "body's skin and bone cells, granting them the ability to repair " +
                    "and restructure themselves. <br><br>" + 
-                   "This augmentation increases the player's strength and defense by 65%");
+                   "This augmentation increases the player's strength and defense by 55%");
     Neotra.setRequirements(225000, 550000000);
     Neotra.addToFactions(["Blade Industries"]);
     if (augmentationExists(AugmentationNames.Neotra)) {
@@ -1468,12 +1468,12 @@ applyAugmentation = function(aug, reapply=false) {
             Player.dexterity_mult *= 1.40;
             break;
         case AugmentationNames.SyntheticHeart:         //High level
-            Player.agility_mult *= 1.8;
-            Player.strength_mult *= 1.8;
+            Player.agility_mult *= 1.5;
+            Player.strength_mult *= 1.5;
             break;
         case AugmentationNames.SynfibrilMuscle:        //Medium-high level
-            Player.strength_mult    *= 1.5;
-            Player.defense_mult     *= 1.5;
+            Player.strength_mult    *= 1.35;
+            Player.defense_mult     *= 1.35;
             break;
         case AugmentationNames.CombatRib1:
             Player.strength_mult    *= 1.1;
@@ -1499,8 +1499,8 @@ applyAugmentation = function(aug, reapply=false) {
             Player.dexterity_mult   *= 1.05;
             break;
         case AugmentationNames.GrapheneBoneLacings:   //High level
-            Player.strength_mult    *= 1.85;
-            Player.defense_mult     *= 1.85;
+            Player.strength_mult    *= 1.75;
+            Player.defense_mult     *= 1.75;
             break;
         case AugmentationNames.BionicSpine:            //Med level
             Player.strength_mult    *= 1.18;
@@ -1824,8 +1824,8 @@ applyAugmentation = function(aug, reapply=false) {
             Player.faction_rep_mult     *= 1.25;
             break;
         case AugmentationNames.Neotra:
-            Player.strength_mult        *= 1.65;
-            Player.defense_mult         *= 1.65;
+            Player.strength_mult        *= 1.55;
+            Player.defense_mult         *= 1.55;
             break;
         case AugmentationNames.Xanipher:
             Player.hacking_mult         *= 1.2;
