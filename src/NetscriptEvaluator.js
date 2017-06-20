@@ -1048,7 +1048,7 @@ function scriptCalculateExpGain(server) {
     if (server.baseDifficulty == null) {
         server.baseDifficulty = server.hackDifficulty;
     }
-	return (server.baseDifficulty * Player.hacking_exp_mult * 0.5 + 1);
+	return (server.baseDifficulty * Player.hacking_exp_mult * 0.5 + 2);
 }
 
 //The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument

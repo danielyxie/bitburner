@@ -706,6 +706,7 @@ var Engine = {
             initFactions();
             CompanyPositions.init();
             initAugmentations();
+            initMessages();
             
             //Start interactive tutorial
             iTutorialStart();            
