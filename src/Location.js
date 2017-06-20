@@ -111,6 +111,10 @@ displayLocationContent = function() {
         
 	var jobTitle 			    = document.getElementById("location-job-title");
 	var jobReputation 		    = document.getElementById("location-job-reputation");
+    var companyFavor            = document.getElementById("location-company-favor");
+    var locationTxtDiv1         = document.getElementById("location-text-divider-1");
+    var locationTxtDiv2         = document.getElementById("location-text-divider-2");
+    var locationTxtDiv3         = document.getElementById("location-text-divider-3");
     
     var gymTrainStr             = document.getElementById("location-gym-train-str");
     var gymTrainDef             = document.getElementById("location-gym-train-def");
@@ -259,9 +263,21 @@ displayLocationContent = function() {
         var company = Companies[loc];
         
         jobTitle.style.display = "block";
-        jobReputation.style.display = "block";
+        jobReputation.style.display = "inline";
+        companyFavor.style.display = "inline";
+        locationTxtDiv1.style.display = "block";
+        locationTxtDiv2.style.display = "block";
+        locationTxtDiv3.style.display = "block";
         jobTitle.innerHTML = "Job Title: " + Player.companyPosition.positionName;
-        jobReputation.innerHTML = "Company reputation: " + (company.playerReputation.toFixed(4)).toLocaleString();
+        jobReputation.innerHTML = "Company reputation: " + formatNumber(company.playerReputation, 4) + 
+                                  "<span class='tooltiptext'>You will earn " + 
+                                  formatNumber(company.playerReputation / CONSTANTS.CompanyReputationToFavor, 4) +
+                                  " faction favor upon resetting after installing an Augmentation</span>";
+        companyFavor.innerHTML = "Company Favor: " + formatNumber(company.favor, 4) + 
+                                 "<span class='tooltiptext'>Company favor increases the rate at which " + 
+                                 "you earn reputation for this company by 1% per favor. Company favor " + 
+                                 "is gained whenever you reset after installing an Augmentation. The amount of " +
+                                 "favor you gain depends on how much reputation you have with the company</span>";
         work.style.display = "block";
         
         var currPos = Player.companyPosition;
@@ -298,6 +314,10 @@ displayLocationContent = function() {
     } else {
 		jobTitle.style.display = "none";
 		jobReputation.style.display = "none";
+        companyFavor.style.display = "none";
+        locationTxtDiv1.style.display = "none";
+        locationTxtDiv2.style.display = "none";
+        locationTxtDiv3.style.display = "none";
 	}
     
     switch (loc) {

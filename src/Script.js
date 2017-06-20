@@ -278,6 +278,7 @@ scriptCalculateOfflineProduction = function(runningScriptObj) {
             runningScriptObj.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
             serv.moneyAvailable -= production;
             if (serv.moneyAvailable < 0) {serv.moneyAvailable = 0;}
+            if (isNaN(serv.moneyAvailable)) {serv.moneyAvailable = 0;}
         }
     }
 

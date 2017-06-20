@@ -142,7 +142,8 @@ function addWorkerScript(runningScriptObj, server) {
     } else {
         runningScriptObj.threads = 1;
     }
-    var ramUsage = runningScriptObj.scriptRef.ramUsage * threads * Math.pow(1.01, threads-1);
+    var ramUsage = runningScriptObj.scriptRef.ramUsage * threads 
+                   * Math.pow(CONSTANTS.MultithreadingRAMCost, threads-1);
 	server.ramUsed += ramUsage;
 	
 	//Create the WorkerScript

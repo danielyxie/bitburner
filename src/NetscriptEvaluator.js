@@ -498,6 +498,22 @@ function evaluate(exp, workerScript) {
                     }, function(e) {
                         reject(e);
                     });
+                } else if (exp.func.value == "getServerBaseSecurityLevel") {
+                    if (exp.args.length != 1) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "getServerBaseSecurityLevel() call has incorrect number of arguments. Takes 1 arguments"));
+                    }
+                    var ipPromise = evaluate(exp.args[0], workerScript);
+                    ipPromise.then(function(ip) {
+                        var server = getServer(ip);
+                        if (server == null) {
+                            workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerBaseSecurityLevel() command"));;
+                        }
+                        workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + formatNumber(server.baseDifficulty, 3) + " for " + server.hostname);
+                        resolve(server.baseDifficulty);
+                    }, function(e) {
+                        reject(e);
+                    });
                 } else if (exp.func.value == "getServerRequiredHackingLevel") {
                     if (exp.args.length != 1) {
                         return reject(makeRuntimeRejectMsg(workerScript, "getServerRequiredHackingLevel() call has incorrect number of arguments. Takes 1 argument"));
@@ -971,7 +987,7 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
                     //Check for admin rights and that there is enough RAM availble to run
                     var script = server.scripts[i];
                     var ramUsage = script.ramUsage;
-                    ramUsage = ramUsage * threads * Math.pow(1.01, threads-1);
+                    ramUsage = ramUsage * threads * Math.pow(CONSTANTS.MultithreadingRAMCost, threads-1);
                     var ramAvailable = server.maxRam - server.ramUsed;
                     
                     if (server.hasAdminRights == false) {
@@ -1032,7 +1048,7 @@ function scriptCalculateExpGain(server) {
     if (server.baseDifficulty == null) {
         server.baseDifficulty = server.hackDifficulty;
     }
-	return (server.baseDifficulty * Player.hacking_exp_mult * 0.5 + 3);
+	return (server.baseDifficulty * Player.hacking_exp_mult * 0.5 + 1);
 }
 
 //The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument

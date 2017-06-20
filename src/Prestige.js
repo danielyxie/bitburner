@@ -166,21 +166,19 @@ function prestigeAugmentation() {
     Player.hacknetNodes.length = 0;
     Player.totalHacknetNodeProduction = 0;
     
-    //Delete Companies
+    //Gain favor for Companies
     for (var member in Companies) {
         if (Companies.hasOwnProperty(member)) {
-            delete Companies[member];
+            Companies[member].gainFavor();
         }
     }
-    Companies = {};
     
-    //Reset Factions
+    //Gain favor for factions
     for (var member in Factions) {
         if (Factions.hasOwnProperty(member)) {
-            delete Factions[member];
+            Factions[member].gainFavor();
         }
     }
-    Factions = {};
     
     //Stop a Terminal action if there is onerror
     if (Engine._actionInProgress) {

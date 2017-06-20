@@ -417,6 +417,10 @@ background-color: #555;
     margin: 6px;
 }
 
+#faction-favor, #faction-reputation {
+    display: inline;
+}
+
 #faction-hack-div,
 #faction-fieldwork-div,
 #faction-securitywork-div,
@@ -473,6 +477,7 @@ div.faction-clear {
     margin-left: 10%;
     width: 99%;
     color: var(--my-font-color);
+    overflow-y: auto;
 }
 
 #faction-augmentations-container p,
@@ -564,5 +569,9 @@ div.faction-clear {
 
 #location-container * {
 	margin: 10px 5px 10px 5px;
+}
+
+#location-job-reputation, #location-company-favor {
+    display: inline;
 }
 
