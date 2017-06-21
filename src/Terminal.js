@@ -585,7 +585,6 @@ var Terminal = {
                 } else {
                     post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); return;
                 }
-                
                 break;
 			case "analyze":
 				if (commandArray.length != 1) {
@@ -1041,6 +1040,21 @@ var Terminal = {
 				//TODO List each's script RAM usage
                 post("Not yet implemented");
 				break;
+            case "unalias":
+                if (commandArray.length != 2) {
+                    post('Incorrect usage of unalias name. Usage: unalias "[alias]"');
+                    return;
+                } else if (!(commandArray[1].startsWith('"') && commandArray[1].endsWith('"'))) {
+                    post('Incorrect usage of unalias name. Usage: unalias "[alias]"');
+                } else {
+                    var alias = commandArray[1].slice(1, -1);
+                    if (removeAlias(alias)) {
+                        post("Removed alias " + alias);
+                    } else {
+                        post("No such alias exists");
+                    }
+                }
+                break;
 			default:
 				post("Command not found");
 		}

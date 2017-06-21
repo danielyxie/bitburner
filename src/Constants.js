@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.21.0",
+    Version:                "0.22.0",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -183,7 +183,8 @@ CONSTANTS = {
                 "sudov                          Shows whether or not you have root access on this computer<br>" + 
                 "tail [script] [args...]        Display dynamic logs for the script with the specified name and arguments<br>" +
                 "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" + 
-                "top                            Display all running scripts and their RAM usage<br>",
+                "top                            Display all running scripts and their RAM usage<br>" + 
+                'unalias "[alias name]"         Deletes the specified alias. Double quotation marks are required<br>',
                 
     /* Tutorial related things */
 	TutorialGettingStartedText: "Todo...",
@@ -673,7 +674,8 @@ CONSTANTS = {
     "-New favor system for companies and factions. Earning reputation at a company/faction will give you favor for that entity when you " + 
     "reset after installing an Augmentation. This favor persists through the rest of the game. The more favor you have, the faster you will earn " + 
     "reputation with that faction<br>" + 
-    "-You can no longer donate to a faction for reputation until you have 150 favor with that faction<br><br>" + 
+    "-You can no longer donate to a faction for reputation until you have 150 favor with that faction<br>" + 
+    "-Added unalias Terminal command<br><br>" + 
     "v0.21.1<br>" + 
     "-IF YOUR GAME BREAKS, DO THE FOLLOWING: Options -> Soft Reset -> Save Game -> Reload Page. Sorry about that! <br>" + 
     "-Autocompletion for aliases - courtesy of Github user LTCNugget<br><br>" + 
@@ -826,28 +828,25 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
-    "v0.21.0<br>" + 
-    "-All scripts automatically killed for the sake of update compatibility<br>" + 
-    "-IF YOUR GAME BREAKS, DO THE FOLLOWING: Options -> Soft Reset -> Save Game -> Reload Page. Sorry about that! <br>" + 
-    "-Autocompletion for aliases - courtesy of Github user LTCNugget<br><br>" + 
-    "-Added dynamic arrays. See Netscript documentation<br>" + 
-    "-Added ability to pass arguments into scripts. See documentation<br>" + 
-    "-The implementation/function signature of functions that deal with scripts have changed. Therefore, some old scripts might not " + 
-    "work anymore. Some of these functions include run(), exec(), isRunning(), kill(), and some others I may have forgot about. " + 
-    "Please check the updated Netscript documentation if you run into issues." + 
-    "-Note that scripts are now uniquely identified by the script name and their arguments. For example, you can run " + 
-    "a script using <br>run foodnstuff.script 1<br> and you can also run the same script with a different argument " + 
-    "<br>run foodnstuff.script 2<br>These will be considered two different scripts. To kill the first script you must " + 
-    "run <br>kill foodnstuff.script 1<br> and to kill the second you must run <br>kill foodnstuff.script 2<br> Similar concepts " + 
-    "apply for Terminal Commands such as tail, and Netscript commands such as run(), exec(), kill(), isRunning(), etc.<br>" + 
-    "-Added basic theme functionality using the 'theme' Terminal command - All credit goes to /u/0x726564646974 who implemented the awesome feature<br>" + 
-    "-Optimized Script objects, which were causing save errors when the player had too many scripts<br>" + 
-    "-Formula for determining exp gained from hacking was changed<br>" + 
-    "-Fixed bug where you could purchase Darkweb items without TOR router<br>" + 
-    "-Slightly increased cost multiplier for Home Computer RAM<br>" +
-    "-Fixed bug where you could hack too much money from a server (and bring its money available below zero)<br>" + 
-    "-Changed tail command so that it brings up a display box with dynamic log contents. To get " + 
-    "old functionality where the logs are printed to the Terminal, use the new 'check' command<br>" + 
-    "-As a result of the change above, you can no longer call tail/check on scripts that are not running<br>" + 
-    "-Added autocompletion for buying Programs in Darkweb<br>",
+    "v0.22.0 - Major rebalancing, optimization, and favor system<br>" + 
+    "-Significantly nerfed most augmentations<br>" + 
+    "-Almost every server with a required hacking level of 200 or more now has slightly randomized server parameters. This means that after every Augmentation " + 
+    "purchase, the required hacking level, base security level, and growth factor of these servers will all be slightly different<br>" + 
+    "-The hacking speed multiplier now increases rather than decreases. The hacking time is now divided by your hacking speed " + 
+    "multiplier rather than multiplied. In other words, a higher hacking speed multiplier is better<br>" + 
+    "-Servers now have a minimum server security, which is approximately one third of their starting ('base') server security<br>" + 
+    "-If you do not steal any money from a server, then you gain hacking experience equal to the amount you would have gained " + 
+    "had you failed the hack<br>" + 
+    "-The effects of grow() were increased by 50%<br>" + 
+    "-grow() and weaken() now give hacking experience based on the server's base security level, rather than a flat exp amount<br>" + 
+    "-Slightly reduced amount of exp gained from hack(), weaken(), and grow()<br>" +
+    "-Rebalanced formulas that determine crime success<br>" + 
+    "-Reduced RAM cost for multithreading a script. The RAM multiplier for each thread was reduced from 1.02 to 1.005<br>" + 
+    "-Optimized Script objects so they take less space in the save file<br>" + 
+    "-Added getServerBaseSecurityLevel() Netscript function<br>" + 
+    "-New favor system for companies and factions. Earning reputation at a company/faction will give you favor for that entity when you " + 
+    "reset after installing an Augmentation. This favor persists through the rest of the game. The more favor you have, the faster you will earn " + 
+    "reputation with that faction<br>" + 
+    "-You can no longer donate to a faction for reputation until you have 150 favor with that faction<br>" + 
+    "-Added unalias Terminal command<br><br>",
 }

@@ -46,7 +46,7 @@ Company.prototype.hasPosition = function(pos) {
 
 Company.prototype.gainFavor = function() {
     if (this.favor == null || this.favor == undefined) {this.favor = 0;}
-    this.favor += (this.playerReputation / CONSTANTS.CompanyReputationToFavor);
+    this.favor += Math.max(0, (this.playerReputation-1) / CONSTANTS.CompanyReputationToFavor);
 }
 
 Company.prototype.toJSON = function() {

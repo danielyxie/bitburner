@@ -357,7 +357,6 @@ var Engine = {
                 aElem.setAttribute("class", "a-link-button");
                 aElem.innerHTML = factionName;
                 aElem.addEventListener("click", function() {
-                    console.log("factionName:" + factionName)
                     Engine.loadFactionContent();
                     displayFactionContent(factionName);
                     return false;

@@ -83,7 +83,7 @@ loadGame = function(saveObj) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
             if (ver != CONSTANTS.Version) {
-                if (CONSTANTS.Version == "0.21.0") {
+                if (CONSTANTS.Version == "0.21.0" || CONSTANTS.Version == "0.22.0") {
                     dialogBoxCreate("All scripts automatically killed for the sake of compatibility " +
                                     "with new version. If the game is still broken, try the following: " + 
                                     "Options -> Soft Reset -> Save Game -> Reload page. If that STILL " + 
