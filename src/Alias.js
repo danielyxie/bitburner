@@ -30,6 +30,14 @@ function getAlias(name) {
     return null;
 }
 
+function removeAlias(name) {
+    if (Aliases.hasOwnProperty(name)) {
+        delete Aliases[name];
+        return true;
+    }
+    return false;
+}
+
 //Returns the original string with any aliases substituted in
 //Aliases only applied to "whole words", one level deep
 function substituteAliases(origCommand) {

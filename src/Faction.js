@@ -30,6 +30,9 @@ function Faction(name) {
     //Multipliers for unlocking and purchasing augmentations
     this.augmentationPriceMult = 1;
     this.augmentationRepRequirementMult = 1;
+    
+    //Faction favor
+    this.favor              = 0;
 };
 
 Faction.prototype.setAugmentationMultipliers = function(price, rep) {
@@ -39,6 +42,12 @@ Faction.prototype.setAugmentationMultipliers = function(price, rep) {
 
 Faction.prototype.setInfo = function(inf) {
 	this.info = inf;
+}
+
+Faction.prototype.gainFavor = function() {
+    if (this.favor == null || this.favor == undefined) {this.favor = 0;}
+    var gain = (this.playerReputation / CONSTANTS.FactionReputationToFavor);
+    this.favor += gain;
 }
 
 Faction.prototype.toJSON = function() {
@@ -59,115 +68,267 @@ AddToFactions = function(faction) {
 	Factions[name] = faction;
 }
 
+function factionExists(name) {
+    return Factions.hasOwnProperty(name);
+}
+
 //TODO Augmentation price and rep requirement mult are 1 for everything right now,
 //      This might change in the future for balance
 initFactions = function() {
 	//Endgame
 	var Illuminati 				= new Faction("Illuminati");
     Illuminati.setInfo(FactionInfo.IlluminatiInfo);
+    if (factionExists("Illuminati")) {
+        Illuminati.favor = Factions["Illuminati"].favor;
+        delete Factions["Illuminati"];
+    }
 	AddToFactions(Illuminati);
+    
 	var Daedalus 				= new Faction("Daedalus");
     Daedalus.setInfo(FactionInfo.DaedalusInfo);
+    if (factionExists("Daedalus")) {
+        Daedalus.favor = Factions["Daedalus"].favor;
+        delete Factions["Daedalus"];
+    }
 	AddToFactions(Daedalus);
+    
 	var Covenant 				= new Faction("The Covenant");
     Covenant.setInfo(FactionInfo.CovenantInfo);
+    if (factionExists("The Covenant")) {
+        Covenant.favor = Factions["The Covenant"].favor;
+        delete Factions["The Covenant"];
+    }
 	AddToFactions(Covenant);
 	
 	//Megacorporations, each forms its own faction
 	var ECorp 					= new Faction("ECorp");
     ECorp.setInfo(FactionInfo.ECorpInfo);
+    if (factionExists("ECorp")) {
+        ECorp.favor = Factions["ECorp"].favor;
+        delete Factions["ECorp"];
+    }
 	AddToFactions(ECorp);
+    
 	var MegaCorp 				= new Faction("MegaCorp");
     MegaCorp.setInfo(FactionInfo.MegaCorpInfo);
+    if (factionExists("MegaCorp")) {
+        MegaCorp.favor = Factions["MegaCorp"].favor;
+        delete Factions["MegaCorp"];
+    }
 	AddToFactions(MegaCorp);
+    
 	var BachmanAndAssociates 	= new Faction("Bachman & Associates");
     BachmanAndAssociates.setInfo(FactionInfo.BachmanAndAssociatesInfo);
+    if (factionExists("Bachman & Associates")) {
+        BachmanAndAssociates.favor = Factions["Bachman & Associates"].favor;
+        delete Factions["Bachman & Associates"];
+    }
 	AddToFactions(BachmanAndAssociates);
+    
 	var BladeIndustries 		= new Faction("Blade Industries");
     BladeIndustries.setInfo(FactionInfo.BladeIndustriesInfo);
+    if (factionExists("Blade Industries")) {
+        BladeIndustries.favor = Factions["Blade Industries"].favor;
+        delete Factions["Blade Industries"];
+    }
 	AddToFactions(BladeIndustries);
+    
 	var NWO 					= new Faction("NWO");
     NWO.setInfo(FactionInfo.NWOInfo);
+    if (factionExists("NWO")) {
+        NWO.favor = Factions["NWO"].favor;
+        delete Factions["NWO"];
+    }
 	AddToFactions(NWO);
+    
 	var ClarkeIncorporated 		= new Faction("Clarke Incorporated");
     ClarkeIncorporated.setInfo(FactionInfo.ClarkeIncorporatedInfo);
+    if (factionExists("Clarke Incorporated")) {
+        ClarkeIncorporated.favor = Factions["Clarke Incorporated"].favor;
+        delete Factions["Clarke Incorporated"];
+    }
 	AddToFactions(ClarkeIncorporated);
+    
 	var OmniTekIncorporated 	= new Faction("OmniTek Incorporated");
     OmniTekIncorporated.setInfo(FactionInfo.OmniTekIncorporatedInfo);
+    if (factionExists("OmniTek Incorporated")) {
+        OmniTekIncorporated.favor = Factions["OmniTek Incorporated"].favor;
+        delete Factions["OmniTek Incorporated"];
+    }
 	AddToFactions(OmniTekIncorporated);
+    
 	var FourSigma 				= new Faction("Four Sigma");
     FourSigma.setInfo(FactionInfo.FourSigmaInfo);
+    if (factionExists("Four Sigma")) {
+        FourSigma.favor = Factions["Four Sigma"].favor;
+        delete Factions["Four Sigma"];
+    }
 	AddToFactions(FourSigma);
+    
 	var KuaiGongInternational 	= new Faction("KuaiGong International");
     KuaiGongInternational.setInfo(FactionInfo.KuaiGongInternationalInfo);
+    if (factionExists("KuaiGong International")) {
+        KuaiGongInternational.favor = Factions["KuaiGong International"].favor;
+        delete Factions["KuaiGong International"];
+    }
 	AddToFactions(KuaiGongInternational);
     
     //Other corporations
     var FulcrumTechnologies     = new Faction("Fulcrum Secret Technologies");
     FulcrumTechnologies.setInfo(FactionInfo.FulcrumSecretTechnologiesInfo);
+    if (factionExists("Fulcrum Secret Technologies")) {
+        FulcrumTechnologies.favor = Factions["Fulcrum Secret Technologies"].favor;
+        delete Factions["Fulcrum Secret Technologies"];
+    }
     AddToFactions(FulcrumTechnologies);
 	
 	//Hacker groups
 	var BitRunners 				= new Faction("BitRunners");
     BitRunners.setInfo(FactionInfo.BitRunnersInfo);
+    if (factionExists("BitRunners")) {
+        BitRunners.favor = Factions["BitRunners"].favor;
+        delete Factions["BitRunners"];
+    }
 	AddToFactions(BitRunners);
+    
 	var BlackHand				= new Faction("The Black Hand");
     BlackHand.setInfo(FactionInfo.BlackHandInfo);
+    if (factionExists("The Black Hand")) {
+        BlackHand.favor = Factions["The Black Hand"].favor;
+        delete Factions["The Black Hand"];
+    }
 	AddToFactions(BlackHand);
+    
 	var NiteSec 				= new Faction("NiteSec");
     NiteSec.setInfo(FactionInfo.NiteSecInfo);
+    if (factionExists("NiteSec")) {
+        NiteSec.favor = Factions["NiteSec"].favor;
+        delete Factions["NiteSec"];
+    }
 	AddToFactions(NiteSec);
 	
 	//City factions, essentially governments
 	var Chongqing 				= new Faction("Chongqing");
     Chongqing.setInfo(FactionInfo.ChongqingInfo);
+    if (factionExists("Chongqing")) {
+        Chongqing.favor = Factions["Chongqing"].favor;
+        delete Factions["Chongqing"];
+    }
 	AddToFactions(Chongqing);
+    
 	var Sector12 				= new Faction("Sector-12");
     Sector12.setInfo(FactionInfo.Sector12Info);
+    if (factionExists("Sector-12")) {
+        Sector12.favor = Factions["Sector-12"].favor;
+        delete Factions["Sector-12"];
+    }
 	AddToFactions(Sector12);
+    
 	var NewTokyo				= new Faction("New Tokyo");
     NewTokyo.setInfo(FactionInfo.NewTokyoInfo);
+    if (factionExists("New Tokyo")) {
+        NewTokyo.favor = Factions["New Tokyo"].favor;
+        delete Factions["New Tokyo"];
+    }
 	AddToFactions(NewTokyo);
+    
 	var Aevum 				    = new Faction("Aevum");
     Aevum.setInfo(FactionInfo.AevumInfo);
+    if (factionExists("Aevum")) {
+        Aevum.favor = Factions["Aevum"].favor;
+        delete Factions["Aevum"];
+    }
 	AddToFactions(Aevum);
+    
     var Ishima                 	= new Faction("Ishima");
-    Ishima.setInfo(FactionInfo.IshimaInfo);
-	AddToFactions(Ishima);
+    Ishima.setInfo
 	var Volhaven 				= new Faction("Volhaven");
     Volhaven.setInfo(FactionInfo.VolhavenInfo);
-	AddToFactions(Volhaven);
+    if (factionExists("Volhaven")) {
+        Volhaven.favor = Factions["Volhaven"].favor;
+        delete Factions["Volhaven"];
+    }
+	AddToFactions(Volhaven);(FactionInfo.IshimaInfo);
+    if (factionExists("Ishima")) {
+        Ishima.favor = Factions["Ishima"].favor;
+        delete Factions["Ishima"];
+    }
+	AddToFactions(Ishima);
+    
 	
 	//Criminal Organizations/Gangs
 	var SpeakersForTheDead		= new Faction("Speakers for the Dead"); 
     SpeakersForTheDead.setInfo(FactionInfo.SpeakersForTheDeadInfo);
+    if (factionExists("Speakers for the Dead")) {
+        SpeakersForTheDead.favor = Factions["Speakers for the Dead"].favor;
+        delete Factions["Speakers for the Dead"];
+    }
 	AddToFactions(SpeakersForTheDead);
+    
 	var DarkArmy				= new Faction("The Dark Army");
     DarkArmy.setInfo(FactionInfo.DarkArmyInfo);
+    if (factionExists("The Dark Army")) {
+        DarkArmy.favor = Factions["The Dark Army"].favor;
+        delete Factions["The Dark Army"];
+    }
 	AddToFactions(DarkArmy);
+    
 	var TheSyndicate 			= new Faction("The Syndicate");
     TheSyndicate.setInfo(FactionInfo.TheSyndicateInfo);
+    if (factionExists("The Syndicate")) {
+        TheSyndicate.favor = Factions["The Syndicate"].favor;
+        delete Factions["The Syndicate"];
+    }
 	AddToFactions(TheSyndicate);
+    
     var Silhouette              = new Faction("Silhouette");
     Silhouette.setInfo(FactionInfo.SilhouetteInfo);
+    if (factionExists("Silhouette")) {
+        Silhouette.favor = Factions["Silhouette"].favor;
+        delete Factions["Silhouette"];
+    }
     AddToFactions(Silhouette);
+    
     var Tetrads                 = new Faction("Tetrads"); //Low-medium level asian crime gang
     Tetrads.setInfo(FactionInfo.TetradsInfo);
+    if (factionExists("Tetrads")) {
+        Tetrads.favor = Factions["Tetrads"].favor;
+        delete Factions["Tetrads"];
+    }
     AddToFactions(Tetrads);
+    
     var SlumSnakes              = new Faction("Slum Snakes"); //Low level crime gang
     SlumSnakes.setInfo(FactionInfo.SlumSnakesInfo);
+    if (factionExists("Slum Snakes")) {
+        SlumSnakes.favor = Factions["Slum Snakes"].favor;
+        delete Factions["Slum Snakes"];
+    }
     AddToFactions(SlumSnakes);
 	
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
     var Netburners              = new Faction("Netburners");
     Netburners.setInfo(FactionInfo.NetburnersInfo);
+    if (factionExists("Netburners")) {
+        Netburners.favor = Factions["Netburners"].favor;
+        delete Factions["Netburners"];
+    }
     AddToFactions(Netburners);
+    
 	var TianDiHui				= new Faction("Tian Di Hui");	//Society of the Heaven and Earth
     TianDiHui.setInfo(FactionInfo.TianDiHuiInfo);
+    if (factionExists("Tian Di Hui")) {
+        TianDiHui.favor = Factions["Tian Di Hui"].favor;
+        delete Factions["Tian Di Hui"];
+    }
 	AddToFactions(TianDiHui);
+    
 	var CyberSec 				= new Faction("CyberSec");
     CyberSec.setInfo(FactionInfo.CyberSecInfo);
+    if (factionExists("CyberSec")) {
+        CyberSec.favor = Factions["CyberSec"].favor;
+        delete Factions["CyberSec"];
+    }
 	AddToFactions(CyberSec);
 }
 
@@ -175,10 +336,6 @@ initFactions = function() {
 //those requirements and will return an array of all factions that the Player should
 //receive an invitation to
 PlayerObject.prototype.checkForFactionInvitations = function() {
-    if (Engine.Debug) {
-        console.log("checkForFactionInvitations() called");
-        console.log("karma: " + this.karma);
-    }
     invitedFactions = []; //Array which will hold all Factions th eplayer should be invited to
     
     var company = Companies[this.companyName];
@@ -190,39 +347,35 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Illuminati
     var illuminatiFac = Factions["Illuminati"];
     if (!illuminatiFac.isBanned && !illuminatiFac.isMember && !illuminatiFac.alreadyInvited && 
-        this.numAugmentations >= 10 && 
-        this.money >= 10000000000 && this.total_money >= 20000000000 &&
-        this.hacking_skill >= 800 && this.total_hacking >= 7000 &&
-        this.strength >= 900 && this.total_strength >= 10000 && 
-        this.defense >= 900 && this.total_defense >= 10000 &&
-        this.dexterity >= 900 && this.total_dexterity >= 10000 && 
-        this.agility >= 900 && this.total_agility >= 10000) {
+        this.numAugmentations >= 30 && 
+        this.money >= 150000000000 &&
+        this.hacking_skill >= 1200 &&
+        this.strength >= 1000 && this.defense >= 1000 && 
+        this.dexterity >= 1000 && this.agility >= 1000) {
         invitedFactions.push(illuminatiFac);
     }
         
     //Daedalus
     var daedalusFac = Factions["Daedalus"];
     if (!daedalusFac.isBanned && !daedalusFac.isMember && !daedalusFac.alreadyInvited && 
-        this.numAugmentations >= 15 && 
-        this.money >= 1000000000 && this.total_money >= 10000000000 &&
-        this.hacking_skill >= 1000 && this.total_hacking >= 10000 &&
-        this.strength >= 500 && this.total_strength >= 8000 && 
-        this.defense >= 500 && this.total_defense >= 8000 &&
-        this.dexterity >= 500 && this.total_dexterity >= 8000 && 
-        this.agility >= 500 && this.total_agility >= 8000) {
+        this.numAugmentations >= 30 && 
+        this.money >= 100000000000 &&
+        (this.hacking_skill >= 2500 ||
+            (this.strength >= 1500 && this.defense >= 1500 && 
+             this.dexterity >= 1500 && this.agility >= 1500))) {
         invitedFactions.push(daedalusFac);
     }
     
     //The Covenant
     var covenantFac = Factions["The Covenant"];
     if (!covenantFac.isBanned && !covenantFac.isMember && !covenantFac.alreadyInvited &&
-        this.numAugmentations >= 12 &&
-        this.money >= 5000000000 && this.total_money >= 10000000000 &&
-        this.hacking_skill >= 850 && this.total_hacking >= 5000 && 
-        this.strength >= 850 && this.total_strength >= 5000 &&
-        this.defense >= 850 && this.total_defense >= 5000 &&
-        this.dexterity >= 850 && this.total_dexterity >= 5000 &&
-        this.agility >= 850 && this.total_agility >= 5000) {
+        this.numAugmentations >= 30 &&
+        this.money >= 75000000000 &&
+        this.hacking_skill >= 850 &&
+        this.strength >= 850 &&
+        this.defense >= 850 &&
+        this.dexterity >= 850 &&
+        this.agility >= 850) {
         invitedFactions.push(covenantFac);
     }
     
@@ -558,7 +711,15 @@ displayFactionContent = function(factionName) {
 	var faction = Factions[factionName];
     document.getElementById("faction-name").innerHTML = factionName;
     document.getElementById("faction-info").innerHTML = "<i>" + faction.info + "</i>";
-    document.getElementById("faction-reputation").innerHTML = "Reputation: " + formatNumber(faction.playerReputation, 4);
+    document.getElementById("faction-reputation").innerHTML = "Reputation: " + formatNumber(faction.playerReputation, 4) + 
+                                                              "<span class='tooltiptext'>You will earn " + 
+                                                              formatNumber(faction.playerReputation / CONSTANTS.FactionReputationToFavor, 4) +
+                                                              " faction favor upon resetting after installing an Augmentation</span>";
+    document.getElementById("faction-favor").innerHTML = "Faction Favor: " + formatNumber(faction.favor, 4) +
+                                                         "<span class='tooltiptext'>Faction favor increases the rate at which " + 
+                                                         "you earn reputation for this faction by 1% per favor. Faction favor " + 
+                                                         "is gained whenever you reset after installing an Augmentation. The amount of " +
+                                                         "favor you gain depends on how much reputation you have with the faction</span>";
 	
 	var hackDiv 			= document.getElementById("faction-hack-div");
 	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
@@ -626,7 +787,12 @@ displayFactionContent = function(factionName) {
     });
 	
 	if (faction.isMember) {
-        donateDiv.style.display = "inline";
+        if (faction.favor >= 150) {
+            donateDiv.style.display = "inline";
+        } else {
+            donateDiv.style.display = "none";
+        }
+        
 		switch(faction.name) {
 			case "Illuminati":
 				hackDiv.style.display = "inline";

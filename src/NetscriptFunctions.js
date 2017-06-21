@@ -188,7 +188,10 @@ function netscriptHack(exp, workerScript) {
                 moneyGained = Math.floor(server.moneyAvailable * moneyGained) * threads;
                 
                 //Over-the-top safety checks
-                if (moneyGained <= 0) {moneyGained = 0;}
+                if (moneyGained <= 0) {
+                    moneyGained = 0;
+                    expGainedOnSuccess = expGainedOnFailure;
+                }
                 if (moneyGained > server.moneyAvailable) {moneyGained = server.moneyAvailable;}
                 server.moneyAvailable -= moneyGained;
                 if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
@@ -253,7 +256,10 @@ function netscriptGrow(exp, workerScript) {
             server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
             var growthPercentage = processSingleServerGrowth(server, 450 * threads);
             workerScript.scriptRef.recordGrow(server.ip, threads);
-            var expGain = 0.5 * Player.hacking_exp_mult * threads;
+            var expGain = scriptCalculateExpGain(server) * threads;
+            if (growthPercentage == 1) {
+                expGain = 0;
+            }
             workerScript.scriptRef.log("Available money on " + server.hostname + " grown by " 
                                        + formatNumber(growthPercentage*100 - 100, 6) + "%. Gained " + 
                                        formatNumber(expGain, 4) + " hacking exp (t=" + threads +")");            
@@ -303,7 +309,7 @@ function netscriptWeaken(exp, workerScript) {
             if (env.stopFlag) {return Promise.reject(workerScript);}
             server.weaken(CONSTANTS.ServerWeakenAmount * threads);
             workerScript.scriptRef.recordWeaken(server.ip, threads);
-            var expGain = 3 * Player.hacking_exp_mult * threads;
+            var expGain = scriptCalculateExpGain(server) * threads;
             workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty + 
                                        ". Gained " + formatNumber(expGain, 4) + " hacking exp (t=" + threads + ")");
             workerScript.scriptRef.onlineExpGained += expGain;

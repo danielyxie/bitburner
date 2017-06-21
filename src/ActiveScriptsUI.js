@@ -232,6 +232,24 @@ function createActiveScriptsText(workerscript, item) {
     
     item.appendChild(itemText);
     
+    var logButton = document.createElement("span");
+    logButton.innerHTML = "Log";
+    var killButton = document.createElement("span");
+    killButton.innerHTML = "Kill script";
+    logButton.setAttribute("class", "active-scripts-button");
+    killButton.setAttribute("class", "active-scripts-button");
+    logButton.addEventListener("click", function() {
+        logBoxCreate(workerscript.scriptRef);
+        return false;
+    });
+    killButton.addEventListener("click", function() {
+        killWorkerScript(workerscript.scriptRef, workerscript.scriptRef.scriptRef.server);
+        dialogBoxCreate("Killing script, may take a few minutes to complete...");
+        return false;
+    });
+    item.appendChild(logButton);
+    item.appendChild(killButton);
+    
     //Return total online production rate
     return onlineMps;
 }

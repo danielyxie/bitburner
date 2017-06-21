@@ -233,7 +233,7 @@ PlayerObject.prototype.calculateHackingChance = function() {
 PlayerObject.prototype.calculateHackingTime = function() {
     var difficultyMult = this.getCurrentServer().requiredHackingSkill * this.getCurrentServer().hackDifficulty;
     var skillFactor = (2.5 * difficultyMult + 200) / (this.hacking_skill + 100);
-    return skillFactor * this.hacking_speed_mult * 5;
+    return 5 * skillFactor / this.hacking_speed_mult;
 }
 
 //Calculates the PERCENTAGE of a server's money that the player will hack from the server if successful
@@ -259,7 +259,7 @@ PlayerObject.prototype.calculateExpGain = function() {
     if (s.baseDifficulty == null) {
         s.baseDifficulty = s.hackDifficulty;
     }
-    return (s.baseDifficulty * this.hacking_exp_mult * 0.5 + 4);
+    return (s.baseDifficulty * this.hacking_exp_mult * 0.5 + 2);
 }
 
 //Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for
@@ -635,6 +635,11 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
 }
 
 PlayerObject.prototype.startFactionWork = function(faction) {
+    //Update reputation gain rate to account for faction favor
+    var favorMult = 1 + (faction.favor / 100);
+    if (isNaN(favorMult)) {favorMult = 1;}
+    this.workRepGainRate *= favorMult;
+    
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeFaction;
     this.currentWorkFactionName = faction.name;
@@ -655,8 +660,8 @@ PlayerObject.prototype.startFactionWork = function(faction) {
 PlayerObject.prototype.startFactionHackWork = function(faction) {
     this.resetWorkStatus();
     
-    this.workHackExpGainRate    = .175 * this.hacking_exp_mult;
-    this.workRepGainRate        = this.hacking_skill / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
+    this.workHackExpGainRate    = .15 * this.hacking_exp_mult;
+    this.workRepGainRate = 0.9 * this.hacking_skill / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
     
     this.factionWorkType = CONSTANTS.FactionWorkHacking;
     this.currentWorkFactionDescription = "carrying out hacking contracts";
@@ -715,6 +720,11 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
         default:
             break;
     }
+    
+    //Update reputation gain rate to account for faction favor
+    var favorMult = 1 + (faction.favor / 100);
+    if (isNaN(favorMult)) {favorMult = 1;}
+    this.workRepGainRate *= favorMult;
     
     this.workHackExpGained  += this.workHackExpGainRate * numCycles;
     this.workStrExpGained   += this.workStrExpGainRate * numCycles;
@@ -805,29 +815,32 @@ PlayerObject.prototype.getWorkChaExpGain = function() {
 
 //Reputation gained per game cycle
 PlayerObject.prototype.getWorkRepGain = function() {
-    
+    var company = Companies[this.companyName];
     var jobPerformance = this.companyPosition.calculateJobPerformance(this.hacking_skill, this.strength,
                                                                       this.defense, this.dexterity,
-                                                                      this.agility, this.charisma);
-    return jobPerformance * this.company_rep_mult;                                                                    
+                                                                      this.agility, this.charisma);    
+    //Update reputation gain rate to account for company favor
+    var favorMult = 1 + (company.favor / 100);
+    if (isNaN(favorMult)) {favorMult = 1;}
+    return jobPerformance * this.company_rep_mult * favorMult;                                                                    
 }
 
 PlayerObject.prototype.getFactionSecurityWorkRepGain = function() {
-    var t = (this.hacking_skill  / CONSTANTS.MaxSkillLevel + 
-            this.strength       / CONSTANTS.MaxSkillLevel + 
-            this.defense        / CONSTANTS.MaxSkillLevel + 
-            this.dexterity      / CONSTANTS.MaxSkillLevel + 
-            this.agility        / CONSTANTS.MaxSkillLevel) / 5;
+    var t = 0.9 * (this.hacking_skill  / CONSTANTS.MaxSkillLevel + 
+                   this.strength       / CONSTANTS.MaxSkillLevel + 
+                   this.defense        / CONSTANTS.MaxSkillLevel + 
+                   this.dexterity      / CONSTANTS.MaxSkillLevel + 
+                   this.agility        / CONSTANTS.MaxSkillLevel) / 5;
     return t * this.faction_rep_mult;
 }
 
 PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
-    var t = (this.hacking_skill  / CONSTANTS.MaxSkillLevel + 
-            this.strength       / CONSTANTS.MaxSkillLevel + 
-            this.defense        / CONSTANTS.MaxSkillLevel + 
-            this.dexterity      / CONSTANTS.MaxSkillLevel + 
-            this.agility        / CONSTANTS.MaxSkillLevel + 
-            this.charisma       / CONSTANTS.MaxSkillLevel) / 6;
+    var t = 0.9 * (this.hacking_skill  / CONSTANTS.MaxSkillLevel + 
+                   this.strength       / CONSTANTS.MaxSkillLevel + 
+                   this.defense        / CONSTANTS.MaxSkillLevel + 
+                   this.dexterity      / CONSTANTS.MaxSkillLevel + 
+                   this.agility        / CONSTANTS.MaxSkillLevel + 
+                   this.charisma       / CONSTANTS.MaxSkillLevel) / 6;
     return t * this.faction_rep_mult;
 }
 

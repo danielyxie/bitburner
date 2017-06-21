@@ -90,28 +90,24 @@ function determineCrimeSuccess(crime, moneyGained) {
 }
 
 function determineCrimeChanceShoplift() {
-    var chance = ((Player.strength / CONSTANTS.MaxSkillLevel + 
-                   Player.defense / CONSTANTS.MaxSkillLevel + 
-                   Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel)) * 10;
+    var chance = ((Player.dexterity / CONSTANTS.MaxSkillLevel +
+                   Player.agility / CONSTANTS.MaxSkillLevel)) * 20;
     chance *= Player.crime_success_mult;               
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceMug() {
-    var chance = ((Player.strength / CONSTANTS.MaxSkillLevel + 
-                   Player.defense / CONSTANTS.MaxSkillLevel + 
-                   Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel)) * 5;
+    var chance = ((2   *Player.strength / CONSTANTS.MaxSkillLevel + 
+                   0.5 * Player.defense / CONSTANTS.MaxSkillLevel + 
+                   2   * Player.dexterity / CONSTANTS.MaxSkillLevel +
+                   0.5 * Player.agility / CONSTANTS.MaxSkillLevel)) * 5;
     chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceDealDrugs() {
-    var chance = ((2*Player.charisma / CONSTANTS.MaxSkillLevel +
-                   Player.strength / CONSTANTS.MaxSkillLevel + 
-                   Player.defense / CONSTANTS.MaxSkillLevel + 
-                   Player.dexterity / CONSTANTS.MaxSkillLevel +
+    var chance = ((3*Player.charisma / CONSTANTS.MaxSkillLevel +
+                   2*Player.dexterity / CONSTANTS.MaxSkillLevel +
                    Player.agility / CONSTANTS.MaxSkillLevel));
     chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
@@ -128,10 +124,10 @@ function determineCrimeChanceTraffickArms() {
 }
 
 function determineCrimeChanceHomicide() {
-    var chance = ((Player.strength / CONSTANTS.MaxSkillLevel + 
-                   Player.defense / CONSTANTS.MaxSkillLevel + 
-                   Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel));
+    var chance = ((2   * Player.strength / CONSTANTS.MaxSkillLevel + 
+                   2   * Player.defense / CONSTANTS.MaxSkillLevel + 
+                   0.5 * Player.dexterity / CONSTANTS.MaxSkillLevel +
+                   0.5 * Player.agility / CONSTANTS.MaxSkillLevel));
     chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }
@@ -139,9 +135,8 @@ function determineCrimeChanceHomicide() {
 function determineCrimeChanceGrandTheftAuto() {
     var chance = ((Player.hacking_skill / CONSTANTS.MaxSkillLevel + 
                    Player.strength / CONSTANTS.MaxSkillLevel + 
-                   Player.defense / CONSTANTS.MaxSkillLevel + 
                    4 * Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel + 
+                   2 * Player.agility / CONSTANTS.MaxSkillLevel + 
                    2 * Player.charisma / CONSTANTS.MaxSkillLevel)) / 8;
     chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
@@ -150,17 +145,15 @@ function determineCrimeChanceGrandTheftAuto() {
 function determineCrimeChanceKidnap() {
     var chance =  ((Player.charisma / CONSTANTS.MaxSkillLevel +
                    Player.strength / CONSTANTS.MaxSkillLevel + 
-                   Player.defense / CONSTANTS.MaxSkillLevel + 
                    Player.dexterity / CONSTANTS.MaxSkillLevel +
-                   Player.agility / CONSTANTS.MaxSkillLevel)) / 6;
+                   Player.agility / CONSTANTS.MaxSkillLevel)) / 5;
     chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceAssassination() {
     var chance = ((Player.strength / CONSTANTS.MaxSkillLevel + 
-                   Player.defense / CONSTANTS.MaxSkillLevel + 
-                   Player.dexterity / CONSTANTS.MaxSkillLevel +
+                   2 * Player.dexterity / CONSTANTS.MaxSkillLevel +
                    Player.agility / CONSTANTS.MaxSkillLevel)) / 8;
     chance *= Player.crime_success_mult;
     return Math.min(chance, 1);    

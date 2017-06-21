@@ -17,7 +17,21 @@ function BitburnerSaveObject() {
 
 BitburnerSaveObject.prototype.saveGame = function() {
     this.PlayerSave                 = JSON.stringify(Player);
-    this.AllServersSave             = JSON.stringify(AllServers);
+    
+    //Delete all logs from all running scripts 
+    var TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
+    //var TempAllServers = jQuery.extend(true, {}, AllServers);   //Deep copy
+    for (var ip in TempAllServers) {
+        var server = TempAllServers[ip];
+        if (server == null) {continue;}
+        for (var i = 0; i < server.runningScripts.length; ++i) {
+            var runningScriptObj = server.runningScripts[i];
+            runningScriptObj.logs.length = 0;
+            runningScriptObj.logs = [];
+        }
+    }
+    
+    this.AllServersSave             = JSON.stringify(TempAllServers);
     this.CompaniesSave              = JSON.stringify(Companies);
     this.FactionsSave               = JSON.stringify(Factions);
     this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
@@ -69,7 +83,7 @@ loadGame = function(saveObj) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
             if (ver != CONSTANTS.Version) {
-                if (CONSTANTS.Version == "0.21.0") {
+                if (CONSTANTS.Version == "0.21.0" || CONSTANTS.Version == "0.22.0") {
                     dialogBoxCreate("All scripts automatically killed for the sake of compatibility " +
                                     "with new version. If the game is still broken, try the following: " + 
                                     "Options -> Soft Reset -> Save Game -> Reload page. If that STILL " + 

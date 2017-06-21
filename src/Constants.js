@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.21.0",
+    Version:                "0.22.0",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -27,6 +27,10 @@ CONSTANTS = {
     HacknetNodeMaxLevel: 200,
     HacknetNodeMaxRam: 64,
     HacknetNodeMaxCores: 16,
+    
+    /* Faction and Company favor */
+    FactionReputationToFavor: 7500,
+    CompanyReputationToFavor: 5000,
     
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
@@ -67,9 +71,11 @@ CONSTANTS = {
     ScriptHNUpgRamRamCost:          0.6,
     ScriptHNUpgCoreRamCost:         0.8,
     
+    MultithreadingRAMCost:          1.002,
+    
     //Server constants
-    ServerBaseGrowthRate: 1.02,     //Unadjusted Growth rate
-    ServerMaxGrowthRate: 1.003,     //Maximum possible growth rate (max rate accounting for server security)
+    ServerBaseGrowthRate: 1.03,     //Unadjusted Growth rate
+    ServerMaxGrowthRate: 1.0045,     //Maximum possible growth rate (max rate accounting for server security)
     ServerFortifyAmount: 0.002,     //Amount by which server's security increases when its hacked/grown
     ServerWeakenAmount: 0.1,        //Amount by which server's security decreases when weakened
     
@@ -177,7 +183,8 @@ CONSTANTS = {
                 "sudov                          Shows whether or not you have root access on this computer<br>" + 
                 "tail [script] [args...]        Display dynamic logs for the script with the specified name and arguments<br>" +
                 "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" + 
-                "top                            Display all running scripts and their RAM usage<br>",
+                "top                            Display all running scripts and their RAM usage<br>" + 
+                'unalias "[alias name]"         Deletes the specified alias. Double quotation marks are required<br>',
                 
     /* Tutorial related things */
 	TutorialGettingStartedText: "Todo...",
@@ -281,7 +288,7 @@ CONSTANTS = {
                          "yield $50,000. <br><br> " +
                          "Each additional thread to a script will slightly increase the RAM usage for that thread. The total cost of running a script with " + 
                          "n threads can be calculated with: <br>" + 
-                         "base cost * n * (1.02 ^ n) <br>" + 
+                         "base cost * n * (1.005 ^ n) <br>" + 
                          "where the base cost is the amount of RAM required to run the script with a single thread. In the terminal, you can run the " + 
                          "'mem [scriptname] -t n' command to see how much RAM a script requires with n threads. <br><br>" + 
                          "Every method for running a script has an option for making it multihreaded. To run a script with " + 
@@ -471,6 +478,11 @@ CONSTANTS = {
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
                            "<i>getServerSecurityLevel(hostname/ip)</i><br>Returns the security level of a server. The argument passed in must be a string with either the " + 
                            "hostname or IP of the target server. A server's security is denoted by a number between 1 and 100. Does NOT work while offline.<br><br>" + 
+                           "<i>getServerBaseSecurityLevel(hostname/ip)</i><br> Returns the base security level of a server. This is the security level that the server starts out with. " + 
+                           "This is different than getServerSecurityLevel() because getServerSecurityLevel() returns the current security level of a server, which can constantly change " + 
+                           "due to hack(), grow(), and weaken() calls on that server. The base security level will stay the same until you reset by installing an Augmentation. <br><br>" + 
+                           "The argument passed in must be a string with either the hostname or IP of the target server. A server's base security is denoted by a number between 1 and 100. " +
+                           "Does NOT work while offline.<br><br>" + 
                            "<i>getServerRequiredHackingLevel(hostname/ip)</i><br> Returns the required hacking level of a server. The argument passed in must be a string with either the " + 
                            "hostname or IP or the target server. Does NOT work while offline <br><br>" + 
                            "<i>fileExists(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " + 
@@ -643,9 +655,31 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.22.0 - Major rebalancing, optimization, and favor system<br>" + 
+    "-Significantly nerfed most augmentations<br>" + 
+    "-Almost every server with a required hacking level of 200 or more now has slightly randomized server parameters. This means that after every Augmentation " + 
+    "purchase, the required hacking level, base security level, and growth factor of these servers will all be slightly different<br>" + 
+    "-The hacking speed multiplier now increases rather than decreases. The hacking time is now divided by your hacking speed " + 
+    "multiplier rather than multiplied. In other words, a higher hacking speed multiplier is better<br>" + 
+    "-Servers now have a minimum server security, which is approximately one third of their starting ('base') server security<br>" + 
+    "-If you do not steal any money from a server, then you gain hacking experience equal to the amount you would have gained " + 
+    "had you failed the hack<br>" + 
+    "-The effects of grow() were increased by 50%<br>" + 
+    "-grow() and weaken() now give hacking experience based on the server's base security level, rather than a flat exp amount<br>" + 
+    "-Slightly reduced amount of exp gained from hack(), weaken(), and grow()<br>" +
+    "-Rebalanced formulas that determine crime success<br>" + 
+    "-Reduced RAM cost for multithreading a script. The RAM multiplier for each thread was reduced from 1.02 to 1.005<br>" + 
+    "-Optimized Script objects so they take less space in the save file<br>" + 
+    "-Added getServerBaseSecurityLevel() Netscript function<br>" + 
+    "-New favor system for companies and factions. Earning reputation at a company/faction will give you favor for that entity when you " + 
+    "reset after installing an Augmentation. This favor persists through the rest of the game. The more favor you have, the faster you will earn " + 
+    "reputation with that faction<br>" + 
+    "-You can no longer donate to a faction for reputation until you have 150 favor with that faction<br>" + 
+    "-Added unalias Terminal command<br>" + 
+    "-Changed requirements for endgame Factions<br><br>" + 
     "v0.21.1<br>" + 
     "-IF YOUR GAME BREAKS, DO THE FOLLOWING: Options -> Soft Reset -> Save Game -> Reload Page. Sorry about that! <br>" + 
-    "-Autocompletion for aliases - courtesy of Github user LTCNugget" + 
+    "-Autocompletion for aliases - courtesy of Github user LTCNugget<br><br>" + 
     "v0.21.0<br>" + 
     "-Added dynamic arrays. See Netscript documentation<br>" + 
     "-Added ability to pass arguments into scripts. See documentation<br>" + 
@@ -795,28 +829,26 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
-    "v0.21.0<br>" + 
-    "-All scripts automatically killed for the sake of update compatibility<br>" + 
-    "-IF YOUR GAME BREAKS, DO THE FOLLOWING: Options -> Soft Reset -> Save Game -> Reload Page. Sorry about that! <br>" + 
-    "-Autocompletion for aliases - courtesy of Github user LTCNugget<br><br>" + 
-    "-Added dynamic arrays. See Netscript documentation<br>" + 
-    "-Added ability to pass arguments into scripts. See documentation<br>" + 
-    "-The implementation/function signature of functions that deal with scripts have changed. Therefore, some old scripts might not " + 
-    "work anymore. Some of these functions include run(), exec(), isRunning(), kill(), and some others I may have forgot about. " + 
-    "Please check the updated Netscript documentation if you run into issues." + 
-    "-Note that scripts are now uniquely identified by the script name and their arguments. For example, you can run " + 
-    "a script using <br>run foodnstuff.script 1<br> and you can also run the same script with a different argument " + 
-    "<br>run foodnstuff.script 2<br>These will be considered two different scripts. To kill the first script you must " + 
-    "run <br>kill foodnstuff.script 1<br> and to kill the second you must run <br>kill foodnstuff.script 2<br> Similar concepts " + 
-    "apply for Terminal Commands such as tail, and Netscript commands such as run(), exec(), kill(), isRunning(), etc.<br>" + 
-    "-Added basic theme functionality using the 'theme' Terminal command - All credit goes to /u/0x726564646974 who implemented the awesome feature<br>" + 
-    "-Optimized Script objects, which were causing save errors when the player had too many scripts<br>" + 
-    "-Formula for determining exp gained from hacking was changed<br>" + 
-    "-Fixed bug where you could purchase Darkweb items without TOR router<br>" + 
-    "-Slightly increased cost multiplier for Home Computer RAM<br>" +
-    "-Fixed bug where you could hack too much money from a server (and bring its money available below zero)<br>" + 
-    "-Changed tail command so that it brings up a display box with dynamic log contents. To get " + 
-    "old functionality where the logs are printed to the Terminal, use the new 'check' command<br>" + 
-    "-As a result of the change above, you can no longer call tail/check on scripts that are not running<br>" + 
-    "-Added autocompletion for buying Programs in Darkweb<br>",
+    "v0.22.0 - Major rebalancing, optimization, and favor system<br>" + 
+    "-Significantly nerfed most augmentations<br>" + 
+    "-Almost every server with a required hacking level of 200 or more now has slightly randomized server parameters. This means that after every Augmentation " + 
+    "purchase, the required hacking level, base security level, and growth factor of these servers will all be slightly different<br>" + 
+    "-The hacking speed multiplier now increases rather than decreases. The hacking time is now divided by your hacking speed " + 
+    "multiplier rather than multiplied. In other words, a higher hacking speed multiplier is better<br>" + 
+    "-Servers now have a minimum server security, which is approximately one third of their starting ('base') server security<br>" + 
+    "-If you do not steal any money from a server, then you gain hacking experience equal to the amount you would have gained " + 
+    "had you failed the hack<br>" + 
+    "-The effects of grow() were increased by 50%<br>" + 
+    "-grow() and weaken() now give hacking experience based on the server's base security level, rather than a flat exp amount<br>" + 
+    "-Slightly reduced amount of exp gained from hack(), weaken(), and grow()<br>" +
+    "-Rebalanced formulas that determine crime success<br>" + 
+    "-Reduced RAM cost for multithreading a script. The RAM multiplier for each thread was reduced from 1.02 to 1.005<br>" + 
+    "-Optimized Script objects so they take less space in the save file<br>" + 
+    "-Added getServerBaseSecurityLevel() Netscript function<br>" + 
+    "-New favor system for companies and factions. Earning reputation at a company/faction will give you favor for that entity when you " + 
+    "reset after installing an Augmentation. This favor persists through the rest of the game. The more favor you have, the faster you will earn " + 
+    "reputation with that faction<br>" + 
+    "-You can no longer donate to a faction for reputation until you have 150 favor with that faction<br>" + 
+    "-Added unalias Terminal command<br>" + 
+    "-Changed requirements for endgame Factions<br>",
 }

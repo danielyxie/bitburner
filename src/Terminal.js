@@ -585,7 +585,6 @@ var Terminal = {
                 } else {
                     post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); return;
                 }
-                
                 break;
 			case "analyze":
 				if (commandArray.length != 1) {
@@ -648,7 +647,7 @@ var Terminal = {
                         post("Error: No such script exists");
                         return;
                     }
-                    logBoxCreate(runningScript);
+                    runningScript.displayLog();
                 }
                 break;
 			case "clear":
@@ -790,7 +789,7 @@ var Terminal = {
                 for (var i = 0; i < currServ.scripts.length; ++i) {
                     if (scriptName == currServ.scripts[i].filename) {
                         var scriptBaseRamUsage = currServ.scripts[i].ramUsage;
-                        var ramUsage = scriptBaseRamUsage * numThreads * Math.pow(1.02, numThreads-1);
+                        var ramUsage = scriptBaseRamUsage * numThreads * Math.pow(CONSTANTS.MultithreadingRAMCost, numThreads-1);
                         
                         post("This script requires " + formatNumber(ramUsage, 2) + "GB of RAM to run for " + numThreads + " thread(s)");
                         return;
@@ -1041,6 +1040,21 @@ var Terminal = {
 				//TODO List each's script RAM usage
                 post("Not yet implemented");
 				break;
+            case "unalias":
+                if (commandArray.length != 2) {
+                    post('Incorrect usage of unalias name. Usage: unalias "[alias]"');
+                    return;
+                } else if (!(commandArray[1].startsWith('"') && commandArray[1].endsWith('"'))) {
+                    post('Incorrect usage of unalias name. Usage: unalias "[alias]"');
+                } else {
+                    var alias = commandArray[1].slice(1, -1);
+                    if (removeAlias(alias)) {
+                        post("Removed alias " + alias);
+                    } else {
+                        post("No such alias exists");
+                    }
+                }
+                break;
 			default:
 				post("Command not found");
 		}
@@ -1304,7 +1318,7 @@ var Terminal = {
 			if (server.scripts[i].filename == scriptName) {
 				//Check for admin rights and that there is enough RAM availble to run
                 var script = server.scripts[i];
-				var ramUsage = script.ramUsage * numThreads * Math.pow(1.02, numThreads-1);
+				var ramUsage = script.ramUsage * numThreads * Math.pow(CONSTANTS.MultithreadingRAMCost, numThreads-1);
 				var ramAvailable = server.maxRam - server.ramUsed;
 				
 				if (server.hasAdminRights == false) {
