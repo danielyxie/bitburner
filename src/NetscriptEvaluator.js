@@ -1065,7 +1065,7 @@ function scriptCalculatePercentMoneyHacked(server) {
 function scriptCalculateGrowTime(server) {
     var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
 	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
-	var growTime = skillFactor * Player.hacking_speed_mult * 16; //This is in seconds
+	var growTime = 16 * skillFactor / Player.hacking_speed_mult; //This is in seconds
 	return growTime * 1000;
 }
 
@@ -1073,6 +1073,6 @@ function scriptCalculateGrowTime(server) {
 function scriptCalculateWeakenTime(server) {
     var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
 	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
-	var weakenTime = skillFactor * Player.hacking_speed_mult * 40; //This is in seconds
+	var weakenTime = 40 * skillFactor / Player.hacking_speed_mult; //This is in seconds
 	return weakenTime * 1000;
 }
