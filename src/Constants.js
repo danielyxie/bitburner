@@ -675,7 +675,8 @@ CONSTANTS = {
     "reset after installing an Augmentation. This favor persists through the rest of the game. The more favor you have, the faster you will earn " + 
     "reputation with that faction<br>" + 
     "-You can no longer donate to a faction for reputation until you have 150 favor with that faction<br>" + 
-    "-Added unalias Terminal command<br><br>" + 
+    "-Added unalias Terminal command<br>" + 
+    "-Changed requirements for endgame Factions<br><br>" + 
     "v0.21.1<br>" + 
     "-IF YOUR GAME BREAKS, DO THE FOLLOWING: Options -> Soft Reset -> Save Game -> Reload Page. Sorry about that! <br>" + 
     "-Autocompletion for aliases - courtesy of Github user LTCNugget<br><br>" + 
@@ -848,5 +849,6 @@ CONSTANTS = {
     "reset after installing an Augmentation. This favor persists through the rest of the game. The more favor you have, the faster you will earn " + 
     "reputation with that faction<br>" + 
     "-You can no longer donate to a faction for reputation until you have 150 favor with that faction<br>" + 
-    "-Added unalias Terminal command<br><br>",
+    "-Added unalias Terminal command<br>" + 
+    "-Changed requirements for endgame Factions<br>",
 }
