@@ -1,8 +1,13 @@
 //Terminal
 
 /* Write text to terminal */
-var post = function(input) {
-    $("#terminal-input").before('<tr class="posted"><td style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
+var post = function(input, replace=true) {
+    if (replace) {
+        $("#terminal-input").before('<tr class="posted"><td style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
+    } else {
+        $("#terminal-input").before('<tr class="posted"><td style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
+    }
+    
 	updateTerminalScroll();
 }
 
@@ -669,13 +674,7 @@ var Terminal = {
                 
                 for (var i = 0; i < Player.getCurrentServer().serversOnNetwork.length; i++) {
                     if (Player.getCurrentServer().getServerOnNetwork(i).ip == ip || Player.getCurrentServer().getServerOnNetwork(i).hostname == ip) {
-                        Player.getCurrentServer().isConnectedTo = false;
-                        Player.currentServer = Player.getCurrentServer().getServerOnNetwork(i).ip;
-                        Player.getCurrentServer().isConnectedTo = true;
-                        post("Connected to " + ip);
-                        if (Player.getCurrentServer().hostname == "darkweb") {
-                            checkIfConnectedToDarkweb(); //Posts a 'help' message if connecting to dark web
-                        }
+                        Terminal.connectToServer(ip);
                         return;
                     }
                 }
@@ -1060,6 +1059,22 @@ var Terminal = {
 		}
 	},
     
+    connectToServer: function(ip) {
+        console.log("Connect to server called");
+        var serv = getServer(ip);
+        if (serv == null) {
+            post("Invalid server. Connection failed.");
+            return;
+        }
+        Player.getCurrentServer().isConnectedTo = false;
+        Player.currentServer = serv.ip;
+        Player.getCurrentServer().isConnectedTo = true;
+        post("Connected to " + serv.hostname);
+        if (Player.getCurrentServer().hostname == "darkweb") {
+            checkIfConnectedToDarkweb(); //Posts a 'help' message if connecting to dark web
+        }
+    },
+    
     executeListCommand: function(commandArray) {
         if (commandArray.length != 1) {
             post("Incorrect usage of ls command. Usage: ls"); return;
@@ -1146,7 +1161,12 @@ var Terminal = {
             }
             if (d == 0) {continue;} //Don't print current server
             var titleDashes = Array((d-1) * 4 + 1).join("-");
-            post("<strong>" + titleDashes + ">" + s.hostname + "</strong>");
+            if (Player.hasProgram(Programs.AutoLink)) {
+                post("<strong>" +  titleDashes + "> <a class='scan-analyze-link'>"  + s.hostname + "</a></strong>", false);
+            } else {
+                post("<strong>" + titleDashes + ">" + s.hostname + "</strong>");
+            }
+
             var dashes = titleDashes + "--";
             //var dashes = Array(d * 2 + 1).join("-");
             var c = "NO";
@@ -1156,6 +1176,17 @@ var Terminal = {
             post(dashes + "RAM: " + s.maxRam);
             post(" ");
         }
+        
+        var links = document.getElementsByClassName("scan-analyze-link");
+        for (var i = 0; i < links.length; ++i) {
+            (function() {
+            var hostname = links[i].innerHTML.toString();
+            links[i].onclick = function() {
+                Terminal.connectToServer(hostname);
+            }
+            }());//Immediate invocation
+        }
+        
     },
     
     executeFreeCommand: function(commandArray) {
@@ -1172,18 +1203,27 @@ var Terminal = {
 	runProgram: function(programName) {
 		//Check if you have the program on your computer. If you do, execute it, otherwise
 		//display an error message
-		for (var i = 0; i < Player.getHomeComputer().programs.length; i++) {
-			if (Player.getHomeComputer().programs[i] == programName) {
-				Terminal.executeProgram(programName);
-				return;
-			}
-		}
+        var splitArgs = programName.split(" ");
+        var name = " ";
+        if (splitArgs.length > 1) {
+            name = splitArgs[0];
+        } else {
+            name = programName;
+        }
+        if (Player.hasProgram(name)) {
+            Terminal.executeProgram(programName);
+            return;
+        }
 		post("ERROR: No such executable on home computer (Only programs that exist on your home computer can be run)");
 	},
 	
 	//Contains the implementations of all possible programs
 	executeProgram: function(programName) {
         var s = Player.getCurrentServer();
+        var splitArgs = programName.split(" ");
+        if (splitArgs.length > 1) {
+            programName = splitArgs[0];
+        }
 		switch (programName) {
 			case Programs.NukeProgram:
 				if (s.hasAdminRights) {
@@ -1243,8 +1283,26 @@ var Terminal = {
                     ++s.openPortCount;
                 }
                 break;
+            case Programs.ServerProfiler:
+                if (splitArgs.length != 2) {
+                    post("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
+                    return;
+                }
+                var serv = getServer(splitArgs[1]);
+                if (serv == null) {
+                    post("Invalid server IP/hostname");
+                    return;
+                }
+                post(serv.hostname + ":");
+                post("Server base security level: " + serv.baseDifficulty);
+                post("Server current security level: " + serv.hackDifficulty);
+                post("Server growth rate: " + serv.serverGrowth);
+                post("Netscript hack() execution time: " + formatNumber(scriptCalculateHackingTime(serv), 1) + "s");
+                post("Netscript grow() execution time: " + formatNumber(scriptCalculateGrowTime(serv)/1000, 1) + "s");
+                post("Netscript weaken() execution time: " + formatNumber(scriptCalculateWeakenTime(serv)/1000, 1) + "s");
+                break;
 			default:
-				post("Executable not found");
+				post("Invalid executable. Cannot be run");
 				return;
 		}
 	},

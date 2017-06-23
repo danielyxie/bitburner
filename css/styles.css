@@ -293,3 +293,13 @@ tr:focus {
 #character-overview-options-button {
     display: inline-block;
 }
+
+/* Scan analyze links from AutoLink */
+.scan-analyze-link {
+    cursor:pointer;
+    color:#FFFFFF;
+    text-decoration:underline;
+}
+.scan-analyze-link:hover {
+    text-decoration:none;
+}
