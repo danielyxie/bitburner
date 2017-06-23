@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.22.0",
+    Version:                "0.22.1",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -655,6 +655,11 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.22.1<br>" + 
+    "-You no longer lose progress on creating programs when cancelling your work. Your progress will be saved and you will pick up " + 
+    "where you left off when you start working on it again<br>" + 
+    "-Added two new programs: AutoLink.exe and ServerProfiler.exe<br>" +
+    "-Fixed bug with Faction Field work reputation gain<br><br>" + 
     "v0.22.0 - Major rebalancing, optimization, and favor system<br>" + 
     "-Significantly nerfed most augmentations<br>" + 
     "-Almost every server with a required hacking level of 200 or more now has slightly randomized server parameters. This means that after every Augmentation " + 
@@ -673,7 +678,7 @@ CONSTANTS = {
     "-Added getServerBaseSecurityLevel() Netscript function<br>" + 
     "-New favor system for companies and factions. Earning reputation at a company/faction will give you favor for that entity when you " + 
     "reset after installing an Augmentation. This favor persists through the rest of the game. The more favor you have, the faster you will earn " + 
-    "reputation with that faction<br>" + 
+    "reputation with that faction/company<br>" + 
     "-You can no longer donate to a faction for reputation until you have 150 favor with that faction<br>" + 
     "-Added unalias Terminal command<br>" + 
     "-Changed requirements for endgame Factions<br><br>" + 
@@ -829,6 +834,11 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
+    "v0.22.1<br>" + 
+    "-You no longer lose progress on creating programs when cancelling your work. Your progress will be saved and you will pick up " + 
+    "where you left off when you start working on it again<br>" + 
+    "-Added two new programs: AutoLink.exe and ServerProfiler.exe<br>" +
+    "-Fixed bug with Faction Field work reputation gain<br><br>" + 
     "v0.22.0 - Major rebalancing, optimization, and favor system<br>" + 
     "-Significantly nerfed most augmentations<br>" + 
     "-Almost every server with a required hacking level of 200 or more now has slightly randomized server parameters. This means that after every Augmentation " + 
@@ -847,7 +857,7 @@ CONSTANTS = {
     "-Added getServerBaseSecurityLevel() Netscript function<br>" + 
     "-New favor system for companies and factions. Earning reputation at a company/faction will give you favor for that entity when you " + 
     "reset after installing an Augmentation. This favor persists through the rest of the game. The more favor you have, the faster you will earn " + 
-    "reputation with that faction<br>" + 
+    "reputation with that faction/company<br>" + 
     "-You can no longer donate to a faction for reputation until you have 150 favor with that faction<br>" + 
     "-Added unalias Terminal command<br>" + 
     "-Changed requirements for endgame Factions<br>",

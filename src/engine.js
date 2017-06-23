@@ -938,47 +938,7 @@ var Engine = {
         });
         
         //Create Program buttons
-        var nukeALink       = document.getElementById("create-program-nuke");
-        var bruteSshALink   = document.getElementById("create-program-brutessh");
-        var ftpCrackALink   = document.getElementById("create-program-ftpcrack");
-        var relaySmtpALink  = document.getElementById("create-program-relaysmtp");
-        var httpWormALink   = document.getElementById("create-program-httpworm");
-        var sqlInjectALink  = document.getElementById("create-program-sqlinject");
-        var deepscanv1ALink = document.getElementById("create-program-deepscanv1");
-        var deepscanv2ALink = document.getElementById("create-program-deepscanv2");
-        
-        nukeALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.NukeProgram, CONSTANTS.MillisecondsPerFiveMinutes, 1);
-            return false;
-        });
-        bruteSshALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerFiveMinutes * 2, 50);
-            return false;
-        });
-        ftpCrackALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHalfHour, 100);
-            return false;
-        });
-        relaySmtpALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.RelaySMTPProgram, CONSTANTS.MillisecondsPer2Hours, 250);
-            return false;
-        });
-        httpWormALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer4Hours, 500);
-            return false;
-        });
-        sqlInjectALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer8Hours, 750);
-            return false;
-        });
-        deepscanv1ALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.DeepscanV1, CONSTANTS.MillisecondsPerQuarterHour, 75);
-            return false;
-        });
-        deepscanv2ALink.addEventListener("click", function() {
-            Player.startCreateProgramWork(Programs.DeepscanV2, CONSTANTS.MillisecondsPer2Hours, 400);
-            return false;
-        });
+        initCreateProgramButtons();
                 
         //Message at the top of terminal
         postNetburnerText();

@@ -680,7 +680,7 @@ PlayerObject.prototype.startFactionFieldWork = function(faction) {
     this.workChaExpGainRate     = .1 * this.charisma_exp_mult;
     this.workRepGainRate        = this.getFactionFieldWorkRepGain();
     
-    this.factionWorkType = CONSTANTS.factionWorkField;
+    this.factionWorkType = CONSTANTS.FactionWorkField;
     this.currentWorkFactionDescription = "carrying out field missions"
    
     this.startFactionWork(faction);
@@ -855,7 +855,20 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
     var timeMultiplier = (CONSTANTS.MaxSkillLevel - (this.hacking_skill - reqLevel)) / CONSTANTS.MaxSkillLevel;
     if (timeMultiplier > 1) {timeMultiplier = 1;}
     if (timeMultiplier < 0.01) {timeMultiplier = 0.01;}
+    
     this.timeNeededToCompleteWork = timeMultiplier * time;
+    //Check for incomplete program
+    for (var i = 0; i < Player.getHomeComputer().programs.length; ++i) {
+        var programFile = Player.getHomeComputer().programs[i];
+        if (programFile.startsWith(programName) && programFile.endsWith("%-INC")) {
+            var res = programFile.split("-");
+            if (res.length != 3) {break;}
+            var percComplete = Number(res[1].slice(0, -1));
+            if (isNaN(percComplete) || percComplete <= 0 || percComplete >= 100) {break;}
+            this.timeWorked = percComplete / 100 * this.timeNeededToCompleteWork;
+            Player.getHomeComputer().programs.splice(i, 1);
+        }
+    }
     
     this.createProgramName = programName;
     
@@ -882,7 +895,7 @@ PlayerObject.prototype.createProgramWork = function(numCycles) {
     txt.innerHTML = "You are currently working on coding " + programName + ".<br><br> " + 
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "The program is " + (this.timeWorked / this.timeNeededToCompleteWork * 100).toFixed(2) + "% complete. <br>" + 
-                    "If you cancel, you will lose all of your progress.";  
+                    "If you cancel, your work will be saved and you can come back to complete the program later.";  
 }
 
 PlayerObject.prototype.finishCreateProgramWork = function(cancelled, programName) {
@@ -891,6 +904,10 @@ PlayerObject.prototype.finishCreateProgramWork = function(cancelled, programName
                         "The new program can be found on your home computer.");
     
         Player.getHomeComputer().programs.push(programName);
+    } else {
+        var perc = Math.floor(this.timeWorked / this.timeNeededToCompleteWork * 100).toString();
+        var incompleteName = programName + "-" + perc + "%-INC";
+        Player.getHomeComputer().programs.push(incompleteName);
     }
     
     var mainMenu = document.getElementById("mainmenu-container");
