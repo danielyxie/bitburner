@@ -864,7 +864,7 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
             var res = programFile.split("-");
             if (res.length != 3) {break;}
             var percComplete = Number(res[1].slice(0, -1));
-            if (isNaN(percComplete) || percComplete <= 0 || percComplete >= 100) {break;}
+            if (isNaN(percComplete) || percComplete < 0 || percComplete >= 100) {break;}
             this.timeWorked = percComplete / 100 * this.timeNeededToCompleteWork;
             Player.getHomeComputer().programs.splice(i, 1);
         }
