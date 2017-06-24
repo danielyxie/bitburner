@@ -2,7 +2,6 @@
 function Augmentation(name) {
     this.name = name;
     this.info = "";
-    this.owned = false;                 //Whether the player has it (you can only have each augmentation once)
 
     //Price and reputation base requirements (can change based on faction multipliers)
     this.baseRepRequirement = 0;        
@@ -160,7 +159,6 @@ initAugmentations = function() {
     HemoRecirculator.setRequirements(4000, 9000000);
     HemoRecirculator.addToFactions(["Tetrads", "The Dark Army", "The Syndicate"]);
     if (augmentationExists(AugmentationNames.HemoRecirculator)) {
-        HemoRecirculator.owned = Augmentations[AugmentationNames.HemoRecirculator].owned;
         delete Augmentations[AugmentationNames.HemoRecirculator];
     }
     AddToAugmentations(HemoRecirculator);
@@ -174,7 +172,6 @@ initAugmentations = function() {
     Targeting1.addToFactions(["Slum Snakes", "The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                             "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.Targeting1)) {
-        Targeting1.owned = Augmentations[AugmentationNames.Targeting1].owned;
         delete Augmentations[AugmentationNames.Targeting1];
     }
     AddToAugmentations(Targeting1);
@@ -187,7 +184,6 @@ initAugmentations = function() {
     Targeting2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.Targeting2)) {
-        Targeting2.owned = Augmentations[AugmentationNames.Targeting2].owned;
         delete Augmentations[AugmentationNames.Targeting2];
     } 
     AddToAugmentations(Targeting2);
@@ -200,7 +196,6 @@ initAugmentations = function() {
     Targeting3.addToFactions(["The Dark Army", "The Syndicate", "OmniTek Incorporated",
                              "KuaiGong International", "Blade Industries", "The Covenant"]);
     if (augmentationExists(AugmentationNames.Targeting3)) {
-        Targeting3.owned = Augmentations[AugmentationNames.Targeting3].owned;
         delete Augmentations[AugmentationNames.Targeting3];
     }
     AddToAugmentations(Targeting3);
@@ -213,7 +208,6 @@ initAugmentations = function() {
     SyntheticHeart.addToFactions(["KuaiGong International", "Fulcrum Secret Technologies", "Speakers for the Dead",
                                  "NWO", "The Covenant", "Daedalus", "Illuminati"]);
     if (augmentationExists(AugmentationNames.SyntheticHeart)) {
-        SyntheticHeart.owned = Augmentations[AugmentationNames.SyntheticHeart].owned;
         delete Augmentations[AugmentationNames.SyntheticHeart];
     }
     AddToAugmentations(SyntheticHeart);
@@ -227,7 +221,6 @@ initAugmentations = function() {
     SynfibrilMuscle.addToFactions(["KuaiGong International", "Fulcrum Secret Technologies", "Speakers for the Dead",
                                   "NWO", "The Covenant", "Daedalus", "Illuminati", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.SynfibrilMuscle)) {
-        SynfibrilMuscle.owned = Augmentations[AugmentationNames.SynfibrilMuscle].owned;
         delete Augmentations[AugmentationNames.SynfibrilMuscle];
     }
     AddToAugmentations(SynfibrilMuscle)
@@ -240,7 +233,6 @@ initAugmentations = function() {
     CombatRib1.addToFactions(["Slum Snakes", "The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.CombatRib1)) {
-        CombatRib1.owned = Augmentations[AugmentationNames.CombatRib1].owned;
         delete Augmentations[AugmentationNames.CombatRib1];
     }
     AddToAugmentations(CombatRib1);
@@ -252,7 +244,6 @@ initAugmentations = function() {
     CombatRib2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.CombatRib2)) {
-        CombatRib2.owned = Augmentations[AugmentationNames.CombatRib2].owned;
         delete Augmentations[AugmentationNames.CombatRib2];
     }
     AddToAugmentations(CombatRib2);
@@ -264,7 +255,6 @@ initAugmentations = function() {
     CombatRib3.addToFactions(["The Dark Army", "The Syndicate", "OmniTek Incorporated",
                              "KuaiGong International", "Blade Industries", "The Covenant"]);
     if (augmentationExists(AugmentationNames.CombatRib3)) {
-        CombatRib3.owned = Augmentations[AugmentationNames.CombatRib3].owned;
         delete Augmentations[AugmentationNames.CombatRib3];
     }
     AddToAugmentations(CombatRib3);
@@ -277,7 +267,6 @@ initAugmentations = function() {
     NanofiberWeave.addToFactions(["Tian Di Hui", "The Syndicate", "The Dark Army", "Speakers for the Dead",
                                  "Blade Industries", "Fulcrum Secret Technologies", "OmniTek Incorporated"]);
     if (augmentationExists(AugmentationNames.NanofiberWeave)) {
-        NanofiberWeave.owned = Augmentations[AugmentationNames.NanofiberWeave].owned;
         delete Augmentations[AugmentationNames.NanofiberWeave];
     } 
     AddToAugmentations(NanofiberWeave);
@@ -293,7 +282,6 @@ initAugmentations = function() {
     SubdermalArmor.addToFactions(["The Syndicate", "Fulcrum Secret Technologies", "Illuminati", "Daedalus",
                                  "The Covenant"]);
     if (augmentationExists(AugmentationNames.SubdermalArmor)) {
-        SubdermalArmor.owned = Augmentations[AugmentationNames.SubdermalArmor].owned;
         delete Augmentations[AugmentationNames.SubdermalArmor];
     }
     AddToAugmentations(SubdermalArmor);
@@ -306,7 +294,6 @@ initAugmentations = function() {
     WiredReflexes.addToFactions(["Tian Di Hui", "Slum Snakes", "Sector-12", "Volhaven", "Aevum", "Ishima", 
                                 "The Syndicate", "The Dark Army", "Speakers for the Dead"]);
     if (augmentationExists(AugmentationNames.WiredReflexes)) {
-        WiredReflexes.owned = Augmentations[AugmentationNames.WiredReflexes].owned;
         delete Augmentations[AugmentationNames.WiredReflexes];
     }
     AddToAugmentations(WiredReflexes);
@@ -318,7 +305,6 @@ initAugmentations = function() {
                                 "This augmentation increases the player's strength and defense by 75%.");
     GrapheneBoneLacings.addToFactions(["Fulcrum Secret Technologies", "The Covenant"]);
     if (augmentationExists(AugmentationNames.GrapheneBoneLacings)) {
-        GrapheneBoneLacings.owned = Augmentations[AugmentationNames.GrapheneBoneLacings].owned;
         delete Augmentations[AugmentationNames.GrapheneBoneLacings];
     }
     AddToAugmentations(GrapheneBoneLacings);
@@ -333,7 +319,6 @@ initAugmentations = function() {
     BionicSpine.addToFactions(["Speakers for the Dead", "The Syndicate", "KuaiGong International",
                               "OmniTek Incorporated", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.BionicSpine)) {
-        BionicSpine.owned = Augmentations[AugmentationNames.BionicSpine].owned;
         delete Augmentations[AugmentationNames.BionicSpine];
     }
     AddToAugmentations(BionicSpine);
@@ -345,7 +330,6 @@ initAugmentations = function() {
                                 "This augmentation increases all of the player's combat stats by 65%.");
     GrapheneBionicSpine.addToFactions(["Fulcrum Secret Technologies", "ECorp"]);
     if (augmentationExists(AugmentationNames.GrapheneBionicSpine)) {
-        GrapheneBionicSpine.owned = Augmentations[AugmentationNames.GrapheneBionicSpine].owned;
         delete Augmentations[AugmentationNames.GrapheneBionicSpine];
     }
     AddToAugmentations(GrapheneBionicSpine);
@@ -357,7 +341,6 @@ initAugmentations = function() {
     BionicLegs.addToFactions(["Speakers for the Dead", "The Syndicate", "KuaiGong International",
                              "OmniTek Incorporated", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.BionicLegs)) {
-        BionicLegs.owned = Augmentations[AugmentationNames.BionicLegs].owned;
         delete Augmentations[AugmentationNames.BionicLegs];
     }
     AddToAugmentations(BionicLegs);
@@ -369,7 +352,6 @@ initAugmentations = function() {
                                "This augmentation increases the player's agility by an additional 175%.");
     GrapheneBionicLegs.addToFactions(["MegaCorp", "ECorp", "Fulcrum Secret Technologies"]);
     if (augmentationExists(AugmentationNames.GrapheneBionicLegs)) {
-        GrapheneBionicLegs.owned = Augmentations[AugmentationNames.GrapheneBionicLegs].owned;
         delete Augmentations[AugmentationNames.GrapheneBionicLegs];
     }
     AddToAugmentations(GrapheneBionicLegs);
@@ -384,7 +366,6 @@ initAugmentations = function() {
     SpeechProcessor.addToFactions(["Tian Di Hui", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
                                   "Ishima", "Volhaven", "Silhouette"]);
     if (augmentationExists(AugmentationNames.SpeechProcessor)) {
-        SpeechProcessor.owned = Augmentations[AugmentationNames.SpeechProcessor].owned;
         delete Augmentations[AugmentationNames.SpeechProcessor];
     }
     AddToAugmentations(SpeechProcessor);
@@ -397,7 +378,6 @@ initAugmentations = function() {
                             "This augmentation increases the player's charisma and charisma experience gain rate by 15%");
     TITN41Injection.addToFactions(["Silhouette"]);            
     if (augmentationExists(AugmentationNames.TITN41Injection)) {
-        TITN41Injection.owned = Augmentations[AugmentationNames.TITN41Injection].owned;
         delete Augmentations[AugmentationNames.TITN41Injection];
     }
     AddToAugmentations(TITN41Injection);
@@ -413,7 +393,6 @@ initAugmentations = function() {
     EnhancedSocialInteractionImplant.addToFactions(["Bachman & Associates", "NWO", "Clarke Incorporated",
                                                    "OmniTek Incorporated", "Four Sigma"]);
     if (augmentationExists(AugmentationNames.EnhancedSocialInteractionImplant)) {
-        EnhancedSocialInteractionImplant.owned = Augmentations[AugmentationNames.EnhancedSocialInteractionImplant].owned;
         delete Augmentations[AugmentationNames.EnhancedSocialInteractionImplant];
     }
     AddToAugmentations(EnhancedSocialInteractionImplant);
@@ -425,7 +404,6 @@ initAugmentations = function() {
                     "capabilities. <br><br> This augmentation increases the player's hacking skill by 5%");
     BitWire.addToFactions(["CyberSec", "NiteSec"]);
     if (augmentationExists(AugmentationNames.BitWire)) {
-        BitWire.owned = Augmentations[AugmentationNames.BitWire].owned;
         delete Augmentations[AugmentationNames.BitWire];
     }
     AddToAugmentations(BitWire);
@@ -443,7 +421,6 @@ initAugmentations = function() {
                                        "Inreases the player's hacking skill by 12%");
     ArtificialBioNeuralNetwork.addToFactions(["BitRunners", "Fulcrum Secret Technologies"]);
     if (augmentationExists(AugmentationNames.ArtificialBioNeuralNetwork)) {
-        ArtificialBioNeuralNetwork.owned = Augmentations[AugmentationNames.ArtificialBioNeuralNetwork].owned;
         delete Augmentations[AugmentationNames.ArtificialBioNeuralNetwork];
     }
     AddToAugmentations(ArtificialBioNeuralNetwork);
@@ -458,7 +435,6 @@ initAugmentations = function() {
                                            "Increases the player's hacking experience gain rate by 5%");
     ArtificialSynapticPotentiation.addToFactions(["The Black Hand", "NiteSec"]);
     if (augmentationExists(AugmentationNames.ArtificialSynapticPotentiation)) {
-        ArtificialSynapticPotentiation.owned = Augmentations[AugmentationNames.ArtificialSynapticPotentiation].owned;
         delete Augmentations[AugmentationNames.ArtificialSynapticPotentiation];
     }
     AddToAugmentations(ArtificialSynapticPotentiation);
@@ -475,7 +451,6 @@ initAugmentations = function() {
                                     "Increases the player's hacking experience gain rate by 10%");
     EnhancedMyelinSheathing.addToFactions(["Fulcrum Secret Technologies", "BitRunners", "The Black Hand"]);
     if (augmentationExists(AugmentationNames.EnhancedMyelinSheathing)) {
-        EnhancedMyelinSheathing.owned = Augmentations[AugmentationNames.EnhancedMyelinSheathing].owned;
         delete Augmentations[AugmentationNames.EnhancedMyelinSheathing];
     }
     AddToAugmentations(EnhancedMyelinSheathing);
@@ -487,7 +462,6 @@ initAugmentations = function() {
                                 "This augmentation increases the player's hacking speed by 3%.");
     SynapticEnhancement.addToFactions(["CyberSec"]);
     if (augmentationExists(AugmentationNames.SynapticEnhancement)) {
-        SynapticEnhancement.owned = Augmentations[AugmentationNames.SynapticEnhancement].owned;
         delete Augmentations[AugmentationNames.SynapticEnhancement];
     }
     AddToAugmentations(SynapticEnhancement);
@@ -499,7 +473,6 @@ initAugmentations = function() {
                                        "This augmentation increases the player's hacking experience gain rate by 25%.");
     NeuralRetentionEnhancement.addToFactions(["NiteSec"]);
     if (augmentationExists(AugmentationNames.NeuralRetentionEnhancement)) {
-        NeuralRetentionEnhancement.owned = Augmentations[AugmentationNames.NeuralRetentionEnhancement].owned;
         delete Augmentations[AugmentationNames.NeuralRetentionEnhancement];
     }
     AddToAugmentations(NeuralRetentionEnhancement);
@@ -512,7 +485,6 @@ initAugmentations = function() {
                      "This augmentation increases the amount of money the player gains from hacking by 25%");
     DataJack.addToFactions(["BitRunners", "The Black Hand", "NiteSec", "Chongqing", "New Tokyo"]);
     if (augmentationExists(AugmentationNames.DataJack)) {
-        DataJack.owned = Augmentations[AugmentationNames.DataJack].owned;
         delete Augmentations[AugmentationNames.DataJack];
     }
     AddToAugmentations(DataJack);
@@ -528,7 +500,6 @@ initAugmentations = function() {
     ENM.addToFactions(["BitRunners", "The Black Hand", "NiteSec", "ECorp", "MegaCorp", 
                       "Fulcrum Secret Technologies", "NWO", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.ENM)) {
-        ENM.owned = Augmentations[AugmentationNames.ENM].owned;
         delete Augmentations[AugmentationNames.ENM];
     }
     AddToAugmentations(ENM);
@@ -546,7 +517,6 @@ initAugmentations = function() {
     ENMCore.addToFactions(["BitRunners", "The Black Hand", "ECorp", "MegaCorp", 
                           "Fulcrum Secret Technologies", "NWO", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.ENMCore)) {
-        ENMCore.owned = Augmentations[AugmentationNames.ENMCore].owned;
         delete Augmentations[AugmentationNames.ENMCore];
     }
     AddToAugmentations(ENMCore);
@@ -566,7 +536,6 @@ initAugmentations = function() {
     ENMCoreV2.addToFactions(["BitRunners", "ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                             "Blade Industries", "OmniTek Incorporated", "KuaiGong International"]);
     if (augmentationExists(AugmentationNames.ENMCoreV2)) {
-        ENMCoreV2.owned = Augmentations[AugmentationNames.ENMCoreV2].owned;
         delete Augmentations[AugmentationNames.ENMCoreV2];
     }
     AddToAugmentations(ENMCoreV2);
@@ -585,7 +554,6 @@ initAugmentations = function() {
     ENMCoreV3.addToFactions(["ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                             "Daedalus", "The Covenant", "Illuminati"]);
     if (augmentationExists(AugmentationNames.ENMCoreV3)) {
-        ENMCoreV3.owned = Augmentations[AugmentationNames.ENMCoreV3].owned;
         delete Augmentations[AugmentationNames.ENMCoreV3];
     }
     AddToAugmentations(ENMCoreV3);
@@ -598,7 +566,6 @@ initAugmentations = function() {
     ENMAnalyzeEngine.addToFactions(["ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                                    "Daedalus", "The Covenant", "Illuminati"]);
     if (augmentationExists(AugmentationNames.ENMAnalyzeEngine)) {
-        ENMAnalyzeEngine.owned = Augmentations[AugmentationNames.ENMAnalyzeEngine].owned;
         delete Augmentations[AugmentationNames.ENMAnalyzeEngine];
     }
     AddToAugmentations(ENMAnalyzeEngine);
@@ -614,7 +581,6 @@ initAugmentations = function() {
     ENMDMA.addToFactions(["ECorp", "MegaCorp", "Fulcrum Secret Technologies", "NWO",
                          "Daedalus", "The Covenant", "Illuminati"]);
     if (augmentationExists(AugmentationNames.ENMDMA)) {
-        ENMDMA.owned = Augmentations[AugmentationNames.ENMDMA].owned;
         delete Augmentations[AugmentationNames.ENMDMA];
     }
     AddToAugmentations(ENMDMA);
@@ -631,7 +597,6 @@ initAugmentations = function() {
                                    "Ishima", "Volhaven", "Bachman & Associates", "Clarke Incorporated", 
                                    "Four Sigma"]);
     if (augmentationExists(AugmentationNames.Neuralstimulator)) {
-        Neuralstimulator.owned = Augmentations[AugmentationNames.Neuralstimulator].owned;
         delete Augmentations[AugmentationNames.Neuralstimulator];
     }
     AddToAugmentations(Neuralstimulator);
@@ -646,7 +611,6 @@ initAugmentations = function() {
                               "Increases the amount of money the player gains from hacking by 20%");
     NeuralAccelerator.addToFactions(["BitRunners"]);
     if (augmentationExists(AugmentationNames.NeuralAccelerator)) {
-        NeuralAccelerator.owned = Augmentations[AugmentationNames.NeuralAccelerator].owned;
         delete Augmentations[AugmentationNames.NeuralAccelerator];
     }
     AddToAugmentations(NeuralAccelerator);
@@ -662,7 +626,6 @@ initAugmentations = function() {
                                       "Increases the player's hacking skill by 5%");
     CranialSignalProcessorsG1.addToFactions(["CyberSec"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG1)) {
-        CranialSignalProcessorsG1.owned = Augmentations[AugmentationNames.CranialSignalProcessorsG1].owned;
         delete Augmentations[AugmentationNames.CranialSignalProcessorsG1];
     }
     AddToAugmentations(CranialSignalProcessorsG1);
@@ -679,7 +642,6 @@ initAugmentations = function() {
                                       "Increases the player's hacking skill by 7%");
     CranialSignalProcessorsG2.addToFactions(["NiteSec"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG2)) {
-        CranialSignalProcessorsG2.owned = Augmentations[AugmentationNames.CranialSignalProcessorsG2].owned;
         delete Augmentations[AugmentationNames.CranialSignalProcessorsG2];
     }
     AddToAugmentations(CranialSignalProcessorsG2);
@@ -696,7 +658,6 @@ initAugmentations = function() {
                                       "Increases the player's hacking skill by 9%");
     CranialSignalProcessorsG3.addToFactions(["NiteSec", "The Black Hand"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG3)) {
-        CranialSignalProcessorsG3.owned = Augmentations[AugmentationNames.CranialSignalProcessorsG3].owned;
         delete Augmentations[AugmentationNames.CranialSignalProcessorsG3];
     }
     AddToAugmentations(CranialSignalProcessorsG3);
@@ -713,7 +674,6 @@ initAugmentations = function() {
                                       "Increases the amount of money the player can inject into servers using grow() by 25%");
     CranialSignalProcessorsG4.addToFactions(["The Black Hand"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG4)) {
-        CranialSignalProcessorsG4.owned = Augmentations[AugmentationNames.CranialSignalProcessorsG4].owned;
         delete Augmentations[AugmentationNames.CranialSignalProcessorsG4];
     }
     AddToAugmentations(CranialSignalProcessorsG4);
@@ -730,7 +690,6 @@ initAugmentations = function() {
                                       "Increases the amount of money the player can inject into servers using grow() by 75%");
     CranialSignalProcessorsG5.addToFactions(["BitRunners"]);
     if (augmentationExists(AugmentationNames.CranialSignalProcessorsG5)) {
-        CranialSignalProcessorsG5.owned = Augmentations[AugmentationNames.CranialSignalProcessorsG5].owned;
         delete Augmentations[AugmentationNames.CranialSignalProcessorsG5];
     }
     AddToAugmentations(CranialSignalProcessorsG5);
@@ -746,7 +705,6 @@ initAugmentations = function() {
                                   "Increases the player's hacking speed by 3%");
     NeuronalDensification.addToFactions(["Clarke Incorporated"]);
     if (augmentationExists(AugmentationNames.NeuronalDensification)) {
-        NeuronalDensification.owned = Augmentations[AugmentationNames.NeuronalDensification].owned;
         delete Augmentations[AugmentationNames.NeuronalDensification];
     }
     AddToAugmentations(NeuronalDensification);
@@ -762,7 +720,6 @@ initAugmentations = function() {
     NuoptimalInjectorImplant.addToFactions(["Tian Di Hui", "Volhaven", "New Tokyo", "Chongqing", "Ishima",
                                            "Clarke Incorporated", "Four Sigma", "Bachman & Associates"]);
     if (augmentationExists(AugmentationNames.NuoptimalInjectorImplant)) {
-        NuoptimalInjectorImplant.owned = Augmentations[AugmentationNames.NuoptimalInjectorImplant].owned;
         delete Augmentations[AugmentationNames.NuoptimalInjectorImplant];
     }
     AddToAugmentations(NuoptimalInjectorImplant);
@@ -778,7 +735,6 @@ initAugmentations = function() {
     SpeechEnhancement.addToFactions(["Tian Di Hui", "Speakers for the Dead", "Four Sigma", "KuaiGong International",
                                     "Clarke Incorporated", "Four Sigma", "Bachman & Associates"]);
     if (augmentationExists(AugmentationNames.SpeechEnhancement)) {
-        SpeechEnhancement.owned = Augmentations[AugmentationNames.SpeechEnhancement].owned;
         delete Augmentations[AugmentationNames.SpeechEnhancement];
     }
     AddToAugmentations(SpeechEnhancement);
@@ -793,7 +749,6 @@ initAugmentations = function() {
                       "Increases the amount of reputation the player gains when working for a company by 10%");
     FocusWire.addToFactions(["Bachman & Associates", "Clarke Incorporated", "Four Sigma", "KuaiGong International"]);
     if (augmentationExists(AugmentationNames.FocusWire)) {
-        FocusWire.owned = Augmentations[AugmentationNames.FocusWire].owned;
         delete Augmentations[AugmentationNames.FocusWire];
     }
     AddToAugmentations(FocusWire)
@@ -808,7 +763,6 @@ initAugmentations = function() {
                   "Increases the player's hacking skill by 8%");
     PCDNI.addToFactions(["Four Sigma", "OmniTek Incorporated", "ECorp", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.PCDNI)) {
-        PCDNI.owned = Augmentations[AugmentationNames.PCDNI].owned;
         delete Augmentations[AugmentationNames.PCDNI];
     }
     AddToAugmentations(PCDNI);
@@ -823,7 +777,6 @@ initAugmentations = function() {
                            "Increases the player's hacking skill by 10%");
     PCDNIOptimizer.addToFactions(["Fulcrum Secret Technologies", "ECorp", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.PCDNIOptimizer)) {
-        PCDNIOptimizer.owned = Augmentations[AugmentationNames.PCDNIOptimizer].owned;
         delete Augmentations[AugmentationNames.PCDNIOptimizer];
     }
     AddToAugmentations(PCDNIOptimizer);
@@ -840,7 +793,6 @@ initAugmentations = function() {
                                "Increases the player's hacking speed by 5%");
     PCDNINeuralNetwork.addToFactions(["Fulcrum Secret Technologies"]);
     if (augmentationExists(AugmentationNames.PCDNINeuralNetwork)) {
-        PCDNINeuralNetwork.owned = Augmentations[AugmentationNames.PCDNINeuralNetwork].owned;
         delete Augmentations[AugmentationNames.PCDNINeuralNetwork];
     }
     AddToAugmentations(PCDNINeuralNetwork);
@@ -855,7 +807,6 @@ initAugmentations = function() {
                           "Increases the amount of reputation the player gains for a faction by 10%");
     ADRPheromone1.addToFactions(["Tian Di Hui", "The Syndicate", "NWO", "MegaCorp", "Four Sigma"]);
     if (augmentationExists(AugmentationNames.ADRPheromone1)) {
-        ADRPheromone1.owned = Augmentations[AugmentationNames.ADRPheromone1].owned;
         delete Augmentations[AugmentationNames.ADRPheromone1];
     }
     AddToAugmentations(ADRPheromone1);
@@ -871,7 +822,6 @@ initAugmentations = function() {
                                  "Decreases the cost of purchasing a Hacknet Node Core by 15%");
     HacknetNodeCPUUpload.addToFactions(["Netburners"]);
     if (augmentationExists(AugmentationNames.HacknetNodeCPUUpload)) {
-        HacknetNodeCPUUpload.owned = Augmentations[AugmentationNames.HacknetNodeCPUUpload].owned;
         delete Augmentations[AugmentationNames.HacknetNodeCPUUpload];
     }
     AddToAugmentations(HacknetNodeCPUUpload);
@@ -886,7 +836,6 @@ initAugmentations = function() {
                                    "Decreases the cost of leveling up a Hacknet Node by 15%");
     HacknetNodeCacheUpload.addToFactions(["Netburners"]);
     if (augmentationExists(AugmentationNames.HacknetNodeCacheUpload)) {
-        HacknetNodeCacheUpload.owned = Augmentations[AugmentationNames.HacknetNodeCacheUpload].owned;
         delete Augmentations[AugmentationNames.HacknetNodeCacheUpload];
     }
     AddToAugmentations(HacknetNodeCacheUpload);
@@ -901,7 +850,6 @@ initAugmentations = function() {
                                  "Decreases the cost of purchasing a Hacknet Node by 10%");
     HacknetNodeNICUpload.addToFactions(["Netburners"]);
     if (augmentationExists(AugmentationNames.HacknetNodeNICUpload)) {
-        HacknetNodeNICUpload.owned = Augmentations[AugmentationNames.HacknetNodeNICUpload].owned;
         delete Augmentations[AugmentationNames.HacknetNodeNICUpload];
     }
     AddToAugmentations(HacknetNodeNICUpload);
@@ -914,7 +862,6 @@ initAugmentations = function() {
                                  "This augmentation increases the amount of money produced by Hacknet Nodes by 25%.");
     HacknetNodeKernelDNI.addToFactions(["Netburners"]);
     if (augmentationExists(AugmentationNames.HacknetNodeKernelDNI)) {
-        HacknetNodeKernelDNI.owned = Augmentations[AugmentationNames.HacknetNodeKernelDNI].owned;
         delete Augmentations[AugmentationNames.HacknetNodeKernelDNI];
     }
     AddToAugmentations(HacknetNodeKernelDNI);
@@ -927,7 +874,6 @@ initAugmentations = function() {
                                "This augmentation increases the amount of money produced by Hacknet Nodes by 45%.");
     HacknetNodeCoreDNI.addToFactions(["Netburners"]);
     if (augmentationExists(AugmentationNames.HacknetNodeCoreDNI)) {
-        HacknetNodeCoreDNI.owned = Augmentations[AugmentationNames.HacknetNodeCoreDNI].owned;
         delete Augmentations[AugmentationNames.HacknetNodeCoreDNI];
     }
     AddToAugmentations(HacknetNodeCoreDNI);
@@ -936,7 +882,6 @@ initAugmentations = function() {
     var NeuroFluxGovernor = new Augmentation(AugmentationNames.NeuroFluxGovernor);
     if (augmentationExists(AugmentationNames.NeuroFluxGovernor)) {
         var oldAug = Augmentations[AugmentationNames.NeuroFluxGovernor];
-        NeuroFluxGovernor.owned = oldAug.owned;
         NeuroFluxGovernor.level = oldAug.level;
         mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level);
         NeuroFluxGovernor.setRequirements(500 * mult, 750000 * mult);
@@ -962,7 +907,6 @@ initAugmentations = function() {
                           "This augmentation increases the player's experience gain rate for all stats by 10%");
     Neurotrainer1.addToFactions(["CyberSec"]);
     if (augmentationExists(AugmentationNames.Neurotrainer1)) {
-        Neurotrainer1.owned = Augmentations[AugmentationNames.Neurotrainer1].owned;
         delete Augmentations[AugmentationNames.Neurotrainer1];
     }
     AddToAugmentations(Neurotrainer1);
@@ -975,7 +919,6 @@ initAugmentations = function() {
                           "This augmentation increases the player's experience gain rate for all stats by 15%");
     Neurotrainer2.addToFactions(["BitRunners", "NiteSec"]);
     if (augmentationExists(AugmentationNames.Neurotrainer2)) {
-        Neurotrainer2.owned = Augmentations[AugmentationNames.Neurotrainer2].owned;
         delete Augmentations[AugmentationNames.Neurotrainer2];
     }
     AddToAugmentations(Neurotrainer2);
@@ -988,7 +931,6 @@ initAugmentations = function() {
                           "This augmentation increases the player's experience gain rate for all stats by 20%");
     Neurotrainer3.addToFactions(["NWO", "Four Sigma"]);
     if (augmentationExists(AugmentationNames.Neurotrainer3)) {
-        Neurotrainer3.owned = Augmentations[AugmentationNames.Neurotrainer3].owned;
         delete Augmentations[AugmentationNames.Neurotrainer3];
     }
     AddToAugmentations(Neurotrainer3);
@@ -1004,7 +946,6 @@ initAugmentations = function() {
     Hypersight.setRequirements(60000, 550000000);
     Hypersight.addToFactions(["Blade Industries", "KuaiGong International"]);
     if (augmentationExists(AugmentationNames.Hypersight)) {
-        Hypersight.owned = Augmentations[AugmentationNames.Hypersight].owned;
         delete Augmentations[AugmentationNames.Hypersight];
     }
     AddToAugmentations(Hypersight);
@@ -1019,7 +960,6 @@ initAugmentations = function() {
     LuminCloaking1.setRequirements(600, 1000000);
     LuminCloaking1.addToFactions(["Slum Snakes", "Tetrads"]);
     if (augmentationExists(AugmentationNames.LuminCloaking1)) {
-        LuminCloaking1.owned = Augmentations[AugmentationNames.LuminCloaking1].owned;
         delete Augmentations[AugmentationNames.LuminCloaking1];
     }
     AddToAugmentations(LuminCloaking1);
@@ -1036,7 +976,6 @@ initAugmentations = function() {
     LuminCloaking2.setRequirements(2000, 5000000);
     LuminCloaking2.addToFactions(["Slum Snakes", "Tetrads"]);
     if (augmentationExists(AugmentationNames.LuminCloaking2)) {
-        LuminCloaking2.owned = Augmentations[AugmentationNames.LuminCloaking2].owned;
         delete Augmentations[AugmentationNames.LuminCloaking2];
     }
     AddToAugmentations(LuminCloaking2);
@@ -1051,7 +990,6 @@ initAugmentations = function() {
     SmartSonar.setRequirements(9000, 12000000);
     SmartSonar.addToFactions(["Slum Snakes"]);
     if (augmentationExists(AugmentationNames.SmartSonar)) {
-        SmartSonar.owned = Augmentations[AugmentationNames.SmartSonar].owned;
         delete Augmentations[AugmentationNames.SmartSonar];
     }
     AddToAugmentations(SmartSonar);
@@ -1066,7 +1004,6 @@ initAugmentations = function() {
     PowerRecirculator.setRequirements(10000, 33000000);
     PowerRecirculator.addToFactions(["Tetrads", "The Dark Army", "The Syndicate", "NWO"]);
     if (augmentationExists(AugmentationNames.PowerRecirculator)) {
-        PowerRecirculator.owned = Augmentations[AugmentationNames.PowerRecirculator].owned;
         delete Augmentations[AugmentationNames.PowerRecirculator];
     }
     AddToAugmentations(PowerRecirculator);
@@ -1088,7 +1025,6 @@ initAugmentations = function() {
     QLink.setRequirements(750000, 1200000000);
     QLink.addToFactions(["Illuminati"]);
     if (augmentationExists(AugmentationNames.QLink)) {
-        QLink.owned = Augmentations[AugmentationNames.QLink].owned;
         delete Augmentations[AugmentationNames.QLink];
     }
     AddToAugmentations(QLink);
@@ -1108,7 +1044,6 @@ initAugmentations = function() {
     SPTN97.setRequirements(500000, 950000000);
     SPTN97.addToFactions(["The Covenant"]);
     if (augmentationExists(AugmentationNames.SPTN97)) {
-        SPTN97.owned = Augmentations[AugmentationNames.SPTN97].owned;
         delete Augmentations[AugmentationNames.SPTN97];
     }
     AddToAugmentations(SPTN97);
@@ -1121,7 +1056,6 @@ initAugmentations = function() {
     HiveMind.setRequirements(600000, 1000000000);
     HiveMind.addToFactions(["ECorp"]);
     if (augmentationExists(AugmentationNames.HiveMind)) {
-        HiveMind.owned = Augmentations[AugmentationNames.HiveMind].owned;
         delete Augmentations[AugmentationNames.HiveMind];
     }
     AddToAugmentations(HiveMind);
@@ -1138,7 +1072,6 @@ initAugmentations = function() {
     CordiARCReactor.setRequirements(450000, 975000000);
     CordiARCReactor.addToFactions(["MegaCorp"]);
     if (augmentationExists(AugmentationNames.CordiARCReactor)) {
-        CordiARCReactor.owned = Augmentations[AugmentationNames.CordiARCReactor].owned;
         delete Augmentations[AugmentationNames.CordiARCReactor];
     }
     AddToAugmentations(CordiARCReactor);
@@ -1156,7 +1089,6 @@ initAugmentations = function() {
     SmartJaw.setRequirements(150000, 500000000);
     SmartJaw.addToFactions(["Bachman & Associates"]);
     if (augmentationExists(AugmentationNames.SmartJaw)) {
-        SmartJaw.owned = Augmentations[AugmentationNames.SmartJaw].owned;
         delete Augmentations[AugmentationNames.SmartJaw];
     }
     AddToAugmentations(SmartJaw);
@@ -1171,7 +1103,6 @@ initAugmentations = function() {
     Neotra.setRequirements(225000, 550000000);
     Neotra.addToFactions(["Blade Industries"]);
     if (augmentationExists(AugmentationNames.Neotra)) {
-        Neotra.owned = Augmentations[AugmentationNames.Neotra].owned;
         delete Augmentations[AugmentationNames.Neotra];
     }
     AddToAugmentations(Neotra);
@@ -1187,7 +1118,6 @@ initAugmentations = function() {
     Xanipher.setRequirements(350000, 800000000);
     Xanipher.addToFactions(["NWO"]);
     if (augmentationExists(AugmentationNames.Xanipher)) {
-        Xanipher.owned = Augmentations[AugmentationNames.Xanipher].owned;
         delete Augmentations[AugmentationNames.Xanipher];
     }
     AddToAugmentations(Xanipher);
@@ -1201,7 +1131,6 @@ initAugmentations = function() {
     nextSENS.setRequirements(175000, 375000000); 
     nextSENS.addToFactions(["Clarke Incorporated"]);
     if (augmentationExists(AugmentationNames.nextSENS)) {
-        nextSENS.owned = Augmentations[AugmentationNames.nextSENS].owned;
         delete Augmentations[AugmentationNames.nextSENS];
     }
     AddToAugmentations(nextSENS); 
@@ -1217,7 +1146,6 @@ initAugmentations = function() {
     OmniTekInfoLoad.setRequirements(250000, 550000000)
     OmniTekInfoLoad.addToFactions(["OmniTek Incorporated"]);
     if (augmentationExists(AugmentationNames.OmniTekInfoLoad)) {
-        OmniTekInfoLoad.owned = Augmentations[AugmentationNames.OmniTekInfoLoad].owned;
         delete Augmentations[AugmentationNames.OmniTekInfoLoad];
     }
     AddToAugmentations(OmniTekInfoLoad);
@@ -1235,7 +1163,6 @@ initAugmentations = function() {
     PhotosyntheticCells.setRequirements(225000, 525000000);
     PhotosyntheticCells.addToFactions(["KuaiGong International"]);
     if (augmentationExists(AugmentationNames.PhotosyntheticCells)) {
-        PhotosyntheticCells.owned = Augmentations[AugmentationNames.PhotosyntheticCells].owned;
         delete Augmentations[AugmentationNames.PhotosyntheticCells];
     }
     AddToAugmentations(PhotosyntheticCells);
@@ -1254,7 +1181,6 @@ initAugmentations = function() {
     Neurolink.setRequirements(350000, 850000000);
     Neurolink.addToFactions(["BitRunners"]);
     if (augmentationExists(AugmentationNames.Neurolink)) {
-        Neurolink.owned = Augmentations[AugmentationNames.Neurolink].owned;
         delete Augmentations[AugmentationNames.Neurolink];
     }
     AddToAugmentations(Neurolink);
@@ -1273,7 +1199,6 @@ initAugmentations = function() {
     TheBlackHand.setRequirements(40000, 100000000);
     TheBlackHand.addToFactions(["The Black Hand"]);
     if (augmentationExists(AugmentationNames.TheBlackHand)) {
-        TheBlackHand.owned = Augmentations[AugmentationNames.TheBlackHand].owned;
         delete Augmentations[AugmentationNames.TheBlackHand];
     }
     AddToAugmentations(TheBlackHand);
@@ -1289,7 +1214,6 @@ initAugmentations = function() {
     CRTX42AA.setRequirements(18000, 45000000);
     CRTX42AA.addToFactions(["NiteSec"]);
     if (augmentationExists(AugmentationNames.CRTX42AA)) {
-        CRTX42AA.owned = Augmentations[AugmentationNames.CRTX42AA].owned;
         delete Augmentations[AugmentationNames.CRTX42AA];
     }
     AddToAugmentations(CRTX42AA);
@@ -1303,7 +1227,6 @@ initAugmentations = function() {
     Neuregen.setRequirements(15000, 75000000);
     Neuregen.addToFactions(["Chongqing"]);
     if (augmentationExists(AugmentationNames.Neuregen)) {
-        Neuregen.owned = Augmentations[AugmentationNames.Neuregen].owned;
         delete Augmentations[AugmentationNames.Neuregen];
     }
     AddToAugmentations(Neuregen);
@@ -1319,7 +1242,6 @@ initAugmentations = function() {
     CashRoot.setRequirements(5000, 25000000);
     CashRoot.addToFactions(["Sector-12"]);
     if (augmentationExists(AugmentationNames.CashRoot)) {
-        CashRoot.owned = Augmentations[AugmentationNames.CashRoot].owned;
         delete Augmentations[AugmentationNames.CashRoot];
     }
     AddToAugmentations(CashRoot);
@@ -1335,7 +1257,6 @@ initAugmentations = function() {
     NutriGen.setRequirements(2500, 500000);
     NutriGen.addToFactions(["New Tokyo"]);
     if (augmentationExists(AugmentationNames.NutriGen)) {
-        NutriGen.owned = Augmentations[AugmentationNames.NutriGen].owned;
         delete Augmentations[AugmentationNames.NutriGen];
     }
     AddToAugmentations(NutriGen);
@@ -1355,7 +1276,6 @@ initAugmentations = function() {
     INFRARet.setRequirements(3000, 6000000);
     INFRARet.addToFactions(["Ishima"]);
     if (augmentationExists(AugmentationNames.INFRARet)) {
-        INFRARet.owned = Augmentations[AugmentationNames.INFRARet].owned;
         delete Augmentations[AugmentationNames.INFRARet];
     }
     AddToAugmentations(INFRARet);
@@ -1369,7 +1289,6 @@ initAugmentations = function() {
     DermaForce.setRequirements(6000, 10000000);
     DermaForce.addToFactions(["Volhaven"]);
     if (augmentationExists(AugmentationNames.DermaForce)) {
-        DermaForce.owned = Augmentations[AugmentationNames.DermaForce].owned;
         delete Augmentations[AugmentationNames.DermaForce];
     }
     AddToAugmentations(DermaForce);
@@ -1386,7 +1305,6 @@ initAugmentations = function() {
     GrapheneBrachiBlades.setRequirements(90000, 500000000);
     GrapheneBrachiBlades.addToFactions(["Speakers for the Dead"]);
     if (augmentationExists(AugmentationNames.GrapheneBrachiBlades)) {
-        GrapheneBrachiBlades.owned = Augmentations[AugmentationNames.GrapheneBrachiBlades].owned;
         delete Augmentations[AugmentationNames.GrapheneBrachiBlades];
     }
     AddToAugmentations(GrapheneBrachiBlades);
@@ -1400,7 +1318,6 @@ initAugmentations = function() {
     GrapheneBionicArms.setRequirements(200000, 750000000);
     GrapheneBionicArms.addToFactions(["The Dark Army"]);
     if (augmentationExists(AugmentationNames.GrapheneBionicArms)) {
-        GrapheneBionicArms.owned = Augmentations[AugmentationNames.GrapheneBionicArms].owned;
         delete Augmentations[AugmentationNames.GrapheneBionicArms];
     }
     AddToAugmentations(GrapheneBionicArms);
@@ -1415,7 +1332,6 @@ initAugmentations = function() {
     BrachiBlades.setRequirements(5000, 18000000);
     BrachiBlades.addToFactions(["The Syndicate"]);
     if (augmentationExists(AugmentationNames.BrachiBlades)) {
-        BrachiBlades.owned = Augmentations[AugmentationNames.BrachiBlades].owned;
         delete Augmentations[AugmentationNames.BrachiBlades];
     }
     AddToAugmentations(BrachiBlades);
@@ -1428,7 +1344,6 @@ initAugmentations = function() {
     BionicArms.setRequirements(25000, 55000000);
     BionicArms.addToFactions(["Tetrads"]);
     if (augmentationExists(AugmentationNames.BionicArms)) {
-        BionicArms.owned = Augmentations[AugmentationNames.BionicArms].owned;
         delete Augmentations[AugmentationNames.BionicArms];
     }
     AddToAugmentations(BionicArms);
@@ -1444,18 +1359,12 @@ initAugmentations = function() {
     SNA.setRequirements(2500, 6000000);
     SNA.addToFactions(["Tian Di Hui"]);
     if (augmentationExists(AugmentationNames.SNA)) {
-        SNA.owned = Augmentations[AugmentationNames.SNA].owned;
         delete Augmentations[AugmentationNames.SNA];
     }
     AddToAugmentations(SNA);
 }
 
-applyAugmentation = function(aug, reapply=false) {
-    if (reapply == false && aug.name != AugmentationNames.NeuroFluxGovernor && aug.owned) {
-        throw new Error("This Augmentation is already owned/applied...somethings wrong");
-        return;
-    }
-    
+applyAugmentation = function(aug, reapply=false) { 
     switch(aug.name) {
         //Combat stat augmentations
         case AugmentationNames.Targeting1:
@@ -1924,17 +1833,24 @@ applyAugmentation = function(aug, reapply=false) {
             return;
     }
 
-    aug.owned = true;
-    if (aug.name == AugmentationNames.NeuroFluxGovernor &&
-        Player.augmentations.indexOf(AugmentationNames.NeuroFluxGovernor) != -1) {
-        //Already have this aug, just upgrade the level
-        return;
+    if (aug.name == AugmentationNames.NeuroFluxGovernor) {
+        for (var i = 0; i > Player.augmentations.length; ++i) {
+            if (Player.augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+                //Already have this aug, just upgrade the level
+                return;
+            }
+        }
     }
     
     if (!reapply) {
-        Player.augmentations.push(aug.name);
-        ++Player.numAugmentations;
+        var ownedAug = new PlayerOwnedAugmentation(aug.name);
+        Player.augmentations.push(ownedAug);
     }
+}
+
+function PlayerOwnedAugmentation(name) {
+    this.name = name;
+    this.level = 1;
 }
 
 PlayerObject.prototype.reapplyAllAugmentations = function() {
@@ -1974,7 +1890,17 @@ PlayerObject.prototype.reapplyAllAugmentations = function() {
     this.work_money_mult = 1;
     
     for (i = 0; i < this.augmentations.length; ++i) {
-        var aug = Augmentations[this.augmentations[i]];
+        //Compatibility with new version
+        if (typeof this.augmentations[i] === 'string' || this.augmentations[i] instanceof String) {
+            var newOwnedAug = new PlayerOwnedAugmentation(this.augmentations[i]);
+            if (this.augmentations[i] == AugmentationNames.NeuroFluxGovernor) {
+                newOwnedAug.level = Augmentations[AugmentationNames.NeuroFluxGovernor].level;
+            }
+            this.augmentations[i] = newOwnedAug;
+        }
+        
+        var augName = this.augmentations[i].name;
+        var aug = Augmentations[augName];
         if (aug == null) {
             console.log("WARNING: Invalid augmentation name");
             continue;
@@ -1998,7 +1924,8 @@ function giveAllAugmentations() {
     for (var name in Augmentations) {
         var aug = Augmentations[name];
         if (aug == null) {continue;}
-        Player.augmentations.push(name);
+        var ownedAug = new PlayerOwnedAugmentation(name);
+        Player.augmentations.push(ownedAug);
     }
     Player.reapplyAllAugmentations();
 }

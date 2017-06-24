@@ -338,6 +338,8 @@ initFactions = function() {
 PlayerObject.prototype.checkForFactionInvitations = function() {
     invitedFactions = []; //Array which will hold all Factions th eplayer should be invited to
     
+    var numAugmentations = this.augmentations.length;
+    
     var company = Companies[this.companyName];
     var companyRep = 0;
     if (company != null) {
@@ -347,7 +349,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Illuminati
     var illuminatiFac = Factions["Illuminati"];
     if (!illuminatiFac.isBanned && !illuminatiFac.isMember && !illuminatiFac.alreadyInvited && 
-        this.numAugmentations >= 30 && 
+        numAugmentations >= 30 && 
         this.money >= 150000000000 &&
         this.hacking_skill >= 1200 &&
         this.strength >= 1000 && this.defense >= 1000 && 
@@ -358,7 +360,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Daedalus
     var daedalusFac = Factions["Daedalus"];
     if (!daedalusFac.isBanned && !daedalusFac.isMember && !daedalusFac.alreadyInvited && 
-        this.numAugmentations >= 30 && 
+        numAugmentations >= 30 && 
         this.money >= 100000000000 &&
         (this.hacking_skill >= 2500 ||
             (this.strength >= 1500 && this.defense >= 1500 && 
@@ -369,7 +371,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //The Covenant
     var covenantFac = Factions["The Covenant"];
     if (!covenantFac.isBanned && !covenantFac.isMember && !covenantFac.alreadyInvited &&
-        this.numAugmentations >= 30 &&
+        numAugmentations >= 30 &&
         this.money >= 75000000000 &&
         this.hacking_skill >= 850 &&
         this.strength >= 850 &&

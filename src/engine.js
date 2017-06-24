@@ -376,9 +376,8 @@ var Engine = {
         }
         
         for (var i = 0; i < Player.augmentations.length; ++i) {
-            var augName = Player.augmentations[i];
+            var augName = Player.augmentations[i].name;
             var aug = Augmentations[augName];
-            
             
             var item = document.createElement("li");
             var hElem = document.createElement("h2");
@@ -647,6 +646,7 @@ var Engine = {
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
             CompanyPositions.init();
+            initAugmentations();
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
