@@ -97,9 +97,9 @@ function determineCrimeChanceShoplift() {
 }
 
 function determineCrimeChanceMug() {
-    var chance = ((2   *Player.strength / CONSTANTS.MaxSkillLevel + 
+    var chance = ((1.5 *Player.strength / CONSTANTS.MaxSkillLevel + 
                    0.5 * Player.defense / CONSTANTS.MaxSkillLevel + 
-                   2   * Player.dexterity / CONSTANTS.MaxSkillLevel +
+                   1.5 * Player.dexterity / CONSTANTS.MaxSkillLevel +
                    0.5 * Player.agility / CONSTANTS.MaxSkillLevel)) * 5;
     chance *= Player.crime_success_mult;
     return Math.min(chance, 1);

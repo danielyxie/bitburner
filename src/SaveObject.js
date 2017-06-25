@@ -9,7 +9,6 @@ function BitburnerSaveObject() {
     this.CompaniesSave              = "";
     this.FactionsSave               = "";
     this.SpecialServerIpsSave       = "";
-    this.AugmentationsSave          = "";
     this.AliasesSave                = "";
     this.MessagesSave               = "";
     this.VersionSave                = "";
@@ -35,11 +34,10 @@ BitburnerSaveObject.prototype.saveGame = function() {
     this.CompaniesSave              = JSON.stringify(Companies);
     this.FactionsSave               = JSON.stringify(Factions);
     this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
-    this.AugmentationsSave          = JSON.stringify(Augmentations);
+    //this.AugmentationsSave          = JSON.stringify(Augmentations);
     this.AliasesSave                = JSON.stringify(Aliases);
     this.MessagesSave               = JSON.stringify(Messages);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
-    
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
     window.localStorage.setItem("bitburnerSave", saveString);
     
@@ -60,7 +58,7 @@ loadGame = function(saveObj) {
     Companies       = JSON.parse(saveObj.CompaniesSave, Reviver);
     Factions        = JSON.parse(saveObj.FactionsSave, Reviver);
     SpecialServerIps = JSON.parse(saveObj.SpecialServerIpsSave, Reviver);
-    Augmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
+    
     if (saveObj.hasOwnProperty("AliasesSave")) {
         try {
             Aliases         = JSON.parse(saveObj.AliasesSave, Reviver);
@@ -96,6 +94,9 @@ loadGame = function(saveObj) {
                             AllServers[ip].runningScripts.length = 0;
                         }
                     }
+                }
+                if (CONSTANTS.Version == "0.23.0.BETA") {
+                    Augmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
                 }
                 createNewUpdateText();
             }
@@ -166,6 +167,9 @@ loadImportedGame = function(saveObj, saveString) {
                                 tempAllServers[ip].runningScripts.length = 0;
                             }
                         }
+                    }
+                    if (CONSTANTS.Version == "0.23.0.BETA") {
+                        Augmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
                     }
                     createNewUpdateText();
                 }

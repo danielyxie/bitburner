@@ -511,13 +511,16 @@ div.faction-clear {
     overflow-y: scroll;
 }
 
-#augmentations-list li {
+#augmentations-list li,
+#queued-augmentations-list li {
     width: 70%;
     background-color: #333;
 }
 
 #augmentations-list h2,
-#augmentations-list p {
+#augmentations-list p,
+#queued-augmentations-list h2,
+#queued-augmentations-list p {
     margin: 4px;
     color: var(--my-font-color);
 	padding: 8px;

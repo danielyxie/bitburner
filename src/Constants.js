@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.22.1",
+    Version:                "0.23.0.BETA",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -29,8 +29,8 @@ CONSTANTS = {
     HacknetNodeMaxCores: 16,
     
     /* Faction and Company favor */
-    FactionReputationToFavor: 7500,
-    CompanyReputationToFavor: 5000,
+    FactionReputationToFavor: 6000,
+    CompanyReputationToFavor: 4500,
     
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
@@ -655,6 +655,13 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.23.0<br>" + 
+    "-You can now purchase multiple Augmentations in a run. When you purchase an Augmentation you will lose money equal to the price " + 
+    "and then the cost of purchasing another Augmentation during this run will be increased by 50%. You do not gain the benefits " + 
+    "of your purchased Augmentations until you install them. This installation can be done through the 'Augmentation' tab. When " +
+    "you install your Augmentations, your game will reset like before. <br>" + 
+    "-Reputation needed to gain a favor from faction decreased from 7500 to 6000<br>" + 
+    "-Reputation needed to gain a favor from company decreased from 5000 to 4500<br>" + 
     "v0.22.1<br>" + 
     "-You no longer lose progress on creating programs when cancelling your work. Your progress will be saved and you will pick up " + 
     "where you left off when you start working on it again<br>" + 

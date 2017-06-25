@@ -530,6 +530,22 @@ function evaluate(exp, workerScript) {
                     }, function(e) {
                         reject(e);
                     });
+                } else if (exp.func.value == "getServerMaxMoney") {
+                    if (exp.args.length != 1) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "getServerMaxMoney() call has incorrect number of arguments. Takes 1 argument"));
+                    }
+                    var ipPromise = evaluate(exp.args[0], workerScript);
+                    ipPromise.then(function(ip) {
+                        var server = getServer(ip);
+                        if (server == null) {
+                            workerScript.scriptRef.log("getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerMaxMoney() command"));
+                        }
+                        workerScript.scriptRef.log("getServerMaxMoney() returned " + formatNumber(server.moneyMax, 0) + " for " + server.hostname);
+                        resolve(server.moneyMax);
+                    }, function(e) {
+                        reject(e);
+                    });
                 } else if (exp.func.value == "fileExists") {
                     if (exp.args.length != 1 && exp.args.length != 2) {
                         return reject(makeRuntimeRejectMsg(workerScript, "fileExists() call has incorrect number of arguments. Takes 1 or 2 arguments")); 
@@ -620,6 +636,10 @@ function evaluate(exp, workerScript) {
                     displayHacknetNodesContent();
                     workerScript.scriptRef.log("Purchased new Hacknet Node with name: " + name);
                     resolve(numOwned);
+                } else if (exp.func.value == "val") {
+                    if (exp.args.length != 1) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "val() call has incorrect number of arguments. Takes 1 arguments"));
+                    }
                 } else {
                     reject(makeRuntimeRejectMsg(workerScript, "Invalid function: " + exp.func.value));
                 } 

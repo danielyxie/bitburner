@@ -548,10 +548,29 @@
 		</ul>
     </div>
 	
-	<!-- Installed augmentations -->
+	<!-- Augmentations -->
 	<div id="augmentations-container">
-        <h1> Augmentations </h1>
-        <p> Lists all augmentations you have installed </p>
+        <h1> Purchased Augmentations </h1>
+        <p style="width:70%;"> 
+        Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them. 
+        <br>WARNING: Purchasing an Augmentation resets most of your progress, including: <br><br>
+                Stats/Skill levels and Experience <br>
+                Money <br>
+                Scripts on every computer but your home computer<br>
+                Purchased servers <br>
+                Hacknet Nodes <br>
+                Faction/Company reputation <br><br>
+                Purchasing an Augmentation lets you start over with the perks and benefits granted by all
+                of the Augmentations you have ever purchased. Also, you will keep any scripts and RAM upgrades
+                on your home computer (but you will lose all programs besides NUKE.exe). 
+        </p>
+        <br><br>
+        <ul id="queued-augmentations-list"></ul>
+        <br>
+        <a id="install-augmentations-button" class="a-link-button"> Install Augmentations </a>
+        <br><br>
+        <h1> Installed Augmentations </h1>
+        <p style="width:70%;"> List of all augmentations that have been installed. You have gained the effects of these augmentations </p>
         <ul id="augmentations-list">
         </ul>
 	</div>
@@ -703,17 +722,6 @@
             <h2 id="purchase-augmentation-box-aug-name"> </h2>
             <p id="purchase-augmentation-box-aug-info"> </p>
             <p id="purchase-augmentation-box-text"> </p>
-            <p> <br> WARNING: Purchasing an Augmentation resets most of your progress, including: <br><br>
-                Stats/Skill levels and Experience <br>
-                Money <br>
-                Scripts on every computer but your home computer<br>
-                Purchased servers <br>
-                Hacknet Nodes <br>
-                Faction/Company reputation <br><br>
-                Purchasing an Augmentation lets you start over with the perks and benefits granted by all
-                of the Augmentations you have ever purchased. Also, you will keep any scripts and RAM upgrades
-                on your home computer (but you will lose all programs besides NUKE.exe). 
-            </p>
             <span id="purchase-augmentation-box-confirm"> Purchase </span>
             <span id="purchase-augmentation-box-cancel"> Cancel </span>
         </div>

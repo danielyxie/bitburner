@@ -972,6 +972,16 @@ displayFactionAugmentations = function(factionName) {
     for (var i = 0; i < faction.augmentations.length; ++i) {
         (function () {
             var aug = Augmentations[faction.augmentations[i]];
+            if (aug == null) {
+                console.log("ERROR: Invalid Augmentation");
+                return;
+            }
+            var owned = false;
+            for (var j = 0; j < Player.queuedAugmentations.length; ++j) {
+                if (Player.queuedAugmentations[j].name == aug.name) {
+                    owned = true;
+                }
+            }
             var item = document.createElement("li");
             var span = document.createElement("span");
             var aDiv = document.createElement("div");
@@ -979,7 +989,7 @@ displayFactionAugmentations = function(factionName) {
             var pElem = document.createElement("p");
             aElem.setAttribute("href", "#");
             var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
-            if (aug.name != AugmentationNames.NeuroFluxGovernor && aug.owned) {
+            if (aug.name != AugmentationNames.NeuroFluxGovernor && (aug.owned || owned)) {
                 aElem.setAttribute("class", "a-link-button-inactive");
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
@@ -994,7 +1004,7 @@ displayFactionAugmentations = function(factionName) {
             pElem.style.display = "inline";
             aElem.innerHTML = aug.name;
             if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-                aElem.innerHTML += " - Level " + (aug.level + 1);
+                aElem.innerHTML += " - Level " + (getNextNeurofluxLevel());
             }
             span.style.display = "inline-block"
             

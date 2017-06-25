@@ -2,6 +2,7 @@
 function Augmentation(name) {
     this.name = name;
     this.info = "";
+    this.owned = false;
 
     //Price and reputation base requirements (can change based on faction multipliers)
     this.baseRepRequirement = 0;        
@@ -152,6 +153,11 @@ AugmentationNames = {
 }
 
 initAugmentations = function() {
+    for (var name in Factions) {
+        if (Factions.hasOwnProperty(name)) {
+            Factions[name].augmentations = [];
+        }
+    }
     //Combat stat augmentations
     var HemoRecirculator = new Augmentation(AugmentationNames.HemoRecirculator);
     HemoRecirculator.setInfo("A heart implant that greatly increases the body's ability to effectively use and pump " + 
@@ -819,7 +825,7 @@ initAugmentations = function() {
                                  "for the Hacknet Node that provides better performance.<br><br>" + 
                                  "This augmentation:<br>" + 
                                  "Increases the amount of money produced by Hacknet Nodes by 15%<br>" + 
-                                 "Decreases the cost of purchasing a Hacknet Node Core by 15%");
+                                 "Decreases the cost of purchasing a Hacknet Node by 15%");
     HacknetNodeCPUUpload.addToFactions(["Netburners"]);
     if (augmentationExists(AugmentationNames.HacknetNodeCPUUpload)) {
         delete Augmentations[AugmentationNames.HacknetNodeCPUUpload];
@@ -881,13 +887,16 @@ initAugmentations = function() {
     //Misc/Hybrid augmentations
     var NeuroFluxGovernor = new Augmentation(AugmentationNames.NeuroFluxGovernor);
     if (augmentationExists(AugmentationNames.NeuroFluxGovernor)) {
-        var oldAug = Augmentations[AugmentationNames.NeuroFluxGovernor];
-        NeuroFluxGovernor.level = oldAug.level;
+        var nextLevel = getNextNeurofluxLevel();
+        NeuroFluxGovernor.level = nextLevel - 1;
         mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level);
         NeuroFluxGovernor.setRequirements(500 * mult, 750000 * mult);
         delete Augmentations[AugmentationNames.NeuroFluxGovernor];
     } else {
-        NeuroFluxGovernor.setRequirements(250, 500000);
+        var nextLevel = getNextNeurofluxLevel();
+        NeuroFluxGovernor.level = nextLevel - 1;
+        mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level);
+        NeuroFluxGovernor.setRequirements(500 * mult, 750000 * mult);
     }
     NeuroFluxGovernor.setInfo("A device that is embedded in the back of the neck. The NeuroFlux Governor " + 
                               "monitors and regulates nervous impulses coming to and from the spinal column, " +
@@ -1362,9 +1371,18 @@ initAugmentations = function() {
         delete Augmentations[AugmentationNames.SNA];
     }
     AddToAugmentations(SNA);
+    
+    //Update costs based on how many have been purchased
+    var mult = Math.pow(1.5, Player.queuedAugmentations.length);
+    for (var name in Augmentations) {
+        if (Augmentations.hasOwnProperty(name)) {
+            Augmentations[name].baseCost *= mult;
+        }
+    }
 }
 
 applyAugmentation = function(aug, reapply=false) { 
+    Augmentations[aug.name].owned = true;
     switch(aug.name) {
         //Combat stat augmentations
         case AugmentationNames.Targeting1:
@@ -1634,7 +1652,13 @@ applyAugmentation = function(aug, reapply=false) {
             Player.work_money_mult    *= 1.01;
         
             if (!reapply) {
-                ++aug.level;
+                Augmentations[aug.name].level = aug.level;
+                for (var i = 0; i < Player.augmentations.length; ++i) {
+                    if (Player.augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+                        Player.augmentations[i].level = aug.level;
+                        break;
+                    }
+                }
             }
             break;    
         case AugmentationNames.Neurotrainer1:      //Low Level
@@ -1834,7 +1858,7 @@ applyAugmentation = function(aug, reapply=false) {
     }
 
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-        for (var i = 0; i > Player.augmentations.length; ++i) {
+        for (var i = 0; i < Player.augmentations.length; ++i) {
             if (Player.augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
                 //Already have this aug, just upgrade the level
                 return;
@@ -1851,6 +1875,28 @@ applyAugmentation = function(aug, reapply=false) {
 function PlayerOwnedAugmentation(name) {
     this.name = name;
     this.level = 1;
+}
+
+function installAugmentations() {
+    if (Player.queuedAugmentations.length == 0) {
+        dialogBoxCreate("You have not purchased any Augmentations to install!");
+        return;
+    }
+    var augmentationList = "";
+    for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
+        var aug = Augmentations[Player.queuedAugmentations[i].name];
+        if (aug == null) {
+            console.log("ERROR. Invalid augmentation");
+            continue;
+        }
+        applyAugmentation(Player.queuedAugmentations[i]);
+        augmentationList += (aug.name + "<br>");
+    }
+    Player.queuedAugmentations = [];
+    dialogBoxCreate("You slowly drift to sleep as scientists put you under in order " +
+                    "to install the following Augmentations:<br>" + augmentationList +  
+                    "<br>You wake up in your home...you feel different...");
+    prestigeAugmentation();
 }
 
 PlayerObject.prototype.reapplyAllAugmentations = function() {
@@ -1901,17 +1947,18 @@ PlayerObject.prototype.reapplyAllAugmentations = function() {
         
         var augName = this.augmentations[i].name;
         var aug = Augmentations[augName];
+        aug.owned = true;
         if (aug == null) {
             console.log("WARNING: Invalid augmentation name");
             continue;
         }
         if (aug.name == AugmentationNames.NeuroFluxGovernor) {
             for (j = 0; j < aug.level; ++j) {
-                applyAugmentation(aug, true);
+                applyAugmentation(this.augmentations[i], true);
             }
             continue;
         }
-        applyAugmentation(aug, true);
+        applyAugmentation(this.augmentations[i], true);
     }
 }
 

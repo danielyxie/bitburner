@@ -18,6 +18,11 @@
     background-color: var(--my-background-color);
 }
 
+/*
+.posted {
+    width: 70%;
+}*/
+
 #terminal-input {
     background-color: var(--my-background-color);
     color: var(--my-font-color);

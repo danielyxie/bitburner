@@ -4,6 +4,8 @@ function PlayerObject() {
     this.hacking_skill   = 1;
                      
     //Fighting
+    this.hp              = 10;
+    this.max_hp          = 10;
     this.strength        = 1;      //Damage dealt
     this.defense         = 1;      //Damage received
     this.dexterity       = 1;      //Accuracy
@@ -86,6 +88,7 @@ function PlayerObject() {
     this.factions = []; //Names of all factions player has joined
     
     //Augmentations
+    this.queuedAugmentations = []; //Purchased but not installed, names only
     this.augmentations = []; //Names of all installed augmentations
     
     //Crime statistics (Total refers to this 'simulation'. Lifetime is forever)

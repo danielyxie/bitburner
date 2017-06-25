@@ -75,6 +75,8 @@ function prestigeAugmentation() {
     
     Player.factions = [];
     
+    Player.queuedAugmentations = [];
+    
     Player.startAction = false;
     Player.actionTime = 0;
     
@@ -187,7 +189,7 @@ function prestigeAugmentation() {
     }
     
     //Re-initialize things - This will update any changes 
-    initFactions();
+    initFactions(); //Factions must be initialized before augmentations
     initAugmentations();
     initCompanies();
     

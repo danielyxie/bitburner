@@ -176,7 +176,7 @@ function netscriptHack(exp, workerScript) {
         workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
         return Promise.resolve([server, hackingTime]);
     }).then(function([server, hackingTime]) {
-        console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds (t=" + threads + ")");
+        //console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds (t=" + threads + ")");
         return netscriptDelay(hackingTime* 1000).then(function() {
             if (env.stopFlag) {return Promise.reject(workerScript);}
             var hackChance = scriptCalculateHackingChance(server);
@@ -201,7 +201,7 @@ function netscriptHack(exp, workerScript) {
                 workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
                 Player.gainHackingExp(expGainedOnSuccess);
                 workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
-                console.log("Script successfully hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
+                //console.log("Script successfully hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
                 workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
                 server.fortify(CONSTANTS.ServerFortifyAmount * threads);
                 return Promise.resolve(true);
@@ -209,7 +209,7 @@ function netscriptHack(exp, workerScript) {
                 //Player only gains 25% exp for failure? TODO Can change this later to balance
                 Player.gainHackingExp(expGainedOnFailure);
                 workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
-                console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp");
+                //console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp");
                 workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
                 return Promise.resolve(false);
             }
@@ -245,7 +245,7 @@ function netscriptGrow(exp, workerScript) {
         }
         
         var growTime = scriptCalculateGrowTime(server);
-        console.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds")
+        //console.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds")
         workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds (t=" + threads + ")");
         
         return Promise.resolve([server, growTime]);
@@ -298,7 +298,7 @@ function netscriptWeaken(exp, workerScript) {
         }
         
         var weakenTime = scriptCalculateWeakenTime(server);
-        console.log("Executing weaken() on server " + server.hostname + " in " + formatNumber(weakenTime/1000, 3) + " seconds")
+        //console.log("Executing weaken() on server " + server.hostname + " in " + formatNumber(weakenTime/1000, 3) + " seconds")
         workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " + 
                                    formatNumber(weakenTime/1000, 3) + " seconds (t=" + threads + ")");
         
