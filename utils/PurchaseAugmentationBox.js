@@ -79,12 +79,37 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
                    Augmentations[AugmentationNames.BionicArms].owned == false) {
             dialogBoxCreate("You must first install the Bionic Arms augmentation before installing this upgrade");
         } else if (Player.money >= (aug.baseCost * fac.augmentationPriceMult)) {
-            applyAugmentation(aug);
-            dialogBoxCreate("You slowly drift to sleep as " + fac.name + "'s scientists put you under " +
-                            " in order to install the " + aug.name + " Augmentation. <br><br>" +
-                            "You wake up in your home...you feel different...");
-
-            prestigeAugmentation();
+            var queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
+            if (aug.name == AugmentationNames.NeuroFluxGovernor) {
+                queuedAugmentation.level = getNextNeurofluxLevel();
+            }
+            Player.queuedAugmentations.push(queuedAugmentation);
+            
+            Player.loseMoney((aug.baseCost * fac.augmentationPriceMult));
+            dialogBoxCreate("You purchased "  + aug.name + ". It's enhancements will not take " + 
+                            "effect until they are installed. To install your augmentations, go to the " + 
+                            "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " + 
+                            "augmentations will now be more expensive.");
+                            
+            //If you just purchased Neuroflux Governor, recalculate the cost
+            if (aug.name == AugmentationNames.NeuroFluxGovernor) {
+                var nextLevel = getNextNeurofluxLevel();
+                --nextLevel;
+                var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
+                aug.setRequirements(500 * mult, 750000 * mult);
+                
+                for (var i = 0; i < Player.queuedAugmentations.length-1; ++i) {
+                    aug.baseCost *= CONSTANTS.MultipleAugMultiplier;
+                }
+            }
+            
+            for (var name in Augmentations) {
+                if (Augmentations.hasOwnProperty(name)) {
+                    Augmentations[name].baseCost *= CONSTANTS.MultipleAugMultiplier;
+                }
+            }
+            
+            displayFactionAugmentations(fac.name);
         } else {
             dialogBoxCreate("You don't have enough money to purchase this Augmentation!");
         }
@@ -94,4 +119,26 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
     });
     
     purchaseAugmentationBoxOpen();
+}
+
+function getNextNeurofluxLevel() {
+    var aug = Augmentations[AugmentationNames.NeuroFluxGovernor];
+    if (aug == null) {
+        for (var i = 0; i < Player.augmentations.length; ++i) {
+            if (Player.augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+                aug = Player.augmentations[i];
+            }
+        }
+        if (aug == null) {
+            console.log("ERROR, Could not find NeuroFlux Governor aug");
+            return 1;
+        }
+    }
+    var nextLevel = aug.level + 1;
+    for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
+        if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+            ++nextLevel;
+        }
+    }
+    return nextLevel;
 }

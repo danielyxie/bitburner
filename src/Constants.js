@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.22.1",
+    Version:                "0.23.0",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -29,8 +29,8 @@ CONSTANTS = {
     HacknetNodeMaxCores: 16,
     
     /* Faction and Company favor */
-    FactionReputationToFavor: 7500,
-    CompanyReputationToFavor: 5000,
+    FactionReputationToFavor: 6500,
+    CompanyReputationToFavor: 6000,
     
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
@@ -47,6 +47,7 @@ CONSTANTS = {
     ScriptHackRamCost:              0.1,
     ScriptGrowRamCost:              0.15,
     ScriptWeakenRamCost:            0.15,
+    ScriptScanRamCost:              0.2,
     ScriptNukeRamCost:              0.05,
     ScriptBrutesshRamCost:          0.05,
     ScriptFtpcrackRamCost:          0.05,
@@ -71,7 +72,7 @@ CONSTANTS = {
     ScriptHNUpgRamRamCost:          0.6,
     ScriptHNUpgCoreRamCost:         0.8,
     
-    MultithreadingRAMCost:          1.002,
+    MultithreadingRAMCost:          1,
     
     //Server constants
     ServerBaseGrowthRate: 1.03,     //Unadjusted Growth rate
@@ -81,7 +82,8 @@ CONSTANTS = {
     
     //Augmentation Constants
     AugmentationCostMultiplier: 5,  //Used for balancing costs without having to readjust every Augmentation cost
-    AugmentationRepMultiplier: 1.5, //Used for balancing rep cost without having to readjust every value
+    AugmentationRepMultiplier:  1.75, //Used for balancing rep cost without having to readjust every value
+    MultipleAugMultiplier:      1.75,
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 50,
@@ -193,7 +195,7 @@ CONSTANTS = {
                             "and you can purchase additional servers as you progress through the game. Connecting to other servers " + 
                             "and hacking them can be a major source of income and experience. Servers can also be used to run " + 
                             "scripts which can automatically hack servers for you. <br><br>" + 
-                            "In order to navigate between machines, use the 'scan' command to see all servers " +
+                            "In order to navigate between machines, use the 'scan' or 'scan-analyze' Terminal command to see all servers " +
                             "that are reachable from your current server. Then, you can use the 'connect [hostname/ip]' " + 
                             "command to connect to one of the available machines. <br><br>" + 
                             "The 'hostname' and 'ifconfig' commands can be used to display the hostname/IP of the " +
@@ -286,16 +288,15 @@ CONSTANTS = {
                          "every call to the hack(), grow(), and weaken() Netscript functions will have its effect multiplied by the number of scripts. " + 
                          "For example, if a normal single-threaded script is able to hack $10,000, then running the same script with 5 threads would " + 
                          "yield $50,000. <br><br> " +
-                         "Each additional thread to a script will slightly increase the RAM usage for that thread. The total cost of running a script with " + 
-                         "n threads can be calculated with: <br>" + 
-                         "base cost * n * (1.005 ^ n) <br>" + 
-                         "where the base cost is the amount of RAM required to run the script with a single thread. In the terminal, you can run the " + 
+                         "When multithreading a script, the total RAM cost can be calculated by simply multiplying the base RAM cost of the script " + 
+                         "with the number of threads, where the base cost refers to the amount of RAM required to run the script single-threaded. " + 
+                         "In the terminal, you can run the " + 
                          "'mem [scriptname] -t n' command to see how much RAM a script requires with n threads. <br><br>" + 
                          "Every method for running a script has an option for making it multihreaded. To run a script with " + 
                          "n threads from a Terminal: <br>" + 
                          "run [scriptname] -t n<br><br>" + 
                          "Using Netscript commands: <br>" + 
-                         "run('scriptname.script', m);<br> " +
+                         "run('scriptname.script', n);<br> " +
                          "exec('scriptname.script, 'targetServer', n);<br><br>" + 
                          "<u><h1> Notes about how scripts work offline </h1> </u><br>" + 
                          "<strong> The scripts that you write and execute are interpreted in Javascript. For this " + 
@@ -404,7 +405,7 @@ CONSTANTS = {
                            "is determined by the server's growth rate and varies between servers. Generally, higher-level servers have higher growth rates. <br><br> " + 
                            "Like hack(), grow() can be called on any server, regardless of where the script is running. " + 
                            "The grow() command requires root access to the target server, but there is no required hacking level to run the command. " + 
-                           "It grants 0.5 hacking exp when it completes. It also raises the security level of the target server by 0.004. " +
+                           "It also raises the security level of the target server by 0.004. " +
                            "Returns the number by which the money on the server was multiplied for the growth. " + 
                            "Works offline at a slower rate. <br> Example: grow('foodnstuff');<br><br>" + 
                            "<i>weaken(hostname/ip)</i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " + 
@@ -412,11 +413,13 @@ CONSTANTS = {
                            "hacking level and the target server's security level. This function lowers the security level of the target server by " + 
                            "0.1.<br><br> Like hack() and grow(), weaken() can be called on " + 
                            "any server, regardless of where the script is running. This command requires root access to the target server, but " + 
-                           "there is no required hacking level to run the command. Grants 3 hacking exp when it completes. Returns " + 
+                           "there is no required hacking level to run the command. Returns " + 
                            "0.1. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
-                           "<i>print(x)</i> <br> Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br>" + 
+                           "<i>print(x)</i> <br>Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br>" + 
                            "WARNING: Do NOT call print() on an array. The script will crash. You can, however, call print on single elements of an array. For example, if " + 
                            "the variable 'a' is an array, then do NOT call print(a), but it is okay to call print(a[0]).<br><br>" + 
+                           "<i>scan()</i><br>Returns an array containing the hostnames of all servers that are one node away from the current server. The " + 
+                           "current server is the server on which the script that calls this function is running. The hostnames are strings.<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" + 
                            "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer. Does NOT work while offline <br> Example: ftpcrack('foodnstuff');<br><br>" + 
@@ -476,6 +479,8 @@ CONSTANTS = {
                            "<i>getHackingLevel()</i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " + 
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" + 
+                           "<i>getServerMaxMoney(hostname/ip)</i><br>Returns the maximum amount of money that can be available on a server. The argument passed in must be a string with " + 
+                           "the hostname or IP of the target server. Does NOT work while offline<br>Example: getServerMaxMoney('foodnstuff');<br><br>" + 
                            "<i>getServerSecurityLevel(hostname/ip)</i><br>Returns the security level of a server. The argument passed in must be a string with either the " + 
                            "hostname or IP of the target server. A server's security is denoted by a number between 1 and 100. Does NOT work while offline.<br><br>" + 
                            "<i>getServerBaseSecurityLevel(hostname/ip)</i><br> Returns the base security level of a server. This is the security level that the server starts out with. " + 
@@ -485,6 +490,8 @@ CONSTANTS = {
                            "Does NOT work while offline.<br><br>" + 
                            "<i>getServerRequiredHackingLevel(hostname/ip)</i><br> Returns the required hacking level of a server. The argument passed in must be a string with either the " + 
                            "hostname or IP or the target server. Does NOT work while offline <br><br>" + 
+                           "<i>getServerNumPortsRequired(hostname/ip)</i><br>Returns the number of open ports required to successfully run NUKE.exe on a server. The argument " + 
+                           "passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline<br><br>" + 
                            "<i>fileExists(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " + 
                            "The first argument must be a string with the name of the file. A file can either be a script or a program. A script name is case-sensitive, but a " +
                            "program is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " + 
@@ -655,6 +662,19 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.23.0<br>" + 
+    "-You can now purchase multiple Augmentations in a run. When you purchase an Augmentation you will lose money equal to the price " + 
+    "and then the cost of purchasing another Augmentation during this run will be increased by 75%. You do not gain the benefits " + 
+    "of your purchased Augmentations until you install them. This installation can be done through the 'Augmentation' tab. When " +
+    "you install your Augmentations, your game will reset like before. <br>" + 
+    "-Reputation needed to gain a favor from faction decreased from 7500 to 6500<br>" + 
+    "-Reputation needed to gain a favor from company increased from 5000 to 6000<br>" + 
+    "-Reputation cost of all Augmentations increased by 16%<br>" + 
+    "-Higher positions at companies now grant slightly more reputation for working<br>" + 
+    "-Added getServerMaxMoney() Netscript function<br>" + 
+    "-Added scan() Netscript function<br>" + 
+    "-Added getServerNumPortsRequired() Netscript function<br>" + 
+    "-There is now no additional RAM cost incurred when multithreading a script<br><br>" + 
     "v0.22.1<br>" + 
     "-You no longer lose progress on creating programs when cancelling your work. Your progress will be saved and you will pick up " + 
     "where you left off when you start working on it again<br>" + 
@@ -834,31 +854,17 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
-    "v0.22.1<br>" + 
-    "-You no longer lose progress on creating programs when cancelling your work. Your progress will be saved and you will pick up " + 
-    "where you left off when you start working on it again<br>" + 
-    "-Added two new programs: AutoLink.exe and ServerProfiler.exe<br>" +
-    "-Fixed bug with Faction Field work reputation gain<br><br>" + 
-    "v0.22.0 - Major rebalancing, optimization, and favor system<br>" + 
-    "-Significantly nerfed most augmentations<br>" + 
-    "-Almost every server with a required hacking level of 200 or more now has slightly randomized server parameters. This means that after every Augmentation " + 
-    "purchase, the required hacking level, base security level, and growth factor of these servers will all be slightly different<br>" + 
-    "-The hacking speed multiplier now increases rather than decreases. The hacking time is now divided by your hacking speed " + 
-    "multiplier rather than multiplied. In other words, a higher hacking speed multiplier is better<br>" + 
-    "-Servers now have a minimum server security, which is approximately one third of their starting ('base') server security<br>" + 
-    "-If you do not steal any money from a server, then you gain hacking experience equal to the amount you would have gained " + 
-    "had you failed the hack<br>" + 
-    "-The effects of grow() were increased by 50%<br>" + 
-    "-grow() and weaken() now give hacking experience based on the server's base security level, rather than a flat exp amount<br>" + 
-    "-Slightly reduced amount of exp gained from hack(), weaken(), and grow()<br>" +
-    "-Rebalanced formulas that determine crime success<br>" + 
-    "-Reduced RAM cost for multithreading a script. The RAM multiplier for each thread was reduced from 1.02 to 1.005<br>" + 
-    "-Optimized Script objects so they take less space in the save file<br>" + 
-    "-Added getServerBaseSecurityLevel() Netscript function<br>" + 
-    "-New favor system for companies and factions. Earning reputation at a company/faction will give you favor for that entity when you " + 
-    "reset after installing an Augmentation. This favor persists through the rest of the game. The more favor you have, the faster you will earn " + 
-    "reputation with that faction/company<br>" + 
-    "-You can no longer donate to a faction for reputation until you have 150 favor with that faction<br>" + 
-    "-Added unalias Terminal command<br>" + 
-    "-Changed requirements for endgame Factions<br>",
+    "v0.23.0<br>" + 
+    "-You can now purchase multiple Augmentations in a run. When you purchase an Augmentation you will lose money equal to the price " + 
+    "and then the cost of purchasing another Augmentation during this run will be increased by 75%. You do not gain the benefits " + 
+    "of your purchased Augmentations until you install them. This installation can be done through the 'Augmentation' tab. When " +
+    "you install your Augmentations, your game will reset like before. <br>" + 
+    "-Reputation needed to gain a favor from faction decreased from 7500 to 6500<br>" + 
+    "-Reputation needed to gain a favor from company increased from 5000 to 6000<br>" + 
+    "-Reputation cost of all Augmentations increased by 16%<br>" + 
+    "-Higher positions at companies now grant slightly more reputation for working<br>" + 
+    "-Added getServerMaxMoney() Netscript function<br>" + 
+    "-Added scan() Netscript function<br>" + 
+    "-Added getServerNumPortsRequired() Netscript function<br>" + 
+    "-There is now no additional RAM cost incurred when multithreading a script<br><br>",
 }

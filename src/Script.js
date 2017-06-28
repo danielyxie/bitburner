@@ -136,6 +136,7 @@ Script.prototype.updateRamUsage = function() {
     var hackCount = numOccurrences(codeCopy, "hack(");
     var growCount = numOccurrences(codeCopy, "grow(");
     var weakenCount = numOccurrences(codeCopy, "weaken(");
+    var scanCount = numOccurrences(codeCopy, "scan(");
     var nukeCount = numOccurrences(codeCopy, "nuke(");
     var brutesshCount = numOccurrences(codeCopy, "brutessh(");
     var ftpcrackCount = numOccurrences(codeCopy, "ftpcrack(");
@@ -168,6 +169,7 @@ Script.prototype.updateRamUsage = function() {
                     (hackCount * CONSTANTS.ScriptHackRamCost) + 
                     (growCount * CONSTANTS.ScriptGrowRamCost) + 
                     (weakenCount * CONSTANTS.ScriptWeakenRamCost) + 
+                    (scanCount * CONSTANTS.ScriptScanRamCost) + 
                     (nukeCount * CONSTANTS.ScriptNukeRamCost) + 
                     (brutesshCount * CONSTANTS.ScriptBrutesshRamCost) + 
                     (ftpcrackCount * CONSTANTS.ScriptFtpcrackRamCost) + 

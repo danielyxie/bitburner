@@ -369,16 +369,16 @@ var Engine = {
     },
     
     displayAugmentationsContent: function() {
-        var augmentationsList = document.getElementById("augmentations-list");
+        //Purchased/queued augmentations
+        var queuedAugmentationsList = document.getElementById("queued-augmentations-list");
         
-        while (augmentationsList.firstChild) {
-            augmentationsList.removeChild(augmentationsList.firstChild);
+        while (queuedAugmentationsList.firstChild) {
+            queuedAugmentationsList.removeChild(queuedAugmentationsList.firstChild);
         }
         
-        for (var i = 0; i < Player.augmentations.length; ++i) {
-            var augName = Player.augmentations[i];
+        for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
+            var augName = Player.queuedAugmentations[i].name;
             var aug = Augmentations[augName];
-            
             
             var item = document.createElement("li");
             var hElem = document.createElement("h2");
@@ -387,7 +387,42 @@ var Engine = {
             item.setAttribute("class", "installed-augmentation");
             hElem.innerHTML = augName;
             if (augName == AugmentationNames.NeuroFluxGovernor) {
-                hElem.innerHTML += " - Level " + (aug.level);
+                hElem.innerHTML += " - Level " + (Player.queuedAugmentations[i].level);
+            }
+            pElem.innerHTML = aug.info;
+            
+            item.appendChild(hElem);
+            item.appendChild(pElem);
+            
+            queuedAugmentationsList.appendChild(item);
+        }
+        
+        //Install Augmentations button
+        var installButton = clearEventListeners("install-augmentations-button");
+        installButton.addEventListener("click", function() {
+            installAugmentations();
+            return false;
+        });
+        
+        //Installed augmentations
+        var augmentationsList = document.getElementById("augmentations-list");
+        
+        while (augmentationsList.firstChild) {
+            augmentationsList.removeChild(augmentationsList.firstChild);
+        }
+        
+        for (var i = 0; i < Player.augmentations.length; ++i) {
+            var augName = Player.augmentations[i].name;
+            var aug = Augmentations[augName];
+            
+            var item = document.createElement("li");
+            var hElem = document.createElement("h2");
+            var pElem = document.createElement("p");
+            
+            item.setAttribute("class", "installed-augmentation");
+            hElem.innerHTML = augName;
+            if (augName == AugmentationNames.NeuroFluxGovernor) {
+                hElem.innerHTML += " - Level " + (Player.augmentations[i].level);
             }
             pElem.innerHTML = aug.info;
             
@@ -647,6 +682,7 @@ var Engine = {
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
             CompanyPositions.init();
+            initAugmentations();
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();

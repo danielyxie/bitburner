@@ -240,6 +240,7 @@ tr:focus {
     margin-right: 14px;
     background-color: transparent;
     z-index: 2;
+    width: auto;
 }
 
 /* Character Overview */

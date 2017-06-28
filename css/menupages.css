@@ -1,17 +1,20 @@
 /* CSS for different main menu pages, such as character info, script editor, etc (but excluding
 	terminal which has its own page) */
 	
-/* Character Info */
-#character-container {
-    position: fixed;
+.generic-menupage-container {
     height: 100%;
-    padding-top: 10px;
     padding-left: 10px;
     margin-left: 10%;
     width: 99%;
-	overflow: auto;
 	overflow-y: scroll;
 }
+
+/* Character Info */
+#character-container {
+    padding-top: 10px;
+    position: fixed;
+}
+
 
 /* Script Editor */
 /* This temp element is used for auto adjusting filename field */
@@ -20,15 +23,12 @@
         white-space: pre;
 }
 	  
+      
 #script-editor-container {
 	position: fixed;
 	padding-top: 10px;
-	height: 100%;
-	margin-left: 10%;
-    width: 99%;
-    color: var(--my-font-color);
-    overflow-y: scroll;
 }
+
 
 #script-editor-buttons-wrapper {
     width: 100%;
@@ -131,11 +131,6 @@ background-color: #555;
 #active-scripts-container {
 	position: fixed;
 	padding-top: 10px;
-	padding-left: 10px;
-	height: 100%;
-	margin-left: 10%;
-	width: 99%;
-    overflow-y: scroll;
 }
 
 #active-scripts-text,
@@ -277,11 +272,8 @@ background-color: #555;
 #hacknet-nodes-container {
     position: fixed;
     padding: 10px;
-    height: 100%;
-    margin-left: 10%;
-    width: 99%;
-    overflow-y: scroll; 
 }
+
 
 #hacknet-nodes-container li{
     padding: 6px;
@@ -337,11 +329,8 @@ background-color: #555;
 #world-container {
     position: fixed;
     padding-top: 10px;
-    padding-left: 10px;
-    height: 100%;
-    margin-left: 10%;
-    width: 99%;
 }
+
 
 #world-city-name,
 #world-city-desc {
@@ -353,10 +342,6 @@ background-color: #555;
 #create-program-container {
     position: fixed;
     padding-top: 10px;
-    padding-left: 10px;
-    height: 100%;
-    margin-left: 10%;
-    width: 99%;
 }
 
 #create-program-page-text {
@@ -393,23 +378,11 @@ background-color: #555;
 #factions-container {
     position: fixed;
     padding-top: 10px;
-    padding-left: 10px;
-    height: 100%;
-    margin-left: 10%;
-    width: 99%;
-    color: var(--my-font-color);
-    overflow-y: auto;
 }
 
 #faction-container {
     position: fixed;
     padding-top: 10px;
-    padding-left: 10px;
-    height: 100%;
-    margin-left: 10%;
-    width: 99%;
-    overflow: auto;
-    overflow-y: auto;
 }
 
 #factions-list li {
@@ -472,12 +445,6 @@ div.faction-clear {
 #faction-augmentations-container{
     position: fixed;
     padding-top: 10px;
-    padding-left: 10px;
-    height: 100%;
-    margin-left: 10%;
-    width: 99%;
-    color: var(--my-font-color);
-    overflow-y: auto;
 }
 
 #faction-augmentations-container p,
@@ -503,21 +470,19 @@ div.faction-clear {
 #augmentations-container {
     position: fixed;
     padding-top: 10px;
-    padding-left: 10px;
-    height: 100%;
-    margin-left: 10%;
-    width: 99%;
-    color: var(--my-font-color);
-    overflow-y: scroll;
 }
 
-#augmentations-list li {
+
+#augmentations-list li,
+#queued-augmentations-list li {
     width: 70%;
     background-color: #333;
 }
 
 #augmentations-list h2,
-#augmentations-list p {
+#augmentations-list p,
+#queued-augmentations-list h2,
+#queued-augmentations-list p {
     margin: 4px;
     color: var(--my-font-color);
 	padding: 8px;
@@ -533,13 +498,7 @@ div.faction-clear {
 /* Tutorial */
 #tutorial-container {
     position: fixed;
-    height: 100%;
     padding-top: 10px;
-    padding-left: 10px;
-    margin-left: 10%;
-    width: 99%;
-    overflow: auto;
-    overflow-y: scroll;
 }
 
 #tutorial-text {
@@ -574,4 +533,3 @@ div.faction-clear {
 #location-job-reputation, #location-company-favor {
     display: inline;
 }
-
