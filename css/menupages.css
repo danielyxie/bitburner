@@ -508,12 +508,8 @@ div.faction-clear {
 
 /* Location */
 #location-container {
-	color: var(--my-font-color);
 	position: fixed;
 	padding: 6px;
-    height: 100%;
-    margin-left: 10%;
-    width: 99%;
 }
 
 #location-slums-description {
@@ -532,4 +528,10 @@ div.faction-clear {
 
 #location-job-reputation, #location-company-favor {
     display: inline;
+}
+
+/* Infiltration */
+#infiltration-container {
+    position: fixed;
+    padding: 6px;
 }

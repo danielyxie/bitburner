@@ -1379,6 +1379,8 @@ initAugmentations = function() {
             Augmentations[name].baseCost *= mult;
         }
     }
+    
+    Player.reapplyAllAugmentations();
 }
 
 applyAugmentation = function(aug, reapply=false) { 
