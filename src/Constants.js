@@ -342,41 +342,7 @@ CONSTANTS = {
                            "&nbsp;==<br>" + 
                            "&nbsp;!=<br><br>" + 
                            "<u><h1> Arrays </h1></u><br>" + 
-                           "Arrays are special container objects. Arrays can hold many values under a single name. Each value in the array " + 
-                           "can be accessed using an index number. The following example shows how to declare an array: <br><br>" + 
-                           "thisIsAnArray = Array[1, 2, 3, 'bitburner!', false];<br><br>" +
-                           "Note that the values in an array can be different types. To access this array we just declared, we can use the index " + 
-                           "operator on the array's name: <br><br>" + 
-                           "print(thisIsAnArray[0]); <br>" + 
-                           "thisIsAnArray[1] = 5;<br>" +
-                           "thisIsAnArray[3] = 'string concatenation ' + 123;<br><br>" + 
-                           "Note that arrays are indexed starting at index 0. Using an index that is too large or less than 0 will result in an " + 
-                           "out of bounds runtime error. <br><br>" + 
-                           "If an element in an array is assigned to a value that includes a variable, then it holds a reference to that variable. " + 
-                           "What this means is that if the variable changes, the array element will also change accordingly. For example:<br><br>" + 
-                           "x = 10;<br>testArr = Array[x];<br>print(testArr[0]);<br>x = 20;<br>print(testArr[0]);<br><br>" + 
-                           "This code will print: <br><br>10<br>20<br><br>" + 
-                           "<strong>Array functions</strong><br>" + 
-                           "Arrays have built-in functions/properties that can be used to more easily access and manipulate the containers. <br><br>"+
-                           "<i>length/length()</i><br>Returns the number of elements in the array.<br>" + 
-                           "The example below will print out 5:<br><br>" + 
-                           "arr = Array[1, 2, 3, 4, 5];<br>print(arr.length);<br><br>" + 
-                           "<i>clear/clear()</i><br>Removes all elements from the array.<br>" + 
-                           "The example below creates an array with three strings and then uses clear to remove all of those strings. The result is that 'arr' will be " +
-                           "an empty array.<br><br>" + 
-                           "arr = Array['str1', 'str2', 'str3'];<br>arr.clear();<br><br>" +
-                           "<i>push(e)</i><br>Adds the element e to the end of the array.<br>" + 
-                           "The example below will create an array holding one element: the number 1. It will then push the number 2 onto the array. The result " + 
-                           "is that 'arr' will be an array of size 2 with arr[0] == 1 and arr[1] == 2<br><br>" + 
-                           "arr = Array[1];<br>arr.push(2);<br><br>" + 
-                           "<i>insert(e)</i><br>Inserts an element e into an array at a specified index. Every element in the array that is at or after " + 
-                           "the specified index is shifted down. The array must be indexed with the [] operator when using this function.<br>" + 
-                           "The following example will insert the number 2 into index 1 of the array. The result afterwards is that 'arr' will hold the values [1, 2, 3, 4].<br><br>" + 
-                           "arr = Array[1, 3, 4];<br>arr[1].insert(2);<br><br>" +
-                           "<i>remove()</i><br>Removes an element from a specified index. Every element in the array that is after the specified index " + 
-                           "will be shifted up. The array must be indexed with the [] operator when using this function.<br>" + 
-                           "The following example will remove the first element of the array. The result afterwards is that 'arr' will hold the values [2, 3].<br><br>" + 
-                           "arr = Array[1, 2, 3];<br>arr[0].remove();<br><br>" + 
+                           "Netscript arrays have the same properties and functions as javascript arrays. For information see javascripts <a href=\"https://www.w3schools.com/js/js_arrays.asp\">array</a> documentation.<br><br>"+
                            "<u><h1> Script Arguments </h1></u><br>" + 
                            "Arguments passed into a script can be accessed using a special array called 'args'. The arguments can be accessed like a normal array using the [] " + 
                            "operator. (args[0], args[1], args[2]...) <br><br>" + 
@@ -528,51 +494,51 @@ CONSTANTS = {
                            "<i>hacknetnodes[i].cores</i><br> Returns the number of cores on the corresponding Hacknet Node<br><br>" +
                            "<i>hacknetnodes[i].upgradeLevel(n)</i><br> Tries to upgrade the level of the corresponding Hacknet Node n times. The argument n must be a " + 
                            "positive integer. Returns true if the Hacknet Node's level is successfully upgraded n times or up to the max level (200), and false otherwise.<br><br>" + 
-                           "<i>hacknetnodes[i].upgradeRam()</i><br> Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " + 
+                           "<i>hacknetnodes[i].purchaseRamUpgrade()</i><br> Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " + 
                            "RAM is successfully upgraded, and false otherwise. <br><br>" + 
-                           "<i>hacknetnodes[i].upgradeCore()</i><br> Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " + 
+                           "<i>hacknetnodes[i].purchaseCoreUpgrade()</i><br> Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " + 
                            "additional core is successfully purchase, and false otherwise. <br><br>" + 
                            "Example: The following is an example of one way a script can be used to automate the purchasing and upgrading of Hacknet Nodes. " +
                            "This script purchases new Hacknet Nodes until the player has four. Then, it iteratively upgrades each of those four Hacknet Nodes " +
                            "to a level of at least 75, RAM to at least 8GB, and number of cores to at least 2.<br><br>" + 
                            "while(hacknetnodes.length < 4) {<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;purchaseHacknetNode();<br>" + 
-                           "};<br>" + 
-                           "for (i = 0; i < 4; i = i+1) {<br>" + 
+                           "}<br>" + 
+                           "for (i = 0; i < 4; i = i++) {<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;while (hacknetnodes[i].level <=  75) {<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hacknetnodes[i].upgradeLevel(5);<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sleep(10000);<br>" + 
-                           "&nbsp;&nbsp;&nbsp;&nbsp;};<br>" + 
-                           "};<br>" + 
-                           "for (i = 0; i < 4; i = i+1) {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;}<br>" + 
+                           "}<br>" + 
+                           "for (i = 0; i < 4; i = i++) {<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;while (hacknetnodes[i].ram < 8) {<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hacknetnodes[i].upgradeRam();<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sleep(10000);<br>" + 
-                           "&nbsp;&nbsp;&nbsp;&nbsp;};<br>" + 
-                           "};<br>" + 
-                           "for (i = 0; i < 4; i = i+1) {<br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;}<br>" + 
+                           "}<br>" + 
+                           "for (i = 0; i < 4; i = i++) {<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;while (hacknetnodes[i].cores < 2) {<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hacknetnodes[i].upgradeCore();<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sleep(10000);<br>" + 
-                           "&nbsp;&nbsp;&nbsp;&nbsp;};<br>" + 
-                           "};<br><br>" + 
+                           "&nbsp;&nbsp;&nbsp;&nbsp;}<br>" + 
+                           "}<br><br>" + 
                            "<u><h1>While loops </h1></u><br>" +
                            "A while loop is a control flow statement that repeatedly executes code as long as a condition is met. <br><br> " +
                            "<i>while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}</i><br><br>" + 
                            "As long as <i>[cond]</i> remains true, the code block <i>[code]</i> will continuously execute. Example: <br><br>" + 
-                           "<i>i = 0; <br> while (i < 10) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1;<br> }; </i><br><br>" + 
+                           "<i>i = 0; <br> while (i < 10) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1;<br> } </i><br><br>" + 
                            "This code above repeats the 'hack('foodnstuff')' command 10 times before it stops and exits. <br><br>" + 
-                           "<i>while(true) { <br>&nbsp;&nbsp;&nbsp;&nbsp; hack('foodnstuff'); <br> }; </i><br><br> " + 
+                           "<i>while(true) { <br>&nbsp;&nbsp;&nbsp;&nbsp; hack('foodnstuff'); <br> }</i><br><br> " + 
                            "This while loop above is an infinite loop (continuously runs until the script is manually stopped) that repeatedly runs the 'hack('foodnstuff')' command. " +
                            "Note that a semicolon is needed at closing bracket of the while loop, UNLESS it is at the end of the code<br><br> " + 
                            "<u><h1>For loops</h1></u><br>" + 
                            "A for loop is another control flow statement that allows code to be repeated by iterations. The structure is: <br><br> " +
-                           "<i>for (<i>[init]</i>; <i>[cond]</i>; <i>[post]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>code</i> <br> }; </i><br><br>" + 
+                           "<i>for (<i>[init]</i>; <i>[cond]</i>; <i>[post]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>code</i> <br> } </i><br><br>" + 
                            "The <i>[init]</i> expression evaluates before the for loop begins. The for loop will continue to execute " +
                            "as long as <i>[cond]</i> is met. The <i>[post]</i> expression will evaluate at the end of every iteration " + 
                            "of the for loop. The following example shows code that will run the 'hack('foodnstuff');' command 10 times " +
                            " using a for loop: <br><br>" + 
-                           "<i>for (i = 0; i < 10; i = i+1) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>}; </i><br><br>" + 
+                           "<i>for (i = 0; i < 10; i = i++) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>} </i><br><br>" + 
                            "<u><h1> If statements </h1></u><br>" + 
                            "If/Elif/Else statements are conditional statements used to perform different actions based on different conditions: <br><br>" + 
                            "<i>if (condition1) {<br>&nbsp;&nbsp;&nbsp;&nbsp;code1<br>} elif (condition2) {<br>&nbsp;&nbsp;&nbsp;&nbsp;code2<br>} else {<br>" + 
@@ -584,7 +550,7 @@ CONSTANTS = {
                            "Note that a conditional statement can have any number of elif statements. <br><br>" + 
                            "Example: <br><br>" + 
                            "if(getServerMoneyAvailable('foodnstuff') > 200000) {<br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>" + 
-                           "} else {<br>&nbsp;&nbsp;&nbsp;&nbsp;grow('foodnstuff');<br>};<br><br>" + 
+                           "} else {<br>&nbsp;&nbsp;&nbsp;&nbsp;grow('foodnstuff');<br>}<br><br>" + 
                            "The code above will use the getServerMoneyAvailable() function to check how much money there is on the 'foodnstuff' server. " + 
                            "If there is more than $200,000, then it will try to hack that server. If there is $200,000 or less on the server, " + 
                            "then the code will call grow('foodnstuff') instead and add more money to the server.<br><br>",
