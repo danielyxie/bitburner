@@ -54,6 +54,7 @@ var Engine = {
         factionAugmentationsContent:    null,
         augmentationsContent:           null,
         tutorialContent:                null,
+        infiltrationContent:            null,
         locationContent:                null,
         workInProgressContent:          null,
         
@@ -682,7 +683,7 @@ var Engine = {
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
             CompanyPositions.init();
-            initAugmentations();
+            initAugmentations();            //Also calls Player.reapplyAllAugmentations()
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
@@ -720,9 +721,6 @@ var Engine = {
             if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
             Player.totalPlaytime += time;
             Player.playtimeSinceLastAug += time;
-            
-            //Re-apply augmentations
-            Player.reapplyAllAugmentations();
             
             Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
@@ -786,6 +784,9 @@ var Engine = {
         
         Engine.Display.tutorialContent = document.getElementById("tutorial-container");
         Engine.Display.tutorialContent.style.visibility = "hidden";
+        
+        Engine.Display.infiltrationContent = document.getElementById("infiltration-container");
+        Engine.Display.infiltrationContent.style.visibility = "hidden";
         
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");

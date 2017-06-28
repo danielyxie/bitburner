@@ -1204,6 +1204,14 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
     Engine.loadLocationContent();
 }
 
+PlayerObject.prototype.takeDamage = function() {
+    
+}
+
+PlayerObject.prototype.hospitalize = function() {
+    
+}
+
 /* Functions for saving and loading the Player data */
 PlayerObject.prototype.toJSON = function() {
     return Generic_toJSON("PlayerObject", this);

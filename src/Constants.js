@@ -91,6 +91,9 @@ CONSTANTS = {
     //How much a TOR router costs
     TorRouterCost: 200000,
     
+    //Infiltration constants
+    InfiltrationBribeBaseAmount: 100000, //Amount per clearance level
+    
     MillisecondsPer20Hours: 72000000,
     GameCyclesPer20Hours: 72000000 / 200,
     
