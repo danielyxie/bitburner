@@ -982,6 +982,12 @@ displayFactionAugmentations = function(factionName) {
                     owned = true;
                 }
             }
+            for (var j = 0; j < Player.augmentations.length; ++j) {
+                if (Player.augmentations[j].name == aug.name) {
+                    owned = true;
+                }
+            }
+            
             var item = document.createElement("li");
             var span = document.createElement("span");
             var aDiv = document.createElement("div");

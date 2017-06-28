@@ -168,7 +168,7 @@ loadImportedGame = function(saveObj, saveString) {
                         }
                     }
                     if (CONSTANTS.Version == "0.23.0") {
-                        Augmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
+                        tempAugmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
                     }
                     createNewUpdateText();
                 }
