@@ -98,17 +98,18 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
                 var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
                 aug.setRequirements(500 * mult, 750000 * mult);
                 
-                for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
-                    aug.baseCost *= 1.5;
+                for (var i = 0; i < Player.queuedAugmentations.length-1; ++i) {
+                    aug.baseCost *= CONSTANTS.MultipleAugMultiplier;
                 }
             }
-            
             
             for (var name in Augmentations) {
-                if (Augmentations.hasOwnProperty(name) && name != AugmentationNames.NeuroFluxGovernor) {
-                    Augmentations[name].baseCost *= 1.5;
+                if (Augmentations.hasOwnProperty(name)) {
+                    Augmentations[name].baseCost *= CONSTANTS.MultipleAugMultiplier;
                 }
             }
+            
+            displayFactionAugmentations(fac.name);
         } else {
             dialogBoxCreate("You don't have enough money to purchase this Augmentation!");
         }

@@ -36,7 +36,7 @@ purchaseRamForHomeBoxCreate = function() {
     //Calculate cost
     //Have cost increase by some percentage each time RAM has been upgraded
     var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome;
-    var mult = Math.pow(1.45, numUpgrades);
+    var mult = Math.pow(1.44, numUpgrades);
     cost = cost * mult;
     
     purchaseRamForHomeBoxSetText("Would you like to purchase additional RAM for your home computer? <br><br>" + 

@@ -142,14 +142,14 @@
     </div>
     
 	<!-- Character Info page -->
-    <div id="character-container">
+    <div id="character-container" class="generic-menupage-container">
         <div id="character-content">
             <p id="character-info"> </p>
         </div>
     </div>
 	
 	<!-- Script editor -->
-	<div id="script-editor-container">
+	<div id="script-editor-container" class="generic-menupage-container">
         <div id="script-editor-wrapper">
         <div id="script-editor-filename-wrapper">
             <p id="script-editor-filename-tag"> <strong style="background-color:#555;">Script name: </strong></p>
@@ -165,7 +165,7 @@
 	</div>
 	
 	<!-- Active scripts info page -->
-	<div id="active-scripts-container">
+	<div id="active-scripts-container" class="generic-menupage-container">
         <p id="active-scripts-text"> This page displays a list of all of your scripts that are currently running across every machine. It also
         provides information about each script's production. The scripts are categorized by the hostname of the servers on which
         they are running. </p>
@@ -175,7 +175,7 @@
 	</div>
     
     <!-- Hacknet Nodes -->
-    <div id="hacknet-nodes-container">
+    <div id="hacknet-nodes-container" class="generic-menupage-container">
         <h1 id="hacknet-nodes-title"> Hacknet Nodes </h1>
         <p id="hacknet-nodes-text"> 
         The Hacknet is a global, decentralized network of machines. It is used by hackers all around
@@ -205,7 +205,7 @@
     </div>
 
     <!-- World -->
-	<div id="world-container" class="world-container">
+	<div id="world-container" class="generic-menupage-container">
         <h2 id="world-city-name"> </h2>
         <p id="world-city-desc"> </p>
 		<ul id="aevum-locations-list">
@@ -402,7 +402,7 @@
 	</div>
 	
 	<!-- Create a program(executable) -->
-	<div id="create-program-container">
+	<div id="create-program-container" class="generic-menupage-container">
         <p id="create-program-page-text"> 
             This page displays any programs that you are able to create. Writing the code for a program takes time, which
             can vary based on how complex the program is. If you are working on creating on a program you can cancel
@@ -455,14 +455,14 @@
 	</div>
 	
 	<!-- Factions -->
-	<div id="factions-container">
+	<div id="factions-container" class="generic-menupage-container">
 		<h1> Factions </h1>
 		<p> Lists all factions you have joined </p>
 		<ul class="factions-list" id="factions-list"></ul>
 	</div>
 	
 	<!-- Single Faction info (when you select a faction from the Factions menu) -->
-	<div id="faction-container">
+	<div id="faction-container" class="generic-menupage-container">
 		<h1 id="faction-name"></h1>
 		<p id="faction-info"></p>
 		<p> --------------- </p>
@@ -539,7 +539,7 @@
         <br><br><br><br>
 	</div>
 
-    <div id="faction-augmentations-container">
+    <div id="faction-augmentations-container" class="generic-menupage-container">
         <a id="faction-augmentations-back-button" class="a-link-button"> Back </a>
 		<h1> Faction Augmentations </h1>
 		<p id="faction-augmentations-page-desc"> Lists all augmentations that are available to purchase from </p>
@@ -549,7 +549,7 @@
     </div>
 	
 	<!-- Augmentations -->
-	<div id="augmentations-container">
+	<div id="augmentations-container" class="generic-menupage-container">
         <h1> Purchased Augmentations </h1>
         <p style="width:70%;"> 
         Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them. 
@@ -576,7 +576,7 @@
 	</div>
 	
 	<!-- Tutorial content -->
-	<div id="tutorial-container">
+	<div id="tutorial-container" class="generic-menupage-container">
         <a id="tutorial-getting-started-link" class="a-link-button"> Getting Started </a>
         <a id="tutorial-networking-link" class="a-link-button"> Servers & Networking </a>
         <a id="tutorial-hacking-link" class="a-link-button"> Hacking </a>
@@ -592,7 +592,7 @@
 	</div>
     
     <!-- Location (visiting a location in World) -->
-    <div id="location-container">
+    <div id="location-container" class="generic-menupage-container">
         <a id="location-return-to-world-button" class="a-link-button"> Return to World </a>
         <h1 id="location-name"></h1>
         <p id="location-info"> </p>
@@ -677,6 +677,27 @@
         <a id="location-slums-kidnap" class="a-link-button tooltip"> Kidnap and Ransom </a>
         <a id="location-slums-assassinate" class="a-link-button tooltip"> Assassinate </a>
         <a id="location-slums-heist" class="a-link-button tooltip"> Heist </a>
+    </div>
+    
+    <div id="infiltration-container" class="generic-menupage-container">
+        <div id="infiltration-left-panel">
+            <p id="infiltration-level-text"> </p>
+            <div id="infiltration-buttons">
+                <a id="infiltration-kill"> </a>
+                <a id="infiltration-knockout"> </a>
+                <a id="infiltration-stealthknockout"> </a>
+                <a id="infiltration-assassinate"> </a>
+                <a id="infiltration-hacksecurity"> </a>
+                <a id="infiltration-destroysecurity"> </a>
+                <a id="infiltration-sneak"> </a>
+                <a id="infiltration-pickdoor"> </a>
+                <a id="infiltration-bribe"> </a>
+                <a id="infiltration-escape"> </a>
+            </div>
+        </div>
+        <div id="infiltration-right-panel">
+            <p id="infiltration-status-text"></p>
+        </div>
     </div>
    
     <!-- Log Box -->

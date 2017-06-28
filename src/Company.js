@@ -82,7 +82,7 @@ function CompanyPosition(name, reqHack, reqStr, reqDef, reqDex, reqAgi, reqCha, 
 //
 //NOTE: These parameters should total to 100, such that each parameter represents a "weighting" of how
 //        important that stat/skill is for the job
-CompanyPosition.prototype.setPerformanceParameters = function(hackEff, strEff, defEff, dexEff, agiEff, chaEff) {
+CompanyPosition.prototype.setPerformanceParameters = function(hackEff, strEff, defEff, dexEff, agiEff, chaEff, posMult=1) {
     if (hackEff + strEff + defEff + dexEff + agiEff + chaEff != 100) {
         console.log("CompanyPosition.setPerformanceParameters() arguments do not total to 100");
         return;
@@ -93,6 +93,7 @@ CompanyPosition.prototype.setPerformanceParameters = function(hackEff, strEff, d
     this.dexterityEffectiveness = dexEff;
     this.agilityEffectiveness   = agiEff;
     this.charismaEffectiveness  = chaEff;
+    this.positionMultiplier     = posMult;  //Reputation multiplier for this position
 }
 
 //Set the stat/skill experience a Player should gain for working at a CompanyPosition. The experience is per game loop (200 ms)
@@ -115,7 +116,13 @@ CompanyPosition.prototype.calculateJobPerformance = function(hacking, str, def, 
     var dexRatio    = this.dexterityEffectiveness * dex / CONSTANTS.MaxSkillLevel;
     var agiRatio    = this.agilityEffectiveness   * agi / CONSTANTS.MaxSkillLevel;
     var chaRatio    = this.charismaEffectiveness  * cha / CONSTANTS.MaxSkillLevel;
-    return (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio) / 100;
+    
+    var reputationGain = this.positionMultiplier * (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio) / 100;
+    if (isNaN(reputationGain)) {
+        console.log("ERROR: Code should not reach here");
+        reputationGain = (hackRatio + strRatio + defRatio + dexRatio + agiRatio + chaRatio) / 100;
+    }
+    return reputationGain;
 }
 
 CompanyPosition.prototype.isSoftwareJob = function() {
@@ -278,63 +285,63 @@ CompanyPositions = {
     init: function() {
         //Argument order: hack, str, def, dex, agi, cha
         //Software
-        CompanyPositions.SoftwareIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10);
+        CompanyPositions.SoftwareIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10, 1);
         CompanyPositions.SoftwareIntern.setExperienceGains(.1, 0, 0, 0, 0, .02);
-        CompanyPositions.JuniorDev.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+        CompanyPositions.JuniorDev.setPerformanceParameters(85, 0, 0, 0, 0, 15, 1.1);
         CompanyPositions.JuniorDev.setExperienceGains(.2, 0, 0, 0, 0, .04);
-        CompanyPositions.SeniorDev.setPerformanceParameters(75, 0, 0, 0, 0, 25);
+        CompanyPositions.SeniorDev.setPerformanceParameters(75, 0, 0, 0, 0, 25, 1.2);
         CompanyPositions.SeniorDev.setExperienceGains(.4, 0, 0, 0, 0, .08);
-        CompanyPositions.LeadDev.setPerformanceParameters(70, 0, 0, 0, 0, 30);
+        CompanyPositions.LeadDev.setPerformanceParameters(70, 0, 0, 0, 0, 30, 1.3);
         CompanyPositions.LeadDev.setExperienceGains(.5, 0, 0, 0, 0, .1);
         
-        CompanyPositions.SoftwareConsultant.setPerformanceParameters(80, 0, 0, 0, 0, 20);
+        CompanyPositions.SoftwareConsultant.setPerformanceParameters(80, 0, 0, 0, 0, 20, 1);
         CompanyPositions.SoftwareConsultant.setExperienceGains(.175, 0, 0, 0, 0, .03);
-        CompanyPositions.SeniorSoftwareConsultant.setPerformanceParameters(75, 0, 0, 0, 0, 25);
+        CompanyPositions.SeniorSoftwareConsultant.setPerformanceParameters(75, 0, 0, 0, 0, 25, 1.15);
         CompanyPositions.SeniorSoftwareConsultant.setExperienceGains(.35, 0, 0, 0, 0, .06);
         
         //Security
-        CompanyPositions.ITIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10);
+        CompanyPositions.ITIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10, 1);
         CompanyPositions.ITIntern.setExperienceGains(.05, 0, 0, 0, 0, .01);
-        CompanyPositions.ITAnalyst.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+        CompanyPositions.ITAnalyst.setPerformanceParameters(85, 0, 0, 0, 0, 15, 1.1);
         CompanyPositions.ITAnalyst.setExperienceGains(.15, 0, 0, 0, 0, .02);
-        CompanyPositions.ITManager.setPerformanceParameters(75, 0, 0, 0, 0, 25);
+        CompanyPositions.ITManager.setPerformanceParameters(75, 0, 0, 0, 0, 25, 1.2);
         CompanyPositions.ITManager.setExperienceGains(.4, 0, 0, 0, 0, .1);
-        CompanyPositions.SysAdmin.setPerformanceParameters(80, 0, 0, 0, 0, 20);
+        CompanyPositions.SysAdmin.setPerformanceParameters(80, 0, 0, 0, 0, 20, 1.2);
         CompanyPositions.SysAdmin.setExperienceGains(.5, 0, 0, 0, 0, .05);
-        CompanyPositions.SecurityEngineer.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+        CompanyPositions.SecurityEngineer.setPerformanceParameters(85, 0, 0, 0, 0, 15, 1.15);
         CompanyPositions.SecurityEngineer.setExperienceGains(0.4, 0, 0, 0, 0, .05);
-        CompanyPositions.NetworkEngineer.setPerformanceParameters(85, 0, 0, 0, 0, 15);
+        CompanyPositions.NetworkEngineer.setPerformanceParameters(85, 0, 0, 0, 0, 15, 1.15);
         CompanyPositions.NetworkEngineer.setExperienceGains(0.4, 0, 0, 0, 0, .05);
-        CompanyPositions.NetworkAdministrator.setPerformanceParameters(75, 0, 0, 0, 0, 25);
+        CompanyPositions.NetworkAdministrator.setPerformanceParameters(75, 0, 0, 0, 0, 25, 1.25);
         CompanyPositions.NetworkAdministrator.setExperienceGains(0.5, 0, 0, 0, 0, .1);
         
         //Technology management
-        CompanyPositions.HeadOfSoftware.setPerformanceParameters(65, 0, 0, 0, 0, 35);
+        CompanyPositions.HeadOfSoftware.setPerformanceParameters(65, 0, 0, 0, 0, 35, 1.4);
         CompanyPositions.HeadOfSoftware.setExperienceGains(1, 0, 0, 0, 0, .5);
-        CompanyPositions.HeadOfEngineering.setPerformanceParameters(60, 0, 0, 0, 0, 40);
+        CompanyPositions.HeadOfEngineering.setPerformanceParameters(60, 0, 0, 0, 0, 40, 1.4);
         CompanyPositions.HeadOfEngineering.setExperienceGains(1.1, 0, 0, 0, 0, .5);
-        CompanyPositions.VicePresident.setPerformanceParameters(60, 0, 0, 0, 0, 40);
+        CompanyPositions.VicePresident.setPerformanceParameters(60, 0, 0, 0, 0, 40, 1.5);
         CompanyPositions.VicePresident.setExperienceGains(1.2, 0, 0, 0, 0, .6);
-        CompanyPositions.CTO.setPerformanceParameters(50, 0, 0, 0, 0, 50);
+        CompanyPositions.CTO.setPerformanceParameters(50, 0, 0, 0, 0, 50, 1.5);
         CompanyPositions.CTO.setExperienceGains(1.5, 0, 0, 0, 1);
         
         //Business
-        CompanyPositions.BusinessIntern.setPerformanceParameters(10, 0, 0, 0, 0, 90);
+        CompanyPositions.BusinessIntern.setPerformanceParameters(10, 0, 0, 0, 0, 90, 1);
         CompanyPositions.BusinessIntern.setExperienceGains(.01, 0, 0, 0, 0, .1);
-        CompanyPositions.BusinessAnalyst.setPerformanceParameters(20, 0, 0, 0, 0, 80);
+        CompanyPositions.BusinessAnalyst.setPerformanceParameters(20, 0, 0, 0, 0, 80, 1.1);
         CompanyPositions.BusinessAnalyst.setExperienceGains(.02, 0, 0, 0, 0, .2);
-        CompanyPositions.BusinessManager.setPerformanceParameters(15, 0, 0, 0, 0, 85);
+        CompanyPositions.BusinessManager.setPerformanceParameters(15, 0, 0, 0, 0, 85, 1.2);
         CompanyPositions.BusinessManager.setExperienceGains(.02, 0, 0, 0, 0, .4);
-        CompanyPositions.OperationsManager.setPerformanceParameters(15, 0, 0, 0, 0, 85);
+        CompanyPositions.OperationsManager.setPerformanceParameters(15, 0, 0, 0, 0, 85, 1.2);
         CompanyPositions.OperationsManager.setExperienceGains(.02, 0, 0, 0, 0, .4);
-        CompanyPositions.CFO.setPerformanceParameters(10, 0, 0, 0, 0, 90);
+        CompanyPositions.CFO.setPerformanceParameters(10, 0, 0, 0, 0, 90, 1.3);
         CompanyPositions.CFO.setExperienceGains(.05, 0, 0, 0, 0, 1);
-        CompanyPositions.CEO.setPerformanceParameters(10, 0, 0, 0, 0, 90);
+        CompanyPositions.CEO.setPerformanceParameters(10, 0, 0, 0, 0, 90, 1.5);
         CompanyPositions.CEO.setExperienceGains(.1, 0, 0, 0, 0, 1.5);
         
-        CompanyPositions.BusinessConsultant.setPerformanceParameters(20, 0, 0, 0, 0, 80);
+        CompanyPositions.BusinessConsultant.setPerformanceParameters(20, 0, 0, 0, 0, 80, 1);
         CompanyPositions.BusinessConsultant.setExperienceGains(.015, 0, 0, 0, 0, .15);
-        CompanyPositions.SeniorBusinessConsultant.setPerformanceParameters(15, 0, 0, 0, 0, 85);
+        CompanyPositions.SeniorBusinessConsultant.setPerformanceParameters(15, 0, 0, 0, 0, 85, 1.15);
         CompanyPositions.SeniorBusinessConsultant.setExperienceGains(.015, 0, 0, 0, 0, .3);
         
         //Non-tech/management jobs
@@ -347,23 +354,23 @@ CompanyPositions = {
         CompanyPositions.Waiter.setExperienceGains(0, .01, .01, .01, .01, .05);
         CompanyPositions.Employee.setPerformanceParameters(0, 10, 0, 10, 10, 70);
         CompanyPositions.Employee.setExperienceGains(0, .01, .01, .01, .01, .04);
-        CompanyPositions.SecurityGuard.setPerformanceParameters(5, 20, 20, 20, 20, 15);
+        CompanyPositions.SecurityGuard.setPerformanceParameters(5, 20, 20, 20, 20, 15, 1);
         CompanyPositions.SecurityGuard.setExperienceGains(.01, .02, .02, .02, .02, .01);
-        CompanyPositions.PoliceOfficer.setPerformanceParameters(5, 20, 20, 20, 20, 15);
+        CompanyPositions.PoliceOfficer.setPerformanceParameters(5, 20, 20, 20, 20, 15, 1);
         CompanyPositions.PoliceOfficer.setExperienceGains(.01, .04, .04, .04, .04, .02);
-        CompanyPositions.PoliceChief.setPerformanceParameters(5, 20, 20, 20, 20, 15);
+        CompanyPositions.PoliceChief.setPerformanceParameters(5, 20, 20, 20, 20, 15, 1.25);
         CompanyPositions.PoliceChief.setExperienceGains(.02, .06, .06, .06, .06, .05);
-        CompanyPositions.SecurityOfficer.setPerformanceParameters(10, 20, 20, 20, 20, 10);
+        CompanyPositions.SecurityOfficer.setPerformanceParameters(10, 20, 20, 20, 20, 10, 1.1);
         CompanyPositions.SecurityOfficer.setExperienceGains(.02, .06, .06, .06, .06, .04);
-        CompanyPositions.SecuritySupervisor.setPerformanceParameters(10, 15, 15, 15, 15, 30);
+        CompanyPositions.SecuritySupervisor.setPerformanceParameters(10, 15, 15, 15, 15, 30, 1.25);
         CompanyPositions.SecuritySupervisor.setExperienceGains(.02, .06, .06, .06, .06, .08);
-        CompanyPositions.HeadOfSecurity.setPerformanceParameters(10, 15, 15, 15, 15, 30);
+        CompanyPositions.HeadOfSecurity.setPerformanceParameters(10, 15, 15, 15, 15, 30, 1.4);
         CompanyPositions.HeadOfSecurity.setExperienceGains(.05, .1, .1, .1, .1, .1);
-        CompanyPositions.FieldAgent.setPerformanceParameters(10, 15, 15, 20, 20, 20);
+        CompanyPositions.FieldAgent.setPerformanceParameters(10, 15, 15, 20, 20, 20, 1);
         CompanyPositions.FieldAgent.setExperienceGains(.04, .06, .06, .06, .06, .04);
-        CompanyPositions.SecretAgent.setPerformanceParameters(15, 15, 15, 20, 20, 15);
+        CompanyPositions.SecretAgent.setPerformanceParameters(15, 15, 15, 20, 20, 15, 1.25);
         CompanyPositions.SecretAgent.setExperienceGains(.08, .1, .1, .1, .1, .08);
-        CompanyPositions.SpecialOperative.setPerformanceParameters(15, 15, 15, 20, 20, 15);
+        CompanyPositions.SpecialOperative.setPerformanceParameters(15, 15, 15, 20, 20, 15, 1.5);
         CompanyPositions.SpecialOperative.setExperienceGains(.12, .15, .15, .15, .15, .12);
     }
 }
@@ -381,7 +388,7 @@ getNextCompanyPosition = function(currPos) {
     if (currPos.positionName == CompanyPositions.SeniorDev.positionName) {
         return CompanyPositions.LeadDev;
     }
-    if (currPos.positionName == CompanyPositions.LeadDev.positionname) {
+    if (currPos.positionName == CompanyPositions.LeadDev.positionName) {
         return CompanyPositions.HeadOfSoftware;
     }
     

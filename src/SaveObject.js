@@ -34,7 +34,6 @@ BitburnerSaveObject.prototype.saveGame = function() {
     this.CompaniesSave              = JSON.stringify(Companies);
     this.FactionsSave               = JSON.stringify(Factions);
     this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
-    //this.AugmentationsSave          = JSON.stringify(Augmentations);
     this.AliasesSave                = JSON.stringify(Aliases);
     this.MessagesSave               = JSON.stringify(Messages);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
@@ -95,7 +94,7 @@ loadGame = function(saveObj) {
                         }
                     }
                 }
-                if (CONSTANTS.Version == "0.23.0.BETA") {
+                if (CONSTANTS.Version == "0.23.0") {
                     Augmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
                 }
                 createNewUpdateText();
@@ -168,7 +167,7 @@ loadImportedGame = function(saveObj, saveString) {
                             }
                         }
                     }
-                    if (CONSTANTS.Version == "0.23.0.BETA") {
+                    if (CONSTANTS.Version == "0.23.0") {
                         Augmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
                     }
                     createNewUpdateText();

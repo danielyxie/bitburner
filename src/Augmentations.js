@@ -1373,7 +1373,7 @@ initAugmentations = function() {
     AddToAugmentations(SNA);
     
     //Update costs based on how many have been purchased
-    var mult = Math.pow(1.5, Player.queuedAugmentations.length);
+    var mult = Math.pow(CONSTANTS.MultipleAugMultiplier, Player.queuedAugmentations.length);
     for (var name in Augmentations) {
         if (Augmentations.hasOwnProperty(name)) {
             Augmentations[name].baseCost *= mult;
