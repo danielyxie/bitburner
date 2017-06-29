@@ -424,8 +424,8 @@ CONSTANTS = {
                            "<i>print(x)</i> <br>Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br>" + 
                            "WARNING: Do NOT call print() on an array. The script will crash. You can, however, call print on single elements of an array. For example, if " + 
                            "the variable 'a' is an array, then do NOT call print(a), but it is okay to call print(a[0]).<br><br>" + 
-                           "<i>scan()</i><br>Returns an array containing the hostnames of all servers that are one node away from the current server. The " + 
-                           "current server is the server on which the script that calls this function is running. The hostnames are strings.<br><br>" + 
+                           "<i>scan(hostname/ip)</i><br>Returns an array containing the hostnames of all servers that are one node away from the specified server. " + 
+                           "The argument must be a string containing the IP or hostname of the target server. The hostnames in the returned array are strings.<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" + 
                            "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer. Does NOT work while offline <br> Example: ftpcrack('foodnstuff');<br><br>" + 
