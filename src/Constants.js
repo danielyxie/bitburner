@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.23.0",
+    Version:                "0.23.1",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -93,6 +93,9 @@ CONSTANTS = {
     
     //Infiltration constants
     InfiltrationBribeBaseAmount: 100000, //Amount per clearance level
+    
+    
+    HospitalCostPerHp: 25000,
     
     MillisecondsPer20Hours: 72000000,
     GameCyclesPer20Hours: 72000000 / 200,
@@ -857,6 +860,8 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
+    "v0.23.1<br>" + 
+    "-scan() Netscript function now takes a single argument representing the server from which to scan. <br><br>" + 
     "v0.23.0<br>" + 
     "-You can now purchase multiple Augmentations in a run. When you purchase an Augmentation you will lose money equal to the price " + 
     "and then the cost of purchasing another Augmentation during this run will be increased by 75%. You do not gain the benefits " + 
