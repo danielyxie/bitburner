@@ -204,20 +204,27 @@ function evaluate(exp, workerScript) {
                     });
                     
                 } else if (exp.func.value == "scan") {
-                    if (exp.args.length != 0) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "scan() call has incorrect number of arguments. Takes 0 arguments"));
+                    if (exp.args.length != 1) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "scan() call has incorrect number of arguments. Takes 1 argument"));
                     }
-                    var currServ = getServer(workerScript.serverIp);
-                    if (currServ == null) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer"));
-                    }
-                    var res = [];
-                    for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
-                        var thisServ = getServer(currServ.serversOnNetwork[i]);
-                        if (thisServ == null) {continue;}
-                        res.push({type:"str", value: thisServ.hostname});
-                    }
-                    resolve(res);
+                    
+                    var ipPromise = evaluate(exp.args[0], workerScript);
+                    ipPromise.then(function(ip) {
+                        var server = getServer(ip);
+                        if (server == null) {
+                            workerScript.scriptRef.log("scan() failed. Invalid IP or hostname passed in: " + ip);
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into scan() command"));;
+                        }
+                        var res = [];
+                        for (var i = 0; i < server.serversOnNetwork.length; ++i) {
+                            var thisServ = getServer(server.serversOnNetwork[i]);
+                            if (thisServ == null) {continue;}
+                            res.push({type:"str", value: thisServ.hostname});
+                        }
+                        resolve(res);
+                    }, function(e) {
+                        reject(e);
+                    });
                 } else if (exp.func.value == "nuke") {
                     var p = netscriptRunProgram(exp, workerScript, Programs.NukeProgram);
                     p.then(function(res) {
