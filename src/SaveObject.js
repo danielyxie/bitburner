@@ -11,6 +11,7 @@ function BitburnerSaveObject() {
     this.SpecialServerIpsSave       = "";
     this.AugmentationsSave          = "";
     this.AliasesSave                = "";
+    this.GlobalAliasesSave          = "";
     this.MessagesSave               = "";
     this.VersionSave                = "";
 }
@@ -37,6 +38,7 @@ BitburnerSaveObject.prototype.saveGame = function() {
     this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
     this.AugmentationsSave          = JSON.stringify(Augmentations);
     this.AliasesSave                = JSON.stringify(Aliases);
+    this.GlobalAliasesSave          = JSON.stringify(GlobalAliases);
     this.MessagesSave               = JSON.stringify(Messages);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
     
@@ -69,6 +71,15 @@ loadGame = function(saveObj) {
         }
     } else {
         Aliases = {};
+    }
+    if (saveObj.hasOwnProperty("GlobalAliasesSave")) {
+        try {
+            GlobalAliases   = JSON.parse(saveObj.GlobalAliasesSave, Reviver);
+        } catch(e) {
+            GlobalAliases = {};
+        }
+    } else {
+        GlobalAliases = {};
     }
     if (saveObj.hasOwnProperty("MessagesSave")) {
         try {
@@ -118,6 +129,7 @@ loadImportedGame = function(saveObj, saveString) {
     var tempSpecialServerIps = null;
     var tempAugmentations = null;
     var tempAliases = null;
+    var tempGlobalAliases = null;
     var tempMessages = null;
     try {
         saveString = decodeURIComponent(escape(atob(saveString)));
@@ -138,6 +150,15 @@ loadImportedGame = function(saveObj, saveString) {
             }
         } else {
             tempAliases = {};
+        }
+        if (tempSaveObj.hasOwnProperty("GlobalAliases")) {
+            try {
+                tempGlobalAliases   = JSON.parse(tempSaveObj.AliasesSave, Reviver);
+            } catch(e) {
+                tempGlobalAliases = {};
+            }
+        } else {
+            tempGlobalAliases = {};
         }
         if (tempSaveObj.hasOwnProperty("MessagesSave")) {
             try {
@@ -189,6 +210,10 @@ loadImportedGame = function(saveObj, saveString) {
     Augmentations           = tempAugmentations;
     if (tempAliases) {
         Aliases             = tempAliases;
+    }
+    
+    if (tempGlobalAliases) {
+        GlobalAliases             = tempGlobalAliases;
     }
     
     if (tempMessages) {
@@ -263,6 +288,7 @@ BitburnerSaveObject.prototype.exportGame = function() {
     this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
     this.AugmentationsSave          = JSON.stringify(Augmentations);
     this.AliasesSave                = JSON.stringify(Aliases);
+    this.GlobalAliasesSave          = JSON.stringify(GlobalAliasesSave);
     this.MessagesSave               = JSON.stringify(Messages);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
     
