@@ -25,7 +25,7 @@ var Engine = {
         tutorialScriptsButton:          null,
         tutorialNetscriptButton:        null,
         tutorialTravelingButton:        null,
-        tutorialJobsButton:             null,
+        tutorialCompaniesButton:        null,
         tutorialFactionsButton:         null,
         tutorialAugmentationsButton:    null,
         tutorialBackButton:             null,
@@ -55,6 +55,7 @@ var Engine = {
         augmentationsContent:           null,
         tutorialContent:                null,
         infiltrationContent:            null,
+        stockMarketContent:             null,
         locationContent:                null,
         workInProgressContent:          null,
         
@@ -80,6 +81,8 @@ var Engine = {
         Tutorial:           "Tutorial",
         Location:           "Location",
         workInProgress:     "WorkInProgress",
+        Infiltration:       "Infiltration",
+        StockMarket:        "StockMarket",
     },
     currentPage:    null,
 
@@ -111,7 +114,6 @@ var Engine = {
             document.getElementById("script-editor-text").value = code;
         }
         document.getElementById("script-editor-text").focus();
-        
         Engine.currentPage = Engine.Page.ScriptEditor;
     },
     
@@ -119,7 +121,6 @@ var Engine = {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.visibility = "visible";
         setActiveScriptsClickHandlers();
-        
         Engine.currentPage = Engine.Page.ActiveScripts;
     },
     
@@ -127,7 +128,6 @@ var Engine = {
         Engine.hideAllContent();
         Engine.Display.hacknetNodesContent.style.visibility = "visible";
         displayHacknetNodesContent();
-        
         Engine.currentPage = Engine.Page.HacknetNodes;
     },
     
@@ -135,7 +135,6 @@ var Engine = {
         Engine.hideAllContent();
         Engine.Display.worldContent.style.visibility = "visible";
         Engine.displayWorldInfo();
-        
         Engine.currentPage = Engine.Page.World;
     },
     
@@ -143,7 +142,6 @@ var Engine = {
         Engine.hideAllContent();
         Engine.Display.createProgramContent.style.visibility = "visible";
         displayCreateProgramContent();
-        
         Engine.currentPage = Engine.Page.CreateProgram;
     },
     
@@ -151,14 +149,12 @@ var Engine = {
         Engine.hideAllContent();
         Engine.Display.factionsContent.style.visibility = "visible";
         Engine.displayFactionsInfo();
-        
         Engine.currentPage = Engine.Page.Factions;
     },
     
     loadFactionContent: function() {
         Engine.hideAllContent();
         Engine.Display.factionContent.style.visibility = "visible";
-        
         Engine.currentPage = Engine.Page.Faction;
     },
     
@@ -166,7 +162,6 @@ var Engine = {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.visibility = "visible";
         Engine.displayAugmentationsContent();
-        
         Engine.currentPage = Engine.Page.Augmentations;
     },
     
@@ -174,7 +169,6 @@ var Engine = {
         Engine.hideAllContent();
         Engine.Display.tutorialContent.style.visibility = "visible";
         Engine.displayTutorialContent();
-        
         Engine.currentPage = Engine.Page.Tutorial;
     },
     
@@ -182,19 +176,28 @@ var Engine = {
         Engine.hideAllContent();
         Engine.Display.locationContent.style.visibility = "visible";
         displayLocationContent();
-        
         Engine.currentPage = Engine.Page.Location;
     },
     
     loadWorkInProgressContent: function() {
         Engine.hideAllContent();
-        
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
-        
         Engine.Display.workInProgressContent.style.visibility = "visible";
-        
         Engine.currentPage = Engine.Page.WorkInProgress;
+    },
+    
+    loadInfiltrationContent: function() {
+        Engine.hideAllContent();
+        Engine.Display.infiltrationContent.style.visibility = "visible";
+        Engine.currentPage = Engine.Page.Infiltration;
+    },
+    
+    loadStockMarketContent: function() {
+        Engine.hideAllContent();
+        Engine.Display.stockMarketContent.style.visibility = "visible";
+        displayStockMarketContent();
+        Engine.currentPage = Engine.Page.StockMarket;
     },
     
     //Helper function that hides all content 
@@ -213,6 +216,8 @@ var Engine = {
         Engine.Display.tutorialContent.style.visibility = "hidden";
         Engine.Display.locationContent.style.visibility = "hidden";
         Engine.Display.workInProgressContent.style.visibility = "hidden";
+        Engine.Display.infiltrationContent.style.visibility = "hidden";
+        Engine.Display.stockMarketContent.style.visibility = "hidden";
         
         //Location lists
         Engine.aevumLocationsList.style.display = "none";
@@ -224,8 +229,10 @@ var Engine = {
     },
     
     displayCharacterOverviewInfo: function() {
+        if (Player.hp == null) {Player.hp = Player.max_hp;}
         document.getElementById("character-overview-text").innerHTML = 
-        ("Money: $" + formatNumber(Player.money, 2) + "<br>" + 
+        ("Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" + 
+         "Money: $" + formatNumber(Player.money, 2) + "<br>" + 
          "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" + 
          "Str:   " + (Player.strength).toLocaleString() + "<br>" + 
          "Def:   " + (Player.defense).toLocaleString() + "<br>" + 
@@ -309,7 +316,7 @@ var Engine = {
         Engine.newTokyoLocationsList.style.display = "none";
         Engine.ishimaLocationsList.style.display = "none";
         Engine.volhavenLocationsList.style.display = "none";
-        
+                
         document.getElementById("world-city-name").innerHTML = Player.city;
         var cityDesc = document.getElementById("world-city-desc"); //TODO
         switch(Player.city) {
@@ -336,6 +343,8 @@ var Engine = {
                 console.log("Invalid city value in Player object!");
                 break;
         }
+        
+        document.getElementById("generic-locations-list").style.display = "inline";
     },
     
     displayFactionsInfo: function() {
@@ -441,7 +450,7 @@ var Engine = {
         Engine.Clickables.tutorialScriptsButton.style.display = "block";
         Engine.Clickables.tutorialNetscriptButton.style.display = "block";
         Engine.Clickables.tutorialTravelingButton.style.display = "block";
-        Engine.Clickables.tutorialJobsButton.style.display = "block";
+        Engine.Clickables.tutorialCompaniesButton.style.display = "block";
         Engine.Clickables.tutorialFactionsButton.style.display = "block";
         Engine.Clickables.tutorialAugmentationsButton.style.display = "block";    
 
@@ -457,7 +466,7 @@ var Engine = {
         Engine.Clickables.tutorialScriptsButton.style.display = "none";
         Engine.Clickables.tutorialNetscriptButton.style.display = "none";
         Engine.Clickables.tutorialTravelingButton.style.display = "none";
-        Engine.Clickables.tutorialJobsButton.style.display = "none";
+        Engine.Clickables.tutorialCompaniesButton.style.display = "none";
         Engine.Clickables.tutorialFactionsButton.style.display = "none";
         Engine.Clickables.tutorialAugmentationsButton.style.display = "none";
         
@@ -548,6 +557,7 @@ var Engine = {
         checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations every 5 minutes
         passiveFactionGrowth: 600,
         messages: 300,
+        stockTick:  50,                     //Update stock prices
     },
     
     decrementAllCounters: function(numCycles = 1) {
@@ -622,6 +632,13 @@ var Engine = {
             checkForMessagesToSend();
             Engine.Counters.messages = 300;
         }
+        
+        if (Engine.Counters.stockTick <= 0) {
+            if (Player.hasWseAccount) {
+                updateStockPrices();
+            }
+            Engine.Counters.stockTick = 50;
+        }
     },
     
     /* Calculates the hack progress for a manual (non-scripted) hack and updates the progress bar/time accordingly */
@@ -684,6 +701,10 @@ var Engine = {
             Engine.init();                  //Initialize buttons, work, etc.
             CompanyPositions.init();
             initAugmentations();            //Also calls Player.reapplyAllAugmentations()
+            initStockSymbols();
+            if (Player.hasWseAccount) {
+                initSymbolToStockMap();
+            }
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
@@ -740,6 +761,7 @@ var Engine = {
             CompanyPositions.init();
             initAugmentations();
             initMessages();
+            initStockSymbols();
             
             //Start interactive tutorial
             iTutorialStart();            
@@ -787,6 +809,10 @@ var Engine = {
         
         Engine.Display.infiltrationContent = document.getElementById("infiltration-container");
         Engine.Display.infiltrationContent.style.visibility = "hidden";
+        
+        Engine.Display.stockMarketContent = document.getElementById("stock-market-container");
+        Engine.Display.stockMarketContent.style.visibility = "hidden";
+        
         
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");
@@ -844,9 +870,9 @@ var Engine = {
             Engine.displayTutorialPage(CONSTANTS.TutorialTravelingText);
         });
         
-        Engine.Clickables.tutorialJobsButton = document.getElementById("tutorial-jobs-link");
-        Engine.Clickables.tutorialJobsButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(CONSTANTS.TutorialJobsText);
+        Engine.Clickables.tutorialCompaniesButton = document.getElementById("tutorial-jobs-link");
+        Engine.Clickables.tutorialCompaniesButton.addEventListener("click", function() {
+            Engine.displayTutorialPage(CONSTANTS.TutorialCompaniesText);
         });
         
         Engine.Clickables.tutorialFactionsButton = document.getElementById("tutorial-factions-link");

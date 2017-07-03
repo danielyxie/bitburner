@@ -169,6 +169,10 @@ function PlayerObject() {
     this.hacknet_node_ram_cost_mult         = 1;
     this.hacknet_node_core_cost_mult        = 1;
     this.hacknet_node_level_cost_mult       = 1;
+    
+    //Stock Market
+    this.hasWseAccount      = false;
+    this.hasTixApiAccess    = false;
 	
 	//Used to store the last update time. 
 	this.lastUpdate = 0;
@@ -203,13 +207,16 @@ PlayerObject.prototype.calculateSkill = function(exp) {
 }
 
 PlayerObject.prototype.updateSkillLevels = function() {
-    //TODO Account for total and lifetime stats for achievements and stuff
 	this.hacking_skill = Math.floor(this.calculateSkill(this.hacking_exp) * this.hacking_mult);
 	this.strength      = Math.floor(this.calculateSkill(this.strength_exp) * this.strength_mult);
     this.defense       = Math.floor(this.calculateSkill(this.defense_exp) * this.defense_mult);
     this.dexterity     = Math.floor(this.calculateSkill(this.dexterity_exp) * this.dexterity_mult);
     this.agility       = Math.floor(this.calculateSkill(this.agility_exp) * this.agility_mult);
     this.charisma      = Math.floor(this.calculateSkill(this.charisma_exp) * this.charisma_mult);
+    
+    var ratio = this.hp / this.max_hp;
+    this.max_hp         = Math.floor(10 + this.defense / 10);
+    Player.hp = Math.round(this.max_hp * ratio);
 }
 
 //Calculates the chance of hacking a server
@@ -246,7 +253,7 @@ PlayerObject.prototype.calculateHackingTime = function() {
 PlayerObject.prototype.calculatePercentMoneyHacked = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
     var skillMult = (this.hacking_skill - (this.getCurrentServer().requiredHackingSkill - 1)) / this.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 200;
+    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 225;
     console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
@@ -261,7 +268,7 @@ PlayerObject.prototype.calculateExpGain = function() {
     if (s.baseDifficulty == null) {
         s.baseDifficulty = s.hackDifficulty;
     }
-    return (s.baseDifficulty * this.hacking_exp_mult * 0.5 + 2);
+    return (s.baseDifficulty * this.hacking_exp_mult * 0.4 + 2);
 }
 
 //Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for
@@ -1204,12 +1211,24 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
     Engine.loadLocationContent();
 }
 
-PlayerObject.prototype.takeDamage = function() {
-    
+
+//Returns true if hospitalized, false otherwise
+PlayerObject.prototype.takeDamage = function(amt) {
+    this.hp -= amt;
+    if (this.hp <= 0) {
+        this.hospitalize();
+        return true;
+    } else {
+        return false;
+    }
 }
 
 PlayerObject.prototype.hospitalize = function() {
-    
+    dialogBoxCreate("You were in critical condition! You were taken to the hospital where " + 
+                    "luckily they were able to save your life. You were charged $" + 
+                    formatNumber(this.max_hp * CONSTANTS.HospitalCostPerHp, 2));
+    Player.loseMoney(this.max_hp * CONSTANTS.HospitalCostPerHp);
+    this.hp = this.max_hp;
 }
 
 /* Functions for saving and loading the Player data */

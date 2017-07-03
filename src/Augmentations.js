@@ -246,7 +246,7 @@ initAugmentations = function() {
     var CombatRib2 = new Augmentation(AugmentationNames.CombatRib2);
     CombatRib2.setRequirements(7000, 12000000);
     CombatRib2.setInfo("This is an upgrade to the Combat Rib I augmentation, and is capable of releasing even more potent combat-enhancing " + 
-                       "drugs into the bloodstream<br><br>. This upgrade increases the player's strength and defense by an additional 15%.")
+                       "drugs into the bloodstream.<br><br>This upgrade increases the player's strength and defense by an additional 15%.")
     CombatRib2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.CombatRib2)) {

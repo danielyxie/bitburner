@@ -665,7 +665,8 @@ initCompanies = function() {
         CompanyPositions.ITAnalyst, CompanyPositions.ITManager, CompanyPositions.SysAdmin,
         CompanyPositions.SecurityEngineer, CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator,
         CompanyPositions.HeadOfSoftware, CompanyPositions.HeadOfEngineering,
-        CompanyPositions.VicePresident, CompanyPositions.CTO, CompanyPositions.BusinessAnalyst,
+        CompanyPositions.VicePresident, CompanyPositions.CTO, 
+        CompanyPositions.BusinessIntern, CompanyPositions.BusinessAnalyst,
         CompanyPositions.BusinessManager, CompanyPositions.OperationsManager, CompanyPositions.CFO,
         CompanyPositions.CEO]);
     if (companyExists(Locations.IshimaStormTechnologies)) {
@@ -681,7 +682,7 @@ initCompanies = function() {
         CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
-        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.CFO, CompanyPositions.CEO]);
+        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.CEO]);
     if (companyExists(Locations.NewTokyoDefComm)) {
         DefComm.favor = Companies[Locations.NewTokyoDefComm].favor;
         delete Companies[Locations.NewTokyoDefComm];
@@ -695,7 +696,7 @@ initCompanies = function() {
         CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
-        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.CFO, CompanyPositions.CEO]);
+        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.CEO]);
     if (companyExists(Locations.VolhavenHeliosLabs)) {
         HeliosLabs.favor = Companies[Locations.VolhavenHeliosLabs].favor;
         delete Companies[Locations.VolhavenHeliosLabs];
@@ -709,7 +710,8 @@ initCompanies = function() {
         CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
-        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
+        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, 
+        CompanyPositions.BusinessIntern, CompanyPositions.BusinessAnalyst, CompanyPositions.BusinessManager,
         CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
     if (companyExists(Locations.NewTokyoVitaLife)) {
         VitaLife.favor = Companies[Locations.NewTokyoVitaLife].favor;
@@ -724,7 +726,8 @@ initCompanies = function() {
         CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
-        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
+        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, 
+        CompanyPositions.BusinessIntern, CompanyPositions.BusinessAnalyst, CompanyPositions.BusinessManager,
         CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
     if (companyExists(Locations.Sector12IcarusMicrosystems)) {
         IcarusMicrosystems.favor = Companies[Locations.Sector12IcarusMicrosystems].favor;
@@ -739,7 +742,8 @@ initCompanies = function() {
         CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
-        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
+        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, 
+        CompanyPositions.BusinessIntern, CompanyPositions.BusinessAnalyst, CompanyPositions.BusinessManager,
         CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
     if (companyExists(Locations.Sector12UniversalEnergy)) {
         UniversalEnergy.favor = Companies[Locations.Sector12UniversalEnergy].favor;
@@ -754,7 +758,8 @@ initCompanies = function() {
         CompanyPositions.ITIntern, CompanyPositions.ITAnalyst, 
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
-        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, CompanyPositions.BusinessManager,
+        CompanyPositions.HeadOfEngineering, CompanyPositions.CTO, 
+        CompanyPositions.BusinessIntern, CompanyPositions.BusinessAnalyst, CompanyPositions.BusinessManager,
         CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO]);
     if (companyExists(Locations.AevumGalacticCybersystems)) {
         GalacticCybersystems.favor = Companies[Locations.AevumGalacticCybersystems].favor;
@@ -770,7 +775,7 @@ initCompanies = function() {
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.CTO,
-        CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO,
+        CompanyPositions.OperationsManager, CompanyPositions.CEO,
         CompanyPositions.SecurityGuard, CompanyPositions.SecurityOfficer, CompanyPositions.SecuritySupervisor,
         CompanyPositions.HeadOfSecurity]);
     if (companyExists(Locations.AevumAeroCorp)) {
@@ -786,7 +791,7 @@ initCompanies = function() {
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.CTO,
-        CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO,
+        CompanyPositions.OperationsManager, CompanyPositions.CEO,
         CompanyPositions.SecurityGuard, CompanyPositions.SecurityOfficer, CompanyPositions.SecuritySupervisor,
         CompanyPositions.HeadOfSecurity]);
     if (companyExists(Locations.VolhavenOmniaCybersystems)) {
@@ -802,7 +807,7 @@ initCompanies = function() {
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.CTO,
-        CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO,
+        CompanyPositions.OperationsManager, CompanyPositions.CEO,
         CompanyPositions.SecurityGuard, CompanyPositions.SecurityOfficer, CompanyPositions.SecuritySupervisor,
         CompanyPositions.HeadOfSecurity]);
     if (companyExists(Locations.ChongqingSolarisSpaceSystems)) {
@@ -818,7 +823,7 @@ initCompanies = function() {
         CompanyPositions.ITManager, CompanyPositions.SysAdmin, CompanyPositions.SecurityEngineer,
         CompanyPositions.NetworkEngineer, CompanyPositions.NetworkAdministrator, CompanyPositions.HeadOfSoftware,
         CompanyPositions.HeadOfEngineering, CompanyPositions.CTO,
-        CompanyPositions.OperationsManager, CompanyPositions.CFO, CompanyPositions.CEO,
+        CompanyPositions.OperationsManager, CompanyPositions.CEO,
         CompanyPositions.SecurityGuard, CompanyPositions.SecurityOfficer, CompanyPositions.SecuritySupervisor,
         CompanyPositions.HeadOfSecurity]);
     if (companyExists(Locations.Sector12DeltaOne)) {

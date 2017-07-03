@@ -529,7 +529,7 @@ initForeignServers = function() {
     
     var TheBlackHandServer = new Server();
     TheBlackHandServer.init(createRandomIp(), "I.I.I.I", "I.I.I.I", true, false, false, false, 0);
-    TheBlackHandServer.setHackingParameters(getRandomInt(303, 325), 0, 0, 0);
+    TheBlackHandServer.setHackingParameters(getRandomInt(340, 365), 0, 0, 0);
     TheBlackHandServer.setPortProperties(3);
     AddToAllServers(TheBlackHandServer);
     SpecialServerIps.addIp(SpecialServerNames.TheBlackHandServer, TheBlackHandServer.ip);
@@ -689,7 +689,7 @@ processSingleServerGrowth = function(server, numCycles) {
     var growthRate = CONSTANTS.ServerBaseGrowthRate; 
     var adjGrowthRate = 1 + (growthRate - 1) / server.hackDifficulty; 
     if (adjGrowthRate > CONSTANTS.ServerMaxGrowthRate) {adjGrowthRate = CONSTANTS.ServerMaxGrowthRate;}
-    console.log("Adjusted growth rate: " + adjGrowthRate);
+    //console.log("Adjusted growth rate: " + adjGrowthRate);
     
     //Calculate adjusted server growth rate based on parameters
     var serverGrowthPercentage = server.serverGrowth / 100;
