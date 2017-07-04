@@ -243,7 +243,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "free", 
                 "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
                 "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze", 
-                "scp", "sudov", "tail", "theme", "top"].concat(Object.keys(Aliases));
+                "scp", "sudov", "tail", "theme", "top"].concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
     }
     
     if (input.startsWith ("buy ")) {
@@ -581,15 +581,18 @@ var Terminal = {
             case "alias":
                 if (commandArray.length == 1) {
                     printAliases();
-                } else if (commandArray.length == 2) {
-                    if (parseAliasDeclaration(commandArray[1])) {
-                        
-                    } else {
-                        post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); return;
-                    }
-                } else {
-                    post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); return;
+                    return;
                 }
+                if (commandArray.length == 2 ) {
+                    var args = commandArray[1].split(" ");
+                    if (args.length == 1 && parseAliasDeclaration(args[0])){
+                        return;
+                    }
+                    if (args.length == 2 && args[0] == "-g" && parseAliasDeclaration(args[1],true)){
+                        return;
+                    }
+                }
+                post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); 
                 break;
 			case "analyze":
 				if (commandArray.length != 1) {
