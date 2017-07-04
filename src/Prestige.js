@@ -200,6 +200,12 @@ function prestigeAugmentation() {
     //Messages
     initMessages();
     
+    //Stock market
+    if (Player.hasWseAccount) {
+        initStockMarket();
+        initSymbolToStockMap();
+    }
+    
     Player.playtimeSinceLastAug = 0;
     
     Engine.loadTerminalContent();

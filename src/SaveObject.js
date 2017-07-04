@@ -11,6 +11,7 @@ function BitburnerSaveObject() {
     this.SpecialServerIpsSave       = "";
     this.AliasesSave                = "";
     this.MessagesSave               = "";
+    this.StockMarketSave            = "";
     this.VersionSave                = "";
 }
 
@@ -36,6 +37,7 @@ BitburnerSaveObject.prototype.saveGame = function() {
     this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
     this.AliasesSave                = JSON.stringify(Aliases);
     this.MessagesSave               = JSON.stringify(Messages);
+    this.StockMarketSave            = JSON.stringify(StockMarket);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
     window.localStorage.setItem("bitburnerSave", saveString);
@@ -75,6 +77,15 @@ loadGame = function(saveObj) {
         }
     } else {
         initMessages();
+    }
+    if (saveObj.hasOwnProperty("StockMarketSave")) {
+        try {
+            StockMarket     = JSON.parse(saveObj.StockMarketSave, Reviver);
+        } catch(e) {
+            StockMarket     = {};
+        }
+    } else {
+        StockMarket = {};
     }
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
@@ -119,6 +130,7 @@ loadImportedGame = function(saveObj, saveString) {
     var tempAugmentations = null;
     var tempAliases = null;
     var tempMessages = null;
+    var tempStockMarket = null;
     try {
         saveString = decodeURIComponent(escape(atob(saveString)));
         tempSaveObj = new BitburnerSaveObject();
@@ -147,6 +159,15 @@ loadImportedGame = function(saveObj, saveString) {
             }
         } else {
             initMessages();
+        }
+        if (saveObj.hasOwnProperty("StockMarketSave")) {
+            try {
+                tempStockMarket     = JSON.parse(saveObj.StockMarketSave, Reviver);
+            } catch(e) {
+                tempStockMarket     = {};
+            }
+        } else {
+            tempStockMarket = {};
         }
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
@@ -196,6 +217,10 @@ loadImportedGame = function(saveObj, saveString) {
     
     if (tempMessages) {
         Messages            = tempMessages;
+    }
+    
+    if (tempStockMarket) {
+        StockMarket     = tempStockMarket;
     }
     
     dialogBoxCreate("Imported game");

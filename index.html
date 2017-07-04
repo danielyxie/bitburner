@@ -26,6 +26,7 @@
     <script src="utils/PurchaseRamForHomeBox.js"></script>
     <script src="utils/GameOptions.js"></script>
     <script src="utils/LogBox.js"></script>
+    <script src="utils/InfiltrationBox.js"></script>
 	
 	<!-- Netscript -->
 	<script src="src/NetscriptWorker.js"></script>
@@ -61,6 +62,8 @@
     <script src="src/Alias.js"></script>
     <script src="src/Message.js"></script>
     <script src="src/ActiveScriptsUI.js"></script>
+    <script src="src/Infiltration.js"></script>
+    <script src="src/StockMarket.js"></script>
 	
     <script src="src/engine.js"></script>
 	
@@ -115,7 +118,7 @@
             </li>
 			
 			<li class="augmentations-tab">
-				<a id="augmentations-menu-link"> Augmentations </a>
+				<a id="augmentations-menu-link" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"> Augmentations </a>
             </li>
 			
 			<li class="tutorial-tab">
@@ -212,6 +215,9 @@
 			<li id="aevum-travelagency-li">
                 <a id="aevum-travelagency" class="a-link-button"> Travel Agency </a>
             </li>
+            <li id="aevum-hospital-li">
+                <a id="aevum-hospital" class="a-link-button">Hospital</a>
+            </li>
             <li id="aevum-summituniversity-li">
                 <a id="aevum-summituniversity" class="a-link-button"> Summit University </a>
             </li>
@@ -260,6 +266,9 @@
 			<li id="chongqing-travelagency-li">
 				<a id="chongqing-travelagency" class="a-link-button"> Travel Agency </a>
 			</li>
+            <li id="chongqing-hospital-li">
+                <a id="chongqing-hospital" class="a-link-button">Hospital</a>
+            </li>
 			<li id="chonqging-kuaigonginternational-li">
 				<a id="chongqing-kuaigonginternational" class="a-link-button">KuaiGong International </a>
 			</li>
@@ -275,6 +284,9 @@
 			<li id="sector12-travelagency-li">
 				<a id="sector12-travelagency" class="a-link-button">Travel Agency </a>
 			</li>
+            <li id="sector12-hospital-li">
+                <a id="sector12-hospital" class="a-link-button">Hospital</a>
+            </li>
             <li id="sector12-rothmanuniversity-li">
                 <a id="sector12-rothmanuniversity" class="a-link-button"> Rothman University</a>
             </li>
@@ -329,6 +341,9 @@
 			<li id="newtokyo-travelagency-li">
 				<a id="newtokyo-travelagency" class="a-link-button"> Travel Agency</a>
 			</li>
+            <li id="newtokyo-hospital-li">
+                <a id="newtokyo-hospital" class="a-link-button">Hospital</a>
+            </li>
 			<li id="newtokyo-defcomm-li">
 				<a id="newtokyo-defcomm" class="a-link-button"> DefComm</a>
 			</li>
@@ -350,6 +365,9 @@
 			<li id="ishima-travelagency-li">
 				<a id="ishima-travelagency" class="a-link-button">Travel Agency </a>
 			</li>
+            <li id="ishima-hospital-li">
+                <a id="ishima-hospital" class="a-link-button">Hospital</a>
+            </li>
 			<li id="ishima-stormtechnologies-li">
 				<a id="ishima-stormtechnologies" class="a-link-button">Storm Technologies</a>
 			</li>
@@ -368,6 +386,9 @@
 			<li id="volhaven-travelagency-li">
 				<a id="volhaven-travelagency" class="a-link-button">Travel Agency </a>
 			</li>
+            <li id="volhaven-hospital-li">
+                <a id="volhaven-hospital" class="a-link-button">Hospital</a>
+            </li>
             <li id="volhaven-zbinstituteoftechnology-li">
                 <a id="volhaven-zbinstituteoftechnology" class="a-link-button">ZB Insitute of Technology</a>
             </li>
@@ -398,6 +419,12 @@
             <li id="volhaven-slums-li">
                 <a id="volhaven-slums" class="a-link-button">The Slums</a>
             </li>
+		</ul>
+        
+        <ul id="generic-locations-list">
+			<li id="generic-location-wse-li">
+				<a id="generic-location-wse" class="a-link-button">World Stock Exchange </a>
+			</li>
 		</ul>
 	</div>
 	
@@ -559,7 +586,8 @@
                 Scripts on every computer but your home computer<br>
                 Purchased servers <br>
                 Hacknet Nodes <br>
-                Faction/Company reputation <br><br>
+                Faction/Company reputation <br>
+                Stocks<br><br>
                 Purchasing an Augmentation lets you start over with the perks and benefits granted by all
                 of the Augmentations you have ever purchased. Also, you will keep any scripts and RAM upgrades
                 on your home computer (but you will lose all programs besides NUKE.exe). 
@@ -583,7 +611,7 @@
         <a id="tutorial-scripts-link" class="a-link-button"> Scripts </a>
         <a id="tutorial-netscript-link" class="a-link-button"> Netscript Programming Language </a>
         <a id="tutorial-traveling-link" class="a-link-button"> Traveling </a>
-        <a id="tutorial-jobs-link" class="a-link-button"> Jobs </a>
+        <a id="tutorial-jobs-link" class="a-link-button"> Companies and Infiltration </a>
         <a id="tutorial-factions-link" class="a-link-button"> Factions </a>
         <a id="tutorial-augmentations-link" class="a-link-button"> Augmentations </a>
         
@@ -649,6 +677,17 @@
         <a id="location-purchase-tor" class="a-link-button"> Purchase TOR Router - $100,000</a>
         <a id="location-purchase-home-ram" class="a-link-button"> Purchase additional RAM for Home computer </a>
         
+        <!-- Infiltrate -->
+        <a id="location-infiltrate" class="a-link-button tooltip"> Infiltrate Company 
+            <span class="tooltiptext">
+                Infiltrate this company's facility to try and steal their classified secrets! 
+                Warning: You may end up hospitalized if you are unsuccessful!
+            </span>
+        </a>
+        
+        <!-- Hospital -->
+        <a id="location-hospital-treatment" class="a-link-button"> Get Treatment for Wounds </a>
+        
         <!-- Travel agency -->
         <p id="location-travel-agency-text"> 
             From here, you can travel to any other city! A ticket costs $200,000. 
@@ -699,6 +738,35 @@
             <p id="infiltration-status-text"></p>
         </div>
     </div>
+    
+    <div id="stock-market-container" class="generic-menupage-container">
+        <p>
+            Welcome to the World Stock Exchange (WSE)! <br><br>
+            
+            To begin trading, you must first purchase an account. WSE accounts will persist
+            after you 'reset' by installing Augmentations. 
+        </p>
+        <a id="stock-market-buy-account" class="a-link-button-inactive"> Buy WSE Account </a>
+        <p>
+            You can also purchase access to the World Stock Exchange's TIX API! TIX, short for
+            Trade Information eXchange, is the communications protocol supported by the WSE. 
+            <br><br>
+            Gaining access to the TIX API lets you write code to build automated trading
+            systems. In other words, you can create your own algorithmic trading strategies!
+            <br><br>
+            If you purchase access to the TIX API, you will retain that access even after 
+            you 'reset' by installing Augmentations. 
+        </p>
+        <a id="stock-market-buy-tix-api" class="a-link-button-inactive"> 
+            Buy Trade Information eXchange (TEX) API Access - COMING SOON
+        </a>
+        <p id="stock-market-commission"> </p>
+        
+        <ul id="stock-market-list" style="list-style:none;">
+		</ul>
+    </div>
+    
+    
    
     <!-- Log Box -->
     <div id="log-box-container">
@@ -710,55 +778,67 @@
     
     <!-- Purchase Server Pop-up Box -->
     <div id="purchase-server-box-container" class="popup-box-container">
-        <div id="purchase-server-box-content">
+        <div id="purchase-server-box-content" class="popup-box-content">
             <p id="purchase-server-box-text"> </p>
             <p id="purchase-server-box-enter-name"> Enter new server hostname:  </p>
             <input type="text" id="purchase-server-box-input" pattern="[a-zA-Z0-9-_]+ maxlength="30"> </input>
-            <span id="purchase-server-box-confirm"> Purchase </span>
-            <span id="purchase-server-box-cancel"> Cancel </span>
+            <span id="purchase-server-box-confirm" class="popup-box-button"> Purchase </span>
+            <span id="purchase-server-box-cancel" class="popup-box-button"> Cancel </span>
         </div>
     </div>
     
     <!-- Purchase RAM for Home Computer Pop-up Box -->
     <div id="purchase-ram-for-home-box-container" class="popup-box-container">
-        <div id="purchase-ram-for-home-box-content">
+        <div id="purchase-ram-for-home-box-content" class="popup-box-content">
             <p id="purchase-ram-for-home-box-text"> </p>
-            <span id="purchase-ram-for-home-box-confirm"> Purchase </span>
-            <span id="purchase-ram-for-home-box-cancel"> Cancel </span>
+            <span id="purchase-ram-for-home-box-confirm" class="popup-box-button"> Purchase </span>
+            <span id="purchase-ram-for-home-box-cancel" class="popup-box-button"> Cancel </span>
         </div>
     </div>
     
     <!-- Travel Pop-up Box -->
     <div id="travel-box-container" class="popup-box-container">
-        <div id="travel-box-content">
+        <div id="travel-box-content" class="popup-box-content">
             <p id="travel-box-text"> </p>
-            <span id="travel-box-confirm"> Yes </span>
-            <span id="travel-box-cancel"> No </span>
+            <span id="travel-box-confirm" class="popup-box-button"> Yes </span>
+            <span id="travel-box-cancel" class="popup-box-button"> No </span>
         </div>
     </div>
 
     <!-- Purchase Augmentation Pop-up Box -->
     <div id="purchase-augmentation-box-container" class="popup-box-container">
-        <div id="purchase-augmentation-box-content">
+        <div id="purchase-augmentation-box-content" class="popup-box-content">
             <h2 id="purchase-augmentation-box-aug-name"> </h2>
             <p id="purchase-augmentation-box-aug-info"> </p>
             <p id="purchase-augmentation-box-text"> </p>
-            <span id="purchase-augmentation-box-confirm"> Purchase </span>
-            <span id="purchase-augmentation-box-cancel"> Cancel </span>
+            <span id="purchase-augmentation-box-confirm" class="popup-box-button"> Purchase </span>
+            <span id="purchase-augmentation-box-cancel" class="popup-box-button"> Cancel </span>
         </div>
     </div>
     
     <!-- Faction Invitation Pop-up Box -->
     <div id="faction-invitation-box-container" class="popup-box-container">
-        <div id="faction-invitation-box-content">
+        <div id="faction-invitation-box-content" class="popup-box-content">
             <p id="faction-invitation-box-text"> </p>
             <p id="faction-invitation-box-message"> </p>
             <p id="faction-invitation-box-warning"> 
                 Would you like to join? <br> <br>
                 Warning: Joining this faction may prevent you from joining other factions during this run! 
             </p>
-            <span id="faction-invitation-box-yes"> Yes </span>
-            <span id="faction-invitation-box-no"> No </span>
+            <span id="faction-invitation-box-yes" class="popup-box-button"> Yes </span>
+            <span id="faction-invitation-box-no" class="popup-box-button"> No </span>
+        </div>
+    </div>
+    
+    <!-- End of Infiltration pop up box -->
+    <div id="infiltration-box-container" class="popup-box-container">
+        <div id="infiltration-box-content" class="popup-box-content">
+            <p id="infiltration-box-text"> </p>
+            
+            <span id="infiltration-box-sell" class="a-link-button"> Sell on Black Market </span> <br><br>
+            <select id="infiltration-faction-select"> </select> <br>
+            <span id="infiltration-box-faction" class="a-link-button"> Give to Faction for Reputation </span>
+            
         </div>
     </div>
     

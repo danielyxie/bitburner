@@ -75,7 +75,7 @@
 }
 
 #script-editor-filename {	
-background-color: #555;
+    background-color: #555;
     display: inline-block;
 	float: center;
 	resize: none;
@@ -274,15 +274,9 @@ background-color: #555;
     padding: 10px;
 }
 
-
-#hacknet-nodes-container li{
-    padding: 6px;
-    margin: 6px;
-    width: 70%;
-}
-
 #hacknet-nodes-text,
-#hacknet-nodes-money {
+#hacknet-nodes-money,
+#hacknet-nodes-container li {
     width: 70%;
     margin: 10px;
     padding: 10px;
@@ -344,10 +338,7 @@ background-color: #555;
     padding-top: 10px;
 }
 
-#create-program-page-text {
-    width: 70%;
-}
-
+#create-program-page-text,
 #create-program-list {
     width: 70%;
 }
@@ -510,6 +501,12 @@ div.faction-clear {
 #location-container {
 	position: fixed;
 	padding: 6px;
+    overflow-x: hidden;
+}
+
+#location-container a {
+    display:inline-block;
+    width: 30%;
 }
 
 #location-slums-description {
@@ -534,4 +531,67 @@ div.faction-clear {
 #infiltration-container {
     position: fixed;
     padding: 6px;
+}
+#infiltration-left-panel, 
+#infiltration-right-panel {
+    display:inline-block;
+    border: 1px solid white;
+    width: 35%;
+    height: 75%; 
+    top: 10px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+#infiltration-faction-select {
+    color:white;
+}
+
+#infiltration-left-panel p,
+#infiltration-right-panel p {
+    margin: 4px;
+}
+
+#infiltration-buttons .a-link-button {
+    display:inline;
+    width: 25%;
+}
+
+/* Stock market */
+#stock-market-container {
+    position: fixed;
+    padding: 6px;
+}
+
+#stock-market-container p {
+    padding: 10px; 
+    margin: 10px;
+    width: 70%;
+}
+
+#stock-market-container a {
+    margin: 10px;
+}
+
+.stock-market-qty-input {
+    border: 1px solid white;
+    color: var(--my-font-color);
+    padding: 4px;
+    margin: 4px;
+}
+
+.stock-market-buy-sell-button {
+    color: #aaa;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 2px;
+    margin: 6px;
+    border: 1px solid white;
+}
+
+.stock-market-buy-sell-button:hover,
+.stock-market-buy-sell-button:focus {
+    color: var(--my-font-color);
+    text-decoration: none;
+    cursor: pointer;
 }

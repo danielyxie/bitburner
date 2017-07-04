@@ -154,6 +154,7 @@ function evaluate(exp, workerScript) {
                 });
                 break;
             case "call":
+                setTimeout(function() {
                 if (exp.func.value == "hack") {
                     var p = netscriptHack(exp, workerScript);
                     p.then(function(res) {
@@ -321,6 +322,7 @@ function evaluate(exp, workerScript) {
                         reject(e);
                     });
                 } else if (exp.func.value == "exec") {
+                    setTimeout(function() {
                     if (exp.args.length < 2) {
                         return reject(makeRuntimeRejectMsg(workerScript, "exec() call has incorrect number of arguments. Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)"));
                     }
@@ -353,6 +355,7 @@ function evaluate(exp, workerScript) {
                     }).catch(function(e) {
                         reject(e);
                     });
+                    }, 2 * CONSTANTS.CodeInstructionRunTime);
                 } else if (exp.func.value == "kill") {
                     if (exp.args.length < 2) {
                         return reject(makeRuntimeRejectMsg(workerScript, "kill() call has incorrect number of arguments. Usage: kill(scriptname, server, [arg1], [arg2]...)")); 
@@ -412,6 +415,7 @@ function evaluate(exp, workerScript) {
                         reject(e);
                     });
                 } else if (exp.func.value == "scp") {
+                    setTimeout(function() {
                     if (exp.args.length != 2) {
                         return reject(makeRuntimeRejectMsg(workerScript, "scp() call has incorrect number of arguments. Takes 2 arguments"));
                     }
@@ -473,6 +477,7 @@ function evaluate(exp, workerScript) {
                     }).catch(function(e) {
                         reject(e);
                     });
+                    }, 2 * CONSTANTS.CodeInstructionRunTime);
                 } else if (exp.func.value == "getHostname") {
                     if (exp.args.length != 0) {
                         return reject(makeRuntimeRejectMsg(workerScript, "getHostname() call has incorrect number of arguments. Takes 0 arguments"));
@@ -490,6 +495,7 @@ function evaluate(exp, workerScript) {
                     workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
                     resolve(Player.hacking_skill);
                 } else if (exp.func.value == "getServerMoneyAvailable") {
+                    setTimeout(function() {
                     if (exp.args.length != 1) {
                         return reject(makeRuntimeRejectMsg(workerScript, "getServerMoneyAvailable() call has incorrect number of arguments. Takes 1 arguments"));
                     }
@@ -505,7 +511,9 @@ function evaluate(exp, workerScript) {
                     }, function(e) {
                         reject(e);
                     });
+                    }, CONSTANTS.CodeInstructionRunTime);
                 } else if (exp.func.value == "getServerSecurityLevel") {
+                    setTimeout(function() {
                     if (exp.args.length != 1) {
                         return reject(makeRuntimeRejectMsg(workerScript, "getServerSecurityLevel() call has incorrect number of arguments. Takes 1 arguments"));
                     }
@@ -521,7 +529,9 @@ function evaluate(exp, workerScript) {
                     }, function(e) {
                         reject(e);
                     });
+                    }, CONSTANTS.CodeInstructionRunTime);
                 } else if (exp.func.value == "getServerBaseSecurityLevel") {
+                    setTimeout(function() {
                     if (exp.args.length != 1) {
                         return reject(makeRuntimeRejectMsg(workerScript, "getServerBaseSecurityLevel() call has incorrect number of arguments. Takes 1 arguments"));
                     }
@@ -537,7 +547,9 @@ function evaluate(exp, workerScript) {
                     }, function(e) {
                         reject(e);
                     });
+                    }, CONSTANTS.CodeInstructionRunTime);
                 } else if (exp.func.value == "getServerRequiredHackingLevel") {
+                    setTimeout(function() {
                     if (exp.args.length != 1) {
                         return reject(makeRuntimeRejectMsg(workerScript, "getServerRequiredHackingLevel() call has incorrect number of arguments. Takes 1 argument"));
                     }
@@ -553,7 +565,9 @@ function evaluate(exp, workerScript) {
                     }, function(e) {
                         reject(e);
                     });
+                    }, CONSTANTS.CodeInstructionRunTime);
                 } else if (exp.func.value == "getServerMaxMoney") {
+                    setTimeout(function() {
                     if (exp.args.length != 1) {
                         return reject(makeRuntimeRejectMsg(workerScript, "getServerMaxMoney() call has incorrect number of arguments. Takes 1 argument"));
                     }
@@ -569,7 +583,9 @@ function evaluate(exp, workerScript) {
                     }, function(e) {
                         reject(e);
                     });
+                    }, CONSTANTS.CodeInstructionRunTime);
                 } else if (exp.func.value == "getServerNumPortsRequired") {
+                    setTimeout(function() {
                     if (exp.args.length != 1) {
                         return reject(makeRuntimeRejectMsg(workerScript, "getServerNumPortsRequired() call has incorrect number of arguments. Takes 1 argument"));
                     }
@@ -585,6 +601,7 @@ function evaluate(exp, workerScript) {
                     }, function(e) {
                         reject(e);
                     });
+                    }, CONSTANTS.CodeInstructionRunTime);
                 } else if (exp.func.value == "fileExists") {
                     if (exp.args.length != 1 && exp.args.length != 2) {
                         return reject(makeRuntimeRejectMsg(workerScript, "fileExists() call has incorrect number of arguments. Takes 1 or 2 arguments")); 
@@ -687,7 +704,8 @@ function evaluate(exp, workerScript) {
                     });
                 } else {
                     reject(makeRuntimeRejectMsg(workerScript, "Invalid function: " + exp.func.value));
-                } 
+                }
+                }, CONSTANTS.CodeInstructionRunTime); //End additional setTimeout delay for function "calls", the Netscript operation run time
                 break;
             default:
                 reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". This is a bug please report to game developer"));
@@ -1113,14 +1131,14 @@ function scriptCalculateExpGain(server) {
     if (server.baseDifficulty == null) {
         server.baseDifficulty = server.hackDifficulty;
     }
-	return (server.baseDifficulty * Player.hacking_exp_mult * 0.5 + 2);
+	return (server.baseDifficulty * Player.hacking_exp_mult * 0.4 + 2);
 }
 
 //The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument
 function scriptCalculatePercentMoneyHacked(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 200;
+    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 225;
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;

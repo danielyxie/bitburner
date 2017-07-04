@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.23.1",
+    Version:                "0.24.0",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -38,7 +38,7 @@ CONSTANTS = {
     
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
-	CodeInstructionRunTime:	200, 
+	CodeInstructionRunTime:	100, 
     
     //RAM Costs for different commands
     ScriptWhileRamCost:             0.2,
@@ -82,8 +82,8 @@ CONSTANTS = {
     
     //Augmentation Constants
     AugmentationCostMultiplier: 5,  //Used for balancing costs without having to readjust every Augmentation cost
-    AugmentationRepMultiplier:  1.75, //Used for balancing rep cost without having to readjust every value
-    MultipleAugMultiplier:      1.75,
+    AugmentationRepMultiplier:  2.5, //Used for balancing rep cost without having to readjust every value
+    MultipleAugMultiplier:      1.9,
     
     //Maximum number of log entries for a script
     MaxLogCapacity: 50,
@@ -93,9 +93,15 @@ CONSTANTS = {
     
     //Infiltration constants
     InfiltrationBribeBaseAmount: 100000, //Amount per clearance level
+    InfiltrationMoneyValue:   2000,    //Convert "secret" value to money
     
+    //Stock market constants
+    WSEAccountCost:         50000000,
+    TIXAPICost:             1000000000,
+    StockMarketCommission:  100000,
     
-    HospitalCostPerHp: 25000,
+    //Hospital/Health
+    HospitalCostPerHp: 75000,
     
     MillisecondsPer20Hours: 72000000,
     GameCyclesPer20Hours: 72000000 / 200,
@@ -606,28 +612,47 @@ CONSTANTS = {
                            "From the travel agency you can travel to any other city. Doing so costs money. <br><br>" + 
                            "Each city has its own set of companies and unique locations. Also, certain content is only available to you " +
                            "if you are in certain cities, so get exploring!",
-    TutorialJobsText: "Hacking is not the only way to gain money and experience! Located around the world are many " + 
-                      "different companies which you can work for. By working for a company you can earn money, " + 
-                      "train your various labor skills, and unlock powerful passive perks. <br><br> " +
-                      "To apply for a job, visit the company you want to work for through the 'World' menu. The company " + 
-                      "page will have options that let you apply to positions in the company. There might be several different " + 
-                      "positions you can apply for, ranging from software engineer to business analyst to security officer. <br><br> " + 
-                      "When you apply for a job, you will get the offer if your stats are high enough. Your first position at " + 
-                      "a company will be an entry-level position such as 'intern'. Once you get the job, an button will appear on " + 
-                      "the company page that allows you to work for the company. Click this button to start working. <br><br>" + 
-                      "Working occurs in 8 hour shifts. Once you start working, you will begin earning money, experience, " + 
-                      "and reputation. The rate at which you money and experience depends on the company and your position. " + 
-                      "The amount of reputation you gain for your company is based on your job performance, which is affected by " +
-                      "your stats. Different positions value different stats. When you are working, you are unable to perform any " +
-                      "other actions such as using your terminal or visiting other locations (However, note that any scripts you have " + 
-                      "running on servers will continue to run as you work!). It is possible to cancel your work shift before the " + 
-                      "8 hours is up. However, if you have a full-time job, then cancelling a shift early will result in you gaining " + 
-                      "only half of the reputation " +
-                      "that you had earned up to that point. There are also part-time/consultant jobs available where you will not " + 
-                      " be penalized if you cancel a work shift early. However, these positions pay less than full-time positions.<br><br>" +
-                      "As you continue to work at a company, you will gain more and more reputation at that company. When your stats " + 
-                      "and reputation are high enough, you can get a promotion. You can apply for a promotion on the company page, just like " + 
-                      "you applied for the job originally. Higher positions at a company provide better salaries and stat gains.",
+    TutorialCompaniesText: "Hacking is not the only way to gain money and experience! Located around the world are many " + 
+                           "different companies which you can work for. By working for a company you can earn money, " + 
+                           "train your various labor skills, and unlock powerful passive perks. <br><br> " +
+                           "To apply for a job, visit the company you want to work for through the 'World' menu. The company " + 
+                           "page will have options that let you apply to positions in the company. There might be several different " + 
+                           "positions you can apply for, ranging from software engineer to business analyst to security officer. <br><br> " + 
+                           "When you apply for a job, you will get the offer if your stats are high enough. Your first position at " + 
+                           "a company will be an entry-level position such as 'intern'. Once you get the job, an button will appear on " + 
+                           "the company page that allows you to work for the company. Click this button to start working. <br><br>" + 
+                           "Working occurs in 8 hour shifts. Once you start working, you will begin earning money, experience, " + 
+                           "and reputation. The rate at which you money and experience depends on the company and your position. " + 
+                           "The amount of reputation you gain for your company is based on your job performance, which is affected by " +
+                           "your stats. Different positions value different stats. When you are working, you are unable to perform any " +
+                           "other actions such as using your terminal or visiting other locations (However, note that any scripts you have " + 
+                           "running on servers will continue to run as you work!). It is possible to cancel your work shift before the " + 
+                           "8 hours is up. However, if you have a full-time job, then cancelling a shift early will result in you gaining " + 
+                           "only half of the reputation " +
+                           "that you had earned up to that point. There are also part-time/consultant jobs available where you will not " + 
+                           " be penalized if you cancel a work shift early. However, these positions pay less than full-time positions.<br><br>" +
+                           "As you continue to work at a company, you will gain more and more reputation at that company. When your stats " + 
+                           "and reputation are high enough, you can get a promotion. You can apply for a promotion on the company page, just like " + 
+                           "you applied for the job originally. Higher positions at a company provide better salaries and stat gains.<br><br>" +
+                           "<h1>Infiltrating Companies</h1><br>" + 
+                           "Many companies have facilities that you can attempt to infiltrate. By infiltrating, you can steal classified company secrets " + 
+                           "and then sell these for money or for faction reputation. To try and infiltrate a company, visit a company through the " +
+                           "'World' menu. There will be an option that says 'Infiltrate Company'. <br><br>" + 
+                           "When infiltrating a company, you must progress through clearance levels in the facility. Every clearance level " + 
+                           "has some form of security that you must get past. There are several forms of security, ranging from high-tech security systems to " + 
+                           "armed guards. For each form of security, there are a variety of options that you can choose to try and bypass the security. Examples " + 
+                           "include hacking the security, engaging in combat, assassination, or sneaking past the security. The chance to succeed for each option " + 
+                           "is determined in part by your stats. So, for example, trying to hack the security system relies on your hacking skill, whereas trying to " + 
+                           "sneak past the security relies on your agility level.<br><br>" + 
+                           "The facility has a 'security level' that affects your chance of success when trying to get past a clearance level. " + 
+                           "Every time you advance to the next clearance level, the facility's security level will increase by a fixed amount. Furthermore " + 
+                           "the options you choose and whether you succeed or fail will affect the security level as well. For example, " +
+                           "if you try to kill a security guard and fail, the security level will increase by a lot. If you choose to sneak past " +
+                           "security and succeed, the security level will not increase at all. <br><br>" + 
+                           "Every 5 clearance levels, you will steal classified company secrets that can be sold for money or faction reputation. However, " + 
+                           "in order to sell these secrets you must successfully escape the facility using the 'Escape' option. Furthermore, companies have "  +
+                           "a max clearance level. If you reach the max clearance level you will automatically escape the facility with all of your " + 
+                           "stolen secrets.<br><br>",
     TutorialFactionsText: "Throughout the game you may receive invitations from factions. There are many different factions, and each faction " +
                           "has different criteria for determining its potential members. Joining a faction and furthering its cause is crucial " + 
                           "to progressing in the game and unlocking endgame content. <br><br> " + 
@@ -668,6 +693,22 @@ CONSTANTS = {
                                "RAM Upgrades on your home computer",
                                
     Changelog:
+    "v0.24.0<br>" + 
+    "-Players now have HP, which is displayed in the top right. To regain HP, visit the hospital. Currently " + 
+    "the only way to lose HP is through infiltration<br>" + 
+    "-Infiltration - Attempt to infiltrate a company and steal their classified secrets. See 'Companies' documentation for more details<br>" + 
+    "-Stock Market - Added the World Stock Exchange (WSE), a brokerage that lets you buy/sell stocks. To begin trading you must first purchase " + 
+    "an account. A WSE account will persist even after resetting by installing Augmentations. How the stock market works should hopefully be " + 
+    "self explanatory. There is no documentation about it currently, I will add some later. NOTE: Stock prices only change when the game is open. " + 
+    "The Stock Market is reset when installing Augmentations, which means you will lose all your stocks<br>" + 
+    "-Decreased money gained from hacking by ~12%<br>" + 
+    "-Increased reputation required for all Augmentations by ~40%<br>" + 
+    "-Cost increase when purchasing multiple augmentations increased from 75% to 90%<br>" + 
+    "-Added basic variable runtime to Netscript operations. Basic commands run in 100ms. Any function incurs another 100ms in runtime (200ms total). " + 
+    "Any function that starts with getServer incurs another 100ms runtime (300ms total). exec() and scp() require 400ms total. <br>" + 
+    "-Slightly reduced the amount of experience gained from hacking<br><br>" + 
+    "v0.23.1<br>" + 
+    "-scan() Netscript function now takes a single argument representing the server from which to scan. <br><br>" + 
     "v0.23.0<br>" + 
     "-You can now purchase multiple Augmentations in a run. When you purchase an Augmentation you will lose money equal to the price " + 
     "and then the cost of purchasing another Augmentation during this run will be increased by 75%. You do not gain the benefits " + 
@@ -860,19 +901,18 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
-    "v0.23.1<br>" + 
-    "-scan() Netscript function now takes a single argument representing the server from which to scan. <br><br>" + 
-    "v0.23.0<br>" + 
-    "-You can now purchase multiple Augmentations in a run. When you purchase an Augmentation you will lose money equal to the price " + 
-    "and then the cost of purchasing another Augmentation during this run will be increased by 75%. You do not gain the benefits " + 
-    "of your purchased Augmentations until you install them. This installation can be done through the 'Augmentation' tab. When " +
-    "you install your Augmentations, your game will reset like before. <br>" + 
-    "-Reputation needed to gain a favor from faction decreased from 7500 to 6500<br>" + 
-    "-Reputation needed to gain a favor from company increased from 5000 to 6000<br>" + 
-    "-Reputation cost of all Augmentations increased by 16%<br>" + 
-    "-Higher positions at companies now grant slightly more reputation for working<br>" + 
-    "-Added getServerMaxMoney() Netscript function<br>" + 
-    "-Added scan() Netscript function<br>" + 
-    "-Added getServerNumPortsRequired() Netscript function<br>" + 
-    "-There is now no additional RAM cost incurred when multithreading a script<br><br>",
+    "v0.24.0<br>" + 
+    "-Players now have HP, which is displayed in the top right. To regain HP, visit the hospital. Currently " + 
+    "the only way to lose HP is through infiltration<br>" + 
+    "-Infiltration - Attempt to infiltrate a company and steal their classified secrets. See 'Companies' documentation for more details<br>" + 
+    "-Stock Market - Added the World Stock Exchange (WSE), a brokerage that lets you buy/sell stocks. To begin trading you must first purchase " + 
+    "an account. A WSE account will persist even after resetting by installing Augmentations. How the stock market works should hopefully be " + 
+    "self explanatory. There is no documentation about it currently, I will add some later. NOTE: Stock prices only change when the game is open. " + 
+    "The Stock Market is reset when installing Augmentations, which means you will lose all your stocks<br>" + 
+    "-Decreased money gained from hacking by ~12%<br>" + 
+    "-Increased reputation required for all Augmentations by ~40%<br>" + 
+    "-Cost increase when purchasing multiple augmentations increased from 75% to 90%<br>" + 
+    "-Added basic variable runtime to Netscript operations. Basic commands run in 100ms. Any function incurs another 100ms in runtime (200ms total). " + 
+    "Any function that starts with getServer incurs another 100ms runtime (300ms total). exec() and scp() require 400ms total. <br>" + 
+    "-Slightly reduced the amount of experience gained from hacking<br>",
 }

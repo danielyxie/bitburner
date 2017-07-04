@@ -127,7 +127,7 @@ PlayerObject.prototype.applyForSecurityEngineerJob = function() {
     if (this.isQualified(company, CompanyPositions.SecurityEngineer)) {
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.SecurityEngineer;
-        dialogBoxCreate("Congratulations, you were offered a position at ", this.companyName, " as a Security Engineer!");
+        dialogBoxCreate("Congratulations, you were offered a position at " + this.companyName + " as a Security Engineer!");
         Engine.loadLocationContent();
     } else {
         dialogBoxCreate("Unforunately, you do not qualify for this position");
