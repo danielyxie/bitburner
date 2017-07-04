@@ -262,6 +262,7 @@ function sellStock(stock, shares) {
         return false;
     }
     if (shares > stock.playerShares) {shares = stock.playerShares;}
+    if (shares == 0) {return false;}
     var gains = stock.price * shares - CONSTANTS.StockMarketCommission;
     Player.gainMoney(gains);
     stock.playerShares -= shares;
@@ -437,7 +438,12 @@ function displayStockMarketContent() {
                 qtyInput.setAttribute("type", "text");
                 qtyInput.setAttribute("id", tickerId + "-qty-input");
                 qtyInput.setAttribute("class", "stock-market-qty-input");
-                qtyInput.setAttribute("onkeypress", 'return event.charCode >= 48 && event.charCode <= 57');
+                qtyInput.setAttribute("onkeydown", "return ( event.ctrlKey || event.altKey " + 
+                                      " || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) " + 
+                                      " || (95<event.keyCode && event.keyCode<106) " + 
+                                      " || (event.keyCode==8) || (event.keyCode==9) " + 
+                                      " || (event.keyCode>34 && event.keyCode<40) " +
+                                      " || (event.keyCode==46) )");
                 qtyInput.style.width = "3%";
                 qtyInput.style.display = "inline-block";
                 
