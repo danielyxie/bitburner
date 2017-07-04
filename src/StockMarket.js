@@ -227,6 +227,7 @@ function initSymbolToStockMap() {
 
 //Returns true if successful, false otherwise
 function buyStock(stock, shares) {
+    if (shares == 0) {return false;}
     if (stock == null || shares < 0) {
         dialogBoxCreate("Failed to buy stock. This may be a bug, contact developer");
         return false;
@@ -255,6 +256,7 @@ function buyStock(stock, shares) {
 
 //Returns true if successful and false otherwise
 function sellStock(stock, shares) {
+    if (shares == 0) {return false;}
     if (stock == null || shares < 0) {
         dialogBoxCreate("Failed to sell stock. This may be a bug, contact developer");
         return false;
