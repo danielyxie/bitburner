@@ -901,6 +901,9 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
+    "v0.24.1<br>" + 
+    
+    "-'top' Terminal command implemented courtesy of Github user LTCNugget<br><br>" + 
     "v0.24.0<br>" + 
     "-Players now have HP, which is displayed in the top right. To regain HP, visit the hospital. Currently " + 
     "the only way to lose HP is through infiltration<br>" + 

@@ -1043,11 +1043,9 @@ var Terminal = {
 				post("Script                    Threads         RAM Usage");
 
 				var currRunningScripts = Player.getCurrentServer().runningScripts;
-				var currScripts = Player.getCurrentServer().scripts;
 				//Iterate through scripts on current server
-				for(var i = 0; i < currScripts.length; i++) {
-				    if(currRunningScripts.includes(currScripts[i].filename)) { //If the script is running
-					var script = currScripts[i];
+				for(var i = 0; i < currRunningScripts.length; i++) {
+					var script = currRunningScripts[i];
 
 					//Calculate name padding
 					var numSpacesScript = 26 - script.filename.length; //26 -> width of name column
@@ -1058,12 +1056,10 @@ var Terminal = {
 					var spacesThread = Array(numSpacesThread+1).join(" ");
 
 					//Calculate and transform RAM usage
-					var ramUsage = script.ramUsage * script.threads * Math.pow(1.02, script.threads - 1);
-					ramUsage = ramUsage + "GB";
+					ramUsage = (script.scriptRef.ramUsage * script.threads) + "GB";
 
 					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
 					post(entry.join(""));
-				    }
 				}
 				break;
             case "unalias":
