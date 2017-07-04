@@ -1327,6 +1327,19 @@ var Terminal = {
                 post("Netscript grow() execution time: " + formatNumber(scriptCalculateGrowTime(serv)/1000, 1) + "s");
                 post("Netscript weaken() execution time: " + formatNumber(scriptCalculateWeakenTime(serv)/1000, 1) + "s");
                 break;
+            case Programs.AutoLink:
+                post("This executable cannot be run.");
+                post("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
+                post("When using scan-analyze, click on a server's hostname to connect to it.");
+                break;
+            case Programs.DeepscanV1:
+                post("This executable cannot be run.");
+                post("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
+                break;
+            case Programs.DeepscanV2:
+                post("This executable cannot be run.");
+                post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
+                break;
 			default:
 				post("Invalid executable. Cannot be run");
 				return;

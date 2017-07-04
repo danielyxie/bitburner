@@ -128,6 +128,7 @@ AugmentationNames = {
     SmartSonar:                         "SmartSonar Implant",
     PowerRecirculator:                  "Power Recirculation Core",
     QLink:                              "QLink",
+    TheRedPill:                         "The Red Pill",
     SPTN97:                             "SPTN-97 Gene Modification",
     HiveMind:                           "ECorp HVMind Implant",
     CordiARCReactor:                    "CordiARC Fusion Reactor",
@@ -1039,7 +1040,14 @@ initAugmentations = function() {
     AddToAugmentations(QLink);
     
 	//Daedalus
-    //TODO The Red Pill - Second prestige
+    var RedPill = new Augmentation(AugmentationNames.TheRedPill);
+    RedPill.setInfo("It's time to leave the cave");
+    RedPill.setRequirements(1000000, 0);
+    RedPill.addToFactions(["Daedalus"]);
+    if (augmentationExists(AugmentationNames.TheRedPill)) {
+        delete Augmentations[AugmentationNames.TheRedPill];
+    }
+    AddToAugmentations(RedPill);
     
 	//Covenant
     var SPTN97 = new Augmentation(AugmentationNames.SPTN97);

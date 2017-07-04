@@ -10,7 +10,7 @@ CONSTANTS = {
     CorpFactionRepRequirement: 250000,
     
     /* Base costs */
-    BaseCostFor1GBOfRamHome: 45000,
+    BaseCostFor1GBOfRamHome: 32000,
     BaseCostFor1GBOfRamServer: 55000,     //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
     
@@ -152,8 +152,8 @@ CONSTANTS = {
     ClassGymDexterity: "training your dexterity at a gym",
     ClassGymAgility: "training your agility at a gym",
     
-    ClassDataStructuresBaseCost: 6,
-    ClassNetworksBaseCost: 30,
+    ClassDataStructuresBaseCost: 10,
+    ClassNetworksBaseCost: 32,
     ClassAlgorithmsBaseCost: 120,
     ClassManagementBaseCost: 60,
     ClassLeadershipBaseCost: 120,
@@ -668,13 +668,17 @@ CONSTANTS = {
                           "upgrade your abilities. The Augmentations that are available to unlock vary from faction to faction.",
     TutorialAugmentationsText: "Advances in science and medicine have lead to powerful new technologies that allow people to augment themselves " + 
                                "beyond normal human capabilities. There are many different types of Augmentations, ranging from cybernetic to " + 
-                               "genetic to biological. Acquiring these Augmentations enhances the user's physical and mental faculties. <br>" + 
+                               "genetic to biological. Acquiring these Augmentations enhances the user's physical and mental faculties. <br><br>" + 
                                "Because of how powerful these Augmentations are, the technology behind them is kept private and secret by the " + 
                                "corporations and organizations that create them. Therefore, the only way for the player to obtain Augmentations is " + 
                                "through Factions. After joining a Faction and earning enough reputation in it, you will be able to purchase " + 
                                "its Augmentations. Different Factions offer different Augmentations. Augmentations must be purchased in order to be installed, " + 
                                "and they are fairly expensive. <br><br>" +
-                               "Unfortunately, installing an Augmentation has side effects. You will lose most of the progress you've made, including your " + 
+                               "When you purchase an Augmentation, the price of purchasing another Augmentation increases by 90%. This multiplier stacks for " + 
+                               "each Augmentation you purchase. You will not gain the benefits of your purchased Augmentations until you install them. You can " + 
+                               "choose to install Augmentations through the 'Augmentations' menu tab. Once you install your purchased Augmentations, " + 
+                               "their costs are reset back to the original price.<br><br>"
+                               "Unfortunately, installing Augmentations has side effects. You will lose most of the progress you've made, including your " + 
                                "skills, stats, and money. You will have to start over, but you will have all of the Augmentations you have installed to " +
                                "help you progress. <br><br> " + 
                                "To summarize, here is a list of everything you will LOSE when you install an Augmentation: <br><br>" + 
@@ -686,11 +690,13 @@ CONSTANTS = {
                                "Company/faction reputation<br>" + 
                                "Jobs and Faction memberships<br>" + 
                                "Programs<br>" +
+                               "Stocks<br>" + 
                                "TOR router<br><br>" + 
                                "Here is everything you will KEEP when you install an Augmentation: <br><br>" + 
                                "Every Augmentation you have installed<br>"  +
                                "Scripts on your home computer<br>" + 
-                               "RAM Upgrades on your home computer",
+                               "RAM Upgrades on your home computer<br>" + 
+                               "World Stock Exchange account and TIX API Access<br>",
                                
     Changelog:
     "v0.24.0<br>" + 
@@ -902,7 +908,13 @@ CONSTANTS = {
     
     LatestUpdate: 
     "v0.24.1<br>" + 
-    
+    "-Adjusted cost of upgrading home computer RAM. Should be a little cheaper for the first few upgrades (up to ~64GB), and " +
+    "then will start being more expensive than before. High RAM upgrades should now be significantly more expensive than before.<br>" + 
+    "-Very slightly lowered the starting money available on most mid-game and end-game servers (servers with required hacking level " + 
+    "greater than 200) by about 10-15%<br>" + 
+    "-Rebalanced company/company position reputation gains and requirements<br>" + 
+    "-Studying at a university now gives slightly more EXP and early jobs give slightly less EXP<br>" + 
+    "-Updated Faction descriptions<br>" + 
     "-'top' Terminal command implemented courtesy of Github user LTCNugget<br><br>" + 
     "v0.24.0<br>" + 
     "-Players now have HP, which is displayed in the top right. To regain HP, visit the hospital. Currently " + 
