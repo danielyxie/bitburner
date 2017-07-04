@@ -1036,8 +1036,35 @@ var Terminal = {
                 }
                 break;
 			case "top":
-				//TODO List each's script RAM usage
-                post("Not yet implemented");
+				if(commandArray.length != 1) {
+				  post("Incorrect usage of top command. Usage: top"); return;
+				}
+
+				post("Script                    Threads         RAM Usage");
+
+				var currRunningScripts = Player.getCurrentServer().runningScripts;
+				var currScripts = Player.getCurrentServer().scripts;
+				//Iterate through scripts on current server
+				for(var i = 0; i < currScripts.length; i++) {
+				    if(currRunningScripts.includes(currScripts[i].filename)) { //If the script is running
+					var script = currScripts[i];
+
+					//Calculate name padding
+					var numSpacesScript = 26 - script.filename.length; //26 -> width of name column
+					var spacesScript = Array(numSpacesScript+1).join(" ");
+
+					//Calculate thread padding
+					var numSpacesThread = 16 - (script.threads + "").length; //16 -> width of thread column
+					var spacesThread = Array(numSpacesThread+1).join(" ");
+
+					//Calculate and transform RAM usage
+					var ramUsage = script.ramUsage * script.threads * Math.pow(1.02, script.threads - 1);
+					ramUsage = ramUsage + "GB";
+
+					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
+					post(entry.join(""));
+				    }
+				}
 				break;
             case "unalias":
                 if (commandArray.length != 2) {
