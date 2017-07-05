@@ -110,7 +110,7 @@ FactionInfo = {
 	SilhouetteInfo: "Corporations have filled the void of power left behind by the collapse of Western government. The issue is they've become so big " + 
                     "that you don't know who they're working for. And if you're employed at one of these corporations, you don't even know who you're working " +
                     "for. <br><br>" + 
-                    "That's terror. Terror, fear, and corruption. All born into the system, all propagated by the system."
+                    "That's terror. Terror, fear, and corruption. All born into the system, all propagated by the system.",
     
     TetradsInfo: "Following the Mandate of Heaven and Carrying out the Way",
     

@@ -19,7 +19,7 @@ CONSTANTS = {
     
     /* Hacknet Node constants */
     HacknetNodeMoneyGainPerLevel: 1.55,
-    HacknetNodePurchaseNextMult: 1.42,   //Multiplier when purchasing an additional hacknet node
+    HacknetNodePurchaseNextMult: 1.75,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.045,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.28,     //Multiplier for cost when upgrading RAM
     HacknetNodeUpgradeCoreMult: 1.49,    //Multiplier for cost when buying another core
@@ -677,7 +677,7 @@ CONSTANTS = {
                                "When you purchase an Augmentation, the price of purchasing another Augmentation increases by 90%. This multiplier stacks for " + 
                                "each Augmentation you purchase. You will not gain the benefits of your purchased Augmentations until you install them. You can " + 
                                "choose to install Augmentations through the 'Augmentations' menu tab. Once you install your purchased Augmentations, " + 
-                               "their costs are reset back to the original price.<br><br>"
+                               "their costs are reset back to the original price.<br><br>" + 
                                "Unfortunately, installing Augmentations has side effects. You will lose most of the progress you've made, including your " + 
                                "skills, stats, and money. You will have to start over, but you will have all of the Augmentations you have installed to " +
                                "help you progress. <br><br> " + 
@@ -914,6 +914,7 @@ CONSTANTS = {
     "greater than 200) by about 10-15%<br>" + 
     "-Rebalanced company/company position reputation gains and requirements<br>" + 
     "-Studying at a university now gives slightly more EXP and early jobs give slightly less EXP<br>" + 
+    "-Significantly increased cost multiplier for purchasing additional Hacknet Nodes<br>" + 
     "-Updated Faction descriptions<br>" + 
     "-'top' Terminal command implemented courtesy of Github user LTCNugget<br><br>" + 
     "v0.24.0<br>" + 

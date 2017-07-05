@@ -356,7 +356,7 @@ function displayStockMarketContent() {
     
     if (!stockMarketContentCreated && Player.hasWseAccount) {
         console.log("Creating Stock Market UI");
-        document.getElementById("stock-market-commission").innerText =
+        document.getElementById("stock-market-commission").innerHTML =
             "Commission Fees: Every transaction you make has a $" + 
             formatNumber(CONSTANTS.StockMarketCommission, 2) + " commission fee.<br><br>" + 
             "WARNING: When you reset after installing Augmentations, the Stock Market is reset. " + 

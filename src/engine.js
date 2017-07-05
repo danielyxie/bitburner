@@ -195,7 +195,7 @@ var Engine = {
         mainMenu.style.visibility = "hidden";
         Engine.Display.redPillContent.style.visibility = "visible";
         Engine.currentPage = Engine.Page.RedPill;
-    }
+    },
     
     loadInfiltrationContent: function() {
         Engine.hideAllContent();
@@ -846,7 +846,7 @@ var Engine = {
         
         //Red Pill / Hack World Daemon
         Engine.Display.redPillContent = document.getElementById("red-pill-container");
-        Engine.DIsplay.redPillContent.style.visibility = "hidden";
+        Engine.Display.redPillContent.style.visibility = "hidden";
 		
 		//Init Location buttons
 		initLocationButtons();
