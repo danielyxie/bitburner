@@ -62,6 +62,10 @@ function removeAlias(name) {
         delete Aliases[name];
         return true;
     }
+    if (GlobalAliases.hasOwnProperty(name)) {
+        delete GlobalAliases[name];
+        return true;
+    }
     return false;
 }
 

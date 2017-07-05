@@ -170,7 +170,7 @@ CONSTANTS = {
     CrimeHeist: "pull off the ultimate heist",
     
     //Text that is displayed when the 'help' command is ran in Terminal
-    HelpText:   'alias [name="value"]           Create aliases for Terminal commands, or list existing aliases<br>' + 
+    HelpText:   'alias [-g] [name="value"]      Create aliases for Terminal commands, or list existing aliases<br>' + 
                 "analyze                        Get statistics and information about current machine <br>" + 
                 "cat [message]                  Display a .msg file<br>" + 
                 "check [script] [args...]       Print logs to Terminal for the script with the specified name and arguments<br>" + 
@@ -917,7 +917,11 @@ CONSTANTS = {
     "-Studying at a university is now considerably more expensive<br>" + 
     "-Significantly increased cost multiplier for purchasing additional Hacknet Nodes<br>" + 
     "-Updated Faction descriptions<br>" + 
-    "-'top' Terminal command implemented courtesy of Github user LTCNugget<br><br>" + 
+    "-Changed the way alias works. Normal aliases now only work at the start of a Terminal command (they will only " + 
+    "replace the first word in the Terminal command). You can also create global aliases that work on any part of the " + 
+    "command, like before. Declare global aliases by entering the optional -g flag: alias -g alias=Courtesy of Github user MrNuggelz" +
+    "-'top' Terminal command implemented courtesy of Github user LTCNugget. Currently, the formatting gets screwed up " + 
+    "if your script names are really long.<br><br>" + 
     "v0.24.0<br>" + 
     "-Players now have HP, which is displayed in the top right. To regain HP, visit the hospital. Currently " + 
     "the only way to lose HP is through infiltration<br>" + 
