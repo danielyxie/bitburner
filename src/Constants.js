@@ -896,7 +896,7 @@ CONSTANTS = {
     "-Updated Tutorial<br>" + 
     "-Created a Hacknet Node API for Netscript that allows you to access and upgrade your Hacknet Nodes. See the Netscript documentation for more details. WARNING The old upgradeHacknetNode() and getNumHacknetNodes() functions waere removed so any script that has these will no longer work <br><br>" + 
     "v0.15 <br>" + 
-    "-Slightly reduced production multiplier for Hacknet Node RAM<br>" + 
+    "-Slightly reduced production multiplier for Hacknet Node RAM<br>" +
     "-Faction pages now scroll<br>" + 
     "-Slightly increased amount of money gained from hacking<br>" + 
     "-Added 'alias' command<br>" + 
