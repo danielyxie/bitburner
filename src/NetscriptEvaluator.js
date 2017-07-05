@@ -14,138 +14,15 @@ function evaluate(exp, workerScript) {
     setTimeout(function() {
         if (env.stopFlag) {return reject(workerScript);}
         switch (exp.type) {
-            case "num":
-            case "str":
-            case "bool":
-                resolve(exp.value);
-                break;
-            case "var":
-                if (exp.value == "hacknetnodes") {
-                    var pEvaluateHacknetNode = evaluateHacknetNode(exp, workerScript);
-                    pEvaluateHacknetNode.then(function(res) {
-                        resolve(res);
-                    }, function(e) {
-                        reject(e);
-                    });
-                    return;
-                } else if (exp.value == "args") {
-                    if (exp.index) {
-                        var iPromise = evaluate(exp.index.value, workerScript);
-                        iPromise.then(function(i) {
-                            if (isNaN(i)) {
-                                reject(makeRuntimeRejectMsg(workerScript, "Invalid access to args array. Index is not a number: " + i));
-                            } else if (i >= workerScript.args.length || i < 0) {
-                                reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
-                            } else {
-                                resolve(workerScript.args[i]);
-                            }
-                        }, function(e) {
-                            reject(e);
-                        });
-                    } else if (exp.op && exp.op.type == "var" && exp.op.value == "length") {
-                        resolve(workerScript.args.length);
-                    } else {
-                        reject(makeRuntimeRejectMsg(workerScript, "Invalid access to args array"));
-                    }
-                    return;
-                } else if (exp.value == "array") {
-                    //A raw array. This will be called under something like this:
-                    //  x = Array[1, 2, 3];
-                    if (exp.array && exp.array instanceof Array) {
-                        resolve(exp.array);
-                    } else {
-                        reject(makeRuntimeRejectMsg(workerScript, "Invalid array instantiation"));
-                    }
-                    return; 
-                }
-                try {
-                    var res = env.get(exp.value);
-                    if (res.constructor === Array || res instanceof Array) {
-                        var evalArrayPromise = netscriptArray(exp, workerScript);
-                        evalArrayPromise.then(function(res) {
-                            resolve(res);
-                        }, function(e) {
-                            reject(e);
-                        });
-                    } else {
-                        resolve(res);
-                    }
-                } catch (e) {
-                    reject("|" + workerScript.serverIp + "|" + workerScript.name + "|" + e.toString());
-                }
-                break;
-            //Can currently only assign to "var"s
-            case "assign":
-                var p = netscriptAssign(exp, workerScript);
-                p.then(function(res) {
-                    resolve(res);
-                }).catch(function(e) {
-                    reject(e);
-                });
-                break;
-            case "binary":
-                var p = netscriptBinary(exp, workerScript);
-                p.then(function(res) {
-                    resolve(res); 
-                }).catch(function(e) {
-                    reject(e);
-                });
-                break;
-            case "if":
-                var numConds = exp.cond.length;
-                var numThens = exp.then.length;
-                if (numConds == 0 || numThens == 0 || numConds != numThens) {
-                    reject("|" + workerScript.serverIp + "|" + workerScript.name + "|Number of conds and thens in if structure don't match (or there are none)");
-                }
-                
-                var evalIfPromise = evaluateIf(exp, workerScript, 0);
-                evalIfPromise.then(function(res) {
-                    if (res) {
-                        //One of the if/elif statements evaluated to true
-                        resolve("if statement done");
-                    } else {
-                        //None of the if/elif statements were true. Evaluate else if there is one
-                        if (exp.else) {
-                            var elseEval = evaluate(exp.else, workerScript);
-                            elseEval.then(function(res) {
-                                resolve("if statement done with else");
-                            }, function(e) {
-                                reject(e);
-                            });
-                        } else {
-                            resolve("if statement done");
-                        }
-                    }
-                }, function(e) {
-                    reject(e);
-                });
-                break;
-            case "for":
-                var pInit = evaluate(exp.init, workerScript);
-                pInit.then(function(expInit) {
-                    return evaluateFor(exp, workerScript);
-                }).then(function(forLoopRes) {
-                    resolve("forLoopDone");
-                }).catch(function(e) {
-                    reject(e);
-                });
-                break;
-            case "while":
-                var pEvaluateWhile = evaluateWhile(exp, workerScript);
-                pEvaluateWhile.then(function(whileLoopRes) {
-                    resolve(whileLoopRes);
-                }, function(e) {
-                    reject(e);
-                });
-                break;
-            case "prog":
-                var evaluateProgPromise = evaluateProg(exp, workerScript, 0);
+            case "BlockStatement":
+            case "Program":
+                var evaluateProgPromise = evaluateProg(exp, workerScript, 0);  //TODO: make every block/program use individual enviroment
                 evaluateProgPromise.then(function(w) {
                     resolve(workerScript);
                 }, function(e) {
                     if (typeof e === 'string' || e instanceof String) {
                         workerScript.errorMessage = e;
-                        reject(workerScript);   
+                        reject(workerScript);
                     } else if (e instanceof WorkerScript) {
                         reject(e);
                     } else {
@@ -153,559 +30,171 @@ function evaluate(exp, workerScript) {
                     }
                 });
                 break;
-            case "call":
-                setTimeout(function() {
-                if (exp.func.value == "hack") {
-                    var p = netscriptHack(exp, workerScript);
-                    p.then(function(res) {
-                        resolve(res);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "sleep") {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "sleep() call has incorrect number of arguments. Takes 1 argument."));
-                    }
-                    var sleepTimePromise = evaluate(exp.args[0], workerScript);
-                    sleepTimePromise.then(function(sleepTime) {
-                        workerScript.scriptRef.log("Sleeping for " + sleepTime + " milliseconds");
-                        return netscriptDelay(sleepTime).then(function() {
-                            return Promise.resolve(true);
-                        });
-                    }).then(function(res) {
-                        resolve(true);
-                    }).catch(function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "print") {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "print() call has incorrect number of arguments. Takes 1 argument"));
-                    }
-                    
-                    var evaluatePromise = evaluate(exp.args[0], workerScript);
-                    evaluatePromise.then(function(res) {
-                        workerScript.scriptRef.log(res.toString());
-                        resolve(true);
-                    }).catch(function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "grow") {
-                    var p = netscriptGrow(exp, workerScript);
-                    p.then(function(res) {
-                        resolve(res);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "weaken") {
-                    var p = netscriptWeaken(exp, workerScript);
-                    p.then(function(res) {
-                        resolve(res);
-                    }, function(e) {
-                        reject(e);
-                    });
-                    
-                } else if (exp.func.value == "scan") {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "scan() call has incorrect number of arguments. Takes 1 argument"));
-                    }
-                    
-                    var ipPromise = evaluate(exp.args[0], workerScript);
-                    ipPromise.then(function(ip) {
-                        var server = getServer(ip);
-                        if (server == null) {
-                            workerScript.scriptRef.log("scan() failed. Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into scan() command"));;
-                        }
-                        var res = [];
-                        for (var i = 0; i < server.serversOnNetwork.length; ++i) {
-                            var thisServ = getServer(server.serversOnNetwork[i]);
-                            if (thisServ == null) {continue;}
-                            res.push({type:"str", value: thisServ.hostname});
-                        }
-                        resolve(res);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "nuke") {
-                    var p = netscriptRunProgram(exp, workerScript, Programs.NukeProgram);
-                    p.then(function(res) {
-                        resolve(res);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "brutessh") {
-                    var p = netscriptRunProgram(exp, workerScript, Programs.BruteSSHProgram);
-                    p.then(function(res) {
-                        resolve(res);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "ftpcrack") {
-                    var p = netscriptRunProgram(exp, workerScript, Programs.FTPCrackProgram);
-                    p.then(function(res) {
-                        resolve(res);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "relaysmtp") {
-                    var p = netscriptRunProgram(exp, workerScript, Programs.RelaySMTPProgram);
-                    p.then(function(res) {
-                        resolve(res);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "httpworm") {
-                    var p = netscriptRunProgram(exp, workerScript, Programs.HTTPWormProgram);
-                    p.then(function(res) {
-                        resolve(res);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "sqlinject") {
-                    var p = netscriptRunProgram(exp, workerScript, Programs.SQLInjectProgram);
-                    p.then(function(res) {
-                        resolve(res);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "hasRootAccess") {
-                    if (env.stopFlag) {return reject(workerScript);}
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "hasRootAccess() call has incorrect number of arguments. Takes 1 argument"));
-                    }
-                    var ipPromise = evaluate(exp.args[0], workerScript);
-                    ipPromise.then(function(ip) {
-                        if (env.stopFlag) {return reject(workerScript);}
-                        var server = getServer(ip);
-                        if (server == null) {
-                            workerScript.scriptRef.log("hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into hasRootAccess() command"));
-                        }
-                        workerScript.scriptRef.log("hasRootAccess() returned " + server.hasAdminRights);
-                        resolve(server.hasAdminRights);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "run") {
-                    if (exp.args.length < 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "run() call has incorrect number of arguments. Usage: run(scriptname, [numThreads], [arg1], [arg2]...)"));
-                    }
-                    var argPromises = exp.args.map(function(arg) {
-                        return evaluate(arg, workerScript);
-                    });
-                    
-                    Promise.all(argPromises).then(function(args) {
-                        if (env.stopFlag) {return reject(workerScript);}
-                        var scriptname = args[0];
-                        var threads = 1;
-                        if (exp.args.length >= 2) {
-                            threads = args[1];
-                        }
-                        var argsForNewScript = [];
-                        for (var i = 2; i < exp.args.length; ++i) {
-                            argsForNewScript.push(args[i]);
-                        }
-                        
-                        if (isNaN(threads) || threads < 1) {
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0"));
-                        }
-                        var scriptServer = getServer(workerScript.serverIp);
-                        if (scriptServer == null) {
-                            return reject(makeRuntimeRejectMsg(workerScript, "Could not find server. This is a bug in the game. Report to game dev"));
-                        }
-                        
-                        var runScriptPromise = runScriptFromScript(scriptServer, scriptname, argsForNewScript, workerScript, threads);
-                        return runScriptPromise;
-                    }).then(function(res) {
-                        resolve(res);
-                    }).catch(function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "exec") {
-                    setTimeout(function() {
-                    if (exp.args.length < 2) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "exec() call has incorrect number of arguments. Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)"));
-                    }
-                    var argPromises = exp.args.map(function(arg) {
-                        return evaluate(arg, workerScript);
-                    });
-                    
-                    Promise.all(argPromises).then(function(args) {
-                        if (env.stopFlag) {return reject(workerScript);}
-                        var threads = 1;
-                        if (exp.args.length >= 3) {
-                            threads = args[2];
-                        }
-                        var argsForNewScript = [];
-                        for (var i = 3; i < exp.args.length; ++i) {
-                            argsForNewScript.push(args[i]);
-                        }
-                        
-                        if (isNaN(threads) || threads < 1) {
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into exec(). Must be numeric and greater than 0"));
-                        }
-                        var server = getServer(args[1]);
-                        if (server == null) {
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into exec() command: " + args[1]));
-                        }
-                        
-                        return runScriptFromScript(server, args[0], argsForNewScript, workerScript, threads); 
-                    }).then(function(res) {
-                        resolve(res);
-                    }).catch(function(e) {
-                        reject(e);
-                    });
-                    }, 2 * CONSTANTS.CodeInstructionRunTime);
-                } else if (exp.func.value == "kill") {
-                    if (exp.args.length < 2) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "kill() call has incorrect number of arguments. Usage: kill(scriptname, server, [arg1], [arg2]...)")); 
-                    }
-                    var argPromises = exp.args.map(function(arg) {
-                        return evaluate(arg, workerScript);
-                    });
-                                        
-                    Promise.all(argPromises).then(function(args) {
-                        if (env.stopFlag) {return reject(workerScript);}
-                        var filename = args[0];
-                        var server = getServer(args[1]);
-                        if (server == null) {
-                            workerScript.scriptRef.log("kill() failed. Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into kill() command"));
-                        }
-                        var argsForKillTarget = [];
-                        for (var i = 2; i < exp.args.length; ++i) {
-                            argsForKillTarget.push(args[i]);
-                        }
-                        var runningScriptObj = findRunningScript(filename, argsForKillTarget, server);
-                        if (runningScriptObj == null) {
-                            workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget));
-                            return Promise.resolve(false);
-                        }
-                        var res = killWorkerScript(runningScriptObj, server.ip);
-                        if (res) {
-                            workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
-                            return Promise.resolve(true);
-                        } else {
-                            workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget));
-                            return Promise.resolve(false);
-                        }
-                    }).then(function(res) {
-                        resolve(res);
-                    }).catch(function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "killall") {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "killall() call has incorrect number of arguments. Takes 1 argument"));
-                    }
-                    var ipPromise = evaluate(exp.args[0], workerScript);
-                    ipPromise.then(function(ip) {
-                        if (env.stopFlag) {return reject(workerScript);}
-                        var server = getServer(ip);
-                        if (server == null) {
-                            workerScript.scriptRef.log("killall() failed. Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into killall() command"));
-                        }
-                        for (var i = server.runningScripts.length-1; i >= 0; --i) {
-                            killWorkerScript(server.runningScripts[i], server.ip);
-                        }
-                        workerScript.scriptRef.log("killall(): Killing all scripts on " + server.hostname + ". May take a few minutes for the scripts to die");
-                        resolve(true);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "scp") {
-                    setTimeout(function() {
-                    if (exp.args.length != 2) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "scp() call has incorrect number of arguments. Takes 2 arguments"));
-                    }
-                    
-                    var argPromises = exp.args.map(function(arg) {
-                        return evaluate(arg, workerScript);
-                    });
-                    
-                    Promise.all(argPromises).then(function(args) {
-                        if (env.stopFlag) {return reject(workerScript);}
-                        var scriptname = args[0];
-                        var ip = args[1];
-                        var destServer = getServer(ip);
-                        if (destServer == null) {
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into scp() command: " + ip));
-                        }
-                        
-                        var currServ = getServer(workerScript.serverIp);
-                        if (currServ == null) {
-                            return reject(makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer"));
-                        }
-                        
-                        var sourceScript = null;
-                        for (var i = 0; i < currServ.scripts.length; ++i) {
-                            if (scriptname == currServ.scripts[i].filename) {
-                                sourceScript = currServ.scripts[i];
-                                break;
-                            }
-                        }
-                        if (sourceScript == null) {
-                            workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
-                            return Promise.resolve(false);
-                        }
-                        
-                        //Overwrite script if it already exists
-                        for (var i = 0; i < destServer.scripts.length; ++i) {
-                            if (scriptname == destServer.scripts[i].filename) {
-                                workerScript.scriptRef.log("WARNING: " + scriptname + " already exists on " + destServer.hostname + " and it will be overwritten.");
-                                workerScript.scriptRef.log(scriptname + " overwritten on " + destServer.hostname);
-                                var oldScript = destServer.scripts[i];
-                                oldScript.code = sourceScript.code;
-                                oldScript.ramUsage = sourceScript.ramUsage;
-                                return Promise.resolve(true);
-                            }
-                        }
-                       
-                        //Create new script if it does not already exist
-                        var newScript = new Script();
-                        newScript.filename = scriptname;
-                        newScript.code = sourceScript.code;
-                        newScript.ramUsage = sourceScript.ramUsage;
-                        newScript.server = destServer.ip;
-                        destServer.scripts.push(newScript);
-                        workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
-                        return Promise.resolve(true);
-                        return;
-                    }).then(function(res) {
-                        resolve(res);    
-                    }).catch(function(e) {
-                        reject(e);
-                    });
-                    }, 2 * CONSTANTS.CodeInstructionRunTime);
-                } else if (exp.func.value == "getHostname") {
-                    if (exp.args.length != 0) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "getHostname() call has incorrect number of arguments. Takes 0 arguments"));
-                    }
-                    var scriptServer = getServer(workerScript.serverIp);
-                    if (scriptServer == null) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "Could not find server. This is a bug in the game. Report to game dev"));
-                    }
-                    resolve(scriptServer.hostname);
-                } else if (exp.func.value == "getHackingLevel") {
-                    if (exp.args.length != 0) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "getHackingLevel() call has incorrect number of arguments. Takes 0 arguments"));
-                    }
-                    Player.updateSkillLevels();
-                    workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
-                    resolve(Player.hacking_skill);
-                } else if (exp.func.value == "getServerMoneyAvailable") {
-                    setTimeout(function() {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "getServerMoneyAvailable() call has incorrect number of arguments. Takes 1 arguments"));
-                    }
-                    var ipPromise = evaluate(exp.args[0], workerScript);
-                    ipPromise.then(function(ip) {
-                        var server = getServer(ip);
-                        if (server == null) {
-                            workerScript.scriptRef.log("Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerMoneyAvailable() command"));
-                        }
-                        workerScript.scriptRef.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2) + " for " + server.hostname);
-                        resolve(server.moneyAvailable);
-                    }, function(e) {
-                        reject(e);
-                    });
-                    }, CONSTANTS.CodeInstructionRunTime);
-                } else if (exp.func.value == "getServerSecurityLevel") {
-                    setTimeout(function() {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "getServerSecurityLevel() call has incorrect number of arguments. Takes 1 arguments"));
-                    }
-                    var ipPromise = evaluate(exp.args[0], workerScript);
-                    ipPromise.then(function(ip) {
-                        var server = getServer(ip);
-                        if (server == null) {
-                            workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerSecurityLevel() command"));;
-                        }
-                        workerScript.scriptRef.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3) + " for " + server.hostname);
-                        resolve(server.hackDifficulty);
-                    }, function(e) {
-                        reject(e);
-                    });
-                    }, CONSTANTS.CodeInstructionRunTime);
-                } else if (exp.func.value == "getServerBaseSecurityLevel") {
-                    setTimeout(function() {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "getServerBaseSecurityLevel() call has incorrect number of arguments. Takes 1 arguments"));
-                    }
-                    var ipPromise = evaluate(exp.args[0], workerScript);
-                    ipPromise.then(function(ip) {
-                        var server = getServer(ip);
-                        if (server == null) {
-                            workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerBaseSecurityLevel() command"));;
-                        }
-                        workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + formatNumber(server.baseDifficulty, 3) + " for " + server.hostname);
-                        resolve(server.baseDifficulty);
-                    }, function(e) {
-                        reject(e);
-                    });
-                    }, CONSTANTS.CodeInstructionRunTime);
-                } else if (exp.func.value == "getServerRequiredHackingLevel") {
-                    setTimeout(function() {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "getServerRequiredHackingLevel() call has incorrect number of arguments. Takes 1 argument"));
-                    }
-                    var ipPromise = evaluate(exp.args[0], workerScript);
-                    ipPromise.then(function(ip) {
-                        var server = getServer(ip);
-                        if (server == null) {
-                            workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerRequiredHackingLevel() command"));
-                        }
-                        workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + formatNumber(server.requiredHackingSkill, 0) + " for " + server.hostname);
-                        resolve(server.requiredHackingSkill);
-                    }, function(e) {
-                        reject(e);
-                    });
-                    }, CONSTANTS.CodeInstructionRunTime);
-                } else if (exp.func.value == "getServerMaxMoney") {
-                    setTimeout(function() {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "getServerMaxMoney() call has incorrect number of arguments. Takes 1 argument"));
-                    }
-                    var ipPromise = evaluate(exp.args[0], workerScript);
-                    ipPromise.then(function(ip) {
-                        var server = getServer(ip);
-                        if (server == null) {
-                            workerScript.scriptRef.log("getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerMaxMoney() command"));
-                        }
-                        workerScript.scriptRef.log("getServerMaxMoney() returned " + formatNumber(server.moneyMax, 0) + " for " + server.hostname);
-                        resolve(server.moneyMax);
-                    }, function(e) {
-                        reject(e);
-                    });
-                    }, CONSTANTS.CodeInstructionRunTime);
-                } else if (exp.func.value == "getServerNumPortsRequired") {
-                    setTimeout(function() {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "getServerNumPortsRequired() call has incorrect number of arguments. Takes 1 argument"));
-                    }
-                    var ipPromise = evaluate(exp.args[0], workerScript);
-                    ipPromise.then(function(ip) {
-                        var server = getServer(ip);
-                        if (server == null) {
-                            workerScript.scriptRef.log("getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into getServerNumPortsRequired() command"));
-                        }
-                        workerScript.scriptRef.log("getServerNumPortsRequired() returned " + formatNumber(server.numOpenPortsRequired, 0) + " for " + server.hostname);
-                        resolve(server.numOpenPortsRequired);
-                    }, function(e) {
-                        reject(e);
-                    });
-                    }, CONSTANTS.CodeInstructionRunTime);
-                } else if (exp.func.value == "fileExists") {
-                    if (exp.args.length != 1 && exp.args.length != 2) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "fileExists() call has incorrect number of arguments. Takes 1 or 2 arguments")); 
-                    }
-                    var argPromises = exp.args.map(function(arg) {
-                        return evaluate(arg, workerScript);
-                    });
-                    
-                    var filename = "";
-                    Promise.all(argPromises).then(function(args) {
-                        if (env.stopFlag) {return reject(workerScript);}
-                        filename = args[0];
-                        if (exp.args.length == 1) {
-                            return Promise.resolve(workerScript.serverIp);
-                        } else {
-                            return evaluate(exp.args[1], workerScript);
-                        }
-                    }).then(function(ip) {
-                        var server = getServer(ip);
-                        if (server == null) {
-                            workerScript.scriptRef.log("fileExists() failed. Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into fileExists() command"));
-                        }
-                        
-                        for (var i = 0; i < server.scripts.length; ++i) {
-                            if (filename == server.scripts[i].filename) {
-                                return resolve(true);
-                            }
-                        }
-                        if (Player.hasProgram(filename)) {
-                            return resolve(true);
-                        }
-                        return resolve(false);
-                    }).catch(function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "isRunning") {
-                    if (exp.args.length < 2) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "isRunning() call has incorrect number of arguments. Usage: isRunning(scriptname, server, [arg1], [arg2]...)")); 
-                    }
-                    var argPromises = exp.args.map(function(arg) {
-                        return evaluate(arg, workerScript);
-                    });
-                    
-                    var filename = "";
-                    var argsForTargetScript = [];
-                    Promise.all(argPromises).then(function(args) {
-                        if (env.stopFlag) {return reject(workerScript);}
-                        filename = args[0];
-                        var ip = args[1];
-                        for (var i = 2; i < args.length; ++i) {
-                            argsForTargetScript.push(args[i]);
-                        }
-                        var server = getServer(ip);
-                        if (server == null) {
-                            workerScript.scriptRef.log("isRunning() failed. Invalid IP or hostname passed in: " + ip);
-                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid IP or hostname passed into isRunning() command"));
-                        }
-                        var runningScriptObj = findRunningScript(filename, argsForTargetScript, server);
-                        if (runningScriptObj != null) {
-                            return resolve(true);
-                        }
-                        return resolve(false);
-                    }).catch(function(e) {
-                        reject(e);
-                    });
-                } else if (exp.func.value == "purchaseHacknetNode") {
-                    if (exp.args.length != 0) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "purchaseHacknetNode() call has incorrect number of arguments. Takes 0 arguments"));
-                    }
-                    var cost = getCostOfNextHacknetNode();
-                    if (isNaN(cost)) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "Could not calculate cost in purchaseHacknetNode(). This is a bug please report to game dev"));
-                    }
-                    if (cost > Player.money) {
-                        workerScript.scriptRef.log("Could not afford to purchase new Hacknet Node");
-                        return resolve(false);
-                    }
-                        
-                    //Auto generate a name for the node for now...TODO
-                    var numOwned = Player.hacknetNodes.length;
-                    var name = "hacknet-node-" + numOwned;
-                    var node = new HacknetNode(name);
-                    node.updateMoneyGainRate();
-                    
-                    Player.loseMoney(cost);
-                    Player.hacknetNodes.push(node);
-                    displayHacknetNodesContent();
-                    workerScript.scriptRef.log("Purchased new Hacknet Node with name: " + name);
-                    resolve(numOwned);
-                } else if (exp.func.value == "val") {
-                    if (exp.args.length != 1) {
-                        return reject(makeRuntimeRejectMsg(workerScript, "val() call has incorrect number of arguments. Takes 1 arguments"));
-                    }
-                    var valPromise = evaluate(exp.args[0], workerScript);
-                    valPromise.then(function(val) {
-                        resolve(val);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else {
-                    reject(makeRuntimeRejectMsg(workerScript, "Invalid function: " + exp.func.value));
+            case "Literal":
+                resolve(exp.value);
+                break;
+            case "Identifier":
+                if (!(exp.name in env.vars)){
+                    reject(makeRuntimeRejectMsg(workerScript, "variable " + exp.name + " not definied"));
                 }
-                }, CONSTANTS.CodeInstructionRunTime); //End additional setTimeout delay for function "calls", the Netscript operation run time
+                resolve(env.get(exp.name))
+                break;
+            case "ExpressionStatement":
+                var e = evaluate(exp.expression, workerScript);
+                e.then(function(res) {
+                    resolve("expression done");
+                }, function(e) {
+                    reject(e);
+                });
+                break;
+            case "ArrayExpression":
+                var argPromises = exp.elements.map(function(arg) {
+                    return evaluate(arg, workerScript);
+                });
+                Promise.all(argPromises).then(function(array) {
+                    resolve(array)
+                }).catch(function(e) {
+                    reject(e);
+                });
+                break;
+            case "CallExpression":
+                evaluate(exp.callee, workerScript).then(function(func) {
+                    var argPromises = exp.arguments.map(function(arg) {
+                        return evaluate(arg, workerScript);
+                    });
+                    Promise.all(argPromises).then(function(args) {
+                        if (exp.callee.type == "MemberExpression"){
+                            evaluate(exp.callee.object, workerScript).then(function(object) {
+                                try {
+                                    resolve(func.apply(object,args));
+                                } catch (e) {
+                                    reject(makeRuntimeRejectMsg(workerScript, e));
+                                }
+                            }).catch(function(e) {
+                                reject(e);
+                            });
+                        } else {
+                            try {
+                                var out = func.apply(null,args);
+                                if (out instanceof Promise){
+                                    out.then(function(res) {
+                                        resolve(res)
+                                    }).catch(function(e) {
+                                        reject(e);
+                                    });
+                                } else {
+                                    resolve(out);
+                                }
+                            } catch (e) {
+                                reject(makeRuntimeRejectMsg(workerScript, e));
+                            }
+                        }
+                    }).catch(function(e) {
+                        reject(e);
+                    });
+                }).catch(function(e) {
+                    reject(e);
+                });
+                break;
+            case "MemberExpression":
+                var pObject = evaluate(exp.object, workerScript);
+                pObject.then(function(object) {
+                    if (exp.computed){
+                        var p = evaluate(exp.property, workerScript);
+                        p.then(function(index) {
+                            resolve(object[index]);
+                        }).catch(function(e) {
+                            reject(makeRuntimeRejectMsg(workerScript, "Invalid MemberExpression"));
+                        });
+                    } else {
+                        try {
+                            resolve(object[exp.property.name])
+                        } catch (e) {
+                            return reject(makeRuntimeRejectMsg(workerScript, "Failed to get property: " + e.toString()));
+                        }
+                    }
+                }).catch(function(e) {
+                    reject(e);
+                });
+                break;
+            case "LogicalExpression":
+            case "BinaryExpression":
+                var p = evalBinary(exp, workerScript, resolve, reject);
+                p.then(function(res) {
+                    resolve(res);
+                }).catch(function(e) {
+                    reject(e);
+                });
+                break;
+            case "AssignmentExpression":
+                var p = evalAssignment(exp, workerScript);
+                p.then(function(res) {
+                    resolve(res);
+                }).catch(function(e) {
+                    reject(e);
+                });
+                break;
+            case "UpdateExpression":
+                if (exp.argument.type==="Identifier"){
+                    if (exp.argument.name in env.vars){
+                        if (exp.prefix){
+                            resolve(env.get(exp.argument.name))
+                        }
+                        switch (exp.operator){
+                            case "++":
+                                env.set(exp.argument.name,env.get(exp.argument.name)+1);
+                                break;
+                            case "--":
+                                env.set(exp.argument.name,env.get(exp.argument.name)-1);
+                                break;
+                            default:
+                                reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". This is a bug please report to game developer"));
+                        }
+                        if (env.prefix){
+                            return;
+                        }
+                        resolve(env.get(exp.argument.name))
+                    } else {
+                        reject(makeRuntimeRejectMsg(workerScript, "variable " + exp.argument.name + " not definied"));
+                    }
+                } else {
+                    reject(makeRuntimeRejectMsg(workerScript, "argument must be an identifier"));
+                }
+                break;
+            case "EmptyStatement":
+                resolve(false);
+                break;
+            case "ReturnStatement":
+                reject(makeRuntimeRejectMsg(workerScript, "Not implemented ReturnStatement"));
+                break;
+            case "BreakStatement":
+                reject(makeRuntimeRejectMsg(workerScript, "Not implemented BreakStatement"));
+                break;
+            case "IfStatement":
+                evaluateIf(exp, workerScript).then(function(forLoopRes) {
+                    resolve("forLoopDone");
+                }).catch(function(e) {
+                    reject(e);
+                });
+                break;
+            case "SwitchStatement":
+                reject(makeRuntimeRejectMsg(workerScript, "Not implemented SwitchStatement"));
+                break;e
+            case "WhileStatement":
+                evaluateWhile(exp, workerScript).then(function(forLoopRes) {
+                    resolve("forLoopDone");
+                }).catch(function(e) {
+                    reject(e);
+                });
+                break;
+            case "ForStatement":
+                evaluate(exp.init, workerScript).then(function(expInit) {
+                    return evaluateFor(exp, workerScript);
+                }).then(function(forLoopRes) {
+                    resolve("forLoopDone");
+                }).catch(function(e) {
+                    reject(e);
+                });
                 break;
             default:
                 reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". This is a bug please report to game developer"));
@@ -716,41 +205,210 @@ function evaluate(exp, workerScript) {
     }); // End Promise
 }
 
+function evalFunction(exp, workerScript){
+    return new Promise(function(resolve, reject) {
+        if (exp.callee.type!="Identifier"){
+            reject(makeRuntimeRejectMsg(workerScript, "callee must be an Identifier"));
+            return;
+        }
+        switch(exp.callee.name){
+            case "print":
+                if (exp.arguments.length != 1) {
+                    return reject(makeRuntimeRejectMsg(workerScript, "print() call has incorrect number of arguments. Takes 1 argument"));
+                }
+                var evaluatePromise = evaluate(exp.arguments[0], workerScript);
+                evaluatePromise.then(function(res) {
+                    workerScript.scriptRef.log(res.toString());
+                    resolve(true);
+                }).catch(function(e) {
+                    reject(e);
+                });
+                break;
+            case "scan":
+                if (exp.arguments.length != 1) {
+                    exp.arguments = [{value:Player.getCurrentServer().hostname,type:"Literal"}];
+                }
+                var ipPromise = evaluate(exp.arguments[0], workerScript);
+                ipPromise.then(function (ip) {
+                    var server = getServer(ip);
+                    if (server == null) {
+                        workerScript.scriptRef.log('getServerOpenPortsCount() failed. Invalid IP or hostname passed in: ' + ip);
+                        return reject(makeRuntimeRejectMsg(workerScript, 'Invalid IP or hostname passed into getServerOpenPortsCount() command'));
+                    }
+                    var out = [];
+                    for (var i = 0; i < server.serversOnNetwork.length; i++) {
+                        var entry = server.getServerOnNetwork(i).hostname;
+                        if (entry == null) {
+                            continue;
+                        }
+                        out.push(entry);
+                    }
+                    workerScript.scriptRef.log('scan() returned ' + server.serversOnNetwork.length + ' connections for ' + server.hostname);
+                    resolve(out);
+                }).catch(function(e) {
+                        reject(e);
+                    });
+                break;
+            default:
+                reject(makeRuntimeRejectMsg(workerScript, "Invalid function: " + exp.callee));
+        }
+    });
+}
+
+function evalBinary(exp, workerScript){
+    return new Promise(function(resolve, reject) {
+        var expLeftPromise = evaluate(exp.left, workerScript);
+        expLeftPromise.then(function(expLeft) {
+            var expRightPromise = evaluate(exp.right, workerScript);
+            expRightPromise.then(function(expRight) {
+                switch (exp.operator){
+                    case "===":
+                    case "==":
+                        resolve(expLeft===expRight);
+                        break;
+                    case "!==":
+                    case "!=":
+                        resolve(expLeft!==expRight);
+                        break;
+                    case "<":
+                        resolve(expLeft<expRight);
+                        break;
+                    case "<=":
+                        resolve(expLeft<=expRight);
+                        break;
+                    case ">":
+                        resolve(expLeft>expRight);
+                        break;
+                    case ">=":
+                        resolve(expLeft>=expRight);
+                        break;
+                    case "+":
+                        resolve(expLeft+expRight);
+                        break;
+                    case "-":
+                        resolve(expLeft-expRight);
+                        break;
+                    case "*":
+                        resolve(expLeft*expRight);
+                        break;
+                    case "/":
+                        resolve(expLeft/expRight);
+                        break;
+                    case "%":
+                        resolve(expLeft%expRight);
+                        break;
+                    case "in":
+                        resolve(expLeft in expRight);
+                        break;
+                    case "instanceof":
+                        resolve(expLeft instanceof expRight);
+                        break;
+                    case "||":
+                        resolve(expLeft || expRight);
+                        break;
+                    case "&&":
+                        resolve(expLeft && expRight);
+                        break;
+                    default:
+                        reject(makeRuntimeRejectMsg(workerScript, "Bitwise operators are not implemented"));
+                }
+            }, function(e) {
+                reject(e);
+            });
+        }, function(e) {
+            reject(e);
+        });
+    });
+}
+
+function evalUnary(exp, workerScript){
+    return new Promise(function(resolve, reject) {
+        var expLeftPromise = evaluate(exp.left, workerScript);
+        expLeftPromise.then(function(expLeft) {
+            switch(exp.operator){
+                case "++":
+                    break
+                case "--":
+                    break;
+            }
+        }, function(e) {
+                reject(e);
+        });
+    });
+}
+
+function evalAssignment(exp, workerScript) {
+    var env = workerScript.env;
+    return new Promise(function(resolve, reject) {
+        if (env.stopFlag) {return reject(workerScript);}
+
+        if (exp.left.type != "Identifier") {
+            return reject(makeRuntimeRejectMsg(workerScript, "Cannot assign to " + JSON.stringify(exp.left)));
+        }
+
+        if (exp.operator !== "=" && !(exp.left.name in env.vars)){
+            return reject(makeRuntimeRejectMsg(workerScript, "variable " + exp.left.name + " not definied"));
+        }
+   
+        var expRightPromise = evaluate(exp.right, workerScript);
+        expRightPromise.then(function(expRight) {
+            try {
+                switch (exp.operator) {
+                    case "=":
+                        env.set(exp.left.name,expRight);
+                        break;
+                    case "+=":
+                        env.set(exp.left.name,env.get(exp.left.name) + expRight);
+                        break;
+                    case "-=":
+                        env.set(exp.left.name,env.get(exp.left.name) - expRight);
+                        break;
+                    case "*=":
+                        env.set(exp.left.name,env.get(exp.left.name) * expRight);
+                        break;
+                    case "/=":
+                        env.set(exp.left.name,env.get(exp.left.name) / expRight);
+                        break;
+                    case "%=":
+                        env.set(exp.left.name,env.get(exp.left.name) % expRight);
+                        break;
+                    default:
+                        reject(makeRuntimeRejectMsg(workerScript, "Bitwise assignment is not implemented"));
+                }
+            } catch (e) {
+                return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
+            }
+            resolve(false); //Return false so this doesnt cause conditionals to evaluate
+        }, function(e) {
+            reject(e);
+        });
+    });
+}
+
 //Returns true if any of the if statements evaluated, false otherwise. Therefore, the else statement
 //should evaluate if this returns false
 function evaluateIf(exp, workerScript, i) {
     var env = workerScript.env;
     return new Promise(function(resolve, reject) {
-        if (i >= exp.cond.length) {
-            //Catch out of bounds errors
-            resolve(false);
-        } else {
-            var cond = evaluate(exp.cond[i], workerScript);
-            cond.then(function(condRes) {
-                if (condRes) {
-                    var evalThen = evaluate(exp.then[i], workerScript);
-                    evalThen.then(function(res) {
-                        resolve(true);
-                    }, function(e) {
-                        reject(e);
-                    });
-                } else {
-                    //If this if statement isnt true, go on the next elif, or recursively resolve
-                    if (i == exp.cond.length-1) {
-                        resolve(false);
-                    } else {
-                        var recursiveCall = evaluateIf(exp, workerScript, i+1);
-                        recursiveCall.then(function(res) {
-                            resolve(res);
-                        }, function(e) {
-                            reject(e);
-                        });
-                    }
-                }
-            }, function(e) {
-                reject(e);
-            });
-        }
+        evaluate(exp.test, workerScript).then(function(condRes) {
+            if (condRes) {
+                evaluate(exp.consequent, workerScript).then(function(res) {
+                    resolve(true);
+                }, function(e) {
+                    reject(e);
+                });
+            } else if (exp.alternate) {
+                evaluate(exp.alternate, workerScript).then(function(res) {
+                    resolve(true);
+                }, function(e) {
+                    reject(e);
+                });
+            } else {
+                resolve("endIf")
+            }
+        }, function(e) {
+            reject(e);
+        });
     });
 }
 
@@ -760,45 +418,15 @@ function evaluateFor(exp, workerScript) {
 	return new Promise(function(resolve, reject) {
 		if (env.stopFlag) {reject(workerScript); return;}
 		
-		var pCond = new Promise(function(resolve, reject) {
-			setTimeout(function() {
-				var evaluatePromise = evaluate(exp.cond, workerScript);
-				evaluatePromise.then(function(resCond) {
-					resolve(resCond);
-				}, function(e) {
-					reject(e);
-				});
-			}, CONSTANTS.CodeInstructionRunTime);
-		});
-		
+		var pCond = evaluate(exp.test, workerScript);
 		pCond.then(function(resCond) {
 			if (resCond) {
 				//Run the for loop code
-				var pCode = new Promise(function(resolve, reject) {
-					setTimeout(function() {
-						var evaluatePromise = evaluate(exp.code, workerScript);
-						evaluatePromise.then(function(resCode) {
-							resolve(resCode);
-						}, function(e) {
-							reject(e);
-						});
-					}, CONSTANTS.CodeInstructionRunTime);
-				});
-				
+				var pBody = evaluate(exp.body, workerScript);
 				//After the code executes make a recursive call
-				pCode.then(function(resCode) {
-					var pPostLoop = new Promise(function(resolve, reject) {
-						setTimeout(function() {
-							var evaluatePromise = evaluate(exp.postloop, workerScript);
-							evaluatePromise.then(function(foo) {
-								resolve("postLoopFinished");
-							}, function(e) {
-								reject(e);
-							});
-						}, CONSTANTS.CodeInstructionRunTime);
-					});
-					
-					pPostLoop.then(function(resPostloop) {
+				pBody.then(function(resCode) {
+					var pUpdate = evaluate(exp.update, workerScript);
+					pUpdate.then(function(resPostloop) {
 						var recursiveCall = evaluateFor(exp, workerScript);
 						recursiveCall.then(function(foo) {
 							resolve("endForLoop");
@@ -808,7 +436,6 @@ function evaluateFor(exp, workerScript) {
 					}, function(e) {
 						reject(e);
 					});
-
 				}, function(e) {
 					reject(e);
 				});
@@ -829,7 +456,7 @@ function evaluateWhile(exp, workerScript) {
 		
 		var pCond = new Promise(function(resolve, reject) {
 			setTimeout(function() {
-				var evaluatePromise = evaluate(exp.cond, workerScript);
+				var evaluatePromise = evaluate(exp.test, workerScript);
 				evaluatePromise.then(function(resCond) {
 					resolve(resCond);
 				}, function(e) {
@@ -843,7 +470,7 @@ function evaluateWhile(exp, workerScript) {
 				//Run the while loop code
 				var pCode = new Promise(function(resolve, reject) {
 					setTimeout(function() {
-						var evaluatePromise = evaluate(exp.code, workerScript);
+						var evaluatePromise = evaluate(exp.body, workerScript);
 						evaluatePromise.then(function(resCode) {
 							resolve(resCode);
 						}, function(e) {
@@ -982,13 +609,13 @@ function evaluateProg(exp, workerScript, index) {
 	return new Promise(function(resolve, reject) {
 		if (env.stopFlag) {reject(workerScript); return;}
 		
-		if (index >= exp.prog.length) {
+		if (index >= exp.body.length) {
 			resolve("progFinished");
 		} else {
 			//Evaluate this line of code in the prog
 			var code = new Promise(function(resolve, reject) {
 				setTimeout(function() {
-					var evaluatePromise = evaluate(exp.prog[index], workerScript); 
+					var evaluatePromise = evaluate(exp.body[index], workerScript);
 					evaluatePromise.then(function(evalRes) {
 						resolve(evalRes);
 					}, function(e) {
@@ -1053,47 +680,43 @@ function apply_op(op, a, b) {
 
 //Run a script from inside a script using run() command
 function runScriptFromScript(server, scriptname, args, workerScript, threads=1) {
-    return new Promise(function(resolve, reject) {
-        var env = workerScript.env;
-        if (env.stopFlag) {reject(workerScript); return;}
-        setTimeout(function() {
-            //Check if the script is already running
-            var runningScriptObj = findRunningScript(scriptname, args, server);
-            if (runningScriptObj != null) {
-                workerScript.scriptRef.log(scriptname + " is already running on " + server.hostname);
-                return resolve(false);
-            }
-            
-            //Check if the script exists and if it does run it
-            for (var i = 0; i < server.scripts.length; ++i) {
-                if (server.scripts[i].filename == scriptname) {
-                    //Check for admin rights and that there is enough RAM availble to run
-                    var script = server.scripts[i];
-                    var ramUsage = script.ramUsage;
-                    ramUsage = ramUsage * threads * Math.pow(CONSTANTS.MultithreadingRAMCost, threads-1);
-                    var ramAvailable = server.maxRam - server.ramUsed;
-                    
-                    if (server.hasAdminRights == false) {
-                        workerScript.scriptRef.log("Cannot run script " + scriptname + " on " + server.hostname + " because you do not have root access!");
-                        return resolve(false);
-                    } else if (ramUsage > ramAvailable){
-                        workerScript.scriptRef.log("Cannot run script " + scriptname + "(t=" + threads + ") on " + server.hostname + " because there is not enough available RAM!");
-                        return resolve(false);
-                    } else {
-                        //Able to run script
-                        workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads and args: " + printArray(args) + ". May take a few seconds to start up...");
-                        var runningScriptObj = new RunningScript(script, args);
-                        runningScriptObj.threads = threads;
-                        server.runningScripts.push(runningScriptObj);	//Push onto runningScripts
-                        addWorkerScript(runningScriptObj, server);
-                        return resolve(true);
-                    }
+    setTimeout(function() {
+        //Check if the script is already running
+        var runningScriptObj = findRunningScript(scriptname, args, server);
+        if (runningScriptObj != null) {
+            workerScript.scriptRef.log(scriptname + " is already running on " + server.hostname);
+            return false;
+        }
+
+        //Check if the script exists and if it does run it
+        for (var i = 0; i < server.scripts.length; ++i) {
+            if (server.scripts[i].filename == scriptname) {
+                //Check for admin rights and that there is enough RAM availble to run
+                var script = server.scripts[i];
+                var ramUsage = script.ramUsage;
+                ramUsage = ramUsage * threads * Math.pow(CONSTANTS.MultithreadingRAMCost, threads-1);
+                var ramAvailable = server.maxRam - server.ramUsed;
+
+                if (server.hasAdminRights == false) {
+                    workerScript.scriptRef.log("Cannot run script " + scriptname + " on " + server.hostname + " because you do not have root access!");
+                    return false;
+                } else if (ramUsage > ramAvailable){
+                    workerScript.scriptRef.log("Cannot run script " + scriptname + "(t=" + threads + ") on " + server.hostname + " because there is not enough available RAM!");
+                    return false;
+                } else {
+                    //Able to run script
+                    workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads and args: " + printArray(args) + ". May take a few seconds to start up...");
+                    var runningScriptObj = new RunningScript(script, args);
+                    runningScriptObj.threads = threads;
+                    server.runningScripts.push(runningScriptObj);	//Push onto runningScripts
+                    addWorkerScript(runningScriptObj, server);
+                    return true;
                 }
             }
-            workerScript.scriptRef.log("Could not find script " + scriptname + " on " + server.hostname);
-            resolve(false);
-        }, CONSTANTS.CodeInstructionRunTime);
-    });
+        }
+        workerScript.scriptRef.log("Could not find script " + scriptname + " on " + server.hostname);
+        resolve(false);
+    }, CONSTANTS.CodeInstructionRunTime);
 }
 
 function isScriptErrorMessage(msg) {

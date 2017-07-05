@@ -1,8 +1,12 @@
 /* Environment
  * 	NetScript program environment 
  */
-function Environment(parent) {
-    this.vars = Object.create(parent ? parent.vars : null);
+function Environment(workerScript,parent) {
+    if (parent){
+        this.vars = parent.vars;
+    } else {
+        this.vars = NetscriptFunctions(workerScript);
+    }
     this.parent = parent;
 	this.stopFlag = false;
 }
