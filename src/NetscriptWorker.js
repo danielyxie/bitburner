@@ -8,7 +8,8 @@ function WorkerScript(runningScriptObj) {
 	this.running 		= false;
 	this.serverIp 		= null;
 	this.code 			= runningScriptObj.scriptRef.code;
-	this.env 			= new Environment();
+	this.env 			= new Environment(this);
+    this.env.set("args", runningScriptObj.args);
 	this.output			= "";
 	this.ramUsage		= 0;
 	this.scriptRef		= runningScriptObj;
@@ -31,7 +32,7 @@ function runScriptsLoop() {
 		//If it isn't running, start the script
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
 			try {
-				var ast = Parser(Tokenizer(InputStream(workerScripts[i].code)));
+				var ast = acorn.parse(workerScripts[i].code);
                 //console.log(ast);
 			} catch (e) {
                 console.log("Error parsing script: " + workerScripts[i].name);
