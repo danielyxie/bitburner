@@ -128,6 +128,7 @@ AugmentationNames = {
     SmartSonar:                         "SmartSonar Implant",
     PowerRecirculator:                  "Power Recirculation Core",
     QLink:                              "QLink",
+    TheRedPill:                         "The Red Pill",
     SPTN97:                             "SPTN-97 Gene Modification",
     HiveMind:                           "ECorp HVMind Implant",
     CordiARCReactor:                    "CordiARC Fusion Reactor",
@@ -246,7 +247,7 @@ initAugmentations = function() {
     var CombatRib2 = new Augmentation(AugmentationNames.CombatRib2);
     CombatRib2.setRequirements(7000, 12000000);
     CombatRib2.setInfo("This is an upgrade to the Combat Rib I augmentation, and is capable of releasing even more potent combat-enhancing " + 
-                       "drugs into the bloodstream<br><br>. This upgrade increases the player's strength and defense by an additional 15%.")
+                       "drugs into the bloodstream.<br><br>This upgrade increases the player's strength and defense by an additional 15%.")
     CombatRib2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
                              "OmniTek Incorporated", "KuaiGong International", "Blade Industries"]);
     if (augmentationExists(AugmentationNames.CombatRib2)) {
@@ -1039,7 +1040,14 @@ initAugmentations = function() {
     AddToAugmentations(QLink);
     
 	//Daedalus
-    //TODO The Red Pill - Second prestige
+    var RedPill = new Augmentation(AugmentationNames.TheRedPill);
+    RedPill.setInfo("It's time to leave the cave");
+    RedPill.setRequirements(1000000, 0);
+    RedPill.addToFactions(["Daedalus"]);
+    if (augmentationExists(AugmentationNames.TheRedPill)) {
+        delete Augmentations[AugmentationNames.TheRedPill];
+    }
+    AddToAugmentations(RedPill);
     
 	//Covenant
     var SPTN97 = new Augmentation(AugmentationNames.SPTN97);
@@ -1379,6 +1387,8 @@ initAugmentations = function() {
             Augmentations[name].baseCost *= mult;
         }
     }
+    
+    Player.reapplyAllAugmentations();
 }
 
 applyAugmentation = function(aug, reapply=false) { 

@@ -80,6 +80,10 @@ Locations = {
     VolhavenCompuTek:                   "CompuTek",
     VolhavenMilleniumFitnessGym:        "Millenium Fitness Gym",
     VolhavenSlums:                      "Volhaven Slums",
+    
+    //Generic locations
+    Hospital:               "Hospital",
+    WorldStockExchange:     "World Stock Exchange",
 }
 
 displayLocationContent = function() {
@@ -148,7 +152,11 @@ displayLocationContent = function() {
     var travelToNewTokyo        = document.getElementById("location-travel-to-newtokyo");
     var travelToIshima          = document.getElementById("location-travel-to-ishima");
     var travelToVolhaven        = document.getElementById("location-travel-to-volhaven");
-        
+    
+    var infiltrate              = clearEventListeners("location-infiltrate");
+      
+    var hospitalTreatment       = document.getElementById("location-hospital-treatment");
+    
     var slumsDescText           = document.getElementById("location-slums-description");
     var slumsShoplift           = document.getElementById("location-slums-shoplift");
     var slumsMug                = document.getElementById("location-slums-mug");
@@ -246,6 +254,10 @@ displayLocationContent = function() {
     travelToIshima.style.display = "none";
     travelToVolhaven.style.display = "none";
     
+    infiltrate.style.display = "none";
+    
+    hospitalTreatment.style.display = "none";
+    
     slumsDescText.style.display = "none";
     slumsShoplift.style.display = "none";
     slumsMug.style.display = "none";
@@ -320,6 +332,10 @@ displayLocationContent = function() {
         locationTxtDiv3.style.display = "none";
 	}
     
+    //Calculate hospital Cost
+    if (Player.hp < 0) {Player.hp = 0;}
+    var hospitalTreatmentCost = (Player.max_hp - Player.hp) * CONSTANTS.HospitalCostPerHp;
+    
     switch (loc) {
         case Locations.AevumTravelAgency: 
             travelAgencyText.style.display = "block";
@@ -352,6 +368,8 @@ displayLocationContent = function() {
             purchase1tb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.AevumECorp, 
+                                6000, 100, 150, 14);
             break;
             
         case Locations.AevumBachmanAndAssociates: 
@@ -363,6 +381,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.AevumBachmanAndAssociates, 
+                                1500, 36, 60, 10);
             break;
 
         case Locations.AevumClarkeIncorporated:   
@@ -374,6 +394,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.AevumClarkeIncorporated, 
+                                2400, 28, 75, 9.5);
             break;
 
         case Locations.AevumFulcrumTechnologies:  
@@ -391,6 +413,8 @@ displayLocationContent = function() {
             purchase1tb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.AevumFulcrumTechnologies, 
+                                6000, 84, 100, 16);
             break;
 
         case Locations.AevumAeroCorp:        
@@ -400,8 +424,9 @@ displayLocationContent = function() {
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
-            businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.AevumAeroCorp, 
+                                2000, 26, 50, 10.5);
             break;
 
         case Locations.AevumGalacticCybersystems: 
@@ -413,6 +438,8 @@ displayLocationContent = function() {
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.AevumGalacticCybersystems, 
+                                1400, 24, 50, 10);
             break;
 
         case Locations.AevumWatchdogSecurity:  
@@ -425,6 +452,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             securityJob.style.display = "block";
             agentJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.AevumWatchdogSecurity, 
+                                850, 12, 30, 8);
             break;
 
         case Locations.AevumRhoConstruction: 
@@ -432,13 +461,17 @@ displayLocationContent = function() {
 			
             softwareJob.style.display = "block";
             businessJob.style.display = "block";   
+            setInfiltrateButton(infiltrate, Locations.AevumRhoConstruction, 
+                                600, 8, 20, 4.5);
             break;
 
         case Locations.AevumPolice:     
 			locationInfo.innerHTML = Companies[loc].info;
 			
             softwareJob.style.display = "block";
-            securityJob.style.display = "block";        
+            securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.AevumPolice, 
+                                700, 10, 25, 6);
             break;
 
         case Locations.AevumNetLinkTechnologies:  
@@ -455,6 +488,8 @@ displayLocationContent = function() {
             purchase8gb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.AevumNetLinkTechnologies,
+                                150, 5, 15, 3.5);
             break;
 
         case Locations.AevumCrushFitnessGym:
@@ -487,6 +522,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.ChongqingKuaiGongInternational,
+                                5500, 42, 100, 15);
             break;
 
         case Locations.ChongqingSolarisSpaceSystems:  
@@ -496,8 +533,9 @@ displayLocationContent = function() {
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
-            businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.ChongqingSolarisSpaceSystems,
+                                3600, 24, 75, 14);
             break;
 
 
@@ -525,6 +563,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.Sector12MegaCorp,
+                                6000, 100, 125, 15.5);
             break;
 
         case Locations.Sector12BladeIndustries:  
@@ -536,6 +576,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.Sector12BladeIndustries, 
+                                3000, 40, 100, 11);
             break;
 
         case Locations.Sector12FourSigma:    
@@ -547,6 +589,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.Sector12FourSigma, 
+                                1500, 50, 100, 16);
             break;
 
         case Locations.Sector12IcarusMicrosystems: 
@@ -558,6 +602,8 @@ displayLocationContent = function() {
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.Sector12IcarusMicrosystems, 
+                                900, 28, 70, 12);
             break;
 
         case Locations.Sector12UniversalEnergy:
@@ -569,6 +615,8 @@ displayLocationContent = function() {
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.Sector12UniversalEnergy, 
+                                775, 20, 50, 10);
             break;
 
         case Locations.Sector12DeltaOne:      
@@ -578,8 +626,9 @@ displayLocationContent = function() {
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
-            businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.Sector12DeltaOne, 
+                                1200, 30, 75, 11);
             break;
 
         case Locations.Sector12CIA:     
@@ -591,6 +640,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             securityJob.style.display = "block";
             agentJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.Sector12CIA, 
+                                1450, 38, 80, 12.5);
             break;
 
         case Locations.Sector12NSA:          
@@ -602,6 +653,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             securityJob.style.display = "block";
             agentJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.Sector12NSA, 
+                                1400, 34, 80, 12);
             break;
 
         case Locations.Sector12AlphaEnterprises:
@@ -614,6 +667,8 @@ displayLocationContent = function() {
             purchase4gb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.Sector12AlphaEnterprises, 
+                                250, 10, 40, 5);
             break;
 
         case Locations.Sector12CarmichaelSecurity:
@@ -626,6 +681,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             securityJob.style.display = "block";
             agentJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.Sector12CarmichaelSecurity, 
+                                500, 14, 60, 5);
             break;
 
         case Locations.Sector12FoodNStuff:
@@ -640,6 +697,8 @@ displayLocationContent = function() {
 			
             employeeJob.style.display = "block";
             employeePartTimeJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.Sector12JoesGuns, 
+                                100, 4, 20, 4);
             break;
 
         case Locations.Sector12IronGym:
@@ -671,7 +730,8 @@ displayLocationContent = function() {
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
-            businessJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.NewTokyoDefComm, 
+                                1300, 24, 70, 9.5);
             break;
 
         case Locations.NewTokyoVitaLife:
@@ -683,6 +743,8 @@ displayLocationContent = function() {
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.NewTokyoVitaLife, 
+                                750, 18, 100, 9);
             break;
 
         case Locations.NewTokyoGlobalPharmaceuticals: 
@@ -695,6 +757,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.NewTokyoGlobalPharmaceuticals, 
+                                900, 20, 80, 9);
             break;
 
         case Locations.NewTokyoNoodleBar:      	
@@ -703,7 +767,6 @@ displayLocationContent = function() {
             waiterJob.style.display = "block";
             waitPartTimeJob.style.display = "block";
             break;
-        
 
         case Locations.IshimaTravelAgency:
             travelAgencyText.style.display = "block";
@@ -733,6 +796,8 @@ displayLocationContent = function() {
             purchase128gb.style.display = "block";
             purchase256gb.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.IshimaStormTechnologies, 
+                                700, 20, 100, 10.5);
             break;
 
         case Locations.IshimaNovaMedical:         
@@ -744,6 +809,8 @@ displayLocationContent = function() {
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.IshimaNovaMedical, 
+                                600, 16, 50, 8);
             break;
 
         case Locations.IshimaOmegaSoftware:   
@@ -760,6 +827,8 @@ displayLocationContent = function() {
             purchase32gb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.IshimaOmegaSoftware, 
+                                200, 5, 40, 4.5);
             break;
 
         case Locations.VolhavenTravelAgency:
@@ -791,6 +860,8 @@ displayLocationContent = function() {
             purchase256gb.style.display = "block";
             purchase512gb.style.display = "block";
             purchase1tb.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.VolhavenOmniTekIncorporated, 
+                                1500, 38, 100, 10);
             break;
 
         case Locations.VolhavenNWO:      
@@ -802,6 +873,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.VolhavenNWO, 
+                                1800, 48, 200, 12);
             break;
 
         case Locations.VolhavenHeliosLabs:            
@@ -812,7 +885,8 @@ displayLocationContent = function() {
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
-            businessJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.VolhavenHeliosLabs, 
+                                1200, 24, 75, 9.5);
             break;
 
         case Locations.VolhavenOmniaCybersystems:
@@ -822,8 +896,9 @@ displayLocationContent = function() {
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
-            businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.VolhavenOmniaCybersystems, 
+                                900, 24, 90, 10);
             break;
 
         case Locations.VolhavenLexoCorp:
@@ -836,6 +911,8 @@ displayLocationContent = function() {
             networkEngineerJob.style.display = "block";
             businessJob.style.display = "block";
             securityJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.VolhavenLexoCorp, 
+                                500, 10, 40, 6);
             break;
 
         case Locations.VolhavenSysCoreSecurities:     
@@ -845,6 +922,8 @@ displayLocationContent = function() {
             itJob.style.display = "block";
             securityEngineerJob.style.display = "block";
             networkEngineerJob.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.VolhavenSysCoreSecurities, 
+                                600, 12, 50, 7);
             break;
 
         case Locations.VolhavenCompuTek:       
@@ -864,6 +943,8 @@ displayLocationContent = function() {
             purchase256gb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            setInfiltrateButton(infiltrate, Locations.VolhavenCompuTek, 
+                                300, 8, 35, 6);
             break;
 
         case Locations.VolhavenMilleniumFitnessGym:   
@@ -918,6 +999,13 @@ displayLocationContent = function() {
             slumsHeist.innerHTML = "Heist (" + (heistChance*100).toFixed(3) + "% chance of success)";
             slumsHeist.innerHTML += '<span class="tooltiptext"> Attempt to pull off the ultimate heist </span>';
             break;
+            
+        //Hospital
+        case Locations.Hospital:
+            hospitalTreatment.innerText = "Get treatment for wounds - $" + formatNumber(hospitalTreatmentCost, 2).toString();
+            hospitalTreatment.style.display = "block";
+            break;
+            
         default:
             console.log("ERROR: INVALID LOCATION");
 
@@ -949,9 +1037,16 @@ initLocationButtons = function() {
         return false;
     });
     
+    aevumHospital = document.getElementById("aevum-hospital");
+    aevumHospital.addEventListener("click", function() {
+        Player.location = Locations.Hospital;
+        Engine.loadLocationContent();
+        return false;
+    });
+    
     aevumSummitUniversity = document.getElementById("aevum-summituniversity");
     aevumSummitUniversity.addEventListener("click", function() {
-       Player.location = Locations.AevumSummitUniversity;
+        Player.location = Locations.AevumSummitUniversity;
         Engine.loadLocationContent();
         return false;
     });
@@ -1053,6 +1148,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    chongqingHospital = document.getElementById("chongqing-hospital");
+    chongqingHospital.addEventListener("click", function() {
+        Player.location = Locations.Hospital;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	chongqingKuaiGongInternational = document.getElementById("chongqing-kuaigonginternational");
 	chongqingKuaiGongInternational.addEventListener("click", function() {
@@ -1082,6 +1184,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    sector12Hospital = document.getElementById("sector12-hospital");
+    sector12Hospital.addEventListener("click", function() {
+        Player.location = Locations.Hospital;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
     sector12RothmanUniversity = document.getElementById("sector12-rothmanuniversity");
     sector12RothmanUniversity.addEventListener("click", function() {
@@ -1201,6 +1310,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    newTokyoHospital = document.getElementById("newtokyo-hospital");
+    newTokyoHospital.addEventListener("click", function() {
+        Player.location = Locations.Hospital;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	newTokyoDefComm = document.getElementById("newtokyo-defcomm");
 	newTokyoDefComm.addEventListener("click", function() {
@@ -1243,6 +1359,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    ishimaHospital = document.getElementById("ishima-hospital");
+    ishimaHospital.addEventListener("click", function() {
+        Player.location = Locations.Hospital;
+        Engine.loadLocationContent();
+        return false;
+    });
 	
 	ishimaStormTechnologies = document.getElementById("ishima-stormtechnologies");
 	ishimaStormTechnologies.addEventListener("click", function() {
@@ -1278,6 +1401,13 @@ initLocationButtons = function() {
 		Engine.loadLocationContent();
         return false;
 	});
+    
+    volhavenHospital = document.getElementById("volhaven-hospital");
+    volhavenHospital.addEventListener("click", function() {
+        Player.location = Locations.Hospital;
+        Engine.loadLocationContent();
+        return false;
+    });
     
     volhavenZBInstituteOfTechnology = document.getElementById("volhaven-zbinstituteoftechnology");
     volhavenZBInstituteOfTechnology.addEventListener("click", function() {
@@ -1349,6 +1479,13 @@ initLocationButtons = function() {
         return false;
     });
     
+    worldStockExchange = document.getElementById("generic-location-wse");
+    worldStockExchange.addEventListener("click", function() {
+        Player.location = Locations.WorldStockExchange;
+        Engine.loadStockMarketContent();
+        return false;
+    });
+    
     
     //Buttons to interact at a location (apply for job/promotion, train, purchase, etc.)
     var softwareJob             = document.getElementById("location-software-job");
@@ -1396,6 +1533,8 @@ initLocationButtons = function() {
     var slumsKidnap         = document.getElementById("location-slums-kidnap");
     var slumsAssassinate    = document.getElementById("location-slums-assassinate");
     var slumsHeist          = document.getElementById("location-slums-heist");
+    
+    var hospitalTreatment   = document.getElementById("location-hospital-treatment");
     
     softwareJob.addEventListener("click", function() {
         Player.applyForSoftwareJob();
@@ -1596,6 +1735,17 @@ initLocationButtons = function() {
         commitHeistCrime();
         return false;
     });
+    
+    hospitalTreatment.addEventListener("click", function() {
+        if (Player.hp < 0) {Player.hp = 0;}
+        var price = (Player.max_hp - Player.hp) * CONSTANTS.HospitalCostPerHp;
+        Player.loseMoney(price);
+        dialogBoxCreate("You were healed to full health! The hospital billed " + 
+                        "you for $" + formatNumber(price, 2).toString());
+        Player.hp = Player.max_hp;
+        displayLocationContent();
+        return false;
+    });
 }   
 
 travelToCity = function(destCityName, cost) {
@@ -1738,6 +1888,15 @@ setGymLocationButtons = function(costMult, expMult) {
     var gymAgi = clearEventListeners("location-gym-train-agi");
     gymAgi.addEventListener("click", function() {
         Player.startClass(costMult, expMult, CONSTANTS.ClassGymAgility);
+        return false;
+    });
+}
+
+setInfiltrateButton = function(btn, companyName, startLevel, val, maxClearance, difficulty) {
+    btn.style.display = "block";
+    btn.addEventListener("click", function() {
+        Engine.loadInfiltrationContent();
+        beginInfiltration(companyName, startLevel, val, maxClearance, difficulty)
         return false;
     });
 }

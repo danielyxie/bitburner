@@ -32,7 +32,7 @@ h2 {
 }
 
 ul {
-    padding: 6px;
+    padding: 2px;
     list-style-type: none;
 }
 
@@ -207,6 +207,43 @@ tr:focus {
     animation: glowing 1500ms infinite;
 }
 
+/* Blinking Cursor */
+/* ----- blinking cursor animation ----- */
+.typed-cursor{
+  opacity: 1;
+  -webkit-animation: blink 0.95s infinite;
+  -moz-animation: blink 0.95s infinite;
+  -ms-animation: blink 0.95s infinite;
+  -o-animation: blink 0.95s infinite;
+  animation: blink 0.95s infinite;
+}
+
+@-keyframes blink{
+  0% { opacity:1; }
+  50% { opacity:0; }
+  100% { opacity:1; }
+}
+@-webkit-keyframes blink{
+  0% { opacity:1; }
+  50% { opacity:0; }
+  100% { opacity:1; }
+}
+@-moz-keyframes blink{
+  0% { opacity:1; }
+  50% { opacity:0; }
+  100% { opacity:1; }
+}
+@-ms-keyframes blink{
+  0% { opacity:1; }
+  50% { opacity:0; }
+  100% { opacity:1; }
+}
+@-o-keyframes blink{
+  0% { opacity:1; }
+  50% { opacity:0; }
+  100% { opacity:1; }
+}
+
 /* Status text */
 @-webkit-keyframes status-text{
     from{
@@ -252,7 +289,7 @@ tr:focus {
     position: absolute; /* Stay in place */
     right: 0;
     top: 0;
-    height: 185px; /* Full height */
+    height: 195px; /* Full height */
     /*margin: 50% auto;*/
     padding: 5px;
     border: 2px solid var(--my-highlight-color);
@@ -264,7 +301,7 @@ tr:focus {
 
 #character-overview-text {
     padding: 4px;
-    margin: 10px;
+    margin: 8px;
     color: white;
     background-color: #444;
 }
@@ -272,7 +309,7 @@ tr:focus {
 #character-overview-save-button,
 #character-overview-options-button {
     color: #aaa;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;

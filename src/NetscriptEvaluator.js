@@ -754,14 +754,14 @@ function scriptCalculateExpGain(server) {
     if (server.baseDifficulty == null) {
         server.baseDifficulty = server.hackDifficulty;
     }
-	return (server.baseDifficulty * Player.hacking_exp_mult * 0.5 + 2);
+	return (server.baseDifficulty * Player.hacking_exp_mult * 0.4 + 2);
 }
 
 //The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument
 function scriptCalculatePercentMoneyHacked(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
     var skillMult = (Player.hacking_skill - (server.requiredHackingSkill - 1)) / Player.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 200;
+    var percentMoneyHacked = difficultyMult * skillMult * Player.hacking_money_mult / 225;
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked;

@@ -10,7 +10,9 @@ function BitburnerSaveObject() {
     this.FactionsSave               = "";
     this.SpecialServerIpsSave       = "";
     this.AliasesSave                = "";
+    this.GlobalAliasesSave          = "";
     this.MessagesSave               = "";
+    this.StockMarketSave            = "";
     this.VersionSave                = "";
 }
 
@@ -35,7 +37,9 @@ BitburnerSaveObject.prototype.saveGame = function() {
     this.FactionsSave               = JSON.stringify(Factions);
     this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
     this.AliasesSave                = JSON.stringify(Aliases);
+    this.GlobalAliasesSave          = JSON.stringify(GlobalAliases);
     this.MessagesSave               = JSON.stringify(Messages);
+    this.StockMarketSave            = JSON.stringify(StockMarket);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
     window.localStorage.setItem("bitburnerSave", saveString);
@@ -67,6 +71,15 @@ loadGame = function(saveObj) {
     } else {
         Aliases = {};
     }
+    if (saveObj.hasOwnProperty("GlobalAliasesSave")) {
+        try {
+            GlobalAliases   = JSON.parse(saveObj.GlobalAliasesSave, Reviver);
+        } catch(e) {
+            GlobalAliases = {};
+        }
+    } else {
+        GlobalAliases = {};
+    }
     if (saveObj.hasOwnProperty("MessagesSave")) {
         try {
             Messages        = JSON.parse(saveObj.MessagesSave, Reviver);
@@ -75,6 +88,15 @@ loadGame = function(saveObj) {
         }
     } else {
         initMessages();
+    }
+    if (saveObj.hasOwnProperty("StockMarketSave")) {
+        try {
+            StockMarket     = JSON.parse(saveObj.StockMarketSave, Reviver);
+        } catch(e) {
+            StockMarket     = {};
+        }
+    } else {
+        StockMarket = {};
     }
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
@@ -118,7 +140,9 @@ loadImportedGame = function(saveObj, saveString) {
     var tempSpecialServerIps = null;
     var tempAugmentations = null;
     var tempAliases = null;
+    var tempGlobalAliases = null;
     var tempMessages = null;
+    var tempStockMarket = null;
     try {
         saveString = decodeURIComponent(escape(atob(saveString)));
         tempSaveObj = new BitburnerSaveObject();
@@ -139,6 +163,15 @@ loadImportedGame = function(saveObj, saveString) {
         } else {
             tempAliases = {};
         }
+        if (tempSaveObj.hasOwnProperty("GlobalAliases")) {
+            try {
+                tempGlobalAliases   = JSON.parse(tempSaveObj.AliasesSave, Reviver);
+            } catch(e) {
+                tempGlobalAliases = {};
+            }
+        } else {
+            tempGlobalAliases = {};
+        }
         if (tempSaveObj.hasOwnProperty("MessagesSave")) {
             try {
                 tempMessages        = JSON.parse(tempSaveObj.MessagesSave, Reviver);
@@ -147,6 +180,15 @@ loadImportedGame = function(saveObj, saveString) {
             }
         } else {
             initMessages();
+        }
+        if (saveObj.hasOwnProperty("StockMarketSave")) {
+            try {
+                tempStockMarket     = JSON.parse(saveObj.StockMarketSave, Reviver);
+            } catch(e) {
+                tempStockMarket     = {};
+            }
+        } else {
+            tempStockMarket = {};
         }
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
@@ -168,7 +210,7 @@ loadImportedGame = function(saveObj, saveString) {
                         }
                     }
                     if (CONSTANTS.Version == "0.23.0") {
-                        Augmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
+                        tempAugmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
                     }
                     createNewUpdateText();
                 }
@@ -194,8 +236,16 @@ loadImportedGame = function(saveObj, saveString) {
         Aliases             = tempAliases;
     }
     
+    if (tempGlobalAliases) {
+        GlobalAliases             = tempGlobalAliases;
+    }
+    
     if (tempMessages) {
         Messages            = tempMessages;
+    }
+    
+    if (tempStockMarket) {
+        StockMarket     = tempStockMarket;
     }
     
     dialogBoxCreate("Imported game");
@@ -266,6 +316,7 @@ BitburnerSaveObject.prototype.exportGame = function() {
     this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
     this.AugmentationsSave          = JSON.stringify(Augmentations);
     this.AliasesSave                = JSON.stringify(Aliases);
+    this.GlobalAliasesSave          = JSON.stringify(GlobalAliasesSave);
     this.MessagesSave               = JSON.stringify(Messages);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
     

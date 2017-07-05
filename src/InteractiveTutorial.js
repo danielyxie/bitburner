@@ -647,5 +647,5 @@ function iTutorialSetText(txt) {
     var textBox = document.getElementById("interactive-tutorial-text");
     if (textBox == null) {throw new Error("Could not find text box"); return;}
     textBox.innerHTML = txt;
-    
+    textBox.parentElement.scrollTop = 0; // this resets scroll position
 }
