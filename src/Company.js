@@ -295,9 +295,9 @@ CompanyPositions = {
         CompanyPositions.LeadDev.setExperienceGains(.5, 0, 0, 0, 0, .1);
         
         CompanyPositions.SoftwareConsultant.setPerformanceParameters(80, 0, 0, 0, 0, 20, 1);
-        CompanyPositions.SoftwareConsultant.setExperienceGains(.175, 0, 0, 0, 0, .03);
+        CompanyPositions.SoftwareConsultant.setExperienceGains(.08, 0, 0, 0, 0, .03);
         CompanyPositions.SeniorSoftwareConsultant.setPerformanceParameters(75, 0, 0, 0, 0, 25, 1.2);
-        CompanyPositions.SeniorSoftwareConsultant.setExperienceGains(.35, 0, 0, 0, 0, .06);
+        CompanyPositions.SeniorSoftwareConsultant.setExperienceGains(.25, 0, 0, 0, 0, .06);
         
         //Security
         CompanyPositions.ITIntern.setPerformanceParameters(90, 0, 0, 0, 0, 10, 0.9);

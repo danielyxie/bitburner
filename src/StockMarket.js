@@ -491,14 +491,21 @@ function displayStockMarketContent() {
                 li.appendChild(sharesTxt);
                 li.appendChild(returnTxt);
                 stockList.appendChild(li);
-                
-                updateStockTicker(stock, true);
-                updateStockPlayerPosition(stock);
             }()); //Immediate invocation
             }//End if
             
         }
         stockMarketContentCreated = true;
+    }
+    
+    if (Player.hasWseAccount) {
+        for (var name in StockMarket) {
+            if (StockMarket.hasOwnProperty(name)) {
+                var stock = StockMarket[name];
+                updateStockTicker(stock, true);
+                updateStockPlayerPosition(stock);
+            }
+        }
     }
 }
 

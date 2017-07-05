@@ -938,13 +938,13 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     var gameCPS = 1000 / Engine._idleSpeed;
     
     //Base exp gains per second
-    var baseStudyComputerScienceExp = 0.3;
-    var baseDataStructuresExp       = 0.6;
-    var baseNetworksExp             = 1.2;
-    var baseAlgorithmsExp           = 2.4;
-    var baseManagementExp           = 1.0;
-    var baseLeadershipExp           = 2.0;
-    var baseGymExp                  = 1.0;
+    var baseStudyComputerScienceExp = 0.25;
+    var baseDataStructuresExp       = 0.5;
+    var baseNetworksExp             = 1;
+    var baseAlgorithmsExp           = 2;
+    var baseManagementExp           = 1;
+    var baseLeadershipExp           = 2;
+    var baseGymExp                  = 1;
     
     //Find cost and exp gain per game cycle
     var cost = 0;

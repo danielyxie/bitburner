@@ -152,12 +152,12 @@ CONSTANTS = {
     ClassGymDexterity: "training your dexterity at a gym",
     ClassGymAgility: "training your agility at a gym",
     
-    ClassDataStructuresBaseCost: 10,
-    ClassNetworksBaseCost: 32,
-    ClassAlgorithmsBaseCost: 120,
-    ClassManagementBaseCost: 60,
-    ClassLeadershipBaseCost: 120,
-    ClassGymBaseCost: 100,
+    ClassDataStructuresBaseCost: 30,
+    ClassNetworksBaseCost: 60,
+    ClassAlgorithmsBaseCost: 240,
+    ClassManagementBaseCost: 120,
+    ClassLeadershipBaseCost: 240,
+    ClassGymBaseCost: 120,
     
     CrimeShoplift: "shoplift",
     CrimeMug: "mug someone",
@@ -910,10 +910,11 @@ CONSTANTS = {
     "v0.24.1<br>" + 
     "-Adjusted cost of upgrading home computer RAM. Should be a little cheaper for the first few upgrades (up to ~64GB), and " +
     "then will start being more expensive than before. High RAM upgrades should now be significantly more expensive than before.<br>" + 
-    "-Very slightly lowered the starting money available on most mid-game and end-game servers (servers with required hacking level " + 
+    "-Slightly lowered the starting money available on most mid-game and end-game servers (servers with required hacking level " + 
     "greater than 200) by about 10-15%<br>" + 
     "-Rebalanced company/company position reputation gains and requirements<br>" + 
     "-Studying at a university now gives slightly more EXP and early jobs give slightly less EXP<br>" + 
+    "-Studying at a university is now considerably more expensive<br>" + 
     "-Significantly increased cost multiplier for purchasing additional Hacknet Nodes<br>" + 
     "-Updated Faction descriptions<br>" + 
     "-'top' Terminal command implemented courtesy of Github user LTCNugget<br><br>" + 
