@@ -714,7 +714,7 @@ CONSTANTS = {
     "-Updated Faction descriptions<br>" + 
     "-Changed the way alias works. Normal aliases now only work at the start of a Terminal command (they will only " + 
     "replace the first word in the Terminal command). You can also create global aliases that work on any part of the " + 
-    'command, like before. Declare global aliases by entering the optional -g flag: alias -g name="value" - Courtesy of Github user MrNuggelz' +
+    'command, like before. Declare global aliases by entering the optional -g flag: alias -g name="value" - Courtesy of Github user MrNuggelz<br>' +
     "-'top' Terminal command implemented courtesy of Github user LTCNugget. Currently, the formatting gets screwed up " + 
     "if your script names are really long.<br><br>" + 
     "v0.24.0<br>" + 
@@ -940,7 +940,7 @@ CONSTANTS = {
     "-Updated Faction descriptions<br>" + 
     "-Changed the way alias works. Normal aliases now only work at the start of a Terminal command (they will only " + 
     "replace the first word in the Terminal command). You can also create global aliases that work on any part of the " + 
-    'command, like before. Declare global aliases by entering the optional -g flag: alias -g name="value" - Courtesy of Github user MrNuggelz' +
+    'command, like before. Declare global aliases by entering the optional -g flag: alias -g name="value" - Courtesy of Github user MrNuggelz<br>' +
     "-'top' Terminal command implemented courtesy of Github user LTCNugget. Currently, the formatting gets screwed up " + 
     "if your script names are really long.<br><br>" + 
     "v0.24.0<br>" + 
