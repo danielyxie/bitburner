@@ -703,7 +703,10 @@ processSingleServerGrowth = function(server, numCycles) {
     }
     
     server.moneyAvailable *= serverGrowth;
-    if (server.moneyMax && server.moneyAvailable >= server.moneyMax) {
+    if (server.moneyMax && isNaN(server.moneyAvailable)) {
+        server.moneyAvailable = server.moneyMax;
+    }
+    if (server.moneyMax && server.moneyAvailable > server.moneyMax) {
         server.moneyAvailable = server.moneyMax;
         return 1;
     }
