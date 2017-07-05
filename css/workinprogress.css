@@ -1,3 +1,11 @@
+#generic-fullscreen-container {
+    color: var(--my-font-color);
+	padding-top: 10px;
+	padding-left: 10px;
+	height: 100%;
+    width: 99%;
+}
+
 #work-in-progress-container {
     color: var(--my-font-color);
     position: fixed;

@@ -58,6 +58,7 @@ var Engine = {
         stockMarketContent:             null,
         locationContent:                null,
         workInProgressContent:          null,
+        redPillContent:                 null,
         
         //Character info
         characterInfo:                  null,
@@ -81,6 +82,7 @@ var Engine = {
         Tutorial:           "Tutorial",
         Location:           "Location",
         workInProgress:     "WorkInProgress",
+        RedPill:            "RedPill",
         Infiltration:       "Infiltration",
         StockMarket:        "StockMarket",
     },
@@ -187,6 +189,14 @@ var Engine = {
         Engine.currentPage = Engine.Page.WorkInProgress;
     },
     
+    loadRedPillContent: function() {
+        Engine.hideAllContent();
+        var mainMenu = document.getElementById("mainmenu-container");
+        mainMenu.style.visibility = "hidden";
+        Engine.Display.redPillContent.style.visibility = "visible";
+        Engine.currentPage = Engine.Page.RedPill;
+    },
+    
     loadInfiltrationContent: function() {
         Engine.hideAllContent();
         Engine.Display.infiltrationContent.style.visibility = "visible";
@@ -216,6 +226,7 @@ var Engine = {
         Engine.Display.tutorialContent.style.visibility = "hidden";
         Engine.Display.locationContent.style.visibility = "hidden";
         Engine.Display.workInProgressContent.style.visibility = "hidden";
+        Engine.Display.redPillContent.style.visibility = "hidden";
         Engine.Display.infiltrationContent.style.visibility = "hidden";
         Engine.Display.stockMarketContent.style.visibility = "hidden";
         
@@ -832,6 +843,10 @@ var Engine = {
         //Work In Progress
         Engine.Display.workInProgressContent = document.getElementById("work-in-progress-container");
         Engine.Display.workInProgressContent.style.visibility = "hidden";
+        
+        //Red Pill / Hack World Daemon
+        Engine.Display.redPillContent = document.getElementById("red-pill-container");
+        Engine.Display.redPillContent.style.visibility = "hidden";
 		
 		//Init Location buttons
 		initLocationButtons();

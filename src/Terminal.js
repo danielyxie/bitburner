@@ -243,7 +243,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "free", 
                 "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
                 "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze", 
-                "scp", "sudov", "tail", "theme", "top"].concat(Object.keys(Aliases));
+                "scp", "sudov", "tail", "theme", "top"].concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
     }
     
     if (input.startsWith ("buy ")) {
@@ -581,15 +581,21 @@ var Terminal = {
             case "alias":
                 if (commandArray.length == 1) {
                     printAliases();
-                } else if (commandArray.length == 2) {
-                    if (parseAliasDeclaration(commandArray[1])) {
-                        
-                    } else {
-                        post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); return;
-                    }
-                } else {
-                    post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); return;
+                    return;
                 }
+                if (commandArray.length == 2) {
+                    if (commandArray[1].startsWith("-g ")) {
+                        var alias = commandArray[1].substring(3);
+                        if (parseAliasDeclaration(alias, true)) {
+                            return;
+                        }
+                    } else {
+                        if (parseAliasDeclaration(commandArray[1])) {
+                            return;
+                        }
+                    }
+                }
+                post('Incorrect usage of alias command. Usage: alias [-g] [aliasname="value"]'); 
                 break;
 			case "analyze":
 				if (commandArray.length != 1) {
@@ -1036,8 +1042,32 @@ var Terminal = {
                 }
                 break;
 			case "top":
-				//TODO List each's script RAM usage
-                post("Not yet implemented");
+				if(commandArray.length != 1) {
+				  post("Incorrect usage of top command. Usage: top"); return;
+				}
+
+				post("Script                          Threads         RAM Usage");
+
+				var currRunningScripts = Player.getCurrentServer().runningScripts;
+				//Iterate through scripts on current server
+				for(var i = 0; i < currRunningScripts.length; i++) {
+					var script = currRunningScripts[i];
+
+					//Calculate name padding
+					var numSpacesScript = 32 - script.filename.length; //26 -> width of name column
+                    if (numSpacesScript < 0) {numSpacesScript = 0;}
+					var spacesScript = Array(numSpacesScript+1).join(" ");
+
+					//Calculate thread padding
+					var numSpacesThread = 16 - (script.threads + "").length; //16 -> width of thread column
+					var spacesThread = Array(numSpacesThread+1).join(" ");
+
+					//Calculate and transform RAM usage
+					ramUsage = formatNumber(script.scriptRef.ramUsage * script.threads, 2).toString() + "GB";
+
+					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
+					post(entry.join(""));
+				}
 				break;
             case "unalias":
                 if (commandArray.length != 2) {
@@ -1300,6 +1330,19 @@ var Terminal = {
                 post("Netscript hack() execution time: " + formatNumber(scriptCalculateHackingTime(serv), 1) + "s");
                 post("Netscript grow() execution time: " + formatNumber(scriptCalculateGrowTime(serv)/1000, 1) + "s");
                 post("Netscript weaken() execution time: " + formatNumber(scriptCalculateWeakenTime(serv)/1000, 1) + "s");
+                break;
+            case Programs.AutoLink:
+                post("This executable cannot be run.");
+                post("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
+                post("When using scan-analyze, click on a server's hostname to connect to it.");
+                break;
+            case Programs.DeepscanV1:
+                post("This executable cannot be run.");
+                post("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
+                break;
+            case Programs.DeepscanV2:
+                post("This executable cannot be run.");
+                post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
                 break;
 			default:
 				post("Invalid executable. Cannot be run");

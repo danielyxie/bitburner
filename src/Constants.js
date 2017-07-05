@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.24.0",
+    Version:                "0.24.1",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -10,7 +10,7 @@ CONSTANTS = {
     CorpFactionRepRequirement: 250000,
     
     /* Base costs */
-    BaseCostFor1GBOfRamHome: 45000,
+    BaseCostFor1GBOfRamHome: 32000,
     BaseCostFor1GBOfRamServer: 55000,     //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
     
@@ -19,7 +19,7 @@ CONSTANTS = {
     
     /* Hacknet Node constants */
     HacknetNodeMoneyGainPerLevel: 1.55,
-    HacknetNodePurchaseNextMult: 1.42,   //Multiplier when purchasing an additional hacknet node
+    HacknetNodePurchaseNextMult: 1.75,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.045,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.28,     //Multiplier for cost when upgrading RAM
     HacknetNodeUpgradeCoreMult: 1.49,    //Multiplier for cost when buying another core
@@ -152,12 +152,12 @@ CONSTANTS = {
     ClassGymDexterity: "training your dexterity at a gym",
     ClassGymAgility: "training your agility at a gym",
     
-    ClassDataStructuresBaseCost: 6,
-    ClassNetworksBaseCost: 30,
-    ClassAlgorithmsBaseCost: 120,
-    ClassManagementBaseCost: 60,
-    ClassLeadershipBaseCost: 120,
-    ClassGymBaseCost: 100,
+    ClassDataStructuresBaseCost: 30,
+    ClassNetworksBaseCost: 60,
+    ClassAlgorithmsBaseCost: 240,
+    ClassManagementBaseCost: 120,
+    ClassLeadershipBaseCost: 240,
+    ClassGymBaseCost: 120,
     
     CrimeShoplift: "shoplift",
     CrimeMug: "mug someone",
@@ -170,7 +170,7 @@ CONSTANTS = {
     CrimeHeist: "pull off the ultimate heist",
     
     //Text that is displayed when the 'help' command is ran in Terminal
-    HelpText:   'alias [name="value"]           Create aliases for Terminal commands, or list existing aliases<br>' + 
+    HelpText:   'alias [-g] [name="value"]      Create aliases for Terminal commands, or list existing aliases<br>' + 
                 "analyze                        Get statistics and information about current machine <br>" + 
                 "cat [message]                  Display a .msg file<br>" + 
                 "check [script] [args...]       Print logs to Terminal for the script with the specified name and arguments<br>" + 
@@ -668,13 +668,17 @@ CONSTANTS = {
                           "upgrade your abilities. The Augmentations that are available to unlock vary from faction to faction.",
     TutorialAugmentationsText: "Advances in science and medicine have lead to powerful new technologies that allow people to augment themselves " + 
                                "beyond normal human capabilities. There are many different types of Augmentations, ranging from cybernetic to " + 
-                               "genetic to biological. Acquiring these Augmentations enhances the user's physical and mental faculties. <br>" + 
+                               "genetic to biological. Acquiring these Augmentations enhances the user's physical and mental faculties. <br><br>" + 
                                "Because of how powerful these Augmentations are, the technology behind them is kept private and secret by the " + 
                                "corporations and organizations that create them. Therefore, the only way for the player to obtain Augmentations is " + 
                                "through Factions. After joining a Faction and earning enough reputation in it, you will be able to purchase " + 
                                "its Augmentations. Different Factions offer different Augmentations. Augmentations must be purchased in order to be installed, " + 
                                "and they are fairly expensive. <br><br>" +
-                               "Unfortunately, installing an Augmentation has side effects. You will lose most of the progress you've made, including your " + 
+                               "When you purchase an Augmentation, the price of purchasing another Augmentation increases by 90%. This multiplier stacks for " + 
+                               "each Augmentation you purchase. You will not gain the benefits of your purchased Augmentations until you install them. You can " + 
+                               "choose to install Augmentations through the 'Augmentations' menu tab. Once you install your purchased Augmentations, " + 
+                               "their costs are reset back to the original price.<br><br>" + 
+                               "Unfortunately, installing Augmentations has side effects. You will lose most of the progress you've made, including your " + 
                                "skills, stats, and money. You will have to start over, but you will have all of the Augmentations you have installed to " +
                                "help you progress. <br><br> " + 
                                "To summarize, here is a list of everything you will LOSE when you install an Augmentation: <br><br>" + 
@@ -686,13 +690,33 @@ CONSTANTS = {
                                "Company/faction reputation<br>" + 
                                "Jobs and Faction memberships<br>" + 
                                "Programs<br>" +
+                               "Stocks<br>" + 
                                "TOR router<br><br>" + 
                                "Here is everything you will KEEP when you install an Augmentation: <br><br>" + 
                                "Every Augmentation you have installed<br>"  +
                                "Scripts on your home computer<br>" + 
-                               "RAM Upgrades on your home computer",
+                               "RAM Upgrades on your home computer<br>" + 
+                               "World Stock Exchange account and TIX API Access<br>",
                                
     Changelog:
+    "v0.24.1<br>" + 
+    "-Adjusted cost of upgrading home computer RAM. Should be a little cheaper for the first few upgrades (up to ~64GB), and " +
+    "then will start being more expensive than before. High RAM upgrades should now be significantly more expensive than before.<br>" + 
+    "-Slightly lowered the starting money available on most mid-game and end-game servers (servers with required hacking level " + 
+    "greater than 200) by about 10-15%<br>" + 
+    "-Rebalanced company/company position reputation gains and requirements<br>" + 
+    "-Studying at a university now gives slightly more EXP and early jobs give slightly less EXP<br>" + 
+    "-Studying at a university is now considerably more expensive<br>" + 
+    "-Rebalanced stock market<br>" +
+    "-Significantly increased cost multiplier for purchasing additional Hacknet Nodes<br>" + 
+    "-The rate at which facility security level increases during infiltration for each clearance level " +
+    "was lowered slightly for all companies<br>" + 
+    "-Updated Faction descriptions<br>" + 
+    "-Changed the way alias works. Normal aliases now only work at the start of a Terminal command (they will only " + 
+    "replace the first word in the Terminal command). You can also create global aliases that work on any part of the " + 
+    'command, like before. Declare global aliases by entering the optional -g flag: alias -g name="value" - Courtesy of Github user MrNuggelz<br>' +
+    "-'top' Terminal command implemented courtesy of Github user LTCNugget. Currently, the formatting gets screwed up " + 
+    "if your script names are really long.<br><br>" + 
     "v0.24.0<br>" + 
     "-Players now have HP, which is displayed in the top right. To regain HP, visit the hospital. Currently " + 
     "the only way to lose HP is through infiltration<br>" + 
@@ -901,6 +925,24 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
+    "v0.24.1<br>" + 
+    "-Adjusted cost of upgrading home computer RAM. Should be a little cheaper for the first few upgrades (up to ~64GB), and " +
+    "then will start being more expensive than before. High RAM upgrades should now be significantly more expensive than before.<br>" + 
+    "-Slightly lowered the starting money available on most mid-game and end-game servers (servers with required hacking level " + 
+    "greater than 200) by about 10-15%<br>" + 
+    "-Rebalanced company/company position reputation gains and requirements<br>" + 
+    "-Studying at a university now gives slightly more EXP and early jobs give slightly less EXP<br>" + 
+    "-Studying at a university is now considerably more expensive<br>" + 
+    "-Rebalanced stock market<br>" +
+    "-Significantly increased cost multiplier for purchasing additional Hacknet Nodes<br>" + 
+    "-The rate at which facility security level increases during infiltration for each clearance level " +
+    "was lowered slightly for all companies<br>" + 
+    "-Updated Faction descriptions<br>" + 
+    "-Changed the way alias works. Normal aliases now only work at the start of a Terminal command (they will only " + 
+    "replace the first word in the Terminal command). You can also create global aliases that work on any part of the " + 
+    'command, like before. Declare global aliases by entering the optional -g flag: alias -g name="value" - Courtesy of Github user MrNuggelz<br>' +
+    "-'top' Terminal command implemented courtesy of Github user LTCNugget. Currently, the formatting gets screwed up " + 
+    "if your script names are really long.<br><br>" + 
     "v0.24.0<br>" + 
     "-Players now have HP, which is displayed in the top right. To regain HP, visit the hospital. Currently " + 
     "the only way to lose HP is through infiltration<br>" + 
