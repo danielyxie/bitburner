@@ -1740,6 +1740,8 @@ applyAugmentation = function(aug, reapply=false) {
             Player.hacking_chance_mult  *= 1.3;
             Player.hacking_money_mult   *= 2;
             break;
+        case AugmentationNames.TheRedPill:
+            break;
         case AugmentationNames.SPTN97:
             Player.strength_mult        *= 1.75;
             Player.defense_mult         *= 1.75;
