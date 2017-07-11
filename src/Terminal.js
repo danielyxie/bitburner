@@ -583,16 +583,19 @@ var Terminal = {
                     printAliases();
                     return;
                 }
-                if (commandArray.length == 2 ) {
-                    var args = commandArray[1].split(" ");
-                    if (args.length == 1 && parseAliasDeclaration(args[0])){
-                        return;
-                    }
-                    if (args.length == 2 && args[0] == "-g" && parseAliasDeclaration(args[1],true)){
-                        return;
+                if (commandArray.length == 2) {
+                    if (commandArray[1].startsWith("-g ")) {
+                        var alias = commandArray[1].substring(3);
+                        if (parseAliasDeclaration(alias, true)) {
+                            return;
+                        }
+                    } else {
+                        if (parseAliasDeclaration(commandArray[1])) {
+                            return;
+                        }
                     }
                 }
-                post('Incorrect usage of alias command. Usage: alias [aliasname="value"]'); 
+                post('Incorrect usage of alias command. Usage: alias [-g] [aliasname="value"]'); 
                 break;
 			case "analyze":
 				if (commandArray.length != 1) {
@@ -1043,7 +1046,7 @@ var Terminal = {
 				  post("Incorrect usage of top command. Usage: top"); return;
 				}
 
-				post("Script                    Threads         RAM Usage");
+				post("Script                          Threads         RAM Usage");
 
 				var currRunningScripts = Player.getCurrentServer().runningScripts;
 				//Iterate through scripts on current server
@@ -1051,7 +1054,8 @@ var Terminal = {
 					var script = currRunningScripts[i];
 
 					//Calculate name padding
-					var numSpacesScript = 26 - script.filename.length; //26 -> width of name column
+					var numSpacesScript = 32 - script.filename.length; //26 -> width of name column
+                    if (numSpacesScript < 0) {numSpacesScript = 0;}
 					var spacesScript = Array(numSpacesScript+1).join(" ");
 
 					//Calculate thread padding
@@ -1059,7 +1063,7 @@ var Terminal = {
 					var spacesThread = Array(numSpacesThread+1).join(" ");
 
 					//Calculate and transform RAM usage
-					ramUsage = (script.scriptRef.ramUsage * script.threads) + "GB";
+					ramUsage = formatNumber(script.scriptRef.ramUsage * script.threads, 2).toString() + "GB";
 
 					var entry = [script.filename, spacesScript, script.threads, spacesThread, ramUsage];
 					post(entry.join(""));

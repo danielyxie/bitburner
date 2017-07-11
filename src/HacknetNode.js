@@ -216,6 +216,9 @@ getMaxNumberLevelUpgrades = function(nodeObj) {
     var min = 1;
     var max = CONSTANTS.HacknetNodeMaxLevel-1;
     var levelsToMax = CONSTANTS.HacknetNodeMaxLevel - nodeObj.level;
+    if (nodeObj.calculateLevelUpgradeCost(levelsToMax) < Player.money) {
+        return levelsToMax;
+    }
     
     while (min <= max) {
         var curr = (min + max) / 2 | 0;

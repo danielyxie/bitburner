@@ -316,7 +316,7 @@ BitburnerSaveObject.prototype.exportGame = function() {
     this.SpecialServerIpsSave       = JSON.stringify(SpecialServerIps);
     this.AugmentationsSave          = JSON.stringify(Augmentations);
     this.AliasesSave                = JSON.stringify(Aliases);
-    this.GlobalAliasesSave          = JSON.stringify(GlobalAliasesSave);
+    this.GlobalAliasesSave          = JSON.stringify(GlobalAliases);
     this.MessagesSave               = JSON.stringify(Messages);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
     
