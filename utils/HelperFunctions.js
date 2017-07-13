@@ -51,3 +51,9 @@ function compareArrays(a1, a2) {
 function printArray(a) {
     return "[" + a.join(", ") + "]";
 }
+
+//Returns bool indicating whether or not its a power of 2
+function powerOfTwo(n) {
+    if (isNaN(n)) {return false;}
+    return n && (n & (n-1)) === 0;
+}

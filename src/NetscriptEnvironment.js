@@ -1,8 +1,12 @@
 /* Environment
  * 	NetScript program environment 
  */
-function Environment(parent) {
-    this.vars = Object.create(parent ? parent.vars : null);
+function Environment(workerScript,parent) {
+    if (parent){
+        this.vars = parent.vars;
+    } else {
+        this.vars = NetscriptFunctions(workerScript);
+    }
     this.parent = parent;
 	this.stopFlag = false;
 }
@@ -44,7 +48,20 @@ Environment.prototype = {
         }
         return (scope || this).vars[name] = value;
     },
-	
+    
+    setArrayElement: function(name, idx, value) {
+        var scope = this.lookup(name);
+        if (!scope && this.parent) {
+            console.log("Here");
+            throw new Error("Undefined variable " + name);
+        }
+        var arr = (scope || this).vars[name];
+        if (!(arr.constructor === Array || arr instanceof Array)) {
+            throw new Error("Variable is not an array: " + name);
+        }
+        return (scope || this).vars[name][idx] = value;
+    },
+    
 	//Creates (or overwrites) a variable in the current scope
     def: function(name, value) {
         return this.vars[name] = value;
