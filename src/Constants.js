@@ -332,7 +332,7 @@ CONSTANTS = {
     TutorialNetscriptText: "Netscript is a programming language implemented for this game. The language has " + 
                            "your basic programming constructs and several built-in commands that are used to hack. <br><br>" + 
                            "<u><h1>Official Wiki and Documentation</h1></u><br>" + 
-                           "<a href='http://bitburner.wikia.com/wiki/Netscript' target='_blank'>Check out Bitburner's wiki for the official Netscript documentation</a>" + 
+                           "<a href='http://bitburner-game.wikia.com/wiki/Netscript' target='_blank'>Check out Bitburner's wiki for the official Netscript documentation</a>" + 
                            ". The wiki documentation will contain more details and " + 
                            "code examples than this documentation page. Also, it can be opened up in another tab/window for convenience!<br><br>" +
                            "<u><h1> Variables and data types </h1></u><br>" + 
