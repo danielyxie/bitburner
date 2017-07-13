@@ -15,20 +15,17 @@
     position: fixed;
 }
 
-
 /* Script Editor */
 /* This temp element is used for auto adjusting filename field */
 .tmp-element {
         visibility: hidden;
         white-space: pre;
 }
-	  
-      
+	       
 #script-editor-container {
 	position: fixed;
 	padding-top: 10px;
 }
-
 
 #script-editor-buttons-wrapper {
     width: 100%;
@@ -37,8 +34,13 @@
 }
 
 #script-editor-save-and-close-button,
-#script-editor-netscript-doc-button {
+#script-editor-netscript-doc-button,
+#script-editor-status-text {
     display: inline-block;
+}
+
+#script-editor-status-text {
+    margin: 10px;
 }
 
 #script-editor-save-and-close-button {

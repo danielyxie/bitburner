@@ -94,6 +94,10 @@ tr:focus {
 }
 
 /* Make html links ("a" elements) nice looking buttons with this class */
+a:link, a:visited {
+    color:white;
+}
+
 .a-link-button {
     text-decoration: none;
     background-color: #555;

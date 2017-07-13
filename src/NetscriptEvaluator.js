@@ -66,7 +66,8 @@ function evaluate(exp, workerScript) {
                         if (exp.callee.type == "MemberExpression"){
                             evaluate(exp.callee.object, workerScript).then(function(object) {
                                 try {
-                                    resolve(func.apply(object,args));
+                                    var res = func.apply(object,args);
+                                    resolve(res);
                                 } catch (e) {
                                     reject(makeRuntimeRejectMsg(workerScript, e));
                                 }
@@ -86,7 +87,11 @@ function evaluate(exp, workerScript) {
                                     resolve(out);
                                 }
                             } catch (e) {
-                                reject(makeRuntimeRejectMsg(workerScript, e));
+                                if (isScriptErrorMessage(e)) {
+                                    reject(e);
+                                } else {
+                                    reject(makeRuntimeRejectMsg(workerScript, e));
+                                }
                             }
                         }
                     }).catch(function(e) {
@@ -205,6 +210,7 @@ function evaluate(exp, workerScript) {
     }); // End Promise
 }
 
+/*
 function evalFunction(exp, workerScript){
     return new Promise(function(resolve, reject) {
         if (exp.callee.type!="Identifier"){
@@ -254,6 +260,7 @@ function evalFunction(exp, workerScript){
         }
     });
 }
+*/
 
 function evalBinary(exp, workerScript){
     return new Promise(function(resolve, reject) {
@@ -342,7 +349,7 @@ function evalAssignment(exp, workerScript) {
     return new Promise(function(resolve, reject) {
         if (env.stopFlag) {return reject(workerScript);}
 
-        if (exp.left.type != "Identifier") {
+        if (exp.left.type != "Identifier" && exp.left.type != "MemberExpression") {
             return reject(makeRuntimeRejectMsg(workerScript, "Cannot assign to " + JSON.stringify(exp.left)));
         }
 
@@ -352,31 +359,59 @@ function evalAssignment(exp, workerScript) {
    
         var expRightPromise = evaluate(exp.right, workerScript);
         expRightPromise.then(function(expRight) {
-            try {
-                switch (exp.operator) {
-                    case "=":
-                        env.set(exp.left.name,expRight);
-                        break;
-                    case "+=":
-                        env.set(exp.left.name,env.get(exp.left.name) + expRight);
-                        break;
-                    case "-=":
-                        env.set(exp.left.name,env.get(exp.left.name) - expRight);
-                        break;
-                    case "*=":
-                        env.set(exp.left.name,env.get(exp.left.name) * expRight);
-                        break;
-                    case "/=":
-                        env.set(exp.left.name,env.get(exp.left.name) / expRight);
-                        break;
-                    case "%=":
-                        env.set(exp.left.name,env.get(exp.left.name) % expRight);
-                        break;
-                    default:
-                        reject(makeRuntimeRejectMsg(workerScript, "Bitwise assignment is not implemented"));
+            if (exp.left.type == "MemberExpression") {
+                //Assign to array element
+                //Array object designed by exp.left.object.name
+                //Index designated by exp.left.property
+                var name = exp.left.object.name;
+                if (!(name in env.vars)){
+                    reject(makeRuntimeRejectMsg(workerScript, "variable " + name + " not definied"));
                 }
-            } catch (e) {
-                return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
+                var arr = env.get(name);
+                if (arr.constructor === Array || arr instanceof Array) {
+                    var iPromise = evaluate(exp.left.property, workerScript);
+                    iPromise.then(function(idx) {
+                        if (isNaN(idx)) {
+                            return reject(makeRuntimeRejectMsg(workerScript, "Invalid access to array. Index is not a number: " + idx));
+                        } else if (idx >= arr.length || idx < 0) {
+                            return reject(makeRuntimeRejectMsg(workerScript, "Out of bounds: Invalid index in [] operator"));
+                        } else {
+                            env.setArrayElement(name, idx, expRight);
+                        }
+                    }).catch(function(e) {
+                        return reject(e);
+                    });
+                } else {
+                    return reject(makeRuntimeRejectMsg(workerScript, "Trying to access a non-array variable using the [] operator"));
+                }
+            } else {
+                //Other assignments
+                try {
+                    switch (exp.operator) {
+                        case "=":
+                            env.set(exp.left.name,expRight);
+                            break;
+                        case "+=":
+                            env.set(exp.left.name,env.get(exp.left.name) + expRight);
+                            break;
+                        case "-=":
+                            env.set(exp.left.name,env.get(exp.left.name) - expRight);
+                            break;
+                        case "*=":
+                            env.set(exp.left.name,env.get(exp.left.name) * expRight);
+                            break;
+                        case "/=":
+                            env.set(exp.left.name,env.get(exp.left.name) / expRight);
+                            break;
+                        case "%=":
+                            env.set(exp.left.name,env.get(exp.left.name) % expRight);
+                            break;
+                        default:
+                            reject(makeRuntimeRejectMsg(workerScript, "Bitwise assignment is not implemented"));
+                    }
+                } catch (e) {
+                    return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
+                }
             }
             resolve(false); //Return false so this doesnt cause conditionals to evaluate
         }, function(e) {
@@ -499,7 +534,9 @@ function evaluateWhile(exp, workerScript) {
 	});
 }
 
+/*
 function evaluateHacknetNode(exp, workerScript) {
+    console.log("here");
     var env = workerScript.env;
     return new Promise(function(resolve, reject) {
         setTimeout(function() {
@@ -602,6 +639,7 @@ function evaluateHacknetNode(exp, workerScript) {
         reject(e);
     });
 }
+*/
 
 function evaluateProg(exp, workerScript, index) {
 	var env = workerScript.env;
@@ -680,43 +718,41 @@ function apply_op(op, a, b) {
 
 //Run a script from inside a script using run() command
 function runScriptFromScript(server, scriptname, args, workerScript, threads=1) {
-    setTimeout(function() {
-        //Check if the script is already running
-        var runningScriptObj = findRunningScript(scriptname, args, server);
-        if (runningScriptObj != null) {
-            workerScript.scriptRef.log(scriptname + " is already running on " + server.hostname);
-            return false;
-        }
+    //Check if the script is already running
+    var runningScriptObj = findRunningScript(scriptname, args, server);
+    if (runningScriptObj != null) {
+        workerScript.scriptRef.log(scriptname + " is already running on " + server.hostname);
+        return Promise.resolve(false);
+    }
 
-        //Check if the script exists and if it does run it
-        for (var i = 0; i < server.scripts.length; ++i) {
-            if (server.scripts[i].filename == scriptname) {
-                //Check for admin rights and that there is enough RAM availble to run
-                var script = server.scripts[i];
-                var ramUsage = script.ramUsage;
-                ramUsage = ramUsage * threads * Math.pow(CONSTANTS.MultithreadingRAMCost, threads-1);
-                var ramAvailable = server.maxRam - server.ramUsed;
+    //Check if the script exists and if it does run it
+    for (var i = 0; i < server.scripts.length; ++i) {
+        if (server.scripts[i].filename == scriptname) {
+            //Check for admin rights and that there is enough RAM availble to run
+            var script = server.scripts[i];
+            var ramUsage = script.ramUsage;
+            ramUsage = ramUsage * threads * Math.pow(CONSTANTS.MultithreadingRAMCost, threads-1);
+            var ramAvailable = server.maxRam - server.ramUsed;
 
-                if (server.hasAdminRights == false) {
-                    workerScript.scriptRef.log("Cannot run script " + scriptname + " on " + server.hostname + " because you do not have root access!");
-                    return false;
-                } else if (ramUsage > ramAvailable){
-                    workerScript.scriptRef.log("Cannot run script " + scriptname + "(t=" + threads + ") on " + server.hostname + " because there is not enough available RAM!");
-                    return false;
-                } else {
-                    //Able to run script
-                    workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads and args: " + printArray(args) + ". May take a few seconds to start up...");
-                    var runningScriptObj = new RunningScript(script, args);
-                    runningScriptObj.threads = threads;
-                    server.runningScripts.push(runningScriptObj);	//Push onto runningScripts
-                    addWorkerScript(runningScriptObj, server);
-                    return true;
-                }
+            if (server.hasAdminRights == false) {
+                workerScript.scriptRef.log("Cannot run script " + scriptname + " on " + server.hostname + " because you do not have root access!");
+                return Promise.resolve(false);
+            } else if (ramUsage > ramAvailable){
+                workerScript.scriptRef.log("Cannot run script " + scriptname + "(t=" + threads + ") on " + server.hostname + " because there is not enough available RAM!");
+                return Promise.resolve(false);
+            } else {
+                //Able to run script
+                workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads and args: " + printArray(args) + ". May take a few seconds to start up...");
+                var runningScriptObj = new RunningScript(script, args);
+                runningScriptObj.threads = threads;
+                server.runningScripts.push(runningScriptObj);	//Push onto runningScripts
+                addWorkerScript(runningScriptObj, server);
+                return Promise.resolve(true);
             }
         }
-        workerScript.scriptRef.log("Could not find script " + scriptname + " on " + server.hostname);
-        resolve(false);
-    }, CONSTANTS.CodeInstructionRunTime);
+    }
+    workerScript.scriptRef.log("Could not find script " + scriptname + " on " + server.hostname);
+    return Promise.resolve(false);
 }
 
 function isScriptErrorMessage(msg) {

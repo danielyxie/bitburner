@@ -25,7 +25,8 @@ function NetscriptFunctions(workerScript) {
             if (isNaN(threads) || threads < 1) {threads = 1;}
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
+                workerScript.scriptRef.log("hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
+                throw makeRuntimeRejectMsg(workerScript, "hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
             }
             
             //Calculate the hacking time 
@@ -33,11 +34,13 @@ function NetscriptFunctions(workerScript) {
             
             //No root access or skill level too low
             if (server.hasAdminRights == false) {
-                throw workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user does not have root access");
+                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user does not have root access");
+                throw makeRuntimeRejectMsg(workerScript, "Cannot hack this server (" + server.hostname + ") because user does not have root access");
             }
             
             if (server.requiredHackingSkill > Player.hacking_skill) {
-                throw workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
+                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
+                throw makeRuntimeRejectMsg(workerScript, "Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
             }
             
             workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
@@ -84,8 +87,8 @@ function NetscriptFunctions(workerScript) {
             if (time === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "sleep() call has incorrect number of arguments. Takes 1 argument");
             }
-            workerScript.scriptRef.log("Sleeping for " + sleepTime + " milliseconds");
-            return netscriptDelay(sleepTime).then(function() {
+            workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
+            return netscriptDelay(time).then(function() {
                 return Promise.resolve(true);
             });
         },
@@ -97,12 +100,14 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("Cannot grow(). Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot grow(). Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot grow(). Invalid IP or hostname passed in: " + ip);
             }
                                         
             //No root access or skill level too low
             if (server.hasAdminRights == false) {
-                throw workerScript.scriptRef.log("Cannot grow this server (" + server.hostname + ") because user does not have root access");
+                workerScript.scriptRef.log("Cannot grow this server (" + server.hostname + ") because user does not have root access");
+                throw makeRuntimeRejectMsg(workerScript, "Cannot grow this server (" + server.hostname + ") because user does not have root access");
             }
             
             var growTime = scriptCalculateGrowTime(server);
@@ -133,12 +138,14 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("Cannot weaken(). Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot weaken(). Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot weaken(). Invalid IP or hostname passed in: " + ip);
             }
                                         
             //No root access or skill level too low
             if (server.hasAdminRights == false) {
-                throw workerScript.scriptRef.log("Cannot weaken this server (" + server.hostname + ") because user does not have root access");
+                workerScript.scriptRef.log("Cannot weaken this server (" + server.hostname + ") because user does not have root access");
+                throw makeRuntimeRejectMsg(workerScript, "Cannot weaken this server (" + server.hostname + ") because user does not have root access");
             }
             
             var weakenTime = scriptCalculateWeakenTime(server);
@@ -169,7 +176,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
             }
             if (server.openPortCount < server.numOpenPortsRequired) {
                 throw makeRuntimeRejectMsg(workerScript, "Not enough ports opened to use NUKE.exe virus");
@@ -188,7 +196,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
             }
             if (!server.sshPortOpen) {
                 workerScript.scriptRef.log("Executed BruteSSH.exe virus on " + server.hostname + " to open SSH port (22)");
@@ -205,7 +214,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
             }
             if (!server.ftpPortOpen) {
                 workerScript.scriptRef.log("Executed FTPCrack.exe virus on " + server.hostname + " to open FTP port (21)");
@@ -222,7 +232,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
             }
             if (!server.smtpPortOpen) {
                 workerScript.scriptRef.log("Executed relaySMTP.exe virus on " + server.hostname + " to open SMTP port (25)");
@@ -239,7 +250,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
             }
             if (!server.httpPortOpen) {
                 workerScript.scriptRef.log("Executed HTTPWorm.exe virus on " + server.hostname + " to open HTTP port (80)");
@@ -256,7 +268,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
             }
             if (!server.sqlPortOpen) {
                 workerScript.scriptRef.log("Executed SQLInject.exe virus on " + server.hostname + " to open SQL port (1433)");
@@ -267,12 +280,16 @@ function NetscriptFunctions(workerScript) {
             }
             return true;
         },
-        run : function(scriptname,threads = 1,argsForNewScript=[]){
+        run : function(scriptname,threads = 1){
             if (scriptname === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "run() call has incorrect number of arguments. Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
             }
             if (isNaN(threads) || threads < 1) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
+            }
+            var argsForNewScript = [];
+            for (var i = 2; i < arguments.length; ++i) {
+                argsForNewScript.push(arguments[i]);
             }
             var scriptServer = getServer(workerScript.serverIp);
             if (scriptServer == null) {
@@ -281,27 +298,35 @@ function NetscriptFunctions(workerScript) {
             
             return runScriptFromScript(scriptServer, scriptname, argsForNewScript, workerScript, threads);
         },
-        exec : function(scriptname,ip,threads = 1,argsForNewScript=[]){
+        exec : function(scriptname,ip,threads = 1){
             if (scriptname === undefined || ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "exec() call has incorrect number of arguments. Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
             }
             if (isNaN(threads) || threads < 1) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into exec(). Must be numeric and greater than 0");
             }
+            var argsForNewScript = [];
+            for (var i = 3; i < arguments.length; ++i) {
+                argsForNewScript.push(arguments[i]);
+            }
             var server = getServer(ip);
             if (server == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into exec() command: " + args[1]);
             }
-            
             return runScriptFromScript(server, scriptname, argsForNewScript, workerScript, threads);
         },
-        kill : function(filename,ip,argsForKillTarget=[]){
+        kill : function(filename,ip){
             if (filename === undefined || ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "kill() call has incorrect number of arguments. Usage: kill(scriptname, server, [arg1], [arg2]...)"); 
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("kill() failed. Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("kill() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "kill() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            var argsForKillTarget = [];
+            for (var i = 2; i < arguments.length; ++i) {
+                argsForKillTarget.push(arguments[i]);
             }
             var runningScriptObj = findRunningScript(filename, argsForKillTarget, server);
             if (runningScriptObj == null) {
@@ -323,7 +348,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("killall() failed. Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("killall() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "killall() failed. Invalid IP or hostname passed in: " + ip);
             }
             for (var i = server.runningScripts.length-1; i >= 0; --i) {
                 killWorkerScript(server.runningScripts[i], server.ip);
@@ -380,14 +406,15 @@ function NetscriptFunctions(workerScript) {
             return true;
         },
         hasRootAccess : function(ip){
-            if (ip===undefinied){
+            if (ip===undefined){
                 throw makeRuntimeRejectMsg(workerScript, "hasRootAccess() call has incorrect number of arguments. Takes 1 argument");
             }
             var server = getServer(ip);
             if (server == null){
-                throw workerScript.scriptRef.log("hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return server.hasAdimRights;
+            return server.hasAdminRights;
         },
         getHostname : function(){
             var scriptServer = getServer(workerScript.serverIp);
@@ -404,7 +431,13 @@ function NetscriptFunctions(workerScript) {
         getServerMoneyAvailable : function(ip){
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
+            }
+            if (server.hostname == "home") {
+                //Return player's money
+                workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + formatNumber(Player.money, 2));
+                return Player.money;
             }
             workerScript.scriptRef.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2) + " for " + server.hostname);
             return server.moneyAvailable;
@@ -412,7 +445,8 @@ function NetscriptFunctions(workerScript) {
         getServerSecurityLevel : function(ip){
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
             workerScript.scriptRef.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3) + " for " + server.hostname);
             return server.hackDifficulty;
@@ -420,7 +454,8 @@ function NetscriptFunctions(workerScript) {
         getServerBaseSecurityLevel : function(ip){
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
             workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + formatNumber(server.baseDifficulty, 3) + " for " + server.hostname);
             return server.baseDifficulty;
@@ -428,7 +463,8 @@ function NetscriptFunctions(workerScript) {
         getServerRequiredHackingLevel : function(ip){
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
             workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + formatNumber(server.requiredHackingSkill, 0) + " for " + server.hostname);
             return server.requiredHackingSkill;
@@ -436,10 +472,20 @@ function NetscriptFunctions(workerScript) {
         getServerMaxMoney : function(ip){
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
             workerScript.scriptRef.log("getServerMaxMoney() returned " + formatNumber(server.moneyMax, 0) + " for " + server.hostname);
             return server.moneyMax;
+        },
+        getServerNumPortsRequired : function(ip){
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerNumPortsRequired() returned " + formatNumber(server.numOpenPortsRequired, 0) + " for " + server.hostname);
+            return server.numOpenPortsRequired;
         },
         fileExists : function(filename,ip=workerScript.serverIp){
             if (filename === undefined) {
@@ -447,29 +493,162 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("fileExists() failed. Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("fileExists() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "fileExists() failed. Invalid IP or hostname passed in: " + ip);
             }
             for (var i = 0; i < server.scripts.length; ++i) {
                 if (filename == server.scripts[i].filename) {
                     return true;
                 }
             }
-            if (Player.hasProgram(filename)) {
-                return true; //wrong?
+            for (var i = 0; i < server.programs.length; ++i) {
+                if (filename.toLowerCase() == server.programs[i].toLowerCase()) {
+                    return true;
+                }
             }
             return false;
         },
-        isRunning : function(filename,ip,argsForTargetScript=[]){
+        isRunning : function(filename,ip){
             if (filename === undefined || ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "isRunning() call has incorrect number of arguments. Usage: isRunning(scriptname, server, [arg1], [arg2]...)"); 
             }
             var server = getServer(ip);
             if (server == null) {
-                throw workerScript.scriptRef.log("isRunning() failed. Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("isRunning() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "isRunning() failed. Invalid IP or hostname passed in: " + ip);
             }
-            return findRunningScript(filename, argsForTargetScript, server) != null;
+            var argsForTargetScript = [];
+            for (var i = 2; i < arguments.length; ++i) {
+                argsForTargetScript.push(arguments[i]);
+            }
+            return (findRunningScript(filename, argsForTargetScript, server) != null);
         },
-        purchaseHacknetNode : purchaseHacknet
+        purchaseHacknetNode : purchaseHacknet,
+        getStockPrice : function(symbol) {
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getStockPrice()");
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPrice()");
+            }
+            return parseFloat(stock.price.toFixed(3));
+        },
+        getStockPosition : function(symbol) {
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getStockPosition()");
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPrice()");
+            }
+            return [stock.playerShares, stock.playerAvgPx];
+        },
+        buyStock : function(symbol, shares) {
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use buyStock()");
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPrice()");
+            }
+            if (shares == 0) {return false;}
+            if (stock == null || shares < 0 || isNaN(shares)) {
+                workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to buyStock()");
+                return false;
+            }
+            shares = Math.round(shares);
+            
+            var totalPrice = stock.price * shares;
+            if (Player.money < totalPrice + CONSTANTS.StockMarketCommission) {
+                workerScript.scriptRef.log("Not enough money to purchase " + formatNumber(shares, 0) + " shares of " + 
+                                           symbol + ". Need $" + 
+                                           formatNumber(totalPrice + CONSTANTS.StockMarketCommission, 2).toString());
+                return false;
+            }
+            
+            var origTotal = stock.playerShares * stock.playerAvgPx;
+            Player.loseMoney(totalPrice + CONSTANTS.StockMarketCommission);
+            var newTotal = origTotal + totalPrice;
+            stock.playerShares += shares; 
+            stock.playerAvgPx = newTotal / stock.playerShares;
+            if (Engine.currentPage == Engine.Page.StockMarket) {
+                updateStockPlayerPosition(stock);
+            }
+            workerScript.scriptRef.log("Bought " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" + 
+                                       formatNumber(stock.price, 2) + " per share");
+            return true;
+        },
+        sellStock : function(symbol, shares) {
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use sellStock()");
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPrice()");
+            }
+            if (shares == 0) {return false;}
+            if (stock == null || shares < 0 || isNaN(shares)) {
+                workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to sellStock()");
+                return false;
+            }
+            if (shares > stock.playerShares) {shares = stock.playerShares;}
+            if (shares == 0) {return false;}
+            var gains = stock.price * shares - CONSTANTS.StockMarketCommission;
+            Player.gainMoney(gains);
+            
+            //Calculate net profit and add to script stats
+            var netProfit = ((stock.price - stock.playerAvgPx) * shares) - CONSTANTS.StockMarketCommission;
+            if (isNaN(netProfit)) {netProfit = 0;}
+            workerScript.scriptRef.onlineMoneyMade += netProfit;
+            
+            stock.playerShares -= shares;
+            if (stock.playerShares == 0) {
+                stock.playerAvgPx = 0;
+            }
+            if (Engine.currentPage == Engine.Page.StockMarket) {
+                updateStockPlayerPosition(stock);
+            }
+            workerScript.scriptRef.log("Sold " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" + 
+                                       formatNumber(stock.price, 2) + " per share. Gained " + 
+                                       "$" + formatNumber(gains, 2));
+            return true;
+        },
+        purchaseServer : function(hostname, ram) {
+            var hostnameStr = String(hostname);
+            hostnameStr = hostnameStr.replace(/\s\s+/g, '');
+            if (hostnameStr == "") {
+                workerScript.scriptRef.log("Error: Passed empty string for hostname argument of purchaseServer()");
+                return "";
+            }
+            
+            ram = Math.round(ram);
+            if (isNaN(ram) || !powerOfTwo(ram)) {
+                workerScript.scriptRef.log("Error: Invalid ram argument passed to purchaseServer(). Must be numeric and a power of 2");
+                return "";
+            }
+            
+            var cost = 2 * ram * CONSTANTS.BaseCostFor1GBOfRamServer;
+            if (cost > Player.money) {
+                workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
+                return "";
+            }
+            var newServ = new Server();
+            newServ.init(createRandomIp(), hostnameStr, "", true, false, true, true, ram);
+            AddToAllServers(newServ);
+            
+            Player.purchasedServers.push(newServ.ip);
+            var homeComputer = Player.getHomeComputer();
+            homeComputer.serversOnNetwork.push(newServ.ip);
+            newServ.serversOnNetwork.push(homeComputer.ip);
+            Player.loseMoney(cost);
+            workerScript.scriptRef.log("Purchased new server with hostname " + newServ.hostname + " for $" + formatNumber(cost, 2));
+            return newServ.hostname;
+        },
+        round : function(n) {
+            if (isNaN(n)) {return 0;}
+            return Math.round(n);
+        }
     }
 }
 

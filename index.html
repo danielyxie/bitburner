@@ -30,9 +30,6 @@
 	
 	<!-- Netscript -->
 	<script src="src/NetscriptWorker.js"></script>
-	<script src="src/NetscriptInputStream.js"></script>
-	<script src="src/NetscriptTokenizer.js"></script>
-	<script src="src/NetscriptParser.js"></script>
 	<script src="src/NetscriptEvaluator.js"></script>
 	<script src="src/NetscriptEnvironment.js"></script>
     <script src="src/NetscriptFunctions.js"></script>
@@ -151,6 +148,7 @@
 		<textarea id="script-editor-text" tabindex="2" autofocus> </textarea>
         <div id="script-editor-buttons-wrapper">
             <span id="script-editor-save-and-close-button" class="a-link-button">Save & Close (Ctrl + b)</span>
+            <p id="script-editor-status-text"> </p>
             <span id="script-editor-netscript-doc-button" class="a-link-button"> Netscript Documentation </span>
         </div>
         </div>
@@ -747,7 +745,7 @@
             you 'reset' by installing Augmentations. 
         </p>
         <a id="stock-market-buy-tix-api" class="a-link-button-inactive"> 
-            Buy Trade Information eXchange (TEX) API Access - COMING SOON
+            Buy Trade Information eXchange (TIX) API Access - COMING SOON
         </a>
         <p id="stock-market-commission"> </p>
         

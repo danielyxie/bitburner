@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.24.1",
+    Version:                "0.25.0",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -11,7 +11,7 @@ CONSTANTS = {
     
     /* Base costs */
     BaseCostFor1GBOfRamHome: 32000,
-    BaseCostFor1GBOfRamServer: 55000,     //1 GB of RAM
+    BaseCostFor1GBOfRamServer: 60000,     //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
     
     BaseCostForHacknetNode: 1000,
@@ -19,9 +19,9 @@ CONSTANTS = {
     
     /* Hacknet Node constants */
     HacknetNodeMoneyGainPerLevel: 1.55,
-    HacknetNodePurchaseNextMult: 1.75,   //Multiplier when purchasing an additional hacknet node
-    HacknetNodeUpgradeLevelMult: 1.045,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.28,     //Multiplier for cost when upgrading RAM
+    HacknetNodePurchaseNextMult: 1.85,   //Multiplier when purchasing an additional hacknet node
+    HacknetNodeUpgradeLevelMult: 1.05,  //Multiplier for cost when upgrading level
+    HacknetNodeUpgradeRamMult: 1.29,     //Multiplier for cost when upgrading RAM
     HacknetNodeUpgradeCoreMult: 1.49,    //Multiplier for cost when buying another core
     
     HacknetNodeMaxLevel: 200,
@@ -34,7 +34,7 @@ CONSTANTS = {
     
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
-    NeuroFluxGovernorLevelMult: 1.13,
+    NeuroFluxGovernorLevelMult: 1.14,
     
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
@@ -71,6 +71,10 @@ CONSTANTS = {
     ScriptHNUpgLevelRamCost:        0.4, 
     ScriptHNUpgRamRamCost:          0.6,
     ScriptHNUpgCoreRamCost:         0.8,
+    ScriptGetStockRamCost:          2.0,
+    ScriptBuySellStockRamCost:      2.5,
+    ScriptPurchaseServerRamCost:    2.0,
+    ScriptRoundRamCost:             0.05,
     
     MultithreadingRAMCost:          1,
     
@@ -96,8 +100,8 @@ CONSTANTS = {
     InfiltrationMoneyValue:   2000,    //Convert "secret" value to money
     
     //Stock market constants
-    WSEAccountCost:         50000000,
-    TIXAPICost:             1000000000,
+    WSEAccountCost:         200000000,
+    TIXAPICost:             5000000000,
     StockMarketCommission:  100000,
     
     //Hospital/Health
@@ -327,6 +331,10 @@ CONSTANTS = {
                          "the execution of a script is when it saves/loads. </strong><br><br>",
     TutorialNetscriptText: "Netscript is a programming language implemented for this game. The language has " + 
                            "your basic programming constructs and several built-in commands that are used to hack. <br><br>" + 
+                           "<u><h1>Official Wiki and Documentation</h1></u><br>" + 
+                           "<a href='http://bitburner.wikia.com/wiki/Netscript' target='_blank'>Check out Bitburner's wiki for the official Netscript documentation</a>" + 
+                           ". The wiki documentation will contain more details and " + 
+                           "code examples than this documentation page. Also, it can be opened up in another tab/window for convenience!<br><br>" +
                            "<u><h1> Variables and data types </h1></u><br>" + 
                            "The following data types are supported by Netscript: <br>" + 
                            "numeric - Integers and floats (eg. 6, 10.4999)<br>" + 
@@ -354,7 +362,7 @@ CONSTANTS = {
                            "&nbsp;==<br>" + 
                            "&nbsp;!=<br><br>" + 
                            "<u><h1> Arrays </h1></u><br>" + 
-                           "Netscript arrays have the same properties and functions as javascript arrays. For information see javascripts <a href=\"https://www.w3schools.com/js/js_arrays.asp\">array</a> documentation.<br><br>"+
+                           "Netscript arrays have the same properties and functions as javascript arrays. For information see javascripts <a href=\"https://www.w3schools.com/js/js_arrays.asp\" target='_blank'>array</a> documentation.<br><br>"+
                            "<u><h1> Script Arguments </h1></u><br>" + 
                            "Arguments passed into a script can be accessed using a special array called 'args'. The arguments can be accessed like a normal array using the [] " + 
                            "operator. (args[0], args[1], args[2]...) <br><br>" + 
@@ -393,9 +401,7 @@ CONSTANTS = {
                            "any server, regardless of where the script is running. This command requires root access to the target server, but " + 
                            "there is no required hacking level to run the command. Returns " + 
                            "0.1. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
-                           "<i>print(x)</i> <br>Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br>" + 
-                           "WARNING: Do NOT call print() on an array. The script will crash. You can, however, call print on single elements of an array. For example, if " + 
-                           "the variable 'a' is an array, then do NOT call print(a), but it is okay to call print(a[0]).<br><br>" + 
+                           "<i>print(x)</i> <br>Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br><br>" + 
                            "<i>scan(hostname/ip)</i><br>Returns an array containing the hostnames of all servers that are one node away from the specified server. " + 
                            "The argument must be a string containing the IP or hostname of the target server. The hostnames in the returned array are strings.<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
@@ -494,6 +500,14 @@ CONSTANTS = {
                            "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " + 
                            "at the end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford to purchase " +
                            "a new Hacknet Node then the function will return false. Does NOT work offline<br><br>" + 
+                           "<i>purchaseServer(hostname, ram)</i><br> Purchases a server with the specified hostname and amount of RAM. The first argument can be any data type, " + 
+                           "but it will be converted to a string using Javascript's String function. Anything that resolves to an empty string will cause the function to fail. " + 
+                           "The second argument specified the amount of RAM (in GB) for the server. This argument must resolve to a numeric and it must be a power of 2 " + 
+                           "(2, 4, 8, etc...). <br><br>" + 
+                           "Purchasing a server using this Netscript function is twice as expensive as manually purchasing a server from a location in the World.<br><br>" + 
+                           "This function returns the hostname of the newly purchased server as a string. If the function fails to purchase a server, then it will return " + 
+                           "an empty string. The function will fail if the arguments passed in are invalid or if the player does not have enough money to purchase the specified server.<br><br>" + 
+                           "<i>round(n)</i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" + 
                            "<u><h1>Hacknet Nodes API</h1></u><br>" + 
                            "Netscript provides the following API for accessing and upgrading your Hacknet Nodes through scripts. This API does NOT work offline.<br><br>" + 
                            "<i>hacknetnodes</i><br> A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " + 
@@ -506,9 +520,9 @@ CONSTANTS = {
                            "<i>hacknetnodes[i].cores</i><br> Returns the number of cores on the corresponding Hacknet Node<br><br>" +
                            "<i>hacknetnodes[i].upgradeLevel(n)</i><br> Tries to upgrade the level of the corresponding Hacknet Node n times. The argument n must be a " + 
                            "positive integer. Returns true if the Hacknet Node's level is successfully upgraded n times or up to the max level (200), and false otherwise.<br><br>" + 
-                           "<i>hacknetnodes[i].purchaseRamUpgrade()</i><br> Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " + 
+                           "<i>hacknetnodes[i].upgradeRam()</i><br> Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " + 
                            "RAM is successfully upgraded, and false otherwise. <br><br>" + 
-                           "<i>hacknetnodes[i].purchaseCoreUpgrade()</i><br> Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " + 
+                           "<i>hacknetnodes[i].upgradeCore()</i><br> Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " + 
                            "additional core is successfully purchase, and false otherwise. <br><br>" + 
                            "Example: The following is an example of one way a script can be used to automate the purchasing and upgrading of Hacknet Nodes. " +
                            "This script purchases new Hacknet Nodes until the player has four. Then, it iteratively upgrades each of those four Hacknet Nodes " +
@@ -534,6 +548,26 @@ CONSTANTS = {
                            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sleep(10000);<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;}<br>" + 
                            "}<br><br>" + 
+                           "<u><h1>Trade Information eXchange (TIX) API</h1></u><br>" + 
+                           "<i>getStockPrice(sym)</i><br>Returns the price of a stock. The argument passed in must be the stock's symbol (NOT THE COMPANY NAME!). The symbol " + 
+                           "is a sequence of two to four capital letters. The symbol argument must be a string. <br><br>" + 
+                           "Example: getStockPrice('FSIG');<br><br>" + 
+                           "<i>getStockPosition(sym)</i><br>Returns an array of two elements that represents the player's position in a stock. The first element " +
+                           "in the array is the number of shares the player owns of the specified stock. The second element in the array is the average price of the player's " + 
+                           "shares. Both elements are numbers. The argument passed in must be the stock's symbol, which is a sequence of two to four capital letters.<br><br>" + 
+                           "Example: <br><br>pos = getStockPosition('ECP');<br>shares = pos[0];<br>avgPx = pos[1];<br><br>"+ 
+                           "<i>buyStock(sym, shares)</i><br>Attempts to purchase shares of a stock. The first argument must be a string with the stock's symbol. The second argument " + 
+                           "must be the number of shares to purchase.<br><br>" + 
+                           "If the player does not have enough money to purchase specified number of shares, then no shares will be purchased (it will not purchase the most you can afford). " + 
+                           "Remember that every transaction on the stock exchange costs a certain commission fee.<br><br>" + 
+                           "The function will return true if it successfully purchases the specified number of shares of stock, and false otherwise.<br><br>" + 
+                           "<i>sellStock(sym, shares)</i><br>Attempts to sell shares of a stock. The first argument must be a string with the stock's symbol. The second argument " + 
+                           "must be the number of shares to sell.<br><br>" + 
+                           "If the specified number of shares in the function exceeds the amount that the player actually owns, then this function will sell all owned shares. " + 
+                           "Remember that every transaction on the stock exchange costs a certain commission fee.<br><br>" + 
+                           "The net profit made from selling stocks with this function is reflected in the script's statistics. This net profit is calculated as: <br><br>" + 
+                           "shares * (sell price - average price of purchased shares)<br><br>" + 
+                           "This function will return true if the shares of stock are successfully sold and false otherwise.<br><br>" + 
                            "<u><h1>While loops </h1></u><br>" +
                            "A while loop is a control flow statement that repeatedly executes code as long as a condition is met. <br><br> " +
                            "<i>while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}</i><br><br>" + 
@@ -552,14 +586,14 @@ CONSTANTS = {
                            " using a for loop: <br><br>" + 
                            "<i>for (i = 0; i < 10; i = i++) { <br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>} </i><br><br>" + 
                            "<u><h1> If statements </h1></u><br>" + 
-                           "If/Elif/Else statements are conditional statements used to perform different actions based on different conditions: <br><br>" + 
-                           "<i>if (condition1) {<br>&nbsp;&nbsp;&nbsp;&nbsp;code1<br>} elif (condition2) {<br>&nbsp;&nbsp;&nbsp;&nbsp;code2<br>} else {<br>" + 
+                           "If/Else if/Else statements are conditional statements used to perform different actions based on different conditions: <br><br>" + 
+                           "<i>if (condition1) {<br>&nbsp;&nbsp;&nbsp;&nbsp;code1<br>} else if (condition2) {<br>&nbsp;&nbsp;&nbsp;&nbsp;code2<br>} else {<br>" + 
                            "&nbsp;&nbsp;&nbsp;&nbsp;code3<br>}</i><br><br>" + 
                            "In the code above, first <i>condition1</i> will be checked. If this condition is true, then <i>code1</i> will execute and the " +
-                           "rest of the if/elif/else statement will be skipped. If <i>condition1</i> is NOT true, then the code will then go on to check " + 
-                           "<i>condition2</i>. If <i>condition2</i> is true, then <i>code2</i> will be executed, and the rest of the if/elif/else statement " +
+                           "rest of the if/else if/else statement will be skipped. If <i>condition1</i> is NOT true, then the code will then go on to check " + 
+                           "<i>condition2</i>. If <i>condition2</i> is true, then <i>code2</i> will be executed, and the rest of the if/else if/else statement " +
                            "will be skipped. If none of the conditions are true, then the code within the else block (<i>code3</i>) will be executed. " + 
-                           "Note that a conditional statement can have any number of elif statements. <br><br>" + 
+                           "Note that a conditional statement can have any number of 'else if' statements. <br><br>" + 
                            "Example: <br><br>" + 
                            "if(getServerMoneyAvailable('foodnstuff') > 200000) {<br>&nbsp;&nbsp;&nbsp;&nbsp;hack('foodnstuff');<br>" + 
                            "} else {<br>&nbsp;&nbsp;&nbsp;&nbsp;grow('foodnstuff');<br>}<br><br>" + 
@@ -665,6 +699,32 @@ CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
                                
     Changelog:
+    "v0.25.0<br> " + 
+    "-Refactored Netscript to use the open-source Acorns Parser. This re-implementation was done by Github users MrNuggelz. " +
+    "This has resulted in several changes in the Netscript language. Some scripts might break because of these changes. " + 
+    "Changes listed below: <br>" + 
+    "-Arrays are now fully functional Javascript arrays. You no longer need to use the 'Array' keyword to declare them. <br>" + 
+    "-The length(), clear/clear(), insert(), and remove() functions no longer work for arrays. <br>" + 
+    "-All Javascript array methods are available (splice(), push(), pop(), join(), shift(), indexOf(), etc. See documentation)<br>" + 
+    "-Variables assigned to arrays are now passed by value rather than reference<br>" + 
+    "-Incrementing/Decrementing are now available (i++, ++i)<br>" +
+    "-You no longer need semicolons at the end of block statements<br>" + 
+    "-Netscript's Hacknet Node API functions no longer log anything<br>" + 
+    "-Stock prices now update every ~6 seconds when the game is active (was 10 seconds before)<br>" +
+    "-Added a new mechanic that affects how stock prices change<br>" + 
+    "-Script editor now has dynamic indicators for RAM Usage and Line number<br>" + 
+    "-Augmentation Rebalancing - Many late game augmentations are now slightly more expensive. Several early game " + 
+    "augmentations had their effects slightly decreased<br>" + 
+    "-Increased the amount of rewards (both money and rep) you get from infiltration<br>" + 
+    "-Purchasing servers is now slightly more expensive<br>" + 
+    "-Calling the Netscript function getServerMoneyAvailable('home') now return's the player's money<br>" + 
+    "-Added round(n) Netscript function - Rounds a number<br>" + 
+    "-Added purchaseServer(hostname, ram) Netscript function<br>" + 
+    "-Added the TIX API. This must be purchased in the WSE. It persists through resets. Access to the TIX API " +
+    "allows you to write scripts that perform automated algorithmic trading. See Netscript documentation<br>" + 
+    "-Minor rebalancing in a lot of different areas<br>" +
+    "-Changed the format of IP Addresses so that they are smaller (will consist mostly of single digit numbers now). This will reduce " + 
+    "the size of the game's save file.<br><br>" + 
     "v0.24.1<br>" + 
     "-Adjusted cost of upgrading home computer RAM. Should be a little cheaper for the first few upgrades (up to ~64GB), and " +
     "then will start being more expensive than before. High RAM upgrades should now be significantly more expensive than before.<br>" + 
@@ -891,36 +951,31 @@ CONSTANTS = {
     "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
-    "v0.24.1<br>" + 
-    "-Adjusted cost of upgrading home computer RAM. Should be a little cheaper for the first few upgrades (up to ~64GB), and " +
-    "then will start being more expensive than before. High RAM upgrades should now be significantly more expensive than before.<br>" + 
-    "-Slightly lowered the starting money available on most mid-game and end-game servers (servers with required hacking level " + 
-    "greater than 200) by about 10-15%<br>" + 
-    "-Rebalanced company/company position reputation gains and requirements<br>" + 
-    "-Studying at a university now gives slightly more EXP and early jobs give slightly less EXP<br>" + 
-    "-Studying at a university is now considerably more expensive<br>" + 
-    "-Rebalanced stock market<br>" +
-    "-Significantly increased cost multiplier for purchasing additional Hacknet Nodes<br>" + 
-    "-The rate at which facility security level increases during infiltration for each clearance level " +
-    "was lowered slightly for all companies<br>" + 
-    "-Updated Faction descriptions<br>" + 
-    "-Changed the way alias works. Normal aliases now only work at the start of a Terminal command (they will only " + 
-    "replace the first word in the Terminal command). You can also create global aliases that work on any part of the " + 
-    'command, like before. Declare global aliases by entering the optional -g flag: alias -g name="value" - Courtesy of Github user MrNuggelz<br>' +
-    "-'top' Terminal command implemented courtesy of Github user LTCNugget. Currently, the formatting gets screwed up " + 
-    "if your script names are really long.<br><br>" + 
-    "v0.24.0<br>" + 
-    "-Players now have HP, which is displayed in the top right. To regain HP, visit the hospital. Currently " + 
-    "the only way to lose HP is through infiltration<br>" + 
-    "-Infiltration - Attempt to infiltrate a company and steal their classified secrets. See 'Companies' documentation for more details<br>" + 
-    "-Stock Market - Added the World Stock Exchange (WSE), a brokerage that lets you buy/sell stocks. To begin trading you must first purchase " + 
-    "an account. A WSE account will persist even after resetting by installing Augmentations. How the stock market works should hopefully be " + 
-    "self explanatory. There is no documentation about it currently, I will add some later. NOTE: Stock prices only change when the game is open. " + 
-    "The Stock Market is reset when installing Augmentations, which means you will lose all your stocks<br>" + 
-    "-Decreased money gained from hacking by ~12%<br>" + 
-    "-Increased reputation required for all Augmentations by ~40%<br>" + 
-    "-Cost increase when purchasing multiple augmentations increased from 75% to 90%<br>" + 
-    "-Added basic variable runtime to Netscript operations. Basic commands run in 100ms. Any function incurs another 100ms in runtime (200ms total). " + 
-    "Any function that starts with getServer incurs another 100ms runtime (300ms total). exec() and scp() require 400ms total. <br>" + 
-    "-Slightly reduced the amount of experience gained from hacking<br>",
+    "v0.25.0<br> " + 
+    "-Refactored Netscript to use the open-source Acorns Parser. This re-implementation was done by Github users MrNuggelz. " +
+    "This has resulted in several changes in the Netscript language. Some scripts might break because of these changes. " + 
+    "Changes listed below: <br>" + 
+    "-Arrays are now fully functional Javascript arrays. You no longer need to use the 'Array' keyword to declare them. <br>" + 
+    "-The length(), clear/clear(), insert(), and remove() functions no longer work for arrays. <br>" + 
+    "-All Javascript array methods are available (splice(), push(), pop(), join(), shift(), indexOf(), etc. See documentation)<br>" + 
+    "-Variables assigned to arrays are now passed by value rather than reference<br>" + 
+    "-Incrementing/Decrementing are now available (i++, ++i)<br>" +
+    "-You no longer need semicolons at the end of block statements<br>" + 
+    "-Netscript's Hacknet Node API functions no longer log anything<br>" + 
+    "-Stock prices now update every ~6 seconds when the game is active (was 10 seconds before)<br>" +
+    "-Added a new mechanic that affects how stock prices change<br>" + 
+    "-Script editor now has dynamic indicators for RAM Usage and Line number<br>" + 
+    "-Augmentation Rebalancing - Many late game augmentations are now slightly more expensive. Several early game " + 
+    "augmentations had their effects slightly decreased<br>" + 
+    "-Increased the amount of rewards (both money and rep) you get from infiltration<br>" + 
+    "-Purchasing servers is now slightly more expensive<br>" + 
+    "-Calling the Netscript function getServerMoneyAvailable('home') now return's the player's money<br>" + 
+    "-Added round(n) Netscript function - Rounds a number<br>" + 
+    "-Added purchaseServer(hostname, ram) Netscript function<br>" + 
+    "-Added the TIX API. This must be purchased in the WSE. It persists through resets. Access to the TIX API " +
+    "allows you to write scripts that perform automated algorithmic trading. See Netscript documentation<br>" + 
+    "-Minor rebalancing in a lot of different areas<br>" +
+    "-Changed the format of IP Addresses so that they are smaller (will consist mostly of single digit numbers now). This will reduce " + 
+    "the size of the game's save file.<br>",
+    
 }

@@ -116,6 +116,7 @@ var Engine = {
             document.getElementById("script-editor-text").value = code;
         }
         document.getElementById("script-editor-text").focus();
+        upgradeScriptEditorContent();
         Engine.currentPage = Engine.Page.ScriptEditor;
     },
     
@@ -568,7 +569,9 @@ var Engine = {
         checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations every 5 minutes
         passiveFactionGrowth: 600,
         messages: 300,
-        stockTick:  50,                     //Update stock prices
+        stockTick:  30,                     //Update stock prices
+        sCr: 1500,                          
+        updateScriptEditorDisplay: 5,
     },
     
     decrementAllCounters: function(numCycles = 1) {
@@ -648,7 +651,32 @@ var Engine = {
             if (Player.hasWseAccount) {
                 updateStockPrices();
             }
-            Engine.Counters.stockTick = 50;
+            Engine.Counters.stockTick = 30;
+        }
+        
+        if (Engine.Counters.sCr <= 0) {
+            //Assume 4Sig will always indicate state of market
+            if (Player.hasWseAccount) {
+                console.log("Determining stock market cycle");
+                var thresh = 0.66;
+                var stock = StockMarket[Locations.Sector12FourSigma];
+                if (stock == null) {
+                    console.log("ERR: Could not find 4Sigma stock");
+                    return;
+                }
+                if (stock.b) {thresh = 0.34;}
+                if (Math.random() < thresh) {
+                    stockMarketCycle();
+                }
+            }
+            Engine.Counters.sCr = 1500;
+        }
+        
+        if (Engine.Counters.updateScriptEditorDisplay <= 0) {
+            if (Engine.currentPage == Engine.Page.ScriptEditor) {
+                upgradeScriptEditorContent();
+            }
+            Engine.Counters.updateScriptEditorDisplay = 5;
         }
     },
     

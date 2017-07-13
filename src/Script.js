@@ -33,6 +33,18 @@ function scriptEditorInit() {
 };
 document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 
+//Updates line number and RAM usage in script
+function upgradeScriptEditorContent() {
+    var txt = $("#script-editor-text")[0];
+    var lineNum = txt.value.substr(0, txt.selectionStart).split("\n").length;
+    
+    var code = document.getElementById("script-editor-text").value;
+    var codeCopy = code.repeat(1);
+    var ramUsage = calculateRamUsage(codeCopy);
+    document.getElementById("script-editor-status-text").innerText = 
+        "Line Number: " + lineNum + ", RAM: " + formatNumber(ramUsage, 2).toString() + "GB";
+}
+
 //Define key commands in script editor (ctrl o to save + close, etc.)
 $(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
@@ -126,10 +138,17 @@ Script.prototype.saveScript = function() {
 
 //Updates how much RAM the script uses when it is running.
 Script.prototype.updateRamUsage = function() {
-    var baseRam = 1.4;
     var codeCopy = this.code.repeat(1);
+    this.ramUsage = calculateRamUsage(codeCopy);
+    console.log("ram usage: " + this.ramUsage);
+    if (isNaN(this.ramUsage)) {
+        dialogBoxCreate("ERROR in calculating ram usage. This is a bug, please report to game develoepr");
+    }
+}
+
+function calculateRamUsage(codeCopy) {
     codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
-    
+    var baseRam = 1.4;
     var whileCount = numOccurrences(codeCopy, "while(");
     var forCount = numOccurrences(codeCopy, "for(");
     var ifCount = numOccurrences(codeCopy, "if(");
@@ -150,6 +169,7 @@ Script.prototype.updateRamUsage = function() {
     var getHostnameCount = numOccurrences(codeCopy, "getHostname(");
     var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
     var getServerMoneyAvailableCount = numOccurrences(codeCopy, "getServerMoneyAvailable(");
+    var getServerMaxMoneyCount = numOccurrences(codeCopy, "getServerMaxMoney(");
     var getServerSecurityCount = numOccurrences(codeCopy, "getServerSecurityLevel(");
     var getServerBaseSecurityCount = numOccurrences(codeCopy, "getServerBaseSecurityLevel(");
     var getServerReqdHackingCount = numOccurrences(codeCopy, "getServerRequiredHackingLevel(");
@@ -161,43 +181,50 @@ Script.prototype.updateRamUsage = function() {
     var hnUpgLevelCount = numOccurrences(codeCopy, ".upgradeLevel(");
     var hnUpgRamCount = numOccurrences(codeCopy, ".upgradeRam()");
     var hnUpgCoreCount = numOccurrences(codeCopy, ".upgradeCore()");
+    var scriptGetStockCount = numOccurrences(codeCopy, "getStockPrice(") + 
+                              numOccurrences(codeCopy, "getStockPosition(");
+    var scriptBuySellStockCount = numOccurrences(codeCopy, "buyStock(") + 
+                                  numOccurrences(codeCopy, "sellStock(");
+    var scriptPurchaseServerCount = numOccurrences(codeCopy, "purchaseServer(");
+    var scriptRoundCount = numOccurrences(codeCopy, "round(");
     
-    this.ramUsage =  baseRam + 
-                    ((whileCount * CONSTANTS.ScriptWhileRamCost) + 
-                    (forCount * CONSTANTS.ScriptForRamCost) + 
-                    (ifCount * CONSTANTS.ScriptIfRamCost) + 
-                    (hackCount * CONSTANTS.ScriptHackRamCost) + 
-                    (growCount * CONSTANTS.ScriptGrowRamCost) + 
-                    (weakenCount * CONSTANTS.ScriptWeakenRamCost) + 
-                    (scanCount * CONSTANTS.ScriptScanRamCost) + 
-                    (nukeCount * CONSTANTS.ScriptNukeRamCost) + 
-                    (brutesshCount * CONSTANTS.ScriptBrutesshRamCost) + 
-                    (ftpcrackCount * CONSTANTS.ScriptFtpcrackRamCost) + 
-                    (relaysmtpCount * CONSTANTS.ScriptRelaysmtpRamCost) + 
-                    (httpwormCount * CONSTANTS.ScriptHttpwormRamCost) + 
-                    (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost) + 
-                    (runCount * CONSTANTS.ScriptRunRamCost) + 
-                    (execCount * CONSTANTS.ScriptExecRamCost) + 
-                    (scpCount * CONSTANTS.ScriptScpRamCost) + 
-                    (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) + 
-                    (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
-                    (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
-                    (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
-                    (getServerSecurityCount * CONSTANTS.ScriptGetServerSecurityRamCost) +
-                    (getServerBaseSecurityCount * CONSTANTS.ScriptGetServerSecurityRamCost) +
-                    (getServerReqdHackingCount * CONSTANTS.ScriptGetServerReqdHackRamCost) + 
-                    (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) + 
-                    (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
-                    (numOperators * CONSTANTS.ScriptOperatorRamCost) +
-                    (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) + 
-                    (hacknetnodesArrayCount * CONSTANTS.ScriptHacknetNodesRamCost) +
-                    (hnUpgLevelCount * CONSTANTS.ScriptHNUpgLevelRamCost) + 
-                    (hnUpgRamCount * CONSTANTS.ScriptHNUpgRamRamCost) +
-                    (hnUpgCoreCount * CONSTANTS.ScriptHNUpgCoreRamCost));
-    console.log("ram usage: " + this.ramUsage);
-    if (isNaN(this.ramUsage)) {
-        dialogBoxCreate("ERROR in calculating ram usage. This is a bug, please report to game develoepr");
-    }
+    return baseRam + 
+        ((whileCount * CONSTANTS.ScriptWhileRamCost) + 
+        (forCount * CONSTANTS.ScriptForRamCost) + 
+        (ifCount * CONSTANTS.ScriptIfRamCost) + 
+        (hackCount * CONSTANTS.ScriptHackRamCost) + 
+        (growCount * CONSTANTS.ScriptGrowRamCost) + 
+        (weakenCount * CONSTANTS.ScriptWeakenRamCost) + 
+        (scanCount * CONSTANTS.ScriptScanRamCost) + 
+        (nukeCount * CONSTANTS.ScriptNukeRamCost) + 
+        (brutesshCount * CONSTANTS.ScriptBrutesshRamCost) + 
+        (ftpcrackCount * CONSTANTS.ScriptFtpcrackRamCost) + 
+        (relaysmtpCount * CONSTANTS.ScriptRelaysmtpRamCost) + 
+        (httpwormCount * CONSTANTS.ScriptHttpwormRamCost) + 
+        (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost) + 
+        (runCount * CONSTANTS.ScriptRunRamCost) + 
+        (execCount * CONSTANTS.ScriptExecRamCost) + 
+        (scpCount * CONSTANTS.ScriptScpRamCost) + 
+        (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) + 
+        (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
+        (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
+        (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
+        (getServerMaxMoneyCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
+        (getServerSecurityCount * CONSTANTS.ScriptGetServerSecurityRamCost) +
+        (getServerBaseSecurityCount * CONSTANTS.ScriptGetServerSecurityRamCost) +
+        (getServerReqdHackingCount * CONSTANTS.ScriptGetServerReqdHackRamCost) + 
+        (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) + 
+        (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
+        (numOperators * CONSTANTS.ScriptOperatorRamCost) +
+        (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) + 
+        (hacknetnodesArrayCount * CONSTANTS.ScriptHacknetNodesRamCost) +
+        (hnUpgLevelCount * CONSTANTS.ScriptHNUpgLevelRamCost) + 
+        (hnUpgRamCount * CONSTANTS.ScriptHNUpgRamRamCost) +
+        (hnUpgCoreCount * CONSTANTS.ScriptHNUpgCoreRamCost) + 
+        (scriptGetStockCount * CONSTANTS.ScriptGetStockRamCost) + 
+        (scriptBuySellStockCount * CONSTANTS.ScriptBuySellStockRamCost) + 
+        (scriptPurchaseServerCount * CONSTANTS.ScriptPurchaseServerRamCost) + 
+        (scriptRoundCount * CONSTANTS.ScriptRoundRamCost));
 }
 
 Script.prototype.toJSON = function() {

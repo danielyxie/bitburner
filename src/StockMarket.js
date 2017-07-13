@@ -225,10 +225,20 @@ function initSymbolToStockMap() {
     }
 }
 
+function stockMarketCycle() {
+    console.log("Cycling the Stock Market");
+    for (var name in StockMarket) {
+        if (StockMarket.hasOwnProperty(name)) {
+            var stock = StockMarket[name];
+            stock.b = !stock.b;
+        }
+    }
+}
+
 //Returns true if successful, false otherwise
 function buyStock(stock, shares) {
     if (shares == 0) {return false;}
-    if (stock == null || shares < 0) {
+    if (stock == null || shares < 0 || isNaN(shares)) {
         dialogBoxCreate("Failed to buy stock. This may be a bug, contact developer");
         return false;
     }
@@ -257,7 +267,7 @@ function buyStock(stock, shares) {
 //Returns true if successful and false otherwise
 function sellStock(stock, shares) {
     if (shares == 0) {return false;}
-    if (stock == null || shares < 0) {
+    if (stock == null || shares < 0 || isNaN(shares)) {
         dialogBoxCreate("Failed to sell stock. This may be a bug, contact developer");
         return false;
     }
@@ -328,8 +338,9 @@ function displayStockMarketContent() {
     if (Player.hasWseAccount == null) {Player.hasWseAccount = false;}
     if (Player.hasTixApiAccess == null) {Player.hasTixApiAccess = false;}
     
+    //Purchase WSE Account button
     var wseAccountButton = clearEventListeners("stock-market-buy-account");
-    wseAccountButton.innerText = "Buy WSE Account - $" + formatNumber(CONSTANTS.WSEAccountCost, 2).toString()
+    wseAccountButton.innerText = "Buy WSE Account - $" + formatNumber(CONSTANTS.WSEAccountCost, 2).toString();
     if (!Player.hasWseAccount && Player.money >= CONSTANTS.WSEAccountCost) {    
         wseAccountButton.setAttribute("class", "a-link-button");
     } else {
@@ -339,6 +350,22 @@ function displayStockMarketContent() {
         Player.hasWseAccount = true;
         initStockMarket();
         Player.loseMoney(CONSTANTS.WSEAccountCost);
+        displayStockMarketContent();
+        return false;
+    });
+    
+    //Purchase TIX API Access account
+    var tixApiAccessButton = clearEventListeners("stock-market-buy-tix-api");
+    tixApiAccessButton.innerText = "Buy Trade Information eXchange (TIX) API Access - $" + 
+                                   formatNumber(CONSTANTS.TIXAPICost, 2).toString();
+    if (!Player.hasTixApiAccess && Player.money >= CONSTANTS.TIXAPICost) {
+        tixApiAccessButton.setAttribute("class", "a-link-button");
+    } else {
+        tixApiAccessButton.setAttribute("class", "a-link-button-inactive");
+    }
+    tixApiAccessButton.addEventListener("click", function() {
+        Player.hasTixApiAccess = true;
+        Player.loseMoney(CONSTANTS.TIXAPICost);
         displayStockMarketContent();
         return false;
     });

@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", hacknetNodesInit, false);
 function HacknetNode(name) {
     this.level      = 1;
     this.ram        = 1; //GB
-    this.numCores   = 1; 
+    this.cores      = 1; 
     
     this.name       = name;
     
@@ -50,7 +50,7 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
     
     this.moneyGainRatePerSecond = (this.level * gainPerLevel) * 
                                   Math.pow(1.035, this.ram-1) * 
-                                  ((this.numCores + 5) / 6) * Player.hacknet_node_money_mult;
+                                  ((this.cores + 5) / 6) * Player.hacknet_node_money_mult;
     if (isNaN(this.moneyGainRatePerSecond)) {
         this.moneyGainRatePerSecond = 0;
         dialogBoxCreate("Error in calculating Hacknet Node production. Please report to game developer");
@@ -85,6 +85,11 @@ HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
     return true;
 }
 
+//Wrapper function for Netscript
+HacknetNode.prototype.upgradeLevel = function(levels=1) {
+    return this.purchaseLevelUpgrade(levels);
+}
+
 HacknetNode.prototype.calculateRamUpgradeCost = function() {
     var numUpgrades = Math.log2(this.ram);
     
@@ -106,21 +111,31 @@ HacknetNode.prototype.purchaseRamUpgrade = function() {
     return true;
 }
 
+//Wrapper function for Netscript
+HacknetNode.prototype.upgradeRam = function() {
+    return this.purchaseRamUpgrade();
+}
+
 HacknetNode.prototype.calculateCoreUpgradeCost = function() {
     var coreBaseCost = CONSTANTS.BaseCostForHacknetNodeCore;
     var mult = CONSTANTS.HacknetNodeUpgradeCoreMult;
-    return coreBaseCost * Math.pow(mult, this.numCores-1) * Player.hacknet_node_core_cost_mult;
+    return coreBaseCost * Math.pow(mult, this.cores-1) * Player.hacknet_node_core_cost_mult;
 }
 
 HacknetNode.prototype.purchaseCoreUpgrade = function() {
     var cost = this.calculateCoreUpgradeCost();
     if (isNaN(cost)) {return false;}
     if (cost > Player.money) {return false;}
-    if (this.numCores >= CONSTANTS.HacknetNodeMaxCores) {return false;}
+    if (this.cores >= CONSTANTS.HacknetNodeMaxCores) {return false;}
     Player.loseMoney(cost);
-    ++this.numCores;
+    ++this.cores;
     this.updateMoneyGainRate();
     return true;
+}
+
+//Wrapper function for Netscript
+HacknetNode.prototype.upgradeCore = function() {
+    return this.purchaseCoreUpgrade();
 }
 
 /* Saving and loading HackNets */
@@ -150,8 +165,8 @@ purchaseHacknet = function() {
     var cost = getCostOfNextHacknetNode();
     if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
     if (cost > Player.money) {
-        dialogBoxCreate("You cannot afford to purchase a Hacknet Node!");
-        return;
+        //dialogBoxCreate("You cannot afford to purchase a Hacknet Node!");
+        return false;
     }
         
     //Auto generate a name for the node for now...TODO
@@ -165,6 +180,7 @@ purchaseHacknet = function() {
     
     displayHacknetNodesContent();
     updateTotalHacknetProduction();
+    return numOwned;
 }
 
 //Calculates the total production from all HacknetNodes 
@@ -361,7 +377,7 @@ updateHacknetNodeDomElement = function(nodeObj) {
                                  " ($" + formatNumber(nodeObj.moneyGainRatePerSecond, 2) + " / second) <br>" + 
                     "Level:      " + nodeObj.level + "<br>" + 
                     "RAM:        " + nodeObj.ram + "GB<br>" + 
-                    "Cores:      " + nodeObj.numCores;
+                    "Cores:      " + nodeObj.cores;
                     
     //Upgrade level
     var upgradeLevelButton = document.getElementById("hacknet-node-upgrade-level-" + nodeName);
@@ -408,7 +424,7 @@ updateHacknetNodeDomElement = function(nodeObj) {
     //Upgrade Cores
     var upgradeCoreButton = document.getElementById("hacknet-node-upgrade-core-" + nodeName);
     if (upgradeCoreButton == null) {throw new Error("Cannot find upgrade cores button element");}
-    if (nodeObj.numCores >= CONSTANTS.HacknetNodeMaxCores) {
+    if (nodeObj.cores >= CONSTANTS.HacknetNodeMaxCores) {
         upgradeCoreButton.innerHTML = "MAX CORES";
         upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
     } else {
