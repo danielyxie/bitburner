@@ -3,10 +3,10 @@
 //Generate a random IP address
 //Will not return an IP address that already exists in the AllServers array
 createRandomIp = function() {
-	var ip = createRandomByte() +'.' +
-			 createRandomByte() +'.' +
-			 createRandomByte() +'.' +
-		 	 createRandomByte();
+	var ip = createRandomByte(99) +'.' +
+			 createRandomByte(9) +'.' +
+			 createRandomByte(9) +'.' +
+		 	 createRandomByte(9);
              
     //If the Ip already exists, recurse to create a new one
     if (ipExists(ip)) {
@@ -27,8 +27,8 @@ ipExists = function(ip) {
     return false;
 }
 
-createRandomByte = function() {
-	return Math.round(Math.random()*256);
+createRandomByte = function(n=9) {
+	return Math.round(Math.random()*n);
 }
 
 isValidIPAddress = function(ipaddress) {  
