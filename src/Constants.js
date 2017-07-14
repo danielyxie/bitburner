@@ -332,7 +332,7 @@ CONSTANTS = {
     TutorialNetscriptText: "Netscript is a programming language implemented for this game. The language has " + 
                            "your basic programming constructs and several built-in commands that are used to hack. <br><br>" + 
                            "<u><h1>Official Wiki and Documentation</h1></u><br>" + 
-                           "<a href='http://bitburner-game.wikia.com/wiki/Netscript' target='_blank'>Check out Bitburner's wiki for the official Netscript documentation</a>" + 
+                           "<a href='https://bitburner.wikia.com/wiki/Netscript' target='_blank'>Check out Bitburner's wiki for the official Netscript documentation</a>" + 
                            ". The wiki documentation will contain more details and " + 
                            "code examples than this documentation page. Also, it can be opened up in another tab/window for convenience!<br><br>" +
                            "<u><h1> Variables and data types </h1></u><br>" + 
@@ -709,6 +709,7 @@ CONSTANTS = {
     "-Variables assigned to arrays are now passed by value rather than reference<br>" + 
     "-Incrementing/Decrementing are now available (i++, ++i)<br>" +
     "-You no longer need semicolons at the end of block statements<br>" + 
+    "-Elif is no longer valid. Use 'else if' instead<br>" + 
     "-Netscript's Hacknet Node API functions no longer log anything<br>" + 
     "-Stock prices now update every ~6 seconds when the game is active (was 10 seconds before)<br>" +
     "-Added a new mechanic that affects how stock prices change<br>" + 
@@ -961,6 +962,7 @@ CONSTANTS = {
     "-Variables assigned to arrays are now passed by value rather than reference<br>" + 
     "-Incrementing/Decrementing are now available (i++, ++i)<br>" +
     "-You no longer need semicolons at the end of block statements<br>" + 
+    "-Elif is no longer valid. Use 'else if' instead<br>" + 
     "-Netscript's Hacknet Node API functions no longer log anything<br>" + 
     "-Stock prices now update every ~6 seconds when the game is active (was 10 seconds before)<br>" +
     "-Added a new mechanic that affects how stock prices change<br>" + 
