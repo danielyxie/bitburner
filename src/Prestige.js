@@ -200,13 +200,31 @@ function prestigeAugmentation() {
     //Messages
     initMessages();
     
-    //Stock market
+    //Reset Stock market
     if (Player.hasWseAccount) {
         initStockMarket();
         initSymbolToStockMap();
+        stockMarketContentCreated = false;
+        var stockMarketList = document.getElementById("stock-market-list");
+        while(stockMarketList.firstChild) {
+            stockMarketList.removeChild(stockMarketList.firstChild);
+        }
     }
     
     Player.playtimeSinceLastAug = 0;
     
+    var mainMenu = document.getElementById("mainmenu-container");
+    mainMenu.style.visibility = "visible";
     Engine.loadTerminalContent();
+    
+    //Red Pill
+    if (augmentationExists(AugmentationNames.TheRedPill) &&
+        Augmentations[AugmentationNames.TheRedPill].owned) {
+        var WorldDaemon = AllServers[SpecialServerIps[SpecialServerNames.WorldDaemon]];
+        var DaedalusServer = AllServers[SpecialServerIps[SpecialServerNames.DaedalusServer]];
+        if (WorldDaemon && DaedalusServer) {
+            WorldDaemon.serversOnNetwork.push(DaedalusServer.ip);
+            DaedalusServer.serversOnNetwork.push(WorldDaemon.ip);
+        }
+    }
 }

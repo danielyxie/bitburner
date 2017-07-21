@@ -141,148 +141,148 @@ initForeignServers = function() {
     //MegaCorporations
     var ECorpServer = new Server();
     ECorpServer.init(createRandomIp(), "ecorp", "ECorp", true, false, false, false, 0);
-    ECorpServer.setHackingParameters(getRandomInt(900, 950), 90000000000, 99, 99);
+    ECorpServer.setHackingParameters(getRandomInt(1150, 1300), 90000000000, 99, 99);
     ECorpServer.setPortProperties(5);
     AddToAllServers(ECorpServer);
     
     var MegaCorpServer = new Server();
     MegaCorpServer.init(createRandomIp(), "megacorp", "MegaCorp", true, false, false, false, 0);
-    MegaCorpServer.setHackingParameters(getRandomInt(900, 950), 75000000000, 99, 99);
+    MegaCorpServer.setHackingParameters(getRandomInt(1150, 1300), 75000000000, 99, 99);
     MegaCorpServer.setPortProperties(5);
     AddToAllServers(MegaCorpServer);
     
     var BachmanAndAssociatesServer = new Server();
     BachmanAndAssociatesServer.init(createRandomIp(), "b-and-a", "Bachman & Associates", true, false, false, false, 0);
-    BachmanAndAssociatesServer.setHackingParameters(getRandomInt(875, 925), 30000000000, getRandomInt(75, 85), getRandomInt(65, 75));
+    BachmanAndAssociatesServer.setHackingParameters(getRandomInt(1000, 1050), 30000000000, getRandomInt(75, 85), getRandomInt(65, 75));
     BachmanAndAssociatesServer.setPortProperties(5);
     AddToAllServers(BachmanAndAssociatesServer);
     
     var BladeIndustriesServer = new Server();
     BladeIndustriesServer.init(createRandomIp(), "blade", "Blade Industries", true, false, false, false, 0);
-    BladeIndustriesServer.setHackingParameters(getRandomInt(875, 925), 18000000000, getRandomInt(90, 95), getRandomInt(60, 75));
+    BladeIndustriesServer.setHackingParameters(getRandomInt(1000, 1100), 18000000000, getRandomInt(90, 95), getRandomInt(60, 75));
     BladeIndustriesServer.setPortProperties(5);
     AddToAllServers(BladeIndustriesServer);
     
     var NWOServer = new Server();
     NWOServer.init(createRandomIp(), "nwo", "New World Order", true, false, false, false, 0);
-    NWOServer.setHackingParameters(getRandomInt(900, 920), 36000000000, 99, getRandomInt(75, 85));
+    NWOServer.setHackingParameters(getRandomInt(1000, 1200), 36000000000, 99, getRandomInt(75, 85));
     NWOServer.setPortProperties(5);
     AddToAllServers(NWOServer);
     
     var ClarkeIncorporatedServer = new Server();
     ClarkeIncorporatedServer.init(createRandomIp(), "clarkeinc", "Clarke Incorporated", true, false, false, false, 0);
-    ClarkeIncorporatedServer.setHackingParameters(getRandomInt(875, 950), 13000000000, getRandomInt(50, 60), getRandomInt(50, 70));
+    ClarkeIncorporatedServer.setHackingParameters(getRandomInt(1000, 1200), 13000000000, getRandomInt(50, 60), getRandomInt(50, 70));
     ClarkeIncorporatedServer.setPortProperties(5);
     AddToAllServers(ClarkeIncorporatedServer);
     
     var OmniTekIncorporatedServer = new Server();
     OmniTekIncorporatedServer.init(createRandomIp(), "omnitek", "OmniTek Incorporated", true, false, false, false, 0);
-    OmniTekIncorporatedServer.setHackingParameters(getRandomInt(870, 930), 45000000000, getRandomInt(90, 99), getRandomInt(95, 99));
+    OmniTekIncorporatedServer.setHackingParameters(getRandomInt(900, 1100), 45000000000, getRandomInt(90, 99), getRandomInt(95, 99));
     OmniTekIncorporatedServer.setPortProperties(5);
     AddToAllServers(OmniTekIncorporatedServer);
     
     var FourSigmaServer = new Server();
     FourSigmaServer.init(createRandomIp(), "4sigma", "FourSigma", true, false, false, false, 0);
-    FourSigmaServer.setHackingParameters(getRandomInt(875, 925), 24000000000, getRandomInt(60, 70), getRandomInt(75, 99));
+    FourSigmaServer.setHackingParameters(getRandomInt(950, 1200), 24000000000, getRandomInt(60, 70), getRandomInt(75, 99));
     FourSigmaServer.setPortProperties(5);
     AddToAllServers(FourSigmaServer);
     
     var KuaiGongInternationalServer = new Server();
     KuaiGongInternationalServer.init(createRandomIp(), "kuai-gong", "KuaiGong International", true, false, false, false, 0);
-    KuaiGongInternationalServer.setHackingParameters(getRandomInt(900, 950), 70000000000, getRandomInt(95, 99), getRandomInt(90, 99));
+    KuaiGongInternationalServer.setHackingParameters(getRandomInt(1000, 1250), 70000000000, getRandomInt(95, 99), getRandomInt(90, 99));
     KuaiGongInternationalServer.setPortProperties(5);
     AddToAllServers(KuaiGongInternationalServer);
     
     //Technology and communications companies (large targets)
     var FulcrumTechnologiesServer = new Server();
     FulcrumTechnologiesServer.init(createRandomIp(), "fulcrumtech", "Fulcrum Technologies", true, false, false, false, 64);
-    FulcrumTechnologiesServer.setHackingParameters(getRandomInt(900, 1000), 1500000000, getRandomInt(85, 95), getRandomInt(80, 99));
+    FulcrumTechnologiesServer.setHackingParameters(getRandomInt(1000, 1200), 1500000000, getRandomInt(85, 95), getRandomInt(80, 99));
     FulcrumTechnologiesServer.setPortProperties(5);
     AddToAllServers(FulcrumTechnologiesServer);
 	
     var FulcrumSecretTechnologiesServer = new Server();
     FulcrumSecretTechnologiesServer.init(createRandomIp(), "fulcrumassets", "Fulcrum Technologies Assets", true, false, false, false, 0);
-    FulcrumSecretTechnologiesServer.setHackingParameters(getRandomInt(1000, 1250), 1000000, 99, 1);
+    FulcrumSecretTechnologiesServer.setHackingParameters(getRandomInt(1200, 1500), 1000000, 99, 1);
     FulcrumSecretTechnologiesServer.setPortProperties(5);
     AddToAllServers(FulcrumSecretTechnologiesServer);
 	SpecialServerIps.addIp(SpecialServerNames.FulcrumSecretTechnologies, FulcrumSecretTechnologiesServer.ip);
     
     var StormTechnologiesServer = new Server();
     StormTechnologiesServer.init(createRandomIp(), "stormtech", "Storm Technologies", true, false, false, false, 0);
-    StormTechnologiesServer.setHackingParameters(getRandomInt(825, 875), 1300000000, getRandomInt(80, 90), getRandomInt(70, 90));
+    StormTechnologiesServer.setHackingParameters(getRandomInt(900, 1050), 1300000000, getRandomInt(80, 90), getRandomInt(70, 90));
     StormTechnologiesServer.setPortProperties(5);
     AddToAllServers(StormTechnologiesServer);
     
     var DefCommServer = new Server();
     DefCommServer.init(createRandomIp(), "defcomm", "DefComm", true, false, false, false, 0);
-    DefCommServer.setHackingParameters(getRandomInt(800, 850), 850000000, getRandomInt(85, 95), getRandomInt(50, 70));
+    DefCommServer.setHackingParameters(getRandomInt(900, 1000), 850000000, getRandomInt(85, 95), getRandomInt(50, 70));
     DefCommServer.setPortProperties(5);
     AddToAllServers(DefCommServer);
     
     var InfoCommServer = new Server();
     InfoCommServer.init(createRandomIp(), "infocomm", "InfoComm", true, false, false, false, 0);
-    InfoCommServer.setHackingParameters(getRandomInt(800, 850), 700000000, getRandomInt(70, 90), getRandomInt(35, 75));
+    InfoCommServer.setHackingParameters(getRandomInt(875, 950), 700000000, getRandomInt(70, 90), getRandomInt(35, 75));
     InfoCommServer.setPortProperties(5);
     AddToAllServers(InfoCommServer);
     
     var HeliosLabsServer = new Server();
     HeliosLabsServer.init(createRandomIp(), "helios", "Helios Labs", true, false, false, false, 0);
-    HeliosLabsServer.setHackingParameters(getRandomInt(775, 825), 450000000, getRandomInt(85, 95), getRandomInt(70, 80));
+    HeliosLabsServer.setHackingParameters(getRandomInt(800, 900), 450000000, getRandomInt(85, 95), getRandomInt(70, 80));
     HeliosLabsServer.setPortProperties(5);
     AddToAllServers(HeliosLabsServer);
     
     var VitaLifeServer = new Server();
     VitaLifeServer.init(createRandomIp(), "vitalife", "VitaLife", true, false, false, false, 32);
-    VitaLifeServer.setHackingParameters(getRandomInt(750, 800), 720000000, getRandomInt(80, 90), getRandomInt(60, 80));
+    VitaLifeServer.setHackingParameters(getRandomInt(775, 900), 720000000, getRandomInt(80, 90), getRandomInt(60, 80));
     VitaLifeServer.setPortProperties(5);
     AddToAllServers(VitaLifeServer);
     
     var IcarusMicrosystemsServer = new Server();
     IcarusMicrosystemsServer.init(createRandomIp(), "icarus", "Icarus Microsystems", true, false, false, false, 0);
-    IcarusMicrosystemsServer.setHackingParameters(getRandomInt(800, 820), 1000000000, getRandomInt(85, 95), getRandomInt(85, 95));
+    IcarusMicrosystemsServer.setHackingParameters(getRandomInt(850, 925), 1000000000, getRandomInt(85, 95), getRandomInt(85, 95));
     IcarusMicrosystemsServer.setPortProperties(5);
     AddToAllServers(IcarusMicrosystemsServer);
     
     var UniversalEnergyServer = new Server();
     UniversalEnergyServer.init(createRandomIp(), "univ-energy", "Universal Energy", true, false, false, false, 32);
-    UniversalEnergyServer.setHackingParameters(getRandomInt(780, 800), 1300000000, getRandomInt(80, 90), getRandomInt(80, 90));
+    UniversalEnergyServer.setHackingParameters(getRandomInt(800, 900), 1300000000, getRandomInt(80, 90), getRandomInt(80, 90));
     UniversalEnergyServer.setPortProperties(4);
     AddToAllServers(UniversalEnergyServer);
     
     var TitanLabsServer = new Server();
     TitanLabsServer.init(createRandomIp(), "titan-labs", "Titan Laboratories", true, false, false, false, 32);
-    TitanLabsServer.setHackingParameters(getRandomInt(790, 800), 900000000, getRandomInt(70, 80), getRandomInt(60, 80));
+    TitanLabsServer.setHackingParameters(getRandomInt(800, 875), 900000000, getRandomInt(70, 80), getRandomInt(60, 80));
     TitanLabsServer.setPortProperties(5);
     AddToAllServers(TitanLabsServer);
      
     var MicrodyneTechnologiesServer = new Server();
     MicrodyneTechnologiesServer.init(createRandomIp(), "microdyne", "Microdyne Technologies", true, false, false, false, 16);
-    MicrodyneTechnologiesServer.setHackingParameters(getRandomInt(780, 820), 750000000, getRandomInt(65, 75), getRandomInt(70, 90));
+    MicrodyneTechnologiesServer.setHackingParameters(getRandomInt(800, 875), 750000000, getRandomInt(65, 75), getRandomInt(70, 90));
     MicrodyneTechnologiesServer.setPortProperties(5);
     AddToAllServers(MicrodyneTechnologiesServer);
     
     var TaiYangDigitalServer = new Server();
     TaiYangDigitalServer.init(createRandomIp(), "taiyang-digital", "Taiyang Digital", true, false, false, false, 0);
-    TaiYangDigitalServer.setHackingParameters(getRandomInt(800, 900), 1000000000, getRandomInt(70, 80), getRandomInt(70, 80));
+    TaiYangDigitalServer.setHackingParameters(getRandomInt(850, 950), 1000000000, getRandomInt(70, 80), getRandomInt(70, 80));
     TaiYangDigitalServer.setPortProperties(5);
     AddToAllServers(TaiYangDigitalServer);
     
     var GalacticCyberSystemsServer = new Server();
     GalacticCyberSystemsServer.init(createRandomIp(), "galactic-cyber", "Galactic Cybersystems", true, false, false, false, 0);
-    GalacticCyberSystemsServer.setHackingParameters(getRandomInt(800, 850), 450000000, getRandomInt(55, 65), getRandomInt(70, 90));
+    GalacticCyberSystemsServer.setHackingParameters(getRandomInt(825, 875), 450000000, getRandomInt(55, 65), getRandomInt(70, 90));
     GalacticCyberSystemsServer.setPortProperties(5);
     AddToAllServers(GalacticCyberSystemsServer);
     
     //Defense Companies ("Large" Companies)
     var AeroCorpServer = new Server();
     AeroCorpServer.init(createRandomIp(), "aerocorp", "AeroCorp", true, false, false, false, 0);
-    AeroCorpServer.setHackingParameters(getRandomInt(825, 875), 1300000000, getRandomInt(80, 90), getRandomInt(55, 65));
+    AeroCorpServer.setHackingParameters(getRandomInt(850, 925), 1300000000, getRandomInt(80, 90), getRandomInt(55, 65));
     AeroCorpServer.setPortProperties(5);
     AddToAllServers(AeroCorpServer);
     
     var OmniaCybersystemsServer = new Server();
     OmniaCybersystemsServer.init(createRandomIp(), "omnia", "Omnia Cybersystems", true, false, false, false, 0);
-    OmniaCybersystemsServer.setHackingParameters(getRandomInt(800, 850), 1100000000, getRandomInt(85, 95), getRandomInt(60, 70));
+    OmniaCybersystemsServer.setHackingParameters(getRandomInt(850, 950), 1100000000, getRandomInt(85, 95), getRandomInt(60, 70));
     OmniaCybersystemsServer.setPortProperties(5);
     AddToAllServers(OmniaCybersystemsServer);
     
@@ -294,57 +294,57 @@ initForeignServers = function() {
     
     var AppliedEnergeticsServer = new Server();
     AppliedEnergeticsServer.init(createRandomIp(), "applied-energetics", "Applied Energetics", true, false, false, false, 0);
-    AppliedEnergeticsServer.setHackingParameters(getRandomInt(750, 800), 1100000000, getRandomInt(60, 80), getRandomInt(70, 75));
+    AppliedEnergeticsServer.setHackingParameters(getRandomInt(775, 850), 1100000000, getRandomInt(60, 80), getRandomInt(70, 75));
     AppliedEnergeticsServer.setPortProperties(4);
     AddToAllServers(AppliedEnergeticsServer);
     
     var SolarisSpaceSystemsServer = new Server();
     SolarisSpaceSystemsServer.init(createRandomIp(), "solaris", "Solaris Space Systems", true, false, false, false, 0);
-    SolarisSpaceSystemsServer.setHackingParameters(getRandomInt(790, 810), 800000000, getRandomInt(70, 80), getRandomInt(70, 80));
+    SolarisSpaceSystemsServer.setHackingParameters(getRandomInt(750, 850), 800000000, getRandomInt(70, 80), getRandomInt(70, 80));
     SolarisSpaceSystemsServer.setPortProperties(5);
     AddToAllServers(SolarisSpaceSystemsServer);
     
     var DeltaOneServer = new Server();
     DeltaOneServer.init(createRandomIp(), "deltaone", "Delta One", true, false, false, false, 0);
-    DeltaOneServer.setHackingParameters(getRandomInt(800, 820), 1400000000, getRandomInt(75, 85), getRandomInt(50, 70));
+    DeltaOneServer.setHackingParameters(getRandomInt(800, 900), 1400000000, getRandomInt(75, 85), getRandomInt(50, 70));
     DeltaOneServer.setPortProperties(5);
     AddToAllServers(DeltaOneServer);
     
     //Health, medicine, pharmaceutical companies ("Large" targets)
     var GlobalPharmaceuticalsServer = new Server();
     GlobalPharmaceuticalsServer.init(createRandomIp(), "global-pharm", "Global Pharmaceuticals", true, false, false, false, 16);
-    GlobalPharmaceuticalsServer.setHackingParameters(getRandomInt(750, 800), 1800000000, getRandomInt(75, 85), getRandomInt(80, 90));
+    GlobalPharmaceuticalsServer.setHackingParameters(getRandomInt(750, 850), 1800000000, getRandomInt(75, 85), getRandomInt(80, 90));
     GlobalPharmaceuticalsServer.setPortProperties(4);
     AddToAllServers(GlobalPharmaceuticalsServer);
     
     var NovaMedicalServer = new Server();
     NovaMedicalServer.init(createRandomIp(), "nova-med", "Nova Medical", true, false, false, false, 0);
-    NovaMedicalServer.setHackingParameters(getRandomInt(775, 825), 1350000000, getRandomInt(60, 80), getRandomInt(65, 85));
+    NovaMedicalServer.setHackingParameters(getRandomInt(775, 850), 1350000000, getRandomInt(60, 80), getRandomInt(65, 85));
     NovaMedicalServer.setPortProperties(4);
     AddToAllServers(NovaMedicalServer);
     
     var ZeusMedicalServer = new Server();
-    ZeusMedicalServer.init(createRandomIp(), "zeud-med", "Zeus Medical", true, false, false, false, 0);
-    ZeusMedicalServer.setHackingParameters(getRandomInt(800, 825), 1600000000, getRandomInt(70, 90), getRandomInt(70, 80));
+    ZeusMedicalServer.init(createRandomIp(), "zeus-med", "Zeus Medical", true, false, false, false, 0);
+    ZeusMedicalServer.setHackingParameters(getRandomInt(800, 850), 1600000000, getRandomInt(70, 90), getRandomInt(70, 80));
     ZeusMedicalServer.setPortProperties(5);
     AddToAllServers(ZeusMedicalServer);
     
     var UnitaLifeGroupServer = new Server();
     UnitaLifeGroupServer.init(createRandomIp(), "unitalife", "UnitaLife Group", true, false, false, false, 32);
-    UnitaLifeGroupServer.setHackingParameters(getRandomInt(780, 800), 1200000000, getRandomInt(70, 80), getRandomInt(70, 80));
+    UnitaLifeGroupServer.setHackingParameters(getRandomInt(775, 825), 1200000000, getRandomInt(70, 80), getRandomInt(70, 80));
     UnitaLifeGroupServer.setPortProperties(4);
     AddToAllServers(UnitaLifeGroupServer);
     
     //"Medium level" targets
     var LexoCorpServer = new Server();
     LexoCorpServer.init(createRandomIp(), "lexo-corp", "Lexo Corporation", true, false, false, false, 16);
-    LexoCorpServer.setHackingParameters(getRandomInt(680, 720), 800000000, getRandomInt(60, 80), getRandomInt(55, 65));
+    LexoCorpServer.setHackingParameters(getRandomInt(650, 750), 800000000, getRandomInt(60, 80), getRandomInt(55, 65));
     LexoCorpServer.setPortProperties(4);
     AddToAllServers(LexoCorpServer);
     
     var RhoConstructionServer = new Server();
     RhoConstructionServer.init(createRandomIp(), "rho-construction", "Rho Construction", true, false, false, false, 0);
-    RhoConstructionServer.setHackingParameters(getRandomInt(480, 520), 700000000, getRandomInt(40, 60), getRandomInt(40, 60));
+    RhoConstructionServer.setHackingParameters(getRandomInt(475, 525), 700000000, getRandomInt(40, 60), getRandomInt(40, 60));
     RhoConstructionServer.setPortProperties(3);
     AddToAllServers(RhoConstructionServer);
     
@@ -399,19 +399,19 @@ initForeignServers = function() {
     
     var CompuTekServer = new Server();
     CompuTekServer.init(createRandomIp(), "comptek", "CompuTek", true, false, false, false, 8);
-    CompuTekServer.setHackingParameters(getRandomInt(300, 400), 275000000, getRandomInt(55, 65), getRandomInt(50, 60));
+    CompuTekServer.setHackingParameters(getRandomInt(300, 400), 275000000, getRandomInt(55, 65), getRandomInt(45, 65));
     CompuTekServer.setPortProperties(3);
     AddToAllServers(CompuTekServer);
 
     var NetLinkTechnologiesServer = new Server();
     NetLinkTechnologiesServer.init(createRandomIp(), "netlink", "NetLink Technologies", true, false, false, false, 0);
-    NetLinkTechnologiesServer.setHackingParameters(getRandomInt(375, 425), 320000000, getRandomInt(60, 80), getRandomInt(50, 70));
+    NetLinkTechnologiesServer.setHackingParameters(getRandomInt(375, 425), 320000000, getRandomInt(60, 80), getRandomInt(45, 75));
     NetLinkTechnologiesServer.setPortProperties(3);
     AddToAllServers(NetLinkTechnologiesServer);
     
     var JohnsonOrthopedicsServer = new Server();
     JohnsonOrthopedicsServer.init(createRandomIp(), "johnson-ortho", "Johnson Orthopedics", true, false, false, false, 4);
-    JohnsonOrthopedicsServer.setHackingParameters(getRandomInt(250, 300), 80000000, getRandomInt(40, 60), getRandomInt(40, 60));
+    JohnsonOrthopedicsServer.setHackingParameters(getRandomInt(250, 300), 80000000, getRandomInt(35, 65), getRandomInt(35, 65));
     JohnsonOrthopedicsServer.setPortProperties(2);
     AddToAllServers(JohnsonOrthopedicsServer);
     
@@ -556,7 +556,7 @@ initForeignServers = function() {
     SpecialServerIps.addIp(SpecialServerNames.CyberSecServer, CyberSecServer.ip);
     
     var DaedalusServer = new Server();
-    DaedalusServer.init(createRandomIp(), "Icarus", "Icarus", true, false, false, false, 0);
+    DaedalusServer.init(createRandomIp(), "The-Cave", "Helios", true, false, false, false, 0);
     DaedalusServer.setHackingParameters(925, 0, 0, 0);
     DaedalusServer.setPortProperties(5);
     AddToAllServers(DaedalusServer);
@@ -565,11 +565,10 @@ initForeignServers = function() {
     //Super special Servers
     var WorldDaemon = new Server();
     WorldDaemon.init(createRandomIp(), SpecialServerNames.WorldDaemon, SpecialServerNames.WorldDaemon, true, false, false, false, 0);
-    WorldDaemon.setHackingParameters(950, 0, 0, 0);
+    WorldDaemon.setHackingParameters(3000, 0, 0, 0);
     WorldDaemon.setPortProperties(5);
     AddToAllServers(WorldDaemon);
     SpecialServerIps.addIp(SpecialServerNames.WorldDaemon, WorldDaemon.ip);
-	
 	
     /* Create a randomized network for all the foreign servers */
     //Groupings for creating a randomized network

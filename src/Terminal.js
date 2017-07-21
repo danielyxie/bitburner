@@ -3,9 +3,9 @@
 /* Write text to terminal */
 var post = function(input, replace=true) {
     if (replace) {
-        $("#terminal-input").before('<tr class="posted"><td style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
+        $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
     } else {
-        $("#terminal-input").before('<tr class="posted"><td style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
+        $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
     }
     
 	updateTerminalScroll();
@@ -175,6 +175,8 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
     
     command = command.toLowerCase();
     
+    //Remove all options in allPossibilities that do not match the current string
+    //that we are attempting to autocomplete
     if (arg == "") {
         for (var i = allPossibilities.length-1; i >= 0; --i) {
             if (!allPossibilities[i].startsWith(command)) {
@@ -334,6 +336,11 @@ var Terminal = {
 			var expGainedOnSuccess = Player.calculateExpGain();
 			var expGainedOnFailure = (expGainedOnSuccess / 4);
 			if (rand < hackChance) {	//Success!
+                if (SpecialServerIps[SpecialServerNames.WorldDaemon] &&
+                    SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip) {
+                    hackWorldDaemon();
+                    return;
+                }
                 server.manuallyHacked = true;
 				var moneyGained = Player.calculatePercentMoneyHacked();
 				moneyGained = Math.floor(server.moneyAvailable * moneyGained);
@@ -435,6 +442,11 @@ var Terminal = {
         //Process any aliases
         command = substituteAliases(command);
         
+        //Allow usage of ./
+        if (command.startsWith("./")) {
+            command = command.slice(0, 2) + " " + command.slice(2);
+        }
+        
         //Only split the first space
 		var commandArray = command.split(" ");
         if (commandArray.length > 1) {
@@ -451,7 +463,7 @@ var Terminal = {
             switch(currITutorialStep) {
             case iTutorialSteps.TerminalHelp:
                 if (commandArray[0] == "help") {
-                    post(CONSTANTS.HelpText);
+                    post(TerminalHelpText);
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
@@ -714,11 +726,20 @@ var Terminal = {
 				}
 				break;
 			case "help":
-				if (commandArray.length != 1) {
+				if (commandArray.length != 1 && commandArray.length != 2) {
 					post("Incorrect usage of help command. Usage: help"); return;
 				}
-				
-				post(CONSTANTS.HelpText);
+				if (commandArray.length == 1) {
+                    post(TerminalHelpText);
+                } else {
+                    var cmd = commandArray[1];
+                    var txt = HelpTexts[cmd];
+                    if (txt == null) {
+                        post("Error: No help topics match '" + cmd + "'");
+                        return;
+                    }
+                    post(txt);
+                }
 				break;
 			case "home":
 				if (commandArray.length != 1) {
@@ -871,6 +892,7 @@ var Terminal = {
                 post("No such file exists");
 				break;
 			case "run":
+            case "./":
 				//Run a program or a script
 				if (commandArray.length != 2) {
 					post("Incorrect number of arguments. Usage: run [program/script] [-t] [num threads] [arg1] [arg2]...");
@@ -1168,7 +1190,6 @@ var Terminal = {
     
     executeScanAnalyzeCommand: function(depth=1) {
         //We'll use the AllServersMap as a visited() array
-        //TODO Later refactor this to a generic name
         //TODO Using array as stack for now, can make more efficient
         post("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
         post(" ");
@@ -1343,6 +1364,18 @@ var Terminal = {
             case Programs.DeepscanV2:
                 post("This executable cannot be run.");
                 post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
+                break;
+            case Programs.Flight:
+                post("Augmentations: " + Player.augmentations.length + " / 30");
+                post("Money: $" + formatNumber(Player.money, 2) + " / $" + formatNumber(100000000000, 2));
+                post("One path below must be fulfilled...");
+                post("----------HACKING PATH----------");
+                post("Hacking skill: " + Player.hacking_skill + " / 2500");
+                post("----------COMBAT PATH----------");
+                post("Strength: " + Player.strength + " / 1500");
+                post("Defense: " + Player.defense + " / 1500");
+                post("Dexterity: " + Player.dexterity + " / 1500");
+                post("Agility: " + Player.agility + " / 1500");
                 break;
 			default:
 				post("Invalid executable. Cannot be run");

@@ -52,6 +52,7 @@ function checkForMessagesToSend() {
     var cybersecTest    = Messages[MessageFilenames.CyberSecTest];
     var nitesecTest     = Messages[MessageFilenames.NiteSecTest];
     var bitrunnersTest  = Messages[MessageFilenames.BitRunnersTest];
+    var redpill = Messages[MessageFilenames.RedPill];
     
     if (jumper0 && !jumper0.recvd && Player.hacking_skill >= 25) {
         sendMessage(jumper0);
@@ -69,9 +70,11 @@ function checkForMessagesToSend() {
         sendMessage(jumper4);
     } else if (bitrunnersTest && !bitrunnersTest.recvd && Player.hacking_skill >= 500) {
         sendMessage(bitrunnersTest);
-    } if (jumper5 && !jumper5.recvd && Player.hacking_skill >= 900) {
+    } else if (jumper5 && !jumper5.recvd && Player.hacking_skill >= 1000) {
         sendMessage(jumper5);
         Player.getHomeComputer().programs.push(Programs.Flight);
+    } else if (redpill && !redpill.recvd && Player.hacking_skill >= 2000) {
+        sendMessage(redpill);
     }
 }
 
@@ -91,6 +94,7 @@ MessageFilenames = {
     CyberSecTest:   "csec-test.msg",
     NiteSecTest:    "nitesec-test.msg",
     BitRunnersTest: "19dfj3l1nd.msg",
+    RedPill:    "icarus.msg",
 }
 
 function initMessages()  {
@@ -148,4 +152,9 @@ function initMessages()  {
                                 "We can help you find the answers.<br><br>" + 
                                 "run4theh111z"));
     
+    AddToAllMessages(new Message(MessageFilenames.RedPill,
+                                "@)(#V%*N)@(#*)*C)@#%*)*V)@#(*%V@)(#VN%*)@#(*%<br>" + 
+                                ")@B(*#%)@)M#B*%V)____FIND___#$@)#%(B*)@#(*%B)<br>" + 
+                                "@_#(%_@#M(BDSPOMB__THE-CAVE_#)$(*@#$)@#BNBEGB<br>" + 
+                                "DFLSMFVMV)#@($*)@#*$MV)@#(*$V)M#(*$)M@(#*VM$)"));
 }

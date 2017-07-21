@@ -25,6 +25,19 @@ WorkerScript.prototype.getServer = function() {
 //Array containing all scripts that are running across all servers, to easily run them all
 var workerScripts 			= [];
 
+var NetscriptPorts = {
+    Port1: [],
+    Port2: [],
+    Port3: [],
+    Port4: [],
+    Port5: [],
+    Port6: [],
+    Port7: [],
+    Port8: [],
+    Port9: [],
+    Port10: [],
+}
+
 //Loop through workerScripts and run every script that is not currently running
 function runScriptsLoop() {
 	//Run any scripts that haven't been started

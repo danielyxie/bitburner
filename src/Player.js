@@ -226,9 +226,9 @@ PlayerObject.prototype.updateSkillLevels = function() {
 //        (2 * hacking_chance_multiplier * hacking_skill)                      100
 PlayerObject.prototype.calculateHackingChance = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
-    var skillMult = (2 * this.hacking_chance_mult * this.hacking_skill);
+    var skillMult = (1.75 * this.hacking_skill);
     var skillChance = (skillMult - this.getCurrentServer().requiredHackingSkill) / skillMult;
-    var chance = skillChance * difficultyMult;
+    var chance = skillChance * difficultyMult * this.hacking_chance_mult;
     if (chance > 1) {return 1;}
     if (chance < 0) {return 0;} 
     return chance;
@@ -253,7 +253,7 @@ PlayerObject.prototype.calculateHackingTime = function() {
 PlayerObject.prototype.calculatePercentMoneyHacked = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
     var skillMult = (this.hacking_skill - (this.getCurrentServer().requiredHackingSkill - 1)) / this.hacking_skill;
-    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 225;
+    var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 240;
     console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}

@@ -18,16 +18,12 @@
     background-color: var(--my-background-color);
 }
 
-p {
+p, pre, h2 {
     color: var(--my-font-color);
 }
 
 h1 {
     font-size: 22px;
-    color: var(--my-font-color);
-}
-
-h2 {
     color: var(--my-font-color);
 }
 
@@ -54,7 +50,7 @@ tr:focus {
     outline:none;
 }
 
-/* Main menu */
+/* Main navigation menu */
 .mainmenu {
     list-style-type: none;
     margin: 0;
@@ -70,27 +66,60 @@ tr:focus {
 	background-color: #333;
 }
 
+/* Default buttons */
 .mainmenu>li a {
     display: block;
     color: #e6e6e6;
-    background-color: #333;
+    background-color: #555;
     padding: 16px;
     text-decoration: none;
 }
 
-.mainmenu>li a:hover:not(.active) {
-    background-color: #555;
-    color: white;
-}
-
+/* Hovering makes them lighter */
+.mainmenu>li a:hover,
+.mainmenu>li a:hover:not(.active),
 .mainmenu>li a:focus {
-    background-color: #555;
+    background-color: #777;
+    color: white;
 }
 
+/* Panel headers can become active, and they are "lighter" than the rest */
 .mainmenu>li a.active {
-    background-color: #555;
+    background-color: #777;
     color: white;
-	
+}
+
+.mainmenu>li a.active:hover {
+    background-color:#aaa;
+}
+
+/* Plus and minus signs */
+.mainmenu-accordion-header:after {
+    content: '\02795';
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.mainmenu-accordion-header.opened:after {
+    content: "\2796";
+}
+
+.mainmenu-accordion-header.opened {
+    background-color:#222;
+}
+
+/* Slide down transition */
+.mainmenu-accordion-panel {
+    max-height: 0;
+    opacity: 1;
+    transition: max-height 0.2s ease-out;
+}
+
+/* Borders */
+.mainmenu-accordion-header {
+    border:2px solid white;
 }
 
 /* Make html links ("a" elements) nice looking buttons with this class */
@@ -130,7 +159,7 @@ a:link, a:visited {
 
 
 /* Notification icon (for create program right now only) */
-.create-program-tab {
+#create-program-tab {
     position:relative;
 }
 #create-program-notification {
@@ -321,6 +350,7 @@ a:link, a:visited {
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
+    height: 22px;
 }
 
 #character-overview-save-button:hover,
@@ -333,7 +363,7 @@ a:link, a:visited {
 }
 
 #character-overview-options-button {
-    display: inline-block;
+    display: inline;
 }
 
 /* Scan analyze links from AutoLink */

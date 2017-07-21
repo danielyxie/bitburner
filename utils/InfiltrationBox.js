@@ -32,11 +32,12 @@ infiltrationBoxCreate = function(inst) {
                         formatNumber(inst.chaExpGained, 3) + " cha exp<br>");
         return;
     }
+    var facValue = totalValue * Player.faction_rep_mult * 1.2
     var moneyValue = totalValue * CONSTANTS.InfiltrationMoneyValue;
     infiltrationSetText("You can sell the classified documents and secrets " + 
                         "you stole from " + inst.companyName + " for $" + 
                         formatNumber(moneyValue, 2) + " on the black market or you can give it " + 
-                        "to a faction to gain " + formatNumber(totalValue, 3) + " reputation with " + 
+                        "to a faction to gain " + formatNumber(facValue, 3) + " reputation with " + 
                         "that faction.");
     var selector = document.getElementById("infiltration-faction-select");
     selector.innerHTML = "";
@@ -72,9 +73,9 @@ infiltrationBoxCreate = function(inst) {
             dialogBoxCreate("Error finding faction. This is a bug please report to developer");
             return false;
         }
-        faction.playerReputation += totalValue;
+        faction.playerReputation += facValue;
         dialogBoxCreate("You gave the classified information you stole from " + inst.companyName + 
-                        " to " + facName + " and gained " + formatNumber(totalValue, 3) + " reputation with the faction. <br><br>" + 
+                        " to " + facName + " and gained " + formatNumber(facValue, 3) + " reputation with the faction. <br><br>" + 
                         "You gained:<br>" + 
                         formatNumber(inst.hackingExpGained, 3) + " hacking exp<br>" + 
                         formatNumber(inst.strExpGained, 3) + " str exp<br>" + 

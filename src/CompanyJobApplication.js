@@ -79,7 +79,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
     if (leaveCompany) {
         dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + 
                         pos.positionName + "!<br>" + 
-                        "You lost 1000 reputatation at your old company " + oldCompanyName + " because you left.");    
+                        "You lost 1000 reputation at your old company " + oldCompanyName + " because you left.");    
     } else {
         dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.positionName + "!");
     }

@@ -79,7 +79,7 @@ function iTutorialEvaluateStep() {
         });
         break;
     case iTutorialSteps.GoToCharacterPage:
-        iTutorialSetText("Let's start by heading to the Character page. Click the 'Character' tab on " + 
+        iTutorialSetText("Let's start by heading to the Stats page. Click the 'Stats' tab on " + 
                          "the main navigation menu (left-hand side of the screen)");
                          
         //No next button
@@ -87,20 +87,20 @@ function iTutorialEvaluateStep() {
         next.style.display = "none";
         
         //Flash Character tab
-        document.getElementById("character-menu-link").setAttribute("class", "flashing-button");
+        document.getElementById("stats-menu-link").setAttribute("class", "flashing-button");
         
         //Initialize everything necessary to open the "Character" page
-        var charaterMainMenuButton = document.getElementById("character-menu-link");
+        var charaterMainMenuButton = document.getElementById("stats-menu-link");
         charaterMainMenuButton.addEventListener("click", function() {
             Engine.loadCharacterContent();
             iTutorialNextStep(); //Opening the character page will go to the next step
-            clearEventListeners("character-menu-link");
+            clearEventListeners("stats-menu-link");
             return false;
         });
         break;
     case iTutorialSteps.CharacterPage:
-        iTutorialSetText("The Character page shows a lot of important information about your progress, " + 
-                         "such as your stats, skills, money, and bonuses/multipliers. ")
+        iTutorialSetText("The Stats page shows a lot of important information about your progress, " + 
+                         "such as your skills, money, and bonuses/multipliers. ")
         var next = clearEventListeners("interactive-tutorial-next");
         next.style.display = "inline-block";
         next.addEventListener("click", function() {
@@ -339,13 +339,13 @@ function iTutorialEvaluateStep() {
                          "earn you money over time, both online and offline. When you get enough " + 
                          " money, you can upgrade " + 
                          "your newly-purchased Hacknet Node below. <br><br>" + 
-                         "Let's go to the 'World' page through the main navigation menu.");
-        document.getElementById("world-menu-link").setAttribute("class", "flashing-button");
-        var worldButton = clearEventListeners("world-menu-link");
+                         "Let's go to the 'City' page through the main navigation menu.");
+        document.getElementById("city-menu-link").setAttribute("class", "flashing-button");
+        var worldButton = clearEventListeners("city-menu-link");
         worldButton.addEventListener("click", function() {
             Engine.loadWorldContent();
             iTutorialNextStep();
-            clearEventListeners("world-menu-link");
+            clearEventListeners("city-menu-link");
             return false;
         });
         break;
@@ -398,7 +398,7 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.GoToCharacterPage:
-        document.getElementById("character-menu-link").removeAttribute("class");
+        document.getElementById("stats-menu-link").removeAttribute("class");
         currITutorialStep = iTutorialSteps.CharacterPage;
         iTutorialEvaluateStep();
         break;
@@ -499,7 +499,7 @@ function iTutorialNextStep() {
         iTutorialEvaluateStep();
         break;
     case iTutorialSteps.HacknetNodesGoToWorldPage:
-        document.getElementById("world-menu-link").removeAttribute("class");
+        document.getElementById("city-menu-link").removeAttribute("class");
         currITutorialStep = iTutorialSteps.WorldDescription;
         iTutorialEvaluateStep();
         break;

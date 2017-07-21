@@ -1,3 +1,65 @@
+/* Shortcuts to navigate through the game
+ *  Alt-t - Terminal
+ *  Alt-c - Character
+ *  Alt-e - Script editor
+ *  Alt-s - Active scripts
+ *  Alt-h - Hacknet Nodes
+ *  Alt-w - City
+ *  Alt-j - Job
+ *  Alt-r - Travel Agency of current city
+ *  Alt-p - Create program
+ *  Alt-f - Factions
+ *  Alt-a - Augmentations
+ *  Alt-u - Tutorial
+ *  Alt-o - Options
+ */
+$(document).keydown(function(e) {
+    if (!Player.isWorking && !redPillFlag) {
+        if (e.keyCode == 84 && e.altKey) {
+            e.preventDefault();
+            Engine.loadTerminalContent();
+        } else if (e.keyCode == 67 && e.altKey) {
+            e.preventDefault();
+            Engine.loadCharacterContent();
+        } else if (e.keyCode == 69 && e.altKey) {
+            e.preventDefault();
+            Engine.loadScriptEditorContent();
+        } else if (e.keyCode == 83 && e.altKey) {
+            e.preventDefault();
+            Engine.loadActiveScriptsContent();
+        } else if (e.keyCode == 72 && e.altKey) {
+            e.preventDefault();
+            Engine.loadHacknetNodesContent();
+        } else if (e.keyCode == 87 && e.altKey) {
+            e.preventDefault();
+            Engine.loadWorldContent();
+        } else if (e.keyCode == 74 && e.altKey) {
+            e.preventDefault();
+            Engine.loadJobContent();
+        } else if (e.keyCode == 82 && e.altKey) {
+            e.preventDefault();
+            Engine.loadTravelContent();
+        } else if (e.keyCode == 80 && e.altKey) {
+            e.preventDefault();
+            Engine.loadCreateProgramContent();
+        } else if (e.keyCode == 70 && e.altKey) {
+            e.preventDefault();
+            Engine.loadFactionsContent();
+        } else if (e.keyCode == 65 && e.altKey) {
+            e.preventDefault();
+            Engine.loadAugmentationsContent();
+        } else if (e.keyCode == 85 && e.altKey) {
+            e.preventDefault();
+            Engine.loadTutorialContent();
+        } 
+    }
+
+    if (e.keyCode == 79 && e.altKey) {
+        e.preventDefault();
+        gameOptionsBoxOpen();
+    }
+});
+
 var Engine = {
     version: "",
     Debug: true,
@@ -11,6 +73,8 @@ var Engine = {
         activeScriptsMainMenuButton:    null,
         hacknetNodesMainMenuButton:     null,
         worldMainMenuButton:            null,
+        travelMainMenuButton:           null,
+        jobMainMenuButton:              null,
         createProgramMainMenuButton:    null,
         factionsMainMenuButton:         null,
         augmentationsMainMenuButton:    null,
@@ -64,7 +128,7 @@ var Engine = {
         characterInfo:                  null,
         
         //Script editor text
-        scriptEditorText:               null,
+        scriptEditorText:               null,        
     },
     
     //Current page status 
@@ -99,6 +163,7 @@ var Engine = {
         Engine.hideAllContent();
         Engine.Display.terminalContent.style.visibility = "visible";
         Engine.currentPage = Engine.Page.Terminal;
+        document.getElementById("terminal-menu-link").classList.add("active");
     },
     
     loadCharacterContent: function() {
@@ -106,6 +171,7 @@ var Engine = {
         Engine.Display.characterContent.style.visibility = "visible";
         Engine.displayCharacterInfo();
         Engine.currentPage = Engine.Page.CharacterInfo;
+        document.getElementById("stats-menu-link").classList.add("active");
     },
     
     loadScriptEditorContent: function(filename = "", code = "") {
@@ -118,6 +184,7 @@ var Engine = {
         document.getElementById("script-editor-text").focus();
         upgradeScriptEditorContent();
         Engine.currentPage = Engine.Page.ScriptEditor;
+        document.getElementById("create-script-menu-link").classList.add("active");
     },
     
     loadActiveScriptsContent: function() {
@@ -125,6 +192,7 @@ var Engine = {
         Engine.Display.activeScriptsContent.style.visibility = "visible";
         setActiveScriptsClickHandlers();
         Engine.currentPage = Engine.Page.ActiveScripts;
+        document.getElementById("active-scripts-menu-link").classList.add("active");
     },
     
     loadHacknetNodesContent: function() {
@@ -132,6 +200,7 @@ var Engine = {
         Engine.Display.hacknetNodesContent.style.visibility = "visible";
         displayHacknetNodesContent();
         Engine.currentPage = Engine.Page.HacknetNodes;
+        document.getElementById("hacknet-nodes-menu-link").classList.add("active");
     },
     
     loadWorldContent: function() {
@@ -139,6 +208,7 @@ var Engine = {
         Engine.Display.worldContent.style.visibility = "visible";
         Engine.displayWorldInfo();
         Engine.currentPage = Engine.Page.World;
+        document.getElementById("city-menu-link").classList.add("active");
     },
     
     loadCreateProgramContent: function() {
@@ -146,6 +216,7 @@ var Engine = {
         Engine.Display.createProgramContent.style.visibility = "visible";
         displayCreateProgramContent();
         Engine.currentPage = Engine.Page.CreateProgram;
+        document.getElementById("create-program-menu-link").classList.add("active");
     },
     
     loadFactionsContent: function() {
@@ -153,6 +224,7 @@ var Engine = {
         Engine.Display.factionsContent.style.visibility = "visible";
         Engine.displayFactionsInfo();
         Engine.currentPage = Engine.Page.Factions;
+        document.getElementById("factions-menu-link").classList.add("active");
     },
     
     loadFactionContent: function() {
@@ -166,6 +238,7 @@ var Engine = {
         Engine.Display.augmentationsContent.style.visibility = "visible";
         Engine.displayAugmentationsContent();
         Engine.currentPage = Engine.Page.Augmentations;
+        document.getElementById("augmentations-menu-link").classList.add("active");
     },
     
     loadTutorialContent: function() {
@@ -173,6 +246,7 @@ var Engine = {
         Engine.Display.tutorialContent.style.visibility = "visible";
         Engine.displayTutorialContent();
         Engine.currentPage = Engine.Page.Tutorial;
+        document.getElementById("tutorial-menu-link").classList.add("active");
     },
     
     loadLocationContent: function() {
@@ -180,6 +254,43 @@ var Engine = {
         Engine.Display.locationContent.style.visibility = "visible";
         displayLocationContent();
         Engine.currentPage = Engine.Page.Location;
+    },
+    
+    loadTravelContent: function() {
+        switch(Player.city) {
+            case Locations.Aevum:
+                Player.location = Locations.AevumTravelAgency;
+                break;
+            case Locations.Chongqing:
+                Player.location = Locations.ChongqingTravelAgency;
+                break;
+            case Locations.Sector12:
+                Player.location = Locations.Sector12TravelAgency;
+                break;
+            case Locations.NewTokyo:
+                Player.location = Locations.NewTokyoTravelAgency;
+                break;
+            case Locations.Ishima:
+                Player.location = Locations.IshimaTravelAgency;
+                break;
+            case Locations.Volhaven:
+                Player.location = Locations.VolhavenTravelAgency;
+                break;
+            default:
+                dialogBoxCreate("ERROR: Invalid city. This is a bug please contact game dev");
+                break;
+        }
+        Engine.loadLocationContent();
+    },
+    
+    loadJobContent: function() {
+        if (Player.companyName == "") {
+            dialogBoxCreate("You do not currently have a job! You can visit various companies " + 
+                            "in the city and try to find a job.");
+            return;
+        }
+        Player.location = Player.companyName;
+        Engine.loadLocationContent();
     },
     
     loadWorkInProgressContent: function() {
@@ -238,6 +349,19 @@ var Engine = {
         Engine.newTokyoLocationsList.style.display = "none";
         Engine.ishimaLocationsList.style.display = "none";
         Engine.volhavenLocationsList.style.display = "none";
+        
+        //Make nav menu tabs inactive
+        document.getElementById("terminal-menu-link").classList.remove("active");
+        document.getElementById("create-script-menu-link").classList.remove("active");
+        document.getElementById("active-scripts-menu-link").classList.remove("active");
+        document.getElementById("create-program-menu-link").classList.remove("active");
+        document.getElementById("stats-menu-link").classList.remove("active");
+        document.getElementById("factions-menu-link").classList.remove("active");
+        document.getElementById("augmentations-menu-link").classList.remove("active");
+        document.getElementById("hacknet-nodes-menu-link").classList.remove("active");
+        document.getElementById("city-menu-link").classList.remove("active");
+        document.getElementById("tutorial-menu-link").classList.remove("active");
+        document.getElementById("options-menu-link").classList.remove("active");
     },
     
     displayCharacterOverviewInfo: function() {
@@ -568,7 +692,7 @@ var Engine = {
         createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
         checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations every 5 minutes
         passiveFactionGrowth: 600,
-        messages: 300,
+        messages: 150,
         stockTick:  30,                     //Update stock prices
         sCr: 1500,                          
         updateScriptEditorDisplay: 5,
@@ -644,7 +768,7 @@ var Engine = {
         
         if (Engine.Counters.messages <= 0) {
             checkForMessagesToSend();
-            Engine.Counters.messages = 300;
+            Engine.Counters.messages = 150;
         }
         
         if (Engine.Counters.stockTick <= 0) {
@@ -657,17 +781,7 @@ var Engine = {
         if (Engine.Counters.sCr <= 0) {
             //Assume 4Sig will always indicate state of market
             if (Player.hasWseAccount) {
-                console.log("Determining stock market cycle");
-                var thresh = 0.66;
-                var stock = StockMarket[Locations.Sector12FourSigma];
-                if (stock == null) {
-                    console.log("ERR: Could not find 4Sigma stock");
-                    return;
-                }
-                if (stock.b) {thresh = 0.34;}
-                if (Math.random() < thresh) {
-                    stockMarketCycle();
-                }
+                stockMarketCycle();
             }
             Engine.Counters.sCr = 1500;
         }
@@ -732,7 +846,37 @@ var Engine = {
         }, 3000);
     },
     
+    displayLoadingScreen: function() {
+        
+    },
+    
+    removeLoadingScreen: function() {
+        var loader = document.getElementById("loader");
+        if (!loader) {return;}
+        while(loader.firstChild) {
+            loader.removeChild(loader.firstChild);
+        }
+        loader.parentNode.removeChild(loader);
+        document.getElementById("entire-game-container").style.visibility = "visible";
+    },
+    
     load: function() {
+        //Initialize main menu accordion panels to all start as "open"
+        var terminal            = document.getElementById("terminal-tab");
+        var createScript        = document.getElementById("create-script-tab");
+        var activeScripts       = document.getElementById("active-scripts-tab");
+        var createProgram       = document.getElementById("create-program-tab");
+        var stats               = document.getElementById("stats-tab");
+        var factions            = document.getElementById("factions-tab");
+        var augmentations       = document.getElementById("augmentations-tab");
+        var hacknetnodes        = document.getElementById("hacknet-nodes-tab");
+        var city                = document.getElementById("city-tab");
+        var travel              = document.getElementById("travel-tab");
+        var job                 = document.getElementById("job-tab");
+        var tutorial            = document.getElementById("tutorial-tab");
+        var options             = document.getElementById("options-tab");
+        
+        
         //Load game from save or create new game
         if (loadGame(saveObject)) {    
             console.log("Loaded game from save");
@@ -784,9 +928,50 @@ var Engine = {
             
             Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
+            Engine.removeLoadingScreen();
             dialogBoxCreate("While you were offline, your scripts generated $" + 
                             formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" + 
                             formatNumber(offlineProductionFromHacknetNodes, 2));
+            //Close main menu accordions for loaded game
+            terminal.style.maxHeight            = null;
+            terminal.style.opacity              = 0;
+            terminal.style.pointerEvents        = "none";
+            createScript.style.maxHeight        = null;
+            createScript.style.opacity          = 0;
+            createScript.style.pointerEvents    = "none";
+            activeScripts.style.maxHeight       = null;
+            activeScripts.style.opacity         = 0;
+            activeScripts.style.pointerEvents   = "none";
+            createProgram.style.maxHeight       = null;
+            createProgram.style.opacity         = 0;
+            createProgram.style.pointerEvents   = "none";
+            stats.style.maxHeight               = null;
+            stats.style.opacity                 = 0;
+            stats.style.pointerEvents           = "none";
+            factions.style.maxHeight            = null;
+            factions.style.opacity              = 0;
+            factions.style.pointerEvents        = "none";
+            augmentations.style.maxHeight       = null;
+            augmentations.style.opacity         = 0;
+            augmentations.style.pointerEvents   = "none";
+            hacknetnodes.style.maxHeight        = null;
+            hacknetnodes.style.opacity          = 0;
+            hacknetnodes.style.pointerEvents    = "none";
+            city.style.maxHeight                = null;
+            city.style.opacity                  = 0;
+            city.style.pointerEvents            = "none";
+            travel.style.maxHeight              = null;
+            travel.style.opacity                = 0;
+            travel.style.pointerEvents          = "none";
+            job.style.maxHeight                 = null;
+            job.style.opacity                   = 0;
+            job.style.pointerEvents             = "none";
+            tutorial.style.maxHeight            = null;
+            tutorial.style.opacity              = 0;
+            tutorial.style.pointerEvents        = "none";
+            options.style.maxHeight             = null;
+            options.style.opacity               = 0;
+            options.style.pointerEvents         = "none";
         } else {
             //No save found, start new game
             console.log("Initializing new game");
@@ -802,9 +987,48 @@ var Engine = {
             initMessages();
             initStockSymbols();
             
+            //Open main menu accordions for new game
+            //Main menu accordions
+            var hackingHdr      = document.getElementById("hacking-menu-header");
+            hackingHdr.classList.toggle("opened");
+            var characterHdr    = document.getElementById("character-menu-header");
+            characterHdr.classList.toggle("opened");
+            var worldHdr        = document.getElementById("world-menu-header");
+            worldHdr.classList.toggle("opened");
+            var helpHdr         = document.getElementById("help-menu-header");
+            helpHdr.classList.toggle("opened");
+            terminal.style.maxHeight        = terminal.scrollHeight + "px";
+            terminal.style.display          = "block";
+            createScript.style.maxHeight    = createScript.scrollHeight + "px";
+            createScript.style.display      = "block";
+            activeScripts.style.maxHeight   = activeScripts.scrollHeight + "px";
+            activeScripts.style.display     = "block";
+            createProgram.style.maxHeight   = createProgram.scrollHeight + "px";
+            createProgram.style.display     = "block";
+            stats.style.maxHeight           = stats.scrollHeight + "px";
+            stats.style.display             = "block";
+            factions.style.maxHeight        = factions.scrollHeight + "px";
+            factions.style.display          = "block";
+            augmentations.style.maxHeight   = augmentations.scrollHeight + "px";
+            augmentations.style.display     = "block";
+            hacknetnodes.style.maxHeight   = hacknetnodes.scrollHeight + "px";
+            hacknetnodes.style.display     = "block";
+            city.style.maxHeight   = city.scrollHeight + "px";
+            city.style.display     = "block";
+            travel.style.maxHeight   = travel.scrollHeight + "px";
+            travel.style.display     = "block";
+            job.style.maxHeight   = job.scrollHeight + "px";
+            job.style.display     = "block";
+            tutorial.style.maxHeight   = tutorial.scrollHeight + "px";
+            tutorial.style.display     = "block";
+            options.style.maxHeight   = options.scrollHeight + "px";
+            options.style.display     = "block";
+            
             //Start interactive tutorial
-            iTutorialStart();            
+            iTutorialStart();
+            Engine.removeLoadingScreen();
         }
+        
     },
     
     setDisplayElements: function() {
@@ -941,6 +1165,222 @@ var Engine = {
     
     /* Initialization */
     init: function() {
+        //Main menu accordions
+        var hackingHdr      = document.getElementById("hacking-menu-header");
+        //hackingHdr.classList.toggle("opened");
+        var characterHdr    = document.getElementById("character-menu-header");
+        //characterHdr.classList.toggle("opened");
+        var worldHdr        = document.getElementById("world-menu-header");
+        //worldHdr.classList.toggle("opened");
+        var helpHdr         = document.getElementById("help-menu-header");
+        //helpHdr.classList.toggle("opened");
+        
+        hackingHdr.onclick = function() {
+            var terminal            = document.getElementById("terminal-tab");
+            var terminalLink        = document.getElementById("terminal-menu-link");
+            var createScript        = document.getElementById("create-script-tab");
+            var createScriptLink    = document.getElementById("create-script-menu-link");
+            var activeScripts       = document.getElementById("active-scripts-tab");
+            var activeScriptsLink   = document.getElementById("active-scripts-menu-link");
+            var createProgram       = document.getElementById("create-program-tab");
+            var createProgramLink   = document.getElementById("create-program-menu-link");
+            var createProgramNot    = document.getElementById("create-program-notification");
+            this.classList.toggle("opened");
+            if (terminal.style.maxHeight) {
+                terminal.style.opacity = 0;
+                terminal.style.maxHeight = null;
+                terminalLink.style.opacity = 0;
+                terminalLink.style.maxHeight = null;
+                terminalLink.style.pointerEvents = "none";
+                
+                createScript.style.opacity = 0;
+                createScript.style.maxHeight = null;
+                createScriptLink.style.opacity = 0;
+                createScriptLink.style.maxHeight = null;
+                createScriptLink.style.pointerEvents = "none";
+                
+                activeScripts.style.opacity = 0;
+                activeScripts.style.maxHeight = null;
+                activeScriptsLink.style.opacity = 0;
+                activeScriptsLink.style.maxHeight = null;
+                activeScriptsLink.style.pointerEvents = "none";
+                
+                createProgram.style.opacity = 0;
+                createProgram.style.maxHeight = null;
+                createProgramLink.style.opacity = 0;
+                createProgramLink.style.maxHeight = null;
+                createProgramLink.style.pointerEvents = "none";
+                
+                createProgramNot.style.display = "none";
+            } else {
+                terminal.style.maxHeight = terminal.scrollHeight + "px";
+                terminal.style.opacity = 1;
+                terminalLink.style.maxHeight = terminalLink.scrollHeight + "px";
+                terminalLink.style.opacity = 1;
+                terminalLink.style.pointerEvents = "auto";
+                
+                createScript.style.maxHeight = createScript.scrollHeight + "px";
+                createScript.style.opacity = 1;
+                createScriptLink.style.maxHeight = createScriptLink.scrollHeight + "px";
+                createScriptLink.style.opacity = 1;
+                createScriptLink.style.pointerEvents = "auto";
+                
+                activeScripts.style.maxHeight = activeScripts.scrollHeight + "px";
+                activeScripts.style.opacity = 1;
+                activeScriptsLink.style.maxHeight = activeScriptsLink.scrollHeight + "px";
+                activeScriptsLink.style.opacity = 1;
+                activeScriptsLink.style.pointerEvents = "auto";
+                
+                createProgram.style.maxHeight = createProgram.scrollHeight + "px";
+                createProgram.style.opacity = 1;
+                createProgramLink.style.maxHeight = createProgramLink.scrollHeight + "px";
+                createProgramLink.style.opacity = 1;
+                createProgramLink.style.pointerEvents = "auto";
+                createProgramNot.style.display = "block"
+            }
+        }
+
+        characterHdr.onclick = function() {
+            var stats               = document.getElementById("stats-tab");
+            var statsLink           = document.getElementById("stats-menu-link");
+            var factions            = document.getElementById("factions-tab");
+            var factionsLink        = document.getElementById("factions-menu-link");
+            var augmentations       = document.getElementById("augmentations-tab");
+            var augmentationsLink   = document.getElementById("augmentations-menu-link");
+            var hacknetnodes        = document.getElementById("hacknet-nodes-tab");
+            var hacknetnodesLink    = document.getElementById("hacknet-nodes-menu-link");
+            this.classList.toggle("opened");
+            if (stats.style.maxHeight) {
+                stats.style.opacity = 0;
+                stats.style.maxHeight = null;
+                statsLink.style.opacity = 0;
+                statsLink.style.maxHeight = null;
+                statsLink.style.pointerEvents = "none";
+                
+                factions.style.opacity = 0;
+                factions.style.maxHeight = null;
+                factionsLink.style.opacity = 0;
+                factionsLink.style.maxHeight = null;
+                factionsLink.style.pointerEvents = "none";
+                
+                augmentations.style.opacity = 0;
+                augmentations.style.maxHeight = null;
+                augmentationsLink.style.opacity = 0;
+                augmentationsLink.style.maxHeight = null;
+                augmentationsLink.style.pointerEvents = "none";
+                
+                hacknetnodes.style.opacity = 0;
+                hacknetnodes.style.maxHeight = null;
+                hacknetnodesLink.style.opacity = 0;
+                hacknetnodesLink.style.maxHeight = null;
+                hacknetnodesLink.style.pointerEvents = "none";
+            } else {
+                stats.style.maxHeight = stats.scrollHeight + "px";
+                stats.style.opacity = 1;
+                statsLink.style.maxHeight = statsLink.scrollHeight + "px";
+                statsLink.style.opacity = 1;
+                statsLink.style.pointerEvents = "auto";
+                
+                factions.style.maxHeight = factions.scrollHeight + "px";
+                factions.style.opacity = 1;
+                factionsLink.style.maxHeight = factionsLink.scrollHeight + "px";
+                factionsLink.style.opacity = 1;
+                factionsLink.style.pointerEvents = "auto";
+                
+                augmentations.style.maxHeight = augmentations.scrollHeight + "px";
+                augmentations.style.opacity = 1;
+                augmentationsLink.style.maxHeight = augmentationsLink.scrollHeight + "px";
+                augmentationsLink.style.opacity = 1;
+                augmentationsLink.style.pointerEvents = "auto";
+                
+                hacknetnodes.style.maxHeight = hacknetnodes.scrollHeight + "px";
+                hacknetnodes.style.opacity = 1;
+                hacknetnodesLink.style.maxHeight = hacknetnodesLink.scrollHeight + "px";
+                hacknetnodesLink.style.opacity = 1;
+                hacknetnodesLink.style.pointerEvents = "auto";
+            }
+        }
+        
+        worldHdr.onclick = function() {
+            var city            = document.getElementById("city-tab");
+            var cityLink        = document.getElementById("city-menu-link");
+            var travel          = document.getElementById("travel-tab");
+            var travelLink      = document.getElementById("travel-menu-link");
+            var job             = document.getElementById("job-tab");
+            var jobLink         = document.getElementById("job-menu-link");
+            this.classList.toggle("opened");
+            if (city.style.maxHeight) {
+                city.style.opacity = 0;
+                city.style.maxHeight = null;
+                cityLink.style.opacity = 0;
+                cityLink.style.maxHeight = null;
+                cityLink.style.pointerEvents = "none";
+                
+                travel.style.opacity = 0;
+                travel.style.maxHeight = null;
+                travelLink.style.opacity = 0;
+                travelLink.style.maxHeight = null;
+                travelLink.style.pointerEvents = "none";
+                
+                job.style.opacity = 0;
+                job.style.maxHeight = null;
+                jobLink.style.opacity = 0;
+                jobLink.style.maxHeight = null;
+                jobLink.style.pointerEvents = "none";
+            } else {
+                city.style.maxHeight = city.scrollHeight + "px";
+                city.style.opacity = 1;
+                cityLink.style.maxHeight = cityLink.scrollHeight + "px";
+                cityLink.style.opacity = 1;
+                cityLink.style.pointerEvents = "auto";
+                
+                travel.style.maxHeight = travel.scrollHeight + "px";
+                travel.style.opacity = 1;
+                travelLink.style.maxHeight = travelLink.scrollHeight + "px";
+                travelLink.style.opacity = 1;
+                travelLink.style.pointerEvents = "auto";
+                
+                job.style.maxHeight = job.scrollHeight + "px";
+                job.style.opacity = 1;
+                jobLink.style.maxHeight = jobLink.scrollHeight + "px";
+                jobLink.style.opacity = 1;
+                jobLink.style.pointerEvents = "auto";
+            }
+        }
+        
+        helpHdr.onclick = function() {
+            var tutorial        = document.getElementById("tutorial-tab");
+            var tutorialLink    = document.getElementById("tutorial-menu-link");
+            var options         = document.getElementById("options-tab");
+            var optionsLink     = document.getElementById("options-menu-link");
+            this.classList.toggle("opened");
+            if (tutorial.style.maxHeight) {
+                tutorial.style.opacity = 0;
+                tutorial.style.maxHeight = null;
+                tutorialLink.style.opacity = 0;
+                tutorialLink.style.maxHeight = null;
+                tutorialLink.style.pointerEvents = "none";
+                
+                options.style.opacity = 0;
+                options.style.maxHeight = null;
+                optionsLink.style.opacity = 0;
+                optionsLink.style.maxHeight = null;
+                optionsLink.style.pointerEvents = "none";
+            } else {
+                tutorial.style.maxHeight = tutorial.scrollHeight + "px";
+                tutorial.style.opacity = 1;
+                tutorialLink.style.maxHeight = tutorialLink.scrollHeight + "px";
+                tutorialLink.style.opacity = 1;
+                tutorialLink.style.pointerEvents = "auto";
+                
+                options.style.maxHeight = options.scrollHeight + "px";
+                options.style.opacity = 1;
+                optionsLink.style.maxHeight = optionsLink.scrollHeight + "px";
+                optionsLink.style.opacity = 1;
+                optionsLink.style.pointerEvents = "auto";
+            }
+        }
+        
         //Main menu buttons and content
         Engine.Clickables.terminalMainMenuButton = clearEventListeners("terminal-menu-link");
         Engine.Clickables.terminalMainMenuButton.addEventListener("click", function() {
@@ -948,7 +1388,7 @@ var Engine = {
             return false;
         });
         
-        Engine.Clickables.characterMainMenuButton = clearEventListeners("character-menu-link");
+        Engine.Clickables.characterMainMenuButton = clearEventListeners("stats-menu-link");
         Engine.Clickables.characterMainMenuButton.addEventListener("click", function() {
             Engine.loadCharacterContent();
             return false;
@@ -972,11 +1412,24 @@ var Engine = {
             return false;
         });
         
-        Engine.Clickables.worldMainMenuButton = clearEventListeners("world-menu-link");
+        Engine.Clickables.worldMainMenuButton = clearEventListeners("city-menu-link");
         Engine.Clickables.worldMainMenuButton.addEventListener("click", function() {
             Engine.loadWorldContent();
             return false;
         });
+        
+        Engine.Clickables.travelMainMenuButton = clearEventListeners("travel-menu-link");
+        Engine.Clickables.travelMainMenuButton.addEventListener("click", function() {
+            Engine.loadTravelContent();
+            return false;
+        });
+        
+        Engine.Clickables.jobMainMenuButton = clearEventListeners("job-menu-link");
+        Engine.Clickables.jobMainMenuButton.addEventListener("click", function() {
+            Engine.loadJobContent();
+            return false;
+        });
+        
         
         Engine.Clickables.createProgramMainMenuButton = clearEventListeners("create-program-menu-link");
         Engine.Clickables.createProgramMainMenuButton.addEventListener("click", function() {
@@ -1034,15 +1487,6 @@ var Engine = {
             return false;
         });
         
-        //Script Editor Netscript documentation button
-        var netscriptDocButton = document.getElementById("script-editor-netscript-doc-button");
-        netscriptDocButton.addEventListener("click", function() {
-            Engine.loadTutorialContent();
-            Engine.displayTutorialContent();
-            Engine.displayTutorialPage(CONSTANTS.TutorialNetscriptText);
-            return false;
-        });
-        
         //Create Program buttons
         initCreateProgramButtons();
                 
@@ -1076,19 +1520,12 @@ var Engine = {
         
         //Remove classes from links (they might be set from tutorial)
         document.getElementById("terminal-menu-link").removeAttribute("class");
-        document.getElementById("character-menu-link").removeAttribute("class");
+        document.getElementById("stats-menu-link").removeAttribute("class");
         document.getElementById("create-script-menu-link").removeAttribute("class");
         document.getElementById("active-scripts-menu-link").removeAttribute("class");
         document.getElementById("hacknet-nodes-menu-link").removeAttribute("class");
-        document.getElementById("world-menu-link").removeAttribute("class");
+        document.getElementById("city-menu-link").removeAttribute("class");
         document.getElementById("tutorial-menu-link").removeAttribute("class");
-        
-        //Changelog
-        document.getElementById("changelog-link").addEventListener("click", function() {
-            gameOptionsBoxClose();
-            dialogBoxCreate(CONSTANTS.Changelog);
-            return false;
-        });
         
         //DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
@@ -1118,6 +1555,7 @@ var Engine = {
 };
 
 window.onload = function() {
+    Engine.displayLoadingScreen();
     Engine.load();
 };
 

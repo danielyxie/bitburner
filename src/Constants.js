@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.25.0",
+    Version:                "0.26.0",
     
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -10,7 +10,7 @@ CONSTANTS = {
     CorpFactionRepRequirement: 250000,
     
     /* Base costs */
-    BaseCostFor1GBOfRamHome: 32000,
+    BaseCostFor1GBOfRamHome: 30000,
     BaseCostFor1GBOfRamServer: 60000,     //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
     
@@ -38,7 +38,8 @@ CONSTANTS = {
     
     /* Script related things */
 	//Time (ms) it takes to run one operation in Netscript.  
-	CodeInstructionRunTime:	100, 
+	CodeInstructionRunTime:	100,
+    
     
     //RAM Costs for different commands
     ScriptWhileRamCost:             0.2,
@@ -75,22 +76,23 @@ CONSTANTS = {
     ScriptBuySellStockRamCost:      2.5,
     ScriptPurchaseServerRamCost:    2.0,
     ScriptRoundRamCost:             0.05,
+    ScriptReadWriteRamCost:         1.0,
     
     MultithreadingRAMCost:          1,
     
     //Server constants
-    ServerBaseGrowthRate: 1.03,     //Unadjusted Growth rate
-    ServerMaxGrowthRate: 1.0045,     //Maximum possible growth rate (max rate accounting for server security)
+    ServerBaseGrowthRate: 1.025,     //Unadjusted Growth rate
+    ServerMaxGrowthRate: 1.0035,     //Maximum possible growth rate (max rate accounting for server security)
     ServerFortifyAmount: 0.002,     //Amount by which server's security increases when its hacked/grown
-    ServerWeakenAmount: 0.1,        //Amount by which server's security decreases when weakened
+    ServerWeakenAmount: 0.05,        //Amount by which server's security decreases when weakened
     
     //Augmentation Constants
     AugmentationCostMultiplier: 5,  //Used for balancing costs without having to readjust every Augmentation cost
     AugmentationRepMultiplier:  2.5, //Used for balancing rep cost without having to readjust every value
     MultipleAugMultiplier:      1.9,
     
-    //Maximum number of log entries for a script
-    MaxLogCapacity: 50,
+    MaxLogCapacity: 50,     //Maximum number of log entries for a script
+    MaxPortCapacity: 50,   //Maximum amount of data in a Netscript port
     
     //How much a TOR router costs
     TorRouterCost: 200000,
@@ -105,7 +107,7 @@ CONSTANTS = {
     StockMarketCommission:  100000,
     
     //Hospital/Health
-    HospitalCostPerHp: 75000,
+    HospitalCostPerHp: 100000,
     
     MillisecondsPer20Hours: 72000000,
     GameCyclesPer20Hours: 72000000 / 200,
@@ -172,37 +174,6 @@ CONSTANTS = {
     CrimeKidnap: "kidnap someone for ransom",
     CrimeAssassination: "assassinate a high-profile target",
     CrimeHeist: "pull off the ultimate heist",
-    
-    //Text that is displayed when the 'help' command is ran in Terminal
-    HelpText:   'alias [-g] [name="value"]      Create aliases for Terminal commands, or list existing aliases<br>' + 
-                "analyze                        Get statistics and information about current machine <br>" + 
-                "cat [message]                  Display a .msg file<br>" + 
-                "check [script] [args...]       Print logs to Terminal for the script with the specified name and arguments<br>" + 
-                "clear                          Clear all text on the terminal <br>" +
-                "cls                            See 'clear' command <br>" +
-                "connect [ip/hostname]          Connects to the machine given by its IP or hostname <br>" + 
-                "free                           Check the machine's memory (RAM) usage<br>" + 
-                "hack                           Hack the current machine<br>" +
-                "help                           Display this help text<br>" + 
-                "home                           Connect to home computer<br>" + 
-                "hostname                       Displays the hostname of the machine<br>" + 
-                "ifconfig                       Displays the IP address of the machine<br>" +
-                "kill [script] [args...]        Stops a script on the current server with the specified name and arguments<br>" +
-                "killall                        Stops all running scripts on the current machine<br>" + 
-                "ls                             Displays all programs and scripts on the machine<br>" +
-                "mem [script] [-t] [n]          Displays the amount of RAM the script requires to run with n threads<br>" + 
-                "nano [script]                  Text editor - Open up and edit a script<br>" + 
-                "ps                             Display all scripts that are currently running<br>" + 
-                "rm                             Delete a script/program from the machine. (WARNING: Permanent)<br>" + 
-                "run [name] [-t] [n] [args...]  Execute a program or a script with n threads and the specified arguments<br>" + 
-                "scan                           Displays all available network connections<br>" +
-                "scan-analyze [depth]           Displays hacking-related information for all servers up to <i>depth</i> nodes away<br>" + 
-                "scp [script] [server]          Copies a script to a destination server (specified by ip or hostname)<br>" + 
-                "sudov                          Shows whether or not you have root access on this computer<br>" + 
-                "tail [script] [args...]        Display dynamic logs for the script with the specified name and arguments<br>" +
-                "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" + 
-                "top                            Display all running scripts and their RAM usage<br>" + 
-                'unalias "[alias name]"         Deletes the specified alias. Double quotation marks are required<br>',
                 
     /* Tutorial related things */
 	TutorialGettingStartedText: "Todo...",
@@ -384,7 +355,10 @@ CONSTANTS = {
                            "a server will raise that server's security level by 0.002. Returns true if the hack is successful and " + 
                            "false otherwise. <br>" + 
                            "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" + 
-                           "<i>sleep(n)</i><br>Suspends the script for n milliseconds. <br>Example: sleep(5000);<br><br>" + 
+                           "<i>sleep(n, log=true)</i><br>Suspends the script for n milliseconds. The second argument is an optional boolean that indicates " +
+                           "whether or not the function should log the sleep action. If this argument is true, then calling this function will write " + 
+                           "'Sleeping for N milliseconds' to the script's logs. If it's false, then this function will not log anything. " + 
+                           "If this argument is not specified then it will be true by default. <br>Example: sleep(5000);<br><br>" + 
                            "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " + 
                            "must be a string with either the IP or hostname of the target server. The runtime for this command depends on your hacking level and the target server's security level. " +
                            "When grow() completes, the money available on a target server will be increased by a certain, fixed percentage. This percentage " + 
@@ -397,11 +371,12 @@ CONSTANTS = {
                            "<i>weaken(hostname/ip)</i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " + 
                            "in must be a string with either the IP or hostname of the target server. The runtime for this command depends on your " + 
                            "hacking level and the target server's security level. This function lowers the security level of the target server by " + 
-                           "0.1.<br><br> Like hack() and grow(), weaken() can be called on " + 
+                           "0.05.<br><br> Like hack() and grow(), weaken() can be called on " + 
                            "any server, regardless of where the script is running. This command requires root access to the target server, but " + 
                            "there is no required hacking level to run the command. Returns " + 
                            "0.1. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" + 
                            "<i>print(x)</i> <br>Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br><br>" + 
+                           "<i>clearLog()</i><br>Clears the script's logs. <br><br>" + 
                            "<i>scan(hostname/ip)</i><br>Returns an array containing the hostnames of all servers that are one node away from the specified server. " + 
                            "The argument must be a string containing the IP or hostname of the target server. The hostnames in the returned array are strings.<br><br>" + 
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" + 
@@ -508,6 +483,10 @@ CONSTANTS = {
                            "This function returns the hostname of the newly purchased server as a string. If the function fails to purchase a server, then it will return " + 
                            "an empty string. The function will fail if the arguments passed in are invalid or if the player does not have enough money to purchase the specified server.<br><br>" + 
                            "<i>round(n)</i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" + 
+                           "<i>write(port, data)</i><br>Writes data to a port. The first argument must be a number between 1 and 10 that specifies the port. The second " + 
+                           "argument defines the data to write to the port. If the second argument is not specified then it will write an empty string to the port.<br><br>" + 
+                           "<i>read(port)</i><br>Reads data from a port. The first argument must be a number between 1 and 10 that specifies the port. A port is a serialized queue. " + 
+                           "This function will remove the first element from the queue and return it. If the queue is empty, then the string 'NULL PORT DATA' will be returned. <br><br>" + 
                            "<u><h1>Hacknet Nodes API</h1></u><br>" + 
                            "Netscript provides the following API for accessing and upgrading your Hacknet Nodes through scripts. This API does NOT work offline.<br><br>" + 
                            "<i>hacknetnodes</i><br> A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " + 
@@ -697,287 +676,37 @@ CONSTANTS = {
                                "Scripts on your home computer<br>" + 
                                "RAM Upgrades on your home computer<br>" + 
                                "World Stock Exchange account and TIX API Access<br>",
-                               
-    Changelog:
-    "v0.25.0<br> " + 
-    "-Refactored Netscript to use the open-source Acorns Parser. This re-implementation was done by Github users MrNuggelz. " +
-    "This has resulted in several changes in the Netscript language. Some scripts might break because of these changes. " + 
-    "Changes listed below: <br>" + 
-    "-Arrays are now fully functional Javascript arrays. You no longer need to use the 'Array' keyword to declare them. <br>" + 
-    "-The length(), clear/clear(), insert(), and remove() functions no longer work for arrays. <br>" + 
-    "-All Javascript array methods are available (splice(), push(), pop(), join(), shift(), indexOf(), etc. See documentation)<br>" + 
-    "-Variables assigned to arrays are now passed by value rather than reference<br>" + 
-    "-Incrementing/Decrementing are now available (i++, ++i)<br>" +
-    "-You no longer need semicolons at the end of block statements<br>" + 
-    "-Elif is no longer valid. Use 'else if' instead<br>" + 
-    "-Netscript's Hacknet Node API functions no longer log anything<br>" + 
-    "-Stock prices now update every ~6 seconds when the game is active (was 10 seconds before)<br>" +
-    "-Added a new mechanic that affects how stock prices change<br>" + 
-    "-Script editor now has dynamic indicators for RAM Usage and Line number<br>" + 
-    "-Augmentation Rebalancing - Many late game augmentations are now slightly more expensive. Several early game " + 
-    "augmentations had their effects slightly decreased<br>" + 
-    "-Increased the amount of rewards (both money and rep) you get from infiltration<br>" + 
-    "-Purchasing servers is now slightly more expensive<br>" + 
-    "-Calling the Netscript function getServerMoneyAvailable('home') now return's the player's money<br>" + 
-    "-Added round(n) Netscript function - Rounds a number<br>" + 
-    "-Added purchaseServer(hostname, ram) Netscript function<br>" + 
-    "-Added the TIX API. This must be purchased in the WSE. It persists through resets. Access to the TIX API " +
-    "allows you to write scripts that perform automated algorithmic trading. See Netscript documentation<br>" + 
-    "-Minor rebalancing in a lot of different areas<br>" +
-    "-Changed the format of IP Addresses so that they are smaller (will consist mostly of single digit numbers now). This will reduce " + 
-    "the size of the game's save file.<br><br>" + 
-    "v0.24.1<br>" + 
-    "-Adjusted cost of upgrading home computer RAM. Should be a little cheaper for the first few upgrades (up to ~64GB), and " +
-    "then will start being more expensive than before. High RAM upgrades should now be significantly more expensive than before.<br>" + 
-    "-Slightly lowered the starting money available on most mid-game and end-game servers (servers with required hacking level " + 
-    "greater than 200) by about 10-15%<br>" + 
-    "-Rebalanced company/company position reputation gains and requirements<br>" + 
-    "-Studying at a university now gives slightly more EXP and early jobs give slightly less EXP<br>" + 
-    "-Studying at a university is now considerably more expensive<br>" + 
-    "-Rebalanced stock market<br>" +
-    "-Significantly increased cost multiplier for purchasing additional Hacknet Nodes<br>" + 
-    "-The rate at which facility security level increases during infiltration for each clearance level " +
-    "was lowered slightly for all companies<br>" + 
-    "-Updated Faction descriptions<br>" + 
-    "-Changed the way alias works. Normal aliases now only work at the start of a Terminal command (they will only " + 
-    "replace the first word in the Terminal command). You can also create global aliases that work on any part of the " + 
-    'command, like before. Declare global aliases by entering the optional -g flag: alias -g name="value" - Courtesy of Github user MrNuggelz<br>' +
-    "-'top' Terminal command implemented courtesy of Github user LTCNugget. Currently, the formatting gets screwed up " + 
-    "if your script names are really long.<br><br>" + 
-    "v0.24.0<br>" + 
-    "-Players now have HP, which is displayed in the top right. To regain HP, visit the hospital. Currently " + 
-    "the only way to lose HP is through infiltration<br>" + 
-    "-Infiltration - Attempt to infiltrate a company and steal their classified secrets. See 'Companies' documentation for more details<br>" + 
-    "-Stock Market - Added the World Stock Exchange (WSE), a brokerage that lets you buy/sell stocks. To begin trading you must first purchase " + 
-    "an account. A WSE account will persist even after resetting by installing Augmentations. How the stock market works should hopefully be " + 
-    "self explanatory. There is no documentation about it currently, I will add some later. NOTE: Stock prices only change when the game is open. " + 
-    "The Stock Market is reset when installing Augmentations, which means you will lose all your stocks<br>" + 
-    "-Decreased money gained from hacking by ~12%<br>" + 
-    "-Increased reputation required for all Augmentations by ~40%<br>" + 
-    "-Cost increase when purchasing multiple augmentations increased from 75% to 90%<br>" + 
-    "-Added basic variable runtime to Netscript operations. Basic commands run in 100ms. Any function incurs another 100ms in runtime (200ms total). " + 
-    "Any function that starts with getServer incurs another 100ms runtime (300ms total). exec() and scp() require 400ms total. <br>" + 
-    "-Slightly reduced the amount of experience gained from hacking<br><br>" + 
-    "v0.23.1<br>" + 
-    "-scan() Netscript function now takes a single argument representing the server from which to scan. <br><br>" + 
-    "v0.23.0<br>" + 
-    "-You can now purchase multiple Augmentations in a run. When you purchase an Augmentation you will lose money equal to the price " + 
-    "and then the cost of purchasing another Augmentation during this run will be increased by 75%. You do not gain the benefits " + 
-    "of your purchased Augmentations until you install them. This installation can be done through the 'Augmentation' tab. When " +
-    "you install your Augmentations, your game will reset like before. <br>" + 
-    "-Reputation needed to gain a favor from faction decreased from 7500 to 6500<br>" + 
-    "-Reputation needed to gain a favor from company increased from 5000 to 6000<br>" + 
-    "-Reputation cost of all Augmentations increased by 16%<br>" + 
-    "-Higher positions at companies now grant slightly more reputation for working<br>" + 
-    "-Added getServerMaxMoney() Netscript function<br>" + 
-    "-Added scan() Netscript function<br>" + 
-    "-Added getServerNumPortsRequired() Netscript function<br>" + 
-    "-There is now no additional RAM cost incurred when multithreading a script<br><br>" + 
-    "v0.22.1<br>" + 
-    "-You no longer lose progress on creating programs when cancelling your work. Your progress will be saved and you will pick up " + 
-    "where you left off when you start working on it again<br>" + 
-    "-Added two new programs: AutoLink.exe and ServerProfiler.exe<br>" +
-    "-Fixed bug with Faction Field work reputation gain<br><br>" + 
-    "v0.22.0 - Major rebalancing, optimization, and favor system<br>" + 
-    "-Significantly nerfed most augmentations<br>" + 
-    "-Almost every server with a required hacking level of 200 or more now has slightly randomized server parameters. This means that after every Augmentation " + 
-    "purchase, the required hacking level, base security level, and growth factor of these servers will all be slightly different<br>" + 
-    "-The hacking speed multiplier now increases rather than decreases. The hacking time is now divided by your hacking speed " + 
-    "multiplier rather than multiplied. In other words, a higher hacking speed multiplier is better<br>" + 
-    "-Servers now have a minimum server security, which is approximately one third of their starting ('base') server security<br>" + 
-    "-If you do not steal any money from a server, then you gain hacking experience equal to the amount you would have gained " + 
-    "had you failed the hack<br>" + 
-    "-The effects of grow() were increased by 50%<br>" + 
-    "-grow() and weaken() now give hacking experience based on the server's base security level, rather than a flat exp amount<br>" + 
-    "-Slightly reduced amount of exp gained from hack(), weaken(), and grow()<br>" +
-    "-Rebalanced formulas that determine crime success<br>" + 
-    "-Reduced RAM cost for multithreading a script. The RAM multiplier for each thread was reduced from 1.02 to 1.005<br>" + 
-    "-Optimized Script objects so they take less space in the save file<br>" + 
-    "-Added getServerBaseSecurityLevel() Netscript function<br>" + 
-    "-New favor system for companies and factions. Earning reputation at a company/faction will give you favor for that entity when you " + 
-    "reset after installing an Augmentation. This favor persists through the rest of the game. The more favor you have, the faster you will earn " + 
-    "reputation with that faction/company<br>" + 
-    "-You can no longer donate to a faction for reputation until you have 150 favor with that faction<br>" + 
-    "-Added unalias Terminal command<br>" + 
-    "-Changed requirements for endgame Factions<br><br>" + 
-    "v0.21.1<br>" + 
-    "-IF YOUR GAME BREAKS, DO THE FOLLOWING: Options -> Soft Reset -> Save Game -> Reload Page. Sorry about that! <br>" + 
-    "-Autocompletion for aliases - courtesy of Github user LTCNugget<br><br>" + 
-    "v0.21.0<br>" + 
-    "-Added dynamic arrays. See Netscript documentation<br>" + 
-    "-Added ability to pass arguments into scripts. See documentation<br>" + 
-    "-The implementation/function signature of functions that deal with scripts have changed. Therefore, some old scripts might not " + 
-    "work anymore. Some of these functions include run(), exec(), isRunning(), kill(), and some others I may have forgot about. " + 
-    "Please check the updated Netscript documentation if you run into issues." + 
-    "-Note that scripts are now uniquely identified by the script name and their arguments. For example, you can run " + 
-    "a script using <br>run foodnstuff.script 1<br> and you can also run the same script with a different argument " + 
-    "<br>run foodnstuff.script 2<br>These will be considered two different scripts. To kill the first script you must " + 
-    "run <br>kill foodnstuff.script 1<br> and to kill the second you must run <br>kill foodnstuff.script 2<br> Similar concepts " + 
-    "apply for Terminal Commands such as tail, and Netscript commands such as run(), exec(), kill(), isRunning(), etc.<br>" + 
-    "-Added basic theme functionality using the 'theme' Terminal command - All credit goes to /u/0x726564646974 who implemented the awesome feature<br>" + 
-    "-Optimized Script objects, which were causing save errors when the player had too many scripts<br>" + 
-    "-Formula for determining exp gained from hacking was changed<br>" + 
-    "-Fixed bug where you could purchase Darkweb items without TOR router<br>" + 
-    "-Slightly increased cost multiplier for Home Computer RAM<br>" +
-    "-Fixed bug where you could hack too much money from a server (and bring its money available below zero)<br>" + 
-    "-Changed tail command so that it brings up a display box with dynamic log contents. To get " + 
-    "old functionality where the logs are printed to the Terminal, use the new 'check' command<br>" + 
-    "-As a result of the change above, you can no longer call tail/check on scripts that are not running<br>" + 
-    "-Added autocompletion for buying Programs in Darkweb<br>" + 
-    "v0.20.2<br>" + 
-    "-Fixed several small bugs<br>" + 
-    "-Added basic array functionality to Netscript<br>" + 
-    "-Added ability to run scripts with multiple threads. Running a script with n threads will multiply the effects of all " + 
-    "hack(), grow(), and weaken() commands by n. However, running a script with multiple threads has drawbacks in terms of " + 
-    "RAM usage. A script's ram usage when it is 'multithreaded' is calculated as: base cost * numThreads * (1.02 ^ numThreads). " + 
-    "A script can be run multithreaded using the 'run [script] -t n' Terminal command or by passing in an argument to the " + 
-    "run() and exec() Netscript commands. See documentation.<br>" + 
-    "-RAM is slightly (~10%) more expensive (affects purchasing server and upgrading RAM on home computer)<br>" + 
-    "-NeuroFlux Governor augmentation cost multiplier decreased<br>" + 
-    "-Netscript default operation runtime lowered to 200ms (was 500ms previously)<br><br>" + 
-    "v0.20.1<br>" + 
-    "-Fixed bug where sometimes scripts would crash without showing the error<br>" + 
-    "-Added Deepscan programs to Dark Web<br>" + 
-    "-Declining a faction invite will stop you from receiving invitations from that faction for the rest of the run<br>" + 
-    "-(BETA) Added functionality to export/import saves. WARNING This is only lightly tested. You cannot choose where to save your file " + 
-    "it just goes to the default save location. Also I have no idea what will happen if you try to import a file " + 
-    "that is not a valid save. I will address these in later updates<br><br>" + 
-    "v0.20.0<br>" + 
-    "-Refactored Netscript Interpreter code. Operations in Netscript should now run significantly faster (Every operation " + 
-    "such as a variable assignment, a function call, a binary operator, getting a variable's value, etc. used to take up to several seconds, " + 
-    "now each one should only take ~500 milliseconds). <br><br>" +
-    "-Percentage money stolen when hacking lowered to compensate for faster script speeds<br><br>" + 
-    "-Hacking experience granted by grow() halved<br><br>" + 
-    "-Weaken() is now ~11% faster, but only grants 3 base hacking exp upon completion instead of 5 <br><br>" + 
-    "-Rebalancing of script RAM costs. Base RAM Cost for a script increased from 1GB to 1.5GB. Loops, hack(), grow() " + 
-    "and weaken() all cost slightly less RAM than before <br><br>" + 
-    "-Added getServerRequiredHackingLevel(server) Netscript command. <br><br>" + 
-    "-Added fileExists(file, [server]) Netscript command, which is used to check if a script/program exists on a " +
-    "specified server<br><br>" + 
-    "-Added isRunning(script, [server]) Netscript command, which is used to check if a script is running on the specified server<br><br>" + 
-    "-Added killall Terminal command. Kills all running scripts on the current machine<br><br>" +
-    "-Added kill() and killall() Netscript commands. Used to kill scripts on specified machines. See Netscript documentation<br><br>" + 
-    "-Re-designed 'Active Scripts' tab<br><br>" + 
-    "-Hacknet Node base production rate lowered from 1.6 to 1.55 ($/second)<br><br>" +
-    "-Increased monetary cost of RAM (Upgrading home computer and purchasing servers will now be more expensive)<br><br>" + 
-    "-NEW GROWTH MECHANICS - The rate of growth on a server now depends on a server's security level. A higher security level " +
-    "will result in lower growth on a server when using the grow() command. Furthermore, calling grow() on a server raises that " + 
-    "server's security level by 0.004. For reference, if a server has a security level of 10 " + 
-    "it will have approximately the same growth rate as before. <br><br>" + 
-    "-Server growth no longer happens naturally<br><br>" + 
-    "-Servers now have a maximum limit to their money. This limit is 50 times it's starting money<br><br>" + 
-    "-Hacking now grants 10% less hacking experience<br><br>" + 
-    "-You can now edit scripts that are running<br><br>" +
-    "-Augmentations cost ~11% more money and 25% more faction reputation<br><br>" + 
-    "v0.19.7<br>" + 
-    "-Added changelog to Options menu<br>" + 
-    "-Bug fix with autocompletion (wasn't working properly for capitalized filenames/programs<br><br>" + 
-    "v0.19.6<br>" + 
-    "-Script editor now saves its state even when you change tabs <br>" + 
-    "-scp() command in Terminal/script will now overwrite files at the destination <br>" + 
-    "-Terminal commands are no longer case-sensitive (only the commands themselves such as 'run' or 'nano'. Filenames are " + 
-    "still case sensitive<br>" + 
-    "-Tab automcompletion will now work on commands<br><br>" + 
-    "v0.19<br>" + 
-    "-Hacknet Nodes have slightly higher base production, and slightly increased RAM multiplier. " + 
-    "But they are also a bit more expensive at higher levels<br>" + 
-    "-Calling grow() and weaken() in a script will now work offline, at slower rates than while online (The script now " + 
-    "keeps track of the rate at which grow() and weaken() are called when the game is open. These calculated rates " + 
-    "are used to determine how many times the calls would be made while the game is offline)<br>" + 
-    "-Augmentations now cost 20% more reputation and 50% more money<br>" + 
-    "-Changed the mechanic for getting invited to the hacking factions (CyberSec, NiteSec, The Black Hand, BitRunners) " + 
-    "Now when you get to the required level to join these factions you will get a message giving " + 
-    "you instructions on what to do in order to get invited.<br>" + 
-    "-Added a bit of backstory/plot into the game. It's not fully fleshed out yet but it will be " + 
-    "used in the future<br>" + 
-    "-Made the effects of many Augmentations slightly more powerful<br>" + 
-    "-Slightly increased company job wages across the board (~5-10% for each position)<br>" + 
-    "-Gyms and classes are now significantly more expensive<br>" + 
-    "-Doubled the amount by which a server's security increases when it is hacked. Now, it will " + 
-    "increase by 0.002. Calling weaken() on a server will lower the security by 0.1.<br><br>" + 
-    "v0.18<br>" + 
-    "-Major rebalancing (sorry didn't record specifics. But in general hacking gives more money " + 
-    "and hacknet nodes give less)<br>" + 
-    "-Server growth rate (both natural and manual using grow()) doubled<br>" + 
-    "-Added option to Soft Reset<br>" + 
-    "-Cancelling a full time job early now only results in halved gains for reputation. Exp and money earnings are gained in full<br>" + 
-    "-Added exec() Netscript command, used to run scripts on other servers. <br>" + 
-    "-NEW HACKING MECHANICS: Whenever a server is hacked, its 'security level' is increased by a very small amount. " + 
-    "The security level is denoted by a number between 1-100. A higher security level makes it harder " + 
-    "to hack a server and also decreases the amount of money you steal from it. Two Netscript functions, " + 
-    "weaken() and getServerSecurityLevel() level, were added. The weaken(server) function lowers a server's " + 
-    "security level. See the Netscript documentation for more details<br>" + 
-    "-When donating to factions, the base rate is now $1,000,000 for 1 reputation point. Before, it was " + 
-    "$1,000 for 1 reputation point.<br>" + 
-    "-Monetary costs for all Augmentations increased. They are now about ~3.3 - 3.75 times more expensive than before<br><br>" + 
-    "v0.17.1 <br>" + 
-    "-Fixed issue with purchasing Augmentations that are 'upgrades' and require previous Augmentations to be installed<br>" + 
-    "-Increased the percentage of money stolen from servers when hacking<br><br>" + 
-    "v0.17<br>" + 
-    "-Greatly increased amount of money gained for crimes (by about 400% for most crimes)<br>" + 
-    "-Criminal factions require slightly less negative karma to get invited to<br>" + 
-    "-Increased the percentage of money stolen from servers when hacking<br>" + 
-    "-Increased the starting amount of money available on beginning servers (servers with <50 required hacking))<br>" + 
-    "-Increased the growth rate of servers (both naturally and manually when using the grow() command in a script)<br>" + 
-    "-Added getHostname() command in Netscript that returns the hostname of the server a script is running on<br>" + 
-    "-jQuery preventDefault() called when pressing ctrl+b in script editor<br>" + 
-    "-The Neuroflux Governor augmentation (the one that can be repeatedly leveled up) now increases ALL multipliers by 1%. To balance it out, it's price multiplier when it levels up was increased<br>" + 
-    "-Hacknet Node base production decreased from $1.75/s to $1.65/s<br>" + 
-    "-Fixed issue with nested for loops in Netscript (stupid Javascript references)<br>" + 
-    "-Added 'scp' command to Terminal and Netscript<br>" + 
-    "-Slightly nerfed Hacknet Node Kernel DNI and Hacknet Node Core DNI Augmentations<br>" + 
-    "-Increased TOR Router cost to $200k<br><br>" + 
-    "v0.16<br>" + 
-    "-New Script Editor interface <br>" + 
-    "-Rebalanced hacknet node - Increased base production but halved the multiplier from additional cores. This should boost its early-game production but nerf its late-game production<br>" + 
-    "-Player now starts with 8GB of RAM on home computer<br>" + 
-    "-'scan-analyze' terminal command displays RAM on servers<br>" + 
-    "-Slightly buffed the amount of money the player steals when hacking servers (by about ~8%)<br>" + 
-    "-Time to execute grow() now depends on hacking skill and server security, rather than taking a flat 2 minutes.<br>" + 
-    "-Clicking outside of a pop-up dialog box will now close it<br>" + 
-    "-BruteSSH.exe takes 33% less time to create<br>" + 
-    "-'iron-gym' and 'max-hardware' servers now have 2GB of RAM<br>" + 
-    "-Buffed job salaries across the board<br>" + 
-    "-Updated Tutorial<br>" + 
-    "-Created a Hacknet Node API for Netscript that allows you to access and upgrade your Hacknet Nodes. See the Netscript documentation for more details. WARNING The old upgradeHacknetNode() and getNumHacknetNodes() functions waere removed so any script that has these will no longer work <br><br>" + 
-    "v0.15 <br>" + 
-    "-Slightly reduced production multiplier for Hacknet Node RAM<br>" +
-    "-Faction pages now scroll<br>" + 
-    "-Slightly increased amount of money gained from hacking<br>" + 
-    "-Added 'alias' command<br>" + 
-    "-Added 'scan-analyze' terminal command - used to get basic hacking info about all immediate network connections<br>" + 
-    "-Fixed bugs with upgradeHacknetNode() and purchaseHacknetNode() commands<br>" + 
-    "-Added getNumHacknetNodes() and hasRootAccess(hostname/ip) commands to Netscript<br>" + 
-    "-Increased Cost of university classes/gym<br>" + 
-    "-You can now see what an Augmentation does and its price even while its locked<br><br>",
     
     LatestUpdate: 
-    "v0.25.0<br> " + 
-    "-Refactored Netscript to use the open-source Acorns Parser. This re-implementation was done by Github users MrNuggelz. " +
-    "This has resulted in several changes in the Netscript language. Some scripts might break because of these changes. " + 
-    "Changes listed below: <br>" + 
-    "-Arrays are now fully functional Javascript arrays. You no longer need to use the 'Array' keyword to declare them. <br>" + 
-    "-The length(), clear/clear(), insert(), and remove() functions no longer work for arrays. <br>" + 
-    "-All Javascript array methods are available (splice(), push(), pop(), join(), shift(), indexOf(), etc. See documentation)<br>" + 
-    "-Variables assigned to arrays are now passed by value rather than reference<br>" + 
-    "-Incrementing/Decrementing are now available (i++, ++i)<br>" +
-    "-You no longer need semicolons at the end of block statements<br>" + 
-    "-Elif is no longer valid. Use 'else if' instead<br>" + 
-    "-Netscript's Hacknet Node API functions no longer log anything<br>" + 
-    "-Stock prices now update every ~6 seconds when the game is active (was 10 seconds before)<br>" +
-    "-Added a new mechanic that affects how stock prices change<br>" + 
-    "-Script editor now has dynamic indicators for RAM Usage and Line number<br>" + 
-    "-Augmentation Rebalancing - Many late game augmentations are now slightly more expensive. Several early game " + 
-    "augmentations had their effects slightly decreased<br>" + 
-    "-Increased the amount of rewards (both money and rep) you get from infiltration<br>" + 
-    "-Purchasing servers is now slightly more expensive<br>" + 
-    "-Calling the Netscript function getServerMoneyAvailable('home') now return's the player's money<br>" + 
-    "-Added round(n) Netscript function - Rounds a number<br>" + 
-    "-Added purchaseServer(hostname, ram) Netscript function<br>" + 
-    "-Added the TIX API. This must be purchased in the WSE. It persists through resets. Access to the TIX API " +
-    "allows you to write scripts that perform automated algorithmic trading. See Netscript documentation<br>" + 
-    "-Minor rebalancing in a lot of different areas<br>" +
-    "-Changed the format of IP Addresses so that they are smaller (will consist mostly of single digit numbers now). This will reduce " + 
-    "the size of the game's save file.<br>",
-    
+    "v0.26.0<br>" + 
+    "-Game now has a real ending, although it's not very interesting/satisfying right now. It sets up the framework for the secondary prestige system " + 
+    "in the future<br>" + 
+    "-Forgot to mention that since last update, comments now work in Netscript. Use // for single line comments or /* and */ for multiline comments " + 
+    "just like in Javascript<br>" + 
+    "-Added ports to Netscript. These ports are essentially serialized queues. You can use the write() Netscript function to write a value " + 
+    "to a queue, and then you can use the read() Netscript function to read the value from the queue. Once you read a value from the queue it will be " + 
+    "removed. There are only 10 queues (1-10), and each has a maximum capacity of 50 entries. If you try to write to a queue that is full, the " + 
+    "the first value is removed. See wiki/Netscript documentation for more details<br>" + 
+    "-You can now use the 'help' Terminal command for specific commands<br>" + 
+    "-You can now use './' to run a script/program (./NUKE.exe). However, tab completion currently doesn't work for it (I'm working on it)<br>" + 
+    "-Decreased the base growth rate of servers by ~25%<br>" + 
+    "-Both the effect of weaken() and its time to execute were halved. In other words, calling weaken() on a server only lowers its security by 0.05 (was 0.1 before) " + 
+    "but the time to execute the function is half of what it was before. Therefore, the effective rate of weaken() should be about the same<br>" + 
+    "-Increased all Infiltration rewards by ~10%, and increased infiltration rep gains by an additional 20% (~32% total for rep gains)<br>" + 
+    "-The rate at which the security level of a facility increases during Infiltration was decreased significantly (~33%)<br>" + 
+    "-Getting treated at the Hospital is now 33% more expensive<br>" + 
+    "-Slightly increased the amount of time it takes to hack a server<br>" + 
+    "-Slightly decreased the amount of money gained when hacking a server (~6%)<br>" +
+    "-Slightly decreased the base cost for RAM on home computer, but increased the cost multiplier. This means " + 
+    "that upgrading RAM on the home computer should be slightly cheaper at the start, but slightly more expensive " + 
+    "later on<br>" + 
+    "-Increased the required hacking level for many late game servers<br>" + 
+    "-The sleep() Netscript function now takes an optional 'log' argument that specifies whether or " + 
+    "not the 'Sleeping for N milliseconds' will be logged for the script<br>" + 
+    "-Added clearLog() Netscript function<br>" + 
+    "-Deleted a few stocks. Didn't see a reason for having so many, and it just affects performance. Won't take " + 
+    "effect until you reset by installing Augmentations<br>" + 
+    "-There was a typo with Zeus Medical's server hostname. It is now 'zeus-med' rather than 'zeud-med'<br>" + 
+    "-Added keyboard shortcuts to quickly navigate between different menus. See wiki link <a href='http://bitburner.wikia.com/wiki/Shortcuts' target='_blank'>here</a><br>" + 
+    "-Changed the Navigation Menu UI",
 }

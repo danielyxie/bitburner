@@ -1,23 +1,21 @@
+/* Both Work in progress and BitNode stuff */
 #generic-fullscreen-container {
     color: var(--my-font-color);
 	padding-top: 10px;
 	padding-left: 10px;
+    margin: 10px;
 	height: 100%;
     width: 99%;
 }
 
 #work-in-progress-container {
-    color: var(--my-font-color);
     position: fixed;
-	padding-top: 10px;
-	padding-left: 10px;
-	height: 100%;
-    width: 99%;
 }
 
 #work-in-progress-text {
     color: var(--my-font-color);
     width: 70%;
+    margin: 10px;
 }
 
 #work-in-progress-cancel-button {
@@ -41,4 +39,19 @@
     color: white;
     text-decoration: none;
     cursor: pointer;
+}
+
+#red-pill-container {
+    position: fixed;
+}
+
+.bitnode {
+    color:blue;
+}
+.bitnode-destroyed {
+    color:red;
+}
+.bitnode:hover,
+.bitnode-destroyed:hover {
+    color:white;
 }
