@@ -32,7 +32,6 @@ function initStockSymbols() {
     StockSymbols[Locations.NewTokyoVitaLife]                = "VITA";
     StockSymbols[Locations.Sector12IcarusMicrosystems]      = "ICRS";
     StockSymbols[Locations.Sector12UniversalEnergy]         = "UNV";
-    StockSymbols[Locations.AevumGalacticCybersystems]       = "GLC"
     StockSymbols[Locations.AevumAeroCorp]                   = "AERO";
     StockSymbols[Locations.VolhavenOmniaCybersystems]       = "OMN";
     StockSymbols[Locations.ChongqingSolarisSpaceSystems]    = "SLRS";
@@ -52,15 +51,17 @@ function initStockSymbols() {
     StockSymbols["Sigma Cosmetics"]                         = "SGC";
     StockSymbols["Joes Guns"]                               = "JGN";
     StockSymbols["Catalyst Ventures"]                       = "CTYS";
-    StockSymbols["UnitaLife Group"]                         = "UNT";
-    StockSymbols["Zeus Medical"]                            = "ZEUS";
     StockSymbols["Taiyang Digital"]                         = "TAI";
     StockSymbols["Microdyne Technologies"]                  = "MDYN";
     StockSymbols["Titan Laboratories"]                      = "TITN";
 }
 
 function initStockMarket() {
-    StockMarket = {};
+    for (var stk in StockMarket) {
+        if (StockMarket.hasOwnProperty(stk)) {
+            delete StockMarket[stk];
+        }
+    }
     
     var ecorp = Locations.AevumECorp;
     var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], 0.5, true, 16, getRandomInt(20000, 25000));
@@ -190,14 +191,6 @@ function initStockMarket() {
     var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.25, true, 0, getRandomInt(1000, 1500));
     StockMarket[catalyst] = catalystStk;
     
-    var unitalife = "UnitaLife Group";
-    var unitalifeStk = new Stock(unitalife, StockSymbols[unitalife], 0.75, true, 8, getRandomInt(10000, 15000));
-    StockMarket[unitalife] = unitalifeStk;
-    
-    var zeus = "Zeus Medical";
-    var zeusStk = new Stock(zeus, StockSymbols[zeus], 0.6, true, 9, getRandomInt(20000, 25000));
-    StockMarket[zeus] = zeusStk;
-    
     var taiyang = "Taiyang Digital";
     var taiyangStk = new Stock(taiyang, StockSymbols[taiyang], 0.75, true, 12, getRandomInt(25000, 30000));
     StockMarket[taiyang] = taiyangStk;
@@ -230,7 +223,11 @@ function stockMarketCycle() {
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
             var stock = StockMarket[name];
-            stock.b = !stock.b;
+            var thresh = 0.62;
+            if (stock.b) {thresh = 0.38;}
+            if (Math.random() < thresh) {
+                stock.b = !stock.b;
+            }
         }
     }
 }
@@ -349,6 +346,7 @@ function displayStockMarketContent() {
     wseAccountButton.addEventListener("click", function() {
         Player.hasWseAccount = true;
         initStockMarket();
+        initSymbolToStockMap();
         Player.loseMoney(CONSTANTS.WSEAccountCost);
         displayStockMarketContent();
         return false;

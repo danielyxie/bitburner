@@ -62,20 +62,20 @@ FactionInfo = {
 "                 .'    NITESECNITESECn         <br>" +
 "                /       NITESECNITESEC;        <br>" +
 "               :        :NITESECNITESEC;       <br>" +
-"               ;       @ NITESECNITESECN       <br>" +
+"               ;       $ NITESECNITESECN       <br>" +
 "              :    _,   ,N'ITESECNITESEC       <br>" +
-"              : .+''`,  :    `NITESECNIT       <br>" +
+"              : .+^^`,  :    `NITESECNIT       <br>" +
 "               ) /),     `-,-=,NITESECNI       <br>" +
-"              /  `         ,-;|NITESECN;       <br>" +
-"             /     _.'(o)  '-';NITESECN        <br>" +
-"            (  ,   o       ,-''`^NITE'         <br>" +
+"              /  ^         ,-;|NITESECN;       <br>" +
+"             /     _.'     '-';NITESECN        <br>" +
+"            (  ,           ,-''`^NITE'         <br>" +
 "             )`            :`.    .'           <br>" +
-"             )-.           ;  `- /             <br>" +
-"             \         _.-'     :              <br>" +
+"             )--           ;  `- /             <br>" +
+"             \'        _.-'     :              <br>" +
 "             (     _.-'   \.     \             <br>" +
 "              \------.      \     \            <br>" +
 "                      \.     \     \           <br>" +
-"                   bug  \       _.nIt          <br>" +
+"                        \       _.nIt          <br>" +
 "                         \ _.nITESECNi         <br>" +
 "                         nITESECNIT^' \        <br>" +
 "                         NITE^' ___    \       <br>" +
@@ -85,12 +85,12 @@ FactionInfo = {
 "                      /   d;            `b|    <br>" +
 "                     /,   $;          @  `:    <br>" +
 "                    /'    $$               ;   <br>" +
-"                  .'      $$b         (o)  |   <br>" +
+"                  .'      $$b          o   |   <br>" +
 "                .'       d$$$;             :   <br>" +
 "               /       .d$$$$;          ,   ;  <br>" +
-"              d      .d$$$$$$$          $   |  <br>" +
-"             :bp.__.g$$$$$$$$$         :$   ;  <br>" +
-"             $$$$$$$$$$$$$$$$$         $$b :   <br>",
+"              d      .dNITESEC          $   |  <br>" +
+"             :bp.__.gNITESEC$$         :$   ;  <br>" +
+"             NITESECNITESECNIT         $$b :   <br>",
 	
 	//City factions, essentially governments
 	ChongqingInfo: "Serve the people",

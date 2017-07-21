@@ -83,11 +83,13 @@ function NetscriptFunctions(workerScript) {
                 }
             });
         },
-        sleep : function(time){
+        sleep : function(time,log=true){
             if (time === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "sleep() call has incorrect number of arguments. Takes 1 argument");
             }
-            workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
+            if (log) {
+                workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
+            }
             return netscriptDelay(time).then(function() {
                 return Promise.resolve(true);
             });
@@ -170,6 +172,9 @@ function NetscriptFunctions(workerScript) {
             }
             workerScript.scriptRef.log(args.toString());
         },
+        clearLog : function() {
+            workerScript.scriptRef.clearLog();
+        },
         nuke : function(ip){
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
@@ -178,6 +183,9 @@ function NetscriptFunctions(workerScript) {
             if (server == null) {
                 workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+            }
+            if (!Player.hasProgram(Programs.NukeProgram)) {
+                throw makeRuntimeRejectMsg(workerScript, "You do not have the NUKE.exe virus!");
             }
             if (server.openPortCount < server.numOpenPortsRequired) {
                 throw makeRuntimeRejectMsg(workerScript, "Not enough ports opened to use NUKE.exe virus");
@@ -199,8 +207,11 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
             }
+            if (!Player.hasProgram(Programs.BruteSSHProgram)) {
+                throw makeRuntimeRejectMsg(workerScript, "You do not have the BruteSSH.exe program!");
+            }
             if (!server.sshPortOpen) {
-                workerScript.scriptRef.log("Executed BruteSSH.exe virus on " + server.hostname + " to open SSH port (22)");
+                workerScript.scriptRef.log("Executed BruteSSH.exe on " + server.hostname + " to open SSH port (22)");
                 server.sshPortOpen = true; 
                 ++server.openPortCount;
             } else {
@@ -217,8 +228,11 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
             }
+            if (!Player.hasProgram(Programs.FTPCrackProgram)) {
+                throw makeRuntimeRejectMsg(workerScript, "You do not have the FTPCrack.exe program!");
+            }
             if (!server.ftpPortOpen) {
-                workerScript.scriptRef.log("Executed FTPCrack.exe virus on " + server.hostname + " to open FTP port (21)");
+                workerScript.scriptRef.log("Executed FTPCrack.exe on " + server.hostname + " to open FTP port (21)");
                 server.ftpPortOpen = true; 
                 ++server.openPortCount;
             } else {
@@ -235,8 +249,11 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
             }
+            if (!Player.hasProgram(Programs.RelaySMTPProgram)) {
+                throw makeRuntimeRejectMsg(workerScript, "You do not have the relaySMTP.exe program!");
+            }
             if (!server.smtpPortOpen) {
-                workerScript.scriptRef.log("Executed relaySMTP.exe virus on " + server.hostname + " to open SMTP port (25)");
+                workerScript.scriptRef.log("Executed relaySMTP.exe on " + server.hostname + " to open SMTP port (25)");
                 server.smtpPortOpen = true; 
                 ++server.openPortCount;
             } else {
@@ -253,8 +270,11 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
             }
+            if (!Player.hasProgram(Programs.HTTPWormProgram)) {
+                throw makeRuntimeRejectMsg(workerScript, "You do not have the HTTPWorm.exe program!");
+            }
             if (!server.httpPortOpen) {
-                workerScript.scriptRef.log("Executed HTTPWorm.exe virus on " + server.hostname + " to open HTTP port (80)");
+                workerScript.scriptRef.log("Executed HTTPWorm.exe on " + server.hostname + " to open HTTP port (80)");
                 server.httpPortOpen = true; 
                 ++server.openPortCount;
             } else {
@@ -271,8 +291,11 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
             }
+            if (!Player.hasProgram(Programs.SQLInjectProgram)) {
+                throw makeRuntimeRejectMsg(workerScript, "You do not have the SQLInject.exe program!");
+            }
             if (!server.sqlPortOpen) {
-                workerScript.scriptRef.log("Executed SQLInject.exe virus on " + server.hostname + " to open SQL port (1433)");
+                workerScript.scriptRef.log("Executed SQLInject.exe on " + server.hostname + " to open SQL port (1433)");
                 server.sqlPortOpen = true; 
                 ++server.openPortCount;
             } else {
@@ -648,7 +671,49 @@ function NetscriptFunctions(workerScript) {
         round : function(n) {
             if (isNaN(n)) {return 0;}
             return Math.round(n);
+        },
+        write : function(port, data="") {
+            if (!isNaN(port)) {
+                //Port 1-10
+                if (port < 1 && port > 10) {
+                    throw makeRuntimeRejectMsg(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
+                }
+                var portName = "Port" + String(port);
+                var port = NetscriptPorts[portName];
+                if (port == null) {
+                    throw makeRuntimeRejectMsg(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
+                }
+                port.push(data);
+                if (port.length > CONSTANTS.MaxPortCapacity) {
+                    port.shift();
+                    return true;
+                }
+                return false;
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for port: " + port + ". Must be a number between 1 and 10");
+            }
+        },
+        read : function(port) {
+            if (!isNaN(port)) {
+                //Port 1-10
+                if (port < 1 && port > 10) {
+                    throw makeRuntimeRejectMsg(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
+                }
+                var portName = "Port" + String(port);
+                var port = NetscriptPorts[portName];
+                if (port == null) {
+                    throw makeRuntimeRejectMsg(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
+                }
+                if (port.length == 0) {
+                    return "NULL PORT DATA";
+                } else {
+                    return port.shift();
+                }
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for port: " + port + ". Must be a number between 1 and 10");
+            }
         }
+        
     }
 }
 

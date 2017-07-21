@@ -351,9 +351,9 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     if (!illuminatiFac.isBanned && !illuminatiFac.isMember && !illuminatiFac.alreadyInvited && 
         numAugmentations >= 30 && 
         this.money >= 150000000000 &&
-        this.hacking_skill >= 1200 &&
-        this.strength >= 1000 && this.defense >= 1000 && 
-        this.dexterity >= 1000 && this.agility >= 1000) {
+        this.hacking_skill >= 1500 &&
+        this.strength >= 1200 && this.defense >= 1200 && 
+        this.dexterity >= 1200 && this.agility >= 1200) {
         invitedFactions.push(illuminatiFac);
     }
         

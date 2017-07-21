@@ -397,9 +397,9 @@ function endInfiltrationLevel(inst) {
     //Check if you gained any secrets
     if (inst.clearanceLevel % 5 == 0) {
         var baseSecretValue = inst.baseValue * inst.clearanceLevel / 2;
-        var secretValue = baseSecretValue * Player.faction_rep_mult;
+        var secretValue = baseSecretValue * Player.faction_rep_mult * 1.2;
         var secretMoneyValue = baseSecretValue * CONSTANTS.InfiltrationMoneyValue;
-        inst.secretsStolen.push(secretValue);
+        inst.secretsStolen.push(baseSecretValue);
         dialogBoxCreate("You found and stole a set of classified documents from the company. " +
                         "These classified secrets could probably be sold for money ($" + 
                         formatNumber(secretMoneyValue, 2) + "), or they " + 

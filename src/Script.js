@@ -187,6 +187,8 @@ function calculateRamUsage(codeCopy) {
                                   numOccurrences(codeCopy, "sellStock(");
     var scriptPurchaseServerCount = numOccurrences(codeCopy, "purchaseServer(");
     var scriptRoundCount = numOccurrences(codeCopy, "round(");
+    var scriptWriteCount = numOccurrences(codeCopy, "write(");
+    var scriptReadCount = numOccurrences(codeCopy, "read(");
     
     return baseRam + 
         ((whileCount * CONSTANTS.ScriptWhileRamCost) + 
@@ -224,7 +226,9 @@ function calculateRamUsage(codeCopy) {
         (scriptGetStockCount * CONSTANTS.ScriptGetStockRamCost) + 
         (scriptBuySellStockCount * CONSTANTS.ScriptBuySellStockRamCost) + 
         (scriptPurchaseServerCount * CONSTANTS.ScriptPurchaseServerRamCost) + 
-        (scriptRoundCount * CONSTANTS.ScriptRoundRamCost));
+        (scriptRoundCount * CONSTANTS.ScriptRoundRamCost) + 
+        (scriptWriteCount * CONSTANTS.ScriptReadWriteRamCost) + 
+        (scriptReadCount * CONSTANTS.ScriptReadWriteRamCost));
 }
 
 Script.prototype.toJSON = function() {
@@ -415,6 +419,10 @@ RunningScript.prototype.displayLog = function() {
     for (var i = 0; i < this.logs.length; ++i) {
         post(this.logs[i]);
     }
+}
+
+RunningScript.prototype.clearLog = function() {
+    this.logs.length = 0;
 }
     
 //Update the moneyStolen and numTimesHack maps when hacking
