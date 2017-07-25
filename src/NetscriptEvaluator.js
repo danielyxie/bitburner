@@ -205,8 +205,8 @@ function evaluate(exp, workerScript) {
                 reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". This is a bug please report to game developer"));
                 break;
         } //End switch
-    }, CONSTANTS.CodeInstructionRunTime); //End setTimeout, the Netscript operation run time
-    
+    }, Settings.CodeInstructionRunTime); //End setTimeout, the Netscript operation run time
+
     }); // End Promise
 }
 
@@ -356,7 +356,7 @@ function evalAssignment(exp, workerScript) {
         if (exp.operator !== "=" && !(exp.left.name in env.vars)){
             return reject(makeRuntimeRejectMsg(workerScript, "variable " + exp.left.name + " not definied"));
         }
-   
+
         var expRightPromise = evaluate(exp.right, workerScript);
         expRightPromise.then(function(expRight) {
             if (exp.left.type == "MemberExpression") {
@@ -452,7 +452,7 @@ function evaluateFor(exp, workerScript) {
 	var env = workerScript.env;
 	return new Promise(function(resolve, reject) {
 		if (env.stopFlag) {reject(workerScript); return;}
-		
+
 		var pCond = evaluate(exp.test, workerScript);
 		pCond.then(function(resCond) {
 			if (resCond) {
@@ -485,21 +485,21 @@ function evaluateFor(exp, workerScript) {
 
 function evaluateWhile(exp, workerScript) {
 	var env = workerScript.env;
-	
+
 	return new Promise(function(resolve, reject) {
 		if (env.stopFlag) {reject(workerScript); return;}
-		
+
 		var pCond = new Promise(function(resolve, reject) {
 			setTimeout(function() {
 				var evaluatePromise = evaluate(exp.test, workerScript);
 				evaluatePromise.then(function(resCond) {
 					resolve(resCond);
 				}, function(e) {
-					reject(e);	
+					reject(e);
 				});
 			}, CONSTANTS.CodeInstructionRunTime);
 		});
-		
+
 		pCond.then(function(resCond) {
 			if (resCond) {
 				//Run the while loop code
@@ -513,7 +513,7 @@ function evaluateWhile(exp, workerScript) {
 						});
 					}, CONSTANTS.CodeInstructionRunTime);
 				});
-				
+
 				//After the code executes make a recursive call
 				pCode.then(function(resCode) {
 					var recursiveCall = evaluateWhile(exp, workerScript);
@@ -545,13 +545,13 @@ function evaluateHacknetNode(exp, workerScript) {
                     (exp.op.type == "var" && exp.op.value == "length")) {
                     resolve(Player.hacknetNodes.length);
                     workerScript.scriptRef.log("hacknetnodes.length returned " + Player.hacknetNodes.length);
-                    return;                    
+                    return;
                 } else {
                     workerScript.scriptRef.log("Invalid/null index for hacknetnodes");
                     reject(makeRuntimeRejectMsg(workerScript, "Invalid/null index. hacknetnodes array must be accessed with an index"));
                     return;
                 }
-                
+
             }
             var indexPromise = evaluate(exp.index.value, workerScript);
             indexPromise.then(function(index) {
@@ -576,11 +576,11 @@ function evaluateHacknetNode(exp, workerScript) {
                         case "cores":
                             resolve(nodeObj.numCores);
                             break;
-                        default: 
+                        default:
                             reject(makeRuntimeRejectMsg(workerScript, "Unrecognized property for Hacknet Node. Valid properties: ram, cores, level"));
                             break;
                     }
-                    
+
                 } else if (exp.op.type == "call") {
                     switch(exp.op.func.value) {
                         case "upgradeLevel":
@@ -633,7 +633,7 @@ function evaluateHacknetNode(exp, workerScript) {
             }, function(e) {
                 reject(e);
             });
-            
+
         }, CONSTANTS.CodeInstructionRunTime);
     }, function(e) {
         reject(e);
@@ -643,10 +643,10 @@ function evaluateHacknetNode(exp, workerScript) {
 
 function evaluateProg(exp, workerScript, index) {
 	var env = workerScript.env;
-	
+
 	return new Promise(function(resolve, reject) {
 		if (env.stopFlag) {reject(workerScript); return;}
-		
+
 		if (index >= exp.body.length) {
 			resolve("progFinished");
 		} else {
@@ -661,7 +661,7 @@ function evaluateProg(exp, workerScript, index) {
 					});
 				}, CONSTANTS.CodeInstructionRunTime);
 			});
-			
+
 			//After the code finishes evaluating, evaluate the next line recursively
 			code.then(function(codeRes) {
 				var nextLine = evaluateProg(exp, workerScript, index + 1);
@@ -678,7 +678,7 @@ function evaluateProg(exp, workerScript, index) {
 }
 
 function netscriptDelay(time) {
-   return new Promise(function(resolve) { 
+   return new Promise(function(resolve) {
        setTimeout(resolve, time);
    });
 }
@@ -786,7 +786,7 @@ function scriptCalculateHackingTime(server) {
 	return hackingTime;
 }
 
-//The same as Player's calculateExpGain() function but takes in the server as an argument 
+//The same as Player's calculateExpGain() function but takes in the server as an argument
 function scriptCalculateExpGain(server) {
     if (server.baseDifficulty == null) {
         server.baseDifficulty = server.hackDifficulty;

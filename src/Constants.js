@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.26.0",
+    Version:                "0.26.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -680,8 +680,9 @@ CONSTANTS = {
     LatestUpdate:
     "V0.26.1<br>" +
     "-Added autocompletion for aliases<br>" +
-    "Added getServerRam() Netscript function()<br>" +
-    "Added getLevelUpgradeCost(n), getRamUpgradeCost(), getCoreUpgradeCost() functions for Netscript Hacknet Node API<br>" + 
+    "-Added getServerRam() Netscript function()<br>" +
+    "-Added getLevelUpgradeCost(n), getRamUpgradeCost(), getCoreUpgradeCost() functions for Netscript Hacknet Node API<br>" +
+    "-Added some configurable settings (See Game Options menu)<br><br>" +
     "v0.26.0<br>" +
     "-Game now has a real ending, although it's not very interesting/satisfying right now. It sets up the framework for the secondary prestige system " +
     "in the future<br>" +

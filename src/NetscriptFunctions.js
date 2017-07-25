@@ -693,7 +693,7 @@ function NetscriptFunctions(workerScript) {
                     throw makeRuntimeRejectMsg(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 port.push(data);
-                if (port.length > CONSTANTS.MaxPortCapacity) {
+                if (port.length > Settings.MaxPortCapacity) {
                     port.shift();
                     return true;
                 }

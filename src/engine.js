@@ -1031,7 +1031,8 @@ var Engine = {
             iTutorialStart();
             Engine.removeLoadingScreen();
         }
-
+        //Initialize labels on game settings
+        setSettingsLabels();
     },
 
     setDisplayElements: function() {
