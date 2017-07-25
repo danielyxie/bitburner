@@ -1,6 +1,6 @@
 /* CSS for different main menu pages, such as character info, script editor, etc (but excluding
 	terminal which has its own page) */
-	
+
 .generic-menupage-container {
     height: 100%;
     padding-left: 10px;
@@ -21,7 +21,7 @@
         visibility: hidden;
         white-space: pre;
 }
-	       
+
 #script-editor-container {
 	position: fixed;
 	padding-top: 10px;
@@ -64,7 +64,7 @@
     margin-right: 0px;
     padding-left: 6px;
     width: 100%;
-    border: 2px solid var(--my-highlight-color);    
+    border: 2px solid var(--my-highlight-color);
 }
 
 #script-editor-filename-tag {
@@ -76,26 +76,26 @@
     color: white;
 }
 
-#script-editor-filename {	
+#script-editor-filename {
     background-color: #555;
     display: inline-block;
 	float: center;
 	resize: none;
 	color: white;
     margin: 4px;
-    
+
     padding:  2px;
-	
-    border: 2px solid var(--my-highlight-color); 
-    -webkit-box-shadow: 
+
+    border: 2px solid var(--my-highlight-color);
+    -webkit-box-shadow:
       inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    -moz-box-shadow: 
+            0 0 16px rgba(0,0,0,0.1);
+    -moz-box-shadow:
       inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    box-shadow: 
+            0 0 16px rgba(0,0,0,0.1);
+    box-shadow:
       inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
+            0 0 16px rgba(0,0,0,0.1);
 }
 
 #script-editor-status {
@@ -108,21 +108,21 @@
 	height: 80%;
     width: 100%;
     margin-left: 6px;
-    
+
     padding-left: 6px;
     padding-top: 6px;
     padding-bottom: 6px;
-    
-    border: 2px solid var(--my-highlight-color); 
-    -webkit-box-shadow: 
+
+    border: 2px solid var(--my-highlight-color);
+    -webkit-box-shadow:
       inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    -moz-box-shadow: 
+            0 0 16px rgba(0,0,0,0.1);
+    -moz-box-shadow:
       inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    box-shadow: 
+            0 0 16px rgba(0,0,0,0.1);
+    box-shadow:
       inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
+            0 0 16px rgba(0,0,0,0.1);
 }
 
 /* Active scripts */
@@ -301,16 +301,16 @@
     margin: 6px;
     padding: 6px;
     width: 85%;
-    border: 2px solid var(--my-highlight-color); 
-    -webkit-box-shadow: 
+    border: 2px solid var(--my-highlight-color);
+    -webkit-box-shadow:
       inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    -moz-box-shadow: 
+            0 0 16px rgba(0,0,0,0.1);
+    -moz-box-shadow:
       inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
-    box-shadow: 
+            0 0 16px rgba(0,0,0,0.1);
+    box-shadow:
       inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1); 
+            0 0 16px rgba(0,0,0,0.1);
 }
 
 .hacknet-node-button-div a {
@@ -380,7 +380,7 @@
 #faction-donate-div-wrapper {
     float: left;
     border: 2px solid #333;
-    padding: 14px 6px 4px 6px; 
+    padding: 14px 6px 4px 6px;
     margin: 6px;
 }
 
@@ -390,7 +390,7 @@
     margin: 8px;
 }
 
-#faction-donate-amount-txt, 
+#faction-donate-amount-txt,
 #faction-donate-input {
     padding: 6px;
     margin: 6px;
@@ -477,6 +477,10 @@ div.faction-clear {
     margin: 10px;
 }
 
+#tutorial-container a {
+    width: 50%;
+}
+
 /* Location */
 #location-container {
 	position: fixed;
@@ -512,12 +516,12 @@ div.faction-clear {
     position: fixed;
     padding: 6px;
 }
-#infiltration-left-panel, 
+#infiltration-left-panel,
 #infiltration-right-panel {
     display:inline-block;
     border: 1px solid white;
     width: 35%;
-    height: 75%; 
+    height: 75%;
     top: 10px;
     overflow-y: auto;
     overflow-x: auto;
@@ -544,7 +548,7 @@ div.faction-clear {
 }
 
 #stock-market-container p {
-    padding: 10px; 
+    padding: 10px;
     margin: 10px;
     width: 70%;
 }
