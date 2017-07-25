@@ -1,5 +1,5 @@
-/* SaveObject.js 
- *  Defines the object used to save/load games 
+/* SaveObject.js
+ *  Defines the object used to save/load games
  */
 var saveObject = new BitburnerSaveObject();
 
@@ -13,13 +13,14 @@ function BitburnerSaveObject() {
     this.GlobalAliasesSave          = "";
     this.MessagesSave               = "";
     this.StockMarketSave            = "";
+    this.SettingsSave               = "";
     this.VersionSave                = "";
 }
 
 BitburnerSaveObject.prototype.saveGame = function() {
     this.PlayerSave                 = JSON.stringify(Player);
-    
-    //Delete all logs from all running scripts 
+
+    //Delete all logs from all running scripts
     var TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
     //var TempAllServers = jQuery.extend(true, {}, AllServers);   //Deep copy
     for (var ip in TempAllServers) {
@@ -31,7 +32,7 @@ BitburnerSaveObject.prototype.saveGame = function() {
             runningScriptObj.logs = [];
         }
     }
-    
+
     this.AllServersSave             = JSON.stringify(TempAllServers);
     this.CompaniesSave              = JSON.stringify(Companies);
     this.FactionsSave               = JSON.stringify(Factions);
@@ -40,10 +41,11 @@ BitburnerSaveObject.prototype.saveGame = function() {
     this.GlobalAliasesSave          = JSON.stringify(GlobalAliases);
     this.MessagesSave               = JSON.stringify(Messages);
     this.StockMarketSave            = JSON.stringify(StockMarket);
+    this.SettingsSave               = JSON.stringify(Settings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
     window.localStorage.setItem("bitburnerSave", saveString);
-    
+
     console.log("Game saved!");
     Engine.createStatusText("Game saved!");
 }
@@ -55,13 +57,13 @@ loadGame = function(saveObj) {
     }
     var saveString = decodeURIComponent(escape(atob(window.localStorage.getItem("bitburnerSave"))));
     saveObj = JSON.parse(saveString, Reviver);
-    
+
     Player          = JSON.parse(saveObj.PlayerSave, Reviver);
     AllServers      = JSON.parse(saveObj.AllServersSave, Reviver);
     Companies       = JSON.parse(saveObj.CompaniesSave, Reviver);
     Factions        = JSON.parse(saveObj.FactionsSave, Reviver);
     SpecialServerIps = JSON.parse(saveObj.SpecialServerIpsSave, Reviver);
-    
+
     if (saveObj.hasOwnProperty("AliasesSave")) {
         try {
             Aliases         = JSON.parse(saveObj.AliasesSave, Reviver);
@@ -98,6 +100,15 @@ loadGame = function(saveObj) {
     } else {
         StockMarket = {};
     }
+    if (saveObj.hasOwnProperty("SettingsSave")) {
+        try {
+            Settings    = JSON.parse(saveObj.SettingsSave, Reviver);
+        } catch(e) {
+            initSettings();
+        }
+    } else {
+        initSettings();
+    }
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
@@ -105,8 +116,8 @@ loadGame = function(saveObj) {
                 if (CONSTANTS.Version == "0.21.0" || CONSTANTS.Version == "0.22.0" ||
                     CONSTANTS.Version == "0.22.1") {
                     dialogBoxCreate("All scripts automatically killed for the sake of compatibility " +
-                                    "with new version. If the game is still broken, try the following: " + 
-                                    "Options -> Soft Reset -> Save Game -> Reload page. If that STILL " + 
+                                    "with new version. If the game is still broken, try the following: " +
+                                    "Options -> Soft Reset -> Save Game -> Reload page. If that STILL " +
                                     "doesn't work contact the dev");
                     //This is the big update that might break games. Kill all running scripts
                     for (var ip in AllServers) {
@@ -127,7 +138,7 @@ loadGame = function(saveObj) {
     } else {
         createNewUpdateText();
     }
-    
+
     return true;
 }
 
@@ -147,7 +158,7 @@ loadImportedGame = function(saveObj, saveString) {
         saveString = decodeURIComponent(escape(atob(saveString)));
         tempSaveObj = new BitburnerSaveObject();
         tempSaveObj = JSON.parse(saveString, Reviver);
-        
+
         tempPlayer              = JSON.parse(tempSaveObj.PlayerSave, Reviver);
         tempAllServers          = JSON.parse(tempSaveObj.AllServersSave, Reviver);
         tempCompanies           = JSON.parse(tempSaveObj.CompaniesSave, Reviver);
@@ -196,14 +207,14 @@ loadImportedGame = function(saveObj, saveString) {
                 if (ver != CONSTANTS.Version) {
                     createNewUpdateText();
                 }
-                
+
                 if (ver != CONSTANTS.Version) {
                     if (CONSTANTS.Version == "0.21.0" || CONSTANTS.Version == "0.22.0" ||
                         CONSTANTS.Version == "0.22.1") {
                         console.log("here");
                         //This is the big update that might break games. Kill all running scripts
                         for (var ip in tempAllServers) {
-                            if (tempAllServers.hasOwnProperty(ip)) {            
+                            if (tempAllServers.hasOwnProperty(ip)) {
                                 tempAllServers[ip].runningScripts = [];
                                 tempAllServers[ip].runningScripts.length = 0;
                             }
@@ -224,7 +235,7 @@ loadImportedGame = function(saveObj, saveString) {
         dialogBoxCreate("Error importing game");
         return false;
     }
-    
+
     saveObj                 = tempSaveObj;
     Player                  = tempPlayer;
     AllServers              = tempAllServers;
@@ -235,22 +246,22 @@ loadImportedGame = function(saveObj, saveString) {
     if (tempAliases) {
         Aliases             = tempAliases;
     }
-    
+
     if (tempGlobalAliases) {
         GlobalAliases             = tempGlobalAliases;
     }
-    
+
     if (tempMessages) {
         Messages            = tempMessages;
     }
-    
+
     if (tempStockMarket) {
         StockMarket     = tempStockMarket;
     }
-    
+
     dialogBoxCreate("Imported game");
     gameOptionsBoxClose();
-    
+
     //Re-start game
     console.log("Importing game");
     Engine.setDisplayElements();    //Sets variables for important DOM elements
@@ -261,7 +272,7 @@ loadImportedGame = function(saveObj, saveString) {
     Engine._lastUpdate = new Date().getTime();
     var lastUpdate = Player.lastUpdate;
     var numCyclesOffline = Math.floor((Engine._lastUpdate - lastUpdate) / Engine._idleSpeed);
-    
+
     /* Process offline progress */
     var offlineProductionFromScripts = loadAllRunningScripts();    //This also takes care of offline production for those scripts
     if (Player.isWorking) {
@@ -280,30 +291,30 @@ loadImportedGame = function(saveObj, saveString) {
             Player.work(numCyclesOffline);
         }
     }
-    
+
     //Hacknet Nodes offline progress
     var offlineProductionFromHacknetNodes = processAllHacknetNodeEarnings(numCyclesOffline);
-    
+
     //Passive faction rep gain offline
     processPassiveFactionRepGain(numCyclesOffline);
-    
+
     //Update total playtime
     var time = numCyclesOffline * Engine._idleSpeed;
     if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
     if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
     Player.totalPlaytime += time;
     Player.playtimeSinceLastAug += time;
-    
+
     //Re-apply augmentations
     Player.reapplyAllAugmentations();
-    
+
     //Clear terminal
     $("#terminal tr:not(:last)").remove();
-    
+
     Player.lastUpdate = Engine._lastUpdate;
     Engine.start();                 //Run main game loop and Scripts loop
-    dialogBoxCreate("While you were offline, your scripts generated $" + 
-                    formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" + 
+    dialogBoxCreate("While you were offline, your scripts generated $" +
+                    formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" +
                     formatNumber(offlineProductionFromHacknetNodes, 2));
     return true;
 }
@@ -319,12 +330,12 @@ BitburnerSaveObject.prototype.exportGame = function() {
     this.GlobalAliasesSave          = JSON.stringify(GlobalAliases);
     this.MessagesSave               = JSON.stringify(Messages);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
-    
+
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
-    
+
     var file = new Blob([saveString], {type: 'text/plain'});
     if (window.navigator.msSaveOrOpenBlob) {// IE10+
-        window.navigator.msSaveOrOpenBlob(file, filename);  
+        window.navigator.msSaveOrOpenBlob(file, filename);
     } else { // Others
         var a = document.createElement("a"),
                 url = URL.createObjectURL(file);
@@ -334,8 +345,8 @@ BitburnerSaveObject.prototype.exportGame = function() {
         a.click();
         setTimeout(function() {
             document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);  
-        }, 0); 
+            window.URL.revokeObjectURL(url);
+        }, 0);
     }
 }
 
@@ -347,7 +358,7 @@ BitburnerSaveObject.prototype.importGame = function() {
     } else {
         dialogBoxCreate("ERR: Your browser does not support HTML5 File API. Cannot import.");
     }
-    
+
 }
 
 BitburnerSaveObject.prototype.deleteGame = function() {
@@ -358,9 +369,9 @@ BitburnerSaveObject.prototype.deleteGame = function() {
 }
 
 createNewUpdateText = function() {
-    dialogBoxCreate("New update!<br>" + 
-                    "Please report any bugs/issues through the github repository " + 
-                    "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" + 
+    dialogBoxCreate("New update!<br>" +
+                    "Please report any bugs/issues through the github repository " +
+                    "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
                     CONSTANTS.LatestUpdate);
 }
 
@@ -375,7 +386,7 @@ BitburnerSaveObject.fromJSON = function(value) {
 
 Reviver.constructors.BitburnerSaveObject = BitburnerSaveObject;
 
-//Import game 
+//Import game
 
 function openImportFileHandler(evt) {
     var file = evt.target.files[0];
@@ -383,7 +394,7 @@ function openImportFileHandler(evt) {
         dialogBoxCreate("Invalid file selected");
         return;
     }
-        
+
     var reader = new FileReader();
     reader.onload = function(e) {
         var contents = e.target.result;

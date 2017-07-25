@@ -5,12 +5,12 @@
 function scriptEditorInit() {
     //Initialize save and close button
     var closeButton = document.getElementById("script-editor-save-and-close-button");
-    
+
     closeButton.addEventListener("click", function() {
         saveAndCloseScriptEditor();
         return false;
     });
-    
+
     //Allow tabs (four spaces) in all textareas
     var textareas = document.getElementsByTagName('textarea');
     var count = textareas.length;
@@ -37,11 +37,11 @@ document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 function upgradeScriptEditorContent() {
     var txt = $("#script-editor-text")[0];
     var lineNum = txt.value.substr(0, txt.selectionStart).split("\n").length;
-    
+
     var code = document.getElementById("script-editor-text").value;
     var codeCopy = code.repeat(1);
     var ramUsage = calculateRamUsage(codeCopy);
-    document.getElementById("script-editor-status-text").innerText = 
+    document.getElementById("script-editor-status-text").innerText =
         "Line Number: " + lineNum + ", RAM: " + formatNumber(ramUsage, 2).toString() + "GB";
 }
 
@@ -69,21 +69,21 @@ function saveAndCloseScriptEditor() {
             dialogBoxCreate("Please copy and paste the code from the tutorial!");
             return;
         }
-        iTutorialNextStep(); 
+        iTutorialNextStep();
     }
-    
+
     if (filename == "") {
         dialogBoxCreate("You must specify a filename!");
         return;
     }
-        
+
     if (checkValidFilename(filename) == false) {
         dialogBoxCreate("Script filename can contain only alphanumerics, hyphens, and underscores");
         return;
     }
-    
+
     filename += ".script";
-    
+
     //If the current script already exists on the server, overwrite it
     for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
         if (filename == Player.getCurrentServer().scripts[i].filename) {
@@ -92,7 +92,7 @@ function saveAndCloseScriptEditor() {
             return;
         }
     }
-    
+
     //If the current script does NOT exist, create a new one
     var script = new Script();
     script.saveScript();
@@ -104,14 +104,14 @@ function saveAndCloseScriptEditor() {
 // underscores and hyphens
 function checkValidFilename(filename) {
 	var regex = /^[a-zA-Z0-9_-]+$/;
-	
+
 	if (filename.match(regex)) {
 		return true;
 	}
 	return false;
 }
 
-function Script() {    
+function Script() {
 	this.filename 	= "";
     this.code       = "";
     this.ramUsage   = 0;
@@ -124,14 +124,14 @@ Script.prototype.saveScript = function() {
 		//Update code and filename
 		var code = document.getElementById("script-editor-text").value;
 		this.code = code.replace(/^\s+|\s+$/g, '');
-		
+
 		var filename = document.getElementById("script-editor-filename").value + ".script";
 		this.filename = filename;
-		
+
 		//Server
 		this.server = Player.currentServer;
-		
-		//Calculate/update ram usage, execution time, etc. 
+
+		//Calculate/update ram usage, execution time, etc.
 		this.updateRamUsage();
 	}
 }
@@ -181,53 +181,53 @@ function calculateRamUsage(codeCopy) {
     var hnUpgLevelCount = numOccurrences(codeCopy, ".upgradeLevel(");
     var hnUpgRamCount = numOccurrences(codeCopy, ".upgradeRam()");
     var hnUpgCoreCount = numOccurrences(codeCopy, ".upgradeCore()");
-    var scriptGetStockCount = numOccurrences(codeCopy, "getStockPrice(") + 
+    var scriptGetStockCount = numOccurrences(codeCopy, "getStockPrice(") +
                               numOccurrences(codeCopy, "getStockPosition(");
-    var scriptBuySellStockCount = numOccurrences(codeCopy, "buyStock(") + 
+    var scriptBuySellStockCount = numOccurrences(codeCopy, "buyStock(") +
                                   numOccurrences(codeCopy, "sellStock(");
     var scriptPurchaseServerCount = numOccurrences(codeCopy, "purchaseServer(");
     var scriptRoundCount = numOccurrences(codeCopy, "round(");
     var scriptWriteCount = numOccurrences(codeCopy, "write(");
     var scriptReadCount = numOccurrences(codeCopy, "read(");
-    
-    return baseRam + 
-        ((whileCount * CONSTANTS.ScriptWhileRamCost) + 
-        (forCount * CONSTANTS.ScriptForRamCost) + 
-        (ifCount * CONSTANTS.ScriptIfRamCost) + 
-        (hackCount * CONSTANTS.ScriptHackRamCost) + 
-        (growCount * CONSTANTS.ScriptGrowRamCost) + 
-        (weakenCount * CONSTANTS.ScriptWeakenRamCost) + 
-        (scanCount * CONSTANTS.ScriptScanRamCost) + 
-        (nukeCount * CONSTANTS.ScriptNukeRamCost) + 
-        (brutesshCount * CONSTANTS.ScriptBrutesshRamCost) + 
-        (ftpcrackCount * CONSTANTS.ScriptFtpcrackRamCost) + 
-        (relaysmtpCount * CONSTANTS.ScriptRelaysmtpRamCost) + 
-        (httpwormCount * CONSTANTS.ScriptHttpwormRamCost) + 
-        (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost) + 
-        (runCount * CONSTANTS.ScriptRunRamCost) + 
-        (execCount * CONSTANTS.ScriptExecRamCost) + 
-        (scpCount * CONSTANTS.ScriptScpRamCost) + 
-        (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) + 
+
+    return baseRam +
+        ((whileCount * CONSTANTS.ScriptWhileRamCost) +
+        (forCount * CONSTANTS.ScriptForRamCost) +
+        (ifCount * CONSTANTS.ScriptIfRamCost) +
+        (hackCount * CONSTANTS.ScriptHackRamCost) +
+        (growCount * CONSTANTS.ScriptGrowRamCost) +
+        (weakenCount * CONSTANTS.ScriptWeakenRamCost) +
+        (scanCount * CONSTANTS.ScriptScanRamCost) +
+        (nukeCount * CONSTANTS.ScriptNukeRamCost) +
+        (brutesshCount * CONSTANTS.ScriptBrutesshRamCost) +
+        (ftpcrackCount * CONSTANTS.ScriptFtpcrackRamCost) +
+        (relaysmtpCount * CONSTANTS.ScriptRelaysmtpRamCost) +
+        (httpwormCount * CONSTANTS.ScriptHttpwormRamCost) +
+        (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost) +
+        (runCount * CONSTANTS.ScriptRunRamCost) +
+        (execCount * CONSTANTS.ScriptExecRamCost) +
+        (scpCount * CONSTANTS.ScriptScpRamCost) +
+        (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) +
         (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
-        (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) + 
-        (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
-        (getServerMaxMoneyCount * CONSTANTS.ScriptGetServerMoneyRamCost) + 
+        (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) +
+        (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) +
+        (getServerMaxMoneyCount * CONSTANTS.ScriptGetServerMoneyRamCost) +
         (getServerSecurityCount * CONSTANTS.ScriptGetServerSecurityRamCost) +
         (getServerBaseSecurityCount * CONSTANTS.ScriptGetServerSecurityRamCost) +
-        (getServerReqdHackingCount * CONSTANTS.ScriptGetServerReqdHackRamCost) + 
-        (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) + 
+        (getServerReqdHackingCount * CONSTANTS.ScriptGetServerReqdHackRamCost) +
+        (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) +
         (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
         (numOperators * CONSTANTS.ScriptOperatorRamCost) +
-        (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) + 
+        (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) +
         (hacknetnodesArrayCount * CONSTANTS.ScriptHacknetNodesRamCost) +
-        (hnUpgLevelCount * CONSTANTS.ScriptHNUpgLevelRamCost) + 
+        (hnUpgLevelCount * CONSTANTS.ScriptHNUpgLevelRamCost) +
         (hnUpgRamCount * CONSTANTS.ScriptHNUpgRamRamCost) +
-        (hnUpgCoreCount * CONSTANTS.ScriptHNUpgCoreRamCost) + 
-        (scriptGetStockCount * CONSTANTS.ScriptGetStockRamCost) + 
-        (scriptBuySellStockCount * CONSTANTS.ScriptBuySellStockRamCost) + 
-        (scriptPurchaseServerCount * CONSTANTS.ScriptPurchaseServerRamCost) + 
-        (scriptRoundCount * CONSTANTS.ScriptRoundRamCost) + 
-        (scriptWriteCount * CONSTANTS.ScriptReadWriteRamCost) + 
+        (hnUpgCoreCount * CONSTANTS.ScriptHNUpgCoreRamCost) +
+        (scriptGetStockCount * CONSTANTS.ScriptGetStockRamCost) +
+        (scriptBuySellStockCount * CONSTANTS.ScriptBuySellStockRamCost) +
+        (scriptPurchaseServerCount * CONSTANTS.ScriptPurchaseServerRamCost) +
+        (scriptRoundCount * CONSTANTS.ScriptRoundRamCost) +
+        (scriptWriteCount * CONSTANTS.ScriptReadWriteRamCost) +
         (scriptReadCount * CONSTANTS.ScriptReadWriteRamCost));
 }
 
@@ -250,14 +250,14 @@ loadAllRunningScripts = function() {
 	for (var property in AllServers) {
 		if (AllServers.hasOwnProperty(property)) {
 			var server = AllServers[property];
-			
+
 			//Reset each server's RAM usage to 0
 			server.ramUsed = 0;
-			
+
 			for (var j = 0; j < server.runningScripts.length; ++j) {
 				count++;
 				addWorkerScript(server.runningScripts[j], server);
-				
+
 				//Offline production
 				total += scriptCalculateOfflineProduction(server.runningScripts[j]);
 			}
@@ -273,15 +273,15 @@ scriptCalculateOfflineProduction = function(runningScriptObj) {
 	var lastUpdate = Player.lastUpdate;
 	var timePassed = (thisUpdate - lastUpdate) / 1000;	//Seconds
 	console.log("Offline for " + timePassed + " seconds");
-	
+
 	//Calculate the "confidence" rating of the script's true production. This is based
 	//entirely off of time. We will arbitrarily say that if a script has been running for
 	//4 hours (14400 sec) then we are completely confident in its ability
 	var confidence = (runningScriptObj.onlineRunningTime) / 14400;
 	if (confidence >= 1) {confidence = 1;}
-    
+
     //Data map: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-    
+
     //Grow
     for (var ip in runningScriptObj.dataMap) {
         if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
@@ -295,7 +295,7 @@ scriptCalculateOfflineProduction = function(runningScriptObj) {
             runningScriptObj.log(serv.hostname + " grown by " + formatNumber(growth * 100 - 100, 6) + "% from grow() calls made while offline");
         }
     }
-    
+
     var totalOfflineProduction = 0;
     for (var ip in runningScriptObj.dataMap) {
         if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
@@ -308,7 +308,7 @@ scriptCalculateOfflineProduction = function(runningScriptObj) {
                 production = serv.moneyAvailable;
             }
             totalOfflineProduction += production;
-            Player.gainMoney(production); 
+            Player.gainMoney(production);
             console.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
             runningScriptObj.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
             serv.moneyAvailable -= production;
@@ -318,17 +318,17 @@ scriptCalculateOfflineProduction = function(runningScriptObj) {
     }
 
     //Offline EXP gain
-	//A script's offline production will always be at most half of its online production.	
+	//A script's offline production will always be at most half of its online production.
 	var expGain = 0.5 * (runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime) * timePassed;
 	expGain *= confidence;
-	
+
 	Player.gainHackingExp(expGain);
-    	
+
 	//Update script stats
 	runningScriptObj.offlineMoneyMade += totalOfflineProduction;
 	runningScriptObj.offlineRunningTime += timePassed;
 	runningScriptObj.offlineExpGained += expGain;
-    
+
     //Fortify a server's security based on how many times it was hacked
     for (var ip in runningScriptObj.dataMap) {
         if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
@@ -341,7 +341,7 @@ scriptCalculateOfflineProduction = function(runningScriptObj) {
             serv.fortify(CONSTANTS.ServerFortifyAmount * timesHacked);
         }
     }
-    
+
     //Weaken
     for (var ip in runningScriptObj.dataMap) {
         if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
@@ -354,7 +354,7 @@ scriptCalculateOfflineProduction = function(runningScriptObj) {
             serv.weaken(CONSTANTS.ServerWeakenAmount * timesWeakened);
         }
     }
-    
+
     return totalOfflineProduction;
 }
 
@@ -376,9 +376,9 @@ function RunningScript(script, args) {
     this.args       = args;
     this.scriptRef  = script;
     this.server     = script.server;    //IP Address only
-    
+
     this.logs       = [];   //Script logging. Array of strings, with each element being a log entry
-    
+
 	//Stats to display on the Scripts menu, and used to determine offline progress
 	this.offlineRunningTime  	= 0.01;	//Seconds
 	this.offlineMoneyMade 		= 0;
@@ -386,16 +386,16 @@ function RunningScript(script, args) {
 	this.onlineRunningTime 		= 0.01;	//Seconds
 	this.onlineMoneyMade 		= 0;
 	this.onlineExpGained 		= 0;
-    
+
     this.threads                = 1;
-    
+
     //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
     this.dataMap                = new AllServersMap([0, 0, 0, 0]);
 }
 
 RunningScript.prototype.reset = function() {
     this.scriptRef.updateRamUsage();
-    
+
     this.offlineRunningTime  	= 0.01;	//Seconds
 	this.offlineMoneyMade 		= 0;
 	this.offlineExpGained 		= 0;
@@ -406,7 +406,7 @@ RunningScript.prototype.reset = function() {
 }
 
 RunningScript.prototype.log = function(txt) {
-    if (this.logs.length > CONSTANTS.MaxLogCapacity) {
+    if (this.logs.length > Settings.MaxLogCapacity) {
         //Delete first element and add new log entry to the end.
         //TODO Eventually it might be better to replace this with circular array
         //to improve performance
@@ -424,7 +424,7 @@ RunningScript.prototype.displayLog = function() {
 RunningScript.prototype.clearLog = function() {
     this.logs.length = 0;
 }
-    
+
 //Update the moneyStolen and numTimesHack maps when hacking
 RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
     if (this.dataMap == null) {

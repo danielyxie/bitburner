@@ -7,7 +7,7 @@ var post = function(input, replace=true) {
     } else {
         $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
     }
-    
+
 	updateTerminalScroll();
 }
 
@@ -19,7 +19,7 @@ var hackProgressBarPost = function(input) {
 
 var hackProgressPost = function(input) {
     $("#terminal-input").before('<tr class="posted"><td id="hack-progress" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
-	updateTerminalScroll();    
+	updateTerminalScroll();
 }
 
 //Scroll to the bottom of the terminal's 'text area'
@@ -38,37 +38,37 @@ $(document).keydown(function(event) {
 	if (Engine.currentPage == Engine.Page.Terminal) {
         var terminalInput = document.getElementById("terminal-input-text-box");
         if (terminalInput != null && !event.ctrlKey && !event.shiftKey) {terminalInput.focus();}
-        
+
 		//Enter
 		if (event.keyCode == 13) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
 			if (command.length > 0) {
 				post("> " + command);
-				
+
 				Terminal.executeCommand(command);
 				$('input[class=terminal-input]').val("");
 			}
 		}
-		
+
 		//Ctrl + c when an "Action" is in progress
 		if (event.keyCode == 67 && event.ctrlKey && Engine._actionInProgress) {
 			post("Cancelling...");
 			Engine._actionInProgress = false;
 			Terminal.finishAction(true);
 		}
-        
+
         //Up key to cycle through past commands
         if (event.keyCode == 38) {
             if (terminalInput == null) {return;}
             var i = Terminal.commandHistoryIndex;
             var len = Terminal.commandHistory.length;
-            
+
             if (len == 0) {return;}
             if (i < 0 || i > len) {
                 Terminal.commandHistoryIndex = len;
-            } 
-            
+            }
+
             if (i != 0) {
                 --Terminal.commandHistoryIndex;
             }
@@ -76,18 +76,18 @@ $(document).keydown(function(event) {
             terminalInput.value = prevCommand;
             setTimeout(function(){terminalInput.selectionStart = terminalInput.selectionEnd = 10000; }, 0);
         }
-        
+
         //Down key
         if (event.keyCode == 40) {
             if (terminalInput == null) {return;}
             var i = Terminal.commandHistoryIndex;
             var len = Terminal.commandHistory.length;
-            
+
             if (len == 0) {return;}
             if (i < 0 || i > len) {
                 Terminal.commandHistoryIndex = len;
             }
-            
+
             //Latest command, put nothing
             if (i == len || i == len-1) {
                 Terminal.commandHistoryIndex = len;
@@ -98,7 +98,7 @@ $(document).keydown(function(event) {
                 terminalInput.value = prevCommand;
             }
         }
-        
+
         //Tab (autocomplete)
         if (event.keyCode == 9) {
             if (terminalInput == null) {return;}
@@ -106,16 +106,17 @@ $(document).keydown(function(event) {
             if (input == "") {return;}
             input = input.trim();
             input = input.replace(/\s\s+/g, ' ');
-            
+
             var commandArray = input.split(" ");
             var index = commandArray.length - 2;
             if (index < -1) {index = 0;}
             var allPos = determineAllPossibilitiesForTabCompletion(input, index);
             if (allPos.length == 0) {return;}
-            
+
             var arg = "";
             var command = "";
             if (commandArray.length == 0) {return;}
+            if (commandArray.length == 1) {command = commandArray[0];}
             else if (commandArray.length == 2) {
                 command = commandArray[0];
                 arg = commandArray[1];
@@ -123,9 +124,10 @@ $(document).keydown(function(event) {
                 command = commandArray[0] + " " + commandArray[1];
                 arg = commandArray[2];
             } else {
-                command = commandArray[0];
+                arg = commandArray.pop();
+                command = commandArray.join(" ");
             }
-            
+
             tabCompletion(command, arg, allPos);
         }
 	}
@@ -149,7 +151,7 @@ $(document).keydown(function(e) {
             if (inputTextBox != null) {
                 inputTextBox.focus();
             }
-			
+
 			terminalCtrlPressed = false;
 		}
 	}
@@ -172,9 +174,9 @@ $(document).keyup(function(e) {
 function tabCompletion(command, arg, allPossibilities, index=0) {
     if (!(allPossibilities.constructor === Array)) {return;}
     if (!containsAllStrings(allPossibilities)) {return;}
-    
+
     command = command.toLowerCase();
-    
+
     //Remove all options in allPossibilities that do not match the current string
     //that we are attempting to autocomplete
     if (arg == "") {
@@ -190,11 +192,11 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
             }
         }
     }
-    
+
     var val = "";
     if (allPossibilities.length == 0) {
         return;
-    } else if (allPossibilities.length == 1) {    
+    } else if (allPossibilities.length == 1) {
         if (arg == "") {
             //Autocomplete command
             val = allPossibilities[0] + " ";
@@ -231,29 +233,30 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
                 document.getElementById("terminal-input-text-box").focus();
             }
         }
-        
+
     }
 }
 
 function determineAllPossibilitiesForTabCompletion(input, index=0) {
     var allPos = [];
+    allPos = allPos.concat(Object.keys(GlobalAliases));
     var currServ = Player.getCurrentServer();
     input = input.toLowerCase();
-    
+
     //Autocomplete the command
     if (index == -1) {
-        return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "free", 
+        return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "free",
                 "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
-                "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze", 
+                "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze",
                 "scp", "sudov", "tail", "theme", "top"].concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
     }
-    
+
     if (input.startsWith ("buy ")) {
         return [Programs.BruteSSHProgram, Programs.FTPCrackProgram, Programs.RelaySMTPProgram,
                 Programs.HTTPWormProgram, Programs.SQLInjectProgram, Programs.DeepscanV1,
-                Programs.DeepscanV2];
+                Programs.DeepscanV2].concat(Object.keys(GlobalAliases));
     }
-    
+
     if (input.startsWith("scp ") && index == 1) {
         for (var iphostname in AllServers) {
             if (AllServers.hasOwnProperty(iphostname)) {
@@ -262,7 +265,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
             }
         }
     }
-    
+
     if (input.startsWith("connect ") || input.startsWith("telnet ")) {
         //All network connections
         for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
@@ -272,8 +275,8 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
             allPos.push(serv.hostname); //Hostname
         }
         return allPos;
-    } 
-    
+    }
+
     if (input.startsWith("kill ") || input.startsWith("nano ") ||
         input.startsWith("tail ") || input.startsWith("rm ") ||
         input.startsWith("mem ") || input.startsWith("check ") ||
@@ -284,13 +287,13 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         }
         return allPos;
     }
-    
+
     if (input.startsWith("run ")) {
         //All programs and scripts
         for (var i = 0; i < currServ.scripts.length; ++i) {
             allPos.push(currServ.scripts[i].filename);
         }
-        
+
         //Programs are on home computer
         var homeComputer = Player.getHomeComputer();
         for(var i = 0; i < homeComputer.programs.length; ++i) {
@@ -298,7 +301,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         }
         return allPos;
     }
-    
+
     if (input.startsWith("cat ")) {
         for (var i = 0; i < currServ.messages.length; ++i) {
             allPos.push(currServ.messages[i].filename);
@@ -310,12 +313,12 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
 
 var Terminal = {
     //Flags to determine whether the player is currently running a hack or an analyze
-    hackFlag:       false, 
-    analyzeFlag:    false, 
-    
+    hackFlag:       false,
+    analyzeFlag:    false,
+
     commandHistory: [],
     commandHistoryIndex: 0,
-    
+
     finishAction: function(cancelled = false) {
         if (Terminal.hackFlag) {
             Terminal.finishHack(cancelled);
@@ -323,12 +326,12 @@ var Terminal = {
             Terminal.finishAnalyze(cancelled);
         }
     },
-    
+
     //Complete the hack/analyze command
 	finishHack: function(cancelled = false) {
 		if (cancelled == false) {
             var server = Player.getCurrentServer();
-			
+
 			//Calculate whether hack was successful
 			var hackChance = Player.calculateHackingChance();
 			var rand = Math.random();
@@ -344,17 +347,17 @@ var Terminal = {
                 server.manuallyHacked = true;
 				var moneyGained = Player.calculatePercentMoneyHacked();
 				moneyGained = Math.floor(server.moneyAvailable * moneyGained);
-				
+
 				//Safety check
 				if (moneyGained <= 0) {moneyGained = 0;}
-				
+
 				server.moneyAvailable -= moneyGained;
 				Player.gainMoney(moneyGained);
-				
+
                 Player.gainHackingExp(expGainedOnSuccess)
-                
+
                 server.fortify(CONSTANTS.ServerFortifyAmount);
-				
+
 				post("Hack successful! Gained $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) + " hacking EXP");
 			} else {					//Failure
 				//Player only gains 25% exp for failure? TODO Can change this later to balance
@@ -362,16 +365,16 @@ var Terminal = {
 				post("Failed to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " hacking EXP");
 			}
 		}
-        
+
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
         document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
-        $('input[class=terminal-input]').prop('disabled', false);      
+        $('input[class=terminal-input]').prop('disabled', false);
 
         Terminal.hackFlag = false;
 	},
-    
+
     finishAnalyze: function(cancelled = false) {
 		if (cancelled == false) {
 			post(Player.getCurrentServer().hostname + ": ");
@@ -391,25 +394,25 @@ var Terminal = {
 			} else {
 				post("SSH port: Closed")
 			}
-			
+
 			if (Player.getCurrentServer().ftpPortOpen) {
 				post("FTP port: Open")
 			} else {
 				post("FTP port: Closed")
 			}
-			
+
 			if (Player.getCurrentServer().smtpPortOpen) {
 				post("SMTP port: Open")
 			} else {
 				post("SMTP port: Closed")
 			}
-			
+
 			if (Player.getCurrentServer().httpPortOpen) {
 				post("HTTP port: Open")
 			} else {
 				post("HTTP port: Closed")
 			}
-			
+
 			if (Player.getCurrentServer().sqlPortOpen) {
 				post("SQL port: Open")
 			} else {
@@ -417,19 +420,19 @@ var Terminal = {
 			}
 		}
         Terminal.analyzeFlag = false;
-        
+
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
         document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
-        $('input[class=terminal-input]').prop('disabled', false);      
-    }, 
-	
+        $('input[class=terminal-input]').prop('disabled', false);
+    },
+
 	executeCommand:  function(command) {
         command = command.trim();
         //Replace all extra whitespace in command with a single space
         command = command.replace(/\s\s+/g, ' ');
-        
+
         //Terminal history
         if (Terminal.commandHistory[Terminal.commandHistory.length-1] != command) {
             Terminal.commandHistory.push(command);
@@ -438,28 +441,28 @@ var Terminal = {
             }
         }
         Terminal.commandHistoryIndex = Terminal.commandHistory.length;
-        
+
         //Process any aliases
         command = substituteAliases(command);
-        
+
         //Allow usage of ./
         if (command.startsWith("./")) {
             command = command.slice(0, 2) + " " + command.slice(2);
         }
-        
+
         //Only split the first space
 		var commandArray = command.split(" ");
         if (commandArray.length > 1) {
             commandArray = [commandArray.shift(), commandArray.join(" ")];
         }
-		
+
 		if (commandArray.length == 0) {return;}
-        
+
         /****************** Interactive Tutorial Terminal Commands ******************/
         if (iTutorialIsRunning) {
             var foodnstuffServ = GetServerByHostname("foodnstuff");
             if (foodnstuffServ == null) {throw new Error("Could not get foodnstuff server"); return;}
-            
+
             switch(currITutorialStep) {
             case iTutorialSteps.TerminalHelp:
                 if (commandArray[0] == "help") {
@@ -506,7 +509,7 @@ var Terminal = {
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
             case iTutorialSteps.TerminalAnalyze:
-                if (commandArray[0] == "analyze") {    
+                if (commandArray[0] == "analyze") {
                     if (commandArray.length != 1) {
                         post("Incorrect usage of analyze command. Usage: analyze"); return;
                     }
@@ -516,7 +519,7 @@ var Terminal = {
                     hackProgressPost("Time left:");
                     hackProgressBarPost("[");
                     Player.analyze();
-                    
+
                     //Disable terminal
                     document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                     $('input[class=terminal-input]').prop('disabled', true);
@@ -526,7 +529,7 @@ var Terminal = {
                 }
                 break;
             case iTutorialSteps.TerminalNuke:
-                if (commandArray.length == 2 && 
+                if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
                     foodnstuffServ.hasAdminRights = true;
                     post("NUKE successful! Gained root access to foodnstuff");
@@ -539,7 +542,7 @@ var Terminal = {
 					hackProgressPost("Time left:");
 					hackProgressBarPost("[");
 					Player.hack();
-					
+
 					//Disable terminal
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
@@ -547,7 +550,7 @@ var Terminal = {
                 } else {post("Bad command. Please follow the tutorial");}
 				break;
             case iTutorialSteps.TerminalCreateScript:
-                if (commandArray.length == 2 && 
+                if (commandArray.length == 2 &&
                     commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
                     Engine.loadScriptEditorContent("foodnstuff", "");
                     iTutorialNextStep();
@@ -559,7 +562,7 @@ var Terminal = {
                 }
                 break;
             case iTutorialSteps.TerminalRunScript:
-                if (commandArray.length == 2 && 
+                if (commandArray.length == 2 &&
                     commandArray[0] == "run" && commandArray[1] == "foodnstuff.script") {
                     Terminal.runScript("foodnstuff.script");
                     iTutorialNextStep();
@@ -578,15 +581,15 @@ var Terminal = {
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
                 break;
-            default:    
+            default:
                 post("Please follow the tutorial, or click 'Exit Tutorial' if you'd like to skip it");
                 return;
             }
             return;
         }
-        
+
         /****************** END INTERACTIVE TUTORIAL ******************/
-		
+
         /* Command parser */
         var s = Player.getCurrentServer();
 		switch (commandArray[0].toLowerCase()) {
@@ -607,7 +610,7 @@ var Terminal = {
                         }
                     }
                 }
-                post('Incorrect usage of alias command. Usage: alias [-g] [aliasname="value"]'); 
+                post('Incorrect usage of alias command. Usage: alias [-g] [aliasname="value"]');
                 break;
 			case "analyze":
 				if (commandArray.length != 1) {
@@ -619,7 +622,7 @@ var Terminal = {
                 hackProgressPost("Time left:");
                 hackProgressBarPost("[");
                 Player.analyze();
-                
+
                 //Disable terminal
                 document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                 $('input[class=terminal-input]').prop('disabled', true);
@@ -658,12 +661,12 @@ var Terminal = {
                     for (var i = 1; i < results.length; ++i) {
                         args.push(results[i]);
                     }
-                    
+
                     //Can only tail script files
                     if (scriptName.endsWith(".script") == false) {
                         post("Error: tail can only be called on .script files (filename must end with .script)"); return;
                     }
-                    
+
                     //Check that the script exists on this machine
                     var runningScript = findRunningScript(scriptName, args, s);
                     if (runningScript == null) {
@@ -680,24 +683,24 @@ var Terminal = {
 				}
 				$("#terminal tr:not(:last)").remove();
 				postNetburnerText();
-				break;	
+				break;
 			case "connect":
 				//Disconnect from current server in terminal and connect to new one
                 if (commandArray.length != 2) {
                     post("Incorrect usage of connect command. Usage: connect [ip/hostname]");
                     return;
                 }
-                
+
                 var ip = commandArray[1];
-                
+
                 for (var i = 0; i < Player.getCurrentServer().serversOnNetwork.length; i++) {
                     if (Player.getCurrentServer().getServerOnNetwork(i).ip == ip || Player.getCurrentServer().getServerOnNetwork(i).hostname == ip) {
                         Terminal.connectToServer(ip);
                         return;
                     }
                 }
-                
-                post("Host not found"); 
+
+                post("Host not found");
 				break;
 			case "free":
 				Terminal.executeFreeCommand(commandArray);
@@ -719,7 +722,7 @@ var Terminal = {
 					hackProgressPost("Time left:");
 					hackProgressBarPost("[");
 					Player.hack();
-					
+
 					//Disable terminal
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
@@ -810,13 +813,13 @@ var Terminal = {
                     }
                     scriptName = results[0];
                 }
-                
+
                 var currServ = Player.getCurrentServer();
                 for (var i = 0; i < currServ.scripts.length; ++i) {
                     if (scriptName == currServ.scripts[i].filename) {
                         var scriptBaseRamUsage = currServ.scripts[i].ramUsage;
                         var ramUsage = scriptBaseRamUsage * numThreads * Math.pow(CONSTANTS.MultithreadingRAMCost, numThreads-1);
-                        
+
                         post("This script requires " + formatNumber(ramUsage, 2) + "GB of RAM to run for " + numThreads + " thread(s)");
                         return;
                     }
@@ -827,17 +830,17 @@ var Terminal = {
 				if (commandArray.length != 2) {
 					post("Incorrect usage of nano command. Usage: nano [scriptname]"); return;
 				}
-				
+
 				var filename = commandArray[1];
-				
+
 				//Can only edit script files
 				if (filename.endsWith(".script") == false) {
 					post("Error: Only .script files are editable with nano (filename must end with .script)"); return;
 				}
-				
+
 				//Script name is the filename without the .script at the end
 				var scriptname = filename.substr(0, filename.indexOf(".script"));
-				
+
 				//Check if the script already exists
 				for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
 					if (filename == Player.getCurrentServer().scripts[i].filename) {
@@ -864,7 +867,7 @@ var Terminal = {
 				if (commandArray.length != 2) {
                     post("Incorrect number of arguments. Usage: rm [program/script]"); return;
                 }
-                
+
                 //Check programs
                 var delTarget = commandArray[1];
                 for (var i = 0; i < s.programs.length; ++i) {
@@ -873,7 +876,7 @@ var Terminal = {
                        return;
                     }
                 }
-                
+
                 //Check scripts
                 for (var i = 0; i < s.scripts.length; ++i) {
                     if (s.scripts[i].filename == delTarget) {
@@ -888,7 +891,7 @@ var Terminal = {
                         return;
                     }
                 }
-                
+
                 post("No such file exists");
 				break;
 			case "run":
@@ -898,7 +901,7 @@ var Terminal = {
 					post("Incorrect number of arguments. Usage: run [program/script] [-t] [num threads] [arg1] [arg2]...");
 				} else {
 					var executableName = commandArray[1];
-					//Check if its a script or just a program/executable 
+					//Check if its a script or just a program/executable
 					if (executableName.indexOf(".script") == -1) {
 						//Not a script
 						Terminal.runProgram(executableName);
@@ -920,7 +923,7 @@ var Terminal = {
                         post("Incorrect usage of scan-analyze command. depth argument must be positive numeric");
                         return;
                     }
-                    if (depth > 3 && !Player.hasProgram(Programs.DeepscanV1) && 
+                    if (depth > 3 && !Player.hasProgram(Programs.DeepscanV1) &&
                         !Player.hasProgram(Programs.DeepscanV2)) {
                         post("You cannot scan-analyze with that high of a depth. Maximum depth is 3");
                         return;
@@ -934,7 +937,7 @@ var Terminal = {
                     Terminal.executeScanAnalyzeCommand(depth);
                 } else {
                     post("Incorrect usage of scan-analyze command. usage: scan-analyze [depth]");
-                }                    
+                }
                 break;
 			case "scp":
 				if (commandArray.length != 2) {
@@ -953,9 +956,9 @@ var Terminal = {
                     return;
                 }
                 var ip = server.ip;
-                
+
                 var currServ = Player.getCurrentServer();
-                
+
                 //Get the current script
                 var sourceScript = null;
                 for (var i = 0; i < currServ.scripts.length; ++i) {
@@ -968,7 +971,7 @@ var Terminal = {
                     post("ERROR: scp() failed. No such script exists");
                     return;
                 }
-                
+
                 //Overwrite script if it exists
                 for (var i = 0; i < server.scripts.length; ++i) {
                     if (scriptname == server.scripts[i].filename) {
@@ -980,20 +983,20 @@ var Terminal = {
                         return;
                     }
                 }
-                
+
                 var newScript = new Script();
                 newScript.filename = scriptname;
                 newScript.code = sourceScript.code;
                 newScript.ramUsage = sourceScript.ramUsage;
                 newScript.server = ip;
                 server.scripts.push(newScript);
-                post(scriptname + " copied over to " + server.hostname);  
+                post(scriptname + " copied over to " + server.hostname);
 				break;
             case "sudov":
                 if (commandArray.length != 1) {
                     post("Incorrect number of arguments. Usage: sudov"); return;
                 }
-                
+
                 if (Player.getCurrentServer().hasAdminRights) {
                     post("You have ROOT access to this machine");
                 } else {
@@ -1010,12 +1013,12 @@ var Terminal = {
                     for (var i = 1; i < results.length; ++i) {
                         args.push(results[i]);
                     }
-                    
+
                     //Can only tail script files
                     if (scriptName.endsWith(".script") == false) {
                         post("Error: tail can only be called on .script files (filename must end with .script)"); return;
                     }
-                    
+
                     //Check that the script exists on this machine
                     var runningScript = findRunningScript(scriptName, args, s);
                     if (runningScript == null) {
@@ -1026,7 +1029,7 @@ var Terminal = {
                 }
 				break;
             case "theme":
-                //todo support theme saving                
+                //todo support theme saving
                 var args = commandArray[1] ? commandArray[1].split(" ") : [];
                 if(args.length != 1 && args.length != 3) {
                     post("Incorrect number of arguments.");
@@ -1047,7 +1050,7 @@ var Terminal = {
                         document.body.style.setProperty('--my-background-color',"#002b36");
                     }else{
                         post("Theme not found");
-                    }                    
+                    }
                 }else{
                     inputBackgroundHex = args[0];
                     inputTextHex = args[1];
@@ -1060,7 +1063,7 @@ var Terminal = {
                         document.body.style.setProperty('--my-background-color',inputBackgroundHex);
                     }else{
                         post("Invalid Hex Input for theme");
-                    }                    
+                    }
                 }
                 break;
 			case "top":
@@ -1110,7 +1113,7 @@ var Terminal = {
 				post("Command not found");
 		}
 	},
-    
+
     connectToServer: function(ip) {
         console.log("Connect to server called");
         var serv = getServer(ip);
@@ -1126,19 +1129,19 @@ var Terminal = {
             checkIfConnectedToDarkweb(); //Posts a 'help' message if connecting to dark web
         }
     },
-    
+
     executeListCommand: function(commandArray) {
         if (commandArray.length != 1) {
             post("Incorrect usage of ls command. Usage: ls"); return;
         }
-        
+
         //Display all programs and scripts
-        var allFiles = []; 
-        
+        var allFiles = [];
+
         //Get all of the programs and scripts on the machine into one temporary array
         var s = Player.getCurrentServer();
         for (var i = 0; i < s.programs.length; i++) {
-            allFiles.push(s.programs[i]); 
+            allFiles.push(s.programs[i]);
         }
         for (var i = 0; i < s.scripts.length; i++) {
             allFiles.push(s.scripts[i].filename);
@@ -1146,15 +1149,15 @@ var Terminal = {
         for (var i = 0; i < s.messages.length; i++) {
             allFiles.push(s.messages[i].filename);
         }
-        
+
         //Sort the files alphabetically then print each
         allFiles.sort();
-        
+
         for (var i = 0; i < allFiles.length; i++) {
             post(allFiles[i]);
         }
     },
-    
+
     executeScanCommand: function(commandArray) {
         if (commandArray.length != 1) {
             post("Incorrect usage of netstat/scan command. Usage: netstat/scan"); return;
@@ -1166,13 +1169,13 @@ var Terminal = {
             var entry = Player.getCurrentServer().getServerOnNetwork(i);
             if (entry == null) {continue;}
             entry = entry.hostname;
-            
+
             //Calculate padding and add IP
             var numSpaces = 21 - entry.length;
             var spaces = Array(numSpaces+1).join(" ");
             entry += spaces;
             entry += Player.getCurrentServer().getServerOnNetwork(i).ip;
-            
+
             //Calculate padding and add root access info
             var hasRoot;
             if (Player.getCurrentServer().getServerOnNetwork(i).hasAdminRights) {
@@ -1187,7 +1190,7 @@ var Terminal = {
             post(entry);
         }
     },
-    
+
     executeScanAnalyzeCommand: function(depth=1) {
         //We'll use the AllServersMap as a visited() array
         //TODO Using array as stack for now, can make more efficient
@@ -1227,7 +1230,7 @@ var Terminal = {
             post(dashes + "RAM: " + s.maxRam);
             post(" ");
         }
-        
+
         var links = document.getElementsByClassName("scan-analyze-link");
         for (var i = 0; i < links.length; ++i) {
             (function() {
@@ -1237,9 +1240,9 @@ var Terminal = {
             }
             }());//Immediate invocation
         }
-        
+
     },
-    
+
     executeFreeCommand: function(commandArray) {
         if (commandArray.length != 1) {
             post("Incorrect usage of free command. Usage: free"); return;
@@ -1248,7 +1251,7 @@ var Terminal = {
         post("Used: " + formatNumber(Player.getCurrentServer().ramUsed, 2) + " GB");
         post("Available: " + formatNumber(Player.getCurrentServer().maxRam - Player.getCurrentServer().ramUsed, 2) + " GB");
     },
-	
+
 	//First called when the "run [program]" command is called. Checks to see if you
 	//have the executable and, if you do, calls the executeProgram() function
 	runProgram: function(programName) {
@@ -1267,7 +1270,7 @@ var Terminal = {
         }
 		post("ERROR: No such executable on home computer (Only programs that exist on your home computer can be run)");
 	},
-	
+
 	//Contains the implementations of all possible programs
 	executeProgram: function(programName) {
         var s = Player.getCurrentServer();
@@ -1382,10 +1385,10 @@ var Terminal = {
 				return;
 		}
 	},
-	
+
 	runScript: function(scriptName) {
 		var server = Player.getCurrentServer();
-		
+
         var numThreads = 1;
         var args = [];
         var results = scriptName.split(" ");
@@ -1402,7 +1405,7 @@ var Terminal = {
                 }
                 for (var i = 3; i < results.length; ++i) {
                     var arg = results[i];
-                    
+
                     //Forced string
                     if ((arg.startsWith("'") && arg.endsWith("'")) ||
                         (arg.startsWith('"') && arg.endsWith('"'))) {
@@ -1421,7 +1424,7 @@ var Terminal = {
             } else {
                 for (var i = 1; i < results.length; ++i) {
                     var arg = results[i];
-                    
+
                     //Forced string
                     if ((arg.startsWith("'") && arg.endsWith("'")) ||
                         (arg.startsWith('"') && arg.endsWith('"'))) {
@@ -1438,15 +1441,15 @@ var Terminal = {
                     args.push(arg);
                 }
             }
-        } 
-    
-        
+        }
+
+
         //Check if this script is already running
         if (findRunningScript(scriptName, args, server) != null) {
             post("ERROR: This script is already running. Cannot run multiple instances");
             return;
         }
-        
+
 		//Check if the script exists and if it does run it
 		for (var i = 0; i < server.scripts.length; i++) {
 			if (server.scripts[i].filename == scriptName) {
@@ -1454,7 +1457,7 @@ var Terminal = {
                 var script = server.scripts[i];
 				var ramUsage = script.ramUsage * numThreads * Math.pow(CONSTANTS.MultithreadingRAMCost, numThreads-1);
 				var ramAvailable = server.maxRam - server.ramUsed;
-				
+
 				if (server.hasAdminRights == false) {
 					post("Need root access to run script");
 					return;
@@ -1469,17 +1472,14 @@ var Terminal = {
                     var runningScriptObj = new RunningScript(script, args);
                     runningScriptObj.threads = numThreads;
 					server.runningScripts.push(runningScriptObj);
-                    
+
 					addWorkerScript(runningScriptObj, server);
 					return;
 				}
 			}
 		}
-		
+
 		post("ERROR: No such script");
 	}
-    
+
 };
-
-
-

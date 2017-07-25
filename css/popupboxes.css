@@ -127,7 +127,7 @@
 }
 
 /* Infiltration-box */
-#infiltration-box-sell, 
+#infiltration-box-sell,
 #infiltration-box-faction {
     display: block;
     padding: 8px;
@@ -141,17 +141,23 @@
 
 #game-options-content {
     background-color: var(--my-background-color);
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 15% auto;
     padding: 10px;
     border: 5px solid var(--my-highlight-color);
-    width: 50%; /* Could be more or less, depending on screen size */
+    width: 60%;
     color: var(--my-font-color);
+}
+
+#game-options-left-panel,
+#game-options-right-panel {
+    display: inline-block;
+    width: 49%;
 }
 
 #game-options-close-button {
     color: #aaa;
     float: right;
-    margin: 4px; 
+    margin: 4px;
     padding: 4px;
     font-size: 20px;
     font-weight: bold;
@@ -170,7 +176,11 @@
     cursor: pointer;
 }
 
+#game-options-left-panel fieldset {
+    padding:2px;
+    margin:2px;
+}
+
 #import-game-file-selector {
     display:none;
 }
-
