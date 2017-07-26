@@ -599,7 +599,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
         totalHacknetLevels += Player.hacknetNodes[i].level;
         totalHacknetRam += Player.hacknetNodes[i].ram;
-        totalHacknetCores += Player.hacknetNodes[i].numCores;
+        totalHacknetCores += Player.hacknetNodes[i].cores;
     }
     if (!netburnersFac.isBanned && !netburnersFac.isMember && !netburnersFac.alreadyInvited &&
         this.hacking_skill >= 80 && totalHacknetRam >= 8 &&
