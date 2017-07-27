@@ -654,6 +654,12 @@ function NetscriptFunctions(workerScript) {
                 return "";
             }
 
+            if (Player.purchasedServers.length >= CONSTANTS.PurchasedServerLimit) {
+                workerScript.scriptRef.log("Error: You have reached the maximum limit of " + CONSTANTS.PurchasedServerLimit +
+                                           " servers. You cannot purchase any more.");
+                return "";
+            }
+
             ram = Math.round(ram);
             if (isNaN(ram) || !powerOfTwo(ram)) {
                 workerScript.scriptRef.log("Error: Invalid ram argument passed to purchaseServer(). Must be numeric and a power of 2");
@@ -676,6 +682,56 @@ function NetscriptFunctions(workerScript) {
             Player.loseMoney(cost);
             workerScript.scriptRef.log("Purchased new server with hostname " + newServ.hostname + " for $" + formatNumber(cost, 2));
             return newServ.hostname;
+        },
+        deleteServer : function(hostname) {
+            var hostnameStr = String(hostname);
+            hostnameStr = hostnameStr.replace(/\s\s+/g, '');
+            var server = GetServerByHostname(hostnameStr);
+            if (server == null) {
+                workerScript.scriptRef.log("Error: Could not find server with hostname " + hostnameStr + ". deleteServer() failed");
+                return false;
+            }
+
+            if (!server.purchasedByPlayer) {
+                workerScript.scriptRef.log("Error: Server " + server.hostname + " is not a purchased server. " +
+                                           "Cannot be deleted. deleteSErver failed");
+                return false;
+            }
+            var ip = server.ip;
+
+            //Delete from all servers
+            delete AllServers[ip];
+
+            //Delete from player's purchasedServers array
+            var found = false;
+            for (var i = 0; i < Player.purchasedServers.length; ++i) {
+                if (ip == Player.purchasedServers[i]) {
+                    found = true;
+                    Player.purchasedServers.splice(i, 1);
+                    break;
+                }
+            }
+
+            if (!found) {
+                workerScript.scriptRef.log("Error: Could not identify server " + server.hostname +
+                                           "as a purchased server. This is likely a bug please contact game dev");
+                return false;
+            }
+
+            //Delete from home computer
+            found = false;
+            var homeComputer = Player.getHomeComputer();
+            for (var i = 0; i < homeComputer.serversOnNetwork.length; ++i) {
+                if (ip == homeComputer.serversOnNetwork[i]) {
+                    homeComputer.serversOnNetwork.splice(i, 1);
+                    workerScript.scriptRef.log("Deleted server " + hostnameStr);
+                    return true;
+                }
+            }
+            //Wasn't found on home computer
+            workerScript.scriptRef.log("Error: Could not find server " + server.hostname +
+                                       "as a purchased server. This is likely a bug please contact game dev");
+            return false;
         },
         round : function(n) {
             if (isNaN(n)) {return 0;}

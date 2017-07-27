@@ -2,7 +2,7 @@
 function PlayerObject() {
     //Skills and stats
     this.hacking_skill   = 1;
-                     
+
     //Fighting
     this.hp              = 10;
     this.max_hp          = 10;
@@ -10,17 +10,17 @@ function PlayerObject() {
     this.defense         = 1;      //Damage received
     this.dexterity       = 1;      //Accuracy
     this.agility         = 1;      //Dodge %
-    
+
     //Labor stats
     this.charisma        = 1;
 	//Intelligence, perhaps?
-    
+
     //Hacking multipliers
     this.hacking_chance_mult    = 1;  //Increase through ascensions/augmentations
     this.hacking_speed_mult     = 1;  //Decrease through ascensions/augmentations
     this.hacking_money_mult     = 1;  //Increase through ascensions/augmentations. Can't go above 1
     this.hacking_grow_mult      = 1;
-    
+
     //Note: "Lifetime" refers to current ascension, "total" refers to the entire game history
     //Accumulative  stats and skills
     this.total_hacking   = 1;
@@ -35,7 +35,7 @@ function PlayerObject() {
     this.lifetime_dexterity  = 1;
     this.lifetime_agility    = 1;
     this.lifetime_charisma   = 1;
-    
+
     //Experience and multipliers
     this.hacking_exp     = 0;
     this.strength_exp    = 0;
@@ -43,14 +43,14 @@ function PlayerObject() {
     this.dexterity_exp   = 0;
     this.agility_exp     = 0;
     this.charisma_exp    = 0;
-    
+
     this.hacking_mult       = 1;
     this.strength_mult      = 1;
     this.defense_mult       = 1;
     this.dexterity_mult     = 1;
     this.agility_mult       = 1;
     this.charisma_mult      = 1;
-    
+
     this.hacking_exp_mult    = 1;
     this.strength_exp_mult   = 1;
     this.defense_exp_mult    = 1;
@@ -59,38 +59,39 @@ function PlayerObject() {
     this.charisma_exp_mult   = 1;
 
     this.company_rep_mult    = 1;
-    this.faction_rep_mult    = 1;   
-    
+    this.faction_rep_mult    = 1;
+
     //Money
     this.money           = 1000;
     this.total_money     = 0;   //Total money ever earned in this "simulation"
     this.lifetime_money  = 0;   //Total money ever earned
-    
+
     //IP Address of Starting (home) computer
     this.homeComputer = "";
-	
+
 	//Location information
 	this.city 			= Locations.Sector12;
 	this.location 		= "";
-    
+
     //Company Information
     this.companyName = "";      //Name of Company, equivalent to an object from Locations
     this.companyPosition = "";  //CompanyPosition object
-    
+
     //Servers
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
     this.discoveredServers      = []; //IP addresses of secret servers not in the network that you have discovered
     this.purchasedServers       = [];
     this.hacknetNodes           = [];
-    this.totalHacknetNodeProduction = 0; 
-    
+    this.totalHacknetNodeProduction = 0;
+
     //Factions
-    this.factions = []; //Names of all factions player has joined
-    
+    this.factions = [];             //Names of all factions player has joined
+    this.factionInvitations = [];   //Outstanding faction invitations
+
     //Augmentations
     this.queuedAugmentations = []; //Purchased but not installed, names only
     this.augmentations = []; //Names of all installed augmentations
-    
+
     //Crime statistics (Total refers to this 'simulation'. Lifetime is forever)
     this.karma = 0;
     this.numTimesShoplifted             = 0;
@@ -117,22 +118,22 @@ function PlayerObject() {
     this.numTimesHeist                  = 0;
     this.numTimesHeistTotal             = 0;
     this.numTimesHeistLifetime          = 0;
-    
+
     this.crime_money_mult               = 1;
     this.crime_success_mult             = 1;
-    
+
     //Flag to let the engine know the player is starting an action
     //  Current actions: hack, analyze
     this.startAction = false;
     this.actionTime = 0;
-    
-    //Flags/variables for working (Company, Faction, Creating Program, Taking Class) 
+
+    //Flags/variables for working (Company, Faction, Creating Program, Taking Class)
     this.isWorking = false;
     this.workType = "";
-    
+
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";
-    
+
     this.workHackExpGainRate = 0;
     this.workStrExpGainRate = 0;
     this.workDefExpGainRate = 0;
@@ -142,7 +143,7 @@ function PlayerObject() {
     this.workRepGainRate = 0;
     this.workMoneyGainRate = 0;
     this.workMoneyLossRate = 0;
-    
+
     this.workHackExpGained = 0;
     this.workStrExpGained = 0;
     this.workDefExpGained = 0;
@@ -151,30 +152,30 @@ function PlayerObject() {
     this.workChaExpGained = 0;
     this.workRepGained = 0;
     this.workMoneyGained = 0;
-    
+
     this.createProgramName = "";
-    
+
     this.className = "";
-    
+
     this.crimeType = "";
-    
+
     this.timeWorked = 0;    //in ms
     this.timeNeededToCompleteWork = 0;
-    
+
     this.work_money_mult = 1;
-    
+
     //Hacknet Node multipliers
     this.hacknet_node_money_mult            = 1;
     this.hacknet_node_purchase_cost_mult    = 1;
     this.hacknet_node_ram_cost_mult         = 1;
     this.hacknet_node_core_cost_mult        = 1;
     this.hacknet_node_level_cost_mult       = 1;
-    
+
     //Stock Market
     this.hasWseAccount      = false;
     this.hasTixApiAccess    = false;
-	
-	//Used to store the last update time. 
+
+	//Used to store the last update time.
 	this.lastUpdate = 0;
     this.totalPlaytime = 0;
     this.playtimeSinceLastAug = 0;
@@ -187,7 +188,7 @@ PlayerObject.prototype.init = function() {
     this.homeComputer = t_homeComp.ip;
     this.currentServer = t_homeComp.ip;
     AddToAllServers(t_homeComp);
-    
+
     this.getHomeComputer().programs.push(Programs.NukeProgram);
 }
 
@@ -213,7 +214,7 @@ PlayerObject.prototype.updateSkillLevels = function() {
     this.dexterity     = Math.floor(this.calculateSkill(this.dexterity_exp) * this.dexterity_mult);
     this.agility       = Math.floor(this.calculateSkill(this.agility_exp) * this.agility_mult);
     this.charisma      = Math.floor(this.calculateSkill(this.charisma_exp) * this.charisma_mult);
-    
+
     var ratio = this.hp / this.max_hp;
     this.max_hp         = Math.floor(10 + this.defense / 10);
     Player.hp = Math.round(this.max_hp * ratio);
@@ -221,7 +222,7 @@ PlayerObject.prototype.updateSkillLevels = function() {
 
 //Calculates the chance of hacking a server
 //The formula is:
-//  (2 * hacking_chance_multiplier * hacking_skill - requiredLevel)      100 - difficulty       
+//  (2 * hacking_chance_multiplier * hacking_skill - requiredLevel)      100 - difficulty
 //  -----------------------------------------------------------  *  -----------------
 //        (2 * hacking_chance_multiplier * hacking_skill)                      100
 PlayerObject.prototype.calculateHackingChance = function() {
@@ -230,15 +231,15 @@ PlayerObject.prototype.calculateHackingChance = function() {
     var skillChance = (skillMult - this.getCurrentServer().requiredHackingSkill) / skillMult;
     var chance = skillChance * difficultyMult * this.hacking_chance_mult;
     if (chance > 1) {return 1;}
-    if (chance < 0) {return 0;} 
+    if (chance < 0) {return 0;}
     return chance;
 }
 
 //Calculate the time it takes to hack a server in seconds. Returns the time
 //The formula is:
-// (2.5 * requiredLevel * difficulty + 200)          
+// (2.5 * requiredLevel * difficulty + 200)
 //  -----------------------------------  *  hacking_speed_multiplier
-//        hacking_skill + 100                           
+//        hacking_skill + 100
 PlayerObject.prototype.calculateHackingTime = function() {
     var difficultyMult = this.getCurrentServer().requiredHackingSkill * this.getCurrentServer().hackDifficulty;
     var skillFactor = (2.5 * difficultyMult + 200) / (this.hacking_skill + 100);
@@ -247,7 +248,7 @@ PlayerObject.prototype.calculateHackingTime = function() {
 
 //Calculates the PERCENTAGE of a server's money that the player will hack from the server if successful
 //The formula is:
-//  (hacking_skill - (requiredLevel-1))      100 - difficulty       
+//  (hacking_skill - (requiredLevel-1))      100 - difficulty
 //  --------------------------------------* -----------------------  *  hacking_money_multiplier
 //         hacking_skill                        100
 PlayerObject.prototype.calculatePercentMoneyHacked = function() {
@@ -268,7 +269,7 @@ PlayerObject.prototype.calculateExpGain = function() {
     if (s.baseDifficulty == null) {
         s.baseDifficulty = s.hackDifficulty;
     }
-    return (s.baseDifficulty * this.hacking_exp_mult * 0.4 + 2);
+    return (s.baseDifficulty * this.hacking_exp_mult * 0.3 + 2);
 }
 
 //Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for
@@ -349,7 +350,7 @@ PlayerObject.prototype.gainCharismaExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainCharismaExp()"); return;
     }
     this.charisma_exp += exp;
-} 
+}
 
 /******* Working functions *******/
 PlayerObject.prototype.resetWorkStatus = function() {
@@ -361,7 +362,7 @@ PlayerObject.prototype.resetWorkStatus = function() {
     this.workChaExpGainRate     = 0;
     this.workRepGainRate        = 0;
     this.workMoneyGainRate      = 0;
-    
+
     this.workHackExpGained  = 0;
     this.workStrExpGained   = 0;
     this.workDefExpGained   = 0;
@@ -370,14 +371,14 @@ PlayerObject.prototype.resetWorkStatus = function() {
     this.workChaExpGained   = 0;
     this.workRepGained      = 0;
     this.workMoneyGained    = 0;
-    
+
     this.timeWorked = 0;
-    
+
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";
     this.createProgramName = "";
     this.className = "";
-    
+
     document.getElementById("work-in-progress-text").innerHTML = "";
 }
 
@@ -398,33 +399,33 @@ PlayerObject.prototype.finishWork = function(cancelled) {
     }
 
     this.gainWorkExp();
-    
+
     var company = Companies[this.companyName];
     company.playerReputation += (this.workRepGained);
-    
+
     this.gainMoney(this.workMoneyGained);
-    
+
     this.updateSkillLevels();
-    
-    var txt = "You earned a total of: <br>" + 
-              "$" + formatNumber(this.workMoneyGained, 2) + "<br>" + 
-              formatNumber(this.workRepGained, 4) + " reputation for the company <br>" + 
-              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" + 
-              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" + 
+
+    var txt = "You earned a total of: <br>" +
+              "$" + formatNumber(this.workMoneyGained, 2) + "<br>" +
+              formatNumber(this.workRepGained, 4) + " reputation for the company <br>" +
+              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" +
+              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" +
               formatNumber(this.workDefExpGained, 4) + " defense exp <br>" +
-              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" + 
-              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" + 
+              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" +
+              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" +
               formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
-              
+
     if (cancelled) {
         txt = "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
-              "Since you cancelled your work early, you only gained half of the reputation you earned. <br><br>" + txt;  
+              "Since you cancelled your work early, you only gained half of the reputation you earned. <br><br>" + txt;
     } else {
         txt = "You worked a full shift of 8 hours! <br><br> " +
               "You earned a total of: <br>" + txt;
     }
     dialogBoxCreate(txt);
-    
+
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
@@ -435,7 +436,7 @@ PlayerObject.prototype.startWork = function() {
     this.resetWorkStatus();
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeCompany;
-    
+
     this.workHackExpGainRate    = this.getWorkHackExpGain();
     this.workStrExpGainRate     = this.getWorkStrExpGain();
     this.workDefExpGainRate     = this.getWorkDefExpGain();
@@ -444,9 +445,9 @@ PlayerObject.prototype.startWork = function() {
     this.workChaExpGainRate     = this.getWorkChaExpGain();
     this.workRepGainRate        = this.getWorkRepGain();
     this.workMoneyGainRate      = this.getWorkMoneyGain();
-    
+
     this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
-    
+
     //Remove all old event listeners from Cancel button
     var newCancelButton = clearEventListeners("work-in-progress-cancel-button");
     newCancelButton.innerHTML = "Cancel Work";
@@ -454,14 +455,14 @@ PlayerObject.prototype.startWork = function() {
         Player.finishWork(true);
         return false;
     });
-    
+
     //Display Work In Progress Screen
     Engine.loadWorkInProgressContent();
 }
-    
+
 PlayerObject.prototype.work = function(numCycles) {
     this.workRepGainRate    = this.getWorkRepGain();
-    
+
     this.workHackExpGained  += this.workHackExpGainRate * numCycles;
     this.workStrExpGained   += this.workStrExpGainRate * numCycles;
     this.workDefExpGained   += this.workDefExpGainRate * numCycles;
@@ -470,11 +471,11 @@ PlayerObject.prototype.work = function(numCycles) {
     this.workChaExpGained   += this.workChaExpGainRate * numCycles;
     this.workRepGained      += this.workRepGainRate * numCycles;
     this.workMoneyGained    += this.workMoneyGainRate * numCycles;
-    
+
     var cyclesPerSec = 1000 / Engine._idleSpeed;
-    
+
     this.timeWorked += Engine._idleSpeed * numCycles;
-    
+
     //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
     if (this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
         var maxCycles = CONSTANTS.GameCyclesPer8Hours;
@@ -489,30 +490,30 @@ PlayerObject.prototype.work = function(numCycles) {
         this.finishWork(false);
         return;
     }
-    
+
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName + 
-                    " at " + Player.companyName + "<br><br>" + 
+    txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName +
+                    " at " + Player.companyName + "<br><br>" +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "You have earned: <br><br>" + 
-                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" + 
-                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this company <br><br>" + 
-                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" + 
-                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" + 
-                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" + 
-                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" + 
+                    "You have earned: <br><br>" +
+                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
+                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this company <br><br>" +
+                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
+                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
+                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
                     formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
-                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" + 
-                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, " + 
+                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
+                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, " +
                     "but you will only gain half of the reputation you've earned so far."
-                    
+
 }
 
 PlayerObject.prototype.startWorkPartTime = function() {
     this.resetWorkStatus();
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeCompanyPartTime;
-    
+
     this.workHackExpGainRate    = this.getWorkHackExpGain();
     this.workStrExpGainRate     = this.getWorkStrExpGain();
     this.workDefExpGainRate     = this.getWorkDefExpGain();
@@ -521,23 +522,23 @@ PlayerObject.prototype.startWorkPartTime = function() {
     this.workChaExpGainRate     = this.getWorkChaExpGain();
     this.workRepGainRate        = this.getWorkRepGain();
     this.workMoneyGainRate      = this.getWorkMoneyGain();
-    
+
     this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
-    
+
     var newCancelButton = clearEventListeners("work-in-progress-cancel-button");
     newCancelButton.innerHTML = "Stop Working";
     newCancelButton.addEventListener("click", function() {
         Player.finishWorkPartTime();
         return false;
     });
-    
+
     //Display Work In Progress Screen
     Engine.loadWorkInProgressContent();
 }
 
 PlayerObject.prototype.workPartTime = function(numCycles) {
     this.workRepGainRate    = this.getWorkRepGain();
-    
+
     this.workHackExpGained  += this.workHackExpGainRate * numCycles;
     this.workStrExpGained   += this.workStrExpGainRate * numCycles;
     this.workDefExpGained   += this.workDefExpGainRate * numCycles;
@@ -546,11 +547,11 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
     this.workChaExpGained   += this.workChaExpGainRate * numCycles;
     this.workRepGained      += this.workRepGainRate * numCycles;
     this.workMoneyGained    += this.workMoneyGainRate * numCycles;
-    
+
     var cyclesPerSec = 1000 / Engine._idleSpeed;
-    
+
     this.timeWorked += Engine._idleSpeed * numCycles;
-    
+
     //If timeWorked == 8 hours, then finish. You can only gain 8 hours worth of exp and money
     if (this.timeWorked >= CONSTANTS.MillisecondsPer8Hours) {
         var maxCycles = CONSTANTS.GameCyclesPer8Hours;
@@ -565,47 +566,47 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
         this.finishWorkPartTime();
         return;
     }
-    
+
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName + 
-                    " at " + Player.companyName + "<br><br>" + 
+    txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName +
+                    " at " + Player.companyName + "<br><br>" +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "You have earned: <br><br>" + 
-                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" + 
-                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this company <br><br>" + 
-                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" + 
-                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" + 
-                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" + 
-                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" + 
+                    "You have earned: <br><br>" +
+                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
+                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this company <br><br>" +
+                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
+                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
+                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
                     formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
-                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" + 
-                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" + 
+                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
+                    "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" +
                     "and there will be no penalty because this is a part-time job.";
-                    
+
 }
 
 PlayerObject.prototype.finishWorkPartTime = function() {
     this.gainWorkExp();
-    
+
     var company = Companies[this.companyName];
     company.playerReputation += (this.workRepGained);
-    
+
     this.gainMoney(this.workMoneyGained);
-    
+
     this.updateSkillLevels();
-    
-    var txt = "You earned a total of: <br>" + 
-              "$" + formatNumber(this.workMoneyGained, 2) + "<br>" + 
-              formatNumber(this.workRepGained, 4) + " reputation for the company <br>" + 
-              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" + 
-              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" + 
+
+    var txt = "You earned a total of: <br>" +
+              "$" + formatNumber(this.workMoneyGained, 2) + "<br>" +
+              formatNumber(this.workRepGained, 4) + " reputation for the company <br>" +
+              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" +
+              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" +
               formatNumber(this.workDefExpGained, 4) + " defense exp <br>" +
-              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" + 
-              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" + 
+              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" +
+              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" +
               formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
     txt = "You worked for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br> " + txt;
     dialogBoxCreate(txt);
-    
+
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
@@ -615,31 +616,31 @@ PlayerObject.prototype.finishWorkPartTime = function() {
 /* Working for Faction */
 PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
     this.gainWorkExp();
-    
+
     var faction = Factions[this.currentWorkFactionName];
     faction.playerReputation += (this.workRepGained);
-    
+
     this.gainMoney(this.workMoneyGained);
-    
+
     this.updateSkillLevels();
-    
+
     var txt = "You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
-              "You earned a total of: <br>" + 
-              "$" + formatNumber(this.workMoneyGained, 2) + "<br>" + 
-              formatNumber(this.workRepGained, 4) + " reputation for the faction <br>" + 
-              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" + 
-              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" + 
+              "You earned a total of: <br>" +
+              "$" + formatNumber(this.workMoneyGained, 2) + "<br>" +
+              formatNumber(this.workRepGained, 4) + " reputation for the faction <br>" +
+              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" +
+              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" +
               formatNumber(this.workDefExpGained, 4) + " defense exp <br>" +
-              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" + 
-              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" + 
+              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" +
+              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" +
               formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
     dialogBoxCreate(txt);
-    
+
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
-        
+
     this.isWorking = false;
-    
+
     Engine.loadTerminalContent();
 }
 
@@ -648,39 +649,39 @@ PlayerObject.prototype.startFactionWork = function(faction) {
     var favorMult = 1 + (faction.favor / 100);
     if (isNaN(favorMult)) {favorMult = 1;}
     this.workRepGainRate *= favorMult;
-    
+
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeFaction;
     this.currentWorkFactionName = faction.name;
-    
+
     this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer20Hours;
-    
-    var cancelButton = clearEventListeners("work-in-progress-cancel-button");  
+
+    var cancelButton = clearEventListeners("work-in-progress-cancel-button");
     cancelButton.innerHTML = "Stop Faction Work";
     cancelButton.addEventListener("click", function() {
         Player.finishFactionWork(true, faction);
         return false;
     });
-    
+
     //Display Work In Progress Screen
     Engine.loadWorkInProgressContent();
 }
 
 PlayerObject.prototype.startFactionHackWork = function(faction) {
     this.resetWorkStatus();
-    
+
     this.workHackExpGainRate    = .15 * this.hacking_exp_mult;
     this.workRepGainRate = 0.9 * this.hacking_skill / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
-    
+
     this.factionWorkType = CONSTANTS.FactionWorkHacking;
     this.currentWorkFactionDescription = "carrying out hacking contracts";
-   
+
     this.startFactionWork(faction);
 }
 
 PlayerObject.prototype.startFactionFieldWork = function(faction) {
     this.resetWorkStatus();
-    
+
     this.workHackExpGainRate    = .1 * this.hacking_exp_mult;
     this.workStrExpGainRate     = .1 * this.strength_exp_mult;
     this.workDefExpGainRate     = .1 * this.defense_exp_mult;
@@ -688,10 +689,10 @@ PlayerObject.prototype.startFactionFieldWork = function(faction) {
     this.workAgiExpGainRate     = .1 * this.agility_exp_mult;
     this.workChaExpGainRate     = .1 * this.charisma_exp_mult;
     this.workRepGainRate        = this.getFactionFieldWorkRepGain();
-    
+
     this.factionWorkType = CONSTANTS.FactionWorkField;
     this.currentWorkFactionDescription = "carrying out field missions"
-   
+
     this.startFactionWork(faction);
 }
 
@@ -705,16 +706,16 @@ PlayerObject.prototype.startFactionSecurityWork = function(faction) {
     this.workAgiExpGainRate     = 0.15 * this.agility_exp_mult;
     this.workChaExpGainRate     = 0.00 * this.charisma_exp_mult;
     this.workRepGainRate        = this.getFactionSecurityWorkRepGain();
-    
+
     this.factionWorkType = CONSTANTS.FactionWorkSecurity;
     this.currentWorkFactionDescription = "performing security detail"
-   
+
     this.startFactionWork(faction);
 }
-    
+
 PlayerObject.prototype.workForFaction = function(numCycles) {
     var faction = Factions[this.currentWorkFactionName];
-    
+
     //Constantly update the rep gain rate
     switch (this.factionWorkType) {
         case CONSTANTS.FactionWorkHacking:
@@ -729,12 +730,12 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
         default:
             break;
     }
-    
+
     //Update reputation gain rate to account for faction favor
     var favorMult = 1 + (faction.favor / 100);
     if (isNaN(favorMult)) {favorMult = 1;}
     this.workRepGainRate *= favorMult;
-    
+
     this.workHackExpGained  += this.workHackExpGainRate * numCycles;
     this.workStrExpGained   += this.workStrExpGainRate * numCycles;
     this.workDefExpGained   += this.workDefExpGainRate * numCycles;
@@ -743,11 +744,11 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     this.workChaExpGained   += this.workChaExpGainRate * numCycles;
     this.workRepGained      += this.workRepGainRate * numCycles;
     this.workMoneyGained    += this.workMoneyGainRate * numCycles;
-    
+
     var cyclesPerSec = 1000 / Engine._idleSpeed;
-    
+
     this.timeWorked += Engine._idleSpeed * numCycles;
-    
+
     //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
     if (this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
         var maxCycles = CONSTANTS.GameCyclesPer20Hours;
@@ -761,22 +762,22 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
         this.workMoneyGained   = this.workMoneyGainRate * maxCycles;
         this.finishFactionWork(false, faction);
     }
-    
+
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name + "." + 
+    txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name + "." +
                     "  You have been doing this for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "You have earned: <br><br>" + 
-                    "$" + formatNumber(this.workMoneyGained, 2) + " (" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" + 
-                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this faction <br><br>" + 
-                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" + 
-                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" + 
-                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" + 
-                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" + 
+                    "You have earned: <br><br>" +
+                    "$" + formatNumber(this.workMoneyGained, 2) + " (" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
+                    formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this faction <br><br>" +
+                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
+                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
+                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
                     formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
-                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" + 
-                    
-                    "You will automatically finish after working for 20 hours. You can cancel earlier if you wish.<br>" + 
-                    "There is no penalty for cancelling earlier.";  
+                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
+
+                    "You will automatically finish after working for 20 hours. You can cancel earlier if you wish.<br>" +
+                    "There is no penalty for cancelling earlier.";
 }
 
 
@@ -827,28 +828,28 @@ PlayerObject.prototype.getWorkRepGain = function() {
     var company = Companies[this.companyName];
     var jobPerformance = this.companyPosition.calculateJobPerformance(this.hacking_skill, this.strength,
                                                                       this.defense, this.dexterity,
-                                                                      this.agility, this.charisma);    
+                                                                      this.agility, this.charisma);
     //Update reputation gain rate to account for company favor
     var favorMult = 1 + (company.favor / 100);
     if (isNaN(favorMult)) {favorMult = 1;}
-    return jobPerformance * this.company_rep_mult * favorMult;                                                                    
+    return jobPerformance * this.company_rep_mult * favorMult;
 }
 
 PlayerObject.prototype.getFactionSecurityWorkRepGain = function() {
-    var t = 0.9 * (this.hacking_skill  / CONSTANTS.MaxSkillLevel + 
-                   this.strength       / CONSTANTS.MaxSkillLevel + 
-                   this.defense        / CONSTANTS.MaxSkillLevel + 
-                   this.dexterity      / CONSTANTS.MaxSkillLevel + 
+    var t = 0.9 * (this.hacking_skill  / CONSTANTS.MaxSkillLevel +
+                   this.strength       / CONSTANTS.MaxSkillLevel +
+                   this.defense        / CONSTANTS.MaxSkillLevel +
+                   this.dexterity      / CONSTANTS.MaxSkillLevel +
                    this.agility        / CONSTANTS.MaxSkillLevel) / 5;
     return t * this.faction_rep_mult;
 }
 
 PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
-    var t = 0.9 * (this.hacking_skill  / CONSTANTS.MaxSkillLevel + 
-                   this.strength       / CONSTANTS.MaxSkillLevel + 
-                   this.defense        / CONSTANTS.MaxSkillLevel + 
-                   this.dexterity      / CONSTANTS.MaxSkillLevel + 
-                   this.agility        / CONSTANTS.MaxSkillLevel + 
+    var t = 0.9 * (this.hacking_skill  / CONSTANTS.MaxSkillLevel +
+                   this.strength       / CONSTANTS.MaxSkillLevel +
+                   this.defense        / CONSTANTS.MaxSkillLevel +
+                   this.dexterity      / CONSTANTS.MaxSkillLevel +
+                   this.agility        / CONSTANTS.MaxSkillLevel +
                    this.charisma       / CONSTANTS.MaxSkillLevel) / 6;
     return t * this.faction_rep_mult;
 }
@@ -858,13 +859,13 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
     this.resetWorkStatus();
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeCreateProgram;
-    
+
     //Time needed to complete work affected by hacking skill (linearly based on
     //ratio of (your skill - required level) to MAX skill)
     var timeMultiplier = (CONSTANTS.MaxSkillLevel - (this.hacking_skill - reqLevel)) / CONSTANTS.MaxSkillLevel;
     if (timeMultiplier > 1) {timeMultiplier = 1;}
     if (timeMultiplier < 0.01) {timeMultiplier = 0.01;}
-    
+
     this.timeNeededToCompleteWork = timeMultiplier * time;
     //Check for incomplete program
     for (var i = 0; i < Player.getHomeComputer().programs.length; ++i) {
@@ -878,16 +879,16 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
             Player.getHomeComputer().programs.splice(i, 1);
         }
     }
-    
+
     this.createProgramName = programName;
-    
+
     var cancelButton = clearEventListeners("work-in-progress-cancel-button");
     cancelButton.innerHTML = "Cancel work on creating program";
     cancelButton.addEventListener("click", function() {
         Player.finishCreateProgramWork(true, programName);
         return false;
     });
-    
+
     //Display Work In Progress Screen
     Engine.loadWorkInProgressContent();
 }
@@ -895,35 +896,35 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
 PlayerObject.prototype.createProgramWork = function(numCycles) {
     this.timeWorked += Engine._idleSpeed * numCycles;
     var programName = this.createProgramName;
-    
+
     if (this.timeWorked >= this.timeNeededToCompleteWork) {
         this.finishCreateProgramWork(false, programName);
     }
-    
+
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently working on coding " + programName + ".<br><br> " + 
+    txt.innerHTML = "You are currently working on coding " + programName + ".<br><br> " +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "The program is " + (this.timeWorked / this.timeNeededToCompleteWork * 100).toFixed(2) + "% complete. <br>" + 
-                    "If you cancel, your work will be saved and you can come back to complete the program later.";  
+                    "The program is " + (this.timeWorked / this.timeNeededToCompleteWork * 100).toFixed(2) + "% complete. <br>" +
+                    "If you cancel, your work will be saved and you can come back to complete the program later.";
 }
 
 PlayerObject.prototype.finishCreateProgramWork = function(cancelled, programName) {
     if (cancelled == false) {
-        dialogBoxCreate("You've finished creating " + programName + "!<br>" + 
+        dialogBoxCreate("You've finished creating " + programName + "!<br>" +
                         "The new program can be found on your home computer.");
-    
+
         Player.getHomeComputer().programs.push(programName);
     } else {
         var perc = Math.floor(this.timeWorked / this.timeNeededToCompleteWork * 100).toString();
         var incompleteName = programName + "-" + perc + "%-INC";
         Player.getHomeComputer().programs.push(incompleteName);
     }
-    
+
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
-        
+
     Player.isWorking = false;
-    
+
     Engine.loadTerminalContent();
 }
 
@@ -932,11 +933,11 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     this.resetWorkStatus();
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeStudyClass;
-    
+
     this.className = className;
-    
+
     var gameCPS = 1000 / Engine._idleSpeed;
-    
+
     //Base exp gains per second
     var baseStudyComputerScienceExp = 0.25;
     var baseDataStructuresExp       = 0.5;
@@ -945,7 +946,7 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     var baseManagementExp           = 1;
     var baseLeadershipExp           = 2;
     var baseGymExp                  = 1;
-    
+
     //Find cost and exp gain per game cycle
     var cost = 0;
     var hackExp = 0, strExp = 0, defExp = 0, dexExp = 0, agiExp = 0, chaExp = 0;
@@ -958,7 +959,7 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
             hackExp = baseDataStructuresExp * expMult / gameCPS;
             break;
         case CONSTANTS.ClassNetworks:
-            cost = CONSTANTS.ClassNetworksBaseCost * costMult / gameCPS; 
+            cost = CONSTANTS.ClassNetworksBaseCost * costMult / gameCPS;
             hackExp = baseNetworksExp * expMult / gameCPS;
             break;
         case CONSTANTS.ClassAlgorithms:
@@ -993,7 +994,7 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
             throw new Error("ERR: Invalid/unregocnized class name");
             return;
     }
-    
+
     this.workMoneyLossRate      = cost;
     this.workHackExpGainRate    = hackExp * this.hacking_exp_mult;
     this.workStrExpGainRate     = strExp * this.strength_exp_mult;
@@ -1001,11 +1002,11 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     this.workDexExpGainRate     = dexExp * this.dexterity_exp_mult;
     this.workAgiExpGainRate     = agiExp * this.agility_exp_mult;
     this.workChaExpGainRate     = chaExp * this.charisma_exp_mult;
-    
+
     var cancelButton = clearEventListeners("work-in-progress-cancel-button");
-    if (className == CONSTANTS.ClassGymStrength || 
-        className == CONSTANTS.ClassGymDefense || 
-        className == CONSTANTS.ClassGymDexterity || 
+    if (className == CONSTANTS.ClassGymStrength ||
+        className == CONSTANTS.ClassGymDefense ||
+        className == CONSTANTS.ClassGymDexterity ||
         className == CONSTANTS.ClassGymAgility) {
         cancelButton.innerHTML = "Stop training at gym";
     } else {
@@ -1015,7 +1016,7 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
         Player.finishClass();
         return false;
     });
-    
+
     //Display Work In Progress Screen
     Engine.loadWorkInProgressContent();
 }
@@ -1023,7 +1024,7 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
 PlayerObject.prototype.takeClass = function(numCycles) {
     this.timeWorked += Engine._idleSpeed * numCycles;
     var className = this.className;
-    
+
     this.workHackExpGained  += this.workHackExpGainRate * numCycles;
     this.workStrExpGained   += this.workStrExpGainRate * numCycles;
     this.workDefExpGained   += this.workDefExpGainRate * numCycles;
@@ -1033,49 +1034,49 @@ PlayerObject.prototype.takeClass = function(numCycles) {
     this.workRepGained      += this.workRepGainRate * numCycles;
     this.workMoneyGained    += this.workMoneyGainRate * numCycles;
     this.workMoneyGained    -= this.workMoneyLossRate * numCycles;
-    
+
     var cyclesPerSec = 1000 / Engine._idleSpeed;
-        
+
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You have been " + className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "This has cost you: <br>" + 
-                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyLossRate * cyclesPerSec, 2) + " / sec) <br><br>" + 
-                    "You have gained: <br>" + 
-                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br>" + 
-                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" + 
-                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" + 
-                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" + 
+                    "This has cost you: <br>" +
+                    "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyLossRate * cyclesPerSec, 2) + " / sec) <br><br>" +
+                    "You have gained: <br>" +
+                    formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br>" +
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
+                    formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
+                    formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
                     formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br>" +
-                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br>" + 
-                    "You may cancel at any time";       
+                    formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br>" +
+                    "You may cancel at any time";
 }
 
 PlayerObject.prototype.finishClass = function() {
     this.gainWorkExp();
-    
+
     if (this.workMoneyGained > 0) {
         throw new Error("ERR: Somehow gained money while taking class");
     }
     this.loseMoney(this.workMoneyGained * -1);
-    
+
     this.updateSkillLevels();
     var txt = "After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", <br>" +
-              "you spent a total of $" + formatNumber(this.workMoneyGained * -1, 2) + ". <br><br>" + 
-              "You earned a total of: <br>" + 
-              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" + 
-              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" + 
+              "you spent a total of $" + formatNumber(this.workMoneyGained * -1, 2) + ". <br><br>" +
+              "You earned a total of: <br>" +
+              formatNumber(this.workHackExpGained, 4) + " hacking exp <br>" +
+              formatNumber(this.workStrExpGained, 4) + " strength exp <br>" +
               formatNumber(this.workDefExpGained, 4) + " defense exp <br>" +
-              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" + 
-              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" + 
+              formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" +
+              formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" +
               formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
 
     dialogBoxCreate(txt);
-    
+
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
-        
+
     this.isWorking = false;
-    
+
     Engine.loadLocationContent();
 }
 
@@ -1084,7 +1085,7 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
     this.resetWorkStatus();
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeCrime;
-    
+
     this.workHackExpGained  = hackExp * this.hacking_exp_mult;
     this.workStrExpGained   = strExp * this.strength_exp_mult;
     this.workDefExpGained   = defExp * this.defense_exp_mult;
@@ -1092,9 +1093,9 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
     this.workAgiExpGained   = agiExp * this.agility_exp_mult;
     this.workChaExpGained   = chaExp * this.charisma_exp_mult;
     this.workMoneyGained    = money * this.crime_money_mult;
-    
+
     this.timeNeededToCompleteWork = time;
-    
+
     //Remove all old event listeners from Cancel button
     var newCancelButton = clearEventListeners("work-in-progress-cancel-button")
     newCancelButton.innerHTML = "Cancel crime"
@@ -1102,25 +1103,25 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
         Player.finishCrime(true);
         return false;
     });
-    
+
     //Display Work In Progress Screen
     Engine.loadWorkInProgressContent();
 }
 
 PlayerObject.prototype.commitCrime = function (numCycles) {
     this.timeWorked += Engine._idleSpeed * numCycles;
-    
+
     if (this.timeWorked >= this.timeNeededToCompleteWork) {Player.finishCrime(false); return;}
-    
+
     var percent = Math.round(Player.timeWorked / Player.timeNeededToCompleteWork * 100);
     var numBars = Math.round(percent / 5);
     if (numBars < 0) {numBars = 0;}
     if (numBars > 20) {numBars = 20;}
     var progressBar = "[" + Array(numBars+1).join("|") + Array(20 - numBars + 1).join(" ") + "]";
-    
+
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are attempting to " + Player.crimeType + ".<br>" + 
-                    "Time remaining: " + convertTimeMsToTimeElapsedString(this.timeNeededToCompleteWork - this.timeWorked) + "<br>" + 
+    txt.innerHTML = "You are attempting to " + Player.crimeType + ".<br>" +
+                    "Time remaining: " + convertTimeMsToTimeElapsedString(this.timeNeededToCompleteWork - this.timeWorked) + "<br>" +
                     progressBar.replace( / /g, "&nbsp;" );
 }
 
@@ -1141,7 +1142,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     break;
                 case CONSTANTS.CrimeDrugs:
                     ++this.numTimesDealtDrugs;
-                    this.karma -= 0.5; 
+                    this.karma -= 0.5;
                     break;
                 case CONSTANTS.CrimeTraffickArms:
                     ++this.numTimesTraffickArms;
@@ -1171,7 +1172,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
                     return;
             }
-        
+
             //On a crime success, gain 2x exp
             this.workHackExpGained  *= 2;
             this.workStrExpGained   *= 2;
@@ -1179,32 +1180,32 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             this.workDexExpGained   *= 2;
             this.workAgiExpGained   *= 2;
             this.workChaExpGained   *= 2;
-        
-            dialogBoxCreate("Crime successful! <br><br>" + 
-                            "You gained:<br>"+ 
-                            "$" + formatNumber(this.workMoneyGained, 2) + "<br>" + 
-                            formatNumber(this.workHackExpGained, 4) + " hacking experience <br>" + 
-                            formatNumber(this.workStrExpGained, 4) + " strength experience<br>" + 
-                            formatNumber(this.workDefExpGained, 4) + " defense experience<br>" + 
-                            formatNumber(this.workDexExpGained, 4) + " dexterity experience<br>" + 
-                            formatNumber(this.workAgiExpGained, 4) + " agility experience<br>" + 
+
+            dialogBoxCreate("Crime successful! <br><br>" +
+                            "You gained:<br>"+
+                            "$" + formatNumber(this.workMoneyGained, 2) + "<br>" +
+                            formatNumber(this.workHackExpGained, 4) + " hacking experience <br>" +
+                            formatNumber(this.workStrExpGained, 4) + " strength experience<br>" +
+                            formatNumber(this.workDefExpGained, 4) + " defense experience<br>" +
+                            formatNumber(this.workDexExpGained, 4) + " dexterity experience<br>" +
+                            formatNumber(this.workAgiExpGained, 4) + " agility experience<br>" +
                             formatNumber(this.workChaExpGained, 4) + " charisma experience");
         } else {
-            dialogBoxCreate("Crime failed! <br><br>" + 
-                    "You gained:<br>"+ 
-                    formatNumber(this.workHackExpGained, 4) + " hacking experience <br>" + 
-                    formatNumber(this.workStrExpGained, 4) + " strength experience<br>" + 
-                    formatNumber(this.workDefExpGained, 4) + " defense experience<br>" + 
-                    formatNumber(this.workDexExpGained, 4) + " dexterity experience<br>" + 
-                    formatNumber(this.workAgiExpGained, 4) + " agility experience<br>" + 
+            dialogBoxCreate("Crime failed! <br><br>" +
+                    "You gained:<br>"+
+                    formatNumber(this.workHackExpGained, 4) + " hacking experience <br>" +
+                    formatNumber(this.workStrExpGained, 4) + " strength experience<br>" +
+                    formatNumber(this.workDefExpGained, 4) + " defense experience<br>" +
+                    formatNumber(this.workDexExpGained, 4) + " dexterity experience<br>" +
+                    formatNumber(this.workAgiExpGained, 4) + " agility experience<br>" +
                     formatNumber(this.workChaExpGained, 4) + " charisma experience");
         }
-        
+
         this.gainWorkExp();
     }
-    
-    
-    
+
+
+
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
@@ -1224,8 +1225,8 @@ PlayerObject.prototype.takeDamage = function(amt) {
 }
 
 PlayerObject.prototype.hospitalize = function() {
-    dialogBoxCreate("You were in critical condition! You were taken to the hospital where " + 
-                    "luckily they were able to save your life. You were charged $" + 
+    dialogBoxCreate("You were in critical condition! You were taken to the hospital where " +
+                    "luckily they were able to save your life. You were charged $" +
                     formatNumber(this.max_hp * CONSTANTS.HospitalCostPerHp, 2));
     Player.loseMoney(this.max_hp * CONSTANTS.HospitalCostPerHp);
     this.hp = this.max_hp;
@@ -1238,11 +1239,8 @@ PlayerObject.prototype.toJSON = function() {
 
 PlayerObject.fromJSON = function(value) {
     return Generic_fromJSON(PlayerObject, value.data);
-} 
+}
 
 Reviver.constructors.PlayerObject = PlayerObject;
 
 Player = new PlayerObject();
-
-    
-    

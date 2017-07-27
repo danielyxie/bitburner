@@ -502,6 +502,11 @@
 		<h1> Factions </h1>
 		<p> Lists all factions you have joined </p>
 		<ul class="factions-list" id="factions-list"></ul>
+        <br><br>
+        <h1> Outstanding Faction Invitations </h1>
+        <p style="width:70%;"> Lists factions you have been invited to, as well as factions you have previously rejected.
+            You can accept these faction invitations at any times </p>
+        <ul class="factions-list" id="outstanding-faction-invitations-list"></ul>
 	</div>
 
 	<!-- Single Faction info (when you select a faction from the Factions menu) -->
@@ -928,7 +933,7 @@
                         </span>
                     </label>
 
-                    <input type ="range" max="100" min="20"
+                    <input type="range" max="100" min="20"
                         oninput="document.getElementById('settingsNSLogRangeValLabel').innerHTML = this.value;
                                  Settings.MaxLogCapacity=this.value;"
                         step="1" name="settingsNSLogRangeVal" id="settingsNSLogRangeVal" value="50">
@@ -946,12 +951,37 @@
                         </span>
                     </label>
 
-                    <input type ="range" max="100" min="20"
+                    <input type="range" max="100" min="20"
                         oninput="document.getElementById('settingsNSPortRangeValLabel').innerHTML = this.value;
                                  Settings.MaxPortCapacity=this.value;"
                         step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50">
                     </input>
                     <em id="settingsNSPortRangeValLabel" style="font-style: normal;"></em>
+                </fieldset>
+
+                <!-- Suppress messages -->
+                <fieldset>
+                    <label for="settingsSuppressMessages" class="tooltip">Suppress Messages:
+                        <span class="tooltiptext">
+                            If this is set, then any messages you receive will not appear as popups
+                            on the screen. They will still get sent to your home computer as '.msg' files
+                            and can be viewed with the 'cat' Terminal command.
+                        </span>
+                    </label>
+                    <input type="checkbox" name="settingsSuppressMessages" id="settingsSuppressMessages"
+                           onclick="Settings.SuppressMessages = this.checked;">
+                </fieldset>
+
+                <!-- Suppress faction invites -->
+                <fieldset>
+                    <label for="settingsSuppressFactionInvites" class="tooltip">Suppress Faction Invites:
+                        <span class="tooltiptext">
+                            If this is set, then any faction invites you receive will not appear as popups
+                            on the screen. Your outstanding faction invites can be viewed in the 'Factions' page.
+                        </span>
+                    </label>
+                    <input type="checkbox" name="settingsSuppressFactionInvites" id="settingsSuppressFactionInvites"
+                           onclick="Settings.SuppressFactionInvites = this.checked;">
                 </fieldset>
 
                 <!-- Donate button -->

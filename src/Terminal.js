@@ -175,7 +175,9 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
     if (!(allPossibilities.constructor === Array)) {return;}
     if (!containsAllStrings(allPossibilities)) {return;}
 
-    command = command.toLowerCase();
+    if (!command.startsWith("./")) {
+        command = command.toLowerCase();
+    }
 
     //Remove all options in allPossibilities that do not match the current string
     //that we are attempting to autocomplete
@@ -242,6 +244,23 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     allPos = allPos.concat(Object.keys(GlobalAliases));
     var currServ = Player.getCurrentServer();
     input = input.toLowerCase();
+
+    //If the command starts with './' and the index == -1, then the user
+    //has input ./partialexecutablename so autocomplete the script or program
+    //Put './' in front of each script/executable
+    if (input.startsWith("./") && index == -1) {
+        //All programs and scripts
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push("./" + currServ.scripts[i].filename);
+        }
+
+        //Programs are on home computer
+        var homeComputer = Player.getHomeComputer();
+        for(var i = 0; i < homeComputer.programs.length; ++i) {
+            allPos.push("./" + homeComputer.programs[i]);
+        }
+        return allPos;
+    }
 
     //Autocomplete the command
     if (index == -1) {
@@ -447,7 +466,7 @@ var Terminal = {
 
         //Allow usage of ./
         if (command.startsWith("./")) {
-            command = command.slice(0, 2) + " " + command.slice(2);
+            command = "run " + command.slice(2);
         }
 
         //Only split the first space
@@ -895,7 +914,6 @@ var Terminal = {
                 post("No such file exists");
 				break;
 			case "run":
-            case "./":
 				//Run a program or a script
 				if (commandArray.length != 2) {
 					post("Incorrect number of arguments. Usage: run [program/script] [-t] [num threads] [arg1] [arg2]...");

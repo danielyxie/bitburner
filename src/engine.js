@@ -485,9 +485,8 @@ var Engine = {
     },
 
     displayFactionsInfo: function() {
+        //Clear the list of joined factions
         var factionsList = document.getElementById("factions-list");
-
-        //Clear the list
         while (factionsList.firstChild) {
             factionsList.removeChild(factionsList.firstChild);
         }
@@ -500,7 +499,6 @@ var Engine = {
                 //Add the faction to the Factions page content
                 var item = document.createElement("li");
                 var aElem = document.createElement("a");
-                aElem.setAttribute("href", "#");
                 aElem.setAttribute("class", "a-link-button");
                 aElem.innerHTML = factionName;
                 aElem.addEventListener("click", function() {
@@ -509,9 +507,53 @@ var Engine = {
                     return false;
                 });
                 item.appendChild(aElem);
-
                 factionsList.appendChild(item);
             }()); //Immediate invocation
+        }
+
+        //Clear the list of invitations
+        var invitationsList = document.getElementById("outstanding-faction-invitations-list");
+        while (invitationsList.firstChild) {
+            invitationsList.removeChild(invitationsList.firstChild);
+        }
+
+        //Add a link to accept for each faction you have invitiations for
+        for (var i = 0; i < Player.factionInvitations.length; ++i) {
+            (function () {
+                var factionName = Player.factionInvitations[i];
+
+                var item = document.createElement("li");
+
+                var pElem = document.createElement("p");
+                pElem.innerText = factionName;
+                pElem.style.display = "inline";
+                pElem.style.margin = "4px";
+                pElem.style.padding = "4px";
+
+                var aElem = document.createElement("a");
+                aElem.innerText = "Accept Faction Invitation";
+                aElem.setAttribute("class", "a-link-button");
+                aElem.style.display = "inline";
+                aElem.style.margin = "4px";
+                aElem.style.padding = "4px";
+                aElem.addEventListener("click", function() {
+                    joinFaction(Factions[factionName]);
+                    for (var i = 0; i < Player.factionInvitations.length; ++i) {
+                        if (Player.factionInvitations[i] == factionName) {
+                            Player.factionInvitations.splice(i, 1);
+                            break;
+                        }
+                    }
+                    Engine.displayFactionsInfo();
+                    return false;
+                });
+
+                item.appendChild(pElem);
+                item.appendChild(aElem);
+                item.style.margin = "6px";
+                item.style.padding = "6px";
+                invitationsList.appendChild(item);
+            }());
         }
     },
 
@@ -693,7 +735,7 @@ var Engine = {
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
         updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
         createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
-        checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations every 5 minutes
+        checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations
         passiveFactionGrowth: 600,
         messages: 150,
         stockTick:  30,                     //Update stock prices

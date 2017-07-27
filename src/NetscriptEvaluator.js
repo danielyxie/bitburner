@@ -131,6 +131,14 @@ function evaluate(exp, workerScript) {
                     reject(e);
                 });
                 break;
+            case "UnaryExpression":
+                var p = evalUnary(exp, workerScript, resolve, reject);
+                p.then(function(res) {
+                    resolve(res);
+                }).catch(function(e) {
+                    reject(e);
+                });
+                break;
             case "AssignmentExpression":
                 var p = evalAssignment(exp, workerScript);
                 p.then(function(res) {
@@ -210,58 +218,6 @@ function evaluate(exp, workerScript) {
     }); // End Promise
 }
 
-/*
-function evalFunction(exp, workerScript){
-    return new Promise(function(resolve, reject) {
-        if (exp.callee.type!="Identifier"){
-            reject(makeRuntimeRejectMsg(workerScript, "callee must be an Identifier"));
-            return;
-        }
-        switch(exp.callee.name){
-            case "print":
-                if (exp.arguments.length != 1) {
-                    return reject(makeRuntimeRejectMsg(workerScript, "print() call has incorrect number of arguments. Takes 1 argument"));
-                }
-                var evaluatePromise = evaluate(exp.arguments[0], workerScript);
-                evaluatePromise.then(function(res) {
-                    workerScript.scriptRef.log(res.toString());
-                    resolve(true);
-                }).catch(function(e) {
-                    reject(e);
-                });
-                break;
-            case "scan":
-                if (exp.arguments.length != 1) {
-                    exp.arguments = [{value:Player.getCurrentServer().hostname,type:"Literal"}];
-                }
-                var ipPromise = evaluate(exp.arguments[0], workerScript);
-                ipPromise.then(function (ip) {
-                    var server = getServer(ip);
-                    if (server == null) {
-                        workerScript.scriptRef.log('getServerOpenPortsCount() failed. Invalid IP or hostname passed in: ' + ip);
-                        return reject(makeRuntimeRejectMsg(workerScript, 'Invalid IP or hostname passed into getServerOpenPortsCount() command'));
-                    }
-                    var out = [];
-                    for (var i = 0; i < server.serversOnNetwork.length; i++) {
-                        var entry = server.getServerOnNetwork(i).hostname;
-                        if (entry == null) {
-                            continue;
-                        }
-                        out.push(entry);
-                    }
-                    workerScript.scriptRef.log('scan() returned ' + server.serversOnNetwork.length + ' connections for ' + server.hostname);
-                    resolve(out);
-                }).catch(function(e) {
-                        reject(e);
-                    });
-                break;
-            default:
-                reject(makeRuntimeRejectMsg(workerScript, "Invalid function: " + exp.callee));
-        }
-    });
-}
-*/
-
 function evalBinary(exp, workerScript){
     return new Promise(function(resolve, reject) {
         var expLeftPromise = evaluate(exp.left, workerScript);
@@ -329,17 +285,24 @@ function evalBinary(exp, workerScript){
 }
 
 function evalUnary(exp, workerScript){
+    var env = workerScript.env;
     return new Promise(function(resolve, reject) {
-        var expLeftPromise = evaluate(exp.left, workerScript);
-        expLeftPromise.then(function(expLeft) {
-            switch(exp.operator){
-                case "++":
-                    break
-                case "--":
-                    break;
+        if (env.stopFlag) {return reject(workerScript);}
+        var p = evaluate(exp.argument, workerScript);
+        p.then(function(res) {
+            if (exp.operator == "!") {
+                resolve(!res);
+            } else if (exp.operator == "-") {
+                if (isNaN(res)) {
+                    resolve(res);
+                } else {
+                    resolve(-1 * res);
+                }
+            } else {
+                reject(makeRuntimeRejectMsg(workerScript, "Unimplemented unary operator: " + exp.operator));
             }
-        }, function(e) {
-                reject(e);
+        }).catch(function(e) {
+            reject(e);
         });
     });
 }
@@ -534,113 +497,6 @@ function evaluateWhile(exp, workerScript) {
 	});
 }
 
-/*
-function evaluateHacknetNode(exp, workerScript) {
-    console.log("here");
-    var env = workerScript.env;
-    return new Promise(function(resolve, reject) {
-        setTimeout(function() {
-            if (exp.index == null) {
-                if ((exp.op.type == "call" && exp.op.func.value == "length") ||
-                    (exp.op.type == "var" && exp.op.value == "length")) {
-                    resolve(Player.hacknetNodes.length);
-                    workerScript.scriptRef.log("hacknetnodes.length returned " + Player.hacknetNodes.length);
-                    return;
-                } else {
-                    workerScript.scriptRef.log("Invalid/null index for hacknetnodes");
-                    reject(makeRuntimeRejectMsg(workerScript, "Invalid/null index. hacknetnodes array must be accessed with an index"));
-                    return;
-                }
-
-            }
-            var indexPromise = evaluate(exp.index.value, workerScript);
-            indexPromise.then(function(index) {
-                if (isNaN(index) || index >= Player.hacknetNodes.length || index < 0) {
-                    workerScript.scriptRef.log("Invalid index value for hacknetnodes[]");
-                    reject(makeRuntimeRejectMsg(workerScript, "Invalid index value for hacknetnodes[]."));
-                    return;
-                }
-                var nodeObj = Player.hacknetNodes[index];
-                if (exp.op == null) {
-                    reject(makeRuntimeRejectMsg(workerScript, "No operator or property called for hacknetnodes. Usage: hacknetnodes[i].property/operator"));
-                    return;
-                } else if (exp.op.type == "var") {
-                    //Get properties: level, ram, cores
-                    switch(exp.op.value) {
-                        case "level":
-                            resolve(nodeObj.level);
-                            break;
-                        case "ram":
-                            resolve(nodeObj.ram);
-                            break;
-                        case "cores":
-                            resolve(nodeObj.numCores);
-                            break;
-                        default:
-                            reject(makeRuntimeRejectMsg(workerScript, "Unrecognized property for Hacknet Node. Valid properties: ram, cores, level"));
-                            break;
-                    }
-
-                } else if (exp.op.type == "call") {
-                    switch(exp.op.func.value) {
-                        case "upgradeLevel":
-                            if (exp.op.args.length == 1) {
-                                var argPromise = evaluate(exp.op.args[0], workerScript);
-                                argPromise.then(function(arg) {
-                                    if (isNaN(arg) || arg < 0) {
-                                        reject(makeRuntimeRejectMsg(workerScript, "Invalid argument passed into upgradeLevel()"));
-                                        return;
-                                    }
-                                    arg = Math.round(arg);
-                                    var res = nodeObj.purchaseLevelUpgrade(arg);
-                                    if (res) {
-                                        workerScript.scriptRef.log("Upgraded " + nodeObj.name + " " + arg + " times to level " + nodeObj.level);
-                                    }
-                                    resolve(res);
-                                }, function(e) {
-                                    reject(e);
-                                });
-                            } else {
-                                var res = nodeObj.purchaseLevelUpgrade(1);
-                                if (res) {
-                                    workerScript.scriptRef.log("Upgraded " + nodeObj.name + " once to level " + nodeObj.level);
-                                }
-                                resolve(res);
-                            }
-                            break;
-                        case "upgradeRam":
-                            var res = nodeObj.purchaseRamUpgrade();
-                            if (res) {
-                                workerScript.scriptRef.log("Upgraded " + nodeObj.name + "'s RAM to " + nodeObj.ram + "GB");
-                            }
-                            resolve(res);
-                            break;
-                        case "upgradeCore":
-                            var res = nodeObj.purchaseCoreUpgrade();
-                            if (res) {
-                                workerScript.scriptRef.log("Upgraded " + nodeObj.name + "'s number of cores to " + nodeObj.numCores);
-                            }
-                            resolve(res);
-                            break;
-                        default:
-                            reject(makeRuntimeRejectMsg(workerScript, "Unrecognized function/operator for hacknet node. Valid functions: upgradeLevel(n), upgradeRam(), upgradeCore()"));
-                            break;
-                    }
-                } else {
-                    reject(makeRuntimeRejectMsg(workerScript, "Unrecognized operation for hacknet node"));
-                    return;
-                }
-            }, function(e) {
-                reject(e);
-            });
-
-        }, CONSTANTS.CodeInstructionRunTime);
-    }, function(e) {
-        reject(e);
-    });
-}
-*/
-
 function evaluateProg(exp, workerScript, index) {
 	var env = workerScript.env;
 
@@ -791,7 +647,7 @@ function scriptCalculateExpGain(server) {
     if (server.baseDifficulty == null) {
         server.baseDifficulty = server.hackDifficulty;
     }
-	return (server.baseDifficulty * Player.hacking_exp_mult * 0.4 + 2);
+    return (server.baseDifficulty * Player.hacking_exp_mult * 0.3 + 2);
 }
 
 //The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument
