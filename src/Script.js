@@ -173,6 +173,8 @@ function calculateRamUsage(codeCopy) {
     var getServerSecurityCount = numOccurrences(codeCopy, "getServerSecurityLevel(");
     var getServerBaseSecurityCount = numOccurrences(codeCopy, "getServerBaseSecurityLevel(");
     var getServerReqdHackingCount = numOccurrences(codeCopy, "getServerRequiredHackingLevel(");
+    var getServerNumPortsReqdCount = numOccurrences(codeCopy, "getServerNumPortsRequired(");
+    var getServerRamCount = numOccurrences(codeCopy, "getServerRam(");
     var fileExistsCount = numOccurrences(codeCopy, "fileExists(");
     var isRunningCount = numOccurrences(codeCopy, "isRunning(");
     var numOperators = numNetscriptOperators(codeCopy);
@@ -185,7 +187,8 @@ function calculateRamUsage(codeCopy) {
                               numOccurrences(codeCopy, "getStockPosition(");
     var scriptBuySellStockCount = numOccurrences(codeCopy, "buyStock(") +
                                   numOccurrences(codeCopy, "sellStock(");
-    var scriptPurchaseServerCount = numOccurrences(codeCopy, "purchaseServer(");
+    var scriptPurchaseServerCount = numOccurrences(codeCopy, "purchaseServer(") + 
+                                    numOccurrences(codeCopy, "deleteServer(");
     var scriptRoundCount = numOccurrences(codeCopy, "round(");
     var scriptWriteCount = numOccurrences(codeCopy, "write(");
     var scriptReadCount = numOccurrences(codeCopy, "read(");
@@ -210,11 +213,13 @@ function calculateRamUsage(codeCopy) {
         (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) +
         (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
         (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) +
-        (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerMoneyRamCost) +
-        (getServerMaxMoneyCount * CONSTANTS.ScriptGetServerMoneyRamCost) +
-        (getServerSecurityCount * CONSTANTS.ScriptGetServerSecurityRamCost) +
-        (getServerBaseSecurityCount * CONSTANTS.ScriptGetServerSecurityRamCost) +
-        (getServerReqdHackingCount * CONSTANTS.ScriptGetServerReqdHackRamCost) +
+        (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerCost) +
+        (getServerMaxMoneyCount * CONSTANTS.ScriptGetServerCost) +
+        (getServerSecurityCount * CONSTANTS.ScriptGetServerCost) +
+        (getServerBaseSecurityCount * CONSTANTS.ScriptGetServerCost) +
+        (getServerReqdHackingCount * CONSTANTS.ScriptGetServerCost) +
+        (getServerNumPortsReqdCount * CONSTANTS.ScriptGetServerCost) +
+        (getServerRamCount * CONSTANTS.ScriptGetServerCost) +
         (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) +
         (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
         (numOperators * CONSTANTS.ScriptOperatorRamCost) +

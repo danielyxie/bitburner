@@ -6,11 +6,11 @@ checkIfConnectedToDarkweb = function() {
         if (!isValidIPAddress(darkwebIp)) {return;}
         if (darkwebIp == Player.getCurrentServer().ip) {
             post("You are now connected to the dark web. From the dark web you can purchase illegal items. " +
-                 "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name] " + 
+                 "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name] " +
                  "to purchase an item");
         }
     }
-    
+
 }
 
 //Handler for dark web commands. The terminal's executeCommand() function will pass
@@ -41,9 +41,39 @@ executeDarkwebTerminalCommand = function(commandArray) {
 listAllDarkwebItems = function() {
     for (var item in DarkWebItems) {
 		if (DarkWebItems.hasOwnProperty(item)) {
-            post(DarkWebItems[item]);
+            var item = DarkWebItems[item];
+            //Convert string using toLocaleString
+            var split = item.split(" - ");
+            if (split.length == 3 && split[1].charAt(0) == '$') {
+                split[1] = split[1].slice(1);
+                split[1] = split[1].replace(/,/g, '');
+                var price = parseFloat(split[1]);
+                if (isNaN(price)) {
+                    post(item);
+                    return;
+                }
+                price = formatNumber(price, 0);
+                split[1] = "$" + price.toString();
+                post(split.join(" - "));
+            } else {
+                post(item);
+            }
 		}
 	}
+
+    var priceString = split[1];
+    //Check for errors
+    if (priceString.length == 0 || priceString.charAt(0) != '$') {
+        return -1;
+    }
+    //Remove dollar sign and commas
+    priceString = priceString.slice(1);
+    priceString = priceString.replace(/,/g, '');
+
+    //Convert string to numeric
+    var price = parseFloat(priceString);
+    if (isNaN(price)) {return -1;}
+    else {return price;}
 }
 
 buyDarkwebItem = function(itemName) {
@@ -52,7 +82,7 @@ buyDarkwebItem = function(itemName) {
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.BruteSSHProgram);
-            post("You have purchased the BruteSSH.exe program. The new program " + 
+            post("You have purchased the BruteSSH.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -62,7 +92,7 @@ buyDarkwebItem = function(itemName) {
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.FTPCrackProgram);
-            post("You have purchased the FTPCrack.exe program. The new program " + 
+            post("You have purchased the FTPCrack.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -72,7 +102,7 @@ buyDarkwebItem = function(itemName) {
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.RelaySMTPProgram);
-            post("You have purchased the relaySMTP.exe program. The new program " + 
+            post("You have purchased the relaySMTP.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -82,7 +112,7 @@ buyDarkwebItem = function(itemName) {
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.HTTPWormProgram);
-            post("You have purchased the HTTPWorm.exe program. The new program " + 
+            post("You have purchased the HTTPWorm.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -92,7 +122,7 @@ buyDarkwebItem = function(itemName) {
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.SQLInjectProgram);
-            post("You have purchased the SQLInject.exe program. The new program " + 
+            post("You have purchased the SQLInject.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -102,7 +132,7 @@ buyDarkwebItem = function(itemName) {
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.DeepscanV1);
-            post("You have purchased the DeepscanV1.exe program. The new program " + 
+            post("You have purchased the DeepscanV1.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -112,7 +142,7 @@ buyDarkwebItem = function(itemName) {
         if (price > 0 && Player.money >= price) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.DeepscanV2);
-            post("You have purchased the DeepscanV2.exe program. The new program " + 
+            post("You have purchased the DeepscanV2.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
@@ -133,7 +163,7 @@ parseDarkwebItemPrice = function(itemDesc) {
         //Remove dollar sign and commas
         priceString = priceString.slice(1);
         priceString = priceString.replace(/,/g, '');
-        
+
         //Convert string to numeric
         var price = parseFloat(priceString);
         if (isNaN(price)) {return -1;}

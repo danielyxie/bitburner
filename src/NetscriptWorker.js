@@ -1,6 +1,6 @@
-/* Worker code, contains Netscript scripts that are actually running */  
- 
-//TODO Tested For and while and generic call statements. Have not tested if statements 
+/* Worker code, contains Netscript scripts that are actually running */
+
+//TODO Tested For and while and generic call statements. Have not tested if statements
 
 /* Actual Worker Code */
 function WorkerScript(runningScriptObj) {
@@ -53,7 +53,7 @@ function runScriptsLoop() {
                 workerScripts[i].env.stopFlag = true;
 				continue;
 			}
-						
+
 			workerScripts[i].running = true;
 			var p = evaluate(ast, workerScripts[i]);
 			//Once the code finishes (either resolved or rejected, doesnt matter), set its
@@ -79,9 +79,9 @@ function runScriptsLoop() {
                         var serverIp = errorTextArray[1];
                         var scriptName = errorTextArray[2];
                         var errorMsg = errorTextArray[3];
-					
-                        dialogBoxCreate("Script runtime error: <br>Server Ip: " + serverIp + 
-                                        "<br>Script name: " + scriptName + 
+
+                        dialogBoxCreate("Script runtime error: <br>Server Ip: " + serverIp +
+                                        "<br>Script name: " + scriptName +
                                         "<br>Args:" + printArray(w.args) + "<br>" + errorMsg);
                         w.scriptRef.log("Script crashed with runtime error");
                     } else {
@@ -89,7 +89,7 @@ function runScriptsLoop() {
                     }
 					w.running = false;
 					w.env.stopFlag = true;
-                    
+
 				} else if (isScriptErrorMessage(w)) {
                     dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
 					console.log("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN");
@@ -100,13 +100,13 @@ function runScriptsLoop() {
 			});
 		}
 	}
-	
+
 	//Delete any scripts that finished or have been killed. Loop backwards bc removing
 	//items fucks up the indexing
 	for (var i = workerScripts.length - 1; i >= 0; i--) {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
 			console.log("Deleting script: " + workerScripts[i].name);
-			//Delete script from the runningScripts array on its host serverIp 
+			//Delete script from the runningScripts array on its host serverIp
 			var ip = workerScripts[i].serverIp;
 			var name = workerScripts[i].name;
 			for (var j = 0; j < AllServers[ip].runningScripts.length; j++) {
@@ -116,18 +116,18 @@ function runScriptsLoop() {
 					break;
 				}
 			}
-            
+
 			//Free RAM
 			AllServers[ip].ramUsed -= workerScripts[i].ramUsage;
-            
+
             //Delete script from Active Scripts
 			deleteActiveScriptsItem(workerScripts[i]);
-				
+
 			//Delete script from workerScripts
 			workerScripts.splice(i, 1);
 		}
 	}
-	
+
 	setTimeout(runScriptsLoop, 10000);
 }
 
@@ -145,10 +145,10 @@ function killWorkerScript(runningScriptObj, serverIp) {
     return false;
 }
 
-//Queues a script to be run 
+//Queues a script to be run
 function addWorkerScript(runningScriptObj, server) {
 	var filename = runningScriptObj.filename;
-	
+
 	//Update server's ram usage
     var threads = 1;
     if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
@@ -156,18 +156,18 @@ function addWorkerScript(runningScriptObj, server) {
     } else {
         runningScriptObj.threads = 1;
     }
-    var ramUsage = runningScriptObj.scriptRef.ramUsage * threads 
+    var ramUsage = runningScriptObj.scriptRef.ramUsage * threads
                    * Math.pow(CONSTANTS.MultithreadingRAMCost, threads-1);
 	server.ramUsed += ramUsage;
-	
+
 	//Create the WorkerScript
 	var s = new WorkerScript(runningScriptObj);
 	s.serverIp 	= server.ip;
 	s.ramUsage 	= ramUsage;
-	
+
 	//Add the WorkerScript to the Active Scripts list
 	addActiveScriptsItem(s);
-	
+
 	//Add the WorkerScript
 	workerScripts.push(s);
 	return;

@@ -630,7 +630,12 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
 }
 
 inviteToFaction = function(faction) {
-    factionInvitationBoxCreate(faction);
+    if (Settings.SuppressFactionInvites) {
+        faction.alreadyInvited = true;
+        Player.factionInvitations.push(faction.name);
+    } else {
+        factionInvitationBoxCreate(faction);
+    }
 }
 
 joinFaction = function(faction) {

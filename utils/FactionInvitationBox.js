@@ -23,20 +23,21 @@ factionInvitationSetMessage = function(msg) {
 factionInvitationBoxCreate = function(faction) {
     factionInvitationSetText("You have received a faction invitation from " + faction.name);
     //TODO Faction invitation message
-    
+
     var newYesButton = clearEventListeners("faction-invitation-box-yes");
     newYesButton.addEventListener("click", function() {
         joinFaction(faction);
         factionInvitationBoxClose();
         return false;
     });
-    
+
     var noButton = clearEventListeners("faction-invitation-box-no");
     noButton.addEventListener("click", function() {
         factionInvitationBoxClose();
         faction.alreadyInvited = true;
+        Player.factionInvitations.push(faction.name);
         return false;
     });
-    
+
     factionInvitationBoxOpen();
 }

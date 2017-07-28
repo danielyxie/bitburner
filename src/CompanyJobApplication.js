@@ -2,7 +2,7 @@
 
 //Determines the job that the Player should get (if any) at the current
 //company
-PlayerObject.prototype.applyForJob = function(entryPosType) {    
+PlayerObject.prototype.applyForJob = function(entryPosType) {
     var currCompany = "";
     if (this.companyName != "") {
         currCompany = Companies[this.companyName];
@@ -12,26 +12,26 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
         currPositionName = this.companyPosition.positionName;
     }
 	var company = Companies[this.location]; //Company being applied to
-	
+
     var pos = entryPosType;
-    
+
     if (!this.isQualified(company, pos)) {
         var reqText = getJobRequirementText(company, pos);
         dialogBoxCreate("Unforunately, you do not qualify for this position<br>" + reqText);
         return;
     }
-    
+
     while (true) {
         if (Engine.Debug) {console.log("Determining qualification for next Company Position");}
         var newPos = getNextCompanyPosition(pos);
-        
+
         if (newPos == null) {
             if (Engine.Debug) {
                 console.log("Player already at highest position, cannot go any higher");
             }
             break;
         }
-        
+
         //Check if this company has this position
         if (company.hasPosition(newPos)) {
             if (!this.isQualified(company, newPos)) {
@@ -42,9 +42,9 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
         } else {
             break;
         }
-        
+
     }
-    
+
     //Check if the determined job is the same as the player's current job
     if (currCompany != "") {
         if (currCompany.companyName == company.companyName &&
@@ -52,12 +52,12 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
             var nextPos = getNextCompanyPosition(pos);
             var reqText = getJobRequirementText(company, nextPos);
             dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
-            
+
             return; //Same job, do nothing
         }
     }
-    
-	
+
+
     //Lose reputation from a Company if you are leaving it for another job
     var leaveCompany = false;
     var oldCompanyName = "";
@@ -72,22 +72,22 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
             }
         }
     }
-	
+
     this.companyName = company.companyName;
     this.companyPosition = pos;
-    
+
     if (leaveCompany) {
-        dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + 
-                        pos.positionName + "!<br>" + 
-                        "You lost 1000 reputation at your old company " + oldCompanyName + " because you left.");    
+        dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " +
+                        pos.positionName + "!<br>" +
+                        "You lost 1000 reputation at your old company " + oldCompanyName + " because you left.");
     } else {
         dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.positionName + "!");
     }
-    
+
     Engine.loadLocationContent();
 }
 
-function getJobRequirementText(company, pos) {
+function getJobRequirementText(company, pos, tooltiptext=false) {
     var reqText = "";
     var offset = company.jobStatReqOffset;
     var reqHacking = pos.requiredHacking > 0       ? pos.requiredHacking+offset   : 0;
@@ -97,17 +97,59 @@ function getJobRequirementText(company, pos) {
     var reqAgility = pos.requiredDexterity > 0     ? pos.requiredDexterity+offset : 0;
     var reqCharisma = pos.requiredCharisma > 0     ? pos.requiredCharisma+offset  : 0;
     var reqRep = pos.requiredReputation;
-    var reqText = "(Requires ";
-    if (reqHacking > 0)     {reqText += (reqHacking +       " hacking, ");}
-    if (reqStrength > 0)    {reqText += (reqStrength +      " strength, ");}
-    if (reqDefense > 0)     {reqText += (reqDefense +       " defense, ");}
-    if (reqDexterity > 0)   {reqText += (reqDexterity +     " dexterity, ");}
-    if (reqAgility > 0)     {reqText += (reqAgility +       " agility, ");}
-    if (reqCharisma > 0)    {reqText += (reqCharisma +      " charisma, ");}
-    if (reqRep > 1)         {reqText += (reqRep +           " reputation, ");}
-    reqText = reqText.substring(0, reqText.length - 2);
-    reqText += ")";
+    if (tooltiptext) {
+        reqText = "Requires:<br>";
+        reqText += (reqHacking.toString() +       " hacking<br>");
+        reqText += (reqStrength.toString() +      " strength<br>");
+        reqText += (reqDefense.toString() +       " defense<br>");
+        reqText += (reqDexterity.toString() +     " dexterity<br>");
+        reqText += (reqAgility.toString() +       " agility<br>");
+        reqText += (reqCharisma.toString() +      " charisma<br>");
+        reqText += (reqRep.toString() +           " and reputation");
+    } else {
+        reqText = "(Requires ";
+        if (reqHacking > 0)     {reqText += (reqHacking +       " hacking, ");}
+        if (reqStrength > 0)    {reqText += (reqStrength +      " strength, ");}
+        if (reqDefense > 0)     {reqText += (reqDefense +       " defense, ");}
+        if (reqDexterity > 0)   {reqText += (reqDexterity +     " dexterity, ");}
+        if (reqAgility > 0)     {reqText += (reqAgility +       " agility, ");}
+        if (reqCharisma > 0)    {reqText += (reqCharisma +      " charisma, ");}
+        if (reqRep > 1)         {reqText += (reqRep +           " reputation, ");}
+        reqText = reqText.substring(0, reqText.length - 2);
+        reqText += ")";
+    }
     return reqText;
+}
+
+//Returns your next position at a company given the field (software, business, etc.)
+PlayerObject.prototype.getNextCompanyPosition = function(company, entryPosType) {
+    var currCompany = null;
+    if (this.companyName != "") {
+        currCompany = Companies[this.companyName];
+    }
+
+    //Not employed at this company, so return the entry position
+    if (currCompany == null || (currCompany.companyName != company.companyName)) {
+        return entryPosType;
+    }
+
+    //If the entry pos type and the player's current position have the same type,
+    //return the player's "nextCompanyPosition". Otherwise return the entryposType
+    //Employed at this company, so just return the next position if it exists.
+    if ((this.companyPosition.isSoftwareJob() && entryPosType.isSoftwareJob()) ||
+        (this.companyPosition.isITJob() && entryPosType.isITJob()) ||
+        (this.companyPosition.isSecurityEngineerJob() && entryPosType.isSecurityEngineerJob()) ||
+        (this.companyPosition.isNetworkEngineerJob() && entryPosType.isNetworkEngineerJob()) ||
+        (this.companyPosition.isSecurityJob() && entryPosType.isSecurityJob()) ||
+        (this.companyPosition.isAgentJob() && entryPosTypeisAgentJob()) ||
+        (this.companyPosition.isSoftwareConsultantJob() && entryPosType.isSoftwareConsultantJob()) ||
+        (this.companyPosition.isBusinessConsultantJob() && entryPosType.isBusinessConsultantJob()) ||
+        (this.companyPosition.isPartTimeJob() && entryPosType.isPartTimeJob())) {
+        return getNextCompanyPosition(this.companyPosition);
+    }
+
+
+    return entryPosType;
 }
 
 PlayerObject.prototype.applyForSoftwareJob = function() {
@@ -222,10 +264,10 @@ PlayerObject.prototype.isQualified = function(company, position) {
     var reqDexterity = position.requiredDexterity > 0   ? position.requiredDexterity+offset : 0;
     var reqAgility = position.requiredDexterity > 0     ? position.requiredDexterity+offset : 0;
     var reqCharisma = position.requiredCharisma > 0     ? position.requiredCharisma+offset  : 0;
-    
+
 	if (this.hacking_skill >= reqHacking &&
 		this.strength 	   >= reqStrength &&
-        this.defense       >= reqDefense && 
+        this.defense       >= reqDefense &&
         this.dexterity     >= reqDexterity &&
         this.agility       >= reqAgility &&
         this.charisma      >= reqCharisma &&

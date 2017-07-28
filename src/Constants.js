@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.26.1",
+    Version:                "0.26.2",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -61,9 +61,7 @@ CONSTANTS = {
     ScriptHasRootAccessRamCost:     0.05,
     ScriptGetHostnameRamCost:       0.05,
     ScriptGetHackingLevelRamCost:   0.05,
-    ScriptGetServerMoneyRamCost:    0.1,
-    ScriptGetServerSecurityRamCost: 0.1,
-    ScriptGetServerReqdHackRamCost: 0.1,
+    ScriptGetServerCost:            0.1,
     ScriptFileExistsRamCost:        0.1,
     ScriptIsRunningRamCost:         0.1,
     ScriptOperatorRamCost:          0.01,
@@ -85,6 +83,8 @@ CONSTANTS = {
     ServerMaxGrowthRate: 1.0035,     //Maximum possible growth rate (max rate accounting for server security)
     ServerFortifyAmount: 0.002,     //Amount by which server's security increases when its hacked/grown
     ServerWeakenAmount: 0.05,        //Amount by which server's security decreases when weakened
+
+    PurchasedServerLimit: 25,
 
     //Augmentation Constants
     AugmentationCostMultiplier: 5,  //Used for balancing costs without having to readjust every Augmentation cost
@@ -678,7 +678,20 @@ CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "V0.26.1<br>" +
+    "v0.26.2<br>" +
+    "-Major rebalancing and randomization of the amount of money that servers start with<br>" +
+    "-Significantly lowered hacking exp gain from hacking servers. The exp gain for higher-level servers was lowered more than " +
+    "that of low level servers. (~16% for lower level servers, up to ~25% for higher-level servers)<br>" +
+    "-Added deleteServer() Netscript function<br>" +
+    "-You can now purchase a maximum of 25 servers each run (Deleting a server will allow you to purchase a new one)<br>" +
+    "-Added autocompletion for './' Terminal command<br>" +
+    "-Darkweb prices now displayed properly using toLocaleString()<br>" +
+    "-Added NOT operator (!) and negation operator(-), so negative numbers should be functional now<br>" +
+    "-Rejected faction invitations will now show up as 'Outstanding Faction Invites' in the Factions page. These " +
+    "can be accepted at any point in the future<br>" +
+    "-Added a few more configurable game settings for suppressing messages and faction invitations<br>" +
+    "-Added tooltips for company job requirements<br><br>" +
+    "v0.26.1<br>" +
     "-Added autocompletion for aliases<br>" +
     "-Added getServerRam() Netscript function()<br>" +
     "-Added getLevelUpgradeCost(n), getRamUpgradeCost(), getCoreUpgradeCost() functions for Netscript Hacknet Node API<br>" +
