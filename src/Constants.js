@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.26.1",
+    Version:                "0.26.2",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -679,6 +679,7 @@ CONSTANTS = {
 
     LatestUpdate:
     "v0.26.2<br>" +
+    "-Major rebalancing and randomization of the amount of money that servers start with<br>" +
     "-Significantly lowered hacking exp gain from hacking servers. The exp gain for higher-level servers was lowered more than " +
     "that of low level servers. (~16% for lower level servers, up to ~25% for higher-level servers)<br>" +
     "-Added deleteServer() Netscript function<br>" +
@@ -689,6 +690,7 @@ CONSTANTS = {
     "-Rejected faction invitations will now show up as 'Outstanding Faction Invites' in the Factions page. These " +
     "can be accepted at any point in the future<br>" +
     "-Added a few more configurable game settings for suppressing messages and faction invitations<br>" +
+    "-Added tooltips for company job requirements<br><br>" +
     "v0.26.1<br>" +
     "-Added autocompletion for aliases<br>" +
     "-Added getServerRam() Netscript function()<br>" +
