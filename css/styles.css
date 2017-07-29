@@ -326,7 +326,7 @@ a:link, a:visited {
     /*margin: 50% auto;*/
     padding: 5px;
     border: 2px solid var(--my-highlight-color);
-    width: 18%;
+    width: 19%;
     overflow: auto; /* Enable scroll if needed */
     background-color: #444; /* Fallback color */
     z-index: 1;
