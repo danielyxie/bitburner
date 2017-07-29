@@ -79,7 +79,7 @@ listAllDarkwebItems = function() {
 buyDarkwebItem = function(itemName) {
     if (itemName.toLowerCase() == Programs.BruteSSHProgram.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.BruteSSHProgram);
-        if (price > 0 && Player.money >= price) {
+        if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.BruteSSHProgram);
             post("You have purchased the BruteSSH.exe program. The new program " +
@@ -89,7 +89,7 @@ buyDarkwebItem = function(itemName) {
         }
     } else if (itemName.toLowerCase() == Programs.FTPCrackProgram.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.FTPCrackProgram);
-        if (price > 0 && Player.money >= price) {
+        if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.FTPCrackProgram);
             post("You have purchased the FTPCrack.exe program. The new program " +
@@ -99,7 +99,7 @@ buyDarkwebItem = function(itemName) {
         }
     } else if (itemName.toLowerCase() == Programs.RelaySMTPProgram.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.RelaySMTPProgram);
-        if (price > 0 && Player.money >= price) {
+        if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.RelaySMTPProgram);
             post("You have purchased the relaySMTP.exe program. The new program " +
@@ -109,7 +109,7 @@ buyDarkwebItem = function(itemName) {
         }
     } else if (itemName.toLowerCase() == Programs.HTTPWormProgram.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.HTTPWormProgram);
-        if (price > 0 && Player.money >= price) {
+        if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.HTTPWormProgram);
             post("You have purchased the HTTPWorm.exe program. The new program " +
@@ -119,7 +119,7 @@ buyDarkwebItem = function(itemName) {
         }
     } else if (itemName.toLowerCase() == Programs.SQLInjectProgram.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.SQLInjectProgram);
-        if (price > 0 && Player.money >= price) {
+        if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.SQLInjectProgram);
             post("You have purchased the SQLInject.exe program. The new program " +
@@ -129,7 +129,7 @@ buyDarkwebItem = function(itemName) {
         }
     } else if (itemName.toLowerCase() == Programs.DeepscanV1.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV1Program);
-        if (price > 0 && Player.money >= price) {
+        if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.DeepscanV1);
             post("You have purchased the DeepscanV1.exe program. The new program " +
@@ -139,7 +139,7 @@ buyDarkwebItem = function(itemName) {
         }
     } else if (itemName.toLowerCase() == Programs.DeepscanV2.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV2Program);
-        if (price > 0 && Player.money >= price) {
+        if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
             Player.getHomeComputer().programs.push(Programs.DeepscanV2);
             post("You have purchased the DeepscanV2.exe program. The new program " +

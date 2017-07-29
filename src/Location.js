@@ -988,7 +988,7 @@ displayLocationContent = function() {
             slumsDescText.style.display = "block";
             slumsShoplift.style.display = "block";
             slumsShoplift.innerHTML = "Shoplift (" + (shopliftChance*100).toFixed(3) + "% chance of success)";
-            slumsShoplift.innerHTML += '<span class="tooltiptext"> Attempt to shoplift from a low-end retailers </span>';
+            slumsShoplift.innerHTML += '<span class="tooltiptext"> Attempt to shoplift from a low-end retailer </span>';
             slumsMug.style.display = "block";
             slumsMug.innerHTML = "Mug someone (" + (mugChance*100).toFixed(3) + "% chance of success)";
             slumsMug.innerHTML += '<span class="tooltiptext"> Attempt to mug a random person on the street </span>';
@@ -1764,11 +1764,11 @@ initLocationButtons = function() {
 }
 
 travelToCity = function(destCityName, cost) {
-    if (cost > Player.money) {
+    if (Player.money.lt(cost)) {
         dialogBoxCreate("You cannot afford to travel to " + destCityName);
         return;
     }
-    Player.money -= cost;
+    Player.loseMoney(cost);
 
     Player.city = destCityName;
     dialogBoxCreate("You are now in " + destCityName + "!");
@@ -1776,7 +1776,7 @@ travelToCity = function(destCityName, cost) {
 }
 
 purchaseTorRouter = function() {
-    if (CONSTANTS.TorRouterCost > Player.money) {
+    if (Player.money.lt(CONSTANTS.TorRouterCost)) {
         dialogBoxCreate("You cannot afford to purchase the Tor router");
         return;
     }

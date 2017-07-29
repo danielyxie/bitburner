@@ -83,7 +83,7 @@ HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
         var diff = Math.max(0, CONSTANTS.HacknetNodeMaxLevel - this.level);
         return this.purchaseLevelUpgrade(diff);
     }
-    if (cost > Player.money) {return false;}
+    if (Player.money.lt(cost)) {return false;}
     Player.loseMoney(cost);
     this.level += levels;
     this.updateMoneyGainRate();
@@ -113,7 +113,7 @@ HacknetNode.prototype.getRamUpgradeCost = function() {
 HacknetNode.prototype.purchaseRamUpgrade = function() {
     var cost = this.calculateRamUpgradeCost();
     if (isNaN(cost)) {return false;}
-    if (cost > Player.money) {return false;}
+    if (Player.money.lt(cost)) {return false;}
     if (this.ram >= CONSTANTS.HacknetNodeMaxRam) {return false;}
     Player.loseMoney(cost);
     this.ram *= 2; //Ram is always doubled
@@ -140,7 +140,7 @@ HacknetNode.prototype.getCoreUpgradeCost = function() {
 HacknetNode.prototype.purchaseCoreUpgrade = function() {
     var cost = this.calculateCoreUpgradeCost();
     if (isNaN(cost)) {return false;}
-    if (cost > Player.money) {return false;}
+    if (Player.money.lt(cost)) {return false;}
     if (this.cores >= CONSTANTS.HacknetNodeMaxCores) {return false;}
     Player.loseMoney(cost);
     ++this.cores;
@@ -179,7 +179,7 @@ purchaseHacknet = function() {
 
     var cost = getCostOfNextHacknetNode();
     if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
-    if (cost > Player.money) {
+    if (Player.money.lt(cost)) {
         //dialogBoxCreate("You cannot afford to purchase a Hacknet Node!");
         return false;
     }
@@ -243,23 +243,23 @@ updateHacknetNodesMultiplierButtons = function() {
 //Calculate the maximum number of times the Player can afford to upgrade
 //a Hacknet Node's level"
 getMaxNumberLevelUpgrades = function(nodeObj) {
-    if (nodeObj.calculateLevelUpgradeCost(1) > Player.money) {return 0;}
+    if (Player.money.lt(nodeObj.calculateLevelUpgradeCost(1))) {return 0;}
     var min = 1;
     var max = CONSTANTS.HacknetNodeMaxLevel-1;
     var levelsToMax = CONSTANTS.HacknetNodeMaxLevel - nodeObj.level;
-    if (nodeObj.calculateLevelUpgradeCost(levelsToMax) < Player.money) {
+    if (Player.money.gt(nodeObj.calculateLevelUpgradeCost(levelsToMax))) {
         return levelsToMax;
     }
 
     while (min <= max) {
         var curr = (min + max) / 2 | 0;
         if (curr != CONSTANTS.HacknetNodeMaxLevel &&
-            nodeObj.calculateLevelUpgradeCost(curr) < Player.money &&
-            nodeObj.calculateLevelUpgradeCost(curr+1) > Player.money) {
+            Player.money.gt(nodeObj.calculateLevelUpgradeCost(curr)) &&
+            Player.money.lt(nodeObj.calculateLevelUpgradeCost(curr+1))) {
             return Math.min(levelsToMax, curr);
-        } else if (nodeObj.calculateLevelUpgradeCost(curr) > Player.money) {
+        } else if (Player.money.lt(nodeObj.calculateLevelUpgradeCost(curr))) {
             max = curr - 1;
-        } else if (nodeObj.calculateLevelUpgradeCost(curr) < Player.money) {
+        } else if (Player.money.gt(nodeObj.calculateLevelUpgradeCost(curr))) {
             min = curr + 1;
         } else {
             return Math.min(levelsToMax, curr);
@@ -299,7 +299,7 @@ updateHacknetNodesContent = function() {
     var cost = getCostOfNextHacknetNode();
     var purchaseButton = document.getElementById("hacknet-nodes-purchase-button");
     purchaseButton.innerHTML = "Purchase Hacknet Node - $" + formatNumber(cost, 2);
-    if (cost > Player.money) {
+    if (Player.money.lt(cost)) {
         purchaseButton.setAttribute("class", "a-link-button-inactive");
     } else {
         purchaseButton.setAttribute("class", "a-link-button");
@@ -307,7 +307,7 @@ updateHacknetNodesContent = function() {
 
     //Update player's money
     var moneyElem = document.getElementById("hacknet-nodes-money");
-    moneyElem.innerHTML = "Money: $" + formatNumber(Player.money, 2) + "<br>" +
+    moneyElem.innerHTML = "Money: $" + formatNumber(Player.money.toNumber(), 2) + "<br>" +
                           "Total production from all Hacknet Nodes: $" + formatNumber(Player.totalHacknetNodeProduction, 2) + " / second";
 
     //Update information in each owned hacknet node
@@ -413,7 +413,7 @@ updateHacknetNodeDomElement = function(nodeObj) {
         var upgradeLevelCost = nodeObj.calculateLevelUpgradeCost(multiplier);
         upgradeLevelButton.innerHTML = "Upgrade Hacknet Node Level x" + multiplier +
                                        " - $" + formatNumber(upgradeLevelCost, 2);
-        if (upgradeLevelCost > Player.money ) {
+        if (Player.money.lt(upgradeLevelCost)) {
             upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
         } else {
             upgradeLevelButton.setAttribute("class", "a-link-button");
@@ -429,7 +429,7 @@ updateHacknetNodeDomElement = function(nodeObj) {
     } else {
         var upgradeRamCost = nodeObj.calculateRamUpgradeCost();
         upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM -$" + formatNumber(upgradeRamCost, 2);
-        if (upgradeRamCost > Player.money) {
+        if (Player.money.lt(upgradeRamCost)) {
             upgradeRamButton.setAttribute("class", "a-link-button-inactive");
         } else {
             upgradeRamButton.setAttribute("class", "a-link-button");
@@ -445,7 +445,7 @@ updateHacknetNodeDomElement = function(nodeObj) {
     } else {
         var upgradeCoreCost = nodeObj.calculateCoreUpgradeCost();
         upgradeCoreButton.innerHTML = "Purchase additional CPU Core - $" + formatNumber(upgradeCoreCost, 2);
-        if (upgradeCoreCost > Player.money) {
+        if (Player.money.lt(upgradeCoreCost)) {
             upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
         } else {
             upgradeCoreButton.setAttribute("class", "a-link-button");

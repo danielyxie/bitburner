@@ -105,7 +105,7 @@ function getJobRequirementText(company, pos, tooltiptext=false) {
         reqText += (reqDexterity.toString() +     " dexterity<br>");
         reqText += (reqAgility.toString() +       " agility<br>");
         reqText += (reqCharisma.toString() +      " charisma<br>");
-        reqText += (reqRep.toString() +           " and reputation");
+        reqText += (reqRep.toString() +           " reputation");
     } else {
         reqText = "(Requires ";
         if (reqHacking > 0)     {reqText += (reqHacking +       " hacking, ");}

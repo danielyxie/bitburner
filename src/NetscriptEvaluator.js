@@ -107,8 +107,12 @@ function evaluate(exp, workerScript) {
                     if (exp.computed){
                         var p = evaluate(exp.property, workerScript);
                         p.then(function(index) {
+                            if (index >= object.length) {
+                                return reject(makeRuntimeRejectMsg(workerScript, "Invalid index for arrays"));
+                            }
                             resolve(object[index]);
                         }).catch(function(e) {
+                            console.log("here");
                             reject(makeRuntimeRejectMsg(workerScript, "Invalid MemberExpression"));
                         });
                     } else {
@@ -647,7 +651,7 @@ function scriptCalculateExpGain(server) {
     if (server.baseDifficulty == null) {
         server.baseDifficulty = server.hackDifficulty;
     }
-    return (server.baseDifficulty * Player.hacking_exp_mult * 0.3 + 2);
+    return (server.baseDifficulty * Player.hacking_exp_mult * 0.3 + 3);
 }
 
 //The same as Player's calculatePercentMoneyHacked() function but takes in the server as an argument
