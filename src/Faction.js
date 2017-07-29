@@ -350,7 +350,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var illuminatiFac = Factions["Illuminati"];
     if (!illuminatiFac.isBanned && !illuminatiFac.isMember && !illuminatiFac.alreadyInvited &&
         numAugmentations >= 30 &&
-        this.money >= 150000000000 &&
+        this.money.gte(150000000000) &&
         this.hacking_skill >= 1500 &&
         this.strength >= 1200 && this.defense >= 1200 &&
         this.dexterity >= 1200 && this.agility >= 1200) {
@@ -361,7 +361,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var daedalusFac = Factions["Daedalus"];
     if (!daedalusFac.isBanned && !daedalusFac.isMember && !daedalusFac.alreadyInvited &&
         numAugmentations >= 30 &&
-        this.money >= 100000000000 &&
+        this.money.gte(100000000000) &&
         (this.hacking_skill >= 2500 ||
             (this.strength >= 1500 && this.defense >= 1500 &&
              this.dexterity >= 1500 && this.agility >= 1500))) {
@@ -372,7 +372,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var covenantFac = Factions["The Covenant"];
     if (!covenantFac.isBanned && !covenantFac.isMember && !covenantFac.alreadyInvited &&
         numAugmentations >= 30 &&
-        this.money >= 75000000000 &&
+        this.money.gte(75000000000) &&
         this.hacking_skill >= 850 &&
         this.strength >= 850 &&
         this.defense >= 850 &&
@@ -494,42 +494,42 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Chongqing
     var chongqingFac = Factions["Chongqing"];
     if (!chongqingFac.isBanned && !chongqingFac.isMember && !chongqingFac.alreadyInvited &&
-        this.money >= 20000000 && this.city == Locations.Chongqing) {
+        this.money.gte(20000000) && this.city == Locations.Chongqing) {
         invitedFactions.push(chongqingFac);
     }
 
     //Sector-12
     var sector12Fac = Factions["Sector-12"];
     if (!sector12Fac.isBanned && !sector12Fac.isMember && !sector12Fac.alreadyInvited &&
-        this.money >= 15000000 && this.city == Locations.Sector12) {
+        this.money.gte(15000000) && this.city == Locations.Sector12) {
         invitedFactions.push(sector12Fac);
     }
 
     //New Tokyo
     var newtokyoFac = Factions["New Tokyo"];
     if (!newtokyoFac.isBanned && !newtokyoFac.isMember && !newtokyoFac.alreadyInvited &&
-        this.money >= 20000000 && this.city == Locations.NewTokyo) {
+        this.money.gte(20000000) && this.city == Locations.NewTokyo) {
         invitedFactions.push(newtokyoFac);
     }
 
     //Aevum
     var aevumFac = Factions["Aevum"];
     if (!aevumFac.isBanned && !aevumFac.isMember  && !aevumFac.alreadyInvited &&
-        this.money >= 40000000 && this.city == Locations.Aevum) {
+        this.money.gte(40000000) && this.city == Locations.Aevum) {
         invitedFactions.push(aevumFac);
     }
 
     //Ishima
     var ishimaFac = Factions["Ishima"];
     if (!ishimaFac.isBanned && !ishimaFac.isMember && !ishimaFac.alreadyInvited &&
-        this.money >= 30000000 && this.city == Locations.Ishima) {
+        this.money.gte(30000000) && this.city == Locations.Ishima) {
         invitedFactions.push(ishimaFac);
     }
 
     //Volhaven
     var volhavenFac = Factions["Volhaven"];
     if (!volhavenFac.isBanned && !volhavenFac.isMember && !volhavenFac.alreadyInvited &&
-        this.money >= 50000000 && this.city == Locations.Volhaven) {
+        this.money.gte(50000000) && this.city == Locations.Volhaven) {
         invitedFactions.push(volhavenFac);
     }
 
@@ -559,7 +559,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         this.hacking_skill >= 200 && this.strength >= 200 && this.defense >= 200 &&
         this.dexterity >= 200 && this.agility >= 200 &&
         (this.city == Locations.Aevum || this.city == Locations.Sector12) &&
-        this.money >= 10000000 && this.karma <= -90 &&
+        this.money.gte(10000000) && this.karma <= -90 &&
         this.companyName != Locations.Sector12CIA && this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(thesyndicateFac);
     }
@@ -570,7 +570,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
         (this.companyPosition.positionName == CompanyPositions.CTO.positionName ||
          this.companyPosition.positionName == CompanyPositions.CFO.positionName ||
          this.companyPosition.positionName == CompanyPositions.CEO.positionName) &&
-         this.money >= 15000000 && this.karma <= -22) {
+         this.money.gte(15000000) && this.karma <= -22) {
         invitedFactions.push(silhouetteFac);
     }
 
@@ -587,7 +587,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var slumsnakesFac = Factions["Slum Snakes"];
     if (!slumsnakesFac.isBanned && !slumsnakesFac.isMember && !slumsnakesFac.alreadyInvited &&
         this.strength >= 30 && this.defense >= 30 && this.dexterity >= 30 &&
-        this.agility >= 30 && this.karma <= -9 && this.money >= 1000000) {
+        this.agility >= 30 && this.karma <= -9 && this.money.gte(1000000)) {
         invitedFactions.push(slumsnakesFac);
     }
 
@@ -610,7 +610,7 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     //Tian Di Hui
     var tiandihuiFac = Factions["Tian Di Hui"];
     if (!tiandihuiFac.isBanned &&  !tiandihuiFac.isMember && !tiandihuiFac.alreadyInvited &&
-        this.money >= 1000000 && this.hacking_skill >= 50 &&
+        this.money.gte(1000000) && this.hacking_skill >= 50 &&
         (this.city == Locations.Chongqing || this.city == Locations.NewTokyo ||
          this.city == Locations.Ishima)) {
         invitedFactions.push(tiandihuiFac);
@@ -759,7 +759,7 @@ displayFactionContent = function(factionName) {
         var donateAmountVal = document.getElementById("faction-donate-input").value;
         if (isPositiveNumber(donateAmountVal)) {
             var numMoneyDonate = Number(donateAmountVal);
-            if (Player.money < numMoneyDonate) {
+            if (Player.money.lt(numMoneyDonate)) {
                 dialogBoxCreate("You cannot afford to donate this much money!");
                 return;
             }

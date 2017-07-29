@@ -1388,7 +1388,7 @@ var Terminal = {
                 break;
             case Programs.Flight:
                 post("Augmentations: " + Player.augmentations.length + " / 30");
-                post("Money: $" + formatNumber(Player.money, 2) + " / $" + formatNumber(100000000000, 2));
+                post("Money: $" + formatNumber(Player.money.toNumber(), 2) + " / $" + formatNumber(100000000000, 2));
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
                 post("Hacking skill: " + Player.hacking_skill + " / 2500");

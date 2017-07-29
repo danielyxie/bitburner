@@ -368,7 +368,7 @@ var Engine = {
         if (Player.hp == null) {Player.hp = Player.max_hp;}
         document.getElementById("character-overview-text").innerHTML =
         ("Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
-         "Money: $" + formatNumber(Player.money, 2) + "<br>" +
+         "Money: $" + formatNumber(Player.money.toNumber(), 2) + "<br>" +
          "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
          "Str:   " + (Player.strength).toLocaleString() + "<br>" +
          "Def:   " + (Player.defense).toLocaleString() + "<br>" +
@@ -389,7 +389,7 @@ var Engine = {
         'Current City: ' + Player.city + '<br><br>' +
         'Employer: ' + Player.companyName + '<br>' +
         'Job Title: ' + companyPosition + '<br><br>' +
-        'Money: $' + formatNumber(Player.money, 2)+ '<br><br><br>' +
+        'Money: $' + formatNumber(Player.money.toNumber(), 2)+ '<br><br><br>' +
         '<b>Stats</b><br><br>' +
         'Hacking Level: ' + (Player.hacking_skill).toLocaleString() +
                         " (" + formatNumber(Player.hacking_exp, 4) + ' experience)<br>' +

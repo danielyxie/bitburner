@@ -61,7 +61,7 @@ function prestigeAugmentation() {
     Player.agility_exp = 0;
     Player.charisma_exp = 0;
 
-    Player.money = 1000;
+    Player.money = new Decimal(1000);
 
     Player.city = Locations.Sector12;
     Player.location = "";
@@ -144,7 +144,7 @@ function prestigeAugmentation() {
     }
     if (augmentationExists(AugmentationNames.CashRoot) &&
         Augmentations[AugmentationNames.CashRoot].owned) {
-        Player.money = 1000000;
+        Player.money = new Decimal(1000000);
         homeComp.programs.push(Programs.BruteSSHProgram);
     }
     Player.currentServer = homeComp.ip;

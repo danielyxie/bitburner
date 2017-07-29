@@ -4,7 +4,7 @@
  */
 purchaseServer = function(ram, cost) {
     //Check if player has enough money
-    if (cost > Player.money) {
+    if (Player.money.lt(cost)) {
         dialogBoxCreate("You don't have enough money to purchase this server!");
         return;
     }
@@ -44,7 +44,7 @@ purchaseServer = function(ram, cost) {
 
 
 purchaseRamForHomeComputer = function(cost) {
-    if (cost > Player.money) {
+    if (Player.money.lt(cost)) {
         dialogBoxCreate("You do not have enough money to purchase additional RAM for your home computer");
         return;
     }

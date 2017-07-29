@@ -62,9 +62,9 @@ function PlayerObject() {
     this.faction_rep_mult    = 1;
 
     //Money
-    this.money           = 1000;
-    this.total_money     = 0;   //Total money ever earned in this "simulation"
-    this.lifetime_money  = 0;   //Total money ever earned
+    this.money           = new Decimal(1000);
+    this.total_money     = new Decimal(0);   //Total money ever earned in this "simulation"
+    this.lifetime_money  = new Decimal(0);   //Total money ever earned
 
     //IP Address of Starting (home) computer
     this.homeComputer = "";
@@ -269,7 +269,7 @@ PlayerObject.prototype.calculateExpGain = function() {
     if (s.baseDifficulty == null) {
         s.baseDifficulty = s.hackDifficulty;
     }
-    return (s.baseDifficulty * this.hacking_exp_mult * 0.3 + 2);
+    return (s.baseDifficulty * this.hacking_exp_mult * 0.3 + 3);
 }
 
 //Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for
@@ -298,16 +298,16 @@ PlayerObject.prototype.gainMoney = function(money) {
     if (isNaN(money)) {
         console.log("ERR: NaN passed into Player.gainMoney()"); return;
     }
-	this.money += money;
-	this.total_money += money;
-	this.lifetime_money += money;
+	this.money = this.money.plus(money);
+	this.total_money = this.total_money.plus(money);
+	this.lifetime_money = this.lifetime_money.plus(money);
 }
 
 PlayerObject.prototype.loseMoney = function(money) {
     if (isNaN(money)) {
         console.log("ERR: NaN passed into Player.loseMoney()"); return;
     }
-    this.money -= money;
+    this.money = this.money.minus(money);
 }
 
 PlayerObject.prototype.gainHackingExp = function(exp) {

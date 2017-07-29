@@ -112,24 +112,12 @@ loadGame = function(saveObj) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
+            if (CONSTANTS.Version == "0.26.3") {
+                Player.money = new Decimal(Player.money);
+                Player.total_money = new Decimal(Player.total_money);
+                Player.lifetime_money = new Decimal(Player.lifetime_money);
+            }
             if (ver != CONSTANTS.Version) {
-                if (CONSTANTS.Version == "0.21.0" || CONSTANTS.Version == "0.22.0" ||
-                    CONSTANTS.Version == "0.22.1") {
-                    dialogBoxCreate("All scripts automatically killed for the sake of compatibility " +
-                                    "with new version. If the game is still broken, try the following: " +
-                                    "Options -> Soft Reset -> Save Game -> Reload page. If that STILL " +
-                                    "doesn't work contact the dev");
-                    //This is the big update that might break games. Kill all running scripts
-                    for (var ip in AllServers) {
-                        if (AllServers.hasOwnProperty(ip)) {
-                            AllServers[ip].runningScripts = [];
-                            AllServers[ip].runningScripts.length = 0;
-                        }
-                    }
-                }
-                if (CONSTANTS.Version == "0.23.0") {
-                    Augmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
-                }
                 createNewUpdateText();
             }
         } catch(e) {
@@ -204,25 +192,12 @@ loadImportedGame = function(saveObj, saveString) {
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
                 var ver = JSON.parse(tempSaveObj.VersionSave, Reviver);
-                if (ver != CONSTANTS.Version) {
-                    createNewUpdateText();
+                if (CONSTANTS.Version == "0.26.3") {
+                    tempPlayer.money = new Decimal(tempPlayer.money);
+                    tempPlayer.total_money = new Decimal(tempPlayer.total_money);
+                    tempPlayer.lifetime_money = new Decimal(tempPlayer.lifetime_money);
                 }
-
                 if (ver != CONSTANTS.Version) {
-                    if (CONSTANTS.Version == "0.21.0" || CONSTANTS.Version == "0.22.0" ||
-                        CONSTANTS.Version == "0.22.1") {
-                        console.log("here");
-                        //This is the big update that might break games. Kill all running scripts
-                        for (var ip in tempAllServers) {
-                            if (tempAllServers.hasOwnProperty(ip)) {
-                                tempAllServers[ip].runningScripts = [];
-                                tempAllServers[ip].runningScripts.length = 0;
-                            }
-                        }
-                    }
-                    if (CONSTANTS.Version == "0.23.0") {
-                        tempAugmentations   = JSON.parse(saveObj.AugmentationsSave, Reviver);
-                    }
                     createNewUpdateText();
                 }
             } catch(e) {

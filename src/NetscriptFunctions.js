@@ -459,8 +459,8 @@ function NetscriptFunctions(workerScript) {
             }
             if (server.hostname == "home") {
                 //Return player's money
-                workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + formatNumber(Player.money, 2));
-                return Player.money;
+                workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + formatNumber(Player.money.toNumber(), 2));
+                return Player.money.toNumber();
             }
             workerScript.scriptRef.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2) + " for " + server.hostname);
             return server.moneyAvailable;
@@ -592,7 +592,7 @@ function NetscriptFunctions(workerScript) {
             shares = Math.round(shares);
 
             var totalPrice = stock.price * shares;
-            if (Player.money < totalPrice + CONSTANTS.StockMarketCommission) {
+            if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
                 workerScript.scriptRef.log("Not enough money to purchase " + formatNumber(shares, 0) + " shares of " +
                                            symbol + ". Need $" +
                                            formatNumber(totalPrice + CONSTANTS.StockMarketCommission, 2).toString());
@@ -666,8 +666,8 @@ function NetscriptFunctions(workerScript) {
                 return "";
             }
 
-            var cost = 2 * ram * CONSTANTS.BaseCostFor1GBOfRamServer;
-            if (cost > Player.money) {
+            var cost = ram * CONSTANTS.BaseCostFor1GBOfRamServer;
+            if (Player.money.lt(cost)) {
                 workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
                 return "";
             }

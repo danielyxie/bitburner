@@ -3,7 +3,7 @@ function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
     this.symbol     = symbol;
     this.name       = name;
     this.price      = initPrice;
-    
+
     this.playerShares   = 0;
     this.playerAvgPx    = 0;
     this.mv             = mv;
@@ -46,7 +46,7 @@ function initStockSymbols() {
     StockSymbols[Locations.AevumNetLinkTechnologies]        = "NTLK";
     StockSymbols[Locations.IshimaOmegaSoftware]             = "OMGA";
     StockSymbols[Locations.Sector12FoodNStuff]              = "FNS";
-    
+
     //Stocks for other companies
     StockSymbols["Sigma Cosmetics"]                         = "SGC";
     StockSymbols["Joes Guns"]                               = "JGN";
@@ -62,143 +62,143 @@ function initStockMarket() {
             delete StockMarket[stk];
         }
     }
-    
+
     var ecorp = Locations.AevumECorp;
     var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], 0.5, true, 16, getRandomInt(20000, 25000));
     StockMarket[ecorp] = ecorpStk;
-    
+
     var megacorp = Locations.Sector12MegaCorp;
     var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], 0.5, true, 16, getRandomInt(25000, 33000));
     StockMarket[megacorp] = megacorpStk;
-    
+
     var blade = Locations.Sector12BladeIndustries;
     var bladeStk = new Stock(blade, StockSymbols[blade], 0.75, true, 13, getRandomInt(15000, 22000));
     StockMarket[blade] = bladeStk;
-    
+
     var clarke = Locations.AevumClarkeIncorporated;
     var clarkeStk = new Stock(clarke, StockSymbols[clarke], 0.7, true, 12, getRandomInt(15000, 20000));
     StockMarket[clarke] = clarkeStk;
-    
+
     var omnitek = Locations.VolhavenOmniTekIncorporated;
     var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], 0.65, true, 12, getRandomInt(35000, 40000));
     StockMarket[omnitek] = omnitekStk;
-    
+
     var foursigma = Locations.Sector12FourSigma;
     var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], 1.1, true, 18, getRandomInt(60000, 70000));
     StockMarket[foursigma] = foursigmaStk;
-    
+
     var kuaigong = Locations.ChongqingKuaiGongInternational;
     var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], 0.8, true, 10, getRandomInt(20000, 24000));
     StockMarket[kuaigong] = kuaigongStk;
-    
+
     var fulcrum = Locations.AevumFulcrumTechnologies;
     var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], 1.25, true, 17, getRandomInt(30000, 35000));
     StockMarket[fulcrum] = fulcrumStk;
-    
+
     var storm = Locations.IshimaStormTechnologies;
     var stormStk = new Stock(storm, StockSymbols[storm], 0.85, true, 7, getRandomInt(21000, 24000));
     StockMarket[storm] = stormStk;
-    
+
     var defcomm = Locations.NewTokyoDefComm;
     var defcommStk = new Stock(defcomm, StockSymbols[defcomm], 0.65, true, 10, getRandomInt(10000, 15000));
     StockMarket[defcomm] = defcommStk;
-    
+
     var helios = Locations.VolhavenHeliosLabs;
     var heliosStk = new Stock(helios, StockSymbols[helios], 0.6, true, 9, getRandomInt(12000, 16000));
     StockMarket[helios] = heliosStk;
-    
+
     var vitalife = Locations.NewTokyoVitaLife;
     var vitalifeStk = new Stock(vitalife, StockSymbols[vitalife], 0.75, true, 7, getRandomInt(10000, 12000));
     StockMarket[vitalife] = vitalifeStk;
-    
+
     var icarus = Locations.Sector12IcarusMicrosystems;
     var icarusStk = new Stock(icarus, StockSymbols[icarus], 0.65, true, 7.5, getRandomInt(16000, 20000));
     StockMarket[icarus] = icarusStk;
-    
+
     var universalenergy = Locations.Sector12UniversalEnergy;
     var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], 0.55, true, 10, getRandomInt(20000, 25000));
     StockMarket[universalenergy] = universalenergyStk;
-    
+
     var galactic = Locations.AevumGalacticCybersystems;
     var galacticStk = new Stock(galactic, StockSymbols[galactic], 0.6, true, 5, getRandomInt(8000, 10000));
     StockMarket[galactic] = galacticStk;
-    
+
     var aerocorp = Locations.AevumAeroCorp;
     var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], 0.6, true, 6, getRandomInt(10000, 15000));
     StockMarket[aerocorp] = aerocorpStk;
-    
+
     var omnia = Locations.VolhavenOmniaCybersystems;
     var omniaStk = new Stock(omnia, StockSymbols[omnia], 0.7, true, 4.5, getRandomInt(9000, 12000));
     StockMarket[omnia] = omniaStk;
-    
+
     var solaris = Locations.ChongqingSolarisSpaceSystems;
     var solarisStk = new Stock(solaris, StockSymbols[solaris], 0.75, true, 8.5, getRandomInt(18000, 24000));
     StockMarket[solaris] = solarisStk;
-    
+
     var globalpharm = Locations.NewTokyoGlobalPharmaceuticals;
     var globalpharmStk = new Stock(globalpharm, StockSymbols[globalpharm], 0.6, true, 10.5, getRandomInt(18000, 24000));
     StockMarket[globalpharm] = globalpharmStk;
-    
+
     var nova = Locations.IshimaNovaMedical;
     var novaStk = new Stock(nova, StockSymbols[nova], 0.75, true, 5, getRandomInt(18000, 24000));
     StockMarket[nova] = novaStk;
-    
+
     var watchdog = Locations.AevumWatchdogSecurity;
     var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], 1, true, 1.5, getRandomInt(5000, 7500));
     StockMarket[watchdog] = watchdogStk;
-    
+
     var lexocorp = Locations.VolhavenLexoCorp;
     var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], 1.25, true, 3, getRandomInt(5000, 7500));
     StockMarket[lexocorp] = lexocorpStk;
-    
+
     var rho = Locations.AevumRhoConstruction;
     var rhoStk = new Stock(rho, StockSymbols[rho], 0.6, true, 1, getRandomInt(3000, 6000));
     StockMarket[rho] = rhoStk;
-    
+
     var alpha = Locations.Sector12AlphaEnterprises;
     var alphaStk = new Stock(alpha, StockSymbols[alpha], 1.05, true, 2, getRandomInt(5000, 7500));
     StockMarket[alpha] = alphaStk;
-    
+
     var syscore = Locations.VolhavenSysCoreSecurities;
     var syscoreStk = new Stock(syscore, StockSymbols[syscore], 1.25, true, 0, getRandomInt(4000, 7000))
     StockMarket[syscore] = syscoreStk;
-    
+
     var computek = Locations.VolhavenCompuTek;
     var computekStk = new Stock(computek, StockSymbols[computek], 0.9, true, 0, getRandomInt(2000, 5000));
     StockMarket[computek] = computekStk;
-    
+
     var netlink = Locations.AevumNetLinkTechnologies;
     var netlinkStk = new Stock(netlink, StockSymbols[netlink], 1, true, 1, getRandomInt(2000, 4000));
     StockMarket[netlink] = netlinkStk;
-    
+
     var omega = Locations.IshimaOmegaSoftware;
     var omegaStk = new Stock(omega, StockSymbols[omega], 1, true, 0.5, getRandomInt(3000, 6000));
     StockMarket[omega] = omegaStk;
-    
+
     var fns = Locations.Sector12FoodNStuff;
     var fnsStk = new Stock(fns, StockSymbols[fns], 0.75, false, 1, getRandomInt(1000, 4000));
     StockMarket[fns] = fnsStk;
-    
+
     var sigmacosm = "Sigma Cosmetics";
     var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], 0.9, true, 0, getRandomInt(2000, 3000));
     StockMarket[sigmacosm] = sigmacosmStk;
-    
+
     var joesguns = "Joes Guns";
     var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 1, true, 1, getRandomInt(500, 1000));
     StockMarket[joesguns] = joesgunsStk;
-    
+
     var catalyst = "Catalyst Ventures";
     var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.25, true, 0, getRandomInt(1000, 1500));
     StockMarket[catalyst] = catalystStk;
-    
+
     var taiyang = "Taiyang Digital";
     var taiyangStk = new Stock(taiyang, StockSymbols[taiyang], 0.75, true, 12, getRandomInt(25000, 30000));
     StockMarket[taiyang] = taiyangStk;
-    
+
     var microdyne = "Microdyne Technologies";
     var microdyneStk = new Stock(microdyne, StockSymbols[microdyne], 0.75, true, 8, getRandomInt(20000, 25000));
     StockMarket[microdyne] = microdyneStk;
-    
+
     var titanlabs = "Titan Laboratories";
     var titanlabsStk = new Stock(titanlabs, StockSymbols[titanlabs], 0.6, true, 11, getRandomInt(15000, 20000));
     StockMarket[titanlabs] = titanlabsStk;
@@ -240,22 +240,22 @@ function buyStock(stock, shares) {
         return false;
     }
     shares = Math.round(shares);
-    
+
     var totalPrice = stock.price * shares;
-    if (Player.money < totalPrice + CONSTANTS.StockMarketCommission) {
-        dialogBoxCreate("You do not have enough money to purchase this. You need $" + 
+    if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
+        dialogBoxCreate("You do not have enough money to purchase this. You need $" +
                         formatNumber(totalPrice + CONSTANTS.StockMarketCommission, 2).toString() + ".");
         return false;
     }
-    
+
     var origTotal = stock.playerShares * stock.playerAvgPx;
     Player.loseMoney(totalPrice + CONSTANTS.StockMarketCommission);
     var newTotal = origTotal + totalPrice;
-    stock.playerShares += shares; 
+    stock.playerShares += shares;
     stock.playerAvgPx = newTotal / stock.playerShares;
     updateStockPlayerPosition(stock);
-    dialogBoxCreate("Bought " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" + 
-                    formatNumber(stock.price, 2) + " per share. You also paid $" + 
+    dialogBoxCreate("Bought " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
+                    formatNumber(stock.price, 2) + " per share. You also paid $" +
                     formatNumber(CONSTANTS.StockMarketCommission, 2) + " in commission fees.");
     return true;
 }
@@ -277,8 +277,8 @@ function sellStock(stock, shares) {
         stock.playerAvgPx = 0;
     }
     updateStockPlayerPosition(stock);
-    dialogBoxCreate("Sold " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" + 
-                    formatNumber(stock.price, 2) + " per share. After commissions, you gained " + 
+    dialogBoxCreate("Sold " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
+                    formatNumber(stock.price, 2) + " per share. After commissions, you gained " +
                     "a total of $" + formatNumber(gains, 2));
     return true;
 }
@@ -290,7 +290,7 @@ function updateStockPrices() {
             var stock = StockMarket[name];
             var av = (v * stock.mv) / 100;
             if (isNaN(av)) {av = .02;}
-            
+
             var chc = 50;
             if (stock.b) {
                 chc = (chc + stock.otlkMag)/100;
@@ -299,7 +299,7 @@ function updateStockPrices() {
                 chc = (chc - stock.otlkMag)/100;
                 if (isNaN(chc)) {chc = 0.5;}
             }
-            
+
             var c = Math.random();
             if (c < chc) {
                 stock.price *= (1 + av);
@@ -309,10 +309,10 @@ function updateStockPrices() {
             } else {
                 stock.price /= (1 + av);
                 if (Engine.currentPage == Engine.Page.StockMarket) {
-                    updateStockTicker(stock, false);    
+                    updateStockTicker(stock, false);
                 }
             }
-            
+
             var otlkMagChange = stock.otlkMag * av;
             if (stock.otlkMag <= 0.1) {
                 otlkMagChange = 1;
@@ -334,11 +334,11 @@ var stockMarketContentCreated = false;
 function displayStockMarketContent() {
     if (Player.hasWseAccount == null) {Player.hasWseAccount = false;}
     if (Player.hasTixApiAccess == null) {Player.hasTixApiAccess = false;}
-    
+
     //Purchase WSE Account button
     var wseAccountButton = clearEventListeners("stock-market-buy-account");
     wseAccountButton.innerText = "Buy WSE Account - $" + formatNumber(CONSTANTS.WSEAccountCost, 2).toString();
-    if (!Player.hasWseAccount && Player.money >= CONSTANTS.WSEAccountCost) {    
+    if (!Player.hasWseAccount && Player.money.gte(CONSTANTS.WSEAccountCost)) {
         wseAccountButton.setAttribute("class", "a-link-button");
     } else {
         wseAccountButton.setAttribute("class", "a-link-button-inactive");
@@ -351,12 +351,12 @@ function displayStockMarketContent() {
         displayStockMarketContent();
         return false;
     });
-    
+
     //Purchase TIX API Access account
     var tixApiAccessButton = clearEventListeners("stock-market-buy-tix-api");
-    tixApiAccessButton.innerText = "Buy Trade Information eXchange (TIX) API Access - $" + 
+    tixApiAccessButton.innerText = "Buy Trade Information eXchange (TIX) API Access - $" +
                                    formatNumber(CONSTANTS.TIXAPICost, 2).toString();
-    if (!Player.hasTixApiAccess && Player.money >= CONSTANTS.TIXAPICost) {
+    if (!Player.hasTixApiAccess && Player.money.gte(CONSTANTS.TIXAPICost)) {
         tixApiAccessButton.setAttribute("class", "a-link-button");
     } else {
         tixApiAccessButton.setAttribute("class", "a-link-button-inactive");
@@ -367,10 +367,10 @@ function displayStockMarketContent() {
         displayStockMarketContent();
         return false;
     });
-    
+
     var stockList = document.getElementById("stock-market-list");
     if (stockList == null) {return;}
-    
+
     if (!Player.hasWseAccount) {
         stockMarketContentCreated = false;
         while (stockList.firstChild) {
@@ -378,16 +378,16 @@ function displayStockMarketContent() {
         }
         return;
     }
-    
+
     if (!stockMarketContentCreated && Player.hasWseAccount) {
         console.log("Creating Stock Market UI");
         document.getElementById("stock-market-commission").innerHTML =
-            "Commission Fees: Every transaction you make has a $" + 
-            formatNumber(CONSTANTS.StockMarketCommission, 2) + " commission fee.<br><br>" + 
-            "WARNING: When you reset after installing Augmentations, the Stock Market is reset. " + 
-            "This means all your positions are lost, so make sure to sell your stocks before installing " + 
+            "Commission Fees: Every transaction you make has a $" +
+            formatNumber(CONSTANTS.StockMarketCommission, 2) + " commission fee.<br><br>" +
+            "WARNING: When you reset after installing Augmentations, the Stock Market is reset. " +
+            "This means all your positions are lost, so make sure to sell your stocks before installing " +
             "Augmentations!";
-        
+
         var hdrLi       = document.createElement("li");
         var hdrName     = document.createElement("p");
         var hdrSym      = document.createElement("p");
@@ -430,12 +430,12 @@ function displayStockMarketContent() {
         hdrLi.appendChild(hdrShares);
         hdrLi.appendChild(hdrReturn);
         stockList.appendChild(hdrLi);
-        
+
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
             (function() {
                 var stock = StockMarket[name];
-                
+
                 var li          = document.createElement("li");
                 var stkName     = document.createElement("p");
                 var stkSym      = document.createElement("p");
@@ -446,7 +446,7 @@ function displayStockMarketContent() {
                 var avgPriceTxt = document.createElement("p");
                 var sharesTxt   = document.createElement("p");
                 var returnTxt   = document.createElement("p");
-                
+
                 var tickerId = "stock-market-ticker-" + stock.symbol;
                 stkName.setAttribute("id", tickerId + "-name");
                 stkSym.setAttribute("id", tickerId + "-sym");
@@ -457,21 +457,21 @@ function displayStockMarketContent() {
                 stkSym.style.width = "4%";
                 stkPrice.style.display = "inline-block";
                 stkPrice.style.width = "9%";
-                
+
                 li.setAttribute("display", "inline-block");
-                
+
                 qtyInput.setAttribute("type", "text");
                 qtyInput.setAttribute("id", tickerId + "-qty-input");
                 qtyInput.setAttribute("class", "stock-market-qty-input");
-                qtyInput.setAttribute("onkeydown", "return ( event.ctrlKey || event.altKey " + 
-                                      " || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) " + 
-                                      " || (95<event.keyCode && event.keyCode<106) " + 
-                                      " || (event.keyCode==8) || (event.keyCode==9) " + 
+                qtyInput.setAttribute("onkeydown", "return ( event.ctrlKey || event.altKey " +
+                                      " || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) " +
+                                      " || (95<event.keyCode && event.keyCode<106) " +
+                                      " || (event.keyCode==8) || (event.keyCode==9) " +
                                       " || (event.keyCode>34 && event.keyCode<40) " +
                                       " || (event.keyCode==46) )");
                 qtyInput.style.width = "3%";
                 qtyInput.style.display = "inline-block";
-                
+
                 buyButton.innerHTML = "Buy";
                 buyButton.setAttribute("class", "stock-market-buy-sell-button");
                 buyButton.style.width = "3%";
@@ -492,7 +492,7 @@ function displayStockMarketContent() {
                     if (isNaN(shares)) {return false;}
                     sellStock(stock, shares);
                 });
-                
+
                 avgPriceTxt.setAttribute("id", tickerId + "-avgprice");
                 avgPriceTxt.style.display = "inline-block";
                 avgPriceTxt.style.width = "8%";
@@ -505,7 +505,7 @@ function displayStockMarketContent() {
                 returnTxt.style.display = "inline-block";
                 returnTxt.style.width = "6%";
                 returnTxt.style.color = "white";
-                
+
                 li.appendChild(stkName);
                 li.appendChild(stkSym);
                 li.appendChild(stkPrice);
@@ -518,11 +518,11 @@ function displayStockMarketContent() {
                 stockList.appendChild(li);
             }()); //Immediate invocation
             }//End if
-            
+
         }
         stockMarketContentCreated = true;
     }
-    
+
     if (Player.hasWseAccount) {
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
@@ -540,7 +540,7 @@ function updateStockTicker(stock, increase) {
     stkName = document.getElementById(tickerId + "-name");
     stkSym = document.getElementById(tickerId + "-sym");
     stkPrice = document.getElementById(tickerId + "-price");
-    
+
     if (stkName == null || stkSym == null || stkPrice == null) {
         console.log("ERROR, couldn't find elements with tickerId " + tickerId);
         return;
@@ -548,19 +548,19 @@ function updateStockTicker(stock, increase) {
     stkName.innerText = stock.name;
     stkSym.innerText = stock.symbol;
     stkPrice.innerText = "$" + formatNumber(stock.price, 2).toString();
-    
+
     var returnTxt = document.getElementById(tickerId + "-return");
     var totalCost = stock.playerShares * stock.playerAvgPx;
     var gains = (stock.price - stock.playerAvgPx) * stock.playerShares;
     var percentageGains = gains / totalCost;
     if (totalCost > 0) {
-        returnTxt.innerText = "$" + formatNumber(gains, 2) + " (" + 
+        returnTxt.innerText = "$" + formatNumber(gains, 2) + " (" +
                               formatNumber(percentageGains * 100, 2) + "%)";
     } else {
         returnTxt.innerText = "N/A";
     }
-    
-    
+
+
     if (increase) {
         stkName.style.color = "#66ff33";
         stkSym.style.color = "#66ff33";
@@ -577,7 +577,7 @@ function updateStockPlayerPosition(stock) {
     var avgPriceTxt = document.getElementById(tickerId + "-avgprice");
     var sharesTxt = document.getElementById(tickerId + "-shares");
     if (avgPriceTxt == null || sharesTxt == null) {
-        dialogBoxCreate("Could not find element for player positions for stock " + 
+        dialogBoxCreate("Could not find element for player positions for stock " +
                         stock.symbol + ". This is a bug please contact developer");
         return;
     }

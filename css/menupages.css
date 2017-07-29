@@ -462,6 +462,10 @@ div.faction-clear {
     text-decoration: none;
 }
 
+#augmentations-list li p {
+    width: 95%;
+}
+
 .installed-augmentation {
     /* TODO */
 }
