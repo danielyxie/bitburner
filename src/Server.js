@@ -434,7 +434,7 @@ initForeignServers = function() {
 
     var JoesGunsServer = new Server();
     JoesGunsServer.init(createRandomIp(), "joesguns", "Joe's Guns", true, false, false, false, 4);
-    JoesGunsServer.setHackingParameters(10, 2500000, 20, 20);
+    JoesGunsServer.setHackingParameters(10, 2500000, 15, 20);
     JoesGunsServer.setPortProperties(0);
     AddToAllServers(JoesGunsServer);
 
@@ -464,7 +464,7 @@ initForeignServers = function() {
 
     var HongFangTeaHouseServer = new Server();
     HongFangTeaHouseServer.init(createRandomIp(), "hong-fang-tea", "HongFang Teahouse", true, false, false, false, 4);
-    HongFangTeaHouseServer.setHackingParameters(30, 3000000, 15, 15);
+    HongFangTeaHouseServer.setHackingParameters(30, 3000000, 15, 20);
     HongFangTeaHouseServer.setPortProperties(0);
     AddToAllServers(HongFangTeaHouseServer);
 

@@ -18,7 +18,7 @@ CONSTANTS = {
     BaseCostForHacknetNodeCore: 500000,
 
     /* Hacknet Node constants */
-    HacknetNodeMoneyGainPerLevel: 1.55,
+    HacknetNodeMoneyGainPerLevel: 1.6,
     HacknetNodePurchaseNextMult: 1.85,   //Multiplier when purchasing an additional hacknet node
     HacknetNodeUpgradeLevelMult: 1.05,  //Multiplier for cost when upgrading level
     HacknetNodeUpgradeRamMult: 1.29,     //Multiplier for cost when upgrading RAM
@@ -682,7 +682,7 @@ CONSTANTS = {
     "-Added support for large numbers using Decimal.js. Right now it only applies for the player's money<br>" +
     "-Purchasing servers with the Netscript function purchaseServer() is no longer 2x as expensive as doing manually, " +
     "it now costs the same<br>" +
-    "-Early game servers have more starting money<br>" + 
+    "-Early game servers have more starting money<br>" +
     "v0.26.2<br>" +
     "-Major rebalancing and randomization of the amount of money that servers start with<br>" +
     "-Significantly lowered hacking exp gain from hacking servers. The exp gain for higher-level servers was lowered more than " +

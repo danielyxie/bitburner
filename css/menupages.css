@@ -406,10 +406,19 @@ div.faction-clear {
     clear: both;
 }
 
-#faction-container p {
+#faction-container p,
+#faction-container pre {
     padding: 6px;
     margin: 6px;
     width: 70%;
+}
+
+#faction-info {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 /* Faction Augmentations */
