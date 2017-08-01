@@ -59,6 +59,12 @@ loadGame = function(saveObj) {
     saveObj = JSON.parse(saveString, Reviver);
 
     Player          = JSON.parse(saveObj.PlayerSave, Reviver);
+
+    //Parse Decimal.js objects
+    Player.money = new Decimal(Player.money);
+    Player.total_money = new Decimal(Player.total_money);
+    Player.lifetime_money = new Decimal(Player.lifetime_money);
+
     AllServers      = JSON.parse(saveObj.AllServersSave, Reviver);
     Companies       = JSON.parse(saveObj.CompaniesSave, Reviver);
     Factions        = JSON.parse(saveObj.FactionsSave, Reviver);
@@ -112,11 +118,6 @@ loadGame = function(saveObj) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
-            if (CONSTANTS.Version == "0.26.3") {
-                Player.money = new Decimal(Player.money);
-                Player.total_money = new Decimal(Player.total_money);
-                Player.lifetime_money = new Decimal(Player.lifetime_money);
-            }
             if (ver != CONSTANTS.Version) {
                 createNewUpdateText();
             }
@@ -148,6 +149,12 @@ loadImportedGame = function(saveObj, saveString) {
         tempSaveObj = JSON.parse(saveString, Reviver);
 
         tempPlayer              = JSON.parse(tempSaveObj.PlayerSave, Reviver);
+
+        //Parse Decimal.js objects
+        tempPlayer.money = new Decimal(tempPlayer.money);
+        tempPlayer.total_money = new Decimal(tempPlayer.total_money);
+        tempPlayer.lifetime_money = new Decimal(tempPlayer.lifetime_money);
+
         tempAllServers          = JSON.parse(tempSaveObj.AllServersSave, Reviver);
         tempCompanies           = JSON.parse(tempSaveObj.CompaniesSave, Reviver);
         tempFactions            = JSON.parse(tempSaveObj.FactionsSave, Reviver);
