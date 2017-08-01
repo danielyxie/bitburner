@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.26.3",
+    Version:                "0.26.4",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -11,7 +11,7 @@ CONSTANTS = {
 
     /* Base costs */
     BaseCostFor1GBOfRamHome: 30000,
-    BaseCostFor1GBOfRamServer: 55000,     //1 GB of RAM
+    BaseCostFor1GBOfRamServer: 50000,     //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
 
     BaseCostForHacknetNode: 1000,
@@ -20,9 +20,9 @@ CONSTANTS = {
     /* Hacknet Node constants */
     HacknetNodeMoneyGainPerLevel: 1.6,
     HacknetNodePurchaseNextMult: 1.85,   //Multiplier when purchasing an additional hacknet node
-    HacknetNodeUpgradeLevelMult: 1.05,  //Multiplier for cost when upgrading level
-    HacknetNodeUpgradeRamMult: 1.29,     //Multiplier for cost when upgrading RAM
-    HacknetNodeUpgradeCoreMult: 1.49,    //Multiplier for cost when buying another core
+    HacknetNodeUpgradeLevelMult: 1.04,  //Multiplier for cost when upgrading level
+    HacknetNodeUpgradeRamMult: 1.28,     //Multiplier for cost when upgrading RAM
+    HacknetNodeUpgradeCoreMult: 1.48,    //Multiplier for cost when buying another core
 
     HacknetNodeMaxLevel: 200,
     HacknetNodeMaxRam: 64,
@@ -35,11 +35,6 @@ CONSTANTS = {
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
     NeuroFluxGovernorLevelMult: 1.14,
-
-    /* Script related things */
-	//Time (ms) it takes to run one operation in Netscript.
-	CodeInstructionRunTime:	100,
-
 
     //RAM Costs for different commands
     ScriptWhileRamCost:             0.2,
@@ -79,7 +74,7 @@ CONSTANTS = {
     MultithreadingRAMCost:          1,
 
     //Server constants
-    ServerBaseGrowthRate: 1.025,     //Unadjusted Growth rate
+    ServerBaseGrowthRate: 1.03,     //Unadjusted Growth rate
     ServerMaxGrowthRate: 1.0035,     //Maximum possible growth rate (max rate accounting for server security)
     ServerFortifyAmount: 0.002,     //Amount by which server's security increases when its hacked/grown
     ServerWeakenAmount: 0.05,        //Amount by which server's security decreases when weakened
@@ -90,9 +85,6 @@ CONSTANTS = {
     AugmentationCostMultiplier: 5,  //Used for balancing costs without having to readjust every Augmentation cost
     AugmentationRepMultiplier:  2.5, //Used for balancing rep cost without having to readjust every value
     MultipleAugMultiplier:      1.9,
-
-    MaxLogCapacity: 50,     //Maximum number of log entries for a script
-    MaxPortCapacity: 50,   //Maximum amount of data in a Netscript port
 
     //How much a TOR router costs
     TorRouterCost: 200000,
@@ -158,15 +150,17 @@ CONSTANTS = {
     ClassGymDexterity: "training your dexterity at a gym",
     ClassGymAgility: "training your agility at a gym",
 
-    ClassDataStructuresBaseCost: 30,
-    ClassNetworksBaseCost: 60,
-    ClassAlgorithmsBaseCost: 240,
-    ClassManagementBaseCost: 120,
-    ClassLeadershipBaseCost: 240,
+    ClassDataStructuresBaseCost: 40,
+    ClassNetworksBaseCost: 80,
+    ClassAlgorithmsBaseCost: 320,
+    ClassManagementBaseCost: 160,
+    ClassLeadershipBaseCost: 320,
     ClassGymBaseCost: 120,
 
     CrimeShoplift: "shoplift",
+    CrimeRobStore: "rob a store",
     CrimeMug: "mug someone",
+    CrimeLarceny: "commit larceny",
     CrimeDrugs: "deal drugs",
     CrimeTraffickArms: "traffick illegal arms",
     CrimeHomicide: "commit homicide",
@@ -678,11 +672,21 @@ CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.26.4<br>" +
+    "-All of the 'low-level servers' in early game that have a required hacking level now have 8GB of RAM " +
+    "instead of 4GB<br>" +
+    "-Increased the amount of experience given at university<br>" +
+    "-Slightly increased the production of Hacknet Nodes and made them cheaper to upgrade<br>" +
+    "-Infiltration now gives slightly more EXP and faction reputation<br>" +
+    "-Added two new crimes. These crimes are viable to attempt early on in the game and are relatively passive (each take 60+ seconds to complete)<br>" +
+    "-Crimes give more exp and more money<br>" +
+    "-Max money available on a server decreased from 50x the server's starting money to 25x<br>" +
+    "-Significantly increased wages for all jobs<br><br>" +
     "v0.26.3<br>" +
     "-Added support for large numbers using Decimal.js. Right now it only applies for the player's money<br>" +
     "-Purchasing servers with the Netscript function purchaseServer() is no longer 2x as expensive as doing manually, " +
     "it now costs the same<br>" +
-    "-Early game servers have more starting money<br>" +
+    "-Early game servers have more starting money<br><br>" +
     "v0.26.2<br>" +
     "-Major rebalancing and randomization of the amount of money that servers start with<br>" +
     "-Significantly lowered hacking exp gain from hacking servers. The exp gain for higher-level servers was lowered more than " +

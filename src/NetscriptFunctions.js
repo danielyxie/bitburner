@@ -181,8 +181,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
             }
             if (!Player.hasProgram(Programs.NukeProgram)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the NUKE.exe virus!");
@@ -204,8 +204,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
             }
             if (!Player.hasProgram(Programs.BruteSSHProgram)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the BruteSSH.exe program!");
@@ -225,8 +225,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
             }
             if (!Player.hasProgram(Programs.FTPCrackProgram)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the FTPCrack.exe program!");
@@ -246,8 +246,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
             }
             if (!Player.hasProgram(Programs.RelaySMTPProgram)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the relaySMTP.exe program!");
@@ -267,8 +267,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
             }
             if (!Player.hasProgram(Programs.HTTPWormProgram)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the HTTPWorm.exe program!");
@@ -288,8 +288,8 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot call " + programName + ". Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
             }
             if (!Player.hasProgram(Programs.SQLInjectProgram)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the SQLInject.exe program!");

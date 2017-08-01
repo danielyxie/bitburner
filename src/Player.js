@@ -939,12 +939,12 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     var gameCPS = 1000 / Engine._idleSpeed;
 
     //Base exp gains per second
-    var baseStudyComputerScienceExp = 0.25;
-    var baseDataStructuresExp       = 0.5;
-    var baseNetworksExp             = 1;
-    var baseAlgorithmsExp           = 2;
-    var baseManagementExp           = 1;
-    var baseLeadershipExp           = 2;
+    var baseStudyComputerScienceExp = 0.5;
+    var baseDataStructuresExp       = 1;
+    var baseNetworksExp             = 2;
+    var baseAlgorithmsExp           = 4;
+    var baseManagementExp           = 2;
+    var baseLeadershipExp           = 4;
     var baseGymExp                  = 1;
 
     //Find cost and exp gain per game cycle
@@ -1136,9 +1136,14 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     this.karma -= 0.1;
                     ++this.numTimesShoplifted;
                     break;
+                case CONSTANTS.CrimeRobStore:
+
+                    break;
                 case CONSTANTS.CrimeMug:
                     this.karma -= 0.25;
                     ++this.numPeopleMugged;
+                    break;
+                case CONSTANTS.CrimeLarceny:
                     break;
                 case CONSTANTS.CrimeDrugs:
                     ++this.numTimesDealtDrugs;
@@ -1169,6 +1174,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     this.karma -= 15;
                     break;
                 default:
+                    console.log(this.crimeType);
                     dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
                     return;
             }
