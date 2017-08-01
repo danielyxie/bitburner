@@ -1,47 +1,57 @@
 /* Crimes.js */
 function commitShopliftCrime() {
     Player.crimeType = CONSTANTS.CrimeShoplift;
-    Player.startCrime(0, 0, 0, 1.5, 1.5, 0, 10000, 2000); //$5000/s, .375 exp/s
+    Player.startCrime(0, 0, 0, 2, 2, 0, 15000, 2000); //$7500/s, 1 exp/s
+}
+
+function commitRobStoreCrime() {
+    Player.crimeType = CONSTANTS.CrimeRobStore;
+    Player.startCrime(30, 0, 0, 45, 45, 0, 400000, 60000); //$6666,6/2, 0.5exp/s, 0.75exp/s
 }
 
 function commitMugCrime() {
     Player.crimeType = CONSTANTS.CrimeMug;
-    Player.startCrime(0, 1.5, 1.5, 1.5, 1.5, 0, 32000, 4000); //$8000/s, .375 exp/s
+    Player.startCrime(0, 3, 3, 3, 3, 0, 36000, 4000); //$9000/s, .66 exp/s
+}
+
+function commitLarcenyCrime() {
+    Player.crimeType = CONSTANTS.CrimeLarceny;
+    Player.startCrime(45, 0, 0, 60, 60, 0, 800000, 90000) // $8888.88/s, .5 exp/s, .66 exp/s
 }
 
 function commitDealDrugsCrime() {
     Player.crimeType = CONSTANTS.CrimeDrugs;
-    Player.startCrime(0, 0, 0, 4, 4, 8, 100000, 10000); //$10000/s, .4 exp/s
+    Player.startCrime(0, 0, 0, 5, 5, 10, 120000, 10000); //$12000/s, .5 exp/s, 1 exp/s
 }
 
 function commitTraffickArmsCrime() {
     Player.crimeType = CONSTANTS.CrimeTraffickArms;
-    Player.startCrime(0, 10, 10, 10, 10, 15, 480000, 40000); //$12000/s, .25 combat exp/s, .375 cha exp/s
+    Player.startCrime(0, 20, 20, 20, 20, 40, 600000, 40000); //$15000/s, .5 combat exp/s, 1 cha exp/s
 }
 
 function commitHomicideCrime() {
     Player.crimeType = CONSTANTS.CrimeHomicide;
-    Player.startCrime(0, 2, 2, 2, 2, 0, 30000, 3000); //$10000/s, 0.66 combat exp/s
+    Player.startCrime(0, 2, 2, 2, 2, 0, 45000, 3000); //$15000/s, 0.66 combat exp/s
 }
 
 function commitGrandTheftAutoCrime() {
     Player.crimeType = CONSTANTS.CrimeGrandTheftAuto;
-    Player.startCrime(0, 10, 10, 10, 40, 20, 1200000, 80000); //$15000/s, .125 exp/s, .5 exp/s, .25 exp/s
+    Player.startCrime(0, 20, 20, 20, 80, 40, 1600000, 80000); //$20000/s, .25 exp/s, 1 exp/s, .5 exp/s
 }
 
 function commitKidnapCrime() {
     Player.crimeType = CONSTANTS.CrimeKidnap;
-    Player.startCrime(0, 30, 30, 30, 30, 30, 2400000, 120000); //$20000/s. .25 exp/s
+    Player.startCrime(0, 80, 80, 80, 80, 80, 3600000, 120000); //$30000/s. .66 exp/s
 }
 
 function commitAssassinationCrime() {
     Player.crimeType = CONSTANTS.CrimeAssassination;
-    Player.startCrime(0, 75, 75, 75, 75, 0, 7500000, 300000); //$25000/s, .25 exp/s
+    Player.startCrime(0, 300, 300, 300, 300, 0, 12000000, 300000); //$40000/s, 1 exp/s
 }
 
 function commitHeistCrime() {
     Player.crimeType = CONSTANTS.CrimeHeist;
-    Player.startCrime(120, 120, 120, 120, 120, 120, 75000000, 600000); //$125000/s, .2exp/s
+    Player.startCrime(450, 450, 450, 450, 450, 450, 120000000, 600000); //$200000/s, .75exp/s
 }
 
 function determineCrimeSuccess(crime, moneyGained) {
@@ -50,8 +60,14 @@ function determineCrimeSuccess(crime, moneyGained) {
         case CONSTANTS.CrimeShoplift:
             chance = determineCrimeChanceShoplift();
             break;
+        case CONSTANTS.CrimeRobStore:
+            chance = determineCrimeChanceRobStore();
+            break;
         case CONSTANTS.CrimeMug:
             chance = determineCrimeChanceMug();
+            break;
+        case CONSTANTS.CrimeLarceny:
+            chance = determineCrimeChanceLarceny();
             break;
         case CONSTANTS.CrimeDrugs:
             chance = determineCrimeChanceDealDrugs();
@@ -75,6 +91,7 @@ function determineCrimeSuccess(crime, moneyGained) {
             chance = determineCrimeChanceHeist();
             break;
         default:
+            console.log(crime);
             dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
             return;
     }
@@ -96,11 +113,27 @@ function determineCrimeChanceShoplift() {
     return Math.min(chance, 1);
 }
 
+function determineCrimeChanceRobStore() {
+    var chance = ((0.5 * Player.hacking_skill / CONSTANTS.MaxSkillLevel +
+                   2 * Player.dexterity / CONSTANTS.MaxSkillLevel +
+                   1 * Player.agility / CONSTANTS.MaxSkillLevel)) * 5;
+    chance *= Player.crime_success_mult;
+    return Math.min(chance, 1);
+}
+
 function determineCrimeChanceMug() {
-    var chance = ((1.5 *Player.strength / CONSTANTS.MaxSkillLevel +
+    var chance = ((1.5 * Player.strength / CONSTANTS.MaxSkillLevel +
                    0.5 * Player.defense / CONSTANTS.MaxSkillLevel +
                    1.5 * Player.dexterity / CONSTANTS.MaxSkillLevel +
                    0.5 * Player.agility / CONSTANTS.MaxSkillLevel)) * 5;
+    chance *= Player.crime_success_mult;
+    return Math.min(chance, 1);
+}
+
+function determineCrimeChanceLarceny() {
+    var chance = ((0.5 * Player.hacking_skill / CONSTANTS.MaxSkillLevel +
+                   Player.dexterity / CONSTANTS.MaxSkillLevel +
+                   Player.agility / CONSTANTS.MaxSkillLevel)) * 3;
     chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }

@@ -84,7 +84,7 @@ Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvai
     } else {
         this.moneyAvailable = moneyAvailable;
     }
-    this.moneyMax = 50 * moneyAvailable;
+    this.moneyMax = 25 * moneyAvailable;
 	this.hackDifficulty = hackDifficulty;
     this.baseDifficulty = hackDifficulty;
     this.minDifficulty = Math.max(1, Math.round(hackDifficulty / 3));
@@ -421,19 +421,19 @@ initForeignServers = function() {
 
     //"Low level" targets
     var FoodNStuffServer = new Server();
-    FoodNStuffServer.init(createRandomIp(), "foodnstuff", "Food N Stuff Supermarket", true, false, false, false, 4);
+    FoodNStuffServer.init(createRandomIp(), "foodnstuff", "Food N Stuff Supermarket", true, false, false, false, 8);
     FoodNStuffServer.setHackingParameters(1, 2000000, 10, 5);
     FoodNStuffServer.setPortProperties(0);
     AddToAllServers(FoodNStuffServer);
 
     var SigmaCosmeticsServer = new Server();
-    SigmaCosmeticsServer.init(createRandomIp(), "sigma-cosmetics", "Sigma Cosmetics", true, false, false, false, 4);
+    SigmaCosmeticsServer.init(createRandomIp(), "sigma-cosmetics", "Sigma Cosmetics", true, false, false, false, 8);
     SigmaCosmeticsServer.setHackingParameters(5, 2300000, 10, 10);
     SigmaCosmeticsServer.setPortProperties(0);
     AddToAllServers(SigmaCosmeticsServer);
 
     var JoesGunsServer = new Server();
-    JoesGunsServer.init(createRandomIp(), "joesguns", "Joe's Guns", true, false, false, false, 4);
+    JoesGunsServer.init(createRandomIp(), "joesguns", "Joe's Guns", true, false, false, false, 8);
     JoesGunsServer.setHackingParameters(10, 2500000, 15, 20);
     JoesGunsServer.setPortProperties(0);
     AddToAllServers(JoesGunsServer);
@@ -445,7 +445,7 @@ initForeignServers = function() {
     AddToAllServers(Zer0NightclubServer);
 
     var NectarNightclubServer = new Server();
-    NectarNightclubServer.init(createRandomIp(), "nectar-net", "Nectar Nightclub Network", true, false, false, false, 4);
+    NectarNightclubServer.init(createRandomIp(), "nectar-net", "Nectar Nightclub Network", true, false, false, false, 8);
     NectarNightclubServer.setHackingParameters(20, 2750000, 20, 25);
     NectarNightclubServer.setPortProperties(0);
     AddToAllServers(NectarNightclubServer);
@@ -463,13 +463,13 @@ initForeignServers = function() {
     AddToAllServers(SilverHelixServer);
 
     var HongFangTeaHouseServer = new Server();
-    HongFangTeaHouseServer.init(createRandomIp(), "hong-fang-tea", "HongFang Teahouse", true, false, false, false, 4);
+    HongFangTeaHouseServer.init(createRandomIp(), "hong-fang-tea", "HongFang Teahouse", true, false, false, false, 8);
     HongFangTeaHouseServer.setHackingParameters(30, 3000000, 15, 20);
     HongFangTeaHouseServer.setPortProperties(0);
     AddToAllServers(HongFangTeaHouseServer);
 
     var HaraKiriSushiBarServer = new Server();
-    HaraKiriSushiBarServer.init(createRandomIp(), "harakiri-sushi", "HaraKiri Sushi Bar Network", true, false, false, false, 4);
+    HaraKiriSushiBarServer.init(createRandomIp(), "harakiri-sushi", "HaraKiri Sushi Bar Network", true, false, false, false, 8);
     HaraKiriSushiBarServer.setHackingParameters(40, 4000000, 15, 40);
     HaraKiriSushiBarServer.setPortProperties(0);
     AddToAllServers(HaraKiriSushiBarServer);

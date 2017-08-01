@@ -159,7 +159,9 @@ displayLocationContent = function() {
 
     var slumsDescText           = document.getElementById("location-slums-description");
     var slumsShoplift           = document.getElementById("location-slums-shoplift");
+    var slumsRobStore           = document.getElementById("location-slums-rob-store");
     var slumsMug                = document.getElementById("location-slums-mug");
+    var slumsLarceny            = document.getElementById("location-slums-larceny");
     var slumsDealDrugs          = document.getElementById("location-slums-deal-drugs");
     var slumsTrafficArms        = document.getElementById("location-slums-traffic-arms");
     var slumsHomicide           = document.getElementById("location-slums-homicide");
@@ -260,7 +262,9 @@ displayLocationContent = function() {
 
     slumsDescText.style.display = "none";
     slumsShoplift.style.display = "none";
+    slumsRobStore.style.display = "none";
     slumsMug.style.display = "none";
+    slumsLarceny.style.display = "none";
     slumsDealDrugs.style.display = "none";
     slumsTrafficArms.style.display = "none";
     slumsHomicide.style.display = "none";
@@ -976,7 +980,9 @@ displayLocationContent = function() {
         case Locations.IshimaSlums:
         case Locations.VolhavenSlums:
             var shopliftChance = determineCrimeChanceShoplift();
+            var robStoreChance = determineCrimeChanceRobStore();
             var mugChance = determineCrimeChanceMug();
+            var larcenyChance = determineCrimeChanceLarceny();
             var drugsChance = determineCrimeChanceDealDrugs();
             var armsChance = determineCrimeChanceTraffickArms();
             var homicideChance = determineCrimeChanceHomicide();
@@ -989,9 +995,15 @@ displayLocationContent = function() {
             slumsShoplift.style.display = "block";
             slumsShoplift.innerHTML = "Shoplift (" + (shopliftChance*100).toFixed(3) + "% chance of success)";
             slumsShoplift.innerHTML += '<span class="tooltiptext"> Attempt to shoplift from a low-end retailer </span>';
+            slumsRobStore.style.display = "block";
+            slumsRobStore.innerHTML = "Rob store(" + (robStoreChance*100).toFixed(3) + "% chance of success)";
+            slumsRobStore.innerHTML += '<span class="tooltiptext">Attempt to commit armed robbery on a high-end store </span>';
             slumsMug.style.display = "block";
             slumsMug.innerHTML = "Mug someone (" + (mugChance*100).toFixed(3) + "% chance of success)";
             slumsMug.innerHTML += '<span class="tooltiptext"> Attempt to mug a random person on the street </span>';
+            slumsLarceny.style.display = "block";
+            slumsLarceny.innerHTML = "Larceny (" + (larcenyChance*100).toFixed(3) + "% chance of success)";
+            slumsLarceny.innerHTML +="<span class='tooltiptext'> Attempt to rob property from someone's house </span>";
             slumsDealDrugs.style.display = "block";
             slumsDealDrugs.innerHTML = "Deal Drugs (" + (drugsChance*100).toFixed(3) + "% chance of success)";
             slumsDealDrugs.innerHTML += '<span class="tooltiptext"> Attempt to deal drugs </span>';
@@ -1540,7 +1552,9 @@ initLocationButtons = function() {
     var travelToVolhaven    = document.getElementById("location-travel-to-volhaven");
 
     var slumsShoplift       = document.getElementById("location-slums-shoplift");
+    var slumsRobStore       = document.getElementById("location-slums-rob-store");
     var slumsMug            = document.getElementById("location-slums-mug");
+    var slumsLarceny        = document.getElementById("location-slums-larceny");
     var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
     var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
     var slumsHomicide       = document.getElementById("location-slums-homicide");
@@ -1711,8 +1725,18 @@ initLocationButtons = function() {
         return false;
     });
 
+    slumsRobStore.addEventListener("click", function() {
+        commitRobStoreCrime();
+        return false;
+    });
+
     slumsMug.addEventListener("click", function() {
         commitMugCrime();
+        return false;
+    });
+
+    slumsLarceny.addEventListener("click", function() {
+        commitLarcenyCrime();
         return false;
     });
 

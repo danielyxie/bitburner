@@ -229,58 +229,58 @@ CompanyPositions = {
     //Constructor: CompanyPosition(name, reqHack, reqStr, reqDef, reqDex, reqAgi, reqCha, reqRep, salary)
 
     //Software
-    SoftwareIntern:             new CompanyPosition("Software Engineering Intern", 1, 0, 0, 0, 0, 0, 0, 15),
-    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 51, 0, 0, 0, 0, 0, 8000, 35),
-    SeniorDev:                  new CompanyPosition("Senior Software Engineer", 251, 0, 0, 0, 0, 51, 40000, 70),
-    LeadDev:                    new CompanyPosition("Lead Software Developer", 401, 0, 0, 0, 0, 151, 200000, 230),
+    SoftwareIntern:             new CompanyPosition("Software Engineering Intern", 1, 0, 0, 0, 0, 0, 0, 30),
+    JuniorDev:                  new CompanyPosition("Junior Software Engineer", 51, 0, 0, 0, 0, 0, 8000, 72),
+    SeniorDev:                  new CompanyPosition("Senior Software Engineer", 251, 0, 0, 0, 0, 51, 40000, 150),
+    LeadDev:                    new CompanyPosition("Lead Software Developer", 401, 0, 0, 0, 0, 151, 200000, 450),
 
     //TODO Through darkweb, maybe?
     FreelanceDeveloper:         new CompanyPosition("Freelance Developer", 0, 0, 0, 0, 0, 0, 0, 0),
 
-    SoftwareConsultant:         new CompanyPosition("Software Consultant", 51, 0, 0, 0, 0, 0, 0, 25),
-    SeniorSoftwareConsultant:   new CompanyPosition("Senior Software Consultant", 251, 0, 0, 0, 0, 51, 0, 50),
+    SoftwareConsultant:         new CompanyPosition("Software Consultant", 51, 0, 0, 0, 0, 0, 0, 60),
+    SeniorSoftwareConsultant:   new CompanyPosition("Senior Software Consultant", 251, 0, 0, 0, 0, 51, 0, 120),
 
     //IT
-    ITIntern:                   new CompanyPosition("IT Intern", 1, 0, 0, 0, 0, 0, 0, 13),
-    ITAnalyst:                  new CompanyPosition("IT Analyst", 26, 0, 0, 0, 0, 0, 7000, 28),
-    ITManager:                  new CompanyPosition("IT Manager", 151, 0, 0, 0, 0, 51, 35000, 60),
-    SysAdmin:                   new CompanyPosition("Systems Administrator", 251, 0, 0, 0, 0, 76, 175000, 180),
-    SecurityEngineer:           new CompanyPosition("Security Engineer", 151, 0, 0, 0, 0, 26, 35000, 60),
-    NetworkEngineer:            new CompanyPosition("Network Engineer", 151, 0, 0, 0, 0, 26, 35000, 60),
-    NetworkAdministrator:       new CompanyPosition("Network Administrator", 251, 0, 0, 0, 0, 76, 175000, 180),
+    ITIntern:                   new CompanyPosition("IT Intern", 1, 0, 0, 0, 0, 0, 0, 24),
+    ITAnalyst:                  new CompanyPosition("IT Analyst", 26, 0, 0, 0, 0, 0, 7000, 60),
+    ITManager:                  new CompanyPosition("IT Manager", 151, 0, 0, 0, 0, 51, 35000, 120),
+    SysAdmin:                   new CompanyPosition("Systems Administrator", 251, 0, 0, 0, 0, 76, 175000, 375),
+    SecurityEngineer:           new CompanyPosition("Security Engineer", 151, 0, 0, 0, 0, 26, 35000, 110),
+    NetworkEngineer:            new CompanyPosition("Network Engineer", 151, 0, 0, 0, 0, 26, 35000, 110),
+    NetworkAdministrator:       new CompanyPosition("Network Administrator", 251, 0, 0, 0, 0, 76, 175000, 375),
 
     //Technology management
-    HeadOfSoftware:             new CompanyPosition("Head of Software", 501, 0, 0, 0, 0, 251, 400000, 360),
-    HeadOfEngineering:          new CompanyPosition("Head of Engineering", 501, 0, 0, 0, 0, 251, 800000, 725),
-    VicePresident:              new CompanyPosition("Vice President of Technology", 601, 0, 0, 0, 0, 401, 1600000, 1050),
-    CTO:                        new CompanyPosition("Chief Technology Officer", 751, 0, 0, 0, 0, 501, 3200000, 1200),
+    HeadOfSoftware:             new CompanyPosition("Head of Software", 501, 0, 0, 0, 0, 251, 400000, 720),
+    HeadOfEngineering:          new CompanyPosition("Head of Engineering", 501, 0, 0, 0, 0, 251, 800000, 1500),
+    VicePresident:              new CompanyPosition("Vice President of Technology", 601, 0, 0, 0, 0, 401, 1600000, 2100),
+    CTO:                        new CompanyPosition("Chief Technology Officer", 751, 0, 0, 0, 0, 501, 3200000, 2400),
 
     //Business
-    BusinessIntern:             new CompanyPosition("Business Intern", 1, 0, 0, 0, 0, 1, 0, 20),
-    BusinessAnalyst:            new CompanyPosition("Business Analyst", 6, 0, 0, 0, 0, 51, 8000, 46),
-    BusinessManager:            new CompanyPosition("Business Manager", 51, 0, 0, 0, 0, 101, 40000, 92),
-    OperationsManager:          new CompanyPosition("Operations Manager", 51, 0, 0, 0, 0, 226, 200000, 300),
-    CFO:                        new CompanyPosition("Chief Financial Officer", 76, 0, 0, 0, 0, 501, 800000, 900),
-    CEO:                        new CompanyPosition("Chief Executive Officer", 101, 0, 0, 0, 0, 751, 3200000, 1700),
+    BusinessIntern:             new CompanyPosition("Business Intern", 1, 0, 0, 0, 0, 1, 0, 42),
+    BusinessAnalyst:            new CompanyPosition("Business Analyst", 6, 0, 0, 0, 0, 51, 8000, 90),
+    BusinessManager:            new CompanyPosition("Business Manager", 51, 0, 0, 0, 0, 101, 40000, 180),
+    OperationsManager:          new CompanyPosition("Operations Manager", 51, 0, 0, 0, 0, 226, 200000, 600),
+    CFO:                        new CompanyPosition("Chief Financial Officer", 76, 0, 0, 0, 0, 501, 800000, 1800),
+    CEO:                        new CompanyPosition("Chief Executive Officer", 101, 0, 0, 0, 0, 751, 3200000, 3600),
 
-    BusinessConsultant:         new CompanyPosition("Business Consultant", 6, 0, 0, 0, 0, 51, 0, 32),
-    SeniorBusinessConsultant:   new CompanyPosition("Senior Business Consultant", 51, 0, 0, 0, 0, 226, 0, 190),
+    BusinessConsultant:         new CompanyPosition("Business Consultant", 6, 0, 0, 0, 0, 51, 0, 80),
+    SeniorBusinessConsultant:   new CompanyPosition("Senior Business Consultant", 51, 0, 0, 0, 0, 226, 0, 480),
 
     //Non-tech/management jobs
-    PartTimeWaiter:             new CompanyPosition("Part-time Waiter", 0, 0, 0, 0, 0, 0, 0, 10),
-    PartTimeEmployee:           new CompanyPosition("Part-time Employee", 0, 0, 0, 0, 0, 0, 0, 10),
+    PartTimeWaiter:             new CompanyPosition("Part-time Waiter", 0, 0, 0, 0, 0, 0, 0, 18),
+    PartTimeEmployee:           new CompanyPosition("Part-time Employee", 0, 0, 0, 0, 0, 0, 0, 18),
 
-    Waiter:                     new CompanyPosition("Waiter", 0, 0, 0, 0, 0, 0, 0, 12),
-    Employee:                   new CompanyPosition("Employee", 0, 0, 0, 0, 0, 0, 0, 12),
-    PoliceOfficer:              new CompanyPosition("Police Officer", 11, 101, 101, 101, 101, 51, 8000, 40),
-    PoliceChief:                new CompanyPosition("Police Chief", 101, 301, 301, 301, 301, 151, 36000, 200),
-    SecurityGuard:              new CompanyPosition("Security Guard", 0, 51, 51, 51, 51, 1, 0, 22),
-    SecurityOfficer:            new CompanyPosition("Security Officer", 26, 151, 151, 151, 151, 51, 8000, 85),
-    SecuritySupervisor:         new CompanyPosition("Security Supervisor", 26, 251, 251, 251, 251, 101, 36000, 300),
-    HeadOfSecurity:             new CompanyPosition("Head of Security",  51, 501, 501, 501, 501, 151, 144000, 600),
-    FieldAgent:                 new CompanyPosition("Field Agent",       101, 101, 101, 101, 101, 101, 8000, 60),
-    SecretAgent:                new CompanyPosition("Secret Agent",      201, 251, 251, 251, 251, 201, 32000, 225),
-    SpecialOperative:           new CompanyPosition("Special Operative", 251, 501, 501, 501, 501, 251, 162000, 475),
+    Waiter:                     new CompanyPosition("Waiter", 0, 0, 0, 0, 0, 0, 0, 20),
+    Employee:                   new CompanyPosition("Employee", 0, 0, 0, 0, 0, 0, 0, 20),
+    PoliceOfficer:              new CompanyPosition("Police Officer", 11, 101, 101, 101, 101, 51, 8000, 75),
+    PoliceChief:                new CompanyPosition("Police Chief", 101, 301, 301, 301, 301, 151, 36000, 425),
+    SecurityGuard:              new CompanyPosition("Security Guard", 0, 51, 51, 51, 51, 1, 0, 45),
+    SecurityOfficer:            new CompanyPosition("Security Officer", 26, 151, 151, 151, 151, 51, 8000, 175),
+    SecuritySupervisor:         new CompanyPosition("Security Supervisor", 26, 251, 251, 251, 251, 101, 36000, 600),
+    HeadOfSecurity:             new CompanyPosition("Head of Security",  51, 501, 501, 501, 501, 151, 144000, 1200),
+    FieldAgent:                 new CompanyPosition("Field Agent",       101, 101, 101, 101, 101, 101, 8000, 300),
+    SecretAgent:                new CompanyPosition("Secret Agent",      201, 251, 251, 251, 251, 201, 32000, 900),
+    SpecialOperative:           new CompanyPosition("Special Operative", 251, 501, 501, 501, 501, 251, 162000, 1800),
 
     init: function() {
         //Argument order: hack, str, def, dex, agi, cha
@@ -290,9 +290,9 @@ CompanyPositions = {
         CompanyPositions.JuniorDev.setPerformanceParameters(85, 0, 0, 0, 0, 15, 1.1);
         CompanyPositions.JuniorDev.setExperienceGains(.1, 0, 0, 0, 0, .05);
         CompanyPositions.SeniorDev.setPerformanceParameters(80, 0, 0, 0, 0, 20, 1.3);
-        CompanyPositions.SeniorDev.setExperienceGains(.3, 0, 0, 0, 0, .08);
+        CompanyPositions.SeniorDev.setExperienceGains(.4, 0, 0, 0, 0, .08);
         CompanyPositions.LeadDev.setPerformanceParameters(75, 0, 0, 0, 0, 25, 1.5);
-        CompanyPositions.LeadDev.setExperienceGains(.5, 0, 0, 0, 0, .1);
+        CompanyPositions.LeadDev.setExperienceGains(.8, 0, 0, 0, 0, .1);
 
         CompanyPositions.SoftwareConsultant.setPerformanceParameters(80, 0, 0, 0, 0, 20, 1);
         CompanyPositions.SoftwareConsultant.setExperienceGains(.08, 0, 0, 0, 0, .03);
@@ -351,27 +351,27 @@ CompanyPositions = {
         CompanyPositions.PartTimeEmployee.setExperienceGains(0, .0075, .0075, .0075, .0075, .03);
 
         CompanyPositions.Waiter.setPerformanceParameters(0, 10, 0, 10, 10, 70);
-        CompanyPositions.Waiter.setExperienceGains(0, .01, .01, .01, .01, .05);
+        CompanyPositions.Waiter.setExperienceGains(0, .02, .02, .02, .02, .05);
         CompanyPositions.Employee.setPerformanceParameters(0, 10, 0, 10, 10, 70);
-        CompanyPositions.Employee.setExperienceGains(0, .01, .01, .01, .01, .04);
+        CompanyPositions.Employee.setExperienceGains(0, .02, .02, .02, .02, .04);
         CompanyPositions.SecurityGuard.setPerformanceParameters(5, 20, 20, 20, 20, 15, 1);
-        CompanyPositions.SecurityGuard.setExperienceGains(.01, .02, .02, .02, .02, .01);
+        CompanyPositions.SecurityGuard.setExperienceGains(.01, .04, .04, .04, .04, .02);
         CompanyPositions.PoliceOfficer.setPerformanceParameters(5, 20, 20, 20, 20, 15, 1);
-        CompanyPositions.PoliceOfficer.setExperienceGains(.01, .04, .04, .04, .04, .02);
+        CompanyPositions.PoliceOfficer.setExperienceGains(.02, .08, .08, .08, .08, .04);
         CompanyPositions.PoliceChief.setPerformanceParameters(5, 20, 20, 20, 20, 15, 1.25);
-        CompanyPositions.PoliceChief.setExperienceGains(.02, .06, .06, .06, .06, .05);
+        CompanyPositions.PoliceChief.setExperienceGains(.02, .1, .1, .1, .1, .1);
         CompanyPositions.SecurityOfficer.setPerformanceParameters(10, 20, 20, 20, 20, 10, 1.1);
-        CompanyPositions.SecurityOfficer.setExperienceGains(.02, .06, .06, .06, .06, .04);
+        CompanyPositions.SecurityOfficer.setExperienceGains(.02, .1, .1, .1, .1, .05);
         CompanyPositions.SecuritySupervisor.setPerformanceParameters(10, 15, 15, 15, 15, 30, 1.25);
-        CompanyPositions.SecuritySupervisor.setExperienceGains(.02, .06, .06, .06, .06, .08);
+        CompanyPositions.SecuritySupervisor.setExperienceGains(.02, .12, .12, .12, .12, .1);
         CompanyPositions.HeadOfSecurity.setPerformanceParameters(10, 15, 15, 15, 15, 30, 1.4);
-        CompanyPositions.HeadOfSecurity.setExperienceGains(.05, .1, .1, .1, .1, .1);
+        CompanyPositions.HeadOfSecurity.setExperienceGains(.05, .15, .15, .15, .15, .15);
         CompanyPositions.FieldAgent.setPerformanceParameters(10, 15, 15, 20, 20, 20, 1);
-        CompanyPositions.FieldAgent.setExperienceGains(.04, .06, .06, .06, .06, .04);
+        CompanyPositions.FieldAgent.setExperienceGains(.04, .08, .08, .08, .08, .05);
         CompanyPositions.SecretAgent.setPerformanceParameters(15, 15, 15, 20, 20, 15, 1.25);
-        CompanyPositions.SecretAgent.setExperienceGains(.08, .1, .1, .1, .1, .08);
+        CompanyPositions.SecretAgent.setExperienceGains(.1, .15, .15, .15, .15, .1);
         CompanyPositions.SpecialOperative.setPerformanceParameters(15, 15, 15, 20, 20, 15, 1.5);
-        CompanyPositions.SpecialOperative.setExperienceGains(.12, .15, .15, .15, .15, .12);
+        CompanyPositions.SpecialOperative.setExperienceGains(.15, .2, .2, .2, .2, .15);
     }
 }
 
