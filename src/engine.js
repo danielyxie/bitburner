@@ -83,7 +83,6 @@ var Engine = {
         deleteMainMenuButton:           null,
 
         //Tutorial buttons
-        tutorialGettingStartedButton:   null,
         tutorialNetworkingButton:       null,
         tutorialHackingButton:          null,
         tutorialScriptsButton:          null,
@@ -623,7 +622,7 @@ var Engine = {
     },
 
     displayTutorialContent: function() {
-        Engine.Clickables.tutorialGettingStartedButton.style.display = "block";
+        document.getElementById("tutorial-getting-started-link").style.display = "block";
         Engine.Clickables.tutorialNetworkingButton.style.display = "block";
         Engine.Clickables.tutorialHackingButton.style.display = "block";
         Engine.Clickables.tutorialScriptsButton.style.display = "block";
@@ -640,7 +639,6 @@ var Engine = {
 
     //Displays the text when a section of the Tutorial is opened
     displayTutorialPage: function(text) {
-        Engine.Clickables.tutorialGettingStartedButton.style.display = "none";
         Engine.Clickables.tutorialNetworkingButton.style.display = "none";
         Engine.Clickables.tutorialHackingButton.style.display = "none";
         Engine.Clickables.tutorialScriptsButton.style.display = "none";
@@ -1153,11 +1151,6 @@ var Engine = {
         Engine.Display.scriptEditorText = document.getElementById("script-editor-text");
 
         //Tutorial buttons
-        Engine.Clickables.tutorialGettingStartedButton = document.getElementById("tutorial-getting-started-link");
-        Engine.Clickables.tutorialGettingStartedButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(CONSTANTS.TutorialGettingStartedText);
-        });
-
         Engine.Clickables.tutorialNetworkingButton = document.getElementById("tutorial-networking-link");
         Engine.Clickables.tutorialNetworkingButton.addEventListener("click", function() {
             Engine.displayTutorialPage(CONSTANTS.TutorialNetworkingText);

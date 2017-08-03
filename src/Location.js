@@ -285,9 +285,12 @@ displayLocationContent = function() {
         locationTxtDiv2.style.display = "block";
         locationTxtDiv3.style.display = "block";
         jobTitle.innerHTML = "Job Title: " + Player.companyPosition.positionName;
+        var repGain = company.getFavorGain();
+        if (repGain.length != 2) {repGain = 0;}
+        repGain = repGain[0];
         jobReputation.innerHTML = "Company reputation: " + formatNumber(company.playerReputation, 4) +
                                   "<span class='tooltiptext'>You will earn " +
-                                  formatNumber(company.playerReputation / CONSTANTS.CompanyReputationToFavor, 4) +
+                                  formatNumber(repGain, 4) +
                                   " faction favor upon resetting after installing an Augmentation</span>";
         companyFavor.innerHTML = "Company Favor: " + formatNumber(company.favor, 4) +
                                  "<span class='tooltiptext'>Company favor increases the rate at which " +
@@ -1806,8 +1809,7 @@ purchaseTorRouter = function() {
     }
     Player.loseMoney(CONSTANTS.TorRouterCost);
 
-    var darkweb = new Server();
-    darkweb.init(createRandomIp(), "darkweb", "", true, false, false, false, 1);
+    var darkweb = new Server(createRandomIp(), "darkweb", "", false, false, false, 1);
     AddToAllServers(darkweb);
     SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
 

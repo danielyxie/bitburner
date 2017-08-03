@@ -19,6 +19,7 @@ function Company(name, salaryMult, expMult, jobStatReqOffset) {
     this.playerPosition     = "";   //Name (only name, not object) of the current position player holds
     this.playerReputation   = 1;    //"Reputation" within company, gain reputation by working for company
     this.favor              = 0;
+    this.rolloverRep        = 0;
 };
 
 Company.prototype.setInfo = function(inf) {
@@ -46,7 +47,32 @@ Company.prototype.hasPosition = function(pos) {
 
 Company.prototype.gainFavor = function() {
     if (this.favor == null || this.favor == undefined) {this.favor = 0;}
-    this.favor += Math.max(0, (this.playerReputation-1) / CONSTANTS.CompanyReputationToFavor);
+    if (this.rolloverRep == null || this.rolloverRep == undefined) {this.rolloverRep = 0;}
+    var res = this.getFavorGain();
+        if (res.length != 2) {
+            console.log("Error: invalid result from getFavorGain() function");
+            return;
+        }
+        this.favor += res[0];
+        this.rolloverRep = res[1];
+}
+
+Company.prototype.getFavorGain = function() {
+    if (this.favor == null || this.favor == undefined) {this.favor = 0;}
+    if (this.rolloverRep == null || this.rolloverRep == undefined) {this.rolloverRep = 0;}
+    var favorGain = 0, rep = this.playerReputation + this.rolloverRep;
+    var reqdRep = CONSTANTS.CompanyReputationToFavorBase *
+                  Math.pow(CONSTANTS.CompanyReputationToFavorMult, this.favor);
+    while(rep > 0) {
+        if (rep >= reqdRep) {
+            ++favorGain;
+            rep -= reqdRep;
+        } else {
+            break;
+        }
+        reqdRep *= CONSTANTS.FactionReputationToFavorMult;
+    }
+    return [favorGain, rep];
 }
 
 Company.prototype.toJSON = function() {

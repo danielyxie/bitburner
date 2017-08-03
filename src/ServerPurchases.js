@@ -17,7 +17,7 @@ purchaseServer = function(ram, cost) {
         return;
     }
 
-    var newServ = new Server();
+
     var hostname = document.getElementById("purchase-server-box-input").value;
     hostname = hostname.replace(/\s\s+/g, '');
     if (hostname == "") {
@@ -26,7 +26,7 @@ purchaseServer = function(ram, cost) {
     }
 
     //Create server
-    newServ.init(createRandomIp(), hostname, "", true, false, true, true, ram);
+    var newServ = new Server(createRandomIp(), hostname, "", false, true, true, ram);
     AddToAllServers(newServ);
 
     //Add to Player's purchasedServers array

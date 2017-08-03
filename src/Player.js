@@ -89,8 +89,10 @@ function PlayerObject() {
     this.factionInvitations = [];   //Outstanding faction invitations
 
     //Augmentations
-    this.queuedAugmentations = []; //Purchased but not installed, names only
-    this.augmentations = []; //Names of all installed augmentations
+    this.queuedAugmentations = [];
+    this.augmentations = [];
+
+    this.sourceFiles = [];
 
     //Crime statistics (Total refers to this 'simulation'. Lifetime is forever)
     this.karma = 0;
@@ -183,8 +185,7 @@ function PlayerObject() {
 
 PlayerObject.prototype.init = function() {
     /* Initialize Player's home computer */
-    var t_homeComp = new Server();
-    t_homeComp.init(createRandomIp(), "home", "Home PC", true, true, true, true, 8);
+    var t_homeComp = new Server(createRandomIp(), "home", "Home PC", true, true, true, 8);
     this.homeComputer = t_homeComp.ip;
     this.currentServer = t_homeComp.ip;
     AddToAllServers(t_homeComp);

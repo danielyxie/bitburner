@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Bitburner</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
@@ -10,66 +10,6 @@
     <link rel="stylesheet" type="text/css" href="css/popupboxes.css" />
     <link rel="stylesheet" type="text/css" href="css/interactivetutorial.css" />
     <link rel="stylesheet" type="text/css" href="css/loader.css" />
-
-    <!--jQuery library-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-	<!-- Utils -->
-	<script src="utils/IPAddress.js"></script>
-	<script src="utils/JSONReviver.js"></script>
-	<script src="utils/StringHelperFunctions.js"></script>
-	<script src="utils/HelperFunctions.js"></script>
-    <script src="utils/DialogBox.js"></script>
-    <script src="utils/PurchaseServerBox.js"></script>
-    <script src="utils/FactionInvitationBox.js"></script>
-    <script src="utils/PurchaseAugmentationBox.js"></script>
-    <script src="utils/TravelBox.js"></script>
-    <script src="utils/PurchaseRamForHomeBox.js"></script>
-    <script src="utils/GameOptions.js"></script>
-    <script src="utils/LogBox.js"></script>
-    <script src="utils/InfiltrationBox.js"></script>
-    <script src="utils/decimal.js"></script>
-
-	<!-- Netscript -->
-	<script src="src/NetscriptWorker.js"></script>
-	<script src="src/NetscriptEvaluator.js"></script>
-	<script src="src/NetscriptEnvironment.js"></script>
-    <script src="src/NetscriptFunctions.js"></script>
-    <script src="utils/acorn.js"></script>
-
-	<!-- Main game files -->
-	<script src="src/Constants.js"></script>
-    <script src="src/HelpText.js"></script>
-    <script src="src/SpecialServerIps.js"></script>
-    <script src="src/Location.js"></script>
-	<script src="src/Script.js"></script>
-   	<script src="src/Server.js"></script>
-    <script src="src/Player.js"></script>
-	<script src="src/Faction.js"></script>
-    <script src="src/FactionInfo.js"></script>
-	<script src="src/Company.js"></script>
-    <script src="src/CompanyJobApplication.js"></script>
-	<script src="src/Terminal.js"></script>
-    <script src="src/ServerPurchases.js"></script>
-    <script src="src/CreateProgram.js"></script>
-    <script src="src/Augmentations.js"></script>
-    <script src="src/Perk.js"></script>
-    <script src="src/HacknetNode.js"></script>
-    <script src="src/Crimes.js"></script>
-    <script src="src/Prestige.js"></script>
-    <script src="src/SaveObject.js"></script>
-    <script src="src/DarkWeb.js"></script>
-    <script src="src/InteractiveTutorial.js"></script>
-    <script src="src/Alias.js"></script>
-    <script src="src/Message.js"></script>
-    <script src="src/ActiveScriptsUI.js"></script>
-    <script src="src/Infiltration.js"></script>
-    <script src="src/StockMarket.js"></script>
-	<script src="src/RedPill.js"></script>
-    <script src="src/BitNode.js"></script>
-    <script src="src/Settings.js"></script>
-
-    <script src="src/engine.js"></script>
 
     <!-- Google Analytics -->
     <script>
@@ -82,8 +22,8 @@
       ga('send', 'pageview');
 
     </script>
-  </head>
-  <body>
+</head>
+<body>
     <div id="entire-game-container" style="visibility:hidden;">
     <div id="mainmenu-container">
         <!-- Main menu -->
@@ -627,7 +567,8 @@
 
 	<!-- Tutorial content -->
 	<div id="tutorial-container" class="generic-menupage-container">
-        <a id="tutorial-getting-started-link" class="a-link-button"> Getting Started </a>
+        <a id="tutorial-getting-started-link" class="a-link-button"
+           href="http://bitburner.wikia.com/wiki/Chapt3rs_Guide_to_Getting_Started_with_Bitburner" target="_blank"> Getting Started </a>
         <a id="tutorial-networking-link" class="a-link-button"> Servers & Networking </a>
         <a id="tutorial-hacking-link" class="a-link-button"> Hacking </a>
         <a id="tutorial-scripts-link" class="a-link-button"> Scripts </a>
@@ -1028,5 +969,64 @@
         <div class="loaderspinner"></div>
         <div class="loaderlabel">Loading Bitburner...</div>
     </div>
-  </body>
+</body>
+    <!--jQuery library-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Utils -->
+    <script src="utils/IPAddress.js"></script>
+    <script src="utils/JSONReviver.js"></script>
+    <script src="utils/StringHelperFunctions.js"></script>
+    <script src="utils/HelperFunctions.js"></script>
+    <script src="utils/DialogBox.js"></script>
+    <script src="utils/PurchaseServerBox.js"></script>
+    <script src="utils/FactionInvitationBox.js"></script>
+    <script src="utils/PurchaseAugmentationBox.js"></script>
+    <script src="utils/TravelBox.js"></script>
+    <script src="utils/PurchaseRamForHomeBox.js"></script>
+    <script src="utils/GameOptions.js"></script>
+    <script src="utils/LogBox.js"></script>
+    <script src="utils/InfiltrationBox.js"></script>
+    <script src="utils/decimal.js"></script>
+
+    <!-- Netscript -->
+    <script src="src/NetscriptWorker.js"></script>
+    <script src="src/NetscriptEvaluator.js"></script>
+    <script src="src/NetscriptEnvironment.js"></script>
+    <script src="src/NetscriptFunctions.js"></script>
+    <script src="utils/acorn.js"></script>
+
+    <!-- Main game files -->
+    <script src="src/Constants.js"></script>
+    <script src="src/HelpText.js"></script>
+    <script src="src/SpecialServerIps.js"></script>
+    <script src="src/Location.js"></script>
+    <script src="src/Script.js"></script>
+    <script src="src/Server.js"></script>
+    <script src="src/Player.js"></script>
+    <script src="src/Faction.js"></script>
+    <script src="src/FactionInfo.js"></script>
+    <script src="src/Company.js"></script>
+    <script src="src/CompanyJobApplication.js"></script>
+    <script src="src/Terminal.js"></script>
+    <script src="src/ServerPurchases.js"></script>
+    <script src="src/CreateProgram.js"></script>
+    <script src="src/Augmentations.js"></script>
+    <script src="src/Perk.js"></script>
+    <script src="src/HacknetNode.js"></script>
+    <script src="src/Crimes.js"></script>
+    <script src="src/Prestige.js"></script>
+    <script src="src/SaveObject.js"></script>
+    <script src="src/DarkWeb.js"></script>
+    <script src="src/InteractiveTutorial.js"></script>
+    <script src="src/Alias.js"></script>
+    <script src="src/Message.js"></script>
+    <script src="src/ActiveScriptsUI.js"></script>
+    <script src="src/Infiltration.js"></script>
+    <script src="src/StockMarket.js"></script>
+    <script src="src/RedPill.js"></script>
+    <script src="src/BitNode.js"></script>
+    <script src="src/Settings.js"></script>
+
+    <script src="src/engine.js"></script>
 </html>

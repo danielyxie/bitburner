@@ -29,8 +29,11 @@ CONSTANTS = {
     HacknetNodeMaxCores: 16,
 
     /* Faction and Company favor */
-    FactionReputationToFavor: 6500,
-    CompanyReputationToFavor: 6000,
+    FactionReputationToFavorBase: 800,
+    FactionReputationToFavorMult: 1.02,
+    CompanyReputationToFavorBase: 750,
+    CompanyReputationToFavorMult: 1.02,
+
 
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
@@ -170,8 +173,6 @@ CONSTANTS = {
     CrimeHeist: "pull off the ultimate heist",
 
     /* Tutorial related things */
-	TutorialGettingStartedText: "Todo...",
-
     TutorialNetworkingText: "Servers are a central part of the game. You start with a single personal server (your home computer) " +
                             "and you can purchase additional servers as you progress through the game. Connecting to other servers " +
                             "and hacking them can be a major source of income and experience. Servers can also be used to run " +
@@ -325,7 +326,11 @@ CONSTANTS = {
                            "&nbsp;<=<br>" +
                            "&nbsp;>=<br>" +
                            "&nbsp;==<br>" +
-                           "&nbsp;!=<br><br>" +
+                           "&nbsp;!=<br>" +
+                           "&nbsp;++ (Note: This ONLY pre-increments. Post-increment does not work)<br>" +
+                           "&nbsp;-- (Note: This ONLY pre-decrements. Post-decrement does not work)<br>" +
+                           "&nbsp;-  (Negation operator)<br>" +
+                           "&nbsp;!<br><br>" +
                            "<u><h1> Arrays </h1></u><br>" +
                            "Netscript arrays have the same properties and functions as javascript arrays. For information see javascripts <a href=\"https://www.w3schools.com/js/js_arrays.asp\" target='_blank'>array</a> documentation.<br><br>"+
                            "<u><h1> Script Arguments </h1></u><br>" +
@@ -672,6 +677,9 @@ CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.26.5<br>" +
+    "-Reputation gain with factions and companies is no longer a linear conversion, but an exponential one. It " +
+    "will not be easier to gain faction at first, but much harder later. <br>" +
     "v0.26.4<br>" +
     "-All of the 'low-level servers' in early game that have a required hacking level now have 8GB of RAM " +
     "instead of 4GB<br>" +

@@ -671,8 +671,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
                 return "";
             }
-            var newServ = new Server();
-            newServ.init(createRandomIp(), hostnameStr, "", true, false, true, true, ram);
+            var newServ = new Server(createRandomIp(), hostnameStr, "", false, true, true, ram);
             AddToAllServers(newServ);
 
             Player.purchasedServers.push(newServ.ip);
@@ -694,10 +693,16 @@ function NetscriptFunctions(workerScript) {
 
             if (!server.purchasedByPlayer) {
                 workerScript.scriptRef.log("Error: Server " + server.hostname + " is not a purchased server. " +
-                                           "Cannot be deleted. deleteSErver failed");
+                                           "Cannot be deleted. deleteServer failed");
                 return false;
             }
+
             var ip = server.ip;
+
+            //Delete all scripts running on server
+            for (var i = server.runningScripts.length-1; i >= 0; --i) {
+                killWorkerScript(server.runningScripts[i], ip);
+            }
 
             //Delete from all servers
             delete AllServers[ip];

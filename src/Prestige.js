@@ -134,7 +134,6 @@ function prestigeAugmentation() {
     homeComp.runningScripts = [];
     homeComp.serversOnNetwork = [];
     homeComp.isConnectedTo = true;
-    homeComp.isOnline = true;
     homeComp.ramUsed = 0;
     homeComp.programs.push(Programs.NukeProgram);
     if (augmentationExists(AugmentationNames.Neurolink) &&

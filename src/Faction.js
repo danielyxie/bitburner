@@ -33,6 +33,7 @@ function Faction(name) {
 
     //Faction favor
     this.favor              = 0;
+    this.rolloverRep        = 0;
 };
 
 Faction.prototype.setAugmentationMultipliers = function(price, rep) {
@@ -46,8 +47,33 @@ Faction.prototype.setInfo = function(inf) {
 
 Faction.prototype.gainFavor = function() {
     if (this.favor == null || this.favor == undefined) {this.favor = 0;}
-    var gain = (this.playerReputation / CONSTANTS.FactionReputationToFavor);
-    this.favor += gain;
+    if (this.rolloverRep == null || this.rolloverRep == undefined) {this.rolloverRep = 0;}
+    var res = this.getFavorGain();
+    if (res.length != 2) {
+        console.log("Error: invalid result from getFavorGain() function");
+        return;
+    }
+    this.favor += res[0];
+    this.rolloverRep = res[1];
+}
+
+//Returns an array with [How much favor would be gained, how much favor would be left over]
+Faction.prototype.getFavorGain = function() {
+    if (this.favor == null || this.favor == undefined) {this.favor = 0;}
+    if (this.rolloverRep == null || this.rolloverRep == undefined) {this.rolloverRep = 0;}
+    var favorGain = 0, rep = this.playerReputation + this.rolloverRep;
+    var reqdRep = CONSTANTS.FactionReputationToFavorBase *
+                  Math.pow(CONSTANTS.FactionReputationToFavorMult, this.favor);
+    while(rep > 0) {
+        if (rep >= reqdRep) {
+            ++favorGain;
+            rep -= reqdRep;
+        } else {
+            break;
+        }
+        reqdRep *= CONSTANTS.FactionReputationToFavorMult;
+    }
+    return [favorGain, rep];
 }
 
 Faction.prototype.toJSON = function() {
@@ -718,9 +744,12 @@ displayFactionContent = function(factionName) {
 	var faction = Factions[factionName];
     document.getElementById("faction-name").innerHTML = factionName;
     document.getElementById("faction-info").innerHTML = "<i>" + faction.info + "</i>";
+    var repGain = faction.getFavorGain();
+    if (repGain.length != 2) {repGain = 0;}
+    repGain = repGain[0];
     document.getElementById("faction-reputation").innerHTML = "Reputation: " + formatNumber(faction.playerReputation, 4) +
                                                               "<span class='tooltiptext'>You will earn " +
-                                                              formatNumber(faction.playerReputation / CONSTANTS.FactionReputationToFavor, 4) +
+                                                              formatNumber(repGain, 4) +
                                                               " faction favor upon resetting after installing an Augmentation</span>";
     document.getElementById("faction-favor").innerHTML = "Faction Favor: " + formatNumber(faction.favor, 4) +
                                                          "<span class='tooltiptext'>Faction favor increases the rate at which " +
@@ -733,13 +762,11 @@ displayFactionContent = function(factionName) {
 	var securityWorkDiv 	= document.getElementById("faction-securitywork-div");
     var donateDiv           = document.getElementById("faction-donate-div");
 
-	//Set new event listener for all of the work buttons
-    //The old buttons need to be replaced to clear the old event listeners
+
     var newHackButton = clearEventListeners("faction-hack-button");
     var newFieldWorkButton = clearEventListeners("faction-fieldwork-button");
     var newSecurityWorkButton = clearEventListeners("faction-securitywork-button");
     var newDonateWorkButton = clearEventListeners("faction-donate-button");
-
     newHackButton.addEventListener("click", function() {
         Player.startFactionHackWork(faction);
         return false;
@@ -775,10 +802,8 @@ displayFactionContent = function(factionName) {
         return false;
     });
 
-    //Set new event listener for the purchase augmentation buttons
-    //The old button needs to be replaced to clear the old event listeners
-    var newPurchaseAugmentationsButton = clearEventListeners("faction-purchase-augmentations");
 
+    var newPurchaseAugmentationsButton = clearEventListeners("faction-purchase-augmentations");
     newPurchaseAugmentationsButton.addEventListener("click", function() {
         Engine.hideAllContent();
         Engine.Display.factionAugmentationsContent.style.visibility = "visible";
