@@ -1,8 +1,37 @@
 /* BitNode.js */
 
 BitNodes = {
-    BitNode1:   new BitNode(1, "Source Genesis", "The original BitNode"),
-    BitNode2:   new BitNode(2, "Rise of the Underworld", "COMING SOON"),    //Gangs
+    BitNode1:   new BitNode(1, "Source Genesis", "The original BitNode",
+                            "The first BitNode created by the Enders to imprison the minds of humans. It became " +
+                            "the prototype and testing-grounds for all of the BitNodes that followed.<br><br>" +
+                            "This is the first BitNode that you play through. It has no special " +
+                            "modifications or mechanics.<br><br>" +
+                            "Destroying this BitNode will give you Source-File 1, or if you already have " +
+                            "this Source-File it will upgrade its level up to a maximum of 3. This Source-File " +
+                            "lets the player start with 32GB of RAM on his/her home computer when entering a " +
+                            "new BitNode, and also increases all of the player's multipliers by:<br><br>" +
+                            "Level 1: 16%<br>" +
+                            "Level 2: 24%<br>" +
+                            "Level 3: 28%"),
+    BitNode2:   new BitNode(2, "Rise of the Underworld", "From the shadows, they rose",    //Gangs
+                            "From the shadows, they rose.<br><br>Organized crime groups quickly filled the void of power " +
+                            "left behind from the collapse of Western government in the 2050's. As society and civlization broke down, " +
+                            "people quickly succumbed to the innate human impulse of evil and savagery. The organized crime " +
+                            "factions quickly rose to the top of the modern world.<br><br>" +
+                            "In this BitNode:<br><br>The maximum amount of money available on a server is significantly decreased<br>" +
+                            "The amount of money gained from crimes is doubled<br>" +
+                            "Certain Factions (Slum Snakes, Tetrads, The Syndicate, The Dark Army, Speakers for the Dead, " +
+                            "NiteSec, The Black Hand) give the player the ability to form and manage their own gangs. These gangs " +
+                            "will earn the player money and reputation with the corresponding Faction<br>" +
+                            "Every Augmentation in the game will be available through the Factions listed above<br>" +
+                            "For every Faction NOT listed above, reputation gains are halved<br>" +
+                            "You will no longer gain passive reputation with Factions<br>" +
+                            "Destroying the BitNode will give you Source-File 2, or if you already have this Source-File it will " +
+                            "upgrade its level up to a maximum of 3. This Source-File increases the player's crime success rate, " +
+                            "crime money, and charisma multipliers by:<br><br>" +
+                            "Level 1: 20%<br>" +
+                            "Level 2: 30%<br>" +
+                            "Level 3: 35%"),
     BitNode3:   new BitNode(3, "The Price of Civilization", "COMING SOON"), //Corporate Warfare, Run own company
     BitNode4:   new BitNode(4, "The Singularity", "COMING SOON"),           //Everything automatable
     BitNode5:   new BitNode(5, "2084", "COMING SOON"),                      //Big Brother
@@ -20,4 +49,36 @@ function BitNode(n, name, desc="", info="") {
     this.name = name;
     this.desc = desc;
     this.info = info;
+}
+
+BitNodeMultipliers = {
+    ServerMaxMoney:         1,
+    CrimeMoney:             1,
+    FactionWorkRepGain:     1,
+    FactionPassiveRepGain:  1,
+}
+
+function initBitNodeMultipliers() {
+    if (Player.bitNodeN == null) {
+        Player.bitNodeN = 1;
+    }
+    for (var mult in BitNodeMultipliers) {
+        if (BitNodeMultipliers.hasOwnProperty(mult)) {
+            BitNodeMultipliers[mult] = 1;
+        }
+    }
+
+    switch (Player.bitNodeN) {
+        case 1:
+            break;
+        case 2: //Rise of the Underworld
+            BitNodeMultipliers.ServerMaxMoney = 0.2;
+            BitNodeMultipliers.CrimeMoney = 2;
+            BitNodeMultipliers.FactionWorkRepGain = 0.5;
+            BitNodeMultipliers.FactionPassiveRepGain = 0;
+            break;
+        default:
+            console.log("WARNING: Player.bitNodeN invalid");
+            break;
+    }
 }

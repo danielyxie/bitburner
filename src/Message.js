@@ -1,5 +1,5 @@
 /* Message.js */
-function Message(filename, msg) {
+function Message(filename="", msg="") {
     this.filename   = filename;
     this.msg        = msg;
     this.recvd      = false;

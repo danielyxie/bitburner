@@ -334,7 +334,7 @@ function NetscriptFunctions(workerScript) {
             }
             var server = getServer(ip);
             if (server == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into exec() command: " + args[1]);
+                throw makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into exec() command: " + ip);
             }
             return runScriptFromScript(server, scriptname, argsForNewScript, workerScript, threads);
         },
@@ -671,8 +671,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
                 return "";
             }
-            var newServ = new Server();
-            newServ.init(createRandomIp(), hostnameStr, "", true, false, true, true, ram);
+            var newServ = new Server(createRandomIp(), hostnameStr, "", false, true, true, ram);
             AddToAllServers(newServ);
 
             Player.purchasedServers.push(newServ.ip);
@@ -692,15 +691,25 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            if (!server.purchasedByPlayer) {
+            if (!server.purchasedByPlayer || server.hostname == "home") {
                 workerScript.scriptRef.log("Error: Server " + server.hostname + " is not a purchased server. " +
-                                           "Cannot be deleted. deleteSErver failed");
+                                           "Cannot be deleted. deleteServer failed");
                 return false;
             }
+
             var ip = server.ip;
 
-            //Delete from all servers
-            delete AllServers[ip];
+            //A server cannot delete itself
+            if (ip == workerScript.serverIp) {
+                workerScript.scriptRef.log("Error: Cannot call deleteServer() on self. Function failed");
+                return false;
+            }
+
+            //Delete all scripts running on server
+            if (server.runningScripts.length > 0) {
+                workerScript.scriptRef.log("Error: Cannot delete server " + server.hostname + " because it still has scripts running.");
+                return false;
+            }
 
             //Delete from player's purchasedServers array
             var found = false;
@@ -717,6 +726,9 @@ function NetscriptFunctions(workerScript) {
                                            "as a purchased server. This is likely a bug please contact game dev");
                 return false;
             }
+
+            //Delete from all servers
+            delete AllServers[ip];
 
             //Delete from home computer
             found = false;
@@ -740,7 +752,7 @@ function NetscriptFunctions(workerScript) {
         write : function(port, data="") {
             if (!isNaN(port)) {
                 //Port 1-10
-                if (port < 1 && port > 10) {
+                if (port < 1 || port > 10) {
                     throw makeRuntimeRejectMsg(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
                 }
                 var portName = "Port" + String(port);
@@ -761,7 +773,7 @@ function NetscriptFunctions(workerScript) {
         read : function(port) {
             if (!isNaN(port)) {
                 //Port 1-10
-                if (port < 1 && port > 10) {
+                if (port < 1 || port > 10) {
                     throw makeRuntimeRejectMsg(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
                 }
                 var portName = "Port" + String(port);
@@ -777,7 +789,48 @@ function NetscriptFunctions(workerScript) {
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for port: " + port + ". Must be a number between 1 and 10");
             }
-        }
-
+        },
+        scriptRunning : function(scriptname, ip) {
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            for (var i = 0; i < server.runningScripts.length; ++i) {
+                if (server.runningScripts[i].filename == scriptname) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        scriptKill : function(scriptname, ip) {
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("scriptKill() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "scriptKill() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            var suc = false;
+            for (var i = 0; i < server.runningScripts.length; ++i) {
+                if (server.runningScripts[i].filename == scriptname) {
+                    killWorkerScript(server.runningScripts[i], server.ip);
+                    suc = true;
+                }
+            }
+            return suc;
+        },
+        getScriptRam : function (scriptname, ip) {
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            for (var i = 0; i < server.runningScripts.length; ++i) {
+                if (server.runningScripts[i].filename == scriptname) {
+                    return server.runningScripts[i].scriptRef.ramUsage;
+                }
+            }
+            return 0;
+        },
+        
     }
 }

@@ -109,6 +109,7 @@ function runScriptsLoop() {
 			//Delete script from the runningScripts array on its host serverIp
 			var ip = workerScripts[i].serverIp;
 			var name = workerScripts[i].name;
+
 			for (var j = 0; j < AllServers[ip].runningScripts.length; j++) {
 				if (AllServers[ip].runningScripts[j].filename == name &&
                     compareArrays(AllServers[ip].runningScripts[j].args, workerScripts[i].args)) {

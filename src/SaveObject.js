@@ -43,6 +43,9 @@ BitburnerSaveObject.prototype.saveGame = function() {
     this.StockMarketSave            = JSON.stringify(StockMarket);
     this.SettingsSave               = JSON.stringify(Settings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
+    if (Player.bitNodeN == 2 && Player.inGang()) {
+        this.AllGangsSave           = JSON.stringify(AllGangs);
+    }
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
     window.localStorage.setItem("bitburnerSave", saveString);
 
@@ -118,6 +121,14 @@ loadGame = function(saveObj) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
+            if (ver == "0.27.0") {
+                if (Player.bitNodeN == null || Player.bitNodeN == 0) {
+                    Player.bitNodeN = 1;
+                }
+                if (Player.sourceFiles == null) {
+                    Player.sourceFiles = [];
+                }
+            }
             if (ver != CONSTANTS.Version) {
                 createNewUpdateText();
             }
@@ -126,6 +137,13 @@ loadGame = function(saveObj) {
         }
     } else {
         createNewUpdateText();
+    }
+    if (Player.bitNodeN == 2 && Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+        try {
+            AllGangs = JSON.parse(saveObj.AllGangsSave, Reviver);
+        } catch(e) {
+            console.log("ERROR: Failed to parse AllGangsSave: " + e);
+        }
     }
 
     return true;
@@ -199,10 +217,13 @@ loadImportedGame = function(saveObj, saveString) {
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
                 var ver = JSON.parse(tempSaveObj.VersionSave, Reviver);
-                if (CONSTANTS.Version == "0.26.3") {
-                    tempPlayer.money = new Decimal(tempPlayer.money);
-                    tempPlayer.total_money = new Decimal(tempPlayer.total_money);
-                    tempPlayer.lifetime_money = new Decimal(tempPlayer.lifetime_money);
+                if (ver == "0.27.0") {
+                    if (tempPlayer.bitNodeN == null || tempPlayer.bitNodeN == 0) {
+                        tempPlayer.bitNodeN = 1;
+                    }
+                    if (tempPlayer.sourceFiles == null) {
+                        tempPlayer.sourceFiles = [];
+                    }
                 }
                 if (ver != CONSTANTS.Version) {
                     createNewUpdateText();
@@ -212,6 +233,13 @@ loadImportedGame = function(saveObj, saveString) {
             }
         } else {
             createNewUpdateText();
+        }
+        if (tempPlayer.bitNodeN == 2 && tempPlayer.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+            try {
+                AllGangs = JSON.parse(saveObj.AllGangsSave, Reviver);
+            } catch(e) {
+                console.log("ERROR: Failed to parse AllGangsSave: " + e);
+            }
         }
     } catch(e) {
         dialogBoxCreate("Error importing game");
@@ -241,7 +269,8 @@ loadImportedGame = function(saveObj, saveString) {
         StockMarket     = tempStockMarket;
     }
 
-    dialogBoxCreate("Imported game");
+    dialogBoxCreate("Imported game! I would suggest saving the game and then reloading the page " +
+                    "to make sure everything runs smoothly");
     gameOptionsBoxClose();
 
     //Re-start game

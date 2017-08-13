@@ -97,12 +97,7 @@
     color: white;
 }
 
-/* Purchase RAM for Home computer pop-up box */
-#purchase-ram-for-home-box-container {
-    transition: opacity 400ms ease-in;
-}
-
-/* Purchase Invitation Box */
+/* Purchase Augmentation Box */
 #purchase-augmentation-box-container {
     transition: opacity 400ms ease-in;
 }
@@ -116,22 +111,17 @@
     padding: 4px;
 }
 
-/* Travel Pop-up Box */
-#travel-box-container {
-    transition: opacity 400ms ease-in;
-}
-
-
-#travel-box-text {
-    margin: 8px;
-}
-
 /* Infiltration-box */
 #infiltration-box-sell,
 #infiltration-box-faction {
     display: block;
     padding: 8px;
     margin: 8px;
+}
+
+/* Generic Yes No Box */
+#yes-no-text-input-box-input {
+    color: white;
 }
 
 /* Game Options */

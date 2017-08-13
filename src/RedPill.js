@@ -1,14 +1,14 @@
-/* RedPill.js 
+/* RedPill.js
  *  Implements what happens when you have Red Pill augmentation and then hack the world daemon */
- 
+
 //Returns promise
 function writeRedPillLine(line) {
     return new Promise(function(resolve, reject) {
-        
+
         var container = document.getElementById("red-pill-container");
         var pElem = document.createElement("p");
         container.appendChild(pElem);
-        
+
         var promise = writeRedPillLetter(pElem, line, 0);
         promise.then(function(res) {
             resolve(res);
@@ -39,7 +39,7 @@ function writeRedPillLetter(pElem, line, i=0) {
 }
 
 redPillFlag = false;
-function hackWorldDaemon(currentNode="BitNode-1") {
+function hackWorldDaemon(currentNodeNumber) {
     redPillFlag = true;
     Engine.loadRedPillContent();
     return writeRedPillLine("[ERROR] SEMPOOL INVALID").then(function() {
@@ -59,7 +59,7 @@ function hackWorldDaemon(currentNode="BitNode-1") {
     }).then(function() {
         return writeRedPillLine("Failsafe initiated...");
     }).then(function() {
-        return writeRedPillLine("Restarting " + currentNode + "...");
+        return writeRedPillLine("Restarting BitNode-" + currentNodeNumber + "...");
     }).then(function() {
         return writeRedPillLine("...........");
     }).then(function() {
@@ -71,27 +71,65 @@ function hackWorldDaemon(currentNode="BitNode-1") {
     }).then(function() {
         return writeRedPillLine("..............................................")
     }).then(function() {
-        return loadBitVerse();
+        return loadBitVerse(currentNodeNumber);
     }).catch(function(e){
         console.log("ERROR: " + e.toString());
     });
 }
 
-function loadBitVerse() {
+//The bitNode name passed in will have a hyphen between number (e.g. BitNode-1)
+//This needs to be removed
+function giveSourceFile(bitNodeNumber) {
+    var sourceFileKey = "SourceFile"+ bitNodeNumber.toString();
+    var sourceFile = SourceFiles[sourceFileKey];
+    if (sourceFile == null) {
+        console.log("ERROR: could not find source file for Bit node: " + bitNodeNumber);
+        return;
+    }
+
+    //Check if player already has this source file
+    var alreadyOwned = false;
+    var ownedSourceFile = null;
+    for (var i = 0; i < Player.sourceFiles; ++i) {
+        if (Player.sourceFiles[i].n == bitNodeNumber) {
+            alreadyOwned = true;
+            ownedSourceFile = Player.sourceFiles[i];
+            break;
+        }
+    }
+
+    if (alreadyOwned && ownedSourceFile) {
+        if (ownedSourceFile.lvl >= 3) {
+            dialogBoxCreate("The Source-File for the BitNode you just destroyed, " + sourceFile.name + ", " +
+                            "is already at max level!");
+        } else {
+            ++ownedSourceFile.lvl;
+            dialogBoxCreate(sourceFile.name + " was upgraded to level " + ownedSourceFile.lvl + " for " +
+                            "destroying its corresponding BitNode!");
+        }
+    } else {
+        var playerSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
+        Player.sourceFiles.push(playerSrcFile);
+        dialogBoxCreate("You received a Source-File for destroying a Bit Node!<br><br>" +
+                        sourceFile.name + "<br><br>" + sourceFile.info);
+    }
+}
+
+function loadBitVerse(destroyedBitNodeNum) {
     //Clear the screen
     var container = document.getElementById("red-pill-container");
     while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
-            
+
     //Create the Bit Verse
     var bitVerseImage = document.createElement("pre");
     var bitNodes = [];
     for (var i = 1; i <= 12; ++i) {
         bitNodes.push(createBitNode(i));
     }
-    
-    bitVerseImage.innerHTML = 
+
+    bitVerseImage.innerHTML =
     "                          O                          <br>" +
     "             |  O  O      |      O  O  |             <br>" +
     "        O    |  | /     __|       \\ |  |    O        <br>" +
@@ -116,9 +154,9 @@ function loadBitVerse() {
     "        \\       \\| /    \\   /    \\ |/       /        <br>" +
     "         "+bitNodes[0]+"       |/   "+bitNodes[1]+"  | |  "+bitNodes[2]+"   \\|       "+bitNodes[3]+"         <br>" +
     "         |       |    |  | |  |    |       |         <br>" +
-    "          \\JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br><br><br><br>";    
- 
-    
+    "          \\JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br><br><br><br>";
+
+
     /*
     "                          O                          <br>" +
     "             |  O  O      |      O  O  |             <br>" +
@@ -144,47 +182,37 @@ function loadBitVerse() {
     "        \       \| /    \   /    \ |/       /        <br>" +
     "         O       |/   O  | |  O   \|       O         <br>" +
     "         |       |    |  | |  |    |       |         <br>" +
-    "          \JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br>"; 
+    "          \JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          <br>";
     */
-    
+
     container.appendChild(bitVerseImage);
-    
+
     //Bit node event listeners
     for (var i = 1; i <= 12; ++i) {
-        (function() {
+        (function(i) {
             var elemId = "bitnode-" + i.toString();
             var elem = clearEventListeners(elemId);
             if (elem == null) {return;}
-            if (i == 1) {
+            if (i == 1 || i == 2) {
                 elem.addEventListener("click", function() {
-                    prestigeAugmentation();
-                    dialogBoxCreate("Congrats! You've reached the current end of the game. Eventually the " + 
-                                    "BitNode/Bitverse will be fully implemented with cool new features, so check " + 
-                                    "it out again in the future! You have now been returned " + 
-                                    "to the original BitNode (BitNode-1) and you can continue playing if you wish. ");
-                    redPillFlag = false;
-                    var container = document.getElementById("red-pill-container");
-                    while (container.firstChild) {
-                        container.removeChild(container.firstChild);
+                    var bitNodeKey = "BitNode" + i;
+                    var bitNode = BitNodes[bitNodeKey];
+                    if (bitNode == null) {
+                        console.log("ERROR: Could not find BitNode object for number: " + i);
+                        return;
                     }
-                    
-                    //Reenable terminal
-                    $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
-                    $("#hack-progress").attr('id', "old-hack-progress");
-                    document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
-                    $('input[class=terminal-input]').prop('disabled', false);      
-
-                    Terminal.hackFlag = false;
+                    yesNoBoxCreate("BitNode-" + i + ": " + bitNode.name + "<br><br>" + bitNode.info);
+                    createBitNodeYesNoEventListeners(i, destroyedBitNodeNum);
                 });
             } else {
                 elem.addEventListener("click", function() {
                     dialogBoxCreate("Not yet implemented! Coming soon!")
                 });
             }
-        }()); //Immediate invocation closure
+        }(i)); //Immediate invocation closure
     }
-    
-    //Create lore text    
+
+    //Create lore text
     return writeRedPillLine("Many decades ago, a humanoid extraterrestial species which we call the Enders descended on the Earth...violently").then(function() {
         return writeRedPillLine("Our species fought back, but it was futile. The Enders had technology far beyond our own...");
     }).then(function() {
@@ -234,10 +262,43 @@ function createBitNode(n) {
     var bitNodeStr = "BitNode" + n.toString();
     var bitNode = BitNodes[bitNodeStr];
     if (bitNode == null) {return "O";}
-    return  "<a class='bitnode tooltip' id='bitnode-" + bitNode.number.toString() + "'><strong>O</strong>" + 
-             "<span class='tooltiptext'>" + 
-             "<strong>BitNode-" + bitNode.number.toString() + "<br>" + bitNode.name+ "</strong><br>" + 
-             bitNode.desc + "<br>" + 
+    return  "<a class='bitnode tooltip' id='bitnode-" + bitNode.number.toString() + "'><strong>O</strong>" +
+             "<span class='tooltiptext'>" +
+             "<strong>BitNode-" + bitNode.number.toString() + "<br>" + bitNode.name+ "</strong><br>" +
+             bitNode.desc + "<br>" +
              "</span></a>";
 }
 
+function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
+    var yesBtn = yesNoBoxGetYesButton();
+    yesBtn.innerHTML = "Enter BitNode-" + newBitNode;
+    yesBtn.addEventListener("click", function() {
+        giveSourceFile(destroyedBitNode);
+        redPillFlag = false;
+        var container = document.getElementById("red-pill-container");
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+
+        //Set new Bit Node
+        Player.bitNodeN = newBitNode;
+
+        //Reenable terminal
+        $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
+        $("#hack-progress").attr('id', "old-hack-progress");
+        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        $('input[class=terminal-input]').prop('disabled', false);
+
+        Terminal.hackFlag = false;
+
+        prestigeSourceFile();
+        yesNoBoxClose();
+        //TODO Dialog box for going ot new Bit node
+    });
+    var noBtn = yesNoBoxGetNoButton();
+    noBtn.innerHTML = "Back";
+    noBtn.addEventListener("click", function() {
+        yesNoBoxClose();
+    });
+
+}

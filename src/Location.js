@@ -285,9 +285,12 @@ displayLocationContent = function() {
         locationTxtDiv2.style.display = "block";
         locationTxtDiv3.style.display = "block";
         jobTitle.innerHTML = "Job Title: " + Player.companyPosition.positionName;
+        var repGain = company.getFavorGain();
+        if (repGain.length != 2) {repGain = 0;}
+        repGain = repGain[0];
         jobReputation.innerHTML = "Company reputation: " + formatNumber(company.playerReputation, 4) +
                                   "<span class='tooltiptext'>You will earn " +
-                                  formatNumber(company.playerReputation / CONSTANTS.CompanyReputationToFavor, 4) +
+                                  formatNumber(repGain, 4) +
                                   " faction favor upon resetting after installing an Augmentation</span>";
         companyFavor.innerHTML = "Company Favor: " + formatNumber(company.favor, 4) +
                                  "<span class='tooltiptext'>Company favor increases the rate at which " +
@@ -784,7 +787,7 @@ displayLocationContent = function() {
 			locationInfo.innerHTML = Companies[loc].info;
 
             waiterJob.style.display = "block";
-            waitPartTimeJob.style.display = "block";
+            waiterPartTimeJob.style.display = "block";
             break;
 
         case Locations.IshimaTravelAgency:
@@ -1686,8 +1689,29 @@ initLocationButtons = function() {
     });
 
     purchaseHomeRam.addEventListener("click", function() {
-        purchaseRamForHomeBoxCreate();
-        return false;
+        //Calculate how many times ram has been upgraded (doubled)
+        var currentRam = Player.getHomeComputer().maxRam;
+        var newRam = currentRam * 2;
+        var numUpgrades = Math.log2(currentRam);
+
+        //Calculate cost
+        //Have cost increase by some percentage each time RAM has been upgraded
+        var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome;
+        var mult = Math.pow(1.55, numUpgrades);
+        cost = cost * mult;
+
+        var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
+        yesBtn.innerHTML = "Purchase"; noBtn.innerHTML = "Cancel";
+        yesBtn.addEventListener("click", ()=>{
+            purchaseRamForHomeComputer(cost);
+            yesNoBoxClose();
+        });
+        noBtn.addEventListener("click", ()=>{
+            yesNoBoxClose();
+        });
+        yesNoBoxCreate("Would you like to purchase additional RAM for your home computer? <br><br>" +
+                       "This will upgrade your RAM from " + currentRam + "GB to " + newRam + "GB. <br><br>" +
+                       "This will cost $" + formatNumber(cost, 2));
     });
 
     travelToAevum.addEventListener("click", function() {
@@ -1806,8 +1830,7 @@ purchaseTorRouter = function() {
     }
     Player.loseMoney(CONSTANTS.TorRouterCost);
 
-    var darkweb = new Server();
-    darkweb.init(createRandomIp(), "darkweb", "", true, false, false, false, 1);
+    var darkweb = new Server(createRandomIp(), "darkweb", "", false, false, false, 1);
     AddToAllServers(darkweb);
     SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
 
@@ -1947,6 +1970,23 @@ function setJobRequirementTooltip(loc, entryPosType, btn) {
     if (company == null) {return;}
     var pos = Player.getNextCompanyPosition(company, entryPosType);
     if (pos == null) {return};
+    if (!company.hasPosition(pos)) {return;}
     var reqText = getJobRequirementText(company, pos, true);
     btn.innerHTML += "<span class='tooltiptext'>" + reqText + "</span>";
+}
+
+function travelBoxCreate(destCityName, cost) {
+    var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
+    yesBtn.innerHTML = "Yes";
+    noBtn.innerHTML = "No";
+    noBtn.addEventListener("click", () => {
+        yesNoBoxClose();
+        return false;
+    });
+    yesBtn.addEventListener("click", () => {
+        yesNoBoxClose();
+        travelToCity(destCityName, cost);
+        return false;
+    });
+    yesNoBoxCreate("Would you like to travel to " + destCityName + "? The trip will cost $" + formatNumber(cost, 2) + ".");
 }

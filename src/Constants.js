@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.26.4",
+    Version:                "0.27.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -29,8 +29,11 @@ CONSTANTS = {
     HacknetNodeMaxCores: 16,
 
     /* Faction and Company favor */
-    FactionReputationToFavor: 6500,
-    CompanyReputationToFavor: 6000,
+    FactionReputationToFavorBase: 500,
+    FactionReputationToFavorMult: 1.02,
+    CompanyReputationToFavorBase: 500,
+    CompanyReputationToFavorMult: 1.02,
+
 
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
@@ -53,6 +56,7 @@ CONSTANTS = {
     ScriptRunRamCost:               0.8,
     ScriptExecRamCost:              1.1,
     ScriptScpRamCost:               0.5,
+    ScriptKillRamCost:              0.5, //Kill and killall
     ScriptHasRootAccessRamCost:     0.05,
     ScriptGetHostnameRamCost:       0.05,
     ScriptGetHackingLevelRamCost:   0.05,
@@ -70,6 +74,8 @@ CONSTANTS = {
     ScriptPurchaseServerRamCost:    2.0,
     ScriptRoundRamCost:             0.05,
     ScriptReadWriteRamCost:         1.0,
+    ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args
+    ScriptGetScriptCost:            0.1,
 
     MultithreadingRAMCost:          1,
 
@@ -100,6 +106,12 @@ CONSTANTS = {
 
     //Hospital/Health
     HospitalCostPerHp: 100000,
+
+    //Gang constants
+    GangRespectToReputationRatio: 2, //Respect is divided by this to get rep gain
+    MaximumGangMembers: 20,
+    GangRecruitCostMultiplier: 2,
+    GangTerritoryUpdateTimer: 150,
 
     MillisecondsPer20Hours: 72000000,
     GameCyclesPer20Hours: 72000000 / 200,
@@ -170,8 +182,6 @@ CONSTANTS = {
     CrimeHeist: "pull off the ultimate heist",
 
     /* Tutorial related things */
-	TutorialGettingStartedText: "Todo...",
-
     TutorialNetworkingText: "Servers are a central part of the game. You start with a single personal server (your home computer) " +
                             "and you can purchase additional servers as you progress through the game. Connecting to other servers " +
                             "and hacking them can be a major source of income and experience. Servers can also be used to run " +
@@ -325,7 +335,11 @@ CONSTANTS = {
                            "&nbsp;<=<br>" +
                            "&nbsp;>=<br>" +
                            "&nbsp;==<br>" +
-                           "&nbsp;!=<br><br>" +
+                           "&nbsp;!=<br>" +
+                           "&nbsp;++ (Note: This ONLY pre-increments. Post-increment does not work)<br>" +
+                           "&nbsp;-- (Note: This ONLY pre-decrements. Post-decrement does not work)<br>" +
+                           "&nbsp;-  (Negation operator)<br>" +
+                           "&nbsp;!<br><br>" +
                            "<u><h1> Arrays </h1></u><br>" +
                            "Netscript arrays have the same properties and functions as javascript arrays. For information see javascripts <a href=\"https://www.w3schools.com/js/js_arrays.asp\" target='_blank'>array</a> documentation.<br><br>"+
                            "<u><h1> Script Arguments </h1></u><br>" +
@@ -672,68 +686,19 @@ CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.26.4<br>" +
-    "-All of the 'low-level servers' in early game that have a required hacking level now have 8GB of RAM " +
-    "instead of 4GB<br>" +
-    "-Increased the amount of experience given at university<br>" +
-    "-Slightly increased the production of Hacknet Nodes and made them cheaper to upgrade<br>" +
-    "-Infiltration now gives slightly more EXP and faction reputation<br>" +
-    "-Added two new crimes. These crimes are viable to attempt early on in the game and are relatively passive (each take 60+ seconds to complete)<br>" +
-    "-Crimes give more exp and more money<br>" +
-    "-Max money available on a server decreased from 50x the server's starting money to 25x<br>" +
-    "-Significantly increased wages for all jobs<br><br>" +
-    "v0.26.3<br>" +
-    "-Added support for large numbers using Decimal.js. Right now it only applies for the player's money<br>" +
-    "-Purchasing servers with the Netscript function purchaseServer() is no longer 2x as expensive as doing manually, " +
-    "it now costs the same<br>" +
-    "-Early game servers have more starting money<br><br>" +
-    "v0.26.2<br>" +
-    "-Major rebalancing and randomization of the amount of money that servers start with<br>" +
-    "-Significantly lowered hacking exp gain from hacking servers. The exp gain for higher-level servers was lowered more than " +
-    "that of low level servers. (~16% for lower level servers, up to ~25% for higher-level servers)<br>" +
-    "-Added deleteServer() Netscript function<br>" +
-    "-You can now purchase a maximum of 25 servers each run (Deleting a server will allow you to purchase a new one)<br>" +
-    "-Added autocompletion for './' Terminal command<br>" +
-    "-Darkweb prices now displayed properly using toLocaleString()<br>" +
-    "-Added NOT operator (!) and negation operator(-), so negative numbers should be functional now<br>" +
-    "-Rejected faction invitations will now show up as 'Outstanding Faction Invites' in the Factions page. These " +
-    "can be accepted at any point in the future<br>" +
-    "-Added a few more configurable game settings for suppressing messages and faction invitations<br>" +
-    "-Added tooltips for company job requirements<br><br>" +
-    "v0.26.1<br>" +
-    "-Added autocompletion for aliases<br>" +
-    "-Added getServerRam() Netscript function()<br>" +
-    "-Added getLevelUpgradeCost(n), getRamUpgradeCost(), getCoreUpgradeCost() functions for Netscript Hacknet Node API<br>" +
-    "-Added some configurable settings (See Game Options menu)<br><br>" +
-    "v0.26.0<br>" +
-    "-Game now has a real ending, although it's not very interesting/satisfying right now. It sets up the framework for the secondary prestige system " +
-    "in the future<br>" +
-    "-Forgot to mention that since last update, comments now work in Netscript. Use // for single line comments or /* and */ for multiline comments " +
-    "just like in Javascript<br>" +
-    "-Added ports to Netscript. These ports are essentially serialized queues. You can use the write() Netscript function to write a value " +
-    "to a queue, and then you can use the read() Netscript function to read the value from the queue. Once you read a value from the queue it will be " +
-    "removed. There are only 10 queues (1-10), and each has a maximum capacity of 50 entries. If you try to write to a queue that is full, the " +
-    "the first value is removed. See wiki/Netscript documentation for more details<br>" +
-    "-You can now use the 'help' Terminal command for specific commands<br>" +
-    "-You can now use './' to run a script/program (./NUKE.exe). However, tab completion currently doesn't work for it (I'm working on it)<br>" +
-    "-Decreased the base growth rate of servers by ~25%<br>" +
-    "-Both the effect of weaken() and its time to execute were halved. In other words, calling weaken() on a server only lowers its security by 0.05 (was 0.1 before) " +
-    "but the time to execute the function is half of what it was before. Therefore, the effective rate of weaken() should be about the same<br>" +
-    "-Increased all Infiltration rewards by ~10%, and increased infiltration rep gains by an additional 20% (~32% total for rep gains)<br>" +
-    "-The rate at which the security level of a facility increases during Infiltration was decreased significantly (~33%)<br>" +
-    "-Getting treated at the Hospital is now 33% more expensive<br>" +
-    "-Slightly increased the amount of time it takes to hack a server<br>" +
-    "-Slightly decreased the amount of money gained when hacking a server (~6%)<br>" +
-    "-Slightly decreased the base cost for RAM on home computer, but increased the cost multiplier. This means " +
-    "that upgrading RAM on the home computer should be slightly cheaper at the start, but slightly more expensive " +
-    "later on<br>" +
-    "-Increased the required hacking level for many late game servers<br>" +
-    "-The sleep() Netscript function now takes an optional 'log' argument that specifies whether or " +
-    "not the 'Sleeping for N milliseconds' will be logged for the script<br>" +
-    "-Added clearLog() Netscript function<br>" +
-    "-Deleted a few stocks. Didn't see a reason for having so many, and it just affects performance. Won't take " +
-    "effect until you reset by installing Augmentations<br>" +
-    "-There was a typo with Zeus Medical's server hostname. It is now 'zeus-med' rather than 'zeud-med'<br>" +
-    "-Added keyboard shortcuts to quickly navigate between different menus. See wiki link <a href='http://bitburner.wikia.com/wiki/Shortcuts' target='_blank'>here</a><br>" +
-    "-Changed the Navigation Menu UI",
+    "v0.27.0<br>" +
+    "-Added secondary 'prestige' system - featuring Source Files and BitNodes<br>" +
+    "-MILD SPOILERS HERE: Installing 'The Red Pill' Augmentation from Daedalus will unlock a special server called " +
+    "w0r1d_d43m0n. Finding and manually hacking this server through Terminal will destroy the Player's current BitNode, and allow the player " +
+    "to enter a new one. When destroying a BitNode, the player loses everything except the scripts on his/her " +
+    "home computer. The player will then gain a powerful second-tier persistent upgrade called a Source File. The player can then " +
+    "enter a new BitNode to start the game over. Each BitNode has different characteristics, and many will have new content/mechanics " +
+    "as well. Right now there are only 2 BitNodes. Each BitNode grants its own unique Source File. Restarting and destroying a BitNode you already " +
+    "have a Source File for will upgrade your Source File up to a maximum level of 3.<br><br>" +
+    "-Reputation gain with factions and companies is no longer a linear conversion, but an exponential one. It " +
+    "will be much easier to gain faction favor at first, but much harder later on. <br>" +
+    "-Significantly increased Infiltration exp gains<br>" +
+    "-Fixed a bug with company job requirement tooltips<br>" +
+    "-Added scriptRunning(), scriptKill(), and getScriptRam() Netscript functions. See documentation for details<br>" + 
+    "-Fixed a bug with deleteServer() Netscript function<br><br>"
 }

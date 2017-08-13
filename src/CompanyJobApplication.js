@@ -24,13 +24,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
     while (true) {
         if (Engine.Debug) {console.log("Determining qualification for next Company Position");}
         var newPos = getNextCompanyPosition(pos);
-
-        if (newPos == null) {
-            if (Engine.Debug) {
-                console.log("Player already at highest position, cannot go any higher");
-            }
-            break;
-        }
+        if (newPos == null) {break;}
 
         //Check if this company has this position
         if (company.hasPosition(newPos)) {
@@ -42,7 +36,6 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
         } else {
             break;
         }
-
     }
 
     //Check if the determined job is the same as the player's current job
@@ -50,9 +43,14 @@ PlayerObject.prototype.applyForJob = function(entryPosType) {
         if (currCompany.companyName == company.companyName &&
             pos.positionName == currPositionName) {
             var nextPos = getNextCompanyPosition(pos);
-            var reqText = getJobRequirementText(company, nextPos);
-            dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
-
+            if (nextPos == null) {
+                dialogBoxCreate("You are already at the highest position for your field! No promotion available");
+            } else if (company.hasPosition(nextPos)) {
+                var reqText = getJobRequirementText(company, nextPos);
+                dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
+            } else {
+                dialogBoxCreate("You are already at the highest position for your field! No promotion available");
+            }
             return; //Same job, do nothing
         }
     }
@@ -167,10 +165,7 @@ PlayerObject.prototype.applyForItJob = function() {
 PlayerObject.prototype.applyForSecurityEngineerJob = function() {
     var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.SecurityEngineer)) {
-        this.companyName = company.companyName;
-        this.companyPosition = CompanyPositions.SecurityEngineer;
-        dialogBoxCreate("Congratulations, you were offered a position at " + this.companyName + " as a Security Engineer!");
-        Engine.loadLocationContent();
+        this.applyForJob(CompanyPositions.SecurityEngineer);
     } else {
         dialogBoxCreate("Unforunately, you do not qualify for this position");
     }

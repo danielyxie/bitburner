@@ -365,19 +365,13 @@
     display: inline;
 }
 
-#faction-hack-div,
-#faction-fieldwork-div,
-#faction-securitywork-div,
-#faction-donate-div {
+.faction-work-div {
     overflow: hidden;
     width: 70%;
     height: 100%;
 }
 
-#faction-hack-div-wrapper,
-#faction-fieldwork-div-wrapper,
-#faction-securitywork-div-wrapper,
-#faction-donate-div-wrapper {
+.faction-work-div-wrapper {
     float: left;
     border: 2px solid #333;
     padding: 14px 6px 4px 6px;
@@ -591,4 +585,76 @@ div.faction-clear {
     color: var(--my-font-color);
     text-decoration: none;
     cursor: pointer;
+}
+
+/* Gang */
+#gang-container {
+    position: fixed;
+    padding: 6px;
+}
+
+
+
+.gang-member-header {
+    background-color: #444;
+    font-size: 20px;
+    color: white;
+    margin: 6px 6px 0px 6px;
+    padding: 6px;
+    cursor: pointer;
+    width: 80%;
+    text-align: left;
+    border: none;
+    outline: none;
+}
+
+.gang-member-header.active,
+.gang-member-header:hover {
+    background-color: #555;
+}
+
+.gang-member-header.active:hover {
+    background-color: #666;
+}
+
+.gang-member-header:after {
+    content: '\02795'; /* "plus" sign (+) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.gang-member-header.active:after {
+    content: "\2796"; /* "minus" sign (-) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.gang-member-panel {
+    margin: 0px 6px 6px 6px;
+    padding: 0px 6px 6px 6px;
+    width: 75%;
+    margin-left: 5%;
+    display: none;
+    background-color: #555;
+    overflow:auto;
+}
+
+.gang-member-panel div,
+.gang-member-panel ul,
+.gang-member-panel p,
+.gang-member-panel ul > li {
+    background-color: #555;
+}
+
+#gang-management-subpage > p {
+    padding: 4px;
+}
+
+.gang-member-info-div {
+    float:left;
+    background-color: #555;
 }

@@ -21,21 +21,6 @@ function PlayerObject() {
     this.hacking_money_mult     = 1;  //Increase through ascensions/augmentations. Can't go above 1
     this.hacking_grow_mult      = 1;
 
-    //Note: "Lifetime" refers to current ascension, "total" refers to the entire game history
-    //Accumulative  stats and skills
-    this.total_hacking   = 1;
-    this.total_strength  = 1;
-    this.total_defense   = 1;
-    this.total_dexterity = 1;
-    this.total_agility   = 1;
-    this.total_charisma  = 1;
-    this.lifetime_hacking    = 1;
-    this.lifetime_strength   = 1;
-    this.lifetime_defense    = 1;
-    this.lifetime_dexterity  = 1;
-    this.lifetime_agility    = 1;
-    this.lifetime_charisma   = 1;
-
     //Experience and multipliers
     this.hacking_exp     = 0;
     this.strength_exp    = 0;
@@ -89,35 +74,21 @@ function PlayerObject() {
     this.factionInvitations = [];   //Outstanding faction invitations
 
     //Augmentations
-    this.queuedAugmentations = []; //Purchased but not installed, names only
-    this.augmentations = []; //Names of all installed augmentations
+    this.queuedAugmentations = [];
+    this.augmentations = [];
 
-    //Crime statistics (Total refers to this 'simulation'. Lifetime is forever)
+    this.sourceFiles = [];
+
+    //Crime statistics
     this.karma = 0;
     this.numTimesShoplifted             = 0;
-    this.numTimesShopliftedTotal        = 0;
-    this.numTimesShopliftedLifetime     = 0;
     this.numPeopleMugged                = 0;
-    this.numPeopleMuggedTotal           = 0;
-    this.numPeopleMuggedLifetime        = 0;
     this.numTimesDealtDrugs             = 0;
-    this.numTimesDealtDrugsTotal        = 0;
-    this.numTimesDealtDrugsLifetime     = 0;
     this.numTimesTraffickArms           = 0;
-    this.numTimesTraffickArmsTotal      = 0;
-    this.numTimesTraffickArmsLifetime  = 0;
     this.numPeopleKilled                = 0;
-    this.numPeopleKilledTotal           = 0;
-    this.numPeopleKilledLifetime        = 0;
     this.numTimesGrandTheftAuto         = 0;
-    this.numTimesGrandTheftAutoTotal    = 0;
-    this.numTimesGrandTheftAutoLifetime = 0;
     this.numTimesKidnapped              = 0;
-    this.numTimesKidnappedTotal         = 0;
-    this.numTimesKidnappedLifetime      = 0;
     this.numTimesHeist                  = 0;
-    this.numTimesHeistTotal             = 0;
-    this.numTimesHeistLifetime          = 0;
 
     this.crime_money_mult               = 1;
     this.crime_success_mult             = 1;
@@ -175,6 +146,12 @@ function PlayerObject() {
     this.hasWseAccount      = false;
     this.hasTixApiAccess    = false;
 
+    //Gang
+    this.gang = null;
+
+    //bitnode
+    this.bitNodeN = 1;
+
 	//Used to store the last update time.
 	this.lastUpdate = 0;
     this.totalPlaytime = 0;
@@ -183,8 +160,7 @@ function PlayerObject() {
 
 PlayerObject.prototype.init = function() {
     /* Initialize Player's home computer */
-    var t_homeComp = new Server();
-    t_homeComp.init(createRandomIp(), "home", "Home PC", true, true, true, true, 8);
+    var t_homeComp = new Server(createRandomIp(), "home", "Home PC", true, true, true, 8);
     this.homeComputer = t_homeComp.ip;
     this.currentServer = t_homeComp.ip;
     AddToAllServers(t_homeComp);
@@ -218,6 +194,41 @@ PlayerObject.prototype.updateSkillLevels = function() {
     var ratio = this.hp / this.max_hp;
     this.max_hp         = Math.floor(10 + this.defense / 10);
     Player.hp = Math.round(this.max_hp * ratio);
+}
+
+PlayerObject.prototype.resetMultipliers = function() {
+    this.hacking_chance_mult    = 1;
+    this.hacking_speed_mult     = 1;
+    this.hacking_money_mult     = 1;
+    this.hacking_grow_mult      = 1;
+
+    this.hacking_mult       = 1;
+    this.strength_mult      = 1;
+    this.defense_mult       = 1;
+    this.dexterity_mult     = 1;
+    this.agility_mult       = 1;
+    this.charisma_mult      = 1;
+
+    this.hacking_exp_mult    = 1;
+    this.strength_exp_mult   = 1;
+    this.defense_exp_mult    = 1;
+    this.dexterity_exp_mult  = 1;
+    this.agility_exp_mult    = 1;
+    this.charisma_exp_mult   = 1;
+
+    this.company_rep_mult    = 1;
+    this.faction_rep_mult    = 1;
+
+    this.crime_money_mult       = 1;
+    this.crime_success_mult     = 1;
+
+    this.hacknet_node_money_mult            = 1;
+    this.hacknet_node_purchase_cost_mult    = 1;
+    this.hacknet_node_ram_cost_mult         = 1;
+    this.hacknet_node_core_cost_mult        = 1;
+    this.hacknet_node_level_cost_mult       = 1;
+
+    this.work_money_mult = 1;
 }
 
 //Calculates the chance of hacking a server
@@ -649,6 +660,7 @@ PlayerObject.prototype.startFactionWork = function(faction) {
     var favorMult = 1 + (faction.favor / 100);
     if (isNaN(favorMult)) {favorMult = 1;}
     this.workRepGainRate *= favorMult;
+    this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
 
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeFaction;
@@ -735,6 +747,7 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     var favorMult = 1 + (faction.favor / 100);
     if (isNaN(favorMult)) {favorMult = 1;}
     this.workRepGainRate *= favorMult;
+    this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
 
     this.workHackExpGained  += this.workHackExpGainRate * numCycles;
     this.workStrExpGained   += this.workStrExpGainRate * numCycles;
@@ -1092,7 +1105,7 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
     this.workDexExpGained   = dexExp * this.dexterity_exp_mult;
     this.workAgiExpGained   = agiExp * this.agility_exp_mult;
     this.workChaExpGained   = chaExp * this.charisma_exp_mult;
-    this.workMoneyGained    = money * this.crime_money_mult;
+    this.workMoneyGained    = money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
 
     this.timeNeededToCompleteWork = time;
 
@@ -1137,13 +1150,14 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     ++this.numTimesShoplifted;
                     break;
                 case CONSTANTS.CrimeRobStore:
-
+                    this.karma -= 0.5;
                     break;
                 case CONSTANTS.CrimeMug:
                     this.karma -= 0.25;
                     ++this.numPeopleMugged;
                     break;
                 case CONSTANTS.CrimeLarceny:
+                    this.karma -= 1.5;
                     break;
                 case CONSTANTS.CrimeDrugs:
                     ++this.numTimesDealtDrugs;
