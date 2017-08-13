@@ -360,7 +360,10 @@ var Terminal = {
 			if (rand < hackChance) {	//Success!
                 if (SpecialServerIps[SpecialServerNames.WorldDaemon] &&
                     SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip) {
-                    hackWorldDaemon();
+                    if (Player.bitNodeN == null) {
+                        Player.bitNodeN = 1;
+                    }
+                    hackWorldDaemon(Player.bitNodeN);
                     return;
                 }
                 server.manuallyHacked = true;

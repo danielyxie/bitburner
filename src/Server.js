@@ -32,7 +32,6 @@ function Server(ip=createRandomIp(), hostname="", organizationName="",
     this.messages       =   [];
 
 	/* Hacking information (only valid for "foreign" aka non-purchased servers) */
-
 	//Skill required to attempt a hack. Whether a hack is successful will be determined
 	//by a separate formula
 	this.requiredHackingSkill	= 1;
@@ -70,7 +69,7 @@ Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvai
     } else {
         this.moneyAvailable = moneyAvailable;
     }
-    this.moneyMax = 25 * moneyAvailable;
+    this.moneyMax = 25 * moneyAvailable * BitNodeMultipliers.ServerMaxMoney;
 	this.hackDifficulty = hackDifficulty;
     this.baseDifficulty = hackDifficulty;
     this.minDifficulty = Math.max(1, Math.round(hackDifficulty / 3));

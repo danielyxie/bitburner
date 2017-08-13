@@ -1,7 +1,7 @@
 //Netburner Company class
 //    Note: Company Positions can be loaded every time with init() but Company class needs
 //          to be saved/loaded from localStorage
-function Company(name, salaryMult, expMult, jobStatReqOffset) {
+function Company(name="", salaryMult=0, expMult=0, jobStatReqOffset=0) {
     this.companyName        = name;
     this.info               = "";
     this.companyPositions   = [];   //Names (only name, not object) of all company positions

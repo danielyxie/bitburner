@@ -16,7 +16,7 @@ function factionInit() {
 }
 document.addEventListener("DOMContentLoaded", factionInit, false);
 
-function Faction(name) {
+function Faction(name="") {
     this.name 				= name;
     this.augmentations 		= [];   //Name of augmentation only
     this.info 		        = "";	//Introductory/informational text about the faction
@@ -74,6 +74,16 @@ Faction.prototype.getFavorGain = function() {
         reqdRep *= CONSTANTS.FactionReputationToFavorMult;
     }
     return [favorGain, rep];
+}
+
+//Adds all Augmentations to this faction.
+Faction.prototype.addAllAugmentations = function() {
+    this.augmentations.length = 0;
+    for (var name in Augmentations) {
+        if (Augmentations.hasOwnProperty(name)) {
+            this.augmentations.push(name);
+        }
+    }
 }
 
 Faction.prototype.toJSON = function() {
@@ -563,8 +573,8 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var speakersforthedeadFac = Factions["Speakers for the Dead"];
     if (!speakersforthedeadFac.isBanned && !speakersforthedeadFac.isMember && !speakersforthedeadFac.alreadyInvited &&
         this.hacking_skill >= 100 && this.strength >= 300 && this.defense >= 300 &&
-        this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 10 &&
-        this.numPeopleKilledTotal >= 100 && this.karma <= -45 && this.companyName != Locations.Sector12CIA &&
+        this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 30 &&
+        this.karma <= -45 && this.companyName != Locations.Sector12CIA &&
         this.companyName != Locations.Sector12NSA) {
         invitedFactions.push(speakersforthedeadFac);
     }
@@ -761,7 +771,7 @@ displayFactionContent = function(factionName) {
 	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
 	var securityWorkDiv 	= document.getElementById("faction-securitywork-div");
     var donateDiv           = document.getElementById("faction-donate-div");
-
+    var gangDiv             = document.getElementById("faction-gang-div");
 
     var newHackButton = clearEventListeners("faction-hack-button");
     var newFieldWorkButton = clearEventListeners("faction-fieldwork-button");
@@ -817,6 +827,81 @@ displayFactionContent = function(factionName) {
         displayFactionAugmentations(factionName);
         return false;
     });
+
+    if (Player.bitNodeN == 2 && (factionName == "Slum Snakes" || factionName == "Tetrads" ||
+        factionName == "The Syndicate" || factionName == "The Dark Army" || factionName == "Speakers for the Dead" ||
+        factionName == "NiteSec" || factionName == "The Black Hand")) {
+        //Set everything else to invisible
+        hackDiv.style.display = "none";
+        fieldWorkDiv.style.display = "none";
+        securityWorkDiv.style.display = "none";
+        donateDiv.style.display = "none";
+
+        if (Player.gang && Player.gang.facName != factionName) {
+            //If the player has a gang but its not for this faction
+            gangDiv.style.display = "none";
+            return;
+        }
+
+        var gangDiv = document.getElementById("faction-gang-div");
+        //Create the "manage gang" button if it doesn't exist
+        if (gangDiv == null) {
+            gangDiv = document.createElement("div");
+            gangDiv.setAttribute("id", "faction-gang-div");
+            gangDiv.setAttribute("class", "faction-work-div");
+            gangDiv.style.display = "inline";
+
+            gangDiv.innerHTML =
+                '<div id="faction-gang-div-wrapper" class="faction-work-div-wrapper">' +
+                    '<a id="faction-gang-button" class="a-link-button">Manage Gang</a>' +
+                    '<p id="faction-gang-text">' +
+                        'Create and manage a gang for this Faction. ' +
+                        'Gangs will earn you money and faction reputation.' +
+                    '</p>' +
+                '</div>' +
+                '<div class="faction-clear"></div>';
+
+            var descText = document.getElementById("faction-work-description-text");
+            if (descText) {
+                descText.parentNode.insertBefore(gangDiv, descText.nextSibling);
+            } else {
+                console.log("ERROR: faciton-work-description-text not found");
+                dialogBoxCreate("Error loading this page. This is a bug please report to game developer");
+                return;
+            }
+        }
+        gangDiv.style.display = "inline";
+
+        var gangButton = clearEventListeners("faction-gang-button");
+        gangButton.addEventListener("click", function() {
+            if (!Player.inGang()) {
+                var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
+                yesBtn.innerHTML = "Create Gang";
+                noBtn.innerHTML = "Cancel";
+                yesBtn.addEventListener("click", () => {
+                    var hacking = false;
+                    if (factionName == "NiteSec" || factionName == "The Black Hand") {hacking = true;}
+                    Player.gang = new Gang(factionName, hacking);
+                    Engine.loadGangContent();
+                    yesNoBoxClose();
+                });
+                noBtn.addEventListener("click", () => {
+                    yesNoBoxClose();
+                });
+                yesNoBoxCreate("Would you like to create a new Gang with " + factionName + "?<br><br>" +
+                               "Note that this will prevent you from creating a Gang with any other Faction until " +
+                               "this BitNode is destroyed. There are NO differences between the Factions you can " +
+                               "create a Gang with and each of these Factions have all Augmentations available");
+            } else {
+                Engine.loadGangContent();
+            }
+
+        });
+
+        return;
+    } else {
+        if (gangDiv) {gangDiv.style.display = "none";}
+    }
 
 	if (faction.isMember) {
         if (faction.favor >= 150) {
@@ -1072,7 +1157,7 @@ function processPassiveFactionRepGain(numCycles) {
 			//TODO Get hard value of 1 rep per "rep gain cycle"" for now..
             //maybe later make this based on
             //a player's 'status' like how powerful they are and how much money they have
-            if (faction.isMember) {faction.playerReputation += numTimesGain;}
+            if (faction.isMember) {faction.playerReputation += (numTimesGain * BitNodeMultipliers.FactionPassiveRepGain);}
 		}
 	}
 }

@@ -164,6 +164,7 @@ function calculateRamUsage(codeCopy) {
     var sqlinjectCount = numOccurrences(codeCopy, "sqlinject(");
     var runCount = numOccurrences(codeCopy, "run(");
     var execCount = numOccurrences(codeCopy, "exec(");
+    var killCount = numOccurrences(codeCopy, "kill(") + numOccurrences(codeCopy, "killall(");
     var scpCount = numOccurrences(codeCopy, "scp(");
     var hasRootAccessCount = numOccurrences(codeCopy, "hasRootAccess(");
     var getHostnameCount = numOccurrences(codeCopy, "getHostname(");
@@ -187,11 +188,14 @@ function calculateRamUsage(codeCopy) {
                               numOccurrences(codeCopy, "getStockPosition(");
     var scriptBuySellStockCount = numOccurrences(codeCopy, "buyStock(") +
                                   numOccurrences(codeCopy, "sellStock(");
-    var scriptPurchaseServerCount = numOccurrences(codeCopy, "purchaseServer(") + 
+    var scriptPurchaseServerCount = numOccurrences(codeCopy, "purchaseServer(") +
                                     numOccurrences(codeCopy, "deleteServer(");
     var scriptRoundCount = numOccurrences(codeCopy, "round(");
     var scriptWriteCount = numOccurrences(codeCopy, "write(");
     var scriptReadCount = numOccurrences(codeCopy, "read(");
+    var arbScriptCount = numOccurrences(codeCopy, "scriptRunning(") +
+                         numOccurrences(codeCopy, "scriptKill(");
+    var getScriptCount = numOccurrences(codeCopy, "getScriptRam(");
 
     return baseRam +
         ((whileCount * CONSTANTS.ScriptWhileRamCost) +
@@ -209,6 +213,7 @@ function calculateRamUsage(codeCopy) {
         (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost) +
         (runCount * CONSTANTS.ScriptRunRamCost) +
         (execCount * CONSTANTS.ScriptExecRamCost) +
+        (killCount * CONSTANTS.ScriptKillRamCost) +
         (scpCount * CONSTANTS.ScriptScpRamCost) +
         (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) +
         (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
@@ -233,7 +238,9 @@ function calculateRamUsage(codeCopy) {
         (scriptPurchaseServerCount * CONSTANTS.ScriptPurchaseServerRamCost) +
         (scriptRoundCount * CONSTANTS.ScriptRoundRamCost) +
         (scriptWriteCount * CONSTANTS.ScriptReadWriteRamCost) +
-        (scriptReadCount * CONSTANTS.ScriptReadWriteRamCost));
+        (scriptReadCount * CONSTANTS.ScriptReadWriteRamCost) +
+        (arbScriptCount * CONSTANTS.ScriptArbScriptRamCost) +
+        (getScriptCount * CONSTANTS.ScriptGetScriptCost));
 }
 
 Script.prototype.toJSON = function() {

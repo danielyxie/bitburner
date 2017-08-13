@@ -466,8 +466,8 @@
 		use your terminal or create scripts when you are performing a task! <br><br><br><br>
 		</p>
 
-		<div id="faction-hack-div">
-            <div id="faction-hack-div-wrapper">
+		<div id="faction-hack-div" class="faction-work-div">
+            <div id="faction-hack-div-wrapper" class="faction-work-div-wrapper">
                 <a id="faction-hack-button" class="a-link-button">Hacking Contracts</a>
                 <p id="faction-hack-text">
                     Complete hacking contracts for your faction.
@@ -478,8 +478,8 @@
             <div class="faction-clear"></div>
 		</div>
 
-		<div id="faction-fieldwork-div">
-            <div id="faction-fieldwork-div-wrapper">
+		<div id="faction-fieldwork-div" class="faction-work-div">
+            <div id="faction-fieldwork-div-wrapper" class="faction-work-div-wrapper">
                 <a id="faction-fieldwork-button" class="a-link-button">Field Work</a>
                 <p id="faction-fieldwork-text">
                     Carry out field missions for your faction.
@@ -490,8 +490,8 @@
             <div class="faction-clear"></div>
 		</div>
 
-		<div id="faction-securitywork-div">
-            <div id="faction-securitywork-div-wrapper">
+		<div id="faction-securitywork-div" class="faction-work-div">
+            <div id="faction-securitywork-div-wrapper" class="faction-work-div-wrapper">
                 <a id="faction-securitywork-button" class="a-link-button">Security Work</a>
                 <p id="faction-securitywork-text">
                     Serve in a security detail for your faction.
@@ -502,8 +502,8 @@
             <div class="faction-clear"></div>
 		</div>
 
-        <div id="faction-donate-div">
-            <div id="faction-donate-div-wrapper">
+        <div id="faction-donate-div" class="faction-work-div">
+            <div id="faction-donate-div-wrapper" class="faction-work-div-wrapper">
                 <a id="faction-donate-button" class="a-link-button">Donate Money</a>
                 <p id="faction-donate-text">
                     Donate money to your faction. You will gain reputation based on how much money you donate
@@ -542,7 +542,7 @@
         <h1> Purchased Augmentations </h1>
         <p style="width:70%;">
         Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them.
-        <br>WARNING: Purchasing an Augmentation resets most of your progress, including: <br><br>
+        <br>WARNING: Installing your Augmentations resets most of your progress, including: <br><br>
                 Stats/Skill levels and Experience <br>
                 Money <br>
                 Scripts on every computer but your home computer<br>
@@ -550,8 +550,8 @@
                 Hacknet Nodes <br>
                 Faction/Company reputation <br>
                 Stocks<br><br>
-                Purchasing an Augmentation lets you start over with the perks and benefits granted by all
-                of the Augmentations you have ever purchased. Also, you will keep any scripts and RAM upgrades
+                Installing Augmentations lets you start over with the perks and benefits granted by all
+                of the Augmentations you have ever installed. Also, you will keep any scripts and RAM upgrades
                 on your home computer (but you will lose all programs besides NUKE.exe).
         </p>
         <br><br>
@@ -560,7 +560,7 @@
         <a id="install-augmentations-button" class="a-link-button"> Install Augmentations </a>
         <br><br>
         <h1> Installed Augmentations </h1>
-        <p style="width:70%;"> List of all augmentations that have been installed. You have gained the effects of these augmentations </p>
+        <p style="width:70%;"> List of all augmentations (including Source Files) that have been installed. You have gained the effects of these augmentations </p>
         <ul id="augmentations-list">
         </ul>
 	</div>
@@ -746,27 +746,28 @@
         <div id="purchase-server-box-content" class="popup-box-content">
             <p id="purchase-server-box-text"> </p>
             <p id="purchase-server-box-enter-name"> Enter new server hostname:  </p>
-            <input type="text" id="purchase-server-box-input" pattern="[a-zA-Z0-9-_]+ maxlength="30"> </input>
+            <input type="text" id="purchase-server-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30"> </input>
             <span id="purchase-server-box-confirm" class="popup-box-button"> Purchase </span>
             <span id="purchase-server-box-cancel" class="popup-box-button"> Cancel </span>
         </div>
     </div>
 
-    <!-- Purchase RAM for Home Computer Pop-up Box -->
-    <div id="purchase-ram-for-home-box-container" class="popup-box-container">
-        <div id="purchase-ram-for-home-box-content" class="popup-box-content">
-            <p id="purchase-ram-for-home-box-text"> </p>
-            <span id="purchase-ram-for-home-box-confirm" class="popup-box-button"> Purchase </span>
-            <span id="purchase-ram-for-home-box-cancel" class="popup-box-button"> Cancel </span>
+    <!-- Generic Yes/No Pop Up box -->
+    <div id="yes-no-box-container" class="popup-box-container">
+        <div id="yes-no-box-content" class="popup-box-content">
+            <p id="yes-no-box-text"> </p>
+            <span id="yes-no-box-yes" class="popup-box-button"> Yes </span>
+            <span id="yes-no-box-no" class="popup-box-button"> No </span>
         </div>
     </div>
 
-    <!-- Travel Pop-up Box -->
-    <div id="travel-box-container" class="popup-box-container">
-        <div id="travel-box-content" class="popup-box-content">
-            <p id="travel-box-text"> </p>
-            <span id="travel-box-confirm" class="popup-box-button"> Yes </span>
-            <span id="travel-box-cancel" class="popup-box-button"> No </span>
+    <!-- Generic yes/no pop up box with text entry field -->
+    <div id="yes-no-text-input-box-container" class="popup-box-container">
+        <div id="yes-no-text-input-box-content" class="popup-box-content">
+            <p id="yes-no-text-input-box-text"> </p>
+            <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30"> </input>
+            <span id="yes-no-text-input-box-yes" class="popup-box-button"> Yes </span>
+            <span id="yes-no-text-input-box-no" class="popup-box-button"> No </span>
         </div>
     </div>
 
@@ -982,12 +983,11 @@
     <script src="utils/PurchaseServerBox.js"></script>
     <script src="utils/FactionInvitationBox.js"></script>
     <script src="utils/PurchaseAugmentationBox.js"></script>
-    <script src="utils/TravelBox.js"></script>
-    <script src="utils/PurchaseRamForHomeBox.js"></script>
     <script src="utils/GameOptions.js"></script>
     <script src="utils/LogBox.js"></script>
     <script src="utils/InfiltrationBox.js"></script>
     <script src="utils/decimal.js"></script>
+    <script src="utils/YesNoBox.js"></script>
 
     <!-- Netscript -->
     <script src="src/NetscriptWorker.js"></script>
@@ -1027,6 +1027,8 @@
     <script src="src/RedPill.js"></script>
     <script src="src/BitNode.js"></script>
     <script src="src/Settings.js"></script>
+    <script src="src/SourceFile.js"></script>
+    <script src="src/Gang.js"></script>
 
     <script src="src/engine.js"></script>
 </html>

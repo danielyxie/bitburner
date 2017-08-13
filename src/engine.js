@@ -148,6 +148,7 @@ var Engine = {
         RedPill:            "RedPill",
         Infiltration:       "Infiltration",
         StockMarket:        "StockMarket",
+        Gang:               "Gang",
     },
     currentPage:    null,
 
@@ -321,6 +322,18 @@ var Engine = {
         Engine.currentPage = Engine.Page.StockMarket;
     },
 
+    loadGangContent: function() {
+        Engine.hideAllContent();
+        if (document.getElementById("gang-container") || Player.gang) {
+            displayGangContent();
+            Engine.currentPage = Engine.Page.Gang;
+        } else {
+            Engine.loadTerminalContent();
+            Engine.currentPage = Engine.Page.Terminal;
+        }
+
+    },
+
     //Helper function that hides all content
     hideAllContent: function() {
         Engine.Display.terminalContent.style.visibility = "hidden";
@@ -340,6 +353,9 @@ var Engine = {
         Engine.Display.redPillContent.style.visibility = "hidden";
         Engine.Display.infiltrationContent.style.visibility = "hidden";
         Engine.Display.stockMarketContent.style.visibility = "hidden";
+        if (document.getElementById("gang-container")) {
+            document.getElementById("gang-container").style.visibility = "hidden";
+        }
 
         //Location lists
         Engine.aevumLocationsList.style.display = "none";
@@ -599,6 +615,29 @@ var Engine = {
             augmentationsList.removeChild(augmentationsList.firstChild);
         }
 
+        //Source Files - Temporary...Will probably put in a separate pane Later
+        for (var i = 0; i < Player.sourceFiles.length; ++i) {
+            var srcFileKey = "SourceFile" + Player.sourceFiles[i].n;
+            var sourceFileObject = SourceFiles[srcFileKey];
+            if (sourceFileObject == null) {
+                console.log("ERROR: Invalid source file number: " + Player.sourceFiles[i].n);
+                continue;
+            }
+            var item = document.createElement("li");
+            var hElem = document.createElement("h2");
+            var pElem = document.createElement("p");
+
+            item.setAttribute("class", "installed-augmentation");
+            hElem.innerHTML = sourceFileObject.name + "<br>";
+            hElem.innerHTML += "Level " + (Player.sourceFiles[i].lvl) + " / 3";
+            pElem.innerHTML = sourceFileObject.info;
+
+            item.appendChild(hElem);
+            item.appendChild(pElem);
+
+            augmentationsList.appendChild(item);
+        }
+
         for (var i = 0; i < Player.augmentations.length; ++i) {
             var augName = Player.augmentations[i].name;
             var aug = Augmentations[augName];
@@ -710,6 +749,11 @@ var Engine = {
             }
         }
 
+        //Gang, if applicable
+        if (Player.bitNodeN == 2 && Player.inGang()) {
+            Player.gang.process(numCycles);
+        }
+
         //Counters
         Engine.decrementAllCounters(numCycles);
         Engine.checkCounters();
@@ -732,6 +776,7 @@ var Engine = {
         autoSaveCounter:    300,            //Autosave every minute
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
         updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
+        updateDisplaysLong: 15,
         createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
         checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations
         passiveFactionGrowth: 600,
@@ -779,6 +824,13 @@ var Engine = {
             }
 
             Engine.Counters.updateDisplays = 3;
+        }
+
+        if (Engine.Counters.updateDisplaysLong <= 0) {
+            if (Engine.currentPage === Engine.Page.Gang) {
+                updateGangContent();
+            }
+            Engine.Counters.updateDisplaysLong = 15;
         }
 
         if (Engine.Counters.createProgramNotifications <= 0) {
@@ -889,10 +941,6 @@ var Engine = {
         }, 3000);
     },
 
-    displayLoadingScreen: function() {
-
-    },
-
     removeLoadingScreen: function() {
         var loader = document.getElementById("loader");
         if (!loader) {return;}
@@ -919,14 +967,15 @@ var Engine = {
         var tutorial            = document.getElementById("tutorial-tab");
         var options             = document.getElementById("options-tab");
 
-
         //Load game from save or create new game
         if (loadGame(saveObject)) {
             console.log("Loaded game from save");
+            initBitNodeMultipliers();
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
             CompanyPositions.init();
             initAugmentations();            //Also calls Player.reapplyAllAugmentations()
+            Player.reapplyAllSourceFiles();
             initStockSymbols();
             if (Player.hasWseAccount) {
                 initSymbolToStockMap();
@@ -961,6 +1010,11 @@ var Engine = {
 
             //Passive faction rep gain offline
             processPassiveFactionRepGain(numCyclesOffline);
+
+            //Gang progress for BitNode 2
+            if (Player.bitNodeN != null && Player.bitNodeN == 2 && Player.inGang()) {
+                Player.gang.process(numCyclesOffline);
+            }
 
             //Update total playtime
             var time = numCyclesOffline * Engine._idleSpeed;
@@ -1018,6 +1072,7 @@ var Engine = {
         } else {
             //No save found, start new game
             console.log("Initializing new game");
+            initBitNodeMultipliers();
             SpecialServerIps = new SpecialServerIpsMap();
             Engine.setDisplayElements();        //Sets variables for important DOM elements
             Engine.start();                     //Run main game loop and Scripts loop
@@ -1594,6 +1649,5 @@ var Engine = {
 };
 
 window.onload = function() {
-    Engine.displayLoadingScreen();
     Engine.load();
 };
