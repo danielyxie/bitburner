@@ -1152,8 +1152,22 @@ var Terminal = {
     },
 
     executeListCommand: function(commandArray) {
-        if (commandArray.length != 1) {
-            post("Incorrect usage of ls command. Usage: ls"); return;
+        if (commandArray.length != 1 && commandArray.length != 2) {
+            post("Incorrect usage of ls command. Usage: ls [| grep pattern]"); return;
+        }
+
+
+        //grep
+        var filter = null;
+        if (commandArray.length == 2) {
+            if (commandArray[1].startsWith("| grep ")) {
+                var pattern = commandArray[1].replace("| grep ", "");
+                if (pattern != " ") {
+                    filter = pattern;
+                }
+            } else {
+                post("Incorrect usage of ls command. Usage: ls [| grep pattern]"); return;
+            }
         }
 
         //Display all programs and scripts
@@ -1162,13 +1176,32 @@ var Terminal = {
         //Get all of the programs and scripts on the machine into one temporary array
         var s = Player.getCurrentServer();
         for (var i = 0; i < s.programs.length; i++) {
-            allFiles.push(s.programs[i]);
+            if (filter) {
+                if (s.programs[i].includes(filter)) {
+                    allFiles.push(s.programs[i]);
+                }
+            } else {
+                allFiles.push(s.programs[i]);
+            }
         }
         for (var i = 0; i < s.scripts.length; i++) {
-            allFiles.push(s.scripts[i].filename);
+            if (filter) {
+                if (s.scripts[i].filename.includes(filter)) {
+                    allFiles.push(s.scripts[i].filename);
+                }
+            } else {
+                allFiles.push(s.scripts[i].filename);
+            }
+
         }
         for (var i = 0; i < s.messages.length; i++) {
-            allFiles.push(s.messages[i].filename);
+            if (filter) {
+                if (s.messages[i].filename.includes(filter)) {
+                    allFiles.push(s.messages[i].filename);
+                }
+            } else {
+                allFiles.push(s.messages[i].filename);
+            }
         }
 
         //Sort the files alphabetically then print each

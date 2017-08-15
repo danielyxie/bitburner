@@ -686,6 +686,12 @@ CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.27.1<br>" +
+    "-Changed the way Gang power was calculated to make it scale better late game (BitNode 2 only)<br>" +
+    "-Lowered the respect gain rate in Gangs (Bitnode 2 only)<br>" +
+    "-Added '| grep pattern' option for ls Terminal command. This allows you to only list files that contain a certain pattern<br>" +
+    "-Added break statement in Netscript<br>" +
+    "-Display for some numerical values is now done in shorthand (e.g 1.000m instead of 1,000,000)<br><br>" + 
     "v0.27.0<br>" +
     "-Added secondary 'prestige' system - featuring Source Files and BitNodes<br>" +
     "-MILD SPOILERS HERE: Installing 'The Red Pill' Augmentation from Daedalus will unlock a special server called " +
@@ -699,6 +705,6 @@ CONSTANTS = {
     "will be much easier to gain faction favor at first, but much harder later on. <br>" +
     "-Significantly increased Infiltration exp gains<br>" +
     "-Fixed a bug with company job requirement tooltips<br>" +
-    "-Added scriptRunning(), scriptKill(), and getScriptRam() Netscript functions. See documentation for details<br>" + 
+    "-Added scriptRunning(), scriptKill(), and getScriptRam() Netscript functions. See documentation for details<br>" +
     "-Fixed a bug with deleteServer() Netscript function<br><br>"
 }

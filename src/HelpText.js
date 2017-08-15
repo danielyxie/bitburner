@@ -108,9 +108,15 @@ HelpTexts = {
                     "Note that after the 'kill' command is issued for a script, it may take a while for the script to actually stop running. " +
                     "This will happen if the script is in the middle of a command such as grow() or weaken() that takes time to execute. " +
                     "The script will not be stopped/killed until after that time has elapsed.",
-    ls:             "ls<br>" +
-                    "Prints all files on the current server to the Terminal screen. This includes all scripts, programs, and message files. " +
-                    "The files will be displayed in alphabetical order.",
+    ls:             "ls [| grep pattern]<br>" +
+                    "The ls command, with no arguments, prints all files on the current server to the Terminal screen. " +
+                    "This includes all scripts, programs, and message files. " +
+                    "The files will be displayed in alphabetical order. <br><br>" +
+                    "The '| grep pattern' optional parameter can be used to only display files whose filenames match the specified pattern. " +
+                    "For example, if you wanted to only display files with the .script extension, you could use: <br><br>" +
+                    "ls | grep .script<br><br>" +
+                    "Alternatively, if you wanted to display all files with the word purchase in the filename, you could use: <br><br>" +
+                    "ls | grep purchase",
     mem:            "mem [script name] [-t] [num threads]<br>" +
                     "Displays the amount of RAM needed to run the specified script with a single thread. The command can also be used to print " +
                     "the amount of RAM needed to run a script with multiple threads using the '-t' flag. If the '-t' flag is specified, then " +

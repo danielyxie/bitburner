@@ -58,10 +58,10 @@ function processAllGangPowerGains(numCycles=1) {
     for (var name in AllGangs) {
         if (AllGangs.hasOwnProperty(name)) {
             if (name == playerGangName) {
-                AllGangs[name].power = Player.gang.calculatePower();
+                AllGangs[name].power += Player.gang.calculatePower();
             } else {
                 var gain = Math.random() * 0.005; //TODO Adjust as necessary
-                AllGangs[name].power += (gain * numCycles);
+                AllGangs[name].power += (gain);
             }
         }
     }
@@ -83,9 +83,13 @@ function processAllGangTerritory(numCycles=1) {
         var thisPwr = AllGangs[GangNames[i]].power;
         var otherPwr = AllGangs[GangNames[other]].power;
         var thisChance = thisPwr / (thisPwr + otherPwr);
+
+        //Skip calculation if one of the two gangs has zero territory
+        if (AllGangs[GangNames[other]].territory <= 0 || AllGangs[GangNames[i]].territory <= 0) {continue;}
+
         if (Math.random() < thisChance) {
             AllGangs[GangNames[i]].territory += 0.0001;
-            AllGangs[GangNames[other]].territory-= 0.0001;
+            AllGangs[GangNames[other]].territory -= 0.0001;
         } else {
             AllGangs[GangNames[i]].territory -= 0.0001;
             AllGangs[GangNames[other]].territory += 0.0001;
@@ -109,6 +113,7 @@ function Gang(facName, hacking=false) {
     this.members    = [];  //Array of GangMembers
     this.wanted     = 1;
     this.respect    = 1;
+    this.power      = 0;
 
     this.isHackingGang = hacking;
 
@@ -184,6 +189,7 @@ Gang.prototype.processExperienceGains = function(numCycles=1) {
     }
 }
 
+//Calculates power GAIN, which is added onto the Gang's existing power
 Gang.prototype.calculatePower = function() {
     var memberTotal = 0;
     for (var i = 0; i < this.members.length; ++i) {
@@ -192,7 +198,7 @@ Gang.prototype.calculatePower = function() {
             memberTotal += this.members[i].calculatePower();
         }
     }
-    return (memberTotal);
+    return (0.0005 * memberTotal);
 }
 
 Gang.prototype.toJSON = function() {
@@ -382,49 +388,49 @@ GangMemberTasks = {
                                         "Ransomware",
                                         "Assign this gang member to create and distribute ransomware<br><br>" +
                                         "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.00008, baseWanted: 0.00001, baseMoney: 1,
+                                        {baseRespect: 0.00005, baseWanted: 0.00001, baseMoney: 1,
                                          hackWeight: 100, difficulty: 1}),
     "Phishing" :                new GangMemberTask(
                                         "Phishing",
                                         "Assign this gang member to attempt phishing scams and attacks<br><br>" +
                                         "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.0001, baseWanted: 0.001, baseMoney: 2.5,
+                                        {baseRespect: 0.00008, baseWanted: 0.001, baseMoney: 2.5,
                                          hackWeight: 85, chaWeight: 15, difficulty: 3}),
     "Identity Theft" :          new GangMemberTask(
                                         "Identity Theft",
                                         "Assign this gang member to attempt identity theft<br><br>" +
                                         "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0003, baseWanted: 0.01, baseMoney: 6,
+                                        {baseRespect: 0.0001, baseWanted: 0.01, baseMoney: 6,
                                          hackWeight: 80, chaWeight: 20, difficulty: 4}),
     "DDoS Attacks" :            new GangMemberTask(
                                         "DDoS Attacks",
                                         "Assign this gang member to carry out DDoS attacks<br><br>" +
                                         "Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0007, baseWanted: 0.05,
+                                        {baseRespect: 0.0004, baseWanted: 0.05,
                                          hackWeight: 100, difficulty: 7}),
     "Plant Virus" :             new GangMemberTask(
                                         "Plant Virus",
                                         "Assign this gang member to create and distribute malicious viruses<br><br>" +
                                         "Increases respect - Increases wanted level",
-                                        {baseRespect: 0.001, baseWanted: 0.05,
+                                        {baseRespect: 0.0006, baseWanted: 0.05,
                                          hackWeight: 100, difficulty: 10}),
     "Fraud & Counterfeiting" :  new GangMemberTask(
                                         "Fraud & Counterfeiting",
                                         "Assign this gang member to commit financial fraud and digital counterfeiting<br><br>" +
                                         "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.0005, baseWanted: 0.1, baseMoney: 15,
+                                        {baseRespect: 0.0008, baseWanted: 0.1, baseMoney: 15,
                                          hackWeight: 80, chaWeight: 20, difficulty: 17}),
     "Money Laundering" :        new GangMemberTask(
                                         "Money Laundering",
                                         "Assign this gang member to launder money<br><br>" +
                                         "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.002, baseWanted:0.2, baseMoney: 40,
+                                        {baseRespect: 0.0009, baseWanted:0.2, baseMoney: 40,
                                          hackWeight: 75, chaWeight: 25, difficulty: 20}),
     "Cyberterrorism" :          new GangMemberTask(
                                         "Cyberterrorism",
                                         "Assign this gang member to commit acts of cyberterrorism<br><br>" +
                                         "Greatly increases respect - Greatly increases wanted level",
-                                        {baseRespect: 0.01, baseWanted: 0.5,
+                                        {baseRespect: 0.001, baseWanted: 0.5,
                                          hackWeight: 80, chaWeight: 20, difficulty: 33}),
     "Ethical Hacking" :         new GangMemberTask(
                                         "Ethical Hacking",
@@ -442,26 +448,26 @@ GangMemberTasks = {
                                         "Deal Drugs",
                                         "Assign this gang member to sell drugs.<br><br>" +
                                         "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.0001, baseWanted: 0.001, baseMoney: 4,
+                                        {baseRespect: 0.00008, baseWanted: 0.001, baseMoney: 4,
                                          agiWeight: 20, dexWeight: 20, chaWeight: 60, difficulty: 3}),
     "Run a Con" :               new GangMemberTask(
                                         "Run a Con",
                                         "Assign this gang member to run cons<br><br>" +
                                         "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0005, baseWanted: 0.01, baseMoney: 10,
+                                        {baseRespect: 0.0002, baseWanted: 0.01, baseMoney: 10,
                                          strWeight: 5, defWeight: 5, agiWeight: 25, dexWeight: 25, chaWeight: 40, difficulty: 10}),
     "Armed Robbery" :           new GangMemberTask(
                                         "Armed Robbery",
                                         "Assign this gang member to commit armed robbery on stores, banks and armored cars<br><br>" +
                                         "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0003, baseWanted: 0.05, baseMoney: 25,
+                                        {baseRespect: 0.0002, baseWanted: 0.05, baseMoney: 25,
                                          hackWeight: 20, strWeight: 15, defWeight: 15, agiWeight: 10, dexWeight: 20, chaWeight: 20,
                                          difficulty: 17}),
     "Traffick Illegal Arms" :   new GangMemberTask(
                                         "Traffick Illegal Arms",
                                         "Assign this gang member to traffick illegal arms<br><br>" +
                                         "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.001, baseWanted: 0.1, baseMoney: 40,
+                                        {baseRespect: 0.0005, baseWanted: 0.1, baseMoney: 40,
                                          hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, chaWeight: 75,
                                          difficulty: 25}),
     "Threaten & Blackmail" :    new GangMemberTask(
@@ -474,7 +480,7 @@ GangMemberTasks = {
                                         "Terrorism",
                                         "Assign this gang member to commit acts of terrorism<br><br>" +
                                         "Greatly increases respect - Greatly increases wanted level",
-                                        {baseRespect: 0.01, baseWanted: 1,
+                                        {baseRespect: 0.001, baseWanted: 1,
                                          hackWeight: 20, strWeight: 20, defWeight: 20,dexWeight: 20, chaWeight: 20,
                                          difficulty: 33}),
     "Vigilante Justice" :       new GangMemberTask(
@@ -502,88 +508,90 @@ GangMemberTasks = {
 }
 
 
-function GangMemberUpgrade(name, desc) {
+function GangMemberUpgrade(name="", desc="", cost=0, type="-") {
     this.name = name;
     this.desc = desc;
+    this.cost = cost;
+    this.type = type; //w, a, v, r
 }
 
 //Passes in a GangMember object
-GangMemberUpgrade.prototype.apply = function(member) {
+GangMemberUpgrade.prototype.apply = function(member, unapply=false) {
     switch(this.name) {
         case "Baseball Bat":
-            member.str *= 1.1;
-            member.def *= 1.1;
+            unapply ? member.str /= 1.1 : member.str *= 1.1;
+            unapply ? member.def /= 1.1 : member.def *= 1.1;
             break;
         case "Katana":
-            member.str *= 1.15;
-            member.def *= 1.15;
-            member.dex *= 1.15;
+            unapply ? member.str /= 1.15 : member.str *= 1.15;
+            unapply ? member.def /= 1.15 : member.def *= 1.15;
+            unapply ? member.dex /= 1.15 : member.dex *= 1.15;
             break;
         case "Glock 18C":
-            member.str *= 1.2;
-            member.def *= 1.2;
-            member.dex *= 1.2;
-            member.agi *= 1.2;
+            unapply ? member.str /= 1.2 : member.str *= 1.2;
+            unapply ? member.def /= 1.2 : member.def *= 1.2;
+            unapply ? member.dex /= 1.2 : member.dex *= 1.2;
+            unapply ? member.agi /= 1.2 : member.agi *= 1.2;
             break;
         case "P90":
-            member.str *= 1.4;
-            member.def *= 1.4;
-            member.agi *= 1.2;
+            unapply ? member.str /= 1.4 : member.str *= 1.4;
+            unapply ? member.def /= 1.4 : member.def *= 1.4;
+            unapply ? member.agi /= 1.2 : member.agi *= 1.2;
             break;
         case "Steyr AUG":
-            member.str *= 1.6;
-            member.def *= 1.6;
+            unapply ? member.str /= 1.6 : member.str *= 1.6;
+            unapply ? member.def /= 1.6 : member.def *= 1.6;
             break;
         case "AK-47":
-            member.str *= 1.8;
-            member.def *= 1.8;
+            unapply ? member.str /= 1.8 : member.str *= 1.8;
+            unapply ? member.def /= 1.8 : member.def *= 1.8;
             break;
         case "M15A10 Assault Rifle":
-            member.str *= 1.9;
-            member.def *= 1.9;
+            unapply ? member.str /= 1.9 : member.str *= 1.9;
+            unapply ? member.def /= 1.9 : member.def *= 1.9;
             break;
         case "AWM Sniper Rifle":
-            member.str *= 1.8;
-            member.dex *= 1.8;
-            member.agi *= 1.8;
+            unapply ? member.str /= 1.8 : member.str *= 1.8;
+            unapply ? member.dex /= 1.8 : member.dex *= 1.8;
+            unapply ? member.agi /= 1.8 : member.agi *= 1.8;
             break;
         case "Bulletproof Vest":
-            member.def *= 1.15;
+            unapply ? member.def /= 1.15 : member.def *= 1.15;
             break;
         case "Full Body Armor":
-            member.def *= 1.3;
+            unapply ? member.def /= 1.3 : member.def *= 1.3;
             break;
         case "Liquid Body Armor":
-            member.def *= 1.5;
-            member.agi *= 1.5;
+            unapply ? member.def /= 1.5 : member.def *= 1.5;
+            unapply ? member.agi /= 1.5 : member.agi *= 1.5;
             break;
         case "Graphene Plating Armor":
-            member.def *= 2;
+            unapply ? member.def /= 2 : member.def *= 2;
             break;
         case "Ford Flex V20":
-            member.agi *= 1.2;
-            member.cha *= 1.2;
+            unapply ? member.agi /= 1.2 : member.agi *= 1.2;
+            unapply ? member.cha /= 1.2 : member.cha *= 1.2;
             break;
         case "ATX1070 Superbike":
-            member.agi *= 1.4;
-            member.cha *+ 1.4;
+            unapply ? member.agi /= 1.4 : member.agi *= 1.4;
+            unapply ? member.cha /= 1.4 : member.cha *= 1.4;
             break;
         case "Mercedes-Benz S9001":
-            member.agi *= 1.6;
-            member.cha *= 1.6;
+            unapply ? member.agi /= 1.6 : member.agi *= 1.6;
+            unapply ? member.cha /= 1.6 : member.cha *= 1.6;
             break;
         case "White Ferrari":
-            member.agi *= 1.8;
-            member.cha *= 1.8;
+            unapply ? member.agi /= 1.8 : member.agi *= 1.8;
+            unapply ? member.cha /= 1.8 : member.cha *= 1.8;
             break;
         case "NUKE Rootkit":
-            member.hack *= 1.2;
+            unapply ? member.hack /= 1.2 : member.hack *= 1.2;
             break;
         case "Soulstealer Rootkit":
-            member.hack *= 1.3;
+            unapply ? member.hack /= 1.3 : member.hack *= 1.3;
             break;
         case "Demon Rootkit":
-            member.hack *= 1.3;
+            unapply ? member.hack /= 1.5 : member.hack *= 1.5;
             break;
         default:
             console.log("ERROR: Could not find this upgrade: " + this.name);
@@ -591,45 +599,198 @@ GangMemberUpgrade.prototype.apply = function(member) {
     }
 }
 
+//Purchases for given member
+GangMemberUpgrade.prototype.purchase = function(memberObj) {
+    if (Player.money.lt(this.cost)) {
+        dialogBoxCreate("You do not have enough money to purchase this upgrade");
+        return;
+    }
+    Player.loseMoney(this.cost);
+    switch (this.type) {
+        case "w":
+            if (memberObj.weaponUpgrade instanceof GangMemberUpgrade) {
+                memberObj.weaponUpgrade.apply(memberObj, true); //Unapply old upgrade
+            }
+            this.apply(memberObj, false);
+            memberObj.weaponUpgrade = this;
+            break;
+        case "a":
+            if (memberObj.armorUpgrade instanceof GangMemberUpgrade) {
+                memberObj.armorUpgrade.apply(memberObj, true); //Unapply old upgrade
+            }
+            this.apply(memberObj, false);
+            memberObj.armorUpgrade = this;
+            break;
+        case "v":
+            if (memberObj.vehicleUpgrade instanceof GangMemberUpgrade) {
+                memberObj.vehicleUpgrade.apply(memberObj, true); //Unapply old upgrade
+            }
+            this.apply(memberObj, false);
+            memberObj.vehicleUpgrade = this;
+            break;
+        case "r":
+            if (memberObj.hackingUpgrade instanceof GangMemberUpgrade) {
+                memberObj.hackingUpgrade.apply(memberObj, true); //Unapply old upgrade
+            }
+            this.apply(memberObj, false);
+            memberObj.hackingUpgrade = this;
+            break;
+        default:
+            console.log("ERROR: GangMemberUpgrade has invalid type: " + this.type);
+            break;
+    }
+    createGangMemberUpgradeBox(memberObj);
+}
+
+GangMemberUpgrade.prototype.toJSON = function() {
+	return Generic_toJSON("GangMemberUpgrade", this);
+}
+
+GangMemberUpgrade.fromJSON = function(value) {
+	return Generic_fromJSON(GangMemberUpgrade, value.data);
+}
+
+Reviver.constructors.GangMemberUpgrade = GangMemberUpgrade;
+
 GangMemberUpgrades = {
     "Baseball Bat" : new GangMemberUpgrade("Baseball Bat",
-                            "Increases strength and defense by 10%"),
+                            "Increases strength and defense by 10%", 1000000, "w"),
     "Katana" :       new GangMemberUpgrade("Katana",
-                            "Increases strength, defense, and dexterity by 15%"),
+                            "Increases strength, defense, and dexterity by 15%", 12000000, "w"),
     "Glock 18C" :    new GangMemberUpgrade("Glock 18C",
-                            "Increases strength, defense, dexterity, and agility by 20%"),
+                            "Increases strength, defense, dexterity, and agility by 20%", 25000000, "w"),
     "P90" :          new GangMemberUpgrade("P90C",
-                            "Increases strength and defense by 40%. Increases agility by 20%"),
+                            "Increases strength and defense by 40%. Increases agility by 20%", 50000000, "w"),
     "Steyr AUG" :    new GangMemberUpgrade("Steyr AUG",
-                            "Increases strength and defense by 60%"),
+                            "Increases strength and defense by 60%", 60000000, "w"),
     "AK-47" :        new GangMemberUpgrade("AK-47",
-                            "Increases strength and defense by 80%"),
+                            "Increases strength and defense by 80%", 100000000, "w"),
     "M15A10 Assault Rifle" :    new GangMemberUpgrade("M15A10 Assault Rifle",
-                                        "Increases strength and defense by 90%"),
+                                        "Increases strength and defense by 90%", 150000000, "w"),
     "AWM Sniper Rifle" :        new GangMemberUpgrade("AWM Sniper Rifle",
-                                        "Increases strength, dexterity, and agility by 80%"),
+                                        "Increases strength, dexterity, and agility by 80%", 225000000, "w"),
     "Bulletproof Vest" :        new GangMemberUpgrade("Bulletproof Vest",
-                                        "Increases defense by 15%"),
+                                        "Increases defense by 15%", 2000000, "a"),
     "Full Body Armor" :         new GangMemberUpgrade("Full Body Armor",
-                                        "Increases defense by 30%"),
+                                        "Increases defense by 30%", 5000000, "a"),
     "Liquid Body Armor" :       new GangMemberUpgrade("Liquid Body Armor",
-                                        "Increases defense and agility by 50%"),
+                                        "Increases defense and agility by 50%", 25000000, "a"),
     "Graphene Plating Armor" :  new GangMemberUpgrade("Graphene Plating Armor",
-                                        "Increases defense by 100%"),
+                                        "Increases defense by 100%", 40000000, "a"),
     "Ford Flex V20" :           new GangMemberUpgrade("Ford Flex V20",
-                                        "Increases agility and charisma by 20%"),
+                                        "Increases agility and charisma by 20%", 3000000, "v"),
     "ATX1070 Superbike" :       new GangMemberUpgrade("ATX1070 Superbike",
-                                        "Increases agility and charisma by 40%"),
+                                        "Increases agility and charisma by 40%", 9000000, "v"),
     "Mercedes-Benz S9001" :     new GangMemberUpgrade("Mercedes-Benz S9001",
-                                        "Increases agility and charisma by 60%"),
+                                        "Increases agility and charisma by 60%", 18000000, "v"),
     "White Ferrari" :           new GangMemberUpgrade("White Ferrari",
-                                        "Increases agility and charisma by 80%"),
+                                        "Increases agility and charisma by 80%", 30000000, "v"),
     "NUKE Rootkit" :            new GangMemberUpgrade("NUKE Rootkit",
-                                        "Increases hacking by 20%"),
+                                        "Increases hacking by 20%", 5000000, "r"),
     "Soulstealer Rootkit" :     new GangMemberUpgrade("Soulstealer Rootkit",
-                                        "Increases hacking by 30%"),
+                                        "Increases hacking by 30%", 15000000, "r"),
     "Demon Rootkit" :           new GangMemberUpgrade("Demon Rootkit",
-                                        "Increases hacking by 50%"),
+                                        "Increases hacking by 50%", 50000000, "r"),
+}
+
+//Create a pop-up box that lets player purchase upgrades
+function createGangMemberUpgradeBox(memberObj) {
+    var container = document.getElementById("gang-purchase-upgrade-container");
+    if (container) {
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+    } else {
+        var container = document.createElement("div");
+        container.setAttribute("id", "gang-purchase-upgrade-container");
+        document.getElementById("entire-game-container").appendChild(container);
+        container.setAttribute("class", "popup-box-container");
+    }
+
+    var content = document.createElement("div");
+    content.setAttribute("class", "popup-box-content");
+    container.appendChild(content);
+
+    var intro = document.createElement("p");
+    content.appendChild(intro);
+    intro.innerHTML =
+        memberObj.name + "<br><br>" +
+        "A gang member can be upgraded with a weapon, armor, a vehicle, and a hacking rootkit. " +
+        "For each of these pieces of equipment, a gang member can only have one at a time (i.e " +
+        "a member cannot have two weapons or two vehicles). Purchasing an upgrade will automatically " +
+        "replace the member's existing upgrade, if he/she is equipped with one. The existing upgrade " +
+        "will be lost and will have to be re-purchased if you want to switch back.";
+
+    //Weapons
+    var weaponTxt = document.createElement("p");
+    content.appendChild(weaponTxt);
+    if (memberObj.weaponUpgrade instanceof GangMemberUpgrade) {
+        weaponTxt.innerHTML = "Weapons (Current Equip: " + memberObj.weaponUpgrade.name + ")";
+    } else {
+        weaponTxt.innerHTML = "Weapons (Current Equip: NONE)";
+    }
+    var weaponNames = ["Baseball Bat", "Katana", "Glock 18C", "P90", "Steyr AUG",
+                       "AK-47", "M15A10 Assault Rifle", "AWM Sniper Rifle"];
+    createGangMemberUpgradeButtons(memberObj, weaponNames, memberObj.weaponUpgrade, content);
+
+    var armorTxt = document.createElement("p");
+    content.appendChild(armorTxt);
+    if (memberObj.armorUpgrade instanceof GangMemberUpgrade) {
+        armorTxt.innerHTML = "Armor (Current Equip: " + memberObj.armorUpgrade.name + ")";
+    } else {
+        armorTxt.innerHTML = "Armor (Current Equip: NONE)";
+    }
+    var armorNames = ["Bulletproof Vest", "Full Body Armor", "Liquid Body Armor",
+                      "Graphene Plating Armor"];
+    createGangMemberUpgradeButtons(memberObj, armorNames, memberObj.armorUpgrade, content);
+
+    var vehicleTxt = document.createElement("p");
+    content.appendChild(vehicleTxt);
+    if (memberObj.vehicleUpgrade instanceof GangMemberUpgrade) {
+        vehicleTxt.innerHTML = "Vehicles (Current Equip: " + memberObj.vehicleUpgrade.name + ")";
+    } else {
+        vehicleTxt.innerHTML = "Vehicles (Current Equip: NONE)";
+    }
+    var vehicleNames = ["Ford Flex V20", "ATX1070 Superbike", "Mercedes-Benz S9001",
+                        "White Ferrari"];
+    createGangMemberUpgradeButtons(memberObj, vehicleNames, memberObj.vehicleUpgrade, content);
+
+    var rootkitTxt = document.createElement("p");
+    content.appendChild(rootkitTxt);
+    if (memberObj.hackingUpgrade instanceof GangMemberUpgrade) {
+        rootkitTxt.innerHTML = "Rootkits (Current Equip: " + memberObj.hackingUpgrade.name + ")";
+    } else {
+        rootkitTxt.innerHTML = "Rootkits (Current Equip: NONE)";
+    }
+    var rootkitNames = ["NUKE Rootkit", "Soulstealer Rootkit", "Demon Rootkit"];
+    createGangMemberUpgradeButtons(memberObj, rootkitNames, memberObj.hackingUpgrade, content);
+}
+
+function createGangMemberUpgradeButtons(memberObj, upgNames, memberUpgrade, content) {
+    for (var i = 0; i < upgNames.length; ++i) {
+        (function() {
+        var upgrade = GangMemberUpgrades[upgNames[i]];
+        if (upgrade == null) {
+            console.log("ERROR: Could not find GangMemberUpgrade object for" + upgNames[i]);
+            continue;
+        }
+        //Skip the currently owned upgrade
+        if (memberUpgrade instanceof GangMemberUpgrade &&
+            memberUpgrade.name == upgrade.name) {continue;}
+
+        var btn = document.createElement("a");
+        btn.innerHTML = upgrade.name + " - $" + numeral(upgrade.cost).format('(0.00a)');
+        if (Player.money.gte(upgrade.cost)) {
+            btn.setAttribute("class", "a-link-button");
+        } else {
+            btn.setAttribute("class", "a-link-button-inactive");
+        }
+        content.appendChild(btn);
+        btn.addEventListener("click", function() {
+            upgrade.purchase(memberObj);
+        });
+        }()); // Immediate invocation
+    }
 }
 
 var gangContentCreated = false;
@@ -1004,12 +1165,12 @@ function updateGangMemberDisplayElement(memberObj) {
     var stats = document.getElementById(name + "gang-member-stats-text");
     if (stats) {
         stats.innerHTML =
-            "Hacking: " + formatNumber(memberObj.hack, 0) + " (" + formatNumber(memberObj.hack_exp, 3) + " exp)<br>" +
-            "Strength: " + formatNumber(memberObj.str, 0) + " (" + formatNumber(memberObj.str_exp, 3) + " exp)<br>" +
-            "Defense: " + formatNumber(memberObj.def, 0) + " (" + formatNumber(memberObj.def_exp, 3) + " exp)<br>" +
-            "Dexterity: " + formatNumber(memberObj.dex, 0) + " (" + formatNumber(memberObj.dex_exp, 3) + " exp)<br>" +
-            "Agility: " + formatNumber(memberObj.agi, 0) + " (" + formatNumber(memberObj.agi_exp, 3) + " exp)<br>" +
-            "Charisma: " + formatNumber(memberObj.cha, 0) + " (" + formatNumber(memberObj.cha_exp, 3) + " exp)<br>";
+            "Hacking: " + formatNumber(memberObj.hack, 0) + " (" + numeral(memberObj.hack_exp).format('(0.00a)') + " exp)<br>" +
+            "Strength: " + formatNumber(memberObj.str, 0) + " (" + numeral(memberObj.str_exp).format('(0.00a)') + " exp)<br>" +
+            "Defense: " + formatNumber(memberObj.def, 0) + " (" + numeral(memberObj.def_exp).format('(0.00a)') + " exp)<br>" +
+            "Dexterity: " + formatNumber(memberObj.dex, 0) + " (" + numeral(memberObj.dex_exp).format('(0.00a)') + " exp)<br>" +
+            "Agility: " + formatNumber(memberObj.agi, 0) + " (" + numeral(memberObj.agi_exp).format('(0.00a)') + " exp)<br>" +
+            "Charisma: " + formatNumber(memberObj.cha, 0) + " (" + numeral(memberObj.cha_exp).format('(0.00a)') + " exp)<br>";
     }
 
     var gainInfo = document.getElementById(name + "gang-member-gain-info");

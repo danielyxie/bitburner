@@ -185,7 +185,8 @@ function evaluate(exp, workerScript) {
                 reject(makeRuntimeRejectMsg(workerScript, "Not implemented ReturnStatement"));
                 break;
             case "BreakStatement":
-                reject(makeRuntimeRejectMsg(workerScript, "Not implemented BreakStatement"));
+                reject("BREAKSTATEMENT");
+                //reject(makeRuntimeRejectMsg(workerScript, "Not implemented BreakStatement"));
                 break;
             case "IfStatement":
                 evaluateIf(exp, workerScript).then(function(forLoopRes) {
@@ -201,7 +202,12 @@ function evaluate(exp, workerScript) {
                 evaluateWhile(exp, workerScript).then(function(forLoopRes) {
                     resolve("forLoopDone");
                 }).catch(function(e) {
-                    reject(e);
+                    if (e == "BREAKSTATEMENT" ||
+                       (e instanceof WorkerScript && e.errorMessage == "BREAKSTATEMENT")) {
+                        return resolve("whileLoopBroken");
+                    } else {
+                        reject(e);
+                    }
                 });
                 break;
             case "ForStatement":
@@ -210,7 +216,12 @@ function evaluate(exp, workerScript) {
                 }).then(function(forLoopRes) {
                     resolve("forLoopDone");
                 }).catch(function(e) {
-                    reject(e);
+                    if (e == "BREAKSTATEMENT" ||
+                       (e instanceof WorkerScript && e.errorMessage == "BREAKSTATEMENT")) {
+                        return resolve("forLoopBroken");
+                    } else {
+                        reject(e);
+                    }
                 });
                 break;
             default:
@@ -445,7 +456,7 @@ function evaluateFor(exp, workerScript) {
 				resolve("endForLoop");	//Doesn't need to resolve to any particular value
 			}
 		}, function(e) {
-			reject(e);
+            reject(e);
 		});
 	});
 }
@@ -476,7 +487,7 @@ function evaluateWhile(exp, workerScript) {
 						evaluatePromise.then(function(resCode) {
 							resolve(resCode);
 						}, function(e) {
-							reject(e);
+                            reject(e);
 						});
 					}, CONSTANTS.CodeInstructionRunTime);
 				});
@@ -493,7 +504,7 @@ function evaluateWhile(exp, workerScript) {
 					reject(e);
 				});
 			} else {
-				resolve("endWhileLoop");	//Doesn't need to resolve to any particular value
+				resolve("endWhileLoop"); //Doesn't need to resolve to any particular value
 			}
 		}, function(e) {
 			reject(e);
