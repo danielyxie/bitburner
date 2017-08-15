@@ -373,6 +373,13 @@ function prestigeSourceFile() {
         Terminal.finishAction(true);
     }
 
+    //Delete all Augmentations
+    for (var name in Augmentations) {
+        if (Augmentations.hasOwnProperty(name)) {
+            delete Augmentations[name];
+        }
+    }
+    
     //Re-initialize things - This will update any changes
     initFactions(); //Factions must be initialized before augmentations
     initAugmentations();    //Calls reapplyAllAugmentations() and resets Player multipliers

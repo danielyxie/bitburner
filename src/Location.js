@@ -1990,3 +1990,21 @@ function travelBoxCreate(destCityName, cost) {
     });
     yesNoBoxCreate("Would you like to travel to " + destCityName + "? The trip will cost $" + formatNumber(cost, 2) + ".");
 }
+
+function purchaseServerBoxCreate(ram, cost) {
+    var yesBtn = yesNoTxtInpBoxGetYesButton();
+    var noBtn = yesNoTxtInpBoxGetNoButton();
+    yesBtn.innerHTML = "Purchase Server";
+    noBtn.innerHTML = "Cancel";
+    yesBtn.addEventListener("click", function() {
+        purchaseServer(ram, cost);
+        yesNoTxtInpBoxClose();
+    });
+    noBtn.addEventListener("click", function() {
+        yesNoTxtInpBoxClose();
+    });
+
+    yesNoTxtInpBoxCreate("Would you like to purchase a new server with " + ram +
+                         "GB of RAM for $" + formatNumber(cost, 2) + "?<br><br>" +
+                         "Please enter the server hostname below:<br>");
+}

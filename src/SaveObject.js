@@ -121,7 +121,7 @@ loadGame = function(saveObj) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
-            if (ver == "0.27.0") {
+            if (ver == "0.27.0" || ver == "0.27.1") {
                 if (Player.bitNodeN == null || Player.bitNodeN == 0) {
                     Player.bitNodeN = 1;
                 }
@@ -217,7 +217,7 @@ loadImportedGame = function(saveObj, saveString) {
         if (tempSaveObj.hasOwnProperty("VersionSave")) {
             try {
                 var ver = JSON.parse(tempSaveObj.VersionSave, Reviver);
-                if (ver == "0.27.0") {
+                if (ver == "0.27.0" || ver == "0.27.1") {
                     if (tempPlayer.bitNodeN == null || tempPlayer.bitNodeN == 0) {
                         tempPlayer.bitNodeN = 1;
                     }

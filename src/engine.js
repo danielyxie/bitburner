@@ -383,7 +383,8 @@ var Engine = {
         if (Player.hp == null) {Player.hp = Player.max_hp;}
         document.getElementById("character-overview-text").innerHTML =
         ("Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
-         "Money: $" + formatNumber(Player.money.toNumber(), 2) + "<br>" +
+         //"Money: $" + formatNumber(Player.money.toNumber(), 2) + "<br>" +
+         "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
          "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
          "Str:   " + (Player.strength).toLocaleString() + "<br>" +
          "Def:   " + (Player.defense).toLocaleString() + "<br>" +
@@ -407,17 +408,17 @@ var Engine = {
         'Money: $' + formatNumber(Player.money.toNumber(), 2)+ '<br><br><br>' +
         '<b>Stats</b><br><br>' +
         'Hacking Level: ' + (Player.hacking_skill).toLocaleString() +
-                        " (" + formatNumber(Player.hacking_exp, 4) + ' experience)<br>' +
+                        " (" + numeral(Player.hacking_exp).format('(0.000a)') + ' experience)<br>' +
         'Strength:      ' + (Player.strength).toLocaleString() +
-                   " (" + formatNumber(Player.strength_exp, 4) + ' experience)<br>' +
+                   " (" + numeral(Player.strength_exp).format('(0.000a)') + ' experience)<br>' +
         'Defense:       ' + (Player.defense).toLocaleString() +
-                  " (" + formatNumber(Player.defense_exp, 4) + ' experience)<br>' +
+                  " (" + numeral(Player.defense_exp).format('(0.000a)')+ ' experience)<br>' +
         'Dexterity:     ' + (Player.dexterity).toLocaleString() +
-                   " (" + formatNumber(Player.dexterity_exp, 4) + ' experience)<br>' +
+                   " (" + numeral(Player.dexterity_exp).format('(0.000a)') + ' experience)<br>' +
         'Agility:       ' + (Player.agility).toLocaleString() +
-                  " (" + formatNumber(Player.agility_exp, 4) + ' experience)<br>' +
+                  " (" + numeral(Player.agility_exp).format('(0.000a)') + ' experience)<br>' +
         'Charisma:      ' + (Player.charisma).toLocaleString() +
-                   " (" + formatNumber(Player.charisma_exp, 4) + ' experience)<br><br><br>' +
+                   " (" + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br><br><br>' +
         '<b>Multipliers</b><br><br>' +
         'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +
         'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' +

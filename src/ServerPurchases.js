@@ -9,7 +9,7 @@ purchaseServer = function(ram, cost) {
         return;
     }
 
-    //Maximum of 30 servers
+    //Maximum server limit
     if (Player.purchasedServers.length >= CONSTANTS.PurchasedServerLimit) {
         dialogBoxCreate("You have reached the maximum limit of " + CONSTANTS.PurchasedServerLimit + " servers. " +
                         "You cannot purchase any more. You can " +
@@ -17,9 +17,7 @@ purchaseServer = function(ram, cost) {
         return;
     }
 
-
-    var hostname = document.getElementById("purchase-server-box-input").value;
-    hostname = hostname.replace(/\s\s+/g, '');
+    var hostname = yesNoTxtInpBoxGetInput();
     if (hostname == "") {
         dialogBoxCreate("You must enter a hostname for your new server!");
         return;
