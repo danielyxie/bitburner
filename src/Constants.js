@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.27.0",
+    Version:                "0.27.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -691,7 +691,7 @@ CONSTANTS = {
     "-Lowered the respect gain rate in Gangs (Bitnode 2 only)<br>" +
     "-Added '| grep pattern' option for ls Terminal command. This allows you to only list files that contain a certain pattern<br>" +
     "-Added break statement in Netscript<br>" +
-    "-Display for some numerical values is now done in shorthand (e.g 1.000m instead of 1,000,000)<br><br>" + 
+    "-Display for some numerical values is now done in shorthand (e.g 1.000m instead of 1,000,000)<br><br>" +
     "v0.27.0<br>" +
     "-Added secondary 'prestige' system - featuring Source Files and BitNodes<br>" +
     "-MILD SPOILERS HERE: Installing 'The Red Pill' Augmentation from Daedalus will unlock a special server called " +
