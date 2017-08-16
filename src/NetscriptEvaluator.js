@@ -270,7 +270,11 @@ function evalBinary(exp, workerScript){
                         resolve(expLeft*expRight);
                         break;
                     case "/":
-                        resolve(expLeft/expRight);
+                        if (expRight === 0) {
+                            reject(makeRuntimeRejectMsg(workerScript, "ERROR: Divide by zero"));
+                        } else {
+                            resolve(expLeft/expRight);
+                        }
                         break;
                     case "%":
                         resolve(expLeft%expRight);
