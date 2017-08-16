@@ -679,6 +679,7 @@ var Engine = {
 
     //Displays the text when a section of the Tutorial is opened
     displayTutorialPage: function(text) {
+        document.getElementById("tutorial-getting-started-link").style.display = "none";
         Engine.Clickables.tutorialNetworkingButton.style.display = "none";
         Engine.Clickables.tutorialHackingButton.style.display = "none";
         Engine.Clickables.tutorialScriptsButton.style.display = "none";

@@ -257,7 +257,7 @@ function iTutorialEvaluateStep() {
         //next step triggered by terminal commmand
         break;
     case iTutorialSteps.TerminalRunScript:
-        iTutorialSetText("We have 4GB of free RAM on this machine, which is enough to run our " +
+        iTutorialSetText("We have 8GB of free RAM on this machine, which is enough to run our " +
                          "script. Let's run our script using 'run foodnstuff.script'.");
         //next step triggered by terminal commmand
         break;
@@ -641,6 +641,9 @@ function iTutorialEnd() {
     currITutorialStep = iTutorialSteps.End;
     iTutorialIsRunning = false;
     document.getElementById("interactive-tutorial-container").style.display = "none";
+    dialogBoxCreate("If you are new to the game, the following links may be useful for you!<br><br>" +
+                    "<a class='a-link-button' href='http://bitburner.wikia.com/wiki/Chapt3rs_Guide_to_Getting_Started_with_Bitburner' target='_blank'>Getting Started Guide</a>" +
+                    "<a class='a-link-button' href='http://bitburner.wikia.com/wiki/Bitburner_Wiki' target='_blank'>Wiki</a>");
 }
 
 function iTutorialSetText(txt) {
