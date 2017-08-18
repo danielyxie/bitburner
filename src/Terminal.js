@@ -285,6 +285,18 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         }
     }
 
+    if (input.startsWith("scp ") && index == 0) {
+        //All Scripts and lit files
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push(currServ.scripts[i].filename);
+        }
+        for (var i = 0; i < currServ.messages.length; ++i) {
+            if (!(currServ.messages[i] instanceof Message)) {
+                allPos.push(currServ.messages[i]);
+            }
+        }
+    }
+
     if (input.startsWith("connect ") || input.startsWith("telnet ")) {
         //All network connections
         for (var i = 0; i < currServ.serversOnNetwork.length; ++i) {
@@ -298,8 +310,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
 
     if (input.startsWith("kill ") || input.startsWith("nano ") ||
         input.startsWith("tail ") || input.startsWith("rm ") ||
-        input.startsWith("mem ") || input.startsWith("check ") ||
-        (input.startsWith("scp ") && index == 0)) {
+        input.startsWith("mem ") || input.startsWith("check ")) {
         //All Scripts
         for (var i = 0; i < currServ.scripts.length; ++i) {
             allPos.push(currServ.scripts[i].filename);
@@ -323,7 +334,12 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
 
     if (input.startsWith("cat ")) {
         for (var i = 0; i < currServ.messages.length; ++i) {
-            allPos.push(currServ.messages[i].filename);
+            if (currServ.messages[i] instanceof Message) {
+                allPos.push(currServ.messages[i].filename);
+            } else {
+                allPos.push(currServ.messages[i]);
+            }
+
         }
         return allPos;
     }
@@ -658,15 +674,18 @@ var Terminal = {
                 break;
             case "cat":
                 if (commandArray.length != 2) {
-                    post("Incorrect usage of cat command. Usage: cat [message]"); return;
+                    post("Incorrect usage of cat command. Usage: cat [file]"); return;
                 }
                 var filename = commandArray[1];
                 //Can only edit script files
-				if (filename.endsWith(".msg") == false) {
-					post("Error: Only .msg files are viewable with cat (filename must end with .msg)"); return;
+				if (!filename.endsWith(".msg") && !filename.endsWith(".lit")) {
+					post("Error: Only .msg and .lit files are viewable with cat (filename must end with .msg or .lit)"); return;
 				}
                 for (var i = 0; i < s.messages.length; ++i) {
-                    if (s.messages[i].filename == filename) {
+                    if (filename.endsWith(".lit") && s.messages[i] == filename) {
+                        showLiterature(s.messages[i]);
+                        return;
+                    } else if (filename.endsWith(".msg") && s.messages[i].filename == filename) {
                         showMessage(s.messages[i]);
                         return;
                     }
@@ -962,23 +981,54 @@ var Terminal = {
                 break;
 			case "scp":
 				if (commandArray.length != 2) {
-                    post("Incorrect usage of scp command. Usage: scp [scriptname] [destination hostname/ip]");
+                    post("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
                     return;
                 }
                 var args = commandArray[1].split(" ");
                 if (args.length != 2) {
-                    post("Incorrect usage of scp command. Usage: scp [scriptname] [destination hostname/ip]");
+                    post("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
                     return;
                 }
                 var scriptname = args[0];
+                if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script")){
+                    post("Error: scp only works for .script and .lit files");
+                    return;
+                }
                 var server = getServer(args[1]);
                 if (server == null) {
                     post("Invalid destination. " + args[1] + " not found");
                     return;
                 }
                 var ip = server.ip;
-
                 var currServ = Player.getCurrentServer();
+
+                //Scp for lit files
+                if (scriptname.endsWith(".lit")) {
+                    var found = false;
+                    var curr
+                    for (var i = 0; i < currServ.messages.length; ++i) {
+                        if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
+                            found = true;
+                        }
+                    }
+
+                    if (!found) {
+                        post("Error: no such file exists!");
+                        return;
+                    }
+
+                    for (var i = 0; i < server.messages.length; ++i) {
+                        if (server.messages[i] === scriptname) {
+                            post(scriptname + " copied over to " + server.hostname);
+                            return; //Already exists
+                        }
+                    }
+                    server.messages.push(scriptname);
+                    post(scriptname + " copied over to " + server.hostname);
+                    return;
+                }
+
+
 
                 //Get the current script
                 var sourceScript = null;
@@ -1156,7 +1206,6 @@ var Terminal = {
             post("Incorrect usage of ls command. Usage: ls [| grep pattern]"); return;
         }
 
-
         //grep
         var filter = null;
         if (commandArray.length == 2) {
@@ -1196,11 +1245,19 @@ var Terminal = {
         }
         for (var i = 0; i < s.messages.length; i++) {
             if (filter) {
-                if (s.messages[i].filename.includes(filter)) {
-                    allFiles.push(s.messages[i].filename);
+                if (s.messages[i] instanceof Message) {
+                    if (s.messages[i].filename.includes(filter)) {
+                        allFiles.push(s.messages[i].filename);
+                    }
+                } else if (s.messages[i].includes(filter)) {
+                    allFiles.push(s.messages[i]);
                 }
             } else {
-                allFiles.push(s.messages[i].filename);
+                if (s.messages[i] instanceof Message) {
+                    allFiles.push(s.messages[i].filename);
+                } else {
+                    allFiles.push(s.messages[i]);
+                }
             }
         }
 

@@ -778,6 +778,7 @@ var Engine = {
         autoSaveCounter:    300,            //Autosave every minute
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
         updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
+        updateDisplaysMed: 9,
         updateDisplaysLong: 15,
         createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
         checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations
@@ -811,9 +812,7 @@ var Engine = {
 
         if (Engine.Counters.updateDisplays <= 0) {
             Engine.displayCharacterOverviewInfo();
-            if (Engine.currentPage == Engine.Page.ActiveScripts) {
-                updateActiveScriptsItems();
-            } else if (Engine.currentPage == Engine.Page.CharacterInfo) {
+            if (Engine.currentPage == Engine.Page.CharacterInfo) {
                 Engine.displayCharacterInfo();
             }  else if (Engine.currentPage == Engine.Page.HacknetNodes) {
                 updateHacknetNodesContent();
@@ -826,6 +825,13 @@ var Engine = {
             }
 
             Engine.Counters.updateDisplays = 3;
+        }
+
+        if (Engine.Counters.updateDisplaysMed <= 0) {
+            if (Engine.currentPage == Engine.Page.ActiveScripts) {
+                updateActiveScriptsItems();
+            }
+            Engine.Counters.updateDisplaysMed = 9;
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
@@ -982,6 +988,7 @@ var Engine = {
             if (Player.hasWseAccount) {
                 initSymbolToStockMap();
             }
+            initLiterature();
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
@@ -1086,6 +1093,7 @@ var Engine = {
             initAugmentations();
             initMessages();
             initStockSymbols();
+            initLiterature();
 
             //Open main menu accordions for new game
             //Main menu accordions

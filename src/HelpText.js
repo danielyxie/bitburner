@@ -3,7 +3,7 @@ TerminalHelpText =
                 "Type 'help name' to learn more about the command 'name'<br><br>" +
                 'alias [-g] [name="value"]      Create or display Terminal aliases<br>' +
                 "analyze                        Get information about the current machine <br>" +
-                "cat [message]                  Display a .msg file<br>" +
+                "cat [file]                     Display a .msg or .lit file<br>" +
                 "check [script] [args...]       Print a script's logs to Terminal<br>" +
                 "clear                          Clear all text on the terminal <br>" +
                 "cls                            See 'clear' command <br>" +
@@ -24,7 +24,7 @@ TerminalHelpText =
                 "run [name] [-t] [n] [args...]  Execute a program or script<br>" +
                 "scan                           Prints all immediately-available network connections<br>" +
                 "scan-analyze [d]               Prints info for all servers up to <i>d</i> nodes away<br>" +
-                "scp [script] [server]          Copies a script to a destination server<br>" +
+                "scp [file] [server]            Copies a script or .lit file to a destination server<br>" +
                 "sudov                          Shows whether you have root access on this computer<br>" +
                 "tail [script] [args...]        Displays dynamic logs for the specified script<br>" +
                 "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" +
@@ -56,9 +56,11 @@ HelpTexts = {
                     "server details such as the hostname, whether the player has root access, what ports are opened/closed, and also " +
                     "hacking-related information such as an estimated chance to successfully hack, an estimate of how much money is " +
                     "available on the server, etc.",
-    cat:            "cat [message]<br>" +
-                    "Display message files, which are files ending with the '.msg' extension. Example:<br><br>" +
-                    "cat j1.msg",
+    cat:            "cat [file]<br>" +
+                    "Display message files, which are files ending with the '.msg' extension, or a literature file, which " +
+                    "are files ending with the '.lit' extension. Examples:<br><br>" +
+                    "cat j1.msg<br>" +
+                    "cat foo.lit",
     check:          "check [script name] [args...]<br>" +
                     "Print the logs of the script specified by the script name and arguments to the Terminal. Each argument must be separated by " +
                     "a space. Remember that a running script is uniquely " +
@@ -155,8 +157,9 @@ HelpTexts = {
                     "The information 'scan-analyze' displays about each server includes whether or not you have root access to it, " +
                     "its required hacking level, the number of open ports required to run NUKE.exe on it, and how much RAM " +
                     "it has",
-    scp:            "scp [script name] [target server]<br>" +
-                    "Copies the specified script from the current server to the target server. " +
+    scp:            "scp [filename] [target server]<br>" +
+                    "Copies the specified file from the current server to the target server. " +
+                    "This command only works for script files (.script extension) and literature files (.lit extension). " + 
                     "The second argument passed in must be the hostname or IP of the target server.",
     sudov:          "sudov<br>" +
                     "Prints whether or not you have root access to the current machine",

@@ -84,13 +84,16 @@ function processAllGangTerritory(numCycles=1) {
         var otherPwr = AllGangs[GangNames[other]].power;
         var thisChance = thisPwr / (thisPwr + otherPwr);
 
-        //Skip calculation if one of the two gangs has zero territory
-        if (AllGangs[GangNames[other]].territory <= 0 || AllGangs[GangNames[i]].territory <= 0) {continue;}
-
         if (Math.random() < thisChance) {
+            if (AllGangs[GangNames[other]].territory <= 0) {
+                return;
+            }
             AllGangs[GangNames[i]].territory += 0.0001;
             AllGangs[GangNames[other]].territory -= 0.0001;
         } else {
+            if (AllGangs[GangNames[i]].territory <= 0) {
+                return;
+            }
             AllGangs[GangNames[i]].territory -= 0.0001;
             AllGangs[GangNames[other]].territory += 0.0001;
         }
@@ -287,6 +290,7 @@ GangMember.prototype.calculateRespectGain = function() {
     statWeight -= (3.5 * task.difficulty);
     if (statWeight <= 0) {return 0;}
     var territoryMult = AllGangs[Player.gang.facName].territory;
+    if (territoryMult <= 0) {return 0;}
     var respectMult = (Player.gang.respect) / (Player.gang.respect + Player.gang.wanted);
     return 12 * task.baseRespect * statWeight * territoryMult * respectMult;
 }
@@ -303,6 +307,7 @@ GangMember.prototype.calculateWantedLevelGain = function() {
     statWeight -= (3.5 * task.difficulty);
     if (statWeight <= 0) {return 0;}
     var territoryMult = AllGangs[Player.gang.facName].territory;
+    if (territoryMult <= 0) {return 0;}
     if (task.baseWanted < 0) {
         return task.baseWanted * statWeight * territoryMult;
     } else {
@@ -322,6 +327,7 @@ GangMember.prototype.calculateMoneyGain = function() {
     statWeight -= (3.5 * task.difficulty);
     if (statWeight <= 0) {return 0;}
     var territoryMult = AllGangs[Player.gang.facName].territory;
+    if (territoryMult <= 0) {return 0;}
     var respectMult = (Player.gang.respect) / (Player.gang.respect + Player.gang.wanted);
     return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
 }
