@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.27.1",
+    Version:                "0.27.2",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -236,7 +236,11 @@ CONSTANTS = {
                          "the grow() command in a script will also increase security level of the target server.  These actions will " +
                          "make it harder for you to hack the server, and decrease the amount of money you can steal. You can lower a " +
                          "server's security level in a script using the <i>weaken(server)</i> function in Netscript. See the Netscript " +
-                         "documentation for more details",
+                         "documentation for more details.<br><br>" +
+                         "A server has a minimum security level that is equal to one third of its starting security, rounded to the " +
+                         "nearest integer. To be more precise:<br><br>" +
+                         "server.minSecurityLevel = Math.max(1, Math.round(server.startingSecurityLevel / 3))<br><br>" +
+                         "This means that a server's security will not fall below this value if you are trying to weaken it.",
 
     TutorialScriptsText: "Scripts can be used to automate the hacking process. Scripts must be written in the Netscript language. " +
                          "Documentation about the Netscript language can be found in the 'Netscript Programming Language' " +
@@ -276,7 +280,7 @@ CONSTANTS = {
                          "<i>top</i><br>Displays all active scripts and their RAM usage <br><br>" +
                          "<u><h1> Multithreading scripts </h1></u><br>" +
                          "Scripts can be multithreaded. A multithreaded script runs the script's code once in each thread. The result is that " +
-                         "every call to the hack(), grow(), and weaken() Netscript functions will have its effect multiplied by the number of scripts. " +
+                         "every call to the hack(), grow(), and weaken() Netscript functions will have its effect multiplied by the number of threads. " +
                          "For example, if a normal single-threaded script is able to hack $10,000, then running the same script with 5 threads would " +
                          "yield $50,000. <br><br> " +
                          "When multithreading a script, the total RAM cost can be calculated by simply multiplying the base RAM cost of the script " +
@@ -448,6 +452,10 @@ CONSTANTS = {
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" +
                            "<i>getServerMaxMoney(hostname/ip)</i><br>Returns the maximum amount of money that can be available on a server. The argument passed in must be a string with " +
                            "the hostname or IP of the target server. Does NOT work while offline<br>Example: getServerMaxMoney('foodnstuff');<br><br>" +
+                           "<i>getServerGrowth(hostname/ip)</i><br>Returns the server's intrinsic 'growth parameter'. This growth parameter is a number " +
+                           "between 1 and 100 that represents how quickly the server's money grows. This parameter affects the percentage by which this server's " +
+                           "money is increased when using the grow() function. A higher growth parameter will result in a higher percentage from grow().<br><br>" +
+                           "The argument passed in must be a string with the hostname or IP of the target server.<br><br>" +
                            "<i>getServerSecurityLevel(hostname/ip)</i><br>Returns the security level of a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. A server's security is denoted by a number between 1 and 100. Does NOT work while offline.<br><br>" +
                            "<i>getServerBaseSecurityLevel(hostname/ip)</i><br> Returns the base security level of a server. This is the security level that the server starts out with. " +
@@ -455,10 +463,13 @@ CONSTANTS = {
                            "due to hack(), grow(), and weaken() calls on that server. The base security level will stay the same until you reset by installing an Augmentation. <br><br>" +
                            "The argument passed in must be a string with either the hostname or IP of the target server. A server's base security is denoted by a number between 1 and 100. " +
                            "Does NOT work while offline.<br><br>" +
-                           "<i>getServerRequiredHackingLevel(hostname/ip)</i><br> Returns the required hacking level of a server. The argument passed in must be a string with either the " +
+                           "<i>getServerRequiredHackingLevel(hostname/ip)</i><br>Returns the required hacking level of a server. The argument passed in must be a string with either the " +
                            "hostname or IP or the target server. Does NOT work while offline <br><br>" +
                            "<i>getServerNumPortsRequired(hostname/ip)</i><br>Returns the number of open ports required to successfully run NUKE.exe on a server. The argument " +
                            "passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline<br><br>" +
+                           "<i>getServerRam(hostname/ip)</i><br>Returns an array with two elements that gives information about the target server's RAM. The first " +
+                           "element in the array is the amount of RAM that the server has (in GB). The second element in the array is the amount of RAM that " +
+                           "is currently being used on the server.<br><br>" +
                            "<i>fileExists(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " +
                            "The first argument must be a string with the name of the file. A file can either be a script or a program. A script name is case-sensitive, but a " +
                            "program is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " +
@@ -480,7 +491,8 @@ CONSTANTS = {
                            "example above will return true if there is a script named 'foo.script' with no arguments running on the current server, and false otherwise. " +
                            "The third example above will return true if there is a script named 'foo.script' with the arguments 1, 5, and 'test' running on the 'joesguns' server, and " +
                            "false otherwise.<br><br>" +
-                           "<i>purchaseHacknetNode()</i><br> Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " +
+                           "<i>getNextHacknetNodeCost()</i><br>Returns the cost of purchasing a new Hacknet Node<br><br>" +
+                           "<i>purchaseHacknetNode()</i><br>Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " +
                            "at the end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford to purchase " +
                            "a new Hacknet Node then the function will return false. Does NOT work offline<br><br>" +
                            "<i>purchaseServer(hostname, ram)</i><br> Purchases a server with the specified hostname and amount of RAM. The first argument can be any data type, " +
@@ -495,6 +507,18 @@ CONSTANTS = {
                            "argument defines the data to write to the port. If the second argument is not specified then it will write an empty string to the port.<br><br>" +
                            "<i>read(port)</i><br>Reads data from a port. The first argument must be a number between 1 and 10 that specifies the port. A port is a serialized queue. " +
                            "This function will remove the first element from the queue and return it. If the queue is empty, then the string 'NULL PORT DATA' will be returned. <br><br>" +
+                           "<i>scriptRunning(scriptname, hostname/ip)</i><br>Returns a boolean indicating whether any instance of the specified script is running " +
+                           "on a server, regardless of its arguments. This is different than the isRunning() function because it does not " +
+                           "try to identify a specific instance of a running script by its arguments.<br><br>" +
+                           "The first argument must be a string with the name of the script. The script name is case sensitive. The second argument is " +
+                           "a string with the hostname or IP of the target server. Both arguments are required.<br><br>" +
+                           "<i>scriptKill(scriptname, hostname/ip)</i><br>Kills all scripts with the specified filename that are running on the server specified by the " +
+                           "hostname/ip, regardless of arguments. Returns true if one or more scripts were successfully killed, and false if there were none. <br><br>" +
+                           "The first argument must be a string with the name of the script. The script name is case sensitive. The second argument is " +
+                           "a string with the hostname or IP of the target server. Both arguments are required.<br><br>" +
+                           "<i>getScriptRam(scriptname, hostname/ip)</i><br>Returns the amount of RAM required to run the specified script on the " +
+                           "target server. The first argument must be a string with the name of the script. The script name is case sensitive. " +
+                           "The second argument is a string with the hostname or IP of the server where that script is. Both arguments are required.<br><br>" +
                            "<u><h1>Hacknet Nodes API</h1></u><br>" +
                            "Netscript provides the following API for accessing and upgrading your Hacknet Nodes through scripts. This API does NOT work offline.<br><br>" +
                            "<i>hacknetnodes</i><br> A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " +
@@ -686,6 +710,14 @@ CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.27.2<br>" +
+    "-Added getServerGrowth() Netscript function<br>" +
+    "-Added getNextHacknetNodeCost() Netscript function<br>" +
+    "-Added new 'literature' files (.lit extension) that are used to build lore for the game. " +
+    "These .lit files can be found in certain servers throughout the game. They can be viewed with the 'cat' Terminal " +
+    "command and copied over to other servers using the 'scp' command. These .lit files won't be found until you reset " +
+    "by installing Augmentations<br>" +
+    "Fixed some bugs with Gang Territory(BitNode 2 only)<br><br>" +
     "v0.27.1<br>" +
     "-Changed the way Gang power was calculated to make it scale better late game (BitNode 2 only)<br>" +
     "-Lowered the respect gain rate in Gangs (Bitnode 2 only)<br>" +

@@ -495,11 +495,20 @@ function NetscriptFunctions(workerScript) {
         getServerMaxMoney : function(ip){
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
             }
             workerScript.scriptRef.log("getServerMaxMoney() returned " + formatNumber(server.moneyMax, 0) + " for " + server.hostname);
             return server.moneyMax;
+        },
+        getServerGrowth : function(ip) {
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerGrowth() returned " + formatNumber(server.serverGrowth, 0) + " for " + server.hostname);
+            return server.serverGrowth;
         },
         getServerNumPortsRequired : function(ip){
             var server = getServer(ip);
@@ -555,6 +564,7 @@ function NetscriptFunctions(workerScript) {
             }
             return (findRunningScript(filename, argsForTargetScript, server) != null);
         },
+        getNextHacknetNodeCost : getCostOfNextHacknetNode,
         purchaseHacknetNode : purchaseHacknet,
         getStockPrice : function(symbol) {
             if (!Player.hasTixApiAccess) {
@@ -824,13 +834,13 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
             }
-            for (var i = 0; i < server.runningScripts.length; ++i) {
-                if (server.runningScripts[i].filename == scriptname) {
-                    return server.runningScripts[i].scriptRef.ramUsage;
+            for (var i = 0; i < server.scripts.length; ++i) {
+                if (server.scripts[i].filename == scriptname) {
+                    return server.scripts[i].ramUsage;
                 }
             }
             return 0;
         },
-        
+
     }
 }
