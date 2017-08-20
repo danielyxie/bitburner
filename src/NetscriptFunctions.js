@@ -841,6 +841,30 @@ function NetscriptFunctions(workerScript) {
             }
             return 0;
         },
+        getHackTime : function(ip) {
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getHackTime() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getHackTime() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            return scriptCalculateHackingTime(server); //Returns seconds
+        },
+        getGrowTime : function(ip) {
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            return scriptCalculateGrowTime(server) / 1000; //Returns seconds
+        },
+        getWeakenTime : function(ip) {
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            return scriptCalculateWeakenTime(server) / 1000; //Returns seconds
+        }
 
     }
 }

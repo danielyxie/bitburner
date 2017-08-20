@@ -25,8 +25,8 @@ BitNodes = {
                             "will earn the player money and reputation with the corresponding Faction<br>" +
                             "Every Augmentation in the game will be available through the Factions listed above<br>" +
                             "For every Faction NOT listed above, reputation gains are halved<br>" +
-                            "You will no longer gain passive reputation with Factions<br>" +
-                            "Destroying the BitNode will give you Source-File 2, or if you already have this Source-File it will " +
+                            "You will no longer gain passive reputation with Factions<br><br>" +
+                            "Destroying this BitNode will give you Source-File 2, or if you already have this Source-File it will " +
                             "upgrade its level up to a maximum of 3. This Source-File increases the player's crime success rate, " +
                             "crime money, and charisma multipliers by:<br><br>" +
                             "Level 1: 20%<br>" +
@@ -41,6 +41,27 @@ BitNodes = {
     BitNode9:   new BitNode(9, "MegaCorp", "COMING SOON"),                  //Single corp/server with increasing difficulty
     BitNode10:  new BitNode(10, "Wasteland", "COMING SOON"),                //Postapocalyptic
     BitNode11:  new BitNode(11, "The Big Crash", "COMING SOON"),            //Crashing economy
+    /* Okay. Sell it all.
+        "The 2050s was defined by the massive amounts of violent civil unrest and anarchic rebellion that rose all around the world. It was this period " +
+        "of disorder that eventually lead to the governmental reformation of many global superpowers, most notably " +
+        "the USA and China. But just as the world was slowly beginning to recover from these dark times, financial catastrophe hit.<br><br>" +
+        "In many countries, the high cost of trying to deal with the civil disorder bankrupted the governments. In all of this chaos and confusion hackers " +
+        "were able to steal billions of dollars from the world's largest electronic banks, prompting an international banking crisis as " +
+        "governments were unable to bail out insolvent banks. Now, the world is slowly crumbling in the middle of the biggest economic crisis of all time.<br><br>" +
+        "In this BitNode:<br><br>" +
+        "The starting and maximum amount of money available on servers is significantly decreased<br>" +
+        "The growth rate of servers is halved<br>" +
+        "Weakening a server is twice as effective<br>" +
+        "Company wages are decreased by 25%<br>" +
+        "Hacknet Node production is significantly decreased<br>" +
+        "Augmentations are twice as expensive<br><br>" +
+        "Destroying this BitNode will give you Source-File 11, or if you already have this Source-File it will " +
+        "upgrade its level up to a maximum of 3. This Source-File increases the player's company salary multiplier by:<br><br>" +
+        "Level 1: 60%<br>" +
+        "Level 2: 90%<br>" +
+        "Level 3: 105%";
+
+    */
     BitNode12:  new BitNode(12, "Eye of the World", "COMING SOON"),         //Become AI
 }
 

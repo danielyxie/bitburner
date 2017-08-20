@@ -1,4 +1,5 @@
 /* Gang.js */
+//Switch between territory and management screen with 1 and 2
 $(document).keydown(function(event) {
     if (Engine.currentPage == Engine.Page.Gang && !yesNoBoxOpen) {
         if (event.keyCode === 49) {
@@ -9,6 +10,21 @@ $(document).keydown(function(event) {
             if (document.getElementById("gang-management-subpage").style.display === "block") {
                 document.getElementById("gang-territory-subpage-button").click();
             }
+        }
+    }
+});
+
+//Delete upgrade box when clicking outside
+$(document).mousedown(function(event) {
+    if (gangMemberUpgradeBoxOpened) {
+        if ( $(event.target).closest("#gang-purchase-upgrade-container").get(0) == null ) {
+            //Delete the box
+            var container = document.getElementById("gang-purchase-upgrade-container");
+            while(container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+            container.parentNode.removeChild(container);
+            gangMemberUpgradeBoxOpened = false;
         }
     }
 });
@@ -60,7 +76,7 @@ function processAllGangPowerGains(numCycles=1) {
             if (name == playerGangName) {
                 AllGangs[name].power += Player.gang.calculatePower();
             } else {
-                var gain = Math.random() * 0.005; //TODO Adjust as necessary
+                var gain = Math.random() * 0.01; //TODO Adjust as necessary
                 AllGangs[name].power += (gain);
             }
         }
@@ -311,7 +327,7 @@ GangMember.prototype.calculateWantedLevelGain = function() {
     if (task.baseWanted < 0) {
         return task.baseWanted * statWeight * territoryMult;
     } else {
-        return 5 * task.baseWanted / (3 * statWeight * territoryMult);
+        return 6 * task.baseWanted / (3 * statWeight * territoryMult);
     }
 }
 
@@ -424,13 +440,13 @@ GangMemberTasks = {
                                         "Fraud & Counterfeiting",
                                         "Assign this gang member to commit financial fraud and digital counterfeiting<br><br>" +
                                         "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.0008, baseWanted: 0.1, baseMoney: 15,
+                                        {baseRespect: 0.0005, baseWanted: 0.1, baseMoney: 15,
                                          hackWeight: 80, chaWeight: 20, difficulty: 17}),
     "Money Laundering" :        new GangMemberTask(
                                         "Money Laundering",
                                         "Assign this gang member to launder money<br><br>" +
                                         "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0009, baseWanted:0.2, baseMoney: 40,
+                                        {baseRespect: 0.0006, baseWanted:0.2, baseMoney: 40,
                                          hackWeight: 75, chaWeight: 25, difficulty: 20}),
     "Cyberterrorism" :          new GangMemberTask(
                                         "Cyberterrorism",
@@ -460,27 +476,27 @@ GangMemberTasks = {
                                         "Run a Con",
                                         "Assign this gang member to run cons<br><br>" +
                                         "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0002, baseWanted: 0.01, baseMoney: 10,
+                                        {baseRespect: 0.00015, baseWanted: 0.01, baseMoney: 10,
                                          strWeight: 5, defWeight: 5, agiWeight: 25, dexWeight: 25, chaWeight: 40, difficulty: 10}),
     "Armed Robbery" :           new GangMemberTask(
                                         "Armed Robbery",
                                         "Assign this gang member to commit armed robbery on stores, banks and armored cars<br><br>" +
                                         "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0002, baseWanted: 0.05, baseMoney: 25,
+                                        {baseRespect: 0.00015, baseWanted: 0.05, baseMoney: 25,
                                          hackWeight: 20, strWeight: 15, defWeight: 15, agiWeight: 10, dexWeight: 20, chaWeight: 20,
                                          difficulty: 17}),
     "Traffick Illegal Arms" :   new GangMemberTask(
                                         "Traffick Illegal Arms",
                                         "Assign this gang member to traffick illegal arms<br><br>" +
                                         "Earns money - Increases respect - Increases wanted level",
-                                        {baseRespect: 0.0005, baseWanted: 0.1, baseMoney: 40,
+                                        {baseRespect: 0.0003, baseWanted: 0.1, baseMoney: 40,
                                          hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, chaWeight: 75,
                                          difficulty: 25}),
     "Threaten & Blackmail" :    new GangMemberTask(
                                         "Threaten & Blackmail",
                                         "Assign this gang member to threaten and black mail high-profile targets<br><br>" +
                                         "Earns money - Slightly increases respect - Slightly increases wanted level",
-                                        {baseRespect: 0.0001, baseWanted: 0.05, baseMoney: 15,
+                                        {baseRespect: 0.0002, baseWanted: 0.05, baseMoney: 15,
                                          hackWeight: 25, strWeight: 25, dexWeight: 25, chaWeight: 25, difficulty: 28}),
     "Terrorism" :               new GangMemberTask(
                                         "Terrorism",
@@ -525,79 +541,79 @@ function GangMemberUpgrade(name="", desc="", cost=0, type="-") {
 GangMemberUpgrade.prototype.apply = function(member, unapply=false) {
     switch(this.name) {
         case "Baseball Bat":
-            unapply ? member.str /= 1.1 : member.str *= 1.1;
-            unapply ? member.def /= 1.1 : member.def *= 1.1;
+            unapply ? member.str_mult /= 1.1 : member.str_mult *= 1.1;
+            unapply ? member.def_mult /= 1.1 : member.def_mult *= 1.1;
             break;
         case "Katana":
-            unapply ? member.str /= 1.15 : member.str *= 1.15;
-            unapply ? member.def /= 1.15 : member.def *= 1.15;
-            unapply ? member.dex /= 1.15 : member.dex *= 1.15;
+            unapply ? member.str_mult /= 1.15 : member.str_mult *= 1.15;
+            unapply ? member.def_mult /= 1.15 : member.def_mult *= 1.15;
+            unapply ? member.dex_mult /= 1.15 : member.dex_mult *= 1.15;
             break;
         case "Glock 18C":
-            unapply ? member.str /= 1.2 : member.str *= 1.2;
-            unapply ? member.def /= 1.2 : member.def *= 1.2;
-            unapply ? member.dex /= 1.2 : member.dex *= 1.2;
-            unapply ? member.agi /= 1.2 : member.agi *= 1.2;
+            unapply ? member.str_mult /= 1.2 : member.str_mult *= 1.2;
+            unapply ? member.def_mult /= 1.2 : member.def_mult *= 1.2;
+            unapply ? member.dex_mult /= 1.2 : member.dex_mult *= 1.2;
+            unapply ? member.agi_mult /= 1.2 : member.agi_mult *= 1.2;
             break;
         case "P90":
-            unapply ? member.str /= 1.4 : member.str *= 1.4;
-            unapply ? member.def /= 1.4 : member.def *= 1.4;
-            unapply ? member.agi /= 1.2 : member.agi *= 1.2;
+            unapply ? member.str_mult /= 1.4 : member.str_mult *= 1.4;
+            unapply ? member.def_mult /= 1.4 : member.def_mult *= 1.4;
+            unapply ? member.agi_mult /= 1.2 : member.agi_mult *= 1.2;
             break;
         case "Steyr AUG":
-            unapply ? member.str /= 1.6 : member.str *= 1.6;
-            unapply ? member.def /= 1.6 : member.def *= 1.6;
+            unapply ? member.str_mult /= 1.6 : member.str_mult *= 1.6;
+            unapply ? member.def_mult /= 1.6 : member.def_mult *= 1.6;
             break;
         case "AK-47":
-            unapply ? member.str /= 1.8 : member.str *= 1.8;
-            unapply ? member.def /= 1.8 : member.def *= 1.8;
+            unapply ? member.str_mult /= 1.8 : member.str_mult *= 1.8;
+            unapply ? member.def_mult /= 1.8 : member.def_mult *= 1.8;
             break;
         case "M15A10 Assault Rifle":
-            unapply ? member.str /= 1.9 : member.str *= 1.9;
-            unapply ? member.def /= 1.9 : member.def *= 1.9;
+            unapply ? member.str_mult /= 1.9 : member.str_mult *= 1.9;
+            unapply ? member.def_mult /= 1.9 : member.def_mult *= 1.9;
             break;
         case "AWM Sniper Rifle":
-            unapply ? member.str /= 1.8 : member.str *= 1.8;
-            unapply ? member.dex /= 1.8 : member.dex *= 1.8;
-            unapply ? member.agi /= 1.8 : member.agi *= 1.8;
+            unapply ? member.str_mult /= 1.8 : member.str_mult *= 1.8;
+            unapply ? member.dex_mult /= 1.8 : member.dex_mult *= 1.8;
+            unapply ? member.agi_mult /= 1.8 : member.agi_mult *= 1.8;
             break;
         case "Bulletproof Vest":
-            unapply ? member.def /= 1.15 : member.def *= 1.15;
+            unapply ? member.def_mult /= 1.15 : member.def_mult *= 1.15;
             break;
         case "Full Body Armor":
-            unapply ? member.def /= 1.3 : member.def *= 1.3;
+            unapply ? member.def_mult /= 1.3 : member.def_mult *= 1.3;
             break;
         case "Liquid Body Armor":
-            unapply ? member.def /= 1.5 : member.def *= 1.5;
-            unapply ? member.agi /= 1.5 : member.agi *= 1.5;
+            unapply ? member.def_mult /= 1.5 : member.def_mult *= 1.5;
+            unapply ? member.agi_mult /= 1.5 : member.agi_mult *= 1.5;
             break;
         case "Graphene Plating Armor":
-            unapply ? member.def /= 2 : member.def *= 2;
+            unapply ? member.def_mult /= 2 : member.def_mult *= 2;
             break;
         case "Ford Flex V20":
-            unapply ? member.agi /= 1.2 : member.agi *= 1.2;
-            unapply ? member.cha /= 1.2 : member.cha *= 1.2;
+            unapply ? member.agi_mult /= 1.2 : member.agi_mult *= 1.2;
+            unapply ? member.cha_mult /= 1.2 : member.cha_mult *= 1.2;
             break;
         case "ATX1070 Superbike":
-            unapply ? member.agi /= 1.4 : member.agi *= 1.4;
-            unapply ? member.cha /= 1.4 : member.cha *= 1.4;
+            unapply ? member.agi_mult /= 1.4 : member.agi_mult *= 1.4;
+            unapply ? member.cha_mult /= 1.4 : member.cha_mult *= 1.4;
             break;
         case "Mercedes-Benz S9001":
-            unapply ? member.agi /= 1.6 : member.agi *= 1.6;
-            unapply ? member.cha /= 1.6 : member.cha *= 1.6;
+            unapply ? member.agi_mult /= 1.6 : member.agi_mult *= 1.6;
+            unapply ? member.cha_mult /= 1.6 : member.cha_mult *= 1.6;
             break;
         case "White Ferrari":
-            unapply ? member.agi /= 1.8 : member.agi *= 1.8;
-            unapply ? member.cha /= 1.8 : member.cha *= 1.8;
+            unapply ? member.agi_mult /= 1.8 : member.agi_mult *= 1.8;
+            unapply ? member.cha_mult /= 1.8 : member.cha_mult *= 1.8;
             break;
         case "NUKE Rootkit":
-            unapply ? member.hack /= 1.2 : member.hack *= 1.2;
+            unapply ? member.hack_mult /= 1.2 : member.hack_mult *= 1.2;
             break;
         case "Soulstealer Rootkit":
-            unapply ? member.hack /= 1.3 : member.hack *= 1.3;
+            unapply ? member.hack_mult /= 1.3 : member.hack_mult *= 1.3;
             break;
         case "Demon Rootkit":
-            unapply ? member.hack /= 1.5 : member.hack *= 1.5;
+            unapply ? member.hack_mult /= 1.5 : member.hack_mult *= 1.5;
             break;
         default:
             console.log("ERROR: Could not find this upgrade: " + this.name);
@@ -700,7 +716,9 @@ GangMemberUpgrades = {
 }
 
 //Create a pop-up box that lets player purchase upgrades
+var gangMemberUpgradeBoxOpened = false;
 function createGangMemberUpgradeBox(memberObj) {
+    console.log("Creating gang member upgrade box for " + memberObj.name);
     var container = document.getElementById("gang-purchase-upgrade-container");
     if (container) {
         while (container.firstChild) {
@@ -710,11 +728,13 @@ function createGangMemberUpgradeBox(memberObj) {
         var container = document.createElement("div");
         container.setAttribute("id", "gang-purchase-upgrade-container");
         document.getElementById("entire-game-container").appendChild(container);
-        container.setAttribute("class", "popup-box-container");
+        container.setAttribute("class", "dialog-box-container");
+        container.style.display = "block";
     }
 
     var content = document.createElement("div");
-    content.setAttribute("class", "popup-box-content");
+    content.setAttribute("class", "dialog-box-content");
+    content.setAttribute("id", "gang-purchase-upgrade-content");
     container.appendChild(content);
 
     var intro = document.createElement("p");
@@ -725,10 +745,11 @@ function createGangMemberUpgradeBox(memberObj) {
         "For each of these pieces of equipment, a gang member can only have one at a time (i.e " +
         "a member cannot have two weapons or two vehicles). Purchasing an upgrade will automatically " +
         "replace the member's existing upgrade, if he/she is equipped with one. The existing upgrade " +
-        "will be lost and will have to be re-purchased if you want to switch back.";
+        "will be lost and will have to be re-purchased if you want to switch back.<br><br>";
 
     //Weapons
     var weaponTxt = document.createElement("p");
+    weaponTxt.style.display = "block";
     content.appendChild(weaponTxt);
     if (memberObj.weaponUpgrade instanceof GangMemberUpgrade) {
         weaponTxt.innerHTML = "Weapons (Current Equip: " + memberObj.weaponUpgrade.name + ")";
@@ -738,8 +759,10 @@ function createGangMemberUpgradeBox(memberObj) {
     var weaponNames = ["Baseball Bat", "Katana", "Glock 18C", "P90", "Steyr AUG",
                        "AK-47", "M15A10 Assault Rifle", "AWM Sniper Rifle"];
     createGangMemberUpgradeButtons(memberObj, weaponNames, memberObj.weaponUpgrade, content);
+    content.appendChild(document.createElement("br"));
 
     var armorTxt = document.createElement("p");
+    armorTxt.style.display = "block";
     content.appendChild(armorTxt);
     if (memberObj.armorUpgrade instanceof GangMemberUpgrade) {
         armorTxt.innerHTML = "Armor (Current Equip: " + memberObj.armorUpgrade.name + ")";
@@ -751,6 +774,7 @@ function createGangMemberUpgradeBox(memberObj) {
     createGangMemberUpgradeButtons(memberObj, armorNames, memberObj.armorUpgrade, content);
 
     var vehicleTxt = document.createElement("p");
+    vehicleTxt.style.display = "block";
     content.appendChild(vehicleTxt);
     if (memberObj.vehicleUpgrade instanceof GangMemberUpgrade) {
         vehicleTxt.innerHTML = "Vehicles (Current Equip: " + memberObj.vehicleUpgrade.name + ")";
@@ -762,6 +786,7 @@ function createGangMemberUpgradeBox(memberObj) {
     createGangMemberUpgradeButtons(memberObj, vehicleNames, memberObj.vehicleUpgrade, content);
 
     var rootkitTxt = document.createElement("p");
+    rootkitTxt.style.display = "block";
     content.appendChild(rootkitTxt);
     if (memberObj.hackingUpgrade instanceof GangMemberUpgrade) {
         rootkitTxt.innerHTML = "Rootkits (Current Equip: " + memberObj.hackingUpgrade.name + ")";
@@ -770,6 +795,8 @@ function createGangMemberUpgradeBox(memberObj) {
     }
     var rootkitNames = ["NUKE Rootkit", "Soulstealer Rootkit", "Demon Rootkit"];
     createGangMemberUpgradeButtons(memberObj, rootkitNames, memberObj.hackingUpgrade, content);
+
+    gangMemberUpgradeBoxOpened = true;
 }
 
 function createGangMemberUpgradeButtons(memberObj, upgNames, memberUpgrade, content) {
@@ -778,19 +805,31 @@ function createGangMemberUpgradeButtons(memberObj, upgNames, memberUpgrade, cont
         var upgrade = GangMemberUpgrades[upgNames[i]];
         if (upgrade == null) {
             console.log("ERROR: Could not find GangMemberUpgrade object for" + upgNames[i]);
-            continue;
+            return; //Return inside closure
         }
         //Skip the currently owned upgrade
         if (memberUpgrade instanceof GangMemberUpgrade &&
-            memberUpgrade.name == upgrade.name) {continue;}
+            memberUpgrade.name == upgrade.name) {return;}
 
+        //Create button
         var btn = document.createElement("a");
         btn.innerHTML = upgrade.name + " - $" + numeral(upgrade.cost).format('(0.00a)');
         if (Player.money.gte(upgrade.cost)) {
-            btn.setAttribute("class", "a-link-button");
+            btn.setAttribute("class", "popup-box-button tooltip")
         } else {
-            btn.setAttribute("class", "a-link-button-inactive");
+            btn.setAttribute("class", "popup-box-button-inactive tooltip");
         }
+        btn.style.cssFloat = "none";
+        btn.style.display = "block";
+        btn.style.margin = "8px";
+        btn.style.width = "40%";
+
+        //Tooltip for upgrade
+        var tooltip = document.createElement("span");
+        tooltip.setAttribute("class", "tooltiptext");
+        tooltip.innerHTML = upgrade.desc;
+        btn.appendChild(tooltip);
+
         content.appendChild(btn);
         btn.addEventListener("click", function() {
             upgrade.purchase(memberObj);
@@ -1083,7 +1122,16 @@ function createGangMemberDisplayElement(memberObj) {
     var statsP = document.createElement("p");
     statsP.setAttribute("id", name + "gang-member-stats-text");
     statsP.style.display = "inline";
+    var upgradeButton = document.createElement("a");
+    upgradeButton.setAttribute("id", name + "gang-member-upgrade-btn");
+    upgradeButton.setAttribute("class", "popup-box-button");
+    upgradeButton.style.cssFloat = "left";
+    upgradeButton.innerHTML = "Purchase Upgrades";
+    upgradeButton.addEventListener("click", function() {
+        createGangMemberUpgradeBox(memberObj);
+    });
     statsDiv.appendChild(statsP);
+    statsDiv.appendChild(upgradeButton);
 
     //Panel for Selecting task and show respect/wanted gain
     var taskDiv = document.createElement("div");

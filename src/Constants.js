@@ -1,5 +1,5 @@
 CONSTANTS = {
-    Version:                "0.27.2",
+    Version:                "0.27.3",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -76,6 +76,7 @@ CONSTANTS = {
     ScriptReadWriteRamCost:         1.0,
     ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args
     ScriptGetScriptCost:            0.1,
+    ScriptGetHackTimeCost:          0.05,
 
     MultithreadingRAMCost:          1,
 
@@ -519,6 +520,12 @@ CONSTANTS = {
                            "<i>getScriptRam(scriptname, hostname/ip)</i><br>Returns the amount of RAM required to run the specified script on the " +
                            "target server. The first argument must be a string with the name of the script. The script name is case sensitive. " +
                            "The second argument is a string with the hostname or IP of the server where that script is. Both arguments are required.<br><br>" +
+                           "<i>getHackTime(hostname/ip)</i><br>Returns the amount of time in seconds it takes to execute the hack() Netscript function " +
+                           "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
+                           "<i>getGrowTime(hostname/ip)</i><br>Returns the amount of time in seconds it takes to execute the grow() Netscript function " +
+                           "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
+                           "<i>getWeakenTime(hostname/ip)</i><br>Returns the amount of time in seconds it takes to execute the weaken() Netscript function " +
+                           "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
                            "<u><h1>Hacknet Nodes API</h1></u><br>" +
                            "Netscript provides the following API for accessing and upgrading your Hacknet Nodes through scripts. This API does NOT work offline.<br><br>" +
                            "<i>hacknetnodes</i><br> A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " +
@@ -710,6 +717,11 @@ CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.27.3<br>" +
+    "-You can now purchase upgrades for Gang Members (BitNode 2 only)<br>" +
+    "-Decreased Gang respect gains and slightly increased wanted gains (BitNode 2 only)<br>" +
+    "-Other gangs will increase in power faster (BitNode 2 only)<br>" +
+    "-Added getHackTime(), getGrowTime(), and getWeakenTime() Netscript functions<br><br>" +
     "v0.27.2<br>" +
     "-Added getServerGrowth() Netscript function<br>" +
     "-Added getNextHacknetNodeCost() Netscript function<br>" +
