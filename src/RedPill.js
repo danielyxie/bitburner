@@ -90,8 +90,8 @@ function giveSourceFile(bitNodeNumber) {
     //Check if player already has this source file
     var alreadyOwned = false;
     var ownedSourceFile = null;
-    for (var i = 0; i < Player.sourceFiles; ++i) {
-        if (Player.sourceFiles[i].n == bitNodeNumber) {
+    for (var i = 0; i < Player.sourceFiles.length; ++i) {
+        if (Player.sourceFiles[i].n === bitNodeNumber) {
             alreadyOwned = true;
             ownedSourceFile = Player.sourceFiles[i];
             break;

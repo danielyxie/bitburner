@@ -379,7 +379,7 @@ function prestigeSourceFile() {
             delete Augmentations[name];
         }
     }
-    
+
     //Re-initialize things - This will update any changes
     initFactions(); //Factions must be initialized before augmentations
     initAugmentations();    //Calls reapplyAllAugmentations() and resets Player multipliers
@@ -398,6 +398,7 @@ function prestigeSourceFile() {
 
     //Reset Stock market
     Player.hasWseAccount = false;
+    Player.hasTixApiAccess = false;
 
     Player.playtimeSinceLastAug = 0;
 

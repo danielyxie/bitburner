@@ -169,13 +169,14 @@ function calculateRamUsage(codeCopy) {
     var hasRootAccessCount = numOccurrences(codeCopy, "hasRootAccess(");
     var getHostnameCount = numOccurrences(codeCopy, "getHostname(");
     var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
-    var getServerMoneyAvailableCount = numOccurrences(codeCopy, "getServerMoneyAvailable(");
-    var getServerMaxMoneyCount = numOccurrences(codeCopy, "getServerMaxMoney(");
-    var getServerSecurityCount = numOccurrences(codeCopy, "getServerSecurityLevel(");
-    var getServerBaseSecurityCount = numOccurrences(codeCopy, "getServerBaseSecurityLevel(");
-    var getServerReqdHackingCount = numOccurrences(codeCopy, "getServerRequiredHackingLevel(");
-    var getServerNumPortsReqdCount = numOccurrences(codeCopy, "getServerNumPortsRequired(");
-    var getServerRamCount = numOccurrences(codeCopy, "getServerRam(");
+    var getServerCount = numOccurrences(codeCopy, "getServerMoneyAvailable(") +
+                         numOccurrences(codeCopy, "getServerMaxMoney(") +
+                         numOccurrences(codeCopy, "getServerSecurityLevel(") +
+                         numOccurrences(codeCopy, "getServerBaseSecurityLevel(") +
+                         numOccurrences(codeCopy, "getServerGrowth(") +
+                         numOccurrences(codeCopy, "getServerRequiredHackingLevel(") +
+                         numOccurrences(codeCopy, "getServerNumPortsRequired(") +
+                         numOccurrences(codeCopy, "getServerRam(");
     var fileExistsCount = numOccurrences(codeCopy, "fileExists(");
     var isRunningCount = numOccurrences(codeCopy, "isRunning(");
     var numOperators = numNetscriptOperators(codeCopy);
@@ -196,6 +197,9 @@ function calculateRamUsage(codeCopy) {
     var arbScriptCount = numOccurrences(codeCopy, "scriptRunning(") +
                          numOccurrences(codeCopy, "scriptKill(");
     var getScriptCount = numOccurrences(codeCopy, "getScriptRam(");
+    var getHackTimeCount = numOccurrences(codeCopy, "getHackTime(") +
+                           numOccurrences(codeCopy, "getGrowTime(") +
+                           numOccurrences(codeCopy, "getWeakenTime(");
 
     return baseRam +
         ((whileCount * CONSTANTS.ScriptWhileRamCost) +
@@ -218,13 +222,7 @@ function calculateRamUsage(codeCopy) {
         (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) +
         (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
         (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) +
-        (getServerMoneyAvailableCount * CONSTANTS.ScriptGetServerCost) +
-        (getServerMaxMoneyCount * CONSTANTS.ScriptGetServerCost) +
-        (getServerSecurityCount * CONSTANTS.ScriptGetServerCost) +
-        (getServerBaseSecurityCount * CONSTANTS.ScriptGetServerCost) +
-        (getServerReqdHackingCount * CONSTANTS.ScriptGetServerCost) +
-        (getServerNumPortsReqdCount * CONSTANTS.ScriptGetServerCost) +
-        (getServerRamCount * CONSTANTS.ScriptGetServerCost) +
+        (getServerCount * CONSTANTS.ScriptGetServerCost) +
         (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) +
         (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
         (numOperators * CONSTANTS.ScriptOperatorRamCost) +
@@ -240,7 +238,8 @@ function calculateRamUsage(codeCopy) {
         (scriptWriteCount * CONSTANTS.ScriptReadWriteRamCost) +
         (scriptReadCount * CONSTANTS.ScriptReadWriteRamCost) +
         (arbScriptCount * CONSTANTS.ScriptArbScriptRamCost) +
-        (getScriptCount * CONSTANTS.ScriptGetScriptCost));
+        (getScriptCount * CONSTANTS.ScriptGetScriptCost) +
+        (getHackTimeCount * CONSTANTS.ScriptGetHackTimeCost));
 }
 
 Script.prototype.toJSON = function() {
