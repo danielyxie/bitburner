@@ -34,7 +34,7 @@ BitNodes = {
                             "Level 3: 35%"),
     BitNode3:   new BitNode(3, "The Price of Civilization", "COMING SOON"), //Corporate Warfare, Run own company
     BitNode4:   new BitNode(4, "The Singularity", "COMING SOON"),           //Everything automatable
-    BitNode5:   new BitNode(5, "2084", "COMING SOON"),                      //Big Brother
+    BitNode5:   new BitNode(5, "Artificial Intelligence", "COMING SOON"),   //Big Brother
     BitNode6:   new BitNode(6, "Hacktocracy", "COMING SOON"),               //Healthy Hacknet balancing mechanic
     BitNode7:   new BitNode(7, "Do Androids Dream?", "COMING SOON"),        //Build androids for automation
     BitNode8:   new BitNode(8, "Ghost of Wall Street", "COMING SOON"),      //Trading only viable strategy

@@ -1,3 +1,10 @@
+function initSingularitySFFlags() {
+    //TODO
+}
+
+var hasSingularitySF = false;
+var singularitySFLvl = 1;
+
 function NetscriptFunctions(workerScript) {
     return {
         hacknetnodes : Player.hacknetNodes,
@@ -864,7 +871,39 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
             }
             return scriptCalculateWeakenTime(server) / 1000; //Returns seconds
-        }
+        },
+
+        /* Singularity Functions */
+        universityCourse(universityName, courseName) {
+            if (Player.isWorking) {
+                var txt = Player.singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+        },
+        //gymWorkout(gymName, stat);
+
+        //travelToCity(cityname);
+
+        //purchaseTor();
+
+        //homeComp.upgradeRam();
+        //homeComp.getUpgradeRamCost();
+
+        //workForCompany();
+        //applyToCompany(companyName, field);
+        //getCompanyRep(companyName);
+
+        //checkFactionInvitations();
+        //joinFaction(name);
+        //workForFaction(facName, type);
+        //getFactionRep(name);
+
+        //createProgram();
+
+        //getAugmentationCost(name);
+        //purchaseAugmentation(faction, name);
+        //installAugmentations();
+
 
     }
 }

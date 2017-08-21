@@ -1064,7 +1064,9 @@ PlayerObject.prototype.takeClass = function(numCycles) {
                     "You may cancel at any time";
 }
 
-PlayerObject.prototype.finishClass = function() {
+//The 'sing' argument defines whether or not this function was called
+//through a Singularity Netscript function
+PlayerObject.prototype.finishClass = function(sing=false) {
     this.gainWorkExp();
 
     if (this.workMoneyGained > 0) {
@@ -1082,8 +1084,7 @@ PlayerObject.prototype.finishClass = function() {
               formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" +
               formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" +
               formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
-
-    dialogBoxCreate(txt);
+    if (!sing) {dialogBoxCreate(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
@@ -1091,6 +1092,16 @@ PlayerObject.prototype.finishClass = function() {
     this.isWorking = false;
 
     Engine.loadLocationContent();
+
+    if (sing) {return = "After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", " +
+              "you spent a total of $" + formatNumber(this.workMoneyGained * -1, 2) + ". " +
+              "You earned a total of: " +
+              formatNumber(this.workHackExpGained, 3) + " hacking exp, " +
+              formatNumber(this.workStrExpGained, 3) + " strength exp, " +
+              formatNumber(this.workDefExpGained, 3) + " defense exp, " +
+              formatNumber(this.workDexExpGained, 3) + " dexterity exp, " +
+              formatNumber(this.workAgiExpGained, 3) + " agility exp, and " +
+              formatNumber(this.workChaExpGained, 3) + " charisma exp";}
 }
 
 //The EXP and $ gains are hardcoded. Time is in ms
@@ -1230,6 +1241,20 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
     Engine.loadLocationContent();
+}
+
+//Cancels the player's current "work" assignment and gives the proper rewards
+//Used only for Singularity functions, so no popups are created
+PlayerObject.prototype.singularityStopWork = function() {
+    if (!this.isWorking) {return null;}
+    switch (this.workType) {
+        case CONSTANTS.WorkTypeStudyClass:
+            return Player.finishClass(true);
+            break;
+        default:
+            console.log("ERROR: Unrecognized work type");
+            return;
+    }
 }
 
 
