@@ -874,10 +874,46 @@ function NetscriptFunctions(workerScript) {
         },
 
         /* Singularity Functions */
-        universityCourse(universityName, courseName) {
+        universityCourse(universityName, className) {
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
                 workerScript.scriptRef.log(txt);
+            }
+            var costMult, expMult;
+            switch(universityName.toLowerCase()) {
+                case Locations.AevumSummitUniversity.toLowerCase():
+                    costMult = 4;
+                    expMult = 3;
+                    break;
+                case Locations.Sector12RothmanUniversity.toLowerCase():
+                    costMult = 3;
+                    expMult = 2;
+                    break;
+                case Locations.VolhavenZBInstituteOfTechnology.toLowerCase():
+                    costMult = 5;
+                    expMult = 4;
+                    break;
+                default:
+                    workerScript.scriptRef.log("Invalid university name: " + universityName + ". universityCourse() failed");
+                    return false;
+            }
+
+            switch(className.toLowerCase()) {
+                case "Study Computer Science".toLowerCase():
+                    break;
+                case "Data Structures".toLowerCase():
+                    break;
+                case "Networks".toLowerCase():
+                    break;
+                case "Algorithms".toLowerCase():
+                    break;
+                case "Management".toLowerCase():
+                    break;
+                case "Leadership".toLowerCase():
+                    break;
+                default:
+                    workerScript.scriptRef.log("Invalid class name: " + className + ". universityCourse() failed");
+                    break;
             }
         },
         //gymWorkout(gymName, stat);
