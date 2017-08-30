@@ -1,8 +1,14 @@
+import {CONSTANTS}                              from "./Constants.js";
+import {Player}                                 from "./Player.js";
+import {AllServers}                             from "./Server.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {yesNoTxtInpBoxGetInput}                 from "../utils/YesNoBox.js";
+
 /* Functions to handle any server-related purchasing:
  *  Purchasing new servers
  *  Purchasing more RAM for home computer
  */
-purchaseServer = function(ram, cost) {
+function purchaseServer(ram, cost) {
     //Check if player has enough money
     if (Player.money.lt(cost)) {
         dialogBoxCreate("You don't have enough money to purchase this server!");
@@ -41,7 +47,7 @@ purchaseServer = function(ram, cost) {
 }
 
 
-purchaseRamForHomeComputer = function(cost) {
+function purchaseRamForHomeComputer(cost) {
     if (Player.money.lt(cost)) {
         dialogBoxCreate("You do not have enough money to purchase additional RAM for your home computer");
         return;
@@ -54,3 +60,5 @@ purchaseRamForHomeComputer = function(cost) {
 
     dialogBoxCreate("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
 }
+
+export {purchaseServer, purchaseRamForHomeComputer};

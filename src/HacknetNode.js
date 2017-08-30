@@ -1,3 +1,15 @@
+import {BitNodeMultipliers}                     from "./BitNode.js";
+import {CONSTANTS}                              from "./Constants.js";
+import {Engine}                                 from "./engine.js";
+import {iTutorialSteps, iTutorialNextStep,
+        iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial.js";
+import {Player}                                 from "./Player.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+
 /* HacknetNode.js */
 function hacknetNodesInit() {
     var mult1x = document.getElementById("hacknet-nodes-1x-multiplier");
@@ -50,7 +62,9 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
 
     this.moneyGainRatePerSecond = (this.level * gainPerLevel) *
                                   Math.pow(1.035, this.ram-1) *
-                                  ((this.cores + 5) / 6) * Player.hacknet_node_money_mult;
+                                  ((this.cores + 5) / 6) *
+                                  Player.hacknet_node_money_mult *
+                                  BitNodeMultipliers.HacknetNodeMoney;
     if (isNaN(this.moneyGainRatePerSecond)) {
         this.moneyGainRatePerSecond = 0;
         dialogBoxCreate("Error in calculating Hacknet Node production. Please report to game developer");
@@ -165,7 +179,7 @@ HacknetNode.fromJSON = function(value) {
 Reviver.constructors.HacknetNode = HacknetNode;
 
 
-purchaseHacknet = function() {
+function purchaseHacknet() {
     /* INTERACTIVE TUTORIAL */
     if (iTutorialIsRunning) {
         if (currITutorialStep == iTutorialSteps.HacknetNodesIntroduction) {
@@ -199,7 +213,7 @@ purchaseHacknet = function() {
 }
 
 //Calculates the total production from all HacknetNodes
-updateTotalHacknetProduction = function() {
+function updateTotalHacknetProduction() {
     var total = 0;
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
         total += Player.hacknetNodes[i].moneyGainRatePerSecond;
@@ -207,7 +221,7 @@ updateTotalHacknetProduction = function() {
     Player.totalHacknetNodeProduction = total;
 }
 
-getCostOfNextHacknetNode = function() {
+function getCostOfNextHacknetNode() {
     //Cost increases exponentially based on how many you own
     var numOwned = Player.hacknetNodes.length;
     var mult = CONSTANTS.HacknetNodePurchaseNextMult;
@@ -215,7 +229,7 @@ getCostOfNextHacknetNode = function() {
 }
 
 var hacknetNodePurchaseMultiplier = 1;
-updateHacknetNodesMultiplierButtons = function() {
+function updateHacknetNodesMultiplierButtons() {
     var mult1x = document.getElementById("hacknet-nodes-1x-multiplier");
     var mult5x = document.getElementById("hacknet-nodes-5x-multiplier");
     var mult10x = document.getElementById("hacknet-nodes-10x-multiplier");
@@ -242,7 +256,7 @@ updateHacknetNodesMultiplierButtons = function() {
 
 //Calculate the maximum number of times the Player can afford to upgrade
 //a Hacknet Node's level"
-getMaxNumberLevelUpgrades = function(nodeObj) {
+function getMaxNumberLevelUpgrades(nodeObj) {
     if (Player.money.lt(nodeObj.calculateLevelUpgradeCost(1))) {return 0;}
     var min = 1;
     var max = CONSTANTS.HacknetNodeMaxLevel-1;
@@ -268,7 +282,7 @@ getMaxNumberLevelUpgrades = function(nodeObj) {
 }
 
 //Creates Hacknet Node DOM elements when the page is opened
-displayHacknetNodesContent = function() {
+function displayHacknetNodesContent() {
     //Update Hacknet Nodes button
     var newPurchaseButton = clearEventListeners("hacknet-nodes-purchase-button");
 
@@ -294,7 +308,7 @@ displayHacknetNodesContent = function() {
 }
 
 //Update information on all Hacknet Node DOM elements
-updateHacknetNodesContent = function() {
+function updateHacknetNodesContent() {
     //Set purchase button to inactive if not enough money, and update its price display
     var cost = getCostOfNextHacknetNode();
     var purchaseButton = document.getElementById("hacknet-nodes-purchase-button");
@@ -317,7 +331,7 @@ updateHacknetNodesContent = function() {
 }
 
 //Creates a single Hacknet Node DOM element
-createHacknetNodeDomElement = function(nodeObj) {
+function createHacknetNodeDomElement(nodeObj) {
     var nodeName = nodeObj.name;
 
     var listItem = document.createElement("li");
@@ -383,7 +397,7 @@ createHacknetNodeDomElement = function(nodeObj) {
 }
 
 //Updates information on a single hacknet node DOM element
-updateHacknetNodeDomElement = function(nodeObj) {
+function updateHacknetNodeDomElement(nodeObj) {
     var nodeName = nodeObj.name;
     var txt = document.getElementById("hacknet-node-text-" + nodeName);
     if (txt == null) {throw new Error("Cannot find text element");}
@@ -453,7 +467,7 @@ updateHacknetNodeDomElement = function(nodeObj) {
     }
 }
 
-processAllHacknetNodeEarnings = function(numCycles) {
+function processAllHacknetNodeEarnings(numCycles) {
     var total = 0;
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
         total += processSingleHacknetNodeEarnings(numCycles, Player.hacknetNodes[i]);
@@ -461,7 +475,7 @@ processAllHacknetNodeEarnings = function(numCycles) {
     return total;
 }
 
-processSingleHacknetNodeEarnings = function(numCycles, nodeObj) {
+function processSingleHacknetNodeEarnings(numCycles, nodeObj) {
     var cyclesPerSecond = 1000 / Engine._idleSpeed;
     var earningPerCycle = nodeObj.moneyGainRatePerSecond / cyclesPerSecond;
     if (isNaN(earningPerCycle)) {throw new Error("Calculated Earnings is not a number");}
@@ -472,7 +486,7 @@ processSingleHacknetNodeEarnings = function(numCycles, nodeObj) {
     return totalEarnings;
 }
 
-getHacknetNode = function(name) {
+function getHacknetNode(name) {
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
         if (Player.hacknetNodes[i].name == name) {
             return Player.hacknetNodes[i];
@@ -480,3 +494,8 @@ getHacknetNode = function(name) {
     }
     return null;
 }
+
+export {hacknetNodesInit, HacknetNode, purchaseHacknet, updateTotalHacknetProduction,
+        getCostOfNextHacknetNode, updateHacknetNodesMultiplierButtons, getMaxNumberLevelUpgrades,
+        displayHacknetNodesContent, updateHacknetNodesContent, processAllHacknetNodeEarnings,
+        getHacknetNode};

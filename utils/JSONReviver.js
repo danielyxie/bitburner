@@ -17,13 +17,13 @@ function Reviver(key, value) {
 			ctor = Reviver.constructors[value.ctor] || window[value.ctor];
 			if (typeof ctor === "function" &&
 				typeof ctor.fromJSON === "function") {
-					
+
 					return ctor.fromJSON(value);
 			}
-	}	
+	}
 	return value;
 }
-Reviver.constructors = {}; // A list of constructors the smart reviver should know about  
+Reviver.constructors = {}; // A list of constructors the smart reviver should know about
 
 // A generic "toJSON" function that creates the data expected
 // by Reviver.
@@ -67,3 +67,5 @@ function Generic_fromJSON(ctor, data) {
   }
   return obj;
 }
+
+export {Reviver, Generic_toJSON, Generic_fromJSON};

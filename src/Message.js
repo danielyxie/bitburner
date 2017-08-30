@@ -1,3 +1,13 @@
+import {Augmentations, Augmentation,
+        AugmentationNames}                      from "./Augmentations.js";
+import {Programs}                               from "./CreateProgram.js";
+import {Player}                                 from "./Player.js";
+import {GetServerByHostname}                    from "./Server.js";
+import {Settings}                               from "./Settings.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+
 /* Message.js */
 function Message(filename="", msg="") {
     this.filename   = filename;
@@ -56,6 +66,11 @@ function checkForMessagesToSend() {
     var bitrunnersTest  = Messages[MessageFilenames.BitRunnersTest];
     var redpill = Messages[MessageFilenames.RedPill];
 
+    var redpillOwned = false;
+    if (Augmentations[AugmentationNames.TheRedPill].owned) {
+        redpillOwned = true;
+    }
+
     if (jumper0 && !jumper0.recvd && Player.hacking_skill >= 25) {
         sendMessage(jumper0);
     } else if (jumper1 && !jumper1.recvd && Player.hacking_skill >= 40) {
@@ -75,7 +90,7 @@ function checkForMessagesToSend() {
     } else if (jumper5 && !jumper5.recvd && Player.hacking_skill >= 1000) {
         sendMessage(jumper5);
         Player.getHomeComputer().programs.push(Programs.Flight);
-    } else if (redpill && !redpill.recvd && Player.hacking_skill >= 2000) {
+    } else if (redpill && !redpill.recvd && Player.hacking_skill >= 2000 && redpillOwned) {
         sendMessage(redpill);
     }
 }
@@ -84,9 +99,13 @@ function AddToAllMessages(msg) {
     Messages[msg.filename] = msg;
 }
 
-Messages = {}
+let Messages = {}
 
-MessageFilenames = {
+function loadMessages(saveString) {
+    Messages = JSON.parse(saveString, Reviver);
+}
+
+let MessageFilenames = {
     Jumper0:    "j0.msg",
     Jumper1:    "j1.msg",
     Jumper2:    "j2.msg",
@@ -160,3 +179,6 @@ function initMessages()  {
                                 "@_#(%_@#M(BDSPOMB__THE-CAVE_#)$(*@#$)@#BNBEGB<br>" +
                                 "DFLSMFVMV)#@($*)@#*$MV)@#(*$V)M#(*$)M@(#*VM$)"));
 }
+
+export {Messages, checkForMessagesToSend, sendMessage, showMessage, loadMessages,
+        initMessages, Message};

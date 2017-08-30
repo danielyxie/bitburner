@@ -7,6 +7,7 @@
     top: 0;
     width: 100%;
     height: 100%;
+    overflow:auto;
     background-color: rbga(var(--my-background-color), 0.4);
 }
 
@@ -16,7 +17,6 @@
     padding: 12px;
     border: 5px solid var(--my-highlight-color);
     width: 70%;
-    overflow: auto; /* Enable scroll if needed */
     color: var(--my-font-color);
 }
 

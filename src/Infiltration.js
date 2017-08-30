@@ -1,3 +1,11 @@
+import {CONSTANTS}                              from "./Constants.js";
+import {Engine}                                 from "./engine.js";
+import {Player}                                 from "./Player.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {clearEventListeners, getRandomInt}      from "../utils/HelperFunctions.js";
+import {infiltrationBoxCreate}                  from "../utils/InfiltrationBox.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+
 /* Infiltration.js
  *
  * Kill
@@ -16,7 +24,7 @@
  * Escape
  */
 
-InfiltrationScenarios = {
+let InfiltrationScenarios = {
     Guards: "You see an armed security guard patrolling the area.",
     TechOnly: "The area is equipped with a state-of-the-art security system: cameras, laser tripwires, and sentry turrets.",
     TechOrLockedDoor: "The area is equipped with a state-of-the-art security system. There is a locked door on the side of the " +
@@ -70,8 +78,6 @@ InfiltrationInstance.prototype.gainCharismaExp = function(amt) {
     if (isNaN(amt)) {return;}
     this.chaExpGained       += amt;
 }
-
-
 
 function beginInfiltration(companyName, startLevel, val, maxClearance, diff) {
     var inst = new InfiltrationInstance(companyName, startLevel, val, maxClearance, diff);
@@ -796,3 +802,5 @@ function getInfiltrationEscapeChance(inst) {
            (2 * Player.agility +
             Player.dexterity) / lvl);
 }
+
+export {beginInfiltration};

@@ -10,13 +10,13 @@ function sizeOfObject(obj) {
 }
 
 //Adds a random offset to a number within a certain percentage
-//e.g. addOffset(100, 5) will return anything from 95 to 105. 
+//e.g. addOffset(100, 5) will return anything from 95 to 105.
 //The percentage argument must be between 0 and 100;
 function addOffset(n, percentage) {
     if (percentage < 0 || percentage > 100) {return;}
-    
+
     var offset = n * (percentage / 100);
-    
+
     return n + ((Math.random() * (2 * offset)) - offset);
 }
 
@@ -41,7 +41,7 @@ function compareArrays(a1, a2) {
     if (a1.length != a2.length) {
         return false;
     }
-    
+
     for (var i = 0; i < a1.length; ++i) {
         if (a1[i] != a2[i]) {return false;}
     }
@@ -57,3 +57,6 @@ function powerOfTwo(n) {
     if (isNaN(n)) {return false;}
     return n && (n & (n-1)) === 0;
 }
+
+export {sizeOfObject, addOffset, clearEventListeners, getRandomInt,
+        compareArrays, printArray, powerOfTwo};

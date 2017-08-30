@@ -1,5 +1,8 @@
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+
 /* Holds IP of Special Servers */
-SpecialServerNames = {
+let SpecialServerNames = {
     FulcrumSecretTechnologies:  "Fulcrum Secret Technologies Server",
     CyberSecServer:             "CyberSec Server",
     NiteSecServer:              "NiteSec Server",
@@ -23,6 +26,25 @@ SpecialServerIpsMap.fromJSON = function(value) {
     return Generic_fromJSON(SpecialServerIpsMap, value.data);
 }
 
-Reviver.constructors.SpecialServerIpsMap = SpecialServerIpsMap();
+Reviver.constructors.SpecialServerIpsMap = SpecialServerIpsMap;
 
-SpecialServerIps = null;
+let SpecialServerIps = new SpecialServerIpsMap();
+
+function prestigeSpecialServerIps() {
+    for (var member in SpecialServerIps) {
+        delete SpecialServerIps[member];
+    }
+    SpecialServerIps = null;
+    SpecialServerIps = new SpecialServerIpsMap();
+}
+
+function loadSpecialServerIps(saveString) {
+    SpecialServerIps = JSON.parse(saveString, Reviver);
+}
+
+function initSpecialServerIps() {
+    SpecialServerIps = new SpecialServerIpsMap();
+}
+
+export {SpecialServerNames, SpecialServerIps, SpecialServerIpsMap, loadSpecialServerIps,
+        prestigeSpecialServerIps, initSpecialServerIps};

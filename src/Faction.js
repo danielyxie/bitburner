@@ -1,3 +1,21 @@
+import {Augmentations, AugmentationNames,
+        PlayerOwnedAugmentation}                from "./Augmentations.js";
+import {BitNodeMultipliers}                     from "./BitNode.js";
+import {CONSTANTS}                              from "./Constants.js";
+import {Player}                                 from "./Player.js";
+import {Engine}                                 from "./engine.js";
+import {FactionInfo}                            from "./FactionInfo.js";
+import {Settings}                               from "./Settings.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox.js";
+import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {yesNoBoxCreate, yesNoBoxGetYesButton,
+        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
+
+
 //Netburner Faction class
 function factionInit() {
     $('#faction-donate-input').on('input', function() {
@@ -97,9 +115,13 @@ Faction.fromJSON = function(value) {
 Reviver.constructors.Faction = Faction;
 
 //Map of factions indexed by faction name
-Factions = {}
+let Factions = {}
 
-AddToFactions = function(faction) {
+function loadFactions(saveString) {
+    Factions = JSON.parse(saveString, Reviver);
+}
+
+function AddToFactions(faction) {
 	var name = faction.name;
 	Factions[name] = faction;
 }
@@ -110,7 +132,7 @@ function factionExists(name) {
 
 //TODO Augmentation price and rep requirement mult are 1 for everything right now,
 //      This might change in the future for balance
-initFactions = function() {
+function initFactions() {
 	//Endgame
 	var Illuminati 				= new Faction("Illuminati");
     Illuminati.setInfo(FactionInfo.IlluminatiInfo);
@@ -368,304 +390,7 @@ initFactions = function() {
 	AddToFactions(CyberSec);
 }
 
-//This function sets the requirements to join a Faction. It checks whether the Player meets
-//those requirements and will return an array of all factions that the Player should
-//receive an invitation to
-PlayerObject.prototype.checkForFactionInvitations = function() {
-    invitedFactions = []; //Array which will hold all Factions th eplayer should be invited to
-
-    var numAugmentations = this.augmentations.length;
-
-    var company = Companies[this.companyName];
-    var companyRep = 0;
-    if (company != null) {
-        companyRep = company.playerReputation;
-    }
-
-    //Illuminati
-    var illuminatiFac = Factions["Illuminati"];
-    if (!illuminatiFac.isBanned && !illuminatiFac.isMember && !illuminatiFac.alreadyInvited &&
-        numAugmentations >= 30 &&
-        this.money.gte(150000000000) &&
-        this.hacking_skill >= 1500 &&
-        this.strength >= 1200 && this.defense >= 1200 &&
-        this.dexterity >= 1200 && this.agility >= 1200) {
-        invitedFactions.push(illuminatiFac);
-    }
-
-    //Daedalus
-    var daedalusFac = Factions["Daedalus"];
-    if (!daedalusFac.isBanned && !daedalusFac.isMember && !daedalusFac.alreadyInvited &&
-        numAugmentations >= 30 &&
-        this.money.gte(100000000000) &&
-        (this.hacking_skill >= 2500 ||
-            (this.strength >= 1500 && this.defense >= 1500 &&
-             this.dexterity >= 1500 && this.agility >= 1500))) {
-        invitedFactions.push(daedalusFac);
-    }
-
-    //The Covenant
-    var covenantFac = Factions["The Covenant"];
-    if (!covenantFac.isBanned && !covenantFac.isMember && !covenantFac.alreadyInvited &&
-        numAugmentations >= 30 &&
-        this.money.gte(75000000000) &&
-        this.hacking_skill >= 850 &&
-        this.strength >= 850 &&
-        this.defense >= 850 &&
-        this.dexterity >= 850 &&
-        this.agility >= 850) {
-        invitedFactions.push(covenantFac);
-    }
-
-    //ECorp
-    var ecorpFac = Factions["ECorp"];
-    if (!ecorpFac.isBanned && !ecorpFac.isMember && !ecorpFac.alreadyInvited &&
-        this.companyName == Locations.AevumECorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push(ecorpFac);
-    }
-
-    //MegaCorp
-    var megacorpFac = Factions["MegaCorp"];
-    if (!megacorpFac.isBanned && !megacorpFac.isMember && !megacorpFac.alreadyInvited &&
-        this.companyName == Locations.Sector12MegaCorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push(megacorpFac);
-    }
-
-    //Bachman & Associates
-    var bachmanandassociatesFac = Factions["Bachman & Associates"];
-    if (!bachmanandassociatesFac.isBanned && !bachmanandassociatesFac.isMember &&
-        !bachmanandassociatesFac.alreadyInvited &&
-        this.companyName == Locations.AevumBachmanAndAssociates && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push(bachmanandassociatesFac);
-    }
-
-    //Blade Industries
-    var bladeindustriesFac = Factions["Blade Industries"];
-    if (!bladeindustriesFac.isBanned && !bladeindustriesFac.isMember && !bladeindustriesFac.alreadyInvited &&
-        this.companyName == Locations.Sector12BladeIndustries && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push(bladeindustriesFac);
-    }
-
-    //NWO
-    var nwoFac = Factions["NWO"];
-    if (!nwoFac.isBanned && !nwoFac.isMember && !nwoFac.alreadyInvited &&
-        this.companyName == Locations.VolhavenNWO && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push(nwoFac);
-    }
-
-    //Clarke Incorporated
-    var clarkeincorporatedFac = Factions["Clarke Incorporated"];
-    if (!clarkeincorporatedFac.isBanned && !clarkeincorporatedFac.isMember && !clarkeincorporatedFac.alreadyInvited &&
-        this.companyName == Locations.AevumClarkeIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push(clarkeincorporatedFac);
-    }
-
-    //OmniTek Incorporated
-    var omnitekincorporatedFac = Factions["OmniTek Incorporated"];
-    if (!omnitekincorporatedFac.isBanned && !omnitekincorporatedFac.isMember && !omnitekincorporatedFac.alreadyInvited &&
-        this.companyName == Locations.VolhavenOmniTekIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push(omnitekincorporatedFac);
-    }
-
-    //Four Sigma
-    var foursigmaFac = Factions["Four Sigma"];
-    if (!foursigmaFac.isBanned && !foursigmaFac.isMember && !foursigmaFac.alreadyInvited &&
-        this.companyName == Locations.Sector12FourSigma && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push(foursigmaFac);
-    }
-
-    //KuaiGong International
-    var kuaigonginternationalFac = Factions["KuaiGong International"];
-    if (!kuaigonginternationalFac.isBanned && !kuaigonginternationalFac.isMember &&
-        !kuaigonginternationalFac.alreadyInvited &&
-        this.companyName == Locations.ChongqingKuaiGongInternational && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
-        invitedFactions.push(kuaigonginternationalFac);
-    }
-
-    //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
-    var fulcrumsecrettechonologiesFac = Factions["Fulcrum Secret Technologies"];
-    var fulcrumSecretServer = AllServers[SpecialServerIps[SpecialServerNames.FulcrumSecretTechnologies]];
-    if (fulcrumSecretServer == null) {
-        console.log("ERROR: Could not find Fulcrum Secret Technologies Server");
-    } else {
-        if (!fulcrumsecrettechonologiesFac.isBanned && !fulcrumsecrettechonologiesFac.isMember &&
-            !fulcrumsecrettechonologiesFac.alreadyInvited &&
-            fulcrumSecretServer.manuallyHacked &&
-            this.companyName == Locations.AevumFulcrumTechnologies && companyRep >= 250000) {
-            invitedFactions.push(fulcrumsecrettechonologiesFac);
-        }
-    }
-
-    //BitRunners
-    var bitrunnersFac = Factions["BitRunners"];
-    var homeComp = this.getHomeComputer();
-    var bitrunnersServer = AllServers[SpecialServerIps[SpecialServerNames.BitRunnersServer]];
-    if (bitrunnersServer == null) {
-        console.log("ERROR: Could not find BitRunners Server");
-    } else if (!bitrunnersFac.isBanned && !bitrunnersFac.isMember && bitrunnersServer.manuallyHacked &&
-               !bitrunnersFac.alreadyInvited && this.hacking_skill >= 500 && homeComp.maxRam >= 128) {
-        invitedFactions.push(bitrunnersFac);
-    }
-
-    //The Black Hand
-    var theblackhandFac = Factions["The Black Hand"];
-    var blackhandServer = AllServers[SpecialServerIps[SpecialServerNames.TheBlackHandServer]];
-    if (blackhandServer == null) {
-        console.log("ERROR: Could not find The Black Hand Server");
-    } else if (!theblackhandFac.isBanned && !theblackhandFac.isMember && blackhandServer.manuallyHacked &&
-               !theblackhandFac.alreadyInvited && this.hacking_skill >= 350 && homeComp.maxRam >= 64) {
-        invitedFactions.push(theblackhandFac);
-    }
-
-    //NiteSec
-    var nitesecFac = Factions["NiteSec"];
-    var nitesecServer = AllServers[SpecialServerIps[SpecialServerNames.NiteSecServer]];
-    if (nitesecServer == null) {
-        console.log("ERROR: Could not find NiteSec Server");
-    } else if (!nitesecFac.isBanned && !nitesecFac.isMember && nitesecServer.manuallyHacked &&
-               !nitesecFac.alreadyInvited && this.hacking_skill >= 200 && homeComp.maxRam >= 32) {
-        invitedFactions.push(nitesecFac);
-    }
-
-    //Chongqing
-    var chongqingFac = Factions["Chongqing"];
-    if (!chongqingFac.isBanned && !chongqingFac.isMember && !chongqingFac.alreadyInvited &&
-        this.money.gte(20000000) && this.city == Locations.Chongqing) {
-        invitedFactions.push(chongqingFac);
-    }
-
-    //Sector-12
-    var sector12Fac = Factions["Sector-12"];
-    if (!sector12Fac.isBanned && !sector12Fac.isMember && !sector12Fac.alreadyInvited &&
-        this.money.gte(15000000) && this.city == Locations.Sector12) {
-        invitedFactions.push(sector12Fac);
-    }
-
-    //New Tokyo
-    var newtokyoFac = Factions["New Tokyo"];
-    if (!newtokyoFac.isBanned && !newtokyoFac.isMember && !newtokyoFac.alreadyInvited &&
-        this.money.gte(20000000) && this.city == Locations.NewTokyo) {
-        invitedFactions.push(newtokyoFac);
-    }
-
-    //Aevum
-    var aevumFac = Factions["Aevum"];
-    if (!aevumFac.isBanned && !aevumFac.isMember  && !aevumFac.alreadyInvited &&
-        this.money.gte(40000000) && this.city == Locations.Aevum) {
-        invitedFactions.push(aevumFac);
-    }
-
-    //Ishima
-    var ishimaFac = Factions["Ishima"];
-    if (!ishimaFac.isBanned && !ishimaFac.isMember && !ishimaFac.alreadyInvited &&
-        this.money.gte(30000000) && this.city == Locations.Ishima) {
-        invitedFactions.push(ishimaFac);
-    }
-
-    //Volhaven
-    var volhavenFac = Factions["Volhaven"];
-    if (!volhavenFac.isBanned && !volhavenFac.isMember && !volhavenFac.alreadyInvited &&
-        this.money.gte(50000000) && this.city == Locations.Volhaven) {
-        invitedFactions.push(volhavenFac);
-    }
-
-    //Speakers for the Dead
-    var speakersforthedeadFac = Factions["Speakers for the Dead"];
-    if (!speakersforthedeadFac.isBanned && !speakersforthedeadFac.isMember && !speakersforthedeadFac.alreadyInvited &&
-        this.hacking_skill >= 100 && this.strength >= 300 && this.defense >= 300 &&
-        this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 30 &&
-        this.karma <= -45 && this.companyName != Locations.Sector12CIA &&
-        this.companyName != Locations.Sector12NSA) {
-        invitedFactions.push(speakersforthedeadFac);
-    }
-
-    //The Dark Army
-    var thedarkarmyFac = Factions["The Dark Army"];
-    if (!thedarkarmyFac.isBanned && !thedarkarmyFac.isMember && !thedarkarmyFac.alreadyInvited &&
-        this.hacking_skill >= 300 && this.strength >= 300 && this.defense >= 300 &&
-        this.dexterity >= 300 && this.agility >= 300 && this.city == Locations.Chongqing &&
-        this.numPeopleKilled >= 5 && this.karma <= -45 && this.companyName != Locations.Sector12CIA &&
-        this.companyName != Locations.Sector12NSA) {
-        invitedFactions.push(thedarkarmyFac);
-    }
-
-    //The Syndicate
-    var thesyndicateFac = Factions["The Syndicate"];
-    if (!thesyndicateFac.isBanned && !thesyndicateFac.isMember && !thesyndicateFac.alreadyInvited &&
-        this.hacking_skill >= 200 && this.strength >= 200 && this.defense >= 200 &&
-        this.dexterity >= 200 && this.agility >= 200 &&
-        (this.city == Locations.Aevum || this.city == Locations.Sector12) &&
-        this.money.gte(10000000) && this.karma <= -90 &&
-        this.companyName != Locations.Sector12CIA && this.companyName != Locations.Sector12NSA) {
-        invitedFactions.push(thesyndicateFac);
-    }
-
-    //Silhouette
-    var silhouetteFac = Factions["Silhouette"];
-    if (!silhouetteFac.isBanned && !silhouetteFac.isMember && !silhouetteFac.alreadyInvited &&
-        (this.companyPosition.positionName == CompanyPositions.CTO.positionName ||
-         this.companyPosition.positionName == CompanyPositions.CFO.positionName ||
-         this.companyPosition.positionName == CompanyPositions.CEO.positionName) &&
-         this.money.gte(15000000) && this.karma <= -22) {
-        invitedFactions.push(silhouetteFac);
-    }
-
-    //Tetrads
-    var tetradsFac = Factions["Tetrads"];
-    if (!tetradsFac.isBanned && !tetradsFac.isMember && !tetradsFac.alreadyInvited &&
-        (this.city == Locations.Chongqing || this.city == Locations.NewTokyo ||
-        this.city == Locations.Ishima) && this.strength >= 75 && this.defense >= 75 &&
-        this.dexterity >= 75 && this.agility >= 75 && this.karma <= -18) {
-        invitedFactions.push(tetradsFac);
-    }
-
-    //SlumSnakes
-    var slumsnakesFac = Factions["Slum Snakes"];
-    if (!slumsnakesFac.isBanned && !slumsnakesFac.isMember && !slumsnakesFac.alreadyInvited &&
-        this.strength >= 30 && this.defense >= 30 && this.dexterity >= 30 &&
-        this.agility >= 30 && this.karma <= -9 && this.money.gte(1000000)) {
-        invitedFactions.push(slumsnakesFac);
-    }
-
-    //Netburners
-    var netburnersFac = Factions["Netburners"];
-    var totalHacknetRam = 0;
-    var totalHacknetCores = 0;
-    var totalHacknetLevels = 0;
-    for (var i = 0; i < Player.hacknetNodes.length; ++i) {
-        totalHacknetLevels += Player.hacknetNodes[i].level;
-        totalHacknetRam += Player.hacknetNodes[i].ram;
-        totalHacknetCores += Player.hacknetNodes[i].cores;
-    }
-    if (!netburnersFac.isBanned && !netburnersFac.isMember && !netburnersFac.alreadyInvited &&
-        this.hacking_skill >= 80 && totalHacknetRam >= 8 &&
-        totalHacknetCores >= 4 && totalHacknetLevels >= 100) {
-        invitedFactions.push(netburnersFac);
-    }
-
-    //Tian Di Hui
-    var tiandihuiFac = Factions["Tian Di Hui"];
-    if (!tiandihuiFac.isBanned &&  !tiandihuiFac.isMember && !tiandihuiFac.alreadyInvited &&
-        this.money.gte(1000000) && this.hacking_skill >= 50 &&
-        (this.city == Locations.Chongqing || this.city == Locations.NewTokyo ||
-         this.city == Locations.Ishima)) {
-        invitedFactions.push(tiandihuiFac);
-    }
-
-    //CyberSec
-    var cybersecFac = Factions["CyberSec"];
-    var cybersecServer = AllServers[SpecialServerIps[SpecialServerNames.CyberSecServer]];
-    if (cybersecServer == null) {
-        console.log("ERROR: Could not find CyberSec Server");
-    } else if (!cybersecFac.isBanned && !cybersecFac.isMember && cybersecServer.manuallyHacked &&
-               !cybersecFac.alreadyInvited && this.hacking_skill >= 50) {
-        invitedFactions.push(cybersecFac);
-    }
-
-    return invitedFactions;
-}
-
-inviteToFaction = function(faction) {
+function inviteToFaction(faction) {
     if (Settings.SuppressFactionInvites) {
         faction.alreadyInvited = true;
         Player.factionInvitations.push(faction.name);
@@ -674,7 +399,7 @@ inviteToFaction = function(faction) {
     }
 }
 
-joinFaction = function(faction) {
+function joinFaction(faction) {
 	faction.isMember = true;
     Player.factions.push(faction.name);
 
@@ -710,47 +435,8 @@ joinFaction = function(faction) {
     }
 }
 
-leaveFaction = function(faction) {
-    faction.isMember = false;
-    var i = Player.factions.indexOf(faction.name);
-    if (i > -1) {
-        Player.factions.splice(i, 1);
-    }
-
-    //Unban from faction
-    if (faction.name == "Chongqing") {
-        Factions["Sector-12"].isBanned = false;
-        Factions["Aevum"].isBanned = false;
-        Factions["Volhaven"].isBanned = false;
-    } else if (faction.name == "Sector-12") {
-        Factions["Chongqing"].isBanned = false;
-        Factions["New Tokyo"].isBanned = false;
-        Factions["Ishima"].isBanned = false;
-        Factions["Volhaven"].isBanned = false;
-    } else if (faction.name == "New Tokyo") {
-        Factions["Sector-12"].isBanned = false;
-        Factions["Aevum"].isBanned = false;
-        Factions["Volhaven"].isBanned = false;
-    } else if (faction.name == "Aevum") {
-        Factions["Chongqing"].isBanned = false;
-        Factions["New Tokyo"].isBanned = false;
-        Factions["Ishima"].isBanned = false;
-        Factions["Volhaven"].isBanned = false;
-    } else if (faction.name == "Ishima") {
-        Factions["Sector-12"].isBanned = false;
-        Factions["Aevum"].isBanned = false;
-        Factions["Volhaven"].isBanned = false;
-    } else if (faction.name == "Volhaven") {
-        Factions["Chongqing"].isBanned = false;
-        Factions["Sector-12"].isBanned = false;
-        Factions["New Tokyo"].isBanned = false;
-        Factions["Aevum"].isBanned = false;
-        Factions["Ishima"].isBanned = false;
-    }
-}
-
 //Displays the HTML content for a specific faction
-displayFactionContent = function(factionName) {
+function displayFactionContent(factionName) {
 	var faction = Factions[factionName];
     document.getElementById("faction-name").innerHTML = factionName;
     document.getElementById("faction-info").innerHTML = "<i>" + faction.info + "</i>";
@@ -1077,7 +763,7 @@ displayFactionContent = function(factionName) {
 	}
 }
 
-displayFactionAugmentations = function(factionName) {
+function displayFactionAugmentations(factionName) {
     document.getElementById("faction-augmentations-page-desc").innerHTML = "Lists all augmentations that are available to purchase from " + factionName;
     var faction = Factions[factionName];
 
@@ -1150,87 +836,12 @@ displayFactionAugmentations = function(factionName) {
     }
 }
 
-purchaseAugmentationBoxCreate = function(aug, fac) {
+function purchaseAugmentationBoxCreate(aug, fac) {
     var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
     yesBtn.innerHTML = "Purchase";
     noBtn.innerHTML = "Cancel";
     yesBtn.addEventListener("click", function() {
-        //TODO Requirements for specific augmentations (e.g Embedded Netburner Module b4 its upgrades)
-        if (aug.name == AugmentationNames.Targeting2 &&
-            Augmentations[AugmentationNames.Targeting1].owned == false) {
-            dialogBoxCreate("You must first install Augmented Targeting I before you can upgrade it to Augmented Targeting II");
-        } else if (aug.name == AugmentationNames.Targeting3 &&
-                   Augmentations[AugmentationNames.Targeting2].owned == false) {
-            dialogBoxCreate("You must first install Augmented Targeting II before you can upgrade it to Augmented Targeting III");
-        } else if (aug.name == AugmentationNames.CombatRib2 &&
-                   Augmentations[AugmentationNames.CombatRib1].owned == false) {
-            dialogBoxCreate("You must first install Combat Rib I before you can upgrade it to Combat Rib II");
-        } else if (aug.name == AugmentationNames.CombatRib3 &&
-                   Augmentations[AugmentationNames.CombatRib2].owned == false) {
-            dialogBoxCreate("You must first install Combat Rib II before you can upgrade it to Combat Rib III");
-        } else if (aug.name == AugmentationNames.GrapheneBionicSpine &&
-                   Augmentations[AugmentationNames.BionicSpine].owned == false) {
-            dialogBoxCreate("You must first install a Bionic Spine before you can upgrade it to a Graphene Bionic Spine");
-        } else if (aug.name == AugmentationNames.GrapheneBionicLegs &&
-                   Augmentations[AugmentationNames.BionicLegs].owned == false) {
-            dialogBoxCreate("You must first install Bionic Legs before you can upgrade it to Graphene Bionic Legs");
-        } else if (aug.name == AugmentationNames.ENMCoreV2 &&
-                   Augmentations[AugmentationNames.ENMCore].owned == false) {
-            dialogBoxCreate("You must first install Embedded Netburner Module Core Implant before you can upgrade it to V2");
-        } else if (aug.name == AugmentationNames.ENMCoreV3 &&
-                   Augmentations[AugmentationNames.ENMCoreV2].owned == false) {
-            dialogBoxCreate("You must first install Embedded Netburner Module Core V2 Upgrade before you can upgrade it to V3");
-        } else if ((aug.name == AugmentationNames.ENMCore ||
-                   aug.name == AugmentationNames.ENMAnalyzeEngine ||
-                   aug.name == AugmentationNames.ENMDMA) &&
-                   Augmentations[AugmentationNames.ENM].owned == false) {
-           dialogBoxCreate("You must first install the Embedded Netburner Module before installing any upgrades to it");
-        } else if ((aug.name ==  AugmentationNames.PCDNIOptimizer ||
-                   aug.name ==  AugmentationNames.PCDNINeuralNetwork) &&
-                   Augmentations[AugmentationNames.PCDNI].owned == false) {
-            dialogBoxCreate("You must first install the Pc Direct-Neural Interface before installing this upgrade");
-        } else if (aug.name == AugmentationNames.GrapheneBrachiBlades &&
-                   Augmentations[AugmentationNames.BrachiBlades].owned == false) {
-            dialogBoxCreate("You must first install the Brachi Blades augmentation before installing this upgrade");
-        } else if (aug.name == AugmentationNames.GrapheneBionicArms &&
-                   Augmentations[AugmentationNames.BionicArms].owned == false) {
-            dialogBoxCreate("You must first install the Bionic Arms augmentation before installing this upgrade");
-        } else if (Player.money.gte(aug.baseCost * fac.augmentationPriceMult)) {
-            var queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
-            if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-                queuedAugmentation.level = getNextNeurofluxLevel();
-            }
-            Player.queuedAugmentations.push(queuedAugmentation);
-
-            Player.loseMoney((aug.baseCost * fac.augmentationPriceMult));
-            dialogBoxCreate("You purchased "  + aug.name + ". It's enhancements will not take " +
-                            "effect until they are installed. To install your augmentations, go to the " +
-                            "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
-                            "augmentations will now be more expensive.");
-
-            //If you just purchased Neuroflux Governor, recalculate the cost
-            if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-                var nextLevel = getNextNeurofluxLevel();
-                --nextLevel;
-                var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-                aug.setRequirements(500 * mult, 750000 * mult);
-
-                for (var i = 0; i < Player.queuedAugmentations.length-1; ++i) {
-                    aug.baseCost *= CONSTANTS.MultipleAugMultiplier;
-                }
-            }
-
-            for (var name in Augmentations) {
-                if (Augmentations.hasOwnProperty(name)) {
-                    Augmentations[name].baseCost *= CONSTANTS.MultipleAugMultiplier;
-                }
-            }
-
-            displayFactionAugmentations(fac.name);
-        } else {
-            dialogBoxCreate("You don't have enough money to purchase this Augmentation!");
-        }
-        yesNoBoxClose();
+        purchaseAugmentation(aug, fac);
     });
     noBtn.addEventListener("click", function() {
         yesNoBoxClose();
@@ -1240,6 +851,105 @@ purchaseAugmentationBoxCreate = function(aug, fac) {
                    aug.info + "<br><br>" +
                    "<br>Would you like to purchase the " + aug.name + " Augmentation for $" +
                    formatNumber(aug.baseCost * fac.augmentationPriceMult, 2)  + "?");
+}
+
+function purchaseAugmentation(aug, fac, sing=false) {
+    if (aug.name == AugmentationNames.Targeting2 &&
+        Augmentations[AugmentationNames.Targeting1].owned == false) {
+        var txt = "You must first install Augmented Targeting I before you can upgrade it to Augmented Targeting II";
+        if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if (aug.name == AugmentationNames.Targeting3 &&
+               Augmentations[AugmentationNames.Targeting2].owned == false) {
+        var txt = "You must first install Augmented Targeting II before you can upgrade it to Augmented Targeting III";
+        if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if (aug.name == AugmentationNames.CombatRib2 &&
+               Augmentations[AugmentationNames.CombatRib1].owned == false) {
+        var txt = "You must first install Combat Rib I before you can upgrade it to Combat Rib II";
+        if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if (aug.name == AugmentationNames.CombatRib3 &&
+               Augmentations[AugmentationNames.CombatRib2].owned == false) {
+        var txt = "You must first install Combat Rib II before you can upgrade it to Combat Rib III";
+        if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if (aug.name == AugmentationNames.GrapheneBionicSpine &&
+               Augmentations[AugmentationNames.BionicSpine].owned == false) {
+        var txt = "You must first install a Bionic Spine before you can upgrade it to a Graphene Bionic Spine";
+        if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if (aug.name == AugmentationNames.GrapheneBionicLegs &&
+               Augmentations[AugmentationNames.BionicLegs].owned == false) {
+        var txt = "You must first install Bionic Legs before you can upgrade it to Graphene Bionic Legs";
+        if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if (aug.name == AugmentationNames.ENMCoreV2 &&
+               Augmentations[AugmentationNames.ENMCore].owned == false) {
+        var txt = "You must first install Embedded Netburner Module Core Implant before you can upgrade it to V2";
+        if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if (aug.name == AugmentationNames.ENMCoreV3 &&
+               Augmentations[AugmentationNames.ENMCoreV2].owned == false) {
+        var txt = "You must first install Embedded Netburner Module Core V2 Upgrade before you can upgrade it to V3";
+        if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if ((aug.name == AugmentationNames.ENMCore ||
+               aug.name == AugmentationNames.ENMAnalyzeEngine ||
+               aug.name == AugmentationNames.ENMDMA) &&
+               Augmentations[AugmentationNames.ENM].owned == false) {
+       var txt = "You must first install the Embedded Netburner Module before installing any upgrades to it";
+       if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if ((aug.name ==  AugmentationNames.PCDNIOptimizer ||
+               aug.name ==  AugmentationNames.PCDNINeuralNetwork) &&
+               Augmentations[AugmentationNames.PCDNI].owned == false) {
+        var txt = "You must first install the Pc Direct-Neural Interface before installing this upgrade";
+        if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if (aug.name == AugmentationNames.GrapheneBrachiBlades &&
+               Augmentations[AugmentationNames.BrachiBlades].owned == false) {
+        var txt = "You must first install the Brachi Blades augmentation before installing this upgrade";
+        if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if (aug.name == AugmentationNames.GrapheneBionicArms &&
+               Augmentations[AugmentationNames.BionicArms].owned == false) {
+        var txt = "You must first install the Bionic Arms augmentation before installing this upgrade";
+        if (sing) {return txt;} else {dialogBoxCreate(txt);}
+    } else if (Player.money.gte(aug.baseCost * fac.augmentationPriceMult)) {
+        var queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
+        if (aug.name == AugmentationNames.NeuroFluxGovernor) {
+            queuedAugmentation.level = getNextNeurofluxLevel();
+        }
+        Player.queuedAugmentations.push(queuedAugmentation);
+
+        Player.loseMoney((aug.baseCost * fac.augmentationPriceMult));
+
+        //If you just purchased Neuroflux Governor, recalculate the cost
+        if (aug.name == AugmentationNames.NeuroFluxGovernor) {
+            var nextLevel = getNextNeurofluxLevel();
+            --nextLevel;
+            var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
+            aug.setRequirements(500 * mult, 750000 * mult);
+
+            for (var i = 0; i < Player.queuedAugmentations.length-1; ++i) {
+                aug.baseCost *= CONSTANTS.MultipleAugMultiplier;
+            }
+        }
+
+        for (var name in Augmentations) {
+            if (Augmentations.hasOwnProperty(name)) {
+                Augmentations[name].baseCost *= CONSTANTS.MultipleAugMultiplier;
+            }
+        }
+
+        if (sing) {
+            return "You purchased " + aug.name;
+        } else {
+            dialogBoxCreate("You purchased "  + aug.name + ". It's enhancements will not take " +
+                            "effect until they are installed. To install your augmentations, go to the " +
+                            "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
+                            "augmentations will now be more expensive.");
+        }
+
+        displayFactionAugmentations(fac.name);
+    } else {
+        if (sing) {
+            return "You don't have enough money to purchase " + aug.name;
+        } else {
+            dialogBoxCreate("You don't have enough money to purchase this Augmentation!");
+        }
+    }
+    yesNoBoxClose();
 }
 
 function getNextNeurofluxLevel() {
@@ -1277,3 +987,7 @@ function processPassiveFactionRepGain(numCycles) {
 		}
 	}
 }
+
+export {getNextNeurofluxLevel, Factions, initFactions, inviteToFaction,
+        joinFaction, displayFactionContent, processPassiveFactionRepGain,
+        loadFactions, Faction, purchaseAugmentation, factionExists};

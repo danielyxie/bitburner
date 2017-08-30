@@ -1,8 +1,18 @@
-/* Worker code, contains Netscript scripts that are actually running */
+import {addActiveScriptsItem,
+        deleteActiveScriptsItem,
+        updateActiveScriptsItems}           from "./ActiveScriptsUI.js";
+import {CONSTANTS}                          from "./Constants.js";
+import {Engine}                             from "./engine.js";
+import {Environment}                        from "./NetscriptEnvironment.js";
+import {evaluate, isScriptErrorMessage}     from "./NetscriptEvaluator.js";
+import {AllServers}                         from "./Server.js";
+import {Settings}                           from "./Settings.js";
 
-//TODO Tested For and while and generic call statements. Have not tested if statements
+import {parse}                              from "../utils/acorn.js";
+import {dialogBoxCreate}                    from "../utils/DialogBox.js";
+import {compareArrays, printArray}          from "../utils/HelperFunctions.js";
 
-/* Actual Worker Code */
+
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
 	this.running 		= false;
@@ -23,9 +33,9 @@ WorkerScript.prototype.getServer = function() {
 }
 
 //Array containing all scripts that are running across all servers, to easily run them all
-var workerScripts 			= [];
+let workerScripts 			= [];
 
-var NetscriptPorts = {
+let NetscriptPorts = {
     Port1: [],
     Port2: [],
     Port3: [],
@@ -38,6 +48,14 @@ var NetscriptPorts = {
     Port10: [],
 }
 
+function prestigeWorkerScripts() {
+    for (var i = 0; i < workerScripts.length; ++i) {
+        deleteActiveScriptsItem(workerScripts[i]);
+        workerScripts[i].env.stopFlag = true;
+    }
+    workerScripts.length = 0;
+}
+
 //Loop through workerScripts and run every script that is not currently running
 function runScriptsLoop() {
 	//Run any scripts that haven't been started
@@ -45,7 +63,7 @@ function runScriptsLoop() {
 		//If it isn't running, start the script
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
 			try {
-				var ast = acorn.parse(workerScripts[i].code);
+				var ast = parse(workerScripts[i].code);
                 //console.log(ast);
 			} catch (e) {
                 console.log("Error parsing script: " + workerScripts[i].name);
@@ -64,9 +82,10 @@ function runScriptsLoop() {
 				w.env.stopFlag = true;
                 w.scriptRef.log("Script finished running");
 			}, function(w) {
+                //console.log(w);
 				if (w instanceof Error) {
                     dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-					console.log("ERROR: Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN");
+					console.log("ERROR: Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
                     return;
                 } else if (w instanceof WorkerScript) {
                     if (isScriptErrorMessage(w.errorMessage)) {
@@ -92,7 +111,7 @@ function runScriptsLoop() {
 
 				} else if (isScriptErrorMessage(w)) {
                     dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-					console.log("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN");
+					console.log("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " + w.toString());
                     return;
                 } else {
                     dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
@@ -182,4 +201,6 @@ function updateOnlineScriptTimes(numCycles = 1) {
 	}
 }
 
-runScriptsLoop();
+export {WorkerScript, workerScripts, NetscriptPorts, runScriptsLoop,
+        killWorkerScript, addWorkerScript, updateOnlineScriptTimes,
+        prestigeWorkerScripts};

@@ -2,9 +2,9 @@
 
 //Close box when clicking outside
 $(document).click(function(event) {
-    if (gameOptionsOpened) {        
-        if ( $(event.target).closest(".game-options-box").get(0) == null ) {         
-            gameOptionsBoxClose();         
+    if (gameOptionsOpened) {
+        if ( $(event.target).closest(".game-options-box").get(0) == null ) {
+            gameOptionsBoxClose();
         }
     }
 });
@@ -16,7 +16,7 @@ function gameOptionsBoxInit() {
         gameOptionsBoxOpen();
         return false;
     });
-    
+
     //Close button
     var closeButton = document.getElementById("game-options-close-button");
     closeButton.addEventListener("click", function() {
@@ -27,17 +27,19 @@ function gameOptionsBoxInit() {
 
 document.addEventListener("DOMContentLoaded", gameOptionsBoxInit, false);
 
-gameOptionsBoxClose = function() {
+function gameOptionsBoxClose() {
     gameOptionsOpened = false;
     var box = document.getElementById("game-options-container");
     box.style.display = "none";
 }
 
-gameOptionsBoxOpen = function() {
+function gameOptionsBoxOpen() {
     var box = document.getElementById("game-options-container");
     box.style.display = "block";
     setTimeout(function() {
         gameOptionsOpened = true;
     }, 500);
-    
+
 }
+
+export {gameOptionsBoxOpen, gameOptionsBoxClose};

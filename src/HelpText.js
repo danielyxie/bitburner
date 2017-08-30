@@ -1,5 +1,5 @@
 /* HelpText.js */
-TerminalHelpText =
+let TerminalHelpText =
                 "Type 'help name' to learn more about the command 'name'<br><br>" +
                 'alias [-g] [name="value"]      Create or display Terminal aliases<br>' +
                 "analyze                        Get information about the current machine <br>" +
@@ -31,7 +31,7 @@ TerminalHelpText =
                 "top                            Displays all running scripts and their RAM usage<br>" +
                 'unalias "[alias name]"         Deletes the specified alias<br>';
 
-HelpTexts = {
+let HelpTexts = {
     alias:          'alias [-g] [name="value"] <br>' +
                     "Create or display aliases. An alias enables a replacement of a word with another string. " +
                     "It can be used to abbreviate a commonly used command, or commonly used parts of a command. The NAME " +
@@ -159,7 +159,7 @@ HelpTexts = {
                     "it has",
     scp:            "scp [filename] [target server]<br>" +
                     "Copies the specified file from the current server to the target server. " +
-                    "This command only works for script files (.script extension) and literature files (.lit extension). " + 
+                    "This command only works for script files (.script extension) and literature files (.lit extension). " +
                     "The second argument passed in must be the hostname or IP of the target server.",
     sudov:          "sudov<br>" +
                     "Prints whether or not you have root access to the current machine",
@@ -193,3 +193,5 @@ HelpTexts = {
                     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
 
 }
+
+export {TerminalHelpText, HelpTexts};

@@ -1,5 +1,5 @@
-CONSTANTS = {
-    Version:                "0.27.3",
+let CONSTANTS = {
+    Version:                "0.28.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -75,8 +75,12 @@ CONSTANTS = {
     ScriptRoundRamCost:             0.05,
     ScriptReadWriteRamCost:         1.0,
     ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args
-    ScriptGetScriptCost:            0.1,
-    ScriptGetHackTimeCost:          0.05,
+    ScriptGetScriptRamCost:         0.1,
+    ScriptGetHackTimeRamCost:       0.05,
+
+    ScriptSingularityFn1RamCost:    1,
+    ScriptSingularityFn2RamCost:    2,
+    ScriptSingularityFn3RamCost:    3,
 
     MultithreadingRAMCost:          1,
 
@@ -320,6 +324,9 @@ CONSTANTS = {
                            "numeric - Integers and floats (eg. 6, 10.4999)<br>" +
                            "string - Encapsulated by single or double quotes (eg. 'this is a string')<br>" +
                            "boolean - true or false<br><br>" +
+                           "Strings are fully functional <a href='https://www.w3schools.com/jsref/jsref_obj_string.asp' target='_blank'>Javascript strings</a>, " +
+                           "which means that all of the member functions of Javascript strings such as toLowerCase() and includes() are also " +
+                           "available in Netscript!<br><br>" +
                            "To create a variable, use the assign (=) operator. The language is not strongly typed. Examples: <br>" +
                            "i = 5;<br>" +
                            "s = 'this game is awesome!';<br><br>" +
@@ -717,38 +724,11 @@ CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.27.3<br>" +
-    "-You can now purchase upgrades for Gang Members (BitNode 2 only)<br>" +
-    "-Decreased Gang respect gains and slightly increased wanted gains (BitNode 2 only)<br>" +
-    "-Other gangs will increase in power faster (BitNode 2 only)<br>" +
-    "-Added getHackTime(), getGrowTime(), and getWeakenTime() Netscript functions<br><br>" +
-    "v0.27.2<br>" +
-    "-Added getServerGrowth() Netscript function<br>" +
-    "-Added getNextHacknetNodeCost() Netscript function<br>" +
-    "-Added new 'literature' files (.lit extension) that are used to build lore for the game. " +
-    "These .lit files can be found in certain servers throughout the game. They can be viewed with the 'cat' Terminal " +
-    "command and copied over to other servers using the 'scp' command. These .lit files won't be found until you reset " +
-    "by installing Augmentations<br>" +
-    "Fixed some bugs with Gang Territory(BitNode 2 only)<br><br>" +
-    "v0.27.1<br>" +
-    "-Changed the way Gang power was calculated to make it scale better late game (BitNode 2 only)<br>" +
-    "-Lowered the respect gain rate in Gangs (Bitnode 2 only)<br>" +
-    "-Added '| grep pattern' option for ls Terminal command. This allows you to only list files that contain a certain pattern<br>" +
-    "-Added break statement in Netscript<br>" +
-    "-Display for some numerical values is now done in shorthand (e.g 1.000m instead of 1,000,000)<br><br>" +
-    "v0.27.0<br>" +
-    "-Added secondary 'prestige' system - featuring Source Files and BitNodes<br>" +
-    "-MILD SPOILERS HERE: Installing 'The Red Pill' Augmentation from Daedalus will unlock a special server called " +
-    "w0r1d_d43m0n. Finding and manually hacking this server through Terminal will destroy the Player's current BitNode, and allow the player " +
-    "to enter a new one. When destroying a BitNode, the player loses everything except the scripts on his/her " +
-    "home computer. The player will then gain a powerful second-tier persistent upgrade called a Source File. The player can then " +
-    "enter a new BitNode to start the game over. Each BitNode has different characteristics, and many will have new content/mechanics " +
-    "as well. Right now there are only 2 BitNodes. Each BitNode grants its own unique Source File. Restarting and destroying a BitNode you already " +
-    "have a Source File for will upgrade your Source File up to a maximum level of 3.<br><br>" +
-    "-Reputation gain with factions and companies is no longer a linear conversion, but an exponential one. It " +
-    "will be much easier to gain faction favor at first, but much harder later on. <br>" +
-    "-Significantly increased Infiltration exp gains<br>" +
-    "-Fixed a bug with company job requirement tooltips<br>" +
-    "-Added scriptRunning(), scriptKill(), and getScriptRam() Netscript functions. See documentation for details<br>" +
-    "-Fixed a bug with deleteServer() Netscript function<br><br>"
+    "v0.28.0<br>" +
+    "-Added BitNode-4: The Singularity<br>" +
+    "-Added BitNode-11: The Big Crash<br>" +
+    "-Migrated the codebase to use webpack (doesn't affect any in game content, except maybe some slight " +
+    "performance improvements and there may be bugs that result from dependency errors)"
 }
+
+export {CONSTANTS};
