@@ -1666,7 +1666,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     var pos = entryPosType;
 
     if (!this.isQualified(company, pos)) {
-        var reqText = Object(__WEBPACK_IMPORTED_MODULE_2__Company_js__["e" /* getJobRequirementText */])(company, pos);
+        var reqText = Object(__WEBPACK_IMPORTED_MODULE_2__Company_js__["f" /* getJobRequirementText */])(company, pos);
         if (sing) {return false;}
         Object(__WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Unforunately, you do not qualify for this position<br>" + reqText);
         return;
@@ -1674,7 +1674,7 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
 
     while (true) {
         if (__WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].Debug) {console.log("Determining qualification for next Company Position");}
-        var newPos = Object(__WEBPACK_IMPORTED_MODULE_2__Company_js__["f" /* getNextCompanyPosition */])(pos);
+        var newPos = Object(__WEBPACK_IMPORTED_MODULE_2__Company_js__["g" /* getNextCompanyPosition */])(pos);
         if (newPos == null) {break;}
 
         //Check if this company has this position
@@ -1693,13 +1693,13 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     if (currCompany != "") {
         if (currCompany.companyName == company.companyName &&
             pos.positionName == currPositionName) {
-            var nextPos = Object(__WEBPACK_IMPORTED_MODULE_2__Company_js__["f" /* getNextCompanyPosition */])(pos);
+            var nextPos = Object(__WEBPACK_IMPORTED_MODULE_2__Company_js__["g" /* getNextCompanyPosition */])(pos);
             if (nextPos == null) {
                 if (sing) {return false;}
                 Object(__WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You are already at the highest position for your field! No promotion available");
             } else if (company.hasPosition(nextPos)) {
                 if (sing) {return false;}
-                var reqText = Object(__WEBPACK_IMPORTED_MODULE_2__Company_js__["e" /* getJobRequirementText */])(company, nextPos);
+                var reqText = Object(__WEBPACK_IMPORTED_MODULE_2__Company_js__["f" /* getJobRequirementText */])(company, nextPos);
                 Object(__WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Unfortunately, you do not qualify for a promotion<br>" + reqText);
             } else {
                 if (sing) {return false;}
@@ -1762,7 +1762,7 @@ PlayerObject.prototype.getNextCompanyPosition = function(company, entryPosType) 
         (this.companyPosition.isSoftwareConsultantJob() && entryPosType.isSoftwareConsultantJob()) ||
         (this.companyPosition.isBusinessConsultantJob() && entryPosType.isBusinessConsultantJob()) ||
         (this.companyPosition.isPartTimeJob() && entryPosType.isPartTimeJob())) {
-        return Object(__WEBPACK_IMPORTED_MODULE_2__Company_js__["f" /* getNextCompanyPosition */])(this.companyPosition);
+        return Object(__WEBPACK_IMPORTED_MODULE_2__Company_js__["g" /* getNextCompanyPosition */])(this.companyPosition);
     }
 
 
@@ -4494,7 +4494,7 @@ let Engine = {
             Engine.start();                     //Run main game loop and Scripts loop
             __WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].init();
             Object(__WEBPACK_IMPORTED_MODULE_26__Server_js__["f" /* initForeignServers */])();
-            Object(__WEBPACK_IMPORTED_MODULE_9__Company_js__["g" /* initCompanies */])();
+            Object(__WEBPACK_IMPORTED_MODULE_9__Company_js__["h" /* initCompanies */])();
             Object(__WEBPACK_IMPORTED_MODULE_12__Faction_js__["f" /* initFactions */])();
             __WEBPACK_IMPORTED_MODULE_9__Company_js__["d" /* CompanyPositions */].init();
             Object(__WEBPACK_IMPORTED_MODULE_7__Augmentations_js__["g" /* initAugmentations */])();
@@ -19975,7 +19975,7 @@ function setJobRequirementTooltip(loc, entryPosType, btn) {
     var pos = __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].getNextCompanyPosition(company, entryPosType);
     if (pos == null) {return};
     if (!company.hasPosition(pos)) {return;}
-    var reqText = Object(__WEBPACK_IMPORTED_MODULE_0__Company_js__["e" /* getJobRequirementText */])(company, pos, true);
+    var reqText = Object(__WEBPACK_IMPORTED_MODULE_0__Company_js__["f" /* getJobRequirementText */])(company, pos, true);
     btn.innerHTML += "<span class='tooltiptext'>" + reqText + "</span>";
 }
 
@@ -21993,13 +21993,14 @@ function giveAllAugmentations() {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return CompanyPositions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return initCompanies; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return initCompanies; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Companies; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getJobRequirementText; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return getNextCompanyPosition; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return loadCompanies; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return getJobRequirementText; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return getNextCompanyPosition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return loadCompanies; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Company; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return CompanyPosition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return companyExists; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Location_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
@@ -33824,7 +33825,7 @@ function prestigeAugmentation() {
     Object(__WEBPACK_IMPORTED_MODULE_6__Faction_js__["f" /* initFactions */])(); //Factions must be initialized before augmentations
     Object(__WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["g" /* initAugmentations */])(); //Calls reapplyAllAugmentations() and resets Player multipliers
     __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].reapplyAllSourceFiles();
-    Object(__WEBPACK_IMPORTED_MODULE_3__Company_js__["g" /* initCompanies */])();
+    Object(__WEBPACK_IMPORTED_MODULE_3__Company_js__["h" /* initCompanies */])();
 
     //Clear terminal
     $("#terminal tr:not(:last)").remove();
@@ -33941,7 +33942,7 @@ function prestigeSourceFile() {
     Object(__WEBPACK_IMPORTED_MODULE_6__Faction_js__["f" /* initFactions */])(); //Factions must be initialized before augmentations
     Object(__WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["g" /* initAugmentations */])();    //Calls reapplyAllAugmentations() and resets Player multipliers
     __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].reapplyAllSourceFiles();
-    Object(__WEBPACK_IMPORTED_MODULE_3__Company_js__["g" /* initCompanies */])();
+    Object(__WEBPACK_IMPORTED_MODULE_3__Company_js__["h" /* initCompanies */])();
 
     //Clear terminal
     $("#terminal tr:not(:last)").remove();
@@ -35606,6 +35607,14 @@ function NetscriptFunctions(workerScript) {
                     costMult = 10;
                     expMult = 7.5;
                     break;
+                case __WEBPACK_IMPORTED_MODULE_7__Location_js__["a" /* Locations */].VolhavenMilleniumFitnessGym:
+                    if (__WEBPACK_IMPORTED_MODULE_8__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_7__Location_js__["a" /* Locations */].Volhaven) {
+                        workerScript.scriptRef.log("ERROR: You cannot workout at Millenium Fitness Gym because you are not in Volhaven. gymWorkout() failed");
+                        return false;
+                    }
+                    costMult = 3;
+                    expMult = 2.5;
+                    break;
                 default:
                     workerScript.scriptRef.log("Invalid gym name: " + gymName + ". gymWorkout() failed");
                     return false;
@@ -35871,6 +35880,11 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
+            if (!Object(__WEBPACK_IMPORTED_MODULE_1__Company_js__["e" /* companyExists */])(companyName)) {
+                workerScript.scriptRef.log("ERROR: applyToCompany failed because specified company " + companyName + " does not exist.");
+                return false;
+            }
+
             __WEBPACK_IMPORTED_MODULE_8__Player_js__["a" /* Player */].location = companyName;
             var res;
             switch (field.toLowerCase()) {
@@ -35997,6 +36011,11 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
+            if (!__WEBPACK_IMPORTED_MODULE_8__Player_js__["a" /* Player */].factions.includes(name)) {
+                workerScript.scriptRef.log("ERROR: workForFaction() failed because you are not a member of " + name);
+                return false;
+            }
+
             if (__WEBPACK_IMPORTED_MODULE_8__Player_js__["a" /* Player */].isWorking) {
                 var txt = __WEBPACK_IMPORTED_MODULE_8__Player_js__["a" /* Player */].singularityStopWork();
                 workerScript.scriptRef.log(txt);
@@ -36058,6 +36077,7 @@ function NetscriptFunctions(workerScript) {
                 default:
                     workerScript.scriptRef.log("ERROR: Invalid work type passed into workForFaction(): " + type);
             }
+            return true;
         },
         getFactionRep(name) {
             if (__WEBPACK_IMPORTED_MODULE_8__Player_js__["a" /* Player */].bitNodeN != 4) {
@@ -36213,6 +36233,11 @@ function NetscriptFunctions(workerScript) {
                     workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
                     return false;
                 }
+            }
+
+            if (fac.playerReputation < aug.baseRepRequirement) {
+                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you do not have enough reputation with " + fac.name);
+                return false;
             }
 
             var res = Object(__WEBPACK_IMPORTED_MODULE_5__Faction_js__["k" /* purchaseAugmentation */])(aug, fac, true);
@@ -43410,7 +43435,7 @@ function loadGame(saveObj) {
 
     Object(__WEBPACK_IMPORTED_MODULE_8__Player_js__["b" /* loadPlayer */])(saveObj.PlayerSave);
     Object(__WEBPACK_IMPORTED_MODULE_10__Server_js__["g" /* loadAllServers */])(saveObj.AllServersSave);
-    Object(__WEBPACK_IMPORTED_MODULE_1__Company_js__["h" /* loadCompanies */])(saveObj.CompaniesSave);
+    Object(__WEBPACK_IMPORTED_MODULE_1__Company_js__["i" /* loadCompanies */])(saveObj.CompaniesSave);
     Object(__WEBPACK_IMPORTED_MODULE_4__Faction_js__["i" /* loadFactions */])(saveObj.FactionsSave);
     Object(__WEBPACK_IMPORTED_MODULE_12__SpecialServerIps_js__["d" /* loadSpecialServerIps */])(saveObj.SpecialServerIpsSave);
 
@@ -43598,7 +43623,7 @@ function loadImportedGame(saveObj, saveString) {
 
     Object(__WEBPACK_IMPORTED_MODULE_8__Player_js__["b" /* loadPlayer */])(saveObj.PlayerSave);
     Object(__WEBPACK_IMPORTED_MODULE_10__Server_js__["g" /* loadAllServers */])(saveObj.AllServersSave);
-    Object(__WEBPACK_IMPORTED_MODULE_1__Company_js__["h" /* loadCompanies */])(saveObj.CompaniesSave);
+    Object(__WEBPACK_IMPORTED_MODULE_1__Company_js__["i" /* loadCompanies */])(saveObj.CompaniesSave);
     Object(__WEBPACK_IMPORTED_MODULE_4__Faction_js__["i" /* loadFactions */])(saveObj.FactionsSave);
     Object(__WEBPACK_IMPORTED_MODULE_12__SpecialServerIps_js__["d" /* loadSpecialServerIps */])(saveObj.SpecialServerIpsSave);
 

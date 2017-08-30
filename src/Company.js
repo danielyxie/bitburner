@@ -1146,4 +1146,5 @@ function getJobRequirementText(company, pos, tooltiptext=false) {
 }
 
 export {CompanyPositions, initCompanies, Companies, getJobRequirementText,
-        getNextCompanyPosition, loadCompanies, Company, CompanyPosition};
+        getNextCompanyPosition, loadCompanies, Company, CompanyPosition,
+        companyExists};
