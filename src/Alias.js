@@ -1,6 +1,23 @@
-/* Alias.js */
-Aliases = {};
-GlobalAliases = {};
+import {post}                   from "./Terminal.js";
+
+let Aliases = {};
+let GlobalAliases = {};
+
+function loadAliases(saveString) {
+    if (saveString === "") {
+        Aliases = {};
+    } else {
+        Aliases = JSON.parse(saveString);
+    }
+}
+
+function loadGlobalAliases(saveString) {
+    if (saveString === "") {
+        GlobalAliases = {};
+    } else {
+        GlobalAliases = JSON.parse(saveString);
+    }
+}
 
 //Print all aliases to terminal
 function printAliases() {
@@ -92,3 +109,6 @@ function substituteAliases(origCommand) {
     }
     return commandArray.join(" ");
 }
+
+export {Aliases, GlobalAliases, printAliases, parseAliasDeclaration,
+        removeAlias, substituteAliases, loadAliases, loadGlobalAliases};

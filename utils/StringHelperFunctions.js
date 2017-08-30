@@ -1,3 +1,5 @@
+import {dialogBoxCreate} from "./DialogBox.js";
+
 //Netburner String helper functions
 
 //Searches for every occurence of searchStr within str and returns an array of the indices of
@@ -31,18 +33,18 @@ String.prototype.replaceAt=function(index, character) {
 function convertTimeMsToTimeElapsedString(time) {
     //Convert ms to seconds, since we only have second-level precision
     time = Math.floor(time / 1000);
-    
+
     var days = Math.floor(time / 86400);
     time %= 86400;
-    
+
     var hours = Math.floor(time / 3600);
     time %= 3600;
-    
+
     var minutes = Math.floor(time / 60);
     time %= 60;
-    
+
     var seconds = time;
-    
+
     var res = "";
     if (days) {res += days + " days ";}
     if (hours) {res += hours + " hours ";}
@@ -55,8 +57,8 @@ function convertTimeMsToTimeElapsedString(time) {
 function longestCommonStart(strings) {
     if (!containsAllStrings(strings)) {return;}
     if (strings.length == 0) {return;}
-    
-    var A = strings.concat().sort(), 
+
+    var A = strings.concat().sort(),
     a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
     while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
     return a1.substring(0, i);
@@ -126,3 +128,7 @@ function numNetscriptOperators(string) {
     }
     return total;
 }
+
+export {getIndicesOf, convertTimeMsToTimeElapsedString, longestCommonStart,
+        isString, isPositiveNumber, containsAllStrings, formatNumber,
+        numOccurrences, numNetscriptOperators};

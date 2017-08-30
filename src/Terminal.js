@@ -1,7 +1,35 @@
-//Terminal
+import {substituteAliases, printAliases,
+        parseAliasDeclaration,
+        removeAlias, GlobalAliases,
+        Aliases}                            from "./Alias.js";
+import {CONSTANTS}                          from "./Constants.js";
+import {Programs}                           from "./CreateProgram.js";
+import {executeDarkwebTerminalCommand,
+        checkIfConnectedToDarkweb}          from "./DarkWeb.js";
+import {Engine}                             from "./engine.js";
+import {TerminalHelpText, HelpTexts}        from "./HelpText.js";
+import {iTutorialNextStep, iTutorialSteps,
+        iTutorialIsRunning,
+        currITutorialStep}                  from "./InteractiveTutorial.js";
+import {showLiterature}                     from "./Literature.js";
+import {showMessage, Message}               from "./Message.js";
+import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker.js";
+import {Player}                             from "./Player.js";
+import {hackWorldDaemon}                    from "./RedPill.js";
+import {findRunningScript, RunningScript,
+        AllServersMap}                      from "./Script.js";
+import {AllServers, GetServerByHostname,
+        getServer, Server}                  from "./Server.js";
+import {SpecialServerIps,
+        SpecialServerNames}                 from "./SpecialServerIps.js";
+
+import {containsAllStrings, longestCommonStart,
+        formatNumber}                       from "../utils/StringHelperFunctions.js";
+import {addOffset, printArray}              from "../utils/HelperFunctions.js";
+import {logBoxCreate}                       from "../utils/LogBox.js";
 
 /* Write text to terminal */
-var post = function(input, replace=true) {
+function post(input, replace=true) {
     if (replace) {
         $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
     } else {
@@ -12,12 +40,12 @@ var post = function(input, replace=true) {
 }
 
 //Same thing as post but the td cells have ids so they can be animated for the hack progress bar
-var hackProgressBarPost = function(input) {
+function hackProgressBarPost(input) {
     $("#terminal-input").before('<tr class="posted"><td id="hack-progress-bar" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
 	updateTerminalScroll();
 }
 
-var hackProgressPost = function(input) {
+function hackProgressPost(input) {
     $("#terminal-input").before('<tr class="posted"><td id="hack-progress" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
 	updateTerminalScroll();
 }
@@ -28,7 +56,7 @@ function updateTerminalScroll() {
 	element.scrollTop = element.scrollHeight;
 }
 
-var postNetburnerText = function() {
+function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);
 }
 
@@ -134,7 +162,7 @@ $(document).keydown(function(event) {
 });
 
 //Keep terminal in focus
-terminalCtrlPressed = false;
+let terminalCtrlPressed = false;
 $(document).ready(function() {
 	if (Engine.currentPage == Engine.Page.Terminal) {
 		$('.terminal-input').focus();
@@ -346,7 +374,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     return allPos;
 }
 
-var Terminal = {
+let Terminal = {
     //Flags to determine whether the player is currently running a hack or an analyze
     hackFlag:       false,
     analyzeFlag:    false,
@@ -1592,5 +1620,6 @@ var Terminal = {
 
 		post("ERROR: No such script");
 	}
-
 };
+
+export {postNetburnerText, post, Terminal};

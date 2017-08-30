@@ -1,3 +1,4 @@
+import {clearEventListeners}                from "./HelperFunctions.js";
 /* Generic Yes-No Pop-up box
  * Can be used to create pop-up boxes that require a yes/no response from player
  */
@@ -74,3 +75,9 @@ function yesNoTxtInpBoxCreate(txt) {
         console.log("ERROR: Container not found for YesNoTextInputBox");
     }
 }
+
+export {yesNoBoxCreate, yesNoTxtInpBoxCreate,
+        yesNoBoxGetYesButton, yesNoBoxGetNoButton,
+        yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,
+        yesNoTxtInpBoxGetInput, yesNoBoxClose,
+        yesNoTxtInpBoxClose, yesNoBoxOpen};

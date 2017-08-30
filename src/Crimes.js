@@ -1,3 +1,7 @@
+import {CONSTANTS} from "./Constants.js";
+import {Player} from "./Player.js";
+import {dialogBoxCreate} from "../utils/DialogBox.js";
+
 /* Crimes.js */
 function commitShopliftCrime() {
     Player.crimeType = CONSTANTS.CrimeShoplift;
@@ -202,3 +206,14 @@ function determineCrimeChanceHeist() {
     chance *= Player.crime_success_mult;
     return Math.min(chance, 1);
 }
+
+export {commitShopliftCrime, commitRobStoreCrime, commitMugCrime,
+        commitLarcenyCrime, commitDealDrugsCrime, commitTraffickArmsCrime,
+        commitHomicideCrime, commitGrandTheftAutoCrime, commitKidnapCrime,
+        commitAssassinationCrime, commitHeistCrime, determineCrimeSuccess,
+        determineCrimeChanceShoplift, determineCrimeChanceRobStore,
+        determineCrimeChanceMug, determineCrimeChanceLarceny,
+        determineCrimeChanceDealDrugs, determineCrimeChanceTraffickArms,
+        determineCrimeChanceHomicide, determineCrimeChanceGrandTheftAuto,
+        determineCrimeChanceKidnap, determineCrimeChanceAssassination,
+        determineCrimeChanceHeist};

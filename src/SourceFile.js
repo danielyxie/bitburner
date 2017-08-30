@@ -1,5 +1,7 @@
-/* SourceFile.js */
+import {Player} from "./Player.js";
+import {BitNode, BitNodes} from "./BitNode.js";
 
+/* SourceFile.js */
 //Each SourceFile corresponds to a BitNode with the same number
 function SourceFile(number, info="") {
     var bitnodeKey = "BitNode" + number;
@@ -15,27 +17,33 @@ function SourceFile(number, info="") {
     this.owned = false;
 }
 
-SourceFiles = {
-    SourceFile1:    new SourceFile(1, "This Source-File lets the player start with 32GB of RAM on his/her " +
+let SourceFiles = {};
+function initSourceFiles() {
+    SourceFiles = {};
+    SourceFiles["SourceFile1"] = new SourceFile(1, "This Source-File lets the player start with 32GB of RAM on his/her " +
                                       "home computer. It also increases all of the player's multipliers by:<br><br>" +
                                       "Level 1: 16%<br>" +
                                       "Level 2: 24%<br>" +
-                                      "Level 3: 28%"),
-    SourceFile2:    new SourceFile(2, "This Source-File increases the player's crime success rate, crime money, and charisma " +
+                                      "Level 3: 28%");
+    SourceFiles["SourceFile2"] = new SourceFile(2, "This Source-File increases the player's crime success rate, crime money, and charisma " +
                                       "multipliers by:<br><br>" +
                                       "Level 1: 20%<br>" +
                                       "Level 2: 30%<br>" +
-                                      "Level 3: 35%"),
-    SourceFile3:    new SourceFile(3),
-    SourceFile4:    new SourceFile(4),
-    SourceFile5:    new SourceFile(5),
-    SourceFile6:    new SourceFile(6),
-    SourceFile7:    new SourceFile(7),
-    SourceFile8:    new SourceFile(8),
-    SourceFile9:    new SourceFile(9),
-    SourceFile10:   new SourceFile(10),
-    SourceFile11:   new SourceFile(11),
-    SourceFile12:   new SourceFile(12),
+                                      "Level 3: 35%");
+    SourceFiles["SourceFile3"] = new SourceFile(3);
+    SourceFiles["SourceFile4"] = new SourceFile(4, "This Source-File lets you access and use the Singularity Functions in every BitNode. Every " +
+                                        "level of this Source-File opens up more of the Singularity Functions you can use.");
+    SourceFiles["SourceFile5"] = new SourceFile(5);
+    SourceFiles["SourceFile6"] = new SourceFile(6);
+    SourceFiles["SourceFile7"] = new SourceFile(7);
+    SourceFiles["SourceFile8"] = new SourceFile(8);
+    SourceFiles["SourceFile9"] = new SourceFile(9);
+    SourceFiles["SourceFile10"] = new SourceFile(10);
+    SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File increases the player's company salary and reputation gain multipliers by:<br><br>" +
+                                        "Level 1: 60%<br>" +
+                                        "Level 2: 90%<br>" +
+                                        "Level 3: 105%<br>");
+    SourceFiles["SourceFile12"] = new SourceFile(12);
 }
 
 function PlayerOwnedSourceFile(number, level) {
@@ -97,6 +105,18 @@ function applySourceFile(srcFile) {
             Player.crime_success_mult  *= incMult;
             Player.charisma_mult       *= incMult;
             break;
+        case 4: //The Singularity
+            //No effects, just gives access to Singularity functions
+            break;
+        case 11: //The Big Crash
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (60 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            Player.work_money_mult    *= incMult;
+            Player.company_rep_mult   *= incMult;
+            break;
         default:
             console.log("ERROR: Invalid source file number: " + srcFile.n);
             break;
@@ -105,18 +125,4 @@ function applySourceFile(srcFile) {
     sourceFileObject.owned = true;
 }
 
-PlayerObject.prototype.reapplyAllSourceFiles = function() {
-    console.log("Re-applying source files");
-    //Will always be called after reapplyAllAugmentations() so multipliers do not have to be reset
-    //this.resetMultipliers();
-
-    for (i = 0; i < this.sourceFiles.length; ++i) {
-        var srcFileKey = "SourceFile" + this.sourceFiles[i].n;
-        var sourceFileObject = SourceFiles[srcFileKey];
-        if (sourceFileObject == null) {
-            console.log("ERROR: Invalid source file number: " + this.sourceFiles[i].n);
-            continue;
-        }
-        applySourceFile(this.sourceFiles[i]);
-    }
-}
+export {SourceFiles, PlayerOwnedSourceFile, applySourceFile, initSourceFiles};

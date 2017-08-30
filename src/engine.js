@@ -1,3 +1,58 @@
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions.js";
+import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import numeral                                  from "../utils/numeral.min.js";
+import {formatNumber,
+        convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
+import {loxBoxCreate, logBoxUpdateText,
+        logBoxOpened}                           from "../utils/LogBox.js";
+
+import {setActiveScriptsClickHandlers,
+        updateActiveScriptsItems}               from "./ActiveScriptsUI.js";
+import {Augmentations, installAugmentations,
+        initAugmentations, AugmentationNames}   from "./Augmentations.js";
+import {BitNodes, initBitNodes,
+        initBitNodeMultipliers}                 from "./BitNode.js";
+import {CompanyPositions, initCompanies}        from "./Company.js";
+import {CONSTANTS}                              from "./Constants.js";
+import {Programs, displayCreateProgramContent,
+        getNumAvailableCreateProgram,
+        initCreateProgramButtons}               from "./CreateProgram.js";
+import {displayFactionContent, joinFaction,
+        processPassiveFactionRepGain, Factions,
+        inviteToFaction, initFactions}          from "./Faction.js";
+import {displayGangContent, updateGangContent,
+        Gang}                                   from "./Gang.js";
+import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
+        updateHacknetNodesContent}              from "./HacknetNode.js";
+import {iTutorialStart}                         from "./InteractiveTutorial.js";
+import {initLiterature}                         from "./Literature.js";
+import {Locations, displayLocationContent,
+        initLocationButtons}                    from "./Location.js";
+import {checkForMessagesToSend, initMessages}   from "./Message.js";
+import {initSingularitySFFlags}                 from "./NetscriptFunctions.js";
+import {updateOnlineScriptTimes,
+        runScriptsLoop}                         from "./NetscriptWorker.js";
+import {Player}                                 from "./Player.js";
+import {prestigeAugmentation,
+        prestigeSourceFile}                     from "./Prestige.js";
+import {redPillFlag}                            from "./RedPill.js";
+import {saveObject, loadGame}                   from "./SaveObject.js";
+import {loadAllRunningScripts,
+        updateScriptEditorContent}              from "./Script.js";
+import {AllServers, Server, initForeignServers} from "./Server.js";
+import {Settings, setSettingsLabels}            from "./Settings.js";
+import {initSourceFiles, SourceFiles}           from "./SourceFile.js";
+import {SpecialServerIps, initSpecialServerIps} from "./SpecialServerIps.js";
+import {StockMarket, StockSymbols,
+        SymbolToStockMap, initStockSymbols,
+        initSymbolToStockMap, stockMarketCycle,
+        updateStockPrices,
+        displayStockMarketContent}              from "./StockMarket.js";
+import {Terminal, postNetburnerText, post}      from "./Terminal.js";
+
+
+
 /* Shortcuts to navigate through the game
  *  Alt-t - Terminal
  *  Alt-c - Character
@@ -60,7 +115,7 @@ $(document).keydown(function(e) {
     }
 });
 
-var Engine = {
+let Engine = {
     version: "",
     Debug: true,
 
@@ -182,7 +237,7 @@ var Engine = {
             document.getElementById("script-editor-text").value = code;
         }
         document.getElementById("script-editor-text").focus();
-        upgradeScriptEditorContent();
+        updateScriptEditorContent();
         Engine.currentPage = Engine.Page.ScriptEditor;
         document.getElementById("create-script-menu-link").classList.add("active");
     },
@@ -324,7 +379,7 @@ var Engine = {
 
     loadGangContent: function() {
         Engine.hideAllContent();
-        if (document.getElementById("gang-container") || Player.gang) {
+        if (document.getElementById("gang-container") || Player.inGang()) {
             displayGangContent();
             Engine.currentPage = Engine.Page.Gang;
         } else {
@@ -383,7 +438,6 @@ var Engine = {
         if (Player.hp == null) {Player.hp = Player.max_hp;}
         document.getElementById("character-overview-text").innerHTML =
         ("Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
-         //"Money: $" + formatNumber(Player.money.toNumber(), 2) + "<br>" +
          "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
          "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
          "Str:   " + (Player.strength).toLocaleString() + "<br>" +
@@ -473,7 +527,6 @@ var Engine = {
         document.getElementById("world-city-name").innerHTML = Player.city;
         var cityDesc = document.getElementById("world-city-desc"); //TODO
         switch(Player.city) {
-
             case Locations.Aevum:
                 Engine.aevumLocationsList.style.display = "inline";
                 break;
@@ -891,7 +944,7 @@ var Engine = {
 
         if (Engine.Counters.updateScriptEditorDisplay <= 0) {
             if (Engine.currentPage == Engine.Page.ScriptEditor) {
-                upgradeScriptEditorContent();
+                updateScriptEditorContent();
             }
             Engine.Counters.updateScriptEditorDisplay = 5;
         }
@@ -978,7 +1031,9 @@ var Engine = {
         //Load game from save or create new game
         if (loadGame(saveObject)) {
             console.log("Loaded game from save");
+            initBitNodes();
             initBitNodeMultipliers();
+            initSourceFiles();
             Engine.setDisplayElements();    //Sets variables for important DOM elements
             Engine.init();                  //Initialize buttons, work, etc.
             CompanyPositions.init();
@@ -989,6 +1044,7 @@ var Engine = {
                 initSymbolToStockMap();
             }
             initLiterature();
+            initSingularitySFFlags();
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
@@ -1081,8 +1137,10 @@ var Engine = {
         } else {
             //No save found, start new game
             console.log("Initializing new game");
+            initBitNodes();
             initBitNodeMultipliers();
-            SpecialServerIps = new SpecialServerIpsMap();
+            initSourceFiles();
+            initSpecialServerIps();
             Engine.setDisplayElements();        //Sets variables for important DOM elements
             Engine.start();                     //Run main game loop and Scripts loop
             Player.init();
@@ -1094,6 +1152,7 @@ var Engine = {
             initMessages();
             initStockSymbols();
             initLiterature();
+            initSingularitySFFlags();
 
             //Open main menu accordions for new game
             //Main menu accordions
@@ -1269,6 +1328,11 @@ var Engine = {
 
     /* Initialization */
     init: function() {
+        //Import game link
+        document.getElementById("import-game-link").onclick = function() {
+            saveObject.importGame();
+        };
+
         //Main menu accordions
         var hackingHdr      = document.getElementById("hacking-menu-header");
         //hackingHdr.classList.toggle("opened");
@@ -1603,9 +1667,9 @@ var Engine = {
             cancelButton.addEventListener("click", function() {
                 if (Player.workType == CONSTANTS.WorkTypeFaction) {
                     var fac = Factions[Player.currentWorkFactionName];
-                    Player.finishFactionWork(true, fac);
+                    Player.finishFactionWork(true);
                 } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
-                    Player.finishCreateProgramWork(true, Player.createProgramName);
+                    Player.finishCreateProgramWork(true);
                 } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
                     Player.finishClass();
                 } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
@@ -1661,3 +1725,5 @@ var Engine = {
 window.onload = function() {
     Engine.load();
 };
+
+export {Engine};

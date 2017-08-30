@@ -1,26 +1,15 @@
-/* Log Box */
-
-//Close box when clicking outside
-/*
-$(document).click(function(event) {
-    if (logBoxOpened) {        
-        if ( $(event.target).closest("#log-box-container").get(0) == null ) {         
-            logBoxClose();         
-        }
-    }
-});
-*/
+import {printArray}                     from "./HelperFunctions.js";
 
 $(document).keydown(function(event) {
     if (logBoxOpened && event.keyCode == 27) {
         logBoxClose();
     }
 });
- 
+
 function logBoxInit() {
     var closeButton = document.getElementById("log-box-close");
     logBoxClose();
-    
+
     //Close Dialog box
     closeButton.addEventListener("click", function() {
         logBoxClose();
@@ -30,15 +19,15 @@ function logBoxInit() {
 
 document.addEventListener("DOMContentLoaded", logBoxInit, false);
 
-logBoxClose = function() {
+function logBoxClose() {
     logBoxOpened = false;
     var logBox = document.getElementById("log-box-container");
     logBox.style.display = "none";
 }
 
-logBoxOpen = function() {
+function logBoxOpen() {
     logBoxOpened = true;
-    
+
     var logBox = document.getElementById("log-box-container");
     logBox.style.display = "block";
 }
@@ -47,13 +36,13 @@ logBoxOpen = function() {
 var logBoxOpened = false;
 var logBoxCurrentScript = null;
 //ram argument is in GB
-logBoxCreate = function(script) {
+function logBoxCreate(script) {
     logBoxCurrentScript = script;
     logBoxOpen();
     logBoxUpdateText();
 }
 
-logBoxUpdateText = function() {
+function logBoxUpdateText() {
     var txt = document.getElementById("log-box-text");
     if (logBoxCurrentScript && logBoxOpened && txt) {
         txt.innerHTML = logBoxCurrentScript.filename + printArray(logBoxCurrentScript.args) + ":<br><br>";
@@ -63,3 +52,5 @@ logBoxUpdateText = function() {
         }
     }
 }
+
+export {logBoxCreate, logBoxUpdateText, logBoxOpened, logBoxCurrentScript};

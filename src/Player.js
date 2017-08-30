@@ -1,4 +1,29 @@
-//Netburner Player class
+import {Augmentations, applyAugmentation,
+        AugmentationNames}                      from "./Augmentations.js";
+import {BitNodes, BitNode, BitNodeMultipliers}  from "./BitNode.js";
+import {Company, Companies, getNextCompanyPosition,
+        getJobRequirementText, CompanyPosition,
+        CompanyPositions}                       from "./Company.js";
+import {CONSTANTS}                              from "./Constants.js";
+import {Programs}                               from "./CreateProgram.js";
+import {determineCrimeSuccess}                  from "./Crimes.js";
+import {Engine}                                 from "./engine.js";
+import {Factions, Faction}                      from "./Faction.js";
+import {Gang}                                   from "./Gang.js";
+import {Locations}                              from "./Location.js";
+import {AllServers, Server, AddToAllServers}    from "./Server.js";
+import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps.js";
+import {SourceFiles, applySourceFile}           from "./SourceFile.js";
+
+import Decimal                                  from '../utils/decimal.js';
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {createRandomIp}                         from "../utils/IPAddress.js";
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+import {formatNumber,
+        convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
+
 function PlayerObject() {
     //Skills and stats
     this.hacking_skill   = 1;
@@ -168,6 +193,198 @@ PlayerObject.prototype.init = function() {
     this.getHomeComputer().programs.push(Programs.NukeProgram);
 }
 
+PlayerObject.prototype.increaseMultiplier = function(name, val) {
+    let mult = this[name];
+    if (mult === null || mult === undefined) {
+        console.log("ERROR: Could not find this multiplier " + name);
+        return;
+    }
+    mult *= val;
+}
+
+PlayerObject.prototype.prestigeAugmentation = function() {
+    var homeComp = this.getHomeComputer();
+    this.currentServer = homeComp.ip;
+    this.homeComputer = homeComp.ip;
+
+    //Crime statistics
+    this.numTimesShoplifted = 0;
+    this.numPeopleMugged = 0;
+    this.numTimesDealtDrugs = 0;
+    this.numTimesTraffickArms = 0;
+    this.numPeopleKilled = 0;
+    this.numTimesGrandTheftAuto = 0;
+    this.numTimesKidnapped = 0;
+    this.numTimesHeist = 0;
+
+    this.karma = 0;
+
+    //Reset stats
+    this.hacking_skill = 1;
+
+    this.strength = 1;
+    this.defense = 1;
+    this.dexterity = 1;
+    this.agility = 1;
+
+    this.charisma = 1;
+
+    this.hacking_exp = 0;
+    this.strength_exp = 0;
+    this.defense_exp = 0;
+    this.dexterity_exp = 0;
+    this.agility_exp = 0;
+    this.charisma_exp = 0;
+
+    this.money = new Decimal(1000);
+
+    this.city = Locations.Sector12;
+    this.location = "";
+
+    this.companyName = "";
+    this.companyPosition = "";
+
+    this.discoveredServers = [];
+    this.purchasedServers = [];
+
+    this.factions = [];
+    this.factionInvitations = [];
+
+    this.queuedAugmentations = [];
+
+    this.startAction = false;
+    this.actionTime = 0;
+
+    this.isWorking = false;
+    this.currentWorkFactionName = "";
+    this.currentWorkFactionDescription = "";
+    this.createProgramName = "";
+    this.className = "";
+    this.crimeType = "";
+
+    this.workHackExpGainRate = 0;
+    this.workStrExpGainRate = 0;
+    this.workDefExpGainRate = 0;
+    this.workDexExpGainRate = 0;
+    this.workAgiExpGainRate = 0;
+    this.workChaExpGainRate = 0;
+    this.workRepGainRate = 0;
+    this.workMoneyGainRate = 0;
+
+    this.workHackExpGained = 0;
+    this.workStrExpGained = 0;
+    this.workDefExpGained = 0;
+    this.workDexExpGained = 0;
+    this.workAgiExpGained = 0;
+    this.workChaExpGained = 0;
+    this.workRepGained = 0;
+    this.workMoneyGained = 0;
+
+    this.timeWorked = 0;
+
+    this.lastUpdate = new Date().getTime();
+
+    this.playtimeSinceLastAug = 0;
+
+    this.hacknetNodes.length = 0;
+    this.totalHacknetNodeProduction = 0;
+}
+
+PlayerObject.prototype.prestigeSourceFile = function() {
+    var homeComp = this.getHomeComputer();
+    this.currentServer = homeComp.ip;
+    this.homeComputer = homeComp.ip;
+
+    this.numTimesShoplifted = 0;
+    this.numPeopleMugged = 0;
+    this.numTimesDealtDrugs = 0;
+    this.numTimesTraffickArms = 0;
+    this.numPeopleKilled = 0;
+    this.numTimesGrandTheftAuto = 0;
+    this.numTimesKidnapped = 0;
+    this.numTimesHeist = 0;
+
+    this.karma = 0;
+
+    //Reset stats
+    this.hacking_skill = 1;
+
+    this.strength = 1;
+    this.defense = 1;
+    this.dexterity = 1;
+    this.agility = 1;
+
+    this.charisma = 1;
+
+    this.hacking_exp = 0;
+    this.strength_exp = 0;
+    this.defense_exp = 0;
+    this.dexterity_exp = 0;
+    this.agility_exp = 0;
+    this.charisma_exp = 0;
+
+    this.money = new Decimal(1000);
+
+    this.city = Locations.Sector12;
+    this.location = "";
+
+    this.companyName = "";
+    this.companyPosition = "";
+
+    this.discoveredServers = [];
+    this.purchasedServers = [];
+
+    this.factions = [];
+    this.factionInvitations = [];
+
+    this.queuedAugmentations = [];
+    this.augmentations = [];
+
+    this.startAction = false;
+    this.actionTime = 0;
+
+    this.isWorking = false;
+    this.currentWorkFactionName = "";
+    this.currentWorkFactionDescription = "";
+    this.createProgramName = "";
+    this.className = "";
+    this.crimeType = "";
+
+    this.workHackExpGainRate = 0;
+    this.workStrExpGainRate = 0;
+    this.workDefExpGainRate = 0;
+    this.workDexExpGainRate = 0;
+    this.workAgiExpGainRate = 0;
+    this.workChaExpGainRate = 0;
+    this.workRepGainRate = 0;
+    this.workMoneyGainRate = 0;
+
+    this.workHackExpGained = 0;
+    this.workStrExpGained = 0;
+    this.workDefExpGained = 0;
+    this.workDexExpGained = 0;
+    this.workAgiExpGained = 0;
+    this.workChaExpGained = 0;
+    this.workRepGained = 0;
+    this.workMoneyGained = 0;
+
+    this.timeWorked = 0;
+
+    this.lastUpdate = new Date().getTime();
+
+    this.hacknetNodes.length = 0;
+    this.totalHacknetNodeProduction = 0;
+
+    //Gang
+    this.gang = null;
+
+    //Reset Stock market
+    this.hasWseAccount = false;
+    this.hasTixApiAccess = false;
+
+    this.playtimeSinceLastAug = 0;
+}
+
 PlayerObject.prototype.getCurrentServer = function() {
     return AllServers[this.currentServer];
 }
@@ -269,7 +486,7 @@ PlayerObject.prototype.calculatePercentMoneyHacked = function() {
     console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
-    return percentMoneyHacked;
+    return percentMoneyHacked * BitNodeMultipliers.ManualHackMoney;
 }
 
 //Returns how much EXP the player gains on a successful hack
@@ -280,7 +497,7 @@ PlayerObject.prototype.calculateExpGain = function() {
     if (s.baseDifficulty == null) {
         s.baseDifficulty = s.hackDifficulty;
     }
-    return (s.baseDifficulty * this.hacking_exp_mult * 0.3 + 3);
+    return (s.baseDifficulty * this.hacking_exp_mult * 0.3 + 3) * BitNodeMultipliers.HackExpGain;
 }
 
 //Hack/Analyze a server. Return the amount of time the hack will take. This lets the Terminal object know how long to disable itself for
@@ -303,6 +520,13 @@ PlayerObject.prototype.hasProgram = function(programName) {
         if (programName.toLowerCase() == home.programs[i].toLowerCase()) {return true;}
     }
     return false;
+}
+
+PlayerObject.prototype.setMoney = function(money) {
+    if (isNaN(money)) {
+        console.log("ERR: NaN passed into Player.setMoney()"); return;
+    }
+    this.money = money;
 }
 
 PlayerObject.prototype.gainMoney = function(money) {
@@ -403,7 +627,7 @@ PlayerObject.prototype.gainWorkExp = function() {
 }
 
 /* Working for Company */
-PlayerObject.prototype.finishWork = function(cancelled) {
+PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
     //Since the work was cancelled early, player only gains half of what they've earned so far
     if (cancelled) {
         this.workRepGained /= 2;
@@ -435,12 +659,24 @@ PlayerObject.prototype.finishWork = function(cancelled) {
         txt = "You worked a full shift of 8 hours! <br><br> " +
               "You earned a total of: <br>" + txt;
     }
-    dialogBoxCreate(txt);
+    if (!sing) {dialogBoxCreate(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
     Engine.loadTerminalContent();
+
+    if (sing) {
+        return "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " and " +
+               "earned $" + formatNumber(this.workMoneyGained, 2) + ", " +
+               formatNumber(this.workRepGained, 4) + " reputation, " +
+               formatNumber(this.workHackExpGained, 4) + " hacking exp, " +
+               formatNumber(this.workStrExpGained, 4) + " strength exp, " +
+               formatNumber(this.workDefExpGained, 4) + " defense exp, " +
+               formatNumber(this.workDexExpGained, 4) + " dexterity exp, " +
+               formatNumber(this.workAgiExpGained, 4) + " agility exp, and " +
+               formatNumber(this.workChaExpGained, 4) + " charisma exp.";
+    }
 }
 
 PlayerObject.prototype.startWork = function() {
@@ -596,7 +832,7 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
 
 }
 
-PlayerObject.prototype.finishWorkPartTime = function() {
+PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     this.gainWorkExp();
 
     var company = Companies[this.companyName];
@@ -616,16 +852,28 @@ PlayerObject.prototype.finishWorkPartTime = function() {
               formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" +
               formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
     txt = "You worked for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br> " + txt;
-    dialogBoxCreate(txt);
+    if (!sing) {dialogBoxCreate(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
     Engine.loadTerminalContent();
+    if (sing) {
+        return "You worked for " + convertTimeMsToTimeElapsedString(this.timeWorked) + " and " +
+               "earned a total of " +
+               "$" + formatNumber(this.workMoneyGained, 2) + ", " +
+                formatNumber(this.workRepGained, 4) + " reputation, " +
+                formatNumber(this.workHackExpGained, 4) + " hacking exp, " +
+                formatNumber(this.workStrExpGained, 4) + " strength exp, " +
+                formatNumber(this.workDefExpGained, 4) + " defense exp, " +
+                formatNumber(this.workDexExpGained, 4) + " dexterity exp, " +
+                formatNumber(this.workAgiExpGained, 4) + " agility exp, and " +
+                formatNumber(this.workChaExpGained, 4) + " charisma exp";
+    }
 }
 
 /* Working for Faction */
-PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
+PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
     this.gainWorkExp();
 
     var faction = Factions[this.currentWorkFactionName];
@@ -645,7 +893,7 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
               formatNumber(this.workDexExpGained, 4) + " dexterity exp <br>" +
               formatNumber(this.workAgiExpGained, 4) + " agility exp <br>" +
               formatNumber(this.workChaExpGained, 4) + " charisma exp<br>";
-    dialogBoxCreate(txt);
+    if (!sing) {dialogBoxCreate(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
@@ -653,6 +901,17 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, faction) {
     this.isWorking = false;
 
     Engine.loadTerminalContent();
+    if (sing) {
+        return "You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + ". " +
+               "You earned " +
+                formatNumber(this.workRepGained, 4) + " rep, " +
+                formatNumber(this.workHackExpGained, 4) + " hacking exp, " +
+                formatNumber(this.workStrExpGained, 4) + " str exp, " +
+                formatNumber(this.workDefExpGained, 4) + " def exp, " +
+                formatNumber(this.workDexExpGained, 4) + " dex exp, " +
+                formatNumber(this.workAgiExpGained, 4) + " agi exp, and " +
+                formatNumber(this.workChaExpGained, 4) + " cha exp.";
+    }
 }
 
 PlayerObject.prototype.startFactionWork = function(faction) {
@@ -671,7 +930,7 @@ PlayerObject.prototype.startFactionWork = function(faction) {
     var cancelButton = clearEventListeners("work-in-progress-cancel-button");
     cancelButton.innerHTML = "Stop Faction Work";
     cancelButton.addEventListener("click", function() {
-        Player.finishFactionWork(true, faction);
+        Player.finishFactionWork(true);
         return false;
     });
 
@@ -682,8 +941,8 @@ PlayerObject.prototype.startFactionWork = function(faction) {
 PlayerObject.prototype.startFactionHackWork = function(faction) {
     this.resetWorkStatus();
 
-    this.workHackExpGainRate    = .15 * this.hacking_exp_mult;
-    this.workRepGainRate = 0.9 * this.hacking_skill / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
+    this.workHackExpGainRate = .15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+    this.workRepGainRate = this.hacking_skill / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
 
     this.factionWorkType = CONSTANTS.FactionWorkHacking;
     this.currentWorkFactionDescription = "carrying out hacking contracts";
@@ -694,12 +953,12 @@ PlayerObject.prototype.startFactionHackWork = function(faction) {
 PlayerObject.prototype.startFactionFieldWork = function(faction) {
     this.resetWorkStatus();
 
-    this.workHackExpGainRate    = .1 * this.hacking_exp_mult;
-    this.workStrExpGainRate     = .1 * this.strength_exp_mult;
-    this.workDefExpGainRate     = .1 * this.defense_exp_mult;
-    this.workDexExpGainRate     = .1 * this.dexterity_exp_mult;
-    this.workAgiExpGainRate     = .1 * this.agility_exp_mult;
-    this.workChaExpGainRate     = .1 * this.charisma_exp_mult;
+    this.workHackExpGainRate    = .1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+    this.workStrExpGainRate     = .1 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+    this.workDefExpGainRate     = .1 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+    this.workDexExpGainRate     = .1 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+    this.workAgiExpGainRate     = .1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+    this.workChaExpGainRate     = .1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workRepGainRate        = this.getFactionFieldWorkRepGain();
 
     this.factionWorkType = CONSTANTS.FactionWorkField;
@@ -711,12 +970,12 @@ PlayerObject.prototype.startFactionFieldWork = function(faction) {
 PlayerObject.prototype.startFactionSecurityWork = function(faction) {
     this.resetWorkStatus();
 
-    this.workHackExpGainRate    = 0.05 * this.hacking_exp_mult;
-    this.workStrExpGainRate     = 0.15 * this.strength_exp_mult;
-    this.workDefExpGainRate     = 0.15 * this.defense_exp_mult;
-    this.workDexExpGainRate     = 0.15 * this.dexterity_exp_mult;
-    this.workAgiExpGainRate     = 0.15 * this.agility_exp_mult;
-    this.workChaExpGainRate     = 0.00 * this.charisma_exp_mult;
+    this.workHackExpGainRate    = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+    this.workStrExpGainRate     = 0.15 * this.strength_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+    this.workDefExpGainRate     = 0.15 * this.defense_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+    this.workDexExpGainRate     = 0.15 * this.dexterity_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+    this.workAgiExpGainRate     = 0.15 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+    this.workChaExpGainRate     = 0.00 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
     this.workRepGainRate        = this.getFactionSecurityWorkRepGain();
 
     this.factionWorkType = CONSTANTS.FactionWorkSecurity;
@@ -773,7 +1032,7 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
         this.workChaExpGained  = this.workChaExpGainRate * maxCycles;
         this.workRepGained     = this.workRepGainRate * maxCycles;
         this.workMoneyGained   = this.workMoneyGainRate * maxCycles;
-        this.finishFactionWork(false, faction);
+        this.finishFactionWork(false);
     }
 
     var txt = document.getElementById("work-in-progress-text");
@@ -797,43 +1056,50 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
 //Money gained per game cycle
 PlayerObject.prototype.getWorkMoneyGain = function() {
     var company = Companies[this.companyName];
-    return this.companyPosition.baseSalary * company.salaryMultiplier * this.work_money_mult;
+    return this.companyPosition.baseSalary * company.salaryMultiplier *
+           this.work_money_mult * BitNodeMultipliers.CompanyWorkMoney;
 }
 
 //Hack exp gained per game cycle
 PlayerObject.prototype.getWorkHackExpGain = function() {
     var company = Companies[this.companyName];
-    return this.companyPosition.hackingExpGain * company.expMultiplier * this.hacking_exp_mult;
+    return this.companyPosition.hackingExpGain * company.expMultiplier *
+           this.hacking_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Str exp gained per game cycle
 PlayerObject.prototype.getWorkStrExpGain = function() {
     var company = Companies[this.companyName];
-    return this.companyPosition.strengthExpGain * company.expMultiplier * this.strength_exp_mult;
+    return this.companyPosition.strengthExpGain * company.expMultiplier *
+           this.strength_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Def exp gained per game cycle
 PlayerObject.prototype.getWorkDefExpGain = function() {
     var company = Companies[this.companyName];
-    return this.companyPosition.defenseExpGain * company.expMultiplier * this.defense_exp_mult;
+    return this.companyPosition.defenseExpGain * company.expMultiplier *
+           this.defense_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Dex exp gained per game cycle
 PlayerObject.prototype.getWorkDexExpGain = function() {
     var company = Companies[this.companyName];
-    return this.companyPosition.dexterityExpGain * company.expMultiplier * this.dexterity_exp_mult;
+    return this.companyPosition.dexterityExpGain * company.expMultiplier *
+           this.dexterity_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Agi exp gained per game cycle
 PlayerObject.prototype.getWorkAgiExpGain = function() {
     var company = Companies[this.companyName];
-    return this.companyPosition.agilityExpGain * company.expMultiplier * this.agility_exp_mult;
+    return this.companyPosition.agilityExpGain * company.expMultiplier *
+           this.agility_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Charisma exp gained per game cycle
 PlayerObject.prototype.getWorkChaExpGain = function() {
     var company = Companies[this.companyName];
-    return this.companyPosition.charismaExpGain * company.expMultiplier * this.charisma_exp_mult;
+    return this.companyPosition.charismaExpGain * company.expMultiplier *
+           this.charisma_exp_mult * BitNodeMultipliers.CompanyWorkExpGain;
 }
 
 //Reputation gained per game cycle
@@ -898,7 +1164,7 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
     var cancelButton = clearEventListeners("work-in-progress-cancel-button");
     cancelButton.innerHTML = "Cancel work on creating program";
     cancelButton.addEventListener("click", function() {
-        Player.finishCreateProgramWork(true, programName);
+        Player.finishCreateProgramWork(true);
         return false;
     });
 
@@ -911,7 +1177,7 @@ PlayerObject.prototype.createProgramWork = function(numCycles) {
     var programName = this.createProgramName;
 
     if (this.timeWorked >= this.timeNeededToCompleteWork) {
-        this.finishCreateProgramWork(false, programName);
+        this.finishCreateProgramWork(false);
     }
 
     var txt = document.getElementById("work-in-progress-text");
@@ -921,8 +1187,9 @@ PlayerObject.prototype.createProgramWork = function(numCycles) {
                     "If you cancel, your work will be saved and you can come back to complete the program later.";
 }
 
-PlayerObject.prototype.finishCreateProgramWork = function(cancelled, programName) {
-    if (cancelled == false) {
+PlayerObject.prototype.finishCreateProgramWork = function(cancelled, sing=false) {
+    var programName = this.createProgramName;
+    if (cancelled === false) {
         dialogBoxCreate("You've finished creating " + programName + "!<br>" +
                         "The new program can be found on your home computer.");
 
@@ -1009,12 +1276,12 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
     }
 
     this.workMoneyLossRate      = cost;
-    this.workHackExpGainRate    = hackExp * this.hacking_exp_mult;
-    this.workStrExpGainRate     = strExp * this.strength_exp_mult;
-    this.workDefExpGainRate     = defExp * this.defense_exp_mult;
-    this.workDexExpGainRate     = dexExp * this.dexterity_exp_mult;
-    this.workAgiExpGainRate     = agiExp * this.agility_exp_mult;
-    this.workChaExpGainRate     = chaExp * this.charisma_exp_mult;
+    this.workHackExpGainRate    = hackExp * this.hacking_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+    this.workStrExpGainRate     = strExp * this.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
+    this.workDefExpGainRate     = defExp * this.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
+    this.workDexExpGainRate     = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
+    this.workAgiExpGainRate     = agiExp * this.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
+    this.workChaExpGainRate     = chaExp * this.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain;;
 
     var cancelButton = clearEventListeners("work-in-progress-cancel-button");
     if (className == CONSTANTS.ClassGymStrength ||
@@ -1093,7 +1360,7 @@ PlayerObject.prototype.finishClass = function(sing=false) {
 
     Engine.loadLocationContent();
 
-    if (sing) {return = "After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", " +
+    if (sing) {return  "After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", " +
               "you spent a total of $" + formatNumber(this.workMoneyGained * -1, 2) + ". " +
               "You earned a total of: " +
               formatNumber(this.workHackExpGained, 3) + " hacking exp, " +
@@ -1110,12 +1377,12 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
     this.isWorking = true;
     this.workType = CONSTANTS.WorkTypeCrime;
 
-    this.workHackExpGained  = hackExp * this.hacking_exp_mult;
-    this.workStrExpGained   = strExp * this.strength_exp_mult;
-    this.workDefExpGained   = defExp * this.defense_exp_mult;
-    this.workDexExpGained   = dexExp * this.dexterity_exp_mult;
-    this.workAgiExpGained   = agiExp * this.agility_exp_mult;
-    this.workChaExpGained   = chaExp * this.charisma_exp_mult;
+    this.workHackExpGained  = hackExp * this.hacking_exp_mult * BitNodeMultipliers.CrimeExpGain;
+    this.workStrExpGained   = strExp * this.strength_exp_mult * BitNodeMultipliers.CrimeExpGain;
+    this.workDefExpGained   = defExp * this.defense_exp_mult * BitNodeMultipliers.CrimeExpGain;
+    this.workDexExpGained   = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.CrimeExpGain;
+    this.workAgiExpGained   = agiExp * this.agility_exp_mult * BitNodeMultipliers.CrimeExpGain;
+    this.workChaExpGained   = chaExp * this.charisma_exp_mult * BitNodeMultipliers.CrimeExpGain;
     this.workMoneyGained    = money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
 
     this.timeNeededToCompleteWork = time;
@@ -1247,14 +1514,28 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
 //Used only for Singularity functions, so no popups are created
 PlayerObject.prototype.singularityStopWork = function() {
     if (!this.isWorking) {return null;}
+    var res; //Earnings text for work
     switch (this.workType) {
         case CONSTANTS.WorkTypeStudyClass:
-            return Player.finishClass(true);
+            res =  this.finishClass(true);
+            break;
+        case CONSTANTS.WorkTypeCompany:
+            res = this.finishWork(true, true);
+            break;
+        case CONSTANTS.WorkTypeCompanyPartTime:
+            res = this.finishWorkPartTime(true);
+            break;
+        case CONSTANTS.WorkTypeFaction:
+            res = this.finishFactionWork(true, true);
+            break;
+        case CONSTANTS.WorkTypeCreateProgram:
+            res = this.finishCreateProgramWork(true, true);
             break;
         default:
             console.log("ERROR: Unrecognized work type");
-            return;
+            return "";
     }
+    return res;
 }
 
 
@@ -1277,7 +1558,634 @@ PlayerObject.prototype.hospitalize = function() {
     this.hp = this.max_hp;
 }
 
+/********* Company job application **********/
+//Determines the job that the Player should get (if any) at the current company
+//The 'sing' argument designates whether or not this is being called from
+//the applyToCompany() Netscript Singularity function
+PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
+    var currCompany = "";
+    if (this.companyName != "") {
+        currCompany = Companies[this.companyName];
+    }
+    var currPositionName = "";
+    if (this.companyPosition != "") {
+        currPositionName = this.companyPosition.positionName;
+    }
+	var company = Companies[this.location]; //Company being applied to
+    if (sing && !(company instanceof Company)) {
+        return "ERROR: Invalid company name: " + this.location + ". applyToCompany() failed";
+    }
+
+    var pos = entryPosType;
+
+    if (!this.isQualified(company, pos)) {
+        var reqText = getJobRequirementText(company, pos);
+        if (sing) {return false;}
+        dialogBoxCreate("Unforunately, you do not qualify for this position<br>" + reqText);
+        return;
+    }
+
+    while (true) {
+        if (Engine.Debug) {console.log("Determining qualification for next Company Position");}
+        var newPos = getNextCompanyPosition(pos);
+        if (newPos == null) {break;}
+
+        //Check if this company has this position
+        if (company.hasPosition(newPos)) {
+            if (!this.isQualified(company, newPos)) {
+                //If player not qualified for next job, break loop so player will be given current job
+                break;
+            }
+            pos = newPos;
+        } else {
+            break;
+        }
+    }
+
+    //Check if the determined job is the same as the player's current job
+    if (currCompany != "") {
+        if (currCompany.companyName == company.companyName &&
+            pos.positionName == currPositionName) {
+            var nextPos = getNextCompanyPosition(pos);
+            if (nextPos == null) {
+                if (sing) {return false;}
+                dialogBoxCreate("You are already at the highest position for your field! No promotion available");
+            } else if (company.hasPosition(nextPos)) {
+                if (sing) {return false;}
+                var reqText = getJobRequirementText(company, nextPos);
+                dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
+            } else {
+                if (sing) {return false;}
+                dialogBoxCreate("You are already at the highest position for your field! No promotion available");
+            }
+            return; //Same job, do nothing
+        }
+    }
+
+
+    //Lose reputation from a Company if you are leaving it for another job
+    var leaveCompany = false;
+    var oldCompanyName = "";
+    if (currCompany != "") {
+        if (currCompany.companyName != company.companyName) {
+            leaveCompany = true;
+            oldCompanyName = currCompany.companyName;
+            company.playerReputation -= 1000;
+            if (company.playerReputation < 0) {company.playerReputation = 0;}
+        }
+    }
+
+    this.companyName = company.companyName;
+    this.companyPosition = pos;
+
+    if (leaveCompany) {
+        if (sing) {return true;}
+        dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " +
+                        pos.positionName + "!<br>" +
+                        "You lost 1000 reputation at your old company " + oldCompanyName + " because you left.");
+    } else {
+        if (sing) {return true;}
+        dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.positionName + "!");
+    }
+
+    Engine.loadLocationContent();
+}
+
+//Returns your next position at a company given the field (software, business, etc.)
+PlayerObject.prototype.getNextCompanyPosition = function(company, entryPosType) {
+    var currCompany = null;
+    if (this.companyName != "") {
+        currCompany = Companies[this.companyName];
+    }
+
+    //Not employed at this company, so return the entry position
+    if (currCompany == null || (currCompany.companyName != company.companyName)) {
+        return entryPosType;
+    }
+
+    //If the entry pos type and the player's current position have the same type,
+    //return the player's "nextCompanyPosition". Otherwise return the entryposType
+    //Employed at this company, so just return the next position if it exists.
+    if ((this.companyPosition.isSoftwareJob() && entryPosType.isSoftwareJob()) ||
+        (this.companyPosition.isITJob() && entryPosType.isITJob()) ||
+        (this.companyPosition.isSecurityEngineerJob() && entryPosType.isSecurityEngineerJob()) ||
+        (this.companyPosition.isNetworkEngineerJob() && entryPosType.isNetworkEngineerJob()) ||
+        (this.companyPosition.isSecurityJob() && entryPosType.isSecurityJob()) ||
+        (this.companyPosition.isAgentJob() && entryPosTypeisAgentJob()) ||
+        (this.companyPosition.isSoftwareConsultantJob() && entryPosType.isSoftwareConsultantJob()) ||
+        (this.companyPosition.isBusinessConsultantJob() && entryPosType.isBusinessConsultantJob()) ||
+        (this.companyPosition.isPartTimeJob() && entryPosType.isPartTimeJob())) {
+        return getNextCompanyPosition(this.companyPosition);
+    }
+
+
+    return entryPosType;
+}
+
+PlayerObject.prototype.applyForSoftwareJob = function(sing=false) {
+    return this.applyForJob(CompanyPositions.SoftwareIntern, sing);
+}
+
+PlayerObject.prototype.applyForSoftwareConsultantJob = function(sing=false) {
+    return this.applyForJob(CompanyPositions.SoftwareConsultant, sing);
+}
+
+PlayerObject.prototype.applyForItJob = function(sing=false) {
+	return this.applyForJob(CompanyPositions.ITIntern, sing);
+}
+
+PlayerObject.prototype.applyForSecurityEngineerJob = function(sing=false) {
+    var company = Companies[this.location]; //Company being applied to
+    if (this.isQualified(company, CompanyPositions.SecurityEngineer)) {
+        return this.applyForJob(CompanyPositions.SecurityEngineer, sing);
+    } else {
+        if (sing) {return false;}
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
+    }
+}
+
+PlayerObject.prototype.applyForNetworkEngineerJob = function(sing=false) {
+	var company = Companies[this.location]; //Company being applied to
+    if (this.isQualified(company, CompanyPositions.NetworkEngineer)) {
+        return this.applyForJob(CompanyPositions.NetworkEngineer, sing);
+    } else {
+        if (sing) {return false;}
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
+    }
+}
+
+PlayerObject.prototype.applyForBusinessJob = function(sing=false) {
+	return this.applyForJob(CompanyPositions.BusinessIntern, sing);
+}
+
+PlayerObject.prototype.applyForBusinessConsultantJob = function(sing=false) {
+    return this.applyForJob(CompanyPositions.BusinessConsultant, sing);
+}
+
+PlayerObject.prototype.applyForSecurityJob = function(sing=false) {
+    //TODO If case for POlice departments
+	return this.applyForJob(CompanyPositions.SecurityGuard, sing);
+}
+
+PlayerObject.prototype.applyForAgentJob = function(sing=false) {
+	var company = Companies[this.location]; //Company being applied to
+    if (this.isQualified(company, CompanyPositions.FieldAgent)) {
+        return this.applyForJob(CompanyPositions.FieldAgent, sing);
+    } else {
+        if (sing) {return false;}
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
+    }
+}
+
+PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
+	var company = Companies[this.location]; //Company being applied to
+    if (this.isQualified(company, CompanyPositions.Employee)) {
+        this.companyName = company.companyName;
+        this.companyPosition = CompanyPositions.Employee;
+        if (sing) {return true;}
+        dialogBoxCreate("Congratulations, you are now employed at " + this.companyName);
+        Engine.loadLocationContent();
+    } else {
+        if (sing) {return false;}
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
+    }
+}
+
+PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
+	var company = Companies[this.location]; //Company being applied to
+    if (this.isQualified(company, CompanyPositions.PartTimeEmployee)) {
+        this.companyName = company.companyName;
+        this.companyPosition = CompanyPositions.PartTimeEmployee;
+        if (sing) {return true;}
+        dialogBoxCreate("Congratulations, you are now employed part-time at " + this.companyName);
+        Engine.loadLocationContent();
+    } else {
+        if (sing) {return false;}
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
+    }
+}
+
+PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
+	var company = Companies[this.location]; //Company being applied to
+    if (this.isQualified(company, CompanyPositions.Waiter)) {
+        this.companyName = company.companyName;
+        this.companyPosition = CompanyPositions.Waiter;
+        if (sing) {return true;}
+        dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.companyName);
+        Engine.loadLocationContent();
+    } else {
+        if (sing) {return false;}
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
+    }
+}
+
+PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
+	var company = Companies[this.location]; //Company being applied to
+    if (this.isQualified(company, CompanyPositions.PartTimeWaiter)) {
+        this.companyName = company.companyName;
+        this.companyPosition = CompanyPositions.PartTimeWaiter;
+        if (sing) {return true;}
+        dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.companyName);
+        Engine.loadLocationContent();
+    } else {
+        if (sing) {return false;}
+        dialogBoxCreate("Unforunately, you do not qualify for this position");
+    }
+}
+
+//Checks if the Player is qualified for a certain position
+PlayerObject.prototype.isQualified = function(company, position) {
+	var offset = company.jobStatReqOffset;
+    var reqHacking = position.requiredHacking > 0       ? position.requiredHacking+offset   : 0;
+    var reqStrength = position.requiredStrength > 0     ? position.requiredStrength+offset  : 0;
+    var reqDefense = position.requiredDefense > 0       ? position.requiredDefense+offset   : 0;
+    var reqDexterity = position.requiredDexterity > 0   ? position.requiredDexterity+offset : 0;
+    var reqAgility = position.requiredDexterity > 0     ? position.requiredDexterity+offset : 0;
+    var reqCharisma = position.requiredCharisma > 0     ? position.requiredCharisma+offset  : 0;
+
+	if (this.hacking_skill >= reqHacking &&
+		this.strength 	   >= reqStrength &&
+        this.defense       >= reqDefense &&
+        this.dexterity     >= reqDexterity &&
+        this.agility       >= reqAgility &&
+        this.charisma      >= reqCharisma &&
+        company.playerReputation >= position.requiredReputation) {
+            return true;
+    }
+    return false;
+}
+
+/********** Reapplying Augmentations and Source File ***********/
+PlayerObject.prototype.reapplyAllAugmentations = function(resetMultipliers=true) {
+    console.log("Re-applying augmentations");
+    if (resetMultipliers) {
+        this.resetMultipliers();
+    }
+
+    for (let i = 0; i < this.augmentations.length; ++i) {
+        //Compatibility with new version
+        if (typeof this.augmentations[i] === 'string' || this.augmentations[i] instanceof String) {
+            var newOwnedAug = new PlayerOwnedAugmentation(this.augmentations[i]);
+            if (this.augmentations[i] == AugmentationNames.NeuroFluxGovernor) {
+                newOwnedAug.level = Augmentations[AugmentationNames.NeuroFluxGovernor].level;
+            }
+            this.augmentations[i] = newOwnedAug;
+        }
+
+        var augName = this.augmentations[i].name;
+        var aug = Augmentations[augName];
+        aug.owned = true;
+        if (aug == null) {
+            console.log("WARNING: Invalid augmentation name");
+            continue;
+        }
+        if (aug.name == AugmentationNames.NeuroFluxGovernor) {
+            for (let j = 0; j < aug.level; ++j) {
+                applyAugmentation(this.augmentations[i], true);
+            }
+            continue;
+        }
+        applyAugmentation(this.augmentations[i], true);
+    }
+}
+
+PlayerObject.prototype.reapplyAllSourceFiles = function() {
+    console.log("Re-applying source files");
+    //Will always be called after reapplyAllAugmentations() so multipliers do not have to be reset
+    //this.resetMultipliers();
+
+    for (let i = 0; i < this.sourceFiles.length; ++i) {
+        var srcFileKey = "SourceFile" + this.sourceFiles[i].n;
+        var sourceFileObject = SourceFiles[srcFileKey];
+        if (sourceFileObject == null) {
+            console.log("ERROR: Invalid source file number: " + this.sourceFiles[i].n);
+            continue;
+        }
+        applySourceFile(this.sourceFiles[i]);
+    }
+}
+
+/*************** Check for Faction Invitations *************/
+//This function sets the requirements to join a Faction. It checks whether the Player meets
+//those requirements and will return an array of all factions that the Player should
+//receive an invitation to
+PlayerObject.prototype.checkForFactionInvitations = function() {
+    let invitedFactions = []; //Array which will hold all Factions th eplayer should be invited to
+
+    var numAugmentations = this.augmentations.length;
+
+    var company = Companies[this.companyName];
+    var companyRep = 0;
+    if (company != null) {
+        companyRep = company.playerReputation;
+    }
+
+    //Illuminati
+    var illuminatiFac = Factions["Illuminati"];
+    if (!illuminatiFac.isBanned && !illuminatiFac.isMember && !illuminatiFac.alreadyInvited &&
+        numAugmentations >= 30 &&
+        this.money.gte(150000000000) &&
+        this.hacking_skill >= 1500 &&
+        this.strength >= 1200 && this.defense >= 1200 &&
+        this.dexterity >= 1200 && this.agility >= 1200) {
+        invitedFactions.push(illuminatiFac);
+    }
+
+    //Daedalus
+    var daedalusFac = Factions["Daedalus"];
+    if (!daedalusFac.isBanned && !daedalusFac.isMember && !daedalusFac.alreadyInvited &&
+        numAugmentations >= 30 &&
+        this.money.gte(100000000000) &&
+        (this.hacking_skill >= 2500 ||
+            (this.strength >= 1500 && this.defense >= 1500 &&
+             this.dexterity >= 1500 && this.agility >= 1500))) {
+        invitedFactions.push(daedalusFac);
+    }
+
+    //The Covenant
+    var covenantFac = Factions["The Covenant"];
+    if (!covenantFac.isBanned && !covenantFac.isMember && !covenantFac.alreadyInvited &&
+        numAugmentations >= 30 &&
+        this.money.gte(75000000000) &&
+        this.hacking_skill >= 850 &&
+        this.strength >= 850 &&
+        this.defense >= 850 &&
+        this.dexterity >= 850 &&
+        this.agility >= 850) {
+        invitedFactions.push(covenantFac);
+    }
+
+    //ECorp
+    var ecorpFac = Factions["ECorp"];
+    if (!ecorpFac.isBanned && !ecorpFac.isMember && !ecorpFac.alreadyInvited &&
+        this.companyName == Locations.AevumECorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push(ecorpFac);
+    }
+
+    //MegaCorp
+    var megacorpFac = Factions["MegaCorp"];
+    if (!megacorpFac.isBanned && !megacorpFac.isMember && !megacorpFac.alreadyInvited &&
+        this.companyName == Locations.Sector12MegaCorp && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push(megacorpFac);
+    }
+
+    //Bachman & Associates
+    var bachmanandassociatesFac = Factions["Bachman & Associates"];
+    if (!bachmanandassociatesFac.isBanned && !bachmanandassociatesFac.isMember &&
+        !bachmanandassociatesFac.alreadyInvited &&
+        this.companyName == Locations.AevumBachmanAndAssociates && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push(bachmanandassociatesFac);
+    }
+
+    //Blade Industries
+    var bladeindustriesFac = Factions["Blade Industries"];
+    if (!bladeindustriesFac.isBanned && !bladeindustriesFac.isMember && !bladeindustriesFac.alreadyInvited &&
+        this.companyName == Locations.Sector12BladeIndustries && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push(bladeindustriesFac);
+    }
+
+    //NWO
+    var nwoFac = Factions["NWO"];
+    if (!nwoFac.isBanned && !nwoFac.isMember && !nwoFac.alreadyInvited &&
+        this.companyName == Locations.VolhavenNWO && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push(nwoFac);
+    }
+
+    //Clarke Incorporated
+    var clarkeincorporatedFac = Factions["Clarke Incorporated"];
+    if (!clarkeincorporatedFac.isBanned && !clarkeincorporatedFac.isMember && !clarkeincorporatedFac.alreadyInvited &&
+        this.companyName == Locations.AevumClarkeIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push(clarkeincorporatedFac);
+    }
+
+    //OmniTek Incorporated
+    var omnitekincorporatedFac = Factions["OmniTek Incorporated"];
+    if (!omnitekincorporatedFac.isBanned && !omnitekincorporatedFac.isMember && !omnitekincorporatedFac.alreadyInvited &&
+        this.companyName == Locations.VolhavenOmniTekIncorporated && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push(omnitekincorporatedFac);
+    }
+
+    //Four Sigma
+    var foursigmaFac = Factions["Four Sigma"];
+    if (!foursigmaFac.isBanned && !foursigmaFac.isMember && !foursigmaFac.alreadyInvited &&
+        this.companyName == Locations.Sector12FourSigma && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push(foursigmaFac);
+    }
+
+    //KuaiGong International
+    var kuaigonginternationalFac = Factions["KuaiGong International"];
+    if (!kuaigonginternationalFac.isBanned && !kuaigonginternationalFac.isMember &&
+        !kuaigonginternationalFac.alreadyInvited &&
+        this.companyName == Locations.ChongqingKuaiGongInternational && companyRep >= CONSTANTS.CorpFactionRepRequirement) {
+        invitedFactions.push(kuaigonginternationalFac);
+    }
+
+    //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
+    var fulcrumsecrettechonologiesFac = Factions["Fulcrum Secret Technologies"];
+    var fulcrumSecretServer = AllServers[SpecialServerIps[SpecialServerNames.FulcrumSecretTechnologies]];
+    if (fulcrumSecretServer == null) {
+        console.log("ERROR: Could not find Fulcrum Secret Technologies Server");
+    } else {
+        if (!fulcrumsecrettechonologiesFac.isBanned && !fulcrumsecrettechonologiesFac.isMember &&
+            !fulcrumsecrettechonologiesFac.alreadyInvited &&
+            fulcrumSecretServer.manuallyHacked &&
+            this.companyName == Locations.AevumFulcrumTechnologies && companyRep >= 250000) {
+            invitedFactions.push(fulcrumsecrettechonologiesFac);
+        }
+    }
+
+    //BitRunners
+    var bitrunnersFac = Factions["BitRunners"];
+    var homeComp = this.getHomeComputer();
+    var bitrunnersServer = AllServers[SpecialServerIps[SpecialServerNames.BitRunnersServer]];
+    if (bitrunnersServer == null) {
+        console.log("ERROR: Could not find BitRunners Server");
+    } else if (!bitrunnersFac.isBanned && !bitrunnersFac.isMember && bitrunnersServer.manuallyHacked &&
+               !bitrunnersFac.alreadyInvited && this.hacking_skill >= 500 && homeComp.maxRam >= 128) {
+        invitedFactions.push(bitrunnersFac);
+    }
+
+    //The Black Hand
+    var theblackhandFac = Factions["The Black Hand"];
+    var blackhandServer = AllServers[SpecialServerIps[SpecialServerNames.TheBlackHandServer]];
+    if (blackhandServer == null) {
+        console.log("ERROR: Could not find The Black Hand Server");
+    } else if (!theblackhandFac.isBanned && !theblackhandFac.isMember && blackhandServer.manuallyHacked &&
+               !theblackhandFac.alreadyInvited && this.hacking_skill >= 350 && homeComp.maxRam >= 64) {
+        invitedFactions.push(theblackhandFac);
+    }
+
+    //NiteSec
+    var nitesecFac = Factions["NiteSec"];
+    var nitesecServer = AllServers[SpecialServerIps[SpecialServerNames.NiteSecServer]];
+    if (nitesecServer == null) {
+        console.log("ERROR: Could not find NiteSec Server");
+    } else if (!nitesecFac.isBanned && !nitesecFac.isMember && nitesecServer.manuallyHacked &&
+               !nitesecFac.alreadyInvited && this.hacking_skill >= 200 && homeComp.maxRam >= 32) {
+        invitedFactions.push(nitesecFac);
+    }
+
+    //Chongqing
+    var chongqingFac = Factions["Chongqing"];
+    if (!chongqingFac.isBanned && !chongqingFac.isMember && !chongqingFac.alreadyInvited &&
+        this.money.gte(20000000) && this.city == Locations.Chongqing) {
+        invitedFactions.push(chongqingFac);
+    }
+
+    //Sector-12
+    var sector12Fac = Factions["Sector-12"];
+    if (!sector12Fac.isBanned && !sector12Fac.isMember && !sector12Fac.alreadyInvited &&
+        this.money.gte(15000000) && this.city == Locations.Sector12) {
+        invitedFactions.push(sector12Fac);
+    }
+
+    //New Tokyo
+    var newtokyoFac = Factions["New Tokyo"];
+    if (!newtokyoFac.isBanned && !newtokyoFac.isMember && !newtokyoFac.alreadyInvited &&
+        this.money.gte(20000000) && this.city == Locations.NewTokyo) {
+        invitedFactions.push(newtokyoFac);
+    }
+
+    //Aevum
+    var aevumFac = Factions["Aevum"];
+    if (!aevumFac.isBanned && !aevumFac.isMember  && !aevumFac.alreadyInvited &&
+        this.money.gte(40000000) && this.city == Locations.Aevum) {
+        invitedFactions.push(aevumFac);
+    }
+
+    //Ishima
+    var ishimaFac = Factions["Ishima"];
+    if (!ishimaFac.isBanned && !ishimaFac.isMember && !ishimaFac.alreadyInvited &&
+        this.money.gte(30000000) && this.city == Locations.Ishima) {
+        invitedFactions.push(ishimaFac);
+    }
+
+    //Volhaven
+    var volhavenFac = Factions["Volhaven"];
+    if (!volhavenFac.isBanned && !volhavenFac.isMember && !volhavenFac.alreadyInvited &&
+        this.money.gte(50000000) && this.city == Locations.Volhaven) {
+        invitedFactions.push(volhavenFac);
+    }
+
+    //Speakers for the Dead
+    var speakersforthedeadFac = Factions["Speakers for the Dead"];
+    if (!speakersforthedeadFac.isBanned && !speakersforthedeadFac.isMember && !speakersforthedeadFac.alreadyInvited &&
+        this.hacking_skill >= 100 && this.strength >= 300 && this.defense >= 300 &&
+        this.dexterity >= 300 && this.agility >= 300 && this.numPeopleKilled >= 30 &&
+        this.karma <= -45 && this.companyName != Locations.Sector12CIA &&
+        this.companyName != Locations.Sector12NSA) {
+        invitedFactions.push(speakersforthedeadFac);
+    }
+
+    //The Dark Army
+    var thedarkarmyFac = Factions["The Dark Army"];
+    if (!thedarkarmyFac.isBanned && !thedarkarmyFac.isMember && !thedarkarmyFac.alreadyInvited &&
+        this.hacking_skill >= 300 && this.strength >= 300 && this.defense >= 300 &&
+        this.dexterity >= 300 && this.agility >= 300 && this.city == Locations.Chongqing &&
+        this.numPeopleKilled >= 5 && this.karma <= -45 && this.companyName != Locations.Sector12CIA &&
+        this.companyName != Locations.Sector12NSA) {
+        invitedFactions.push(thedarkarmyFac);
+    }
+
+    //The Syndicate
+    var thesyndicateFac = Factions["The Syndicate"];
+    if (!thesyndicateFac.isBanned && !thesyndicateFac.isMember && !thesyndicateFac.alreadyInvited &&
+        this.hacking_skill >= 200 && this.strength >= 200 && this.defense >= 200 &&
+        this.dexterity >= 200 && this.agility >= 200 &&
+        (this.city == Locations.Aevum || this.city == Locations.Sector12) &&
+        this.money.gte(10000000) && this.karma <= -90 &&
+        this.companyName != Locations.Sector12CIA && this.companyName != Locations.Sector12NSA) {
+        invitedFactions.push(thesyndicateFac);
+    }
+
+    //Silhouette
+    var silhouetteFac = Factions["Silhouette"];
+    if (!silhouetteFac.isBanned && !silhouetteFac.isMember && !silhouetteFac.alreadyInvited &&
+        (this.companyPosition.positionName == CompanyPositions.CTO.positionName ||
+         this.companyPosition.positionName == CompanyPositions.CFO.positionName ||
+         this.companyPosition.positionName == CompanyPositions.CEO.positionName) &&
+         this.money.gte(15000000) && this.karma <= -22) {
+        invitedFactions.push(silhouetteFac);
+    }
+
+    //Tetrads
+    var tetradsFac = Factions["Tetrads"];
+    if (!tetradsFac.isBanned && !tetradsFac.isMember && !tetradsFac.alreadyInvited &&
+        (this.city == Locations.Chongqing || this.city == Locations.NewTokyo ||
+        this.city == Locations.Ishima) && this.strength >= 75 && this.defense >= 75 &&
+        this.dexterity >= 75 && this.agility >= 75 && this.karma <= -18) {
+        invitedFactions.push(tetradsFac);
+    }
+
+    //SlumSnakes
+    var slumsnakesFac = Factions["Slum Snakes"];
+    if (!slumsnakesFac.isBanned && !slumsnakesFac.isMember && !slumsnakesFac.alreadyInvited &&
+        this.strength >= 30 && this.defense >= 30 && this.dexterity >= 30 &&
+        this.agility >= 30 && this.karma <= -9 && this.money.gte(1000000)) {
+        invitedFactions.push(slumsnakesFac);
+    }
+
+    //Netburners
+    var netburnersFac = Factions["Netburners"];
+    var totalHacknetRam = 0;
+    var totalHacknetCores = 0;
+    var totalHacknetLevels = 0;
+    for (var i = 0; i < Player.hacknetNodes.length; ++i) {
+        totalHacknetLevels += Player.hacknetNodes[i].level;
+        totalHacknetRam += Player.hacknetNodes[i].ram;
+        totalHacknetCores += Player.hacknetNodes[i].cores;
+    }
+    if (!netburnersFac.isBanned && !netburnersFac.isMember && !netburnersFac.alreadyInvited &&
+        this.hacking_skill >= 80 && totalHacknetRam >= 8 &&
+        totalHacknetCores >= 4 && totalHacknetLevels >= 100) {
+        invitedFactions.push(netburnersFac);
+    }
+
+    //Tian Di Hui
+    var tiandihuiFac = Factions["Tian Di Hui"];
+    if (!tiandihuiFac.isBanned &&  !tiandihuiFac.isMember && !tiandihuiFac.alreadyInvited &&
+        this.money.gte(1000000) && this.hacking_skill >= 50 &&
+        (this.city == Locations.Chongqing || this.city == Locations.NewTokyo ||
+         this.city == Locations.Ishima)) {
+        invitedFactions.push(tiandihuiFac);
+    }
+
+    //CyberSec
+    var cybersecFac = Factions["CyberSec"];
+    var cybersecServer = AllServers[SpecialServerIps[SpecialServerNames.CyberSecServer]];
+    if (cybersecServer == null) {
+        console.log("ERROR: Could not find CyberSec Server");
+    } else if (!cybersecFac.isBanned && !cybersecFac.isMember && cybersecServer.manuallyHacked &&
+               !cybersecFac.alreadyInvited && this.hacking_skill >= 50) {
+        invitedFactions.push(cybersecFac);
+    }
+
+    return invitedFactions;
+}
+
+
+/*************** Gang ****************/
+//Returns true if Player is in a gang and false otherwise
+PlayerObject.prototype.inGang = function() {
+    if (this.gang == null || this.gang == undefined) {return false;}
+    return (this.gang instanceof Gang);
+}
+
+/************* BitNodes **************/
+PlayerObject.prototype.setBitNodeNumber = function(n) {
+    this.bitNodeN = n;
+}
+
 /* Functions for saving and loading the Player data */
+function loadPlayer(saveString) {
+    Player  = JSON.parse(saveString, Reviver);
+
+    //Parse Decimal.js objects
+    Player.money = new Decimal(Player.money);
+    Player.total_money = new Decimal(Player.total_money);
+    Player.lifetime_money = new Decimal(Player.lifetime_money);
+}
+
 PlayerObject.prototype.toJSON = function() {
     return Generic_toJSON("PlayerObject", this);
 }
@@ -1288,4 +2196,5 @@ PlayerObject.fromJSON = function(value) {
 
 Reviver.constructors.PlayerObject = PlayerObject;
 
-Player = new PlayerObject();
+let Player = new PlayerObject();
+export {Player, loadPlayer};

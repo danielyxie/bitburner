@@ -839,8 +839,6 @@
                     </label>
 
                     <input type ="range" max="200" min="25"
-                        oninput="document.getElementById('settingsNSExecTimeRangeValLabel').innerHTML = this.value + 'ms';
-                                 Settings.CodeInstructionRunTime=this.value;"
                         step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="100">
                     </input>
                     <em id="settingsNSExecTimeRangeValLabel" style="font-style: normal;"></em>
@@ -857,8 +855,6 @@
                     </label>
 
                     <input type="range" max="100" min="20"
-                        oninput="document.getElementById('settingsNSLogRangeValLabel').innerHTML = this.value;
-                                 Settings.MaxLogCapacity=this.value;"
                         step="1" name="settingsNSLogRangeVal" id="settingsNSLogRangeVal" value="50">
                     </input>
                     <em id="settingsNSLogRangeValLabel" style="font-style: normal;"></em>
@@ -875,8 +871,6 @@
                     </label>
 
                     <input type="range" max="100" min="20"
-                        oninput="document.getElementById('settingsNSPortRangeValLabel').innerHTML = this.value;
-                                 Settings.MaxPortCapacity=this.value;"
                         step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50">
                     </input>
                     <em id="settingsNSPortRangeValLabel" style="font-style: normal;"></em>
@@ -891,8 +885,7 @@
                             and can be viewed with the 'cat' Terminal command.
                         </span>
                     </label>
-                    <input type="checkbox" name="settingsSuppressMessages" id="settingsSuppressMessages"
-                           onclick="Settings.SuppressMessages = this.checked;">
+                    <input type="checkbox" name="settingsSuppressMessages" id="settingsSuppressMessages">
                 </fieldset>
 
                 <!-- Suppress faction invites -->
@@ -903,8 +896,7 @@
                             on the screen. Your outstanding faction invites can be viewed in the 'Factions' page.
                         </span>
                     </label>
-                    <input type="checkbox" name="settingsSuppressFactionInvites" id="settingsSuppressFactionInvites"
-                           onclick="Settings.SuppressFactionInvites = this.checked;">
+                    <input type="checkbox" name="settingsSuppressFactionInvites" id="settingsSuppressFactionInvites">
                 </fieldset>
 
                 <!-- Donate button -->
@@ -924,7 +916,7 @@
                 <a id="delete-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Delete Game </a>
                 <a id="export-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Export Game </a>
                 <input type="file" id="import-game-file-selector" name="file"/>
-                <a id="import-game-link" class="a-link-button" style="display:inline-block;width:46%;" onclick="saveObject.importGame();"> Import Game </a>
+                <a id="import-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Import Game </a>
                 <a id="debug-delete-scripts-link" class="a-link-button tooltip" style="display:block;width:46%;">
                     (DEBUG) Delete Active Scripts
                     <span class="tooltiptext">
@@ -949,64 +941,5 @@
         <div class="loaderlabel">Loading Bitburner...</div>
     </div>
 </body>
-    <!--jQuery library-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-    <!-- Utils -->
-    <script src="utils/IPAddress.js"></script>
-    <script src="utils/JSONReviver.js"></script>
-    <script src="utils/StringHelperFunctions.js"></script>
-    <script src="utils/HelperFunctions.js"></script>
-    <script src="utils/DialogBox.js"></script>
-    <script src="utils/FactionInvitationBox.js"></script>
-    <script src="utils/GameOptions.js"></script>
-    <script src="utils/LogBox.js"></script>
-    <script src="utils/InfiltrationBox.js"></script>
-    <script src="utils/decimal.js"></script>
-    <script src="utils/YesNoBox.js"></script>
-    <script src="utils/numeral.min.js"></script>
-
-    <!-- Netscript -->
-    <script src="src/NetscriptWorker.js"></script>
-    <script src="src/NetscriptEvaluator.js"></script>
-    <script src="src/NetscriptEnvironment.js"></script>
-    <script src="src/NetscriptFunctions.js"></script>
-    <script src="utils/acorn.js"></script>
-
-    <!-- Main game files -->
-    <script src="src/Constants.js"></script>
-    <script src="src/HelpText.js"></script>
-    <script src="src/SpecialServerIps.js"></script>
-    <script src="src/Location.js"></script>
-    <script src="src/Script.js"></script>
-    <script src="src/Server.js"></script>
-    <script src="src/Player.js"></script>
-    <script src="src/Faction.js"></script>
-    <script src="src/FactionInfo.js"></script>
-    <script src="src/Company.js"></script>
-    <script src="src/CompanyJobApplication.js"></script>
-    <script src="src/Terminal.js"></script>
-    <script src="src/ServerPurchases.js"></script>
-    <script src="src/CreateProgram.js"></script>
-    <script src="src/Augmentations.js"></script>
-    <script src="src/Perk.js"></script>
-    <script src="src/HacknetNode.js"></script>
-    <script src="src/Crimes.js"></script>
-    <script src="src/Prestige.js"></script>
-    <script src="src/SaveObject.js"></script>
-    <script src="src/DarkWeb.js"></script>
-    <script src="src/InteractiveTutorial.js"></script>
-    <script src="src/Alias.js"></script>
-    <script src="src/Message.js"></script>
-    <script src="src/ActiveScriptsUI.js"></script>
-    <script src="src/Infiltration.js"></script>
-    <script src="src/StockMarket.js"></script>
-    <script src="src/RedPill.js"></script>
-    <script src="src/BitNode.js"></script>
-    <script src="src/Settings.js"></script>
-    <script src="src/SourceFile.js"></script>
-    <script src="src/Gang.js"></script>
-    <script src="src/Literature.js"></script>
-
-    <script src="src/engine.js"></script>
+    <script src="dist/bundle.js"></script>
 </html>

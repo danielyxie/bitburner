@@ -1,9 +1,52 @@
-function initSingularitySFFlags() {
-    //TODO
-}
+import {Augmentations, Augmentation,
+        augmentationExists, installAugmentations}   from "./Augmentations.js";
+import {Companies, Company, CompanyPosition,
+        CompanyPositions}                           from "./Company.js";
+import {CONSTANTS}                                  from "./Constants.js";
+import {Programs}                                   from "./CreateProgram.js";
+import {parseDarkwebItemPrice, DarkWebItems}        from "./DarkWeb.js";
+import {Factions, Faction, joinFaction,
+        factionExists, purchaseAugmentation}        from "./Faction.js";
+import {getCostOfNextHacknetNode,
+        purchaseHacknet}                            from "./HacknetNode.js";
+import {Locations}                                  from "./Location.js";
+import {Player}                                     from "./Player.js";
+import {Script, findRunningScript, RunningScript}   from "./Script.js";
+import {Server, getServer, AddToAllServers,
+        AllServers, processSingleServerGrowth,
+        GetServerByHostname}                        from "./Server.js";
+import {Settings}                                   from "./Settings.js";
+import {SpecialServerIps}                           from "./SpecialServerIps.js";
+import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
+        initStockMarket, initSymbolToStockMap, stockMarketCycle, buyStock,
+        sellStock, updateStockPrices, displayStockMarketContent,
+        updateStockTicker, updateStockPlayerPosition,
+        Stock}                                      from "./StockMarket.js";
+
+import {WorkerScript, workerScripts,
+        killWorkerScript, NetscriptPorts}           from "./NetscriptWorker.js";
+import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
+        scriptCalculateHackingChance, scriptCalculateHackingTime,
+        scriptCalculateExpGain, scriptCalculatePercentMoneyHacked,
+        scriptCalculateGrowTime, scriptCalculateWeakenTime} from "./NetscriptEvaluator.js";
+import {Environment}                                from "./NetscriptEnvironment.js";
+
+import Decimal                                      from '../utils/decimal.js';
+import {printArray, powerOfTwo}                     from "../utils/HelperFunctions.js";
+import {createRandomIp}                             from "../utils/IPAddress.js";
+import {formatNumber, isString}                     from "../utils/StringHelperFunctions.js";
 
 var hasSingularitySF = false;
 var singularitySFLvl = 1;
+
+function initSingularitySFFlags() {
+    for (var i = 0; i < Player.sourceFiles.length; ++i) {
+        if (Player.sourceFiles[i].n === 4) {
+            hasSingularitySF = true;
+            singularitySFLvl = Player.sourceFiles[i].lvl;
+        }
+    }
+}
 
 function NetscriptFunctions(workerScript) {
     return {
@@ -215,6 +258,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
             }
             if (!Player.hasProgram(Programs.BruteSSHProgram)) {
+                workerScript.scriptRef.log("You do not have the BruteSSH.exe program!");
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the BruteSSH.exe program!");
             }
             if (!server.sshPortOpen) {
@@ -875,21 +919,40 @@ function NetscriptFunctions(workerScript) {
 
         /* Singularity Functions */
         universityCourse(universityName, className) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run universityCourse(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return false;
+                }
+            }
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
                 workerScript.scriptRef.log(txt);
             }
+
             var costMult, expMult;
             switch(universityName.toLowerCase()) {
                 case Locations.AevumSummitUniversity.toLowerCase():
+                    if (Player.city != Locations.Aevum) {
+                        workerScript.scriptRef.log("ERROR: You cannot study at Summit University because you are not in Aevum. universityCourse() failed");
+                        return false;
+                    }
                     costMult = 4;
                     expMult = 3;
                     break;
                 case Locations.Sector12RothmanUniversity.toLowerCase():
+                    if (Player.city != Locations.Sector12) {
+                        workerScript.scriptRef.log("ERROR: You cannot study at Rothman University because you are not in Sector-12. universityCourse() failed");
+                        return false;
+                    }
                     costMult = 3;
                     expMult = 2;
                     break;
                 case Locations.VolhavenZBInstituteOfTechnology.toLowerCase():
+                    if (Player.city != Locations.Aevum) {
+                        workerScript.scriptRef.log("ERROR: You cannot study at ZB Institute of Technology because you are not in Volhaven. universityCourse() failed");
+                        return false;
+                    }
                     costMult = 5;
                     expMult = 4;
                     break;
@@ -898,48 +961,714 @@ function NetscriptFunctions(workerScript) {
                     return false;
             }
 
+            var task;
             switch(className.toLowerCase()) {
                 case "Study Computer Science".toLowerCase():
+                    task = CONSTANTS.ClassStudyComputerScience;
                     break;
                 case "Data Structures".toLowerCase():
+                    task = CONSTANTS.ClassDataStructures;
                     break;
                 case "Networks".toLowerCase():
+                    task = CONSTANTS.ClassNetworks;
                     break;
                 case "Algorithms".toLowerCase():
+                    task = CONSTANTS.ClassAlgorithms;
                     break;
                 case "Management".toLowerCase():
+                    task = CONSTANTS.ClassManagement;
                     break;
                 case "Leadership".toLowerCase():
+                    task = CONSTANTS.ClassLeadership;
                     break;
                 default:
                     workerScript.scriptRef.log("Invalid class name: " + className + ". universityCourse() failed");
+                    return false;
+            }
+            Player.startClass(costMult, expMult, task);
+            workerScript.scriptRef.log("Started " + task + " at " + universityName);
+            return true;
+        },
+
+        gymWorkout(gymName, stat) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run gymWorkout(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return false;
+                }
+            }
+            if (Player.isWorking) {
+                var txt = Player.singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+            var costMult, expMult;
+            switch(gymName.toLowerCase()) {
+                case Locations.AevumCrushFitnessGym.toLowerCase():
+                    if (Player.city != Locations.Aevum) {
+                        workerScript.scriptRef.log("ERROR: You cannot workout at Crush Fitness because you are not in Aevum. gymWorkout() failed");
+                        return false;
+                    }
+                    costMult = 2;
+                    expMult = 1.5;
                     break;
+                case Locations.AevumSnapFitnessGym.toLowerCase():
+                    if (Player.city != Locations.Aevum) {
+                        workerScript.scriptRef.log("ERROR: You cannot workout at Snap Fitness because you are not in Aevum. gymWorkout() failed");
+                        return false;
+                    }
+                    costMult = 6;
+                    expMult = 4;
+                    break;
+                case Locations.Sector12IronGym.toLowerCase():
+                    if (Player.city != Locations.Sector12) {
+                        workerScript.scriptRef.log("ERROR: You cannot workout at Iron Gym because you are not in Sector-12. gymWorkout() failed");
+                        return false;
+                    }
+                    costMult = 1;
+                    expMult = 1;
+                    break;
+                case Locations.Sector12PowerhouseGym.toLowerCase():
+                    if (Player.city != Locations.Sector12) {
+                        workerScript.scriptRef.log("ERROR: You cannot workout at Powerhouse Gym because you are not in Sector-12. gymWorkout() failed");
+                        return false;
+                    }
+                    costMult = 10;
+                    expMult = 7.5;
+                    break;
+                default:
+                    workerScript.scriptRef.log("Invalid gym name: " + gymName + ". gymWorkout() failed");
+                    return false;
+            }
+
+            switch(stat.toLowerCase()) {
+                case "strength".toLowerCase():
+                case "str".toLowerCase():
+                    Player.startClass(costMult, expMult, CONSTANTS.ClassGymStrength);
+                    break;
+                case "defense".toLowerCase():
+                case "def".toLowerCase():
+                    Player.startClass(costMult, expMult, CONSTANTS.ClassGymDefense);
+                    break;
+                case "dexterity".toLowerCase():
+                case "dex".toLowerCase():
+                    Player.startClass(costMult, expMult, CONSTANTS.ClassGymDexterity);
+                    break;
+                case "agility".toLowerCase():
+                case "agi".toLowerCase():
+                    Player.startClass(costMult, expMult, CONSTANTS.ClassGymAgility);
+                    break;
+                default:
+                    workerScript.scriptRef.log("Invalid stat: " + stat + ". gymWorkout() failed");
+                    return false;
+            }
+            workerScript.scriptRef.log("Started training " + stat + " at " + gymName);
+            return true;
+        },
+
+        travelToCity(cityname) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run travelToCity(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return false;
+                }
+            }
+
+            switch(cityname) {
+                case Locations.Aevum:
+                case Locations.Chongqing:
+                case Locations.Sector12:
+                case Locations.NewTokyo:
+                case Locations.Ishima:
+                case Locations.Volhaven:
+                    Player.loseMoney(200000);
+                    Player.city = cityname;
+                    workerScript.scriptRef.log("Traveled to " + cityname);
+                    return true;
+                default:
+                    workerScript.scriptRef.log("ERROR: Invalid city name passed into travelToCity().");
+                    return false;
             }
         },
-        //gymWorkout(gymName, stat);
 
-        //travelToCity(cityname);
+        purchaseTor() {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run purchaseTor(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return false;
+                }
+            }
 
-        //purchaseTor();
+            if (SpecialServerIps["Darkweb Server"] != null) {
+                workerScript.scriptRef.log("You already have a TOR router! purchaseTor() failed");
+                return false;
+            }
 
-        //homeComp.upgradeRam();
-        //homeComp.getUpgradeRamCost();
+            if (Player.money.lt(CONSTANTS.TorRouterCost)) {
+                workerScript.scriptRef.log("ERROR: You cannot afford to purchase a Tor router. purchaseTor() failed");
+                return false;
+            }
+            Player.loseMoney(CONSTANTS.TorRouterCost);
 
-        //workForCompany();
-        //applyToCompany(companyName, field);
-        //getCompanyRep(companyName);
+            var darkweb = new Server(createRandomIp(), "darkweb", "", false, false, false, 1);
+            AddToAllServers(darkweb);
+            SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
 
-        //checkFactionInvitations();
-        //joinFaction(name);
-        //workForFaction(facName, type);
-        //getFactionRep(name);
+            document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
 
-        //createProgram();
+            Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
+            darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);
+            workerScript.scriptRef.log("You have purchased a Tor router!");
+            return true;
+        },
+        purchaseProgram(programName) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run purchaseProgram(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return false;
+                }
+            }
 
-        //getAugmentationCost(name);
-        //purchaseAugmentation(faction, name);
-        //installAugmentations();
+            if (SpecialServerIps["Darkweb Server"] == null) {
+                workerScript.scriptRef.log("ERROR: You do not have  TOR router. purchaseProgram() failed.");
+                return false;
+            }
 
+            switch(programName.toLowerCase()) {
+                case Programs.BruteSSHProgram.toLowerCase():
+                    var price = parseDarkwebItemPrice(DarkWebItems.BruteSSHProgram);
+                    if (price > 0 && Player.money.gt(price)) {
+                        Player.loseMoney(price);
+                        Player.getHomeComputer().programs.push(Programs.BruteSSHProgram);
+                        workerScript.scriptRef.log("You have purchased the BruteSSH.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                    }
+                    return true;
+                case Programs.FTPCrackProgram.toLowerCase():
+                    var price = parseDarkwebItemPrice(DarkWebItems.FTPCrackProgram);
+                    if (price > 0 && Player.money.gt(price)) {
+                        Player.loseMoney(price);
+                        Player.getHomeComputer().programs.push(Programs.FTPCrackProgram);
+                        workerScript.scriptRef.log("You have purchased the FTPCrack.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                    }
+                    return true;
+                case Programs.RelaySMTPProgram.toLowerCase():
+                    var price = parseDarkwebItemPrice(DarkWebItems.RelaySMTPProgram);
+                    if (price > 0 && Player.money.gt(price)) {
+                        Player.loseMoney(price);
+                        Player.getHomeComputer().programs.push(Programs.RelaySMTPProgram);
+                        workerScript.scriptRef.log("You have purchased the relaySMTP.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                    }
+                    return true;
+                case Programs.HTTPWormProgram.toLowerCase():
+                    var price = parseDarkwebItemPrice(DarkWebItems.HTTPWormProgram);
+                    if (price > 0 && Player.money.gt(price)) {
+                        Player.loseMoney(price);
+                        Player.getHomeComputer().programs.push(Programs.HTTPWormProgram);
+                        workerScript.scriptRef.log("You have purchased the HTTPWorm.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                    }
+                    return true;
+                case Programs.SQLInjectProgram.toLowerCase():
+                    var price = parseDarkwebItemPrice(DarkWebItems.SQLInjectProgram);
+                    if (price > 0 && Player.money.gt(price)) {
+                        Player.loseMoney(price);
+                        Player.getHomeComputer().programs.push(Programs.SQLInjectProgram);
+                        workerScript.scriptRef.log("You have purchased the SQLInject.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                    }
+                    return true;
+                case Programs.DeepscanV1.toLowerCase():
+                    var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV1Program);
+                    if (price > 0 && Player.money.gt(price)) {
+                        Player.loseMoney(price);
+                        Player.getHomeComputer().programs.push(Programs.DeepscanV1);
+                        workerScript.scriptRef.log("You have purchased the DeepscanV1.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                    }
+                    return true;
+                case Programs.DeepscanV2.toLowerCase():
+                    var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV2Program);
+                    if (price > 0 && Player.money.gt(price)) {
+                        Player.loseMoney(price);
+                        Player.getHomeComputer().programs.push(Programs.DeepscanV2);
+                        workerScript.scriptRef.log("You have purchased the DeepscanV2.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                    }
+                    return true;
+                default:
+                    workerScript.scriptRef.log("ERROR: Invalid program passed into purchaseProgram().");
+                    return false;
+            }
+            return true;
+        },
+        upgradeHomeRam() {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run upgradeHomeRam(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
 
+            //Calculate how many times ram has been upgraded (doubled)
+            var currentRam = Player.getHomeComputer().maxRam;
+            var numUpgrades = Math.log2(currentRam);
+
+            //Calculate cost
+            //Have cost increase by some percentage each time RAM has been upgraded
+            var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome;
+            var mult = Math.pow(1.55, numUpgrades);
+            cost = cost * mult;
+
+            if (Player.money.lt(cost)) {
+                workerScript.scriptRef.log("You do not have enough money to purchase additional RAM for your home computer");
+                return false;
+            }
+
+            var homeComputer = Player.getHomeComputer();
+            homeComputer.maxRam *= 2;
+
+            Player.loseMoney(cost);
+
+            workerScript.scriptRef.log("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
+            return true;
+        },
+        getUpgradeHomeRamCost() {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getUpgradeHomeRamCost(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            //Calculate how many times ram has been upgraded (doubled)
+            var currentRam = Player.getHomeComputer().maxRam;
+            var numUpgrades = Math.log2(currentRam);
+
+            //Calculate cost
+            //Have cost increase by some percentage each time RAM has been upgraded
+            var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome;
+            var mult = Math.pow(1.55, numUpgrades);
+            return cost * mult;
+        },
+        workForCompany() {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run workForCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            if (Player.companyPosition == "" || !(Player.companyPosition instanceof CompanyPosition)) {
+                workerScript.scriptRef.log("ERROR: workForCompany() failed because you do not have a job");
+                return false;
+            }
+
+            if (Player.isWorking) {
+                var txt = Player.singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+
+            if (Player.companyPosition.isPartTimeJob()) {
+                Player.startWorkPartTime();
+            } else {
+                Player.startWork();
+            }
+            workerScript.scriptRef.log("Began working at " + Player.companyName + " as a " + Player.companyPosition.positionName);
+            return true;
+        },
+        applyToCompany(companyName, field) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run applyToCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            Player.location = companyName;
+            var res;
+            switch (field.toLowerCase()) {
+                case "software":
+                    res = Player.applyForSoftwareJob(true);
+                    break;
+                case "software consultant":
+                    res = Player.applyForSoftwareConsultantJob(true);
+                    break;
+                case "it":
+                    res = Player.applyForItJob(true);
+                    break;
+                case "security engineer":
+                    res = Player.applyForSecurityEngineerJob(true);
+                    break;
+                case "network engineer":
+                    res = Player.applyForNetworkEngineerJob(true);
+                    break;
+                case "business":
+                    res = Player.applyForBusinessJob(true);
+                    break;
+                case "business consultant":
+                    res = Player.applyForBusinessConsultantJob(true);
+                    break;
+                case "security":
+                    res = Player.applyForSecurityJob(true);
+                    break;
+                case "agent":
+                    res = Player.applyForAgentJob(true);
+                    break;
+                case "employee":
+                    res = Player.applyForEmployeeJob(true);
+                    break;
+                case "part-time employee":
+                    res = Player.applyForPartTimeEmployeeJob(true);
+                    break;
+                case "waiter":
+                    res = Player.applyForWaiterJob(true);
+                    break;
+                case "part-time waiter":
+                    res = Player.applyForPartTimeWaiterJob(true);
+                    break;
+                default:
+                    workerScript.scriptRef.log("ERROR: Invalid job passed into applyToCompany: " + field + ". applyToCompany() failed");
+                    return false;
+            }
+            //The Player object's applyForJob function can return string with special error messages
+            if (isString(res)) {
+                workerScript.scriptRef.log(res);
+                return false;
+            }
+            if (res) {
+                workerScript.scriptRef.log("You were offered a new job at " + companyName + " as a " + Player.companyPosition.positionName);
+            } else {
+                workerScript.scriptRef.log("You failed to get a new job/promotion at " + companyName + " in the " + field + " field.");
+            }
+            return res;
+        },
+        getCompanyRep(companyName) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getCompanyRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            var company = Companies[companyName];
+            if (company === null || !(company instanceof Company)) {
+                workerScript.scriptRef.log("ERROR: Invalid companyName passed into getCompanyRep(): " + companyName);
+                return -1;
+            }
+            return company.playerReputation;
+        },
+        checkFactionInvitations() {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run checkFactionInvitations(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+            //Make a copy of Player.factionInvitations
+            return Player.factionInvitations.slice();
+        },
+        joinFaction(name) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run joinFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            if (!factionExists(name)) {
+                workerScript.scriptRef.log("ERROR: Faction specified in joinFaction() does not exist.");
+                return false;
+            }
+
+            if (!Player.factionInvitations.includes(name)) {
+                workerScript.scriptRef.log("ERROR: Cannot join " + name + " Faction because you have not been invited. joinFaction() failed");
+                return false;
+            }
+
+            var index = Player.factionInvitations.indexOf(name);
+            if (index === -1) {
+                //Redundant and should never happen...
+                workerScript.scriptRef.log("ERROR: Cannot join " + name + " Faction because you have not been invited. joinFaction() failed");
+                return false;
+            }
+            Player.factionInvitations.splice(index, 1);
+            var fac = Factions[name];
+            joinFaction(fac);
+            workerScript.scriptRef.log("Joined the " + name + " faction.");
+            return true;
+        },
+        workForFaction(name, type) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run workForFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            if (!factionExists(name)) {
+                workerScript.scriptRef.log("ERROR: Faction specified in workForFaction() does not exist.");
+                return false;
+            }
+
+            if (Player.isWorking) {
+                var txt = Player.singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+
+            var fac = Factions[name];
+            //Arrays listing factions that allow each time of work
+            var hackAvailable = ["Illuminati", "Daedalus", "The Covenant", "ECorp", "MegaCorp",
+                                 "Bachman & Associates", "Blade Industries", "NWO", "Clarke Incorporated",
+                                 "OmniTek Incorporated", "Four Sigma", "KuaiGong International",
+                                 "Fulcrum Secret Technologies", "BitRunners", "The Black Hand",
+                                 "NiteSec", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
+                                 "Ishima", "Volhaven", "Speakers for the Dead", "The Dark Army",
+                                 "The Syndicate", "Silhouette", "Netburners", "Tian Di Hui", "CyberSec"];
+            var fdWkAvailable = ["Illuminati", "Daedalus", "The Covenant", "ECorp", "MegaCorp",
+                                 "Bachman & Associates", "Blade Industries", "NWO", "Clarke Incorporated",
+                                 "OmniTek Incorporated", "Four Sigma", "KuaiGong International",
+                                 "The Black Hand", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
+                                 "Ishima", "Volhaven", "Speakers for the Dead", "The Dark Army",
+                                 "The Syndicate", "Silhouette", "Tetrads", "Slum Snakes"];
+            var scWkAvailable = ["ECorp", "MegaCorp",
+                                 "Bachman & Associates", "Blade Industries", "NWO", "Clarke Incorporated",
+                                 "OmniTek Incorporated", "Four Sigma", "KuaiGong International",
+                                 "Fulcrum Secret Technologies", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
+                                 "Ishima", "Volhaven", "Speakers for the Dead",
+                                 "The Syndicate", "Tetrads", "Slum Snakes", "Tian Di Hui"];
+
+            switch (type.toLowerCase()) {
+                case "hacking":
+                case "hacking contracts":
+                case "hackingcontracts":
+                    if (!hackAvailable.includes(fac.name)) {
+                        workerScript.scriptRef.log("ERROR: Cannot carry out hacking contracts for " + fac.name + ". workForFaction() failed");
+                        return false;
+                    }
+                    Player.startFactionHackWork(fac);
+                    workerScript.scriptRef.log("Started carrying out hacking contracts for " + fac.name);
+                    return true;
+                case "field":
+                case "fieldwork":
+                case "field work":
+                    if (!fdWkAvailable.includes(fac.name)) {
+                        workerScript.scriptRef.log("ERROR: Cannot carry out field missions for " + fac.name + ". workForFaction() failed");
+                        return false;
+                    }
+                    Player.startFactionFieldWork(fac);
+                    workerScript.scriptRef.log("Started carrying out field missions for " + fac.name);
+                    return true;
+                case "security":
+                case "securitywork":
+                case "security work":
+                    if (!scWkAvailable.includes(fac.name)) {
+                        workerScript.scriptRef.log("ERROR: Cannot serve as security detail for " + fac.name + ". workForFaction() failed");
+                        return false;
+                    }
+                    Player.startFactionSecurityWork(fac);
+                    workerScript.scriptRef.log("Started serving as security details for " + fac.name);
+                    return true;
+                default:
+                    workerScript.scriptRef.log("ERROR: Invalid work type passed into workForFaction(): " + type);
+            }
+        },
+        getFactionRep(name) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getFactionRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return -1;
+                }
+            }
+
+            if (!factionExists(name)) {
+                workerScript.scriptRef.log("ERROR: Faction specified in getFactionRep() does not exist.");
+                return -1;
+            }
+
+            return Factions[name].playerReputation;
+        },
+        createProgram(name) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run createProgram(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            if (Player.isWorking) {
+                var txt = Player.singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+
+            switch(name.toLowerCase()) {
+                case Programs.NukeProgram.toLowerCase():
+                    Player.startCreateProgramWork(Programs.NukeProgram, CONSTANTS.MillisecondsPerFiveMinutes, 1);
+                    break;
+                case Programs.BruteSSHProgram.toLowerCase():
+                    if (Player.hacking_skill < 50) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create BruteSSH (level 50 req)");
+                        return false;
+                    }
+                    Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerFiveMinutes * 2, 50);
+                    break;
+                case Programs.FTPCrackProgram.toLowerCase():
+                    if (Player.hacking_skill < 100) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create FTPCrack (level 100 req)");
+                        return false;
+                    }
+                    Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHalfHour, 100);
+                    break;
+                case Programs.RelaySMTPProgram.toLowerCase():
+                    if (Player.hacking_skill < 250) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create relaySMTP (level 250 req)");
+                        return false;
+                    }
+                    Player.startCreateProgramWork(Programs.RelaySMTPProgram, CONSTANTS.MillisecondsPer2Hours, 250);
+                    break;
+                case Programs.HTTPWormProgram.toLowerCase():
+                    if (Player.hacking_skill < 500) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create HTTPWorm (level 500 req)");
+                        return false;
+                    }
+                    Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer4Hours, 500);
+                    break;
+                case Programs.SQLInjectProgram.toLowerCase():
+                    if (Player.hacking_skill < 750) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create SQLInject (level 750 req)");
+                        return false;
+                    }
+                    Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer8Hours, 750);
+                    break;
+                case Programs.DeepscanV1.toLowerCase():
+                    if (Player.hacking_skill < 75) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create DeepscanV1 (level 75 req)");
+                        return false;
+                    }
+                    Player.startCreateProgramWork(Programs.DeepscanV1, CONSTANTS.MillisecondsPerQuarterHour, 75);
+                    break;
+                case Programs.DeepscanV2.toLowerCase():
+                    if (Player.hacking_skill < 400) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create DeepscanV2 (level 400 req)");
+                        return false;
+                    }
+                    Player.startCreateProgramWork(Programs.DeepscanV2, CONSTANTS.MillisecondsPer2Hours, 400);
+                    break;
+                case Programs.ServerProfiler.toLowerCase():
+                    if (Player.hacking_skill < 75) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create ServerProfiler (level 75 req)");
+                        return false;
+                    }
+                    Player.startCreateProgramWork(Programs.ServerProfiler, CONSTANTS.MillisecondsPerHalfHour, 75);
+                    break;
+                case Programs.AutoLink.toLowerCase():
+                    if (Player.hacking_skill < 25) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create AutoLink (level 25 req)");
+                        return false;
+                    }
+                    Player.startCreateProgramWork(Programs.AutoLink, CONSTANTS.MillisecondsPerQuarterHour, 25);
+                    break;
+                default:
+                    workerScript.scriptRef.log("ERROR: createProgram() failed because the specified program does not exist: " + name);
+                    return false;
+            }
+            workerScript.scriptRef.log("Began creating program: " + name);
+            return true;
+        },
+        getAugmentationCost(name) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getAugmentationCost(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            if (!augmentationExists(name)) {
+                workerScript.scriptRef.log("ERROR: getAugmentationCost() failed. Invalid Augmentation name passed in (note: this is case-sensitive): " + name);
+                return [-1, -1];
+            }
+
+            var aug = Augmentations[name];
+            return [aug.baseRepRequirement, aug.baseCost];
+        },
+        purchaseAugmentation(faction, name) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run purchaseAugmentation(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            var fac = Factions[faction];
+            if (fac === null || !(fac instanceof Faction)) {
+                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because of invalid faction name: " + faction);
+                return false;
+            }
+
+            if (!fac.augmentations.includes(name)) {
+                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because the faction " + faction + " does not contain the " + name + " augmentation");
+                return false;
+            }
+
+            var aug = Augmentations[name];
+            if (aug === null || !(aug instanceof Augmentation)) {
+                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because of invalid augmentation name: " + name);
+                return false;
+            }
+
+            for (var j = 0; j < Player.queuedAugmentations.length; ++j) {
+                if (Player.queuedAugmentations[j].name === aug.name) {
+                    workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                    return false;
+                }
+            }
+            for (var j = 0; j < Player.augmentations.length; ++j) {
+                if (Player.augmentations[j].name === aug.name) {
+                    workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                    return false;
+                }
+            }
+
+            var res = purchaseAugmentation(aug, fac, true);
+            workerScript.scriptRef.log(res);
+            if (isString(res) && res.startsWith("You purchased")) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        installAugmentations() {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run installAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            if (Player.queuedAugmentations.length === 0) {
+                workerScript.scriptRef.log("ERROR: installAugmentations() failed because you do not have any Augmentations to be installed");
+                return false;
+            }
+            workerScript.scriptRef.log("Installing Augmentations. This will cause this script to be killed");
+            installAugmentations();
+            return true;
+        }
     }
 }
+
+export {NetscriptFunctions, initSingularitySFFlags};
