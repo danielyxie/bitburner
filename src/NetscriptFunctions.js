@@ -1,7 +1,7 @@
 import {Augmentations, Augmentation,
         augmentationExists, installAugmentations}   from "./Augmentations.js";
 import {Companies, Company, CompanyPosition,
-        CompanyPositions}                           from "./Company.js";
+        CompanyPositions, companyExists}            from "./Company.js";
 import {CONSTANTS}                                  from "./Constants.js";
 import {Programs}                                   from "./CreateProgram.js";
 import {parseDarkwebItemPrice, DarkWebItems}        from "./DarkWeb.js";
@@ -1035,6 +1035,14 @@ function NetscriptFunctions(workerScript) {
                     costMult = 10;
                     expMult = 7.5;
                     break;
+                case Locations.VolhavenMilleniumFitnessGym:
+                    if (Player.city != Locations.Volhaven) {
+                        workerScript.scriptRef.log("ERROR: You cannot workout at Millenium Fitness Gym because you are not in Volhaven. gymWorkout() failed");
+                        return false;
+                    }
+                    costMult = 3;
+                    expMult = 2.5;
+                    break;
                 default:
                     workerScript.scriptRef.log("Invalid gym name: " + gymName + ". gymWorkout() failed");
                     return false;
@@ -1300,6 +1308,11 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
+            if (!companyExists(companyName)) {
+                workerScript.scriptRef.log("ERROR: applyToCompany failed because specified company " + companyName + " does not exist.");
+                return false;
+            }
+
             Player.location = companyName;
             var res;
             switch (field.toLowerCase()) {
@@ -1426,6 +1439,11 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
+            if (!Player.factions.includes(name)) {
+                workerScript.scriptRef.log("ERROR: workForFaction() failed because you are not a member of " + name);
+                return false;
+            }
+
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
                 workerScript.scriptRef.log(txt);
@@ -1487,6 +1505,7 @@ function NetscriptFunctions(workerScript) {
                 default:
                     workerScript.scriptRef.log("ERROR: Invalid work type passed into workForFaction(): " + type);
             }
+            return true;
         },
         getFactionRep(name) {
             if (Player.bitNodeN != 4) {
@@ -1642,6 +1661,11 @@ function NetscriptFunctions(workerScript) {
                     workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
                     return false;
                 }
+            }
+
+            if (fac.playerReputation < aug.baseRepRequirement) {
+                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you do not have enough reputation with " + fac.name);
+                return false;
             }
 
             var res = purchaseAugmentation(aug, fac, true);
