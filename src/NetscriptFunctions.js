@@ -949,7 +949,7 @@ function NetscriptFunctions(workerScript) {
                     expMult = 2;
                     break;
                 case Locations.VolhavenZBInstituteOfTechnology.toLowerCase():
-                    if (Player.city != Locations.Aevum) {
+                    if (Player.city != Locations.Volhaven) {
                         workerScript.scriptRef.log("ERROR: You cannot study at ZB Institute of Technology because you are not in Volhaven. universityCourse() failed");
                         return false;
                     }
@@ -1244,7 +1244,7 @@ function NetscriptFunctions(workerScript) {
             cost = cost * mult;
 
             if (Player.money.lt(cost)) {
-                workerScript.scriptRef.log("You do not have enough money to purchase additional RAM for your home computer");
+                workerScript.scriptRef.log("ERROR: upgradeHomeRam() failed because you don't have enough money");
                 return false;
             }
 
@@ -1309,7 +1309,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (!companyExists(companyName)) {
-                workerScript.scriptRef.log("ERROR: applyToCompany failed because specified company " + companyName + " does not exist.");
+                workerScript.scriptRef.log("ERROR: applyToCompany() failed because specified company " + companyName + " does not exist.");
                 return false;
             }
 

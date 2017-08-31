@@ -5,7 +5,8 @@ import {Player}                                 from "./Player.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {clearEventListeners, getRandomInt}      from "../utils/HelperFunctions.js";
-import {Reviver}                                from "../utils/JSONReviver.js";
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 
 /* StockMarket.js */
@@ -78,7 +79,6 @@ function initStockSymbols() {
     StockSymbols["Sigma Cosmetics"]                         = "SGC";
     StockSymbols["Joes Guns"]                               = "JGN";
     StockSymbols["Catalyst Ventures"]                       = "CTYS";
-    StockSymbols["Taiyang Digital"]                         = "TAI";
     StockSymbols["Microdyne Technologies"]                  = "MDYN";
     StockSymbols["Titan Laboratories"]                      = "TITN";
 }
