@@ -20,7 +20,8 @@ import {SpecialServerIps, SpecialServerIpsMap,
         prestigeSpecialServerIps,
         SpecialServerNames}                     from "./SpecialServerIps.js";
 import {initStockMarket, initSymbolToStockMap,
-        stockMarketContentCreated}              from "./StockMarket.js";
+        stockMarketContentCreated,
+        setStockMarketContentCreated}           from "./StockMarket.js";
 import {Terminal, postNetburnerText}            from "./Terminal.js";
 import Decimal                                  from '../utils/decimal.js';
 
@@ -99,7 +100,7 @@ function prestigeAugmentation() {
     if (Player.hasWseAccount) {
         initStockMarket();
         initSymbolToStockMap();
-        stockMarketContentCreated = false;
+        setStockMarketContentCreated(false);
         var stockMarketList = document.getElementById("stock-market-list");
         while(stockMarketList.firstChild) {
             stockMarketList.removeChild(stockMarketList.firstChild);

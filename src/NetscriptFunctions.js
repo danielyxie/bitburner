@@ -5,6 +5,7 @@ import {Companies, Company, CompanyPosition,
 import {CONSTANTS}                                  from "./Constants.js";
 import {Programs}                                   from "./CreateProgram.js";
 import {parseDarkwebItemPrice, DarkWebItems}        from "./DarkWeb.js";
+import {Engine}                                     from "./engine.js";
 import {Factions, Faction, joinFaction,
         factionExists, purchaseAugmentation}        from "./Faction.js";
 import {getCostOfNextHacknetNode,
