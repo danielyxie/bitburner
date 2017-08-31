@@ -349,6 +349,10 @@ function updateStockPrices() {
     }
 }
 
+function setStockMarketContentCreated(b) {
+    stockMarketContentCreated = b;
+}
+
 var stockMarketContentCreated = false;
 function displayStockMarketContent() {
     if (Player.hasWseAccount == null) {Player.hasWseAccount = false;}
@@ -607,4 +611,5 @@ function updateStockPlayerPosition(stock) {
 export {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         initStockMarket, initSymbolToStockMap, stockMarketCycle, buyStock,
         sellStock, updateStockPrices, displayStockMarketContent,
-        updateStockTicker, updateStockPlayerPosition, loadStockMarket};
+        updateStockTicker, updateStockPlayerPosition, loadStockMarket,
+        setStockMarketContentCreated};

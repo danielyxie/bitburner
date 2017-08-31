@@ -11,7 +11,7 @@ import {factionInvitationBoxCreate}             from "../utils/FactionInvitation
 import {clearEventListeners}                    from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {formatNumber, isPositiveNumber}         from "../utils/StringHelperFunctions.js";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
 

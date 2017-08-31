@@ -17,7 +17,7 @@ import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker.js";
 import {Player}                             from "./Player.js";
 import {hackWorldDaemon}                    from "./RedPill.js";
 import {findRunningScript, RunningScript,
-        AllServersMap}                      from "./Script.js";
+        AllServersMap, Script}              from "./Script.js";
 import {AllServers, GetServerByHostname,
         getServer, Server}                  from "./Server.js";
 import {SpecialServerIps,
