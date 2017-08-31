@@ -3068,6 +3068,140 @@ let CONSTANTS = {
                            "The code above will use the getServerMoneyAvailable() function to check how much money there is on the 'foodnstuff' server. " +
                            "If there is more than $200,000, then it will try to hack that server. If there is $200,000 or less on the server, " +
                            "then the code will call grow('foodnstuff') instead and add more money to the server.<br><br>",
+    TutorialSingularityFunctionsText:   "<u><h1>Singularity Functions</h1></u><br>" +
+                                        "The Singularity Functions are a special set of Netscript functions that are unlocked in BitNode-4. " +
+                                        "These functions allow you to control many additional aspects of the game through scripts, such as " +
+                                        "working for factions/companies, purchasing/installing Augmentations, and creating programs.<br><br>" +
+                                        "If you are in BitNode-4, then you will automatically have access to all of these functions. " +
+                                        "You can use the Singularity Functions in other BitNodes if and only if you have the Source-File " +
+                                        "for BitNode-4 (aka Source-File 4). Each level of Source-File 4 will open up additional Singularity " +
+                                        "Functions that you can use in other BitNodes. If your Source-File 4 is upgraded all the way to level 3, " +
+                                        "then you will be able to access all of the Singularity Functions.<br><br>" +
+                                        "Note that Singularity Functions require a lot of RAM outside of BitNode-4 (their RAM costs are multiplied by " +
+                                        "10 if you are not in BitNode-4).<br><br>" +
+                                        "<i>universityCourse(universityName, courseName)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function will automatically set you to start taking a course at a university. If you are already " +
+                                        "in the middle of some 'working' action (such as working at a company, for a faction, or on a program), " +
+                                        "then running this function will automatically cancel that action and give you your earnings.<br><br>" +
+                                        "The first argument must be a string with the name of the university. The names are NOT case-sensitive. " +
+                                        "Note that you must be in the correct city for whatever university you specify. The three universities are:<br><br>" +
+                                        "Summit University<br>Rothman University<br>ZB Institute of Technology<br><br>" +
+                                        "The second argument must be a string with the name of the course you are taking. These names are NOT case-sensitive. " +
+                                        "The available courses are:<br><br>" +
+                                        "Study Computer Science<br>Data Structures<br>Networks<br>Algorithms<br>Management<br>Leadership<br><br>" +
+                                        "The cost and experience gains for all of these universities and classes are the same as if you were to manually " +
+                                        "visit and take these classes.<br><br>" +
+                                        "This function will return true if you successfully start taking the course, and false otherwise.<br><br>" +
+                                        "<i>gymWorkout(gymName, stat)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function will automatically set you to start working out at a gym to train a particular stat. If you are " +
+                                        "already in the middle of some 'working' action (such as working at a company, for a faction, or on a program), then " +
+                                        "running this function will automatically cancel that action and give you your earnings.<br><br>" +
+                                        "The first argument must be a string with the name of the gym. The names are NOT case-sensitive. Note that you must " +
+                                        "be in the correct city for whatever gym you specify. The available gyms are:<br><br>" +
+                                        "Crush Fitness Gym<br>Snap Fitness Gym<br>Iron Gym<br>Powerhouse Gym<br>Millenium Fitness Gym<br><br>" +
+                                        "The second argument must be a string with the stat you want to work out. These are NOT case-sensitive. " +
+                                        "The valid stats are:<br><br>strength OR str<br>defense OR def<br>dexterity OR dex<br>agility OR agi<br><br>" +
+                                        "The cost and experience gains for all of these gyms are the same as if you were to manually visit these gyms and train " +
+                                        "This function will return true if you successfully start working out at the gym, and false otherwise.<br><br>" +
+                                        "<i>travelToCity(cityname)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function allows the player to travel to any city. The cost for using this function is the same as the cost for traveling through the Travel Agency.<br><br>" +
+                                        "The argument passed into this must be a string with the name of the city to travel to. Note that this argument IS CASE SENSITIVE. The valid cities are:<br><br>" +
+                                        "Aevum<br>Chongqing<br>Sector-12<br>New Tokyo<br>Ishima<br>Volhaven<br><br>" +
+                                        "This function will return true if you successfully travel to the specified city and false otherwise.<br><br>" +
+                                        "<i>purchaseTor()</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this " +
+                                        "function is the same as if you were to manually purchase one.<br><br>" +
+                                        "This function will return true if it successfully purchase a TOR router and false otherwise.<br><br>" +
+                                        "<i>purchaseProgram(programName)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function.<br><br>" +
+                                        "The argument passed in must be a string with the name of the program (including the '.exe' extension). This argument is " +
+                                        "NOT case-sensitive.<br><br>Example: " +
+                                        "purchaseProgram('brutessh.exe');<br><br>" +
+                                        "The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web (using " +
+                                        "the buy Terminal command).<br><br>" +
+                                        "This function will return true if the specified program is purchased, and false otherwise.<br><br>" +
+                                        "<i>upgradeHomeRam()</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function will upgrade amount of RAM on the player's home computer. The cost is the same as if you were to do it manually.<br><br>" +
+                                        "This function will return true if the player's home computer RAM is successfully upgraded, and false otherwise.<br><br>" +
+                                        "<i>getUpgradeHomeRamCost()</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
+                                        "Returns the cost of upgrading the player's home computer RAM.<br><br>" +
+                                        "<i>workForCompany()</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function will automatically set you to start working at the company at which you are employed. If you are already " +
+                                        "in the middle of some 'working' action (such as working for a faction, training at a gym, or creating a program), then " +
+                                        "running this function will automatically cancel that action and give you your earnings.<br><br>" +
+                                        "This function will return true if the player starts working, and false otherwise.<br><br>" +
+                                        "<i>applyToCompany(companyName, field)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function will automatically try to apply to the specified company for a position in the specified field. This " +
+                                        "function can also be used to apply for promotions by specifying the company and field you are already employed at.<br><br>" +
+                                        "The first argument must be a string with the name of the company. This argument IS CASE-SENSITIVE. The second argument must " +
+                                        "be a string representing the 'field' to which you want to apply. This second argument is NOT case-sensitive. Valid values for " +
+                                        "the second argument are:<br><br>" +
+                                        "software<br>software consultant<br>it<br>security engineer<br>network engineer<br>business<br>business consultant<br>" +
+                                        "security<br>agent<br>employee<br>part-time employee<br>waiter<br>part-time waiter<br><br>" +
+                                        "This function will return true if you successfully get a job/promotion, and false otherwise. Note " +
+                                        "that if you are trying to use this function to apply for a promotion and you don't get one, it will return false.<br><br>" +
+                                        "<i>getCompanyRep(companyName)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function will return the amount of reputation you have at the specified company. If the company passed in as " +
+                                        "an argument is invalid, -1 will be returned.<br><br>" +
+                                        "The argument passed in must be a string with the name of the company. This argument IS CASE-SENSITIVE.<br><br>" +
+                                        "<i>checkFactionInvitations()</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
+                                        "Returns an array with the name of all Factions you currently have oustanding invitations from.<br><br>" +
+                                        "<i>joinFaction(name)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function will automatically accept an invitation from a faction and join it.<br><br>" +
+                                        "The argument must be a string with the name of the faction. This name IS CASE-SENSITIVE.<br><br>" +
+                                        "<i>workForFaction(factionName, workType)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function will automatically set you to start working for the specified Faction. Obviously, you " +
+                                        "must be a member of the Faction or else this function will fail. If you are already in the middle of " +
+                                        "some 'working' action (such as working for a company, training at a gym, or creating a program), then running " +
+                                        "this function will automatically cancel that action and give you your earnings.<br><br>" +
+                                        "The first argument must be a string with the name of the faction. This argument IS CASE-SENSITIVE. The second argument " +
+                                        "must be a string with the type of work you want to perform for the faction. The valid values for this argument are:<br><br>" +
+                                        "<br>hacking/hacking contracts/hackingcontracts<br>field/fieldwork/field work<br>security/securitywork/security work<br><br>" +
+                                        "This function will return true if you successfully start working for the specified faction, and false otherwise.<br><br>" +
+                                        "<i>getFactionRep(factionName)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function returns the amount of reputation you have for the specified Faction. The argument must be a " +
+                                        "string with the name of the Faction. The argument IS CASE-SENSITIVE.<br><br>" +
+                                        "<i>createProgram(programName)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function will automatically set you to start working on creating the specified program. If you are already in " +
+                                        "the middle of some 'working' action (such as working for a company, training at a gym, or taking a course), then " +
+                                        "running this function will automatically cancel that action and give you your earnings.<br><br>" +
+                                        "The argument passed in must be a string designating the name of the program. This argument is NOT case-sensitive.<br><br>" +
+                                        "Example:<br><br>createProgram('relaysmtp.exe');<br><br>" +
+                                        "Note that creating a program using this function has the same hacking level requirements as it normally would. These level requirements are:<br><br>" +
+                                        "BruteSSH.exe: 50<br>FTPCrack.exe: 100<br>relaySMTP.exe: 250<br>HTTPWorm.exe: 500<br>SQLInject.exe: 750<br>" +
+                                        "DeepscanV1.exe: 75<br>DeepscanV2.exe: 400<br>ServerProfiler.exe: 75<br>AutoLink.exe: 25<br><br>" +
+                                        "This function returns true if you successfully start working on the specified program, and false otherwise.<br><br>" +
+                                        "<i>getAugmentationCost(augName)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function returns an array with two elements that gives the cost for the specified Augmentation" +
+                                        ". The first element in the returned array is the reputation requirement of the Augmentation, and the second element " +
+                                        "is the money cost.<br><br>" +
+                                        "The argument passed in must be a string with the name of the Augmentation. This argument IS CASE-SENSITIVE. " +
+                                        "If an invalid Augmentation name is passed in, this function will return the array [-1, -1].<br><br>" +
+                                        "<i>purchaseAugmentation(factionName, augName)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function will try to purchase the specified Augmentation through the given Faction.<br><br>" +
+                                        "The two arguments must be strings specifying the name of the Faction and Augmentation, respectively. These arguments are both CASE-SENSITIVE.<br><br>" +
+                                        "This function will return true if the Augmentation is successfully purchased, and false otherwise.<br><br>" +
+                                        "<i>installAugmentations()</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function will automatically install your Augmentations, resetting the game as usual.<br><br>" +
+                                        "It will return true if successful, and false otherwise.",
 
     TutorialTravelingText:"There are six major cities in the world that you are able to travel to: <br><br> "  +
                            "    Aevum<br>" +
@@ -31282,11 +31416,11 @@ function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
 }
 
 Stock.prototype.toJSON = function() {
-	return Generic_toJSON("Stock", this);
+	return Object(__WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__["b" /* Generic_toJSON */])("Stock", this);
 }
 
 Stock.fromJSON = function(value) {
-	return Generic_fromJSON(Stock, value.data);
+	return Object(__WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(Stock, value.data);
 }
 
 __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__["c" /* Reviver */].constructors.Stock = Stock;
@@ -31338,7 +31472,6 @@ function initStockSymbols() {
     StockSymbols["Sigma Cosmetics"]                         = "SGC";
     StockSymbols["Joes Guns"]                               = "JGN";
     StockSymbols["Catalyst Ventures"]                       = "CTYS";
-    StockSymbols["Taiyang Digital"]                         = "TAI";
     StockSymbols["Microdyne Technologies"]                  = "MDYN";
     StockSymbols["Titan Laboratories"]                      = "TITN";
 }
@@ -35521,7 +35654,7 @@ function NetscriptFunctions(workerScript) {
                     expMult = 2;
                     break;
                 case __WEBPACK_IMPORTED_MODULE_7__Location_js__["a" /* Locations */].VolhavenZBInstituteOfTechnology.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_8__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_7__Location_js__["a" /* Locations */].Aevum) {
+                    if (__WEBPACK_IMPORTED_MODULE_8__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_7__Location_js__["a" /* Locations */].Volhaven) {
                         workerScript.scriptRef.log("ERROR: You cannot study at ZB Institute of Technology because you are not in Volhaven. universityCourse() failed");
                         return false;
                     }
@@ -35816,7 +35949,7 @@ function NetscriptFunctions(workerScript) {
             cost = cost * mult;
 
             if (__WEBPACK_IMPORTED_MODULE_8__Player_js__["a" /* Player */].money.lt(cost)) {
-                workerScript.scriptRef.log("You do not have enough money to purchase additional RAM for your home computer");
+                workerScript.scriptRef.log("ERROR: upgradeHomeRam() failed because you don't have enough money");
                 return false;
             }
 
@@ -35881,7 +36014,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (!Object(__WEBPACK_IMPORTED_MODULE_1__Company_js__["e" /* companyExists */])(companyName)) {
-                workerScript.scriptRef.log("ERROR: applyToCompany failed because specified company " + companyName + " does not exist.");
+                workerScript.scriptRef.log("ERROR: applyToCompany() failed because specified company " + companyName + " does not exist.");
                 return false;
             }
 
