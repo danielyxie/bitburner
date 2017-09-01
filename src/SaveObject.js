@@ -142,10 +142,30 @@ function loadGame(saveObj) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
+            if (Player.bitNodeN === null || Player.bitNodeN === 0) {
+                Player.setBitNodeNumber(1);
+            }
             if (ver.startsWith("0.27.") || ver.startsWith("0.28.")) {
                 console.log("Evaluating changes needed for version compatibility");
-                if (Player.bitNodeN == null || Player.bitNodeN == 0) {
-                    Player.setBitNodeNumber(1);
+                if (Player.augmentations.length > 0 || Player.queuedAugmentations.length > 0 ||
+                    Player.sourceFiles.length > 0) {
+                    //If you have already purchased an Aug...you are far enough in the game
+                    //that everything should be available
+                    Player.firstFacInvRecvd = true;
+                    Player.firstAugPurchased = true;
+                    Player.firstJobRecvd = true;
+                    Player.firstTimeTraveled = true;
+                    Player.firstProgramAvailable = true;
+                } else  {
+                    if (Player.factions.length > 0 || Player.factionInvitations.length > 0) {
+                        Player.firstFacInvRecvd = true;
+                    }
+                    if (Player.companyName !== "" || Player.companyPosition !== "") {
+                        Player.firstJobRecvd = true;
+                    }
+                    if (Player.hacking_skill >= 25) {
+                        Player.firstScriptAvailable = true;
+                    }
                 }
             }
             if (ver != CONSTANTS.Version) {
@@ -329,10 +349,31 @@ function loadImportedGame(saveObj, saveString) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
-            if (ver.startsWith("0.27.")) {
+            if (Player.bitNodeN == null || Player.bitNodeN == 0) {
+                Player.setBitNodeNumber(1);
+
+            }
+            if (ver.startsWith("0.27.") || ver.startsWith("0.28.")) {
                 console.log("Evaluating changes needed for version compatibility");
-                if (Player.bitNodeN == null || Player.bitNodeN == 0) {
-                    Player.setBitNodeNumber(1);
+                if (Player.augmentations.length > 0 || Player.queuedAugmentations.length > 0 ||
+                    Player.sourceFiles.length > 0) {
+                    //If you have already purchased an Aug...you are far enough in the game
+                    //that everything should be available
+                    Player.firstFacInvRecvd = true;
+                    Player.firstAugPurchased = true;
+                    Player.firstJobRecvd = true;
+                    Player.firstTimeTraveled = true;
+                    Player.firstProgramAvailable = true;
+                } else  {
+                    if (Player.factions.length > 0 || Player.factionInvitations.length > 0) {
+                        Player.firstFacInvRecvd = true;
+                    }
+                    if (Player.companyName !== "" || Player.companyPosition !== "") {
+                        Player.firstJobRecvd = true;
+                    }
+                    if (Player.hacking_skill >= 25) {
+                        Player.firstScriptAvailable = true;
+                    }
                 }
             }
             if (ver != CONSTANTS.Version) {

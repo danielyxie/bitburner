@@ -105,15 +105,8 @@ function PlayerObject() {
     this.sourceFiles = [];
 
     //Crime statistics
+    this.numPeopleKilled = 0;
     this.karma = 0;
-    this.numTimesShoplifted             = 0;
-    this.numPeopleMugged                = 0;
-    this.numTimesDealtDrugs             = 0;
-    this.numTimesTraffickArms           = 0;
-    this.numPeopleKilled                = 0;
-    this.numTimesGrandTheftAuto         = 0;
-    this.numTimesKidnapped              = 0;
-    this.numTimesHeist                  = 0;
 
     this.crime_money_mult               = 1;
     this.crime_success_mult             = 1;
@@ -172,10 +165,17 @@ function PlayerObject() {
     this.hasTixApiAccess    = false;
 
     //Gang
-    this.gang = null;
+    this.gang = 0;
 
     //bitnode
     this.bitNodeN = 1;
+
+    //Flags for determining whether certain "thresholds" have been achieved
+    this.firstFacInvRecvd = false;
+    this.firstAugPurchased = false;
+    this.firstJobRecvd = false;
+    this.firstTimeTraveled = false;
+    this.firstProgramAvailable = false;
 
 	//Used to store the last update time.
 	this.lastUpdate = 0;
@@ -207,16 +207,7 @@ PlayerObject.prototype.prestigeAugmentation = function() {
     this.currentServer = homeComp.ip;
     this.homeComputer = homeComp.ip;
 
-    //Crime statistics
-    this.numTimesShoplifted = 0;
-    this.numPeopleMugged = 0;
-    this.numTimesDealtDrugs = 0;
-    this.numTimesTraffickArms = 0;
     this.numPeopleKilled = 0;
-    this.numTimesGrandTheftAuto = 0;
-    this.numTimesKidnapped = 0;
-    this.numTimesHeist = 0;
-
     this.karma = 0;
 
     //Reset stats
@@ -295,15 +286,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.currentServer = homeComp.ip;
     this.homeComputer = homeComp.ip;
 
-    this.numTimesShoplifted = 0;
-    this.numPeopleMugged = 0;
-    this.numTimesDealtDrugs = 0;
-    this.numTimesTraffickArms = 0;
     this.numPeopleKilled = 0;
-    this.numTimesGrandTheftAuto = 0;
-    this.numTimesKidnapped = 0;
-    this.numTimesHeist = 0;
-
     this.karma = 0;
 
     //Reset stats
@@ -1425,24 +1408,20 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             switch(this.crimeType) {
                 case CONSTANTS.CrimeShoplift:
                     this.karma -= 0.1;
-                    ++this.numTimesShoplifted;
                     break;
                 case CONSTANTS.CrimeRobStore:
                     this.karma -= 0.5;
                     break;
                 case CONSTANTS.CrimeMug:
                     this.karma -= 0.25;
-                    ++this.numPeopleMugged;
                     break;
                 case CONSTANTS.CrimeLarceny:
                     this.karma -= 1.5;
                     break;
                 case CONSTANTS.CrimeDrugs:
-                    ++this.numTimesDealtDrugs;
                     this.karma -= 0.5;
                     break;
                 case CONSTANTS.CrimeTraffickArms:
-                    ++this.numTimesTraffickArms;
                     this.karma -= 1;
                     break;
                 case CONSTANTS.CrimeHomicide:
@@ -1450,11 +1429,9 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     this.karma -= 3;
                     break;
                 case CONSTANTS.CrimeGrandTheftAuto:
-                    ++this.numTimesGrandTheftAuto;
                     this.karma -= 5;
                     break;
                 case CONSTANTS.CrimeKidnap:
-                    ++this.numTimesKidnapped;
                     this.karma -= 6;
                     break;
                 case CONSTANTS.CrimeAssassination:
@@ -1462,7 +1439,6 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     this.karma -= 10;
                     break;
                 case CONSTANTS.CrimeHeist:
-                    ++this.numTimesHeist;
                     this.karma -= 15;
                     break;
                 default:
@@ -1638,6 +1614,8 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     this.companyName = company.companyName;
     this.companyPosition = pos;
 
+    Player.firstJobRecvd = true;
+
     if (leaveCompany) {
         if (sing) {return true;}
         dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " +
@@ -1740,6 +1718,7 @@ PlayerObject.prototype.applyForAgentJob = function(sing=false) {
 PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.Employee)) {
+        Player.firstJobRecvd = true;
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Employee;
         if (sing) {return true;}
@@ -1754,6 +1733,7 @@ PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.PartTimeEmployee)) {
+        Player.firstJobRecvd = true;
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.PartTimeEmployee;
         if (sing) {return true;}
@@ -1768,6 +1748,7 @@ PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.Waiter)) {
+        Player.firstJobRecvd = true;
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Waiter;
         if (sing) {return true;}
@@ -1782,6 +1763,7 @@ PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.PartTimeWaiter)) {
+        Player.firstJobRecvd = true;
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.PartTimeWaiter;
         if (sing) {return true;}
@@ -2169,6 +2151,10 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
 PlayerObject.prototype.inGang = function() {
     if (this.gang == null || this.gang == undefined) {return false;}
     return (this.gang instanceof Gang);
+}
+
+PlayerObject.prototype.startGang = function(factionName, hacking) {
+    this.gang = new Gang(factionName, hacking);
 }
 
 /************* BitNodes **************/

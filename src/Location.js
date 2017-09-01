@@ -1840,6 +1840,7 @@ function initLocationButtons() {
 }
 
 function travelToCity(destCityName, cost) {
+    Player.firstTimeTraveled = true;
     if (Player.money.lt(cost)) {
         dialogBoxCreate("You cannot afford to travel to " + destCityName);
         return;

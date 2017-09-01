@@ -2,10 +2,12 @@ import {Augmentations, AugmentationNames,
         PlayerOwnedAugmentation}                from "./Augmentations.js";
 import {BitNodeMultipliers}                     from "./BitNode.js";
 import {CONSTANTS}                              from "./Constants.js";
-import {Player}                                 from "./Player.js";
 import {Engine}                                 from "./engine.js";
 import {FactionInfo}                            from "./FactionInfo.js";
+import {Locations}                              from "./Location.js";
+import {Player}                                 from "./Player.js";
 import {Settings}                               from "./Settings.js";
+
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox.js";
 import {clearEventListeners}                    from "../utils/HelperFunctions.js";
@@ -568,8 +570,8 @@ function displayFactionContent(factionName) {
                 noBtn.innerHTML = "Cancel";
                 yesBtn.addEventListener("click", () => {
                     var hacking = false;
-                    if (factionName == "NiteSec" || factionName == "The Black Hand") {hacking = true;}
-                    Player.gang = new Gang(factionName, hacking);
+                    if (factionName === "NiteSec" || factionName === "The Black Hand") {hacking = true;}
+                    Player.startGang(factionName, hacking);
                     Engine.loadGangContent();
                     yesNoBoxClose();
                 });
@@ -906,6 +908,8 @@ function purchaseAugmentation(aug, fac, sing=false) {
         var txt = "You must first install the Bionic Arms augmentation before installing this upgrade";
         if (sing) {return txt;} else {dialogBoxCreate(txt);}
     } else if (Player.money.gte(aug.baseCost * fac.augmentationPriceMult)) {
+        Player.firstAugPurchased = true;
+
         var queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
         if (aug.name == AugmentationNames.NeuroFluxGovernor) {
             queuedAugmentation.level = getNextNeurofluxLevel();
