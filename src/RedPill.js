@@ -2,7 +2,8 @@ import {BitNode, BitNodes}                      from "./BitNode.js";
 import {Engine}                                 from "./engine.js";
 import {Player}                                 from "./Player.js";
 import {prestigeSourceFile}                     from "./Prestige.js";
-import {SourceFiles, SourceFile}                from "./SourceFile.js";
+import {SourceFiles, SourceFile,
+        PlayerOwnedSourceFile}                  from "./SourceFile.js";
 import {Terminal}                               from "./Terminal.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
