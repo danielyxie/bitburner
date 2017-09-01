@@ -4341,6 +4341,53 @@ let Engine = {
         document.getElementById("entire-game-container").style.visibility = "visible";
     },
 
+    //Used when initializing a game
+    //elems should be an array of all DOM elements under the header
+    closeMainMenuHeader: function(elems) {
+        for (var i = 0; i < elems.length; ++i) {
+            elems[i].style.maxHeight            = null;
+            elems[i].style.opacity              = 0;
+            elems[i].style.pointerEvents        = "none";
+        }
+    },
+
+    //Used when initializing the game
+    //elems should be an array of all DOM elements under the header
+    openMainMenuHeader: function(elems) {
+        for (var i = 0; i < elems.length; ++i) {
+            elems[i].style.maxHeight = elems[i].scrollHeight + "px";
+            elems[i].style.display = "block";
+        }
+    },
+
+    //Used in game when clicking on a main menu header (NOT FOR INITIALIZATION)
+    //open is a boolean specifying whether its being opened or closed
+    //elems is an array of DOM elements for main menu tabs (li)
+    //links is an array of DOM elements for main menu links (a)
+    toggleMainMenuHeader: function(open, elems, links) {
+        for (var i = 0; i < elems.length; ++i) {
+            if (open) {
+                elems[i].style.opacity = 1;
+                elems[i].style.maxHeight = elems[i].scrollHeight + "px";
+            } else {
+                elems[i].style.opacity = 0;
+                elems[i].style.maxHeight = null;
+            }
+        }
+
+        for (var i = 0; i < links.length; ++i) {
+            if (open) {
+                links[i].style.opacity = 1;
+                links[i].style.maxHeight = links[i].scrollHeight + "px";
+                links[i].style.pointerEvents = "auto";
+            } else {
+                links[i].style.opacity = 0;
+                links[i].style.maxHeight = null;
+                links[i].style.pointerEvents = "none";
+            }
+        }
+    },
+
     load: function() {
         //Load script editor
         var editor = ace.edit('javascript-editor');
@@ -4431,6 +4478,12 @@ let Engine = {
                             Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" +
                             Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(offlineProductionFromHacknetNodes, 2));
             //Close main menu accordions for loaded game
+            Engine.closeMainMenuHeader(
+                [terminal, createScript, activeScripts, createProgram, stats,
+                 factions, augmentations, hacknetnodes, city, travel, job,
+                 tutorial, options]
+            );
+            /*
             terminal.style.maxHeight            = null;
             terminal.style.opacity              = 0;
             terminal.style.pointerEvents        = "none";
@@ -4470,6 +4523,7 @@ let Engine = {
             options.style.maxHeight             = null;
             options.style.opacity               = 0;
             options.style.pointerEvents         = "none";
+            */
         } else {
             //No save found, start new game
             console.log("Initializing new game");
@@ -4500,6 +4554,12 @@ let Engine = {
             worldHdr.classList.toggle("opened");
             var helpHdr         = document.getElementById("help-menu-header");
             helpHdr.classList.toggle("opened");
+            Engine.openMainMenuHeader(
+                [terminal, createScript, activeScripts, createProgram, stats,
+                 factions, augmentations, hacknetnodes, city, travel, job,
+                 tutorial, options]
+            );
+            /*
             terminal.style.maxHeight        = terminal.scrollHeight + "px";
             terminal.style.display          = "block";
             createScript.style.maxHeight    = createScript.scrollHeight + "px";
@@ -4526,6 +4586,7 @@ let Engine = {
             tutorial.style.display     = "block";
             options.style.maxHeight   = options.scrollHeight + "px";
             options.style.display     = "block";
+            */
 
             //Start interactive tutorial
             Object(__WEBPACK_IMPORTED_MODULE_16__InteractiveTutorial_js__["d" /* iTutorialStart */])();
@@ -4673,13 +4734,9 @@ let Engine = {
 
         //Main menu accordions
         var hackingHdr      = document.getElementById("hacking-menu-header");
-        //hackingHdr.classList.toggle("opened");
         var characterHdr    = document.getElementById("character-menu-header");
-        //characterHdr.classList.toggle("opened");
         var worldHdr        = document.getElementById("world-menu-header");
-        //worldHdr.classList.toggle("opened");
         var helpHdr         = document.getElementById("help-menu-header");
-        //helpHdr.classList.toggle("opened");
 
         hackingHdr.onclick = function() {
             var terminal            = document.getElementById("terminal-tab");
@@ -4693,6 +4750,11 @@ let Engine = {
             var createProgramNot    = document.getElementById("create-program-notification");
             this.classList.toggle("opened");
             if (terminal.style.maxHeight) {
+                Engine.toggleMainMenuHeader(false,
+                    [terminal, createScript, activeScripts, createProgram],
+                    [terminalLink, createScriptLink, activeScriptsLink, createProgramLink]
+                );
+                /*
                 terminal.style.opacity = 0;
                 terminal.style.maxHeight = null;
                 terminalLink.style.opacity = 0;
@@ -4716,9 +4778,15 @@ let Engine = {
                 createProgramLink.style.opacity = 0;
                 createProgramLink.style.maxHeight = null;
                 createProgramLink.style.pointerEvents = "none";
+                */
 
                 createProgramNot.style.display = "none";
             } else {
+                Engine.toggleMainMenuHeader(true,
+                    [terminal, createScript, activeScripts, createProgram],
+                    [terminalLink, createScriptLink, activeScriptsLink, createProgramLink]
+                );
+                /*
                 terminal.style.maxHeight = terminal.scrollHeight + "px";
                 terminal.style.opacity = 1;
                 terminalLink.style.maxHeight = terminalLink.scrollHeight + "px";
@@ -4742,6 +4810,7 @@ let Engine = {
                 createProgramLink.style.maxHeight = createProgramLink.scrollHeight + "px";
                 createProgramLink.style.opacity = 1;
                 createProgramLink.style.pointerEvents = "auto";
+                */
                 createProgramNot.style.display = "block"
             }
         }
@@ -4757,6 +4826,11 @@ let Engine = {
             var hacknetnodesLink    = document.getElementById("hacknet-nodes-menu-link");
             this.classList.toggle("opened");
             if (stats.style.maxHeight) {
+                Engine.toggleMainMenuHeader(false,
+                    [stats, factions, augmentations, hacknetnodes],
+                    [statsLink, factionsLink, augmentationsLink, hacknetnodesLink]
+                );
+                /*
                 stats.style.opacity = 0;
                 stats.style.maxHeight = null;
                 statsLink.style.opacity = 0;
@@ -4780,7 +4854,13 @@ let Engine = {
                 hacknetnodesLink.style.opacity = 0;
                 hacknetnodesLink.style.maxHeight = null;
                 hacknetnodesLink.style.pointerEvents = "none";
+                */
             } else {
+                Engine.toggleMainMenuHeader(true,
+                    [stats, factions, augmentations, hacknetnodes],
+                    [statsLink, factionsLink, augmentationsLink, hacknetnodesLink]
+                );
+                /*
                 stats.style.maxHeight = stats.scrollHeight + "px";
                 stats.style.opacity = 1;
                 statsLink.style.maxHeight = statsLink.scrollHeight + "px";
@@ -4804,6 +4884,7 @@ let Engine = {
                 hacknetnodesLink.style.maxHeight = hacknetnodesLink.scrollHeight + "px";
                 hacknetnodesLink.style.opacity = 1;
                 hacknetnodesLink.style.pointerEvents = "auto";
+                */
             }
         }
 
@@ -4816,6 +4897,11 @@ let Engine = {
             var jobLink         = document.getElementById("job-menu-link");
             this.classList.toggle("opened");
             if (city.style.maxHeight) {
+                Engine.toggleMainMenuHeader(false,
+                    [city, travel, job],
+                    [cityLink, travelLink, jobLink]
+                );
+                /*
                 city.style.opacity = 0;
                 city.style.maxHeight = null;
                 cityLink.style.opacity = 0;
@@ -4833,7 +4919,13 @@ let Engine = {
                 jobLink.style.opacity = 0;
                 jobLink.style.maxHeight = null;
                 jobLink.style.pointerEvents = "none";
+                */
             } else {
+                Engine.toggleMainMenuHeader(true,
+                    [city, travel, job],
+                    [cityLink, travelLink, jobLink]
+                );
+                /*
                 city.style.maxHeight = city.scrollHeight + "px";
                 city.style.opacity = 1;
                 cityLink.style.maxHeight = cityLink.scrollHeight + "px";
@@ -4851,6 +4943,7 @@ let Engine = {
                 jobLink.style.maxHeight = jobLink.scrollHeight + "px";
                 jobLink.style.opacity = 1;
                 jobLink.style.pointerEvents = "auto";
+                */
             }
         }
 
@@ -4861,6 +4954,11 @@ let Engine = {
             var optionsLink     = document.getElementById("options-menu-link");
             this.classList.toggle("opened");
             if (tutorial.style.maxHeight) {
+                Engine.toggleMainMenuHeader(false,
+                    [tutorial, options],
+                    [tutorialLink, optionsLink]
+                );
+                /*
                 tutorial.style.opacity = 0;
                 tutorial.style.maxHeight = null;
                 tutorialLink.style.opacity = 0;
@@ -4872,7 +4970,13 @@ let Engine = {
                 optionsLink.style.opacity = 0;
                 optionsLink.style.maxHeight = null;
                 optionsLink.style.pointerEvents = "none";
+                */
             } else {
+                Engine.toggleMainMenuHeader(true,
+                    [tutorial, options],
+                    [tutorialLink, optionsLink]
+                );
+                /*
                 tutorial.style.maxHeight = tutorial.scrollHeight + "px";
                 tutorial.style.opacity = 1;
                 tutorialLink.style.maxHeight = tutorialLink.scrollHeight + "px";
@@ -4884,6 +4988,7 @@ let Engine = {
                 optionsLink.style.maxHeight = optionsLink.scrollHeight + "px";
                 optionsLink.style.opacity = 1;
                 optionsLink.style.pointerEvents = "auto";
+                */
             }
         }
 
