@@ -915,7 +915,11 @@ let Engine = {
         if (Engine.Counters.checkFactionInvitations <= 0) {
             var invitedFactions = Player.checkForFactionInvitations();
             if (invitedFactions.length > 0) {
-                Player.firstFacInvRecvd = true;
+                if (Player.firstFacInvRecvd === false) {
+                    Player.firstFacInvRecvd = true;
+                    document.getElementById("factions-tab").style.display = "list-item";
+                }
+
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
                 inviteToFaction(randFaction);
             }
@@ -1155,10 +1159,25 @@ let Engine = {
                             formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" +
                             formatNumber(offlineProductionFromHacknetNodes, 2));
             //Close main menu accordions for loaded game
-            Engine.closeMainMenuHeader(
+            var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
+                                   hacknetnodes, city, tutorial, options];
+            if (Player.firstFacInvRecvd) {visibleMenuTabs.push(factions);}
+            else {factions.style.display = "none";}
+            if (Player.firstAugPurchased) {visibleMenuTabs.push(augmentations);}
+            else {augmentations.style.display = "none";}
+            if (Player.firstJobRecvd) {visibleMenuTabs.push(job);}
+            else {job.style.display = "none";}
+            if (Player.firstTimeTraveled) {visibleMenuTabs.push(travel);}
+            else {travel.style.display = "none";}
+            if (Player.firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
+            else {createProgram.style.display = "none";}
+
+            Engine.closeMainMenuHeader(visibleMenuTabs
+                /*
                 [terminal, createScript, activeScripts, createProgram, stats,
                  factions, augmentations, hacknetnodes, city, travel, job,
                  tutorial, options]
+                 */
             );
         } else {
             //No save found, start new game
@@ -1190,9 +1209,22 @@ let Engine = {
             worldHdr.classList.toggle("opened");
             var helpHdr         = document.getElementById("help-menu-header");
             helpHdr.classList.toggle("opened");
+
+            //Hide tabs that wont be revealed until later
+            factions.style.display = "none";
+            augmentations.style.display = "none";
+            job.style.display = "none";
+            travel.style.display = "none";
+            createProgram.style.display = "none";
+
             Engine.openMainMenuHeader(
+                /*
                 [terminal, createScript, activeScripts, createProgram, stats,
                  factions, augmentations, hacknetnodes, city, travel, job,
+                 tutorial, options]
+                */
+                [terminal, createScript, activeScripts, stats,
+                 hacknetnodes, city,
                  tutorial, options]
             );
 

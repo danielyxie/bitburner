@@ -4478,52 +4478,26 @@ let Engine = {
                             Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" +
                             Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(offlineProductionFromHacknetNodes, 2));
             //Close main menu accordions for loaded game
-            Engine.closeMainMenuHeader(
+            var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
+                                   hacknetnodes, city, tutorial, options];
+            if (__WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].firstFacInvRecvd) {visibleMenuTabs.push(factions);}
+            else {factions.style.display = "none";}
+            if (__WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].firstAugPurchased) {visibleMenuTabs.push(augmentations);}
+            else {augmentations.style.display = "none";}
+            if (__WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].firstJobRecvd) {visibleMenuTabs.push(job);}
+            else {job.style.display = "none";}
+            if (__WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].firstTimeTraveled) {visibleMenuTabs.push(travel);}
+            else {travel.style.display = "none";}
+            if (__WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
+            else {createProgram.style.display = "none";}
+
+            Engine.closeMainMenuHeader(visibleMenuTabs
+                /*
                 [terminal, createScript, activeScripts, createProgram, stats,
                  factions, augmentations, hacknetnodes, city, travel, job,
                  tutorial, options]
+                 */
             );
-            /*
-            terminal.style.maxHeight            = null;
-            terminal.style.opacity              = 0;
-            terminal.style.pointerEvents        = "none";
-            createScript.style.maxHeight        = null;
-            createScript.style.opacity          = 0;
-            createScript.style.pointerEvents    = "none";
-            activeScripts.style.maxHeight       = null;
-            activeScripts.style.opacity         = 0;
-            activeScripts.style.pointerEvents   = "none";
-            createProgram.style.maxHeight       = null;
-            createProgram.style.opacity         = 0;
-            createProgram.style.pointerEvents   = "none";
-            stats.style.maxHeight               = null;
-            stats.style.opacity                 = 0;
-            stats.style.pointerEvents           = "none";
-            factions.style.maxHeight            = null;
-            factions.style.opacity              = 0;
-            factions.style.pointerEvents        = "none";
-            augmentations.style.maxHeight       = null;
-            augmentations.style.opacity         = 0;
-            augmentations.style.pointerEvents   = "none";
-            hacknetnodes.style.maxHeight        = null;
-            hacknetnodes.style.opacity          = 0;
-            hacknetnodes.style.pointerEvents    = "none";
-            city.style.maxHeight                = null;
-            city.style.opacity                  = 0;
-            city.style.pointerEvents            = "none";
-            travel.style.maxHeight              = null;
-            travel.style.opacity                = 0;
-            travel.style.pointerEvents          = "none";
-            job.style.maxHeight                 = null;
-            job.style.opacity                   = 0;
-            job.style.pointerEvents             = "none";
-            tutorial.style.maxHeight            = null;
-            tutorial.style.opacity              = 0;
-            tutorial.style.pointerEvents        = "none";
-            options.style.maxHeight             = null;
-            options.style.opacity               = 0;
-            options.style.pointerEvents         = "none";
-            */
         } else {
             //No save found, start new game
             console.log("Initializing new game");
@@ -4554,39 +4528,24 @@ let Engine = {
             worldHdr.classList.toggle("opened");
             var helpHdr         = document.getElementById("help-menu-header");
             helpHdr.classList.toggle("opened");
+
+            //Hide tabs that wont be revealed until later
+            factions.style.display = "none";
+            augmentations.style.display = "none";
+            job.style.display = "none";
+            travel.style.display = "none";
+            createProgram.style.display = "none";
+
             Engine.openMainMenuHeader(
+                /*
                 [terminal, createScript, activeScripts, createProgram, stats,
                  factions, augmentations, hacknetnodes, city, travel, job,
                  tutorial, options]
+                */
+                [terminal, createScript, activeScripts, stats,
+                 hacknetnodes, city,
+                 tutorial, options]
             );
-            /*
-            terminal.style.maxHeight        = terminal.scrollHeight + "px";
-            terminal.style.display          = "block";
-            createScript.style.maxHeight    = createScript.scrollHeight + "px";
-            createScript.style.display      = "block";
-            activeScripts.style.maxHeight   = activeScripts.scrollHeight + "px";
-            activeScripts.style.display     = "block";
-            createProgram.style.maxHeight   = createProgram.scrollHeight + "px";
-            createProgram.style.display     = "block";
-            stats.style.maxHeight           = stats.scrollHeight + "px";
-            stats.style.display             = "block";
-            factions.style.maxHeight        = factions.scrollHeight + "px";
-            factions.style.display          = "block";
-            augmentations.style.maxHeight   = augmentations.scrollHeight + "px";
-            augmentations.style.display     = "block";
-            hacknetnodes.style.maxHeight   = hacknetnodes.scrollHeight + "px";
-            hacknetnodes.style.display     = "block";
-            city.style.maxHeight   = city.scrollHeight + "px";
-            city.style.display     = "block";
-            travel.style.maxHeight   = travel.scrollHeight + "px";
-            travel.style.display     = "block";
-            job.style.maxHeight   = job.scrollHeight + "px";
-            job.style.display     = "block";
-            tutorial.style.maxHeight   = tutorial.scrollHeight + "px";
-            tutorial.style.display     = "block";
-            options.style.maxHeight   = options.scrollHeight + "px";
-            options.style.display     = "block";
-            */
 
             //Start interactive tutorial
             Object(__WEBPACK_IMPORTED_MODULE_16__InteractiveTutorial_js__["d" /* iTutorialStart */])();
@@ -4754,31 +4713,6 @@ let Engine = {
                     [terminal, createScript, activeScripts, createProgram],
                     [terminalLink, createScriptLink, activeScriptsLink, createProgramLink]
                 );
-                /*
-                terminal.style.opacity = 0;
-                terminal.style.maxHeight = null;
-                terminalLink.style.opacity = 0;
-                terminalLink.style.maxHeight = null;
-                terminalLink.style.pointerEvents = "none";
-
-                createScript.style.opacity = 0;
-                createScript.style.maxHeight = null;
-                createScriptLink.style.opacity = 0;
-                createScriptLink.style.maxHeight = null;
-                createScriptLink.style.pointerEvents = "none";
-
-                activeScripts.style.opacity = 0;
-                activeScripts.style.maxHeight = null;
-                activeScriptsLink.style.opacity = 0;
-                activeScriptsLink.style.maxHeight = null;
-                activeScriptsLink.style.pointerEvents = "none";
-
-                createProgram.style.opacity = 0;
-                createProgram.style.maxHeight = null;
-                createProgramLink.style.opacity = 0;
-                createProgramLink.style.maxHeight = null;
-                createProgramLink.style.pointerEvents = "none";
-                */
 
                 createProgramNot.style.display = "none";
             } else {
@@ -4786,31 +4720,7 @@ let Engine = {
                     [terminal, createScript, activeScripts, createProgram],
                     [terminalLink, createScriptLink, activeScriptsLink, createProgramLink]
                 );
-                /*
-                terminal.style.maxHeight = terminal.scrollHeight + "px";
-                terminal.style.opacity = 1;
-                terminalLink.style.maxHeight = terminalLink.scrollHeight + "px";
-                terminalLink.style.opacity = 1;
-                terminalLink.style.pointerEvents = "auto";
 
-                createScript.style.maxHeight = createScript.scrollHeight + "px";
-                createScript.style.opacity = 1;
-                createScriptLink.style.maxHeight = createScriptLink.scrollHeight + "px";
-                createScriptLink.style.opacity = 1;
-                createScriptLink.style.pointerEvents = "auto";
-
-                activeScripts.style.maxHeight = activeScripts.scrollHeight + "px";
-                activeScripts.style.opacity = 1;
-                activeScriptsLink.style.maxHeight = activeScriptsLink.scrollHeight + "px";
-                activeScriptsLink.style.opacity = 1;
-                activeScriptsLink.style.pointerEvents = "auto";
-
-                createProgram.style.maxHeight = createProgram.scrollHeight + "px";
-                createProgram.style.opacity = 1;
-                createProgramLink.style.maxHeight = createProgramLink.scrollHeight + "px";
-                createProgramLink.style.opacity = 1;
-                createProgramLink.style.pointerEvents = "auto";
-                */
                 createProgramNot.style.display = "block"
             }
         }
@@ -4830,61 +4740,11 @@ let Engine = {
                     [stats, factions, augmentations, hacknetnodes],
                     [statsLink, factionsLink, augmentationsLink, hacknetnodesLink]
                 );
-                /*
-                stats.style.opacity = 0;
-                stats.style.maxHeight = null;
-                statsLink.style.opacity = 0;
-                statsLink.style.maxHeight = null;
-                statsLink.style.pointerEvents = "none";
-
-                factions.style.opacity = 0;
-                factions.style.maxHeight = null;
-                factionsLink.style.opacity = 0;
-                factionsLink.style.maxHeight = null;
-                factionsLink.style.pointerEvents = "none";
-
-                augmentations.style.opacity = 0;
-                augmentations.style.maxHeight = null;
-                augmentationsLink.style.opacity = 0;
-                augmentationsLink.style.maxHeight = null;
-                augmentationsLink.style.pointerEvents = "none";
-
-                hacknetnodes.style.opacity = 0;
-                hacknetnodes.style.maxHeight = null;
-                hacknetnodesLink.style.opacity = 0;
-                hacknetnodesLink.style.maxHeight = null;
-                hacknetnodesLink.style.pointerEvents = "none";
-                */
             } else {
                 Engine.toggleMainMenuHeader(true,
                     [stats, factions, augmentations, hacknetnodes],
                     [statsLink, factionsLink, augmentationsLink, hacknetnodesLink]
                 );
-                /*
-                stats.style.maxHeight = stats.scrollHeight + "px";
-                stats.style.opacity = 1;
-                statsLink.style.maxHeight = statsLink.scrollHeight + "px";
-                statsLink.style.opacity = 1;
-                statsLink.style.pointerEvents = "auto";
-
-                factions.style.maxHeight = factions.scrollHeight + "px";
-                factions.style.opacity = 1;
-                factionsLink.style.maxHeight = factionsLink.scrollHeight + "px";
-                factionsLink.style.opacity = 1;
-                factionsLink.style.pointerEvents = "auto";
-
-                augmentations.style.maxHeight = augmentations.scrollHeight + "px";
-                augmentations.style.opacity = 1;
-                augmentationsLink.style.maxHeight = augmentationsLink.scrollHeight + "px";
-                augmentationsLink.style.opacity = 1;
-                augmentationsLink.style.pointerEvents = "auto";
-
-                hacknetnodes.style.maxHeight = hacknetnodes.scrollHeight + "px";
-                hacknetnodes.style.opacity = 1;
-                hacknetnodesLink.style.maxHeight = hacknetnodesLink.scrollHeight + "px";
-                hacknetnodesLink.style.opacity = 1;
-                hacknetnodesLink.style.pointerEvents = "auto";
-                */
             }
         }
 
@@ -4901,49 +4761,11 @@ let Engine = {
                     [city, travel, job],
                     [cityLink, travelLink, jobLink]
                 );
-                /*
-                city.style.opacity = 0;
-                city.style.maxHeight = null;
-                cityLink.style.opacity = 0;
-                cityLink.style.maxHeight = null;
-                cityLink.style.pointerEvents = "none";
-
-                travel.style.opacity = 0;
-                travel.style.maxHeight = null;
-                travelLink.style.opacity = 0;
-                travelLink.style.maxHeight = null;
-                travelLink.style.pointerEvents = "none";
-
-                job.style.opacity = 0;
-                job.style.maxHeight = null;
-                jobLink.style.opacity = 0;
-                jobLink.style.maxHeight = null;
-                jobLink.style.pointerEvents = "none";
-                */
             } else {
                 Engine.toggleMainMenuHeader(true,
                     [city, travel, job],
                     [cityLink, travelLink, jobLink]
                 );
-                /*
-                city.style.maxHeight = city.scrollHeight + "px";
-                city.style.opacity = 1;
-                cityLink.style.maxHeight = cityLink.scrollHeight + "px";
-                cityLink.style.opacity = 1;
-                cityLink.style.pointerEvents = "auto";
-
-                travel.style.maxHeight = travel.scrollHeight + "px";
-                travel.style.opacity = 1;
-                travelLink.style.maxHeight = travelLink.scrollHeight + "px";
-                travelLink.style.opacity = 1;
-                travelLink.style.pointerEvents = "auto";
-
-                job.style.maxHeight = job.scrollHeight + "px";
-                job.style.opacity = 1;
-                jobLink.style.maxHeight = jobLink.scrollHeight + "px";
-                jobLink.style.opacity = 1;
-                jobLink.style.pointerEvents = "auto";
-                */
             }
         }
 
@@ -4958,37 +4780,11 @@ let Engine = {
                     [tutorial, options],
                     [tutorialLink, optionsLink]
                 );
-                /*
-                tutorial.style.opacity = 0;
-                tutorial.style.maxHeight = null;
-                tutorialLink.style.opacity = 0;
-                tutorialLink.style.maxHeight = null;
-                tutorialLink.style.pointerEvents = "none";
-
-                options.style.opacity = 0;
-                options.style.maxHeight = null;
-                optionsLink.style.opacity = 0;
-                optionsLink.style.maxHeight = null;
-                optionsLink.style.pointerEvents = "none";
-                */
             } else {
                 Engine.toggleMainMenuHeader(true,
                     [tutorial, options],
                     [tutorialLink, optionsLink]
                 );
-                /*
-                tutorial.style.maxHeight = tutorial.scrollHeight + "px";
-                tutorial.style.opacity = 1;
-                tutorialLink.style.maxHeight = tutorialLink.scrollHeight + "px";
-                tutorialLink.style.opacity = 1;
-                tutorialLink.style.pointerEvents = "auto";
-
-                options.style.maxHeight = options.scrollHeight + "px";
-                options.style.opacity = 1;
-                optionsLink.style.maxHeight = optionsLink.scrollHeight + "px";
-                optionsLink.style.opacity = 1;
-                optionsLink.style.pointerEvents = "auto";
-                */
             }
         }
 
