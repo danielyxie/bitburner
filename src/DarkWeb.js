@@ -32,6 +32,7 @@ function executeDarkwebTerminalCommand(commandArray) {
                 post("Incorrect number of arguments. Usage: ");
                 post("buy -l");
                 post("buy [item name]");
+                return;
             }
             var arg = commandArray[1];
             if (arg == "-l") {

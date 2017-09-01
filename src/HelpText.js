@@ -3,6 +3,7 @@ let TerminalHelpText =
                 "Type 'help name' to learn more about the command 'name'<br><br>" +
                 'alias [-g] [name="value"]      Create or display Terminal aliases<br>' +
                 "analyze                        Get information about the current machine <br>" +
+                "buy [-l/program]               Purchase a program through the Dark Web<br>" +
                 "cat [file]                     Display a .msg or .lit file<br>" +
                 "check [script] [args...]       Print a script's logs to Terminal<br>" +
                 "clear                          Clear all text on the terminal <br>" +
@@ -56,6 +57,11 @@ let HelpTexts = {
                     "server details such as the hostname, whether the player has root access, what ports are opened/closed, and also " +
                     "hacking-related information such as an estimated chance to successfully hack, an estimate of how much money is " +
                     "available on the server, etc.",
+    buy:            "buy [-l / program]<br>" +
+                    "Purchase a program through the Dark Web. Requires a TOR router to use.<br><br>" +
+                    "If this command is ran with the '-l' flag, it will display a list of all programs that can be bought through the " +
+                    "dark web to the Terminal, as well as their costs.<br><br>" +
+                    "Otherwise, the name of the program must be passed in as a parameter. This is name is NOT case-sensitive.",
     cat:            "cat [file]<br>" +
                     "Display message files, which are files ending with the '.msg' extension, or a literature file, which " +
                     "are files ending with the '.lit' extension. Examples:<br><br>" +
