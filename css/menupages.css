@@ -16,6 +16,42 @@
 }
 
 /* Script Editor */
+#script-editor-container {
+    background-color:transparent;
+}
+#javascript-editor {
+    margin: 10px;
+
+    height: 80%;
+    width: 100%;
+    margin-left: 6px;
+
+    padding-left: 6px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+
+    border: 2px solid var(--my-highlight-color);
+    z-index: 1;
+    font-family: 'Lucida Console', 'Lucida Sans Unicode', 'Fira Mono', 'Consolas', 'Courier New', Courier, monospace, 'Times New Roman';
+}
+
+#javascript-editor textarea {
+    color: var(--my-font-color);
+}
+
+.ace_line,
+.ace_line * {
+    color: var(--my-font-color);
+    background-color:transparent;
+    margin:0px;
+    padding:0px;
+}
+
+.ace_text-input {
+    font-size:16px;
+    background-color:transparent;
+}
+
 /* This temp element is used for auto adjusting filename field */
 .tmp-element {
         visibility: hidden;
@@ -56,6 +92,7 @@
 #script-editor-wrapper {
     height:100%;
     width: 70%;
+    background:transparent;
 }
 
 #script-editor-filename-wrapper {
@@ -101,28 +138,6 @@
 #script-editor-status {
 	float: left;
 	color: #ffffff;
-}
-
-#script-editor-text {
-	color: var(--my-font-color);
-	height: 80%;
-    width: 100%;
-    margin-left: 6px;
-
-    padding-left: 6px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-
-    border: 2px solid var(--my-highlight-color);
-    -webkit-box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
-    -moz-box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
-    box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
 }
 
 /* Active scripts */
@@ -261,6 +276,7 @@
     box-shadow: 1px 1px 3px #000;
     margin: 4px;
     padding: 4px;
+    background-color:black;
 }
 
 .active-scripts-button:hover,

@@ -23,6 +23,7 @@ import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         sellStock, updateStockPrices, displayStockMarketContent,
         updateStockTicker, updateStockPlayerPosition,
         Stock}                                      from "./StockMarket.js";
+import {post}                                       from "./Terminal.js";
 
 import {WorkerScript, workerScripts,
         killWorkerScript, NetscriptPorts}           from "./NetscriptWorker.js";
@@ -222,6 +223,12 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "print() call has incorrect number of arguments. Takes 1 argument");
             }
             workerScript.scriptRef.log(args.toString());
+        },
+        tprint : function(args) {
+            if (args === undefined || args === null) {
+                throw makeRuntimeRejectMsg(workerScript, "tprint() call has incorrect number of arguments. Takes 1 argument");
+            }
+            post(workerScript.scriptRef.filename + ": " + args.toString());
         },
         clearLog : function() {
             workerScript.scriptRef.clearLog();
@@ -1696,4 +1703,4 @@ function NetscriptFunctions(workerScript) {
     }
 }
 
-export {NetscriptFunctions, initSingularitySFFlags};
+export {NetscriptFunctions, initSingularitySFFlags, hasSingularitySF};
