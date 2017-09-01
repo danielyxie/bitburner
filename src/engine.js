@@ -1,3 +1,9 @@
+var ace = require('brace');
+require('brace/mode/javascript');
+require('brace/theme/monokai');
+require('brace/theme/terminal');
+require('brace/theme/twilight');
+
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions.js";
 import {clearEventListeners}                    from "../utils/HelperFunctions.js";
@@ -30,7 +36,8 @@ import {initLiterature}                         from "./Literature.js";
 import {Locations, displayLocationContent,
         initLocationButtons}                    from "./Location.js";
 import {checkForMessagesToSend, initMessages}   from "./Message.js";
-import {initSingularitySFFlags}                 from "./NetscriptFunctions.js";
+import {initSingularitySFFlags,
+        hasSingularitySF}                       from "./NetscriptFunctions.js";
 import {updateOnlineScriptTimes,
         runScriptsLoop}                         from "./NetscriptWorker.js";
 import {Player}                                 from "./Player.js";
@@ -180,9 +187,6 @@ let Engine = {
 
         //Character info
         characterInfo:                  null,
-
-        //Script editor text
-        scriptEditorText:               null,
     },
 
     //Current page status
@@ -232,11 +236,12 @@ let Engine = {
     loadScriptEditorContent: function(filename = "", code = "") {
         Engine.hideAllContent();
         Engine.Display.scriptEditorContent.style.visibility = "visible";
+        var editor = ace.edit('javascript-editor');
         if (filename != "") {
             document.getElementById("script-editor-filename").value = filename;
-            document.getElementById("script-editor-text").value = code;
+            editor.setValue(code);
         }
-        document.getElementById("script-editor-text").focus();
+        editor.focus();
         updateScriptEditorContent();
         Engine.currentPage = Engine.Page.ScriptEditor;
         document.getElementById("create-script-menu-link").classList.add("active");
@@ -1013,6 +1018,13 @@ let Engine = {
     },
 
     load: function() {
+        //Load script editor
+        var editor = ace.edit('javascript-editor');
+        editor.getSession().setMode('ace/mode/javascript');
+        editor.setTheme('ace/theme/monokai');
+        document.getElementById('javascript-editor').style.fontSize='16px';
+        editor.setOption("showPrintMargin", false);
+
         //Initialize main menu accordion panels to all start as "open"
         var terminal            = document.getElementById("terminal-tab");
         var createScript        = document.getElementById("create-script-tab");
@@ -1271,9 +1283,6 @@ let Engine = {
 		//Init Location buttons
 		initLocationButtons();
 
-        //Script editor
-        Engine.Display.scriptEditorText = document.getElementById("script-editor-text");
-
         //Tutorial buttons
         Engine.Clickables.tutorialNetworkingButton = document.getElementById("tutorial-networking-link");
         Engine.Clickables.tutorialNetworkingButton.addEventListener("click", function() {
@@ -1292,7 +1301,12 @@ let Engine = {
 
         Engine.Clickables.tutorialNetscriptButton = document.getElementById("tutorial-netscript-link");
         Engine.Clickables.tutorialNetscriptButton.addEventListener("click", function() {
-            Engine.displayTutorialPage(CONSTANTS.TutorialNetscriptText);
+            if (Player.bitNodeN === 4 || hasSingularitySF) {
+                Engine.displayTutorialPage(CONSTANTS.TutorialNetscriptText + CONSTANTS.TutorialSingularityFunctionsText);
+            } else {
+                Engine.displayTutorialPage(CONSTANTS.TutorialNetscriptText);
+            }
+
         });
 
         Engine.Clickables.tutorialTravelingButton = document.getElementById("tutorial-traveling-link");

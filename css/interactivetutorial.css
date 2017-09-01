@@ -40,6 +40,7 @@
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
+    background-color:black;
 }
 
 #interactive-tutorial-exit {
@@ -65,4 +66,3 @@
     text-decoration: none;
     cursor: pointer;
 }
-

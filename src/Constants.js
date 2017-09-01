@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.28.0",
+    Version:                "0.28.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -395,7 +395,8 @@ let CONSTANTS = {
                            "any server, regardless of where the script is running. This command requires root access to the target server, but " +
                            "there is no required hacking level to run the command. Returns " +
                            "0.1. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" +
-                           "<i>print(x)</i> <br>Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br><br>" +
+                           "<i>print(x)</i><br>Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br><br>" +
+                           "<i>tprint(x)</i><br>Prints a value or a variable to the Terminal<br><br>" + 
                            "<i>clearLog()</i><br>Clears the script's logs. <br><br>" +
                            "<i>scan(hostname/ip)</i><br>Returns an array containing the hostnames of all servers that are one node away from the specified server. " +
                            "The argument must be a string containing the IP or hostname of the target server. The hostnames in the returned array are strings.<br><br>" +
@@ -858,6 +859,9 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.28.1<br>" +
+    "-The script editor now uses the open-source Ace editor, which provides a much better experience when coding!<br>" +
+    "-Added tprint() Netscript function<br><br>" +
     "v0.28.0<br>" +
     "-Added BitNode-4: The Singularity<br>" +
     "-Added BitNode-11: The Big Crash<br>" +

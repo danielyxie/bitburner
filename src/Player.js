@@ -1513,7 +1513,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
 //Cancels the player's current "work" assignment and gives the proper rewards
 //Used only for Singularity functions, so no popups are created
 PlayerObject.prototype.singularityStopWork = function() {
-    if (!this.isWorking) {return null;}
+    if (!this.isWorking) {return "";}
     var res; //Earnings text for work
     switch (this.workType) {
         case CONSTANTS.WorkTypeStudyClass:

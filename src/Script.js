@@ -1,3 +1,7 @@
+var ace = require('brace');
+require('brace/mode/javascript');
+require('brace/theme/monokai');
+
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {iTutorialSteps, iTutorialNextStep,
@@ -47,14 +51,12 @@ document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 
 //Updates line number and RAM usage in script
 function updateScriptEditorContent() {
-    var txt = $("#script-editor-text")[0];
-    var lineNum = txt.value.substr(0, txt.selectionStart).split("\n").length;
-
-    var code = document.getElementById("script-editor-text").value;
+    var editor = ace.edit('javascript-editor');
+    var code = editor.getValue();
     var codeCopy = code.repeat(1);
     var ramUsage = calculateRamUsage(codeCopy);
     document.getElementById("script-editor-status-text").innerText =
-        "Line Number: " + lineNum + ", RAM: " + formatNumber(ramUsage, 2).toString() + "GB";
+        "RAM: " + formatNumber(ramUsage, 2).toString() + "GB";
 }
 
 //Define key commands in script editor (ctrl o to save + close, etc.)
@@ -75,7 +77,8 @@ function saveAndCloseScriptEditor() {
             dialogBoxCreate("Leave the script name as 'foodnstuff'!");
             return;
         }
-        var code = document.getElementById("script-editor-text").value;
+        var editor = ace.edit('javascript-editor');
+        var code = editor.getValue();
         code = code.replace(/\s/g, "");
         if (code.indexOf("while(true){hack('foodnstuff');}") == -1) {
             dialogBoxCreate("Please copy and paste the code from the tutorial!");
@@ -134,7 +137,8 @@ function Script() {
 Script.prototype.saveScript = function() {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
 		//Update code and filename
-		var code = document.getElementById("script-editor-text").value;
+        var editor = ace.edit('javascript-editor');
+        var code = editor.getValue();
 		this.code = code.replace(/^\s+|\s+$/g, '');
 
 		var filename = document.getElementById("script-editor-filename").value + ".script";
