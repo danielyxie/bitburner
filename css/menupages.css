@@ -585,6 +585,7 @@ div.faction-clear {
     color: var(--my-font-color);
     padding: 4px;
     margin: 4px;
+    background-color:black;
 }
 
 .stock-market-buy-sell-button {
