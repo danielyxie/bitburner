@@ -1,5 +1,6 @@
+import {NetscriptFunctions}             from "./NetscriptFunctions.js";
 /* Environment
- * 	NetScript program environment 
+ * 	NetScript program environment
  */
 function Environment(workerScript,parent) {
     if (parent){
@@ -16,7 +17,7 @@ Environment.prototype = {
     extend: function() {
         return new Environment(this);
     },
-	
+
 	//Finds the scope where the variable with the given name is defined
     lookup: function(name) {
         var scope = this;
@@ -26,7 +27,7 @@ Environment.prototype = {
             scope = scope.parent;
         }
     },
-	
+
 	//Get the current value of a variable
     get: function(name) {
         if (name in this.vars) {
@@ -34,7 +35,7 @@ Environment.prototype = {
         }
         throw new Error("Undefined variable " + name);
     },
-	
+
 	//Sets the value of a variable in any scope
     set: function(name, value) {
         var scope = this.lookup(name);
@@ -48,7 +49,7 @@ Environment.prototype = {
         }
         return (scope || this).vars[name] = value;
     },
-    
+
     setArrayElement: function(name, idx, value) {
         var scope = this.lookup(name);
         if (!scope && this.parent) {
@@ -61,9 +62,11 @@ Environment.prototype = {
         }
         return (scope || this).vars[name][idx] = value;
     },
-    
+
 	//Creates (or overwrites) a variable in the current scope
     def: function(name, value) {
         return this.vars[name] = value;
-    }	
+    }
 };
+
+export {Environment};

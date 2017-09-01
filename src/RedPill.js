@@ -1,3 +1,16 @@
+import {BitNode, BitNodes}                      from "./BitNode.js";
+import {Engine}                                 from "./engine.js";
+import {Player}                                 from "./Player.js";
+import {prestigeSourceFile}                     from "./Prestige.js";
+import {SourceFiles, SourceFile,
+        PlayerOwnedSourceFile}                  from "./SourceFile.js";
+import {Terminal}                               from "./Terminal.js";
+
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {yesNoBoxCreate, yesNoBoxGetYesButton,
+        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
+
 /* RedPill.js
  *  Implements what happens when you have Red Pill augmentation and then hack the world daemon */
 
@@ -38,7 +51,7 @@ function writeRedPillLetter(pElem, line, i=0) {
     });
 }
 
-redPillFlag = false;
+let redPillFlag = false;
 function hackWorldDaemon(currentNodeNumber) {
     redPillFlag = true;
     Engine.loadRedPillContent();
@@ -193,7 +206,7 @@ function loadBitVerse(destroyedBitNodeNum) {
             var elemId = "bitnode-" + i.toString();
             var elem = clearEventListeners(elemId);
             if (elem == null) {return;}
-            if (i == 1 || i == 2) {
+            if (i === 1 || i === 2 || i === 4 || i === 11) {
                 elem.addEventListener("click", function() {
                     var bitNodeKey = "BitNode" + i;
                     var bitNode = BitNodes[bitNodeKey];
@@ -282,6 +295,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
 
         //Set new Bit Node
         Player.bitNodeN = newBitNode;
+        console.log("Entering Bit Node " + Player.bitNodeN);
 
         //Reenable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
@@ -293,7 +307,6 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
 
         prestigeSourceFile();
         yesNoBoxClose();
-        //TODO Dialog box for going ot new Bit node
     });
     var noBtn = yesNoBoxGetNoButton();
     noBtn.innerHTML = "Back";
@@ -302,3 +315,5 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
     });
 
 }
+
+export {redPillFlag, hackWorldDaemon};

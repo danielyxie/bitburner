@@ -1,3 +1,12 @@
+import {BitNodeMultipliers}                             from "./BitNode.js";
+import {CONSTANTS}                                      from "./Constants.js";
+import {Player}                                         from "./Player.js";
+import {prestigeAugmentation}                           from "./Prestige.js";
+import {Factions, getNextNeurofluxLevel}                from "./Faction.js";
+import {dialogBoxCreate} from "../utils/DialogBox.js";
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON} from "../utils/JSONReviver.js";
+
 //Augmentations
 function Augmentation(name) {
     this.name = name;
@@ -18,8 +27,8 @@ Augmentation.prototype.setInfo = function(inf) {
 }
 
 Augmentation.prototype.setRequirements = function(rep, cost) {
-    this.baseRepRequirement = rep * CONSTANTS.AugmentationRepMultiplier;
-    this.baseCost = cost * CONSTANTS.AugmentationCostMultiplier;
+    this.baseRepRequirement = rep * CONSTANTS.AugmentationRepMultiplier * BitNodeMultipliers.AugmentationRepCost;
+    this.baseCost = cost * CONSTANTS.AugmentationCostMultiplier * BitNodeMultipliers.AugmentationMoneyCost;
 }
 
 //Takes in an array of faction names and adds this augmentation to all of those factions
@@ -57,14 +66,14 @@ Augmentation.fromJSON = function(value) {
 
 Reviver.constructors.Augmentation = Augmentation;
 
-Augmentations = {}
+let Augmentations = {}
 
-AddToAugmentations = function(aug) {
+function AddToAugmentations(aug) {
     var name = aug.name;
     Augmentations[name] = aug;
 }
 
-AugmentationNames = {
+let AugmentationNames = {
     Targeting1:                         "Augmented Targeting I",
     Targeting2:                         "Augmented Targeting II",
     Targeting3:                         "Augmented Targeting III",
@@ -153,7 +162,7 @@ AugmentationNames = {
     SNA:                                "Social Negotiation Assistant (S.N.A)"
 }
 
-initAugmentations = function() {
+function initAugmentations() {
     for (var name in Factions) {
         if (Factions.hasOwnProperty(name)) {
             Factions[name].augmentations = [];
@@ -377,7 +386,7 @@ initAugmentations = function() {
     }
     AddToAugmentations(SpeechProcessor);
 
-    TITN41Injection = new Augmentation(AugmentationNames.TITN41Injection);
+    let TITN41Injection = new Augmentation(AugmentationNames.TITN41Injection);
     TITN41Injection.setRequirements(10000, 38000000);
     TITN41Injection.setInfo("TITN is a series of viruses that targets and alters the sequences of human DNA in genes that " +
                             "control personality. The TITN-41 strain alters these genes so that the subject becomes more " +
@@ -1403,7 +1412,7 @@ initAugmentations = function() {
     }
 }
 
-applyAugmentation = function(aug, reapply=false) {
+function applyAugmentation(aug, reapply=false) {
     Augmentations[aug.name].owned = true;
     switch(aug.name) {
         //Combat stat augmentations
@@ -1904,7 +1913,7 @@ function PlayerOwnedAugmentation(name) {
 function installAugmentations() {
     if (Player.queuedAugmentations.length == 0) {
         dialogBoxCreate("You have not purchased any Augmentations to install!");
-        return;
+        return false;
     }
     var augmentationList = "";
     for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
@@ -1923,39 +1932,6 @@ function installAugmentations() {
     prestigeAugmentation();
 }
 
-PlayerObject.prototype.reapplyAllAugmentations = function(resetMultipliers=true) {
-    console.log("Re-applying augmentations");
-    if (resetMultipliers) {
-        this.resetMultipliers();
-    }
-
-    for (i = 0; i < this.augmentations.length; ++i) {
-        //Compatibility with new version
-        if (typeof this.augmentations[i] === 'string' || this.augmentations[i] instanceof String) {
-            var newOwnedAug = new PlayerOwnedAugmentation(this.augmentations[i]);
-            if (this.augmentations[i] == AugmentationNames.NeuroFluxGovernor) {
-                newOwnedAug.level = Augmentations[AugmentationNames.NeuroFluxGovernor].level;
-            }
-            this.augmentations[i] = newOwnedAug;
-        }
-
-        var augName = this.augmentations[i].name;
-        var aug = Augmentations[augName];
-        aug.owned = true;
-        if (aug == null) {
-            console.log("WARNING: Invalid augmentation name");
-            continue;
-        }
-        if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-            for (j = 0; j < aug.level; ++j) {
-                applyAugmentation(this.augmentations[i], true);
-            }
-            continue;
-        }
-        applyAugmentation(this.augmentations[i], true);
-    }
-}
-
 function augmentationExists(name) {
     return Augmentations.hasOwnProperty(name);
 }
@@ -1970,3 +1946,6 @@ function giveAllAugmentations() {
     }
     Player.reapplyAllAugmentations();
 }
+
+export {AugmentationNames, Augmentations, PlayerOwnedAugmentation, installAugmentations,
+        initAugmentations, applyAugmentation, augmentationExists, Augmentation};

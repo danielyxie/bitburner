@@ -1,3 +1,20 @@
+import {CONSTANTS}                              from "./Constants.js";
+import {Engine}                                 from "./engine.js";
+import {Faction, Factions}                      from "./Faction.js";
+import {Locations}                              from "./Location.js";
+import {Player}                                 from "./Player.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+import {getRandomInt}                           from "../utils/HelperFunctions.js";
+import  numeral                                 from "../utils/numeral.min.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
+        yesNoBoxGetYesButton, yesNoBoxGetNoButton,
+        yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,
+        yesNoTxtInpBoxGetInput, yesNoBoxClose,
+        yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox.js";
+
 /* Gang.js */
 //Switch between territory and management screen with 1 and 2
 $(document).keydown(function(event) {
@@ -29,11 +46,11 @@ $(document).mousedown(function(event) {
     }
 });
 
-GangNames = ["Slum Snakes", "Tetrads", "The Syndicate", "The Dark Army", "Speakers for the Dead",
+let GangNames = ["Slum Snakes", "Tetrads", "The Syndicate", "The Dark Army", "Speakers for the Dead",
              "NiteSec", "The Black Hand"];
-GangLocations = [Locations.Aevum, Locations.Chongqing, Locations.Sector12, Locations.NewTokyo,
-                 Locations.Ishima, Locations.Volhaven];
-AllGangs = {
+let GangLocations = [Locations.Aevum, Locations.Chongqing, Locations.Sector12, Locations.NewTokyo,
+                     Locations.Ishima, Locations.Volhaven];
+let AllGangs = {
     "Slum Snakes" : {
         power: 1,
         territory: 1/7,
@@ -64,8 +81,12 @@ AllGangs = {
     },
 }
 
+function loadAllGangs(saveString) {
+    AllGangs = JSON.parse(saveString, Reviver);
+}
+
 //Power is an estimate of a gang's ability to gain/defend territory
-gangStoredPowerCycles = 0;
+let gangStoredPowerCycles = 0;
 function processAllGangPowerGains(numCycles=1) {
     if (!Player.inGang()) {return;}
     gangStoredPowerCycles += numCycles;
@@ -85,7 +106,7 @@ function processAllGangPowerGains(numCycles=1) {
     gangStoredPowerCycles -= 150;
 }
 
-gangStoredTerritoryCycles = 0;
+let gangStoredTerritoryCycles = 0;
 function processAllGangTerritory(numCycles=1) {
     if (!Player.inGang()) {return;}
     gangStoredTerritoryCycles += numCycles;
@@ -116,12 +137,6 @@ function processAllGangTerritory(numCycles=1) {
     }
 
     gangStoredTerritoryCycles -= CONSTANTS.GangTerritoryUpdateTimer;
-}
-
-//Returns true if Player is in a gang and false otherwise
-PlayerObject.prototype.inGang = function() {
-    if (this.gang == null || this.gang == undefined) {return false;}
-    return (this.gang instanceof Gang);
 }
 
 /*  faction - Name of corresponding faction
@@ -229,7 +244,6 @@ Gang.fromJSON = function(value) {
 }
 
 Reviver.constructors.Gang = Gang;
-
 
 /*** Gang Member object ***/
 function GangMember(name) {
@@ -405,7 +419,7 @@ GangMemberTask.fromJSON = function(value) {
 Reviver.constructors.GangMemberTask = GangMemberTask;
 
 //TODO Human trafficking and an equivalent hacking crime
-GangMemberTasks = {
+let GangMemberTasks = {
     "Ransomware" :              new GangMemberTask(
                                         "Ransomware",
                                         "Assign this gang member to create and distribute ransomware<br><br>" +
@@ -674,7 +688,7 @@ GangMemberUpgrade.fromJSON = function(value) {
 
 Reviver.constructors.GangMemberUpgrade = GangMemberUpgrade;
 
-GangMemberUpgrades = {
+let GangMemberUpgrades = {
     "Baseball Bat" : new GangMemberUpgrade("Baseball Bat",
                             "Increases strength and defense by 10%", 1000000, "w"),
     "Katana" :       new GangMemberUpgrade("Katana",
@@ -716,7 +730,7 @@ GangMemberUpgrades = {
 }
 
 //Create a pop-up box that lets player purchase upgrades
-var gangMemberUpgradeBoxOpened = false;
+let gangMemberUpgradeBoxOpened = false;
 function createGangMemberUpgradeBox(memberObj) {
     console.log("Creating gang member upgrade box for " + memberObj.name);
     var container = document.getElementById("gang-purchase-upgrade-container");
@@ -838,7 +852,7 @@ function createGangMemberUpgradeButtons(memberObj, upgNames, memberUpgrade, cont
     }
 }
 
-var gangContentCreated = false;
+let gangContentCreated = false;
 function displayGangContent() {
     if (!gangContentCreated) {
         gangContentCreated = true;
@@ -1084,7 +1098,7 @@ function setGangMemberClickHandlers() {
         console.log("ERROR: Could not find Active Scripts server panels");
         return;
     }
-    for (i = 0; i < gangMemberHdrs.length; ++i) {
+    for (let i = 0; i < gangMemberHdrs.length; ++i) {
         gangMemberHdrs[i].onclick = function() {
             this.classList.toggle("active");
 
@@ -1168,7 +1182,7 @@ function createGangMemberDisplayElement(memberObj) {
     if (memberObj.task instanceof GangMemberTask) {
         var taskName = memberObj.task.name;
         var taskIndex = 0;
-        for (i = 0; i < tasks.length; ++i) {
+        for (let i = 0; i < tasks.length; ++i) {
             if (taskName == tasks[i]) {
                 taskIndex = i;
                 break;
@@ -1247,3 +1261,5 @@ function setGangMemberTaskDescription(memberObj, taskName) {
         taskDesc.innerHTML = desc;
     }
 }
+
+export {Gang, displayGangContent, updateGangContent, loadAllGangs, AllGangs};

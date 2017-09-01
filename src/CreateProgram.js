@@ -1,17 +1,20 @@
+import {CONSTANTS} from "./Constants.js";
+import {Player} from "./Player.js";
+
 /* Create programs */
-Programs = {
-    NukeProgram:        "NUKE.exe",
-    BruteSSHProgram:    "BruteSSH.exe",
-    FTPCrackProgram:    "FTPCrack.exe",
-    RelaySMTPProgram:   "relaySMTP.exe",
-    HTTPWormProgram:    "HTTPWorm.exe",
-    SQLInjectProgram:   "SQLInject.exe",
-    DeepscanV1:         "DeepscanV1.exe",
-    DeepscanV2:         "DeepscanV2.exe",
-    ServerProfiler:     "ServerProfiler.exe",
-    AutoLink:           "AutoLink.exe",
-    Flight:             "fl1ght.exe",
-}
+let Programs = {
+    NukeProgram:          "NUKE.exe",
+    BruteSSHProgram:      "BruteSSH.exe",
+    FTPCrackProgram:      "FTPCrack.exe",
+    RelaySMTPProgram:     "relaySMTP.exe",
+    HTTPWormProgram:      "HTTPWorm.exe",
+    SQLInjectProgram:     "SQLInject.exe",
+    DeepscanV1:           "DeepscanV1.exe",
+    DeepscanV2:           "DeepscanV2.exe",
+    ServerProfiler:       "ServerProfiler.exe",
+    AutoLink:             "AutoLink.exe",
+    Flight:               "fl1ght.exe",
+};
 
 //TODO Right now the times needed to complete work are hard-coded...
 //maybe later make this dependent on hacking level or something
@@ -26,9 +29,9 @@ function displayCreateProgramContent() {
     var deepscanv2ALink     = document.getElementById("create-program-deepscanv2");
     var servProfilerALink   = document.getElementById("create-program-serverprofiler");
     var autolinkALink       = document.getElementById("create-program-autolink");
-    
+
     nukeALink.style.display = "none";
-    bruteSshALink.style.display = "none"; 
+    bruteSshALink.style.display = "none";
     ftpCrackALink.style.display = "none";
     relaySmtpALink.style.display = "none";
     httpWormALink.style.display = "none";
@@ -37,15 +40,15 @@ function displayCreateProgramContent() {
     deepscanv2ALink.style.display = "none";
     servProfilerALink.style.display = "none";
     autolinkALink.style.display = "none";
-        
+
     //NUKE.exe (in case you delete it lol)
-    if (Player.getHomeComputer().programs.indexOf(Programs.NukeProgram) == -1) {    
+    if (Player.getHomeComputer().programs.indexOf(Programs.NukeProgram) == -1) {
         nukeALink.style.display = "inline-block";
     }
     //BruteSSH
     if (Player.getHomeComputer().programs.indexOf(Programs.BruteSSHProgram) == -1 &&
         Player.hacking_skill >= 50) {
-        bruteSshALink.style.display = "inline-block";   
+        bruteSshALink.style.display = "inline-block";
     }
     //FTPCrack
     if (Player.getHomeComputer().programs.indexOf(Programs.FTPCrackProgram) == -1 &&
@@ -88,7 +91,7 @@ function displayCreateProgramContent() {
 function getNumAvailableCreateProgram() {
     var count = 0;
     //PortHack.exe (in case you delete it lol)
-    if (Player.getHomeComputer().programs.indexOf(Programs.NukeProgram) == -1) {    
+    if (Player.getHomeComputer().programs.indexOf(Programs.NukeProgram) == -1) {
         ++count;
     }
     //BruteSSH
@@ -131,6 +134,7 @@ function getNumAvailableCreateProgram() {
     if (!Player.hasProgram(Programs.AutoLink) && Player.hacking_skill >= 25) {
         ++count;
     }
+    if (count > 0) {Player.firstProgramAvailable = true;}
     return count;
 }
 
@@ -145,7 +149,7 @@ function initCreateProgramButtons() {
     var deepscanv2ALink     = document.getElementById("create-program-deepscanv2");
     var servProfilerALink   = document.getElementById("create-program-serverprofiler");
     var autolinkALink       = document.getElementById("create-program-autolink");
-    
+
     nukeALink.addEventListener("click", function() {
         Player.startCreateProgramWork(Programs.NukeProgram, CONSTANTS.MillisecondsPerFiveMinutes, 1);
         return false;
@@ -185,5 +189,8 @@ function initCreateProgramButtons() {
     autolinkALink.addEventListener("click", function() {
         Player.startCreateProgramWork(Programs.AutoLink, CONSTANTS.MillisecondsPerQuarterHour, 25);
         return false;
-    });    
+    });
 }
+
+export {Programs, displayCreateProgramContent, getNumAvailableCreateProgram,
+        initCreateProgramButtons};

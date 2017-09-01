@@ -1,6 +1,22 @@
-/* Script.js
- *  Script object
- */
+var ace = require('brace');
+require('brace/mode/javascript');
+require('brace/theme/monokai');
+
+import {CONSTANTS}                              from "./Constants.js";
+import {Engine}                                 from "./engine.js";
+import {iTutorialSteps, iTutorialNextStep,
+        iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial.js";
+import {addWorkerScript, killWorkerScript}      from "./NetscriptWorker.js";
+import {Player}                                 from "./Player.js";
+import {AllServers, processSingleServerGrowth}  from "./Server.js";
+import {Settings}                               from "./Settings.js";
+
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+import {compareArrays}                          from "../utils/HelperFunctions.js";
+import {formatNumber, numOccurrences,
+        numNetscriptOperators}                  from "../utils/StringHelperFunctions.js";
 
 function scriptEditorInit() {
     //Initialize save and close button
@@ -22,7 +38,7 @@ function scriptEditorInit() {
                 var end = this.selectionEnd;
 
                 //Set textarea value to: text before caret + four spaces + text after caret
-                spaces = "    ";
+                let spaces = "    ";
                 this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
 
                 //Put caret at after the four spaces
@@ -34,15 +50,13 @@ function scriptEditorInit() {
 document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 
 //Updates line number and RAM usage in script
-function upgradeScriptEditorContent() {
-    var txt = $("#script-editor-text")[0];
-    var lineNum = txt.value.substr(0, txt.selectionStart).split("\n").length;
-
-    var code = document.getElementById("script-editor-text").value;
+function updateScriptEditorContent() {
+    var editor = ace.edit('javascript-editor');
+    var code = editor.getValue();
     var codeCopy = code.repeat(1);
     var ramUsage = calculateRamUsage(codeCopy);
     document.getElementById("script-editor-status-text").innerText =
-        "Line Number: " + lineNum + ", RAM: " + formatNumber(ramUsage, 2).toString() + "GB";
+        "RAM: " + formatNumber(ramUsage, 2).toString() + "GB";
 }
 
 //Define key commands in script editor (ctrl o to save + close, etc.)
@@ -63,7 +77,8 @@ function saveAndCloseScriptEditor() {
             dialogBoxCreate("Leave the script name as 'foodnstuff'!");
             return;
         }
-        var code = document.getElementById("script-editor-text").value;
+        var editor = ace.edit('javascript-editor');
+        var code = editor.getValue();
         code = code.replace(/\s/g, "");
         if (code.indexOf("while(true){hack('foodnstuff');}") == -1) {
             dialogBoxCreate("Please copy and paste the code from the tutorial!");
@@ -122,7 +137,8 @@ function Script() {
 Script.prototype.saveScript = function() {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
 		//Update code and filename
-		var code = document.getElementById("script-editor-text").value;
+        var editor = ace.edit('javascript-editor');
+        var code = editor.getValue();
 		this.code = code.replace(/^\s+|\s+$/g, '');
 
 		var filename = document.getElementById("script-editor-filename").value + ".script";
@@ -200,6 +216,30 @@ function calculateRamUsage(codeCopy) {
     var getHackTimeCount = numOccurrences(codeCopy, "getHackTime(") +
                            numOccurrences(codeCopy, "getGrowTime(") +
                            numOccurrences(codeCopy, "getWeakenTime(");
+    var singFn1Count = numOccurrences(codeCopy, "universityCourse(") +
+                       numOccurrences(codeCopy, "gymWorkout(") +
+                       numOccurrences(codeCopy, "travelToCity(") +
+                       numOccurrences(codeCopy, "purchaseTor(") +
+                       numOccurrences(codeCopy, "purchaseProgram(");
+    var singFn2Count = numOccurrences(codeCopy, "upgradeHomeRam(") +
+                       numOccurrences(codeCopy, "getUpgradeHomeRamCost(") +
+                       numOccurrences(codeCopy, "workForCompany(") +
+                       numOccurrences(codeCopy, "applyToCompany(") +
+                       numOccurrences(codeCopy, "getCompanyRep(") +
+                       numOccurrences(codeCopy, "checkFactionInvitations(") +
+                       numOccurrences(codeCopy, "joinFaction(") +
+                       numOccurrences(codeCopy, "workForFaction(") +
+                       numOccurrences(codeCopy, "getFactionRep(");
+    var singFn3Count = numOccurrences(codeCopy, "createProgram(") +
+                       numOccurrences(codeCopy, "getAugmentationCost(") +
+                       numOccurrences(codeCopy, "purchaseAugmentation(") +
+                       numOccurrences(codeCopy, "installAugmentations(");
+
+    if (Player.bitNodeN != 4) {
+        singFn1Count *= 10;
+        singFn2Count *= 10;
+        singFn3Count *= 10;
+    }
 
     return baseRam +
         ((whileCount * CONSTANTS.ScriptWhileRamCost) +
@@ -238,8 +278,11 @@ function calculateRamUsage(codeCopy) {
         (scriptWriteCount * CONSTANTS.ScriptReadWriteRamCost) +
         (scriptReadCount * CONSTANTS.ScriptReadWriteRamCost) +
         (arbScriptCount * CONSTANTS.ScriptArbScriptRamCost) +
-        (getScriptCount * CONSTANTS.ScriptGetScriptCost) +
-        (getHackTimeCount * CONSTANTS.ScriptGetHackTimeCost));
+        (getScriptCount * CONSTANTS.ScriptGetScriptRamCost) +
+        (getHackTimeCount * CONSTANTS.ScriptGetHackTimeRamCost) +
+        (singFn1Count * CONSTANTS.ScriptSingularityFn1RamCost) +
+        (singFn2Count * CONSTANTS.ScriptSingularityFn2RamCost) +
+        (singFn3Count * CONSTANTS.ScriptSingularityFn3RamCost));
 }
 
 Script.prototype.toJSON = function() {
@@ -255,7 +298,7 @@ Reviver.constructors.Script = Script;
 
 //Called when the game is loaded. Loads all running scripts (from all servers)
 //into worker scripts so that they will start running
-loadAllRunningScripts = function() {
+function loadAllRunningScripts() {
 	var count = 0;
     var total = 0;
 	for (var property in AllServers) {
@@ -278,7 +321,7 @@ loadAllRunningScripts = function() {
 	console.log("Loaded " + count.toString() + " running scripts");
 }
 
-scriptCalculateOfflineProduction = function(runningScriptObj) {
+function scriptCalculateOfflineProduction(runningScriptObj) {
 	//The Player object stores the last update time from when we were online
 	var thisUpdate = new Date().getTime();
 	var lastUpdate = Player.lastUpdate;
@@ -473,6 +516,8 @@ RunningScript.fromJSON = function(value) {
     return Generic_fromJSON(RunningScript, value.data);
 }
 
+Reviver.constructors.RunningScript = RunningScript;
+
 //Creates an object that creates a map/dictionary with the IP of each existing server as
 //a key. Initializes every key with a specified value that can either by a number or an array
 function AllServersMap(arr=false) {
@@ -517,3 +562,6 @@ AllServersMap.fromJSON = function(value) {
 }
 
 Reviver.constructors.AllServersMap = AllServersMap;
+
+export {updateScriptEditorContent, loadAllRunningScripts, findRunningScript,
+        RunningScript, Script, AllServersMap};

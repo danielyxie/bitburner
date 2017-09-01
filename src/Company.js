@@ -1,3 +1,10 @@
+import {CONSTANTS}                      from "./Constants.js";
+import {Locations}                      from "./Location.js";
+import {Player}                         from "./Player.js";
+
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}               from "../utils/JSONReviver.js";
+
 //Netburner Company class
 //    Note: Company Positions can be loaded every time with init() but Company class needs
 //          to be saved/loaded from localStorage
@@ -251,7 +258,7 @@ CompanyPosition.fromJSON = function(value) {
 
 Reviver.constructors.CompanyPosition = CompanyPosition;
 
-CompanyPositions = {
+let CompanyPositions = {
     //Constructor: CompanyPosition(name, reqHack, reqStr, reqDef, reqDex, reqAgi, reqCha, reqRep, salary)
 
     //Software
@@ -403,7 +410,7 @@ CompanyPositions = {
 
 //Returns the next highest position in the company for the relevant career/field
 //I.E returns what your next job would be if you qualify for a promotion
-getNextCompanyPosition = function(currPos) {
+function getNextCompanyPosition(currPos) {
     if (currPos == null) {return null;}
     //Software
     if (currPos.positionName == CompanyPositions.SoftwareIntern.positionName) {
@@ -511,7 +518,7 @@ getNextCompanyPosition = function(currPos) {
 
 /* Initialize all companies. Only called when creating new game/prestiging. Otherwise companies are
  * usually loaded from localStorage */
-initCompanies = function() {
+function initCompanies() {
     /* Companies that also have servers */
     //Megacorporations
     var ECorp = new Company(Locations.AevumECorp, 3.0, 3.0, 249);
@@ -1088,10 +1095,14 @@ initCompanies = function() {
 }
 
 //Map of all companies that exist in the game, indexed by their name
-Companies = {}
+let Companies = {}
+
+function loadCompanies(saveString) {
+    Companies = JSON.parse(saveString, Reviver);
+}
 
 //Add a Company object onto the map of all Companies in the game
-AddToCompanies = function (company) {
+function AddToCompanies(company) {
     var name = company.companyName;
     Companies[name] = company;
 }
@@ -1099,3 +1110,41 @@ AddToCompanies = function (company) {
 function companyExists(name) {
     return Companies.hasOwnProperty(name);
 }
+
+function getJobRequirementText(company, pos, tooltiptext=false) {
+    var reqText = "";
+    var offset = company.jobStatReqOffset;
+    var reqHacking = pos.requiredHacking > 0       ? pos.requiredHacking+offset   : 0;
+    var reqStrength = pos.requiredStrength > 0     ? pos.requiredStrength+offset  : 0;
+    var reqDefense = pos.requiredDefense > 0       ? pos.requiredDefense+offset   : 0;
+    var reqDexterity = pos.requiredDexterity > 0   ? pos.requiredDexterity+offset : 0;
+    var reqAgility = pos.requiredDexterity > 0     ? pos.requiredDexterity+offset : 0;
+    var reqCharisma = pos.requiredCharisma > 0     ? pos.requiredCharisma+offset  : 0;
+    var reqRep = pos.requiredReputation;
+    if (tooltiptext) {
+        reqText = "Requires:<br>";
+        reqText += (reqHacking.toString() +       " hacking<br>");
+        reqText += (reqStrength.toString() +      " strength<br>");
+        reqText += (reqDefense.toString() +       " defense<br>");
+        reqText += (reqDexterity.toString() +     " dexterity<br>");
+        reqText += (reqAgility.toString() +       " agility<br>");
+        reqText += (reqCharisma.toString() +      " charisma<br>");
+        reqText += (reqRep.toString() +           " reputation");
+    } else {
+        reqText = "(Requires ";
+        if (reqHacking > 0)     {reqText += (reqHacking +       " hacking, ");}
+        if (reqStrength > 0)    {reqText += (reqStrength +      " strength, ");}
+        if (reqDefense > 0)     {reqText += (reqDefense +       " defense, ");}
+        if (reqDexterity > 0)   {reqText += (reqDexterity +     " dexterity, ");}
+        if (reqAgility > 0)     {reqText += (reqAgility +       " agility, ");}
+        if (reqCharisma > 0)    {reqText += (reqCharisma +      " charisma, ");}
+        if (reqRep > 1)         {reqText += (reqRep +           " reputation, ");}
+        reqText = reqText.substring(0, reqText.length - 2);
+        reqText += ")";
+    }
+    return reqText;
+}
+
+export {CompanyPositions, initCompanies, Companies, getJobRequirementText,
+        getNextCompanyPosition, loadCompanies, Company, CompanyPosition,
+        companyExists};

@@ -1,5 +1,9 @@
+import {Engine} from "./engine.js";
+import {dialogBoxCreate} from "../utils/DialogBox.js";
+import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+
 /* InteractiveTutorial.js */
-iTutorialSteps = {
+let iTutorialSteps = {
     Start: "Start",
     GoToCharacterPage: "Click on the Character page menu link",
     CharacterPage: "Introduction to Character page",
@@ -652,3 +656,6 @@ function iTutorialSetText(txt) {
     textBox.innerHTML = txt;
     textBox.parentElement.scrollTop = 0; // this resets scroll position
 }
+
+export {iTutorialSteps, iTutorialEnd, iTutorialStart, iTutorialNextStep, currITutorialStep,
+        iTutorialIsRunning};

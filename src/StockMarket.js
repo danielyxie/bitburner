@@ -1,3 +1,14 @@
+import {CONSTANTS}                              from "./Constants.js";
+import {Engine}                                 from "./engine.js";
+import {Locations}                              from "./Location.js";
+import {Player}                                 from "./Player.js";
+
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {clearEventListeners, getRandomInt}      from "../utils/HelperFunctions.js";
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+
 /* StockMarket.js */
 function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
     this.symbol     = symbol;
@@ -11,10 +22,27 @@ function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
     this.otlkMag        = otlkMag;
 }
 
+Stock.prototype.toJSON = function() {
+	return Generic_toJSON("Stock", this);
+}
 
-StockMarket = {}        //Full name to stock object
-StockSymbols = {}       //Full name to symbol
-SymbolToStockMap = {};  //Symbol to Stock object
+Stock.fromJSON = function(value) {
+	return Generic_fromJSON(Stock, value.data);
+}
+
+Reviver.constructors.Stock = Stock;
+
+let StockMarket = {}        //Full name to stock object
+let StockSymbols = {}       //Full name to symbol
+let SymbolToStockMap = {};  //Symbol to Stock object
+
+function loadStockMarket(saveString) {
+    if (saveString === "") {
+        StockMarket = {};
+    } else {
+        StockMarket = JSON.parse(saveString, Reviver);
+    }
+}
 
 function initStockSymbols() {
     //Stocks for companies at which you can work
@@ -51,7 +79,6 @@ function initStockSymbols() {
     StockSymbols["Sigma Cosmetics"]                         = "SGC";
     StockSymbols["Joes Guns"]                               = "JGN";
     StockSymbols["Catalyst Ventures"]                       = "CTYS";
-    StockSymbols["Taiyang Digital"]                         = "TAI";
     StockSymbols["Microdyne Technologies"]                  = "MDYN";
     StockSymbols["Titan Laboratories"]                      = "TITN";
 }
@@ -118,10 +145,6 @@ function initStockMarket() {
     var universalenergy = Locations.Sector12UniversalEnergy;
     var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], 0.55, true, 10, getRandomInt(20000, 25000));
     StockMarket[universalenergy] = universalenergyStk;
-
-    var galactic = Locations.AevumGalacticCybersystems;
-    var galacticStk = new Stock(galactic, StockSymbols[galactic], 0.6, true, 5, getRandomInt(8000, 10000));
-    StockMarket[galactic] = galacticStk;
 
     var aerocorp = Locations.AevumAeroCorp;
     var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], 0.6, true, 6, getRandomInt(10000, 15000));
@@ -190,10 +213,6 @@ function initStockMarket() {
     var catalyst = "Catalyst Ventures";
     var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.25, true, 0, getRandomInt(1000, 1500));
     StockMarket[catalyst] = catalystStk;
-
-    var taiyang = "Taiyang Digital";
-    var taiyangStk = new Stock(taiyang, StockSymbols[taiyang], 0.75, true, 12, getRandomInt(25000, 30000));
-    StockMarket[taiyang] = taiyangStk;
 
     var microdyne = "Microdyne Technologies";
     var microdyneStk = new Stock(microdyne, StockSymbols[microdyne], 0.75, true, 8, getRandomInt(20000, 25000));
@@ -328,6 +347,10 @@ function updateStockPrices() {
             }
         }
     }
+}
+
+function setStockMarketContentCreated(b) {
+    stockMarketContentCreated = b;
 }
 
 var stockMarketContentCreated = false;
@@ -537,9 +560,9 @@ function displayStockMarketContent() {
 //'increase' argument is a boolean indicating whether the price increased or decreased
 function updateStockTicker(stock, increase) {
     var tickerId = "stock-market-ticker-" + stock.symbol;
-    stkName = document.getElementById(tickerId + "-name");
-    stkSym = document.getElementById(tickerId + "-sym");
-    stkPrice = document.getElementById(tickerId + "-price");
+    let stkName = document.getElementById(tickerId + "-name");
+    let stkSym = document.getElementById(tickerId + "-sym");
+    let stkPrice = document.getElementById(tickerId + "-price");
 
     if (stkName == null || stkSym == null || stkPrice == null) {
         console.log("ERROR, couldn't find elements with tickerId " + tickerId);
@@ -584,3 +607,9 @@ function updateStockPlayerPosition(stock) {
     avgPriceTxt.innerText = "$" + formatNumber(stock.playerAvgPx, 2);
     sharesTxt.innerText = stock.playerShares.toString();
 }
+
+export {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
+        initStockMarket, initSymbolToStockMap, stockMarketCycle, buyStock,
+        sellStock, updateStockPrices, displayStockMarketContent,
+        updateStockTicker, updateStockPlayerPosition, loadStockMarket,
+        setStockMarketContentCreated};

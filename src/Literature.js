@@ -1,3 +1,5 @@
+import {dialogBoxCreate} from "../utils/DialogBox.js";
+
 /* Literature.js
  *  Lore / world building literature that can be found on servers
  */
@@ -15,7 +17,7 @@ function showLiterature(fn) {
     dialogBoxCreate(txt);
 }
 
-Literatures = {}
+let Literatures = {}
 
 function initLiterature() {
     var title, fn, txt;
@@ -125,7 +127,7 @@ function initLiterature() {
               "Soon the cries rose everywhere, with revolt and riot<br>Until one day, finally, all was quiet<br>" +
               "From the ashes rose a new order, corporatocracy was its name<br>" +
               "Rome, Mongol, Byzantine, all of history is just the same<br>" +
-              "For man will never change in a fundamental way<br>"
+              "For man will never change in a fundamental way<br>" +
               "And now democracy is dead, in the USA";
     Literatures[fn] = new Literature(title, fn, txt);
 
@@ -265,7 +267,7 @@ function initLiterature() {
 
     title   = "The Hidden World";
     fn      = "the-hidden-world.lit";
-    txt     = "WAKE UP SHEEPLE<br><br>"
+    txt     = "WAKE UP SHEEPLE<br><br>" +
               "THE GOVERNMENT DOES NOT EXIST. CORPORATIONS DO NOT RUN SOCIETY<br><br>" +
               "THE ILLUMINATI ARE THE SECRET RULERS OF THE WORLD!<br><br>" +
               "Yes, the Illuminati of legends. The ancient secret society that controls the entire " +
@@ -317,3 +319,5 @@ function initLiterature() {
     txt     = ""
     Literatures[fn] = new Literature(title, fn, txt);
 }
+
+export {Literatures, initLiterature, showLiterature};

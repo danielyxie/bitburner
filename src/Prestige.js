@@ -1,113 +1,49 @@
-/* Prestige functions */
+import {deleteActiveScriptsItem}                from "./ActiveScriptsUI.js";
+import {Augmentations, augmentationExists,
+        initAugmentations, AugmentationNames}   from "./Augmentations.js";
+import {initBitNodeMultipliers}                 from "./BitNode.js";
+import {Companies, Company, initCompanies}      from "./Company.js";
+import {Programs}                               from "./CreateProgram.js";
+import {Engine}                                 from "./engine.js";
+import {Factions, Faction, initFactions,
+        joinFaction}                            from "./Faction.js";
+import {Locations}                              from "./Location.js";
+import {initMessages, Messages, Message}        from "./Message.js";
+import {WorkerScript, workerScripts,
+        prestigeWorkerScripts}                  from "./NetscriptWorker.js";
+import {Player}                                 from "./Player.js";
+import {AllServers, AddToAllServers,
+        initForeignServers, Server,
+        prestigeAllServers,
+        prestigeHomeComputer}                   from "./Server.js";
+import {SpecialServerIps, SpecialServerIpsMap,
+        prestigeSpecialServerIps,
+        SpecialServerNames}                     from "./SpecialServerIps.js";
+import {initStockMarket, initSymbolToStockMap,
+        stockMarketContentCreated,
+        setStockMarketContentCreated}           from "./StockMarket.js";
+import {Terminal, postNetburnerText}            from "./Terminal.js";
+import Decimal                                  from '../utils/decimal.js';
 
 //Prestige by purchasing augmentation
 function prestigeAugmentation() {
     initBitNodeMultipliers();
 
-    //Crime statistics
-    Player.numTimesShoplifted = 0;
-    Player.numPeopleMugged = 0;
-    Player.numTimesDealtDrugs = 0;
-    Player.numTimesTraffickArms = 0;
-    Player.numPeopleKilled = 0;
-    Player.numTimesGrandTheftAuto = 0;
-    Player.numTimesKidnapped = 0;
-    Player.numTimesHeist = 0;
-
-    Player.karma = 0;
-
-    //Reset stats
-    Player.hacking_skill = 1;
-
-    Player.strength = 1;
-    Player.defense = 1;
-    Player.dexterity = 1;
-    Player.agility = 1;
-
-    Player.charisma = 1;
-
-    Player.hacking_exp = 0;
-    Player.strength_exp = 0;
-    Player.defense_exp = 0;
-    Player.dexterity_exp = 0;
-    Player.agility_exp = 0;
-    Player.charisma_exp = 0;
-
-    Player.money = new Decimal(1000);
-
-    Player.city = Locations.Sector12;
-    Player.location = "";
-
-    Player.companyName = "";
-    Player.companyPosition = "";
-
-    Player.currentServer = "";
-    Player.discoveredServers = [];
-    Player.purchasedServers = [];
-
-    Player.factions = [];
-    Player.factionInvitations = [];
-
-    Player.queuedAugmentations = [];
-
-    Player.startAction = false;
-    Player.actionTime = 0;
-
-    Player.isWorking = false;
-    Player.currentWorkFactionName = "";
-    Player.currentWorkFactionDescription = "";
-    this.createProgramName = "";
-    this.className = "";
-    this.crimeType = "";
-
-    Player.workHackExpGainRate = 0;
-    Player.workStrExpGainRate = 0;
-    Player.workDefExpGainRate = 0;
-    Player.workDexExpGainRate = 0;
-    Player.workAgiExpGainRate = 0;
-    Player.workChaExpGainRate = 0;
-    Player.workRepGainRate = 0;
-    Player.workMoneyGainRate = 0;
-
-    Player.workHackExpGained = 0;
-    Player.workStrExpGained = 0;
-    Player.workDefExpGained = 0;
-    Player.workDexExpGained = 0;
-    Player.workAgiExpGained = 0;
-    Player.workChaExpGained = 0;
-    Player.workRepGained = 0;
-    Player.workMoneyGained = 0;
-
-    Player.timeWorked = 0;
-
-    Player.lastUpdate = new Date().getTime();
+    Player.prestigeAugmentation();
 
     //Delete all Worker Scripts objects
-    for (var i = 0; i < workerScripts.length; ++i) {
-        deleteActiveScriptsItem(workerScripts[i]);
-        workerScripts[i].env.stopFlag = true;
-    }
-    workerScripts.length = 0;
+    prestigeWorkerScripts();
 
     var homeComp = Player.getHomeComputer();
     //Delete all servers except home computer
-    for (var member in AllServers) {
-        delete AllServers[member];
-    }
-    AllServers = {};
+    prestigeAllServers();
+
     //Delete Special Server IPs
-    for (var member in SpecialServerIps) {
-        delete SpecialServerIps[member];
-    }
-    SpecialServersIps = null;
+    prestigeSpecialServerIps(); //Must be done before initForeignServers()
 
     //Reset home computer (only the programs) and add to AllServers
-    homeComp.programs.length = 0;
-    homeComp.runningScripts = [];
-    homeComp.serversOnNetwork = [];
-    homeComp.isConnectedTo = true;
-    homeComp.ramUsed = 0;
-    homeComp.programs.push(Programs.NukeProgram);
+    prestigeHomeComputer(homeComp);
+
     if (augmentationExists(AugmentationNames.Neurolink) &&
         Augmentations[AugmentationNames.Neurolink].owned) {
         homeComp.programs.push(Programs.FTPCrackProgram);
@@ -115,30 +51,17 @@ function prestigeAugmentation() {
     }
     if (augmentationExists(AugmentationNames.CashRoot) &&
         Augmentations[AugmentationNames.CashRoot].owned) {
-        Player.money = new Decimal(1000000);
+        Player.setMoney(new Decimal(1000000));
         homeComp.programs.push(Programs.BruteSSHProgram);
     }
-    Player.currentServer = homeComp.ip;
-    Player.homeComputer = homeComp.ip;
+
     AddToAllServers(homeComp);
 
     //Re-create foreign servers
-    SpecialServerIps = new SpecialServerIpsMap();   //Must be done before initForeignServers()
     initForeignServers();
 
     //Darkweb is purchase-able
     document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button");
-
-    //Reset statistics of all scripts on home computer
-    for (var i = 0; i < homeComp.scripts.length; ++i) {
-        var s = homeComp.scripts[i];
-    }
-    //Delete messages on home computer
-    homeComp.messages.length = 0;
-
-    //Delete Hacknet Nodes
-    Player.hacknetNodes.length = 0;
-    Player.totalHacknetNodeProduction = 0;
 
     //Gain favor for Companies
     for (var member in Companies) {
@@ -177,7 +100,7 @@ function prestigeAugmentation() {
     if (Player.hasWseAccount) {
         initStockMarket();
         initSymbolToStockMap();
-        stockMarketContentCreated = false;
+        setStockMarketContentCreated(false);
         var stockMarketList = document.getElementById("stock-market-list");
         while(stockMarketList.firstChild) {
             stockMarketList.removeChild(stockMarketList.firstChild);
@@ -191,8 +114,6 @@ function prestigeAugmentation() {
             joinFaction(faction);
         }
     }
-
-    Player.playtimeSinceLastAug = 0;
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
@@ -216,110 +137,22 @@ function prestigeSourceFile() {
     initBitNodeMultipliers();
 
     //Crime statistics
-    Player.numTimesShoplifted = 0;
-    Player.numPeopleMugged = 0;
-    Player.numTimesDealtDrugs = 0;
-    Player.numTimesTraffickArms = 0;
-    Player.numPeopleKilled = 0;
-    Player.numTimesGrandTheftAuto = 0;
-    Player.numTimesKidnapped = 0;
-    Player.numTimesHeist = 0;
-
-    Player.karma = 0;
-
-    //Reset stats
-    Player.hacking_skill = 1;
-
-    Player.strength = 1;
-    Player.defense = 1;
-    Player.dexterity = 1;
-    Player.agility = 1;
-
-    Player.charisma = 1;
-
-    Player.hacking_exp = 0;
-    Player.strength_exp = 0;
-    Player.defense_exp = 0;
-    Player.dexterity_exp = 0;
-    Player.agility_exp = 0;
-    Player.charisma_exp = 0;
-
-    Player.money = new Decimal(1000);
-
-    Player.city = Locations.Sector12;
-    Player.location = "";
-
-    Player.companyName = "";
-    Player.companyPosition = "";
-
-    Player.currentServer = "";
-    Player.discoveredServers = [];
-    Player.purchasedServers = [];
-
-    Player.factions = [];
-    Player.factionInvitations = [];
-
-    Player.queuedAugmentations = [];
-    Player.augmentations = [];
-
-    Player.startAction = false;
-    Player.actionTime = 0;
-
-    Player.isWorking = false;
-    Player.currentWorkFactionName = "";
-    Player.currentWorkFactionDescription = "";
-    this.createProgramName = "";
-    this.className = "";
-    this.crimeType = "";
-
-    Player.workHackExpGainRate = 0;
-    Player.workStrExpGainRate = 0;
-    Player.workDefExpGainRate = 0;
-    Player.workDexExpGainRate = 0;
-    Player.workAgiExpGainRate = 0;
-    Player.workChaExpGainRate = 0;
-    Player.workRepGainRate = 0;
-    Player.workMoneyGainRate = 0;
-
-    Player.workHackExpGained = 0;
-    Player.workStrExpGained = 0;
-    Player.workDefExpGained = 0;
-    Player.workDexExpGained = 0;
-    Player.workAgiExpGained = 0;
-    Player.workChaExpGained = 0;
-    Player.workRepGained = 0;
-    Player.workMoneyGained = 0;
-
-    Player.timeWorked = 0;
-
-    Player.lastUpdate = new Date().getTime();
+    Player.prestigeSourceFile();
 
     //Delete all Worker Scripts objects
-    for (var i = 0; i < workerScripts.length; ++i) {
-        deleteActiveScriptsItem(workerScripts[i]);
-        workerScripts[i].env.stopFlag = true;
-    }
-    workerScripts.length = 0;
+    prestigeWorkerScripts();
 
     var homeComp = Player.getHomeComputer();
+
     //Delete all servers except home computer
-    for (var member in AllServers) {
-        delete AllServers[member];
-    }
-    AllServers = {};
+    prestigeAllServers(); //Must be done before initForeignServers()
+
     //Delete Special Server IPs
-    for (var member in SpecialServerIps) {
-        delete SpecialServerIps[member];
-    }
-    SpecialServersIps = null;
+    prestigeSpecialServerIps();
 
     //Reset home computer (only the programs) and add to AllServers
-    homeComp.programs.length = 0;
-    homeComp.runningScripts = [];
-    homeComp.serversOnNetwork = [];
-    homeComp.isConnectedTo = true;
-    homeComp.ramUsed = 0;
-    homeComp.programs.push(Programs.NukeProgram);
+    prestigeHomeComputer(homeComp);
+
     var srcFile1Owned = false;
     for (var i = 0; i < Player.sourceFiles.length; ++i) {
         if (Player.sourceFiles[i].n == 1) {
@@ -327,31 +160,18 @@ function prestigeSourceFile() {
         }
     }
     if (srcFile1Owned) {
-        homeComp.maxRam = 32;
+        homeComp.setMaxRam(32);
     } else {
-        homeComp.maxRam = 8;
+        homeComp.setMaxRam(8);
     }
-    Player.currentServer = homeComp.ip;
-    Player.homeComputer = homeComp.ip;
+
     AddToAllServers(homeComp);
 
     //Re-create foreign servers
-    SpecialServerIps = new SpecialServerIpsMap();   //Must be done before initForeignServers()
     initForeignServers();
 
     //Darkweb is purchase-able
     document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button");
-
-    //Reset statistics of all scripts on home computer
-    for (var i = 0; i < homeComp.scripts.length; ++i) {
-        var s = homeComp.scripts[i];
-    }
-    //Delete messages on home computer
-    homeComp.messages.length = 0;
-
-    //Delete Hacknet Nodes
-    Player.hacknetNodes.length = 0;
-    Player.totalHacknetNodeProduction = 0;
 
     //Reset favor for Companies
     for (var member in Companies) {
@@ -393,16 +213,9 @@ function prestigeSourceFile() {
     //Messages
     initMessages();
 
-    //Gang
-    Player.gang = null;
-
-    //Reset Stock market
-    Player.hasWseAccount = false;
-    Player.hasTixApiAccess = false;
-
-    Player.playtimeSinceLastAug = 0;
-
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     Engine.loadTerminalContent();
 }
+
+export {prestigeAugmentation, prestigeSourceFile};

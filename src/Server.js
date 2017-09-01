@@ -1,6 +1,14 @@
-//Netburner Server class
-//TODO Make a map of all IPS in the game so far so that we don't accidentally
-//		get duplicate IPs..however unlikely it is
+import {BitNodeMultipliers}                         from "./BitNode.js";
+import {CONSTANTS}                                  from "./Constants.js";
+import {Programs}                                   from "./CreateProgram.js";
+import {Player}                                     from "./Player.js";
+import {RunningScript, Script}                      from "./Script.js";
+import {SpecialServerNames, SpecialServerIps}       from "./SpecialServerIps.js";
+import {getRandomInt}                               from "../utils/HelperFunctions.js";
+import {createRandomIp, isValidIPAddress, ipExists} from "../utils/IPAddress.js";
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}                           from "../utils/JSONReviver.js";
+
 function Server(ip=createRandomIp(), hostname="", organizationName="",
                 isConnectedTo=false, adminRights=false, purchasedByPlayer=false, maxRam=0) {
 	/* Properties */
@@ -67,9 +75,9 @@ Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvai
     if (isNaN(moneyAvailable)) {
         this.moneyAvailable = 1000000;
     } else {
-        this.moneyAvailable = moneyAvailable;
+        this.moneyAvailable = moneyAvailable * BitNodeMultipliers.ServerStartingMoney;
     }
-    this.moneyMax = 25 * moneyAvailable * BitNodeMultipliers.ServerMaxMoney;
+    this.moneyMax = 25 * this.moneyAvailable * BitNodeMultipliers.ServerMaxMoney;
 	this.hackDifficulty = hackDifficulty;
     this.baseDifficulty = hackDifficulty;
     this.minDifficulty = Math.max(1, Math.round(hackDifficulty / 3));
@@ -80,6 +88,10 @@ Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvai
 //Right now its only the number of open ports needed to PortHack the server.
 Server.prototype.setPortProperties = function(numOpenPortsReq) {
 	this.numOpenPortsRequired = numOpenPortsReq;
+}
+
+Server.prototype.setMaxRam = function(ram) {
+    this.maxRam = ram;
 }
 
 //The serverOnNetwork array holds the IP of all the servers. This function
@@ -110,7 +122,7 @@ Server.prototype.fortify = function(amt) {
 }
 
 Server.prototype.weaken = function(amt) {
-    this.hackDifficulty -= amt;
+    this.hackDifficulty -= (amt * BitNodeMultipliers.ServerWeakenRate);
     if (this.hackDifficulty < this.minDifficulty) {this.hackDifficulty = this.minDifficulty;}
     if (this.hackDifficulty < 1) {this.hackDifficulty = 1;}
 }
@@ -126,7 +138,7 @@ Server.fromJSON = function(value) {
 
 Reviver.constructors.Server = Server;
 
-initForeignServers = function() {
+function initForeignServers() {
     //MegaCorporations
     var ECorpServer = new Server(createRandomIp(), "ecorp", "ECorp", false, false, false, 0);
     ECorpServer.setHackingParameters(getRandomInt(1150, 1300), getRandomInt(30000000000, 70000000000), 99, 99);
@@ -637,7 +649,7 @@ initForeignServers = function() {
 }
 
 //Applied server growth for a single server. Returns the percentage growth
-processSingleServerGrowth = function(server, numCycles) {
+function processSingleServerGrowth(server, numCycles) {
     //Server growth processed once every 450 game cycles
 	var numServerGrowthCycles = Math.max(Math.floor(numCycles / 450), 0);
 
@@ -645,11 +657,10 @@ processSingleServerGrowth = function(server, numCycles) {
     var growthRate = CONSTANTS.ServerBaseGrowthRate;
     var adjGrowthRate = 1 + (growthRate - 1) / server.hackDifficulty;
     if (adjGrowthRate > CONSTANTS.ServerMaxGrowthRate) {adjGrowthRate = CONSTANTS.ServerMaxGrowthRate;}
-    //console.log("Adjusted growth rate: " + adjGrowthRate);
 
     //Calculate adjusted server growth rate based on parameters
     var serverGrowthPercentage = server.serverGrowth / 100;
-    var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage;
+    var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage * BitNodeMultipliers.ServerGrowthRate;
 
     //Apply serverGrowth for the calculated number of growth cycles
     var serverGrowth = Math.pow(adjGrowthRate, numServerGrowthCyclesAdjusted * Player.hacking_grow_mult);
@@ -666,14 +677,38 @@ processSingleServerGrowth = function(server, numCycles) {
         server.moneyAvailable = server.moneyMax;
         return 1;
     }
+
+    //Growing increases server security twice as much as hacking
     server.fortify(2 * CONSTANTS.ServerFortifyAmount * numServerGrowthCycles);
     return serverGrowth;
 }
 
-//List of all servers that exist in the game, indexed by their ip
-AllServers = {};
+function prestigeHomeComputer(homeComp) {
+    homeComp.programs.length = 0;
+    homeComp.runningScripts = [];
+    homeComp.serversOnNetwork = [];
+    homeComp.isConnectedTo = true;
+    homeComp.ramUsed = 0;
+    homeComp.programs.push(Programs.NukeProgram);
 
-SizeOfAllServers = function() {
+    homeComp.messages.length = 0;
+}
+
+//List of all servers that exist in the game, indexed by their ip
+let AllServers = {};
+
+function prestigeAllServers() {
+    for (var member in AllServers) {
+        delete AllServers[member];
+    }
+    AllServers = {};
+}
+
+function loadAllServers(saveString) {
+    AllServers = JSON.parse(saveString, Reviver);
+}
+
+function SizeOfAllServers() {
 	var size = 0, key;
 	for (key in AllServers) {
 		if (AllServers.hasOwnProperty(key)) size++;
@@ -682,7 +717,7 @@ SizeOfAllServers = function() {
 }
 
 //Add a server onto the map of all servers in the game
-AddToAllServers = function(server) {
+function AddToAllServers(server) {
     var serverIp = server.ip;
     if (ipExists(serverIp)) {
         console.log("IP of server that's being added: " + serverIp);
@@ -696,7 +731,7 @@ AddToAllServers = function(server) {
 
 //Returns server object with corresponding hostname
 //	Relatively slow, would rather not use this a lot
-GetServerByHostname = function(hostname) {
+function GetServerByHostname(hostname) {
 	for (var ip in AllServers) {
 		if (AllServers.hasOwnProperty(ip)) {
 			if (AllServers[ip].hostname == hostname) {
@@ -708,7 +743,7 @@ GetServerByHostname = function(hostname) {
 }
 
 //Get server by IP or hostname. Returns null if invalid
-getServer = function(s) {
+function getServer(s) {
     if (!isValidIPAddress(s)) {
         return GetServerByHostname(s);
     } else {
@@ -717,10 +752,14 @@ getServer = function(s) {
 }
 
 //Debugging tool
-PrintAllServers = function() {
+function PrintAllServers() {
     for (var ip in AllServers) {
         if (AllServers.hasOwnProperty(ip)) {
             console.log("Ip: " + ip + ", hostname: " + AllServers[ip].hostname);
         }
     }
 }
+
+export {Server, AllServers, getServer, GetServerByHostname, loadAllServers,
+        AddToAllServers, processSingleServerGrowth, initForeignServers,
+        prestigeAllServers, prestigeHomeComputer};

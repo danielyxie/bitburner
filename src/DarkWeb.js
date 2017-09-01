@@ -1,6 +1,14 @@
+import {Programs}                               from "./CreateProgram.js";
+import {Player}                                 from "./Player.js";
+import {SpecialServerIps}                       from "./SpecialServerIps.js";
+import {post}                                   from "./Terminal.js";
+
+import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+
+
 /* DarkWeb.js */
 //Posts a "help" message if connected to DarkWeb
-checkIfConnectedToDarkweb = function() {
+function checkIfConnectedToDarkweb() {
     if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
         var darkwebIp =  SpecialServerIps["Darkweb Server"];
         if (!isValidIPAddress(darkwebIp)) {return;}
@@ -16,7 +24,7 @@ checkIfConnectedToDarkweb = function() {
 //Handler for dark web commands. The terminal's executeCommand() function will pass
 //dark web-specific commands into this. It will pass in the raw split command array
 //rather than the command string
-executeDarkwebTerminalCommand = function(commandArray) {
+function executeDarkwebTerminalCommand(commandArray) {
     if (commandArray.length == 0) {return;}
     switch (commandArray[0]) {
         case "buy":
@@ -24,6 +32,7 @@ executeDarkwebTerminalCommand = function(commandArray) {
                 post("Incorrect number of arguments. Usage: ");
                 post("buy -l");
                 post("buy [item name]");
+                return;
             }
             var arg = commandArray[1];
             if (arg == "-l") {
@@ -38,7 +47,7 @@ executeDarkwebTerminalCommand = function(commandArray) {
     }
 }
 
-listAllDarkwebItems = function() {
+function listAllDarkwebItems() {
     for (var item in DarkWebItems) {
 		if (DarkWebItems.hasOwnProperty(item)) {
             var item = DarkWebItems[item];
@@ -76,7 +85,7 @@ listAllDarkwebItems = function() {
     else {return price;}
 }
 
-buyDarkwebItem = function(itemName) {
+function buyDarkwebItem(itemName) {
     if (itemName.toLowerCase() == Programs.BruteSSHProgram.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.BruteSSHProgram);
         if (price > 0 && Player.money.gt(price)) {
@@ -152,7 +161,7 @@ buyDarkwebItem = function(itemName) {
     }
 }
 
-parseDarkwebItemPrice = function(itemDesc) {
+function parseDarkwebItemPrice(itemDesc) {
     var split = itemDesc.split(" - ");
     if (split.length == 3) {
         var priceString = split[1];
@@ -173,12 +182,16 @@ parseDarkwebItemPrice = function(itemDesc) {
     }
 }
 
-DarkWebItems = {
-    BruteSSHProgram:    Programs.BruteSSHProgram + " - $500,000 - Opens up SSH Ports",
-    FTPCrackProgram:    Programs.FTPCrackProgram + " - $1,500,000 - Opens up FTP Ports",
-    RelaySMTPProgram:   Programs.RelaySMTPProgram + " - $5,000,000 - Opens up SMTP Ports",
-    HTTPWormProgram:    Programs.HTTPWormProgram + " - $30,000,000 - Opens up HTTP Ports",
-    SQLInjectProgram:   Programs.SQLInjectProgram + " - $250,000,000 - Opens up SQL Ports",
-    DeepScanV1Program:  Programs.DeepscanV1 + " - $500,000 - Enables 'scan-analyze' with a depth up to 5",
-    DeepScanV2Program:  Programs.DeepscanV2 + " - $25,000,000 - Enables 'scan-analyze' with a depth up to 10",
+let DarkWebItems = {
+    BruteSSHProgram:    "BruteSSH.exe - $500,000 - Opens up SSH Ports",
+    FTPCrackProgram:    "FTPCrack.exe - $1,500,000 - Opens up FTP Ports",
+    RelaySMTPProgram:   "relaySMTP.exe - $5,000,000 - Opens up SMTP Ports",
+    HTTPWormProgram:    "HTTPWorm.exe - $30,000,000 - Opens up HTTP Ports",
+    SQLInjectProgram:   "SQLInject.exe - $250,000,000 - Opens up SQL Ports",
+    DeepScanV1Program:  "DeepscanV1.exe - $500,000 - Enables 'scan-analyze' with a depth up to 5",
+    DeepScanV2Program:  "DeepscanV2.exe - $25,000,000 - Enables 'scan-analyze' with a depth up to 10",
 }
+
+export {checkIfConnectedToDarkweb, executeDarkwebTerminalCommand,
+        listAllDarkwebItems, buyDarkwebItem, parseDarkwebItemPrice,
+        DarkWebItems};

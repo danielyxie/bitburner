@@ -1,26 +1,30 @@
+import {Faction, joinFaction}       from "../src/Faction.js";
+import {Player}                     from "../src/Player.js";
+import {clearEventListeners}        from "./HelperFunctions.js";
+
 /* Faction Invitation Pop-up box */
-factionInvitationBoxClose = function() {
+function factionInvitationBoxClose() {
     var factionInvitationBox = document.getElementById("faction-invitation-box-container");
     factionInvitationBox.style.display = "none";
 }
 
-factionInvitationBoxOpen = function() {
+function factionInvitationBoxOpen() {
     var factionInvitationBox = document.getElementById("faction-invitation-box-container");
     factionInvitationBox.style.display = "block";
 }
 
-factionInvitationSetText = function(txt) {
+function factionInvitationSetText(txt) {
     var textBox = document.getElementById("faction-invitation-box-text");
     textBox.innerHTML = txt;
 }
 
-factionInvitationSetMessage = function(msg) {
+function factionInvitationSetMessage(msg) {
     var msgBox = document.getElementById("faction-invitation-box-message");
     msgBox.innerHTML = msg;
 }
 
 //ram argument is in GB
-factionInvitationBoxCreate = function(faction) {
+function factionInvitationBoxCreate(faction) {
     factionInvitationSetText("You have received a faction invitation from " + faction.name);
     //TODO Faction invitation message
 
@@ -41,3 +45,5 @@ factionInvitationBoxCreate = function(faction) {
 
     factionInvitationBoxOpen();
 }
+
+export {factionInvitationBoxCreate};

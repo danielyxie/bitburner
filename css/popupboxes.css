@@ -7,6 +7,7 @@
     top: 0;
     width: 100%;
     height: 100%;
+    overflow:auto;
     background-color: rbga(var(--my-background-color), 0.4);
 }
 
@@ -16,7 +17,6 @@
     padding: 12px;
     border: 5px solid var(--my-highlight-color);
     width: 70%;
-    overflow: auto; /* Enable scroll if needed */
     color: var(--my-font-color);
 }
 
@@ -29,6 +29,7 @@
     padding: 2px;
     margin: 6px;
     border: 1px solid white;
+    background-color:black;
 }
 
 .popup-box-button:hover,
@@ -41,6 +42,12 @@
 .popupbox-button-inactive {
     pointer-events: none;
     cursor: default;
+}
+
+#yes-no-text-input-box-input {
+    color: var(--my-font-color);
+    border: 1px solid white;
+    background-color:black;
 }
 
 .dialog-box-container,
@@ -92,20 +99,6 @@
     color: white;
     text-decoration: none;
     cursor: pointer;
-}
-
-/* Purchase server box */
-#purchase-server-box-container {
-    transition: opacity 400ms ease-in;
-}
-
-#purchase-server-box-input {
-    color: white;
-}
-
-/* Purchase Augmentation Box */
-#purchase-augmentation-box-container {
-    transition: opacity 400ms ease-in;
 }
 
 /* Faction invitation box */
