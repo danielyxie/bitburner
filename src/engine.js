@@ -27,14 +27,14 @@ import {Programs, displayCreateProgramContent,
 import {displayFactionContent, joinFaction,
         processPassiveFactionRepGain, Factions,
         inviteToFaction, initFactions}          from "./Faction.js";
+import {Locations, displayLocationContent,
+        initLocationButtons}                    from "./Location.js";
 import {displayGangContent, updateGangContent,
         Gang}                                   from "./Gang.js";
 import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
         updateHacknetNodesContent}              from "./HacknetNode.js";
 import {iTutorialStart}                         from "./InteractiveTutorial.js";
 import {initLiterature}                         from "./Literature.js";
-import {Locations, displayLocationContent,
-        initLocationButtons}                    from "./Location.js";
 import {checkForMessagesToSend, initMessages}   from "./Message.js";
 import {initSingularitySFFlags,
         hasSingularitySF}                       from "./NetscriptFunctions.js";
@@ -915,6 +915,7 @@ let Engine = {
         if (Engine.Counters.checkFactionInvitations <= 0) {
             var invitedFactions = Player.checkForFactionInvitations();
             if (invitedFactions.length > 0) {
+                Player.firstFacInvRecvd = true;
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
                 inviteToFaction(randFaction);
             }

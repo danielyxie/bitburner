@@ -134,6 +134,7 @@ function getNumAvailableCreateProgram() {
     if (!Player.hasProgram(Programs.AutoLink) && Player.hacking_skill >= 25) {
         ++count;
     }
+    if (count > 0) {Player.firstProgramAvailable = true;}
     return count;
 }
 
