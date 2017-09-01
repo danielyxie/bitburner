@@ -118,6 +118,10 @@
     margin: 8px;
 }
 
+#infiltration-faction-select {
+    background-color:black;
+}
+
 /* Generic Yes No Box */
 #yes-no-text-input-box-input {
     color: white;
