@@ -179,7 +179,7 @@ function evaluate(exp, workerScript) {
                                 env.set(exp.argument.name,env.get(exp.argument.name)-1);
                                 break;
                             default:
-                                reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". This is a bug please report to game developer"));
+                                reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". You are trying to use code that is currently unsupported"));
                         }
                         if (env.prefix){
                             return;
@@ -239,7 +239,7 @@ function evaluate(exp, workerScript) {
                 });
                 break;
             default:
-                reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". This is a bug please report to game developer"));
+                reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". This is currently unsupported in Netscript"));
                 break;
         } //End switch
     }, Settings.CodeInstructionRunTime); //End setTimeout, the Netscript operation run time

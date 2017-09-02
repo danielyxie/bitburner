@@ -1701,7 +1701,10 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     this.companyName = company.companyName;
     this.companyPosition = pos;
 
-    Player.firstJobRecvd = true;
+    if (Player.firstJobRecvd === false) {
+        Player.firstJobRecvd = true;
+        document.getElementById("job-tab").style.display = "list-item";
+    }
 
     if (leaveCompany) {
         if (sing) {return true;}
@@ -1805,7 +1808,10 @@ PlayerObject.prototype.applyForAgentJob = function(sing=false) {
 PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 	var company = __WEBPACK_IMPORTED_MODULE_2__Company_js__["a" /* Companies */][this.location]; //Company being applied to
     if (this.isQualified(company, __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].Employee)) {
-        Player.firstJobRecvd = true;
+        if (Player.firstJobRecvd === false) {
+            Player.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+        }
         this.companyName = company.companyName;
         this.companyPosition = __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].Employee;
         if (sing) {return true;}
@@ -1820,7 +1826,10 @@ PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 	var company = __WEBPACK_IMPORTED_MODULE_2__Company_js__["a" /* Companies */][this.location]; //Company being applied to
     if (this.isQualified(company, __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].PartTimeEmployee)) {
-        Player.firstJobRecvd = true;
+        if (Player.firstJobRecvd === false) {
+            Player.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+        }
         this.companyName = company.companyName;
         this.companyPosition = __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].PartTimeEmployee;
         if (sing) {return true;}
@@ -1835,7 +1844,10 @@ PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 	var company = __WEBPACK_IMPORTED_MODULE_2__Company_js__["a" /* Companies */][this.location]; //Company being applied to
     if (this.isQualified(company, __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].Waiter)) {
-        Player.firstJobRecvd = true;
+        if (Player.firstJobRecvd === false) {
+            Player.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+        }
         this.companyName = company.companyName;
         this.companyPosition = __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].Waiter;
         if (sing) {return true;}
@@ -1850,7 +1862,10 @@ PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
 	var company = __WEBPACK_IMPORTED_MODULE_2__Company_js__["a" /* Companies */][this.location]; //Company being applied to
     if (this.isQualified(company, __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].PartTimeWaiter)) {
-        Player.firstJobRecvd = true;
+        if (Player.firstJobRecvd === false) {
+            Player.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+        }
         this.companyName = company.companyName;
         this.companyPosition = __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].PartTimeWaiter;
         if (sing) {return true;}
@@ -4238,7 +4253,11 @@ let Engine = {
         if (Engine.Counters.checkFactionInvitations <= 0) {
             var invitedFactions = __WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].checkForFactionInvitations();
             if (invitedFactions.length > 0) {
-                __WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].firstFacInvRecvd = true;
+                if (__WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].firstFacInvRecvd === false) {
+                    __WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].firstFacInvRecvd = true;
+                    document.getElementById("factions-tab").style.display = "list-item";
+                }
+
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
                 Object(__WEBPACK_IMPORTED_MODULE_12__Faction_js__["g" /* inviteToFaction */])(randFaction);
             }
@@ -17354,7 +17373,10 @@ function purchaseAugmentation(aug, fac, sing=false) {
         var txt = "You must first install the Bionic Arms augmentation before installing this upgrade";
         if (sing) {return txt;} else {Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])(txt);}
     } else if (__WEBPACK_IMPORTED_MODULE_6__Player_js__["a" /* Player */].money.gte(aug.baseCost * fac.augmentationPriceMult)) {
-        __WEBPACK_IMPORTED_MODULE_6__Player_js__["a" /* Player */].firstAugPurchased = true;
+        if (__WEBPACK_IMPORTED_MODULE_6__Player_js__["a" /* Player */].firstAugPurchased === false) {
+            __WEBPACK_IMPORTED_MODULE_6__Player_js__["a" /* Player */].firstAugPurchased = true;
+            document.getElementById("augmentations-tab").style.display = "list-item";
+        }
 
         var queuedAugmentation = new __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["d" /* PlayerOwnedAugmentation */](aug.name);
         if (aug.name == __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["b" /* AugmentationNames */].NeuroFluxGovernor) {
@@ -19353,7 +19375,11 @@ function initLocationButtons() {
 }
 
 function travelToCity(destCityName, cost) {
-    __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].firstTimeTraveled = true;
+    if (__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].firstTimeTraveled === false) {
+        __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].firstTimeTraveled = true;
+        document.getElementById("travel-tab").style.display = "list-item";
+    }
+
     if (__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].money.lt(cost)) {
         Object(__WEBPACK_IMPORTED_MODULE_9__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You cannot afford to travel to " + destCityName);
         return;
@@ -19773,7 +19799,10 @@ function getNumAvailableCreateProgram() {
     if (!__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].hasProgram(Programs.AutoLink) && __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].hacking_skill >= 25) {
         ++count;
     }
-    if (count > 0) {__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].firstProgramAvailable = true;}
+    if (__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].firstProgramAvailable === false && count > 0) {
+        __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].firstProgramAvailable = true;
+        document.getElementById("create-program-tab").style.display = "list-item";
+    }
     return count;
 }
 
@@ -57786,7 +57815,7 @@ function evaluate(exp, workerScript) {
                                 env.set(exp.argument.name,env.get(exp.argument.name)-1);
                                 break;
                             default:
-                                reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". This is a bug please report to game developer"));
+                                reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". You are trying to use code that is currently unsupported"));
                         }
                         if (env.prefix){
                             return;
@@ -57846,7 +57875,7 @@ function evaluate(exp, workerScript) {
                 });
                 break;
             default:
-                reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". This is a bug please report to game developer"));
+                reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". This is currently unsupported in Netscript"));
                 break;
         } //End switch
     }, __WEBPACK_IMPORTED_MODULE_6__Settings_js__["a" /* Settings */].CodeInstructionRunTime); //End setTimeout, the Netscript operation run time
