@@ -9,7 +9,7 @@ import {Programs}                               from "./CreateProgram.js";
 import {determineCrimeSuccess}                  from "./Crimes.js";
 import {Engine}                                 from "./engine.js";
 import {Factions, Faction}                      from "./Faction.js";
-import {Gang}                                   from "./Gang.js";
+import {Gang, resetGangs}                       from "./Gang.js";
 import {Locations}                              from "./Location.js";
 import {AllServers, Server, AddToAllServers}    from "./Server.js";
 import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps.js";
@@ -360,6 +360,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
 
     //Gang
     this.gang = null;
+    resetGangs();
 
     //Reset Stock market
     this.hasWseAccount = false;
