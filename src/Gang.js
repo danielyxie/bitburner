@@ -81,6 +81,39 @@ let AllGangs = {
     },
 }
 
+function resetGangs() {
+    AllGangs = {
+        "Slum Snakes" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "Tetrads" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Syndicate" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Dark Army" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "Speakers for the Dead" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "NiteSec" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Black Hand" : {
+            power: 1,
+            territory: 1/7,
+        },
+    }
+}
+
 function loadAllGangs(saveString) {
     AllGangs = JSON.parse(saveString, Reviver);
 }
@@ -1262,4 +1295,5 @@ function setGangMemberTaskDescription(memberObj, taskName) {
     }
 }
 
-export {Gang, displayGangContent, updateGangContent, loadAllGangs, AllGangs};
+export {Gang, displayGangContent, updateGangContent, loadAllGangs, AllGangs,
+        resetGangs};
