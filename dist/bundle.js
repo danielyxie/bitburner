@@ -447,6 +447,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
 
     //Gang
     this.gang = null;
+    Object(__WEBPACK_IMPORTED_MODULE_8__Gang_js__["e" /* resetGangs */])();
 
     //Reset Stock market
     this.hasWseAccount = false;
@@ -4242,7 +4243,7 @@ let Engine = {
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
             if (Engine.currentPage === Engine.Page.Gang) {
-                Object(__WEBPACK_IMPORTED_MODULE_14__Gang_js__["e" /* updateGangContent */])();
+                Object(__WEBPACK_IMPORTED_MODULE_14__Gang_js__["f" /* updateGangContent */])();
             }
             Engine.Counters.updateDisplaysLong = 15;
         }
@@ -32405,9 +32406,10 @@ Environment.prototype = {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Gang; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return displayGangContent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return updateGangContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return updateGangContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadAllGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllGangs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return resetGangs; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Faction_js__ = __webpack_require__(10);
@@ -32496,6 +32498,39 @@ let AllGangs = {
         power: 1,
         territory: 1/7,
     },
+}
+
+function resetGangs() {
+    AllGangs = {
+        "Slum Snakes" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "Tetrads" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Syndicate" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Dark Army" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "Speakers for the Dead" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "NiteSec" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Black Hand" : {
+            power: 1,
+            territory: 1/7,
+        },
+    }
 }
 
 function loadAllGangs(saveString) {
@@ -33459,7 +33494,7 @@ function updateGangContent() {
                 "fact that your wanted level is too high. Consider assigning a few members to the 'Vigilante Justice' or 'Ethical Hacking' " +
                 "tasks to lower your wanted level. <br><br>" +
                 "Installing Augmentations does NOT reset your progress with your Gang. Furthermore, after installing Augmentations, you will " +
-                "automatically be a member of whatever Faction you created your gain with.<br><br>" +
+                "automatically be a member of whatever Faction you created your gang with.<br><br>" +
                 "<p class='tooltip'>Respect: <span class='tooltiptext'>Represents the amount of respect " +
                 "your gang has from other gangs and criminal organizations. Your respect affects the amount of money " +
                 "your gang members will earn, and also determines how much reputation you are earning with your gang's " +
@@ -33570,6 +33605,7 @@ function createGangMemberDisplayElement(memberObj) {
     taskDiv.setAttribute("class", "gang-member-info-div");
     var taskSelector = document.createElement("select");
     taskSelector.style.color = "white";
+    taskSelector.style.backgroundColor = "black";
     taskSelector.setAttribute("id", name + "gang-member-task-selector");
     var tasks = null;
     if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].gang.isHackingGang) {

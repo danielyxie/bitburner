@@ -81,6 +81,39 @@ let AllGangs = {
     },
 }
 
+function resetGangs() {
+    AllGangs = {
+        "Slum Snakes" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "Tetrads" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Syndicate" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Dark Army" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "Speakers for the Dead" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "NiteSec" : {
+            power: 1,
+            territory: 1/7,
+        },
+        "The Black Hand" : {
+            power: 1,
+            territory: 1/7,
+        },
+    }
+}
+
 function loadAllGangs(saveString) {
     AllGangs = JSON.parse(saveString, Reviver);
 }
@@ -1042,7 +1075,7 @@ function updateGangContent() {
                 "fact that your wanted level is too high. Consider assigning a few members to the 'Vigilante Justice' or 'Ethical Hacking' " +
                 "tasks to lower your wanted level. <br><br>" +
                 "Installing Augmentations does NOT reset your progress with your Gang. Furthermore, after installing Augmentations, you will " +
-                "automatically be a member of whatever Faction you created your gain with.<br><br>" +
+                "automatically be a member of whatever Faction you created your gang with.<br><br>" +
                 "<p class='tooltip'>Respect: <span class='tooltiptext'>Represents the amount of respect " +
                 "your gang has from other gangs and criminal organizations. Your respect affects the amount of money " +
                 "your gang members will earn, and also determines how much reputation you are earning with your gang's " +
@@ -1153,6 +1186,7 @@ function createGangMemberDisplayElement(memberObj) {
     taskDiv.setAttribute("class", "gang-member-info-div");
     var taskSelector = document.createElement("select");
     taskSelector.style.color = "white";
+    taskSelector.style.backgroundColor = "black";
     taskSelector.setAttribute("id", name + "gang-member-task-selector");
     var tasks = null;
     if (Player.gang.isHackingGang) {
@@ -1261,4 +1295,5 @@ function setGangMemberTaskDescription(memberObj, taskName) {
     }
 }
 
-export {Gang, displayGangContent, updateGangContent, loadAllGangs, AllGangs};
+export {Gang, displayGangContent, updateGangContent, loadAllGangs, AllGangs,
+        resetGangs};
