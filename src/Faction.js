@@ -911,6 +911,8 @@ function purchaseAugmentation(aug, fac, sing=false) {
         if (Player.firstAugPurchased === false) {
             Player.firstAugPurchased = true;
             document.getElementById("augmentations-tab").style.display = "list-item";
+            document.getElementById("character-menu-header").click();
+            document.getElementById("character-menu-header").click();
         }
 
         var queuedAugmentation = new PlayerOwnedAugmentation(aug.name);

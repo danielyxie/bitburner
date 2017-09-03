@@ -1617,6 +1617,8 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     if (Player.firstJobRecvd === false) {
         Player.firstJobRecvd = true;
         document.getElementById("job-tab").style.display = "list-item";
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
     }
 
     if (leaveCompany) {
@@ -1724,6 +1726,8 @@ PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
         if (Player.firstJobRecvd === false) {
             Player.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
         }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Employee;
@@ -1742,6 +1746,8 @@ PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
         if (Player.firstJobRecvd === false) {
             Player.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
         }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.PartTimeEmployee;
@@ -1760,6 +1766,8 @@ PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
         if (Player.firstJobRecvd === false) {
             Player.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
         }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Waiter;
@@ -1778,6 +1786,8 @@ PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
         if (Player.firstJobRecvd === false) {
             Player.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
         }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.PartTimeWaiter;

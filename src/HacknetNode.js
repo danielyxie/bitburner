@@ -442,7 +442,7 @@ function updateHacknetNodeDomElement(nodeObj) {
         upgradeRamButton.setAttribute("class", "a-link-button-inactive");
     } else {
         var upgradeRamCost = nodeObj.calculateRamUpgradeCost();
-        upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM -$" + formatNumber(upgradeRamCost, 2);
+        upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM - $" + formatNumber(upgradeRamCost, 2);
         if (Player.money.lt(upgradeRamCost)) {
             upgradeRamButton.setAttribute("class", "a-link-button-inactive");
         } else {

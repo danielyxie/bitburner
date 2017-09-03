@@ -918,6 +918,8 @@ let Engine = {
                 if (Player.firstFacInvRecvd === false) {
                     Player.firstFacInvRecvd = true;
                     document.getElementById("factions-tab").style.display = "list-item";
+                    document.getElementById("character-menu-header").click();
+                    document.getElementById("character-menu-header").click();
                 }
 
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];

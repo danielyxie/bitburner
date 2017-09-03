@@ -87,7 +87,7 @@
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__utils_decimal_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_IPAddress_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_IPAddress_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_JSONReviver_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
@@ -1704,6 +1704,8 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     if (Player.firstJobRecvd === false) {
         Player.firstJobRecvd = true;
         document.getElementById("job-tab").style.display = "list-item";
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
     }
 
     if (leaveCompany) {
@@ -1811,6 +1813,8 @@ PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
         if (Player.firstJobRecvd === false) {
             Player.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
         }
         this.companyName = company.companyName;
         this.companyPosition = __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].Employee;
@@ -1829,6 +1833,8 @@ PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
         if (Player.firstJobRecvd === false) {
             Player.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
         }
         this.companyName = company.companyName;
         this.companyPosition = __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].PartTimeEmployee;
@@ -1847,6 +1853,8 @@ PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
         if (Player.firstJobRecvd === false) {
             Player.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
         }
         this.companyName = company.companyName;
         this.companyPosition = __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].Waiter;
@@ -1865,6 +1873,8 @@ PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
         if (Player.firstJobRecvd === false) {
             Player.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
         }
         this.companyName = company.companyName;
         this.companyPosition = __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].PartTimeWaiter;
@@ -3355,7 +3365,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__SourceFile_js__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__StockMarket_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__Terminal_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__Terminal_js__ = __webpack_require__(20);
 var ace = __webpack_require__(33);
 __webpack_require__(35);
 __webpack_require__(36);
@@ -4256,6 +4266,8 @@ let Engine = {
                 if (__WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].firstFacInvRecvd === false) {
                     __WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].firstFacInvRecvd = true;
                     document.getElementById("factions-tab").style.display = "list-item";
+                    document.getElementById("character-menu-header").click();
+                    document.getElementById("character-menu-header").click();
                 }
 
                 var randFaction = invitedFactions[Math.floor(Math.random() * invitedFactions.length)];
@@ -5159,7 +5171,7 @@ function numNetscriptOperators(string) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Script_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_IPAddress_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_IPAddress_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(7);
 
 
@@ -16465,7 +16477,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_HelperFunctions_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_JSONReviver_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_YesNoBox_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_YesNoBox_js__ = __webpack_require__(21);
 
 
 
@@ -17376,6 +17388,8 @@ function purchaseAugmentation(aug, fac, sing=false) {
         if (__WEBPACK_IMPORTED_MODULE_6__Player_js__["a" /* Player */].firstAugPurchased === false) {
             __WEBPACK_IMPORTED_MODULE_6__Player_js__["a" /* Player */].firstAugPurchased = true;
             document.getElementById("augmentations-tab").style.display = "list-item";
+            document.getElementById("character-menu-header").click();
+            document.getElementById("character-menu-header").click();
         }
 
         var queuedAugmentation = new __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["d" /* PlayerOwnedAugmentation */](aug.name);
@@ -17545,9 +17559,9 @@ function initSpecialServerIps() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_DialogBox_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_IPAddress_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_IPAddress_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_YesNoBox_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_YesNoBox_js__ = __webpack_require__(21);
 
 
 
@@ -19378,6 +19392,8 @@ function travelToCity(destCityName, cost) {
     if (__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].firstTimeTraveled === false) {
         __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].firstTimeTraveled = true;
         document.getElementById("travel-tab").style.display = "list-item";
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
     }
 
     if (__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].money.lt(cost)) {
@@ -19802,6 +19818,8 @@ function getNumAvailableCreateProgram() {
     if (__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].firstProgramAvailable === false && count > 0) {
         __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].firstProgramAvailable = true;
         document.getElementById("create-program-tab").style.display = "list-item";
+        document.getElementById("hacking-menu-header").click();
+        document.getElementById("hacking-menu-header").click();
     }
     return count;
 }
@@ -19951,7 +19969,7 @@ function runScriptsLoop() {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
 			try {
 				var ast = Object(__WEBPACK_IMPORTED_MODULE_7__utils_acorn_js__["parse"])(workerScripts[i].code);
-                //console.log(ast);
+                console.log(ast);
 			} catch (e) {
                 console.log("Error parsing script: " + workerScripts[i].name);
                 Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
@@ -23822,6 +23840,60 @@ __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].construct
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createRandomIp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ipExists; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return isValidIPAddress; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_Server_js__ = __webpack_require__(6);
+
+/* Functions to deal with manipulating IP addresses*/
+
+//Generate a random IP address
+//Will not return an IP address that already exists in the AllServers array
+function createRandomIp() {
+	var ip = createRandomByte(99) +'.' +
+			 createRandomByte(9) +'.' +
+			 createRandomByte(9) +'.' +
+		 	 createRandomByte(9);
+
+    //If the Ip already exists, recurse to create a new one
+    if (ipExists(ip)) {
+        return createRandomIp();
+    }
+	return ip;
+}
+
+//Returns true if the IP already exists in one of the game's servers
+function ipExists(ip) {
+    for (var property in __WEBPACK_IMPORTED_MODULE_0__src_Server_js__["b" /* AllServers */]) {
+        if (__WEBPACK_IMPORTED_MODULE_0__src_Server_js__["b" /* AllServers */].hasOwnProperty(property)) {
+            if (property == ip) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function createRandomByte(n=9) {
+	return Math.round(Math.random()*n);
+}
+
+function isValidIPAddress(ipaddress) {
+	if (/^(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress))
+	{
+		return true;
+	}
+	return false;
+}
+
+
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return postNetburnerText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return post; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Terminal; });
@@ -25462,7 +25534,7 @@ let Terminal = {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25553,60 +25625,6 @@ function yesNoTxtInpBoxCreate(txt) {
     } else {
         console.log("ERROR: Container not found for YesNoTextInputBox");
     }
-}
-
-
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createRandomIp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ipExists; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return isValidIPAddress; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_Server_js__ = __webpack_require__(6);
-
-/* Functions to deal with manipulating IP addresses*/
-
-//Generate a random IP address
-//Will not return an IP address that already exists in the AllServers array
-function createRandomIp() {
-	var ip = createRandomByte(99) +'.' +
-			 createRandomByte(9) +'.' +
-			 createRandomByte(9) +'.' +
-		 	 createRandomByte(9);
-
-    //If the Ip already exists, recurse to create a new one
-    if (ipExists(ip)) {
-        return createRandomIp();
-    }
-	return ip;
-}
-
-//Returns true if the IP already exists in one of the game's servers
-function ipExists(ip) {
-    for (var property in __WEBPACK_IMPORTED_MODULE_0__src_Server_js__["b" /* AllServers */]) {
-        if (__WEBPACK_IMPORTED_MODULE_0__src_Server_js__["b" /* AllServers */].hasOwnProperty(property)) {
-            if (property == ip) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-function createRandomByte(n=9) {
-	return Math.round(Math.random()*n);
-}
-
-function isValidIPAddress(ipaddress) {
-	if (/^(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress))
-	{
-		return true;
-	}
-	return false;
 }
 
 
@@ -32401,7 +32419,7 @@ Environment.prototype = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_YesNoBox_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_YesNoBox_js__ = __webpack_require__(21);
 
 
 
@@ -33826,7 +33844,7 @@ function applySourceFile(srcFile) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__StockMarket_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Terminal_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Terminal_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_decimal_js__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__utils_decimal_js__);
 
@@ -34510,7 +34528,7 @@ function updateHacknetNodeDomElement(nodeObj) {
         upgradeRamButton.setAttribute("class", "a-link-button-inactive");
     } else {
         var upgradeRamCost = nodeObj.calculateRamUpgradeCost();
-        upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM -$" + Object(__WEBPACK_IMPORTED_MODULE_8__utils_StringHelperFunctions_js__["c" /* formatNumber */])(upgradeRamCost, 2);
+        upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM - $" + Object(__WEBPACK_IMPORTED_MODULE_8__utils_StringHelperFunctions_js__["c" /* formatNumber */])(upgradeRamCost, 2);
         if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].money.lt(upgradeRamCost)) {
             upgradeRamButton.setAttribute("class", "a-link-button-inactive");
         } else {
@@ -54650,14 +54668,14 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Settings_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__StockMarket_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Terminal_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Terminal_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__NetscriptWorker_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__NetscriptEvaluator_js__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__NetscriptEnvironment_js__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__utils_decimal_js__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__utils_decimal_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__utils_IPAddress_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__utils_IPAddress_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
@@ -56609,7 +56627,7 @@ function determineCrimeChanceHeist() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return substituteAliases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAliases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadGlobalAliases; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Terminal_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Terminal_js__ = __webpack_require__(20);
 
 
 let Aliases = {};
@@ -56739,8 +56757,10 @@ function substituteAliases(origCommand) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CreateProgram_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SpecialServerIps_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Terminal_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Terminal_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__ = __webpack_require__(5);
+
 
 
 
@@ -56754,7 +56774,7 @@ function substituteAliases(origCommand) {
 function checkIfConnectedToDarkweb() {
     if (__WEBPACK_IMPORTED_MODULE_2__SpecialServerIps_js__["a" /* SpecialServerIps */].hasOwnProperty("Darkweb Server")) {
         var darkwebIp =  __WEBPACK_IMPORTED_MODULE_2__SpecialServerIps_js__["a" /* SpecialServerIps */]["Darkweb Server"];
-        if (!isValidIPAddress(darkwebIp)) {return;}
+        if (!Object(__WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__["c" /* isValidIPAddress */])(darkwebIp)) {return;}
         if (darkwebIp == __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].getCurrentServer().ip) {
             Object(__WEBPACK_IMPORTED_MODULE_3__Terminal_js__["b" /* post */])("You are now connected to the dark web. From the dark web you can purchase illegal items. " +
                  "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name] " +
@@ -56804,7 +56824,7 @@ function listAllDarkwebItems() {
                     Object(__WEBPACK_IMPORTED_MODULE_3__Terminal_js__["b" /* post */])(item);
                     return;
                 }
-                price = Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(price, 0);
+                price = Object(__WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__["c" /* formatNumber */])(price, 0);
                 split[1] = "$" + price.toString();
                 Object(__WEBPACK_IMPORTED_MODULE_3__Terminal_js__["b" /* post */])(split.join(" - "));
             } else {
@@ -57284,10 +57304,10 @@ function initLiterature() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Prestige_js__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SourceFile_js__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Terminal_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Terminal_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_YesNoBox_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_YesNoBox_js__ = __webpack_require__(21);
 
 
 
@@ -57633,7 +57653,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Script_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_IPAddress_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_IPAddress_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
@@ -59799,7 +59819,7 @@ function factionInvitationBoxCreate(faction) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_YesNoBox_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_YesNoBox_js__ = __webpack_require__(21);
 
 
 
