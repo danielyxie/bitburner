@@ -1,9 +1,3 @@
-var ace = require('brace');
-require('brace/mode/javascript');
-require('brace/theme/monokai');
-require('brace/theme/terminal');
-require('brace/theme/twilight');
-
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions.js";
 import {clearEventListeners}                    from "../utils/HelperFunctions.js";
@@ -1072,13 +1066,6 @@ let Engine = {
     },
 
     load: function() {
-        //Load script editor
-        var editor = ace.edit('javascript-editor');
-        editor.getSession().setMode('ace/mode/javascript');
-        editor.setTheme('ace/theme/monokai');
-        document.getElementById('javascript-editor').style.fontSize='16px';
-        editor.setOption("showPrintMargin", false);
-
         //Initialize main menu accordion panels to all start as "open"
         var terminal            = document.getElementById("terminal-tab");
         var createScript        = document.getElementById("create-script-tab");
@@ -1143,7 +1130,7 @@ let Engine = {
             processPassiveFactionRepGain(numCyclesOffline);
 
             //Gang progress for BitNode 2
-            if (Player.bitNodeN != null && Player.bitNodeN == 2 && Player.inGang()) {
+            if (Player.bitNodeN != null && Player.bitNodeN === 2 && Player.inGang()) {
                 Player.gang.process(numCyclesOffline);
             }
 

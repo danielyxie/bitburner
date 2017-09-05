@@ -849,7 +849,7 @@ function purchaseAugmentationBoxCreate(aug, fac) {
         yesNoBoxClose();
     });
 
-    yesNoBoxCreate("<h2>aug.name</h2><br>" +
+    yesNoBoxCreate("<h2>" + aug.name + "</h2><br>" +
                    aug.info + "<br><br>" +
                    "<br>Would you like to purchase the " + aug.name + " Augmentation for $" +
                    formatNumber(aug.baseCost * fac.augmentationPriceMult, 2)  + "?");
