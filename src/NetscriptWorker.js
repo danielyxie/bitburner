@@ -64,7 +64,7 @@ function runScriptsLoop() {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
 			try {
 				var ast = parse(workerScripts[i].code);
-                //console.log(ast);
+                console.log(ast);
 			} catch (e) {
                 console.log("Error parsing script: " + workerScripts[i].name);
                 dialogBoxCreate("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);

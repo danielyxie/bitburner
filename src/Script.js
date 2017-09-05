@@ -1,6 +1,15 @@
 var ace = require('brace');
 require('brace/mode/javascript');
+require('brace/theme/chaos');
+require('brace/theme/chrome');
 require('brace/theme/monokai');
+require('brace/theme/solarized_dark');
+require('brace/theme/solarized_light');
+require('brace/theme/terminal');
+require('brace/theme/twilight');
+require('brace/theme/xcode');
+require("brace/keybinding/vim");
+require("brace/keybinding/emacs");
 
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
@@ -18,6 +27,12 @@ import {compareArrays}                          from "../utils/HelperFunctions.j
 import {formatNumber, numOccurrences,
         numNetscriptOperators}                  from "../utils/StringHelperFunctions.js";
 
+var keybindings = {
+    ace: null,
+    vim: "ace/keyboard/vim",
+    emacs: "ace/keyboard/emacs",
+};
+
 function scriptEditorInit() {
     //Initialize save and close button
     var closeButton = document.getElementById("script-editor-save-and-close-button");
@@ -27,25 +42,48 @@ function scriptEditorInit() {
         return false;
     });
 
-    //Allow tabs (four spaces) in all textareas
-    var textareas = document.getElementsByTagName('textarea');
-    var count = textareas.length;
-    for(var i=0;i<count;i++){
-        textareas[i].onkeydown = function(e){
-            if(e.keyCode==9 || e.which==9){
-                e.preventDefault();
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
+    //Initialize ACE Script editor
+    var editor = ace.edit('javascript-editor');
+    editor.getSession().setMode('ace/mode/javascript');
+    editor.setTheme('ace/theme/monokai');
+    document.getElementById('javascript-editor').style.fontSize='16px';
+    editor.setOption("showPrintMargin", false);
 
-                //Set textarea value to: text before caret + four spaces + text after caret
-                let spaces = "    ";
-                this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
+    /* Script editor options */
+    //Theme
+    var themeDropdown = document.getElementById("script-editor-option-theme");
+    themeDropdown.selectedIndex = 2;
+    themeDropdown.onchange = function() {
+        var val = themeDropdown.value;
+        var themePath = "ace/theme/" + val.toLowerCase();
+        editor.setTheme(themePath);
+    };
 
-                //Put caret at after the four spaces
-                this.selectionStart = this.selectionEnd = start + spaces.length;
-            }
-        }
-    }
+    //Keybinding
+    var keybindingDropdown = document.getElementById("script-editor-option-keybinding");
+    keybindingDropdown.onchange = function() {
+        var val = keybindingDropdown.value;
+        editor.setKeyboardHandler(keybindings[val.toLowerCase()]);
+    };
+
+    //Highlight Active line
+    var highlightActiveChkBox = document.getElementById("script-editor-option-highlightactiveline");
+    highlightActiveChkBox.onchange = function() {
+        editor.setHighlightActiveLine(highlightActiveChkBox.checked);
+    };
+
+    //Show Invisibles
+    var showInvisiblesChkBox = document.getElementById("script-editor-option-showinvisibles");
+    showInvisiblesChkBox.onchange = function() {
+        editor.setShowInvisibles(showInvisiblesChkBox.checked);
+    };
+
+    //Use Soft Tab
+    var softTabChkBox = document.getElementById("script-editor-option-usesofttab");
+    softTabChkBox.onchange = function() {
+        editor.getSession().setUseSoftTabs(softTabChkBox.checked);
+    };
+
 };
 document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 

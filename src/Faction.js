@@ -849,7 +849,7 @@ function purchaseAugmentationBoxCreate(aug, fac) {
         yesNoBoxClose();
     });
 
-    yesNoBoxCreate("<h2>aug.name</h2><br>" +
+    yesNoBoxCreate("<h2>" + aug.name + "</h2><br>" +
                    aug.info + "<br><br>" +
                    "<br>Would you like to purchase the " + aug.name + " Augmentation for $" +
                    formatNumber(aug.baseCost * fac.augmentationPriceMult, 2)  + "?");
@@ -908,7 +908,12 @@ function purchaseAugmentation(aug, fac, sing=false) {
         var txt = "You must first install the Bionic Arms augmentation before installing this upgrade";
         if (sing) {return txt;} else {dialogBoxCreate(txt);}
     } else if (Player.money.gte(aug.baseCost * fac.augmentationPriceMult)) {
-        Player.firstAugPurchased = true;
+        if (Player.firstAugPurchased === false) {
+            Player.firstAugPurchased = true;
+            document.getElementById("augmentations-tab").style.display = "list-item";
+            document.getElementById("character-menu-header").click();
+            document.getElementById("character-menu-header").click();
+        }
 
         var queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
         if (aug.name == AugmentationNames.NeuroFluxGovernor) {

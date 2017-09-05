@@ -235,8 +235,12 @@ Gang.prototype.processGains = function(numCycles=1) {
         console.log("ERROR: respectGains is NaN");
     }
     if (!isNaN(wantedLevelGains)) {
-        this.wanted += (wantedLevelGains * this.storedCycles);
-        if (this.wanted < 1) {this.wanted = 1;}
+        if (this.wanted === 1 && wantedLevelGains < 0) {
+            //Do nothing
+        } else {
+            this.wanted += (wantedLevelGains * this.storedCycles);
+            if (this.wanted < 1) {this.wanted = 1;}
+        }
     } else {
         console.log("ERROR: wantedLevelGains is NaN");
     }

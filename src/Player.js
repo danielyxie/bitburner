@@ -1615,7 +1615,12 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     this.companyName = company.companyName;
     this.companyPosition = pos;
 
-    Player.firstJobRecvd = true;
+    if (Player.firstJobRecvd === false) {
+        Player.firstJobRecvd = true;
+        document.getElementById("job-tab").style.display = "list-item";
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
+    }
 
     if (leaveCompany) {
         if (sing) {return true;}
@@ -1719,7 +1724,12 @@ PlayerObject.prototype.applyForAgentJob = function(sing=false) {
 PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.Employee)) {
-        Player.firstJobRecvd = true;
+        if (Player.firstJobRecvd === false) {
+            Player.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
+        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Employee;
         if (sing) {return true;}
@@ -1734,7 +1744,12 @@ PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.PartTimeEmployee)) {
-        Player.firstJobRecvd = true;
+        if (Player.firstJobRecvd === false) {
+            Player.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
+        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.PartTimeEmployee;
         if (sing) {return true;}
@@ -1749,7 +1764,12 @@ PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.Waiter)) {
-        Player.firstJobRecvd = true;
+        if (Player.firstJobRecvd === false) {
+            Player.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
+        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Waiter;
         if (sing) {return true;}
@@ -1764,7 +1784,12 @@ PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.PartTimeWaiter)) {
-        Player.firstJobRecvd = true;
+        if (Player.firstJobRecvd === false) {
+            Player.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
+        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.PartTimeWaiter;
         if (sing) {return true;}

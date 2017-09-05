@@ -134,7 +134,12 @@ function getNumAvailableCreateProgram() {
     if (!Player.hasProgram(Programs.AutoLink) && Player.hacking_skill >= 25) {
         ++count;
     }
-    if (count > 0) {Player.firstProgramAvailable = true;}
+    if (Player.firstProgramAvailable === false && count > 0) {
+        Player.firstProgramAvailable = true;
+        document.getElementById("create-program-tab").style.display = "list-item";
+        document.getElementById("hacking-menu-header").click();
+        document.getElementById("hacking-menu-header").click();
+    }
     return count;
 }
 

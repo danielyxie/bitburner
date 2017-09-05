@@ -36,12 +36,10 @@
 }
 
 #javascript-editor textarea {
-    color: var(--my-font-color);
 }
 
 .ace_line,
 .ace_line * {
-    color: var(--my-font-color);
     background-color:transparent;
     margin:0px;
     padding:0px;
@@ -138,6 +136,26 @@
 #script-editor-status {
 	float: left;
 	color: #ffffff;
+}
+
+#script-editor-options-panel {
+    position:absolute;
+    right: 9%;
+    bottom:15%;
+    border:2px solid white;
+    width:19%;
+    background-color:#444;
+    padding:2px;
+    overflow:auto;
+    z-index: 1;
+    color: white;
+}
+
+#script-editor-options-panel fieldset {
+    margin-top:8px;
+    margin-bottom:8px;
+    padding: 2px;
+    font-size:12px;
 }
 
 /* Active scripts */
@@ -406,6 +424,7 @@
     margin: 6px;
     display: inline-block;
     color: var(--my-font-color);
+    background-color:black;
 }
 
 #faction-donate-amount-txt {

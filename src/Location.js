@@ -1840,7 +1840,13 @@ function initLocationButtons() {
 }
 
 function travelToCity(destCityName, cost) {
-    Player.firstTimeTraveled = true;
+    if (Player.firstTimeTraveled === false) {
+        Player.firstTimeTraveled = true;
+        document.getElementById("travel-tab").style.display = "list-item";
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
+    }
+
     if (Player.money.lt(cost)) {
         dialogBoxCreate("You cannot afford to travel to " + destCityName);
         return;
