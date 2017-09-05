@@ -73,7 +73,7 @@ function iTutorialEvaluateStep() {
 
         iTutorialSetText("Welcome to Bitburner, a cyberpunk-themed incremental RPG! " +
                          "The game takes place in a dark, dystopian future...The year is 2077...<br><br>" +
-                         "This tutorial will show you the basics of the game to help you get started. " +
+                         "This tutorial will show you the basics of the game. " +
                          "You may skip the tutorial at any time.");
         var next = clearEventListeners("interactive-tutorial-next");
         next.style.display = "inline-block";
@@ -114,7 +114,7 @@ function iTutorialEvaluateStep() {
         break;
     case iTutorialSteps.CharacterGoToTerminalPage:
         iTutorialSetText("Let's head to your computer's terminal by clicking the 'Terminal' tab on the " +
-                         "main navigation menu");
+                         "main navigation menu.");
         //No next button
         var next = clearEventListeners("interactive-tutorial-next");
         next.style.display = "none";
@@ -132,8 +132,7 @@ function iTutorialEvaluateStep() {
         break;
     case iTutorialSteps.TerminalIntro:
         iTutorialSetText("The Terminal is used to interface with your home computer as well as " +
-                         "all of the other machines around the world. A lot of content in the game is " +
-                         "accessible only through the Terminal, and is necessary for progressing. ");
+                         "all of the other machines around the world.");
         var next = clearEventListeners("interactive-tutorial-next");
         next.style.display = "inline-block";
         next.addEventListener("click", function() {
@@ -149,14 +148,14 @@ function iTutorialEvaluateStep() {
         //next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalLs:
-        iTutorialSetText("The 'help' command displays a list of all available commands, how to use them, " +
+        iTutorialSetText("The 'help' command displays a list of all available Terminal commands, how to use them, " +
                          "and a description of what they do. <br><br>Let's try another command. Enter the 'ls' command");
         //next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalScan:
         iTutorialSetText("'ls' is a basic command that shows all of the contents (programs/scripts) " +
                          "on the computer. Right now, it shows that you have a program called 'NUKE.exe' on your computer. " +
-                         "We'll get to what this does later. <br><br> Through your home computer's terminal, you can connect " +
+                         "We'll get to what this does later. <br><br>Using your home computer's terminal, you can connect " +
                          "to other machines throughout the world. Let's do that now by first entering " +
                          "the 'scan' command. ");
         //next step triggered by terminal command
@@ -197,7 +196,7 @@ function iTutorialEvaluateStep() {
     case iTutorialSteps.TerminalNuke:
         iTutorialSetText("When the 'analyze' command finishes running it will show useful information " +
                          "about hacking the server. <br><br> For this server, the required hacking skill is only 1, " +
-                         "which means you are able to hack it right now. However, in order to hack a server " +
+                         "which means you can hack it right now. However, in order to hack a server " +
                          "you must first gain root access. The 'NUKE.exe' program that we saw earlier on your " +
                          "home computer is a virus that will grant you root access to a machine if there are enough " +
                          "open ports.<br><br> The 'analyze' results shows that there do not need to be any open ports " +
@@ -207,19 +206,19 @@ function iTutorialEvaluateStep() {
         break;
     case iTutorialSteps.TerminalManualHack:
         iTutorialSetText("You now have root access! You can hack the server using the 'hack' command. " +
-                         "Try doing that now. ");
+                         "Try doing that now.");
         //next step triggered by terminal command
         break;
     case iTutorialSteps.TerminalHackingMechanics:
         iTutorialSetText("You are now attempting to hack the server. Note that performing a hack takes time and " +
                          "only has a certain percentage chance " +
                          "of success. This time and success chance is determined by a variety of factors, including " +
-                         "your hacking skill and the server's security level. <br><br>" +
+                         "your hacking skill and the server's security level.<br><br>" +
                          "If your attempt to hack the server is successful, you will steal a certain percentage " +
                          "of the server's total money. This percentage is affected by your hacking skill and " +
-                         "the server's security level. <br><br> The amount of money on a server is not limitless. So, if " +
+                         "the server's security level.<br><br>The amount of money on a server is not limitless. So, if " +
                          "you constantly hack a server and deplete its money, then you will encounter " +
-                         "diminishing returns in your hacking.<br>");
+                         "diminishing returns in your hacking.");
         var next = clearEventListeners("interactive-tutorial-next");
         next.style.display = "inline-block";
         next.addEventListener("click", function() {
@@ -230,7 +229,7 @@ function iTutorialEvaluateStep() {
     case iTutorialSteps.TerminalCreateScript:
         iTutorialSetText("Hacking is the core mechanic of the game and is necessary for progressing. However, " +
                          "you don't want to be hacking manually the entire time. You can automate your hacking " +
-                         "by writing scripts! <br><br>To create a new script or edit an existing one, you can use the 'nano' " +
+                         "by writing scripts!<br><br>To create a new script or edit an existing one, you can use the 'nano' " +
                          "command. Scripts must end with the '.script' extension. Let's make a script now by " +
                          "entering 'nano foodnstuff.script' after the hack command finishes running (Sidenote: Pressing ctrl + c" +
                          " will end a command like hack early)");
@@ -249,14 +248,14 @@ function iTutorialEvaluateStep() {
                          "&nbsp;&nbsp;hack('foodnstuff'); <br>" +
                          "}<br><br> " +
                          "For anyone with basic programming experience, this code should be straightforward. " +
-                         "This script will continuously hack the 'foodnstuff' server. <br><br>" +
+                         "This script will continuously hack the 'foodnstuff' server.<br><br>" +
                          "To save and close the script editor, press the button in the bottom left, or press ctrl + b.");
         //next step triggered in saveAndCloseScriptEditor() (Script.js)
         break;
     case iTutorialSteps.TerminalFree:
         iTutorialSetText("Now we'll run the script. Scripts require a certain amount of RAM to run, and can be " +
                          "run on any machine which you have root access to. Different servers have different " +
-                         "amounts of RAM. You can also purchase more RAM for your home server. <br><br> To check how much " +
+                         "amounts of RAM. You can also purchase more RAM for your home server.<br><br>To check how much " +
                          "RAM is available on this machine, enter the 'free' command.");
         //next step triggered by terminal commmand
         break;
@@ -272,8 +271,8 @@ function iTutorialEvaluateStep() {
                          "runs an infinite loop). <br><br>These scripts can passively earn you income and hacking experience. " +
                          "Your scripts will also earn money and experience while you are offline, although at a " +
                          "much slower rate. <br><br> " +
-                         "Let's check out some statistics of our active, running scripts by clicking the " +
-                         "'Active Scripts' link in the main navigation menu. ");
+                         "Let's check out some statistics for our running scripts by clicking the " +
+                         "'Active Scripts' link in the main navigation menu.");
         document.getElementById("active-scripts-menu-link").setAttribute("class", "flashing-button");
         var activeScriptsMainMenuButton = document.getElementById("active-scripts-menu-link");
         activeScriptsMainMenuButton.addEventListener("click", function() {
@@ -342,7 +341,7 @@ function iTutorialEvaluateStep() {
         iTutorialSetText("You just purchased a Hacknet Node! This Hacknet Node will passively " +
                          "earn you money over time, both online and offline. When you get enough " +
                          " money, you can upgrade " +
-                         "your newly-purchased Hacknet Node below. <br><br>" +
+                         "your newly-purchased Hacknet Node below.<br><br>" +
                          "Let's go to the 'City' page through the main navigation menu.");
         document.getElementById("city-menu-link").setAttribute("class", "flashing-button");
         var worldButton = clearEventListeners("city-menu-link");
