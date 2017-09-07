@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.28.2",
+    Version:                "0.28.3",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -449,9 +449,12 @@ let CONSTANTS = {
                            "kill('foo.script', getHostname(), 1, 'foodnstuff');<br><br>" +
                            "<i>killall(hostname/ip)</i><br> Kills all running scripts on the specified server. This function takes a single argument which " +
                            "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" +
-                           "<i>scp(script, hostname/ip)</i><br>Copies a script to another server. The first argument is a string with the filename of the script " +
+                           "<i>scp(script, hostname/ip)</i><br>Copies a script or literature (.lit) file to another server. The first argument is a string with " +
+                           "the filename of the script or literature file " +
                            "to be copied. The second argument is a string with the hostname or IP of the destination server. Returns true if the script is successfully " +
                            "copied over and false otherwise. <br> Example: scp('hack-template.script', 'foodnstuff');<br><br>" +
+                           "<i>ls(hostname/ip)</i><br>Returns an array containing the names of all files on the specified server. The argument must be a " +
+                           "string with the hostname or IP of the target server.<br><br>" +
                            "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " +
                            "The argument passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline.<br> " +
                            "Example:<br>if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" +
@@ -508,7 +511,6 @@ let CONSTANTS = {
                            "but it will be converted to a string using Javascript's String function. Anything that resolves to an empty string will cause the function to fail. " +
                            "The second argument specified the amount of RAM (in GB) for the server. This argument must resolve to a numeric and it must be a power of 2 " +
                            "(2, 4, 8, etc...). <br><br>" +
-                           "Purchasing a server using this Netscript function is twice as expensive as manually purchasing a server from a location in the World.<br><br>" +
                            "This function returns the hostname of the newly purchased server as a string. If the function fails to purchase a server, then it will return " +
                            "an empty string. The function will fail if the arguments passed in are invalid or if the player does not have enough money to purchase the specified server.<br><br>" +
                            "<i>round(n)</i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" +
@@ -859,6 +861,9 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.28.3<br>" +
+    "-Added ls() Netscript function<br>" +
+    "-Increased the amount of RAM on many lower level servers (up to level 200 hacking level required).<br><br>" +
     "v0.28.2<br>" +
     "-Added a few script editor configuration options. Includes key bindings, themes, etc.<br>" +
     "-Certain menu options will now be hidden until their relevant gameplay is unlocked. This " +

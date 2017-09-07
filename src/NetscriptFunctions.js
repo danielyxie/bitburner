@@ -11,6 +11,7 @@ import {Factions, Faction, joinFaction,
 import {getCostOfNextHacknetNode,
         purchaseHacknet}                            from "./HacknetNode.js";
 import {Locations}                                  from "./Location.js";
+import {Message, Messages}                          from "./Message.js";
 import {Player}                                     from "./Player.js";
 import {Script, findRunningScript, RunningScript}   from "./Script.js";
 import {Server, getServer, AddToAllServers,
@@ -439,13 +440,16 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("killall(): Killing all scripts on " + server.hostname + ". May take a few minutes for the scripts to die");
             return true;
         },
-        scp : function(scriptname,ip){
-            if (scriptname === undefined || ip === undefined) {
-                throw makeRuntimeRejectMsg(workerScript, "scp() call has incorrect number of arguments. Takes 2 arguments");
+        scp : function(scriptname, ip){
+            if (scriptname === undefined || ip === undefined || arguments.length != 2) {
+                throw makeRuntimeRejectMsg(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 arguments");
             }
             var destServer = getServer(ip);
             if (destServer == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into scp() command: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "Error: Invalid hostname/ip passed into scp() command: " + ip);
+            }
+            if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script")) {
+                throw makeRuntimeRejectMsg(workerScript, "Error: scp() only works for .script and .lit files");
             }
 
             var currServ = getServer(workerScript.serverIp);
@@ -453,6 +457,32 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
             }
 
+            //Scp for lit files
+            if (scriptname.endsWith(".lit")) {
+                var found = false;
+                for (var i = 0; i < currServ.messages.length; ++i) {
+                    if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
+                        found = true;
+                    }
+                }
+
+                if (!found) {
+                    workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
+                    return false;
+                }
+
+                for (var i = 0; i < destServer.messages.length; ++i) {
+                    if (destServer.messages[i] === scriptname) {
+                        workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                        return true; //Already exists
+                    }
+                }
+                destServer.messages.push(scriptname);
+                workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                return true;
+            }
+
+            //Scp for script files
             var sourceScript = null;
             for (var i = 0; i < currServ.scripts.length; ++i) {
                 if (scriptname == currServ.scripts[i].filename) {
@@ -487,6 +517,64 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
             return true;
         },
+        ls : function(ip, grep) {
+            if (ip === undefined) {
+                throw makeRuntimeRejectMsg(workerScript, "ls() failed because of invalid arguments. Usage: ls(ip/hostname, [grep filter])");
+            }
+            var server = getServer(ip);
+            if (server === null) {
+                workerScript.scriptRef.log("ls() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "ls() failed. Invalid IP or hostname passed in: " + ip);
+            }
+
+            //Get the grep filter, if one exists
+            var filter = false;
+            if (arguments.length >= 2) {
+                filter = grep.toString();
+            }
+
+            var allFiles = [];
+            for (var i = 0; i < server.programs.length; i++) {
+                if (filter) {
+                    if (server.programs[i].includes(filter)) {
+                        allFiles.push(server.programs[i]);
+                    }
+                } else {
+                    allFiles.push(server.programs[i]);
+                }
+            }
+            for (var i = 0; i < server.scripts.length; i++) {
+                if (filter) {
+                    if (server.scripts[i].filename.includes(filter)) {
+                        allFiles.push(server.scripts[i].filename);
+                    }
+                } else {
+                    allFiles.push(server.scripts[i].filename);
+                }
+
+            }
+            for (var i = 0; i < server.messages.length; i++) {
+                if (filter) {
+                    if (server.messages[i] instanceof Message) {
+                        if (server.messages[i].filename.includes(filter)) {
+                            allFiles.push(server.messages[i].filename);
+                        }
+                    } else if (server.messages[i].includes(filter)) {
+                        allFiles.push(server.messages[i]);
+                    }
+                } else {
+                    if (server.messages[i] instanceof Message) {
+                        allFiles.push(server.messages[i].filename);
+                    } else {
+                        allFiles.push(server.messages[i]);
+                    }
+                }
+            }
+
+            //Sort the files alphabetically then print each
+            allFiles.sort();
+            return allFiles;
+        },
         hasRootAccess : function(ip){
             if (ip===undefined){
                 throw makeRuntimeRejectMsg(workerScript, "hasRootAccess() call has incorrect number of arguments. Takes 1 argument");
@@ -513,8 +601,8 @@ function NetscriptFunctions(workerScript) {
         getServerMoneyAvailable : function(ip){
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
             }
             if (server.hostname == "home") {
                 //Return player's money
@@ -1159,6 +1247,7 @@ function NetscriptFunctions(workerScript) {
                              "can be found on your home computer.");
                     } else {
                         workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.FTPCrackProgram.toLowerCase():
@@ -1169,7 +1258,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the FTPCrack.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.RelaySMTPProgram.toLowerCase():
@@ -1180,7 +1270,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the relaySMTP.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.HTTPWormProgram.toLowerCase():
@@ -1191,7 +1282,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the HTTPWorm.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.SQLInjectProgram.toLowerCase():
@@ -1202,7 +1294,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the SQLInject.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.DeepscanV1.toLowerCase():
@@ -1213,7 +1306,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the DeepscanV1.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.DeepscanV2.toLowerCase():
@@ -1224,7 +1318,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the DeepscanV2.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 default:
