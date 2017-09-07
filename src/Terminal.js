@@ -1033,7 +1033,6 @@ let Terminal = {
                 //Scp for lit files
                 if (scriptname.endsWith(".lit")) {
                     var found = false;
-                    var curr
                     for (var i = 0; i < currServ.messages.length; ++i) {
                         if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
                             found = true;
