@@ -2454,7 +2454,7 @@ function dialogBoxCreate(txt) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CONSTANTS; });
 let CONSTANTS = {
-    Version:                "0.28.2",
+    Version:                "0.28.3",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -3318,6 +3318,8 @@ let CONSTANTS = {
     LatestUpdate:
     "v0.28.3<br>" +
     "-Added ls() Netscript function<br>" +
+    "-Increased company wages by about ~10% across the board<br>" +
+    "-The scp() Netsction function and Terminal command now works for .lit files<br>" + 
     "-Increased the amount of RAM on many lower level servers (up to level 200 hacking level required).<br><br>" +
     "v0.28.2<br>" +
     "-Added a few script editor configuration options. Includes key bindings, themes, etc.<br>" +
