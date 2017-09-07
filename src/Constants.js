@@ -863,6 +863,8 @@ let CONSTANTS = {
     LatestUpdate:
     "v0.28.3<br>" +
     "-Added ls() Netscript function<br>" +
+    "-Increased company wages by about ~10% across the board<br>" +
+    "-The scp() Netsction function and Terminal command now works for .lit files<br>" + 
     "-Increased the amount of RAM on many lower level servers (up to level 200 hacking level required).<br><br>" +
     "v0.28.2<br>" +
     "-Added a few script editor configuration options. Includes key bindings, themes, etc.<br>" +
