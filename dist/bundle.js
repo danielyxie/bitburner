@@ -19964,6 +19964,34 @@ function prestigeWorkerScripts() {
 
 //Loop through workerScripts and run every script that is not currently running
 function runScriptsLoop() {
+    //Delete any scripts that finished or have been killed. Loop backwards bc removing
+    //items fucks up the indexing
+    for (var i = workerScripts.length - 1; i >= 0; i--) {
+        if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
+            console.log("Deleting script: " + workerScripts[i].name);
+            //Delete script from the runningScripts array on its host serverIp
+            var ip = workerScripts[i].serverIp;
+            var name = workerScripts[i].name;
+
+            for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts.length; j++) {
+                if (__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts[j].filename == name &&
+                    Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["c" /* compareArrays */])(__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts[j].args, workerScripts[i].args)) {
+                    __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts.splice(j, 1);
+                    break;
+                }
+            }
+
+            //Free RAM
+            __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].ramUsed -= workerScripts[i].ramUsage;
+
+            //Delete script from Active Scripts
+            Object(__WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__["b" /* deleteActiveScriptsItem */])(workerScripts[i]);
+
+            //Delete script from workerScripts
+            workerScripts.splice(i, 1);
+        }
+    }
+
 	//Run any scripts that haven't been started
 	for (var i = 0; i < workerScripts.length; i++) {
 		//If it isn't running, start the script
@@ -20023,34 +20051,6 @@ function runScriptsLoop() {
                     Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("An unknown script died for an unknown reason. This is a bug please contact game dev");
                 }
 			});
-		}
-	}
-
-	//Delete any scripts that finished or have been killed. Loop backwards bc removing
-	//items fucks up the indexing
-	for (var i = workerScripts.length - 1; i >= 0; i--) {
-		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
-			console.log("Deleting script: " + workerScripts[i].name);
-			//Delete script from the runningScripts array on its host serverIp
-			var ip = workerScripts[i].serverIp;
-			var name = workerScripts[i].name;
-
-			for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts.length; j++) {
-				if (__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts[j].filename == name &&
-                    Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["c" /* compareArrays */])(__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts[j].args, workerScripts[i].args)) {
-					__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts.splice(j, 1);
-					break;
-				}
-			}
-
-			//Free RAM
-			__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].ramUsed -= workerScripts[i].ramUsage;
-
-            //Delete script from Active Scripts
-			Object(__WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__["b" /* deleteActiveScriptsItem */])(workerScripts[i]);
-
-			//Delete script from workerScripts
-			workerScripts.splice(i, 1);
 		}
 	}
 
@@ -39429,6 +39429,14 @@ function infiltrationSetText(txt) {
 
 //ram argument is in GB
 function infiltrationBoxCreate(inst) {
+    //Gain exp
+    __WEBPACK_IMPORTED_MODULE_2__src_Player_js__["a" /* Player */].gainHackingExp(inst.hackingExpGained);
+    __WEBPACK_IMPORTED_MODULE_2__src_Player_js__["a" /* Player */].gainStrengthExp(inst.strExpGained);
+    __WEBPACK_IMPORTED_MODULE_2__src_Player_js__["a" /* Player */].gainDefenseExp(inst.defExpGained);
+    __WEBPACK_IMPORTED_MODULE_2__src_Player_js__["a" /* Player */].gainDexterityExp(inst.dexExpGained);
+    __WEBPACK_IMPORTED_MODULE_2__src_Player_js__["a" /* Player */].gainAgilityExp(inst.agiExpGained);
+    __WEBPACK_IMPORTED_MODULE_2__src_Player_js__["a" /* Player */].gainCharismaExp(inst.chaExpGained);
+    
     var totalValue = 0;
     for (var i = 0; i < inst.secretsStolen.length; ++i) {
         totalValue += inst.secretsStolen[i];
