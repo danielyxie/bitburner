@@ -1,5 +1,6 @@
 var ace = require('brace');
 require('brace/mode/javascript');
+require('brace/mode/netscript');
 require('brace/theme/chaos');
 require('brace/theme/chrome');
 require('brace/theme/monokai');
@@ -44,7 +45,7 @@ function scriptEditorInit() {
 
     //Initialize ACE Script editor
     var editor = ace.edit('javascript-editor');
-    editor.getSession().setMode('ace/mode/javascript');
+    editor.getSession().setMode('ace/mode/netscript');
     editor.setTheme('ace/theme/monokai');
     document.getElementById('javascript-editor').style.fontSize='16px';
     editor.setOption("showPrintMargin", false);
