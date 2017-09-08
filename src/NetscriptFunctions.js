@@ -1,5 +1,6 @@
 import {Augmentations, Augmentation,
-        augmentationExists, installAugmentations}   from "./Augmentations.js";
+        augmentationExists, installAugmentations,
+        AugmentationNames}                          from "./Augmentations.js";
 import {Companies, Company, CompanyPosition,
         CompanyPositions, companyExists}            from "./Company.js";
 import {CONSTANTS}                                  from "./Constants.js";
@@ -1753,16 +1754,23 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            for (var j = 0; j < Player.queuedAugmentations.length; ++j) {
-                if (Player.queuedAugmentations[j].name === aug.name) {
-                    workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
-                    return false;
-                }
+            var isNeuroflux = false;
+            if (aug.name === AugmentationNames.NeuroFluxGovernor) {
+                isNeuroflux = true;
             }
-            for (var j = 0; j < Player.augmentations.length; ++j) {
-                if (Player.augmentations[j].name === aug.name) {
-                    workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
-                    return false;
+
+            if (!isNeuroflux) {
+                for (var j = 0; j < Player.queuedAugmentations.length; ++j) {
+                    if (Player.queuedAugmentations[j].name === aug.name) {
+                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                        return false;
+                    }
+                }
+                for (var j = 0; j < Player.augmentations.length; ++j) {
+                    if (Player.augmentations[j].name === aug.name) {
+                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                        return false;
+                    }
                 }
             }
 
