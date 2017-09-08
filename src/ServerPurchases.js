@@ -1,8 +1,10 @@
 import {CONSTANTS}                              from "./Constants.js";
 import {Player}                                 from "./Player.js";
-import {AllServers}                             from "./Server.js";
+import {Server, AllServers, AddToAllServers}    from "./Server.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {createRandomIp}                         from "../utils/IPAddress.js";
 import {yesNoTxtInpBoxGetInput}                 from "../utils/YesNoBox.js";
+
 
 /* Functions to handle any server-related purchasing:
  *  Purchasing new servers

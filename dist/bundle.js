@@ -70,9 +70,9 @@
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Player; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadPlayer; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BitNode_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Company_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Company_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Crimes_js__ = __webpack_require__(36);
@@ -87,7 +87,7 @@
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__utils_decimal_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_IPAddress_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_IPAddress_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_JSONReviver_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
@@ -3355,9 +3355,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_LogBox_js__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ActiveScriptsUI_js__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Augmentations_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Augmentations_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__BitNode_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Company_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Company_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__CreateProgram_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Faction_js__ = __webpack_require__(10);
@@ -3373,7 +3373,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__Prestige_js__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__RedPill_js__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__SaveObject_js__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__Script_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__Script_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__Settings_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__SourceFile_js__ = __webpack_require__(30);
@@ -5169,10 +5169,10 @@ function numNetscriptOperators(string) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CreateProgram_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Script_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Script_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_IPAddress_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_IPAddress_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(7);
 
 
@@ -16465,7 +16465,7 @@ function initBitNodeMultipliers() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Faction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return purchaseAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return factionExists; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BitNode_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(4);
@@ -17549,7 +17549,7 @@ function initSpecialServerIps() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Locations; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return displayLocationContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initLocationButtons; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Company_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Company_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Crimes_js__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(4);
@@ -17560,7 +17560,7 @@ function initSpecialServerIps() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_DialogBox_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_IPAddress_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_IPAddress_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_YesNoBox_js__ = __webpack_require__(21);
 
@@ -20115,6 +20115,60 @@ function updateOnlineScriptTimes(numCycles = 1) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createRandomIp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ipExists; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return isValidIPAddress; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_Server_js__ = __webpack_require__(6);
+
+/* Functions to deal with manipulating IP addresses*/
+
+//Generate a random IP address
+//Will not return an IP address that already exists in the AllServers array
+function createRandomIp() {
+	var ip = createRandomByte(99) +'.' +
+			 createRandomByte(9) +'.' +
+			 createRandomByte(9) +'.' +
+		 	 createRandomByte(9);
+
+    //If the Ip already exists, recurse to create a new one
+    if (ipExists(ip)) {
+        return createRandomIp();
+    }
+	return ip;
+}
+
+//Returns true if the IP already exists in one of the game's servers
+function ipExists(ip) {
+    for (var property in __WEBPACK_IMPORTED_MODULE_0__src_Server_js__["b" /* AllServers */]) {
+        if (__WEBPACK_IMPORTED_MODULE_0__src_Server_js__["b" /* AllServers */].hasOwnProperty(property)) {
+            if (property == ip) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function createRandomByte(n=9) {
+	return Math.round(Math.random()*n);
+}
+
+function isValidIPAddress(ipaddress) {
+	if (/^(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress))
+	{
+		return true;
+	}
+	return false;
+}
+
+
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return AugmentationNames; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Augmentations; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return PlayerOwnedAugmentation; });
@@ -22082,7 +22136,7 @@ function giveAllAugmentations() {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23249,7 +23303,7 @@ function getJobRequirementText(company, pos, tooltiptext=false) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23875,60 +23929,6 @@ __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].construct
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
 
 /***/ }),
-/* 19 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createRandomIp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ipExists; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return isValidIPAddress; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_Server_js__ = __webpack_require__(6);
-
-/* Functions to deal with manipulating IP addresses*/
-
-//Generate a random IP address
-//Will not return an IP address that already exists in the AllServers array
-function createRandomIp() {
-	var ip = createRandomByte(99) +'.' +
-			 createRandomByte(9) +'.' +
-			 createRandomByte(9) +'.' +
-		 	 createRandomByte(9);
-
-    //If the Ip already exists, recurse to create a new one
-    if (ipExists(ip)) {
-        return createRandomIp();
-    }
-	return ip;
-}
-
-//Returns true if the IP already exists in one of the game's servers
-function ipExists(ip) {
-    for (var property in __WEBPACK_IMPORTED_MODULE_0__src_Server_js__["b" /* AllServers */]) {
-        if (__WEBPACK_IMPORTED_MODULE_0__src_Server_js__["b" /* AllServers */].hasOwnProperty(property)) {
-            if (property == ip) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-function createRandomByte(n=9) {
-	return Math.round(Math.random()*n);
-}
-
-function isValidIPAddress(ipaddress) {
-	if (/^(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress))
-	{
-		return true;
-	}
-	return false;
-}
-
-
-
-
-/***/ }),
 /* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -23948,7 +23948,7 @@ function isValidIPAddress(ipaddress) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__NetscriptWorker_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__RedPill_js__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Script_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Script_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_StringHelperFunctions_js__ = __webpack_require__(5);
@@ -25680,7 +25680,7 @@ function yesNoTxtInpBoxCreate(txt) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreateProgram_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Server_js__ = __webpack_require__(6);
@@ -33907,9 +33907,9 @@ function applySourceFile(srcFile) {
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BitNode_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Company_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Company_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Faction_js__ = __webpack_require__(10);
@@ -34740,8 +34740,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NetscriptFunctions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSingularitySFFlags; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasSingularitySF; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Company_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Company_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__CreateProgram_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__DarkWeb_js__ = __webpack_require__(39);
@@ -34751,7 +34751,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Location_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Message_js__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Script_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Script_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Settings_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__SpecialServerIps_js__ = __webpack_require__(11);
@@ -34763,7 +34763,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__utils_decimal_js__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__utils_decimal_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__utils_IPAddress_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__utils_IPAddress_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
@@ -36950,7 +36950,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Terminal_js__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
@@ -37843,9 +37843,9 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Script_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Script_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_IPAddress_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_IPAddress_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
@@ -67373,7 +67373,10 @@ exports.killRing = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_YesNoBox_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_YesNoBox_js__ = __webpack_require__(21);
+
+
 
 
 
@@ -67399,15 +67402,15 @@ function purchaseServer(ram, cost) {
         return;
     }
 
-    var hostname = Object(__WEBPACK_IMPORTED_MODULE_4__utils_YesNoBox_js__["h" /* yesNoTxtInpBoxGetInput */])();
+    var hostname = Object(__WEBPACK_IMPORTED_MODULE_5__utils_YesNoBox_js__["h" /* yesNoTxtInpBoxGetInput */])();
     if (hostname == "") {
         Object(__WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You must enter a hostname for your new server!");
         return;
     }
 
     //Create server
-    var newServ = new Server(createRandomIp(), hostname, "", false, true, true, ram);
-    AddToAllServers(newServ);
+    var newServ = new __WEBPACK_IMPORTED_MODULE_2__Server_js__["d" /* Server */](Object(__WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__["a" /* createRandomIp */])(), hostname, "", false, true, true, ram);
+    Object(__WEBPACK_IMPORTED_MODULE_2__Server_js__["a" /* AddToAllServers */])(newServ);
 
     //Add to Player's purchasedServers array
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].purchasedServers.push(newServ.ip);
@@ -71296,7 +71299,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return saveObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return loadGame; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Alias_js__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Company_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Company_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Faction_js__ = __webpack_require__(10);
@@ -71304,7 +71307,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__HacknetNode_js__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Message_js__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Script_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Script_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Settings_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__SpecialServerIps_js__ = __webpack_require__(11);
