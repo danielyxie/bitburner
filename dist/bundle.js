@@ -36506,16 +36506,23 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].queuedAugmentations.length; ++j) {
-                if (__WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].queuedAugmentations[j].name === aug.name) {
-                    workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
-                    return false;
-                }
+            var isNeuroflux = false;
+            if (aug.name === __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["b" /* AugmentationNames */].NeuroFluxGovernor) {
+                isNeuroflux = true;
             }
-            for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].augmentations.length; ++j) {
-                if (__WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].augmentations[j].name === aug.name) {
-                    workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
-                    return false;
+
+            if (!isNeuroflux) {
+                for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].queuedAugmentations.length; ++j) {
+                    if (__WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].queuedAugmentations[j].name === aug.name) {
+                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                        return false;
+                    }
+                }
+                for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].augmentations.length; ++j) {
+                    if (__WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].augmentations[j].name === aug.name) {
+                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                        return false;
+                    }
                 }
             }
 
