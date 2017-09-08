@@ -23,6 +23,14 @@ function infiltrationSetText(txt) {
 
 //ram argument is in GB
 function infiltrationBoxCreate(inst) {
+    //Gain exp
+    Player.gainHackingExp(inst.hackingExpGained);
+    Player.gainStrengthExp(inst.strExpGained);
+    Player.gainDefenseExp(inst.defExpGained);
+    Player.gainDexterityExp(inst.dexExpGained);
+    Player.gainAgilityExp(inst.agiExpGained);
+    Player.gainCharismaExp(inst.chaExpGained);
+    
     var totalValue = 0;
     for (var i = 0; i < inst.secretsStolen.length; ++i) {
         totalValue += inst.secretsStolen[i];
