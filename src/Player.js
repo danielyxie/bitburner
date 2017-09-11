@@ -1008,6 +1008,7 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
     if (this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
         var maxCycles = CONSTANTS.GameCyclesPer20Hours;
+        this.timeWorked = CONSTANTS.MillisecondsPer20Hours;
         this.workHackExpGained = this.workHackExpGainRate * maxCycles;
         this.workStrExpGained  = this.workStrExpGainRate * maxCycles;
         this.workDefExpGained  = this.workDefExpGainRate * maxCycles;
@@ -1255,7 +1256,7 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
             agiExp = baseGymExp * expMult / gameCPS;
             break;
         default:
-            throw new Error("ERR: Invalid/unregocnized class name");
+            throw new Error("ERR: Invalid/recognized class name");
             return;
     }
 

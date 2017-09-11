@@ -120,7 +120,7 @@ function displayLocationContent() {
 		console.log("displayLocationContent() called with location " + Player.location)
 	}
 
-    var returnToWorld        = document.getElementById("location-return-to-world-button");
+    var returnToWorld           = document.getElementById("location-return-to-world-button");
 
     var locationName            = document.getElementById("location-name");
 
@@ -304,7 +304,7 @@ function displayLocationContent() {
 
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
-    if (loc == Player.companyName) {
+    if (loc != "" && loc === Player.companyName) {
         var company = Companies[loc];
 
         jobTitle.style.display = "block";

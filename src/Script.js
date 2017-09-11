@@ -1,5 +1,6 @@
 var ace = require('brace');
 require('brace/mode/javascript');
+require('brace/mode/netscript');
 require('brace/theme/chaos');
 require('brace/theme/chrome');
 require('brace/theme/monokai');
@@ -44,7 +45,7 @@ function scriptEditorInit() {
 
     //Initialize ACE Script editor
     var editor = ace.edit('javascript-editor');
-    editor.getSession().setMode('ace/mode/javascript');
+    editor.getSession().setMode('ace/mode/netscript');
     editor.setTheme('ace/theme/monokai');
     document.getElementById('javascript-editor').style.fontSize='16px';
     editor.setOption("showPrintMargin", false);
@@ -201,6 +202,7 @@ Script.prototype.updateRamUsage = function() {
 }
 
 function calculateRamUsage(codeCopy) {
+    codeCopy = codeCopy.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1'); //Delete comments
     codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
     var baseRam = 1.4;
     var whileCount = numOccurrences(codeCopy, "while(");
@@ -233,7 +235,6 @@ function calculateRamUsage(codeCopy) {
                          numOccurrences(codeCopy, "getServerRam(");
     var fileExistsCount = numOccurrences(codeCopy, "fileExists(");
     var isRunningCount = numOccurrences(codeCopy, "isRunning(");
-    var numOperators = numNetscriptOperators(codeCopy);
     var purchaseHacknetCount = numOccurrences(codeCopy, "purchaseHacknetNode(");
     var hacknetnodesArrayCount = numOccurrences(codeCopy, "hacknetnodes[");
     var hnUpgLevelCount = numOccurrences(codeCopy, ".upgradeLevel(");
@@ -303,7 +304,6 @@ function calculateRamUsage(codeCopy) {
         (getServerCount * CONSTANTS.ScriptGetServerCost) +
         (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) +
         (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
-        (numOperators * CONSTANTS.ScriptOperatorRamCost) +
         (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) +
         (hacknetnodesArrayCount * CONSTANTS.ScriptHacknetNodesRamCost) +
         (hnUpgLevelCount * CONSTANTS.ScriptHNUpgLevelRamCost) +

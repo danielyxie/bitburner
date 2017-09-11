@@ -1,3 +1,4 @@
+import {updateActiveScriptsItems}                   from "./ActiveScriptsUI.js";
 import {Augmentations, Augmentation,
         augmentationExists, installAugmentations,
         AugmentationNames}                          from "./Augmentations.js";
@@ -1013,6 +1014,29 @@ function NetscriptFunctions(workerScript) {
             }
             return scriptCalculateWeakenTime(server) / 1000; //Returns seconds
         },
+        getScriptIncome : function(scriptname, ip) {
+            if (arguments.length === 0) {
+                //Get total script income
+                return updateActiveScriptsItems();
+            } else {
+                //Get income for a particular script
+                var server = getServer(ip);
+                if (server === null) {
+                    workerScript.scriptRef.log("getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
+                    throw makeRuntimeRejectMsg(workerScript, "getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
+                }
+                var argsForScript = [];
+                for (var i = 2; i < arguments.length; ++i) {
+                    argsForScript.push(arguments[i]);
+                }
+                var runningScriptObj = findRunningScript(scriptname, argsForScript, server);
+                if (runningScriptObj == null) {
+                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + printArray(argsForScript));
+                    return -1;
+                }
+                return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
+            }
+        },
 
         /* Singularity Functions */
         universityCourse(universityName, className) {
@@ -1034,6 +1058,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot study at Summit University because you are not in Aevum. universityCourse() failed");
                         return false;
                     }
+                    Player.location = Locations.AevumSummitUniversity;
                     costMult = 4;
                     expMult = 3;
                     break;
@@ -1042,6 +1067,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot study at Rothman University because you are not in Sector-12. universityCourse() failed");
                         return false;
                     }
+                    Player.location = Locations.Sector12RothmanUniversity;
                     costMult = 3;
                     expMult = 2;
                     break;
@@ -1050,6 +1076,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot study at ZB Institute of Technology because you are not in Volhaven. universityCourse() failed");
                         return false;
                     }
+                    Player.location = Locations.VolhavenZBInstituteOfTechnology;
                     costMult = 5;
                     expMult = 4;
                     break;
@@ -1105,6 +1132,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Crush Fitness because you are not in Aevum. gymWorkout() failed");
                         return false;
                     }
+                    Player.location = Locations.AevumCrushFitnessGym;
                     costMult = 2;
                     expMult = 1.5;
                     break;
@@ -1113,6 +1141,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Snap Fitness because you are not in Aevum. gymWorkout() failed");
                         return false;
                     }
+                    Player.location = Locations.AevumSnapFitnessGym;
                     costMult = 6;
                     expMult = 4;
                     break;
@@ -1121,6 +1150,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Iron Gym because you are not in Sector-12. gymWorkout() failed");
                         return false;
                     }
+                    Player.location = Locations.Sector12IronGym;
                     costMult = 1;
                     expMult = 1;
                     break;
@@ -1129,6 +1159,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Powerhouse Gym because you are not in Sector-12. gymWorkout() failed");
                         return false;
                     }
+                    Player.location = Locations.Sector12PowerhouseGym;
                     costMult = 10;
                     expMult = 7.5;
                     break;
@@ -1137,6 +1168,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Millenium Fitness Gym because you are not in Volhaven. gymWorkout() failed");
                         return false;
                     }
+                    Player.location = Locations.VolhavenMilleniumFitnessGym;
                     costMult = 3;
                     expMult = 2.5;
                     break;
