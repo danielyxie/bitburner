@@ -766,7 +766,10 @@ function displayFactionContent(factionName) {
 }
 
 function displayFactionAugmentations(factionName) {
-    document.getElementById("faction-augmentations-page-desc").innerHTML = "Lists all augmentations that are available to purchase from " + factionName;
+    document.getElementById("faction-augmentations-page-desc").innerHTML =
+        "Lists all Augmentations that are available to purchase from " + factionName + "<br><br>" +
+        "Augmentations are powerful upgrades that will enhance your abilities.";
+
     var faction = Factions[factionName];
 
     var augmentationsList = document.getElementById("faction-augmentations-list");

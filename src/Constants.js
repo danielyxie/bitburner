@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.28.3",
+    Version:                "0.28.4",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -536,21 +536,35 @@ let CONSTANTS = {
                            "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
                            "<i>getWeakenTime(hostname/ip)</i><br>Returns the amount of time in seconds it takes to execute the weaken() Netscript function " +
                            "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
+                           "<i>getScriptIncome([scriptname], [hostname/ip], [args...])</i><br>" +
+                           "Returns the amount of income the specified script generates while online (when the game is open, does not apply for " +
+                           "offline income). This function can also return the total income of all of your active scripts by running the function " +
+                           "with no arguments.<br><br>" +
+                           "Remember that a script is uniquely identified by both its name and its arguments. So for example if you ran a script " +
+                           "with the arguments 'foodnstuff' and '5' then in order to use this function to get that script's income you must " +
+                           "specify those arguments in this function call.<br><br>" +
+                           "The first argument, if specified, must be a string with the name of the script (including the .script extension). " +
+                           "The second argument must be a string with the hostname/IP of the target server. If the first argument is specified " +
+                           "then the second argument must be specified as well. Any additional arguments passed to the function will specify " +
+                           "the arguments passed into the target script.<br><br>" +
                            "<u><h1>Hacknet Nodes API</h1></u><br>" +
                            "Netscript provides the following API for accessing and upgrading your Hacknet Nodes through scripts. This API does NOT work offline.<br><br>" +
                            "<i>hacknetnodes</i><br> A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " +
                            "indexes. These indexes correspond to the number at the end of the name of the Hacknet Node. For example, the first Hacknet Node you purchase " +
                            "will have the same 'hacknet-node-0' and can be accessed with hacknetnodes[0]. The fourth Hacknet Node you purchase will have the name " +
                            "'hacknet-node-3' and can be accessed with hacknetnodes[3]. <br><br>" +
-                           "<i>hacknetnodes.length</i><br> Returns the number of Hacknet Nodes that the player owns<br><br>" +
-                           "<i>hacknetnodes[i].level</i><br> Returns the level of the corresponding Hacknet Node<br><br>" +
-                           "<i>hacknetnodes[i].ram</i><br> Returns the amount of RAM on the corresponding Hacknet Node<br><br>" +
-                           "<i>hacknetnodes[i].cores</i><br> Returns the number of cores on the corresponding Hacknet Node<br><br>" +
-                           "<i>hacknetnodes[i].upgradeLevel(n)</i><br> Tries to upgrade the level of the corresponding Hacknet Node n times. The argument n must be a " +
+                           "<i>hacknetnodes.length</i><br>Returns the number of Hacknet Nodes that the player owns<br><br>" +
+                           "<i>hacknetnodes[i].level</i><br>Returns the level of the corresponding Hacknet Node<br><br>" +
+                           "<i>hacknetnodes[i].ram</i><br>Returns the amount of RAM on the corresponding Hacknet Node<br><br>" +
+                           "<i>hacknetnodes[i].cores</i><br>Returns the number of cores on the corresponding Hacknet Node<br><br>" +
+                           "<i>hacknetnodes[i].totalMoneyGenerated</i><br>Returns the total amount of money that the corresponding Hacknet Node has earned<br><br>" +
+                           "<i>hacknetnodes[i].onlineTimeSeconds</i><br>Returns the total amount of time that the corresponding Hacknet Node has existed<br><br>" +
+                           "<i>hacknetnodes[i].moneyGainRatePerSecond</i><br>Returns the income ($ / sec) that the corresponding Hacknet Node earns<br><br>" +
+                           "<i>hacknetnodes[i].upgradeLevel(n)</i><br>Tries to upgrade the level of the corresponding Hacknet Node n times. The argument n must be a " +
                            "positive integer. Returns true if the Hacknet Node's level is successfully upgraded n times or up to the max level (200), and false otherwise.<br><br>" +
-                           "<i>hacknetnodes[i].upgradeRam()</i><br> Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " +
+                           "<i>hacknetnodes[i].upgradeRam()</i><br>Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " +
                            "RAM is successfully upgraded, and false otherwise. <br><br>" +
-                           "<i>hacknetnodes[i].upgradeCore()</i><br> Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " +
+                           "<i>hacknetnodes[i].upgradeCore()</i><br>Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " +
                            "additional core is successfully purchase, and false otherwise. <br><br>" +
                            "Example: The following is an example of one way a script can be used to automate the purchasing and upgrading of Hacknet Nodes. " +
                            "This script purchases new Hacknet Nodes until the player has four. Then, it iteratively upgrades each of those four Hacknet Nodes " +
@@ -861,10 +875,18 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.28.4<br>" +
+    "-Added getScriptIncome() Netscript function<br>" +
+    "-Added several member variables for the Hacknet Node API that allow you to access info about their income<br>" +
+    "-All valid Netscript functions are now syntax highlighted as keywords in the editor. This means they will a different " +
+    "color than invalid netscript functions (so you can see if you have a typo/if your function is valid, etc.). The color " +
+    "depends on your theme.<br>" +
+    "-Comments and operators no longer count towards RAM usage in scripts.<br>" +
+    "-Variety of bug fixes and updates to informational text in the game<br><br>" +
     "v0.28.3<br>" +
     "-Added ls() Netscript function<br>" +
     "-Increased company wages by about ~10% across the board<br>" +
-    "-The scp() Netsction function and Terminal command now works for .lit files<br>" + 
+    "-The scp() Netsction function and Terminal command now works for .lit files<br>" +
     "-Increased the amount of RAM on many lower level servers (up to level 200 hacking level required).<br><br>" +
     "v0.28.2<br>" +
     "-Added a few script editor configuration options. Includes key bindings, themes, etc.<br>" +

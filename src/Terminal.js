@@ -24,7 +24,7 @@ import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps.js";
 
 import {containsAllStrings, longestCommonStart,
-        formatNumber}                       from "../utils/StringHelperFunctions.js";
+        formatNumber, isString}             from "../utils/StringHelperFunctions.js";
 import {addOffset, printArray}              from "../utils/HelperFunctions.js";
 import {logBoxCreate}                       from "../utils/LogBox.js";
 
@@ -211,13 +211,13 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
     //that we are attempting to autocomplete
     if (arg == "") {
         for (var i = allPossibilities.length-1; i >= 0; --i) {
-            if (!allPossibilities[i].startsWith(command)) {
+            if (!allPossibilities[i].toLowerCase().startsWith(command.toLowerCase())) {
                 allPossibilities.splice(i, 1);
             }
         }
     } else {
         for (var i = allPossibilities.length-1; i >= 0; --i) {
-            if (!allPossibilities[i].startsWith(arg)) {
+            if (!allPossibilities[i].toLowerCase().startsWith(arg.toLowerCase())) {
                 allPossibilities.splice(i, 1);
             }
         }
@@ -337,11 +337,27 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     }
 
     if (input.startsWith("kill ") || input.startsWith("nano ") ||
-        input.startsWith("tail ") || input.startsWith("rm ") ||
+        input.startsWith("tail ") ||
         input.startsWith("mem ") || input.startsWith("check ")) {
         //All Scripts
         for (var i = 0; i < currServ.scripts.length; ++i) {
             allPos.push(currServ.scripts[i].filename);
+        }
+        return allPos;
+    }
+
+    if (input.startsWith("rm ")) {
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push(currServ.scripts[i].filename);
+        }
+        for (var i = 0; i < currServ.programs.length; ++i) {
+            allPos.push(currServ.programs[i]);
+        }
+        for (var i = 0; i < currServ.messages.length; ++i) {
+            if (!(currServ.messages[i] instanceof Message) && isString(currServ.messages[i]) &&
+                  currServ.messages[i].endsWith(".lit")) {
+                allPos.push(currServ.messages[i]);
+            }
         }
         return allPos;
     }
@@ -957,6 +973,15 @@ let Terminal = {
                             }
                         }
                         s.scripts.splice(i, 1);
+                        return;
+                    }
+                }
+
+                //Check literature files
+                for (var i = 0; i < s.messages.length; ++i) {
+                    var f = s.messages[i];
+                    if (!(f instanceof Message) && isString(f) && f === delTarget) {
+                        s.messages.splice(i, 1);
                         return;
                     }
                 }

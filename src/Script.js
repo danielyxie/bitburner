@@ -202,6 +202,7 @@ Script.prototype.updateRamUsage = function() {
 }
 
 function calculateRamUsage(codeCopy) {
+    codeCopy = codeCopy.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1'); //Delete comments
     codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
     var baseRam = 1.4;
     var whileCount = numOccurrences(codeCopy, "while(");
@@ -234,7 +235,6 @@ function calculateRamUsage(codeCopy) {
                          numOccurrences(codeCopy, "getServerRam(");
     var fileExistsCount = numOccurrences(codeCopy, "fileExists(");
     var isRunningCount = numOccurrences(codeCopy, "isRunning(");
-    var numOperators = numNetscriptOperators(codeCopy);
     var purchaseHacknetCount = numOccurrences(codeCopy, "purchaseHacknetNode(");
     var hacknetnodesArrayCount = numOccurrences(codeCopy, "hacknetnodes[");
     var hnUpgLevelCount = numOccurrences(codeCopy, ".upgradeLevel(");
@@ -304,7 +304,6 @@ function calculateRamUsage(codeCopy) {
         (getServerCount * CONSTANTS.ScriptGetServerCost) +
         (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) +
         (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
-        (numOperators * CONSTANTS.ScriptOperatorRamCost) +
         (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) +
         (hacknetnodesArrayCount * CONSTANTS.ScriptHacknetNodesRamCost) +
         (hnUpgLevelCount * CONSTANTS.ScriptHNUpgLevelRamCost) +
