@@ -1256,7 +1256,7 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
             agiExp = baseGymExp * expMult / gameCPS;
             break;
         default:
-            throw new Error("ERR: Invalid/recognized class name");
+            throw new Error("ERR: Invalid/unrecognized class name");
             return;
     }
 
