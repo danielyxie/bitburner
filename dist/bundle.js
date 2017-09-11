@@ -1343,7 +1343,7 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
             agiExp = baseGymExp * expMult / gameCPS;
             break;
         default:
-            throw new Error("ERR: Invalid/recognized class name");
+            throw new Error("ERR: Invalid/unrecognized class name");
             return;
     }
 
@@ -3333,6 +3333,7 @@ let CONSTANTS = {
     LatestUpdate:
     "v0.28.4<br>" +
     "-Added getScriptIncome() Netscript function<br>" +
+    "-Added Javascript's Math module to Netscript. See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math<br>" +
     "-Added several member variables for the Hacknet Node API that allow you to access info about their income<br>" +
     "-All valid Netscript functions are now syntax highlighted as keywords in the editor. This means they will a different " +
     "color than invalid netscript functions. The color will depend on your theme. " +
@@ -34860,6 +34861,7 @@ function initSingularitySFFlags() {
 
 function NetscriptFunctions(workerScript) {
     return {
+        Math : Math,
         hacknetnodes : __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].hacknetNodes,
         scan : function(ip=workerScript.serverIp){
             var server = Object(__WEBPACK_IMPORTED_MODULE_13__Server_js__["e" /* getServer */])(ip);

@@ -55,6 +55,7 @@ function initSingularitySFFlags() {
 
 function NetscriptFunctions(workerScript) {
     return {
+        Math : Math,
         hacknetnodes : Player.hacknetNodes,
         scan : function(ip=workerScript.serverIp){
             var server = getServer(ip);

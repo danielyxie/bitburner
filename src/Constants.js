@@ -877,6 +877,7 @@ let CONSTANTS = {
     LatestUpdate:
     "v0.28.4<br>" +
     "-Added getScriptIncome() Netscript function<br>" +
+    "-Added Javascript's Math module to Netscript. See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math<br>" +
     "-Added several member variables for the Hacknet Node API that allow you to access info about their income<br>" +
     "-All valid Netscript functions are now syntax highlighted as keywords in the editor. This means they will a different " +
     "color than invalid netscript functions. The color will depend on your theme. " +
