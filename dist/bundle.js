@@ -3335,8 +3335,9 @@ let CONSTANTS = {
     "-Added getScriptIncome() Netscript function<br>" +
     "-Added several member variables for the Hacknet Node API that allow you to access info about their income<br>" +
     "-All valid Netscript functions are now syntax highlighted as keywords in the editor. This means they will a different " +
-    "color than invalid netscript functions (so you can see if you have a typo/if your function is valid, etc.). The color " +
-    "depends on your theme.<br>" +
+    "color than invalid netscript functions. The color will depend on your theme. " +
+    "Note that right now, this only applies for normal Netscript functions, not " +
+    "functions in the TIX API, Hacknet Node API, or Singularity Functions.<br><br>" +
     "-Comments and operators no longer count towards RAM usage in scripts.<br>" +
     "-Variety of bug fixes and updates to informational text in the game<br><br>" +
     "v0.28.3<br>" +
