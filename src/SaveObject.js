@@ -466,7 +466,7 @@ BitburnerSaveObject.prototype.exportGame = function() {
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
 
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
-
+    var filename = "bitburnerSave.json";
     var file = new Blob([saveString], {type: 'text/plain'});
     if (window.navigator.msSaveOrOpenBlob) {// IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);

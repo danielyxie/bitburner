@@ -117,6 +117,7 @@ function prestigeAugmentation() {
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
+    Terminal.resetTerminalInput();
     Engine.loadTerminalContent();
 
     //Red Pill
@@ -215,6 +216,7 @@ function prestigeSourceFile() {
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
+    Terminal.resetTerminalInput();
     Engine.loadTerminalContent();
 }
 
