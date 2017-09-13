@@ -26,19 +26,21 @@ import {formatNumber,
 
 function PlayerObject() {
     //Skills and stats
-    this.hacking_skill   = 1;
+    this.hacking_skill  = 1;
 
-    //Fighting
-    this.hp              = 10;
-    this.max_hp          = 10;
-    this.strength        = 1;      //Damage dealt
-    this.defense         = 1;      //Damage received
-    this.dexterity       = 1;      //Accuracy
-    this.agility         = 1;      //Dodge %
+    //Combat stats
+    this.hp             = 10;
+    this.max_hp         = 10;
+    this.strength       = 1;      //Damage dealt
+    this.defense        = 1;      //Damage received
+    this.dexterity      = 1;      //Accuracy
+    this.agility        = 1;      //Dodge %
 
     //Labor stats
-    this.charisma        = 1;
-	//Intelligence, perhaps?
+    this.charisma       = 1;
+
+    //Special stats
+    this.intelligence   = 0;
 
     //Hacking multipliers
     this.hacking_chance_mult    = 1;  //Increase through ascensions/augmentations
@@ -53,6 +55,7 @@ function PlayerObject() {
     this.dexterity_exp   = 0;
     this.agility_exp     = 0;
     this.charisma_exp    = 0;
+    this.intelligence_exp= 0;
 
     this.hacking_mult       = 1;
     this.strength_mult      = 1;
@@ -569,6 +572,13 @@ PlayerObject.prototype.gainCharismaExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainCharismaExp()"); return;
     }
     this.charisma_exp += exp;
+}
+
+PlayerObject.prototype.gainIntelligenceExp = function(exp) {
+    if (isNaN(exp)) {
+        console.log("ERROR: NaN passed into Player.gainIntelligenceExp()"); return;
+    }
+    //TODO
 }
 
 /******* Working functions *******/

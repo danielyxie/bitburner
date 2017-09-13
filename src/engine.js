@@ -1161,13 +1161,7 @@ let Engine = {
             if (Player.firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
             else {createProgram.style.display = "none";}
 
-            Engine.closeMainMenuHeader(visibleMenuTabs
-                /*
-                [terminal, createScript, activeScripts, createProgram, stats,
-                 factions, augmentations, hacknetnodes, city, travel, job,
-                 tutorial, options]
-                 */
-            );
+            Engine.closeMainMenuHeader(visibleMenuTabs);
         } else {
             //No save found, start new game
             console.log("Initializing new game");
@@ -1207,11 +1201,6 @@ let Engine = {
             createProgram.style.display = "none";
 
             Engine.openMainMenuHeader(
-                /*
-                [terminal, createScript, activeScripts, createProgram, stats,
-                 factions, augmentations, hacknetnodes, city, travel, job,
-                 tutorial, options]
-                */
                 [terminal, createScript, activeScripts, stats,
                  hacknetnodes, city,
                  tutorial, options]
@@ -1223,6 +1212,7 @@ let Engine = {
         }
         //Initialize labels on game settings
         setSettingsLabels();
+        Terminal.resetTerminalInput();
     },
 
     setDisplayElements: function() {

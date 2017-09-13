@@ -113,19 +113,21 @@
 
 function PlayerObject() {
     //Skills and stats
-    this.hacking_skill   = 1;
+    this.hacking_skill  = 1;
 
-    //Fighting
-    this.hp              = 10;
-    this.max_hp          = 10;
-    this.strength        = 1;      //Damage dealt
-    this.defense         = 1;      //Damage received
-    this.dexterity       = 1;      //Accuracy
-    this.agility         = 1;      //Dodge %
+    //Combat stats
+    this.hp             = 10;
+    this.max_hp         = 10;
+    this.strength       = 1;      //Damage dealt
+    this.defense        = 1;      //Damage received
+    this.dexterity      = 1;      //Accuracy
+    this.agility        = 1;      //Dodge %
 
     //Labor stats
-    this.charisma        = 1;
-	//Intelligence, perhaps?
+    this.charisma       = 1;
+
+    //Special stats
+    this.intelligence   = 0;
 
     //Hacking multipliers
     this.hacking_chance_mult    = 1;  //Increase through ascensions/augmentations
@@ -140,6 +142,7 @@ function PlayerObject() {
     this.dexterity_exp   = 0;
     this.agility_exp     = 0;
     this.charisma_exp    = 0;
+    this.intelligence_exp= 0;
 
     this.hacking_mult       = 1;
     this.strength_mult      = 1;
@@ -656,6 +659,13 @@ PlayerObject.prototype.gainCharismaExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainCharismaExp()"); return;
     }
     this.charisma_exp += exp;
+}
+
+PlayerObject.prototype.gainIntelligenceExp = function(exp) {
+    if (isNaN(exp)) {
+        console.log("ERROR: NaN passed into Player.gainIntelligenceExp()"); return;
+    }
+    //TODO
 }
 
 /******* Working functions *******/
@@ -2455,7 +2465,7 @@ function dialogBoxCreate(txt) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CONSTANTS; });
 let CONSTANTS = {
-    Version:                "0.28.4",
+    Version:                "0.28.5",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -3331,6 +3341,12 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.28.5<br>" +
+    "-The fl1ght.exe program that is received from jump3r is now sent very early on in the game, rather " +
+    "than at hacking level 1000<br>" +
+    "-Hostname is now displayed in Terminal<br>" +
+    "-Syntax highlighting now works for all Netscript functions<br>" +
+    "-Export should now work on Edge/IE<br><br>" +
     "v0.28.4<br>" +
     "-Added getScriptIncome() Netscript function<br>" +
     "-Added Javascript's Math module to Netscript. See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math<br>" +
@@ -4548,13 +4564,7 @@ let Engine = {
             if (__WEBPACK_IMPORTED_MODULE_21__Player_js__["a" /* Player */].firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
             else {createProgram.style.display = "none";}
 
-            Engine.closeMainMenuHeader(visibleMenuTabs
-                /*
-                [terminal, createScript, activeScripts, createProgram, stats,
-                 factions, augmentations, hacknetnodes, city, travel, job,
-                 tutorial, options]
-                 */
-            );
+            Engine.closeMainMenuHeader(visibleMenuTabs);
         } else {
             //No save found, start new game
             console.log("Initializing new game");
@@ -4594,11 +4604,6 @@ let Engine = {
             createProgram.style.display = "none";
 
             Engine.openMainMenuHeader(
-                /*
-                [terminal, createScript, activeScripts, createProgram, stats,
-                 factions, augmentations, hacknetnodes, city, travel, job,
-                 tutorial, options]
-                */
                 [terminal, createScript, activeScripts, stats,
                  hacknetnodes, city,
                  tutorial, options]
@@ -4610,6 +4615,7 @@ let Engine = {
         }
         //Initialize labels on game settings
         Object(__WEBPACK_IMPORTED_MODULE_27__Settings_js__["d" /* setSettingsLabels */])();
+        __WEBPACK_IMPORTED_MODULE_31__Terminal_js__["a" /* Terminal */].resetTerminalInput();
     },
 
     setDisplayElements: function() {
@@ -20026,7 +20032,7 @@ function runScriptsLoop() {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
 			try {
 				var ast = Object(__WEBPACK_IMPORTED_MODULE_7__utils_acorn_js__["parse"])(workerScripts[i].code);
-                console.log(ast);
+                //console.log(ast);
 			} catch (e) {
                 console.log("Error parsing script: " + workerScripts[i].name);
                 Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
@@ -24046,10 +24052,10 @@ $(document).keydown(function(event) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
 			if (command.length > 0) {
-				post("> " + command);
+                post("[" + __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].getCurrentServer().hostname + " ~]> " + command);
 
+                Terminal.resetTerminalInput();      //Clear input first
 				Terminal.executeCommand(command);
-				$('input[class=terminal-input]').val("");
 			}
 		}
 
@@ -24380,6 +24386,17 @@ let Terminal = {
         }
     },
 
+    resetTerminalInput: function() {
+        document.getElementById("terminal-input-td").innerHTML =
+            "<div id='terminal-input-header'>[" + __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].getCurrentServer().hostname + " ~]" + "$ </div>" +
+            '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        var hdr = document.getElementById("terminal-input-header");
+        hdr.style.display = "inline";
+        var lineWidth = document.getElementById("terminal-input-td").offsetWidth;
+        var width = lineWidth - hdr.offsetWidth - 10;
+        document.getElementById("terminal-input-text-box").style.width = width + "px";
+    },
+
     //Complete the hack/analyze command
 	finishHack: function(cancelled = false) {
 		if (cancelled == false) {
@@ -24425,7 +24442,8 @@ let Terminal = {
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        Terminal.resetTerminalInput();
+        //document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);
 
         Terminal.hackFlag = false;
@@ -24480,7 +24498,8 @@ let Terminal = {
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        Terminal.resetTerminalInput();
+        //document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);
     },
 
@@ -24577,6 +24596,7 @@ let Terminal = {
                     __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].analyze();
 
                     //Disable terminal
+                    //Terminal.resetTerminalInput();
                     document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                     $('input[class=terminal-input]').prop('disabled', true);
                     Object(__WEBPACK_IMPORTED_MODULE_6__InteractiveTutorial_js__["c" /* iTutorialNextStep */])();
@@ -24600,6 +24620,7 @@ let Terminal = {
 					__WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].hack();
 
 					//Disable terminal
+                    //Terminal.resetTerminalInput();
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
                     Object(__WEBPACK_IMPORTED_MODULE_6__InteractiveTutorial_js__["c" /* iTutorialNextStep */])();
@@ -24680,6 +24701,7 @@ let Terminal = {
                 __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].analyze();
 
                 //Disable terminal
+                //Terminal.resetTerminalInput();
                 document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                 $('input[class=terminal-input]').prop('disabled', true);
 				break;
@@ -24783,6 +24805,7 @@ let Terminal = {
 					__WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].hack();
 
 					//Disable terminal
+                    //Terminal.resetTerminalInput();
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
 				}
@@ -24811,6 +24834,7 @@ let Terminal = {
                 __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].currentServer = __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].getHomeComputer().ip;
                 __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].getCurrentServer().isConnectedTo = true;
                 post("Connected to home");
+                Terminal.resetTerminalInput();
 				break;
 			case "hostname":
 				if (commandArray.length != 1) {
@@ -25225,6 +25249,7 @@ let Terminal = {
         if (__WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].getCurrentServer().hostname == "darkweb") {
             Object(__WEBPACK_IMPORTED_MODULE_3__DarkWeb_js__["b" /* checkIfConnectedToDarkweb */])(); //Posts a 'help' message if connecting to dark web
         }
+        Terminal.resetTerminalInput();
     },
 
     executeListCommand: function(commandArray) {
@@ -25800,7 +25825,6 @@ function checkForMessagesToSend() {
     var jumper2 = Messages[MessageFilenames.Jumper2];
     var jumper3 = Messages[MessageFilenames.Jumper3];
     var jumper4 = Messages[MessageFilenames.Jumper4];
-    var jumper5 = Messages[MessageFilenames.Jumper5];
     var cybersecTest    = Messages[MessageFilenames.CyberSecTest];
     var nitesecTest     = Messages[MessageFilenames.NiteSecTest];
     var bitrunnersTest  = Messages[MessageFilenames.BitRunnersTest];
@@ -25813,6 +25837,7 @@ function checkForMessagesToSend() {
 
     if (jumper0 && !jumper0.recvd && __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill >= 25) {
         sendMessage(jumper0);
+        __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_1__CreateProgram_js__["a" /* Programs */].Flight);
     } else if (jumper1 && !jumper1.recvd && __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill >= 40) {
         sendMessage(jumper1);
     } else if (cybersecTest && !cybersecTest.recvd && __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill >= 50) {
@@ -25827,9 +25852,6 @@ function checkForMessagesToSend() {
         sendMessage(jumper4);
     } else if (bitrunnersTest && !bitrunnersTest.recvd && __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill >= 500) {
         sendMessage(bitrunnersTest);
-    } else if (jumper5 && !jumper5.recvd && __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill >= 1000) {
-        sendMessage(jumper5);
-        __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_1__CreateProgram_js__["a" /* Programs */].Flight);
     } else if (redpill && !redpill.recvd && __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill >= 2000 && redpillOwned) {
         sendMessage(redpill);
     }
@@ -25851,7 +25873,6 @@ let MessageFilenames = {
     Jumper2:    "j2.msg",
     Jumper3:    "j3.msg",
     Jumper4:    "j4.msg",
-    Jumper5:    "j5.msg",
     CyberSecTest:   "csec-test.msg",
     NiteSecTest:    "nitesec-test.msg",
     BitRunnersTest: "19dfj3l1nd.msg",
@@ -25867,7 +25888,10 @@ function initMessages()  {
                                  "I know you can sense it. I know you're searching for it. " +
                                  "It's why you spend night after " +
                                  "night at your computer. <br><br>It's real, I've seen it. And I can " +
-                                 "help you find it. But not right now. You're not ready yet.<br><br>-jump3R"));
+                                 "help you find it. But not right now. You're not ready yet.<br><br>" +
+                                 "Use this program to track your progress<br><br>" +
+                                 "The fl1ght.exe program was added to your home computer<br><br>" +
+                                 "-jump3R"));
     AddToAllMessages(new Message(MessageFilenames.Jumper1,
                                  "Soon you will be contacted by a hacking group known as CyberSec. " +
                                  "They can help you with your search. <br><br>" +
@@ -25888,9 +25912,6 @@ function initMessages()  {
                                  "To find what you are searching for, you must understand the bits. " +
                                  "The bits are all around us. The runners will help you.<br><br>" +
                                  "-jump3R"));
-    AddToAllMessages(new Message(MessageFilenames.Jumper5,
-                                 "Build your wings and fly<br><br>-jump3R<br><br> " +
-                                 "The fl1ght.exe program was added to your home computer"));
 
     //Messages from hacking factions
     AddToAllMessages(new Message(MessageFilenames.CyberSecTest,
@@ -34085,6 +34106,7 @@ function prestigeAugmentation() {
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
+    __WEBPACK_IMPORTED_MODULE_14__Terminal_js__["a" /* Terminal */].resetTerminalInput();
     __WEBPACK_IMPORTED_MODULE_5__engine_js__["Engine"].loadTerminalContent();
 
     //Red Pill
@@ -34183,6 +34205,7 @@ function prestigeSourceFile() {
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
+    __WEBPACK_IMPORTED_MODULE_14__Terminal_js__["a" /* Terminal */].resetTerminalInput();
     __WEBPACK_IMPORTED_MODULE_5__engine_js__["Engine"].loadTerminalContent();
 }
 
@@ -38570,6 +38593,7 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
             //Check for admin rights and that there is enough RAM availble to run
             var script = server.scripts[i];
             var ramUsage = script.ramUsage;
+            threads = Math.round(Number(threads)); //Convert to number and round
             ramUsage = ramUsage * threads * Math.pow(__WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].MultithreadingRAMCost, threads-1);
             var ramAvailable = server.maxRam - server.ramUsed;
 
@@ -59831,7 +59855,9 @@ var NetscriptHighlightRules = function(options) {
             "getUpgradeHomeRamCost|workForCompany|applyToCompany|getCompanyRep|"       +
             "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
             "createProgram|getAugmentationCost|purchaseAugmentation|"                  +
-            "installAugmentations|"                                                    +
+            "installAugmentations|hacknetnodes|upgradeLevel|upgradeRam|upgradeCore|"   +
+            "getLevelUpgradeCost|getRamUpgradeCost|getCoreUpgradeCost|"                +
+            "getStockPrice|getStockPosition|buyStock|sellStock|"                       +
             "JSON|Math|"                                                               + // Other
             "this|arguments|prototype|window|document"                                 , // Pseudo
         "keyword":
@@ -72678,7 +72704,7 @@ BitburnerSaveObject.prototype.exportGame = function() {
     this.VersionSave                = JSON.stringify(__WEBPACK_IMPORTED_MODULE_2__Constants_js__["a" /* CONSTANTS */].Version);
 
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
-
+    var filename = "bitburnerSave.json";
     var file = new Blob([saveString], {type: 'text/plain'});
     if (window.navigator.msSaveOrOpenBlob) {// IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);

@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.28.4",
+    Version:                "0.28.5",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -875,6 +875,12 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.28.5<br>" +
+    "-The fl1ght.exe program that is received from jump3r is now sent very early on in the game, rather " +
+    "than at hacking level 1000<br>" +
+    "-Hostname is now displayed in Terminal<br>" +
+    "-Syntax highlighting now works for all Netscript functions<br>" +
+    "-Export should now work on Edge/IE<br><br>" +
     "v0.28.4<br>" +
     "-Added getScriptIncome() Netscript function<br>" +
     "-Added Javascript's Math module to Netscript. See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math<br>" +

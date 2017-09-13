@@ -72,10 +72,10 @@ $(document).keydown(function(event) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
 			if (command.length > 0) {
-				post("> " + command);
+                post("[" + Player.getCurrentServer().hostname + " ~]> " + command);
 
+                Terminal.resetTerminalInput();      //Clear input first
 				Terminal.executeCommand(command);
-				$('input[class=terminal-input]').val("");
 			}
 		}
 
@@ -406,6 +406,17 @@ let Terminal = {
         }
     },
 
+    resetTerminalInput: function() {
+        document.getElementById("terminal-input-td").innerHTML =
+            "<div id='terminal-input-header'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
+            '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        var hdr = document.getElementById("terminal-input-header");
+        hdr.style.display = "inline";
+        var lineWidth = document.getElementById("terminal-input-td").offsetWidth;
+        var width = lineWidth - hdr.offsetWidth - 10;
+        document.getElementById("terminal-input-text-box").style.width = width + "px";
+    },
+
     //Complete the hack/analyze command
 	finishHack: function(cancelled = false) {
 		if (cancelled == false) {
@@ -451,7 +462,8 @@ let Terminal = {
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        Terminal.resetTerminalInput();
+        //document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);
 
         Terminal.hackFlag = false;
@@ -506,7 +518,8 @@ let Terminal = {
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        Terminal.resetTerminalInput();
+        //document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);
     },
 
@@ -603,6 +616,7 @@ let Terminal = {
                     Player.analyze();
 
                     //Disable terminal
+                    //Terminal.resetTerminalInput();
                     document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                     $('input[class=terminal-input]').prop('disabled', true);
                     iTutorialNextStep();
@@ -626,6 +640,7 @@ let Terminal = {
 					Player.hack();
 
 					//Disable terminal
+                    //Terminal.resetTerminalInput();
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
                     iTutorialNextStep();
@@ -706,6 +721,7 @@ let Terminal = {
                 Player.analyze();
 
                 //Disable terminal
+                //Terminal.resetTerminalInput();
                 document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                 $('input[class=terminal-input]').prop('disabled', true);
 				break;
@@ -809,6 +825,7 @@ let Terminal = {
 					Player.hack();
 
 					//Disable terminal
+                    //Terminal.resetTerminalInput();
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
 				}
@@ -837,6 +854,7 @@ let Terminal = {
                 Player.currentServer = Player.getHomeComputer().ip;
                 Player.getCurrentServer().isConnectedTo = true;
                 post("Connected to home");
+                Terminal.resetTerminalInput();
 				break;
 			case "hostname":
 				if (commandArray.length != 1) {
@@ -1251,6 +1269,7 @@ let Terminal = {
         if (Player.getCurrentServer().hostname == "darkweb") {
             checkIfConnectedToDarkweb(); //Posts a 'help' message if connecting to dark web
         }
+        Terminal.resetTerminalInput();
     },
 
     executeListCommand: function(commandArray) {
