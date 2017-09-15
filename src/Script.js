@@ -232,7 +232,8 @@ function calculateRamUsage(codeCopy) {
                          numOccurrences(codeCopy, "getServerGrowth(") +
                          numOccurrences(codeCopy, "getServerRequiredHackingLevel(") +
                          numOccurrences(codeCopy, "getServerNumPortsRequired(") +
-                         numOccurrences(codeCopy, "getServerRam(");
+                         numOccurrences(codeCopy, "getServerRam(") +
+                         numOccurrences(codeCopy, "serverExists(");
     var fileExistsCount = numOccurrences(codeCopy, "fileExists(");
     var isRunningCount = numOccurrences(codeCopy, "isRunning(");
     var purchaseHacknetCount = numOccurrences(codeCopy, "purchaseHacknetNode(");
@@ -251,7 +252,9 @@ function calculateRamUsage(codeCopy) {
     var scriptReadCount = numOccurrences(codeCopy, "read(");
     var arbScriptCount = numOccurrences(codeCopy, "scriptRunning(") +
                          numOccurrences(codeCopy, "scriptKill(");
-    var getScriptCount = numOccurrences(codeCopy, "getScriptRam(");
+    var getScriptCount = numOccurrences(codeCopy, "getScriptRam(") +
+                         numOccurrences(codeCopy, "getScriptIncome(") +
+                         numOccurrences(codeCopy, "getScriptExpGain(");
     var getHackTimeCount = numOccurrences(codeCopy, "getHackTime(") +
                            numOccurrences(codeCopy, "getGrowTime(") +
                            numOccurrences(codeCopy, "getWeakenTime(");

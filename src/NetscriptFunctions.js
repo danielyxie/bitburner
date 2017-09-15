@@ -37,9 +37,10 @@ import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
 import {Environment}                                from "./NetscriptEnvironment.js";
 
 import Decimal                                      from '../utils/decimal.js';
+import {dialogBoxCreate}                            from "../utils/DialogBox.js";
 import {printArray, powerOfTwo}                     from "../utils/HelperFunctions.js";
 import {createRandomIp}                             from "../utils/IPAddress.js";
-import {formatNumber, isString}                     from "../utils/StringHelperFunctions.js";
+import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions.js";
 
 var hasSingularitySF = false;
 var singularitySFLvl = 1;
@@ -101,7 +102,7 @@ function NetscriptFunctions(workerScript) {
 
             workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
             //console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds (t=" + threads + ")");
-            return netscriptDelay(hackingTime* 1000).then(function() {
+            return netscriptDelay(hackingTime* 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 var hackChance = scriptCalculateHackingChance(server);
                 var rand = Math.random();
@@ -146,7 +147,7 @@ function NetscriptFunctions(workerScript) {
             if (log) {
                 workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
             }
-            return netscriptDelay(time).then(function() {
+            return netscriptDelay(time, workerScript).then(function() {
                 return Promise.resolve(true);
             });
         },
@@ -171,7 +172,7 @@ function NetscriptFunctions(workerScript) {
             var growTime = scriptCalculateGrowTime(server);
             //console.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds")
             workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds (t=" + threads + ")");
-            return netscriptDelay(growTime).then(function() {
+            return netscriptDelay(growTime, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
                 var growthPercentage = processSingleServerGrowth(server, 450 * threads);
@@ -207,10 +208,9 @@ function NetscriptFunctions(workerScript) {
             }
 
             var weakenTime = scriptCalculateWeakenTime(server);
-            //console.log("Executing weaken() on server " + server.hostname + " in " + formatNumber(weakenTime/1000, 3) + " seconds")
             workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " +
                                        formatNumber(weakenTime/1000, 3) + " seconds (t=" + threads + ")");
-            return netscriptDelay(weakenTime).then(function() {
+            return netscriptDelay(weakenTime, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.weaken(CONSTANTS.ServerWeakenAmount * threads);
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
@@ -231,6 +231,14 @@ function NetscriptFunctions(workerScript) {
         tprint : function(args) {
             if (args === undefined || args === null) {
                 throw makeRuntimeRejectMsg(workerScript, "tprint() call has incorrect number of arguments. Takes 1 argument");
+            }
+            var x = args.toString();
+            if (isHTML(x)) {
+                Player.takeDamage(1);
+                dialogBoxCreate("You suddenly feel a sharp shooting pain through your body as an angry voice in your head exclaims: <br><br>" +
+                                "DON'T USE TPRINT() TO OUTPUT HTML ELEMENTS TO YOUR TERMINAL!!!!<br><br>" +
+                                "(You lost 1 HP)");
+                return;
             }
             post(workerScript.scriptRef.filename + ": " + args.toString());
         },
@@ -678,6 +686,9 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("getServerRam() returned [" + formatNumber(server.maxRam, 2) + "GB, " + formatNumber(server.ramUsed, 2) + "GB]");
             return [server.maxRam, server.ramUsed];
         },
+        serverExists : function(ip) {
+            return (getServer(ip) !== null);
+        },
         fileExists : function(filename,ip=workerScript.serverIp){
             if (filename === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "fileExists() call has incorrect number of arguments. Usage: fileExists(scriptname, [server])");
@@ -1036,6 +1047,32 @@ function NetscriptFunctions(workerScript) {
                     return -1;
                 }
                 return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
+            }
+        },
+        getScriptExpGain : function(scriptname, ip) {
+            if (arguments.length === 0) {
+                var total = 0;
+                for (var i = 0; i < workerScripts.length; ++i) {
+                    total += (workerScripts[i].scriptRef.onlineExpGained / workerScripts[i].scriptRef.onlineRunningTime);
+                }
+                return total;
+            } else {
+                //Get income for a particular script
+                var server = getServer(ip);
+                if (server === null) {
+                    workerScript.scriptRef.log("getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
+                    throw makeRuntimeRejectMsg(workerScript, "getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
+                }
+                var argsForScript = [];
+                for (var i = 2; i < arguments.length; ++i) {
+                    argsForScript.push(arguments[i]);
+                }
+                var runningScriptObj = findRunningScript(scriptname, argsForScript, server);
+                if (runningScriptObj == null) {
+                    workerScript.scriptRef.log("getScriptExpGain() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + printArray(argsForScript));
+                    return -1;
+                }
+                return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;
             }
         },
 

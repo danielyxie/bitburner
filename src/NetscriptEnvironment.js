@@ -51,6 +51,30 @@ Environment.prototype = {
     },
 
     setArrayElement: function(name, idx, value) {
+        if (!(idx instanceof Array)) {
+            throw new Error("idx parameter is not an Array");
+        }
+        var scope = this.lookup(name);
+        if (!scope && this.parent) {
+            console.log("Here");
+            throw new Error("Undefined variable " + name);
+        }
+        var arr = (scope || this).vars[name];
+        if (!(arr.constructor === Array || arr instanceof Array)) {
+            throw new Error("Variable is not an array: " + name);
+        }
+        var res = arr;
+        for (var iterator = 0; iterator < idx.length-1; ++iterator) {
+            var i = idx[iterator];
+            if (!(res instanceof Array) || i >= res.length) {
+                throw new Error("Out-of-bounds array access");
+            }
+            res = res[i];
+        }
+        return res[idx[idx.length-1]] = value;
+    },
+    /*
+    setArrayElement: function(name, idx, value) {
         var scope = this.lookup(name);
         if (!scope && this.parent) {
             console.log("Here");
@@ -61,7 +85,7 @@ Environment.prototype = {
             throw new Error("Variable is not an array: " + name);
         }
         return (scope || this).vars[name][idx] = value;
-    },
+    },*/
 
 	//Creates (or overwrites) a variable in the current scope
     def: function(name, value) {

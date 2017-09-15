@@ -130,7 +130,7 @@ function processAllGangPowerGains(numCycles=1) {
             if (name == playerGangName) {
                 AllGangs[name].power += Player.gang.calculatePower();
             } else {
-                var gain = Math.random() * 0.01; //TODO Adjust as necessary
+                var gain = Math.random() * 0.02; //TODO Adjust as necessary
                 AllGangs[name].power += (gain);
             }
         }
