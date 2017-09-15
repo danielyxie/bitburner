@@ -252,6 +252,12 @@ function evalBinary(exp, workerScript){
     return new Promise(function(resolve, reject) {
         var expLeftPromise = evaluate(exp.left, workerScript);
         expLeftPromise.then(function(expLeft) {
+            if (expLeft == true && exp.operator === "||") {
+                return resolve(true);
+            }
+            if (expLeft == false && exp.operator === "&&") {
+                return resolve(false);
+            }
             var expRightPromise = evaluate(exp.right, workerScript);
             expRightPromise.then(function(expRight) {
                 switch (exp.operator){
@@ -307,7 +313,7 @@ function evalBinary(exp, workerScript){
                         resolve(expLeft && expRight);
                         break;
                     default:
-                        reject(makeRuntimeRejectMsg(workerScript, "Bitwise operators are not implemented"));
+                        reject(makeRuntimeRejectMsg(workerScript, "Unsupported operator: " + exp.operator));
                 }
             }, function(e) {
                 reject(e);
@@ -341,6 +347,40 @@ function evalUnary(exp, workerScript){
     });
 }
 
+//Takes in a MemberExpression that should represent a Netscript array (possible multidimensional)
+//The return value is an array of the form:
+//    [0th index (leftmost), array name, 1st index, 2nd index, ...]
+function getArrayElement(exp, workerScript) {
+    return new Promise(function(resolve, reject) {
+        var indices = [];
+        var iPromise = evaluate(exp.property, workerScript);
+        iPromise.then(function(idx) {
+            if (isNaN(idx)) {
+                return reject(makeRuntimeRejectMsg(workerScript, "Invalid access to array. Index is not a number: " + idx));
+            } else {
+                if (exp.object.name === undefined && exp.object.object) {
+                    var recursePromise = getArrayElement(exp.object, workerScript);
+                    recursePromise.then(function(res) {
+                        res.push(idx);
+                        indices = res;
+                        return resolve(indices);
+                    }).catch(function(e) {
+                        return reject(e);
+                    });
+                } else {
+                    indices.push(idx);
+                    indices.push(exp.object.name);
+                    return resolve(indices);
+                }
+            }
+        }).catch(function(e) {
+            console.log(e);
+            console.log("Error getting index in getArrayElement: " + e.toString());
+            return reject(e);
+        });
+    });
+}
+
 function evalAssignment(exp, workerScript) {
     var env = workerScript.env;
     return new Promise(function(resolve, reject) {
@@ -360,6 +400,22 @@ function evalAssignment(exp, workerScript) {
                 //Assign to array element
                 //Array object designed by exp.left.object.name
                 //Index designated by exp.left.property
+                var getArrayElementPromise = getArrayElement(exp.left, workerScript);
+                getArrayElementPromise.then(function(res) {
+                    if (!(res instanceof Array) || res.length < 2) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "Error evaluating array assignment. This is (probably) a bug please report to game dev"));
+                    }
+
+                    //The array name is the second value
+                    var arrName = res.splice(1, 1);
+                    arrName = arrName[0];
+
+                    env.setArrayElement(arrName, res, expRight);
+                    return resolve(false);
+                }).catch(function(e) {
+                    return reject(e);
+                });
+                /*
                 var name = exp.left.object.name;
                 if (!(name in env.vars)){
                     reject(makeRuntimeRejectMsg(workerScript, "variable " + name + " not defined"));
@@ -380,7 +436,7 @@ function evalAssignment(exp, workerScript) {
                     });
                 } else {
                     return reject(makeRuntimeRejectMsg(workerScript, "Trying to access a non-array variable using the [] operator"));
-                }
+                }*/
             } else {
                 //Other assignments
                 try {
@@ -406,11 +462,12 @@ function evalAssignment(exp, workerScript) {
                         default:
                             reject(makeRuntimeRejectMsg(workerScript, "Bitwise assignment is not implemented"));
                     }
+                    resolve(false);
                 } catch (e) {
                     return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
                 }
             }
-            resolve(false); //Return false so this doesnt cause conditionals to evaluate
+            //resolve(false); //Return false so this doesnt cause conditionals to evaluate
         }, function(e) {
             reject(e);
         });
@@ -567,9 +624,13 @@ function evaluateProg(exp, workerScript, index) {
 	});
 }
 
-function netscriptDelay(time) {
+function netscriptDelay(time, workerScript) {
    return new Promise(function(resolve) {
-       setTimeout(resolve, time);
+       var delay = setTimeout(resolve, time);
+       workerScript.killTrigger = function() {
+           clearTimeout(delay);
+           resolve();
+       };
    });
 }
 
@@ -577,6 +638,7 @@ function makeRuntimeRejectMsg(workerScript, msg) {
     return "|"+workerScript.serverIp+"|"+workerScript.name+"|" + msg;
 }
 
+/*
 function apply_op(op, a, b) {
     function num(x) {
         if (typeof x != "number")
@@ -605,6 +667,7 @@ function apply_op(op, a, b) {
     }
     throw new Error("Can't apply operator " + op);
 }
+*/
 
 //Run a script from inside a script using run() command
 function runScriptFromScript(server, scriptname, args, workerScript, threads=1) {
@@ -671,7 +734,7 @@ function isScriptErrorMessage(msg) {
 //The same as Player's calculateHackingChance() function but takes in the server as an argument
 function scriptCalculateHackingChance(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
-    var skillMult = (1.75 * Player.hacking_skill);
+    var skillMult = (1.75 * Player.hacking_skill) + (0.2 * Player.intelligence);
     var skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
     var chance = skillChance * difficultyMult * Player.hacking_chance_mult;
     if (chance > 1) {return 1;}
@@ -682,7 +745,7 @@ function scriptCalculateHackingChance(server) {
 //The same as Player's calculateHackingTime() function but takes in the server as an argument
 function scriptCalculateHackingTime(server) {
 	var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
+	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50 + (0.1 * Player.intelligence));
 	var hackingTime = 5 * skillFactor / Player.hacking_speed_mult; //This is in seconds
 	return hackingTime;
 }
@@ -708,7 +771,7 @@ function scriptCalculatePercentMoneyHacked(server) {
 //Amount of time to execute grow() in milliseconds
 function scriptCalculateGrowTime(server) {
     var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
+	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50 + (0.1 * Player.intelligence));
 	var growTime = 16 * skillFactor / Player.hacking_speed_mult; //This is in seconds
 	return growTime * 1000;
 }
@@ -716,7 +779,7 @@ function scriptCalculateGrowTime(server) {
 //Amount of time to execute weaken() in milliseconds
 function scriptCalculateWeakenTime(server) {
     var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50);
+	var skillFactor = (2.5 * difficultyMult + 500) / (Player.hacking_skill + 50 + (0.1 * Player.intelligence));
 	var weakenTime = 20 * skillFactor / Player.hacking_speed_mult; //This is in seconds
 	return weakenTime * 1000;
 }

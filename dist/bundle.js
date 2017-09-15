@@ -85,8 +85,8 @@
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__SourceFile_js__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_decimal_js__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__utils_decimal_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_IPAddress_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_JSONReviver_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__ = __webpack_require__(5);
@@ -233,12 +233,14 @@ function PlayerObject() {
     this.workMoneyGained = 0;
 
     this.createProgramName = "";
+    this.createProgramReqLvl = 0;
 
     this.className = "";
 
     this.crimeType = "";
 
     this.timeWorked = 0;    //in ms
+    this.timeWorkedCreateProgram = 0;
     this.timeNeededToCompleteWork = 0;
 
     this.work_money_mult = 1;
@@ -281,15 +283,6 @@ PlayerObject.prototype.init = function() {
     Object(__WEBPACK_IMPORTED_MODULE_10__Server_js__["a" /* AddToAllServers */])(t_homeComp);
 
     this.getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__["a" /* Programs */].NukeProgram);
-}
-
-PlayerObject.prototype.increaseMultiplier = function(name, val) {
-    let mult = this[name];
-    if (mult === null || mult === undefined) {
-        console.log("ERROR: Could not find this multiplier " + name);
-        return;
-    }
-    mult *= val;
 }
 
 PlayerObject.prototype.prestigeAugmentation = function() {
@@ -482,6 +475,12 @@ PlayerObject.prototype.updateSkillLevels = function() {
     this.agility       = Math.floor(this.calculateSkill(this.agility_exp) * this.agility_mult);
     this.charisma      = Math.floor(this.calculateSkill(this.charisma_exp) * this.charisma_mult);
 
+    if (this.intelligence > 0) {
+        this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp));
+    } else {
+        this.intelligence = 0;
+    }
+
     var ratio = this.hp / this.max_hp;
     this.max_hp         = Math.floor(10 + this.defense / 10);
     Player.hp = Math.round(this.max_hp * ratio);
@@ -529,7 +528,7 @@ PlayerObject.prototype.resetMultipliers = function() {
 //        (2 * hacking_chance_multiplier * hacking_skill)                      100
 PlayerObject.prototype.calculateHackingChance = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
-    var skillMult = (1.75 * this.hacking_skill);
+    var skillMult = (1.75 * this.hacking_skill) + (0.2 * this.intelligence);
     var skillChance = (skillMult - this.getCurrentServer().requiredHackingSkill) / skillMult;
     var chance = skillChance * difficultyMult * this.hacking_chance_mult;
     if (chance > 1) {return 1;}
@@ -544,7 +543,7 @@ PlayerObject.prototype.calculateHackingChance = function() {
 //        hacking_skill + 100
 PlayerObject.prototype.calculateHackingTime = function() {
     var difficultyMult = this.getCurrentServer().requiredHackingSkill * this.getCurrentServer().hackDifficulty;
-    var skillFactor = (2.5 * difficultyMult + 200) / (this.hacking_skill + 100);
+    var skillFactor = (2.5 * difficultyMult + 200) / (this.hacking_skill + 100 + (0.1 * this.intelligence));
     return 5 * skillFactor / this.hacking_speed_mult;
 }
 
@@ -665,7 +664,18 @@ PlayerObject.prototype.gainIntelligenceExp = function(exp) {
     if (isNaN(exp)) {
         console.log("ERROR: NaN passed into Player.gainIntelligenceExp()"); return;
     }
-    //TODO
+    var hasBn = false;
+    for (var i = 0; i < this.sourceFiles.length; ++i) {
+        if (this.sourceFiles[i].n === 5) {
+            hasBn = true;
+            break;
+        }
+    }
+    if (hasBn || this.intelligence > 0) {
+        this.intelligence_exp += exp;
+    } else {
+        console.log("Not gaining intelligence experience bc it hasn't been unlocked yet");
+    }
 }
 
 /******* Working functions *******/
@@ -689,6 +699,7 @@ PlayerObject.prototype.resetWorkStatus = function() {
     this.workMoneyGained    = 0;
 
     this.timeWorked = 0;
+    this.timeWorkedCreateProgram = 0;
 
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";
@@ -745,7 +756,8 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
-    __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].loadTerminalContent();
+    //Engine.loadTerminalContent();
+    __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].loadLocationContent();
 
     if (sing) {
         return "You worked a short shift of " + Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + " and " +
@@ -821,7 +833,7 @@ PlayerObject.prototype.work = function(numCycles) {
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName +
-                    " at " + Player.companyName + "<br><br>" +
+                    " at " + this.companyName + "<br><br>" +
                     "You have been working for " + Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
                     "$" + Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + " ($" + Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
@@ -938,7 +950,8 @@ PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
-    __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].loadTerminalContent();
+    //Engine.loadTerminalContent();
+    __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].loadLocationContent();
     if (sing) {
         return "You worked for " + Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + " and " +
                "earned a total of " +
@@ -981,7 +994,9 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
 
     this.isWorking = false;
 
-    __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].loadTerminalContent();
+    //Engine.loadTerminalContent();
+    __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].loadFactionContent();
+    Object(__WEBPACK_IMPORTED_MODULE_7__Faction_js__["c" /* displayFactionContent */])(faction.name);
     if (sing) {
         return "You worked for your faction " + faction.name + " for a total of " + Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + ". " +
                "You earned " +
@@ -1023,7 +1038,7 @@ PlayerObject.prototype.startFactionHackWork = function(faction) {
     this.resetWorkStatus();
 
     this.workHackExpGainRate = .15 * this.hacking_exp_mult * __WEBPACK_IMPORTED_MODULE_1__BitNode_js__["a" /* BitNodeMultipliers */].FactionWorkExpGain;
-    this.workRepGainRate = this.hacking_skill / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel * this.faction_rep_mult;
+    this.workRepGainRate = this.workRepGainRate = (this.hacking_skill + this.intelligence) / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel * this.faction_rep_mult;
 
     this.factionWorkType = __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].FactionWorkHacking;
     this.currentWorkFactionDescription = "carrying out hacking contracts";
@@ -1071,7 +1086,7 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     //Constantly update the rep gain rate
     switch (this.factionWorkType) {
         case __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].FactionWorkHacking:
-            this.workRepGainRate = this.hacking_skill / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel * this.faction_rep_mult;
+            this.workRepGainRate = (this.hacking_skill + this.intelligence) / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel * this.faction_rep_mult;
             break;
         case __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].FactionWorkField:
             this.workRepGainRate = this.getFactionFieldWorkRepGain();
@@ -1190,6 +1205,10 @@ PlayerObject.prototype.getWorkRepGain = function() {
     var jobPerformance = this.companyPosition.calculateJobPerformance(this.hacking_skill, this.strength,
                                                                       this.defense, this.dexterity,
                                                                       this.agility, this.charisma);
+
+    //Intelligence provides a flat bonus to job performance
+    jobPerformance += (this.intelligence / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel);
+
     //Update reputation gain rate to account for company favor
     var favorMult = 1 + (company.favor / 100);
     if (isNaN(favorMult)) {favorMult = 1;}
@@ -1211,7 +1230,8 @@ PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
                    this.defense        / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
                    this.dexterity      / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
                    this.agility        / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   this.charisma       / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel) / 6;
+                   this.charisma       / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
+                   this.intelligence   / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel) / 6;
     return t * this.faction_rep_mult;
 }
 
@@ -1223,21 +1243,22 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
 
     //Time needed to complete work affected by hacking skill (linearly based on
     //ratio of (your skill - required level) to MAX skill)
-    var timeMultiplier = (__WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel - (this.hacking_skill - reqLevel)) / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel;
-    if (timeMultiplier > 1) {timeMultiplier = 1;}
-    if (timeMultiplier < 0.01) {timeMultiplier = 0.01;}
+    //var timeMultiplier = (CONSTANTS.MaxSkillLevel - (this.hacking_skill - reqLevel)) / CONSTANTS.MaxSkillLevel;
+    //if (timeMultiplier > 1) {timeMultiplier = 1;}
+    //if (timeMultiplier < 0.01) {timeMultiplier = 0.01;}
+    this.createProgramReqLvl = reqLevel;
 
-    this.timeNeededToCompleteWork = timeMultiplier * time;
+    this.timeNeededToCompleteWork = time;
     //Check for incomplete program
-    for (var i = 0; i < Player.getHomeComputer().programs.length; ++i) {
-        var programFile = Player.getHomeComputer().programs[i];
+    for (var i = 0; i < this.getHomeComputer().programs.length; ++i) {
+        var programFile = this.getHomeComputer().programs[i];
         if (programFile.startsWith(programName) && programFile.endsWith("%-INC")) {
             var res = programFile.split("-");
             if (res.length != 3) {break;}
             var percComplete = Number(res[1].slice(0, -1));
             if (isNaN(percComplete) || percComplete < 0 || percComplete >= 100) {break;}
-            this.timeWorked = percComplete / 100 * this.timeNeededToCompleteWork;
-            Player.getHomeComputer().programs.splice(i, 1);
+            this.timeWorkedCreateProgram = percComplete / 100 * this.timeNeededToCompleteWork;
+            this.getHomeComputer().programs.splice(i, 1);
         }
     }
 
@@ -1255,17 +1276,24 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
 }
 
 PlayerObject.prototype.createProgramWork = function(numCycles) {
-    this.timeWorked += __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"]._idleSpeed * numCycles;
+    //Higher hacking skill will allow you to create programs faster
+    var reqLvl = this.createProgramReqLvl;
+    var skillMult = (this.hacking_skill / reqLvl); //This should always be greater than 1;
+    skillMult = 1 + ((skillMult - 1) / 5); //The divider constant can be adjusted as necessary
+
+    //Skill multiplier directly applied to "time worked"
+    this.timeWorked += (__WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"]._idleSpeed * numCycles);
+    this.timeWorkedCreateProgram += (__WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"]._idleSpeed * numCycles * skillMult);
     var programName = this.createProgramName;
 
-    if (this.timeWorked >= this.timeNeededToCompleteWork) {
+    if (this.timeWorkedCreateProgram >= this.timeNeededToCompleteWork) {
         this.finishCreateProgramWork(false);
     }
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working on coding " + programName + ".<br><br> " +
                     "You have been working for " + Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
-                    "The program is " + (this.timeWorked / this.timeNeededToCompleteWork * 100).toFixed(2) + "% complete. <br>" +
+                    "The program is " + (this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 100).toFixed(2) + "% complete. <br>" +
                     "If you cancel, your work will be saved and you can come back to complete the program later.";
 }
 
@@ -1275,17 +1303,19 @@ PlayerObject.prototype.finishCreateProgramWork = function(cancelled, sing=false)
         Object(__WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You've finished creating " + programName + "!<br>" +
                         "The new program can be found on your home computer.");
 
-        Player.getHomeComputer().programs.push(programName);
+        this.getHomeComputer().programs.push(programName);
     } else {
-        var perc = Math.floor(this.timeWorked / this.timeNeededToCompleteWork * 100).toString();
+        var perc = Math.floor(this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 100).toString();
         var incompleteName = programName + "-" + perc + "%-INC";
-        Player.getHomeComputer().programs.push(incompleteName);
+        this.getHomeComputer().programs.push(incompleteName);
     }
+
+    this.gainIntelligenceExp(this.createProgramReqLvl / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].IntelligenceProgramBaseExpGain);
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
 
-    Player.isWorking = false;
+    this.isWorking = false;
 
     __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].loadTerminalContent();
 }
@@ -1484,16 +1514,16 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
 PlayerObject.prototype.commitCrime = function (numCycles) {
     this.timeWorked += __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"]._idleSpeed * numCycles;
 
-    if (this.timeWorked >= this.timeNeededToCompleteWork) {Player.finishCrime(false); return;}
+    if (this.timeWorked >= this.timeNeededToCompleteWork) {this.finishCrime(false); return;}
 
-    var percent = Math.round(Player.timeWorked / Player.timeNeededToCompleteWork * 100);
+    var percent = Math.round(this.timeWorked / this.timeNeededToCompleteWork * 100);
     var numBars = Math.round(percent / 5);
     if (numBars < 0) {numBars = 0;}
     if (numBars > 20) {numBars = 20;}
     var progressBar = "[" + Array(numBars+1).join("|") + Array(20 - numBars + 1).join(" ") + "]";
 
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are attempting to " + Player.crimeType + ".<br>" +
+    txt.innerHTML = "You are attempting to " + this.crimeType + ".<br>" +
                     "Time remaining: " + Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeNeededToCompleteWork - this.timeWorked) + "<br>" +
                     progressBar.replace( / /g, "&nbsp;" );
 }
@@ -1529,6 +1559,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     break;
                 case __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].CrimeGrandTheftAuto:
                     this.karma -= 5;
+                    this.gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].IntelligenceCrimeBaseExpGain);
                     break;
                 case __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].CrimeKidnap:
                     this.karma -= 6;
@@ -1536,9 +1567,11 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                 case __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].CrimeAssassination:
                     ++this.numPeopleKilled;
                     this.karma -= 10;
+                    this.gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].IntelligenceCrimeBaseExpGain);
                     break;
                 case __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].CrimeHeist:
                     this.karma -= 15;
+                    this.gainIntelligenceExp(5 * __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].IntelligenceCrimeBaseExpGain);
                     break;
                 default:
                     console.log(this.crimeType);
@@ -1629,7 +1662,7 @@ PlayerObject.prototype.hospitalize = function() {
     Object(__WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You were in critical condition! You were taken to the hospital where " +
                     "luckily they were able to save your life. You were charged $" +
                     Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.max_hp * __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].HospitalCostPerHp, 2));
-    Player.loseMoney(this.max_hp * __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].HospitalCostPerHp);
+    this.loseMoney(this.max_hp * __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].HospitalCostPerHp);
     this.hp = this.max_hp;
 }
 
@@ -1713,8 +1746,8 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     this.companyName = company.companyName;
     this.companyPosition = pos;
 
-    if (Player.firstJobRecvd === false) {
-        Player.firstJobRecvd = true;
+    if (this.firstJobRecvd === false) {
+        this.firstJobRecvd = true;
         document.getElementById("job-tab").style.display = "list-item";
         document.getElementById("world-menu-header").click();
         document.getElementById("world-menu-header").click();
@@ -1822,8 +1855,8 @@ PlayerObject.prototype.applyForAgentJob = function(sing=false) {
 PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 	var company = __WEBPACK_IMPORTED_MODULE_2__Company_js__["a" /* Companies */][this.location]; //Company being applied to
     if (this.isQualified(company, __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].Employee)) {
-        if (Player.firstJobRecvd === false) {
-            Player.firstJobRecvd = true;
+        if (this.firstJobRecvd === false) {
+            this.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
             document.getElementById("world-menu-header").click();
             document.getElementById("world-menu-header").click();
@@ -1842,8 +1875,8 @@ PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 	var company = __WEBPACK_IMPORTED_MODULE_2__Company_js__["a" /* Companies */][this.location]; //Company being applied to
     if (this.isQualified(company, __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].PartTimeEmployee)) {
-        if (Player.firstJobRecvd === false) {
-            Player.firstJobRecvd = true;
+        if (this.firstJobRecvd === false) {
+            this.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
             document.getElementById("world-menu-header").click();
             document.getElementById("world-menu-header").click();
@@ -1862,8 +1895,8 @@ PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 	var company = __WEBPACK_IMPORTED_MODULE_2__Company_js__["a" /* Companies */][this.location]; //Company being applied to
     if (this.isQualified(company, __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].Waiter)) {
-        if (Player.firstJobRecvd === false) {
-            Player.firstJobRecvd = true;
+        if (this.firstJobRecvd === false) {
+            this.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
             document.getElementById("world-menu-header").click();
             document.getElementById("world-menu-header").click();
@@ -1882,8 +1915,8 @@ PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
 	var company = __WEBPACK_IMPORTED_MODULE_2__Company_js__["a" /* Companies */][this.location]; //Company being applied to
     if (this.isQualified(company, __WEBPACK_IMPORTED_MODULE_2__Company_js__["d" /* CompanyPositions */].PartTimeWaiter)) {
-        if (Player.firstJobRecvd === false) {
-            Player.firstJobRecvd = true;
+        if (this.firstJobRecvd === false) {
+            this.firstJobRecvd = true;
             document.getElementById("job-tab").style.display = "list-item";
             document.getElementById("world-menu-header").click();
             document.getElementById("world-menu-header").click();
@@ -2236,10 +2269,10 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var totalHacknetRam = 0;
     var totalHacknetCores = 0;
     var totalHacknetLevels = 0;
-    for (var i = 0; i < Player.hacknetNodes.length; ++i) {
-        totalHacknetLevels += Player.hacknetNodes[i].level;
-        totalHacknetRam += Player.hacknetNodes[i].ram;
-        totalHacknetCores += Player.hacknetNodes[i].cores;
+    for (var i = 0; i < this.hacknetNodes.length; ++i) {
+        totalHacknetLevels += this.hacknetNodes[i].level;
+        totalHacknetRam += this.hacknetNodes[i].ram;
+        totalHacknetCores += this.hacknetNodes[i].cores;
     }
     if (!netburnersFac.isBanned && !netburnersFac.isMember && !netburnersFac.alreadyInvited &&
         this.hacking_skill >= 80 && totalHacknetRam >= 8 &&
@@ -2315,6 +2348,79 @@ let Player = new PlayerObject();
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return dialogBoxCreate; });
+/* Pop up Dialog Box */
+let dialogBoxes = [];
+
+//Close dialog box when clicking outside
+$(document).click(function(event) {
+    if (dialogBoxOpened && dialogBoxes.length >= 1) {
+        if (!$(event.target).closest(dialogBoxes[0]).length){
+            dialogBoxes[0].remove();
+            dialogBoxes.splice(0, 1);
+            if (dialogBoxes.length == 0) {
+                dialogBoxOpened = false;
+            } else {
+                dialogBoxes[0].style.visibility = "visible";
+            }
+        }
+    }
+});
+
+
+//Dialog box close buttons
+$(document).on('click', '.dialog-box-close-button', function( event ) {
+    if (dialogBoxOpened && dialogBoxes.length >= 1) {
+        dialogBoxes[0].remove();
+        dialogBoxes.splice(0, 1);
+        if (dialogBoxes.length == 0) {
+            dialogBoxOpened = false;
+        } else {
+            dialogBoxes[0].style.visibility = "visible";
+        }
+    }
+});
+
+var dialogBoxOpened = false;
+
+function dialogBoxCreate(txt) {
+    var container = document.createElement("div");
+    container.setAttribute("class", "dialog-box-container");
+
+    var content = document.createElement("div");
+    content.setAttribute("class", "dialog-box-content");
+
+    var closeButton = document.createElement("span");
+    closeButton.setAttribute("class", "dialog-box-close-button");
+    closeButton.innerHTML = "&times;"
+
+    var textE = document.createElement("p");
+    textE.innerHTML = txt;
+
+    content.appendChild(closeButton);
+    content.appendChild(textE);
+    container.appendChild(content);
+
+    document.body.appendChild(container);
+    if (dialogBoxes.length >= 1) {
+        container.style.visibility = "hidden";
+    }
+    dialogBoxes.push(container);
+
+    setTimeout(function() {
+        dialogBoxOpened = true;
+    }, 400);
+}
+
+
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* unused harmony export sizeOfObject */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addOffset; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return clearEventListeners; });
@@ -2386,86 +2492,13 @@ function powerOfTwo(n) {
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return dialogBoxCreate; });
-/* Pop up Dialog Box */
-let dialogBoxes = [];
-
-//Close dialog box when clicking outside
-$(document).click(function(event) {
-    if (dialogBoxOpened && dialogBoxes.length >= 1) {
-        if (!$(event.target).closest(dialogBoxes[0]).length){
-            dialogBoxes[0].remove();
-            dialogBoxes.splice(0, 1);
-            if (dialogBoxes.length == 0) {
-                dialogBoxOpened = false;
-            } else {
-                dialogBoxes[0].style.visibility = "visible";
-            }
-        }
-    }
-});
-
-
-//Dialog box close buttons
-$(document).on('click', '.dialog-box-close-button', function( event ) {
-    if (dialogBoxOpened && dialogBoxes.length >= 1) {
-        dialogBoxes[0].remove();
-        dialogBoxes.splice(0, 1);
-        if (dialogBoxes.length == 0) {
-            dialogBoxOpened = false;
-        } else {
-            dialogBoxes[0].style.visibility = "visible";
-        }
-    }
-});
-
-var dialogBoxOpened = false;
-
-function dialogBoxCreate(txt) {
-    var container = document.createElement("div");
-    container.setAttribute("class", "dialog-box-container");
-
-    var content = document.createElement("div");
-    content.setAttribute("class", "dialog-box-content");
-
-    var closeButton = document.createElement("span");
-    closeButton.setAttribute("class", "dialog-box-close-button");
-    closeButton.innerHTML = "&times;"
-
-    var textE = document.createElement("p");
-    textE.innerHTML = txt;
-
-    content.appendChild(closeButton);
-    content.appendChild(textE);
-    container.appendChild(content);
-
-    document.body.appendChild(container);
-    if (dialogBoxes.length >= 1) {
-        container.style.visibility = "hidden";
-    }
-    dialogBoxes.push(container);
-
-    setTimeout(function() {
-        dialogBoxOpened = true;
-    }, 400);
-}
-
-
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
-
-/***/ }),
 /* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CONSTANTS; });
 let CONSTANTS = {
-    Version:                "0.28.5",
+    Version:                "0.28.6",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -2552,9 +2585,9 @@ let CONSTANTS = {
 
     //Server constants
     ServerBaseGrowthRate: 1.03,     //Unadjusted Growth rate
-    ServerMaxGrowthRate: 1.0035,     //Maximum possible growth rate (max rate accounting for server security)
+    ServerMaxGrowthRate: 1.0035,    //Maximum possible growth rate (max rate accounting for server security)
     ServerFortifyAmount: 0.002,     //Amount by which server's security increases when its hacked/grown
-    ServerWeakenAmount: 0.05,        //Amount by which server's security decreases when weakened
+    ServerWeakenAmount: 0.05,       //Amount by which server's security decreases when weakened
 
     PurchasedServerLimit: 25,
 
@@ -2577,6 +2610,13 @@ let CONSTANTS = {
 
     //Hospital/Health
     HospitalCostPerHp: 100000,
+
+    //Intelligence-related constants
+    IntelligenceCrimeWeight: 0.05,  //Weight for how much int affects crime success rates
+    IntelligenceInfiltrationWeight: 0.1, //Weight for how much int affects infiltration success rates
+    IntelligenceCrimeBaseExpGain: 0.0001,
+    IntelligenceProgramBaseExpGain: 1000, //Program required hack level divided by this to determine int exp gain
+    IntelligenceTerminalHackBaseExpGain: 200, //Hacking exp divided by this to determine int exp gain
 
     //Gang constants
     GangRespectToReputationRatio: 2, //Respect is divided by this to get rep gain
@@ -2697,7 +2737,8 @@ let CONSTANTS = {
                          "encounter diminishing returns in your hacking (since you are only hacking a certain percentage). You can " +
                          "increase the amount of money on a server using a script and the grow() function in Netscript.<br><br>" +
                          "<h1>Server Security</h1><br>" +
-                         "Each server has a security level, which is denoted by a number between 1 and 100. A higher number means " +
+                         "Each server has a security level, typically between 1 and 100. It is possible for a server to have a security " +
+                         "level 100 or higher, in which case hacking a server will become impossible. A higher number means " +
                          "the server has stronger security. As mentioned above, a server's security level is an important factor " +
                          "to consider when hacking. You can check a server's security level using the 'analyze' command, although this " +
                          "only gives an estimate (with 5% uncertainty). You can also check a server's security in a script, using the " +
@@ -2948,6 +2989,8 @@ let CONSTANTS = {
                            "<i>getServerRam(hostname/ip)</i><br>Returns an array with two elements that gives information about the target server's RAM. The first " +
                            "element in the array is the amount of RAM that the server has (in GB). The second element in the array is the amount of RAM that " +
                            "is currently being used on the server.<br><br>" +
+                           "<i>serverExists(hostname/ip)</i><br>Returns a boolean denoting whether or not the specified server exists. The argument " +
+                           "must be a string with the hostname or IP of the target server.<br><br>" +
                            "<i>fileExists(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " +
                            "The first argument must be a string with the name of the file. A file can either be a script or a program. A script name is case-sensitive, but a " +
                            "program is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " +
@@ -3005,6 +3048,17 @@ let CONSTANTS = {
                            "<i>getScriptIncome([scriptname], [hostname/ip], [args...])</i><br>" +
                            "Returns the amount of income the specified script generates while online (when the game is open, does not apply for " +
                            "offline income). This function can also return the total income of all of your active scripts by running the function " +
+                           "with no arguments.<br><br>" +
+                           "Remember that a script is uniquely identified by both its name and its arguments. So for example if you ran a script " +
+                           "with the arguments 'foodnstuff' and '5' then in order to use this function to get that script's income you must " +
+                           "specify those arguments in this function call.<br><br>" +
+                           "The first argument, if specified, must be a string with the name of the script (including the .script extension). " +
+                           "The second argument must be a string with the hostname/IP of the target server. If the first argument is specified " +
+                           "then the second argument must be specified as well. Any additional arguments passed to the function will specify " +
+                           "the arguments passed into the target script.<br><br>" +
+                           "<i>getScriptExpGain([scriptname], [hostname/ip], [args...])</i><br>" +
+                           "Returns the amount of hacking experience the specified script generates while online (when the game is open, does not apply for " +
+                           "offline experience gains). This function can also return the total experience gain rate of all of your active scripts by running the function " +
                            "with no arguments.<br><br>" +
                            "Remember that a script is uniquely identified by both its name and its arguments. So for example if you ran a script " +
                            "with the arguments 'foodnstuff' and '5' then in order to use this function to get that script's income you must " +
@@ -3341,41 +3395,17 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.28.5<br>" +
-    "-The fl1ght.exe program that is received from jump3r is now sent very early on in the game, rather " +
-    "than at hacking level 1000<br>" +
-    "-Hostname is now displayed in Terminal<br>" +
-    "-Syntax highlighting now works for all Netscript functions<br>" +
-    "-Export should now work on Edge/IE<br><br>" +
-    "v0.28.4<br>" +
-    "-Added getScriptIncome() Netscript function<br>" +
-    "-Added Javascript's Math module to Netscript. See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math<br>" +
-    "-Added several member variables for the Hacknet Node API that allow you to access info about their income<br>" +
-    "-All valid Netscript functions are now syntax highlighted as keywords in the editor. This means they will a different " +
-    "color than invalid netscript functions. The color will depend on your theme. " +
-    "Note that right now, this only applies for normal Netscript functions, not " +
-    "functions in the TIX API, Hacknet Node API, or Singularity Functions.<br><br>" +
-    "-Comments and operators no longer count towards RAM usage in scripts.<br>" +
-    "-Variety of bug fixes and updates to informational text in the game<br><br>" +
-    "v0.28.3<br>" +
-    "-Added ls() Netscript function<br>" +
-    "-Increased company wages by about ~10% across the board<br>" +
-    "-The scp() Netsction function and Terminal command now works for .lit files<br>" +
-    "-Increased the amount of RAM on many lower level servers (up to level 200 hacking level required).<br><br>" +
-    "v0.28.2<br>" +
-    "-Added a few script editor configuration options. Includes key bindings, themes, etc.<br>" +
-    "-Certain menu options will now be hidden until their relevant gameplay is unlocked. This " +
-    "really only affects new players<br>" +
-    "-Most unrecognized or un-implemented syntax errors in a script will now include line number in error message<br>" +
-    "-Various bug fixes<br><br>" +
-    "v0.28.1<br>" +
-    "-The script editor now uses the open-source Ace editor, which provides a much better experience when coding!<br>" +
-    "-Added tprint() Netscript function<br><br>" +
-    "v0.28.0<br>" +
-    "-Added BitNode-4: The Singularity<br>" +
-    "-Added BitNode-11: The Big Crash<br>" +
-    "-Migrated the codebase to use webpack (doesn't affect any in game content, except maybe some slight " +
-    "performance improvements and there may be bugs that result from dependency errors)"
+    "v0.28.6<br>" +
+    "-Time required to create programs now scales better with hacking level, and should generally be much faster<br>" +
+    "-Added serverExists(hostname/ip) and getScriptExpGain(scriptname, ip, args...) Netscript functions<br>" +
+    "-Short circuiting && and || logical operators should now work<br>" +
+    "-Assigning to multidimensional arrays should now work<br>" +
+    "-Scripts will no longer wait for hack/grow/weaken functions to finish if they are killed. They will die immediately<br>" +
+    "-The script loop that checks whether any scripts need to be started/stopped now runs every 6 seconds rather than 10 " +
+    "(resulting in less delays when stopping/starting scripts)<br>" +
+    "-Fixed several bugs/exploits<br>" +
+    "-Added some description for BitNode-5 (not implemented yet, should be soon though)<br>",
+
 }
 
 
@@ -3388,9 +3418,9 @@ let CONSTANTS = {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_DialogBox_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_GameOptions_js__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__ = __webpack_require__(5);
@@ -5039,14 +5069,15 @@ window.onload = function() {
 "use strict";
 /* unused harmony export getIndicesOf */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return convertTimeMsToTimeElapsedString; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return longestCommonStart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return isString; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return isPositiveNumber; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return longestCommonStart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return isString; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return isPositiveNumber; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return containsAllStrings; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return formatNumber; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return numOccurrences; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return numOccurrences; });
 /* unused harmony export numNetscriptOperators */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DialogBox_js__ = __webpack_require__(2);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return isHTML; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DialogBox_js__ = __webpack_require__(1);
 
 
 //Netburner String helper functions
@@ -5178,6 +5209,16 @@ function numNetscriptOperators(string) {
     return total;
 }
 
+//Checks if a string contains HTML elements
+function isHTML(str) {
+    var a = document.createElement('div');
+    a.innerHTML = str;
+    for (var c = a.childNodes, i = c.length; i--; ) {
+        if (c[i].nodeType == 1) return true;
+    }
+    return false;
+}
+
 
 
 
@@ -5202,7 +5243,7 @@ function numNetscriptOperators(string) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Script_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SpecialServerIps_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_IPAddress_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(7);
 
@@ -5875,13 +5916,14 @@ function processSingleServerGrowth(server, numCycles) {
         serverGrowth = 1;
     }
 
+    var oldMoneyAvailable = server.moneyAvailable;
     server.moneyAvailable *= serverGrowth;
     if (server.moneyMax && isNaN(server.moneyAvailable)) {
         server.moneyAvailable = server.moneyMax;
     }
     if (server.moneyMax && server.moneyAvailable > server.moneyMax) {
         server.moneyAvailable = server.moneyMax;
-        return 1;
+        return server.moneyAvailable / oldMoneyAvailable;
     }
 
     //Growing increases server security twice as much as hacking
@@ -16376,7 +16418,20 @@ function initBitNodes() {
                                           "upgrade its level up to a maximum of 3. This Source-File lets you access and use the Singularity  " +
                                           "Functions in other BitNodes. Each level of this Source-File will open up more Singularity Functions " +
                                           "that you can use.");
-    BitNodes["BitNode5"] = new BitNode(5, "Artificial Intelligence", "COMING SOON");   //Int
+    BitNodes["BitNode5"] = new BitNode(5, "Artificial Intelligence", "Posthuman", "They said it couldn't be done. They said the human brain, " +
+                                          "along with its consciousness and intelligence, couldn't be replicated. They said the complexity " +
+                                          "of the brain results from unpredictable, nonlinear interactions that couldn't be modeled " +
+                                          "by 1's and 0's. They were wrong.<br><br>" +
+                                          "In this BitNode <br><br>" +
+                                          "Destroying this BitNode will give you Source-File 5, or if you already have this Source-File it will " +
+                                          "upgrade its level up to a maximum of 3. This Source-File grants you a special new stat called Intelligence. " +
+                                          "Intelligence is unique because it is permanent and persistent (it never gets reset back to 1). However " +
+                                          "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't know " +
+                                          "when you gain experience and how much). Higher Intelligence levels will boost your production for many actions " +
+                                          "in the game. This source file will also raise all of your hacking-related multipliers by:<br><br>" +
+                                          "Level 1: 4%<br>" +
+                                          "Level 2: 6%<br>" +
+                                          "Level 3: 7%");
     BitNodes["BitNode6"] = new BitNode(6, "Hacktocracy", "COMING SOON");               //Healthy Hacknet balancing mechanic
     BitNodes["BitNode7"] = new BitNode(7, "Do Androids Dream?", "COMING SOON");        //Build androids for automation
     BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "COMING SOON");      //Trading only viable strategy
@@ -16504,9 +16559,9 @@ function initBitNodeMultipliers() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Location_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Settings_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_FactionInvitationBox_js__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_JSONReviver_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_YesNoBox_js__ = __webpack_require__(21);
@@ -16532,7 +16587,7 @@ function factionInit() {
     $('#faction-donate-input').on('input', function() {
         if (__WEBPACK_IMPORTED_MODULE_3__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_3__engine_js__["Engine"].Page.Faction) {
             var val = document.getElementById("faction-donate-input").value;
-            if (Object(__WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__["d" /* isPositiveNumber */])(val)) {
+            if (Object(__WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__["e" /* isPositiveNumber */])(val)) {
                 var numMoneyDonate = Number(val);
                 document.getElementById("faction-donate-rep-gain").innerHTML =
                     "This donation will result in " + Object(__WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__["c" /* formatNumber */])(numMoneyDonate/1000000 * __WEBPACK_IMPORTED_MODULE_6__Player_js__["a" /* Player */].faction_rep_mult, 3) + " reputation gain";
@@ -16991,7 +17046,7 @@ function displayFactionContent(factionName) {
 
     newDonateWorkButton.addEventListener("click", function() {
         var donateAmountVal = document.getElementById("faction-donate-input").value;
-        if (Object(__WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__["d" /* isPositiveNumber */])(donateAmountVal)) {
+        if (Object(__WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__["e" /* isPositiveNumber */])(donateAmountVal)) {
             var numMoneyDonate = Number(donateAmountVal);
             if (__WEBPACK_IMPORTED_MODULE_6__Player_js__["a" /* Player */].money.lt(numMoneyDonate)) {
                 Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You cannot afford to donate this much money!");
@@ -17592,8 +17647,8 @@ function initSpecialServerIps() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ServerPurchases_js__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__SpecialServerIps_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_IPAddress_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_YesNoBox_js__ = __webpack_require__(21);
@@ -19938,8 +19993,8 @@ function initCreateProgramButtons() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_acorn_js__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_acorn_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__utils_acorn_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__ = __webpack_require__(2);
 
 
 
@@ -19965,6 +20020,7 @@ function WorkerScript(runningScriptObj) {
 	this.scriptRef		= runningScriptObj;
     this.errorMessage   = "";
     this.args           = runningScriptObj.args;
+    this.killTrigger    = function() {}; //CB func used to clear any delays (netscriptDelay())
 }
 
 //Returns the server on which the workerScript is running
@@ -20088,7 +20144,7 @@ function runScriptsLoop() {
 		}
 	}
 
-	setTimeout(runScriptsLoop, 10000);
+	setTimeout(runScriptsLoop, 6000);
 }
 
 //Queues a script to be killed by settings its stop flag to true. Then, the code will reject
@@ -20099,6 +20155,7 @@ function killWorkerScript(runningScriptObj, serverIp) {
 		if (workerScripts[i].name == runningScriptObj.filename && workerScripts[i].serverIp == serverIp &&
             Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["c" /* compareArrays */])(workerScripts[i].args, runningScriptObj.args)) {
 			workerScripts[i].env.stopFlag = true;
+            workerScripts[i].killTrigger();
             return true;
 		}
 	}
@@ -20216,7 +20273,7 @@ function isValidIPAddress(ipaddress) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Prestige_js__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Faction_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(7);
 
 
@@ -23354,9 +23411,9 @@ function getJobRequirementText(company, pos, tooltiptext=false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 var ace = __webpack_require__(48);
 __webpack_require__(51);
@@ -23562,74 +23619,77 @@ function calculateRamUsage(codeCopy) {
     codeCopy = codeCopy.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1'); //Delete comments
     codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
     var baseRam = 1.4;
-    var whileCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "while(");
-    var forCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "for(");
-    var ifCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "if(");
-    var hackCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "hack(");
-    var growCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "grow(");
-    var weakenCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "weaken(");
-    var scanCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "scan(");
-    var nukeCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "nuke(");
-    var brutesshCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "brutessh(");
-    var ftpcrackCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "ftpcrack(");
-    var relaysmtpCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "relaysmtp(");
-    var httpwormCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "httpworm(");
-    var sqlinjectCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "sqlinject(");
-    var runCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "run(");
-    var execCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "exec(");
-    var killCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "kill(") + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "killall(");
-    var scpCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "scp(");
-    var hasRootAccessCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "hasRootAccess(");
-    var getHostnameCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getHostname(");
-    var getHackingLevelCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getHackingLevel(");
-    var getServerCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getServerMoneyAvailable(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getServerMaxMoney(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getServerSecurityLevel(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getServerBaseSecurityLevel(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getServerGrowth(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getServerRequiredHackingLevel(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getServerNumPortsRequired(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getServerRam(");
-    var fileExistsCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "fileExists(");
-    var isRunningCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "isRunning(");
-    var purchaseHacknetCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "purchaseHacknetNode(");
-    var hacknetnodesArrayCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "hacknetnodes[");
-    var hnUpgLevelCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, ".upgradeLevel(");
-    var hnUpgRamCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, ".upgradeRam()");
-    var hnUpgCoreCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, ".upgradeCore()");
-    var scriptGetStockCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getStockPrice(") +
-                              Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getStockPosition(");
-    var scriptBuySellStockCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "buyStock(") +
-                                  Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "sellStock(");
-    var scriptPurchaseServerCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "purchaseServer(") +
-                                    Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "deleteServer(");
-    var scriptRoundCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "round(");
-    var scriptWriteCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "write(");
-    var scriptReadCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "read(");
-    var arbScriptCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "scriptRunning(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "scriptKill(");
-    var getScriptCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getScriptRam(");
-    var getHackTimeCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getHackTime(") +
-                           Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getGrowTime(") +
-                           Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getWeakenTime(");
-    var singFn1Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "universityCourse(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "gymWorkout(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "travelToCity(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "purchaseTor(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "purchaseProgram(");
-    var singFn2Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "upgradeHomeRam(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getUpgradeHomeRamCost(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "workForCompany(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "applyToCompany(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getCompanyRep(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "checkFactionInvitations(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "joinFaction(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "workForFaction(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getFactionRep(");
-    var singFn3Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "createProgram(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "getAugmentationCost(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "purchaseAugmentation(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["g" /* numOccurrences */])(codeCopy, "installAugmentations(");
+    var whileCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "while(");
+    var forCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "for(");
+    var ifCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "if(");
+    var hackCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "hack(");
+    var growCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "grow(");
+    var weakenCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "weaken(");
+    var scanCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scan(");
+    var nukeCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "nuke(");
+    var brutesshCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "brutessh(");
+    var ftpcrackCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "ftpcrack(");
+    var relaysmtpCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "relaysmtp(");
+    var httpwormCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "httpworm(");
+    var sqlinjectCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "sqlinject(");
+    var runCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "run(");
+    var execCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "exec(");
+    var killCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "kill(") + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "killall(");
+    var scpCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scp(");
+    var hasRootAccessCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "hasRootAccess(");
+    var getHostnameCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getHostname(");
+    var getHackingLevelCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getHackingLevel(");
+    var getServerCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerMoneyAvailable(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerMaxMoney(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerSecurityLevel(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerBaseSecurityLevel(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerGrowth(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerRequiredHackingLevel(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerNumPortsRequired(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerRam(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "serverExists(");
+    var fileExistsCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "fileExists(");
+    var isRunningCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "isRunning(");
+    var purchaseHacknetCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseHacknetNode(");
+    var hacknetnodesArrayCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "hacknetnodes[");
+    var hnUpgLevelCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, ".upgradeLevel(");
+    var hnUpgRamCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, ".upgradeRam()");
+    var hnUpgCoreCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, ".upgradeCore()");
+    var scriptGetStockCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getStockPrice(") +
+                              Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getStockPosition(");
+    var scriptBuySellStockCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "buyStock(") +
+                                  Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "sellStock(");
+    var scriptPurchaseServerCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseServer(") +
+                                    Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "deleteServer(");
+    var scriptRoundCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "round(");
+    var scriptWriteCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "write(");
+    var scriptReadCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "read(");
+    var arbScriptCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scriptRunning(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scriptKill(");
+    var getScriptCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getScriptRam(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getScriptIncome(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getScriptExpGain(");
+    var getHackTimeCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getHackTime(") +
+                           Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getGrowTime(") +
+                           Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getWeakenTime(");
+    var singFn1Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "universityCourse(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "gymWorkout(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "travelToCity(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseTor(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseProgram(");
+    var singFn2Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "upgradeHomeRam(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getUpgradeHomeRamCost(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "workForCompany(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "applyToCompany(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getCompanyRep(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "checkFactionInvitations(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "joinFaction(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "workForFaction(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getFactionRep(");
+    var singFn3Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "createProgram(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getAugmentationCost(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseAugmentation(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "installAugmentations(");
 
     if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].bitNodeN != 4) {
         singFn1Count *= 10;
@@ -23986,7 +24046,7 @@ __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].construct
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_StringHelperFunctions_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_LogBox_js__ = __webpack_require__(27);
 
 
@@ -24009,13 +24069,13 @@ __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].construct
 
 
 /* Write text to terminal */
+//If replace is true then spaces are replaced with "&nbsp;"
 function post(input, replace=true) {
     if (replace) {
         $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
     } else {
         $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
     }
-
 	updateTerminalScroll();
 }
 
@@ -24216,7 +24276,7 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
         document.getElementById("terminal-input-text-box").value = val;
         document.getElementById("terminal-input-text-box").focus();
     } else {
-        var longestStartSubstr = Object(__WEBPACK_IMPORTED_MODULE_15__utils_StringHelperFunctions_js__["f" /* longestCommonStart */])(allPossibilities);
+        var longestStartSubstr = Object(__WEBPACK_IMPORTED_MODULE_15__utils_StringHelperFunctions_js__["g" /* longestCommonStart */])(allPossibilities);
         //If the longest common starting substring of remaining possibilities is the same
         //as whatevers already in terminal, just list all possible options. Otherwise,
         //change the input in the terminal to the longest common starting substr
@@ -24334,7 +24394,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
             allPos.push(currServ.programs[i]);
         }
         for (var i = 0; i < currServ.messages.length; ++i) {
-            if (!(currServ.messages[i] instanceof __WEBPACK_IMPORTED_MODULE_8__Message_js__["a" /* Message */]) && Object(__WEBPACK_IMPORTED_MODULE_15__utils_StringHelperFunctions_js__["e" /* isString */])(currServ.messages[i]) &&
+            if (!(currServ.messages[i] instanceof __WEBPACK_IMPORTED_MODULE_8__Message_js__["a" /* Message */]) && Object(__WEBPACK_IMPORTED_MODULE_15__utils_StringHelperFunctions_js__["f" /* isString */])(currServ.messages[i]) &&
                   currServ.messages[i].endsWith(".lit")) {
                 allPos.push(currServ.messages[i]);
             }
@@ -24421,13 +24481,12 @@ let Terminal = {
 				var moneyGained = __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].calculatePercentMoneyHacked();
 				moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
-				//Safety check
-				if (moneyGained <= 0) {moneyGained = 0;}
+				if (moneyGained <= 0) {moneyGained = 0;} //Safety check
 
 				server.moneyAvailable -= moneyGained;
 				__WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].gainMoney(moneyGained);
-
                 __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].gainHackingExp(expGainedOnSuccess)
+                __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].gainIntelligenceExp(expGainedOnSuccess / __WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].IntelligenceTerminalHackBaseExpGain);
 
                 server.fortify(__WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].ServerFortifyAmount);
 
@@ -24978,7 +25037,7 @@ let Terminal = {
                 //Check literature files
                 for (var i = 0; i < s.messages.length; ++i) {
                     var f = s.messages[i];
-                    if (!(f instanceof __WEBPACK_IMPORTED_MODULE_8__Message_js__["a" /* Message */]) && Object(__WEBPACK_IMPORTED_MODULE_15__utils_StringHelperFunctions_js__["e" /* isString */])(f) && f === delTarget) {
+                    if (!(f instanceof __WEBPACK_IMPORTED_MODULE_8__Message_js__["a" /* Message */]) && Object(__WEBPACK_IMPORTED_MODULE_15__utils_StringHelperFunctions_js__["f" /* isString */])(f) && f === delTarget) {
                         s.messages.splice(i, 1);
                         return;
                     }
@@ -25398,6 +25457,7 @@ let Terminal = {
             (function() {
             var hostname = links[i].innerHTML.toString();
             links[i].onclick = function() {
+                if (Terminal.analyzeFlag || Terminal.hackFlag) {return;}
                 Terminal.connectToServer(hostname);
             }
             }());//Immediate invocation
@@ -25664,7 +25724,7 @@ let Terminal = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return yesNoBoxClose; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return yesNoTxtInpBoxClose; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return yesNoBoxOpen; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__ = __webpack_require__(2);
 
 /* Generic Yes-No Pop-up box
  * Can be used to create pop-up boxes that require a yes/no response from player
@@ -25763,7 +25823,7 @@ function yesNoTxtInpBoxCreate(txt) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Settings_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(7);
 
 
@@ -25955,8 +26015,8 @@ function initMessages()  {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return updateActiveScriptsItems; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NetscriptWorker_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_LogBox_js__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
@@ -26236,8 +26296,8 @@ function createActiveScriptsText(workerscript, item) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return currITutorialStep; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return iTutorialIsRunning; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__engine_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_HelperFunctions_js__ = __webpack_require__(2);
 
 
 
@@ -31743,8 +31803,8 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*! decimal.js v7.2.3 https://github.com/MikeM
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Location_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
@@ -32368,7 +32428,7 @@ function updateStockPlayerPosition(stock) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return logBoxUpdateText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return logBoxOpened; });
 /* unused harmony export logBoxCurrentScript */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__ = __webpack_require__(2);
 
 
 $(document).keydown(function(event) {
@@ -32488,6 +32548,30 @@ Environment.prototype = {
     },
 
     setArrayElement: function(name, idx, value) {
+        if (!(idx instanceof Array)) {
+            throw new Error("idx parameter is not an Array");
+        }
+        var scope = this.lookup(name);
+        if (!scope && this.parent) {
+            console.log("Here");
+            throw new Error("Undefined variable " + name);
+        }
+        var arr = (scope || this).vars[name];
+        if (!(arr.constructor === Array || arr instanceof Array)) {
+            throw new Error("Variable is not an array: " + name);
+        }
+        var res = arr;
+        for (var iterator = 0; iterator < idx.length-1; ++iterator) {
+            var i = idx[iterator];
+            if (!(res instanceof Array) || i >= res.length) {
+                throw new Error("Out-of-bounds array access");
+            }
+            res = res[i];
+        }
+        return res[idx[idx.length-1]] = value;
+    },
+    /*
+    setArrayElement: function(name, idx, value) {
         var scope = this.lookup(name);
         if (!scope && this.parent) {
             console.log("Here");
@@ -32498,7 +32582,7 @@ Environment.prototype = {
             throw new Error("Variable is not an array: " + name);
         }
         return (scope || this).vars[name][idx] = value;
-    },
+    },*/
 
 	//Creates (or overwrites) a variable in the current scope
     def: function(name, value) {
@@ -32525,9 +32609,9 @@ Environment.prototype = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Location_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__ = __webpack_require__(5);
@@ -32659,7 +32743,7 @@ function processAllGangPowerGains(numCycles=1) {
             if (name == playerGangName) {
                 AllGangs[name].power += __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].gang.calculatePower();
             } else {
-                var gain = Math.random() * 0.01; //TODO Adjust as necessary
+                var gain = Math.random() * 0.02; //TODO Adjust as necessary
                 AllGangs[name].power += (gain);
             }
         }
@@ -34207,6 +34291,9 @@ function prestigeSourceFile() {
     mainMenu.style.visibility = "visible";
     __WEBPACK_IMPORTED_MODULE_14__Terminal_js__["a" /* Terminal */].resetTerminalInput();
     __WEBPACK_IMPORTED_MODULE_5__engine_js__["Engine"].loadTerminalContent();
+
+    //Gain int exp
+    __WEBPACK_IMPORTED_MODULE_10__Player_js__["a" /* Player */].gainIntelligenceExp(5);
 }
 
 
@@ -34234,8 +34321,8 @@ function prestigeSourceFile() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__InteractiveTutorial_js__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
@@ -34839,9 +34926,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__NetscriptEnvironment_js__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__utils_decimal_js__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__utils_decimal_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__utils_HelperFunctions_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__utils_IPAddress_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__utils_HelperFunctions_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__utils_IPAddress_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__ = __webpack_require__(5);
+
 
 
 
@@ -34930,7 +35019,7 @@ function NetscriptFunctions(workerScript) {
 
             workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
             //console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds (t=" + threads + ")");
-            return Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["d" /* netscriptDelay */])(hackingTime* 1000).then(function() {
+            return Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["d" /* netscriptDelay */])(hackingTime* 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 var hackChance = Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["h" /* scriptCalculateHackingChance */])(server);
                 var rand = Math.random();
@@ -34955,7 +35044,7 @@ function NetscriptFunctions(workerScript) {
                     __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].gainHackingExp(expGainedOnSuccess);
                     workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
                     //console.log("Script successfully hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
-                    workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(moneyGained, 2) + " and " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
+                    workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(moneyGained, 2) + " and " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
                     server.fortify(__WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].ServerFortifyAmount * threads);
                     return Promise.resolve(true);
                 } else {
@@ -34963,7 +35052,7 @@ function NetscriptFunctions(workerScript) {
                     __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].gainHackingExp(expGainedOnFailure);
                     workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
                     //console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp");
-                    workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
+                    workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
                     return Promise.resolve(false);
                 }
             });
@@ -34975,7 +35064,7 @@ function NetscriptFunctions(workerScript) {
             if (log) {
                 workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
             }
-            return Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["d" /* netscriptDelay */])(time).then(function() {
+            return Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["d" /* netscriptDelay */])(time, workerScript).then(function() {
                 return Promise.resolve(true);
             });
         },
@@ -34999,8 +35088,8 @@ function NetscriptFunctions(workerScript) {
 
             var growTime = Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["g" /* scriptCalculateGrowTime */])(server);
             //console.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds")
-            workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(growTime/1000, 3) + " seconds (t=" + threads + ")");
-            return Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["d" /* netscriptDelay */])(growTime).then(function() {
+            workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(growTime/1000, 3) + " seconds (t=" + threads + ")");
+            return Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["d" /* netscriptDelay */])(growTime, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
                 var growthPercentage = Object(__WEBPACK_IMPORTED_MODULE_13__Server_js__["j" /* processSingleServerGrowth */])(server, 450 * threads);
@@ -35010,8 +35099,8 @@ function NetscriptFunctions(workerScript) {
                     expGain = 0;
                 }
                 workerScript.scriptRef.log("Available money on " + server.hostname + " grown by "
-                                           + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(growthPercentage*100 - 100, 6) + "%. Gained " +
-                                           Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGain, 4) + " hacking exp (t=" + threads +")");
+                                           + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(growthPercentage*100 - 100, 6) + "%. Gained " +
+                                           Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGain, 4) + " hacking exp (t=" + threads +")");
                 workerScript.scriptRef.onlineExpGained += expGain;
                 __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].gainHackingExp(expGain);
                 return Promise.resolve(growthPercentage);
@@ -35036,16 +35125,15 @@ function NetscriptFunctions(workerScript) {
             }
 
             var weakenTime = Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["k" /* scriptCalculateWeakenTime */])(server);
-            //console.log("Executing weaken() on server " + server.hostname + " in " + formatNumber(weakenTime/1000, 3) + " seconds")
             workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " +
-                                       Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(weakenTime/1000, 3) + " seconds (t=" + threads + ")");
-            return Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["d" /* netscriptDelay */])(weakenTime).then(function() {
+                                       Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(weakenTime/1000, 3) + " seconds (t=" + threads + ")");
+            return Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["d" /* netscriptDelay */])(weakenTime, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.weaken(__WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].ServerWeakenAmount * threads);
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
                 var expGain = Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["f" /* scriptCalculateExpGain */])(server) * threads;
                 workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty +
-                                           ". Gained " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGain, 4) + " hacking exp (t=" + threads + ")");
+                                           ". Gained " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGain, 4) + " hacking exp (t=" + threads + ")");
                 workerScript.scriptRef.onlineExpGained += expGain;
                 __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].gainHackingExp(expGain);
                 return Promise.resolve(__WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].ServerWeakenAmount * threads);
@@ -35060,6 +35148,14 @@ function NetscriptFunctions(workerScript) {
         tprint : function(args) {
             if (args === undefined || args === null) {
                 throw Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "tprint() call has incorrect number of arguments. Takes 1 argument");
+            }
+            var x = args.toString();
+            if (Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["d" /* isHTML */])(x)) {
+                __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].takeDamage(1);
+                Object(__WEBPACK_IMPORTED_MODULE_22__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You suddenly feel a sharp shooting pain through your body as an angry voice in your head exclaims: <br><br>" +
+                                "DON'T USE TPRINT() TO OUTPUT HTML ELEMENTS TO YOUR TERMINAL!!!!<br><br>" +
+                                "(You lost 1 HP)");
+                return;
             }
             Object(__WEBPACK_IMPORTED_MODULE_17__Terminal_js__["b" /* post */])(workerScript.scriptRef.filename + ": " + args.toString());
         },
@@ -35245,15 +35341,15 @@ function NetscriptFunctions(workerScript) {
             }
             var runningScriptObj = Object(__WEBPACK_IMPORTED_MODULE_12__Script_js__["d" /* findRunningScript */])(filename, argsForKillTarget, server);
             if (runningScriptObj == null) {
-                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_22__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget));
+                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_23__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget));
                 return false;
             }
             var res = Object(__WEBPACK_IMPORTED_MODULE_18__NetscriptWorker_js__["d" /* killWorkerScript */])(runningScriptObj, server.ip);
             if (res) {
-                workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_22__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
+                workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_23__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
                 return true;
             } else {
-                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_22__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget));
+                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_23__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget));
                 return false;
             }
         },
@@ -35438,10 +35534,10 @@ function NetscriptFunctions(workerScript) {
             }
             if (server.hostname == "home") {
                 //Return player's money
-                workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].money.toNumber(), 2));
+                workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].money.toNumber(), 2));
                 return __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].money.toNumber();
             }
-            workerScript.scriptRef.log("getServerMoneyAvailable() returned " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.moneyAvailable, 2) + " for " + server.hostname);
+            workerScript.scriptRef.log("getServerMoneyAvailable() returned " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.moneyAvailable, 2) + " for " + server.hostname);
             return server.moneyAvailable;
         },
         getServerSecurityLevel : function(ip){
@@ -35450,7 +35546,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
                 throw Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.hackDifficulty, 3) + " for " + server.hostname);
+            workerScript.scriptRef.log("getServerSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.hackDifficulty, 3) + " for " + server.hostname);
             return server.hackDifficulty;
         },
         getServerBaseSecurityLevel : function(ip){
@@ -35459,7 +35555,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
                 throw Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.baseDifficulty, 3) + " for " + server.hostname);
+            workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.baseDifficulty, 3) + " for " + server.hostname);
             return server.baseDifficulty;
         },
         getServerRequiredHackingLevel : function(ip){
@@ -35468,7 +35564,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
                 throw Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.requiredHackingSkill, 0) + " for " + server.hostname);
+            workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.requiredHackingSkill, 0) + " for " + server.hostname);
             return server.requiredHackingSkill;
         },
         getServerMaxMoney : function(ip){
@@ -35477,7 +35573,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
                 throw Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerMaxMoney() returned " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.moneyMax, 0) + " for " + server.hostname);
+            workerScript.scriptRef.log("getServerMaxMoney() returned " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.moneyMax, 0) + " for " + server.hostname);
             return server.moneyMax;
         },
         getServerGrowth : function(ip) {
@@ -35486,7 +35582,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
                 throw Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerGrowth() returned " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.serverGrowth, 0) + " for " + server.hostname);
+            workerScript.scriptRef.log("getServerGrowth() returned " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.serverGrowth, 0) + " for " + server.hostname);
             return server.serverGrowth;
         },
         getServerNumPortsRequired : function(ip){
@@ -35495,7 +35591,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
                 throw Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerNumPortsRequired() returned " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.numOpenPortsRequired, 0) + " for " + server.hostname);
+            workerScript.scriptRef.log("getServerNumPortsRequired() returned " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.numOpenPortsRequired, 0) + " for " + server.hostname);
             return server.numOpenPortsRequired;
         },
         getServerRam : function(ip) {
@@ -35504,8 +35600,11 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerRam() failed. Invalid IP or hostname passed in: " + ip);
                 throw Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerRam() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerRam() returned [" + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.maxRam, 2) + "GB, " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.ramUsed, 2) + "GB]");
+            workerScript.scriptRef.log("getServerRam() returned [" + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.maxRam, 2) + "GB, " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.ramUsed, 2) + "GB]");
             return [server.maxRam, server.ramUsed];
+        },
+        serverExists : function(ip) {
+            return (Object(__WEBPACK_IMPORTED_MODULE_13__Server_js__["e" /* getServer */])(ip) !== null);
         },
         fileExists : function(filename,ip=workerScript.serverIp){
             if (filename === undefined) {
@@ -35582,9 +35681,9 @@ function NetscriptFunctions(workerScript) {
 
             var totalPrice = stock.price * shares;
             if (__WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].money.lt(totalPrice + __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].StockMarketCommission)) {
-                workerScript.scriptRef.log("Not enough money to purchase " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " +
+                workerScript.scriptRef.log("Not enough money to purchase " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " +
                                            symbol + ". Need $" +
-                                           Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(totalPrice + __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2).toString());
+                                           Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(totalPrice + __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2).toString());
                 return false;
             }
 
@@ -35596,8 +35695,8 @@ function NetscriptFunctions(workerScript) {
             if (__WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].Page.StockMarket) {
                 Object(__WEBPACK_IMPORTED_MODULE_16__StockMarket_js__["j" /* updateStockPlayerPosition */])(stock);
             }
-            workerScript.scriptRef.log("Bought " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                                       Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share");
+            workerScript.scriptRef.log("Bought " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                                       Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share");
             return true;
         },
         sellStock : function(symbol, shares) {
@@ -35630,9 +35729,9 @@ function NetscriptFunctions(workerScript) {
             if (__WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].Page.StockMarket) {
                 Object(__WEBPACK_IMPORTED_MODULE_16__StockMarket_js__["j" /* updateStockPlayerPosition */])(stock);
             }
-            workerScript.scriptRef.log("Sold " + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                                       Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. Gained " +
-                                       "$" + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(gains, 2));
+            workerScript.scriptRef.log("Sold " + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                                       Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. Gained " +
+                                       "$" + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(gains, 2));
             return true;
         },
         purchaseServer : function(hostname, ram) {
@@ -35650,17 +35749,17 @@ function NetscriptFunctions(workerScript) {
             }
 
             ram = Math.round(ram);
-            if (isNaN(ram) || !Object(__WEBPACK_IMPORTED_MODULE_22__utils_HelperFunctions_js__["e" /* powerOfTwo */])(ram)) {
+            if (isNaN(ram) || !Object(__WEBPACK_IMPORTED_MODULE_23__utils_HelperFunctions_js__["e" /* powerOfTwo */])(ram)) {
                 workerScript.scriptRef.log("Error: Invalid ram argument passed to purchaseServer(). Must be numeric and a power of 2");
                 return "";
             }
 
             var cost = ram * __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].BaseCostFor1GBOfRamServer;
             if (__WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].money.lt(cost)) {
-                workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(cost, 2));
+                workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(cost, 2));
                 return "";
             }
-            var newServ = new __WEBPACK_IMPORTED_MODULE_13__Server_js__["d" /* Server */](Object(__WEBPACK_IMPORTED_MODULE_23__utils_IPAddress_js__["a" /* createRandomIp */])(), hostnameStr, "", false, true, true, ram);
+            var newServ = new __WEBPACK_IMPORTED_MODULE_13__Server_js__["d" /* Server */](Object(__WEBPACK_IMPORTED_MODULE_24__utils_IPAddress_js__["a" /* createRandomIp */])(), hostnameStr, "", false, true, true, ram);
             Object(__WEBPACK_IMPORTED_MODULE_13__Server_js__["a" /* AddToAllServers */])(newServ);
 
             __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].purchasedServers.push(newServ.ip);
@@ -35668,7 +35767,7 @@ function NetscriptFunctions(workerScript) {
             homeComputer.serversOnNetwork.push(newServ.ip);
             newServ.serversOnNetwork.push(homeComputer.ip);
             __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].loseMoney(cost);
-            workerScript.scriptRef.log("Purchased new server with hostname " + newServ.hostname + " for $" + Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["c" /* formatNumber */])(cost, 2));
+            workerScript.scriptRef.log("Purchased new server with hostname " + newServ.hostname + " for $" + Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["c" /* formatNumber */])(cost, 2));
             return newServ.hostname;
         },
         deleteServer : function(hostname) {
@@ -35861,10 +35960,36 @@ function NetscriptFunctions(workerScript) {
                 }
                 var runningScriptObj = Object(__WEBPACK_IMPORTED_MODULE_12__Script_js__["d" /* findRunningScript */])(scriptname, argsForScript, server);
                 if (runningScriptObj == null) {
-                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_22__utils_HelperFunctions_js__["f" /* printArray */])(argsForScript));
+                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_23__utils_HelperFunctions_js__["f" /* printArray */])(argsForScript));
                     return -1;
                 }
                 return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
+            }
+        },
+        getScriptExpGain : function(scriptname, ip) {
+            if (arguments.length === 0) {
+                var total = 0;
+                for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_18__NetscriptWorker_js__["h" /* workerScripts */].length; ++i) {
+                    total += (__WEBPACK_IMPORTED_MODULE_18__NetscriptWorker_js__["h" /* workerScripts */][i].scriptRef.onlineExpGained / __WEBPACK_IMPORTED_MODULE_18__NetscriptWorker_js__["h" /* workerScripts */][i].scriptRef.onlineRunningTime);
+                }
+                return total;
+            } else {
+                //Get income for a particular script
+                var server = Object(__WEBPACK_IMPORTED_MODULE_13__Server_js__["e" /* getServer */])(ip);
+                if (server === null) {
+                    workerScript.scriptRef.log("getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
+                    throw Object(__WEBPACK_IMPORTED_MODULE_19__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
+                }
+                var argsForScript = [];
+                for (var i = 2; i < arguments.length; ++i) {
+                    argsForScript.push(arguments[i]);
+                }
+                var runningScriptObj = Object(__WEBPACK_IMPORTED_MODULE_12__Script_js__["d" /* findRunningScript */])(scriptname, argsForScript, server);
+                if (runningScriptObj == null) {
+                    workerScript.scriptRef.log("getScriptExpGain() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_23__utils_HelperFunctions_js__["f" /* printArray */])(argsForScript));
+                    return -1;
+                }
+                return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;
             }
         },
 
@@ -36076,7 +36201,7 @@ function NetscriptFunctions(workerScript) {
             }
             __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].loseMoney(__WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].TorRouterCost);
 
-            var darkweb = new __WEBPACK_IMPORTED_MODULE_13__Server_js__["d" /* Server */](Object(__WEBPACK_IMPORTED_MODULE_23__utils_IPAddress_js__["a" /* createRandomIp */])(), "darkweb", "", false, false, false, 1);
+            var darkweb = new __WEBPACK_IMPORTED_MODULE_13__Server_js__["d" /* Server */](Object(__WEBPACK_IMPORTED_MODULE_24__utils_IPAddress_js__["a" /* createRandomIp */])(), "darkweb", "", false, false, false, 1);
             Object(__WEBPACK_IMPORTED_MODULE_13__Server_js__["a" /* AddToAllServers */])(darkweb);
             __WEBPACK_IMPORTED_MODULE_15__SpecialServerIps_js__["a" /* SpecialServerIps */].addIp("Darkweb Server", darkweb.ip);
 
@@ -36326,7 +36451,7 @@ function NetscriptFunctions(workerScript) {
                     return false;
             }
             //The Player object's applyForJob function can return string with special error messages
-            if (Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["e" /* isString */])(res)) {
+            if (Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["f" /* isString */])(res)) {
                 workerScript.scriptRef.log(res);
                 return false;
             }
@@ -36643,7 +36768,7 @@ function NetscriptFunctions(workerScript) {
 
             var res = Object(__WEBPACK_IMPORTED_MODULE_7__Faction_js__["k" /* purchaseAugmentation */])(aug, fac, true);
             workerScript.scriptRef.log(res);
-            if (Object(__WEBPACK_IMPORTED_MODULE_24__utils_StringHelperFunctions_js__["e" /* isString */])(res) && res.startsWith("You purchased")) {
+            if (Object(__WEBPACK_IMPORTED_MODULE_25__utils_StringHelperFunctions_js__["f" /* isString */])(res) && res.startsWith("You purchased")) {
                 return true;
             } else {
                 return false;
@@ -36701,7 +36826,7 @@ function NetscriptFunctions(workerScript) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return determineCrimeChanceHeist; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_DialogBox_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_DialogBox_js__ = __webpack_require__(1);
 
 
 
@@ -36814,99 +36939,113 @@ function determineCrimeSuccess(crime, moneyGained) {
     }
 }
 
+let intWgt = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].IntelligenceCrimeWeight;
+let maxLvl = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel;
+
 function determineCrimeChanceShoplift() {
-    var chance = ((__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel)) * 20;
+    var chance = (__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / maxLvl +
+                  intWgt * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].intelligence / maxLvl) * 20;
     chance *= __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceRobStore() {
-    var chance = ((0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].hacking_skill / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   2 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   1 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel)) * 5;
+    var chance = (0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].hacking_skill / maxLvl +
+                  2 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / maxLvl +
+                  1 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / maxLvl +
+                  intWgt * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].intelligence / maxLvl) * 5;
     chance *= __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceMug() {
-    var chance = ((1.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].defense / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   1.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel)) * 5;
+    var chance = (1.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / maxLvl +
+                  0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].defense / maxLvl +
+                  1.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / maxLvl +
+                  0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / maxLvl +
+                  intWgt * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].intelligence / maxLvl) * 5;
     chance *= __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceLarceny() {
-    var chance = ((0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].hacking_skill / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel)) * 3;
+    var chance = (0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].hacking_skill / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / maxLvl +
+                  intWgt * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].intelligence / maxLvl) * 3;
     chance *= __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceDealDrugs() {
-    var chance = ((3*__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].charisma / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   2*__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel));
+    var chance = (3*__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].charisma / maxLvl +
+                  2*__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / maxLvl +
+                  intWgt * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].intelligence / maxLvl);
     chance *= __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceTraffickArms() {
-    var chance = ((__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].charisma / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].defense / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel)) / 2;
+    var chance = (__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].charisma / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].defense / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / maxLvl +
+                  intWgt * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].intelligence / maxLvl) / 2;
     chance *= __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceHomicide() {
-    var chance = ((2   * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   2   * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].defense / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel));
+    var chance = (2   * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / maxLvl +
+                  2   * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].defense / maxLvl +
+                  0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / maxLvl +
+                  0.5 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / maxLvl +
+                  intWgt * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].intelligence / maxLvl);
     chance *= __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceGrandTheftAuto() {
-    var chance = ((__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].hacking_skill / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   4 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   2 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   2 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].charisma / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel)) / 8;
+    var chance = (__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].hacking_skill / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / maxLvl +
+                  4 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / maxLvl +
+                  2 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / maxLvl +
+                  2 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].charisma / maxLvl +
+                  intWgt * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].intelligence / maxLvl) / 8;
     chance *= __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceKidnap() {
-    var chance =  ((__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].charisma / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel)) / 5;
+    var chance =  (__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].charisma / maxLvl +
+                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / maxLvl +
+                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / maxLvl +
+                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / maxLvl +
+                   intWgt * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].intelligence / maxLvl) / 5;
     chance *= __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceAssassination() {
-    var chance = ((__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   2 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel)) / 8;
+    var chance = (__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / maxLvl +
+                  2 * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / maxLvl +
+                  intWgt * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].intelligence / maxLvl) / 8;
     chance *= __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crime_success_mult;
     return Math.min(chance, 1);
 }
 
 function determineCrimeChanceHeist() {
-    var chance = ((__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].hacking_skill / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].defense / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].charisma / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel)) / 18;
+    var chance = (__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].hacking_skill / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].strength / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].defense / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].dexterity / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].agility / maxLvl +
+                  __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].charisma / maxLvl +
+                  intWgt * __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].intelligence / maxLvl) / 18;
     chance *= __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crime_success_mult;
     return Math.min(chance, 1);
 }
@@ -37282,7 +37421,7 @@ let DarkWebItems = {
 /* unused harmony export Literatures */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return initLiterature; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return showLiterature; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_DialogBox_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_DialogBox_js__ = __webpack_require__(1);
 
 
 /* Literature.js
@@ -37621,8 +37760,8 @@ function initLiterature() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Prestige_js__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SourceFile_js__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Terminal_js__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_YesNoBox_js__ = __webpack_require__(21);
 
 
@@ -37968,7 +38107,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Script_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_IPAddress_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
@@ -38005,7 +38144,7 @@ function evaluate(exp, workerScript) {
                 evaluateProgPromise.then(function(w) {
                     resolve(workerScript);
                 }, function(e) {
-                    if (Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["e" /* isString */])(e)) {
+                    if (Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["f" /* isString */])(e)) {
                         workerScript.errorMessage = e;
                         reject(workerScript);
                     } else if (e instanceof __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__["b" /* WorkerScript */]) {
@@ -38224,6 +38363,12 @@ function evalBinary(exp, workerScript){
     return new Promise(function(resolve, reject) {
         var expLeftPromise = evaluate(exp.left, workerScript);
         expLeftPromise.then(function(expLeft) {
+            if (expLeft == true && exp.operator === "||") {
+                return resolve(true);
+            }
+            if (expLeft == false && exp.operator === "&&") {
+                return resolve(false);
+            }
             var expRightPromise = evaluate(exp.right, workerScript);
             expRightPromise.then(function(expRight) {
                 switch (exp.operator){
@@ -38279,7 +38424,7 @@ function evalBinary(exp, workerScript){
                         resolve(expLeft && expRight);
                         break;
                     default:
-                        reject(makeRuntimeRejectMsg(workerScript, "Bitwise operators are not implemented"));
+                        reject(makeRuntimeRejectMsg(workerScript, "Unsupported operator: " + exp.operator));
                 }
             }, function(e) {
                 reject(e);
@@ -38313,6 +38458,40 @@ function evalUnary(exp, workerScript){
     });
 }
 
+//Takes in a MemberExpression that should represent a Netscript array (possible multidimensional)
+//The return value is an array of the form:
+//    [0th index (leftmost), array name, 1st index, 2nd index, ...]
+function getArrayElement(exp, workerScript) {
+    return new Promise(function(resolve, reject) {
+        var indices = [];
+        var iPromise = evaluate(exp.property, workerScript);
+        iPromise.then(function(idx) {
+            if (isNaN(idx)) {
+                return reject(makeRuntimeRejectMsg(workerScript, "Invalid access to array. Index is not a number: " + idx));
+            } else {
+                if (exp.object.name === undefined && exp.object.object) {
+                    var recursePromise = getArrayElement(exp.object, workerScript);
+                    recursePromise.then(function(res) {
+                        res.push(idx);
+                        indices = res;
+                        return resolve(indices);
+                    }).catch(function(e) {
+                        return reject(e);
+                    });
+                } else {
+                    indices.push(idx);
+                    indices.push(exp.object.name);
+                    return resolve(indices);
+                }
+            }
+        }).catch(function(e) {
+            console.log(e);
+            console.log("Error getting index in getArrayElement: " + e.toString());
+            return reject(e);
+        });
+    });
+}
+
 function evalAssignment(exp, workerScript) {
     var env = workerScript.env;
     return new Promise(function(resolve, reject) {
@@ -38332,6 +38511,22 @@ function evalAssignment(exp, workerScript) {
                 //Assign to array element
                 //Array object designed by exp.left.object.name
                 //Index designated by exp.left.property
+                var getArrayElementPromise = getArrayElement(exp.left, workerScript);
+                getArrayElementPromise.then(function(res) {
+                    if (!(res instanceof Array) || res.length < 2) {
+                        return reject(makeRuntimeRejectMsg(workerScript, "Error evaluating array assignment. This is (probably) a bug please report to game dev"));
+                    }
+
+                    //The array name is the second value
+                    var arrName = res.splice(1, 1);
+                    arrName = arrName[0];
+
+                    env.setArrayElement(arrName, res, expRight);
+                    return resolve(false);
+                }).catch(function(e) {
+                    return reject(e);
+                });
+                /*
                 var name = exp.left.object.name;
                 if (!(name in env.vars)){
                     reject(makeRuntimeRejectMsg(workerScript, "variable " + name + " not defined"));
@@ -38352,7 +38547,7 @@ function evalAssignment(exp, workerScript) {
                     });
                 } else {
                     return reject(makeRuntimeRejectMsg(workerScript, "Trying to access a non-array variable using the [] operator"));
-                }
+                }*/
             } else {
                 //Other assignments
                 try {
@@ -38378,11 +38573,12 @@ function evalAssignment(exp, workerScript) {
                         default:
                             reject(makeRuntimeRejectMsg(workerScript, "Bitwise assignment is not implemented"));
                     }
+                    resolve(false);
                 } catch (e) {
                     return reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
                 }
             }
-            resolve(false); //Return false so this doesnt cause conditionals to evaluate
+            //resolve(false); //Return false so this doesnt cause conditionals to evaluate
         }, function(e) {
             reject(e);
         });
@@ -38539,9 +38735,13 @@ function evaluateProg(exp, workerScript, index) {
 	});
 }
 
-function netscriptDelay(time) {
+function netscriptDelay(time, workerScript) {
    return new Promise(function(resolve) {
-       setTimeout(resolve, time);
+       var delay = setTimeout(resolve, time);
+       workerScript.killTrigger = function() {
+           clearTimeout(delay);
+           resolve();
+       };
    });
 }
 
@@ -38549,6 +38749,7 @@ function makeRuntimeRejectMsg(workerScript, msg) {
     return "|"+workerScript.serverIp+"|"+workerScript.name+"|" + msg;
 }
 
+/*
 function apply_op(op, a, b) {
     function num(x) {
         if (typeof x != "number")
@@ -38577,6 +38778,7 @@ function apply_op(op, a, b) {
     }
     throw new Error("Can't apply operator " + op);
 }
+*/
 
 //Run a script from inside a script using run() command
 function runScriptFromScript(server, scriptname, args, workerScript, threads=1) {
@@ -38628,7 +38830,7 @@ function getErrorLineNumber(exp, workerScript) {
 }
 
 function isScriptErrorMessage(msg) {
-    if (!Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["e" /* isString */])(msg)) {return false;}
+    if (!Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["f" /* isString */])(msg)) {return false;}
     let splitMsg = msg.split("|");
     if (splitMsg.length != 4){
         return false;
@@ -38643,7 +38845,7 @@ function isScriptErrorMessage(msg) {
 //The same as Player's calculateHackingChance() function but takes in the server as an argument
 function scriptCalculateHackingChance(server) {
 	var difficultyMult = (100 - server.hackDifficulty) / 100;
-    var skillMult = (1.75 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill);
+    var skillMult = (1.75 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill) + (0.2 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].intelligence);
     var skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
     var chance = skillChance * difficultyMult * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_chance_mult;
     if (chance > 1) {return 1;}
@@ -38654,7 +38856,7 @@ function scriptCalculateHackingChance(server) {
 //The same as Player's calculateHackingTime() function but takes in the server as an argument
 function scriptCalculateHackingTime(server) {
 	var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-	var skillFactor = (2.5 * difficultyMult + 500) / (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill + 50);
+	var skillFactor = (2.5 * difficultyMult + 500) / (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill + 50 + (0.1 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].intelligence));
 	var hackingTime = 5 * skillFactor / __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult; //This is in seconds
 	return hackingTime;
 }
@@ -38680,7 +38882,7 @@ function scriptCalculatePercentMoneyHacked(server) {
 //Amount of time to execute grow() in milliseconds
 function scriptCalculateGrowTime(server) {
     var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-	var skillFactor = (2.5 * difficultyMult + 500) / (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill + 50);
+	var skillFactor = (2.5 * difficultyMult + 500) / (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill + 50 + (0.1 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].intelligence));
 	var growTime = 16 * skillFactor / __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult; //This is in seconds
 	return growTime * 1000;
 }
@@ -38688,7 +38890,7 @@ function scriptCalculateGrowTime(server) {
 //Amount of time to execute weaken() in milliseconds
 function scriptCalculateWeakenTime(server) {
     var difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-	var skillFactor = (2.5 * difficultyMult + 500) / (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill + 50);
+	var skillFactor = (2.5 * difficultyMult + 500) / (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill + 50 + (0.1 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].intelligence));
 	var weakenTime = 20 * skillFactor / __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult; //This is in seconds
 	return weakenTime * 1000;
 }
@@ -38705,8 +38907,8 @@ function scriptCalculateWeakenTime(server) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_InfiltrationBox_js__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
@@ -39152,7 +39354,7 @@ function updateInfiltrationLevelText(inst) {
     var totalValue = 0;
     var totalMoneyValue = 0;
     for (var i = 0; i < inst.secretsStolen.length; ++i) {
-        totalValue += inst.secretsStolen[i];
+        totalValue += (inst.secretsStolen[i] * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].faction_rep_mult * 1.25);
         totalMoneyValue += inst.secretsStolen[i] * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].InfiltrationMoneyValue;
     }
     document.getElementById("infiltration-level-text").innerHTML =
@@ -39288,6 +39490,7 @@ function updateInfiltrationButtons(inst, scenario) {
     }
 }
 
+let intWgt = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].IntelligenceInfiltrationWeight;
 
 //Kill
 //Success: 5%, Failure 10%, -Karma
@@ -39360,7 +39563,8 @@ function getInfiltrationStealthKnockoutChance(inst) {
     return Math.min(0.95,
            (0.5 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength +
             2 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity +
-            2 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility) / (3 * lvl));
+            2 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility +
+            intWgt * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].intelligence) / (3 * lvl));
 }
 
 //Assassination
@@ -39382,7 +39586,8 @@ function getInfiltrationAssassinateChance(inst) {
     var lvl = inst.securityLevel;
     return Math.min(0.95,
            (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity +
-            0.5 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility) / (2 * lvl));
+            0.5 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility +
+            intWgt * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].intelligence) / (2 * lvl));
 }
 
 
@@ -39431,7 +39636,8 @@ function attemptInfiltrationHack(inst) {
 function getInfiltrationHackChance(inst) {
     var lvl = inst.securityLevel;
     return Math.min(0.95,
-                   (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill) / lvl);
+                   (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill +
+                   (intWgt * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].intelligence)) / lvl);
 }
 
 //Sneak past security
@@ -39451,7 +39657,8 @@ function getInfiltrationSneakChance(inst) {
     var lvl = inst.securityLevel;
     return Math.min(0.95,
             (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility +
-             0.5 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity) / (2 * lvl));
+             0.5 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity +
+             intWgt * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].intelligence) / (2 * lvl));
 }
 
 //Pick locked door
@@ -39471,7 +39678,8 @@ function attemptInfiltrationPickLockedDoor(inst) {
 function getInfiltrationPickLockedDoorChance(inst) {
     var lvl = inst.securityLevel;
     return Math.min(0.95,
-           (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity) / lvl);
+           (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity +
+            intWgt * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].intelligence) / lvl);
 }
 
 //Bribe
@@ -39511,7 +39719,8 @@ function getInfiltrationEscapeChance(inst) {
     var lvl = inst.securityLevel;
     return Math.min(0.95,
            (2 * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility +
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity) / lvl);
+            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity +
+            intWgt * __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].intelligence) / lvl);
 }
 
 
@@ -39526,8 +39735,8 @@ function getInfiltrationEscapeChance(inst) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DialogBox_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__StringHelperFunctions_js__ = __webpack_require__(5);
 
 
@@ -39561,7 +39770,7 @@ function infiltrationBoxCreate(inst) {
     __WEBPACK_IMPORTED_MODULE_2__src_Player_js__["a" /* Player */].gainDexterityExp(inst.dexExpGained);
     __WEBPACK_IMPORTED_MODULE_2__src_Player_js__["a" /* Player */].gainAgilityExp(inst.agiExpGained);
     __WEBPACK_IMPORTED_MODULE_2__src_Player_js__["a" /* Player */].gainCharismaExp(inst.chaExpGained);
-    
+
     var totalValue = 0;
     for (var i = 0; i < inst.secretsStolen.length; ++i) {
         totalValue += inst.secretsStolen[i];
@@ -39578,7 +39787,7 @@ function infiltrationBoxCreate(inst) {
                         Object(__WEBPACK_IMPORTED_MODULE_5__StringHelperFunctions_js__["c" /* formatNumber */])(inst.chaExpGained, 3) + " cha exp<br>");
         return;
     }
-    var facValue = totalValue * __WEBPACK_IMPORTED_MODULE_2__src_Player_js__["a" /* Player */].faction_rep_mult * 1.2
+    var facValue = totalValue * __WEBPACK_IMPORTED_MODULE_2__src_Player_js__["a" /* Player */].faction_rep_mult * 1.25
     var moneyValue = totalValue * __WEBPACK_IMPORTED_MODULE_0__src_Constants_js__["a" /* CONSTANTS */].InfiltrationMoneyValue;
     infiltrationSetText("You can sell the classified documents and secrets " +
                         "you stole from " + inst.companyName + " for $" +
@@ -39787,7 +39996,7 @@ let FactionInfo = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return factionInvitationBoxCreate; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__HelperFunctions_js__ = __webpack_require__(2);
 
 
 
@@ -68293,7 +68502,7 @@ exports.killRing = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_YesNoBox_js__ = __webpack_require__(21);
 
@@ -72233,9 +72442,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Settings_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__StockMarket_js__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_GameOptions_js__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_HelperFunctions_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_JSONReviver_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__utils_decimal_js__ = __webpack_require__(25);

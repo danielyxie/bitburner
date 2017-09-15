@@ -129,6 +129,16 @@ function numNetscriptOperators(string) {
     return total;
 }
 
+//Checks if a string contains HTML elements
+function isHTML(str) {
+    var a = document.createElement('div');
+    a.innerHTML = str;
+    for (var c = a.childNodes, i = c.length; i--; ) {
+        if (c[i].nodeType == 1) return true;
+    }
+    return false;
+}
+
 export {getIndicesOf, convertTimeMsToTimeElapsedString, longestCommonStart,
         isString, isPositiveNumber, containsAllStrings, formatNumber,
-        numOccurrences, numNetscriptOperators};
+        numOccurrences, numNetscriptOperators, isHTML};

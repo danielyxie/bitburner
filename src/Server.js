@@ -669,13 +669,14 @@ function processSingleServerGrowth(server, numCycles) {
         serverGrowth = 1;
     }
 
+    var oldMoneyAvailable = server.moneyAvailable;
     server.moneyAvailable *= serverGrowth;
     if (server.moneyMax && isNaN(server.moneyAvailable)) {
         server.moneyAvailable = server.moneyMax;
     }
     if (server.moneyMax && server.moneyAvailable > server.moneyMax) {
         server.moneyAvailable = server.moneyMax;
-        return 1;
+        return server.moneyAvailable / oldMoneyAvailable;
     }
 
     //Growing increases server security twice as much as hacking

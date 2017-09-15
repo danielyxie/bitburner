@@ -30,7 +30,7 @@ function infiltrationBoxCreate(inst) {
     Player.gainDexterityExp(inst.dexExpGained);
     Player.gainAgilityExp(inst.agiExpGained);
     Player.gainCharismaExp(inst.chaExpGained);
-    
+
     var totalValue = 0;
     for (var i = 0; i < inst.secretsStolen.length; ++i) {
         totalValue += inst.secretsStolen[i];
@@ -47,7 +47,7 @@ function infiltrationBoxCreate(inst) {
                         formatNumber(inst.chaExpGained, 3) + " cha exp<br>");
         return;
     }
-    var facValue = totalValue * Player.faction_rep_mult * 1.2
+    var facValue = totalValue * Player.faction_rep_mult * 1.25
     var moneyValue = totalValue * CONSTANTS.InfiltrationMoneyValue;
     infiltrationSetText("You can sell the classified documents and secrets " +
                         "you stole from " + inst.companyName + " for $" +

@@ -29,13 +29,13 @@ import {addOffset, printArray}              from "../utils/HelperFunctions.js";
 import {logBoxCreate}                       from "../utils/LogBox.js";
 
 /* Write text to terminal */
+//If replace is true then spaces are replaced with "&nbsp;"
 function post(input, replace=true) {
     if (replace) {
         $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
     } else {
         $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
     }
-
 	updateTerminalScroll();
 }
 
@@ -441,13 +441,12 @@ let Terminal = {
 				var moneyGained = Player.calculatePercentMoneyHacked();
 				moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
-				//Safety check
-				if (moneyGained <= 0) {moneyGained = 0;}
+				if (moneyGained <= 0) {moneyGained = 0;} //Safety check
 
 				server.moneyAvailable -= moneyGained;
 				Player.gainMoney(moneyGained);
-
                 Player.gainHackingExp(expGainedOnSuccess)
+                Player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
 
                 server.fortify(CONSTANTS.ServerFortifyAmount);
 
@@ -1418,6 +1417,7 @@ let Terminal = {
             (function() {
             var hostname = links[i].innerHTML.toString();
             links[i].onclick = function() {
+                if (Terminal.analyzeFlag || Terminal.hackFlag) {return;}
                 Terminal.connectToServer(hostname);
             }
             }());//Immediate invocation

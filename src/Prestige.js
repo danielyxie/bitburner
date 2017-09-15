@@ -218,6 +218,9 @@ function prestigeSourceFile() {
     mainMenu.style.visibility = "visible";
     Terminal.resetTerminalInput();
     Engine.loadTerminalContent();
+
+    //Gain int exp
+    Player.gainIntelligenceExp(5);
 }
 
 export {prestigeAugmentation, prestigeSourceFile};

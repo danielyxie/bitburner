@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.28.5",
+    Version:                "0.28.6",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -86,9 +86,9 @@ let CONSTANTS = {
 
     //Server constants
     ServerBaseGrowthRate: 1.03,     //Unadjusted Growth rate
-    ServerMaxGrowthRate: 1.0035,     //Maximum possible growth rate (max rate accounting for server security)
+    ServerMaxGrowthRate: 1.0035,    //Maximum possible growth rate (max rate accounting for server security)
     ServerFortifyAmount: 0.002,     //Amount by which server's security increases when its hacked/grown
-    ServerWeakenAmount: 0.05,        //Amount by which server's security decreases when weakened
+    ServerWeakenAmount: 0.05,       //Amount by which server's security decreases when weakened
 
     PurchasedServerLimit: 25,
 
@@ -111,6 +111,13 @@ let CONSTANTS = {
 
     //Hospital/Health
     HospitalCostPerHp: 100000,
+
+    //Intelligence-related constants
+    IntelligenceCrimeWeight: 0.05,  //Weight for how much int affects crime success rates
+    IntelligenceInfiltrationWeight: 0.1, //Weight for how much int affects infiltration success rates
+    IntelligenceCrimeBaseExpGain: 0.0001,
+    IntelligenceProgramBaseExpGain: 1000, //Program required hack level divided by this to determine int exp gain
+    IntelligenceTerminalHackBaseExpGain: 200, //Hacking exp divided by this to determine int exp gain
 
     //Gang constants
     GangRespectToReputationRatio: 2, //Respect is divided by this to get rep gain
@@ -231,7 +238,8 @@ let CONSTANTS = {
                          "encounter diminishing returns in your hacking (since you are only hacking a certain percentage). You can " +
                          "increase the amount of money on a server using a script and the grow() function in Netscript.<br><br>" +
                          "<h1>Server Security</h1><br>" +
-                         "Each server has a security level, which is denoted by a number between 1 and 100. A higher number means " +
+                         "Each server has a security level, typically between 1 and 100. It is possible for a server to have a security " +
+                         "level 100 or higher, in which case hacking a server will become impossible. A higher number means " +
                          "the server has stronger security. As mentioned above, a server's security level is an important factor " +
                          "to consider when hacking. You can check a server's security level using the 'analyze' command, although this " +
                          "only gives an estimate (with 5% uncertainty). You can also check a server's security in a script, using the " +
@@ -482,6 +490,8 @@ let CONSTANTS = {
                            "<i>getServerRam(hostname/ip)</i><br>Returns an array with two elements that gives information about the target server's RAM. The first " +
                            "element in the array is the amount of RAM that the server has (in GB). The second element in the array is the amount of RAM that " +
                            "is currently being used on the server.<br><br>" +
+                           "<i>serverExists(hostname/ip)</i><br>Returns a boolean denoting whether or not the specified server exists. The argument " +
+                           "must be a string with the hostname or IP of the target server.<br><br>" +
                            "<i>fileExists(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " +
                            "The first argument must be a string with the name of the file. A file can either be a script or a program. A script name is case-sensitive, but a " +
                            "program is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " +
@@ -539,6 +549,17 @@ let CONSTANTS = {
                            "<i>getScriptIncome([scriptname], [hostname/ip], [args...])</i><br>" +
                            "Returns the amount of income the specified script generates while online (when the game is open, does not apply for " +
                            "offline income). This function can also return the total income of all of your active scripts by running the function " +
+                           "with no arguments.<br><br>" +
+                           "Remember that a script is uniquely identified by both its name and its arguments. So for example if you ran a script " +
+                           "with the arguments 'foodnstuff' and '5' then in order to use this function to get that script's income you must " +
+                           "specify those arguments in this function call.<br><br>" +
+                           "The first argument, if specified, must be a string with the name of the script (including the .script extension). " +
+                           "The second argument must be a string with the hostname/IP of the target server. If the first argument is specified " +
+                           "then the second argument must be specified as well. Any additional arguments passed to the function will specify " +
+                           "the arguments passed into the target script.<br><br>" +
+                           "<i>getScriptExpGain([scriptname], [hostname/ip], [args...])</i><br>" +
+                           "Returns the amount of hacking experience the specified script generates while online (when the game is open, does not apply for " +
+                           "offline experience gains). This function can also return the total experience gain rate of all of your active scripts by running the function " +
                            "with no arguments.<br><br>" +
                            "Remember that a script is uniquely identified by both its name and its arguments. So for example if you ran a script " +
                            "with the arguments 'foodnstuff' and '5' then in order to use this function to get that script's income you must " +
@@ -875,41 +896,17 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.28.5<br>" +
-    "-The fl1ght.exe program that is received from jump3r is now sent very early on in the game, rather " +
-    "than at hacking level 1000<br>" +
-    "-Hostname is now displayed in Terminal<br>" +
-    "-Syntax highlighting now works for all Netscript functions<br>" +
-    "-Export should now work on Edge/IE<br><br>" +
-    "v0.28.4<br>" +
-    "-Added getScriptIncome() Netscript function<br>" +
-    "-Added Javascript's Math module to Netscript. See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math<br>" +
-    "-Added several member variables for the Hacknet Node API that allow you to access info about their income<br>" +
-    "-All valid Netscript functions are now syntax highlighted as keywords in the editor. This means they will a different " +
-    "color than invalid netscript functions. The color will depend on your theme. " +
-    "Note that right now, this only applies for normal Netscript functions, not " +
-    "functions in the TIX API, Hacknet Node API, or Singularity Functions.<br><br>" +
-    "-Comments and operators no longer count towards RAM usage in scripts.<br>" +
-    "-Variety of bug fixes and updates to informational text in the game<br><br>" +
-    "v0.28.3<br>" +
-    "-Added ls() Netscript function<br>" +
-    "-Increased company wages by about ~10% across the board<br>" +
-    "-The scp() Netsction function and Terminal command now works for .lit files<br>" +
-    "-Increased the amount of RAM on many lower level servers (up to level 200 hacking level required).<br><br>" +
-    "v0.28.2<br>" +
-    "-Added a few script editor configuration options. Includes key bindings, themes, etc.<br>" +
-    "-Certain menu options will now be hidden until their relevant gameplay is unlocked. This " +
-    "really only affects new players<br>" +
-    "-Most unrecognized or un-implemented syntax errors in a script will now include line number in error message<br>" +
-    "-Various bug fixes<br><br>" +
-    "v0.28.1<br>" +
-    "-The script editor now uses the open-source Ace editor, which provides a much better experience when coding!<br>" +
-    "-Added tprint() Netscript function<br><br>" +
-    "v0.28.0<br>" +
-    "-Added BitNode-4: The Singularity<br>" +
-    "-Added BitNode-11: The Big Crash<br>" +
-    "-Migrated the codebase to use webpack (doesn't affect any in game content, except maybe some slight " +
-    "performance improvements and there may be bugs that result from dependency errors)"
+    "v0.28.6<br>" +
+    "-Time required to create programs now scales better with hacking level, and should generally be much faster<br>" +
+    "-Added serverExists(hostname/ip) and getScriptExpGain(scriptname, ip, args...) Netscript functions<br>" +
+    "-Short circuiting && and || logical operators should now work<br>" +
+    "-Assigning to multidimensional arrays should now work<br>" +
+    "-Scripts will no longer wait for hack/grow/weaken functions to finish if they are killed. They will die immediately<br>" +
+    "-The script loop that checks whether any scripts need to be started/stopped now runs every 6 seconds rather than 10 " +
+    "(resulting in less delays when stopping/starting scripts)<br>" +
+    "-Fixed several bugs/exploits<br>" +
+    "-Added some description for BitNode-5 (not implemented yet, should be soon though)<br>",
+
 }
 
 export {CONSTANTS};

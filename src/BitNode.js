@@ -53,7 +53,20 @@ function initBitNodes() {
                                           "upgrade its level up to a maximum of 3. This Source-File lets you access and use the Singularity  " +
                                           "Functions in other BitNodes. Each level of this Source-File will open up more Singularity Functions " +
                                           "that you can use.");
-    BitNodes["BitNode5"] = new BitNode(5, "Artificial Intelligence", "COMING SOON");   //Int
+    BitNodes["BitNode5"] = new BitNode(5, "Artificial Intelligence", "Posthuman", "They said it couldn't be done. They said the human brain, " +
+                                          "along with its consciousness and intelligence, couldn't be replicated. They said the complexity " +
+                                          "of the brain results from unpredictable, nonlinear interactions that couldn't be modeled " +
+                                          "by 1's and 0's. They were wrong.<br><br>" +
+                                          "In this BitNode <br><br>" +
+                                          "Destroying this BitNode will give you Source-File 5, or if you already have this Source-File it will " +
+                                          "upgrade its level up to a maximum of 3. This Source-File grants you a special new stat called Intelligence. " +
+                                          "Intelligence is unique because it is permanent and persistent (it never gets reset back to 1). However " +
+                                          "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't know " +
+                                          "when you gain experience and how much). Higher Intelligence levels will boost your production for many actions " +
+                                          "in the game. This source file will also raise all of your hacking-related multipliers by:<br><br>" +
+                                          "Level 1: 4%<br>" +
+                                          "Level 2: 6%<br>" +
+                                          "Level 3: 7%");
     BitNodes["BitNode6"] = new BitNode(6, "Hacktocracy", "COMING SOON");               //Healthy Hacknet balancing mechanic
     BitNodes["BitNode7"] = new BitNode(7, "Do Androids Dream?", "COMING SOON");        //Build androids for automation
     BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "COMING SOON");      //Trading only viable strategy

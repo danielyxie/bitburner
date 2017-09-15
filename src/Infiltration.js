@@ -441,7 +441,7 @@ function updateInfiltrationLevelText(inst) {
     var totalValue = 0;
     var totalMoneyValue = 0;
     for (var i = 0; i < inst.secretsStolen.length; ++i) {
-        totalValue += inst.secretsStolen[i];
+        totalValue += (inst.secretsStolen[i] * Player.faction_rep_mult * 1.25);
         totalMoneyValue += inst.secretsStolen[i] * CONSTANTS.InfiltrationMoneyValue;
     }
     document.getElementById("infiltration-level-text").innerHTML =
@@ -577,6 +577,7 @@ function updateInfiltrationButtons(inst, scenario) {
     }
 }
 
+let intWgt = CONSTANTS.IntelligenceInfiltrationWeight;
 
 //Kill
 //Success: 5%, Failure 10%, -Karma
@@ -649,7 +650,8 @@ function getInfiltrationStealthKnockoutChance(inst) {
     return Math.min(0.95,
            (0.5 * Player.strength +
             2 * Player.dexterity +
-            2 * Player.agility) / (3 * lvl));
+            2 * Player.agility +
+            intWgt * Player.intelligence) / (3 * lvl));
 }
 
 //Assassination
@@ -671,7 +673,8 @@ function getInfiltrationAssassinateChance(inst) {
     var lvl = inst.securityLevel;
     return Math.min(0.95,
            (Player.dexterity +
-            0.5 * Player.agility) / (2 * lvl));
+            0.5 * Player.agility +
+            intWgt * Player.intelligence) / (2 * lvl));
 }
 
 
@@ -720,7 +723,8 @@ function attemptInfiltrationHack(inst) {
 function getInfiltrationHackChance(inst) {
     var lvl = inst.securityLevel;
     return Math.min(0.95,
-                   (Player.hacking_skill) / lvl);
+                   (Player.hacking_skill +
+                   (intWgt * Player.intelligence)) / lvl);
 }
 
 //Sneak past security
@@ -740,7 +744,8 @@ function getInfiltrationSneakChance(inst) {
     var lvl = inst.securityLevel;
     return Math.min(0.95,
             (Player.agility +
-             0.5 * Player.dexterity) / (2 * lvl));
+             0.5 * Player.dexterity +
+             intWgt * Player.intelligence) / (2 * lvl));
 }
 
 //Pick locked door
@@ -760,7 +765,8 @@ function attemptInfiltrationPickLockedDoor(inst) {
 function getInfiltrationPickLockedDoorChance(inst) {
     var lvl = inst.securityLevel;
     return Math.min(0.95,
-           (Player.dexterity) / lvl);
+           (Player.dexterity +
+            intWgt * Player.intelligence) / lvl);
 }
 
 //Bribe
@@ -800,7 +806,8 @@ function getInfiltrationEscapeChance(inst) {
     var lvl = inst.securityLevel;
     return Math.min(0.95,
            (2 * Player.agility +
-            Player.dexterity) / lvl);
+            Player.dexterity +
+            intWgt * Player.intelligence) / lvl);
 }
 
 export {beginInfiltration};

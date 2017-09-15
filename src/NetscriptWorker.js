@@ -25,6 +25,7 @@ function WorkerScript(runningScriptObj) {
 	this.scriptRef		= runningScriptObj;
     this.errorMessage   = "";
     this.args           = runningScriptObj.args;
+    this.killTrigger    = function() {}; //CB func used to clear any delays (netscriptDelay())
 }
 
 //Returns the server on which the workerScript is running
@@ -148,7 +149,7 @@ function runScriptsLoop() {
 		}
 	}
 
-	setTimeout(runScriptsLoop, 10000);
+	setTimeout(runScriptsLoop, 6000);
 }
 
 //Queues a script to be killed by settings its stop flag to true. Then, the code will reject
@@ -159,6 +160,7 @@ function killWorkerScript(runningScriptObj, serverIp) {
 		if (workerScripts[i].name == runningScriptObj.filename && workerScripts[i].serverIp == serverIp &&
             compareArrays(workerScripts[i].args, runningScriptObj.args)) {
 			workerScripts[i].env.stopFlag = true;
+            workerScripts[i].killTrigger();
             return true;
 		}
 	}
