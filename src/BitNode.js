@@ -57,13 +57,20 @@ function initBitNodes() {
                                           "along with its consciousness and intelligence, couldn't be replicated. They said the complexity " +
                                           "of the brain results from unpredictable, nonlinear interactions that couldn't be modeled " +
                                           "by 1's and 0's. They were wrong.<br><br>" +
-                                          "In this BitNode <br><br>" +
+                                          "In this BitNode:<br><br>" +
+                                          "The base security level of servers is doubled<br>" +
+                                          "The starting money on servers is halved, but the maximum money is doubled<br>" +
+                                          "Most methods of earning money now give significantly less<br>" +
+                                          "Augmentations are more expensive<br>" +
+                                          "Hacking experience gain rates are reduced<br><br>" +
                                           "Destroying this BitNode will give you Source-File 5, or if you already have this Source-File it will " +
                                           "upgrade its level up to a maximum of 3. This Source-File grants you a special new stat called Intelligence. " +
                                           "Intelligence is unique because it is permanent and persistent (it never gets reset back to 1). However " +
                                           "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't know " +
                                           "when you gain experience and how much). Higher Intelligence levels will boost your production for many actions " +
-                                          "in the game. This source file will also raise all of your hacking-related multipliers by:<br><br>" +
+                                          "in the game. <br><br>" +
+                                          "In addition, this Source-File will unlock the getBitNodeMultipliers() Netscript function, " +
+                                          "and will also raise all of your hacking-related multipliers by:<br><br>" +
                                           "Level 1: 4%<br>" +
                                           "Level 2: 6%<br>" +
                                           "Level 3: 7%");
@@ -100,6 +107,7 @@ let BitNodeMultipliers = {
     ServerStartingMoney:    1,
     ServerGrowthRate:       1,
     ServerWeakenRate:       1,
+    ServerStartingSecurity: 1,
 
     ManualHackMoney:        1,
     ScriptHackMoney:        1,
@@ -131,7 +139,7 @@ function initBitNodeMultipliers() {
     }
 
     switch (Player.bitNodeN) {
-        case 1:
+        case 1: //Source Genesis (every multiplier is 1)
             break;
         case 2: //Rise of the Underworld
             BitNodeMultipliers.ServerMaxMoney           = 0.2;
@@ -151,6 +159,16 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.HackExpGain              = 0.4;
             BitNodeMultipliers.CrimeExpGain             = 0.5;
             BitNodeMultipliers.FactionWorkRepGain       = 0.75;
+            break;
+        case 5: //Artificial intelligence
+            BitNodeMultipliers.ServerMaxMoney           = 2;
+            BitNodeMultipliers.ServerStartingSecurity   = 2;
+            BitNodeMultipliers.ServerStartingMoney      = 0.5;
+            BitNodeMultipliers.ScriptHackMoney          = 0.25;
+            BitNodeMultipliers.HacknetNodeMoney         = 0.2;
+            BitNodeMultipliers.CrimeMoney               = 0.5;
+            BitNodeMultipliers.AugmentationMoneyCost    = 2;
+            BitNodeMultipliers.HackExpGain              = 0.5;
             break;
         case 11: //The Big Crash
             BitNodeMultipliers.ServerMaxMoney           = 0.1;

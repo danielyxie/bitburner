@@ -12,6 +12,8 @@ require('brace/theme/xcode');
 require("brace/keybinding/vim");
 require("brace/keybinding/emacs");
 
+
+
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {iTutorialSteps, iTutorialNextStep,
@@ -85,7 +87,17 @@ function scriptEditorInit() {
         editor.getSession().setUseSoftTabs(softTabChkBox.checked);
     };
 
-};
+    //Configure some of the VIM keybindings
+    ace.config.loadModule('ace/keyboard/vim', function(module) {
+        var VimApi = module.CodeMirror.Vim;
+        VimApi.defineEx('write', 'w', function(cm, input) {
+            saveAndCloseScriptEditor();
+        });
+        VimApi.defineEx('quit', 'q', function(cm, input) {
+            Engine.loadTerminalContent();
+        });
+    });
+}
 document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 
 //Updates line number and RAM usage in script
@@ -223,8 +235,12 @@ function calculateRamUsage(codeCopy) {
     var killCount = numOccurrences(codeCopy, "kill(") + numOccurrences(codeCopy, "killall(");
     var scpCount = numOccurrences(codeCopy, "scp(");
     var hasRootAccessCount = numOccurrences(codeCopy, "hasRootAccess(");
-    var getHostnameCount = numOccurrences(codeCopy, "getHostname(");
-    var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
+    var getHostnameCount = numOccurrences(codeCopy, "getHostname(") +
+                           numOccurrences(codeCopy, "getIp(");
+    var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(") +
+                               numOccurrences(codeCopy, "getIntelligence(");
+    var getMultipliersCount = numOccurrences(codeCopy, "getHackingMultipliers(") +
+                              numOccurrences(codeCopy, "getBitNodeMultipliers(");
     var getServerCount = numOccurrences(codeCopy, "getServerMoneyAvailable(") +
                          numOccurrences(codeCopy, "getServerMaxMoney(") +
                          numOccurrences(codeCopy, "getServerSecurityLevel(") +
@@ -304,6 +320,7 @@ function calculateRamUsage(codeCopy) {
         (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) +
         (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
         (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) +
+        (getMultipliersCount * CONSTANTS.ScriptGetMultipliersRamCost) +
         (getServerCount * CONSTANTS.ScriptGetServerCost) +
         (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) +
         (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
@@ -485,19 +502,7 @@ function RunningScript(script, args) {
     this.threads                = 1;
 
     //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-    this.dataMap                = new AllServersMap([0, 0, 0, 0]);
-}
-
-RunningScript.prototype.reset = function() {
-    this.scriptRef.updateRamUsage();
-
-    this.offlineRunningTime  	= 0.01;	//Seconds
-	this.offlineMoneyMade 		= 0;
-	this.offlineExpGained 		= 0;
-	this.onlineRunningTime 		= 0.01;	//Seconds
-	this.onlineMoneyMade 		= 0;
-	this.onlineExpGained 		= 0;
-    this.logs = [];
+    this.dataMap                = new AllServersMap([0, 0, 0, 0], true);
 }
 
 RunningScript.prototype.log = function(txt) {
@@ -524,7 +529,7 @@ RunningScript.prototype.clearLog = function() {
 RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
     if (this.dataMap == null) {
         //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0]);
+        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
     }
     this.dataMap[serverIp][0] += moneyGained;
     this.dataMap[serverIp][1] += n;
@@ -534,7 +539,7 @@ RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
 RunningScript.prototype.recordGrow = function(serverIp, n=1) {
     if (this.dataMap == null) {
         //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0]);
+        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
     }
     this.dataMap[serverIp][2] += n;
 }
@@ -543,7 +548,7 @@ RunningScript.prototype.recordGrow = function(serverIp, n=1) {
 RunningScript.prototype.recordWeaken = function(serverIp, n=1) {
     if (this.dataMap == null) {
         //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0]);
+        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
     }
     this.dataMap[serverIp][3] += n;
 }
@@ -561,22 +566,17 @@ Reviver.constructors.RunningScript = RunningScript;
 
 //Creates an object that creates a map/dictionary with the IP of each existing server as
 //a key. Initializes every key with a specified value that can either by a number or an array
-function AllServersMap(arr=false) {
+function AllServersMap(arr=false, filterOwned=false) {
     for (var ip in AllServers) {
         if (AllServers.hasOwnProperty(ip)) {
+            if (filterOwned && (AllServers[ip].purchasedByPlayer || AllServers[ip].hostname === "home")) {
+                continue;
+            }
             if (arr) {
                 this[ip] = [0, 0, 0, 0];
             } else {
                 this[ip] = 0;
             }
-        }
-    }
-}
-
-AllServersMap.prototype.reset = function() {
-    for (var ip in this) {
-        if (this.hasOwnProperty(ip)) {
-            this[ip] = 0;
         }
     }
 }
