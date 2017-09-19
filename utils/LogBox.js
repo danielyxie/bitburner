@@ -39,13 +39,15 @@ var logBoxCurrentScript = null;
 function logBoxCreate(script) {
     logBoxCurrentScript = script;
     logBoxOpen();
+    document.getElementById("log-box-text-header").innerHTML =
+        logBoxCurrentScript.filename + " " + printArray(logBoxCurrentScript.args) + ":<br><br>";
     logBoxUpdateText();
 }
 
 function logBoxUpdateText() {
     var txt = document.getElementById("log-box-text");
     if (logBoxCurrentScript && logBoxOpened && txt) {
-        txt.innerHTML = logBoxCurrentScript.filename + printArray(logBoxCurrentScript.args) + ":<br><br>";
+        txt.innerHTML = "";
         for (var i = 0; i < logBoxCurrentScript.logs.length; ++i) {
             txt.innerHTML += logBoxCurrentScript.logs[i];
             txt.innerHTML += "<br>";

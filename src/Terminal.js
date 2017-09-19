@@ -13,6 +13,9 @@ import {iTutorialNextStep, iTutorialSteps,
         currITutorialStep}                  from "./InteractiveTutorial.js";
 import {showLiterature}                     from "./Literature.js";
 import {showMessage, Message}               from "./Message.js";
+import {scriptCalculateHackingTime,
+        scriptCalculateGrowTime,
+        scriptCalculateWeakenTime}          from "./NetscriptEvaluator.js";
 import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker.js";
 import {Player}                             from "./Player.js";
 import {hackWorldDaemon}                    from "./RedPill.js";
@@ -1028,7 +1031,17 @@ let Terminal = {
                 if (commandArray.length == 1) {
                     Terminal.executeScanAnalyzeCommand(1);
                 } else if (commandArray.length == 2) {
-                    var depth = Number(commandArray[1]);
+                    var all = false;
+                    if (commandArray[1].endsWith("-a")) {
+                        all = true;
+                        commandArray[1] = commandArray[1].replace("-a", "");
+                    }
+                    var depth;
+                    if (commandArray[1].length === 0) {
+                        depth = 1;
+                    } else {
+                        depth = Number(commandArray[1]);
+                    }
                     if (isNaN(depth) || depth < 0) {
                         post("Incorrect usage of scan-analyze command. depth argument must be positive numeric");
                         return;
@@ -1044,7 +1057,7 @@ let Terminal = {
                         post("You cannot scan-analyze with that high of a depth. Maximum depth is 10");
                         return;
                     }
-                    Terminal.executeScanAnalyzeCommand(depth);
+                    Terminal.executeScanAnalyzeCommand(depth, all);
                 } else {
                     post("Incorrect usage of scan-analyze command. usage: scan-analyze [depth]");
                 }
@@ -1372,12 +1385,13 @@ let Terminal = {
         }
     },
 
-    executeScanAnalyzeCommand: function(depth=1) {
+    executeScanAnalyzeCommand: function(depth=1, all=false) {
         //We'll use the AllServersMap as a visited() array
         //TODO Using array as stack for now, can make more efficient
         post("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
         post(" ");
         var visited = new AllServersMap();
+
         var stack = [];
         var depthQueue = [0];
         var currServ = Player.getCurrentServer();
@@ -1385,8 +1399,10 @@ let Terminal = {
         while(stack.length != 0) {
             var s = stack.pop();
             var d = depthQueue.pop();
-            if (visited[s.ip] || d > depth) {
-                continue;
+            if (!all && s.purchasedByPlayer && s.hostname != "home") {
+                continue; //Purchased server
+            } else if (visited[s.ip] || d > depth) {
+                continue; //Already visited or out-of-depth
             } else {
                 visited[s.ip] = 1;
             }

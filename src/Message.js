@@ -4,7 +4,7 @@ import {Programs}                               from "./CreateProgram.js";
 import {Player}                                 from "./Player.js";
 import {GetServerByHostname}                    from "./Server.js";
 import {Settings}                               from "./Settings.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {dialogBoxCreate, dialogBoxOpened}       from "../utils/DialogBox.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 
@@ -27,10 +27,10 @@ Message.fromJSON = function(value) {
 Reviver.constructors.Message = Message;
 
 //Sends message to player, including a pop up
-function sendMessage(msg) {
+function sendMessage(msg, forced=false) {
     console.log("sending message: " + msg.filename);
     msg.recvd = true;
-    if (!Settings.SuppressMessages) {
+    if (forced || !Settings.SuppressMessages) {
         showMessage(msg);
     }
     addMessageToServer(msg, "home");
@@ -49,6 +49,11 @@ function addMessageToServer(msg, serverHostname) {
     if (server == null) {
         console.log("WARNING: Did not locate " + serverHostname);
         return;
+    }
+    for (var i = 0; i < server.messages.length; ++i) {
+        if (server.messages[i].filename === msg.filename) {
+            return; //Already exists
+        }
     }
     server.messages.push(msg);
 }
@@ -70,7 +75,11 @@ function checkForMessagesToSend() {
         redpillOwned = true;
     }
 
-    if (jumper0 && !jumper0.recvd && Player.hacking_skill >= 25) {
+    if (redpill && redpillOwned) {
+        if (!dialogBoxOpened) {
+            sendMessage(redpill, true);
+        }
+    } else if (jumper0 && !jumper0.recvd && Player.hacking_skill >= 25) {
         sendMessage(jumper0);
         Player.getHomeComputer().programs.push(Programs.Flight);
     } else if (jumper1 && !jumper1.recvd && Player.hacking_skill >= 40) {
@@ -87,8 +96,6 @@ function checkForMessagesToSend() {
         sendMessage(jumper4);
     } else if (bitrunnersTest && !bitrunnersTest.recvd && Player.hacking_skill >= 500) {
         sendMessage(bitrunnersTest);
-    } else if (redpill && !redpill.recvd && Player.hacking_skill >= 2000 && redpillOwned) {
-        sendMessage(redpill);
     }
 }
 

@@ -474,8 +474,6 @@ function evalAssignment(exp, workerScript) {
     });
 }
 
-//Returns true if any of the if statements evaluated, false otherwise. Therefore, the else statement
-//should evaluate if this returns false
 function evaluateIf(exp, workerScript, i) {
     var env = workerScript.env;
     return new Promise(function(resolve, reject) {

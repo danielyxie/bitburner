@@ -32,7 +32,7 @@ function Server(ip=createRandomIp(), hostname="", organizationName="",
 	//RAM, CPU speed and Scripts
 	this.maxRam			=	maxRam;  //GB
 	this.ramUsed		=	0;
-	this.cpuSpeed		= 	1;	//MHz
+	this.cpuCores		= 	1;       //Max of 8, affects hacking times and Hacking MIssion starting Cores
 
 	this.scripts 		= 	[];
 	this.runningScripts = 	[]; 	//Stores RunningScript objects
@@ -78,8 +78,8 @@ Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvai
         this.moneyAvailable = moneyAvailable * BitNodeMultipliers.ServerStartingMoney;
     }
     this.moneyMax = 25 * this.moneyAvailable * BitNodeMultipliers.ServerMaxMoney;
-	this.hackDifficulty = hackDifficulty;
-    this.baseDifficulty = hackDifficulty;
+	this.hackDifficulty = hackDifficulty * BitNodeMultipliers.ServerStartingSecurity;
+    this.baseDifficulty = hackDifficulty * BitNodeMultipliers.ServerStartingSecurity;
     this.minDifficulty = Math.max(1, Math.round(hackDifficulty / 3));
 	this.serverGrowth = serverGrowth;
 }
@@ -118,7 +118,9 @@ Server.prototype.getScript = function(scriptName) {
 //Strengthens a server's security level (difficulty) by the specified amount
 Server.prototype.fortify = function(amt) {
     this.hackDifficulty += amt;
-    if (this.hackDifficulty > 99) {this.hackDifficulty = 99;}
+    //Place some arbitrarily limit that realistically should never happen unless someone is
+    //screwing around with the game
+    if (this.hackDifficulty > 1000000) {this.hackDifficulty = 1000000;}
 }
 
 Server.prototype.weaken = function(amt) {

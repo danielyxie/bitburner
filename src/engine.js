@@ -435,16 +435,30 @@ let Engine = {
 
     displayCharacterOverviewInfo: function() {
         if (Player.hp == null) {Player.hp = Player.max_hp;}
-        document.getElementById("character-overview-text").innerHTML =
-        ("Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
-         "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
-         "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
-         "Str:   " + (Player.strength).toLocaleString() + "<br>" +
-         "Def:   " + (Player.defense).toLocaleString() + "<br>" +
-         "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" +
-         "Agi:   " + (Player.agility).toLocaleString() + "<br>" +
-         "Cha:   " + (Player.charisma).toLocaleString()
-        ).replace( / /g, "&nbsp;" );
+        if (Player.intelligence >= 1) {
+            document.getElementById("character-overview-text").innerHTML =
+            ("Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
+             "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
+             "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
+             "Str:   " + (Player.strength).toLocaleString() + "<br>" +
+             "Def:   " + (Player.defense).toLocaleString() + "<br>" +
+             "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" +
+             "Agi:   " + (Player.agility).toLocaleString() + "<br>" +
+             "Cha:   " + (Player.charisma).toLocaleString() + "<br>" +
+             "Int:   " + (Player.intelligence).toLocaleString()
+            ).replace( / /g, "&nbsp;" );
+        } else {
+            document.getElementById("character-overview-text").innerHTML =
+            ("Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
+             "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
+             "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
+             "Str:   " + (Player.strength).toLocaleString() + "<br>" +
+             "Def:   " + (Player.defense).toLocaleString() + "<br>" +
+             "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" +
+             "Agi:   " + (Player.agility).toLocaleString() + "<br>" +
+             "Cha:   " + (Player.charisma).toLocaleString()
+            ).replace( / /g, "&nbsp;" );
+        }
     },
 
     /* Display character info */
@@ -930,7 +944,11 @@ let Engine = {
 
         if (Engine.Counters.messages <= 0) {
             checkForMessagesToSend();
-            Engine.Counters.messages = 150;
+            if (Augmentations[AugmentationNames.TheRedPill].owned) {
+                Engine.Counters.messages = 600; //2 minutes for Red pill message
+            } else {
+                Engine.Counters.messages = 150;
+            }
         }
 
         if (Engine.Counters.stockTick <= 0) {
