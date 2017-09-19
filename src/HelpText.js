@@ -24,7 +24,7 @@ let TerminalHelpText =
                 "rm [file]                      Delete a file from the server<br>" +
                 "run [name] [-t] [n] [args...]  Execute a program or script<br>" +
                 "scan                           Prints all immediately-available network connections<br>" +
-                "scan-analyze [d]               Prints info for all servers up to <i>d</i> nodes away<br>" +
+                "scan-analyze [d] [-a]          Prints info for all servers up to <i>d</i> nodes away<br>" +
                 "scp [file] [server]            Copies a script or .lit file to a destination server<br>" +
                 "sudov                          Shows whether you have root access on this computer<br>" +
                 "tail [script] [args...]        Displays dynamic logs for the specified script<br>" +
@@ -153,7 +153,7 @@ let HelpTexts = {
     scan:           "scan<br>" +
                     "Prints all immediately-available network connection. This will print a list of all servers that you can currently connect " +
                     "to using the 'connect' Terminal command.",
-    "scan-analyze":   "scan-analyze [depth]<br>" +
+    "scan-analyze": "scan-analyze [depth] [-a]<br>" +
                     "Prints detailed information about all servers up to [depth] nodes away on the network. Calling " +
                     "'scan-analyze 1' will display information for the same servers that are shown by the 'scan' Terminal " +
                     "command. This command also shows the relative paths to reach each server.<br><br>" +
@@ -162,7 +162,9 @@ let HelpTexts = {
                     "5 and 10, respectively.<br><br>" +
                     "The information 'scan-analyze' displays about each server includes whether or not you have root access to it, " +
                     "its required hacking level, the number of open ports required to run NUKE.exe on it, and how much RAM " +
-                    "it has",
+                    "it has.<br><br>" +
+                    "By default, this command will not display servers that you have purchased. However, you can pass in the " +
+                    "-a flag at the end of the command if you would like to enable that.",
     scp:            "scp [filename] [target server]<br>" +
                     "Copies the specified file from the current server to the target server. " +
                     "This command only works for script files (.script extension) and literature files (.lit extension). " +
