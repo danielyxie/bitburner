@@ -124,6 +124,7 @@ let CONSTANTS = {
     //Hacking Missions
     HackingMissionRepToDiffConversion: 5000, //Faction rep is divided by this to get mission difficulty
     HackingMissionRepToRewardConversion: 20, //Faction rep divided byt his to get mission rep reward
+    HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with factin reputation",
 
     //Gang constants
     GangRespectToReputationRatio: 2, //Respect is divided by this to get rep gain
@@ -552,8 +553,8 @@ let CONSTANTS = {
                            "<i>serverExists(hostname/ip)</i><br>Returns a boolean denoting whether or not the specified server exists. The argument " +
                            "must be a string with the hostname or IP of the target server.<br><br>" +
                            "<i>fileExists(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " +
-                           "The first argument must be a string with the name of the file. A file can either be a script or a program. A script name is case-sensitive, but a " +
-                           "program is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " +
+                           "The first argument must be a string with the name of the file. A file can either be a script, program, or literature file. A script name is case-sensitive, but a " +
+                           "program/literature file is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " +
                            "The second argument is a string with the hostname or IP of the server on which to search for the program. This second argument is optional. " +
                            "If it is omitted, then the function will search through the current server (the server running the script that calls this function) for the file. <br> " +
                            "Example: fileExists('foo.script', 'foodnstuff');<br>" +
@@ -957,6 +958,9 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.29.1<br>" +
+    "-Added continue statement for for/while loops<br>" +
+    "-fileExists() function now works on literature files<br><br>" +
     "v0.29.0<br>" +
     "-Added BitNode-5: Artificial Intelligence<br>" +
     "-Added getIp(), getIntelligence(), getHackingMultipliers(), and getBitNodeMultipliers() Netscript functions (requires Source-File 5)<br>" +

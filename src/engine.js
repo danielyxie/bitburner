@@ -178,6 +178,7 @@ let Engine = {
         locationContent:                null,
         workInProgressContent:          null,
         redPillContent:                 null,
+        missionContent:                 null,
 
         //Character info
         characterInfo:                  null,
@@ -202,6 +203,7 @@ let Engine = {
         Infiltration:       "Infiltration",
         StockMarket:        "StockMarket",
         Gang:               "Gang",
+        Mission:            "Mission",
     },
     currentPage:    null,
 
@@ -385,7 +387,13 @@ let Engine = {
             Engine.loadTerminalContent();
             Engine.currentPage = Engine.Page.Terminal;
         }
+    },
 
+    loadMissionContent: function() {
+        Engine.hideAllContent();
+        document.getElementById("mainmenu-container").style.visibility = "hidden";
+        document.getElementById("character-overview-wrapper").style.visibility = "hidden";
+        Engine.Display.missionContent.style.visibility = "visible";
     },
 
     //Helper function that hides all content
@@ -407,6 +415,7 @@ let Engine = {
         Engine.Display.redPillContent.style.visibility = "hidden";
         Engine.Display.infiltrationContent.style.visibility = "hidden";
         Engine.Display.stockMarketContent.style.visibility = "hidden";
+        Engine.Display.missionContent.style.visibility = "hidden";
         if (document.getElementById("gang-container")) {
             document.getElementById("gang-container").style.visibility = "hidden";
         }
@@ -1278,6 +1287,8 @@ let Engine = {
         Engine.Display.stockMarketContent = document.getElementById("stock-market-container");
         Engine.Display.stockMarketContent.style.visibility = "hidden";
 
+        Engine.Display.missionContent = document.getElementById("mission-container");
+        Engine.Display.missionContent.style.visibility = "hidden";
 
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");

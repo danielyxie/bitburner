@@ -201,6 +201,9 @@ function evaluate(exp, workerScript) {
             case "BreakStatement":
                 reject("BREAKSTATEMENT");
                 break;
+            case "ContinueStatement":
+                reject("CONTINUESTATEMENT");
+                break;
             case "IfStatement":
                 evaluateIf(exp, workerScript).then(function(forLoopRes) {
                     resolve("forLoopDone");
@@ -524,7 +527,23 @@ function evaluateFor(exp, workerScript) {
 						reject(e);
 					});
 				}, function(e) {
-					reject(e);
+                    if (e == "CONTINUESTATEMENT" ||
+                       (e instanceof WorkerScript && e.errorMessage == "CONTINUESTATEMENT")) {
+                        //Continue statement, recurse to next iteration
+                        var pUpdate = evaluate(exp.update, workerScript);
+       					pUpdate.then(function(resPostloop) {
+       						var recursiveCall = evaluateFor(exp, workerScript);
+       						recursiveCall.then(function(foo) {
+       							resolve("endForLoop");
+       						}, function(e) {
+       							reject(e);
+       						});
+       					}, function(e) {
+       						reject(e);
+       					});
+                    } else {
+                        reject(e);
+                    }
 				});
 			} else {
 				resolve("endForLoop");	//Doesn't need to resolve to any particular value
@@ -561,7 +580,18 @@ function evaluateWhile(exp, workerScript) {
 						evaluatePromise.then(function(resCode) {
 							resolve(resCode);
 						}, function(e) {
-                            reject(e);
+                            if (e == "CONTINUESTATEMENT" ||
+                               (e instanceof WorkerScript && e.errorMessage == "CONTINUESTATEMENT")) {
+                                //Continue statement, recurse
+                                var recursiveCall = evaluateWhile(exp, workerScript);
+            					recursiveCall.then(function(foo) {
+            						resolve("endWhileLoop");
+            					}, function(e) {
+            						reject(e);
+            					});
+                            } else {
+                                reject(e);
+                            }
 						});
 					}, CONSTANTS.CodeInstructionRunTime);
 				});

@@ -770,6 +770,12 @@ function NetscriptFunctions(workerScript) {
                     return true;
                 }
             }
+            for (var i = 0; i < server.messages.length; ++i) {
+                if (!(server.messages[i] instanceof Message) &&
+                    filename.toLowerCase() === server.messages[i]) {
+                    return true;
+                }
+            }
             return false;
         },
         isRunning : function(filename,ip){

@@ -30,6 +30,14 @@ function clearEventListeners(elemId) {
     return newElem;
 }
 
+//Same as clearEventListeners except it takes a DOM element object rather than an ID
+function clearEventListenersEl(el) {
+    if (el == null) {console.log("ERR: element passed into clearEventListenersEl is null"); return null;}
+    var newElem = el.cloneNode(true);
+    el.parentNode.replaceChild(newElem, el);
+    return newElem;
+}
+
 function getRandomInt(min, max) {
     if (min > max) {return getRandomInt(max, min);}
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -59,4 +67,4 @@ function powerOfTwo(n) {
 }
 
 export {sizeOfObject, addOffset, clearEventListeners, getRandomInt,
-        compareArrays, printArray, powerOfTwo};
+        compareArrays, printArray, powerOfTwo, clearEventListenersEl};

@@ -1,0 +1,90 @@
+/* css for Missions */
+
+/* Hacking missions */
+
+.hack-mission-grid {
+    display: grid;
+    grid-template-columns: 7% 7% 7% 7% 7% 7% 7% 7%;
+    grid-template-rows: 7% 7% 7% 7% 7% 7% 7% 7%;
+    grid-gap: 3%;
+    height: 100%;
+    position:fixed;
+    width: 100%;
+}
+
+.hack-mission-node {
+    color:gray;
+    z-index:5;
+    background-color:gray;
+    align-self: center;
+    justify-self: center;
+}
+
+.hack-mission-node p {
+    color:white;
+    font-size:12px;
+    margin-top: 8px;
+    text-align:center;
+}
+
+.hack-mission-player-node {
+    color:blue;
+    background-color:blue;
+}
+
+.hack-mission-player-node:hover,
+.hack-mission-player-node-active {
+    border: 2px solid white;
+    color: #6666ff;
+    background-color: #6666ff;
+}
+
+.hack-mission-enemy-node {
+    color:red;
+    background-color:red;
+}
+
+.hack-mission-cpu-node {
+    width:100%;
+    height:100%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.hack-mission-firewall-node {
+    width:100%;
+    height:75%;
+}
+
+.hack-mission-database-node {
+    width: 100%;
+	height: 75%;
+	-webkit-transform: skew(20deg);
+	-moz-transform: skew(20deg);
+	-o-transform: skew(20deg);
+}
+
+.hack-mission-database-node p {
+    -webkit-transform: skew(-20deg);
+	-moz-transform: skew(-20deg);
+	-o-transform: skew(-20deg);
+}
+
+.hack-mission-spam-node,
+.hack-mission-transfer-node,
+.hack-mission-shield-node {
+    height:100%;
+    width: 100%;
+}
+
+/* Non-map related DOM elements */
+
+/* Element at the top of the Hacking Mission page (intro page, start button, guide buttons, etc.) */
+.hack-mission-header-element {
+    margin: 6px;
+}
+
+.hack-mission-action-buttons-container {
+    border: 2px solid white;
+}
