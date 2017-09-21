@@ -1700,7 +1700,7 @@ PlayerObject.prototype.getNextCompanyPosition = function(company, entryPosType) 
         (this.companyPosition.isSecurityEngineerJob() && entryPosType.isSecurityEngineerJob()) ||
         (this.companyPosition.isNetworkEngineerJob() && entryPosType.isNetworkEngineerJob()) ||
         (this.companyPosition.isSecurityJob() && entryPosType.isSecurityJob()) ||
-        (this.companyPosition.isAgentJob() && entryPosTypeisAgentJob()) ||
+        (this.companyPosition.isAgentJob() && entryPosType.isAgentJob()) ||
         (this.companyPosition.isSoftwareConsultantJob() && entryPosType.isSoftwareConsultantJob()) ||
         (this.companyPosition.isBusinessConsultantJob() && entryPosType.isBusinessConsultantJob()) ||
         (this.companyPosition.isPartTimeJob() && entryPosType.isPartTimeJob())) {
