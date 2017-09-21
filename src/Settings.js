@@ -1,6 +1,6 @@
 /* Settings.js */
 let Settings = {
-    CodeInstructionRunTime: 100,
+    CodeInstructionRunTime: 50,
     MaxLogCapacity:         50,
     MaxPortCapacity:        50,
     SuppressMessages:       false,
@@ -12,7 +12,7 @@ function loadSettings(saveString) {
 }
 
 function initSettings()  {
-    Settings.CodeInstructionRunTime = 100;
+    Settings.CodeInstructionRunTime = 50;
     Settings.MaxLogCapacity = 50;
     Settings.MaxPortCapacity = 50;
     Settings.SuppressMessages = false;

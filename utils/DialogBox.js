@@ -61,4 +61,4 @@ function dialogBoxCreate(txt) {
     }, 400);
 }
 
-export {dialogBoxCreate};
+export {dialogBoxCreate, dialogBoxOpened};

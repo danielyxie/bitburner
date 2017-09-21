@@ -9,6 +9,7 @@ import {Factions, Faction, initFactions,
         joinFaction}                            from "./Faction.js";
 import {Locations}                              from "./Location.js";
 import {initMessages, Messages, Message}        from "./Message.js";
+import {initSingularitySFFlags}                 from "./NetscriptFunctions.js";
 import {WorkerScript, workerScripts,
         prestigeWorkerScripts}                  from "./NetscriptWorker.js";
 import {Player}                                 from "./Player.js";
@@ -117,6 +118,7 @@ function prestigeAugmentation() {
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
+    Terminal.resetTerminalInput();
     Engine.loadTerminalContent();
 
     //Red Pill
@@ -215,7 +217,14 @@ function prestigeSourceFile() {
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
+    Terminal.resetTerminalInput();
     Engine.loadTerminalContent();
+
+    //Reinitialize flags in case you just finished BN-4
+    initSingularitySFFlags();
+
+    //Gain int exp
+    Player.gainIntelligenceExp(5);
 }
 
 export {prestigeAugmentation, prestigeSourceFile};

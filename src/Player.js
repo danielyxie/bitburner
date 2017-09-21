@@ -8,7 +8,8 @@ import {CONSTANTS}                              from "./Constants.js";
 import {Programs}                               from "./CreateProgram.js";
 import {determineCrimeSuccess}                  from "./Crimes.js";
 import {Engine}                                 from "./engine.js";
-import {Factions, Faction}                      from "./Faction.js";
+import {Factions, Faction,
+        displayFactionContent}                  from "./Faction.js";
 import {Gang, resetGangs}                       from "./Gang.js";
 import {Locations}                              from "./Location.js";
 import {AllServers, Server, AddToAllServers}    from "./Server.js";
@@ -26,19 +27,21 @@ import {formatNumber,
 
 function PlayerObject() {
     //Skills and stats
-    this.hacking_skill   = 1;
+    this.hacking_skill  = 1;
 
-    //Fighting
-    this.hp              = 10;
-    this.max_hp          = 10;
-    this.strength        = 1;      //Damage dealt
-    this.defense         = 1;      //Damage received
-    this.dexterity       = 1;      //Accuracy
-    this.agility         = 1;      //Dodge %
+    //Combat stats
+    this.hp             = 10;
+    this.max_hp         = 10;
+    this.strength       = 1;      //Damage dealt
+    this.defense        = 1;      //Damage received
+    this.dexterity      = 1;      //Accuracy
+    this.agility        = 1;      //Dodge %
 
     //Labor stats
-    this.charisma        = 1;
-	//Intelligence, perhaps?
+    this.charisma       = 1;
+
+    //Special stats
+    this.intelligence   = 0;
 
     //Hacking multipliers
     this.hacking_chance_mult    = 1;  //Increase through ascensions/augmentations
@@ -53,6 +56,7 @@ function PlayerObject() {
     this.dexterity_exp   = 0;
     this.agility_exp     = 0;
     this.charisma_exp    = 0;
+    this.intelligence_exp= 0;
 
     this.hacking_mult       = 1;
     this.strength_mult      = 1;
@@ -143,12 +147,14 @@ function PlayerObject() {
     this.workMoneyGained = 0;
 
     this.createProgramName = "";
+    this.createProgramReqLvl = 0;
 
     this.className = "";
 
     this.crimeType = "";
 
     this.timeWorked = 0;    //in ms
+    this.timeWorkedCreateProgram = 0;
     this.timeNeededToCompleteWork = 0;
 
     this.work_money_mult = 1;
@@ -191,15 +197,6 @@ PlayerObject.prototype.init = function() {
     AddToAllServers(t_homeComp);
 
     this.getHomeComputer().programs.push(Programs.NukeProgram);
-}
-
-PlayerObject.prototype.increaseMultiplier = function(name, val) {
-    let mult = this[name];
-    if (mult === null || mult === undefined) {
-        console.log("ERROR: Could not find this multiplier " + name);
-        return;
-    }
-    mult *= val;
 }
 
 PlayerObject.prototype.prestigeAugmentation = function() {
@@ -392,6 +389,12 @@ PlayerObject.prototype.updateSkillLevels = function() {
     this.agility       = Math.floor(this.calculateSkill(this.agility_exp) * this.agility_mult);
     this.charisma      = Math.floor(this.calculateSkill(this.charisma_exp) * this.charisma_mult);
 
+    if (this.intelligence > 0) {
+        this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp));
+    } else {
+        this.intelligence = 0;
+    }
+
     var ratio = this.hp / this.max_hp;
     this.max_hp         = Math.floor(10 + this.defense / 10);
     Player.hp = Math.round(this.max_hp * ratio);
@@ -439,7 +442,7 @@ PlayerObject.prototype.resetMultipliers = function() {
 //        (2 * hacking_chance_multiplier * hacking_skill)                      100
 PlayerObject.prototype.calculateHackingChance = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
-    var skillMult = (1.75 * this.hacking_skill);
+    var skillMult = (1.75 * this.hacking_skill) + (0.2 * this.intelligence);
     var skillChance = (skillMult - this.getCurrentServer().requiredHackingSkill) / skillMult;
     var chance = skillChance * difficultyMult * this.hacking_chance_mult;
     if (chance > 1) {return 1;}
@@ -454,7 +457,7 @@ PlayerObject.prototype.calculateHackingChance = function() {
 //        hacking_skill + 100
 PlayerObject.prototype.calculateHackingTime = function() {
     var difficultyMult = this.getCurrentServer().requiredHackingSkill * this.getCurrentServer().hackDifficulty;
-    var skillFactor = (2.5 * difficultyMult + 200) / (this.hacking_skill + 100);
+    var skillFactor = (2.5 * difficultyMult + 200) / (this.hacking_skill + 100 + (0.1 * this.intelligence));
     return 5 * skillFactor / this.hacking_speed_mult;
 }
 
@@ -571,6 +574,24 @@ PlayerObject.prototype.gainCharismaExp = function(exp) {
     this.charisma_exp += exp;
 }
 
+PlayerObject.prototype.gainIntelligenceExp = function(exp) {
+    if (isNaN(exp)) {
+        console.log("ERROR: NaN passed into Player.gainIntelligenceExp()"); return;
+    }
+    var hasBn = false;
+    for (var i = 0; i < this.sourceFiles.length; ++i) {
+        if (this.sourceFiles[i].n === 5) {
+            hasBn = true;
+            break;
+        }
+    }
+    if (hasBn || this.intelligence > 0) {
+        this.intelligence_exp += exp;
+    } else {
+        console.log("Not gaining intelligence experience bc it hasn't been unlocked yet");
+    }
+}
+
 /******* Working functions *******/
 PlayerObject.prototype.resetWorkStatus = function() {
     this.workHackExpGainRate    = 0;
@@ -592,6 +613,7 @@ PlayerObject.prototype.resetWorkStatus = function() {
     this.workMoneyGained    = 0;
 
     this.timeWorked = 0;
+    this.timeWorkedCreateProgram = 0;
 
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";
@@ -648,7 +670,8 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
-    Engine.loadTerminalContent();
+    //Engine.loadTerminalContent();
+    Engine.loadLocationContent();
 
     if (sing) {
         return "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " and " +
@@ -724,7 +747,7 @@ PlayerObject.prototype.work = function(numCycles) {
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName +
-                    " at " + Player.companyName + "<br><br>" +
+                    " at " + this.companyName + "<br><br>" +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
                     "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
@@ -841,7 +864,8 @@ PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
-    Engine.loadTerminalContent();
+    //Engine.loadTerminalContent();
+    Engine.loadLocationContent();
     if (sing) {
         return "You worked for " + convertTimeMsToTimeElapsedString(this.timeWorked) + " and " +
                "earned a total of " +
@@ -884,7 +908,9 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
 
     this.isWorking = false;
 
-    Engine.loadTerminalContent();
+    //Engine.loadTerminalContent();
+    Engine.loadFactionContent();
+    displayFactionContent(faction.name);
     if (sing) {
         return "You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + ". " +
                "You earned " +
@@ -926,7 +952,7 @@ PlayerObject.prototype.startFactionHackWork = function(faction) {
     this.resetWorkStatus();
 
     this.workHackExpGainRate = .15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-    this.workRepGainRate = this.hacking_skill / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
+    this.workRepGainRate = this.workRepGainRate = (this.hacking_skill + this.intelligence) / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
 
     this.factionWorkType = CONSTANTS.FactionWorkHacking;
     this.currentWorkFactionDescription = "carrying out hacking contracts";
@@ -974,7 +1000,7 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     //Constantly update the rep gain rate
     switch (this.factionWorkType) {
         case CONSTANTS.FactionWorkHacking:
-            this.workRepGainRate = this.hacking_skill / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
+            this.workRepGainRate = (this.hacking_skill + this.intelligence) / CONSTANTS.MaxSkillLevel * this.faction_rep_mult;
             break;
         case CONSTANTS.FactionWorkField:
             this.workRepGainRate = this.getFactionFieldWorkRepGain();
@@ -1008,6 +1034,7 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     //If timeWorked == 20 hours, then finish. You can only work for the faction for 20 hours
     if (this.timeWorked >= CONSTANTS.MillisecondsPer20Hours) {
         var maxCycles = CONSTANTS.GameCyclesPer20Hours;
+        this.timeWorked = CONSTANTS.MillisecondsPer20Hours;
         this.workHackExpGained = this.workHackExpGainRate * maxCycles;
         this.workStrExpGained  = this.workStrExpGainRate * maxCycles;
         this.workDefExpGained  = this.workDefExpGainRate * maxCycles;
@@ -1092,6 +1119,10 @@ PlayerObject.prototype.getWorkRepGain = function() {
     var jobPerformance = this.companyPosition.calculateJobPerformance(this.hacking_skill, this.strength,
                                                                       this.defense, this.dexterity,
                                                                       this.agility, this.charisma);
+
+    //Intelligence provides a flat bonus to job performance
+    jobPerformance += (this.intelligence / CONSTANTS.MaxSkillLevel);
+
     //Update reputation gain rate to account for company favor
     var favorMult = 1 + (company.favor / 100);
     if (isNaN(favorMult)) {favorMult = 1;}
@@ -1113,7 +1144,8 @@ PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
                    this.defense        / CONSTANTS.MaxSkillLevel +
                    this.dexterity      / CONSTANTS.MaxSkillLevel +
                    this.agility        / CONSTANTS.MaxSkillLevel +
-                   this.charisma       / CONSTANTS.MaxSkillLevel) / 6;
+                   this.charisma       / CONSTANTS.MaxSkillLevel +
+                   this.intelligence   / CONSTANTS.MaxSkillLevel) / 6;
     return t * this.faction_rep_mult;
 }
 
@@ -1125,21 +1157,22 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
 
     //Time needed to complete work affected by hacking skill (linearly based on
     //ratio of (your skill - required level) to MAX skill)
-    var timeMultiplier = (CONSTANTS.MaxSkillLevel - (this.hacking_skill - reqLevel)) / CONSTANTS.MaxSkillLevel;
-    if (timeMultiplier > 1) {timeMultiplier = 1;}
-    if (timeMultiplier < 0.01) {timeMultiplier = 0.01;}
+    //var timeMultiplier = (CONSTANTS.MaxSkillLevel - (this.hacking_skill - reqLevel)) / CONSTANTS.MaxSkillLevel;
+    //if (timeMultiplier > 1) {timeMultiplier = 1;}
+    //if (timeMultiplier < 0.01) {timeMultiplier = 0.01;}
+    this.createProgramReqLvl = reqLevel;
 
-    this.timeNeededToCompleteWork = timeMultiplier * time;
+    this.timeNeededToCompleteWork = time;
     //Check for incomplete program
-    for (var i = 0; i < Player.getHomeComputer().programs.length; ++i) {
-        var programFile = Player.getHomeComputer().programs[i];
+    for (var i = 0; i < this.getHomeComputer().programs.length; ++i) {
+        var programFile = this.getHomeComputer().programs[i];
         if (programFile.startsWith(programName) && programFile.endsWith("%-INC")) {
             var res = programFile.split("-");
             if (res.length != 3) {break;}
             var percComplete = Number(res[1].slice(0, -1));
             if (isNaN(percComplete) || percComplete < 0 || percComplete >= 100) {break;}
-            this.timeWorked = percComplete / 100 * this.timeNeededToCompleteWork;
-            Player.getHomeComputer().programs.splice(i, 1);
+            this.timeWorkedCreateProgram = percComplete / 100 * this.timeNeededToCompleteWork;
+            this.getHomeComputer().programs.splice(i, 1);
         }
     }
 
@@ -1157,17 +1190,24 @@ PlayerObject.prototype.startCreateProgramWork = function(programName, time, reqL
 }
 
 PlayerObject.prototype.createProgramWork = function(numCycles) {
-    this.timeWorked += Engine._idleSpeed * numCycles;
+    //Higher hacking skill will allow you to create programs faster
+    var reqLvl = this.createProgramReqLvl;
+    var skillMult = (this.hacking_skill / reqLvl); //This should always be greater than 1;
+    skillMult = 1 + ((skillMult - 1) / 5); //The divider constant can be adjusted as necessary
+
+    //Skill multiplier directly applied to "time worked"
+    this.timeWorked += (Engine._idleSpeed * numCycles);
+    this.timeWorkedCreateProgram += (Engine._idleSpeed * numCycles * skillMult);
     var programName = this.createProgramName;
 
-    if (this.timeWorked >= this.timeNeededToCompleteWork) {
+    if (this.timeWorkedCreateProgram >= this.timeNeededToCompleteWork) {
         this.finishCreateProgramWork(false);
     }
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working on coding " + programName + ".<br><br> " +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
-                    "The program is " + (this.timeWorked / this.timeNeededToCompleteWork * 100).toFixed(2) + "% complete. <br>" +
+                    "The program is " + (this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 100).toFixed(2) + "% complete. <br>" +
                     "If you cancel, your work will be saved and you can come back to complete the program later.";
 }
 
@@ -1177,17 +1217,19 @@ PlayerObject.prototype.finishCreateProgramWork = function(cancelled, sing=false)
         dialogBoxCreate("You've finished creating " + programName + "!<br>" +
                         "The new program can be found on your home computer.");
 
-        Player.getHomeComputer().programs.push(programName);
+        this.getHomeComputer().programs.push(programName);
     } else {
-        var perc = Math.floor(this.timeWorked / this.timeNeededToCompleteWork * 100).toString();
+        var perc = Math.floor(this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 100).toString();
         var incompleteName = programName + "-" + perc + "%-INC";
-        Player.getHomeComputer().programs.push(incompleteName);
+        this.getHomeComputer().programs.push(incompleteName);
     }
+
+    this.gainIntelligenceExp(this.createProgramReqLvl / CONSTANTS.IntelligenceProgramBaseExpGain);
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
 
-    Player.isWorking = false;
+    this.isWorking = false;
 
     Engine.loadTerminalContent();
 }
@@ -1255,7 +1297,7 @@ PlayerObject.prototype.startClass = function(costMult, expMult, className) {
             agiExp = baseGymExp * expMult / gameCPS;
             break;
         default:
-            throw new Error("ERR: Invalid/unregocnized class name");
+            throw new Error("ERR: Invalid/unrecognized class name");
             return;
     }
 
@@ -1386,16 +1428,16 @@ PlayerObject.prototype.startCrime = function(hackExp, strExp, defExp, dexExp, ag
 PlayerObject.prototype.commitCrime = function (numCycles) {
     this.timeWorked += Engine._idleSpeed * numCycles;
 
-    if (this.timeWorked >= this.timeNeededToCompleteWork) {Player.finishCrime(false); return;}
+    if (this.timeWorked >= this.timeNeededToCompleteWork) {this.finishCrime(false); return;}
 
-    var percent = Math.round(Player.timeWorked / Player.timeNeededToCompleteWork * 100);
+    var percent = Math.round(this.timeWorked / this.timeNeededToCompleteWork * 100);
     var numBars = Math.round(percent / 5);
     if (numBars < 0) {numBars = 0;}
     if (numBars > 20) {numBars = 20;}
     var progressBar = "[" + Array(numBars+1).join("|") + Array(20 - numBars + 1).join(" ") + "]";
 
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are attempting to " + Player.crimeType + ".<br>" +
+    txt.innerHTML = "You are attempting to " + this.crimeType + ".<br>" +
                     "Time remaining: " + convertTimeMsToTimeElapsedString(this.timeNeededToCompleteWork - this.timeWorked) + "<br>" +
                     progressBar.replace( / /g, "&nbsp;" );
 }
@@ -1431,6 +1473,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     break;
                 case CONSTANTS.CrimeGrandTheftAuto:
                     this.karma -= 5;
+                    this.gainIntelligenceExp(CONSTANTS.IntelligenceCrimeBaseExpGain);
                     break;
                 case CONSTANTS.CrimeKidnap:
                     this.karma -= 6;
@@ -1438,9 +1481,11 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                 case CONSTANTS.CrimeAssassination:
                     ++this.numPeopleKilled;
                     this.karma -= 10;
+                    this.gainIntelligenceExp(CONSTANTS.IntelligenceCrimeBaseExpGain);
                     break;
                 case CONSTANTS.CrimeHeist:
                     this.karma -= 15;
+                    this.gainIntelligenceExp(5 * CONSTANTS.IntelligenceCrimeBaseExpGain);
                     break;
                 default:
                     console.log(this.crimeType);
@@ -1531,7 +1576,7 @@ PlayerObject.prototype.hospitalize = function() {
     dialogBoxCreate("You were in critical condition! You were taken to the hospital where " +
                     "luckily they were able to save your life. You were charged $" +
                     formatNumber(this.max_hp * CONSTANTS.HospitalCostPerHp, 2));
-    Player.loseMoney(this.max_hp * CONSTANTS.HospitalCostPerHp);
+    this.loseMoney(this.max_hp * CONSTANTS.HospitalCostPerHp);
     this.hp = this.max_hp;
 }
 
@@ -1615,7 +1660,12 @@ PlayerObject.prototype.applyForJob = function(entryPosType, sing=false) {
     this.companyName = company.companyName;
     this.companyPosition = pos;
 
-    Player.firstJobRecvd = true;
+    if (this.firstJobRecvd === false) {
+        this.firstJobRecvd = true;
+        document.getElementById("job-tab").style.display = "list-item";
+        document.getElementById("world-menu-header").click();
+        document.getElementById("world-menu-header").click();
+    }
 
     if (leaveCompany) {
         if (sing) {return true;}
@@ -1719,7 +1769,12 @@ PlayerObject.prototype.applyForAgentJob = function(sing=false) {
 PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.Employee)) {
-        Player.firstJobRecvd = true;
+        if (this.firstJobRecvd === false) {
+            this.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
+        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Employee;
         if (sing) {return true;}
@@ -1734,7 +1789,12 @@ PlayerObject.prototype.applyForEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.PartTimeEmployee)) {
-        Player.firstJobRecvd = true;
+        if (this.firstJobRecvd === false) {
+            this.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
+        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.PartTimeEmployee;
         if (sing) {return true;}
@@ -1749,7 +1809,12 @@ PlayerObject.prototype.applyForPartTimeEmployeeJob = function(sing=false) {
 PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.Waiter)) {
-        Player.firstJobRecvd = true;
+        if (this.firstJobRecvd === false) {
+            this.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
+        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.Waiter;
         if (sing) {return true;}
@@ -1764,7 +1829,12 @@ PlayerObject.prototype.applyForWaiterJob = function(sing=false) {
 PlayerObject.prototype.applyForPartTimeWaiterJob = function(sing=false) {
 	var company = Companies[this.location]; //Company being applied to
     if (this.isQualified(company, CompanyPositions.PartTimeWaiter)) {
-        Player.firstJobRecvd = true;
+        if (this.firstJobRecvd === false) {
+            this.firstJobRecvd = true;
+            document.getElementById("job-tab").style.display = "list-item";
+            document.getElementById("world-menu-header").click();
+            document.getElementById("world-menu-header").click();
+        }
         this.companyName = company.companyName;
         this.companyPosition = CompanyPositions.PartTimeWaiter;
         if (sing) {return true;}
@@ -2113,10 +2183,10 @@ PlayerObject.prototype.checkForFactionInvitations = function() {
     var totalHacknetRam = 0;
     var totalHacknetCores = 0;
     var totalHacknetLevels = 0;
-    for (var i = 0; i < Player.hacknetNodes.length; ++i) {
-        totalHacknetLevels += Player.hacknetNodes[i].level;
-        totalHacknetRam += Player.hacknetNodes[i].ram;
-        totalHacknetCores += Player.hacknetNodes[i].cores;
+    for (var i = 0; i < this.hacknetNodes.length; ++i) {
+        totalHacknetLevels += this.hacknetNodes[i].level;
+        totalHacknetRam += this.hacknetNodes[i].ram;
+        totalHacknetCores += this.hacknetNodes[i].cores;
     }
     if (!netburnersFac.isBanned && !netburnersFac.isMember && !netburnersFac.alreadyInvited &&
         this.hacking_skill >= 80 && totalHacknetRam >= 8 &&

@@ -73,7 +73,16 @@ BitburnerSaveObject.prototype.saveGame = function() {
         this.AllGangsSave           = JSON.stringify(AllGangs);
     }
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
-    window.localStorage.setItem("bitburnerSave", saveString);
+    try {
+        window.localStorage.setItem("bitburnerSave", saveString);
+    } catch(e) {
+        if (e.code == 22) {
+            dialogBoxCreate("Failed to save game because the size of the save file " +
+                            "is too large. Consider killing several of your scripts to " +
+                            "fix this, or increasing the size of your browsers localStorage");
+        }
+    }
+
 
     console.log("Game saved!");
     Engine.createStatusText("Game saved!");
@@ -466,7 +475,7 @@ BitburnerSaveObject.prototype.exportGame = function() {
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
 
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
-
+    var filename = "bitburnerSave.json";
     var file = new Blob([saveString], {type: 'text/plain'});
     if (window.navigator.msSaveOrOpenBlob) {// IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);

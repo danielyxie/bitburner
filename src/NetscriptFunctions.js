@@ -1,5 +1,8 @@
+import {updateActiveScriptsItems}                   from "./ActiveScriptsUI.js";
 import {Augmentations, Augmentation,
-        augmentationExists, installAugmentations}   from "./Augmentations.js";
+        augmentationExists, installAugmentations,
+        AugmentationNames}                          from "./Augmentations.js";
+import {BitNodeMultipliers}                         from "./BitNode.js";
 import {Companies, Company, CompanyPosition,
         CompanyPositions, companyExists}            from "./Company.js";
 import {CONSTANTS}                                  from "./Constants.js";
@@ -11,6 +14,7 @@ import {Factions, Faction, joinFaction,
 import {getCostOfNextHacknetNode,
         purchaseHacknet}                            from "./HacknetNode.js";
 import {Locations}                                  from "./Location.js";
+import {Message, Messages}                          from "./Message.js";
 import {Player}                                     from "./Player.js";
 import {Script, findRunningScript, RunningScript}   from "./Script.js";
 import {Server, getServer, AddToAllServers,
@@ -34,33 +38,46 @@ import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
 import {Environment}                                from "./NetscriptEnvironment.js";
 
 import Decimal                                      from '../utils/decimal.js';
+import {dialogBoxCreate}                            from "../utils/DialogBox.js";
 import {printArray, powerOfTwo}                     from "../utils/HelperFunctions.js";
 import {createRandomIp}                             from "../utils/IPAddress.js";
-import {formatNumber, isString}                     from "../utils/StringHelperFunctions.js";
+import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions.js";
 
 var hasSingularitySF = false;
+var hasAISF = false;
 var singularitySFLvl = 1;
 
+//Also used to check for Artificial Intelligence Source File, don't want to change
+//name though
 function initSingularitySFFlags() {
     for (var i = 0; i < Player.sourceFiles.length; ++i) {
         if (Player.sourceFiles[i].n === 4) {
             hasSingularitySF = true;
             singularitySFLvl = Player.sourceFiles[i].lvl;
         }
+        if (Player.sourceFiles[i].n === 5) {
+            hasAISF = true;
+        }
     }
 }
 
 function NetscriptFunctions(workerScript) {
     return {
+        Math : Math,
         hacknetnodes : Player.hacknetNodes,
-        scan : function(ip=workerScript.serverIp){
+        scan : function(ip=workerScript.serverIp, hostnames=true){
             var server = getServer(ip);
             if (server == null) {
                 throw makeRuntimeRejectMsg(workerScript, 'Invalid IP or hostname passed into scan() command');
             }
             var out = [];
             for (var i = 0; i < server.serversOnNetwork.length; i++) {
-                var entry = server.getServerOnNetwork(i).hostname;
+                var entry;
+                if (hostnames) {
+                    entry = server.getServerOnNetwork(i).hostname;
+                } else {
+                    entry = server.getServerOnNetwork(i).ip;
+                }
                 if (entry == null) {
                     continue;
                 }
@@ -97,7 +114,7 @@ function NetscriptFunctions(workerScript) {
 
             workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
             //console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds (t=" + threads + ")");
-            return netscriptDelay(hackingTime* 1000).then(function() {
+            return netscriptDelay(hackingTime* 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 var hackChance = scriptCalculateHackingChance(server);
                 var rand = Math.random();
@@ -142,7 +159,7 @@ function NetscriptFunctions(workerScript) {
             if (log) {
                 workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
             }
-            return netscriptDelay(time).then(function() {
+            return netscriptDelay(time, workerScript).then(function() {
                 return Promise.resolve(true);
             });
         },
@@ -167,7 +184,7 @@ function NetscriptFunctions(workerScript) {
             var growTime = scriptCalculateGrowTime(server);
             //console.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds")
             workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds (t=" + threads + ")");
-            return netscriptDelay(growTime).then(function() {
+            return netscriptDelay(growTime, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
                 var growthPercentage = processSingleServerGrowth(server, 450 * threads);
@@ -203,10 +220,9 @@ function NetscriptFunctions(workerScript) {
             }
 
             var weakenTime = scriptCalculateWeakenTime(server);
-            //console.log("Executing weaken() on server " + server.hostname + " in " + formatNumber(weakenTime/1000, 3) + " seconds")
             workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " +
                                        formatNumber(weakenTime/1000, 3) + " seconds (t=" + threads + ")");
-            return netscriptDelay(weakenTime).then(function() {
+            return netscriptDelay(weakenTime, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.weaken(CONSTANTS.ServerWeakenAmount * threads);
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
@@ -227,6 +243,14 @@ function NetscriptFunctions(workerScript) {
         tprint : function(args) {
             if (args === undefined || args === null) {
                 throw makeRuntimeRejectMsg(workerScript, "tprint() call has incorrect number of arguments. Takes 1 argument");
+            }
+            var x = args.toString();
+            if (isHTML(x)) {
+                Player.takeDamage(1);
+                dialogBoxCreate("You suddenly feel a sharp shooting pain through your body as an angry voice in your head exclaims: <br><br>" +
+                                "DON'T USE TPRINT() TO OUTPUT HTML ELEMENTS TO YOUR TERMINAL!!!!<br><br>" +
+                                "(You lost 1 HP)");
+                return;
             }
             post(workerScript.scriptRef.filename + ": " + args.toString());
         },
@@ -439,20 +463,70 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("killall(): Killing all scripts on " + server.hostname + ". May take a few minutes for the scripts to die");
             return true;
         },
-        scp : function(scriptname,ip){
-            if (scriptname === undefined || ip === undefined) {
-                throw makeRuntimeRejectMsg(workerScript, "scp() call has incorrect number of arguments. Takes 2 arguments");
+        scp : function(scriptname, ip1, ip2){
+            if (arguments.length !== 2 && arguments.length !== 3) {
+                throw makeRuntimeRejectMsg(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
             }
-            var destServer = getServer(ip);
-            if (destServer == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid hostname/ip passed into scp() command: " + ip);
-            }
-
-            var currServ = getServer(workerScript.serverIp);
-            if (currServ == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
+            if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script")) {
+                throw makeRuntimeRejectMsg(workerScript, "Error: scp() only works for .script and .lit files");
             }
 
+            var destServer, currServ;
+
+            if (arguments.length === 3) {   //scriptname, source, destination
+                if (scriptname === undefined || ip1 === undefined || ip2 === undefined) {
+                    throw makeRuntimeRejectMsg(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+                }
+                destServer = getServer(ip2);
+                if (destServer == null) {
+                    throw makeRuntimeRejectMsg(workerScript, "Error: Invalid hostname/ip passed into scp() command: " + ip);
+                }
+
+                currServ = getServer(ip1);
+                if (currServ == null) {
+                    throw makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
+                }
+            } else if (arguments.length === 2) {    //scriptname, destination
+                if (scriptname === undefined || ip1 === undefined) {
+                    throw makeRuntimeRejectMsg(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+                }
+                destServer = getServer(ip1);
+                if (destServer == null) {
+                    throw makeRuntimeRejectMsg(workerScript, "Error: Invalid hostname/ip passed into scp() command: " + ip);
+                }
+
+                currServ = getServer(workerScript.serverIp);
+                if (currServ == null) {
+                    throw makeRuntimeRejectMsg(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
+                }
+            }
+
+            //Scp for lit files
+            if (scriptname.endsWith(".lit")) {
+                var found = false;
+                for (var i = 0; i < currServ.messages.length; ++i) {
+                    if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
+                        found = true;
+                    }
+                }
+
+                if (!found) {
+                    workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
+                    return false;
+                }
+
+                for (var i = 0; i < destServer.messages.length; ++i) {
+                    if (destServer.messages[i] === scriptname) {
+                        workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                        return true; //Already exists
+                    }
+                }
+                destServer.messages.push(scriptname);
+                workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                return true;
+            }
+
+            //Scp for script files
             var sourceScript = null;
             for (var i = 0; i < currServ.scripts.length; ++i) {
                 if (scriptname == currServ.scripts[i].filename) {
@@ -487,6 +561,64 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
             return true;
         },
+        ls : function(ip, grep) {
+            if (ip === undefined) {
+                throw makeRuntimeRejectMsg(workerScript, "ls() failed because of invalid arguments. Usage: ls(ip/hostname, [grep filter])");
+            }
+            var server = getServer(ip);
+            if (server === null) {
+                workerScript.scriptRef.log("ls() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "ls() failed. Invalid IP or hostname passed in: " + ip);
+            }
+
+            //Get the grep filter, if one exists
+            var filter = false;
+            if (arguments.length >= 2) {
+                filter = grep.toString();
+            }
+
+            var allFiles = [];
+            for (var i = 0; i < server.programs.length; i++) {
+                if (filter) {
+                    if (server.programs[i].includes(filter)) {
+                        allFiles.push(server.programs[i]);
+                    }
+                } else {
+                    allFiles.push(server.programs[i]);
+                }
+            }
+            for (var i = 0; i < server.scripts.length; i++) {
+                if (filter) {
+                    if (server.scripts[i].filename.includes(filter)) {
+                        allFiles.push(server.scripts[i].filename);
+                    }
+                } else {
+                    allFiles.push(server.scripts[i].filename);
+                }
+
+            }
+            for (var i = 0; i < server.messages.length; i++) {
+                if (filter) {
+                    if (server.messages[i] instanceof Message) {
+                        if (server.messages[i].filename.includes(filter)) {
+                            allFiles.push(server.messages[i].filename);
+                        }
+                    } else if (server.messages[i].includes(filter)) {
+                        allFiles.push(server.messages[i]);
+                    }
+                } else {
+                    if (server.messages[i] instanceof Message) {
+                        allFiles.push(server.messages[i].filename);
+                    } else {
+                        allFiles.push(server.messages[i]);
+                    }
+                }
+            }
+
+            //Sort the files alphabetically then print each
+            allFiles.sort();
+            return allFiles;
+        },
         hasRootAccess : function(ip){
             if (ip===undefined){
                 throw makeRuntimeRejectMsg(workerScript, "hasRootAccess() call has incorrect number of arguments. Takes 1 argument");
@@ -497,6 +629,13 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
             }
             return server.hasAdminRights;
+        },
+        getIp : function() {
+            var scriptServer = getServer(workerScript.serverIp);
+            if (scriptServer == null) {
+                throw makeRuntimeRejectMsg(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
+            }
+            return scriptServer.ip;
         },
         getHostname : function(){
             var scriptServer = getServer(workerScript.serverIp);
@@ -510,11 +649,33 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
             return Player.hacking_skill;
         },
+        getIntelligence : function () {
+            if (!hasAISF) {
+                throw makeRuntimeRejectMsg(workerScript, "Cannot run getIntelligence(). It requires Source-File 5 to run.");
+            }
+            Player.updateSkillLevels();
+            workerScript.scriptRef.log("getHackingLevel() returned " + Player.intelligence);
+            return Player.intelligence;
+        },
+        getHackingMultipliers : function() {
+            return {
+                chance: Player.hacking_chance_mult,
+                speed: Player.hacking_speed_mult,
+                money: Player.hacking_money_mult,
+                growth: Player.hacking_grow_mult,
+            };
+        },
+        getBitNodeMultipliers: function() {
+            if (!hasAISF) {
+                throw makeRuntimeRejectMsg(workerScript, "Cannot run getBitNodeMultipliers(). It requires Source-File 5 to run.");
+            }
+            return BitNodeMultipliers;
+        },
         getServerMoneyAvailable : function(ip){
             var server = getServer(ip);
             if (server == null) {
-                workerScript.scriptRef.log("Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
-                throw makeRuntimeRejectMsg(workerScript, "Cannot getServerMoneyAvailable(). Invalid IP or hostname passed in: " + ip);
+                workerScript.scriptRef.log("getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
             }
             if (server.hostname == "home") {
                 //Return player's money
@@ -586,6 +747,9 @@ function NetscriptFunctions(workerScript) {
             }
             workerScript.scriptRef.log("getServerRam() returned [" + formatNumber(server.maxRam, 2) + "GB, " + formatNumber(server.ramUsed, 2) + "GB]");
             return [server.maxRam, server.ramUsed];
+        },
+        serverExists : function(ip) {
+            return (getServer(ip) !== null);
         },
         fileExists : function(filename,ip=workerScript.serverIp){
             if (filename === undefined) {
@@ -924,6 +1088,55 @@ function NetscriptFunctions(workerScript) {
             }
             return scriptCalculateWeakenTime(server) / 1000; //Returns seconds
         },
+        getScriptIncome : function(scriptname, ip) {
+            if (arguments.length === 0) {
+                //Get total script income
+                return updateActiveScriptsItems();
+            } else {
+                //Get income for a particular script
+                var server = getServer(ip);
+                if (server === null) {
+                    workerScript.scriptRef.log("getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
+                    throw makeRuntimeRejectMsg(workerScript, "getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
+                }
+                var argsForScript = [];
+                for (var i = 2; i < arguments.length; ++i) {
+                    argsForScript.push(arguments[i]);
+                }
+                var runningScriptObj = findRunningScript(scriptname, argsForScript, server);
+                if (runningScriptObj == null) {
+                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + printArray(argsForScript));
+                    return -1;
+                }
+                return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
+            }
+        },
+        getScriptExpGain : function(scriptname, ip) {
+            if (arguments.length === 0) {
+                var total = 0;
+                for (var i = 0; i < workerScripts.length; ++i) {
+                    total += (workerScripts[i].scriptRef.onlineExpGained / workerScripts[i].scriptRef.onlineRunningTime);
+                }
+                return total;
+            } else {
+                //Get income for a particular script
+                var server = getServer(ip);
+                if (server === null) {
+                    workerScript.scriptRef.log("getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
+                    throw makeRuntimeRejectMsg(workerScript, "getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
+                }
+                var argsForScript = [];
+                for (var i = 2; i < arguments.length; ++i) {
+                    argsForScript.push(arguments[i]);
+                }
+                var runningScriptObj = findRunningScript(scriptname, argsForScript, server);
+                if (runningScriptObj == null) {
+                    workerScript.scriptRef.log("getScriptExpGain() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + printArray(argsForScript));
+                    return -1;
+                }
+                return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;
+            }
+        },
 
         /* Singularity Functions */
         universityCourse(universityName, className) {
@@ -945,6 +1158,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot study at Summit University because you are not in Aevum. universityCourse() failed");
                         return false;
                     }
+                    Player.location = Locations.AevumSummitUniversity;
                     costMult = 4;
                     expMult = 3;
                     break;
@@ -953,6 +1167,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot study at Rothman University because you are not in Sector-12. universityCourse() failed");
                         return false;
                     }
+                    Player.location = Locations.Sector12RothmanUniversity;
                     costMult = 3;
                     expMult = 2;
                     break;
@@ -961,6 +1176,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot study at ZB Institute of Technology because you are not in Volhaven. universityCourse() failed");
                         return false;
                     }
+                    Player.location = Locations.VolhavenZBInstituteOfTechnology;
                     costMult = 5;
                     expMult = 4;
                     break;
@@ -1016,6 +1232,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Crush Fitness because you are not in Aevum. gymWorkout() failed");
                         return false;
                     }
+                    Player.location = Locations.AevumCrushFitnessGym;
                     costMult = 2;
                     expMult = 1.5;
                     break;
@@ -1024,6 +1241,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Snap Fitness because you are not in Aevum. gymWorkout() failed");
                         return false;
                     }
+                    Player.location = Locations.AevumSnapFitnessGym;
                     costMult = 6;
                     expMult = 4;
                     break;
@@ -1032,6 +1250,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Iron Gym because you are not in Sector-12. gymWorkout() failed");
                         return false;
                     }
+                    Player.location = Locations.Sector12IronGym;
                     costMult = 1;
                     expMult = 1;
                     break;
@@ -1040,6 +1259,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Powerhouse Gym because you are not in Sector-12. gymWorkout() failed");
                         return false;
                     }
+                    Player.location = Locations.Sector12PowerhouseGym;
                     costMult = 10;
                     expMult = 7.5;
                     break;
@@ -1048,6 +1268,7 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("ERROR: You cannot workout at Millenium Fitness Gym because you are not in Volhaven. gymWorkout() failed");
                         return false;
                     }
+                    Player.location = Locations.VolhavenMilleniumFitnessGym;
                     costMult = 3;
                     expMult = 2.5;
                     break;
@@ -1098,6 +1319,7 @@ function NetscriptFunctions(workerScript) {
                 case Locations.Volhaven:
                     Player.loseMoney(200000);
                     Player.city = cityname;
+                    Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
                     workerScript.scriptRef.log("Traveled to " + cityname);
                     return true;
                 default:
@@ -1133,6 +1355,7 @@ function NetscriptFunctions(workerScript) {
 
             Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
             darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);
+            Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
             workerScript.scriptRef.log("You have purchased a Tor router!");
             return true;
         },
@@ -1159,6 +1382,7 @@ function NetscriptFunctions(workerScript) {
                              "can be found on your home computer.");
                     } else {
                         workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.FTPCrackProgram.toLowerCase():
@@ -1169,7 +1393,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the FTPCrack.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.RelaySMTPProgram.toLowerCase():
@@ -1180,7 +1405,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the relaySMTP.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.HTTPWormProgram.toLowerCase():
@@ -1191,7 +1417,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the HTTPWorm.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.SQLInjectProgram.toLowerCase():
@@ -1202,7 +1429,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the SQLInject.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.DeepscanV1.toLowerCase():
@@ -1213,7 +1441,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the DeepscanV1.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 case Programs.DeepscanV2.toLowerCase():
@@ -1224,7 +1453,8 @@ function NetscriptFunctions(workerScript) {
                         workerScript.scriptRef.log("You have purchased the DeepscanV2.exe program. The new program " +
                              "can be found on your home computer.");
                     } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + itemName);
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
                     }
                     return true;
                 default:
@@ -1261,6 +1491,7 @@ function NetscriptFunctions(workerScript) {
 
             Player.loseMoney(cost);
 
+            Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
             workerScript.scriptRef.log("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
             return true;
         },
@@ -1431,6 +1662,7 @@ function NetscriptFunctions(workerScript) {
             Player.factionInvitations.splice(index, 1);
             var fac = Factions[name];
             joinFaction(fac);
+            Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
             workerScript.scriptRef.log("Joined the " + name + " faction.");
             return true;
         },
@@ -1658,16 +1890,23 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            for (var j = 0; j < Player.queuedAugmentations.length; ++j) {
-                if (Player.queuedAugmentations[j].name === aug.name) {
-                    workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
-                    return false;
-                }
+            var isNeuroflux = false;
+            if (aug.name === AugmentationNames.NeuroFluxGovernor) {
+                isNeuroflux = true;
             }
-            for (var j = 0; j < Player.augmentations.length; ++j) {
-                if (Player.augmentations[j].name === aug.name) {
-                    workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
-                    return false;
+
+            if (!isNeuroflux) {
+                for (var j = 0; j < Player.queuedAugmentations.length; ++j) {
+                    if (Player.queuedAugmentations[j].name === aug.name) {
+                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                        return false;
+                    }
+                }
+                for (var j = 0; j < Player.augmentations.length; ++j) {
+                    if (Player.augmentations[j].name === aug.name) {
+                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                        return false;
+                    }
                 }
             }
 
@@ -1679,6 +1918,7 @@ function NetscriptFunctions(workerScript) {
             var res = purchaseAugmentation(aug, fac, true);
             workerScript.scriptRef.log(res);
             if (isString(res) && res.startsWith("You purchased")) {
+                Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
                 return true;
             } else {
                 return false;
@@ -1696,6 +1936,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("ERROR: installAugmentations() failed because you do not have any Augmentations to be installed");
                 return false;
             }
+            Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
             workerScript.scriptRef.log("Installing Augmentations. This will cause this script to be killed");
             installAugmentations();
             return true;

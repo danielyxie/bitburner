@@ -13,6 +13,9 @@ import {iTutorialNextStep, iTutorialSteps,
         currITutorialStep}                  from "./InteractiveTutorial.js";
 import {showLiterature}                     from "./Literature.js";
 import {showMessage, Message}               from "./Message.js";
+import {scriptCalculateHackingTime,
+        scriptCalculateGrowTime,
+        scriptCalculateWeakenTime}          from "./NetscriptEvaluator.js";
 import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker.js";
 import {Player}                             from "./Player.js";
 import {hackWorldDaemon}                    from "./RedPill.js";
@@ -24,18 +27,18 @@ import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps.js";
 
 import {containsAllStrings, longestCommonStart,
-        formatNumber}                       from "../utils/StringHelperFunctions.js";
+        formatNumber, isString}             from "../utils/StringHelperFunctions.js";
 import {addOffset, printArray}              from "../utils/HelperFunctions.js";
 import {logBoxCreate}                       from "../utils/LogBox.js";
 
 /* Write text to terminal */
+//If replace is true then spaces are replaced with "&nbsp;"
 function post(input, replace=true) {
     if (replace) {
         $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
     } else {
         $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
     }
-
 	updateTerminalScroll();
 }
 
@@ -72,10 +75,10 @@ $(document).keydown(function(event) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
 			if (command.length > 0) {
-				post("> " + command);
+                post("[" + Player.getCurrentServer().hostname + " ~]> " + command);
 
+                Terminal.resetTerminalInput();      //Clear input first
 				Terminal.executeCommand(command);
-				$('input[class=terminal-input]').val("");
 			}
 		}
 
@@ -211,13 +214,13 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
     //that we are attempting to autocomplete
     if (arg == "") {
         for (var i = allPossibilities.length-1; i >= 0; --i) {
-            if (!allPossibilities[i].startsWith(command)) {
+            if (!allPossibilities[i].toLowerCase().startsWith(command.toLowerCase())) {
                 allPossibilities.splice(i, 1);
             }
         }
     } else {
         for (var i = allPossibilities.length-1; i >= 0; --i) {
-            if (!allPossibilities[i].startsWith(arg)) {
+            if (!allPossibilities[i].toLowerCase().startsWith(arg.toLowerCase())) {
                 allPossibilities.splice(i, 1);
             }
         }
@@ -337,11 +340,27 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     }
 
     if (input.startsWith("kill ") || input.startsWith("nano ") ||
-        input.startsWith("tail ") || input.startsWith("rm ") ||
+        input.startsWith("tail ") ||
         input.startsWith("mem ") || input.startsWith("check ")) {
         //All Scripts
         for (var i = 0; i < currServ.scripts.length; ++i) {
             allPos.push(currServ.scripts[i].filename);
+        }
+        return allPos;
+    }
+
+    if (input.startsWith("rm ")) {
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push(currServ.scripts[i].filename);
+        }
+        for (var i = 0; i < currServ.programs.length; ++i) {
+            allPos.push(currServ.programs[i]);
+        }
+        for (var i = 0; i < currServ.messages.length; ++i) {
+            if (!(currServ.messages[i] instanceof Message) && isString(currServ.messages[i]) &&
+                  currServ.messages[i].endsWith(".lit")) {
+                allPos.push(currServ.messages[i]);
+            }
         }
         return allPos;
     }
@@ -390,6 +409,17 @@ let Terminal = {
         }
     },
 
+    resetTerminalInput: function() {
+        document.getElementById("terminal-input-td").innerHTML =
+            "<div id='terminal-input-header'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
+            '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        var hdr = document.getElementById("terminal-input-header");
+        hdr.style.display = "inline";
+        var lineWidth = document.getElementById("terminal-input-td").offsetWidth;
+        var width = lineWidth - hdr.offsetWidth - 10;
+        document.getElementById("terminal-input-text-box").style.width = width + "px";
+    },
+
     //Complete the hack/analyze command
 	finishHack: function(cancelled = false) {
 		if (cancelled == false) {
@@ -414,13 +444,12 @@ let Terminal = {
 				var moneyGained = Player.calculatePercentMoneyHacked();
 				moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
-				//Safety check
-				if (moneyGained <= 0) {moneyGained = 0;}
+				if (moneyGained <= 0) {moneyGained = 0;} //Safety check
 
 				server.moneyAvailable -= moneyGained;
 				Player.gainMoney(moneyGained);
-
                 Player.gainHackingExp(expGainedOnSuccess)
+                Player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
 
                 server.fortify(CONSTANTS.ServerFortifyAmount);
 
@@ -435,7 +464,8 @@ let Terminal = {
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        Terminal.resetTerminalInput();
+        //document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);
 
         Terminal.hackFlag = false;
@@ -490,7 +520,8 @@ let Terminal = {
         //Rename the progress bar so that the next hacks dont trigger it. Re-enable terminal
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
-        document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
+        Terminal.resetTerminalInput();
+        //document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);
     },
 
@@ -587,6 +618,7 @@ let Terminal = {
                     Player.analyze();
 
                     //Disable terminal
+                    //Terminal.resetTerminalInput();
                     document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                     $('input[class=terminal-input]').prop('disabled', true);
                     iTutorialNextStep();
@@ -610,6 +642,7 @@ let Terminal = {
 					Player.hack();
 
 					//Disable terminal
+                    //Terminal.resetTerminalInput();
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
                     iTutorialNextStep();
@@ -690,6 +723,7 @@ let Terminal = {
                 Player.analyze();
 
                 //Disable terminal
+                //Terminal.resetTerminalInput();
                 document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
                 $('input[class=terminal-input]').prop('disabled', true);
 				break;
@@ -793,6 +827,7 @@ let Terminal = {
 					Player.hack();
 
 					//Disable terminal
+                    //Terminal.resetTerminalInput();
 					document.getElementById("terminal-input-td").innerHTML = '<input type="text" class="terminal-input"/>';
 					$('input[class=terminal-input]').prop('disabled', true);
 				}
@@ -821,6 +856,7 @@ let Terminal = {
                 Player.currentServer = Player.getHomeComputer().ip;
                 Player.getCurrentServer().isConnectedTo = true;
                 post("Connected to home");
+                Terminal.resetTerminalInput();
 				break;
 			case "hostname":
 				if (commandArray.length != 1) {
@@ -961,6 +997,15 @@ let Terminal = {
                     }
                 }
 
+                //Check literature files
+                for (var i = 0; i < s.messages.length; ++i) {
+                    var f = s.messages[i];
+                    if (!(f instanceof Message) && isString(f) && f === delTarget) {
+                        s.messages.splice(i, 1);
+                        return;
+                    }
+                }
+
                 post("No such file exists");
 				break;
 			case "run":
@@ -986,7 +1031,17 @@ let Terminal = {
                 if (commandArray.length == 1) {
                     Terminal.executeScanAnalyzeCommand(1);
                 } else if (commandArray.length == 2) {
-                    var depth = Number(commandArray[1]);
+                    var all = false;
+                    if (commandArray[1].endsWith("-a")) {
+                        all = true;
+                        commandArray[1] = commandArray[1].replace("-a", "");
+                    }
+                    var depth;
+                    if (commandArray[1].length === 0) {
+                        depth = 1;
+                    } else {
+                        depth = Number(commandArray[1]);
+                    }
                     if (isNaN(depth) || depth < 0) {
                         post("Incorrect usage of scan-analyze command. depth argument must be positive numeric");
                         return;
@@ -1002,7 +1057,7 @@ let Terminal = {
                         post("You cannot scan-analyze with that high of a depth. Maximum depth is 10");
                         return;
                     }
-                    Terminal.executeScanAnalyzeCommand(depth);
+                    Terminal.executeScanAnalyzeCommand(depth, all);
                 } else {
                     post("Incorrect usage of scan-analyze command. usage: scan-analyze [depth]");
                 }
@@ -1033,7 +1088,6 @@ let Terminal = {
                 //Scp for lit files
                 if (scriptname.endsWith(".lit")) {
                     var found = false;
-                    var curr
                     for (var i = 0; i < currServ.messages.length; ++i) {
                         if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
                             found = true;
@@ -1227,6 +1281,7 @@ let Terminal = {
         if (Player.getCurrentServer().hostname == "darkweb") {
             checkIfConnectedToDarkweb(); //Posts a 'help' message if connecting to dark web
         }
+        Terminal.resetTerminalInput();
     },
 
     executeListCommand: function(commandArray) {
@@ -1330,12 +1385,13 @@ let Terminal = {
         }
     },
 
-    executeScanAnalyzeCommand: function(depth=1) {
+    executeScanAnalyzeCommand: function(depth=1, all=false) {
         //We'll use the AllServersMap as a visited() array
         //TODO Using array as stack for now, can make more efficient
         post("~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~");
         post(" ");
         var visited = new AllServersMap();
+
         var stack = [];
         var depthQueue = [0];
         var currServ = Player.getCurrentServer();
@@ -1343,8 +1399,10 @@ let Terminal = {
         while(stack.length != 0) {
             var s = stack.pop();
             var d = depthQueue.pop();
-            if (visited[s.ip] || d > depth) {
-                continue;
+            if (!all && s.purchasedByPlayer && s.hostname != "home") {
+                continue; //Purchased server
+            } else if (visited[s.ip] || d > depth) {
+                continue; //Already visited or out-of-depth
             } else {
                 visited[s.ip] = 1;
             }
@@ -1375,6 +1433,7 @@ let Terminal = {
             (function() {
             var hostname = links[i].innerHTML.toString();
             links[i].onclick = function() {
+                if (Terminal.analyzeFlag || Terminal.hackFlag) {return;}
                 Terminal.connectToServer(hostname);
             }
             }());//Immediate invocation

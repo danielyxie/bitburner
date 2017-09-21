@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.28.1",
+    Version:                "0.29.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -58,8 +58,9 @@ let CONSTANTS = {
     ScriptScpRamCost:               0.5,
     ScriptKillRamCost:              0.5, //Kill and killall
     ScriptHasRootAccessRamCost:     0.05,
-    ScriptGetHostnameRamCost:       0.05,
-    ScriptGetHackingLevelRamCost:   0.05,
+    ScriptGetHostnameRamCost:       0.05, //getHostname() and getIp()
+    ScriptGetHackingLevelRamCost:   0.05, //getHackingLevel() and getIntelligence()
+    ScriptGetMultipliersRamCost:    4.0, //getHackingMultipliers() and getBitNodeMultipliers()
     ScriptGetServerCost:            0.1,
     ScriptFileExistsRamCost:        0.1,
     ScriptIsRunningRamCost:         0.1,
@@ -86,9 +87,9 @@ let CONSTANTS = {
 
     //Server constants
     ServerBaseGrowthRate: 1.03,     //Unadjusted Growth rate
-    ServerMaxGrowthRate: 1.0035,     //Maximum possible growth rate (max rate accounting for server security)
+    ServerMaxGrowthRate: 1.0035,    //Maximum possible growth rate (max rate accounting for server security)
     ServerFortifyAmount: 0.002,     //Amount by which server's security increases when its hacked/grown
-    ServerWeakenAmount: 0.05,        //Amount by which server's security decreases when weakened
+    ServerWeakenAmount: 0.05,       //Amount by which server's security decreases when weakened
 
     PurchasedServerLimit: 25,
 
@@ -111,6 +112,18 @@ let CONSTANTS = {
 
     //Hospital/Health
     HospitalCostPerHp: 100000,
+
+    //Intelligence-related constants
+    IntelligenceCrimeWeight: 0.05,  //Weight for how much int affects crime success rates
+    IntelligenceInfiltrationWeight: 0.1, //Weight for how much int affects infiltration success rates
+    IntelligenceCrimeBaseExpGain: 0.0002,
+    IntelligenceProgramBaseExpGain: 1000, //Program required hack level divided by this to determine int exp gain
+    IntelligenceTerminalHackBaseExpGain: 200, //Hacking exp divided by this to determine int exp gain
+    IntelligenceSingFnBaseExpGain: 0.0005,
+
+    //Hacking Missions
+    HackingMissionRepToDiffConversion: 5000, //Faction rep is divided by this to get mission difficulty
+    HackingMissionRepToRewardConversion: 20, //Faction rep divided byt his to get mission rep reward
 
     //Gang constants
     GangRespectToReputationRatio: 2, //Respect is divided by this to get rep gain
@@ -231,8 +244,10 @@ let CONSTANTS = {
                          "encounter diminishing returns in your hacking (since you are only hacking a certain percentage). You can " +
                          "increase the amount of money on a server using a script and the grow() function in Netscript.<br><br>" +
                          "<h1>Server Security</h1><br>" +
-                         "Each server has a security level, which is denoted by a number between 1 and 100. A higher number means " +
-                         "the server has stronger security. As mentioned above, a server's security level is an important factor " +
+                         "Each server has a security level, typically between 1 and 100. A higher number means the server has stronger security. " +
+                         "It is possible for a server to have a security level of 100 or higher, in which case hacking that server "  +
+                         "will become impossible (0% chance to hack).<br><br>" +
+                         "As mentioned above, a server's security level is an important factor " +
                          "to consider when hacking. You can check a server's security level using the 'analyze' command, although this " +
                          "only gives an estimate (with 5% uncertainty). You can also check a server's security in a script, using the " +
                          "<i>getServerSecurityLevel(server)</i> function in Netscript. See the Netscript documentation for more details. " +
@@ -396,10 +411,13 @@ let CONSTANTS = {
                            "there is no required hacking level to run the command. Returns " +
                            "0.1. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" +
                            "<i>print(x)</i><br>Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br><br>" +
-                           "<i>tprint(x)</i><br>Prints a value or a variable to the Terminal<br><br>" + 
+                           "<i>tprint(x)</i><br>Prints a value or a variable to the Terminal<br><br>" +
                            "<i>clearLog()</i><br>Clears the script's logs. <br><br>" +
-                           "<i>scan(hostname/ip)</i><br>Returns an array containing the hostnames of all servers that are one node away from the specified server. " +
-                           "The argument must be a string containing the IP or hostname of the target server. The hostnames in the returned array are strings.<br><br>" +
+                           "<i>scan(hostname/ip, [hostnames=true])</i><br>Returns an array containing the hostnames or IPs of all servers that are one node away from the specified server. " +
+                           "The argument must be a string containing the IP or hostname of the target server. The second argument is a boolean that specifies whether " +
+                           "the hostnames or IPs of the scanned servers should be output. If it is true then hostnames will be returned, and if false then IP addresses will. " +
+                           "This second argument is optional and, if ommitted, the function will output " +
+                           "the hostnames of the scanned servers. The hostnames/IPs in the returned array are strings.<br><br>" +
                            "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" +
                            "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" +
                            "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer. Does NOT work while offline <br> Example: ftpcrack('foodnstuff');<br><br>" +
@@ -449,14 +467,66 @@ let CONSTANTS = {
                            "kill('foo.script', getHostname(), 1, 'foodnstuff');<br><br>" +
                            "<i>killall(hostname/ip)</i><br> Kills all running scripts on the specified server. This function takes a single argument which " +
                            "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" +
-                           "<i>scp(script, hostname/ip)</i><br>Copies a script to another server. The first argument is a string with the filename of the script " +
-                           "to be copied. The second argument is a string with the hostname or IP of the destination server. Returns true if the script is successfully " +
-                           "copied over and false otherwise. <br> Example: scp('hack-template.script', 'foodnstuff');<br><br>" +
+                           "<i>scp(script, [source], destination)</i><br>Copies a script or literature (.lit) file to another server. The first argument is a string with " +
+                           "the filename of the script or literature file " +
+                           "to be copied. The next two arguments are strings containing the hostname/IPs of the source and target server. " +
+                           "The source refers to the server from which the script/literature file will be copied, while the destination " +
+                           "refers to the server to which it will be copied. The source server argument is optional, and if ommitted the source " +
+                           "will be the current server (the server on which the script is running). Returns true if the script/literature file is " +
+                           "successfully copied over and false otherwise. <br><br>" +
+                           "Example: scp('hack-template.script', 'foodnstuff'); //Copies hack-template.script from the current server to foodnstuff<br>" +
+                           "Example: scp('foo.lit', 'helios', 'home'); //Copies foo.lit from the helios server to the home computer<br><br>" +
+                           "<i>ls(hostname/ip)</i><br>Returns an array containing the names of all files on the specified server. The argument must be a " +
+                           "string with the hostname or IP of the target server.<br><br>" +
                            "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " +
                            "The argument passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline.<br> " +
                            "Example:<br>if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" +
+                           "<i>getIp()</i><br>Returns a string with the IP Address of the server that the script is running on <br><br>" +
                            "<i>getHostname()</i><br>Returns a string with the hostname of the server that the script is running on<br><br>" +
-                           "<i>getHackingLevel()</i><br> Returns the Player's current hacking level. Does NOT work while offline <br><br> " +
+                           "<i>getHackingLevel()</i><br>Returns the Player's current hacking level. Does NOT work while offline<br><br> " +
+                           "<i>getIntelligence()</i><br>Returns the Player's current intelligence level. Requires Source-File 5 to run<br><br>" +
+                           "<i>getHackingMultipliers()</i><br>Returns an object containing the Player's hacking related multipliers. " +
+                           "These multipliers are returned in integer forms, not percentages (e.g. 1.5 instead of 150%). " +
+                           "The object has the following structure:<br><br>" +
+                           "{<br>" +
+                           "chance: Player's hacking chance multiplier<br>" +
+                           "speed: Player's hacking speed multiplier<br>" +
+                           "money: Player's hacking money stolen multiplier<br>" +
+                           "growth: Player's hacking growth multiplier<br>" +
+                           "}<br><br>Example:<br><br>" +
+                           "mults = getHackingMultipliers();<br>" +
+                           "print(mults.chance);<br>" +
+                           "print(mults.growth);<br><br>" +
+                           "<i>getBitNodeMultipliers()</i><br>Returns an object containing the current BitNode multipliers. " +
+                           "This function requires Source-File 5 in order to run. The multipliers are returned in integer forms, not percentages " +
+                           "(e.g. 1.5 instead of 150%). The multipliers represent the difference between the current BitNode and the " +
+                           "original BitNode (BitNode-1). For example, if the 'CrimeMoney' multiplier has a value of 0.1 then that means " +
+                           "that committing crimes in the current BitNode will only give 10% of the money you would have received in " +
+                           "BitNode-1. The object has the following structure (subject to change in the future):<br><br>" +
+                           "{<br>" +
+                           "ServerMaxMoney:         1,<br>" +
+                           "ServerStartingMoney:    1,<br>" +
+                           "ServerGrowthRate:       1,<br>" +
+                           "ServerWeakenRate:       1,<br>" +
+                           "ServerStartingSecurity: 1,<br>" +
+                           "ManualHackMoney:        1,<br>" +
+                           "ScriptHackMoney:        1,<br>" +
+                           "CompanyWorkMoney:       1,<br>" +
+                           "CrimeMoney:             1,<br>" +
+                           "HacknetNodeMoney:       1,<br>" +
+                           "CompanyWorkExpGain:     1,<br>" +
+                           "ClassGymExpGain:        1,<br>" +
+                           "FactionWorkExpGain:     1,<br>" +
+                           "HackExpGain:            1,<br>" +
+                           "CrimeExpGain:           1,<br>" +
+                           "FactionWorkRepGain:     1,<br>" +
+                           "FactionPassiveRepGain:  1,<br>" +
+                           "AugmentationRepCost:    1,<br>" +
+                           "AugmentationMoneyCost:  1,<br>" +
+                           "}<br><br>Example:<br><br>" +
+                           "mults = getBitNodeMultipliers();<br>" +
+                           "print(mults.ServerMaxMoney);<br>" +
+                           "print(mults.HackExpGain);<br><br>" +
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" +
                            "<i>getServerMaxMoney(hostname/ip)</i><br>Returns the maximum amount of money that can be available on a server. The argument passed in must be a string with " +
@@ -479,6 +549,8 @@ let CONSTANTS = {
                            "<i>getServerRam(hostname/ip)</i><br>Returns an array with two elements that gives information about the target server's RAM. The first " +
                            "element in the array is the amount of RAM that the server has (in GB). The second element in the array is the amount of RAM that " +
                            "is currently being used on the server.<br><br>" +
+                           "<i>serverExists(hostname/ip)</i><br>Returns a boolean denoting whether or not the specified server exists. The argument " +
+                           "must be a string with the hostname or IP of the target server.<br><br>" +
                            "<i>fileExists(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " +
                            "The first argument must be a string with the name of the file. A file can either be a script or a program. A script name is case-sensitive, but a " +
                            "program is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " +
@@ -508,9 +580,10 @@ let CONSTANTS = {
                            "but it will be converted to a string using Javascript's String function. Anything that resolves to an empty string will cause the function to fail. " +
                            "The second argument specified the amount of RAM (in GB) for the server. This argument must resolve to a numeric and it must be a power of 2 " +
                            "(2, 4, 8, etc...). <br><br>" +
-                           "Purchasing a server using this Netscript function is twice as expensive as manually purchasing a server from a location in the World.<br><br>" +
                            "This function returns the hostname of the newly purchased server as a string. If the function fails to purchase a server, then it will return " +
                            "an empty string. The function will fail if the arguments passed in are invalid or if the player does not have enough money to purchase the specified server.<br><br>" +
+                           "<i>deleteServer(hostname)</i><br>Deletes one of the servers you've purchased with the specified hostname. The function will fail if " +
+                           "there are any scripts running on the specified server. Returns true if successful and false otherwise<br><br>" +
                            "<i>round(n)</i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" +
                            "<i>write(port, data)</i><br>Writes data to a port. The first argument must be a number between 1 and 10 that specifies the port. The second " +
                            "argument defines the data to write to the port. If the second argument is not specified then it will write an empty string to the port.<br><br>" +
@@ -534,21 +607,46 @@ let CONSTANTS = {
                            "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
                            "<i>getWeakenTime(hostname/ip)</i><br>Returns the amount of time in seconds it takes to execute the weaken() Netscript function " +
                            "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
+                           "<i>getScriptIncome([scriptname], [hostname/ip], [args...])</i><br>" +
+                           "Returns the amount of income the specified script generates while online (when the game is open, does not apply for " +
+                           "offline income). This function can also return the total income of all of your active scripts by running the function " +
+                           "with no arguments.<br><br>" +
+                           "Remember that a script is uniquely identified by both its name and its arguments. So for example if you ran a script " +
+                           "with the arguments 'foodnstuff' and '5' then in order to use this function to get that script's income you must " +
+                           "specify those arguments in this function call.<br><br>" +
+                           "The first argument, if specified, must be a string with the name of the script (including the .script extension). " +
+                           "The second argument must be a string with the hostname/IP of the target server. If the first argument is specified " +
+                           "then the second argument must be specified as well. Any additional arguments passed to the function will specify " +
+                           "the arguments passed into the target script.<br><br>" +
+                           "<i>getScriptExpGain([scriptname], [hostname/ip], [args...])</i><br>" +
+                           "Returns the amount of hacking experience the specified script generates while online (when the game is open, does not apply for " +
+                           "offline experience gains). This function can also return the total experience gain rate of all of your active scripts by running the function " +
+                           "with no arguments.<br><br>" +
+                           "Remember that a script is uniquely identified by both its name and its arguments. So for example if you ran a script " +
+                           "with the arguments 'foodnstuff' and '5' then in order to use this function to get that script's income you must " +
+                           "specify those arguments in this function call.<br><br>" +
+                           "The first argument, if specified, must be a string with the name of the script (including the .script extension). " +
+                           "The second argument must be a string with the hostname/IP of the target server. If the first argument is specified " +
+                           "then the second argument must be specified as well. Any additional arguments passed to the function will specify " +
+                           "the arguments passed into the target script.<br><br>" +
                            "<u><h1>Hacknet Nodes API</h1></u><br>" +
                            "Netscript provides the following API for accessing and upgrading your Hacknet Nodes through scripts. This API does NOT work offline.<br><br>" +
                            "<i>hacknetnodes</i><br> A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " +
                            "indexes. These indexes correspond to the number at the end of the name of the Hacknet Node. For example, the first Hacknet Node you purchase " +
                            "will have the same 'hacknet-node-0' and can be accessed with hacknetnodes[0]. The fourth Hacknet Node you purchase will have the name " +
                            "'hacknet-node-3' and can be accessed with hacknetnodes[3]. <br><br>" +
-                           "<i>hacknetnodes.length</i><br> Returns the number of Hacknet Nodes that the player owns<br><br>" +
-                           "<i>hacknetnodes[i].level</i><br> Returns the level of the corresponding Hacknet Node<br><br>" +
-                           "<i>hacknetnodes[i].ram</i><br> Returns the amount of RAM on the corresponding Hacknet Node<br><br>" +
-                           "<i>hacknetnodes[i].cores</i><br> Returns the number of cores on the corresponding Hacknet Node<br><br>" +
-                           "<i>hacknetnodes[i].upgradeLevel(n)</i><br> Tries to upgrade the level of the corresponding Hacknet Node n times. The argument n must be a " +
+                           "<i>hacknetnodes.length</i><br>Returns the number of Hacknet Nodes that the player owns<br><br>" +
+                           "<i>hacknetnodes[i].level</i><br>Returns the level of the corresponding Hacknet Node<br><br>" +
+                           "<i>hacknetnodes[i].ram</i><br>Returns the amount of RAM on the corresponding Hacknet Node<br><br>" +
+                           "<i>hacknetnodes[i].cores</i><br>Returns the number of cores on the corresponding Hacknet Node<br><br>" +
+                           "<i>hacknetnodes[i].totalMoneyGenerated</i><br>Returns the total amount of money that the corresponding Hacknet Node has earned<br><br>" +
+                           "<i>hacknetnodes[i].onlineTimeSeconds</i><br>Returns the total amount of time that the corresponding Hacknet Node has existed<br><br>" +
+                           "<i>hacknetnodes[i].moneyGainRatePerSecond</i><br>Returns the income ($ / sec) that the corresponding Hacknet Node earns<br><br>" +
+                           "<i>hacknetnodes[i].upgradeLevel(n)</i><br>Tries to upgrade the level of the corresponding Hacknet Node n times. The argument n must be a " +
                            "positive integer. Returns true if the Hacknet Node's level is successfully upgraded n times or up to the max level (200), and false otherwise.<br><br>" +
-                           "<i>hacknetnodes[i].upgradeRam()</i><br> Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " +
+                           "<i>hacknetnodes[i].upgradeRam()</i><br>Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " +
                            "RAM is successfully upgraded, and false otherwise. <br><br>" +
-                           "<i>hacknetnodes[i].upgradeCore()</i><br> Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " +
+                           "<i>hacknetnodes[i].upgradeCore()</i><br>Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " +
                            "additional core is successfully purchase, and false otherwise. <br><br>" +
                            "Example: The following is an example of one way a script can be used to automate the purchasing and upgrading of Hacknet Nodes. " +
                            "This script purchases new Hacknet Nodes until the player has four. Then, it iteratively upgrades each of those four Hacknet Nodes " +
@@ -859,14 +957,20 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.28.1<br>" +
-    "-The script editor now uses the open-source Ace editor, which provides a much better experience when coding!<br>" +
-    "-Added tprint() Netscript function<br><br>" +
-    "v0.28.0<br>" +
-    "-Added BitNode-4: The Singularity<br>" +
-    "-Added BitNode-11: The Big Crash<br>" +
-    "-Migrated the codebase to use webpack (doesn't affect any in game content, except maybe some slight " +
-    "performance improvements and there may be bugs that result from dependency errors)"
+    "v0.29.0<br>" +
+    "-Added BitNode-5: Artificial Intelligence<br>" +
+    "-Added getIp(), getIntelligence(), getHackingMultipliers(), and getBitNodeMultipliers() Netscript functions (requires Source-File 5)<br>" +
+    "-Updated scan() Netscript function so that you can choose to have it print IPs rather than hostnames<br>" +
+    "-Refactored scp() Netscript function so that it takes an optional 'source server' argument<br>" +
+    "-For Infiltration, decreased the percentage by which the security level increases by " +
+    "about 10% for every location<br>" +
+    "-Using :w in the script editor's Vim keybinding mode should now save and quit to Terminal<br>" +
+    "-Some minor optimizations that should reduce the size of the save file<br>" +
+    "-scan-analyze Terminal command will no longer show your purchased servers, unless you pass a '-a' flag into the command<br>" +
+    "-After installing the Red Pill augmentation from Daedalus, the message telling you to find 'The-Cave' " +
+    "will now repeatedly pop up regardless of whether or not you have messages suppressed<br>" +
+    "-Various bugfixes",
+
 }
 
 export {CONSTANTS};

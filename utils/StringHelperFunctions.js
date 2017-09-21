@@ -60,7 +60,7 @@ function longestCommonStart(strings) {
 
     var A = strings.concat().sort(),
     a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
-    while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
+    while(i<L && a1.charAt(i).toLowerCase() === a2.charAt(i).toLowerCase()) i++;
     return a1.substring(0, i);
 }
 
@@ -129,6 +129,16 @@ function numNetscriptOperators(string) {
     return total;
 }
 
+//Checks if a string contains HTML elements
+function isHTML(str) {
+    var a = document.createElement('div');
+    a.innerHTML = str;
+    for (var c = a.childNodes, i = c.length; i--; ) {
+        if (c[i].nodeType == 1) return true;
+    }
+    return false;
+}
+
 export {getIndicesOf, convertTimeMsToTimeElapsedString, longestCommonStart,
         isString, isPositiveNumber, containsAllStrings, formatNumber,
-        numOccurrences, numNetscriptOperators};
+        numOccurrences, numNetscriptOperators, isHTML};

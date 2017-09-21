@@ -92,7 +92,7 @@ HacknetNode.prototype.getLevelUpgradeCost = function(levels=1) {
 
 HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
     var cost = this.calculateLevelUpgradeCost(levels);
-    if (isNaN(cost)) {return false;}
+    if (isNaN(cost) || levels < 0) {return false;}
     if (this.level + levels > CONSTANTS.HacknetNodeMaxLevel) {
         var diff = Math.max(0, CONSTANTS.HacknetNodeMaxLevel - this.level);
         return this.purchaseLevelUpgrade(diff);
@@ -442,7 +442,7 @@ function updateHacknetNodeDomElement(nodeObj) {
         upgradeRamButton.setAttribute("class", "a-link-button-inactive");
     } else {
         var upgradeRamCost = nodeObj.calculateRamUpgradeCost();
-        upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM -$" + formatNumber(upgradeRamCost, 2);
+        upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM - $" + formatNumber(upgradeRamCost, 2);
         if (Player.money.lt(upgradeRamCost)) {
             upgradeRamButton.setAttribute("class", "a-link-button-inactive");
         } else {

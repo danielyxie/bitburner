@@ -25,6 +25,7 @@ function WorkerScript(runningScriptObj) {
 	this.scriptRef		= runningScriptObj;
     this.errorMessage   = "";
     this.args           = runningScriptObj.args;
+    this.killTrigger    = function() {}; //CB func used to clear any delays (netscriptDelay())
 }
 
 //Returns the server on which the workerScript is running
@@ -58,6 +59,34 @@ function prestigeWorkerScripts() {
 
 //Loop through workerScripts and run every script that is not currently running
 function runScriptsLoop() {
+    //Delete any scripts that finished or have been killed. Loop backwards bc removing
+    //items fucks up the indexing
+    for (var i = workerScripts.length - 1; i >= 0; i--) {
+        if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
+            console.log("Deleting script: " + workerScripts[i].name);
+            //Delete script from the runningScripts array on its host serverIp
+            var ip = workerScripts[i].serverIp;
+            var name = workerScripts[i].name;
+
+            for (var j = 0; j < AllServers[ip].runningScripts.length; j++) {
+                if (AllServers[ip].runningScripts[j].filename == name &&
+                    compareArrays(AllServers[ip].runningScripts[j].args, workerScripts[i].args)) {
+                    AllServers[ip].runningScripts.splice(j, 1);
+                    break;
+                }
+            }
+
+            //Free RAM
+            AllServers[ip].ramUsed -= workerScripts[i].ramUsage;
+
+            //Delete script from Active Scripts
+            deleteActiveScriptsItem(workerScripts[i]);
+
+            //Delete script from workerScripts
+            workerScripts.splice(i, 1);
+        }
+    }
+
 	//Run any scripts that haven't been started
 	for (var i = 0; i < workerScripts.length; i++) {
 		//If it isn't running, start the script
@@ -120,35 +149,7 @@ function runScriptsLoop() {
 		}
 	}
 
-	//Delete any scripts that finished or have been killed. Loop backwards bc removing
-	//items fucks up the indexing
-	for (var i = workerScripts.length - 1; i >= 0; i--) {
-		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
-			console.log("Deleting script: " + workerScripts[i].name);
-			//Delete script from the runningScripts array on its host serverIp
-			var ip = workerScripts[i].serverIp;
-			var name = workerScripts[i].name;
-
-			for (var j = 0; j < AllServers[ip].runningScripts.length; j++) {
-				if (AllServers[ip].runningScripts[j].filename == name &&
-                    compareArrays(AllServers[ip].runningScripts[j].args, workerScripts[i].args)) {
-					AllServers[ip].runningScripts.splice(j, 1);
-					break;
-				}
-			}
-
-			//Free RAM
-			AllServers[ip].ramUsed -= workerScripts[i].ramUsage;
-
-            //Delete script from Active Scripts
-			deleteActiveScriptsItem(workerScripts[i]);
-
-			//Delete script from workerScripts
-			workerScripts.splice(i, 1);
-		}
-	}
-
-	setTimeout(runScriptsLoop, 10000);
+	setTimeout(runScriptsLoop, 6000);
 }
 
 //Queues a script to be killed by settings its stop flag to true. Then, the code will reject
@@ -159,6 +160,7 @@ function killWorkerScript(runningScriptObj, serverIp) {
 		if (workerScripts[i].name == runningScriptObj.filename && workerScripts[i].serverIp == serverIp &&
             compareArrays(workerScripts[i].args, runningScriptObj.args)) {
 			workerScripts[i].env.stopFlag = true;
+            workerScripts[i].killTrigger();
             return true;
 		}
 	}

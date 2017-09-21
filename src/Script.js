@@ -1,6 +1,18 @@
 var ace = require('brace');
 require('brace/mode/javascript');
+require('brace/mode/netscript');
+require('brace/theme/chaos');
+require('brace/theme/chrome');
 require('brace/theme/monokai');
+require('brace/theme/solarized_dark');
+require('brace/theme/solarized_light');
+require('brace/theme/terminal');
+require('brace/theme/twilight');
+require('brace/theme/xcode');
+require("brace/keybinding/vim");
+require("brace/keybinding/emacs");
+
+
 
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
@@ -18,6 +30,12 @@ import {compareArrays}                          from "../utils/HelperFunctions.j
 import {formatNumber, numOccurrences,
         numNetscriptOperators}                  from "../utils/StringHelperFunctions.js";
 
+var keybindings = {
+    ace: null,
+    vim: "ace/keyboard/vim",
+    emacs: "ace/keyboard/emacs",
+};
+
 function scriptEditorInit() {
     //Initialize save and close button
     var closeButton = document.getElementById("script-editor-save-and-close-button");
@@ -27,26 +45,59 @@ function scriptEditorInit() {
         return false;
     });
 
-    //Allow tabs (four spaces) in all textareas
-    var textareas = document.getElementsByTagName('textarea');
-    var count = textareas.length;
-    for(var i=0;i<count;i++){
-        textareas[i].onkeydown = function(e){
-            if(e.keyCode==9 || e.which==9){
-                e.preventDefault();
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
+    //Initialize ACE Script editor
+    var editor = ace.edit('javascript-editor');
+    editor.getSession().setMode('ace/mode/netscript');
+    editor.setTheme('ace/theme/monokai');
+    document.getElementById('javascript-editor').style.fontSize='16px';
+    editor.setOption("showPrintMargin", false);
 
-                //Set textarea value to: text before caret + four spaces + text after caret
-                let spaces = "    ";
-                this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
+    /* Script editor options */
+    //Theme
+    var themeDropdown = document.getElementById("script-editor-option-theme");
+    themeDropdown.selectedIndex = 2;
+    themeDropdown.onchange = function() {
+        var val = themeDropdown.value;
+        var themePath = "ace/theme/" + val.toLowerCase();
+        editor.setTheme(themePath);
+    };
 
-                //Put caret at after the four spaces
-                this.selectionStart = this.selectionEnd = start + spaces.length;
-            }
-        }
-    }
-};
+    //Keybinding
+    var keybindingDropdown = document.getElementById("script-editor-option-keybinding");
+    keybindingDropdown.onchange = function() {
+        var val = keybindingDropdown.value;
+        editor.setKeyboardHandler(keybindings[val.toLowerCase()]);
+    };
+
+    //Highlight Active line
+    var highlightActiveChkBox = document.getElementById("script-editor-option-highlightactiveline");
+    highlightActiveChkBox.onchange = function() {
+        editor.setHighlightActiveLine(highlightActiveChkBox.checked);
+    };
+
+    //Show Invisibles
+    var showInvisiblesChkBox = document.getElementById("script-editor-option-showinvisibles");
+    showInvisiblesChkBox.onchange = function() {
+        editor.setShowInvisibles(showInvisiblesChkBox.checked);
+    };
+
+    //Use Soft Tab
+    var softTabChkBox = document.getElementById("script-editor-option-usesofttab");
+    softTabChkBox.onchange = function() {
+        editor.getSession().setUseSoftTabs(softTabChkBox.checked);
+    };
+
+    //Configure some of the VIM keybindings
+    ace.config.loadModule('ace/keyboard/vim', function(module) {
+        var VimApi = module.CodeMirror.Vim;
+        VimApi.defineEx('write', 'w', function(cm, input) {
+            saveAndCloseScriptEditor();
+        });
+        VimApi.defineEx('quit', 'q', function(cm, input) {
+            Engine.loadTerminalContent();
+        });
+    });
+}
 document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 
 //Updates line number and RAM usage in script
@@ -163,6 +214,7 @@ Script.prototype.updateRamUsage = function() {
 }
 
 function calculateRamUsage(codeCopy) {
+    codeCopy = codeCopy.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1'); //Delete comments
     codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
     var baseRam = 1.4;
     var whileCount = numOccurrences(codeCopy, "while(");
@@ -183,8 +235,12 @@ function calculateRamUsage(codeCopy) {
     var killCount = numOccurrences(codeCopy, "kill(") + numOccurrences(codeCopy, "killall(");
     var scpCount = numOccurrences(codeCopy, "scp(");
     var hasRootAccessCount = numOccurrences(codeCopy, "hasRootAccess(");
-    var getHostnameCount = numOccurrences(codeCopy, "getHostname(");
-    var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
+    var getHostnameCount = numOccurrences(codeCopy, "getHostname(") +
+                           numOccurrences(codeCopy, "getIp(");
+    var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(") +
+                               numOccurrences(codeCopy, "getIntelligence(");
+    var getMultipliersCount = numOccurrences(codeCopy, "getHackingMultipliers(") +
+                              numOccurrences(codeCopy, "getBitNodeMultipliers(");
     var getServerCount = numOccurrences(codeCopy, "getServerMoneyAvailable(") +
                          numOccurrences(codeCopy, "getServerMaxMoney(") +
                          numOccurrences(codeCopy, "getServerSecurityLevel(") +
@@ -192,10 +248,10 @@ function calculateRamUsage(codeCopy) {
                          numOccurrences(codeCopy, "getServerGrowth(") +
                          numOccurrences(codeCopy, "getServerRequiredHackingLevel(") +
                          numOccurrences(codeCopy, "getServerNumPortsRequired(") +
-                         numOccurrences(codeCopy, "getServerRam(");
+                         numOccurrences(codeCopy, "getServerRam(") +
+                         numOccurrences(codeCopy, "serverExists(");
     var fileExistsCount = numOccurrences(codeCopy, "fileExists(");
     var isRunningCount = numOccurrences(codeCopy, "isRunning(");
-    var numOperators = numNetscriptOperators(codeCopy);
     var purchaseHacknetCount = numOccurrences(codeCopy, "purchaseHacknetNode(");
     var hacknetnodesArrayCount = numOccurrences(codeCopy, "hacknetnodes[");
     var hnUpgLevelCount = numOccurrences(codeCopy, ".upgradeLevel(");
@@ -212,7 +268,9 @@ function calculateRamUsage(codeCopy) {
     var scriptReadCount = numOccurrences(codeCopy, "read(");
     var arbScriptCount = numOccurrences(codeCopy, "scriptRunning(") +
                          numOccurrences(codeCopy, "scriptKill(");
-    var getScriptCount = numOccurrences(codeCopy, "getScriptRam(");
+    var getScriptCount = numOccurrences(codeCopy, "getScriptRam(") +
+                         numOccurrences(codeCopy, "getScriptIncome(") +
+                         numOccurrences(codeCopy, "getScriptExpGain(");
     var getHackTimeCount = numOccurrences(codeCopy, "getHackTime(") +
                            numOccurrences(codeCopy, "getGrowTime(") +
                            numOccurrences(codeCopy, "getWeakenTime(");
@@ -262,10 +320,10 @@ function calculateRamUsage(codeCopy) {
         (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) +
         (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
         (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) +
+        (getMultipliersCount * CONSTANTS.ScriptGetMultipliersRamCost) +
         (getServerCount * CONSTANTS.ScriptGetServerCost) +
         (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) +
         (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
-        (numOperators * CONSTANTS.ScriptOperatorRamCost) +
         (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) +
         (hacknetnodesArrayCount * CONSTANTS.ScriptHacknetNodesRamCost) +
         (hnUpgLevelCount * CONSTANTS.ScriptHNUpgLevelRamCost) +
@@ -444,19 +502,7 @@ function RunningScript(script, args) {
     this.threads                = 1;
 
     //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-    this.dataMap                = new AllServersMap([0, 0, 0, 0]);
-}
-
-RunningScript.prototype.reset = function() {
-    this.scriptRef.updateRamUsage();
-
-    this.offlineRunningTime  	= 0.01;	//Seconds
-	this.offlineMoneyMade 		= 0;
-	this.offlineExpGained 		= 0;
-	this.onlineRunningTime 		= 0.01;	//Seconds
-	this.onlineMoneyMade 		= 0;
-	this.onlineExpGained 		= 0;
-    this.logs = [];
+    this.dataMap                = new AllServersMap([0, 0, 0, 0], true);
 }
 
 RunningScript.prototype.log = function(txt) {
@@ -483,7 +529,7 @@ RunningScript.prototype.clearLog = function() {
 RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
     if (this.dataMap == null) {
         //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0]);
+        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
     }
     this.dataMap[serverIp][0] += moneyGained;
     this.dataMap[serverIp][1] += n;
@@ -493,7 +539,7 @@ RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
 RunningScript.prototype.recordGrow = function(serverIp, n=1) {
     if (this.dataMap == null) {
         //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0]);
+        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
     }
     this.dataMap[serverIp][2] += n;
 }
@@ -502,7 +548,7 @@ RunningScript.prototype.recordGrow = function(serverIp, n=1) {
 RunningScript.prototype.recordWeaken = function(serverIp, n=1) {
     if (this.dataMap == null) {
         //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0]);
+        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
     }
     this.dataMap[serverIp][3] += n;
 }
@@ -520,22 +566,17 @@ Reviver.constructors.RunningScript = RunningScript;
 
 //Creates an object that creates a map/dictionary with the IP of each existing server as
 //a key. Initializes every key with a specified value that can either by a number or an array
-function AllServersMap(arr=false) {
+function AllServersMap(arr=false, filterOwned=false) {
     for (var ip in AllServers) {
         if (AllServers.hasOwnProperty(ip)) {
+            if (filterOwned && (AllServers[ip].purchasedByPlayer || AllServers[ip].hostname === "home")) {
+                continue;
+            }
             if (arr) {
                 this[ip] = [0, 0, 0, 0];
             } else {
                 this[ip] = 0;
             }
-        }
-    }
-}
-
-AllServersMap.prototype.reset = function() {
-    for (var ip in this) {
-        if (this.hasOwnProperty(ip)) {
-            this[ip] = 0;
         }
     }
 }

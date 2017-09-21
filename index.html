@@ -105,6 +105,47 @@
             <a id="script-editor-netscript-doc-button" class="a-link-button" href="https://bitburner.wikia.com/wiki/Netscript" target="_blank"> Netscript Documentation </a>
         </div>
         </div> <!-- End wrapper -->
+
+        <div id="script-editor-options-panel">
+            <h1 style="color:white;"> Script Editor Options </h1>
+            <fieldset>
+            <label for="script-editor-option-theme">Theme</label>
+            <select id="script-editor-option-theme">
+                <option value="Chaos">Chaos</option>
+                <option value="Chrome">Chrome</option>
+                <option value="Monokai">Monokai</option>
+                <option value="Solarized_Dark">Solarized Dark</option>
+                <option value="Solarized_Light">Solarized Light</option>
+                <option value="Terminal">Terminal</option>
+                <option value="Twilight">Twilight</option>
+                <option value="XCode">XCode</option>
+            </select>
+            </fieldset>
+
+            <fieldset>
+            <label for="script-editor-option-keybinding">Key Binding</label>
+            <select id="script-editor-option-keybinding">
+                <option value="ace">Ace</option>
+                <option value="vim">Vim</option>
+                <option value="emacs">Emacs</option>
+            </select>
+            </fieldset>
+
+            <fieldset>
+            <label for="script-editor-option-highlightactiveline">Highlight Active Line</label>
+            <input type="checkbox" name="script-editor-option-highlightactiveline" id="script-editor-option-highlightactiveline" checked>
+            </fieldset>
+
+            <fieldset>
+            <label for="script-editor-option-showinvisibles">Show Invisibles</label></td>
+            <input type="checkbox" name="script-editor-option-showinvisibles" id="script-editor-option-showinvisibles">
+            </fieldset>
+
+            <fieldset>
+            <label for="script-editor-option-usesofttab">Use Soft Tab</label></td>
+            <input type="checkbox" name="script-editor-option-usesofttab" id="script-editor-option-usesofttab" checked>
+            </fieldset>
+        </div> <!-- End script editor options panel -->
 	</div>
 
 	<!-- Terminal page -->
@@ -462,8 +503,9 @@
 		<p> --------------- </p>
 		<p id="faction-work-description-text">
 		Perform work/carry out assignments for your faction to help further its cause! By doing so
-        you will gain reputation for your faction. You will also gain reputation passively over time,
-        although at a very slow rate. Note that you cannot
+        you will earn reputation for your faction. You will also gain reputation passively over time,
+        although at a very slow rate. Earning reputation will allow you to purchase Augmentations
+        through this faction, which are powerful upgrades that enhance your abilities. Note that you cannot
 		use your terminal or create scripts when you are performing a task! <br><br><br><br>
 		</p>
 
@@ -738,6 +780,7 @@
     <div id="log-box-container">
         <div id="log-box-content">
             <span id="log-box-close"> &times; </span>
+            <p id="log-box-text-header"> </p>
             <p id="log-box-text"> </p>
         </div>
     </div>
@@ -785,6 +828,10 @@
             <span id="infiltration-box-faction" class="a-link-button"> Give to Faction for Reputation </span>
 
         </div>
+    </div>
+
+    <!-- Mission container -->
+    <div id="mission-container" class="generic-fullscreen-container">
     </div>
 
     <!-- Work in progress screen -->

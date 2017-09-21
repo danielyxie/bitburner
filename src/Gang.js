@@ -130,7 +130,7 @@ function processAllGangPowerGains(numCycles=1) {
             if (name == playerGangName) {
                 AllGangs[name].power += Player.gang.calculatePower();
             } else {
-                var gain = Math.random() * 0.01; //TODO Adjust as necessary
+                var gain = Math.random() * 0.02; //TODO Adjust as necessary
                 AllGangs[name].power += (gain);
             }
         }
@@ -235,8 +235,12 @@ Gang.prototype.processGains = function(numCycles=1) {
         console.log("ERROR: respectGains is NaN");
     }
     if (!isNaN(wantedLevelGains)) {
-        this.wanted += (wantedLevelGains * this.storedCycles);
-        if (this.wanted < 1) {this.wanted = 1;}
+        if (this.wanted === 1 && wantedLevelGains < 0) {
+            //Do nothing
+        } else {
+            this.wanted += (wantedLevelGains * this.storedCycles);
+            if (this.wanted < 1) {this.wanted = 1;}
+        }
     } else {
         console.log("ERROR: wantedLevelGains is NaN");
     }

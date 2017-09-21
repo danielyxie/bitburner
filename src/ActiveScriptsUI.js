@@ -183,6 +183,7 @@ function updateActiveScriptsItems() {
     }
     document.getElementById("active-scripts-total-prod").innerHTML =
         "Total online production rate: $" + formatNumber(total, 2) + " / second";
+    return total;
 }
 
 //Updates the content of the given item in the Active Scripts list
@@ -197,7 +198,6 @@ function updateActiveScriptsItemContent(workerscript) {
         itemNameArray.push(workerscript.args[i].toString());
     }
     var itemName = itemNameArray.join("-");
-    //var itemName = "active-scripts-" + server.hostname + "-" + workerscript.name;
     var itemContent = document.getElementById(itemName + "-content")
 
     //Clear the item

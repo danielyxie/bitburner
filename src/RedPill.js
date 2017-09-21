@@ -123,6 +123,9 @@ function giveSourceFile(bitNodeNumber) {
     } else {
         var playerSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
         Player.sourceFiles.push(playerSrcFile);
+        if (bitNodeNumber === 5) { //Artificial Intelligence
+            Player.intelligence = 1;
+        }
         dialogBoxCreate("You received a Source-File for destroying a Bit Node!<br><br>" +
                         sourceFile.name + "<br><br>" + sourceFile.info);
     }
@@ -206,7 +209,7 @@ function loadBitVerse(destroyedBitNodeNum) {
             var elemId = "bitnode-" + i.toString();
             var elem = clearEventListeners(elemId);
             if (elem == null) {return;}
-            if (i === 1 || i === 2 || i === 4 || i === 11) {
+            if (i === 1 || i === 2 || i === 4 || i === 5 || i === 11) {
                 elem.addEventListener("click", function() {
                     var bitNodeKey = "BitNode" + i;
                     var bitNode = BitNodes[bitNodeKey];

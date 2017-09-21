@@ -4,7 +4,7 @@ import {Programs}                               from "./CreateProgram.js";
 import {Player}                                 from "./Player.js";
 import {GetServerByHostname}                    from "./Server.js";
 import {Settings}                               from "./Settings.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {dialogBoxCreate, dialogBoxOpened}       from "../utils/DialogBox.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 
@@ -27,10 +27,10 @@ Message.fromJSON = function(value) {
 Reviver.constructors.Message = Message;
 
 //Sends message to player, including a pop up
-function sendMessage(msg) {
+function sendMessage(msg, forced=false) {
     console.log("sending message: " + msg.filename);
     msg.recvd = true;
-    if (!Settings.SuppressMessages) {
+    if (forced || !Settings.SuppressMessages) {
         showMessage(msg);
     }
     addMessageToServer(msg, "home");
@@ -50,6 +50,11 @@ function addMessageToServer(msg, serverHostname) {
         console.log("WARNING: Did not locate " + serverHostname);
         return;
     }
+    for (var i = 0; i < server.messages.length; ++i) {
+        if (server.messages[i].filename === msg.filename) {
+            return; //Already exists
+        }
+    }
     server.messages.push(msg);
 }
 
@@ -60,7 +65,6 @@ function checkForMessagesToSend() {
     var jumper2 = Messages[MessageFilenames.Jumper2];
     var jumper3 = Messages[MessageFilenames.Jumper3];
     var jumper4 = Messages[MessageFilenames.Jumper4];
-    var jumper5 = Messages[MessageFilenames.Jumper5];
     var cybersecTest    = Messages[MessageFilenames.CyberSecTest];
     var nitesecTest     = Messages[MessageFilenames.NiteSecTest];
     var bitrunnersTest  = Messages[MessageFilenames.BitRunnersTest];
@@ -71,8 +75,13 @@ function checkForMessagesToSend() {
         redpillOwned = true;
     }
 
-    if (jumper0 && !jumper0.recvd && Player.hacking_skill >= 25) {
+    if (redpill && redpillOwned) {
+        if (!dialogBoxOpened) {
+            sendMessage(redpill, true);
+        }
+    } else if (jumper0 && !jumper0.recvd && Player.hacking_skill >= 25) {
         sendMessage(jumper0);
+        Player.getHomeComputer().programs.push(Programs.Flight);
     } else if (jumper1 && !jumper1.recvd && Player.hacking_skill >= 40) {
         sendMessage(jumper1);
     } else if (cybersecTest && !cybersecTest.recvd && Player.hacking_skill >= 50) {
@@ -87,11 +96,6 @@ function checkForMessagesToSend() {
         sendMessage(jumper4);
     } else if (bitrunnersTest && !bitrunnersTest.recvd && Player.hacking_skill >= 500) {
         sendMessage(bitrunnersTest);
-    } else if (jumper5 && !jumper5.recvd && Player.hacking_skill >= 1000) {
-        sendMessage(jumper5);
-        Player.getHomeComputer().programs.push(Programs.Flight);
-    } else if (redpill && !redpill.recvd && Player.hacking_skill >= 2000 && redpillOwned) {
-        sendMessage(redpill);
     }
 }
 
@@ -111,7 +115,6 @@ let MessageFilenames = {
     Jumper2:    "j2.msg",
     Jumper3:    "j3.msg",
     Jumper4:    "j4.msg",
-    Jumper5:    "j5.msg",
     CyberSecTest:   "csec-test.msg",
     NiteSecTest:    "nitesec-test.msg",
     BitRunnersTest: "19dfj3l1nd.msg",
@@ -127,7 +130,10 @@ function initMessages()  {
                                  "I know you can sense it. I know you're searching for it. " +
                                  "It's why you spend night after " +
                                  "night at your computer. <br><br>It's real, I've seen it. And I can " +
-                                 "help you find it. But not right now. You're not ready yet.<br><br>-jump3R"));
+                                 "help you find it. But not right now. You're not ready yet.<br><br>" +
+                                 "Use this program to track your progress<br><br>" +
+                                 "The fl1ght.exe program was added to your home computer<br><br>" +
+                                 "-jump3R"));
     AddToAllMessages(new Message(MessageFilenames.Jumper1,
                                  "Soon you will be contacted by a hacking group known as CyberSec. " +
                                  "They can help you with your search. <br><br>" +
@@ -148,9 +154,6 @@ function initMessages()  {
                                  "To find what you are searching for, you must understand the bits. " +
                                  "The bits are all around us. The runners will help you.<br><br>" +
                                  "-jump3R"));
-    AddToAllMessages(new Message(MessageFilenames.Jumper5,
-                                 "Build your wings and fly<br><br>-jump3R<br><br> " +
-                                 "The fl1ght.exe program was added to your home computer"));
 
     //Messages from hacking factions
     AddToAllMessages(new Message(MessageFilenames.CyberSecTest,
