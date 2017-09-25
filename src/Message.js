@@ -75,7 +75,7 @@ function checkForMessagesToSend() {
         redpillOwned = true;
     }
 
-    if (redpill && redpillOwned) {
+    if (redpill && redpillOwned && Player.sourceFiles.length === 0) {
         if (!dialogBoxOpened) {
             sendMessage(redpill, true);
         }
@@ -96,6 +96,8 @@ function checkForMessagesToSend() {
         sendMessage(jumper4);
     } else if (bitrunnersTest && !bitrunnersTest.recvd && Player.hacking_skill >= 500) {
         sendMessage(bitrunnersTest);
+    } else if (redpill && redpillOwned) {
+        sendMessage(redpill);
     }
 }
 
