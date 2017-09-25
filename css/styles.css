@@ -200,7 +200,7 @@ a:link, a:visited {
     left: 101%;
 
     position: absolute;
-    z-index: 3;
+    z-index: 99;
 }
 
 .tooltip:hover .tooltiptext {

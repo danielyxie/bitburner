@@ -471,7 +471,7 @@ function displayFactionContent(factionName) {
     newHackMissionButton.addEventListener("click", function() {
         Engine.loadMissionContent();
         var mission = new HackingMission(faction.playerReputation, faction);
-        setInMission(true); //Sets inMission flag to true
+        setInMission(true, mission); //Sets inMission flag to true
         mission.init();
         return false;
     });

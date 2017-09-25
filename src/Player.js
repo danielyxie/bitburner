@@ -1224,7 +1224,9 @@ PlayerObject.prototype.finishCreateProgramWork = function(cancelled, sing=false)
         this.getHomeComputer().programs.push(incompleteName);
     }
 
-    this.gainIntelligenceExp(this.createProgramReqLvl / CONSTANTS.IntelligenceProgramBaseExpGain);
+    if (!cancelled) {
+        this.gainIntelligenceExp(this.createProgramReqLvl / CONSTANTS.IntelligenceProgramBaseExpGain);
+    }
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";

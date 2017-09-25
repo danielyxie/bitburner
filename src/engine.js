@@ -30,6 +30,7 @@ import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
 import {iTutorialStart}                         from "./InteractiveTutorial.js";
 import {initLiterature}                         from "./Literature.js";
 import {checkForMessagesToSend, initMessages}   from "./Message.js";
+import {inMission, currMission}                 from "./Missions.js";
 import {initSingularitySFFlags,
         hasSingularitySF}                       from "./NetscriptFunctions.js";
 import {updateOnlineScriptTimes,
@@ -70,7 +71,7 @@ import {Terminal, postNetburnerText, post}      from "./Terminal.js";
  *  Alt-o - Options
  */
 $(document).keydown(function(e) {
-    if (!Player.isWorking && !redPillFlag) {
+    if (!Player.isWorking && !redPillFlag && !inMission) {
         if (e.keyCode == 84 && e.altKey) {
             e.preventDefault();
             Engine.loadTerminalContent();
@@ -829,6 +830,10 @@ let Engine = {
         //Gang, if applicable
         if (Player.bitNodeN == 2 && Player.inGang()) {
             Player.gang.process(numCycles);
+        }
+
+        if (inMission && currMission) {
+            currMission.process(numCycles);
         }
 
         //Counters

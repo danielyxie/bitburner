@@ -1,14 +1,21 @@
-import {Player}                                     from "./Player.js";
 import {CONSTANTS}                                  from "./Constants.js";
+import {Engine}                                     from "./engine.js";
+import {Player}                                     from "./Player.js";
 import {dialogBoxCreate}                            from "../utils/DialogBox.js";
 import {addOffset, getRandomInt,
         clearEventListenersEl}                      from "../utils/HelperFunctions.js";
-import {formatNumber}                               from "../utils/StringHelperFunctions.js";
+import {formatNumber, isString}                     from "../utils/StringHelperFunctions.js";
 import jsplumb                                      from 'jsplumb'
 
 let inMission = false; //Flag to denote whether a mission is running
-function setInMission(bool) {
+let currMission = null;
+function setInMission(bool, mission) {
     inMission = bool;
+    if (bool) {
+        currMission = mission;
+    } else {
+        currMission = null;
+    }
 }
 /* Hacking Missions */
 
@@ -43,16 +50,16 @@ let NodeTypes = {
     Firewall: "Firewall Node",  //No actions available
     Database: "Database Node",  //No actions available
     Spam: "Spam Node",          //No actions Available
-    Transfer: "Transfer Node",  //Can Soften, Scan, and Overflow
+    Transfer: "Transfer Node",  //Can Weaken, Scan, and Overflow
     Shield: "Shield Node"       //Can Fortify
 }
 
 let NodeActions = {
-    Attack: "Attack", //Damaged based on attack stat + hacking level + opp def
-    Scan: "Scan", //-Def for target, affected by hacking level
-    Soften: "Soften", //-Attack for target, affected by hacking level
-    Fortify: "Fortify", //+Defense for Node, affected by hacking level
-    Overflow: "Overflow", //+Attack but -Defense for Node, affected by hacking level
+    Attack: "Attacking", //Damaged based on attack stat + hacking level + opp def
+    Scan: "Scanning", //-Def for target, affected by hacking level
+    Weaken: "Weakening", //-Attack for target, affected by hacking level
+    Fortify: "Fortifying", //+Defense for Node, affected by hacking level
+    Overflow: "Overflowing", //+Attack but -Defense for Node, affected by hacking level
 }
 
 function Node(type, stats) {
@@ -66,6 +73,11 @@ function Node(type, stats) {
     this.pos = [0, 0]; //x, y
     this.el = null; //Holds the Node's DOM element
     this.action = null;
+
+    //Holds the JsPlumb Connection object for this Node,
+    //where this Node is the Source (since each Node
+    //can only have 1 outgoing Connection)
+    this.conn = null;
 }
 
 Node.prototype.setPosition = function(x, y) {
@@ -76,8 +88,8 @@ Node.prototype.setControlledByPlayer = function() {
     this.plyrCtrl = true;
     this.enmyCtrl = false;
     if (this.el) {
-        this.classList.remove("hack-mission-enemy-node");
-        this.classList.add("hack-mission-player-node");
+        this.el.classList.remove("hack-mission-enemy-node");
+        this.el.classList.add("hack-mission-player-node");
     }
 }
 
@@ -85,8 +97,8 @@ Node.prototype.setControlledByEnemy = function() {
     this.plyrCtrl = false;
     this.enmyCtrl = true;
     if (this.el) {
-        this.classList.remove("hack-mission-player-node");
-        this.classList.add("hack-mission-enemy-node");
+        this.el.classList.remove("hack-mission-player-node");
+        this.el.classList.add("hack-mission-enemy-node");
     }
 }
 
@@ -136,6 +148,8 @@ Node.prototype.deselect = function(actionButtons) {
 function HackingMission(rep, fac) {
     this.faction = fac;
 
+    this.time = 120000; //2 minutes, milliseconds
+
     this.playerCores = [];
     this.playerNodes = []; //Non-core nodes
     this.playerDef = 0;
@@ -158,11 +172,12 @@ function HackingMission(rep, fac) {
         }
     }
 
-    //this.map = Array(8).fill(Array(8).fill(null)); //8x8 2d array of references to Nodes
     this.map = [];
     for (var i = 0; i < 8; ++i) {
         this.map.push([null, null, null, null, null, null, null, null]);
     }
+
+    this.jsplumbinstance = null;
 
     //difficulty capped at 16
     this.difficulty = Math.min(16, Math.round(rep / CONSTANTS.HackingMissionRepToDiffConversion) + 1);
@@ -178,9 +193,9 @@ HackingMission.prototype.init = function() {
     var home = Player.getHomeComputer()
     for (var i = 0; i < home.cpuCores; ++i) {
         var stats = {
-            atk: (Player.hacking_skill / 10) * (home.maxRam / 8),
-            def: (Player.hacking_skill / 20) * (home.maxRam / 2),
-            hp: (Player.hacking_skill / 5) * (home.maxRam / 4),
+            atk: (Player.hacking_skill / 10),
+            def: (Player.hacking_skill / 25),
+            hp: (Player.hacking_skill / 5),
         };
         this.playerCores.push(new Node(NodeTypes.Core, stats));
         this.playerCores[i].setControlledByPlayer();
@@ -198,13 +213,12 @@ HackingMission.prototype.init = function() {
     console.log("numFirewalls: " + numFirewalls);
     console.log("numDatabases: " + numDatabases);
     console.log("totalNodes: " + totalNodes);
-    console.log("xlimit: " + xlimit);
     var randMult = addOffset(this.difficulty, 20);
     for (var i = 0; i < numNodes; ++i) {
         var stats = {
-            atk: randMult * getRandomInt(400, 750),
-            def: randMult * getRandomInt(400, 750),
-            hp: randMult * getRandomInt(800, 1200)
+            atk: randMult * getRandomInt(150, 200),
+            def: randMult * getRandomInt(40, 75),
+            hp: randMult * getRandomInt(225, 275)
         }
         this.enemyCores.push(new Node(NodeTypes.Core, stats));
         this.enemyCores[i].setControlledByEnemy();
@@ -212,9 +226,9 @@ HackingMission.prototype.init = function() {
     }
     for (var i = 0; i < numFirewalls; ++i) {
         var stats = {
-            atk: randMult * getRandomInt(100, 400),
-            def: randMult * getRandomInt(1000, 2500),
-            hp: randMult * getRandomInt(500, 2000)
+            atk: randMult * getRandomInt(10, 25),
+            def: randMult * getRandomInt(50, 75),
+            hp: randMult * getRandomInt(175, 200)
         }
         this.enemyNodes.push(new Node(NodeTypes.Firewall, stats));
         this.enemyNodes[i].setControlledByEnemy();
@@ -222,9 +236,9 @@ HackingMission.prototype.init = function() {
     }
     for (var i = 0; i < numDatabases; ++i) {
         var stats = {
-            atk: randMult * getRandomInt(100, 200),
-            def: randMult * getRandomInt(1000, 1500),
-            hp: randMult * getRandomInt(1000, 2000)
+            atk: randMult * getRandomInt(20, 30),
+            def: randMult * getRandomInt(25, 40),
+            hp: randMult * getRandomInt(120, 150)
         }
         var node = new Node(NodeTypes.Database, stats);
         node.setControlledByEnemy();
@@ -268,11 +282,14 @@ HackingMission.prototype.createPageDom = function() {
 
     //Start button will get replaced with forfeit when game is started
     var startBtn = document.createElement("a");
+    startBtn.innerHTML = "Start";
+    startBtn.classList.add("a-link-button");
     startBtn.classList.add("hack-mission-header-element");
-    startBtn.style.display = "block";
+    startBtn.style.display = "inline-block";
 
-    //Create Action Buttons (Attack/Scan/Soften/ etc...)
+    //Create Action Buttons (Attack/Scan/Weaken/ etc...)
     var actionsContainer = document.createElement("span");
+    actionsContainer.style.display = "block";
     actionsContainer.classList.add("hack-mission-action-buttons-container");
     for (var i = 0; i < 5; ++i) {
         this.actionButtons.push(document.createElement("a"));
@@ -282,36 +299,87 @@ HackingMission.prototype.createPageDom = function() {
         this.actionButtons[i].classList.add("hack-mission-header-element");
         actionsContainer.appendChild(this.actionButtons[i]);
     }
-    this.actionButtons[0].innerText = "Attack(1)";
+    this.actionButtons[0].innerText = "Attack(a)";
     var atkTooltip = document.createElement("span");
     atkTooltip.classList.add("tooltiptext");
     atkTooltip.innerText = "Lowers the targeted node's HP. The effectiveness of this depends on " +
                            "this node's Attack level, your hacking level, and the opponents defense level.";
     this.actionButtons[0].appendChild(atkTooltip);
-    this.actionButtons[1].innerText = "Scan(2)";
+    this.actionButtons[1].innerText = "Scan(s)";
     var scanTooltip = document.createElement("span");
     scanTooltip.classList.add("tooltiptext");
     scanTooltip.innerText = "Lowers the targeted node's defense. The effectiveness of this depends on " +
                             "this node's Attack level and your hacking level";
     this.actionButtons[1].appendChild(scanTooltip);
-    this.actionButtons[2].innerText = "Soften(3)";
-    var softenTooltip = document.createElement("span");
-    softenTooltip.classList.add("tooltiptext");
-    softenTooltip.innerText = "Lowers the targeted node's attack. The effectiveness of this depends on " +
+    this.actionButtons[2].innerText = "Weaken(w)";
+    var WeakenTooltip = document.createElement("span");
+    WeakenTooltip.classList.add("tooltiptext");
+    WeakenTooltip.innerText = "Lowers the targeted node's attack. The effectiveness of this depends on " +
                               "this node's Attack level and your hacking level";
-    this.actionButtons[2].appendChild(softenTooltip);
-    this.actionButtons[3].innerText = "Fortify(4)";
+    this.actionButtons[2].appendChild(WeakenTooltip);
+    this.actionButtons[3].innerText = "Fortify(f)";
     var fortifyTooltip = document.createElement("span");
     fortifyTooltip.classList.add("tooltiptext");
     fortifyTooltip.innerText = "Raises this node's Defense level. The effectiveness of this depends on " +
                                "your hacking level";
     this.actionButtons[3].appendChild(fortifyTooltip);
-    this.actionButtons[4].innerText = "Overflow(5)";
+    this.actionButtons[4].innerText = "Overflow(r)";
     var overflowTooltip = document.createElement("span");
     overflowTooltip.classList.add("tooltiptext");
     overflowTooltip.innerText = "Raises this node's Attack level but lowers its Defense level. The effectiveness " +
                                 "of this depends on your hacking level.";
     this.actionButtons[4].appendChild(overflowTooltip);
+
+    //Set Action Button event listeners
+    this.actionButtons[0].addEventListener("click", ()=>{
+        if (!(this.selectedNode instanceof Node)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        this.setActionButtonsActive();
+        this.setActionButton(NodeActions.Attack, false); //Set attack button inactive
+        this.selectedNode.action = NodeActions.Attack;
+    });
+
+    this.actionButtons[1].addEventListener("click", ()=>{
+        if (!(this.selectedNode instanceof Node)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        this.setActionButtonsActive();
+        this.setActionButton(NodeActions.Scan, false); //Set scan button inactive
+        this.selectedNode.action = NodeActions.Scan;
+    });
+
+    this.actionButtons[2].addEventListener("click", ()=>{
+        if (!(this.selectedNode instanceof Node)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        this.setActionButtonsActive();
+        this.setActionButton(NodeActions.Weaken, false); //Set Weaken button inactive
+        this.selectedNode.action = NodeActions.Weaken;
+    });
+
+    this.actionButtons[3].addEventListener("click", ()=>{
+        if (!(this.selectedNode instanceof Node)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        this.setActionButtonsActive();
+        this.setActionButton(NodeActions.Fortify, false); //Set Fortify button inactive
+        this.selectedNode.action = NodeActions.Fortify;
+    });
+
+    this.actionButtons[4].addEventListener("click", ()=>{
+        if (!(this.selectedNode instanceof Node)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        this.setActionButtonsActive();
+        this.setActionButton(NodeActions.Overflow, false); //Set Overflow button inactive
+        this.selectedNode.action = NodeActions.Overflow;
+    });
 
     var timeDisplay = document.createElement("p");
 
@@ -321,6 +389,52 @@ HackingMission.prototype.createPageDom = function() {
     container.appendChild(startBtn);
     container.appendChild(actionsContainer);
     container.appendChild(timeDisplay);
+}
+
+HackingMission.prototype.setActionButtonsInactive = function() {
+    for (var i = 0; i < this.actionButtons.length; ++i) {
+        this.actionButtons[i].classList.remove("a-link-button");
+        this.actionButtons[i].classList.add("a-link-button-inactive");
+    }
+}
+
+HackingMission.prototype.setActionButtonsActive = function() {
+    for (var i = 0; i < this.actionButtons.length; ++i) {
+        this.actionButtons[i].classList.add("a-link-button");
+        this.actionButtons[i].classList.remove("a-link-button-inactive");
+    }
+}
+
+//True for active, false for inactive
+HackingMission.prototype.setActionButton = function(i, active=true) {
+    if (isString(i)) {
+        switch (i) {
+            case NodeActions.Attack:
+                i = 0;
+                break;
+            case NodeActions.Scan:
+                i = 1;
+                break;
+            case NodeActions.Weaken:
+                i = 2;
+                break;
+            case NodeActions.Fortify:
+                i = 3;
+                break;
+            case NodeActions.Overflow:
+            default:
+                i = 4;
+                break;
+        }
+    }
+    if (active) {
+        this.actionButtons[i].classList.remove("a-link-button-inactive");
+        this.actionButtons[i].classList.add("a-link-button");
+    } else {
+        this.actionButtons[i].classList.remove("a-link-button");
+        this.actionButtons[i].classList.add("a-link-button-inactive");
+    }
+
 }
 
 //Should only be used at the start
@@ -399,16 +513,16 @@ HackingMission.prototype.createMap = function() {
                     case 0: //Spam
                         var stats = {
                             atk: 0,
-                            def: randMult * getRandomInt(400, 800),
-                            hp: randMult * getRandomInt(500, 1000)
+                            def: randMult * getRandomInt(10, 20),
+                            hp: randMult * getRandomInt(60, 90)
                         }
                         node = new Node(NodeTypes.Spam, stats);
                         break;
                     case 1: //Transfer
                         var stats = {
                             atk: 0,
-                            def: randMult * getRandomInt(500, 1000),
-                            hp: randMult * getRandomInt(600, 1100)
+                            def: randMult * getRandomInt(35, 45),
+                            hp: randMult * getRandomInt(75, 90)
                         }
                         node = new Node(NodeTypes.Transfer, stats);
                         break;
@@ -416,8 +530,8 @@ HackingMission.prototype.createMap = function() {
                     default:
                         var stats = {
                             atk: 0,
-                            def: randMult * getRandomInt(750, 1000),
-                            hp: randMult * getRandomInt(700, 1000)
+                            def: randMult * getRandomInt(80, 100),
+                            hp: randMult * getRandomInt(100, 125)
                         }
                         node = new Node(NodeTypes.Shield, stats);
                         break;
@@ -442,7 +556,6 @@ HackingMission.prototype.createMap = function() {
         this.configurePlayerNodeElement(this.playerCores[i].el);
     }
 
-    console.log(this.map);
     this.initJsPlumb();
 }
 
@@ -465,39 +578,93 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
     }
 
     //Set node classes based on type
+    var txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
-            nodeDiv.innerHTML = "<p>CPU Core<br>" + "HP: " +
-                                formatNumber(nodeObj.hp, 1) + "</p>";
+            txt = "<p>CPU Core<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-cpu-node");
             break;
         case NodeTypes.Firewall:
-            nodeDiv.innerHTML = "<p>Firewall<br>" + "HP: " +
-                                formatNumber(nodeObj.hp, 1) + "</p>";
+            txt = "<p>Firewall<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-firewall-node");
             break;
         case NodeTypes.Database:
-            nodeDiv.innerHTML = "<p>Database<br>" + "HP: " +
-                                formatNumber(nodeObj.hp, 1) + "</p>";
+            txt = "<p>Database<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-database-node");
             break;
         case NodeTypes.Spam:
-            nodeDiv.innerHTML = "<p>Spam<br>" + "HP: " +
-                                formatNumber(nodeObj.hp, 1) + "</p>";
+            txt = "<p>Spam<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-spam-node");
             break;
         case NodeTypes.Transfer:
-            nodeDiv.innerHTML = "<p>Transfer<br>" + "HP: " +
-                                formatNumber(nodeObj.hp, 1) + "</p>";
+            txt = "<p>Transfer<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-transfer-node");
             break;
         case NodeTypes.Shield:
         default:
-            nodeDiv.innerHTML = "<p>Shield<br>" + "HP: " +
-                                formatNumber(nodeObj.hp, 1) + "</p>";
+            txt = "<p>Shield<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-shield-node");
             break;
     }
+
+    txt += "<br>Atk: " + formatNumber(nodeObj.atk, 1) +
+           "<br>Def: " + formatNumber(nodeObj.def, 1) + "</p>";
+    nodeDiv.innerHTML = txt;
+}
+
+HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
+    if (nodeObj.el === null) {
+        console.log("ERR: Calling updateNodeDomElement on a Node without an element");
+        return;
+    }
+
+    var nodeDiv = document.getElementById("hacking-mission-node-" +
+                                          nodeObj.pos[0] + "-" +
+                                          nodeObj.pos[1]);
+
+    //Set node classes based on type
+    var txt;
+    switch (nodeObj.type) {
+        case NodeTypes.Core:
+            txt = "<p>CPU Core<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Firewall:
+            txt = "<p>Firewall<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Database:
+            txt = "<p>Database<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Spam:
+            txt = "<p>Spam<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Transfer:
+            txt = "<p>Transfer<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
+            break;
+        case NodeTypes.Shield:
+        default:
+            txt = "<p>Shield<br>" + "HP: " +
+                  formatNumber(nodeObj.hp, 1);
+            break;
+    }
+
+    txt += "<br>Atk: " + formatNumber(nodeObj.atk, 1) +
+           "<br>Def: " + formatNumber(nodeObj.def, 1);
+    if (nodeObj.action) {
+        txt += "<br>" + nodeObj.action;
+    }
+    txt += "</p>";
+    nodeDiv.innerHTML = txt;
 }
 
 //Gets a Node DOM element's corresponding Node object using its
@@ -547,6 +714,17 @@ HackingMission.prototype.configureEnemyNodeElement = function(el) {
     }
 }
 
+//Returns bool indicating whether a node is reachable by player
+//by checking if any of the adjacent nodes are owned by the player
+HackingMission.prototype.nodeReachable = function(node) {
+    var x = node.pos[0], y = node.pos[1];
+    if (x > 0 && this.map[x-1][y].plyrCtrl) {return true;}
+    if (x < 7 && this.map[x+1][y].plyrCtrl) {return true;}
+    if (y > 0 && this.map[x][y-1].plyrCtrl) {return true;}
+    if (y < 7 && this.map[x][y+1].plyrCtrl) {return true;}
+    return false;
+}
+
 HackingMission.prototype.initJsPlumb = function() {
     var instance = jsPlumb.getInstance({
         DragOptions:{cursor:"pointer", zIndex:2000},
@@ -556,9 +734,11 @@ HackingMission.prototype.initJsPlumb = function() {
                 [ 1, "#FFFFFF" ]
             ] },
             stroke: "#FFFFFF",
-            strokeWidth: 10
+            strokeWidth: 8
         },
     });
+
+    this.jsplumbinstance = instance;
 
     //All player cores are sources
     for (var i = 0; i < this.playerCores.length; ++i) {
@@ -602,10 +782,218 @@ HackingMission.prototype.initJsPlumb = function() {
 
     //Clicking a connection drops it
     instance.bind("click", function(conn, originalEvent) {
-        console.log("test");
         var endpoints = conn.endpoints;
         endpoints[0].detachFrom(endpoints[1]);
     });
+
+    //Connection events
+    instance.bind("connection", (info)=>{
+        var targetNode = this.getNodeFromElement(info.target);
+
+        //If the node is not reachable, drop the connection
+        if (!this.nodeReachable(targetNode)) {
+            info.sourceEndpoint.detachFrom(info.targetEndpoint);
+            return;
+        }
+
+        var sourceNode = this.getNodeFromElement(info.source);
+        sourceNode.conn = info.connection;
+    });
+
+    //Detach Connection events
+    instance.bind("connectionDetached", (info, originalEvent)=>{
+        var sourceNode = this.getNodeFromElement(info.source);
+        sourceNode.conn = null;
+    });
 }
 
-export {HackingMission, inMission, setInMission};
+//Drops all connections where the specified node is the source
+HackingMission.prototype.dropAllConnectionsFromNode = function(node) {
+    var allConns = this.jsplumbinstance.getAllConnections();
+    for (var i = allConns.length-1; i >= 0; --i) {
+        if (allConns[i].source == node.el) {
+            allConns[i].endpoints[0].detachFrom(allConns[i].endpoints[1]);
+        }
+    }
+}
+
+//Drops all connections where the specified node is the target
+HackingMission.prototype.dropAllConnectionsToNode = function(node) {
+    var allConns = this.jsplumbinstance.getAllConnections();
+    for (var i = allConns.length-1; i >= 0; --i) {
+        if (allConns[i].target == node.el) {
+            allConns[i].endpoints[0].detachFrom(allConns[i].endpoints[1]);
+        }
+    }
+}
+
+HackingMission.prototype.process = function(numCycles=1) {
+    var res = true;
+    //Process actions of all player nodes
+    for (var i = 0; i < this.playerCores.length; ++i) {
+        res &= this.processNode(this.playerCores[i], numCycles);
+    }
+
+    //Process actions of all enemy nodes
+    for (var i = 0; i < this.enemyCores.length; ++i) {
+        res &= this.processNode(this.enemyCores[i], numCycles);
+    }
+
+    if (res) {this.calculateDefenses();}
+
+    //TODO Check if win/lose
+
+    //Update timer and check if player lost
+    this.time -= (numCycles * Engine._idleSpeed);
+    if (this.time <= 0) {
+        this.finishMission(false);
+    }
+}
+
+//Returns a bool representing whether defenses need to be re-calculated
+HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
+    if (nodeObj.action === null) {return;}
+
+    var targetNode = null, def;
+    if (nodeObj.conn) {
+        targetNode = this.getNodeFromElement(nodeObj.conn.target);
+        if (targetNode.plyrCtrl) {
+            def = this.playerDef;
+        } else if (targetNode.enmyCtrl) {
+            def = this.enemyDef;
+        } else { //Misc Node
+            def = targetNode.def;
+        }
+    }
+
+    //Calculations are per second, so divide everything by 5
+    var calcDefenses = false;
+    switch(nodeObj.action) {
+        case NodeActions.Attack:
+            if (nodeObj.conn === null) {break;}
+            var dmg = this.calculateAttackDamage(nodeObj.atk, def, Player.hacking_skill);
+            targetNode.hp -= (dmg/5 * numCycles);
+            break;
+        case NodeActions.Scan:
+            if (nodeObj.conn === null) {break;}
+            var eff = this.calculateScanEffect(def, Player.hacking_skill);
+            targetNode.def -= (eff/5 * numCycles);
+            calcDefenses = true;
+            break;
+        case NodeActions.Weaken:
+            if (nodeObj.conn === null) {break;}
+            var eff = this.calculateWeakenEffect(def, Player.hacking_skill);
+            targetNode.atk -= (eff/5 * numCycles);
+            break;
+        case NodeActions.Fortify:
+            var eff = this.calculateFortifyEffect(Player.hacking_skill);
+            nodeObj.def += (eff/5 * numCycles);
+            calcDefenses = true;
+            break;
+        case NodeActions.Overflow:
+            var eff = this.calculateOverflowEffect(Player.hacking_skill);
+            if (nodeObj.def < eff) {break;}
+            nodeObj.def -= (eff/5 * numCycles);
+            nodeObj.atk += (eff/5 * numCycles);
+            calcDefenses = true;
+            break;
+        default:
+            console.log("ERR: Invalid Node Action: " + nodeObj.action);
+            break;
+    }
+
+    //Stats can't go below 0
+    if (nodeObj.atk < 0) {nodeObj.atk = 0;}
+    if (nodeObj.def < 0) {nodeObj.def = 0;}
+    if (targetNode && targetNode.atk < 0) {targetNode.atk = 0;}
+    if (targetNode && targetNode.def < 0) {targetNode.def = 0;}
+
+    //Conquering a node
+    if (targetNode && targetNode.hp <= 0) {
+        var conqueredByPlayer = nodeObj.plyrCtrl;
+        targetNode.hp = targetNode.maxhp;
+        targetNode.action = null;
+        targetNode.conn = null;
+        if (this.selectedNode == targetNode) {
+            targetNode.deselect();
+        }
+        this.dropAllConnectionsToNode(targetNode);
+        this.dropAllConnectionsFromNode(targetNode);
+        if (conqueredByPlayer) {
+            targetNode.setControlledByPlayer()
+        } else { //Conquered by enemy
+            targetNode.setControlledByEnemy();
+        }
+        calcDefenses = true;
+
+        function swapNodes(orig, dest, targetNode) {
+            for (var i = 0; i < orig.length; ++i) {
+                if (orig[i] == targetNode) {
+                    var node = orig.splice(i, 1);
+                    dest.push(node);
+                    break;
+                }
+            }
+        }
+
+        switch(targetNode.type) {
+            case NodeTypes.Core:
+                if (conqueredByPlayer) {
+                    swapNodes(this.enemyCores, this.playerCores, targetNode);
+                } else {
+                    swapNodes(this.playerCores, this.enemyCores, targetNode);
+                }
+                break;
+            case NodeTypes.Firewall:
+                if (conqueredByPlayer) {
+                    swapNodes(this.enemyNodes, this.playerNodes, targetNode);
+                } else {
+                    swapNodes(this.playerNodes, this.enemyNodes, targetNode);
+                }
+                break;
+            case NodeTypes.Database:
+                break;
+            case NodeTypes.Spam:
+                break;
+            case NodeTypes.Transfer:
+                break;
+            case NodeTypes.Shield:
+                break;
+        }
+    }
+    this.updateNodeDomElement(nodeObj);
+    if (targetNode) {this.updateNodeDomElement(targetNode);}
+    return calcDefenses;
+}
+
+var hackEffWeightSelf = 100; //Weight for Node actions on self
+var hackEffWeightTarget = 10; //Weight for Node Actions against Target
+var hackEffWeightAttack = 100; //Weight for Attack action
+
+//Returns damage per cycle based on stats
+HackingMission.prototype.calculateAttackDamage = function(atk, def, hacking = 0) {
+    return Math.max(atk + (hacking / hackEffWeightAttack) - def, 0.1);
+}
+
+HackingMission.prototype.calculateScanEffect = function(def, hacking=0) {
+    return Math.max(hacking / hackEffWeightTarget - def, 0.1);
+}
+
+HackingMission.prototype.calculateWeakenEffect = function(def, hacking=0) {
+    return Math.max(hacking / hackEffWeightTarget - def, 0.1);
+}
+
+HackingMission.prototype.calculateFortifyEffect = function(hacking=0) {
+    return hacking / hackEffWeightSelf;
+}
+
+HackingMission.prototype.calculateOverflowEffect = function(hacking=0) {
+    return hacking / hackEffWeightSelf;
+}
+
+//The 'win' argument is a bool for whether or not the player won
+HackingMission.prototype.finishMission = function(win) {
+
+}
+
+export {HackingMission, inMission, setInMission, currMission};

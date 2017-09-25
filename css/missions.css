@@ -4,12 +4,13 @@
 
 .hack-mission-grid {
     display: grid;
-    grid-template-columns: 7% 7% 7% 7% 7% 7% 7% 7%;
-    grid-template-rows: 7% 7% 7% 7% 7% 7% 7% 7%;
-    grid-gap: 3%;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-rows: 8% 8% 8% 8% 8% 8% 8% 8%;
+    grid-gap: 2.5%;
     height: 100%;
     position:fixed;
     width: 100%;
+    overflow-y:auto;
 }
 
 .hack-mission-node {
@@ -18,6 +19,7 @@
     background-color:gray;
     align-self: center;
     justify-self: center;
+    display:inline-block;
 }
 
 .hack-mission-node p {
@@ -28,7 +30,7 @@
 }
 
 .hack-mission-player-node {
-    color:blue;
+    color:white;
     background-color:blue;
 }
 
@@ -53,13 +55,13 @@
 }
 
 .hack-mission-firewall-node {
-    width:100%;
-    height:75%;
+    width:90%;
+    height:100%;
 }
 
 .hack-mission-database-node {
     width: 100%;
-	height: 75%;
+	height: 90%;
 	-webkit-transform: skew(20deg);
 	-moz-transform: skew(20deg);
 	-o-transform: skew(20deg);
