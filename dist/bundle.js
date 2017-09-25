@@ -26018,7 +26018,7 @@ function checkForMessagesToSend() {
         redpillOwned = true;
     }
 
-    if (redpill && redpillOwned) {
+    if (redpill && redpillOwned && __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].sourceFiles.length === 0) {
         if (!__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["b" /* dialogBoxOpened */]) {
             sendMessage(redpill, true);
         }
@@ -26039,6 +26039,8 @@ function checkForMessagesToSend() {
         sendMessage(jumper4);
     } else if (bitrunnersTest && !bitrunnersTest.recvd && __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill >= 500) {
         sendMessage(bitrunnersTest);
+    } else if (redpill && redpillOwned) {
+        sendMessage(redpill);
     }
 }
 
