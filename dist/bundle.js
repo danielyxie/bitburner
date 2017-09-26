@@ -1964,7 +1964,7 @@ PlayerObject.prototype.reapplyAllAugmentations = function(resetMultipliers=true)
     for (let i = 0; i < this.augmentations.length; ++i) {
         //Compatibility with new version
         if (typeof this.augmentations[i] === 'string' || this.augmentations[i] instanceof String) {
-            var newOwnedAug = new PlayerOwnedAugmentation(this.augmentations[i]);
+            var newOwnedAug = new __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["d" /* PlayerOwnedAugmentation */](this.augmentations[i]);
             if (this.augmentations[i] == __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["b" /* AugmentationNames */].NeuroFluxGovernor) {
                 newOwnedAug.level = __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["c" /* Augmentations */][__WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["b" /* AugmentationNames */].NeuroFluxGovernor].level;
             }
@@ -60256,11 +60256,12 @@ var NetscriptHighlightRules = function(options) {
             "SyntaxError|TypeError|URIError|"                                          +
             "decodeURI|decodeURIComponent|encodeURI|encodeURIComponent|eval|isFinite|" + // Non-constructor functions
             "isNaN|parseFloat|parseInt|"                                               +
-            "hack|sleep|grow|wewaken|print|tprint|scan|nuke|brutessh|ftpcrack|"        + //Netscript functions
+            "hack|sleep|grow|weaken|print|tprint|scan|nuke|brutessh|ftpcrack|"         + //Netscript functions
             "relaysmtp|httpworm|sqlinject|run|exec|kill|killall|scp|ls|hasRootAccess|" +
-            "getIp|getHackingMultipliers|getBitNodeMultipliers|"                       + 
+            "getIp|getHackingMultipliers|getBitNodeMultipliers|"                       +
             "getHostname|getHackingLevel|getServerMoneyAvailable|getServerMaxMoney|"   +
             "getServerGrowth|getServerSecurityLevel|getServerBaseSecurityLevel|"       +
+            "getServerMinSecurityLevel|"                                               +
             "getServerRequiredHackingLevel|getServerNumPortsRequired|getServerRam|"    +
             "serverExists|fileExists|isRunning|getNextHacknetNodeCost|"                +
             "purchaseHacknetNode|" +
