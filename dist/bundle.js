@@ -1973,7 +1973,7 @@ PlayerObject.prototype.reapplyAllAugmentations = function(resetMultipliers=true)
     for (let i = 0; i < this.augmentations.length; ++i) {
         //Compatibility with new version
         if (typeof this.augmentations[i] === 'string' || this.augmentations[i] instanceof String) {
-            var newOwnedAug = new PlayerOwnedAugmentation(this.augmentations[i]);
+            var newOwnedAug = new __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["d" /* PlayerOwnedAugmentation */](this.augmentations[i]);
             if (this.augmentations[i] == __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["b" /* AugmentationNames */].NeuroFluxGovernor) {
                 newOwnedAug.level = __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["c" /* Augmentations */][__WEBPACK_IMPORTED_MODULE_0__Augmentations_js__["b" /* AugmentationNames */].NeuroFluxGovernor].level;
             }
@@ -26151,7 +26151,7 @@ function checkForMessagesToSend() {
         redpillOwned = true;
     }
 
-    if (redpill && redpillOwned) {
+    if (redpill && redpillOwned && __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].sourceFiles.length === 0) {
         if (!__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["b" /* dialogBoxOpened */]) {
             sendMessage(redpill, true);
         }
@@ -26172,6 +26172,8 @@ function checkForMessagesToSend() {
         sendMessage(jumper4);
     } else if (bitrunnersTest && !bitrunnersTest.recvd && __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_skill >= 500) {
         sendMessage(bitrunnersTest);
+    } else if (redpill && redpillOwned) {
+        sendMessage(redpill);
     }
 }
 

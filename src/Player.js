@@ -1,5 +1,6 @@
 import {Augmentations, applyAugmentation,
-        AugmentationNames}                      from "./Augmentations.js";
+        AugmentationNames,
+        PlayerOwnedAugmentation}                from "./Augmentations.js";
 import {BitNodes, BitNode, BitNodeMultipliers}  from "./BitNode.js";
 import {Company, Companies, getNextCompanyPosition,
         getJobRequirementText, CompanyPosition,
