@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -76,7 +76,7 @@
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Crimes_js__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Gang_js__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Location_js__ = __webpack_require__(12);
@@ -88,8 +88,8 @@
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_IPAddress_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_JSONReviver_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_JSONReviver_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
 
@@ -179,8 +179,7 @@ function PlayerObject() {
 
     //Servers
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
-    this.discoveredServers      = []; //IP addresses of secret servers not in the network that you have discovered
-    this.purchasedServers       = [];
+    this.purchasedServers       = []; //IP Addresses of purchased servers
     this.hacknetNodes           = [];
     this.totalHacknetNodeProduction = 0;
 
@@ -273,6 +272,9 @@ function PlayerObject() {
 	this.lastUpdate = 0;
     this.totalPlaytime = 0;
     this.playtimeSinceLastAug = 0;
+
+    //Script production since last Aug installation
+    this.scriptProdSinceLastAug = 0;
 };
 
 PlayerObject.prototype.init = function() {
@@ -318,7 +320,6 @@ PlayerObject.prototype.prestigeAugmentation = function() {
     this.companyName = "";
     this.companyPosition = "";
 
-    this.discoveredServers = [];
     this.purchasedServers = [];
 
     this.factions = [];
@@ -397,7 +398,6 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.companyName = "";
     this.companyPosition = "";
 
-    this.discoveredServers = [];
     this.purchasedServers = [];
 
     this.factions = [];
@@ -1449,6 +1449,7 @@ PlayerObject.prototype.takeClass = function(numCycles) {
 //through a Singularity Netscript function
 PlayerObject.prototype.finishClass = function(sing=false) {
     this.gainWorkExp();
+    this.gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].IntelligenceClassBaseExpGain * Math.round(this.timeWorked / 1000));
 
     if (this.workMoneyGained > 0) {
         throw new Error("ERR: Somehow gained money while taking class");
@@ -1599,6 +1600,14 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                             Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility experience<br>" +
                             Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma experience");
         } else {
+            //Exp halved on failure
+            this.workHackExpGained  /= 2;
+            this.workStrExpGained   /= 2;
+            this.workDefExpGained   /= 2;
+            this.workDexExpGained   /= 2;
+            this.workAgiExpGained   /= 2;
+            this.workChaExpGained   /= 2;
+
             Object(__WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Crime failed! <br><br>" +
                     "You gained:<br>"+
                     Object(__WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking experience <br>" +
@@ -1611,8 +1620,6 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
 
         this.gainWorkExp();
     }
-
-
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
@@ -2417,7 +2424,7 @@ function dialogBoxCreate(txt) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
 /* 2 */
@@ -2631,11 +2638,48 @@ let CONSTANTS = {
     IntelligenceProgramBaseExpGain: 1000, //Program required hack level divided by this to determine int exp gain
     IntelligenceTerminalHackBaseExpGain: 200, //Hacking exp divided by this to determine int exp gain
     IntelligenceSingFnBaseExpGain: 0.0005,
+    IntelligenceClassBaseExpGain: 0.0000001,
 
     //Hacking Missions
     HackingMissionRepToDiffConversion: 5000, //Faction rep is divided by this to get mission difficulty
     HackingMissionRepToRewardConversion: 20, //Faction rep divided byt his to get mission rep reward
-    HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with factin reputation",
+    HackingMissionSpamTimeIncrease: 20000, //How much time limit increase is gained when conquering a Spam Node (ms)
+    HackingMissionTransferAttackIncrease: 1.05, //Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
+    HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with faction reputation.<br><br>" +
+                             "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
+                             "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray" +
+                             "that initially belong to neither you nor the enemy. The goal of the game is " +
+                             "to capture all of the enemy's database nodes, which are the parallelogram-shaped ones, within the time limit. " +
+                             "If you cannot capture all of the enemy's database nodes in the time limit, you will lose.<br><br>" +
+                             "Each Node has three stats: Attack, Defense, and HP. There are five different actions that " +
+                             "a Node can take:<br><br> " +
+                             "Attack - Targets an enemy Node and lowers its HP. The effectiveness is determined by the Node's Attack, the Player's " +
+                             "hacking level, and the enemy's defense.<br>" +
+                             "Scan - Targets an enemy Node and lowers its Defense. The effectiveness is determined by the Player's hacking level and the " +
+                             "enemy's defense.<br>"  +
+                             "Weaken - Targets an enemy Node and lowers its Attack. The effectiveness is determined by the Player's hacking level and the enemy's " +
+                             "defense.<br>" +
+                             "Fortify - Raises the Node's Defense. The effectiveness is determined by your hacking level.<br><br>" +
+                             "To capture a Node, you must lower its HP down to 0. " +
+                             "A Node's 'Attack' stats affects its effectiveness when attacking other Nodes. A Node's 'Defense' helps protect " +
+                             "against the actions of enemy Nodes. One important thing to note is that, when defending, your total 'Defense' " +
+                             "(sum of the Defense of all of your Nodes) is what's taken into account when determining the effect of offensive actions. " +
+                             "However, when attacking, only the 'Attack' of the Node being used to attack is taken into account.<br><br>" +
+                             "There are six different types of Nodes:<br><br>" +
+                             "CPU Core - These are your main Nodes that are used to perform actions<br>" +
+                             "Firewall - Nodes with high defense. These Nodes cannot perform any actions<br>" +
+                             "Database - A special type of Node. The player's objective is to conquer all of the enemy's Database Nodes within " +
+                             "the time limit. These Nodes cannot perform any actions<br>"  +
+                             "Spam - Conquering one of these Nodes will slow the enemy's trace, giving the player additional time to complete " +
+                             "the mission. These Nodes cannot perform any actions<br>" +
+                             "Transfer - Conquering one of these nodes will increase the Attack of all of your CPU Cores by a small fixed percentage. " +
+                             "These Nodes are capable of performing every action except the 'Attack' action<br>" +
+                             "Shield - Nodes with high defense. These Nodes cannot perform any actions<br><br>" +
+                             "For certain actions such as attacking, scanning, and weakening, the Node performing the action must have a target. To target " +
+                             "another node, simply click-and-drag from the 'source' Node to a target. A Node can only have one target, and you can only target " +
+                             "Nodes that are adjacent to one of your Nodes (immediately above, below, or to the side. NOT diagonal). Furthermore, only CPU Cores and Transfer Nodes " +
+                             "can target, since they are the only ones that can perform actions",
+
 
     //Gang constants
     GangRespectToReputationRatio: 2, //Respect is divided by this to get rep gain
@@ -2930,18 +2974,18 @@ let CONSTANTS = {
                            "the hostnames or IPs of the scanned servers should be output. If it is true then hostnames will be returned, and if false then IP addresses will. " +
                            "This second argument is optional and, if ommitted, the function will output " +
                            "the hostnames of the scanned servers. The hostnames/IPs in the returned array are strings.<br><br>" +
-                           "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" +
-                           "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" +
-                           "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer. Does NOT work while offline <br> Example: ftpcrack('foodnstuff');<br><br>" +
-                           "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer. Does NOT work while offline <br> Example: relaysmtp('foodnstuff');<br><br>" +
-                           "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer. Does NOT work while offline <br> Example: httpworm('foodnstuff');<br><br>" +
-                           "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer. Does NOT work while offline  <br> Example: sqlinject('foodnstuff');<br><br>" +
+                           "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer.<br> Example: nuke('foodnstuff'); <br><br>" +
+                           "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer.<br> Example: brutessh('foodnstuff');<br><br>" +
+                           "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer.<br> Example: ftpcrack('foodnstuff');<br><br>" +
+                           "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer.<br> Example: relaysmtp('foodnstuff');<br><br>" +
+                           "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer.<br> Example: httpworm('foodnstuff');<br><br>" +
+                           "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer.<br> Example: sqlinject('foodnstuff');<br><br>" +
                            "<i>run(script, [numThreads], [args...])</i> <br> Run a script as a separate process. The first argument that is passed in is the name of the script as a string. This function can only " +
                            "be used to run scripts located on the current server (the server running the script that calls this function). The second argument " +
                            "is optional, and it specifies how many threads to run the script with. This argument must be a number greater than 0. If it is omitted, then the script will be run single-threaded. Any additional arguments will specify " +
                            "arguments to pass into the new script that is being run. If arguments are specified for the new script, then the second argument numThreads argument must be filled in with a value.<br><br>" +
                            "Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
-                           "of RAM to run this command. Does NOT work while offline <br><br>" +
+                           "of RAM to run this command.<br><br>" +
                            "The simplest way to use the run command is to call it with just the script name. The following example will run 'foo.script' single-threaded with no arguments:<br><br>" +
                            "run('foo.script');<br><br>" +
                            "The following example will run 'foo.script' but with 5 threads instead of single-threaded:<br><br>" +
@@ -2953,7 +2997,7 @@ let CONSTANTS = {
                            "The third argument is optional, and it specifies how many threads to run the script with. If it is omitted, then the script will be run single-threaded. " +
                            "This argument must be a number that is greater than 0. Any additional arguments will specify arguments to pass into the new script that is being run. If " +
                            "arguments are specified for the new script, then the third argument numThreads must be filled in with a value.<br><br>Returns " +
-                           "true if the script is successfully started, and false otherwise. Does NOT work while offline<br><br> " +
+                           "true if the script is successfully started, and false otherwise.<br><br> " +
                            "The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run 'generic-hack.script' " +
                            "on the 'foodnstuff' server:<br><br>" +
                            "exec('generic-hack.script', 'foodnstuff');<br><br>" +
@@ -2991,11 +3035,11 @@ let CONSTANTS = {
                            "<i>ls(hostname/ip)</i><br>Returns an array containing the names of all files on the specified server. The argument must be a " +
                            "string with the hostname or IP of the target server.<br><br>" +
                            "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " +
-                           "The argument passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline.<br> " +
+                           "The argument passed in must be a string with either the hostname or IP of the target server.<br> " +
                            "Example:<br>if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" +
                            "<i>getIp()</i><br>Returns a string with the IP Address of the server that the script is running on <br><br>" +
                            "<i>getHostname()</i><br>Returns a string with the hostname of the server that the script is running on<br><br>" +
-                           "<i>getHackingLevel()</i><br>Returns the Player's current hacking level. Does NOT work while offline<br><br> " +
+                           "<i>getHackingLevel()</i><br>Returns the Player's current hacking level.<br><br> " +
                            "<i>getIntelligence()</i><br>Returns the Player's current intelligence level. Requires Source-File 5 to run<br><br>" +
                            "<i>getHackingMultipliers()</i><br>Returns an object containing the Player's hacking related multipliers. " +
                            "These multipliers are returned in integer forms, not percentages (e.g. 1.5 instead of 150%). " +
@@ -3040,24 +3084,26 @@ let CONSTANTS = {
                            "print(mults.ServerMaxMoney);<br>" +
                            "print(mults.HackExpGain);<br><br>" +
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
-                           "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" +
+                           "hostname or IP of the target server.<br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" +
                            "<i>getServerMaxMoney(hostname/ip)</i><br>Returns the maximum amount of money that can be available on a server. The argument passed in must be a string with " +
-                           "the hostname or IP of the target server. Does NOT work while offline<br>Example: getServerMaxMoney('foodnstuff');<br><br>" +
+                           "the hostname or IP of the target server.<br>Example: getServerMaxMoney('foodnstuff');<br><br>" +
                            "<i>getServerGrowth(hostname/ip)</i><br>Returns the server's intrinsic 'growth parameter'. This growth parameter is a number " +
                            "between 1 and 100 that represents how quickly the server's money grows. This parameter affects the percentage by which this server's " +
                            "money is increased when using the grow() function. A higher growth parameter will result in a higher percentage from grow().<br><br>" +
                            "The argument passed in must be a string with the hostname or IP of the target server.<br><br>" +
                            "<i>getServerSecurityLevel(hostname/ip)</i><br>Returns the security level of a server. The argument passed in must be a string with either the " +
-                           "hostname or IP of the target server. A server's security is denoted by a number between 1 and 100. Does NOT work while offline.<br><br>" +
-                           "<i>getServerBaseSecurityLevel(hostname/ip)</i><br> Returns the base security level of a server. This is the security level that the server starts out with. " +
+                           "hostname or IP of the target server. A server's security is denoted by a number, typically between 1 and 100.<br><br>" +
+                           "<i>getServerBaseSecurityLevel(hostname/ip)</i><br>Returns the base security level of a server. This is the security level that the server starts out with. " +
                            "This is different than getServerSecurityLevel() because getServerSecurityLevel() returns the current security level of a server, which can constantly change " +
                            "due to hack(), grow(), and weaken() calls on that server. The base security level will stay the same until you reset by installing an Augmentation. <br><br>" +
-                           "The argument passed in must be a string with either the hostname or IP of the target server. A server's base security is denoted by a number between 1 and 100. " +
-                           "Does NOT work while offline.<br><br>" +
+                           "The argument passed in must be a string with either the hostname or IP of the target server. A server's base security is denoted by a number, typically between 1 and 100. " +
+                           "<br><br>" +
+                           "<i>getServerMinSecurityLevel(hostname/ip)</i>Returns the minimum security level of a server. The argument passed in must be a string with " +
+                           "either the hostname or IP of the target server.<br><br>" +
                            "<i>getServerRequiredHackingLevel(hostname/ip)</i><br>Returns the required hacking level of a server. The argument passed in must be a string with either the " +
-                           "hostname or IP or the target server. Does NOT work while offline <br><br>" +
+                           "hostname or IP or the target server.<br><br>" +
                            "<i>getServerNumPortsRequired(hostname/ip)</i><br>Returns the number of open ports required to successfully run NUKE.exe on a server. The argument " +
-                           "passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline<br><br>" +
+                           "passed in must be a string with either the hostname or IP of the target server.<br><br>" +
                            "<i>getServerRam(hostname/ip)</i><br>Returns an array with two elements that gives information about the target server's RAM. The first " +
                            "element in the array is the amount of RAM that the server has (in GB). The second element in the array is the amount of RAM that " +
                            "is currently being used on the server.<br><br>" +
@@ -3471,6 +3517,12 @@ let CONSTANTS = {
     LatestUpdate:
     "v0.29.1<br>" +
     "-Added continue statement for for/while loops<br>" +
+    "-Added getServerMinSecurityLevel() Netscript function<br>" +
+    "-Added Javascript's Date module to Netscript. Since 'new' is not supported in Netscript yet, only the Date module's " +
+    "static methods will work (now(), UTC(), parse(), etc.).<br>" +
+    "-Failing a crime now gives half the experience it did before<br>" +
+    "-The repeated 'Find The-Cave' message after installing The Red Pill Augmentation now only happens " +
+    "if you've never destroyed a BitNode before<br>" +
     "-fileExists() function now works on literature files<br><br>" +
     "v0.29.0<br>" +
     "-Added BitNode-5: Artificial Intelligence<br>" +
@@ -3496,166 +3548,6 @@ let CONSTANTS = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export getIndicesOf */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return convertTimeMsToTimeElapsedString; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return longestCommonStart; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return isString; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return isPositiveNumber; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return containsAllStrings; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return formatNumber; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return numOccurrences; });
-/* unused harmony export numNetscriptOperators */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return isHTML; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DialogBox_js__ = __webpack_require__(1);
-
-
-//Netburner String helper functions
-
-//Searches for every occurence of searchStr within str and returns an array of the indices of
-//all these occurences
-function getIndicesOf(searchStr, str, caseSensitive) {
-    var searchStrLen = searchStr.length;
-    if (searchStrLen == 0) {
-        return [];
-    }
-    var startIndex = 0, index, indices = [];
-    if (!caseSensitive) {
-        str = str.toLowerCase();
-        searchStr = searchStr.toLowerCase();
-    }
-    while ((index = str.indexOf(searchStr, startIndex)) > -1) {
-        indices.push(index);
-        startIndex = index + searchStrLen;
-    }
-    return indices;
-}
-
-//Replaces the character at an index with a new character
-String.prototype.replaceAt=function(index, character) {
-    return this.substr(0, index) + character + this.substr(index+character.length);
-}
-
-//Converts a date representing time in milliseconds to a string with the format
-//      H hours M minutes and S seconds
-// e.g. 10000 -> "0 hours 0 minutes and 10 seconds"
-//      120000 -> "0 0 hours 2 minutes and 0 seconds"
-function convertTimeMsToTimeElapsedString(time) {
-    //Convert ms to seconds, since we only have second-level precision
-    time = Math.floor(time / 1000);
-
-    var days = Math.floor(time / 86400);
-    time %= 86400;
-
-    var hours = Math.floor(time / 3600);
-    time %= 3600;
-
-    var minutes = Math.floor(time / 60);
-    time %= 60;
-
-    var seconds = time;
-
-    var res = "";
-    if (days) {res += days + " days ";}
-    if (hours) {res += hours + " hours ";}
-    if (minutes) {res += minutes + " minutes ";}
-    res += seconds + " seconds ";
-    return res;
-}
-
-//Finds the longest common starting substring in a set of strings
-function longestCommonStart(strings) {
-    if (!containsAllStrings(strings)) {return;}
-    if (strings.length == 0) {return;}
-
-    var A = strings.concat().sort(),
-    a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
-    while(i<L && a1.charAt(i).toLowerCase() === a2.charAt(i).toLowerCase()) i++;
-    return a1.substring(0, i);
-}
-
-
-//Returns whether a variable is a string
-function isString(str) {
-    return (typeof str === 'string' || str instanceof String);
-}
-
-//Returns true if string contains only digits (meaning it would be a positive number)
-function isPositiveNumber(str) {
-    return /^\d+$/.test(str);
-}
-
-//Returns whether an array contains entirely of string objects
-function containsAllStrings(arr) {
-    return arr.every(isString);
-}
-
-//Formats a number with commas and a specific number of decimal digits
-function formatNumber(num, numFractionDigits) {
-    return num.toLocaleString(undefined, {
-        minimumFractionDigits: numFractionDigits,
-        maximumFractionDigits: numFractionDigits
-    });
-}
-
-//Count the number of times a substring occurs in a string
-function numOccurrences(string, subString) {
-    string += "";
-    subString += "";
-    if (subString.length <= 0) return (string.length + 1);
-
-    var n = 0, pos = 0, step = subString.length;
-
-    while (true) {
-        pos = string.indexOf(subString, pos);
-        if (pos >= 0) {
-            ++n;
-            pos += step;
-        } else break;
-    }
-    return n;
-}
-
-//Counters the number of Netscript operators in a string
-function numNetscriptOperators(string) {
-    var total = 0;
-    total += numOccurrences(string, "+");
-    total += numOccurrences(string, "-");
-    total += numOccurrences(string, "*");
-    total += numOccurrences(string, "/");
-    total += numOccurrences(string, "%");
-    total += numOccurrences(string, "&&");
-    total += numOccurrences(string, "||");
-    total += numOccurrences(string, "<");
-    total += numOccurrences(string, ">");
-    total += numOccurrences(string, "<=");
-    total += numOccurrences(string, ">=");
-    total += numOccurrences(string, "==");
-    total += numOccurrences(string, "!=");
-    if (isNaN(total)) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__DialogBox_js__["a" /* dialogBoxCreate */])("ERROR in counting number of operators in script. This is a bug, please report to game developer");
-        total = 0;
-    }
-    return total;
-}
-
-//Checks if a string contains HTML elements
-function isHTML(str) {
-    var a = document.createElement('div');
-    a.innerHTML = str;
-    for (var c = a.childNodes, i = c.length; i--; ) {
-        if (c[i].nodeType == 1) return true;
-    }
-    return false;
-}
-
-
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_DialogBox_js__ = __webpack_require__(1);
@@ -3663,7 +3555,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_LogBox_js__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ActiveScriptsUI_js__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Augmentations_js__ = __webpack_require__(17);
@@ -3922,6 +3814,7 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.visibility = "visible";
         Object(__WEBPACK_IMPORTED_MODULE_6__ActiveScriptsUI_js__["c" /* setActiveScriptsClickHandlers */])();
+        Object(__WEBPACK_IMPORTED_MODULE_6__ActiveScriptsUI_js__["d" /* updateActiveScriptsItems */])();
         Engine.currentPage = Engine.Page.ActiveScripts;
         document.getElementById("active-scripts-menu-link").classList.add("active");
     },
@@ -4069,6 +3962,7 @@ let Engine = {
         document.getElementById("mainmenu-container").style.visibility = "hidden";
         document.getElementById("character-overview-wrapper").style.visibility = "hidden";
         Engine.Display.missionContent.style.visibility = "visible";
+        Engine.currentPage = Engine.Page.Mission;
     },
 
     //Helper function that hides all content
@@ -4151,6 +4045,11 @@ let Engine = {
         if (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].companyPosition != "") {
             companyPosition = __WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].companyPosition.positionName;
         }
+
+        var bnText = "";
+        if (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].sourceFiles.length !== 0) {
+            bnText = "<br>Current BitNode: " + __WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].bitNodeN;
+        }
         Engine.Display.characterInfo.innerHTML =
        ('<b>General</b><br><br>' +
         'Current City: ' + __WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].city + '<br><br>' +
@@ -4202,7 +4101,8 @@ let Engine = {
         'Hacknet Nodes owned: ' + __WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].hacknetNodes.length + '<br>' +
         'Augmentations installed: ' + __WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].augmentations.length + '<br>' +
         'Time played since last Augmentation: ' + Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].playtimeSinceLastAug) + '<br>' +
-        'Time played: ' + Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].totalPlaytime) + '<br><br><br>').replace( / /g, "&nbsp;" );
+        'Time played: ' + Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].totalPlaytime) +
+        bnText + '<br><br><br>').replace( / /g, "&nbsp;" );
     },
 
     /* Display locations in the world*/
@@ -5335,7 +5235,167 @@ window.onload = function() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export getIndicesOf */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return convertTimeMsToTimeElapsedString; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return longestCommonStart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return isString; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return isPositiveNumber; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return containsAllStrings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return formatNumber; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return numOccurrences; });
+/* unused harmony export numNetscriptOperators */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return isHTML; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DialogBox_js__ = __webpack_require__(1);
+
+
+//Netburner String helper functions
+
+//Searches for every occurence of searchStr within str and returns an array of the indices of
+//all these occurences
+function getIndicesOf(searchStr, str, caseSensitive) {
+    var searchStrLen = searchStr.length;
+    if (searchStrLen == 0) {
+        return [];
+    }
+    var startIndex = 0, index, indices = [];
+    if (!caseSensitive) {
+        str = str.toLowerCase();
+        searchStr = searchStr.toLowerCase();
+    }
+    while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+        indices.push(index);
+        startIndex = index + searchStrLen;
+    }
+    return indices;
+}
+
+//Replaces the character at an index with a new character
+String.prototype.replaceAt=function(index, character) {
+    return this.substr(0, index) + character + this.substr(index+character.length);
+}
+
+//Converts a date representing time in milliseconds to a string with the format
+//      H hours M minutes and S seconds
+// e.g. 10000 -> "0 hours 0 minutes and 10 seconds"
+//      120000 -> "0 0 hours 2 minutes and 0 seconds"
+function convertTimeMsToTimeElapsedString(time) {
+    //Convert ms to seconds, since we only have second-level precision
+    time = Math.floor(time / 1000);
+
+    var days = Math.floor(time / 86400);
+    time %= 86400;
+
+    var hours = Math.floor(time / 3600);
+    time %= 3600;
+
+    var minutes = Math.floor(time / 60);
+    time %= 60;
+
+    var seconds = time;
+
+    var res = "";
+    if (days) {res += days + " days ";}
+    if (hours) {res += hours + " hours ";}
+    if (minutes) {res += minutes + " minutes ";}
+    res += seconds + " seconds ";
+    return res;
+}
+
+//Finds the longest common starting substring in a set of strings
+function longestCommonStart(strings) {
+    if (!containsAllStrings(strings)) {return;}
+    if (strings.length == 0) {return;}
+
+    var A = strings.concat().sort(),
+    a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
+    while(i<L && a1.charAt(i).toLowerCase() === a2.charAt(i).toLowerCase()) i++;
+    return a1.substring(0, i);
+}
+
+
+//Returns whether a variable is a string
+function isString(str) {
+    return (typeof str === 'string' || str instanceof String);
+}
+
+//Returns true if string contains only digits (meaning it would be a positive number)
+function isPositiveNumber(str) {
+    return /^\d+$/.test(str);
+}
+
+//Returns whether an array contains entirely of string objects
+function containsAllStrings(arr) {
+    return arr.every(isString);
+}
+
+//Formats a number with commas and a specific number of decimal digits
+function formatNumber(num, numFractionDigits) {
+    return num.toLocaleString(undefined, {
+        minimumFractionDigits: numFractionDigits,
+        maximumFractionDigits: numFractionDigits
+    });
+}
+
+//Count the number of times a substring occurs in a string
+function numOccurrences(string, subString) {
+    string += "";
+    subString += "";
+    if (subString.length <= 0) return (string.length + 1);
+
+    var n = 0, pos = 0, step = subString.length;
+
+    while (true) {
+        pos = string.indexOf(subString, pos);
+        if (pos >= 0) {
+            ++n;
+            pos += step;
+        } else break;
+    }
+    return n;
+}
+
+//Counters the number of Netscript operators in a string
+function numNetscriptOperators(string) {
+    var total = 0;
+    total += numOccurrences(string, "+");
+    total += numOccurrences(string, "-");
+    total += numOccurrences(string, "*");
+    total += numOccurrences(string, "/");
+    total += numOccurrences(string, "%");
+    total += numOccurrences(string, "&&");
+    total += numOccurrences(string, "||");
+    total += numOccurrences(string, "<");
+    total += numOccurrences(string, ">");
+    total += numOccurrences(string, "<=");
+    total += numOccurrences(string, ">=");
+    total += numOccurrences(string, "==");
+    total += numOccurrences(string, "!=");
+    if (isNaN(total)) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__DialogBox_js__["a" /* dialogBoxCreate */])("ERROR in counting number of operators in script. This is a bug, please report to game developer");
+        total = 0;
+    }
+    return total;
+}
+
+//Checks if a string contains HTML elements
+function isHTML(str) {
+    var a = document.createElement('div');
+    a.innerHTML = str;
+    for (var c = a.childNodes, i = c.length; i--; ) {
+        if (c[i].nodeType == 1) return true;
+    }
+    return false;
+}
+
+
+
 
 /***/ }),
 /* 6 */
@@ -5360,7 +5420,7 @@ window.onload = function() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_IPAddress_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(8);
 
 
 
@@ -6130,87 +6190,6 @@ function PrintAllServers() {
 
 /***/ }),
 /* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Reviver; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Generic_toJSON; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Generic_fromJSON; });
-/* Generic Reviver, toJSON, and fromJSON functions used for saving and loading objects */
-
-// A generic "smart reviver" function.
-// Looks for object values with a `ctor` property and
-// a `data` property. If it finds them, and finds a matching
-// constructor that has a `fromJSON` property on it, it hands
-// off to that `fromJSON` fuunction, passing in the value.
-function Reviver(key, value) {
-	var ctor;
-    if (value == null) {
-        console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
-        return 0;
-    }
-	if (typeof value === "object" &&
-		typeof value.ctor === "string" &&
-		typeof value.data !== "undefined") {
-			ctor = Reviver.constructors[value.ctor] || window[value.ctor];
-			if (typeof ctor === "function" &&
-				typeof ctor.fromJSON === "function") {
-
-					return ctor.fromJSON(value);
-			}
-	}
-	return value;
-}
-Reviver.constructors = {}; // A list of constructors the smart reviver should know about
-
-// A generic "toJSON" function that creates the data expected
-// by Reviver.
-// `ctorName`  The name of the constructor to use to revive it
-// `obj`       The object being serialized
-// `keys`      (Optional) Array of the properties to serialize,
-//             if not given then all of the objects "own" properties
-//             that don't have function values will be serialized.
-//             (Note: If you list a property in `keys`, it will be serialized
-//             regardless of whether it's an "own" property.)
-// Returns:    The structure (which will then be turned into a string
-//             as part of the JSON.stringify algorithm)
-function Generic_toJSON(ctorName, obj, keys) {
-  var data, index, key;
-
-  if (!keys) {
-    keys = Object.keys(obj); // Only "own" properties are included
-  }
-
-  data = {};
-  for (index = 0; index < keys.length; ++index) {
-    key = keys[index];
-    data[key] = obj[key];
-  }
-  return {ctor: ctorName, data: data};
-}
-
-// A generic "fromJSON" function for use with Reviver: Just calls the
-// constructor function with no arguments, then applies all of the
-// key/value pairs from the raw data to the instance. Only useful for
-// constructors that can be reasonably called without arguments!
-// `ctor`      The constructor to call
-// `data`      The data to apply
-// Returns:    The object
-function Generic_fromJSON(ctor, data) {
-  var obj, name;
-
-  obj = new ctor();
-  for (name in data) {
-    obj[name] = data[name];
-  }
-  return obj;
-}
-
-
-
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -16470,6 +16449,87 @@ return jQuery;
 
 
 /***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Reviver; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Generic_toJSON; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Generic_fromJSON; });
+/* Generic Reviver, toJSON, and fromJSON functions used for saving and loading objects */
+
+// A generic "smart reviver" function.
+// Looks for object values with a `ctor` property and
+// a `data` property. If it finds them, and finds a matching
+// constructor that has a `fromJSON` property on it, it hands
+// off to that `fromJSON` fuunction, passing in the value.
+function Reviver(key, value) {
+	var ctor;
+    if (value == null) {
+        console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
+        return 0;
+    }
+	if (typeof value === "object" &&
+		typeof value.ctor === "string" &&
+		typeof value.data !== "undefined") {
+			ctor = Reviver.constructors[value.ctor] || window[value.ctor];
+			if (typeof ctor === "function" &&
+				typeof ctor.fromJSON === "function") {
+
+					return ctor.fromJSON(value);
+			}
+	}
+	return value;
+}
+Reviver.constructors = {}; // A list of constructors the smart reviver should know about
+
+// A generic "toJSON" function that creates the data expected
+// by Reviver.
+// `ctorName`  The name of the constructor to use to revive it
+// `obj`       The object being serialized
+// `keys`      (Optional) Array of the properties to serialize,
+//             if not given then all of the objects "own" properties
+//             that don't have function values will be serialized.
+//             (Note: If you list a property in `keys`, it will be serialized
+//             regardless of whether it's an "own" property.)
+// Returns:    The structure (which will then be turned into a string
+//             as part of the JSON.stringify algorithm)
+function Generic_toJSON(ctorName, obj, keys) {
+  var data, index, key;
+
+  if (!keys) {
+    keys = Object.keys(obj); // Only "own" properties are included
+  }
+
+  data = {};
+  for (index = 0; index < keys.length; ++index) {
+    key = keys[index];
+    data[key] = obj[key];
+  }
+  return {ctor: ctorName, data: data};
+}
+
+// A generic "fromJSON" function for use with Reviver: Just calls the
+// constructor function with no arguments, then applies all of the
+// key/value pairs from the raw data to the instance. Only useful for
+// constructors that can be reasonably called without arguments!
+// `ctor`      The constructor to call
+// `data`      The data to apply
+// Returns:    The object
+function Generic_fromJSON(ctor, data) {
+  var obj, name;
+
+  obj = new ctor();
+  for (name in data) {
+    obj[name] = data[name];
+  }
+  return obj;
+}
+
+
+
+
+/***/ }),
 /* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16689,7 +16749,7 @@ function initBitNodeMultipliers() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BitNode_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FactionInfo_js__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Location_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Missions_js__ = __webpack_require__(38);
@@ -16698,8 +16758,8 @@ function initBitNodeMultipliers() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_FactionInvitationBox_js__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_JSONReviver_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_JSONReviver_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_YesNoBox_js__ = __webpack_require__(21);
 
 
@@ -17744,7 +17804,7 @@ function processPassiveFactionRepGain(numCycles) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
 /* 11 */
@@ -17757,7 +17817,7 @@ function processPassiveFactionRepGain(numCycles) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadSpecialServerIps; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeSpecialServerIps; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSpecialServerIps; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__ = __webpack_require__(8);
 
 
 /* Holds IP of Special Servers */
@@ -17819,7 +17879,7 @@ function initSpecialServerIps() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Company_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Crimes_js__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Infiltration_js__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Server_js__ = __webpack_require__(6);
@@ -17828,7 +17888,7 @@ function initSpecialServerIps() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_IPAddress_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_YesNoBox_js__ = __webpack_require__(21);
 
 
@@ -20164,7 +20224,7 @@ function initCreateProgramButtons() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeWorkerScripts; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptEnvironment_js__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptEvaluator_js__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Server_js__ = __webpack_require__(6);
@@ -20452,7 +20512,7 @@ function isValidIPAddress(ipaddress) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Prestige_js__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(8);
 
 
 
@@ -22421,7 +22481,7 @@ function giveAllAugmentations() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Location_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_JSONReviver_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_JSONReviver_js__ = __webpack_require__(8);
 
 
 
@@ -23583,16 +23643,16 @@ function getJobRequirementText(company, pos, tooltiptext=false) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Script; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllServersMap; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 var ace = __webpack_require__(50);
 __webpack_require__(53);
 __webpack_require__(54);
@@ -24196,7 +24256,7 @@ __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].construct
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
 /* 20 */
@@ -24210,7 +24270,7 @@ __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].construct
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CreateProgram_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DarkWeb_js__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__HelpText_js__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__InteractiveTutorial_js__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Literature_js__ = __webpack_require__(43);
@@ -24222,7 +24282,7 @@ __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].construct
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Script_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__SpecialServerIps_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_LogBox_js__ = __webpack_require__(27);
 
@@ -25898,7 +25958,7 @@ let Terminal = {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
 /* 21 */
@@ -26015,7 +26075,7 @@ function yesNoTxtInpBoxCreate(txt) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Settings_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(8);
 
 
 
@@ -26212,11 +26272,13 @@ function initMessages()  {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return deleteActiveScriptsItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return updateActiveScriptsItems; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NetscriptWorker_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_LogBox_js__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Server_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_HelperFunctions_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_LogBox_js__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__ = __webpack_require__(5);
+
 
 
 
@@ -26329,7 +26391,7 @@ function deleteActiveScriptsServerPanel(server) {
 
 function addActiveScriptsItem(workerscript) {
     //Get server panel
-    var server = Object(__WEBPACK_IMPORTED_MODULE_1__Server_js__["e" /* getServer */])(workerscript.serverIp);
+    var server = Object(__WEBPACK_IMPORTED_MODULE_2__Server_js__["e" /* getServer */])(workerscript.serverIp);
     if (server == null) {
         console.log("ERROR: Invalid server IP for workerscript.");
         return;
@@ -26372,7 +26434,7 @@ function addActiveScriptsItem(workerscript) {
 }
 
 function deleteActiveScriptsItem(workerscript) {
-    var server = Object(__WEBPACK_IMPORTED_MODULE_1__Server_js__["e" /* getServer */])(workerscript.serverIp);
+    var server = Object(__WEBPACK_IMPORTED_MODULE_2__Server_js__["e" /* getServer */])(workerscript.serverIp);
     if (server == null) {
         console.log("ERROR: Invalid server IP for workerscript.");
         return;
@@ -26399,13 +26461,16 @@ function updateActiveScriptsItems() {
         total += updateActiveScriptsItemContent(__WEBPACK_IMPORTED_MODULE_0__NetscriptWorker_js__["h" /* workerScripts */][i]);
     }
     document.getElementById("active-scripts-total-prod").innerHTML =
-        "Total online production rate: $" + Object(__WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__["c" /* formatNumber */])(total, 2) + " / second";
+        "Total online production of Active Scripts: $" + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(total, 2) + " / second<br>" +
+        "Total online production since last Augmentation installation: $" +
+        Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].scriptProdSinceLastAug, 2) + " ($" +
+        Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].scriptProdSinceLastAug / __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].playtimeSinceLastAug, 2) + " / second)";
     return total;
 }
 
 //Updates the content of the given item in the Active Scripts list
 function updateActiveScriptsItemContent(workerscript) {
-    var server = Object(__WEBPACK_IMPORTED_MODULE_1__Server_js__["e" /* getServer */])(workerscript.serverIp);
+    var server = Object(__WEBPACK_IMPORTED_MODULE_2__Server_js__["e" /* getServer */])(workerscript.serverIp);
     if (server == null) {
         console.log("ERROR: Invalid server IP for workerscript.");
         return;
@@ -26429,7 +26494,7 @@ function createActiveScriptsText(workerscript, item) {
 
     //Server ip/hostname
     var threads = "Threads: " + workerscript.scriptRef.threads;
-    var args = "Args: " + Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["f" /* printArray */])(workerscript.args);
+    var args = "Args: " + Object(__WEBPACK_IMPORTED_MODULE_4__utils_HelperFunctions_js__["f" /* printArray */])(workerscript.args);
 
     itemTextHeader.innerHTML = threads + "<br>" + args + "<br>";
 
@@ -26445,12 +26510,12 @@ function createActiveScriptsText(workerscript, item) {
     logButton.setAttribute("class", "active-scripts-button");
     killButton.setAttribute("class", "active-scripts-button");
     logButton.addEventListener("click", function() {
-        Object(__WEBPACK_IMPORTED_MODULE_4__utils_LogBox_js__["a" /* logBoxCreate */])(workerscript.scriptRef);
+        Object(__WEBPACK_IMPORTED_MODULE_5__utils_LogBox_js__["a" /* logBoxCreate */])(workerscript.scriptRef);
         return false;
     });
     killButton.addEventListener("click", function() {
         Object(__WEBPACK_IMPORTED_MODULE_0__NetscriptWorker_js__["d" /* killWorkerScript */])(workerscript.scriptRef, workerscript.scriptRef.scriptRef.server);
-        Object(__WEBPACK_IMPORTED_MODULE_2__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Killing script, may take a few minutes to complete...");
+        Object(__WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Killing script, may take a few minutes to complete...");
         return false;
     });
     item.appendChild(logButton);
@@ -26469,22 +26534,22 @@ function updateActiveScriptsText(workerscript, item, statsEl=null) {
 
     //Updates statistics only
     //Online
-    var onlineTotalMoneyMade = "Total online production: $" + Object(__WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__["c" /* formatNumber */])(workerscript.scriptRef.onlineMoneyMade, 2);
-    var onlineTotalExpEarned = (Array(26).join(" ") + Object(__WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__["c" /* formatNumber */])(workerscript.scriptRef.onlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
+    var onlineTotalMoneyMade = "Total online production: $" + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(workerscript.scriptRef.onlineMoneyMade, 2);
+    var onlineTotalExpEarned = (Array(26).join(" ") + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(workerscript.scriptRef.onlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
 
     var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
-    var onlineMpsText = "Online production rate: $" + Object(__WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__["c" /* formatNumber */])(onlineMps, 2) + "/second";
+    var onlineMpsText = "Online production rate: $" + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(onlineMps, 2) + "/second";
     var onlineEps = workerscript.scriptRef.onlineExpGained / workerscript.scriptRef.onlineRunningTime;
-    var onlineEpsText = (Array(25).join(" ") + Object(__WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__["c" /* formatNumber */])(onlineEps, 4) + " hacking exp/second").replace( / /g, "&nbsp;");
+    var onlineEpsText = (Array(25).join(" ") + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(onlineEps, 4) + " hacking exp/second").replace( / /g, "&nbsp;");
 
     //Offline
-    var offlineTotalMoneyMade = "Total offline production: $" + Object(__WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__["c" /* formatNumber */])(workerscript.scriptRef.offlineMoneyMade, 2);
-    var offlineTotalExpEarned = (Array(27).join(" ") + Object(__WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__["c" /* formatNumber */])(workerscript.scriptRef.offlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
+    var offlineTotalMoneyMade = "Total offline production: $" + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(workerscript.scriptRef.offlineMoneyMade, 2);
+    var offlineTotalExpEarned = (Array(27).join(" ") + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(workerscript.scriptRef.offlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
 
     var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
-    var offlineMpsText = "Offline production rate: $" + Object(__WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__["c" /* formatNumber */])(offlineMps, 2) + "/second";
+    var offlineMpsText = "Offline production rate: $" + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(offlineMps, 2) + "/second";
     var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
-    var offlineEpsText = (Array(26).join(" ") + Object(__WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__["c" /* formatNumber */])(offlineEps, 4) +  " hacking exp/second").replace( / /g, "&nbsp;");
+    var offlineEpsText = (Array(26).join(" ") + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(offlineEps, 4) +  " hacking exp/second").replace( / /g, "&nbsp;");
 
     itemTextStats.innerHTML = onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
                               onlineMpsText + "<br>" + onlineEpsText + "<br>" + offlineTotalMoneyMade + "<br>" + offlineTotalExpEarned + "<br>" +
@@ -26506,7 +26571,7 @@ function updateActiveScriptsText(workerscript, item, statsEl=null) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return iTutorialNextStep; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return currITutorialStep; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return iTutorialIsRunning; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_HelperFunctions_js__ = __webpack_require__(2);
 
@@ -32011,13 +32076,13 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*! decimal.js v7.2.3 https://github.com/MikeM
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return loadStockMarket; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return setStockMarketContentCreated; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Location_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
 
@@ -32699,7 +32764,7 @@ function logBoxUpdateText() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
 /* 28 */
@@ -32821,7 +32886,7 @@ Environment.prototype = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__CreateProgram_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__DarkWeb_js__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__HacknetNode_js__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Location_js__ = __webpack_require__(12);
@@ -32841,7 +32906,7 @@ Environment.prototype = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__utils_IPAddress_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
 
@@ -32893,6 +32958,7 @@ function initSingularitySFFlags() {
 function NetscriptFunctions(workerScript) {
     return {
         Math : Math,
+        Date : Date,
         hacknetnodes : __WEBPACK_IMPORTED_MODULE_12__Player_js__["a" /* Player */].hacknetNodes,
         scan : function(ip=workerScript.serverIp, hostnames=true){
             var server = Object(__WEBPACK_IMPORTED_MODULE_14__Server_js__["e" /* getServer */])(ip);
@@ -32964,6 +33030,7 @@ function NetscriptFunctions(workerScript) {
 
                     __WEBPACK_IMPORTED_MODULE_12__Player_js__["a" /* Player */].gainMoney(moneyGained);
                     workerScript.scriptRef.onlineMoneyMade += moneyGained;
+                    __WEBPACK_IMPORTED_MODULE_12__Player_js__["a" /* Player */].scriptProdSinceLastAug += moneyGained;
                     workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
                     __WEBPACK_IMPORTED_MODULE_12__Player_js__["a" /* Player */].gainHackingExp(expGainedOnSuccess);
                     workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
@@ -33532,6 +33599,15 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.baseDifficulty, 3) + " for " + server.hostname);
             return server.baseDifficulty;
         },
+        getServerMinSecurityLevel : function(ip) {
+            var server = Object(__WEBPACK_IMPORTED_MODULE_14__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_20__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerMinSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.minDifficulty, 3) + " for " + server.hostname);
+            return server.minDifficulty;
+        },
         getServerRequiredHackingLevel : function(ip){
             var server = Object(__WEBPACK_IMPORTED_MODULE_14__Server_js__["e" /* getServer */])(ip);
             if (server == null) {
@@ -33701,6 +33777,7 @@ function NetscriptFunctions(workerScript) {
             var netProfit = ((stock.price - stock.playerAvgPx) * shares) - __WEBPACK_IMPORTED_MODULE_4__Constants_js__["a" /* CONSTANTS */].StockMarketCommission;
             if (isNaN(netProfit)) {netProfit = 0;}
             workerScript.scriptRef.onlineMoneyMade += netProfit;
+            __WEBPACK_IMPORTED_MODULE_12__Player_js__["a" /* Player */].scriptProdSinceLastAug += netProfit;
 
             stock.playerShares -= shares;
             if (stock.playerShares == 0) {
@@ -33812,6 +33889,21 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("Error: Could not find server " + server.hostname +
                                        "as a purchased server. This is likely a bug please contact game dev");
             return false;
+        },
+        getPurchasedServers : function(hostname=true) {
+            var res = [];
+            __WEBPACK_IMPORTED_MODULE_12__Player_js__["a" /* Player */].purchasedServers.forEach(function(ip) {
+                if (hostname) {
+                    var server = Object(__WEBPACK_IMPORTED_MODULE_14__Server_js__["e" /* getServer */])(ip);
+                    if (server == null) {
+                        throw Object(__WEBPACK_IMPORTED_MODULE_20__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "ERR: Could not find server in getPurchasedServers(). This is a bug please report to game dev");
+                    }
+                    res.push(server.hostname);
+                } else {
+                    res.push(ip);
+                }
+            });
+            return res;
         },
         round : function(n) {
             if (isNaN(n)) {return 0;}
@@ -34794,16 +34886,16 @@ function NetscriptFunctions(workerScript) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllGangs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return resetGangs; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Location_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_YesNoBox_js__ = __webpack_require__(21);
 
 
@@ -36103,7 +36195,7 @@ function setGangMemberTaskDescription(memberObj, taskName) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
 /* 31 */
@@ -36258,7 +36350,7 @@ function applySourceFile(srcFile) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BitNode_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Company_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Location_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Message_js__ = __webpack_require__(22);
@@ -36492,7 +36584,7 @@ function prestigeSourceFile() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
 /* 33 */
@@ -36520,7 +36612,7 @@ function prestigeSourceFile() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Script_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_IPAddress_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
 
@@ -37355,13 +37447,13 @@ function scriptCalculateWeakenTime(server) {
 /* unused harmony export getHacknetNode */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BitNode_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__InteractiveTutorial_js__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
 
@@ -37913,7 +38005,7 @@ function gameOptionsBoxOpen() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
 /* 36 */
@@ -38194,17 +38286,21 @@ function determineCrimeChanceHeist() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HackingMission; });
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HackingMission; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return inMission; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return setInMission; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return currMission; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jsplumb__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jsplumb___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_jsplumb__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Faction_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jsplumb__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jsplumb___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_jsplumb__);
+
+
 
 
 
@@ -38222,47 +38318,48 @@ function setInMission(bool, mission) {
         currMission = null;
     }
 }
-/* Hacking Missions */
 
-/*You start with N CPU nodes dependent on home computer cores
+//Keyboard shortcuts
+$(document).keydown(function(e) {
+    if (inMission && currMission && currMission.selectedNode != null) {
+        switch (e.keyCode) {
+            case 65: //a for Attack
+                currMission.actionButtons[0].click();
+                break;
+            case 83: //s for Scan
+                currMission.actionButtons[1].click();
+                break;
+            case 87: //w for Weaken
+                currMission.actionButtons[2].click();
+                break;
+            case 70: //f for Fortify
+                currMission.actionButtons[3].click();
+                break;
+            case 82: //r for Overflow
+                currMission.actionButtons[4].click();
+                break;
+            case 68: //d for Detach connection
+                currMission.actionButtons[5].click();
+                break;
+            default:
+                break;
+        }
+    }
+});
 
-Three main stats:
-    Attack - Specific to a node. Affected by hacking skill, RAM (for home comp)
-    Defense - Universal defense - summed from all nodes
-    HP - Specific to a node. Affected by hacking skill, RAM (for home comp)
-
-Enemy has the following nodes:
-    Firewall Nodes - Essentially shields. Weak attack but large def
-    CPU Nodes - Defeating and capturing these will give you new nodes to use
-    Database Node - Main Target
-
-Misc Nodes (initially not owned by player or enemy):
-    Spam nodes - Increases time limit
-    Transfer Nodes - Slightly increases attack for all of your CPUs
-    Shield Node - Increases your defense
-
-Shapes for nodes:
-    Firewall - Rectangle
-    CPU - Circle
-    Database - Parralelogram
-    Spam - Diamond
-    Transfer - Cone
-    Shield - Shield shape
-
-*/
 let NodeTypes = {
     Core: "CPU Core Node",      //All actions available
     Firewall: "Firewall Node",  //No actions available
     Database: "Database Node",  //No actions available
     Spam: "Spam Node",          //No actions Available
-    Transfer: "Transfer Node",  //Can Weaken, Scan, and Overflow
+    Transfer: "Transfer Node",  //Can Weaken, Scan, Fortify and Overflow
     Shield: "Shield Node"       //Can Fortify
 }
 
 let NodeActions = {
     Attack: "Attacking", //Damaged based on attack stat + hacking level + opp def
-    Scan: "Scanning", //-Def for target, affected by hacking level
-    Weaken: "Weakening", //-Attack for target, affected by hacking level
+    Scan: "Scanning", //-Def for target, affected by attack and hacking level
+    Weaken: "Weakening", //-Attack for target, affected by attack and hacking level
     Fortify: "Fortifying", //+Defense for Node, affected by hacking level
     Overflow: "Overflowing", //+Attack but -Defense for Node, affected by hacking level
 }
@@ -38283,7 +38380,6 @@ function Node(type, stats) {
     //where this Node is the Source (since each Node
     //can only have 1 outgoing Connection)
     this.conn = null;
-
 }
 
 Node.prototype.setPosition = function(x, y) {
@@ -38332,8 +38428,12 @@ Node.prototype.select = function(actionButtons) {
             actionButtons[1].classList.add("a-link-button");
             actionButtons[2].classList.remove("a-link-button-inactive");
             actionButtons[2].classList.add("a-link-button");
+            actionButtons[3].classList.remove("a-link-button-inactive");
+            actionButtons[3].classList.add("a-link-button");
             actionButtons[4].classList.remove("a-link-button-inactive");
             actionButtons[4].classList.add("a-link-button");
+            actionButtons[5].classList.remove("a-link-button-inactive");
+            actionButtons[5].classList.add("a-link-button");
             break;
         default:
             break;
@@ -38341,7 +38441,7 @@ Node.prototype.select = function(actionButtons) {
 }
 
 Node.prototype.deselect = function(actionButtons) {
-    this.el.classList.remove("active");
+    this.el.classList.remove("hack-mission-player-node-active");
     for (var i = 0; i < actionButtons.length; ++i) {
         actionButtons[i].classList.remove("a-link-button");
         actionButtons[i].classList.add("a-link-button-inactive");
@@ -38353,6 +38453,9 @@ Node.prototype.deselect = function(actionButtons) {
 //being conducted
 function HackingMission(rep, fac) {
     this.faction = fac;
+
+    this.started = false;
+    this.time = 120000; //2 minutes, milliseconds
 
     this.playerCores = [];
     this.playerNodes = []; //Non-core nodes
@@ -38384,9 +38487,9 @@ function HackingMission(rep, fac) {
     this.jsplumbinstance = null;
 
     //difficulty capped at 16
-    this.difficulty = Math.min(16, Math.round(rep / __WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].HackingMissionRepToDiffConversion) + 1);
+    this.difficulty = Math.min(16, Math.round(rep / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].HackingMissionRepToDiffConversion) + 1);
     console.log("difficulty: " + this.difficulty);
-    this.reward = 200 + (rep / __WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].HackingMissionRepToRewardConversion);
+    this.reward = 200 + (rep / __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].HackingMissionRepToRewardConversion);
 }
 
 HackingMission.prototype.init = function() {
@@ -38394,12 +38497,12 @@ HackingMission.prototype.init = function() {
     this.createPageDom();
 
     //Create player starting nodes
-    var home = __WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].getHomeComputer()
+    var home = __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].getHomeComputer()
     for (var i = 0; i < home.cpuCores; ++i) {
         var stats = {
-            atk: (__WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_skill / 10),
-            def: (__WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_skill / 25),
-            hp: (__WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_skill / 5),
+            atk: (__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hacking_skill / 10),
+            def: (__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hacking_skill / 25),
+            hp: (__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hacking_skill / 5),
         };
         this.playerCores.push(new Node(NodeTypes.Core, stats));
         this.playerCores[i].setControlledByPlayer();
@@ -38408,21 +38511,21 @@ HackingMission.prototype.init = function() {
     }
 
     //Randomly generate enemy nodes (CPU and Firewall) based on difficulty
-    var numNodes = Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(this.difficulty, this.difficulty + 2);
-    var numFirewalls = Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(this.difficulty, this.difficulty + 5);
-    var numDatabases = Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(this.difficulty, this.difficulty + 1);
+    var numNodes = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(this.difficulty, this.difficulty + 1);
+    var numFirewalls = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(this.difficulty, this.difficulty + 2);
+    var numDatabases = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(this.difficulty, this.difficulty + 1);
     var totalNodes = numNodes + numFirewalls + numDatabases;
     var xlimit = 7 - Math.floor(totalNodes / 8);
     console.log("numNodes: " + numNodes);
     console.log("numFirewalls: " + numFirewalls);
     console.log("numDatabases: " + numDatabases);
     console.log("totalNodes: " + totalNodes);
-    var randMult = Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["a" /* addOffset */])(this.difficulty, 20);
+    var randMult = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["a" /* addOffset */])(this.difficulty, 20);
     for (var i = 0; i < numNodes; ++i) {
         var stats = {
-            atk: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(100, 250),
-            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(40, 75),
-            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(200, 300)
+            atk: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(125, 175),
+            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(30, 50),
+            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(225, 275)
         }
         this.enemyCores.push(new Node(NodeTypes.Core, stats));
         this.enemyCores[i].setControlledByEnemy();
@@ -38430,9 +38533,9 @@ HackingMission.prototype.init = function() {
     }
     for (var i = 0; i < numFirewalls; ++i) {
         var stats = {
-            atk: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(10, 25),
-            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(50, 75),
-            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(100, 250)
+            atk: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(10, 25),
+            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(50, 75),
+            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(175, 200)
         }
         this.enemyNodes.push(new Node(NodeTypes.Firewall, stats));
         this.enemyNodes[i].setControlledByEnemy();
@@ -38440,9 +38543,9 @@ HackingMission.prototype.init = function() {
     }
     for (var i = 0; i < numDatabases; ++i) {
         var stats = {
-            atk: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(20, 30),
-            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(25, 40),
-            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(200, 400)
+            atk: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(20, 30),
+            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(25, 40),
+            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(120, 150)
         }
         var node = new Node(NodeTypes.Database, stats);
         node.setControlledByEnemy();
@@ -38471,7 +38574,7 @@ HackingMission.prototype.createPageDom = function() {
     inGameGuideBtn.style.display = "inline-block";
     inGameGuideBtn.classList.add("hack-mission-header-element");
     inGameGuideBtn.addEventListener("click", function() {
-        Object(__WEBPACK_IMPORTED_MODULE_2__utils_DialogBox_js__["a" /* dialogBoxCreate */])(__WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].HackingMissionHowToPlay);
+        Object(__WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__["a" /* dialogBoxCreate */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].HackingMissionHowToPlay);
         return false;
     });
 
@@ -38487,15 +38590,23 @@ HackingMission.prototype.createPageDom = function() {
     //Start button will get replaced with forfeit when game is started
     var startBtn = document.createElement("a");
     startBtn.innerHTML = "Start";
+    startBtn.setAttribute("id", "hack-mission-start-btn");
     startBtn.classList.add("a-link-button");
     startBtn.classList.add("hack-mission-header-element");
     startBtn.style.display = "inline-block";
+    startBtn.addEventListener("click", ()=>{
+        this.start();
+    });
+
+    var timer = document.createElement("p");
+    timer.setAttribute("id", "hacking-mission-timer");
+    timer.style.display = "inline-block";
 
     //Create Action Buttons (Attack/Scan/Weaken/ etc...)
     var actionsContainer = document.createElement("span");
     actionsContainer.style.display = "block";
     actionsContainer.classList.add("hack-mission-action-buttons-container");
-    for (var i = 0; i < 5; ++i) {
+    for (var i = 0; i < 6; ++i) {
         this.actionButtons.push(document.createElement("a"));
         this.actionButtons[i].style.display = "inline-block";
         this.actionButtons[i].classList.add("a-link-button-inactive"); //Disabled at start
@@ -38507,19 +38618,19 @@ HackingMission.prototype.createPageDom = function() {
     var atkTooltip = document.createElement("span");
     atkTooltip.classList.add("tooltiptext");
     atkTooltip.innerText = "Lowers the targeted node's HP. The effectiveness of this depends on " +
-                           "this node's Attack level, your hacking level, and the opponents defense level.";
+                           "this node's Attack level, your hacking level, and the opponent's defense level.";
     this.actionButtons[0].appendChild(atkTooltip);
     this.actionButtons[1].innerText = "Scan(s)";
     var scanTooltip = document.createElement("span");
     scanTooltip.classList.add("tooltiptext");
     scanTooltip.innerText = "Lowers the targeted node's defense. The effectiveness of this depends on " +
-                            "this node's Attack level and your hacking level";
+                            "this node's Attack level, your hacking level, and the opponent's defense level.";
     this.actionButtons[1].appendChild(scanTooltip);
     this.actionButtons[2].innerText = "Weaken(w)";
     var WeakenTooltip = document.createElement("span");
     WeakenTooltip.classList.add("tooltiptext");
     WeakenTooltip.innerText = "Lowers the targeted node's attack. The effectiveness of this depends on " +
-                              "this node's Attack level and your hacking level";
+                              "this node's Attack level, your hacking level, and the opponent's defense level.";
     this.actionButtons[2].appendChild(WeakenTooltip);
     this.actionButtons[3].innerText = "Fortify(f)";
     var fortifyTooltip = document.createElement("span");
@@ -38533,6 +38644,26 @@ HackingMission.prototype.createPageDom = function() {
     overflowTooltip.innerText = "Raises this node's Attack level but lowers its Defense level. The effectiveness " +
                                 "of this depends on your hacking level.";
     this.actionButtons[4].appendChild(overflowTooltip);
+    this.actionButtons[5].innerText = "Drop Connection(d)";
+    var dropconnTooltip = document.createElement("span");
+    dropconnTooltip.classList.add("tooltiptext");
+    dropconnTooltip.innerText = "Removes this Node's current connection to some target Node, if it has one. This can " +
+                                "also be done by simply clicking the white connection line.";
+    this.actionButtons[5].appendChild(dropconnTooltip);
+
+    //Player/enemy defense displays will be in action container
+    var playerDefense = document.createElement("p");
+    var enemyDefense = document.createElement("p");
+    playerDefense.style.display = "inline-block";
+    enemyDefense.style.display = "inline-block";
+    playerDefense.style.color = "blue";
+    enemyDefense.style.color = "red";
+    playerDefense.style.margin = "4px";
+    enemyDefense.style.margin = "4px";
+    playerDefense.setAttribute("id", "hacking-mission-player-def");
+    enemyDefense.setAttribute("id", "hacking-mission-enemy-def");
+    actionsContainer.appendChild(playerDefense);
+    actionsContainer.appendChild(enemyDefense);
 
     //Set Action Button event listeners
     this.actionButtons[0].addEventListener("click", ()=>{
@@ -38585,12 +38716,24 @@ HackingMission.prototype.createPageDom = function() {
         this.selectedNode.action = NodeActions.Overflow;
     });
 
+    this.actionButtons[5].addEventListener("click", ()=>{
+        if (!(this.selectedNode instanceof Node)) {
+            console.log("ERR: Pressing Action button without selected node");
+            return;
+        }
+        if (this.selectedNode.conn) {
+            var endpoints = this.selectedNode.conn.endpoints;
+            endpoints[0].detachFrom(endpoints[1]);
+        }
+    })
+
     var timeDisplay = document.createElement("p");
 
     container.appendChild(headerText);
     container.appendChild(inGameGuideBtn);
     container.appendChild(wikiGuideBtn);
     container.appendChild(startBtn);
+    container.appendChild(timer);
     container.appendChild(actionsContainer);
     container.appendChild(timeDisplay);
 }
@@ -38611,7 +38754,7 @@ HackingMission.prototype.setActionButtonsActive = function() {
 
 //True for active, false for inactive
 HackingMission.prototype.setActionButton = function(i, active=true) {
-    if (Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["f" /* isString */])(i)) {
+    if (Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["f" /* isString */])(i)) {
         switch (i) {
             case NodeActions.Attack:
                 i = 0;
@@ -38650,8 +38793,9 @@ HackingMission.prototype.calculateDefenses = function() {
     for (var i = 0; i < this.playerNodes.length; ++i) {
         total += this.playerNodes[i].def;
     }
-    console.log("player defenses calculated to be: " + total);
     this.playerDef = total;
+    document.getElementById("hacking-mission-player-def").innerText =
+        "Player Defense: " + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.playerDef, 1);
     total = 0;
     for (var i = 0; i < this.enemyCores.length; ++i) {
         total += this.enemyCores[i].def;
@@ -38662,8 +38806,9 @@ HackingMission.prototype.calculateDefenses = function() {
     for (var i = 0; i < this.enemyNodes.length; ++i) {
         total += this.enemyNodes[i].def;
     }
-    console.log("enemy defenses calculated to be: " + total);
     this.enemyDef = total;
+    document.getElementById("hacking-mission-enemy-def").innerText =
+        "Enemy Defense: " + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.enemyDef, 1);
 }
 
 HackingMission.prototype.removeAvailablePosition = function(x, y) {
@@ -38693,7 +38838,7 @@ HackingMission.prototype.setNodePosition = function(nodeObj, x, y) {
 }
 
 HackingMission.prototype.setNodeRandomPosition = function(nodeObj, xlimit=0) {
-    var i = Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(0, this.availablePositions.length - 1);
+    var i = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(0, this.availablePositions.length - 1);
     var pos = this.availablePositions.splice(i, 1);
     pos = pos[0];
     this.setNodePosition(nodeObj, pos[0], pos[1]);
@@ -38711,22 +38856,22 @@ HackingMission.prototype.createMap = function() {
     for (var x = 0; x < 8; ++x) {
         for (var y = 0; y < 8; ++y) {
             if (!(this.map[x][y] instanceof Node)) {
-                var node, type = Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(0, 2);
-                var randMult = Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["a" /* addOffset */])(this.difficulty, 20);
+                var node, type = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(0, 2);
+                var randMult = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["a" /* addOffset */])(this.difficulty, 20);
                 switch (type) {
                     case 0: //Spam
                         var stats = {
                             atk: 0,
-                            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(400, 800),
-                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(500, 1000)
+                            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(30, 40),
+                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(70, 90)
                         }
                         node = new Node(NodeTypes.Spam, stats);
                         break;
                     case 1: //Transfer
                         var stats = {
                             atk: 0,
-                            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(500, 1000),
-                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(600, 1100)
+                            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(50, 70),
+                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(80, 95)
                         }
                         node = new Node(NodeTypes.Transfer, stats);
                         break;
@@ -38734,8 +38879,8 @@ HackingMission.prototype.createMap = function() {
                     default:
                         var stats = {
                             atk: 0,
-                            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(750, 1000),
-                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_3__utils_HelperFunctions_js__["d" /* getRandomInt */])(700, 1000)
+                            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(90, 105),
+                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(130, 150)
                         }
                         node = new Node(NodeTypes.Shield, stats);
                         break;
@@ -38759,9 +38904,6 @@ HackingMission.prototype.createMap = function() {
         console.log("Configuring Player Node: " + this.playerCores[i].el.id);
         this.configurePlayerNodeElement(this.playerCores[i].el);
     }
-
-    console.log(this.map);
-    this.initJsPlumb();
 }
 
 HackingMission.prototype.createNodeDomElement = function(nodeObj) {
@@ -38775,7 +38917,6 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
                                 nodeObj.pos[1]);
 
     //Set node classes for owner
-    nodeDiv.classList.add("tooltip2");
     nodeDiv.classList.add("hack-mission-node");
     if (nodeObj.plyrCtrl) {
         nodeDiv.classList.add("hack-mission-player-node");
@@ -38788,39 +38929,39 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
     switch (nodeObj.type) {
         case NodeTypes.Core:
             txt = "<p>CPU Core<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-cpu-node");
             break;
         case NodeTypes.Firewall:
             txt = "<p>Firewall<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-firewall-node");
             break;
         case NodeTypes.Database:
             txt = "<p>Database<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-database-node");
             break;
         case NodeTypes.Spam:
             txt = "<p>Spam<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-spam-node");
             break;
         case NodeTypes.Transfer:
             txt = "<p>Transfer<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-transfer-node");
             break;
         case NodeTypes.Shield:
         default:
             txt = "<p>Shield<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-shield-node");
             break;
     }
 
-    txt += "<br>Atk: " + Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.atk, 1) +
-           "<br>Def: " + Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.def, 1) + "</p>";
+    txt += "<br>Atk: " + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.atk, 1) +
+           "<br>Def: " + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.def, 1) + "</p>";
     nodeDiv.innerHTML = txt;
 }
 
@@ -38839,33 +38980,33 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
     switch (nodeObj.type) {
         case NodeTypes.Core:
             txt = "<p>CPU Core<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
         case NodeTypes.Firewall:
             txt = "<p>Firewall<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
         case NodeTypes.Database:
             txt = "<p>Database<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
         case NodeTypes.Spam:
             txt = "<p>Spam<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
         case NodeTypes.Transfer:
             txt = "<p>Transfer<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
         case NodeTypes.Shield:
         default:
             txt = "<p>Shield<br>" + "HP: " +
-                  Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
+                  Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
     }
 
-    txt += "<br>Atk: " + Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.atk, 1) +
-           "<br>Def: " + Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.def, 1);
+    txt += "<br>Atk: " + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.atk, 1) +
+           "<br>Def: " + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.def, 1);
     if (nodeObj.action) {
         txt += "<br>" + nodeObj.action;
     }
@@ -38918,6 +39059,8 @@ HackingMission.prototype.configureEnemyNodeElement = function(el) {
     if (this.selectedNode == nodeObj) {
         nodeObj.deselect(this.actionButtons);
     }
+
+    //TODO Need to remove event listeners
 }
 
 //Returns bool indicating whether a node is reachable by player
@@ -38929,6 +39072,17 @@ HackingMission.prototype.nodeReachable = function(node) {
     if (y > 0 && this.map[x][y-1].plyrCtrl) {return true;}
     if (y < 7 && this.map[x][y+1].plyrCtrl) {return true;}
     return false;
+}
+
+HackingMission.prototype.start = function() {
+    this.started = true;
+    this.initJsPlumb();
+    var startBtn = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["b" /* clearEventListeners */])("hack-mission-start-btn");
+    startBtn.innerHTML = "Forfeit Mission";
+    startBtn.addEventListener("click", ()=>{
+        this.finishMission(false);
+        return false;
+    });
 }
 
 HackingMission.prototype.initJsPlumb = function() {
@@ -39034,59 +39188,94 @@ HackingMission.prototype.dropAllConnectionsToNode = function(node) {
 }
 
 HackingMission.prototype.process = function(numCycles=1) {
+    if (!this.started) {return;}
+    var res = false;
     //Process actions of all player nodes
-    for (var i = 0; i < this.playerCores.length; ++i) {
-        this.processNode(this.playerCores[i], numCycles);
-    }
+    this.playerCores.forEach((node)=>{
+        res |= this.processNode(node, numCycles);
+    });
+
+    this.playerNodes.forEach((node)=>{
+        if (node.type === NodeTypes.Transfer) {
+            res |= this.processNode(node, numCycles);
+        }
+    });
 
     //Process actions of all enemy nodes
-    for (var i = 0; i < this.enemyCores.length; ++i) {
-        this.processNode(this.enemyCores[i], numCycles);
+    this.enemyCores.forEach((node)=>{
+        res |= this.processNode(node, numCycles);
+    });
+
+    this.enemyNodes.forEach((node)=>{
+        if (node.type === NodeTypes.Transfer) {
+            res |= this.processNode(node, numCycles);
+        }
+    });
+
+    if (res) {this.calculateDefenses();}
+
+    if (this.enemyDatabases.length === 0) {
+        this.finishMission(true);
+        return;
     }
+
+    //Update timer and check if player lost
+    this.time -= (numCycles * __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"]._idleSpeed);
+    if (this.time <= 0) {
+        this.finishMission(false);
+        return;
+    }
+    this.updateTimer();
 }
 
+//Returns a bool representing whether defenses need to be re-calculated
 HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
-    if (nodeObj.action === null) {return;}
+    if (nodeObj.action === null) {
+        return;
+    }
 
     var targetNode = null, def;
     if (nodeObj.conn) {
         targetNode = this.getNodeFromElement(nodeObj.conn.target);
         if (targetNode.plyrCtrl) {
             def = this.playerDef;
-        } else {
+        } else if (targetNode.enmyCtrl) {
             def = this.enemyDef;
+        } else { //Misc Node
+            def = targetNode.def;
         }
     }
 
     //Calculations are per second, so divide everything by 5
+    var calcDefenses = false;
     switch(nodeObj.action) {
         case NodeActions.Attack:
             if (nodeObj.conn === null) {break;}
-            var dmg = this.calculateAttackDamage(nodeObj.atk, def, __WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_skill);
+            var dmg = this.calculateAttackDamage(nodeObj.atk, def, __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hacking_skill);
             targetNode.hp -= (dmg/5 * numCycles);
             break;
         case NodeActions.Scan:
             if (nodeObj.conn === null) {break;}
-            var eff = this.calculateScanEffect(def, __WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_skill);
+            var eff = this.calculateScanEffect(nodeObj.atk, def, __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hacking_skill);
             targetNode.def -= (eff/5 * numCycles);
-            this.calculateDefenses();
+            calcDefenses = true;
             break;
         case NodeActions.Weaken:
             if (nodeObj.conn === null) {break;}
-            var eff = this.calculateWeakenEffect(def, __WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_skill);
+            var eff = this.calculateWeakenEffect(nodeObj.atk, def, __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hacking_skill);
             targetNode.atk -= (eff/5 * numCycles);
             break;
         case NodeActions.Fortify:
-            var eff = this.calculateFortifyEffect(__WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_skill);
+            var eff = this.calculateFortifyEffect(__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hacking_skill);
             nodeObj.def += (eff/5 * numCycles);
-            this.calculateDefenses();
+            calcDefenses = true;
             break;
         case NodeActions.Overflow:
-            var eff = this.calculateOverflowEffect(__WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_skill);
+            var eff = this.calculateOverflowEffect(__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hacking_skill);
             if (nodeObj.def < eff) {break;}
             nodeObj.def -= (eff/5 * numCycles);
             nodeObj.atk += (eff/5 * numCycles);
-            this.calculateDefenses();
+            calcDefenses = true;
             break;
         default:
             console.log("ERR: Invalid Node Action: " + nodeObj.action);
@@ -39108,20 +39297,118 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
         if (this.selectedNode == targetNode) {
             targetNode.deselect();
         }
+
+        //Flag for whether the target node was a misc node
+        var isMiscNode = !targetNode.plyrCtrl && !targetNode.enmyCtrl;
+        console.log("isMiscNode: " + isMiscNode);
+
+        //Remove all connections from Node
         this.dropAllConnectionsToNode(targetNode);
         this.dropAllConnectionsFromNode(targetNode);
+
+        //Changes the css class and turn the node into a JsPlumb Source/Target
         if (conqueredByPlayer) {
-            targetNode.setControlledByPlayer()
-        } else { //Conquered by enemy
+            targetNode.setControlledByPlayer();
+            this.jsplumbinstance.unmakeTarget(targetNode.el);
+            this.jsplumbinstance.makeSource(targetNode.el, {
+                deleteEndpointsOnEmpty:true,
+                maxConnections:1,
+                anchor:"Center",
+                connector:"Straight"
+            });
+        } else {
             targetNode.setControlledByEnemy();
+            this.jsplumbinstance.unmakeSource(targetNode.el);
+            this.jsplumbinstance.makeTarget(targetNode.el, {
+                maxConnections:-1,
+                anchor:"Center",
+                connector:["Straight"]
+            });
+        }
+
+        calcDefenses = true;
+
+        //Helper function to swap nodes between the respective enemyNodes/playerNodes arrays
+        function swapNodes(orig, dest, targetNode) {
+            console.log("swapNodes called");
+            for (var i = 0; i < orig.length; ++i) {
+                if (orig[i] == targetNode) {
+                    console.log("Swapping nodes");
+                    var node = orig.splice(i, 1);
+                    node = node[0];
+                    dest.push(node);
+                    break;
+                }
+            }
+        }
+
+        //Whether conquered node was a misc node
+        switch(targetNode.type) {
+            case NodeTypes.Core:
+                if (conqueredByPlayer) {
+                    swapNodes(this.enemyCores, this.playerCores, targetNode);
+                    this.configurePlayerNodeElement(targetNode.el);
+                } else {
+                    swapNodes(this.playerCores, this.enemyCores, targetNode);
+                    this.configureEnemyNodeElement(targetNode.el);
+                }
+                break;
+            case NodeTypes.Firewall:
+                if (conqueredByPlayer) {
+                    swapNodes(this.enemyNodes, this.playerNodes, targetNode);
+                } else {
+                    swapNodes(this.playerNodes, this.enemyNodes, targetNode);
+                }
+                break;
+            case NodeTypes.Database:
+                if (conqueredByPlayer) {
+                    swapNodes(this.enemyDatabases, this.playerNodes, targetNode);
+                } else {
+                    swapNodes(this.playerNodes, this.enemyDatabases, targetNode);
+                }
+                break;
+            case NodeTypes.Spam:
+                if (conqueredByPlayer) {
+                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
+                } else {
+                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
+                }
+
+                //Conquering spam node increases time limit
+                this.time += __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].HackingMissionSpamTimeIncrease;
+                break;
+            case NodeTypes.Transfer:
+                //Conquering a Transfer node increases the attack of all cores by some percentages
+                if (conqueredByPlayer) {
+                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
+                    this.playerCores.forEach(function(node) {
+                        node.atk *= __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].HackingMissionTransferAttackIncrease;
+                    });
+                    this.configurePlayerNodeElement(targetNode.el);
+                } else {
+                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
+                    this.enemyCores.forEach(function(node) {
+                        node.atk *= __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].HackingMissionTransferAttackIncrease;
+                    });
+                    this.configureEnemyNodeElement(targetNode.el);
+                }
+                break;
+            case NodeTypes.Shield:
+                if (conqueredByPlayer) {
+                    swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
+                } else {
+                    swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
+                }
+                break;
         }
     }
     this.updateNodeDomElement(nodeObj);
     if (targetNode) {this.updateNodeDomElement(targetNode);}
+    return calcDefenses;
 }
 
 var hackEffWeightSelf = 100; //Weight for Node actions on self
-var hackEffWeightTarget = 10; //Weight for Node Actions against Target
+var hackEffWeightTarget = 15; //Weight for Node Actions against Target
 var hackEffWeightAttack = 100; //Weight for Attack action
 
 //Returns damage per cycle based on stats
@@ -39129,12 +39416,12 @@ HackingMission.prototype.calculateAttackDamage = function(atk, def, hacking = 0)
     return Math.max(atk + (hacking / hackEffWeightAttack) - def, 0.1);
 }
 
-HackingMission.prototype.calculateScanEffect = function(def, hacking=0) {
-    return Math.max(hacking / hackEffWeightTarget - def, 0.1);
+HackingMission.prototype.calculateScanEffect = function(atk, def, hacking=0) {
+    return Math.max((atk/2) + hacking / hackEffWeightTarget - def, 0.1);
 }
 
-HackingMission.prototype.calculateWeakenEffect = function(def, hacking=0) {
-    return Math.max(hacking / hackEffWeightTarget - def, 0.1);
+HackingMission.prototype.calculateWeakenEffect = function(atk, def, hacking=0) {
+    return Math.max((atk/2) + hacking / hackEffWeightTarget - def, 0.1);
 }
 
 HackingMission.prototype.calculateFortifyEffect = function(hacking=0) {
@@ -39145,8 +39432,45 @@ HackingMission.prototype.calculateOverflowEffect = function(hacking=0) {
     return hacking / hackEffWeightSelf;
 }
 
+//Updates timer display
+HackingMission.prototype.updateTimer = function() {
+    var timer = document.getElementById("hacking-mission-timer");
+
+    //Convert time remaining to a string of the form m:ss
+    var seconds = Math.round(this.time / 1000);
+    var minutes = Math.trunc(seconds / 60);
+    seconds %= 60;
+    var str = ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+    timer.innerText = "Time left: " + str;
+}
+
+//The 'win' argument is a bool for whether or not the player won
+HackingMission.prototype.finishMission = function(win) {
+    inMission = false;
+    currMission = null;
+
+    if (win) {
+        Object(__WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Mission won!");
+    } else {
+        Object(__WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Mission lost!");
+    }
+
+    //Clear mission container
+    var container = document.getElementById("mission-container");
+    while(container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+
+    //Return to Faction page
+    document.getElementById("mainmenu-container").style.visibility = "visible";
+    document.getElementById("character-overview-wrapper").style.visibility = "visible";
+    __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].loadFactionContent();
+    Object(__WEBPACK_IMPORTED_MODULE_2__Faction_js__["c" /* displayFactionContent */])(this.faction.name);
+}
 
 
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
 /* 39 */
@@ -39309,7 +39633,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Terminal_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
 
@@ -39850,7 +40174,7 @@ function initLiterature() {
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return redPillFlag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hackWorldDaemon; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BitNode_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Prestige_js__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SourceFile_js__ = __webpack_require__(31);
@@ -40179,7 +40503,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
 /* 45 */
@@ -40188,12 +40512,12 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return beginInfiltration; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_InfiltrationBox_js__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
 
@@ -41020,7 +41344,7 @@ function getInfiltrationEscapeChance(inst) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__StringHelperFunctions_js__ = __webpack_require__(5);
 
 
 
@@ -75892,11 +76216,12 @@ var NetscriptHighlightRules = function(options) {
             "SyntaxError|TypeError|URIError|"                                          +
             "decodeURI|decodeURIComponent|encodeURI|encodeURIComponent|eval|isFinite|" + // Non-constructor functions
             "isNaN|parseFloat|parseInt|"                                               +
-            "hack|sleep|grow|wewaken|print|tprint|scan|nuke|brutessh|ftpcrack|"        + //Netscript functions
+            "hack|sleep|grow|weaken|print|tprint|scan|nuke|brutessh|ftpcrack|"         + //Netscript functions
             "relaysmtp|httpworm|sqlinject|run|exec|kill|killall|scp|ls|hasRootAccess|" +
-            "getIp|getHackingMultipliers|getBitNodeMultipliers|"                       + 
+            "getIp|getHackingMultipliers|getBitNodeMultipliers|"                       +
             "getHostname|getHackingLevel|getServerMoneyAvailable|getServerMaxMoney|"   +
             "getServerGrowth|getServerSecurityLevel|getServerBaseSecurityLevel|"       +
+            "getServerMinSecurityLevel|"                                               +
             "getServerRequiredHackingLevel|getServerNumPortsRequired|getServerRam|"    +
             "serverExists|fileExists|isRunning|getNextHacknetNodeCost|"                +
             "purchaseHacknetNode|" +
@@ -88276,7 +88601,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Alias_js__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Company_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Gang_js__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__HacknetNode_js__ = __webpack_require__(34);
@@ -88290,8 +88615,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_GameOptions_js__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_JSONReviver_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_JSONReviver_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__utils_decimal_js__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__utils_decimal_js__);
 
@@ -88840,7 +89165,7 @@ function openImportFileHandler(evt) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ })
 /******/ ]);

@@ -93,8 +93,7 @@ function PlayerObject() {
 
     //Servers
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
-    this.discoveredServers      = []; //IP addresses of secret servers not in the network that you have discovered
-    this.purchasedServers       = [];
+    this.purchasedServers       = []; //IP Addresses of purchased servers
     this.hacknetNodes           = [];
     this.totalHacknetNodeProduction = 0;
 
@@ -187,6 +186,9 @@ function PlayerObject() {
 	this.lastUpdate = 0;
     this.totalPlaytime = 0;
     this.playtimeSinceLastAug = 0;
+
+    //Script production since last Aug installation
+    this.scriptProdSinceLastAug = 0;
 };
 
 PlayerObject.prototype.init = function() {
@@ -232,7 +234,6 @@ PlayerObject.prototype.prestigeAugmentation = function() {
     this.companyName = "";
     this.companyPosition = "";
 
-    this.discoveredServers = [];
     this.purchasedServers = [];
 
     this.factions = [];
@@ -311,7 +312,6 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.companyName = "";
     this.companyPosition = "";
 
-    this.discoveredServers = [];
     this.purchasedServers = [];
 
     this.factions = [];
@@ -1363,6 +1363,7 @@ PlayerObject.prototype.takeClass = function(numCycles) {
 //through a Singularity Netscript function
 PlayerObject.prototype.finishClass = function(sing=false) {
     this.gainWorkExp();
+    this.gainIntelligenceExp(CONSTANTS.IntelligenceClassBaseExpGain * Math.round(this.timeWorked / 1000));
 
     if (this.workMoneyGained > 0) {
         throw new Error("ERR: Somehow gained money while taking class");
@@ -1513,6 +1514,14 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                             formatNumber(this.workAgiExpGained, 4) + " agility experience<br>" +
                             formatNumber(this.workChaExpGained, 4) + " charisma experience");
         } else {
+            //Exp halved on failure
+            this.workHackExpGained  /= 2;
+            this.workStrExpGained   /= 2;
+            this.workDefExpGained   /= 2;
+            this.workDexExpGained   /= 2;
+            this.workAgiExpGained   /= 2;
+            this.workChaExpGained   /= 2;
+
             dialogBoxCreate("Crime failed! <br><br>" +
                     "You gained:<br>"+
                     formatNumber(this.workHackExpGained, 4) + " hacking experience <br>" +
@@ -1525,8 +1534,6 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
 
         this.gainWorkExp();
     }
-
-
 
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";

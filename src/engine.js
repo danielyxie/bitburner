@@ -248,6 +248,7 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.visibility = "visible";
         setActiveScriptsClickHandlers();
+        updateActiveScriptsItems();
         Engine.currentPage = Engine.Page.ActiveScripts;
         document.getElementById("active-scripts-menu-link").classList.add("active");
     },
@@ -395,6 +396,7 @@ let Engine = {
         document.getElementById("mainmenu-container").style.visibility = "hidden";
         document.getElementById("character-overview-wrapper").style.visibility = "hidden";
         Engine.Display.missionContent.style.visibility = "visible";
+        Engine.currentPage = Engine.Page.Mission;
     },
 
     //Helper function that hides all content
@@ -477,6 +479,11 @@ let Engine = {
         if (Player.companyPosition != "") {
             companyPosition = Player.companyPosition.positionName;
         }
+
+        var bnText = "";
+        if (Player.sourceFiles.length !== 0) {
+            bnText = "<br>Current BitNode: " + Player.bitNodeN;
+        }
         Engine.Display.characterInfo.innerHTML =
        ('<b>General</b><br><br>' +
         'Current City: ' + Player.city + '<br><br>' +
@@ -528,7 +535,8 @@ let Engine = {
         'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
         'Augmentations installed: ' + Player.augmentations.length + '<br>' +
         'Time played since last Augmentation: ' + convertTimeMsToTimeElapsedString(Player.playtimeSinceLastAug) + '<br>' +
-        'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime) + '<br><br><br>').replace( / /g, "&nbsp;" );
+        'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime) +
+        bnText + '<br><br><br>').replace( / /g, "&nbsp;" );
     },
 
     /* Display locations in the world*/

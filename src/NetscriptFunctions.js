@@ -64,6 +64,7 @@ function initSingularitySFFlags() {
 function NetscriptFunctions(workerScript) {
     return {
         Math : Math,
+        Date : Date,
         hacknetnodes : Player.hacknetNodes,
         scan : function(ip=workerScript.serverIp, hostnames=true){
             var server = getServer(ip);
@@ -135,6 +136,7 @@ function NetscriptFunctions(workerScript) {
 
                     Player.gainMoney(moneyGained);
                     workerScript.scriptRef.onlineMoneyMade += moneyGained;
+                    Player.scriptProdSinceLastAug += moneyGained;
                     workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
                     Player.gainHackingExp(expGainedOnSuccess);
                     workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
@@ -703,6 +705,15 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + formatNumber(server.baseDifficulty, 3) + " for " + server.hostname);
             return server.baseDifficulty;
         },
+        getServerMinSecurityLevel : function(ip) {
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerMinSecurityLevel() returned " + formatNumber(server.minDifficulty, 3) + " for " + server.hostname);
+            return server.minDifficulty;
+        },
         getServerRequiredHackingLevel : function(ip){
             var server = getServer(ip);
             if (server == null) {
@@ -872,6 +883,7 @@ function NetscriptFunctions(workerScript) {
             var netProfit = ((stock.price - stock.playerAvgPx) * shares) - CONSTANTS.StockMarketCommission;
             if (isNaN(netProfit)) {netProfit = 0;}
             workerScript.scriptRef.onlineMoneyMade += netProfit;
+            Player.scriptProdSinceLastAug += netProfit;
 
             stock.playerShares -= shares;
             if (stock.playerShares == 0) {
@@ -983,6 +995,21 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("Error: Could not find server " + server.hostname +
                                        "as a purchased server. This is likely a bug please contact game dev");
             return false;
+        },
+        getPurchasedServers : function(hostname=true) {
+            var res = [];
+            Player.purchasedServers.forEach(function(ip) {
+                if (hostname) {
+                    var server = getServer(ip);
+                    if (server == null) {
+                        throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find server in getPurchasedServers(). This is a bug please report to game dev");
+                    }
+                    res.push(server.hostname);
+                } else {
+                    res.push(ip);
+                }
+            });
+            return res;
         },
         round : function(n) {
             if (isNaN(n)) {return 0;}

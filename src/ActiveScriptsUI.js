@@ -1,6 +1,7 @@
 import {workerScripts,
         addWorkerScript,
         killWorkerScript}           from "./NetscriptWorker.js";
+import {Player}                     from "./Player.js";
 import {getServer}                  from "./Server.js";
 import {dialogBoxCreate}            from "../utils/DialogBox.js";
 import {printArray}                 from "../utils/HelperFunctions.js";
@@ -182,7 +183,10 @@ function updateActiveScriptsItems() {
         total += updateActiveScriptsItemContent(workerScripts[i]);
     }
     document.getElementById("active-scripts-total-prod").innerHTML =
-        "Total online production rate: $" + formatNumber(total, 2) + " / second";
+        "Total online production of Active Scripts: $" + formatNumber(total, 2) + " / second<br>" +
+        "Total online production since last Augmentation installation: $" +
+        formatNumber(Player.scriptProdSinceLastAug, 2) + " ($" +
+        formatNumber(Player.scriptProdSinceLastAug / Player.playtimeSinceLastAug, 2) + " / second)";
     return total;
 }
 
