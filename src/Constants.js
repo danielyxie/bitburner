@@ -124,31 +124,30 @@ let CONSTANTS = {
 
     //Hacking Missions
     HackingMissionRepToDiffConversion: 5000, //Faction rep is divided by this to get mission difficulty
-    HackingMissionRepToRewardConversion: 20, //Faction rep divided byt his to get mission rep reward
+    HackingMissionRepToRewardConversion: 12, //Faction rep divided byt his to get mission rep reward
     HackingMissionSpamTimeIncrease: 20000, //How much time limit increase is gained when conquering a Spam Node (ms)
     HackingMissionTransferAttackIncrease: 1.05, //Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
     HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with faction reputation.<br><br>" +
                              "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
-                             "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray" +
+                             "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray " +
                              "that initially belong to neither you nor the enemy. The goal of the game is " +
                              "to capture all of the enemy's database nodes, which are the parallelogram-shaped ones, within the time limit. " +
                              "If you cannot capture all of the enemy's database nodes in the time limit, you will lose.<br><br>" +
                              "Each Node has three stats: Attack, Defense, and HP. There are five different actions that " +
                              "a Node can take:<br><br> " +
-                             "Attack - Targets an enemy Node and lowers its HP. The effectiveness is determined by the Node's Attack, the Player's " +
+                             "Attack - Targets an enemy Node and lowers its HP. The effectiveness is determined by the owner's Attack, the Player's " +
                              "hacking level, and the enemy's defense.<br>" +
-                             "Scan - Targets an enemy Node and lowers its Defense. The effectiveness is determined by the Player's hacking level and the " +
+                             "Scan - Targets an enemy Node and lowers its Defense. The effectiveness is determined by the owner's Attack, the Player's hacking level, and the " +
                              "enemy's defense.<br>"  +
-                             "Weaken - Targets an enemy Node and lowers its Attack. The effectiveness is determined by the Player's hacking level and the enemy's " +
+                             "Weaken - Targets an enemy Node and lowers its Attack. The effectiveness is determined by the owner's Attack, the Player's hacking level, and the enemy's " +
                              "defense.<br>" +
-                             "Fortify - Raises the Node's Defense. The effectiveness is determined by your hacking level.<br><br>" +
-                             "To capture a Node, you must lower its HP down to 0. " +
-                             "A Node's 'Attack' stats affects its effectiveness when attacking other Nodes. A Node's 'Defense' helps protect " +
-                             "against the actions of enemy Nodes. One important thing to note is that, when defending, your total 'Defense' " +
-                             "(sum of the Defense of all of your Nodes) is what's taken into account when determining the effect of offensive actions. " +
-                             "However, when attacking, only the 'Attack' of the Node being used to attack is taken into account.<br><br>" +
+                             "Fortify - Raises the Node's Defense. The effectiveness is determined by your hacking level.<br>" +
+                             "Overflow - Raises the Node's Attack but lowers its Defense. The effectiveness is determined by your hacking level.<br><br>" +
+                             "Note that when determining the effectiveness of the above actions, the TOTAL Attack or Defense of the team is used, not just the " +
+                             "Attack/Defense of the individual Node that is performing the action.<br><br." +
+                             "To capture a Node, you must lower its HP down to 0.<br><br>" +
                              "There are six different types of Nodes:<br><br>" +
-                             "CPU Core - These are your main Nodes that are used to perform actions<br>" +
+                             "CPU Core - These are your main Nodes that are used to perform actions. Capable of performing every action<br>" +
                              "Firewall - Nodes with high defense. These Nodes cannot perform any actions<br>" +
                              "Database - A special type of Node. The player's objective is to conquer all of the enemy's Database Nodes within " +
                              "the time limit. These Nodes cannot perform any actions<br>"  +
@@ -157,10 +156,16 @@ let CONSTANTS = {
                              "Transfer - Conquering one of these nodes will increase the Attack of all of your CPU Cores by a small fixed percentage. " +
                              "These Nodes are capable of performing every action except the 'Attack' action<br>" +
                              "Shield - Nodes with high defense. These Nodes cannot perform any actions<br><br>" +
+                             "To assign an action to a Node, you must first select one of your Nodes. This can be done by simply clicking on it. Only " +
+                             "one Node can be selected at a time, and it will be denoted with a white highlight. After selecting the Node, " +
+                             "select its action using the Action Buttons near the top of the screen. Every action also has a corresponding keyboard " +
+                             "shortcut that can be used as well.<br><br>" +
                              "For certain actions such as attacking, scanning, and weakening, the Node performing the action must have a target. To target " +
                              "another node, simply click-and-drag from the 'source' Node to a target. A Node can only have one target, and you can only target " +
                              "Nodes that are adjacent to one of your Nodes (immediately above, below, or to the side. NOT diagonal). Furthermore, only CPU Cores and Transfer Nodes " +
-                             "can target, since they are the only ones that can perform actions",
+                             "can target, since they are the only ones that can perform actions. To remove a target, you can simply click on the line that represents " +
+                             "the connection between one of your Nodes and its target. Alternatively, you can select the 'source' Node and click the 'Drop Connection' button, " +
+                             "or press 'd',",
 
 
     //Gang constants
@@ -418,6 +423,9 @@ let CONSTANTS = {
                            "args.length<br><br>" +
                            "Note that none of the other functions that typically work with arrays, such as remove(), insert(), clear(), etc., will work on the " +
                            "args array.<br><br>" +
+                           "<u><h1>Javascript Modules</h1></u><br>" +
+                           "Netscript supports the following Javascript Modules:<br><br>" +
+                           "Math<br>Date (static functions only)<br><br>" +
                            "<u><h1> Functions </h1></u><br>" +
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " +
@@ -649,8 +657,9 @@ let CONSTANTS = {
                            "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
                            "<i>getScriptIncome([scriptname], [hostname/ip], [args...])</i><br>" +
                            "Returns the amount of income the specified script generates while online (when the game is open, does not apply for " +
-                           "offline income). This function can also return the total income of all of your active scripts by running the function " +
-                           "with no arguments.<br><br>" +
+                           "offline income). This function can also be called with no arguments. If called with no arguments, then this function " +
+                           "will return an array of two values. The first value is the total income ($/sec) of all of your active scripts (currently running). " +
+                           "The second value is the total income ($/sec) from scripts since you last installed Augmentations (or destroyed a BitNode).<br><br>" +
                            "Remember that a script is uniquely identified by both its name and its arguments. So for example if you ran a script " +
                            "with the arguments 'foodnstuff' and '5' then in order to use this function to get that script's income you must " +
                            "specify those arguments in this function call.<br><br>" +
@@ -669,6 +678,8 @@ let CONSTANTS = {
                            "The second argument must be a string with the hostname/IP of the target server. If the first argument is specified " +
                            "then the second argument must be specified as well. Any additional arguments passed to the function will specify " +
                            "the arguments passed into the target script.<br><br>" +
+                           "<i>getTimeSinceLastAug()</i><br>" +
+                           "Returns the amount of time in milliseconds that have passed since you last installed Augmentations (or destroyed a BitNode).<br><br>" +
                            "<u><h1>Hacknet Nodes API</h1></u><br>" +
                            "Netscript provides the following API for accessing and upgrading your Hacknet Nodes through scripts. This API does NOT work offline.<br><br>" +
                            "<i>hacknetnodes</i><br> A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " +
@@ -998,28 +1009,24 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.29.1<br>" +
+    "-New gameplay feature that is currently in BETA: Hacking Missions. Hacking Missions is an active gameplay mechanic (its a minigame) " +
+    "that is meant to be used to earn faction reputation. However, since this is currently in beta, hacking missions will NOT grant reputation " +
+    "for the time being, since the feature likely has many bugs, balance problems, and other issues. If you have any feedback " +
+    "regarding the new feature, feel free to let me know<br>" +
+    "-CHANGED THE RETURN VALUE OF getScriptIncome() WHEN RAN WITH NO ARGUMENTS. It will now return an array of " +
+    "two values rather than a single value. This may break your scripts, so make sure to update them!<br>" +
     "-Added continue statement for for/while loops<br>" +
-    "-Added getServerMinSecurityLevel() Netscript function<br>" +
+    "-Added getServerMinSecurityLevel(), getPurchasedServers(), and getTimeSinceLastAug() Netscript functions<br>" +
+    "-Netscript scp() function can now take an array as the first argument, and will try to copy " +
+    "every file specified in the array (it will just call scp() normally for every element in the array). " +
+    "If an array is passed in, then the scp() function returns true if at least one element from the array is successfully copied<br>" +
     "-Added Javascript's Date module to Netscript. Since 'new' is not supported in Netscript yet, only the Date module's " +
     "static methods will work (now(), UTC(), parse(), etc.).<br>" +
     "-Failing a crime now gives half the experience it did before<br>" +
-    "-The repeated 'Find The-Cave' message after installing The Red Pill Augmentation now only happens " +
-    "if you've never destroyed a BitNode before<br>" +
-    "-fileExists() function now works on literature files<br><br>" +
-    "v0.29.0<br>" +
-    "-Added BitNode-5: Artificial Intelligence<br>" +
-    "-Added getIp(), getIntelligence(), getHackingMultipliers(), and getBitNodeMultipliers() Netscript functions (requires Source-File 5)<br>" +
-    "-Updated scan() Netscript function so that you can choose to have it print IPs rather than hostnames<br>" +
-    "-Refactored scp() Netscript function so that it takes an optional 'source server' argument<br>" +
-    "-For Infiltration, decreased the percentage by which the security level increases by " +
-    "about 10% for every location<br>" +
-    "-Using :w in the script editor's Vim keybinding mode should now save and quit to Terminal<br>" +
-    "-Some minor optimizations that should reduce the size of the save file<br>" +
-    "-scan-analyze Terminal command will no longer show your purchased servers, unless you pass a '-a' flag into the command<br>" +
-    "-After installing the Red Pill augmentation from Daedalus, the message telling you to find 'The-Cave' " +
-    "will now repeatedly pop up regardless of whether or not you have messages suppressed<br>" +
-    "-Various bugfixes",
-
+    "-The forced repeated 'Find The-Cave' message after installing The Red Pill Augmentation now only happens " +
+    "if you've never destroyed a BitNode before, and will only popup every 15 minutes. If you have already destroyed a BitNode, " +
+    "the message will not pop up if you have messages suppressed (if you don't have messages suppressed it WILL still repeatedly popup)<br>" +
+    "-fileExists() function now works on literature files<br><br>",
 }
 
 export {CONSTANTS};

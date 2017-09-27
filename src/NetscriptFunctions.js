@@ -469,6 +469,16 @@ function NetscriptFunctions(workerScript) {
             if (arguments.length !== 2 && arguments.length !== 3) {
                 throw makeRuntimeRejectMsg(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
             }
+            if (scriptname && scriptname.constructor === Array) {
+                //Recursively call scp on all elements of array
+                var res = false;
+                scriptname.forEach(function(script) {
+                    if (NetscriptFunctions(workerScript).scp(script, ip1, ip2)) {
+                        res = true;
+                    };
+                });
+                return res;
+            }
             if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script")) {
                 throw makeRuntimeRejectMsg(workerScript, "Error: scp() only works for .script and .lit files");
             }
@@ -1124,7 +1134,10 @@ function NetscriptFunctions(workerScript) {
         getScriptIncome : function(scriptname, ip) {
             if (arguments.length === 0) {
                 //Get total script income
-                return updateActiveScriptsItems();
+                var res = [];
+                res.push(updateActiveScriptsItems());
+                res.push(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000));
+                return res;
             } else {
                 //Get income for a particular script
                 var server = getServer(ip);
@@ -1169,6 +1182,9 @@ function NetscriptFunctions(workerScript) {
                 }
                 return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;
             }
+        },
+        getTimeSinceLastAug : function() {
+            return Player.playtimeSinceLastAug;
         },
 
         /* Singularity Functions */

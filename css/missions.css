@@ -34,7 +34,6 @@
     background-color:blue;
 }
 
-.hack-mission-player-node:hover,
 .hack-mission-player-node-active {
     border: 2px solid white;
     color: #6666ff;

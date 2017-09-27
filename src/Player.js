@@ -275,6 +275,7 @@ PlayerObject.prototype.prestigeAugmentation = function() {
     this.lastUpdate = new Date().getTime();
 
     this.playtimeSinceLastAug = 0;
+    this.scriptProdSinceLastAug = 0;
 
     this.hacknetNodes.length = 0;
     this.totalHacknetNodeProduction = 0;
@@ -365,6 +366,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.hasTixApiAccess = false;
 
     this.playtimeSinceLastAug = 0;
+    this.scriptProdSinceLastAug = 0;
 }
 
 PlayerObject.prototype.getCurrentServer = function() {

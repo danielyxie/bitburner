@@ -1,7 +1,9 @@
 import {Augmentations, Augmentation,
         AugmentationNames}                      from "./Augmentations.js";
 import {Programs}                               from "./CreateProgram.js";
+import {inMission}                              from "./Missions.js";
 import {Player}                                 from "./Player.js";
+import {redPillFlag}                            from "./RedPill.js";
 import {GetServerByHostname}                    from "./Server.js";
 import {Settings}                               from "./Settings.js";
 import {dialogBoxCreate, dialogBoxOpened}       from "../utils/DialogBox.js";
@@ -75,9 +77,14 @@ function checkForMessagesToSend() {
         redpillOwned = true;
     }
 
-    if (redpill && redpillOwned && Player.sourceFiles.length === 0) {
+    if (redpill && redpillOwned && Player.sourceFiles.length === 0 && !redPillFlag && !inMission) {
         if (!dialogBoxOpened) {
             sendMessage(redpill, true);
+        }
+    } else if (redpill && redpillOwned) {
+        //If player has already destroyed a BitNode, message is not forced
+        if (!redPillFlag && !inMission && !dialogBoxOpened) {
+            sendMessage(redpill);
         }
     } else if (jumper0 && !jumper0.recvd && Player.hacking_skill >= 25) {
         sendMessage(jumper0);
@@ -96,8 +103,6 @@ function checkForMessagesToSend() {
         sendMessage(jumper4);
     } else if (bitrunnersTest && !bitrunnersTest.recvd && Player.hacking_skill >= 500) {
         sendMessage(bitrunnersTest);
-    } else if (redpill && redpillOwned) {
-        sendMessage(redpill);
     }
 }
 

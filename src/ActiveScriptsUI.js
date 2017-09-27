@@ -6,6 +6,7 @@ import {getServer}                  from "./Server.js";
 import {dialogBoxCreate}            from "../utils/DialogBox.js";
 import {printArray}                 from "../utils/HelperFunctions.js";
 import {logBoxCreate}               from "../utils/LogBox.js";
+import numeral                      from "../utils/numeral.min.js";
 import {formatNumber}               from "../utils/StringHelperFunctions.js";
 
 
@@ -183,10 +184,10 @@ function updateActiveScriptsItems() {
         total += updateActiveScriptsItemContent(workerScripts[i]);
     }
     document.getElementById("active-scripts-total-prod").innerHTML =
-        "Total online production of Active Scripts: $" + formatNumber(total, 2) + " / second<br>" +
-        "Total online production since last Augmentation installation: $" +
-        formatNumber(Player.scriptProdSinceLastAug, 2) + " ($" +
-        formatNumber(Player.scriptProdSinceLastAug / Player.playtimeSinceLastAug, 2) + " / second)";
+        "Total online production of Active Scripts: " + numeral(total).format('$0.000a') + " / sec<br>" +
+        "Total online production since last Aug installation: " +
+        numeral(Player.scriptProdSinceLastAug).format('$0.000a') + " (" +
+        numeral(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000)).format('$0.000a') + " / sec)";
     return total;
 }
 

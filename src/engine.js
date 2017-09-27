@@ -840,6 +840,7 @@ let Engine = {
             Player.gang.process(numCycles);
         }
 
+        //Mission
         if (inMission && currMission) {
             currMission.process(numCycles);
         }
@@ -967,7 +968,7 @@ let Engine = {
         if (Engine.Counters.messages <= 0) {
             checkForMessagesToSend();
             if (Augmentations[AugmentationNames.TheRedPill].owned) {
-                Engine.Counters.messages = 600; //2 minutes for Red pill message
+                Engine.Counters.messages = 4500; //15 minutes for Red pill message
             } else {
                 Engine.Counters.messages = 150;
             }
