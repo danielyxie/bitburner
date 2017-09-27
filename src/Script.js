@@ -12,8 +12,6 @@ require('brace/theme/xcode');
 require("brace/keybinding/vim");
 require("brace/keybinding/emacs");
 
-
-
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {iTutorialSteps, iTutorialNextStep,

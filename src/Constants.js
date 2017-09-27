@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.29.0",
+    Version:                "0.29.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -120,10 +120,53 @@ let CONSTANTS = {
     IntelligenceProgramBaseExpGain: 1000, //Program required hack level divided by this to determine int exp gain
     IntelligenceTerminalHackBaseExpGain: 200, //Hacking exp divided by this to determine int exp gain
     IntelligenceSingFnBaseExpGain: 0.0005,
+    IntelligenceClassBaseExpGain: 0.0000001,
 
     //Hacking Missions
     HackingMissionRepToDiffConversion: 5000, //Faction rep is divided by this to get mission difficulty
-    HackingMissionRepToRewardConversion: 20, //Faction rep divided byt his to get mission rep reward
+    HackingMissionRepToRewardConversion: 12, //Faction rep divided byt his to get mission rep reward
+    HackingMissionSpamTimeIncrease: 20000, //How much time limit increase is gained when conquering a Spam Node (ms)
+    HackingMissionTransferAttackIncrease: 1.05, //Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
+    HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with faction reputation.<br><br>" +
+                             "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
+                             "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray " +
+                             "that initially belong to neither you nor the enemy. The goal of the game is " +
+                             "to capture all of the enemy's database nodes, which are the parallelogram-shaped ones, within the time limit. " +
+                             "If you cannot capture all of the enemy's database nodes in the time limit, you will lose.<br><br>" +
+                             "Each Node has three stats: Attack, Defense, and HP. There are five different actions that " +
+                             "a Node can take:<br><br> " +
+                             "Attack - Targets an enemy Node and lowers its HP. The effectiveness is determined by the owner's Attack, the Player's " +
+                             "hacking level, and the enemy's defense.<br>" +
+                             "Scan - Targets an enemy Node and lowers its Defense. The effectiveness is determined by the owner's Attack, the Player's hacking level, and the " +
+                             "enemy's defense.<br>"  +
+                             "Weaken - Targets an enemy Node and lowers its Attack. The effectiveness is determined by the owner's Attack, the Player's hacking level, and the enemy's " +
+                             "defense.<br>" +
+                             "Fortify - Raises the Node's Defense. The effectiveness is determined by your hacking level.<br>" +
+                             "Overflow - Raises the Node's Attack but lowers its Defense. The effectiveness is determined by your hacking level.<br><br>" +
+                             "Note that when determining the effectiveness of the above actions, the TOTAL Attack or Defense of the team is used, not just the " +
+                             "Attack/Defense of the individual Node that is performing the action.<br><br." +
+                             "To capture a Node, you must lower its HP down to 0.<br><br>" +
+                             "There are six different types of Nodes:<br><br>" +
+                             "CPU Core - These are your main Nodes that are used to perform actions. Capable of performing every action<br>" +
+                             "Firewall - Nodes with high defense. These Nodes cannot perform any actions<br>" +
+                             "Database - A special type of Node. The player's objective is to conquer all of the enemy's Database Nodes within " +
+                             "the time limit. These Nodes cannot perform any actions<br>"  +
+                             "Spam - Conquering one of these Nodes will slow the enemy's trace, giving the player additional time to complete " +
+                             "the mission. These Nodes cannot perform any actions<br>" +
+                             "Transfer - Conquering one of these nodes will increase the Attack of all of your CPU Cores by a small fixed percentage. " +
+                             "These Nodes are capable of performing every action except the 'Attack' action<br>" +
+                             "Shield - Nodes with high defense. These Nodes cannot perform any actions<br><br>" +
+                             "To assign an action to a Node, you must first select one of your Nodes. This can be done by simply clicking on it. Only " +
+                             "one Node can be selected at a time, and it will be denoted with a white highlight. After selecting the Node, " +
+                             "select its action using the Action Buttons near the top of the screen. Every action also has a corresponding keyboard " +
+                             "shortcut that can be used as well.<br><br>" +
+                             "For certain actions such as attacking, scanning, and weakening, the Node performing the action must have a target. To target " +
+                             "another node, simply click-and-drag from the 'source' Node to a target. A Node can only have one target, and you can only target " +
+                             "Nodes that are adjacent to one of your Nodes (immediately above, below, or to the side. NOT diagonal). Furthermore, only CPU Cores and Transfer Nodes " +
+                             "can target, since they are the only ones that can perform actions. To remove a target, you can simply click on the line that represents " +
+                             "the connection between one of your Nodes and its target. Alternatively, you can select the 'source' Node and click the 'Drop Connection' button, " +
+                             "or press 'd',",
+
 
     //Gang constants
     GangRespectToReputationRatio: 2, //Respect is divided by this to get rep gain
@@ -380,6 +423,9 @@ let CONSTANTS = {
                            "args.length<br><br>" +
                            "Note that none of the other functions that typically work with arrays, such as remove(), insert(), clear(), etc., will work on the " +
                            "args array.<br><br>" +
+                           "<u><h1>Javascript Modules</h1></u><br>" +
+                           "Netscript supports the following Javascript Modules:<br><br>" +
+                           "Math<br>Date (static functions only)<br><br>" +
                            "<u><h1> Functions </h1></u><br>" +
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " +
@@ -418,18 +464,18 @@ let CONSTANTS = {
                            "the hostnames or IPs of the scanned servers should be output. If it is true then hostnames will be returned, and if false then IP addresses will. " +
                            "This second argument is optional and, if ommitted, the function will output " +
                            "the hostnames of the scanned servers. The hostnames/IPs in the returned array are strings.<br><br>" +
-                           "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer. Does NOT work while offline <br> Example: nuke('foodnstuff'); <br><br>" +
-                           "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer. Does NOT work while offline <br> Example: brutessh('foodnstuff');<br><br>" +
-                           "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer. Does NOT work while offline <br> Example: ftpcrack('foodnstuff');<br><br>" +
-                           "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer. Does NOT work while offline <br> Example: relaysmtp('foodnstuff');<br><br>" +
-                           "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer. Does NOT work while offline <br> Example: httpworm('foodnstuff');<br><br>" +
-                           "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer. Does NOT work while offline  <br> Example: sqlinject('foodnstuff');<br><br>" +
+                           "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer.<br> Example: nuke('foodnstuff'); <br><br>" +
+                           "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer.<br> Example: brutessh('foodnstuff');<br><br>" +
+                           "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer.<br> Example: ftpcrack('foodnstuff');<br><br>" +
+                           "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer.<br> Example: relaysmtp('foodnstuff');<br><br>" +
+                           "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer.<br> Example: httpworm('foodnstuff');<br><br>" +
+                           "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer.<br> Example: sqlinject('foodnstuff');<br><br>" +
                            "<i>run(script, [numThreads], [args...])</i> <br> Run a script as a separate process. The first argument that is passed in is the name of the script as a string. This function can only " +
                            "be used to run scripts located on the current server (the server running the script that calls this function). The second argument " +
                            "is optional, and it specifies how many threads to run the script with. This argument must be a number greater than 0. If it is omitted, then the script will be run single-threaded. Any additional arguments will specify " +
                            "arguments to pass into the new script that is being run. If arguments are specified for the new script, then the second argument numThreads argument must be filled in with a value.<br><br>" +
                            "Returns true if the script is successfully started, and false otherwise. Requires a significant amount " +
-                           "of RAM to run this command. Does NOT work while offline <br><br>" +
+                           "of RAM to run this command.<br><br>" +
                            "The simplest way to use the run command is to call it with just the script name. The following example will run 'foo.script' single-threaded with no arguments:<br><br>" +
                            "run('foo.script');<br><br>" +
                            "The following example will run 'foo.script' but with 5 threads instead of single-threaded:<br><br>" +
@@ -441,7 +487,7 @@ let CONSTANTS = {
                            "The third argument is optional, and it specifies how many threads to run the script with. If it is omitted, then the script will be run single-threaded. " +
                            "This argument must be a number that is greater than 0. Any additional arguments will specify arguments to pass into the new script that is being run. If " +
                            "arguments are specified for the new script, then the third argument numThreads must be filled in with a value.<br><br>Returns " +
-                           "true if the script is successfully started, and false otherwise. Does NOT work while offline<br><br> " +
+                           "true if the script is successfully started, and false otherwise.<br><br> " +
                            "The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run 'generic-hack.script' " +
                            "on the 'foodnstuff' server:<br><br>" +
                            "exec('generic-hack.script', 'foodnstuff');<br><br>" +
@@ -479,11 +525,11 @@ let CONSTANTS = {
                            "<i>ls(hostname/ip)</i><br>Returns an array containing the names of all files on the specified server. The argument must be a " +
                            "string with the hostname or IP of the target server.<br><br>" +
                            "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " +
-                           "The argument passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline.<br> " +
+                           "The argument passed in must be a string with either the hostname or IP of the target server.<br> " +
                            "Example:<br>if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" +
                            "<i>getIp()</i><br>Returns a string with the IP Address of the server that the script is running on <br><br>" +
                            "<i>getHostname()</i><br>Returns a string with the hostname of the server that the script is running on<br><br>" +
-                           "<i>getHackingLevel()</i><br>Returns the Player's current hacking level. Does NOT work while offline<br><br> " +
+                           "<i>getHackingLevel()</i><br>Returns the Player's current hacking level.<br><br> " +
                            "<i>getIntelligence()</i><br>Returns the Player's current intelligence level. Requires Source-File 5 to run<br><br>" +
                            "<i>getHackingMultipliers()</i><br>Returns an object containing the Player's hacking related multipliers. " +
                            "These multipliers are returned in integer forms, not percentages (e.g. 1.5 instead of 150%). " +
@@ -528,32 +574,34 @@ let CONSTANTS = {
                            "print(mults.ServerMaxMoney);<br>" +
                            "print(mults.HackExpGain);<br><br>" +
                            "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
-                           "hostname or IP of the target server. Does NOT work while offline <br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" +
+                           "hostname or IP of the target server.<br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" +
                            "<i>getServerMaxMoney(hostname/ip)</i><br>Returns the maximum amount of money that can be available on a server. The argument passed in must be a string with " +
-                           "the hostname or IP of the target server. Does NOT work while offline<br>Example: getServerMaxMoney('foodnstuff');<br><br>" +
+                           "the hostname or IP of the target server.<br>Example: getServerMaxMoney('foodnstuff');<br><br>" +
                            "<i>getServerGrowth(hostname/ip)</i><br>Returns the server's intrinsic 'growth parameter'. This growth parameter is a number " +
                            "between 1 and 100 that represents how quickly the server's money grows. This parameter affects the percentage by which this server's " +
                            "money is increased when using the grow() function. A higher growth parameter will result in a higher percentage from grow().<br><br>" +
                            "The argument passed in must be a string with the hostname or IP of the target server.<br><br>" +
                            "<i>getServerSecurityLevel(hostname/ip)</i><br>Returns the security level of a server. The argument passed in must be a string with either the " +
-                           "hostname or IP of the target server. A server's security is denoted by a number between 1 and 100. Does NOT work while offline.<br><br>" +
-                           "<i>getServerBaseSecurityLevel(hostname/ip)</i><br> Returns the base security level of a server. This is the security level that the server starts out with. " +
+                           "hostname or IP of the target server. A server's security is denoted by a number, typically between 1 and 100.<br><br>" +
+                           "<i>getServerBaseSecurityLevel(hostname/ip)</i><br>Returns the base security level of a server. This is the security level that the server starts out with. " +
                            "This is different than getServerSecurityLevel() because getServerSecurityLevel() returns the current security level of a server, which can constantly change " +
                            "due to hack(), grow(), and weaken() calls on that server. The base security level will stay the same until you reset by installing an Augmentation. <br><br>" +
-                           "The argument passed in must be a string with either the hostname or IP of the target server. A server's base security is denoted by a number between 1 and 100. " +
-                           "Does NOT work while offline.<br><br>" +
+                           "The argument passed in must be a string with either the hostname or IP of the target server. A server's base security is denoted by a number, typically between 1 and 100. " +
+                           "<br><br>" +
+                           "<i>getServerMinSecurityLevel(hostname/ip)</i>Returns the minimum security level of a server. The argument passed in must be a string with " +
+                           "either the hostname or IP of the target server.<br><br>" +
                            "<i>getServerRequiredHackingLevel(hostname/ip)</i><br>Returns the required hacking level of a server. The argument passed in must be a string with either the " +
-                           "hostname or IP or the target server. Does NOT work while offline <br><br>" +
+                           "hostname or IP or the target server.<br><br>" +
                            "<i>getServerNumPortsRequired(hostname/ip)</i><br>Returns the number of open ports required to successfully run NUKE.exe on a server. The argument " +
-                           "passed in must be a string with either the hostname or IP of the target server. Does NOT work while offline<br><br>" +
+                           "passed in must be a string with either the hostname or IP of the target server.<br><br>" +
                            "<i>getServerRam(hostname/ip)</i><br>Returns an array with two elements that gives information about the target server's RAM. The first " +
                            "element in the array is the amount of RAM that the server has (in GB). The second element in the array is the amount of RAM that " +
                            "is currently being used on the server.<br><br>" +
                            "<i>serverExists(hostname/ip)</i><br>Returns a boolean denoting whether or not the specified server exists. The argument " +
                            "must be a string with the hostname or IP of the target server.<br><br>" +
                            "<i>fileExists(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " +
-                           "The first argument must be a string with the name of the file. A file can either be a script or a program. A script name is case-sensitive, but a " +
-                           "program is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " +
+                           "The first argument must be a string with the name of the file. A file can either be a script, program, or literature file. A script name is case-sensitive, but a " +
+                           "program/literature file is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " +
                            "The second argument is a string with the hostname or IP of the server on which to search for the program. This second argument is optional. " +
                            "If it is omitted, then the function will search through the current server (the server running the script that calls this function) for the file. <br> " +
                            "Example: fileExists('foo.script', 'foodnstuff');<br>" +
@@ -609,8 +657,9 @@ let CONSTANTS = {
                            "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
                            "<i>getScriptIncome([scriptname], [hostname/ip], [args...])</i><br>" +
                            "Returns the amount of income the specified script generates while online (when the game is open, does not apply for " +
-                           "offline income). This function can also return the total income of all of your active scripts by running the function " +
-                           "with no arguments.<br><br>" +
+                           "offline income). This function can also be called with no arguments. If called with no arguments, then this function " +
+                           "will return an array of two values. The first value is the total income ($/sec) of all of your active scripts (currently running). " +
+                           "The second value is the total income ($/sec) from scripts since you last installed Augmentations (or destroyed a BitNode).<br><br>" +
                            "Remember that a script is uniquely identified by both its name and its arguments. So for example if you ran a script " +
                            "with the arguments 'foodnstuff' and '5' then in order to use this function to get that script's income you must " +
                            "specify those arguments in this function call.<br><br>" +
@@ -629,6 +678,8 @@ let CONSTANTS = {
                            "The second argument must be a string with the hostname/IP of the target server. If the first argument is specified " +
                            "then the second argument must be specified as well. Any additional arguments passed to the function will specify " +
                            "the arguments passed into the target script.<br><br>" +
+                           "<i>getTimeSinceLastAug()</i><br>" +
+                           "Returns the amount of time in milliseconds that have passed since you last installed Augmentations (or destroyed a BitNode).<br><br>" +
                            "<u><h1>Hacknet Nodes API</h1></u><br>" +
                            "Netscript provides the following API for accessing and upgrading your Hacknet Nodes through scripts. This API does NOT work offline.<br><br>" +
                            "<i>hacknetnodes</i><br> A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " +
@@ -957,20 +1008,25 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.29.0<br>" +
-    "-Added BitNode-5: Artificial Intelligence<br>" +
-    "-Added getIp(), getIntelligence(), getHackingMultipliers(), and getBitNodeMultipliers() Netscript functions (requires Source-File 5)<br>" +
-    "-Updated scan() Netscript function so that you can choose to have it print IPs rather than hostnames<br>" +
-    "-Refactored scp() Netscript function so that it takes an optional 'source server' argument<br>" +
-    "-For Infiltration, decreased the percentage by which the security level increases by " +
-    "about 10% for every location<br>" +
-    "-Using :w in the script editor's Vim keybinding mode should now save and quit to Terminal<br>" +
-    "-Some minor optimizations that should reduce the size of the save file<br>" +
-    "-scan-analyze Terminal command will no longer show your purchased servers, unless you pass a '-a' flag into the command<br>" +
-    "-After installing the Red Pill augmentation from Daedalus, the message telling you to find 'The-Cave' " +
-    "will now repeatedly pop up regardless of whether or not you have messages suppressed<br>" +
-    "-Various bugfixes",
-
+    "v0.29.1<br>" +
+    "-New gameplay feature that is currently in BETA: Hacking Missions. Hacking Missions is an active gameplay mechanic (its a minigame) " +
+    "that is meant to be used to earn faction reputation. However, since this is currently in beta, hacking missions will NOT grant reputation " +
+    "for the time being, since the feature likely has many bugs, balance problems, and other issues. If you have any feedback " +
+    "regarding the new feature, feel free to let me know<br>" +
+    "-CHANGED THE RETURN VALUE OF getScriptIncome() WHEN RAN WITH NO ARGUMENTS. It will now return an array of " +
+    "two values rather than a single value. This may break your scripts, so make sure to update them!<br>" +
+    "-Added continue statement for for/while loops<br>" +
+    "-Added getServerMinSecurityLevel(), getPurchasedServers(), and getTimeSinceLastAug() Netscript functions<br>" +
+    "-Netscript scp() function can now take an array as the first argument, and will try to copy " +
+    "every file specified in the array (it will just call scp() normally for every element in the array). " +
+    "If an array is passed in, then the scp() function returns true if at least one element from the array is successfully copied<br>" +
+    "-Added Javascript's Date module to Netscript. Since 'new' is not supported in Netscript yet, only the Date module's " +
+    "static methods will work (now(), UTC(), parse(), etc.).<br>" +
+    "-Failing a crime now gives half the experience it did before<br>" +
+    "-The forced repeated 'Find The-Cave' message after installing The Red Pill Augmentation now only happens " +
+    "if you've never destroyed a BitNode before, and will only popup every 15 minutes. If you have already destroyed a BitNode, " +
+    "the message will not pop up if you have messages suppressed (if you don't have messages suppressed it WILL still repeatedly popup)<br>" +
+    "-fileExists() function now works on literature files<br><br>",
 }
 
 export {CONSTANTS};

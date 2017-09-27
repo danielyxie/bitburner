@@ -80,7 +80,7 @@ Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvai
     this.moneyMax = 25 * this.moneyAvailable * BitNodeMultipliers.ServerMaxMoney;
 	this.hackDifficulty = hackDifficulty * BitNodeMultipliers.ServerStartingSecurity;
     this.baseDifficulty = hackDifficulty * BitNodeMultipliers.ServerStartingSecurity;
-    this.minDifficulty = Math.max(1, Math.round(hackDifficulty / 3));
+    this.minDifficulty = Math.max(1, Math.round(this.hackDifficulty / 3));
 	this.serverGrowth = serverGrowth;
 }
 

@@ -64,6 +64,7 @@ function initSingularitySFFlags() {
 function NetscriptFunctions(workerScript) {
     return {
         Math : Math,
+        Date : Date,
         hacknetnodes : Player.hacknetNodes,
         scan : function(ip=workerScript.serverIp, hostnames=true){
             var server = getServer(ip);
@@ -135,6 +136,7 @@ function NetscriptFunctions(workerScript) {
 
                     Player.gainMoney(moneyGained);
                     workerScript.scriptRef.onlineMoneyMade += moneyGained;
+                    Player.scriptProdSinceLastAug += moneyGained;
                     workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
                     Player.gainHackingExp(expGainedOnSuccess);
                     workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
@@ -467,6 +469,16 @@ function NetscriptFunctions(workerScript) {
             if (arguments.length !== 2 && arguments.length !== 3) {
                 throw makeRuntimeRejectMsg(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
             }
+            if (scriptname && scriptname.constructor === Array) {
+                //Recursively call scp on all elements of array
+                var res = false;
+                scriptname.forEach(function(script) {
+                    if (NetscriptFunctions(workerScript).scp(script, ip1, ip2)) {
+                        res = true;
+                    };
+                });
+                return res;
+            }
             if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script")) {
                 throw makeRuntimeRejectMsg(workerScript, "Error: scp() only works for .script and .lit files");
             }
@@ -703,6 +715,15 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + formatNumber(server.baseDifficulty, 3) + " for " + server.hostname);
             return server.baseDifficulty;
         },
+        getServerMinSecurityLevel : function(ip) {
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerMinSecurityLevel() returned " + formatNumber(server.minDifficulty, 3) + " for " + server.hostname);
+            return server.minDifficulty;
+        },
         getServerRequiredHackingLevel : function(ip){
             var server = getServer(ip);
             if (server == null) {
@@ -767,6 +788,12 @@ function NetscriptFunctions(workerScript) {
             }
             for (var i = 0; i < server.programs.length; ++i) {
                 if (filename.toLowerCase() == server.programs[i].toLowerCase()) {
+                    return true;
+                }
+            }
+            for (var i = 0; i < server.messages.length; ++i) {
+                if (!(server.messages[i] instanceof Message) &&
+                    filename.toLowerCase() === server.messages[i]) {
                     return true;
                 }
             }
@@ -866,6 +893,7 @@ function NetscriptFunctions(workerScript) {
             var netProfit = ((stock.price - stock.playerAvgPx) * shares) - CONSTANTS.StockMarketCommission;
             if (isNaN(netProfit)) {netProfit = 0;}
             workerScript.scriptRef.onlineMoneyMade += netProfit;
+            Player.scriptProdSinceLastAug += netProfit;
 
             stock.playerShares -= shares;
             if (stock.playerShares == 0) {
@@ -977,6 +1005,21 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("Error: Could not find server " + server.hostname +
                                        "as a purchased server. This is likely a bug please contact game dev");
             return false;
+        },
+        getPurchasedServers : function(hostname=true) {
+            var res = [];
+            Player.purchasedServers.forEach(function(ip) {
+                if (hostname) {
+                    var server = getServer(ip);
+                    if (server == null) {
+                        throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find server in getPurchasedServers(). This is a bug please report to game dev");
+                    }
+                    res.push(server.hostname);
+                } else {
+                    res.push(ip);
+                }
+            });
+            return res;
         },
         round : function(n) {
             if (isNaN(n)) {return 0;}
@@ -1091,7 +1134,10 @@ function NetscriptFunctions(workerScript) {
         getScriptIncome : function(scriptname, ip) {
             if (arguments.length === 0) {
                 //Get total script income
-                return updateActiveScriptsItems();
+                var res = [];
+                res.push(updateActiveScriptsItems());
+                res.push(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000));
+                return res;
             } else {
                 //Get income for a particular script
                 var server = getServer(ip);
@@ -1136,6 +1182,9 @@ function NetscriptFunctions(workerScript) {
                 }
                 return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;
             }
+        },
+        getTimeSinceLastAug : function() {
+            return Player.playtimeSinceLastAug;
         },
 
         /* Singularity Functions */

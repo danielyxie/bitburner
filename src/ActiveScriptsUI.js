@@ -1,10 +1,12 @@
 import {workerScripts,
         addWorkerScript,
         killWorkerScript}           from "./NetscriptWorker.js";
+import {Player}                     from "./Player.js";
 import {getServer}                  from "./Server.js";
 import {dialogBoxCreate}            from "../utils/DialogBox.js";
 import {printArray}                 from "../utils/HelperFunctions.js";
 import {logBoxCreate}               from "../utils/LogBox.js";
+import numeral                      from "../utils/numeral.min.js";
 import {formatNumber}               from "../utils/StringHelperFunctions.js";
 
 
@@ -182,7 +184,10 @@ function updateActiveScriptsItems() {
         total += updateActiveScriptsItemContent(workerScripts[i]);
     }
     document.getElementById("active-scripts-total-prod").innerHTML =
-        "Total online production rate: $" + formatNumber(total, 2) + " / second";
+        "Total online production of Active Scripts: " + numeral(total).format('$0.000a') + " / sec<br>" +
+        "Total online production since last Aug installation: " +
+        numeral(Player.scriptProdSinceLastAug).format('$0.000a') + " (" +
+        numeral(Player.scriptProdSinceLastAug / (Player.playtimeSinceLastAug/1000)).format('$0.000a') + " / sec)";
     return total;
 }
 
@@ -200,45 +205,26 @@ function updateActiveScriptsItemContent(workerscript) {
     var itemName = itemNameArray.join("-");
     var itemContent = document.getElementById(itemName + "-content")
 
-    //Clear the item
-    while (itemContent.firstChild) {
-        itemContent.removeChild(itemContent.firstChild);
-    }
-
     //Add the updated text back. Returns the total online production rate
-    return createActiveScriptsText(workerscript, itemContent);
+    return updateActiveScriptsText(workerscript, itemContent);
 }
 
 function createActiveScriptsText(workerscript, item) {
-    var itemText = document.createElement("p");
+    var itemTextHeader = document.createElement("p");
+    var itemTextStats = document.createElement("p");
+    var itemId = item.id;
+    itemTextStats.setAttribute("id", itemId + "-stats");
 
     //Server ip/hostname
     var threads = "Threads: " + workerscript.scriptRef.threads;
     var args = "Args: " + printArray(workerscript.args);
 
-    //Online
-    var onlineTotalMoneyMade = "Total online production: $" + formatNumber(workerscript.scriptRef.onlineMoneyMade, 2);
-    var onlineTotalExpEarned = (Array(26).join(" ") + formatNumber(workerscript.scriptRef.onlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
+    itemTextHeader.innerHTML = threads + "<br>" + args + "<br>";
 
-    var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
-    var onlineMpsText = "Online production rate: $" + formatNumber(onlineMps, 2) + "/second";
-    var onlineEps = workerscript.scriptRef.onlineExpGained / workerscript.scriptRef.onlineRunningTime;
-    var onlineEpsText = (Array(25).join(" ") + formatNumber(onlineEps, 4) + " hacking exp/second").replace( / /g, "&nbsp;");
+    item.appendChild(itemTextHeader);
+    item.appendChild(itemTextStats);
 
-    //Offline
-    var offlineTotalMoneyMade = "Total offline production: $" + formatNumber(workerscript.scriptRef.offlineMoneyMade, 2);
-    var offlineTotalExpEarned = (Array(27).join(" ") + formatNumber(workerscript.scriptRef.offlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
-
-    var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
-    var offlineMpsText = "Offline production rate: $" + formatNumber(offlineMps, 2) + "/second";
-    var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
-    var offlineEpsText = (Array(26).join(" ") + formatNumber(offlineEps, 4) +  " hacking exp/second").replace( / /g, "&nbsp;");
-
-    itemText.innerHTML = threads + "<br>" + args + "<br>" + onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
-                         onlineMpsText + "<br>" + onlineEpsText + "<br>" + offlineTotalMoneyMade + "<br>" + offlineTotalExpEarned + "<br>" +
-                         offlineMpsText + "<br>" + offlineEpsText + "<br>";
-
-    item.appendChild(itemText);
+    var onlineMps = updateActiveScriptsText(workerscript, item, itemTextStats);
 
     var logButton = document.createElement("span");
     logButton.innerHTML = "Log";
@@ -259,6 +245,38 @@ function createActiveScriptsText(workerscript, item) {
     item.appendChild(killButton);
 
     //Return total online production rate
+    return onlineMps;
+}
+
+function updateActiveScriptsText(workerscript, item, statsEl=null) {
+    var itemId = item.id
+    var itemTextStats = document.getElementById(itemId + "-stats");
+    if (itemTextStats === null || itemTextStats === undefined) {
+        itemTextStats = statsEl;
+    }
+
+    //Updates statistics only
+    //Online
+    var onlineTotalMoneyMade = "Total online production: $" + formatNumber(workerscript.scriptRef.onlineMoneyMade, 2);
+    var onlineTotalExpEarned = (Array(26).join(" ") + formatNumber(workerscript.scriptRef.onlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
+
+    var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
+    var onlineMpsText = "Online production rate: $" + formatNumber(onlineMps, 2) + "/second";
+    var onlineEps = workerscript.scriptRef.onlineExpGained / workerscript.scriptRef.onlineRunningTime;
+    var onlineEpsText = (Array(25).join(" ") + formatNumber(onlineEps, 4) + " hacking exp/second").replace( / /g, "&nbsp;");
+
+    //Offline
+    var offlineTotalMoneyMade = "Total offline production: $" + formatNumber(workerscript.scriptRef.offlineMoneyMade, 2);
+    var offlineTotalExpEarned = (Array(27).join(" ") + formatNumber(workerscript.scriptRef.offlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
+
+    var offlineMps = workerscript.scriptRef.offlineMoneyMade / workerscript.scriptRef.offlineRunningTime;
+    var offlineMpsText = "Offline production rate: $" + formatNumber(offlineMps, 2) + "/second";
+    var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
+    var offlineEpsText = (Array(26).join(" ") + formatNumber(offlineEps, 4) +  " hacking exp/second").replace( / /g, "&nbsp;");
+
+    itemTextStats.innerHTML = onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
+                              onlineMpsText + "<br>" + onlineEpsText + "<br>" + offlineTotalMoneyMade + "<br>" + offlineTotalExpEarned + "<br>" +
+                              offlineMpsText + "<br>" + offlineEpsText + "<br>";
     return onlineMps;
 }
 

@@ -5,6 +5,7 @@ import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {FactionInfo}                            from "./FactionInfo.js";
 import {Locations}                              from "./Location.js";
+import {HackingMission, setInMission}           from "./Missions.js";
 import {Player}                                 from "./Player.js";
 import {Settings}                               from "./Settings.js";
 
@@ -455,16 +456,26 @@ function displayFactionContent(factionName) {
                                                          "is gained whenever you reset after installing an Augmentation. The amount of " +
                                                          "favor you gain depends on how much reputation you have with the faction</span>";
 
+    var hackMissionDiv      = document.getElementById("faction-hack-mission-div");
 	var hackDiv 			= document.getElementById("faction-hack-div");
 	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
 	var securityWorkDiv 	= document.getElementById("faction-securitywork-div");
     var donateDiv           = document.getElementById("faction-donate-div");
     var gangDiv             = document.getElementById("faction-gang-div");
 
+    var newHackMissionButton = clearEventListeners("faction-hack-mission-button");
     var newHackButton = clearEventListeners("faction-hack-button");
     var newFieldWorkButton = clearEventListeners("faction-fieldwork-button");
     var newSecurityWorkButton = clearEventListeners("faction-securitywork-button");
     var newDonateWorkButton = clearEventListeners("faction-donate-button");
+    newHackMissionButton.addEventListener("click", function() {
+        Engine.loadMissionContent();
+        var mission = new HackingMission(faction.playerReputation, faction);
+        setInMission(true, mission); //Sets inMission flag to true
+        mission.init();
+        return false;
+    });
+
     newHackButton.addEventListener("click", function() {
         Player.startFactionHackWork(faction);
         return false;
@@ -602,156 +613,187 @@ function displayFactionContent(factionName) {
 
 		switch(faction.name) {
 			case "Illuminati":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "none";
 				break;
 			case "Daedalus":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "none";
 				break;
 			case "The Covenant":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "none";
 				break;
 			case "ECorp":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "MegaCorp":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "Bachman & Associates":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "Blade Industries":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "NWO":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "Clarke Incorporated":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "OmniTek Incorporated":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "Four Sigma":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "KuaiGong International":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
             case "Fulcrum Secret Technologies":
+                hackMissionDiv.style.display = "inline";
                 hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "none";
 				securityWorkDiv.style.display = "inline";
                 break;
 			case "BitRunners":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "none";
 				securityWorkDiv.style.display = "none";
 				break;
 			case "The Black Hand":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "none";
 				break;
 			case "NiteSec":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "none";
 				securityWorkDiv.style.display = "none";
 				break;
 			case "Chongqing":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "Sector-12":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "New Tokyo":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "Aevum":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "Ishima":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "Volhaven":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "Speakers for the Dead":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "The Dark Army":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "none";
 				break;
 			case "The Syndicate":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "inline";
 				securityWorkDiv.style.display = "inline";
 				break;
             case "Silhouette":
+                hackMissionDiv.style.display = "inline";
                 hackDiv.style.display = "inline";
                 fieldWorkDiv.style.display = "inline";
                 securityWorkDiv.style.display = "none";
                 break;
             case "Tetrads":
+                hackMissionDiv.style.display = "none";
                 hackDiv.style.display = "none";
                 fieldWorkDiv.style.display = "inline";
                 securityWorkDiv.style.display = "inline";
                 break;
             case "Slum Snakes":
+                hackMissionDiv.style.display = "none";
                 hackDiv.style.display = "none";
                 fieldWorkDiv.style.display = "inline";
                 securityWorkDiv.style.display = "inline";
                 break;
             case "Netburners":
+                hackMissionDiv.style.display = "inline";
                 hackDiv.style.display = "inline";
                 fieldWorkDiv.style.display = "none";
                 securityWorkDiv.style.display = "none";
                 break;
 			case "Tian Di Hui":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "none";
 				securityWorkDiv.style.display = "inline";
 				break;
 			case "CyberSec":
+                hackMissionDiv.style.display = "inline";
 				hackDiv.style.display = "inline";
 				fieldWorkDiv.style.display = "none";
 				securityWorkDiv.style.display = "none";

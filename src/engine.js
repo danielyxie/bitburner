@@ -30,6 +30,7 @@ import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
 import {iTutorialStart}                         from "./InteractiveTutorial.js";
 import {initLiterature}                         from "./Literature.js";
 import {checkForMessagesToSend, initMessages}   from "./Message.js";
+import {inMission, currMission}                 from "./Missions.js";
 import {initSingularitySFFlags,
         hasSingularitySF}                       from "./NetscriptFunctions.js";
 import {updateOnlineScriptTimes,
@@ -70,7 +71,7 @@ import {Terminal, postNetburnerText, post}      from "./Terminal.js";
  *  Alt-o - Options
  */
 $(document).keydown(function(e) {
-    if (!Player.isWorking && !redPillFlag) {
+    if (!Player.isWorking && !redPillFlag && !inMission) {
         if (e.keyCode == 84 && e.altKey) {
             e.preventDefault();
             Engine.loadTerminalContent();
@@ -178,6 +179,7 @@ let Engine = {
         locationContent:                null,
         workInProgressContent:          null,
         redPillContent:                 null,
+        missionContent:                 null,
 
         //Character info
         characterInfo:                  null,
@@ -202,6 +204,7 @@ let Engine = {
         Infiltration:       "Infiltration",
         StockMarket:        "StockMarket",
         Gang:               "Gang",
+        Mission:            "Mission",
     },
     currentPage:    null,
 
@@ -245,6 +248,7 @@ let Engine = {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.visibility = "visible";
         setActiveScriptsClickHandlers();
+        updateActiveScriptsItems();
         Engine.currentPage = Engine.Page.ActiveScripts;
         document.getElementById("active-scripts-menu-link").classList.add("active");
     },
@@ -385,7 +389,14 @@ let Engine = {
             Engine.loadTerminalContent();
             Engine.currentPage = Engine.Page.Terminal;
         }
+    },
 
+    loadMissionContent: function() {
+        Engine.hideAllContent();
+        document.getElementById("mainmenu-container").style.visibility = "hidden";
+        document.getElementById("character-overview-wrapper").style.visibility = "hidden";
+        Engine.Display.missionContent.style.visibility = "visible";
+        Engine.currentPage = Engine.Page.Mission;
     },
 
     //Helper function that hides all content
@@ -407,6 +418,7 @@ let Engine = {
         Engine.Display.redPillContent.style.visibility = "hidden";
         Engine.Display.infiltrationContent.style.visibility = "hidden";
         Engine.Display.stockMarketContent.style.visibility = "hidden";
+        Engine.Display.missionContent.style.visibility = "hidden";
         if (document.getElementById("gang-container")) {
             document.getElementById("gang-container").style.visibility = "hidden";
         }
@@ -467,6 +479,11 @@ let Engine = {
         if (Player.companyPosition != "") {
             companyPosition = Player.companyPosition.positionName;
         }
+
+        var bnText = "";
+        if (Player.sourceFiles.length !== 0) {
+            bnText = "<br>Current BitNode: " + Player.bitNodeN;
+        }
         Engine.Display.characterInfo.innerHTML =
        ('<b>General</b><br><br>' +
         'Current City: ' + Player.city + '<br><br>' +
@@ -518,7 +535,8 @@ let Engine = {
         'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
         'Augmentations installed: ' + Player.augmentations.length + '<br>' +
         'Time played since last Augmentation: ' + convertTimeMsToTimeElapsedString(Player.playtimeSinceLastAug) + '<br>' +
-        'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime) + '<br><br><br>').replace( / /g, "&nbsp;" );
+        'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime) +
+        bnText + '<br><br><br>').replace( / /g, "&nbsp;" );
     },
 
     /* Display locations in the world*/
@@ -822,6 +840,11 @@ let Engine = {
             Player.gang.process(numCycles);
         }
 
+        //Mission
+        if (inMission && currMission) {
+            currMission.process(numCycles);
+        }
+
         //Counters
         Engine.decrementAllCounters(numCycles);
         Engine.checkCounters();
@@ -945,7 +968,7 @@ let Engine = {
         if (Engine.Counters.messages <= 0) {
             checkForMessagesToSend();
             if (Augmentations[AugmentationNames.TheRedPill].owned) {
-                Engine.Counters.messages = 600; //2 minutes for Red pill message
+                Engine.Counters.messages = 4500; //15 minutes for Red pill message
             } else {
                 Engine.Counters.messages = 150;
             }
@@ -1278,6 +1301,8 @@ let Engine = {
         Engine.Display.stockMarketContent = document.getElementById("stock-market-container");
         Engine.Display.stockMarketContent.style.visibility = "hidden";
 
+        Engine.Display.missionContent = document.getElementById("mission-container");
+        Engine.Display.missionContent.style.visibility = "hidden";
 
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");
