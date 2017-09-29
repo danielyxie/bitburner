@@ -34,7 +34,6 @@ let CONSTANTS = {
     CompanyReputationToFavorBase: 500,
     CompanyReputationToFavorMult: 1.02,
 
-
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
     NeuroFluxGovernorLevelMult: 1.14,
@@ -515,11 +514,12 @@ let CONSTANTS = {
                            "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" +
                            "<i>scp(script, [source], destination)</i><br>Copies a script or literature (.lit) file to another server. The first argument is a string with " +
                            "the filename of the script or literature file " +
-                           "to be copied. The next two arguments are strings containing the hostname/IPs of the source and target server. " +
+                           "to be copied, or an array of filenames to be copied. The next two arguments are strings containing the hostname/IPs of the source and target server. " +
                            "The source refers to the server from which the script/literature file will be copied, while the destination " +
                            "refers to the server to which it will be copied. The source server argument is optional, and if ommitted the source " +
                            "will be the current server (the server on which the script is running). Returns true if the script/literature file is " +
-                           "successfully copied over and false otherwise. <br><br>" +
+                           "successfully copied over and false otherwise. If the first argument passed in is an array, then the function " +
+                           "will return if at least one of the files in the array is successfully copied over.<br><br>" +
                            "Example: scp('hack-template.script', 'foodnstuff'); //Copies hack-template.script from the current server to foodnstuff<br>" +
                            "Example: scp('foo.lit', 'helios', 'home'); //Copies foo.lit from the helios server to the home computer<br><br>" +
                            "<i>ls(hostname/ip)</i><br>Returns an array containing the names of all files on the specified server. The argument must be a " +
@@ -632,6 +632,9 @@ let CONSTANTS = {
                            "an empty string. The function will fail if the arguments passed in are invalid or if the player does not have enough money to purchase the specified server.<br><br>" +
                            "<i>deleteServer(hostname)</i><br>Deletes one of the servers you've purchased with the specified hostname. The function will fail if " +
                            "there are any scripts running on the specified server. Returns true if successful and false otherwise<br><br>" +
+                           "<i>getPurchasedServers([hostname=true])</i><br>Returns an array with either the hostname or IPs of all of the servers you " +
+                           "have purchased. It takes an optional parameter specifying whether the hostname or IP addresses will be returned. If this " +
+                           "parameter is not specified, it is true by default and hostnames will be returned<br><br>" +
                            "<i>round(n)</i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" +
                            "<i>write(port, data)</i><br>Writes data to a port. The first argument must be a number between 1 and 10 that specifies the port. The second " +
                            "argument defines the data to write to the port. If the second argument is not specified then it will write an empty string to the port.<br><br>" +
@@ -1008,6 +1011,11 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.29.2<br>" +
+    "-installAugmentations() Singularity Function now takes a callback script as an argument. This is a script " +
+    "that gets ran automatically after Augmentations are installed. The script is run with no arguments and only a single thread, " +
+    "and must be found on your home computer.<br>" +
+    "-Added functions to Netscript. See the link here for details<br>" +
     "v0.29.1<br>" +
     "-New gameplay feature that is currently in BETA: Hacking Missions. Hacking Missions is an active gameplay mechanic (its a minigame) " +
     "that is meant to be used to earn faction reputation. However, since this is currently in beta, hacking missions will NOT grant reputation " +

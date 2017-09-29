@@ -820,6 +820,15 @@ HackingMission.prototype.nodeReachable = function(node) {
     return false;
 }
 
+HackingMission.prototype.nodeReachableByEnemy = function(node) {
+    var x = node.pos[0], y = node.pos[1];
+    if (x > 0 && this.map[x-1][y].enmyCtrl) {return true;}
+    if (x < 7 && this.map[x+1][y].enmyCtrl) {return true;}
+    if (y > 0 && this.map[x][y-1].enmyCtrl) {return true;}
+    if (y < 7 && this.map[x][y+1].enmyCtrl) {return true;}
+    return false;
+}
+
 HackingMission.prototype.start = function() {
     this.started = true;
     this.initJsPlumb();
@@ -1168,6 +1177,53 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
     if (targetNode) {this.updateNodeDomElement(targetNode);}
     return calcStats;
 }
+
+//Enemy "AI" for CPU Cor eand Transfer Nodes
+HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
+    if (nodeObj === null) {return;}
+    switch(nodeObj.type) {
+        case NodeTypes.Core:
+            //Select a single RANDOM target from miscNodes and player's Nodes
+            //If it is reachable, it will target it. If not, no target will
+            //be selected for now, and the next time process() gets called this will repeat
+            if (nodeObj.conn === null) {
+                if (this.miscNodes.length === 0) {
+                    var rand = getRandomInt(0, this.playerNodes.length-1);
+                    var node = this.playerNodes[rand];
+                    if (this.nodeReachableByEnemy(node)) {
+                        //TODO Create connection
+                    } else {
+                        rand = getRandomInt(0, this.playerCores.length-1);
+                        node = this.playerCores[rand];
+                        if (this.nodeReachableByEnemy(node)) {
+                            //TODO Create connection
+                        }
+                    }
+                } else {
+                    var rand = getRandomInt(0, this.miscNodes.length-1);
+                    var node = this.miscNodes[rand];
+                    if (this.nodeReachableByEnemy(node)) {
+                        //TODO Create connection to this Node
+                    }
+                }
+            }
+
+            //TODO Select action
+
+            break;
+        case NodeTypes.Transfer:
+            //Switch between fortifying and overflowing as necessary
+            if (nodeObj.def < 500) {
+                nodeObj.action = NodeActions.Fortify;
+            } else {
+                nodeObj.action = NodeActions.Overflow;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
 
 var hackEffWeightSelf = 150; //Weight for Node actions on self
 var hackEffWeightTarget = 25; //Weight for Node Actions against Target

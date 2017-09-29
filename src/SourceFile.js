@@ -33,7 +33,15 @@ function initSourceFiles() {
     SourceFiles["SourceFile3"] = new SourceFile(3);
     SourceFiles["SourceFile4"] = new SourceFile(4, "This Source-File lets you access and use the Singularity Functions in every BitNode. Every " +
                                         "level of this Source-File opens up more of the Singularity Functions you can use.");
-    SourceFiles["SourceFile5"] = new SourceFile(5);
+    SourceFiles["SourceFile5"] = new SourceFile(5, "This Source-File grants a special new stat called Intelligence. Intelligence " +
+                                                   "is unique because it is permanent and persistent (it never gets reset back to 1). However, " +
+                                                   "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't " +
+                                                   "know when you gain experience and how much). Higher Intelligence levels will boost your production " +
+                                                   "for many actions in the game. In addition, this Source-File will unlock the getBitNodeMultipliers() " +
+                                                   "Netscript function, and will raise all of your hacking-related multipliers by:<br><br> " +
+                                                   "Level 1: 4%<br>" +
+                                                   "Level 2: 6%<br>" +
+                                                   "Level 3: 7%");
     SourceFiles["SourceFile6"] = new SourceFile(6);
     SourceFiles["SourceFile7"] = new SourceFile(7);
     SourceFiles["SourceFile8"] = new SourceFile(8);
@@ -107,6 +115,17 @@ function applySourceFile(srcFile) {
             break;
         case 4: //The Singularity
             //No effects, just gives access to Singularity functions
+            break;
+        case 5: //Artificial Intelligence
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (4 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            Player.hacking_chance_mult  *= incMult;
+            Player.hacking_speed_mult   *= incMult;
+            Player.hacking_money_mult   *= incMult;
+            Player.hacking_grow_mult    *= incMult;
             break;
         case 11: //The Big Crash
             var mult = 0;

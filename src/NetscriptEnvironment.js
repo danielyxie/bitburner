@@ -15,7 +15,7 @@ Environment.prototype = {
 	//Create a "subscope", which is a new new "sub-environment"
 	//The subscope is linked to this through its parent variable
     extend: function() {
-        return new Environment(this);
+        return new Environment(null, this);
     },
 
 	//Finds the scope where the variable with the given name is defined

@@ -70,16 +70,16 @@
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Player; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadPlayer; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BitNode_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Company_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Company_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Crimes_js__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Gang_js__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Location_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Location_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__SourceFile_js__ = __webpack_require__(33);
@@ -87,7 +87,7 @@
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__utils_decimal_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_IPAddress_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_IPAddress_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_JSONReviver_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
@@ -2554,7 +2554,6 @@ let CONSTANTS = {
     CompanyReputationToFavorBase: 500,
     CompanyReputationToFavorMult: 1.02,
 
-
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
     NeuroFluxGovernorLevelMult: 1.14,
@@ -3035,11 +3034,12 @@ let CONSTANTS = {
                            "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" +
                            "<i>scp(script, [source], destination)</i><br>Copies a script or literature (.lit) file to another server. The first argument is a string with " +
                            "the filename of the script or literature file " +
-                           "to be copied. The next two arguments are strings containing the hostname/IPs of the source and target server. " +
+                           "to be copied, or an array of filenames to be copied. The next two arguments are strings containing the hostname/IPs of the source and target server. " +
                            "The source refers to the server from which the script/literature file will be copied, while the destination " +
                            "refers to the server to which it will be copied. The source server argument is optional, and if ommitted the source " +
                            "will be the current server (the server on which the script is running). Returns true if the script/literature file is " +
-                           "successfully copied over and false otherwise. <br><br>" +
+                           "successfully copied over and false otherwise. If the first argument passed in is an array, then the function " +
+                           "will return if at least one of the files in the array is successfully copied over.<br><br>" +
                            "Example: scp('hack-template.script', 'foodnstuff'); //Copies hack-template.script from the current server to foodnstuff<br>" +
                            "Example: scp('foo.lit', 'helios', 'home'); //Copies foo.lit from the helios server to the home computer<br><br>" +
                            "<i>ls(hostname/ip)</i><br>Returns an array containing the names of all files on the specified server. The argument must be a " +
@@ -3152,6 +3152,9 @@ let CONSTANTS = {
                            "an empty string. The function will fail if the arguments passed in are invalid or if the player does not have enough money to purchase the specified server.<br><br>" +
                            "<i>deleteServer(hostname)</i><br>Deletes one of the servers you've purchased with the specified hostname. The function will fail if " +
                            "there are any scripts running on the specified server. Returns true if successful and false otherwise<br><br>" +
+                           "<i>getPurchasedServers([hostname=true])</i><br>Returns an array with either the hostname or IPs of all of the servers you " +
+                           "have purchased. It takes an optional parameter specifying whether the hostname or IP addresses will be returned. If this " +
+                           "parameter is not specified, it is true by default and hostnames will be returned<br><br>" +
                            "<i>round(n)</i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" +
                            "<i>write(port, data)</i><br>Writes data to a port. The first argument must be a number between 1 and 10 that specifies the port. The second " +
                            "argument defines the data to write to the port. If the second argument is not specified then it will write an empty string to the port.<br><br>" +
@@ -3528,6 +3531,11 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.29.2<br>" +
+    "-installAugmentations() Singularity Function now takes a callback script as an argument. This is a script " +
+    "that gets ran automatically after Augmentations are installed. The script is run with no arguments and only a single thread, " +
+    "and must be found on your home computer.<br>" +
+    "-Added functions to Netscript. See the link here for details<br>" +
     "v0.29.1<br>" +
     "-New gameplay feature that is currently in BETA: Hacking Missions. Hacking Missions is an active gameplay mechanic (its a minigame) " +
     "that is meant to be used to earn faction reputation. However, since this is currently in beta, hacking missions will NOT grant reputation " +
@@ -3567,13 +3575,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_LogBox_js__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ActiveScriptsUI_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Augmentations_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Augmentations_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__BitNode_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Company_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Company_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__CreateProgram_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Faction_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Location_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Location_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Gang_js__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__HacknetNode_js__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__InteractiveTutorial_js__ = __webpack_require__(24);
@@ -3581,14 +3589,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__Message_js__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Missions_js__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__Prestige_js__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__RedPill_js__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__SaveObject_js__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__Script_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__Script_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__Settings_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__Settings_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__SourceFile_js__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__StockMarket_js__ = __webpack_require__(26);
@@ -4059,6 +4067,11 @@ let Engine = {
         if (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].sourceFiles.length !== 0) {
             bnText = "<br>Current BitNode: " + __WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].bitNodeN;
         }
+
+        var intText = "";
+        if (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].intelligence > 0) {
+            intText = 'Intelligence:  ' + (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].intelligence).toLocaleString() + "<br><br><br>";
+        }
         Engine.Display.characterInfo.innerHTML =
        ('<b>General</b><br><br>' +
         'Current City: ' + __WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].city + '<br><br>' +
@@ -4077,7 +4090,8 @@ let Engine = {
         'Agility:       ' + (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].agility).toLocaleString() +
                   " (" + __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js___default()(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].agility_exp).format('(0.000a)') + ' experience)<br>' +
         'Charisma:      ' + (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].charisma).toLocaleString() +
-                   " (" + __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js___default()(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].charisma_exp).format('(0.000a)') + ' experience)<br><br><br>' +
+                   " (" + __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js___default()(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].charisma_exp).format('(0.000a)') + ' experience)<br>' +
+        intText + 
         '<b>Multipliers</b><br><br>' +
         'Hacking Chance multiplier: ' + Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].hacking_chance_mult * 100, 2) + '%<br>' +
         'Hacking Speed multiplier:  ' + Object(__WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].hacking_speed_mult * 100, 2) + '%<br>' +
@@ -5424,12 +5438,12 @@ function isHTML(str) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return prestigeHomeComputer; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BitNode_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CreateProgram_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Script_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Script_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_IPAddress_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_IPAddress_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(8);
 
 
@@ -16756,17 +16770,17 @@ function initBitNodeMultipliers() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Faction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return purchaseAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return factionExists; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BitNode_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FactionInfo_js__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Location_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FactionInfo_js__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Location_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Missions_js__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Settings_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Settings_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_FactionInvitationBox_js__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_FactionInvitationBox_js__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_JSONReviver_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_StringHelperFunctions_js__ = __webpack_require__(5);
@@ -17883,21 +17897,258 @@ function initSpecialServerIps() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return WorkerScript; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return workerScripts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NetscriptPorts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return runScriptsLoop; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return killWorkerScript; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return addWorkerScript; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return updateOnlineScriptTimes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeWorkerScripts; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptEnvironment_js__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptEvaluator_js__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Server_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_acorn_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_acorn_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__utils_acorn_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__ = __webpack_require__(2);
+
+
+
+
+
+
+
+
+
+
+
+
+function WorkerScript(runningScriptObj) {
+	this.name 			= runningScriptObj.filename;
+	this.running 		= false;
+	this.serverIp 		= null;
+	this.code 			= runningScriptObj.scriptRef.code;
+	this.env 			= new __WEBPACK_IMPORTED_MODULE_3__NetscriptEnvironment_js__["a" /* Environment */](this);
+    this.env.set("args", runningScriptObj.args);
+	this.output			= "";
+	this.ramUsage		= 0;
+	this.scriptRef		= runningScriptObj;
+    this.errorMessage   = "";
+    this.args           = runningScriptObj.args;
+    this.killTrigger    = function() {}; //CB func used to clear any delays (netscriptDelay())
+}
+
+//Returns the server on which the workerScript is running
+WorkerScript.prototype.getServer = function() {
+	return __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][this.serverIp];
+}
+
+//Array containing all scripts that are running across all servers, to easily run them all
+let workerScripts 			= [];
+
+let NetscriptPorts = {
+    Port1: [],
+    Port2: [],
+    Port3: [],
+    Port4: [],
+    Port5: [],
+    Port6: [],
+    Port7: [],
+    Port8: [],
+    Port9: [],
+    Port10: [],
+}
+
+function prestigeWorkerScripts() {
+    for (var i = 0; i < workerScripts.length; ++i) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__["b" /* deleteActiveScriptsItem */])(workerScripts[i]);
+        workerScripts[i].env.stopFlag = true;
+    }
+    workerScripts.length = 0;
+}
+
+//Loop through workerScripts and run every script that is not currently running
+function runScriptsLoop() {
+    //Delete any scripts that finished or have been killed. Loop backwards bc removing
+    //items fucks up the indexing
+    for (var i = workerScripts.length - 1; i >= 0; i--) {
+        if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
+            console.log("Deleting script: " + workerScripts[i].name);
+            //Delete script from the runningScripts array on its host serverIp
+            var ip = workerScripts[i].serverIp;
+            var name = workerScripts[i].name;
+
+            for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts.length; j++) {
+                if (__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts[j].filename == name &&
+                    Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["c" /* compareArrays */])(__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts[j].args, workerScripts[i].args)) {
+                    __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts.splice(j, 1);
+                    break;
+                }
+            }
+
+            //Free RAM
+            __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].ramUsed -= workerScripts[i].ramUsage;
+
+            //Delete script from Active Scripts
+            Object(__WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__["b" /* deleteActiveScriptsItem */])(workerScripts[i]);
+
+            //Delete script from workerScripts
+            workerScripts.splice(i, 1);
+        }
+    }
+
+	//Run any scripts that haven't been started
+	for (var i = 0; i < workerScripts.length; i++) {
+		//If it isn't running, start the script
+		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
+			try {
+				var ast = Object(__WEBPACK_IMPORTED_MODULE_7__utils_acorn_js__["parse"])(workerScripts[i].code);
+                console.log(ast);
+			} catch (e) {
+                console.log("Error parsing script: " + workerScripts[i].name);
+                Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
+                workerScripts[i].env.stopFlag = true;
+				continue;
+			}
+
+			workerScripts[i].running = true;
+			var p = Object(__WEBPACK_IMPORTED_MODULE_4__NetscriptEvaluator_js__["a" /* evaluate */])(ast, workerScripts[i]);
+			//Once the code finishes (either resolved or rejected, doesnt matter), set its
+			//running status to false
+			p.then(function(w) {
+				console.log("Stopping script " + w.name + " because it finished running naturally");
+				w.running = false;
+				w.env.stopFlag = true;
+                w.scriptRef.log("Script finished running");
+			}, function(w) {
+                //console.log(w);
+				if (w instanceof Error) {
+                    Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Script runtime unknown error. This is a bug please contact game developer");
+					console.log("ERROR: Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
+                    return;
+                } else if (w instanceof WorkerScript) {
+                    if (Object(__WEBPACK_IMPORTED_MODULE_4__NetscriptEvaluator_js__["b" /* isScriptErrorMessage */])(w.errorMessage)) {
+                        var errorTextArray = w.errorMessage.split("|");
+                        if (errorTextArray.length != 4) {
+                            console.log("ERROR: Something wrong with Error text in evaluator...");
+                            console.log("Error text: " + errorText);
+                            return;
+                        }
+                        var serverIp = errorTextArray[1];
+                        var scriptName = errorTextArray[2];
+                        var errorMsg = errorTextArray[3];
+
+                        Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Script runtime error: <br>Server Ip: " + serverIp +
+                                        "<br>Script name: " + scriptName +
+                                        "<br>Args:" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["f" /* printArray */])(w.args) + "<br>" + errorMsg);
+                        w.scriptRef.log("Script crashed with runtime error");
+                    } else {
+                        w.scriptRef.log("Script killed");
+                    }
+					w.running = false;
+					w.env.stopFlag = true;
+
+				} else if (Object(__WEBPACK_IMPORTED_MODULE_4__NetscriptEvaluator_js__["b" /* isScriptErrorMessage */])(w)) {
+                    Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Script runtime unknown error. This is a bug please contact game developer");
+					console.log("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " + w.toString());
+                    return;
+                } else {
+                    Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("An unknown script died for an unknown reason. This is a bug please contact game dev");
+                }
+			});
+		}
+	}
+
+	setTimeout(runScriptsLoop, 6000);
+}
+
+//Queues a script to be killed by settings its stop flag to true. Then, the code will reject
+//all of its promises recursively, and when it does so it will no longer be running.
+//The runScriptsLoop() will then delete the script from worker scripts
+function killWorkerScript(runningScriptObj, serverIp) {
+	for (var i = 0; i < workerScripts.length; i++) {
+		if (workerScripts[i].name == runningScriptObj.filename && workerScripts[i].serverIp == serverIp &&
+            Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["c" /* compareArrays */])(workerScripts[i].args, runningScriptObj.args)) {
+			workerScripts[i].env.stopFlag = true;
+            workerScripts[i].killTrigger();
+            return true;
+		}
+	}
+    return false;
+}
+
+//Queues a script to be run
+function addWorkerScript(runningScriptObj, server) {
+	var filename = runningScriptObj.filename;
+
+	//Update server's ram usage
+    var threads = 1;
+    if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
+        threads = runningScriptObj.threads;
+    } else {
+        runningScriptObj.threads = 1;
+    }
+    var ramUsage = runningScriptObj.scriptRef.ramUsage * threads
+                   * Math.pow(__WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].MultithreadingRAMCost, threads-1);
+    var ramAvailable = server.maxRam - server.ramUsed;
+    if (ramUsage > ramAvailable) {
+        Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Not enough RAM to run script " + runningScriptObj.filename + " with args " +
+                        Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["f" /* printArray */])(runningScriptObj.args) + ". This likely occurred because you re-loaded " +
+                        "the game and the script's RAM usage increased (either because of an update to the game or " +
+                        "your changes to the script.)");
+        return;
+    }
+	server.ramUsed += ramUsage;
+
+	//Create the WorkerScript
+	var s = new WorkerScript(runningScriptObj);
+	s.serverIp 	= server.ip;
+	s.ramUsage 	= ramUsage;
+
+	//Add the WorkerScript to the Active Scripts list
+	Object(__WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__["a" /* addActiveScriptsItem */])(s);
+
+	//Add the WorkerScript
+	workerScripts.push(s);
+	return;
+}
+
+//Updates the online running time stat of all running scripts
+function updateOnlineScriptTimes(numCycles = 1) {
+	var time = (numCycles * __WEBPACK_IMPORTED_MODULE_2__engine_js__["Engine"]._idleSpeed) / 1000; //seconds
+	for (var i = 0; i < workerScripts.length; ++i) {
+		workerScripts[i].scriptRef.onlineRunningTime += time;
+	}
+}
+
+
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Locations; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return displayLocationContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initLocationButtons; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Company_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Company_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Crimes_js__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Infiltration_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Infiltration_js__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ServerPurchases_js__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ServerPurchases_js__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_IPAddress_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_IPAddress_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_YesNoBox_js__ = __webpack_require__(21);
 
@@ -19935,7 +20186,7 @@ function purchaseServerBoxCreate(ram, cost) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20007,7 +20258,7 @@ function setSettingsLabels() {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20220,29 +20471,40 @@ function initCreateProgramButtons() {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return WorkerScript; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return workerScripts; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NetscriptPorts; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return runScriptsLoop; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return killWorkerScript; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return addWorkerScript; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return updateOnlineScriptTimes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeWorkerScripts; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__engine_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptEnvironment_js__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptEvaluator_js__ = __webpack_require__(36);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return updateScriptEditorContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadAllRunningScripts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return findRunningScript; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return RunningScript; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Script; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllServersMap; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_acorn_js__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_acorn_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__utils_acorn_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(5);
+var ace = __webpack_require__(51);
+__webpack_require__(54);
+__webpack_require__(55);
+__webpack_require__(56);
+__webpack_require__(57);
+__webpack_require__(58);
+__webpack_require__(59);
+__webpack_require__(60);
+__webpack_require__(61);
+__webpack_require__(62);
+__webpack_require__(63);
+__webpack_require__(64);
+__webpack_require__(65);
 
 
 
@@ -20256,201 +20518,587 @@ function initCreateProgramButtons() {
 
 
 
-function WorkerScript(runningScriptObj) {
-	this.name 			= runningScriptObj.filename;
-	this.running 		= false;
-	this.serverIp 		= null;
-	this.code 			= runningScriptObj.scriptRef.code;
-	this.env 			= new __WEBPACK_IMPORTED_MODULE_3__NetscriptEnvironment_js__["a" /* Environment */](this);
-    this.env.set("args", runningScriptObj.args);
-	this.output			= "";
-	this.ramUsage		= 0;
-	this.scriptRef		= runningScriptObj;
-    this.errorMessage   = "";
-    this.args           = runningScriptObj.args;
-    this.killTrigger    = function() {}; //CB func used to clear any delays (netscriptDelay())
+
+var keybindings = {
+    ace: null,
+    vim: "ace/keyboard/vim",
+    emacs: "ace/keyboard/emacs",
+};
+
+function scriptEditorInit() {
+    //Initialize save and close button
+    var closeButton = document.getElementById("script-editor-save-and-close-button");
+
+    closeButton.addEventListener("click", function() {
+        saveAndCloseScriptEditor();
+        return false;
+    });
+
+    //Initialize ACE Script editor
+    var editor = ace.edit('javascript-editor');
+    editor.getSession().setMode('ace/mode/netscript');
+    editor.setTheme('ace/theme/monokai');
+    document.getElementById('javascript-editor').style.fontSize='16px';
+    editor.setOption("showPrintMargin", false);
+
+    /* Script editor options */
+    //Theme
+    var themeDropdown = document.getElementById("script-editor-option-theme");
+    themeDropdown.selectedIndex = 2;
+    themeDropdown.onchange = function() {
+        var val = themeDropdown.value;
+        var themePath = "ace/theme/" + val.toLowerCase();
+        editor.setTheme(themePath);
+    };
+
+    //Keybinding
+    var keybindingDropdown = document.getElementById("script-editor-option-keybinding");
+    keybindingDropdown.onchange = function() {
+        var val = keybindingDropdown.value;
+        editor.setKeyboardHandler(keybindings[val.toLowerCase()]);
+    };
+
+    //Highlight Active line
+    var highlightActiveChkBox = document.getElementById("script-editor-option-highlightactiveline");
+    highlightActiveChkBox.onchange = function() {
+        editor.setHighlightActiveLine(highlightActiveChkBox.checked);
+    };
+
+    //Show Invisibles
+    var showInvisiblesChkBox = document.getElementById("script-editor-option-showinvisibles");
+    showInvisiblesChkBox.onchange = function() {
+        editor.setShowInvisibles(showInvisiblesChkBox.checked);
+    };
+
+    //Use Soft Tab
+    var softTabChkBox = document.getElementById("script-editor-option-usesofttab");
+    softTabChkBox.onchange = function() {
+        editor.getSession().setUseSoftTabs(softTabChkBox.checked);
+    };
+
+    //Configure some of the VIM keybindings
+    ace.config.loadModule('ace/keyboard/vim', function(module) {
+        var VimApi = module.CodeMirror.Vim;
+        VimApi.defineEx('write', 'w', function(cm, input) {
+            saveAndCloseScriptEditor();
+        });
+        VimApi.defineEx('quit', 'q', function(cm, input) {
+            __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].loadTerminalContent();
+        });
+    });
+}
+document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
+
+//Updates line number and RAM usage in script
+function updateScriptEditorContent() {
+    var editor = ace.edit('javascript-editor');
+    var code = editor.getValue();
+    var codeCopy = code.repeat(1);
+    var ramUsage = calculateRamUsage(codeCopy);
+    document.getElementById("script-editor-status-text").innerText =
+        "RAM: " + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(ramUsage, 2).toString() + "GB";
 }
 
-//Returns the server on which the workerScript is running
-WorkerScript.prototype.getServer = function() {
-	return __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][this.serverIp];
-}
+//Define key commands in script editor (ctrl o to save + close, etc.)
+$(document).keydown(function(e) {
+	if (__WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].Page.ScriptEditor) {
+		//Ctrl + b
+        if (e.keyCode == 66 && e.ctrlKey) {
+            e.preventDefault();
+			saveAndCloseScriptEditor();
+        }
+	}
+});
 
-//Array containing all scripts that are running across all servers, to easily run them all
-let workerScripts 			= [];
-
-let NetscriptPorts = {
-    Port1: [],
-    Port2: [],
-    Port3: [],
-    Port4: [],
-    Port5: [],
-    Port6: [],
-    Port7: [],
-    Port8: [],
-    Port9: [],
-    Port10: [],
-}
-
-function prestigeWorkerScripts() {
-    for (var i = 0; i < workerScripts.length; ++i) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__["b" /* deleteActiveScriptsItem */])(workerScripts[i]);
-        workerScripts[i].env.stopFlag = true;
+function saveAndCloseScriptEditor() {
+    var filename = document.getElementById("script-editor-filename").value;
+    if (__WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__["b" /* iTutorialIsRunning */] && __WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__["a" /* currITutorialStep */] == __WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__["e" /* iTutorialSteps */].TerminalTypeScript) {
+        if (filename != "foodnstuff") {
+            Object(__WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Leave the script name as 'foodnstuff'!");
+            return;
+        }
+        var editor = ace.edit('javascript-editor');
+        var code = editor.getValue();
+        code = code.replace(/\s/g, "");
+        if (code.indexOf("while(true){hack('foodnstuff');}") == -1) {
+            Object(__WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Please copy and paste the code from the tutorial!");
+            return;
+        }
+        Object(__WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__["c" /* iTutorialNextStep */])();
     }
-    workerScripts.length = 0;
-}
 
-//Loop through workerScripts and run every script that is not currently running
-function runScriptsLoop() {
-    //Delete any scripts that finished or have been killed. Loop backwards bc removing
-    //items fucks up the indexing
-    for (var i = workerScripts.length - 1; i >= 0; i--) {
-        if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
-            console.log("Deleting script: " + workerScripts[i].name);
-            //Delete script from the runningScripts array on its host serverIp
-            var ip = workerScripts[i].serverIp;
-            var name = workerScripts[i].name;
+    if (filename == "") {
+        Object(__WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You must specify a filename!");
+        return;
+    }
 
-            for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts.length; j++) {
-                if (__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts[j].filename == name &&
-                    Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["c" /* compareArrays */])(__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts[j].args, workerScripts[i].args)) {
-                    __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].runningScripts.splice(j, 1);
-                    break;
-                }
-            }
+    if (checkValidFilename(filename) == false) {
+        Object(__WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Script filename can contain only alphanumerics, hyphens, and underscores");
+        return;
+    }
 
-            //Free RAM
-            __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].ramUsed -= workerScripts[i].ramUsage;
+    filename += ".script";
 
-            //Delete script from Active Scripts
-            Object(__WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__["b" /* deleteActiveScriptsItem */])(workerScripts[i]);
-
-            //Delete script from workerScripts
-            workerScripts.splice(i, 1);
+    //If the current script already exists on the server, overwrite it
+    for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].getCurrentServer().scripts.length; i++) {
+        if (filename == __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].getCurrentServer().scripts[i].filename) {
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].getCurrentServer().scripts[i].saveScript();
+            __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].loadTerminalContent();
+            return;
         }
     }
 
-	//Run any scripts that haven't been started
-	for (var i = 0; i < workerScripts.length; i++) {
-		//If it isn't running, start the script
-		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
-			try {
-				var ast = Object(__WEBPACK_IMPORTED_MODULE_7__utils_acorn_js__["parse"])(workerScripts[i].code);
-                //console.log(ast);
-			} catch (e) {
-                console.log("Error parsing script: " + workerScripts[i].name);
-                Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
-                workerScripts[i].env.stopFlag = true;
-				continue;
-			}
-
-			workerScripts[i].running = true;
-			var p = Object(__WEBPACK_IMPORTED_MODULE_4__NetscriptEvaluator_js__["a" /* evaluate */])(ast, workerScripts[i]);
-			//Once the code finishes (either resolved or rejected, doesnt matter), set its
-			//running status to false
-			p.then(function(w) {
-				console.log("Stopping script " + w.name + " because it finished running naturally");
-				w.running = false;
-				w.env.stopFlag = true;
-                w.scriptRef.log("Script finished running");
-			}, function(w) {
-                //console.log(w);
-				if (w instanceof Error) {
-                    Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Script runtime unknown error. This is a bug please contact game developer");
-					console.log("ERROR: Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
-                    return;
-                } else if (w instanceof WorkerScript) {
-                    if (Object(__WEBPACK_IMPORTED_MODULE_4__NetscriptEvaluator_js__["b" /* isScriptErrorMessage */])(w.errorMessage)) {
-                        var errorTextArray = w.errorMessage.split("|");
-                        if (errorTextArray.length != 4) {
-                            console.log("ERROR: Something wrong with Error text in evaluator...");
-                            console.log("Error text: " + errorText);
-                            return;
-                        }
-                        var serverIp = errorTextArray[1];
-                        var scriptName = errorTextArray[2];
-                        var errorMsg = errorTextArray[3];
-
-                        Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Script runtime error: <br>Server Ip: " + serverIp +
-                                        "<br>Script name: " + scriptName +
-                                        "<br>Args:" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["f" /* printArray */])(w.args) + "<br>" + errorMsg);
-                        w.scriptRef.log("Script crashed with runtime error");
-                    } else {
-                        w.scriptRef.log("Script killed");
-                    }
-					w.running = false;
-					w.env.stopFlag = true;
-
-				} else if (Object(__WEBPACK_IMPORTED_MODULE_4__NetscriptEvaluator_js__["b" /* isScriptErrorMessage */])(w)) {
-                    Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Script runtime unknown error. This is a bug please contact game developer");
-					console.log("ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " + w.toString());
-                    return;
-                } else {
-                    Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("An unknown script died for an unknown reason. This is a bug please contact game dev");
-                }
-			});
-		}
-	}
-
-	setTimeout(runScriptsLoop, 6000);
+    //If the current script does NOT exist, create a new one
+    var script = new Script();
+    script.saveScript();
+    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].getCurrentServer().scripts.push(script);
+    __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].loadTerminalContent();
 }
 
-//Queues a script to be killed by settings its stop flag to true. Then, the code will reject
-//all of its promises recursively, and when it does so it will no longer be running.
-//The runScriptsLoop() will then delete the script from worker scripts
-function killWorkerScript(runningScriptObj, serverIp) {
-	for (var i = 0; i < workerScripts.length; i++) {
-		if (workerScripts[i].name == runningScriptObj.filename && workerScripts[i].serverIp == serverIp &&
-            Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["c" /* compareArrays */])(workerScripts[i].args, runningScriptObj.args)) {
-			workerScripts[i].env.stopFlag = true;
-            workerScripts[i].killTrigger();
-            return true;
-		}
+//Checks that the string contains only valid characters for a filename, which are alphanumeric,
+// underscores and hyphens
+function checkValidFilename(filename) {
+	var regex = /^[a-zA-Z0-9_-]+$/;
+
+	if (filename.match(regex)) {
+		return true;
 	}
-    return false;
+	return false;
 }
 
-//Queues a script to be run
-function addWorkerScript(runningScriptObj, server) {
-	var filename = runningScriptObj.filename;
+function Script() {
+	this.filename 	= "";
+    this.code       = "";
+    this.ramUsage   = 0;
+	this.server 	= "";	//IP of server this script is on
+};
 
-	//Update server's ram usage
-    var threads = 1;
-    if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
-        threads = runningScriptObj.threads;
-    } else {
-        runningScriptObj.threads = 1;
+//Get the script data from the Script Editor and save it to the object
+Script.prototype.saveScript = function() {
+	if (__WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].Page.ScriptEditor) {
+		//Update code and filename
+        var editor = ace.edit('javascript-editor');
+        var code = editor.getValue();
+		this.code = code.replace(/^\s+|\s+$/g, '');
+
+		var filename = document.getElementById("script-editor-filename").value + ".script";
+		this.filename = filename;
+
+		//Server
+		this.server = __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].currentServer;
+
+		//Calculate/update ram usage, execution time, etc.
+		this.updateRamUsage();
+	}
+}
+
+//Updates how much RAM the script uses when it is running.
+Script.prototype.updateRamUsage = function() {
+    var codeCopy = this.code.repeat(1);
+    this.ramUsage = calculateRamUsage(codeCopy);
+    console.log("ram usage: " + this.ramUsage);
+    if (isNaN(this.ramUsage)) {
+        Object(__WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__["a" /* dialogBoxCreate */])("ERROR in calculating ram usage. This is a bug, please report to game develoepr");
     }
-    var ramUsage = runningScriptObj.scriptRef.ramUsage * threads
-                   * Math.pow(__WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].MultithreadingRAMCost, threads-1);
-	server.ramUsed += ramUsage;
-
-	//Create the WorkerScript
-	var s = new WorkerScript(runningScriptObj);
-	s.serverIp 	= server.ip;
-	s.ramUsage 	= ramUsage;
-
-	//Add the WorkerScript to the Active Scripts list
-	Object(__WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__["a" /* addActiveScriptsItem */])(s);
-
-	//Add the WorkerScript
-	workerScripts.push(s);
-	return;
 }
 
-//Updates the online running time stat of all running scripts
-function updateOnlineScriptTimes(numCycles = 1) {
-	var time = (numCycles * __WEBPACK_IMPORTED_MODULE_2__engine_js__["Engine"]._idleSpeed) / 1000; //seconds
-	for (var i = 0; i < workerScripts.length; ++i) {
-		workerScripts[i].scriptRef.onlineRunningTime += time;
+function calculateRamUsage(codeCopy) {
+    codeCopy = codeCopy.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1'); //Delete comments
+    codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
+    var baseRam = 1.4;
+    var whileCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "while(");
+    var forCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "for(");
+    var ifCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "if(");
+    var hackCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "hack(");
+    var growCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "grow(");
+    var weakenCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "weaken(");
+    var scanCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scan(");
+    var nukeCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "nuke(");
+    var brutesshCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "brutessh(");
+    var ftpcrackCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "ftpcrack(");
+    var relaysmtpCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "relaysmtp(");
+    var httpwormCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "httpworm(");
+    var sqlinjectCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "sqlinject(");
+    var runCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "run(");
+    var execCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "exec(");
+    var killCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "kill(") + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "killall(");
+    var scpCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scp(");
+    var hasRootAccessCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "hasRootAccess(");
+    var getHostnameCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getHostname(") +
+                           Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getIp(");
+    var getHackingLevelCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getHackingLevel(") +
+                               Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getIntelligence(");
+    var getMultipliersCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getHackingMultipliers(") +
+                              Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getBitNodeMultipliers(");
+    var getServerCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerMoneyAvailable(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerMaxMoney(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerSecurityLevel(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerBaseSecurityLevel(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerGrowth(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerRequiredHackingLevel(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerNumPortsRequired(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerRam(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "serverExists(");
+    var fileExistsCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "fileExists(");
+    var isRunningCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "isRunning(");
+    var purchaseHacknetCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseHacknetNode(");
+    var hacknetnodesArrayCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "hacknetnodes[");
+    var hnUpgLevelCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, ".upgradeLevel(");
+    var hnUpgRamCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, ".upgradeRam()");
+    var hnUpgCoreCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, ".upgradeCore()");
+    var scriptGetStockCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getStockPrice(") +
+                              Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getStockPosition(");
+    var scriptBuySellStockCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "buyStock(") +
+                                  Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "sellStock(");
+    var scriptPurchaseServerCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseServer(") +
+                                    Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "deleteServer(");
+    var scriptRoundCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "round(");
+    var scriptWriteCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "write(");
+    var scriptReadCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "read(");
+    var arbScriptCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scriptRunning(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scriptKill(");
+    var getScriptCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getScriptRam(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getScriptIncome(") +
+                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getScriptExpGain(");
+    var getHackTimeCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getHackTime(") +
+                           Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getGrowTime(") +
+                           Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getWeakenTime(");
+    var singFn1Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "universityCourse(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "gymWorkout(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "travelToCity(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseTor(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseProgram(");
+    var singFn2Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "upgradeHomeRam(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getUpgradeHomeRamCost(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "workForCompany(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "applyToCompany(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getCompanyRep(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "checkFactionInvitations(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "joinFaction(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "workForFaction(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getFactionRep(");
+    var singFn3Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "createProgram(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getAugmentationCost(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseAugmentation(") +
+                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "installAugmentations(");
+
+    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].bitNodeN != 4) {
+        singFn1Count *= 10;
+        singFn2Count *= 10;
+        singFn3Count *= 10;
+    }
+
+    return baseRam +
+        ((whileCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptWhileRamCost) +
+        (forCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptForRamCost) +
+        (ifCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptIfRamCost) +
+        (hackCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHackRamCost) +
+        (growCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGrowRamCost) +
+        (weakenCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptWeakenRamCost) +
+        (scanCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptScanRamCost) +
+        (nukeCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptNukeRamCost) +
+        (brutesshCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptBrutesshRamCost) +
+        (ftpcrackCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptFtpcrackRamCost) +
+        (relaysmtpCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptRelaysmtpRamCost) +
+        (httpwormCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHttpwormRamCost) +
+        (sqlinjectCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptSqlinjectRamCost) +
+        (runCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptRunRamCost) +
+        (execCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptExecRamCost) +
+        (killCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptKillRamCost) +
+        (scpCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptScpRamCost) +
+        (hasRootAccessCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHasRootAccessRamCost) +
+        (getHostnameCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetHostnameRamCost) +
+        (getHackingLevelCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetHackingLevelRamCost) +
+        (getMultipliersCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetMultipliersRamCost) +
+        (getServerCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetServerCost) +
+        (fileExistsCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptFileExistsRamCost) +
+        (isRunningCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptIsRunningRamCost) +
+        (purchaseHacknetCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptPurchaseHacknetRamCost) +
+        (hacknetnodesArrayCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHacknetNodesRamCost) +
+        (hnUpgLevelCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHNUpgLevelRamCost) +
+        (hnUpgRamCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHNUpgRamRamCost) +
+        (hnUpgCoreCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHNUpgCoreRamCost) +
+        (scriptGetStockCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetStockRamCost) +
+        (scriptBuySellStockCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptBuySellStockRamCost) +
+        (scriptPurchaseServerCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptPurchaseServerRamCost) +
+        (scriptRoundCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptRoundRamCost) +
+        (scriptWriteCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptReadWriteRamCost) +
+        (scriptReadCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptReadWriteRamCost) +
+        (arbScriptCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptArbScriptRamCost) +
+        (getScriptCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetScriptRamCost) +
+        (getHackTimeCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetHackTimeRamCost) +
+        (singFn1Count * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptSingularityFn1RamCost) +
+        (singFn2Count * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptSingularityFn2RamCost) +
+        (singFn3Count * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptSingularityFn3RamCost));
+}
+
+Script.prototype.toJSON = function() {
+    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["b" /* Generic_toJSON */])("Script", this);
+}
+
+
+Script.fromJSON = function(value) {
+    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(Script, value.data);
+}
+
+__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].constructors.Script = Script;
+
+//Called when the game is loaded. Loads all running scripts (from all servers)
+//into worker scripts so that they will start running
+function loadAllRunningScripts() {
+	var count = 0;
+    var total = 0;
+	for (var property in __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */]) {
+		if (__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */].hasOwnProperty(property)) {
+			var server = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][property];
+
+			//Reset each server's RAM usage to 0
+			server.ramUsed = 0;
+
+			for (var j = 0; j < server.runningScripts.length; ++j) {
+				count++;
+				Object(__WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__["c" /* addWorkerScript */])(server.runningScripts[j], server);
+
+				//Offline production
+				total += scriptCalculateOfflineProduction(server.runningScripts[j]);
+			}
+		}
 	}
+    return total;
+	console.log("Loaded " + count.toString() + " running scripts");
+}
+
+function scriptCalculateOfflineProduction(runningScriptObj) {
+	//The Player object stores the last update time from when we were online
+	var thisUpdate = new Date().getTime();
+	var lastUpdate = __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].lastUpdate;
+	var timePassed = (thisUpdate - lastUpdate) / 1000;	//Seconds
+	console.log("Offline for " + timePassed + " seconds");
+
+	//Calculate the "confidence" rating of the script's true production. This is based
+	//entirely off of time. We will arbitrarily say that if a script has been running for
+	//4 hours (14400 sec) then we are completely confident in its ability
+	var confidence = (runningScriptObj.onlineRunningTime) / 14400;
+	if (confidence >= 1) {confidence = 1;}
+
+    //Data map: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
+
+    //Grow
+    for (var ip in runningScriptObj.dataMap) {
+        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.dataMap[ip][2] == 0 || runningScriptObj.dataMap[ip][2] == null) {continue;}
+            var serv = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip];
+            if (serv == null) {continue;}
+            var timesGrown = Math.round(0.5 * runningScriptObj.dataMap[ip][2] / runningScriptObj.onlineRunningTime * timePassed);
+            console.log(runningScriptObj.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
+            runningScriptObj.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
+            var growth = Object(__WEBPACK_IMPORTED_MODULE_5__Server_js__["j" /* processSingleServerGrowth */])(serv, timesGrown * 450);
+            runningScriptObj.log(serv.hostname + " grown by " + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(growth * 100 - 100, 6) + "% from grow() calls made while offline");
+        }
+    }
+
+    var totalOfflineProduction = 0;
+    for (var ip in runningScriptObj.dataMap) {
+        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.dataMap[ip][0] == 0 || runningScriptObj.dataMap[ip][0] == null) {continue;}
+            var serv = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip];
+            if (serv == null) {continue;}
+            var production = 0.5 * runningScriptObj.dataMap[ip][0] / runningScriptObj.onlineRunningTime * timePassed;
+            production *= confidence;
+            if (production > serv.moneyAvailable) {
+                production = serv.moneyAvailable;
+            }
+            totalOfflineProduction += production;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].gainMoney(production);
+            console.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
+            runningScriptObj.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
+            serv.moneyAvailable -= production;
+            if (serv.moneyAvailable < 0) {serv.moneyAvailable = 0;}
+            if (isNaN(serv.moneyAvailable)) {serv.moneyAvailable = 0;}
+        }
+    }
+
+    //Offline EXP gain
+	//A script's offline production will always be at most half of its online production.
+	var expGain = 0.5 * (runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime) * timePassed;
+	expGain *= confidence;
+
+	__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].gainHackingExp(expGain);
+
+	//Update script stats
+	runningScriptObj.offlineMoneyMade += totalOfflineProduction;
+	runningScriptObj.offlineRunningTime += timePassed;
+	runningScriptObj.offlineExpGained += expGain;
+
+    //Fortify a server's security based on how many times it was hacked
+    for (var ip in runningScriptObj.dataMap) {
+        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.dataMap[ip][1] == 0 || runningScriptObj.dataMap[ip][1] == null) {continue;}
+            var serv = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip];
+            if (serv == null) {continue;}
+            var timesHacked = Math.round(0.5 * runningScriptObj.dataMap[ip][1] / runningScriptObj.onlineRunningTime * timePassed);
+            console.log(runningScriptObj.filename + " hacked " + serv.hostname + " " + timesHacked + " times while offline");
+            runningScriptObj.log("Hacked " + serv.hostname + " " + timesHacked + " times while offline");
+            serv.fortify(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ServerFortifyAmount * timesHacked);
+        }
+    }
+
+    //Weaken
+    for (var ip in runningScriptObj.dataMap) {
+        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
+            if (runningScriptObj.dataMap[ip][3] == 0 || runningScriptObj.dataMap[ip][3] == null) {continue;}
+            var serv = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip];
+            if (serv == null) {continue;}
+            var timesWeakened = Math.round(0.5 * runningScriptObj.dataMap[ip][3] / runningScriptObj.onlineRunningTime * timePassed);
+            console.log(runningScriptObj.filename + " called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
+            runningScriptObj.log("Called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
+            serv.weaken(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ServerWeakenAmount * timesWeakened);
+        }
+    }
+
+    return totalOfflineProduction;
+}
+
+//Returns a RunningScript object matching the filename and arguments on the
+//designated server, and false otherwise
+function findRunningScript(filename, args, server) {
+    for (var i = 0; i < server.runningScripts.length; ++i) {
+        if (server.runningScripts[i].filename == filename &&
+            Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["c" /* compareArrays */])(server.runningScripts[i].args, args)) {
+            return server.runningScripts[i];
+        }
+    }
+    return null;
+}
+
+function RunningScript(script, args) {
+    if (script == null || script == undefined) {return;}
+    this.filename   = script.filename;
+    this.args       = args;
+    this.scriptRef  = script;
+    this.server     = script.server;    //IP Address only
+
+    this.logs       = [];   //Script logging. Array of strings, with each element being a log entry
+
+	//Stats to display on the Scripts menu, and used to determine offline progress
+	this.offlineRunningTime  	= 0.01;	//Seconds
+	this.offlineMoneyMade 		= 0;
+	this.offlineExpGained 		= 0;
+	this.onlineRunningTime 		= 0.01;	//Seconds
+	this.onlineMoneyMade 		= 0;
+	this.onlineExpGained 		= 0;
+
+    this.threads                = 1;
+
+    //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
+    this.dataMap                = new AllServersMap([0, 0, 0, 0], true);
+}
+
+RunningScript.prototype.log = function(txt) {
+    if (this.logs.length > __WEBPACK_IMPORTED_MODULE_6__Settings_js__["a" /* Settings */].MaxLogCapacity) {
+        //Delete first element and add new log entry to the end.
+        //TODO Eventually it might be better to replace this with circular array
+        //to improve performance
+        this.logs.shift();
+    }
+    this.logs.push(txt);
+}
+
+RunningScript.prototype.displayLog = function() {
+    for (var i = 0; i < this.logs.length; ++i) {
+        post(this.logs[i]);
+    }
+}
+
+RunningScript.prototype.clearLog = function() {
+    this.logs.length = 0;
+}
+
+//Update the moneyStolen and numTimesHack maps when hacking
+RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
+    if (this.dataMap == null) {
+        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
+        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
+    }
+    this.dataMap[serverIp][0] += moneyGained;
+    this.dataMap[serverIp][1] += n;
+}
+
+//Update the grow map when calling grow()
+RunningScript.prototype.recordGrow = function(serverIp, n=1) {
+    if (this.dataMap == null) {
+        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
+        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
+    }
+    this.dataMap[serverIp][2] += n;
+}
+
+//Update the weaken map when calling weaken() {
+RunningScript.prototype.recordWeaken = function(serverIp, n=1) {
+    if (this.dataMap == null) {
+        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
+        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
+    }
+    this.dataMap[serverIp][3] += n;
+}
+
+RunningScript.prototype.toJSON = function() {
+    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["b" /* Generic_toJSON */])("RunningScript", this);
 }
 
 
+RunningScript.fromJSON = function(value) {
+    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(RunningScript, value.data);
+}
 
+__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].constructors.RunningScript = RunningScript;
+
+//Creates an object that creates a map/dictionary with the IP of each existing server as
+//a key. Initializes every key with a specified value that can either by a number or an array
+function AllServersMap(arr=false, filterOwned=false) {
+    for (var ip in __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */]) {
+        if (__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */].hasOwnProperty(ip)) {
+            if (filterOwned && (__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].purchasedByPlayer || __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].hostname === "home")) {
+                continue;
+            }
+            if (arr) {
+                this[ip] = [0, 0, 0, 0];
+            } else {
+                this[ip] = 0;
+            }
+        }
+    }
+}
+
+AllServersMap.prototype.printConsole = function() {
+    for (var ip in this) {
+        if (this.hasOwnProperty(ip)) {
+            var serv = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip];
+            if (serv == null) {
+                console.log("Warning null server encountered with ip: " + ip);
+                continue;
+            }
+        }
+    }
+}
+
+AllServersMap.prototype.toJSON = function() {
+    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["b" /* Generic_toJSON */])("AllServersMap", this);
+}
+
+
+AllServersMap.fromJSON = function(value) {
+    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(AllServersMap, value.data);
+}
+
+__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].constructors.AllServersMap = AllServersMap;
+
+
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20504,7 +21152,7 @@ function isValidIPAddress(ipaddress) {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20518,11 +21166,17 @@ function isValidIPAddress(ipaddress) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Augmentation; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BitNode_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Prestige_js__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Faction_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Faction_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Prestige_js__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Script_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Server_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_JSONReviver_js__ = __webpack_require__(8);
+
+
+
 
 
 
@@ -20558,7 +21212,7 @@ Augmentation.prototype.setRequirements = function(rep, cost) {
 //Takes in an array of faction names and adds this augmentation to all of those factions
 Augmentation.prototype.addToFactions = function(factionList) {
     for (var i = 0; i < factionList.length; ++i) {
-        var faction = __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */][factionList[i]];
+        var faction = __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */][factionList[i]];
         if (faction == null) {
             console.log("ERROR: Could not find faction with this name:" + factionList[i]);
             continue;
@@ -20568,9 +21222,9 @@ Augmentation.prototype.addToFactions = function(factionList) {
 }
 
 Augmentation.prototype.addToAllFactions = function() {
-    for (var fac in __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */]) {
-        if (__WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */].hasOwnProperty(fac)) {
-            var facObj = __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */][fac];
+    for (var fac in __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */]) {
+        if (__WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */].hasOwnProperty(fac)) {
+            var facObj = __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */][fac];
             if (facObj == null) {
                 console.log("ERROR: Invalid faction object");
                 continue;
@@ -20581,14 +21235,14 @@ Augmentation.prototype.addToAllFactions = function() {
 }
 
 Augmentation.prototype.toJSON = function() {
-    return Object(__WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__["b" /* Generic_toJSON */])("Augmentation", this);
+    return Object(__WEBPACK_IMPORTED_MODULE_9__utils_JSONReviver_js__["b" /* Generic_toJSON */])("Augmentation", this);
 }
 
 Augmentation.fromJSON = function(value) {
-    return Object(__WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(Augmentation, value.data);
+    return Object(__WEBPACK_IMPORTED_MODULE_9__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(Augmentation, value.data);
 }
 
-__WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__["c" /* Reviver */].constructors.Augmentation = Augmentation;
+__WEBPACK_IMPORTED_MODULE_9__utils_JSONReviver_js__["c" /* Reviver */].constructors.Augmentation = Augmentation;
 
 let Augmentations = {}
 
@@ -20687,9 +21341,9 @@ let AugmentationNames = {
 }
 
 function initAugmentations() {
-    for (var name in __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */]) {
-        if (__WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */].hasOwnProperty(name)) {
-            __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */][name].augmentations = [];
+    for (var name in __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */]) {
+        if (__WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */].hasOwnProperty(name)) {
+            __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */][name].augmentations = [];
         }
     }
     //Combat stat augmentations
@@ -21421,13 +22075,13 @@ function initAugmentations() {
     //Misc/Hybrid augmentations
     var NeuroFluxGovernor = new Augmentation(AugmentationNames.NeuroFluxGovernor);
     if (augmentationExists(AugmentationNames.NeuroFluxGovernor)) {
-        var nextLevel = Object(__WEBPACK_IMPORTED_MODULE_4__Faction_js__["e" /* getNextNeurofluxLevel */])();
+        var nextLevel = Object(__WEBPACK_IMPORTED_MODULE_2__Faction_js__["e" /* getNextNeurofluxLevel */])();
         NeuroFluxGovernor.level = nextLevel - 1;
         mult = Math.pow(__WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level);
         NeuroFluxGovernor.setRequirements(500 * mult, 750000 * mult);
         delete Augmentations[AugmentationNames.NeuroFluxGovernor];
     } else {
-        var nextLevel = Object(__WEBPACK_IMPORTED_MODULE_4__Faction_js__["e" /* getNextNeurofluxLevel */])();
+        var nextLevel = Object(__WEBPACK_IMPORTED_MODULE_2__Faction_js__["e" /* getNextNeurofluxLevel */])();
         NeuroFluxGovernor.level = nextLevel - 1;
         mult = Math.pow(__WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].NeuroFluxGovernorLevelMult, NeuroFluxGovernor.level);
         NeuroFluxGovernor.setRequirements(500 * mult, 750000 * mult);
@@ -21914,25 +22568,25 @@ function initAugmentations() {
     AddToAugmentations(SNA);
 
     //Update costs based on how many have been purchased
-    var mult = Math.pow(__WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].MultipleAugMultiplier, __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].queuedAugmentations.length);
+    var mult = Math.pow(__WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].MultipleAugMultiplier, __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].queuedAugmentations.length);
     for (var name in Augmentations) {
         if (Augmentations.hasOwnProperty(name)) {
             Augmentations[name].baseCost *= mult;
         }
     }
 
-    __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].reapplyAllAugmentations();
+    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].reapplyAllAugmentations();
 
     //In BitNode-2, these crime/evil factions have all AugmentationsAvailable
-    if (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].bitNodeN == 2) {
+    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].bitNodeN == 2) {
         console.log("Adding all augmentations to crime factions for Bit node 2");
-        __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */]["Slum Snakes"].addAllAugmentations();
-        __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */]["Tetrads"].addAllAugmentations();
-        __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */]["The Syndicate"].addAllAugmentations();
-        __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */]["The Dark Army"].addAllAugmentations();
-        __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */]["Speakers for the Dead"].addAllAugmentations();
-        __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */]["NiteSec"].addAllAugmentations();
-        __WEBPACK_IMPORTED_MODULE_4__Faction_js__["b" /* Factions */]["The Black Hand"].addAllAugmentations();
+        __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */]["Slum Snakes"].addAllAugmentations();
+        __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */]["Tetrads"].addAllAugmentations();
+        __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */]["The Syndicate"].addAllAugmentations();
+        __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */]["The Dark Army"].addAllAugmentations();
+        __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */]["Speakers for the Dead"].addAllAugmentations();
+        __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */]["NiteSec"].addAllAugmentations();
+        __WEBPACK_IMPORTED_MODULE_2__Faction_js__["b" /* Factions */]["The Black Hand"].addAllAugmentations();
     }
 }
 
@@ -21941,473 +22595,473 @@ function applyAugmentation(aug, reapply=false) {
     switch(aug.name) {
         //Combat stat augmentations
         case AugmentationNames.Targeting1:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult *= 1.10;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult *= 1.10;
             break;
         case AugmentationNames.Targeting2:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult *= 1.20;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult *= 1.20;
             break;
         case AugmentationNames.Targeting3:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult *= 1.30;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult *= 1.30;
             break;
         case AugmentationNames.SyntheticHeart:         //High level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult *= 1.5;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult *= 1.5;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult *= 1.5;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult *= 1.5;
             break;
         case AugmentationNames.SynfibrilMuscle:        //Medium-high level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult    *= 1.35;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult     *= 1.35;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult    *= 1.35;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult     *= 1.35;
             break;
         case AugmentationNames.CombatRib1:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult    *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult    *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult     *= 1.1;
             break;
         case AugmentationNames.CombatRib2:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult    *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult     *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult    *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult     *= 1.15;
             break;
         case AugmentationNames.CombatRib3:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult    *= 1.20;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult     *= 1.20;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult    *= 1.20;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult     *= 1.20;
             break;
         case AugmentationNames.NanofiberWeave:         //Med level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult    *= 1.25;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult     *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult    *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult     *= 1.25;
             break;
         case AugmentationNames.SubdermalArmor:         //High level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult     *= 2.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult     *= 2.25;
             break;
         case AugmentationNames.WiredReflexes:          //Low level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult     *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult   *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult     *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult   *= 1.05;
             break;
         case AugmentationNames.GrapheneBoneLacings:   //High level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult    *= 1.7;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult     *= 1.7;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult    *= 1.7;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult     *= 1.7;
             break;
         case AugmentationNames.BionicSpine:            //Med level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult    *= 1.16;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult     *= 1.16;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult     *= 1.16;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult   *= 1.16;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult    *= 1.16;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult     *= 1.16;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult     *= 1.16;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult   *= 1.16;
             break;
         case AugmentationNames.GrapheneBionicSpine:   //High level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult    *= 1.6;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult     *= 1.6;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult     *= 1.6;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult   *= 1.6;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult    *= 1.6;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult     *= 1.6;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult     *= 1.6;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult   *= 1.6;
             break;
         case AugmentationNames.BionicLegs:             //Med level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult     *= 1.6;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult     *= 1.6;
             break;
         case AugmentationNames.GrapheneBionicLegs:    //High level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult     *= 2.75;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult     *= 2.75;
             break;
 
         //Labor stats augmentations
         case AugmentationNames.EnhancedSocialInteractionImplant: //Med-high level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_mult        *= 1.6;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.6;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_mult        *= 1.6;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.6;
             break;
         case AugmentationNames.TITN41Injection:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_mult        *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_mult        *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.15;
             break;
         case AugmentationNames.SpeechProcessor:    //Med level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_mult    *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_mult    *= 1.2;
             break;
 
         //Hacking augmentations
         case AugmentationNames.BitWire:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult   *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult   *= 1.05;
             break;
         case AugmentationNames.ArtificialBioNeuralNetwork:   //Med level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult *= 1.03;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult       *= 1.12;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult *= 1.03;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult       *= 1.12;
             break;
         case AugmentationNames.ArtificialSynapticPotentiation:    //Med level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.02;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_chance_mult  *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.02;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_chance_mult  *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.05;
             break;
         case AugmentationNames.EnhancedMyelinSheathing:       //Med level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult *= 1.03;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult   *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult       *= 1.08;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult *= 1.03;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult   *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult       *= 1.08;
             break;
         case AugmentationNames.SynapticEnhancement:    //Low Level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult *= 1.03;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult *= 1.03;
             break;
         case AugmentationNames.NeuralRetentionEnhancement:    //Med level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult   *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult   *= 1.25;
             break;
         case AugmentationNames.DataJack:                        //Med low level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult *= 1.25;
             break;
         case AugmentationNames.ENM:       //Medium level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult           *= 1.08;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult           *= 1.08;
             break;
         case AugmentationNames.ENMCore:      //Medium level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult     *= 1.03;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult     *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_chance_mult    *= 1.03;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult       *= 1.07;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult           *= 1.07;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult     *= 1.03;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_chance_mult    *= 1.03;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult       *= 1.07;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult           *= 1.07;
             break;
         case AugmentationNames.ENMCoreV2:   //Medium high level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult     *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult     *= 1.3;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_chance_mult    *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult       *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult           *= 1.08;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult     *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult     *= 1.3;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_chance_mult    *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult       *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult           *= 1.08;
             break;
         case AugmentationNames.ENMCoreV3:   //High level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult     *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult     *= 1.4;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_chance_mult    *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult       *= 1.25;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult           *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult     *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult     *= 1.4;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_chance_mult    *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult       *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult           *= 1.1;
             break;
         case AugmentationNames.ENMAnalyzeEngine:    //High level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult     *= 1.1;
             break;
         case AugmentationNames.ENMDMA:  //High level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult     *= 1.4;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_chance_mult    *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult     *= 1.4;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_chance_mult    *= 1.2;
             break;
         case AugmentationNames.Neuralstimulator:    //Medium Level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult     *= 1.02;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_chance_mult    *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult       *= 1.12;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult     *= 1.02;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_chance_mult    *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult       *= 1.12;
             break;
         case AugmentationNames.NeuralAccelerator:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult   *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult   *= 1.2;
             break;
         case AugmentationNames.CranialSignalProcessorsG1:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.05;
             break;
         case AugmentationNames.CranialSignalProcessorsG2:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.02;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_chance_mult  *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.07;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.02;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_chance_mult  *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.07;
             break;
         case AugmentationNames.CranialSignalProcessorsG3:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.02;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult   *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.09;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.02;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult   *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.09;
             break;
         case AugmentationNames.CranialSignalProcessorsG4:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.02;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult   *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_grow_mult    *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.02;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult   *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_grow_mult    *= 1.25;
             break;
         case AugmentationNames.CranialSignalProcessorsG5:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.3;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult   *= 1.25;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_grow_mult    *= 1.75;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.3;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult   *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_grow_mult    *= 1.75;
             break;
         case AugmentationNames.NeuronalDensification:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.03;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.03;
             break;
 
         //Work augmentations
         case AugmentationNames.NuoptimalInjectorImplant:    //Low medium level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].company_rep_mult   *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].company_rep_mult   *= 1.2;
             break;
         case AugmentationNames.SpeechEnhancement:  //Low level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].company_rep_mult   *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_mult      *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].company_rep_mult   *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_mult      *= 1.1;
             break;
         case AugmentationNames.FocusWire:   //Med level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_exp_mult    *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_exp_mult     *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_exp_mult   *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_exp_mult     *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].company_rep_mult     *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].work_money_mult      *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_exp_mult    *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_exp_mult     *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_exp_mult   *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_exp_mult     *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].company_rep_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].work_money_mult      *= 1.2;
             break;
         case AugmentationNames.PCDNI:  //Med level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].company_rep_mult   *= 1.3;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult       *= 1.08;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].company_rep_mult   *= 1.3;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult       *= 1.08;
             break;
         case AugmentationNames.PCDNIOptimizer:   //High level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].company_rep_mult   *= 1.75;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult       *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].company_rep_mult   *= 1.75;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult       *= 1.1;
             break;
         case AugmentationNames.PCDNINeuralNetwork:        //High level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].company_rep_mult   *= 2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult       *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].company_rep_mult   *= 2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult       *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult *= 1.05;
             break;
         case AugmentationNames.ADRPheromone1:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].company_rep_mult     *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].faction_rep_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].company_rep_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].faction_rep_mult     *= 1.1;
             break;
 
         //Hacknet Node Augmentations
         case AugmentationNames.HacknetNodeCPUUpload:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_purchase_cost_mult    *= 0.85;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_purchase_cost_mult    *= 0.85;
             break;
         case AugmentationNames.HacknetNodeCacheUpload:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.10;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_level_cost_mult       *= 0.85;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.10;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_level_cost_mult       *= 0.85;
             break;
         case AugmentationNames.HacknetNodeNICUpload:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_purchase_cost_mult    *= 0.9;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_purchase_cost_mult    *= 0.9;
             break;
         case AugmentationNames.HacknetNodeKernelDNI:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.25;
             break;
         case AugmentationNames.HacknetNodeCoreDNI:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.45;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.45;
             break;
 
         //Misc augmentations
         case AugmentationNames.NeuroFluxGovernor:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_chance_mult *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult  *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult  *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_grow_mult   *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult        *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_chance_mult *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult  *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult  *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_grow_mult   *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult        *= 1.01;
 
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult       *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult        *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult      *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult        *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_mult       *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult       *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult        *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult      *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult        *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_mult       *= 1.01;
 
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult    *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_exp_mult   *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_exp_mult    *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_exp_mult  *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_exp_mult    *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_exp_mult   *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult    *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_exp_mult   *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_exp_mult    *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_exp_mult  *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_exp_mult    *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_exp_mult   *= 1.01;
 
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].company_rep_mult    *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].faction_rep_mult    *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].company_rep_mult    *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].faction_rep_mult    *= 1.01;
 
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].crime_money_mult    *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].crime_success_mult  *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].crime_money_mult    *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].crime_success_mult  *= 1.01;
 
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.01;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_purchase_cost_mult    *= 0.99;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_ram_cost_mult         *= 0.99;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_core_cost_mult        *= 0.99;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacknet_node_level_cost_mult       *= 0.99;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_money_mult            *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_purchase_cost_mult    *= 0.99;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_ram_cost_mult         *= 0.99;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_core_cost_mult        *= 0.99;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacknet_node_level_cost_mult       *= 0.99;
 
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].work_money_mult    *= 1.01;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].work_money_mult    *= 1.01;
 
             if (!reapply) {
                 Augmentations[aug.name].level = aug.level;
-                for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].augmentations.length; ++i) {
-                    if (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
-                        __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].augmentations[i].level = aug.level;
+                for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].augmentations.length; ++i) {
+                    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+                        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].augmentations[i].level = aug.level;
                         break;
                     }
                 }
             }
             break;
         case AugmentationNames.Neurotrainer1:      //Low Level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult   *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_exp_mult  *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_exp_mult   *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_exp_mult *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_exp_mult   *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_exp_mult  *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult   *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_exp_mult  *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_exp_mult   *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_exp_mult *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_exp_mult   *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_exp_mult  *= 1.1;
             break;
         case AugmentationNames.Neurotrainer2:     //Medium level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult   *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_exp_mult  *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_exp_mult   *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_exp_mult *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_exp_mult   *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_exp_mult  *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult   *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_exp_mult  *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_exp_mult   *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_exp_mult *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_exp_mult   *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_exp_mult  *= 1.15;
             break;
         case AugmentationNames.Neurotrainer3:    //High Level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult   *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_exp_mult  *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_exp_mult   *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_exp_mult *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_exp_mult   *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_exp_mult  *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult   *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_exp_mult  *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_exp_mult   *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_exp_mult *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_exp_mult   *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_exp_mult  *= 1.2;
             break;
         case AugmentationNames.Hypersight:  //Medium high level
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult     *= 1.4;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult *= 1.03;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult     *= 1.4;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult *= 1.03;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult *= 1.1;
             break;
         case AugmentationNames.LuminCloaking1:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult       *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].crime_money_mult   *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult       *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].crime_money_mult   *= 1.1;
             break;
         case AugmentationNames.LuminCloaking2:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult       *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult       *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].crime_money_mult   *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult       *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult       *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].crime_money_mult   *= 1.25;
             break;
         case AugmentationNames.HemoRecirculator:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult      *= 1.08;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult       *= 1.08;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult       *= 1.08;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult     *= 1.08;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult      *= 1.08;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult       *= 1.08;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult       *= 1.08;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult     *= 1.08;
             break;
         case AugmentationNames.SmartSonar:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult     *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_exp_mult *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].crime_money_mult   *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_exp_mult *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].crime_money_mult   *= 1.25;
             break;
         case AugmentationNames.PowerRecirculator:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult         *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult       *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult         *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_mult        *= 1.05;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_exp_mult    *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_exp_mult     *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_exp_mult   *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_exp_mult     *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult         *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult       *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult         *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_mult        *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_exp_mult    *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_exp_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_exp_mult   *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_exp_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.1;
             break;
         //Unique augmentations (for factions)
         case AugmentationNames.QLink:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_chance_mult  *= 1.3;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult   *= 2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_chance_mult  *= 1.3;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult   *= 2;
             break;
         case AugmentationNames.TheRedPill:
             break;
         case AugmentationNames.SPTN97:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.75;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult         *= 1.75;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult       *= 1.75;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult         *= 1.75;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.75;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult         *= 1.75;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult       *= 1.75;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult         *= 1.75;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.15;
             break;
         case AugmentationNames.HiveMind:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_grow_mult    *= 3;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_grow_mult    *= 3;
             break;
         case AugmentationNames.CordiARCReactor:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.35;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult         *= 1.35;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult       *= 1.35;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult         *= 1.35;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_exp_mult    *= 1.35;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_exp_mult     *= 1.35;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_exp_mult   *= 1.35;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_exp_mult     *= 1.35;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.35;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult         *= 1.35;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult       *= 1.35;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult         *= 1.35;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_exp_mult    *= 1.35;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_exp_mult     *= 1.35;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_exp_mult   *= 1.35;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_exp_mult     *= 1.35;
             break;
         case AugmentationNames.SmartJaw:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_mult        *= 1.5;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.5;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].company_rep_mult     *= 1.25;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].faction_rep_mult     *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_mult        *= 1.5;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.5;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].company_rep_mult     *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].faction_rep_mult     *= 1.25;
             break;
         case AugmentationNames.Neotra:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.55;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult         *= 1.55;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.55;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult         *= 1.55;
             break;
         case AugmentationNames.Xanipher:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult         *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult       *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult         *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_mult        *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_exp_mult    *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_exp_mult     *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_exp_mult   *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_exp_mult     *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult         *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult       *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult         *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_mult        *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_exp_mult    *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_exp_mult     *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_exp_mult   *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_exp_mult     *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_exp_mult    *= 1.15;
             break;
         case AugmentationNames.nextSENS:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult         *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult       *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult         *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].charisma_mult        *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult         *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult       *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult         *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].charisma_mult        *= 1.2;
             break;
         case AugmentationNames.OmniTekInfoLoad:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.25;
             break;
         case AugmentationNames.PhotosyntheticCells:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.4;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult         *= 1.4;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_mult         *= 1.4;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.4;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult         *= 1.4;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_mult         *= 1.4;
             break;
         case AugmentationNames.Neurolink:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_chance_mult  *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.05;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_chance_mult  *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.05;
             break;
         case AugmentationNames.TheBlackHand:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult       *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.02;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_money_mult   *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult       *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_speed_mult   *= 1.02;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_money_mult   *= 1.1;
             break;
         case AugmentationNames.CRTX42AA:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_mult         *= 1.08;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_mult         *= 1.08;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.15;
             break;
         case AugmentationNames.Neuregen:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.4;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hacking_exp_mult     *= 1.4;
             break;
         case AugmentationNames.CashRoot:
             break;
         case AugmentationNames.NutriGen:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_exp_mult    *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_exp_mult     *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_exp_mult   *= 1.2;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].agility_exp_mult     *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_exp_mult    *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_exp_mult     *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_exp_mult   *= 1.2;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].agility_exp_mult     *= 1.2;
             break;
         case AugmentationNames.INFRARet:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].crime_success_mult   *= 1.25;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].crime_money_mult     *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult       *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].crime_success_mult   *= 1.25;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].crime_money_mult     *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult       *= 1.1;
             break;
         case AugmentationNames.DermaForce:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult         *= 1.5;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult         *= 1.5;
             break;
         case AugmentationNames.GrapheneBrachiBlades:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.4;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult         *= 1.4;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].crime_success_mult   *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].crime_money_mult     *= 1.3;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.4;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult         *= 1.4;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].crime_success_mult   *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].crime_money_mult     *= 1.3;
             break;
         case AugmentationNames.GrapheneBionicArms:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.85;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult       *= 1.85;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.85;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult       *= 1.85;
             break;
         case AugmentationNames.BrachiBlades:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].defense_mult         *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].crime_success_mult   *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].crime_money_mult     *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].defense_mult         *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].crime_success_mult   *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].crime_money_mult     *= 1.15;
             break;
         case AugmentationNames.BionicArms:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].strength_mult        *= 1.3;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].dexterity_mult       *= 1.3;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].strength_mult        *= 1.3;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].dexterity_mult       *= 1.3;
             break;
         case AugmentationNames.SNA:
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].work_money_mult      *= 1.1;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].company_rep_mult     *= 1.15;
-            __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].faction_rep_mult     *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].work_money_mult      *= 1.1;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].company_rep_mult     *= 1.15;
+            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].faction_rep_mult     *= 1.15;
             break;
         default:
             throw new Error("ERROR: No such augmentation!");
@@ -22415,8 +23069,8 @@ function applyAugmentation(aug, reapply=false) {
     }
 
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-        for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].augmentations.length; ++i) {
-            if (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+        for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].augmentations.length; ++i) {
+            if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
                 //Already have this aug, just upgrade the level
                 return;
             }
@@ -22425,7 +23079,7 @@ function applyAugmentation(aug, reapply=false) {
 
     if (!reapply) {
         var ownedAug = new PlayerOwnedAugmentation(aug.name);
-        __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].augmentations.push(ownedAug);
+        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].augmentations.push(ownedAug);
     }
 }
 
@@ -22434,26 +23088,45 @@ function PlayerOwnedAugmentation(name) {
     this.level = 1;
 }
 
-function installAugmentations() {
-    if (__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].queuedAugmentations.length == 0) {
-        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You have not purchased any Augmentations to install!");
+function installAugmentations(cbScript=null) {
+    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].queuedAugmentations.length == 0) {
+        Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You have not purchased any Augmentations to install!");
         return false;
     }
     var augmentationList = "";
-    for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].queuedAugmentations.length; ++i) {
-        var aug = Augmentations[__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].queuedAugmentations[i].name];
+    for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].queuedAugmentations.length; ++i) {
+        var aug = Augmentations[__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].queuedAugmentations[i].name];
         if (aug == null) {
             console.log("ERROR. Invalid augmentation");
             continue;
         }
-        applyAugmentation(__WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].queuedAugmentations[i]);
+        applyAugmentation(__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].queuedAugmentations[i]);
         augmentationList += (aug.name + "<br>");
     }
-    __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].queuedAugmentations = [];
-    Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You slowly drift to sleep as scientists put you under in order " +
+    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].queuedAugmentations = [];
+    Object(__WEBPACK_IMPORTED_MODULE_8__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You slowly drift to sleep as scientists put you under in order " +
                     "to install the following Augmentations:<br>" + augmentationList +
                     "<br>You wake up in your home...you feel different...");
-    Object(__WEBPACK_IMPORTED_MODULE_3__Prestige_js__["a" /* prestigeAugmentation */])();
+    Object(__WEBPACK_IMPORTED_MODULE_5__Prestige_js__["a" /* prestigeAugmentation */])();
+
+    //Run a script after prestiging
+    if (cbScript) {
+        var home = __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].getHomeComputer();
+        for (var i = 0; i < home.scripts.length; ++i) {
+            if (home.scripts[i].filename === cbScript) {
+                var script = home.scripts[i];
+                var ramUsage = script.ramUsage;
+                var ramAvailable = home.maxRam - home.ramUsed;
+                if (ramUsage > ramAvailable) {
+                    return; //Not enough RAM
+                }
+                var runningScriptObj = new __WEBPACK_IMPORTED_MODULE_6__Script_js__["b" /* RunningScript */](script, []); //No args
+                runningScriptObj.threads = 1; //Only 1 thread
+                home.runningScripts.push(runningScriptObj);
+                Object(__WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__["c" /* addWorkerScript */])(runningScriptObj, home);
+            }
+        }
+    }
 }
 
 function augmentationExists(name) {
@@ -22466,16 +23139,16 @@ function giveAllAugmentations() {
         var aug = Augmentations[name];
         if (aug == null) {continue;}
         var ownedAug = new PlayerOwnedAugmentation(name);
-        __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].augmentations.push(ownedAug);
+        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].augmentations.push(ownedAug);
     }
-    __WEBPACK_IMPORTED_MODULE_2__Player_js__["a" /* Player */].reapplyAllAugmentations();
+    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].reapplyAllAugmentations();
 }
 
 
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22489,7 +23162,7 @@ function giveAllAugmentations() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return CompanyPosition; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return companyExists; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Location_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Location_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_JSONReviver_js__ = __webpack_require__(8);
 
@@ -23642,633 +24315,6 @@ function getJobRequirementText(company, pos, tooltiptext=false) {
 
 
 /***/ }),
-/* 19 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return updateScriptEditorContent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadAllRunningScripts; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return findRunningScript; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return RunningScript; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Script; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AllServersMap; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(5);
-var ace = __webpack_require__(50);
-__webpack_require__(53);
-__webpack_require__(54);
-__webpack_require__(55);
-__webpack_require__(56);
-__webpack_require__(57);
-__webpack_require__(58);
-__webpack_require__(59);
-__webpack_require__(60);
-__webpack_require__(61);
-__webpack_require__(62);
-__webpack_require__(63);
-__webpack_require__(64);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var keybindings = {
-    ace: null,
-    vim: "ace/keyboard/vim",
-    emacs: "ace/keyboard/emacs",
-};
-
-function scriptEditorInit() {
-    //Initialize save and close button
-    var closeButton = document.getElementById("script-editor-save-and-close-button");
-
-    closeButton.addEventListener("click", function() {
-        saveAndCloseScriptEditor();
-        return false;
-    });
-
-    //Initialize ACE Script editor
-    var editor = ace.edit('javascript-editor');
-    editor.getSession().setMode('ace/mode/netscript');
-    editor.setTheme('ace/theme/monokai');
-    document.getElementById('javascript-editor').style.fontSize='16px';
-    editor.setOption("showPrintMargin", false);
-
-    /* Script editor options */
-    //Theme
-    var themeDropdown = document.getElementById("script-editor-option-theme");
-    themeDropdown.selectedIndex = 2;
-    themeDropdown.onchange = function() {
-        var val = themeDropdown.value;
-        var themePath = "ace/theme/" + val.toLowerCase();
-        editor.setTheme(themePath);
-    };
-
-    //Keybinding
-    var keybindingDropdown = document.getElementById("script-editor-option-keybinding");
-    keybindingDropdown.onchange = function() {
-        var val = keybindingDropdown.value;
-        editor.setKeyboardHandler(keybindings[val.toLowerCase()]);
-    };
-
-    //Highlight Active line
-    var highlightActiveChkBox = document.getElementById("script-editor-option-highlightactiveline");
-    highlightActiveChkBox.onchange = function() {
-        editor.setHighlightActiveLine(highlightActiveChkBox.checked);
-    };
-
-    //Show Invisibles
-    var showInvisiblesChkBox = document.getElementById("script-editor-option-showinvisibles");
-    showInvisiblesChkBox.onchange = function() {
-        editor.setShowInvisibles(showInvisiblesChkBox.checked);
-    };
-
-    //Use Soft Tab
-    var softTabChkBox = document.getElementById("script-editor-option-usesofttab");
-    softTabChkBox.onchange = function() {
-        editor.getSession().setUseSoftTabs(softTabChkBox.checked);
-    };
-
-    //Configure some of the VIM keybindings
-    ace.config.loadModule('ace/keyboard/vim', function(module) {
-        var VimApi = module.CodeMirror.Vim;
-        VimApi.defineEx('write', 'w', function(cm, input) {
-            saveAndCloseScriptEditor();
-        });
-        VimApi.defineEx('quit', 'q', function(cm, input) {
-            __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].loadTerminalContent();
-        });
-    });
-}
-document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
-
-//Updates line number and RAM usage in script
-function updateScriptEditorContent() {
-    var editor = ace.edit('javascript-editor');
-    var code = editor.getValue();
-    var codeCopy = code.repeat(1);
-    var ramUsage = calculateRamUsage(codeCopy);
-    document.getElementById("script-editor-status-text").innerText =
-        "RAM: " + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(ramUsage, 2).toString() + "GB";
-}
-
-//Define key commands in script editor (ctrl o to save + close, etc.)
-$(document).keydown(function(e) {
-	if (__WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].Page.ScriptEditor) {
-		//Ctrl + b
-        if (e.keyCode == 66 && e.ctrlKey) {
-            e.preventDefault();
-			saveAndCloseScriptEditor();
-        }
-	}
-});
-
-function saveAndCloseScriptEditor() {
-    var filename = document.getElementById("script-editor-filename").value;
-    if (__WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__["b" /* iTutorialIsRunning */] && __WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__["a" /* currITutorialStep */] == __WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__["e" /* iTutorialSteps */].TerminalTypeScript) {
-        if (filename != "foodnstuff") {
-            Object(__WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Leave the script name as 'foodnstuff'!");
-            return;
-        }
-        var editor = ace.edit('javascript-editor');
-        var code = editor.getValue();
-        code = code.replace(/\s/g, "");
-        if (code.indexOf("while(true){hack('foodnstuff');}") == -1) {
-            Object(__WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Please copy and paste the code from the tutorial!");
-            return;
-        }
-        Object(__WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__["c" /* iTutorialNextStep */])();
-    }
-
-    if (filename == "") {
-        Object(__WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You must specify a filename!");
-        return;
-    }
-
-    if (checkValidFilename(filename) == false) {
-        Object(__WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Script filename can contain only alphanumerics, hyphens, and underscores");
-        return;
-    }
-
-    filename += ".script";
-
-    //If the current script already exists on the server, overwrite it
-    for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].getCurrentServer().scripts.length; i++) {
-        if (filename == __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].getCurrentServer().scripts[i].filename) {
-            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].getCurrentServer().scripts[i].saveScript();
-            __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].loadTerminalContent();
-            return;
-        }
-    }
-
-    //If the current script does NOT exist, create a new one
-    var script = new Script();
-    script.saveScript();
-    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].getCurrentServer().scripts.push(script);
-    __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].loadTerminalContent();
-}
-
-//Checks that the string contains only valid characters for a filename, which are alphanumeric,
-// underscores and hyphens
-function checkValidFilename(filename) {
-	var regex = /^[a-zA-Z0-9_-]+$/;
-
-	if (filename.match(regex)) {
-		return true;
-	}
-	return false;
-}
-
-function Script() {
-	this.filename 	= "";
-    this.code       = "";
-    this.ramUsage   = 0;
-	this.server 	= "";	//IP of server this script is on
-};
-
-//Get the script data from the Script Editor and save it to the object
-Script.prototype.saveScript = function() {
-	if (__WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].Page.ScriptEditor) {
-		//Update code and filename
-        var editor = ace.edit('javascript-editor');
-        var code = editor.getValue();
-		this.code = code.replace(/^\s+|\s+$/g, '');
-
-		var filename = document.getElementById("script-editor-filename").value + ".script";
-		this.filename = filename;
-
-		//Server
-		this.server = __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].currentServer;
-
-		//Calculate/update ram usage, execution time, etc.
-		this.updateRamUsage();
-	}
-}
-
-//Updates how much RAM the script uses when it is running.
-Script.prototype.updateRamUsage = function() {
-    var codeCopy = this.code.repeat(1);
-    this.ramUsage = calculateRamUsage(codeCopy);
-    console.log("ram usage: " + this.ramUsage);
-    if (isNaN(this.ramUsage)) {
-        Object(__WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__["a" /* dialogBoxCreate */])("ERROR in calculating ram usage. This is a bug, please report to game develoepr");
-    }
-}
-
-function calculateRamUsage(codeCopy) {
-    codeCopy = codeCopy.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1'); //Delete comments
-    codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
-    var baseRam = 1.4;
-    var whileCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "while(");
-    var forCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "for(");
-    var ifCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "if(");
-    var hackCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "hack(");
-    var growCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "grow(");
-    var weakenCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "weaken(");
-    var scanCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scan(");
-    var nukeCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "nuke(");
-    var brutesshCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "brutessh(");
-    var ftpcrackCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "ftpcrack(");
-    var relaysmtpCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "relaysmtp(");
-    var httpwormCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "httpworm(");
-    var sqlinjectCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "sqlinject(");
-    var runCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "run(");
-    var execCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "exec(");
-    var killCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "kill(") + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "killall(");
-    var scpCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scp(");
-    var hasRootAccessCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "hasRootAccess(");
-    var getHostnameCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getHostname(") +
-                           Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getIp(");
-    var getHackingLevelCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getHackingLevel(") +
-                               Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getIntelligence(");
-    var getMultipliersCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getHackingMultipliers(") +
-                              Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getBitNodeMultipliers(");
-    var getServerCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerMoneyAvailable(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerMaxMoney(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerSecurityLevel(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerBaseSecurityLevel(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerGrowth(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerRequiredHackingLevel(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerNumPortsRequired(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getServerRam(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "serverExists(");
-    var fileExistsCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "fileExists(");
-    var isRunningCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "isRunning(");
-    var purchaseHacknetCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseHacknetNode(");
-    var hacknetnodesArrayCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "hacknetnodes[");
-    var hnUpgLevelCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, ".upgradeLevel(");
-    var hnUpgRamCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, ".upgradeRam()");
-    var hnUpgCoreCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, ".upgradeCore()");
-    var scriptGetStockCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getStockPrice(") +
-                              Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getStockPosition(");
-    var scriptBuySellStockCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "buyStock(") +
-                                  Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "sellStock(");
-    var scriptPurchaseServerCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseServer(") +
-                                    Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "deleteServer(");
-    var scriptRoundCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "round(");
-    var scriptWriteCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "write(");
-    var scriptReadCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "read(");
-    var arbScriptCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scriptRunning(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "scriptKill(");
-    var getScriptCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getScriptRam(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getScriptIncome(") +
-                         Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getScriptExpGain(");
-    var getHackTimeCount = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getHackTime(") +
-                           Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getGrowTime(") +
-                           Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getWeakenTime(");
-    var singFn1Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "universityCourse(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "gymWorkout(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "travelToCity(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseTor(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseProgram(");
-    var singFn2Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "upgradeHomeRam(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getUpgradeHomeRamCost(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "workForCompany(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "applyToCompany(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getCompanyRep(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "checkFactionInvitations(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "joinFaction(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "workForFaction(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getFactionRep(");
-    var singFn3Count = Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "createProgram(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "getAugmentationCost(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "purchaseAugmentation(") +
-                       Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["h" /* numOccurrences */])(codeCopy, "installAugmentations(");
-
-    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].bitNodeN != 4) {
-        singFn1Count *= 10;
-        singFn2Count *= 10;
-        singFn3Count *= 10;
-    }
-
-    return baseRam +
-        ((whileCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptWhileRamCost) +
-        (forCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptForRamCost) +
-        (ifCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptIfRamCost) +
-        (hackCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHackRamCost) +
-        (growCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGrowRamCost) +
-        (weakenCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptWeakenRamCost) +
-        (scanCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptScanRamCost) +
-        (nukeCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptNukeRamCost) +
-        (brutesshCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptBrutesshRamCost) +
-        (ftpcrackCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptFtpcrackRamCost) +
-        (relaysmtpCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptRelaysmtpRamCost) +
-        (httpwormCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHttpwormRamCost) +
-        (sqlinjectCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptSqlinjectRamCost) +
-        (runCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptRunRamCost) +
-        (execCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptExecRamCost) +
-        (killCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptKillRamCost) +
-        (scpCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptScpRamCost) +
-        (hasRootAccessCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHasRootAccessRamCost) +
-        (getHostnameCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetHostnameRamCost) +
-        (getHackingLevelCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetHackingLevelRamCost) +
-        (getMultipliersCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetMultipliersRamCost) +
-        (getServerCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetServerCost) +
-        (fileExistsCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptFileExistsRamCost) +
-        (isRunningCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptIsRunningRamCost) +
-        (purchaseHacknetCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptPurchaseHacknetRamCost) +
-        (hacknetnodesArrayCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHacknetNodesRamCost) +
-        (hnUpgLevelCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHNUpgLevelRamCost) +
-        (hnUpgRamCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHNUpgRamRamCost) +
-        (hnUpgCoreCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptHNUpgCoreRamCost) +
-        (scriptGetStockCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetStockRamCost) +
-        (scriptBuySellStockCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptBuySellStockRamCost) +
-        (scriptPurchaseServerCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptPurchaseServerRamCost) +
-        (scriptRoundCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptRoundRamCost) +
-        (scriptWriteCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptReadWriteRamCost) +
-        (scriptReadCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptReadWriteRamCost) +
-        (arbScriptCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptArbScriptRamCost) +
-        (getScriptCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetScriptRamCost) +
-        (getHackTimeCount * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptGetHackTimeRamCost) +
-        (singFn1Count * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptSingularityFn1RamCost) +
-        (singFn2Count * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptSingularityFn2RamCost) +
-        (singFn3Count * __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ScriptSingularityFn3RamCost));
-}
-
-Script.prototype.toJSON = function() {
-    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["b" /* Generic_toJSON */])("Script", this);
-}
-
-
-Script.fromJSON = function(value) {
-    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(Script, value.data);
-}
-
-__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].constructors.Script = Script;
-
-//Called when the game is loaded. Loads all running scripts (from all servers)
-//into worker scripts so that they will start running
-function loadAllRunningScripts() {
-	var count = 0;
-    var total = 0;
-	for (var property in __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */]) {
-		if (__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */].hasOwnProperty(property)) {
-			var server = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][property];
-
-			//Reset each server's RAM usage to 0
-			server.ramUsed = 0;
-
-			for (var j = 0; j < server.runningScripts.length; ++j) {
-				count++;
-				Object(__WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__["c" /* addWorkerScript */])(server.runningScripts[j], server);
-
-				//Offline production
-				total += scriptCalculateOfflineProduction(server.runningScripts[j]);
-			}
-		}
-	}
-    return total;
-	console.log("Loaded " + count.toString() + " running scripts");
-}
-
-function scriptCalculateOfflineProduction(runningScriptObj) {
-	//The Player object stores the last update time from when we were online
-	var thisUpdate = new Date().getTime();
-	var lastUpdate = __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].lastUpdate;
-	var timePassed = (thisUpdate - lastUpdate) / 1000;	//Seconds
-	console.log("Offline for " + timePassed + " seconds");
-
-	//Calculate the "confidence" rating of the script's true production. This is based
-	//entirely off of time. We will arbitrarily say that if a script has been running for
-	//4 hours (14400 sec) then we are completely confident in its ability
-	var confidence = (runningScriptObj.onlineRunningTime) / 14400;
-	if (confidence >= 1) {confidence = 1;}
-
-    //Data map: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-
-    //Grow
-    for (var ip in runningScriptObj.dataMap) {
-        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
-            if (runningScriptObj.dataMap[ip][2] == 0 || runningScriptObj.dataMap[ip][2] == null) {continue;}
-            var serv = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip];
-            if (serv == null) {continue;}
-            var timesGrown = Math.round(0.5 * runningScriptObj.dataMap[ip][2] / runningScriptObj.onlineRunningTime * timePassed);
-            console.log(runningScriptObj.filename + " called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
-            runningScriptObj.log("Called grow() on " + serv.hostname + " " + timesGrown + " times while offline");
-            var growth = Object(__WEBPACK_IMPORTED_MODULE_5__Server_js__["j" /* processSingleServerGrowth */])(serv, timesGrown * 450);
-            runningScriptObj.log(serv.hostname + " grown by " + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(growth * 100 - 100, 6) + "% from grow() calls made while offline");
-        }
-    }
-
-    var totalOfflineProduction = 0;
-    for (var ip in runningScriptObj.dataMap) {
-        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
-            if (runningScriptObj.dataMap[ip][0] == 0 || runningScriptObj.dataMap[ip][0] == null) {continue;}
-            var serv = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip];
-            if (serv == null) {continue;}
-            var production = 0.5 * runningScriptObj.dataMap[ip][0] / runningScriptObj.onlineRunningTime * timePassed;
-            production *= confidence;
-            if (production > serv.moneyAvailable) {
-                production = serv.moneyAvailable;
-            }
-            totalOfflineProduction += production;
-            __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].gainMoney(production);
-            console.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
-            runningScriptObj.log(runningScriptObj.filename + " generated $" + production + " while offline by hacking " + serv.hostname);
-            serv.moneyAvailable -= production;
-            if (serv.moneyAvailable < 0) {serv.moneyAvailable = 0;}
-            if (isNaN(serv.moneyAvailable)) {serv.moneyAvailable = 0;}
-        }
-    }
-
-    //Offline EXP gain
-	//A script's offline production will always be at most half of its online production.
-	var expGain = 0.5 * (runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime) * timePassed;
-	expGain *= confidence;
-
-	__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].gainHackingExp(expGain);
-
-	//Update script stats
-	runningScriptObj.offlineMoneyMade += totalOfflineProduction;
-	runningScriptObj.offlineRunningTime += timePassed;
-	runningScriptObj.offlineExpGained += expGain;
-
-    //Fortify a server's security based on how many times it was hacked
-    for (var ip in runningScriptObj.dataMap) {
-        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
-            if (runningScriptObj.dataMap[ip][1] == 0 || runningScriptObj.dataMap[ip][1] == null) {continue;}
-            var serv = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip];
-            if (serv == null) {continue;}
-            var timesHacked = Math.round(0.5 * runningScriptObj.dataMap[ip][1] / runningScriptObj.onlineRunningTime * timePassed);
-            console.log(runningScriptObj.filename + " hacked " + serv.hostname + " " + timesHacked + " times while offline");
-            runningScriptObj.log("Hacked " + serv.hostname + " " + timesHacked + " times while offline");
-            serv.fortify(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ServerFortifyAmount * timesHacked);
-        }
-    }
-
-    //Weaken
-    for (var ip in runningScriptObj.dataMap) {
-        if (runningScriptObj.dataMap.hasOwnProperty(ip)) {
-            if (runningScriptObj.dataMap[ip][3] == 0 || runningScriptObj.dataMap[ip][3] == null) {continue;}
-            var serv = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip];
-            if (serv == null) {continue;}
-            var timesWeakened = Math.round(0.5 * runningScriptObj.dataMap[ip][3] / runningScriptObj.onlineRunningTime * timePassed);
-            console.log(runningScriptObj.filename + " called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
-            runningScriptObj.log("Called weaken() on " + serv.hostname + " " + timesWeakened + " times while offline");
-            serv.weaken(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].ServerWeakenAmount * timesWeakened);
-        }
-    }
-
-    return totalOfflineProduction;
-}
-
-//Returns a RunningScript object matching the filename and arguments on the
-//designated server, and false otherwise
-function findRunningScript(filename, args, server) {
-    for (var i = 0; i < server.runningScripts.length; ++i) {
-        if (server.runningScripts[i].filename == filename &&
-            Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["c" /* compareArrays */])(server.runningScripts[i].args, args)) {
-            return server.runningScripts[i];
-        }
-    }
-    return null;
-}
-
-function RunningScript(script, args) {
-    if (script == null || script == undefined) {return;}
-    this.filename   = script.filename;
-    this.args       = args;
-    this.scriptRef  = script;
-    this.server     = script.server;    //IP Address only
-
-    this.logs       = [];   //Script logging. Array of strings, with each element being a log entry
-
-	//Stats to display on the Scripts menu, and used to determine offline progress
-	this.offlineRunningTime  	= 0.01;	//Seconds
-	this.offlineMoneyMade 		= 0;
-	this.offlineExpGained 		= 0;
-	this.onlineRunningTime 		= 0.01;	//Seconds
-	this.onlineMoneyMade 		= 0;
-	this.onlineExpGained 		= 0;
-
-    this.threads                = 1;
-
-    //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-    this.dataMap                = new AllServersMap([0, 0, 0, 0], true);
-}
-
-RunningScript.prototype.log = function(txt) {
-    if (this.logs.length > __WEBPACK_IMPORTED_MODULE_6__Settings_js__["a" /* Settings */].MaxLogCapacity) {
-        //Delete first element and add new log entry to the end.
-        //TODO Eventually it might be better to replace this with circular array
-        //to improve performance
-        this.logs.shift();
-    }
-    this.logs.push(txt);
-}
-
-RunningScript.prototype.displayLog = function() {
-    for (var i = 0; i < this.logs.length; ++i) {
-        post(this.logs[i]);
-    }
-}
-
-RunningScript.prototype.clearLog = function() {
-    this.logs.length = 0;
-}
-
-//Update the moneyStolen and numTimesHack maps when hacking
-RunningScript.prototype.recordHack = function(serverIp, moneyGained, n=1) {
-    if (this.dataMap == null) {
-        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
-    }
-    this.dataMap[serverIp][0] += moneyGained;
-    this.dataMap[serverIp][1] += n;
-}
-
-//Update the grow map when calling grow()
-RunningScript.prototype.recordGrow = function(serverIp, n=1) {
-    if (this.dataMap == null) {
-        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
-    }
-    this.dataMap[serverIp][2] += n;
-}
-
-//Update the weaken map when calling weaken() {
-RunningScript.prototype.recordWeaken = function(serverIp, n=1) {
-    if (this.dataMap == null) {
-        //[MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
-        this.dataMap = new AllServersMap([0, 0, 0, 0], true);
-    }
-    this.dataMap[serverIp][3] += n;
-}
-
-RunningScript.prototype.toJSON = function() {
-    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["b" /* Generic_toJSON */])("RunningScript", this);
-}
-
-
-RunningScript.fromJSON = function(value) {
-    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(RunningScript, value.data);
-}
-
-__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].constructors.RunningScript = RunningScript;
-
-//Creates an object that creates a map/dictionary with the IP of each existing server as
-//a key. Initializes every key with a specified value that can either by a number or an array
-function AllServersMap(arr=false, filterOwned=false) {
-    for (var ip in __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */]) {
-        if (__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */].hasOwnProperty(ip)) {
-            if (filterOwned && (__WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].purchasedByPlayer || __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip].hostname === "home")) {
-                continue;
-            }
-            if (arr) {
-                this[ip] = [0, 0, 0, 0];
-            } else {
-                this[ip] = 0;
-            }
-        }
-    }
-}
-
-AllServersMap.prototype.printConsole = function() {
-    for (var ip in this) {
-        if (this.hasOwnProperty(ip)) {
-            var serv = __WEBPACK_IMPORTED_MODULE_5__Server_js__["b" /* AllServers */][ip];
-            if (serv == null) {
-                console.log("Warning null server encountered with ip: " + ip);
-                continue;
-            }
-        }
-    }
-}
-
-AllServersMap.prototype.toJSON = function() {
-    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["b" /* Generic_toJSON */])("AllServersMap", this);
-}
-
-
-AllServersMap.fromJSON = function(value) {
-    return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(AllServersMap, value.data);
-}
-
-__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].constructors.AllServersMap = AllServersMap;
-
-
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)))
-
-/***/ }),
 /* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -24278,18 +24324,18 @@ __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].construct
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Terminal; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Alias_js__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CreateProgram_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DarkWeb_js__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__engine_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__HelpText_js__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__HelpText_js__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__InteractiveTutorial_js__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Literature_js__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Message_js__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__NetscriptEvaluator_js__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptWorker_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptWorker_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__RedPill_js__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Script_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Script_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_StringHelperFunctions_js__ = __webpack_require__(5);
@@ -26079,13 +26125,13 @@ function yesNoTxtInpBoxCreate(txt) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreateProgram_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Missions_js__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RedPill_js__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(8);
 
@@ -26290,7 +26336,7 @@ function initMessages()  {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addActiveScriptsItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return deleteActiveScriptsItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return updateActiveScriptsItems; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NetscriptWorker_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NetscriptWorker_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(1);
@@ -32099,7 +32145,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*! decimal.js v7.2.3 https://github.com/MikeM
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return setStockMarketContentCreated; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Location_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Location_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__ = __webpack_require__(2);
@@ -32829,7 +32875,7 @@ Environment.prototype = {
 	//Create a "subscope", which is a new new "sub-environment"
 	//The subscope is linked to this through its parent variable
     extend: function() {
-        return new Environment(this);
+        return new Environment(null, this);
     },
 
 	//Finds the scope where the variable with the given name is defined
@@ -32919,32 +32965,32 @@ Environment.prototype = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSingularitySFFlags; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasSingularitySF; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BitNode_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Company_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Company_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__CreateProgram_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__DarkWeb_js__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__HacknetNode_js__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Location_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Location_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Message_js__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Script_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Script_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Settings_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Settings_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__StockMarket_js__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__Terminal_js__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__NetscriptWorker_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__NetscriptWorker_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__NetscriptEvaluator_js__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__NetscriptEnvironment_js__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__utils_decimal_js__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__utils_decimal_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__utils_IPAddress_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__utils_IPAddress_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
@@ -34945,7 +34991,7 @@ function NetscriptFunctions(workerScript) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jsplumb__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jsplumb__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jsplumb___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_jsplumb__);
 
 
@@ -35767,6 +35813,15 @@ HackingMission.prototype.nodeReachable = function(node) {
     return false;
 }
 
+HackingMission.prototype.nodeReachableByEnemy = function(node) {
+    var x = node.pos[0], y = node.pos[1];
+    if (x > 0 && this.map[x-1][y].enmyCtrl) {return true;}
+    if (x < 7 && this.map[x+1][y].enmyCtrl) {return true;}
+    if (y > 0 && this.map[x][y-1].enmyCtrl) {return true;}
+    if (y < 7 && this.map[x][y+1].enmyCtrl) {return true;}
+    return false;
+}
+
 HackingMission.prototype.start = function() {
     this.started = true;
     this.initJsPlumb();
@@ -36116,6 +36171,53 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
     return calcStats;
 }
 
+//Enemy "AI" for CPU Cor eand Transfer Nodes
+HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
+    if (nodeObj === null) {return;}
+    switch(nodeObj.type) {
+        case NodeTypes.Core:
+            //Select a single RANDOM target from miscNodes and player's Nodes
+            //If it is reachable, it will target it. If not, no target will
+            //be selected for now, and the next time process() gets called this will repeat
+            if (nodeObj.conn === null) {
+                if (this.miscNodes.length === 0) {
+                    var rand = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(0, this.playerNodes.length-1);
+                    var node = this.playerNodes[rand];
+                    if (this.nodeReachableByEnemy(node)) {
+                        //TODO Create connection
+                    } else {
+                        rand = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(0, this.playerCores.length-1);
+                        node = this.playerCores[rand];
+                        if (this.nodeReachableByEnemy(node)) {
+                            //TODO Create connection
+                        }
+                    }
+                } else {
+                    var rand = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(0, this.miscNodes.length-1);
+                    var node = this.miscNodes[rand];
+                    if (this.nodeReachableByEnemy(node)) {
+                        //TODO Create connection to this Node
+                    }
+                }
+            }
+
+            //TODO Select action
+
+            break;
+        case NodeTypes.Transfer:
+            //Switch between fortifying and overflowing as necessary
+            if (nodeObj.def < 500) {
+                nodeObj.action = NodeActions.Fortify;
+            } else {
+                nodeObj.action = NodeActions.Overflow;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+
 var hackEffWeightSelf = 150; //Weight for Node actions on self
 var hackEffWeightTarget = 25; //Weight for Node Actions against Target
 var hackEffWeightAttack = 110; //Weight for Attack action
@@ -36197,7 +36299,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Faction_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Location_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Location_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(8);
@@ -37552,7 +37654,15 @@ function initSourceFiles() {
     SourceFiles["SourceFile3"] = new SourceFile(3);
     SourceFiles["SourceFile4"] = new SourceFile(4, "This Source-File lets you access and use the Singularity Functions in every BitNode. Every " +
                                         "level of this Source-File opens up more of the Singularity Functions you can use.");
-    SourceFiles["SourceFile5"] = new SourceFile(5);
+    SourceFiles["SourceFile5"] = new SourceFile(5, "This Source-File grants a special new stat called Intelligence. Intelligence " +
+                                                   "is unique because it is permanent and persistent (it never gets reset back to 1). However, " +
+                                                   "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't " +
+                                                   "know when you gain experience and how much). Higher Intelligence levels will boost your production " +
+                                                   "for many actions in the game. In addition, this Source-File will unlock the getBitNodeMultipliers() " +
+                                                   "Netscript function, and will raise all of your hacking-related multipliers by:<br><br> " +
+                                                   "Level 1: 4%<br>" +
+                                                   "Level 2: 6%<br>" +
+                                                   "Level 3: 7%");
     SourceFiles["SourceFile6"] = new SourceFile(6);
     SourceFiles["SourceFile7"] = new SourceFile(7);
     SourceFiles["SourceFile8"] = new SourceFile(8);
@@ -37627,6 +37737,17 @@ function applySourceFile(srcFile) {
         case 4: //The Singularity
             //No effects, just gives access to Singularity functions
             break;
+        case 5: //Artificial Intelligence
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (4 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            __WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_chance_mult  *= incMult;
+            __WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_speed_mult   *= incMult;
+            __WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_money_mult   *= incMult;
+            __WEBPACK_IMPORTED_MODULE_0__Player_js__["a" /* Player */].hacking_grow_mult    *= incMult;
+            break;
         case 11: //The Big Crash
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
@@ -37655,16 +37776,16 @@ function applySourceFile(srcFile) {
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BitNode_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Company_js__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Company_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Faction_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Location_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Location_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Message_js__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__NetscriptFunctions_js__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptWorker_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptWorker_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__SpecialServerIps_js__ = __webpack_require__(11);
@@ -38254,13 +38375,16 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptEnvironment_js__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Script_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_IPAddress_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Script_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_acorn_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_acorn_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__utils_acorn_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_IPAddress_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_StringHelperFunctions_js__ = __webpack_require__(5);
+
 
 
 
@@ -38281,7 +38405,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
  */
 function evaluate(exp, workerScript) {
     return new Promise(function(resolve, reject) {
-	var env = workerScript.env;
+    var env = workerScript.env;
     if (env.stopFlag) {return reject(workerScript);}
     if (exp == null) {
         return reject(makeRuntimeRejectMsg(workerScript, "Error: NULL expression"));
@@ -38295,7 +38419,10 @@ function evaluate(exp, workerScript) {
                 evaluateProgPromise.then(function(w) {
                     resolve(workerScript);
                 }, function(e) {
-                    if (Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["f" /* isString */])(e)) {
+                    if (e.constructor === Array && e.length === 2 && e[0] === "RETURNSTATEMENT") {
+                        //Returning from a Player-defined function
+                        resolve(e[1]);
+                    } else if (Object(__WEBPACK_IMPORTED_MODULE_11__utils_StringHelperFunctions_js__["f" /* isString */])(e)) {
                         workerScript.errorMessage = e;
                         reject(workerScript);
                     } else if (e instanceof __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__["b" /* WorkerScript */]) {
@@ -38317,7 +38444,7 @@ function evaluate(exp, workerScript) {
             case "ExpressionStatement":
                 var e = evaluate(exp.expression, workerScript);
                 e.then(function(res) {
-                    resolve("expression done");
+                    resolve(res);
                 }, function(e) {
                     reject(e);
                 });
@@ -38338,7 +38465,32 @@ function evaluate(exp, workerScript) {
                         return evaluate(arg, workerScript);
                     });
                     Promise.all(argPromises).then(function(args) {
-                        if (exp.callee.type == "MemberExpression"){
+                        if (func instanceof __WEBPACK_IMPORTED_MODULE_8__utils_acorn_js__["Node"]) { //Player-defined function
+                            //Create new Environment for the function
+                            //Should be automatically garbage collected...
+                            var funcEnv = env.extend();
+
+                            //Define function arguments in this new environment
+                            for (var i = 0; i < func.params.length; ++i) {
+                                var arg;
+                                if (i >= args.length) {
+                                    arg = null;
+                                } else {
+                                    arg = args[i];
+                                }
+                                funcEnv.def(func.params[i].name, arg);
+                            }
+
+                            //Create a new WorkerScript for this function evaluation
+                            var funcWorkerScript = new __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__["b" /* WorkerScript */](workerScript.scriptRef);
+                            funcWorkerScript.env = funcEnv;
+
+                            evaluate(func.body, funcWorkerScript).then(function(res) {
+                                resolve(res);
+                            }).catch(function(e) {
+                                reject(e);
+                            });
+                        } else if (exp.callee.type == "MemberExpression"){
                             evaluate(exp.callee.object, workerScript).then(function(object) {
                                 try {
                                     var res = func.apply(object,args);
@@ -38387,7 +38539,6 @@ function evaluate(exp, workerScript) {
                             }
                             resolve(object[index]);
                         }).catch(function(e) {
-                            console.log("here");
                             reject(makeRuntimeRejectMsg(workerScript, "Invalid MemberExpression"));
                         });
                     } else {
@@ -38457,8 +38608,14 @@ function evaluate(exp, workerScript) {
                 resolve(false);
                 break;
             case "ReturnStatement":
-                var lineNum = getErrorLineNumber(exp, workerScript);
-                reject(makeRuntimeRejectMsg(workerScript, "Return statements are not yet implemented in Netscript (line " + (lineNum+1) + ")"));
+                console.log("Evaluating Return Statement");
+                //var lineNum = getErrorLineNumber(exp, workerScript);
+                //reject(makeRuntimeRejectMsg(workerScript, "Return statements are not yet implemented in Netscript (line " + (lineNum+1) + ")"));
+                evaluate(exp.argument, workerScript).then(function(res) {
+                    reject(["RETURNSTATEMENT", res]);
+                }).catch(function(e) {
+                    reject(e);
+                });
                 break;
             case "BreakStatement":
                 reject("BREAKSTATEMENT");
@@ -38468,7 +38625,7 @@ function evaluate(exp, workerScript) {
                 break;
             case "IfStatement":
                 evaluateIf(exp, workerScript).then(function(forLoopRes) {
-                    resolve("forLoopDone");
+                    resolve(forLoopRes);
                 }).catch(function(e) {
                     reject(e);
                 });
@@ -38479,7 +38636,7 @@ function evaluate(exp, workerScript) {
                 break;e
             case "WhileStatement":
                 evaluateWhile(exp, workerScript).then(function(forLoopRes) {
-                    resolve("forLoopDone");
+                    resolve(forLoopRes);
                 }).catch(function(e) {
                     if (e == "BREAKSTATEMENT" ||
                        (e instanceof __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__["b" /* WorkerScript */] && e.errorMessage == "BREAKSTATEMENT")) {
@@ -38502,6 +38659,15 @@ function evaluate(exp, workerScript) {
                         reject(e);
                     }
                 });
+                break;
+            case "FunctionDeclaration":
+                if (exp.id && exp.id.name) {
+                    env.set(exp.id.name, exp);
+                    resolve(true);
+                } else {
+                    var lineNum = getErrorLineNumber(exp, workerScript);
+                    reject(makeRuntimeRejectMsg(workerScript, "Invalid function declaration at line " + lineNum+1));
+                }
                 break;
             default:
                 var lineNum = getErrorLineNumber(exp, workerScript);
@@ -38986,7 +39152,7 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
                 return Promise.resolve(false);
             } else {
                 //Able to run script
-                workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads and args: " + Object(__WEBPACK_IMPORTED_MODULE_8__utils_HelperFunctions_js__["f" /* printArray */])(args) + ". May take a few seconds to start up...");
+                workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads and args: " + Object(__WEBPACK_IMPORTED_MODULE_9__utils_HelperFunctions_js__["f" /* printArray */])(args) + ". May take a few seconds to start up...");
                 var runningScriptObj = new __WEBPACK_IMPORTED_MODULE_7__Script_js__["b" /* RunningScript */](script, args);
                 runningScriptObj.threads = threads;
                 server.runningScripts.push(runningScriptObj);	//Push onto runningScripts
@@ -39009,13 +39175,13 @@ function getErrorLineNumber(exp, workerScript) {
 }
 
 function isScriptErrorMessage(msg) {
-    if (!Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["f" /* isString */])(msg)) {return false;}
+    if (!Object(__WEBPACK_IMPORTED_MODULE_11__utils_StringHelperFunctions_js__["f" /* isString */])(msg)) {return false;}
     let splitMsg = msg.split("|");
     if (splitMsg.length != 4){
         return false;
     }
     var ip = splitMsg[1];
-    if (!Object(__WEBPACK_IMPORTED_MODULE_9__utils_IPAddress_js__["c" /* isValidIPAddress */])(ip)) {
+    if (!Object(__WEBPACK_IMPORTED_MODULE_10__utils_IPAddress_js__["c" /* isValidIPAddress */])(ip)) {
         return false;
     }
     return true;
@@ -40068,11 +40234,11 @@ function substituteAliases(origCommand) {
 /* unused harmony export buyDarkwebItem */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parseDarkwebItemPrice; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DarkWebItems; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CreateProgram_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Terminal_js__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
@@ -40608,6 +40774,3642 @@ function initLiterature() {
 
 /***/ }),
 /* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+acorn.js 
+https://github.com/ternjs/acorn
+
+Copyright (C) 2012-2017 by various contributors (see AUTHORS)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
+(function (global, factory) {
+   true ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (factory((global.acorn = global.acorn || {})));
+}(this, (function (exports) { 'use strict';
+
+// Reserved word lists for various dialects of the language
+
+var reservedWords = {
+  3: "abstract boolean byte char class double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized throws transient volatile",
+  5: "class enum extends super const export import",
+  6: "enum",
+  strict: "implements interface let package private protected public static yield",
+  strictBind: "eval arguments"
+}
+
+// And the keywords
+
+var ecma5AndLessKeywords = "break case catch continue debugger default do else finally for function if return switch throw try var while with null true false instanceof typeof void delete new in this"
+
+var keywords = {
+  5: ecma5AndLessKeywords,
+  6: ecma5AndLessKeywords + " const class extends export import super"
+}
+
+// ## Character categories
+
+// Big ugly regular expressions that match characters in the
+// whitespace, identifier, and identifier-start categories. These
+// are only applied when a character is found to actually have a
+// code point above 128.
+// Generated by `bin/generate-identifier-regex.js`.
+
+var nonASCIIidentifierStartChars = "\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u037f\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u052f\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0-\u08b4\u08b6-\u08bd\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0af9\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c39\u0c3d\u0c58-\u0c5a\u0c60\u0c61\u0c80\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d54-\u0d56\u0d5f-\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f5\u13f8-\u13fd\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f8\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191e\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19b0-\u19c9\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1c80-\u1c88\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2118-\u211d\u2124\u2126\u2128\u212a-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309b-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fd5\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua69d\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua7ae\ua7b0-\ua7b7\ua7f7-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua8fd\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\ua9e0-\ua9e4\ua9e6-\ua9ef\ua9fa-\ua9fe\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa7e-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uab30-\uab5a\uab5c-\uab65\uab70-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc"
+var nonASCIIidentifierChars = "\u200c\u200d\xb7\u0300-\u036f\u0387\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u064b-\u0669\u0670\u06d6-\u06dc\u06df-\u06e4\u06e7\u06e8\u06ea-\u06ed\u06f0-\u06f9\u0711\u0730-\u074a\u07a6-\u07b0\u07c0-\u07c9\u07eb-\u07f3\u0816-\u0819\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0859-\u085b\u08d4-\u08e1\u08e3-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09cb-\u09cd\u09d7\u09e2\u09e3\u09e6-\u09ef\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2\u0ae3\u0ae6-\u0aef\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b62\u0b63\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c00-\u0c03\u0c3e-\u0c44\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62\u0c63\u0c66-\u0c6f\u0c81-\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2\u0ce3\u0ce6-\u0cef\u0d01-\u0d03\u0d3e-\u0d44\u0d46-\u0d48\u0d4a-\u0d4d\u0d57\u0d62\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0de6-\u0def\u0df2\u0df3\u0e31\u0e34-\u0e3a\u0e47-\u0e4e\u0e50-\u0e59\u0eb1\u0eb4-\u0eb9\u0ebb\u0ebc\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f3e\u0f3f\u0f71-\u0f84\u0f86\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u102b-\u103e\u1040-\u1049\u1056-\u1059\u105e-\u1060\u1062-\u1064\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u1369-\u1371\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17b4-\u17d3\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u18a9\u1920-\u192b\u1930-\u193b\u1946-\u194f\u19d0-\u19da\u1a17-\u1a1b\u1a55-\u1a5e\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1ab0-\u1abd\u1b00-\u1b04\u1b34-\u1b44\u1b50-\u1b59\u1b6b-\u1b73\u1b80-\u1b82\u1ba1-\u1bad\u1bb0-\u1bb9\u1be6-\u1bf3\u1c24-\u1c37\u1c40-\u1c49\u1c50-\u1c59\u1cd0-\u1cd2\u1cd4-\u1ce8\u1ced\u1cf2-\u1cf4\u1cf8\u1cf9\u1dc0-\u1df5\u1dfb-\u1dff\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2cef-\u2cf1\u2d7f\u2de0-\u2dff\u302a-\u302f\u3099\u309a\ua620-\ua629\ua66f\ua674-\ua67d\ua69e\ua69f\ua6f0\ua6f1\ua802\ua806\ua80b\ua823-\ua827\ua880\ua881\ua8b4-\ua8c5\ua8d0-\ua8d9\ua8e0-\ua8f1\ua900-\ua909\ua926-\ua92d\ua947-\ua953\ua980-\ua983\ua9b3-\ua9c0\ua9d0-\ua9d9\ua9e5\ua9f0-\ua9f9\uaa29-\uaa36\uaa43\uaa4c\uaa4d\uaa50-\uaa59\uaa7b-\uaa7d\uaab0\uaab2-\uaab4\uaab7\uaab8\uaabe\uaabf\uaac1\uaaeb-\uaaef\uaaf5\uaaf6\uabe3-\uabea\uabec\uabed\uabf0-\uabf9\ufb1e\ufe00-\ufe0f\ufe20-\ufe2f\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f"
+
+var nonASCIIidentifierStart = new RegExp("[" + nonASCIIidentifierStartChars + "]")
+var nonASCIIidentifier = new RegExp("[" + nonASCIIidentifierStartChars + nonASCIIidentifierChars + "]")
+
+nonASCIIidentifierStartChars = nonASCIIidentifierChars = null
+
+// These are a run-length and offset encoded representation of the
+// >0xffff code points that are a valid part of identifiers. The
+// offset starts at 0x10000, and each pair of numbers represents an
+// offset to the next range, and then a size of the range. They were
+// generated by bin/generate-identifier-regex.js
+
+// eslint-disable-next-line comma-spacing
+var astralIdentifierStartCodes = [0,11,2,25,2,18,2,1,2,14,3,13,35,122,70,52,268,28,4,48,48,31,17,26,6,37,11,29,3,35,5,7,2,4,43,157,19,35,5,35,5,39,9,51,157,310,10,21,11,7,153,5,3,0,2,43,2,1,4,0,3,22,11,22,10,30,66,18,2,1,11,21,11,25,71,55,7,1,65,0,16,3,2,2,2,26,45,28,4,28,36,7,2,27,28,53,11,21,11,18,14,17,111,72,56,50,14,50,785,52,76,44,33,24,27,35,42,34,4,0,13,47,15,3,22,0,2,0,36,17,2,24,85,6,2,0,2,3,2,14,2,9,8,46,39,7,3,1,3,21,2,6,2,1,2,4,4,0,19,0,13,4,159,52,19,3,54,47,21,1,2,0,185,46,42,3,37,47,21,0,60,42,86,25,391,63,32,0,449,56,264,8,2,36,18,0,50,29,881,921,103,110,18,195,2749,1070,4050,582,8634,568,8,30,114,29,19,47,17,3,32,20,6,18,881,68,12,0,67,12,65,0,32,6124,20,754,9486,1,3071,106,6,12,4,8,8,9,5991,84,2,70,2,1,3,0,3,1,3,3,2,11,2,0,2,6,2,64,2,3,3,7,2,6,2,27,2,3,2,4,2,0,4,6,2,339,3,24,2,24,2,30,2,24,2,30,2,24,2,30,2,24,2,30,2,24,2,7,4149,196,60,67,1213,3,2,26,2,1,2,0,3,0,2,9,2,3,2,0,2,0,7,0,5,0,2,0,2,0,2,2,2,1,2,0,3,0,2,0,2,0,2,0,2,0,2,1,2,0,3,3,2,6,2,3,2,3,2,0,2,9,2,16,6,2,2,4,2,16,4421,42710,42,4148,12,221,3,5761,10591,541]
+
+// eslint-disable-next-line comma-spacing
+var astralIdentifierCodes = [509,0,227,0,150,4,294,9,1368,2,2,1,6,3,41,2,5,0,166,1,1306,2,54,14,32,9,16,3,46,10,54,9,7,2,37,13,2,9,52,0,13,2,49,13,10,2,4,9,83,11,7,0,161,11,6,9,7,3,57,0,2,6,3,1,3,2,10,0,11,1,3,6,4,4,193,17,10,9,87,19,13,9,214,6,3,8,28,1,83,16,16,9,82,12,9,9,84,14,5,9,423,9,838,7,2,7,17,9,57,21,2,13,19882,9,135,4,60,6,26,9,1016,45,17,3,19723,1,5319,4,4,5,9,7,3,6,31,3,149,2,1418,49,513,54,5,49,9,0,15,0,23,4,2,14,1361,6,2,16,3,6,2,1,2,4,2214,6,110,6,6,9,792487,239]
+
+// This has a complexity linear to the value of the code. The
+// assumption is that looking up astral identifier characters is
+// rare.
+function isInAstralSet(code, set) {
+  var pos = 0x10000
+  for (var i = 0; i < set.length; i += 2) {
+    pos += set[i]
+    if (pos > code) return false
+    pos += set[i + 1]
+    if (pos >= code) return true
+  }
+}
+
+// Test whether a given character code starts an identifier.
+
+function isIdentifierStart(code, astral) {
+  if (code < 65) return code === 36
+  if (code < 91) return true
+  if (code < 97) return code === 95
+  if (code < 123) return true
+  if (code <= 0xffff) return code >= 0xaa && nonASCIIidentifierStart.test(String.fromCharCode(code))
+  if (astral === false) return false
+  return isInAstralSet(code, astralIdentifierStartCodes)
+}
+
+// Test whether a given character is part of an identifier.
+
+function isIdentifierChar(code, astral) {
+  if (code < 48) return code === 36
+  if (code < 58) return true
+  if (code < 65) return false
+  if (code < 91) return true
+  if (code < 97) return code === 95
+  if (code < 123) return true
+  if (code <= 0xffff) return code >= 0xaa && nonASCIIidentifier.test(String.fromCharCode(code))
+  if (astral === false) return false
+  return isInAstralSet(code, astralIdentifierStartCodes) || isInAstralSet(code, astralIdentifierCodes)
+}
+
+// ## Token types
+
+// The assignment of fine-grained, information-carrying type objects
+// allows the tokenizer to store the information it has about a
+// token in a way that is very cheap for the parser to look up.
+
+// All token type variables start with an underscore, to make them
+// easy to recognize.
+
+// The `beforeExpr` property is used to disambiguate between regular
+// expressions and divisions. It is set on all token types that can
+// be followed by an expression (thus, a slash after them would be a
+// regular expression).
+//
+// The `startsExpr` property is used to check if the token ends a
+// `yield` expression. It is set on all token types that either can
+// directly start an expression (like a quotation mark) or can
+// continue an expression (like the body of a string).
+//
+// `isLoop` marks a keyword as starting a loop, which is important
+// to know when parsing a label, in order to allow or disallow
+// continue jumps to that label.
+
+var TokenType = function TokenType(label, conf) {
+  if ( conf === void 0 ) conf = {};
+
+  this.label = label
+  this.keyword = conf.keyword
+  this.beforeExpr = !!conf.beforeExpr
+  this.startsExpr = !!conf.startsExpr
+  this.isLoop = !!conf.isLoop
+  this.isAssign = !!conf.isAssign
+  this.prefix = !!conf.prefix
+  this.postfix = !!conf.postfix
+  this.binop = conf.binop || null
+  this.updateContext = null
+};
+
+function binop(name, prec) {
+  return new TokenType(name, {beforeExpr: true, binop: prec})
+}
+var beforeExpr = {beforeExpr: true};
+var startsExpr = {startsExpr: true};
+// Map keyword names to token types.
+
+var keywordTypes = {}
+
+// Succinct definitions of keyword token types
+function kw(name, options) {
+  if ( options === void 0 ) options = {};
+
+  options.keyword = name
+  return keywordTypes[name] = new TokenType(name, options)
+}
+
+var tt = {
+  num: new TokenType("num", startsExpr),
+  regexp: new TokenType("regexp", startsExpr),
+  string: new TokenType("string", startsExpr),
+  name: new TokenType("name", startsExpr),
+  eof: new TokenType("eof"),
+
+  // Punctuation token types.
+  bracketL: new TokenType("[", {beforeExpr: true, startsExpr: true}),
+  bracketR: new TokenType("]"),
+  braceL: new TokenType("{", {beforeExpr: true, startsExpr: true}),
+  braceR: new TokenType("}"),
+  parenL: new TokenType("(", {beforeExpr: true, startsExpr: true}),
+  parenR: new TokenType(")"),
+  comma: new TokenType(",", beforeExpr),
+  semi: new TokenType(";", beforeExpr),
+  colon: new TokenType(":", beforeExpr),
+  dot: new TokenType("."),
+  question: new TokenType("?", beforeExpr),
+  arrow: new TokenType("=>", beforeExpr),
+  template: new TokenType("template"),
+  ellipsis: new TokenType("...", beforeExpr),
+  backQuote: new TokenType("`", startsExpr),
+  dollarBraceL: new TokenType("${", {beforeExpr: true, startsExpr: true}),
+
+  // Operators. These carry several kinds of properties to help the
+  // parser use them properly (the presence of these properties is
+  // what categorizes them as operators).
+  //
+  // `binop`, when present, specifies that this operator is a binary
+  // operator, and will refer to its precedence.
+  //
+  // `prefix` and `postfix` mark the operator as a prefix or postfix
+  // unary operator.
+  //
+  // `isAssign` marks all of `=`, `+=`, `-=` etcetera, which act as
+  // binary operators with a very low precedence, that should result
+  // in AssignmentExpression nodes.
+
+  eq: new TokenType("=", {beforeExpr: true, isAssign: true}),
+  assign: new TokenType("_=", {beforeExpr: true, isAssign: true}),
+  incDec: new TokenType("++/--", {prefix: true, postfix: true, startsExpr: true}),
+  prefix: new TokenType("prefix", {beforeExpr: true, prefix: true, startsExpr: true}),
+  logicalOR: binop("||", 1),
+  logicalAND: binop("&&", 2),
+  bitwiseOR: binop("|", 3),
+  bitwiseXOR: binop("^", 4),
+  bitwiseAND: binop("&", 5),
+  equality: binop("==/!=", 6),
+  relational: binop("</>", 7),
+  bitShift: binop("<</>>", 8),
+  plusMin: new TokenType("+/-", {beforeExpr: true, binop: 9, prefix: true, startsExpr: true}),
+  modulo: binop("%", 10),
+  star: binop("*", 10),
+  slash: binop("/", 10),
+  starstar: new TokenType("**", {beforeExpr: true}),
+
+  // Keyword token types.
+  _break: kw("break"),
+  _case: kw("case", beforeExpr),
+  _catch: kw("catch"),
+  _continue: kw("continue"),
+  _debugger: kw("debugger"),
+  _default: kw("default", beforeExpr),
+  _do: kw("do", {isLoop: true, beforeExpr: true}),
+  _else: kw("else", beforeExpr),
+  _finally: kw("finally"),
+  _for: kw("for", {isLoop: true}),
+  _function: kw("function", startsExpr),
+  _if: kw("if"),
+  _return: kw("return", beforeExpr),
+  _switch: kw("switch"),
+  _throw: kw("throw", beforeExpr),
+  _try: kw("try"),
+  _var: kw("var"),
+  _const: kw("const"),
+  _while: kw("while", {isLoop: true}),
+  _with: kw("with"),
+  _new: kw("new", {beforeExpr: true, startsExpr: true}),
+  _this: kw("this", startsExpr),
+  _super: kw("super", startsExpr),
+  _class: kw("class"),
+  _extends: kw("extends", beforeExpr),
+  _export: kw("export"),
+  _import: kw("import"),
+  _null: kw("null", startsExpr),
+  _true: kw("true", startsExpr),
+  _false: kw("false", startsExpr),
+  _in: kw("in", {beforeExpr: true, binop: 7}),
+  _instanceof: kw("instanceof", {beforeExpr: true, binop: 7}),
+  _typeof: kw("typeof", {beforeExpr: true, prefix: true, startsExpr: true}),
+  _void: kw("void", {beforeExpr: true, prefix: true, startsExpr: true}),
+  _delete: kw("delete", {beforeExpr: true, prefix: true, startsExpr: true})
+}
+
+// Matches a whole line break (where CRLF is considered a single
+// line break). Used to count lines.
+
+var lineBreak = /\r\n?|\n|\u2028|\u2029/
+var lineBreakG = new RegExp(lineBreak.source, "g")
+
+function isNewLine(code) {
+  return code === 10 || code === 13 || code === 0x2028 || code === 0x2029
+}
+
+var nonASCIIwhitespace = /[\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff]/
+
+var skipWhiteSpace = /(?:\s|\/\/.*|\/\*[^]*?\*\/)*/g
+
+var ref = Object.prototype;
+var hasOwnProperty = ref.hasOwnProperty;
+var toString = ref.toString;
+
+// Checks if an object has a property.
+
+function has(obj, propName) {
+  return hasOwnProperty.call(obj, propName)
+}
+
+var isArray = Array.isArray || (function (obj) { return (
+  toString.call(obj) === "[object Array]"
+); })
+
+// These are used when `options.locations` is on, for the
+// `startLoc` and `endLoc` properties.
+
+var Position = function Position(line, col) {
+  this.line = line
+  this.column = col
+};
+
+Position.prototype.offset = function offset (n) {
+  return new Position(this.line, this.column + n)
+};
+
+var SourceLocation = function SourceLocation(p, start, end) {
+  this.start = start
+  this.end = end
+  if (p.sourceFile !== null) this.source = p.sourceFile
+};
+
+// The `getLineInfo` function is mostly useful when the
+// `locations` option is off (for performance reasons) and you
+// want to find the line/column position for a given character
+// offset. `input` should be the code string that the offset refers
+// into.
+
+function getLineInfo(input, offset) {
+  for (var line = 1, cur = 0;;) {
+    lineBreakG.lastIndex = cur
+    var match = lineBreakG.exec(input)
+    if (match && match.index < offset) {
+      ++line
+      cur = match.index + match[0].length
+    } else {
+      return new Position(line, offset - cur)
+    }
+  }
+}
+
+// A second optional argument can be given to further configure
+// the parser process. These options are recognized:
+
+var defaultOptions = {
+  // `ecmaVersion` indicates the ECMAScript version to parse. Must
+  // be either 3, 5, 6 (2015), 7 (2016), or 8 (2017). This influences support
+  // for strict mode, the set of reserved words, and support for
+  // new syntax features. The default is 7.
+  ecmaVersion: 7,
+  // `sourceType` indicates the mode the code should be parsed in.
+  // Can be either `"script"` or `"module"`. This influences global
+  // strict mode and parsing of `import` and `export` declarations.
+  sourceType: "script",
+  // `onInsertedSemicolon` can be a callback that will be called
+  // when a semicolon is automatically inserted. It will be passed
+  // th position of the comma as an offset, and if `locations` is
+  // enabled, it is given the location as a `{line, column}` object
+  // as second argument.
+  onInsertedSemicolon: null,
+  // `onTrailingComma` is similar to `onInsertedSemicolon`, but for
+  // trailing commas.
+  onTrailingComma: null,
+  // By default, reserved words are only enforced if ecmaVersion >= 5.
+  // Set `allowReserved` to a boolean value to explicitly turn this on
+  // an off. When this option has the value "never", reserved words
+  // and keywords can also not be used as property names.
+  allowReserved: null,
+  // When enabled, a return at the top level is not considered an
+  // error.
+  allowReturnOutsideFunction: false,
+  // When enabled, import/export statements are not constrained to
+  // appearing at the top of the program.
+  allowImportExportEverywhere: false,
+  // When enabled, hashbang directive in the beginning of file
+  // is allowed and treated as a line comment.
+  allowHashBang: false,
+  // When `locations` is on, `loc` properties holding objects with
+  // `start` and `end` properties in `{line, column}` form (with
+  // line being 1-based and column 0-based) will be attached to the
+  // nodes.
+  locations: false,
+  // A function can be passed as `onToken` option, which will
+  // cause Acorn to call that function with object in the same
+  // format as tokens returned from `tokenizer().getToken()`. Note
+  // that you are not allowed to call the parser from the
+  // callback—that will corrupt its internal state.
+  onToken: null,
+  // A function can be passed as `onComment` option, which will
+  // cause Acorn to call that function with `(block, text, start,
+  // end)` parameters whenever a comment is skipped. `block` is a
+  // boolean indicating whether this is a block (`/* */`) comment,
+  // `text` is the content of the comment, and `start` and `end` are
+  // character offsets that denote the start and end of the comment.
+  // When the `locations` option is on, two more parameters are
+  // passed, the full `{line, column}` locations of the start and
+  // end of the comments. Note that you are not allowed to call the
+  // parser from the callback—that will corrupt its internal state.
+  onComment: null,
+  // Nodes have their start and end characters offsets recorded in
+  // `start` and `end` properties (directly on the node, rather than
+  // the `loc` object, which holds line/column data. To also add a
+  // [semi-standardized][range] `range` property holding a `[start,
+  // end]` array with the same numbers, set the `ranges` option to
+  // `true`.
+  //
+  // [range]: https://bugzilla.mozilla.org/show_bug.cgi?id=745678
+  ranges: false,
+  // It is possible to parse multiple files into a single AST by
+  // passing the tree produced by parsing the first file as
+  // `program` option in subsequent parses. This will add the
+  // toplevel forms of the parsed file to the `Program` (top) node
+  // of an existing parse tree.
+  program: null,
+  // When `locations` is on, you can pass this to record the source
+  // file in every node's `loc` object.
+  sourceFile: null,
+  // This value, if given, is stored in every node, whether
+  // `locations` is on or off.
+  directSourceFile: null,
+  // When enabled, parenthesized expressions are represented by
+  // (non-standard) ParenthesizedExpression nodes
+  preserveParens: false,
+  plugins: {}
+}
+
+// Interpret and default an options object
+
+function getOptions(opts) {
+  var options = {}
+
+  for (var opt in defaultOptions)
+    options[opt] = opts && has(opts, opt) ? opts[opt] : defaultOptions[opt]
+
+  if (options.ecmaVersion >= 2015)
+    options.ecmaVersion -= 2009
+
+  if (options.allowReserved == null)
+    options.allowReserved = options.ecmaVersion < 5
+
+  if (isArray(options.onToken)) {
+    var tokens = options.onToken
+    options.onToken = function (token) { return tokens.push(token); }
+  }
+  if (isArray(options.onComment))
+    options.onComment = pushComment(options, options.onComment)
+
+  return options
+}
+
+function pushComment(options, array) {
+  return function(block, text, start, end, startLoc, endLoc) {
+    var comment = {
+      type: block ? "Block" : "Line",
+      value: text,
+      start: start,
+      end: end
+    }
+    if (options.locations)
+      comment.loc = new SourceLocation(this, startLoc, endLoc)
+    if (options.ranges)
+      comment.range = [start, end]
+    array.push(comment)
+  }
+}
+
+// Registered plugins
+var plugins = {}
+
+function keywordRegexp(words) {
+  return new RegExp("^(" + words.replace(/ /g, "|") + ")$")
+}
+
+var Parser = function Parser(options, input, startPos) {
+  this.options = options = getOptions(options)
+  this.sourceFile = options.sourceFile
+  this.keywords = keywordRegexp(keywords[options.ecmaVersion >= 6 ? 6 : 5])
+  var reserved = ""
+  if (!options.allowReserved) {
+    for (var v = options.ecmaVersion;; v--)
+      if (reserved = reservedWords[v]) break
+    if (options.sourceType == "module") reserved += " await"
+  }
+  this.reservedWords = keywordRegexp(reserved)
+  var reservedStrict = (reserved ? reserved + " " : "") + reservedWords.strict
+  this.reservedWordsStrict = keywordRegexp(reservedStrict)
+  this.reservedWordsStrictBind = keywordRegexp(reservedStrict + " " + reservedWords.strictBind)
+  this.input = String(input)
+
+  // Used to signal to callers of `readWord1` whether the word
+  // contained any escape sequences. This is needed because words with
+  // escape sequences must not be interpreted as keywords.
+  this.containsEsc = false
+
+  // Load plugins
+  this.loadPlugins(options.plugins)
+
+  // Set up token state
+
+  // The current position of the tokenizer in the input.
+  if (startPos) {
+    this.pos = startPos
+    this.lineStart = this.input.lastIndexOf("\n", startPos - 1) + 1
+    this.curLine = this.input.slice(0, this.lineStart).split(lineBreak).length
+  } else {
+    this.pos = this.lineStart = 0
+    this.curLine = 1
+  }
+
+  // Properties of the current token:
+  // Its type
+  this.type = tt.eof
+  // For tokens that include more information than their type, the value
+  this.value = null
+  // Its start and end offset
+  this.start = this.end = this.pos
+  // And, if locations are used, the {line, column} object
+  // corresponding to those offsets
+  this.startLoc = this.endLoc = this.curPosition()
+
+  // Position information for the previous token
+  this.lastTokEndLoc = this.lastTokStartLoc = null
+  this.lastTokStart = this.lastTokEnd = this.pos
+
+  // The context stack is used to superficially track syntactic
+  // context to predict whether a regular expression is allowed in a
+  // given position.
+  this.context = this.initialContext()
+  this.exprAllowed = true
+
+  // Figure out if it's a module code.
+  this.inModule = options.sourceType === "module"
+  this.strict = this.inModule || this.strictDirective(this.pos)
+
+  // Used to signify the start of a potential arrow function
+  this.potentialArrowAt = -1
+
+  // Flags to track whether we are in a function, a generator, an async function.
+  this.inFunction = this.inGenerator = this.inAsync = false
+  // Positions to delayed-check that yield/await does not exist in default parameters.
+  this.yieldPos = this.awaitPos = 0
+  // Labels in scope.
+  this.labels = []
+
+  // If enabled, skip leading hashbang line.
+  if (this.pos === 0 && options.allowHashBang && this.input.slice(0, 2) === "#!")
+    this.skipLineComment(2)
+
+  // Scope tracking for duplicate variable names (see scope.js)
+  this.scopeStack = []
+  this.enterFunctionScope()
+};
+
+// DEPRECATED Kept for backwards compatibility until 3.0 in case a plugin uses them
+Parser.prototype.isKeyword = function isKeyword (word) { return this.keywords.test(word) };
+Parser.prototype.isReservedWord = function isReservedWord (word) { return this.reservedWords.test(word) };
+
+Parser.prototype.extend = function extend (name, f) {
+  this[name] = f(this[name])
+};
+
+Parser.prototype.loadPlugins = function loadPlugins (pluginConfigs) {
+    var this$1 = this;
+
+  for (var name in pluginConfigs) {
+    var plugin = plugins[name]
+    if (!plugin) throw new Error("Plugin '" + name + "' not found")
+    plugin(this$1, pluginConfigs[name])
+  }
+};
+
+Parser.prototype.parse = function parse () {
+  var node = this.options.program || this.startNode()
+  this.nextToken()
+  return this.parseTopLevel(node)
+};
+
+var pp = Parser.prototype
+
+// ## Parser utilities
+
+var literal = /^(?:'((?:[^']|\.)*)'|"((?:[^"]|\.)*)"|;)/
+pp.strictDirective = function(start) {
+  var this$1 = this;
+
+  for (;;) {
+    skipWhiteSpace.lastIndex = start
+    start += skipWhiteSpace.exec(this$1.input)[0].length
+    var match = literal.exec(this$1.input.slice(start))
+    if (!match) return false
+    if ((match[1] || match[2]) == "use strict") return true
+    start += match[0].length
+  }
+}
+
+// Predicate that tests whether the next token is of the given
+// type, and if yes, consumes it as a side effect.
+
+pp.eat = function(type) {
+  if (this.type === type) {
+    this.next()
+    return true
+  } else {
+    return false
+  }
+}
+
+// Tests whether parsed token is a contextual keyword.
+
+pp.isContextual = function(name) {
+  return this.type === tt.name && this.value === name
+}
+
+// Consumes contextual keyword if possible.
+
+pp.eatContextual = function(name) {
+  return this.value === name && this.eat(tt.name)
+}
+
+// Asserts that following token is given contextual keyword.
+
+pp.expectContextual = function(name) {
+  if (!this.eatContextual(name)) this.unexpected()
+}
+
+// Test whether a semicolon can be inserted at the current position.
+
+pp.canInsertSemicolon = function() {
+  return this.type === tt.eof ||
+    this.type === tt.braceR ||
+    lineBreak.test(this.input.slice(this.lastTokEnd, this.start))
+}
+
+pp.insertSemicolon = function() {
+  if (this.canInsertSemicolon()) {
+    if (this.options.onInsertedSemicolon)
+      this.options.onInsertedSemicolon(this.lastTokEnd, this.lastTokEndLoc)
+    return true
+  }
+}
+
+// Consume a semicolon, or, failing that, see if we are allowed to
+// pretend that there is a semicolon at this position.
+
+pp.semicolon = function() {
+  if (!this.eat(tt.semi) && !this.insertSemicolon()) this.unexpected()
+}
+
+pp.afterTrailingComma = function(tokType, notNext) {
+  if (this.type == tokType) {
+    if (this.options.onTrailingComma)
+      this.options.onTrailingComma(this.lastTokStart, this.lastTokStartLoc)
+    if (!notNext)
+      this.next()
+    return true
+  }
+}
+
+// Expect a token of a given type. If found, consume it, otherwise,
+// raise an unexpected token error.
+
+pp.expect = function(type) {
+  this.eat(type) || this.unexpected()
+}
+
+// Raise an unexpected token error.
+
+pp.unexpected = function(pos) {
+  this.raise(pos != null ? pos : this.start, "Unexpected token")
+}
+
+var DestructuringErrors = function DestructuringErrors() {
+  this.shorthandAssign = this.trailingComma = this.parenthesizedAssign = this.parenthesizedBind = -1
+};
+
+pp.checkPatternErrors = function(refDestructuringErrors, isAssign) {
+  if (!refDestructuringErrors) return
+  if (refDestructuringErrors.trailingComma > -1)
+    this.raiseRecoverable(refDestructuringErrors.trailingComma, "Comma is not permitted after the rest element")
+  var parens = isAssign ? refDestructuringErrors.parenthesizedAssign : refDestructuringErrors.parenthesizedBind
+  if (parens > -1) this.raiseRecoverable(parens, "Parenthesized pattern")
+}
+
+pp.checkExpressionErrors = function(refDestructuringErrors, andThrow) {
+  var pos = refDestructuringErrors ? refDestructuringErrors.shorthandAssign : -1
+  if (!andThrow) return pos >= 0
+  if (pos > -1) this.raise(pos, "Shorthand property assignments are valid only in destructuring patterns")
+}
+
+pp.checkYieldAwaitInDefaultParams = function() {
+  if (this.yieldPos && (!this.awaitPos || this.yieldPos < this.awaitPos))
+    this.raise(this.yieldPos, "Yield expression cannot be a default value")
+  if (this.awaitPos)
+    this.raise(this.awaitPos, "Await expression cannot be a default value")
+}
+
+pp.isSimpleAssignTarget = function(expr) {
+  if (expr.type === "ParenthesizedExpression")
+    return this.isSimpleAssignTarget(expr.expression)
+  return expr.type === "Identifier" || expr.type === "MemberExpression"
+}
+
+var pp$1 = Parser.prototype
+
+// ### Statement parsing
+
+// Parse a program. Initializes the parser, reads any number of
+// statements, and wraps them in a Program node.  Optionally takes a
+// `program` argument.  If present, the statements will be appended
+// to its body instead of creating a new node.
+
+pp$1.parseTopLevel = function(node) {
+  var this$1 = this;
+
+  var exports = {}
+  if (!node.body) node.body = []
+  while (this.type !== tt.eof) {
+    var stmt = this$1.parseStatement(true, true, exports)
+    node.body.push(stmt)
+  }
+  this.next()
+  if (this.options.ecmaVersion >= 6) {
+    node.sourceType = this.options.sourceType
+  }
+  return this.finishNode(node, "Program")
+}
+
+var loopLabel = {kind: "loop"};
+var switchLabel = {kind: "switch"};
+pp$1.isLet = function() {
+  if (this.type !== tt.name || this.options.ecmaVersion < 6 || this.value != "let") return false
+  skipWhiteSpace.lastIndex = this.pos
+  var skip = skipWhiteSpace.exec(this.input)
+  var next = this.pos + skip[0].length, nextCh = this.input.charCodeAt(next)
+  if (nextCh === 91 || nextCh == 123) return true // '{' and '['
+  if (isIdentifierStart(nextCh, true)) {
+    var pos = next + 1
+    while (isIdentifierChar(this.input.charCodeAt(pos), true)) ++pos
+    var ident = this.input.slice(next, pos)
+    if (!this.isKeyword(ident)) return true
+  }
+  return false
+}
+
+// check 'async [no LineTerminator here] function'
+// - 'async /*foo*/ function' is OK.
+// - 'async /*\n*/ function' is invalid.
+pp$1.isAsyncFunction = function() {
+  if (this.type !== tt.name || this.options.ecmaVersion < 8 || this.value != "async")
+    return false
+
+  skipWhiteSpace.lastIndex = this.pos
+  var skip = skipWhiteSpace.exec(this.input)
+  var next = this.pos + skip[0].length
+  return !lineBreak.test(this.input.slice(this.pos, next)) &&
+    this.input.slice(next, next + 8) === "function" &&
+    (next + 8 == this.input.length || !isIdentifierChar(this.input.charAt(next + 8)))
+}
+
+// Parse a single statement.
+//
+// If expecting a statement and finding a slash operator, parse a
+// regular expression literal. This is to handle cases like
+// `if (foo) /blah/.exec(foo)`, where looking at the previous token
+// does not help.
+
+pp$1.parseStatement = function(declaration, topLevel, exports) {
+  var starttype = this.type, node = this.startNode(), kind
+
+  if (this.isLet()) {
+    starttype = tt._var
+    kind = "let"
+  }
+
+  // Most types of statements are recognized by the keyword they
+  // start with. Many are trivial to parse, some require a bit of
+  // complexity.
+
+  switch (starttype) {
+  case tt._break: case tt._continue: return this.parseBreakContinueStatement(node, starttype.keyword)
+  case tt._debugger: return this.parseDebuggerStatement(node)
+  case tt._do: return this.parseDoStatement(node)
+  case tt._for: return this.parseForStatement(node)
+  case tt._function:
+    if (!declaration && this.options.ecmaVersion >= 6) this.unexpected()
+    return this.parseFunctionStatement(node, false)
+  case tt._class:
+    if (!declaration) this.unexpected()
+    return this.parseClass(node, true)
+  case tt._if: return this.parseIfStatement(node)
+  case tt._return: return this.parseReturnStatement(node)
+  case tt._switch: return this.parseSwitchStatement(node)
+  case tt._throw: return this.parseThrowStatement(node)
+  case tt._try: return this.parseTryStatement(node)
+  case tt._const: case tt._var:
+    kind = kind || this.value
+    if (!declaration && kind != "var") this.unexpected()
+    return this.parseVarStatement(node, kind)
+  case tt._while: return this.parseWhileStatement(node)
+  case tt._with: return this.parseWithStatement(node)
+  case tt.braceL: return this.parseBlock()
+  case tt.semi: return this.parseEmptyStatement(node)
+  case tt._export:
+  case tt._import:
+    if (!this.options.allowImportExportEverywhere) {
+      if (!topLevel)
+        this.raise(this.start, "'import' and 'export' may only appear at the top level")
+      if (!this.inModule)
+        this.raise(this.start, "'import' and 'export' may appear only with 'sourceType: module'")
+    }
+    return starttype === tt._import ? this.parseImport(node) : this.parseExport(node, exports)
+
+    // If the statement does not start with a statement keyword or a
+    // brace, it's an ExpressionStatement or LabeledStatement. We
+    // simply start parsing an expression, and afterwards, if the
+    // next token is a colon and the expression was a simple
+    // Identifier node, we switch to interpreting it as a label.
+  default:
+    if (this.isAsyncFunction() && declaration) {
+      this.next()
+      return this.parseFunctionStatement(node, true)
+    }
+
+    var maybeName = this.value, expr = this.parseExpression()
+    if (starttype === tt.name && expr.type === "Identifier" && this.eat(tt.colon))
+      return this.parseLabeledStatement(node, maybeName, expr)
+    else return this.parseExpressionStatement(node, expr)
+  }
+}
+
+pp$1.parseBreakContinueStatement = function(node, keyword) {
+  var this$1 = this;
+
+  var isBreak = keyword == "break"
+  this.next()
+  if (this.eat(tt.semi) || this.insertSemicolon()) node.label = null
+  else if (this.type !== tt.name) this.unexpected()
+  else {
+    node.label = this.parseIdent()
+    this.semicolon()
+  }
+
+  // Verify that there is an actual destination to break or
+  // continue to.
+  var i = 0
+  for (; i < this.labels.length; ++i) {
+    var lab = this$1.labels[i]
+    if (node.label == null || lab.name === node.label.name) {
+      if (lab.kind != null && (isBreak || lab.kind === "loop")) break
+      if (node.label && isBreak) break
+    }
+  }
+  if (i === this.labels.length) this.raise(node.start, "Unsyntactic " + keyword)
+  return this.finishNode(node, isBreak ? "BreakStatement" : "ContinueStatement")
+}
+
+pp$1.parseDebuggerStatement = function(node) {
+  this.next()
+  this.semicolon()
+  return this.finishNode(node, "DebuggerStatement")
+}
+
+pp$1.parseDoStatement = function(node) {
+  this.next()
+  this.labels.push(loopLabel)
+  node.body = this.parseStatement(false)
+  this.labels.pop()
+  this.expect(tt._while)
+  node.test = this.parseParenExpression()
+  if (this.options.ecmaVersion >= 6)
+    this.eat(tt.semi)
+  else
+    this.semicolon()
+  return this.finishNode(node, "DoWhileStatement")
+}
+
+// Disambiguating between a `for` and a `for`/`in` or `for`/`of`
+// loop is non-trivial. Basically, we have to parse the init `var`
+// statement or expression, disallowing the `in` operator (see
+// the second parameter to `parseExpression`), and then check
+// whether the next token is `in` or `of`. When there is no init
+// part (semicolon immediately after the opening parenthesis), it
+// is a regular `for` loop.
+
+pp$1.parseForStatement = function(node) {
+  this.next()
+  this.labels.push(loopLabel)
+  this.enterLexicalScope()
+  this.expect(tt.parenL)
+  if (this.type === tt.semi) return this.parseFor(node, null)
+  var isLet = this.isLet()
+  if (this.type === tt._var || this.type === tt._const || isLet) {
+    var init$1 = this.startNode(), kind = isLet ? "let" : this.value
+    this.next()
+    this.parseVar(init$1, true, kind)
+    this.finishNode(init$1, "VariableDeclaration")
+    if ((this.type === tt._in || (this.options.ecmaVersion >= 6 && this.isContextual("of"))) && init$1.declarations.length === 1 &&
+        !(kind !== "var" && init$1.declarations[0].init))
+      return this.parseForIn(node, init$1)
+    return this.parseFor(node, init$1)
+  }
+  var refDestructuringErrors = new DestructuringErrors
+  var init = this.parseExpression(true, refDestructuringErrors)
+  if (this.type === tt._in || (this.options.ecmaVersion >= 6 && this.isContextual("of"))) {
+    this.toAssignable(init)
+    this.checkLVal(init)
+    this.checkPatternErrors(refDestructuringErrors, true)
+    return this.parseForIn(node, init)
+  } else {
+    this.checkExpressionErrors(refDestructuringErrors, true)
+  }
+  return this.parseFor(node, init)
+}
+
+pp$1.parseFunctionStatement = function(node, isAsync) {
+  this.next()
+  return this.parseFunction(node, true, false, isAsync)
+}
+
+pp$1.isFunction = function() {
+  return this.type === tt._function || this.isAsyncFunction()
+}
+
+pp$1.parseIfStatement = function(node) {
+  this.next()
+  node.test = this.parseParenExpression()
+  // allow function declarations in branches, but only in non-strict mode
+  node.consequent = this.parseStatement(!this.strict && this.isFunction())
+  node.alternate = this.eat(tt._else) ? this.parseStatement(!this.strict && this.isFunction()) : null
+  return this.finishNode(node, "IfStatement")
+}
+
+pp$1.parseReturnStatement = function(node) {
+  if (!this.inFunction && !this.options.allowReturnOutsideFunction)
+    this.raise(this.start, "'return' outside of function")
+  this.next()
+
+  // In `return` (and `break`/`continue`), the keywords with
+  // optional arguments, we eagerly look for a semicolon or the
+  // possibility to insert one.
+
+  if (this.eat(tt.semi) || this.insertSemicolon()) node.argument = null
+  else { node.argument = this.parseExpression(); this.semicolon() }
+  return this.finishNode(node, "ReturnStatement")
+}
+
+pp$1.parseSwitchStatement = function(node) {
+  var this$1 = this;
+
+  this.next()
+  node.discriminant = this.parseParenExpression()
+  node.cases = []
+  this.expect(tt.braceL)
+  this.labels.push(switchLabel)
+  this.enterLexicalScope()
+
+  // Statements under must be grouped (by label) in SwitchCase
+  // nodes. `cur` is used to keep the node that we are currently
+  // adding statements to.
+
+  var cur
+  for (var sawDefault = false; this.type != tt.braceR;) {
+    if (this$1.type === tt._case || this$1.type === tt._default) {
+      var isCase = this$1.type === tt._case
+      if (cur) this$1.finishNode(cur, "SwitchCase")
+      node.cases.push(cur = this$1.startNode())
+      cur.consequent = []
+      this$1.next()
+      if (isCase) {
+        cur.test = this$1.parseExpression()
+      } else {
+        if (sawDefault) this$1.raiseRecoverable(this$1.lastTokStart, "Multiple default clauses")
+        sawDefault = true
+        cur.test = null
+      }
+      this$1.expect(tt.colon)
+    } else {
+      if (!cur) this$1.unexpected()
+      cur.consequent.push(this$1.parseStatement(true))
+    }
+  }
+  this.exitLexicalScope()
+  if (cur) this.finishNode(cur, "SwitchCase")
+  this.next() // Closing brace
+  this.labels.pop()
+  return this.finishNode(node, "SwitchStatement")
+}
+
+pp$1.parseThrowStatement = function(node) {
+  this.next()
+  if (lineBreak.test(this.input.slice(this.lastTokEnd, this.start)))
+    this.raise(this.lastTokEnd, "Illegal newline after throw")
+  node.argument = this.parseExpression()
+  this.semicolon()
+  return this.finishNode(node, "ThrowStatement")
+}
+
+// Reused empty array added for node fields that are always empty.
+
+var empty = []
+
+pp$1.parseTryStatement = function(node) {
+  this.next()
+  node.block = this.parseBlock()
+  node.handler = null
+  if (this.type === tt._catch) {
+    var clause = this.startNode()
+    this.next()
+    this.expect(tt.parenL)
+    clause.param = this.parseBindingAtom()
+    this.enterLexicalScope()
+    this.checkLVal(clause.param, "let")
+    this.expect(tt.parenR)
+    clause.body = this.parseBlock(false)
+    this.exitLexicalScope()
+    node.handler = this.finishNode(clause, "CatchClause")
+  }
+  node.finalizer = this.eat(tt._finally) ? this.parseBlock() : null
+  if (!node.handler && !node.finalizer)
+    this.raise(node.start, "Missing catch or finally clause")
+  return this.finishNode(node, "TryStatement")
+}
+
+pp$1.parseVarStatement = function(node, kind) {
+  this.next()
+  this.parseVar(node, false, kind)
+  this.semicolon()
+  return this.finishNode(node, "VariableDeclaration")
+}
+
+pp$1.parseWhileStatement = function(node) {
+  this.next()
+  node.test = this.parseParenExpression()
+  this.labels.push(loopLabel)
+  node.body = this.parseStatement(false)
+  this.labels.pop()
+  return this.finishNode(node, "WhileStatement")
+}
+
+pp$1.parseWithStatement = function(node) {
+  if (this.strict) this.raise(this.start, "'with' in strict mode")
+  this.next()
+  node.object = this.parseParenExpression()
+  node.body = this.parseStatement(false)
+  return this.finishNode(node, "WithStatement")
+}
+
+pp$1.parseEmptyStatement = function(node) {
+  this.next()
+  return this.finishNode(node, "EmptyStatement")
+}
+
+pp$1.parseLabeledStatement = function(node, maybeName, expr) {
+  var this$1 = this;
+
+  for (var i = 0; i < this.labels.length; ++i)
+    if (this$1.labels[i].name === maybeName) this$1.raise(expr.start, "Label '" + maybeName + "' is already declared")
+  var kind = this.type.isLoop ? "loop" : this.type === tt._switch ? "switch" : null
+  for (var i$1 = this.labels.length - 1; i$1 >= 0; i$1--) {
+    var label = this$1.labels[i$1]
+    if (label.statementStart == node.start) {
+      label.statementStart = this$1.start
+      label.kind = kind
+    } else break
+  }
+  this.labels.push({name: maybeName, kind: kind, statementStart: this.start})
+  node.body = this.parseStatement(true)
+  if (node.body.type == "ClassDeclaration" ||
+      node.body.type == "VariableDeclaration" && node.body.kind != "var" ||
+      node.body.type == "FunctionDeclaration" && (this.strict || node.body.generator))
+    this.raiseRecoverable(node.body.start, "Invalid labeled declaration")
+  this.labels.pop()
+  node.label = expr
+  return this.finishNode(node, "LabeledStatement")
+}
+
+pp$1.parseExpressionStatement = function(node, expr) {
+  node.expression = expr
+  this.semicolon()
+  return this.finishNode(node, "ExpressionStatement")
+}
+
+// Parse a semicolon-enclosed block of statements, handling `"use
+// strict"` declarations when `allowStrict` is true (used for
+// function bodies).
+
+pp$1.parseBlock = function(createNewLexicalScope) {
+  var this$1 = this;
+  if ( createNewLexicalScope === void 0 ) createNewLexicalScope = true;
+
+  var node = this.startNode()
+  node.body = []
+  this.expect(tt.braceL)
+  if (createNewLexicalScope) {
+    this.enterLexicalScope()
+  }
+  while (!this.eat(tt.braceR)) {
+    var stmt = this$1.parseStatement(true)
+    node.body.push(stmt)
+  }
+  if (createNewLexicalScope) {
+    this.exitLexicalScope()
+  }
+  return this.finishNode(node, "BlockStatement")
+}
+
+// Parse a regular `for` loop. The disambiguation code in
+// `parseStatement` will already have parsed the init statement or
+// expression.
+
+pp$1.parseFor = function(node, init) {
+  node.init = init
+  this.expect(tt.semi)
+  node.test = this.type === tt.semi ? null : this.parseExpression()
+  this.expect(tt.semi)
+  node.update = this.type === tt.parenR ? null : this.parseExpression()
+  this.expect(tt.parenR)
+  this.exitLexicalScope()
+  node.body = this.parseStatement(false)
+  this.labels.pop()
+  return this.finishNode(node, "ForStatement")
+}
+
+// Parse a `for`/`in` and `for`/`of` loop, which are almost
+// same from parser's perspective.
+
+pp$1.parseForIn = function(node, init) {
+  var type = this.type === tt._in ? "ForInStatement" : "ForOfStatement"
+  this.next()
+  node.left = init
+  node.right = this.parseExpression()
+  this.expect(tt.parenR)
+  this.exitLexicalScope()
+  node.body = this.parseStatement(false)
+  this.labels.pop()
+  return this.finishNode(node, type)
+}
+
+// Parse a list of variable declarations.
+
+pp$1.parseVar = function(node, isFor, kind) {
+  var this$1 = this;
+
+  node.declarations = []
+  node.kind = kind
+  for (;;) {
+    var decl = this$1.startNode()
+    this$1.parseVarId(decl, kind)
+    if (this$1.eat(tt.eq)) {
+      decl.init = this$1.parseMaybeAssign(isFor)
+    } else if (kind === "const" && !(this$1.type === tt._in || (this$1.options.ecmaVersion >= 6 && this$1.isContextual("of")))) {
+      this$1.unexpected()
+    } else if (decl.id.type != "Identifier" && !(isFor && (this$1.type === tt._in || this$1.isContextual("of")))) {
+      this$1.raise(this$1.lastTokEnd, "Complex binding patterns require an initialization value")
+    } else {
+      decl.init = null
+    }
+    node.declarations.push(this$1.finishNode(decl, "VariableDeclarator"))
+    if (!this$1.eat(tt.comma)) break
+  }
+  return node
+}
+
+pp$1.parseVarId = function(decl, kind) {
+  decl.id = this.parseBindingAtom(kind)
+  this.checkLVal(decl.id, kind, false)
+}
+
+// Parse a function declaration or literal (depending on the
+// `isStatement` parameter).
+
+pp$1.parseFunction = function(node, isStatement, allowExpressionBody, isAsync) {
+  this.initFunction(node)
+  if (this.options.ecmaVersion >= 6 && !isAsync)
+    node.generator = this.eat(tt.star)
+  if (this.options.ecmaVersion >= 8)
+    node.async = !!isAsync
+
+  if (isStatement) {
+    node.id = isStatement === "nullableID" && this.type != tt.name ? null : this.parseIdent()
+    if (node.id) {
+      this.checkLVal(node.id, "var")
+    }
+  }
+
+  var oldInGen = this.inGenerator, oldInAsync = this.inAsync,
+      oldYieldPos = this.yieldPos, oldAwaitPos = this.awaitPos, oldInFunc = this.inFunction
+  this.inGenerator = node.generator
+  this.inAsync = node.async
+  this.yieldPos = 0
+  this.awaitPos = 0
+  this.inFunction = true
+  this.enterFunctionScope()
+
+  if (!isStatement)
+    node.id = this.type == tt.name ? this.parseIdent() : null
+
+  this.parseFunctionParams(node)
+  this.parseFunctionBody(node, allowExpressionBody)
+
+  this.inGenerator = oldInGen
+  this.inAsync = oldInAsync
+  this.yieldPos = oldYieldPos
+  this.awaitPos = oldAwaitPos
+  this.inFunction = oldInFunc
+  return this.finishNode(node, isStatement ? "FunctionDeclaration" : "FunctionExpression")
+}
+
+pp$1.parseFunctionParams = function(node) {
+  this.expect(tt.parenL)
+  node.params = this.parseBindingList(tt.parenR, false, this.options.ecmaVersion >= 8, true)
+  this.checkYieldAwaitInDefaultParams()
+}
+
+// Parse a class declaration or literal (depending on the
+// `isStatement` parameter).
+
+pp$1.parseClass = function(node, isStatement) {
+  var this$1 = this;
+
+  this.next()
+
+  this.parseClassId(node, isStatement)
+  this.parseClassSuper(node)
+  var classBody = this.startNode()
+  var hadConstructor = false
+  classBody.body = []
+  this.expect(tt.braceL)
+  while (!this.eat(tt.braceR)) {
+    if (this$1.eat(tt.semi)) continue
+    var method = this$1.startNode()
+    var isGenerator = this$1.eat(tt.star)
+    var isAsync = false
+    var isMaybeStatic = this$1.type === tt.name && this$1.value === "static"
+    this$1.parsePropertyName(method)
+    method.static = isMaybeStatic && this$1.type !== tt.parenL
+    if (method.static) {
+      if (isGenerator) this$1.unexpected()
+      isGenerator = this$1.eat(tt.star)
+      this$1.parsePropertyName(method)
+    }
+    if (this$1.options.ecmaVersion >= 8 && !isGenerator && !method.computed &&
+        method.key.type === "Identifier" && method.key.name === "async" && this$1.type !== tt.parenL &&
+        !this$1.canInsertSemicolon()) {
+      isAsync = true
+      this$1.parsePropertyName(method)
+    }
+    method.kind = "method"
+    var isGetSet = false
+    if (!method.computed) {
+      var key = method.key;
+      if (!isGenerator && !isAsync && key.type === "Identifier" && this$1.type !== tt.parenL && (key.name === "get" || key.name === "set")) {
+        isGetSet = true
+        method.kind = key.name
+        key = this$1.parsePropertyName(method)
+      }
+      if (!method.static && (key.type === "Identifier" && key.name === "constructor" ||
+          key.type === "Literal" && key.value === "constructor")) {
+        if (hadConstructor) this$1.raise(key.start, "Duplicate constructor in the same class")
+        if (isGetSet) this$1.raise(key.start, "Constructor can't have get/set modifier")
+        if (isGenerator) this$1.raise(key.start, "Constructor can't be a generator")
+        if (isAsync) this$1.raise(key.start, "Constructor can't be an async method")
+        method.kind = "constructor"
+        hadConstructor = true
+      }
+    }
+    this$1.parseClassMethod(classBody, method, isGenerator, isAsync)
+    if (isGetSet) {
+      var paramCount = method.kind === "get" ? 0 : 1
+      if (method.value.params.length !== paramCount) {
+        var start = method.value.start
+        if (method.kind === "get")
+          this$1.raiseRecoverable(start, "getter should have no params")
+        else
+          this$1.raiseRecoverable(start, "setter should have exactly one param")
+      } else {
+        if (method.kind === "set" && method.value.params[0].type === "RestElement")
+          this$1.raiseRecoverable(method.value.params[0].start, "Setter cannot use rest params")
+      }
+    }
+  }
+  node.body = this.finishNode(classBody, "ClassBody")
+  return this.finishNode(node, isStatement ? "ClassDeclaration" : "ClassExpression")
+}
+
+pp$1.parseClassMethod = function(classBody, method, isGenerator, isAsync) {
+  method.value = this.parseMethod(isGenerator, isAsync)
+  classBody.body.push(this.finishNode(method, "MethodDefinition"))
+}
+
+pp$1.parseClassId = function(node, isStatement) {
+  node.id = this.type === tt.name ? this.parseIdent() : isStatement === true ? this.unexpected() : null
+}
+
+pp$1.parseClassSuper = function(node) {
+  node.superClass = this.eat(tt._extends) ? this.parseExprSubscripts() : null
+}
+
+// Parses module export declaration.
+
+pp$1.parseExport = function(node, exports) {
+  var this$1 = this;
+
+  this.next()
+  // export * from '...'
+  if (this.eat(tt.star)) {
+    this.expectContextual("from")
+    node.source = this.type === tt.string ? this.parseExprAtom() : this.unexpected()
+    this.semicolon()
+    return this.finishNode(node, "ExportAllDeclaration")
+  }
+  if (this.eat(tt._default)) { // export default ...
+    this.checkExport(exports, "default", this.lastTokStart)
+    var isAsync
+    if (this.type === tt._function || (isAsync = this.isAsyncFunction())) {
+      var fNode = this.startNode()
+      this.next()
+      if (isAsync) this.next()
+      node.declaration = this.parseFunction(fNode, "nullableID", false, isAsync)
+    } else if (this.type === tt._class) {
+      var cNode = this.startNode()
+      node.declaration = this.parseClass(cNode, "nullableID")
+    } else {
+      node.declaration = this.parseMaybeAssign()
+      this.semicolon()
+    }
+    return this.finishNode(node, "ExportDefaultDeclaration")
+  }
+  // export var|const|let|function|class ...
+  if (this.shouldParseExportStatement()) {
+    node.declaration = this.parseStatement(true)
+    if (node.declaration.type === "VariableDeclaration")
+      this.checkVariableExport(exports, node.declaration.declarations)
+    else
+      this.checkExport(exports, node.declaration.id.name, node.declaration.id.start)
+    node.specifiers = []
+    node.source = null
+  } else { // export { x, y as z } [from '...']
+    node.declaration = null
+    node.specifiers = this.parseExportSpecifiers(exports)
+    if (this.eatContextual("from")) {
+      node.source = this.type === tt.string ? this.parseExprAtom() : this.unexpected()
+    } else {
+      // check for keywords used as local names
+      for (var i = 0; i < node.specifiers.length; i++) {
+        if (this$1.keywords.test(node.specifiers[i].local.name) || this$1.reservedWords.test(node.specifiers[i].local.name)) {
+          this$1.unexpected(node.specifiers[i].local.start)
+        }
+      }
+
+      node.source = null
+    }
+    this.semicolon()
+  }
+  return this.finishNode(node, "ExportNamedDeclaration")
+}
+
+pp$1.checkExport = function(exports, name, pos) {
+  if (!exports) return
+  if (has(exports, name))
+    this.raiseRecoverable(pos, "Duplicate export '" + name + "'")
+  exports[name] = true
+}
+
+pp$1.checkPatternExport = function(exports, pat) {
+  var this$1 = this;
+
+  var type = pat.type
+  if (type == "Identifier")
+    this.checkExport(exports, pat.name, pat.start)
+  else if (type == "ObjectPattern")
+    for (var i = 0; i < pat.properties.length; ++i)
+      this$1.checkPatternExport(exports, pat.properties[i].value)
+  else if (type == "ArrayPattern")
+    for (var i$1 = 0; i$1 < pat.elements.length; ++i$1) {
+      var elt = pat.elements[i$1]
+      if (elt) this$1.checkPatternExport(exports, elt)
+    }
+  else if (type == "AssignmentPattern")
+    this.checkPatternExport(exports, pat.left)
+  else if (type == "ParenthesizedExpression")
+    this.checkPatternExport(exports, pat.expression)
+}
+
+pp$1.checkVariableExport = function(exports, decls) {
+  var this$1 = this;
+
+  if (!exports) return
+  for (var i = 0; i < decls.length; i++)
+    this$1.checkPatternExport(exports, decls[i].id)
+}
+
+pp$1.shouldParseExportStatement = function() {
+  return this.type.keyword === "var" ||
+    this.type.keyword === "const" ||
+    this.type.keyword === "class" ||
+    this.type.keyword === "function" ||
+    this.isLet() ||
+    this.isAsyncFunction()
+}
+
+// Parses a comma-separated list of module exports.
+
+pp$1.parseExportSpecifiers = function(exports) {
+  var this$1 = this;
+
+  var nodes = [], first = true
+  // export { x, y as z } [from '...']
+  this.expect(tt.braceL)
+  while (!this.eat(tt.braceR)) {
+    if (!first) {
+      this$1.expect(tt.comma)
+      if (this$1.afterTrailingComma(tt.braceR)) break
+    } else first = false
+
+    var node = this$1.startNode()
+    node.local = this$1.parseIdent(true)
+    node.exported = this$1.eatContextual("as") ? this$1.parseIdent(true) : node.local
+    this$1.checkExport(exports, node.exported.name, node.exported.start)
+    nodes.push(this$1.finishNode(node, "ExportSpecifier"))
+  }
+  return nodes
+}
+
+// Parses import declaration.
+
+pp$1.parseImport = function(node) {
+  this.next()
+  // import '...'
+  if (this.type === tt.string) {
+    node.specifiers = empty
+    node.source = this.parseExprAtom()
+  } else {
+    node.specifiers = this.parseImportSpecifiers()
+    this.expectContextual("from")
+    node.source = this.type === tt.string ? this.parseExprAtom() : this.unexpected()
+  }
+  this.semicolon()
+  return this.finishNode(node, "ImportDeclaration")
+}
+
+// Parses a comma-separated list of module imports.
+
+pp$1.parseImportSpecifiers = function() {
+  var this$1 = this;
+
+  var nodes = [], first = true
+  if (this.type === tt.name) {
+    // import defaultObj, { x, y as z } from '...'
+    var node = this.startNode()
+    node.local = this.parseIdent()
+    this.checkLVal(node.local, "let")
+    nodes.push(this.finishNode(node, "ImportDefaultSpecifier"))
+    if (!this.eat(tt.comma)) return nodes
+  }
+  if (this.type === tt.star) {
+    var node$1 = this.startNode()
+    this.next()
+    this.expectContextual("as")
+    node$1.local = this.parseIdent()
+    this.checkLVal(node$1.local, "let")
+    nodes.push(this.finishNode(node$1, "ImportNamespaceSpecifier"))
+    return nodes
+  }
+  this.expect(tt.braceL)
+  while (!this.eat(tt.braceR)) {
+    if (!first) {
+      this$1.expect(tt.comma)
+      if (this$1.afterTrailingComma(tt.braceR)) break
+    } else first = false
+
+    var node$2 = this$1.startNode()
+    node$2.imported = this$1.parseIdent(true)
+    if (this$1.eatContextual("as")) {
+      node$2.local = this$1.parseIdent()
+    } else {
+      node$2.local = node$2.imported
+      if (this$1.isKeyword(node$2.local.name)) this$1.unexpected(node$2.local.start)
+      if (this$1.reservedWordsStrict.test(node$2.local.name)) this$1.raiseRecoverable(node$2.local.start, "The keyword '" + node$2.local.name + "' is reserved")
+    }
+    this$1.checkLVal(node$2.local, "let")
+    nodes.push(this$1.finishNode(node$2, "ImportSpecifier"))
+  }
+  return nodes
+}
+
+var pp$2 = Parser.prototype
+
+// Convert existing expression atom to assignable pattern
+// if possible.
+
+pp$2.toAssignable = function(node, isBinding) {
+  var this$1 = this;
+
+  if (this.options.ecmaVersion >= 6 && node) {
+    switch (node.type) {
+    case "Identifier":
+      if (this.inAsync && node.name === "await")
+        this.raise(node.start, "Can not use 'await' as identifier inside an async function")
+      break
+
+    case "ObjectPattern":
+    case "ArrayPattern":
+      break
+
+    case "ObjectExpression":
+      node.type = "ObjectPattern"
+      for (var i = 0; i < node.properties.length; i++) {
+        var prop = node.properties[i]
+        if (prop.kind !== "init") this$1.raise(prop.key.start, "Object pattern can't contain getter or setter")
+        this$1.toAssignable(prop.value, isBinding)
+      }
+      break
+
+    case "ArrayExpression":
+      node.type = "ArrayPattern"
+      this.toAssignableList(node.elements, isBinding)
+      break
+
+    case "AssignmentExpression":
+      if (node.operator === "=") {
+        node.type = "AssignmentPattern"
+        delete node.operator
+        this.toAssignable(node.left, isBinding)
+        // falls through to AssignmentPattern
+      } else {
+        this.raise(node.left.end, "Only '=' operator can be used for specifying default value.")
+        break
+      }
+
+    case "AssignmentPattern":
+      break
+
+    case "ParenthesizedExpression":
+      node.expression = this.toAssignable(node.expression, isBinding)
+      break
+
+    case "MemberExpression":
+      if (!isBinding) break
+
+    default:
+      this.raise(node.start, "Assigning to rvalue")
+    }
+  }
+  return node
+}
+
+// Convert list of expression atoms to binding list.
+
+pp$2.toAssignableList = function(exprList, isBinding) {
+  var this$1 = this;
+
+  var end = exprList.length
+  if (end) {
+    var last = exprList[end - 1]
+    if (last && last.type == "RestElement") {
+      --end
+    } else if (last && last.type == "SpreadElement") {
+      last.type = "RestElement"
+      var arg = last.argument
+      this.toAssignable(arg, isBinding)
+      if (arg.type !== "Identifier" && arg.type !== "MemberExpression" && arg.type !== "ArrayPattern")
+        this.unexpected(arg.start)
+      --end
+    }
+
+    if (isBinding && last && last.type === "RestElement" && last.argument.type !== "Identifier")
+      this.unexpected(last.argument.start)
+  }
+  for (var i = 0; i < end; i++) {
+    var elt = exprList[i]
+    if (elt) this$1.toAssignable(elt, isBinding)
+  }
+  return exprList
+}
+
+// Parses spread element.
+
+pp$2.parseSpread = function(refDestructuringErrors) {
+  var node = this.startNode()
+  this.next()
+  node.argument = this.parseMaybeAssign(false, refDestructuringErrors)
+  return this.finishNode(node, "SpreadElement")
+}
+
+pp$2.parseRest = function(allowNonIdent) {
+  var node = this.startNode()
+  this.next()
+
+  // RestElement inside of a function parameter must be an identifier
+  if (allowNonIdent) node.argument = this.type === tt.name ? this.parseIdent() : this.unexpected()
+  else node.argument = this.type === tt.name || this.type === tt.bracketL ? this.parseBindingAtom() : this.unexpected()
+
+  return this.finishNode(node, "RestElement")
+}
+
+// Parses lvalue (assignable) atom.
+
+pp$2.parseBindingAtom = function() {
+  if (this.options.ecmaVersion < 6) return this.parseIdent()
+  switch (this.type) {
+  case tt.name:
+    return this.parseIdent()
+
+  case tt.bracketL:
+    var node = this.startNode()
+    this.next()
+    node.elements = this.parseBindingList(tt.bracketR, true, true)
+    return this.finishNode(node, "ArrayPattern")
+
+  case tt.braceL:
+    return this.parseObj(true)
+
+  default:
+    this.unexpected()
+  }
+}
+
+pp$2.parseBindingList = function(close, allowEmpty, allowTrailingComma, allowNonIdent) {
+  var this$1 = this;
+
+  var elts = [], first = true
+  while (!this.eat(close)) {
+    if (first) first = false
+    else this$1.expect(tt.comma)
+    if (allowEmpty && this$1.type === tt.comma) {
+      elts.push(null)
+    } else if (allowTrailingComma && this$1.afterTrailingComma(close)) {
+      break
+    } else if (this$1.type === tt.ellipsis) {
+      var rest = this$1.parseRest(allowNonIdent)
+      this$1.parseBindingListItem(rest)
+      elts.push(rest)
+      if (this$1.type === tt.comma) this$1.raise(this$1.start, "Comma is not permitted after the rest element")
+      this$1.expect(close)
+      break
+    } else {
+      var elem = this$1.parseMaybeDefault(this$1.start, this$1.startLoc)
+      this$1.parseBindingListItem(elem)
+      elts.push(elem)
+    }
+  }
+  return elts
+}
+
+pp$2.parseBindingListItem = function(param) {
+  return param
+}
+
+// Parses assignment pattern around given atom if possible.
+
+pp$2.parseMaybeDefault = function(startPos, startLoc, left) {
+  left = left || this.parseBindingAtom()
+  if (this.options.ecmaVersion < 6 || !this.eat(tt.eq)) return left
+  var node = this.startNodeAt(startPos, startLoc)
+  node.left = left
+  node.right = this.parseMaybeAssign()
+  return this.finishNode(node, "AssignmentPattern")
+}
+
+// Verify that a node is an lval — something that can be assigned
+// to.
+// bindingType can be either:
+// 'var' indicating that the lval creates a 'var' binding
+// 'let' indicating that the lval creates a lexical ('let' or 'const') binding
+// 'none' indicating that the binding should be checked for illegal identifiers, but not for duplicate references
+
+pp$2.checkLVal = function(expr, bindingType, checkClashes) {
+  var this$1 = this;
+
+  switch (expr.type) {
+  case "Identifier":
+    if (this.strict && this.reservedWordsStrictBind.test(expr.name))
+      this.raiseRecoverable(expr.start, (bindingType ? "Binding " : "Assigning to ") + expr.name + " in strict mode")
+    if (checkClashes) {
+      if (has(checkClashes, expr.name))
+        this.raiseRecoverable(expr.start, "Argument name clash")
+      checkClashes[expr.name] = true
+    }
+    if (bindingType && bindingType !== "none") {
+      if (
+        bindingType === "var" && !this.canDeclareVarName(expr.name) ||
+        bindingType !== "var" && !this.canDeclareLexicalName(expr.name)
+      ) {
+        this.raiseRecoverable(expr.start, ("Identifier '" + (expr.name) + "' has already been declared"))
+      }
+      if (bindingType === "var") {
+        this.declareVarName(expr.name)
+      } else {
+        this.declareLexicalName(expr.name)
+      }
+    }
+    break
+
+  case "MemberExpression":
+    if (bindingType) this.raiseRecoverable(expr.start, (bindingType ? "Binding" : "Assigning to") + " member expression")
+    break
+
+  case "ObjectPattern":
+    for (var i = 0; i < expr.properties.length; i++)
+      this$1.checkLVal(expr.properties[i].value, bindingType, checkClashes)
+    break
+
+  case "ArrayPattern":
+    for (var i$1 = 0; i$1 < expr.elements.length; i$1++) {
+      var elem = expr.elements[i$1]
+      if (elem) this$1.checkLVal(elem, bindingType, checkClashes)
+    }
+    break
+
+  case "AssignmentPattern":
+    this.checkLVal(expr.left, bindingType, checkClashes)
+    break
+
+  case "RestElement":
+    this.checkLVal(expr.argument, bindingType, checkClashes)
+    break
+
+  case "ParenthesizedExpression":
+    this.checkLVal(expr.expression, bindingType, checkClashes)
+    break
+
+  default:
+    this.raise(expr.start, (bindingType ? "Binding" : "Assigning to") + " rvalue")
+  }
+}
+
+// A recursive descent parser operates by defining functions for all
+// syntactic elements, and recursively calling those, each function
+// advancing the input stream and returning an AST node. Precedence
+// of constructs (for example, the fact that `!x[1]` means `!(x[1])`
+// instead of `(!x)[1]` is handled by the fact that the parser
+// function that parses unary prefix operators is called first, and
+// in turn calls the function that parses `[]` subscripts — that
+// way, it'll receive the node for `x[1]` already parsed, and wraps
+// *that* in the unary operator node.
+//
+// Acorn uses an [operator precedence parser][opp] to handle binary
+// operator precedence, because it is much more compact than using
+// the technique outlined above, which uses different, nesting
+// functions to specify precedence, for all of the ten binary
+// precedence levels that JavaScript defines.
+//
+// [opp]: http://en.wikipedia.org/wiki/Operator-precedence_parser
+
+var pp$3 = Parser.prototype
+
+// Check if property name clashes with already added.
+// Object/class getters and setters are not allowed to clash —
+// either with each other or with an init property — and in
+// strict mode, init properties are also not allowed to be repeated.
+
+pp$3.checkPropClash = function(prop, propHash) {
+  if (this.options.ecmaVersion >= 6 && (prop.computed || prop.method || prop.shorthand))
+    return
+  var key = prop.key;
+  var name
+  switch (key.type) {
+  case "Identifier": name = key.name; break
+  case "Literal": name = String(key.value); break
+  default: return
+  }
+  var kind = prop.kind;
+  if (this.options.ecmaVersion >= 6) {
+    if (name === "__proto__" && kind === "init") {
+      if (propHash.proto) this.raiseRecoverable(key.start, "Redefinition of __proto__ property")
+      propHash.proto = true
+    }
+    return
+  }
+  name = "$" + name
+  var other = propHash[name]
+  if (other) {
+    var redefinition
+    if (kind === "init") {
+      redefinition = this.strict && other.init || other.get || other.set
+    } else {
+      redefinition = other.init || other[kind]
+    }
+    if (redefinition)
+      this.raiseRecoverable(key.start, "Redefinition of property")
+  } else {
+    other = propHash[name] = {
+      init: false,
+      get: false,
+      set: false
+    }
+  }
+  other[kind] = true
+}
+
+// ### Expression parsing
+
+// These nest, from the most general expression type at the top to
+// 'atomic', nondivisible expression types at the bottom. Most of
+// the functions will simply let the function(s) below them parse,
+// and, *if* the syntactic construct they handle is present, wrap
+// the AST node that the inner parser gave them in another node.
+
+// Parse a full expression. The optional arguments are used to
+// forbid the `in` operator (in for loops initalization expressions)
+// and provide reference for storing '=' operator inside shorthand
+// property assignment in contexts where both object expression
+// and object pattern might appear (so it's possible to raise
+// delayed syntax error at correct position).
+
+pp$3.parseExpression = function(noIn, refDestructuringErrors) {
+  var this$1 = this;
+
+  var startPos = this.start, startLoc = this.startLoc
+  var expr = this.parseMaybeAssign(noIn, refDestructuringErrors)
+  if (this.type === tt.comma) {
+    var node = this.startNodeAt(startPos, startLoc)
+    node.expressions = [expr]
+    while (this.eat(tt.comma)) node.expressions.push(this$1.parseMaybeAssign(noIn, refDestructuringErrors))
+    return this.finishNode(node, "SequenceExpression")
+  }
+  return expr
+}
+
+// Parse an assignment expression. This includes applications of
+// operators like `+=`.
+
+pp$3.parseMaybeAssign = function(noIn, refDestructuringErrors, afterLeftParse) {
+  if (this.inGenerator && this.isContextual("yield")) return this.parseYield()
+
+  var ownDestructuringErrors = false, oldParenAssign = -1, oldTrailingComma = -1
+  if (refDestructuringErrors) {
+    oldParenAssign = refDestructuringErrors.parenthesizedAssign
+    oldTrailingComma = refDestructuringErrors.trailingComma
+    refDestructuringErrors.parenthesizedAssign = refDestructuringErrors.trailingComma = -1
+  } else {
+    refDestructuringErrors = new DestructuringErrors
+    ownDestructuringErrors = true
+  }
+
+  var startPos = this.start, startLoc = this.startLoc
+  if (this.type == tt.parenL || this.type == tt.name)
+    this.potentialArrowAt = this.start
+  var left = this.parseMaybeConditional(noIn, refDestructuringErrors)
+  if (afterLeftParse) left = afterLeftParse.call(this, left, startPos, startLoc)
+  if (this.type.isAssign) {
+    this.checkPatternErrors(refDestructuringErrors, true)
+    if (!ownDestructuringErrors) DestructuringErrors.call(refDestructuringErrors)
+    var node = this.startNodeAt(startPos, startLoc)
+    node.operator = this.value
+    node.left = this.type === tt.eq ? this.toAssignable(left) : left
+    refDestructuringErrors.shorthandAssign = -1 // reset because shorthand default was used correctly
+    this.checkLVal(left)
+    this.next()
+    node.right = this.parseMaybeAssign(noIn)
+    return this.finishNode(node, "AssignmentExpression")
+  } else {
+    if (ownDestructuringErrors) this.checkExpressionErrors(refDestructuringErrors, true)
+  }
+  if (oldParenAssign > -1) refDestructuringErrors.parenthesizedAssign = oldParenAssign
+  if (oldTrailingComma > -1) refDestructuringErrors.trailingComma = oldTrailingComma
+  return left
+}
+
+// Parse a ternary conditional (`?:`) operator.
+
+pp$3.parseMaybeConditional = function(noIn, refDestructuringErrors) {
+  var startPos = this.start, startLoc = this.startLoc
+  var expr = this.parseExprOps(noIn, refDestructuringErrors)
+  if (this.checkExpressionErrors(refDestructuringErrors)) return expr
+  if (this.eat(tt.question)) {
+    var node = this.startNodeAt(startPos, startLoc)
+    node.test = expr
+    node.consequent = this.parseMaybeAssign()
+    this.expect(tt.colon)
+    node.alternate = this.parseMaybeAssign(noIn)
+    return this.finishNode(node, "ConditionalExpression")
+  }
+  return expr
+}
+
+// Start the precedence parser.
+
+pp$3.parseExprOps = function(noIn, refDestructuringErrors) {
+  var startPos = this.start, startLoc = this.startLoc
+  var expr = this.parseMaybeUnary(refDestructuringErrors, false)
+  if (this.checkExpressionErrors(refDestructuringErrors)) return expr
+  return expr.start == startPos && expr.type === "ArrowFunctionExpression" ? expr : this.parseExprOp(expr, startPos, startLoc, -1, noIn)
+}
+
+// Parse binary operators with the operator precedence parsing
+// algorithm. `left` is the left-hand side of the operator.
+// `minPrec` provides context that allows the function to stop and
+// defer further parser to one of its callers when it encounters an
+// operator that has a lower precedence than the set it is parsing.
+
+pp$3.parseExprOp = function(left, leftStartPos, leftStartLoc, minPrec, noIn) {
+  var prec = this.type.binop
+  if (prec != null && (!noIn || this.type !== tt._in)) {
+    if (prec > minPrec) {
+      var logical = this.type === tt.logicalOR || this.type === tt.logicalAND
+      var op = this.value
+      this.next()
+      var startPos = this.start, startLoc = this.startLoc
+      var right = this.parseExprOp(this.parseMaybeUnary(null, false), startPos, startLoc, prec, noIn)
+      var node = this.buildBinary(leftStartPos, leftStartLoc, left, right, op, logical)
+      return this.parseExprOp(node, leftStartPos, leftStartLoc, minPrec, noIn)
+    }
+  }
+  return left
+}
+
+pp$3.buildBinary = function(startPos, startLoc, left, right, op, logical) {
+  var node = this.startNodeAt(startPos, startLoc)
+  node.left = left
+  node.operator = op
+  node.right = right
+  return this.finishNode(node, logical ? "LogicalExpression" : "BinaryExpression")
+}
+
+// Parse unary operators, both prefix and postfix.
+
+pp$3.parseMaybeUnary = function(refDestructuringErrors, sawUnary) {
+  var this$1 = this;
+
+  var startPos = this.start, startLoc = this.startLoc, expr
+  if (this.inAsync && this.isContextual("await")) {
+    expr = this.parseAwait(refDestructuringErrors)
+    sawUnary = true
+  } else if (this.type.prefix) {
+    var node = this.startNode(), update = this.type === tt.incDec
+    node.operator = this.value
+    node.prefix = true
+    this.next()
+    node.argument = this.parseMaybeUnary(null, true)
+    this.checkExpressionErrors(refDestructuringErrors, true)
+    if (update) this.checkLVal(node.argument)
+    else if (this.strict && node.operator === "delete" &&
+             node.argument.type === "Identifier")
+      this.raiseRecoverable(node.start, "Deleting local variable in strict mode")
+    else sawUnary = true
+    expr = this.finishNode(node, update ? "UpdateExpression" : "UnaryExpression")
+  } else {
+    expr = this.parseExprSubscripts(refDestructuringErrors)
+    if (this.checkExpressionErrors(refDestructuringErrors)) return expr
+    while (this.type.postfix && !this.canInsertSemicolon()) {
+      var node$1 = this$1.startNodeAt(startPos, startLoc)
+      node$1.operator = this$1.value
+      node$1.prefix = false
+      node$1.argument = expr
+      this$1.checkLVal(expr)
+      this$1.next()
+      expr = this$1.finishNode(node$1, "UpdateExpression")
+    }
+  }
+
+  if (!sawUnary && this.eat(tt.starstar))
+    return this.buildBinary(startPos, startLoc, expr, this.parseMaybeUnary(null, false), "**", false)
+  else
+    return expr
+}
+
+// Parse call, dot, and `[]`-subscript expressions.
+
+pp$3.parseExprSubscripts = function(refDestructuringErrors) {
+  var startPos = this.start, startLoc = this.startLoc
+  var expr = this.parseExprAtom(refDestructuringErrors)
+  var skipArrowSubscripts = expr.type === "ArrowFunctionExpression" && this.input.slice(this.lastTokStart, this.lastTokEnd) !== ")"
+  if (this.checkExpressionErrors(refDestructuringErrors) || skipArrowSubscripts) return expr
+  var result = this.parseSubscripts(expr, startPos, startLoc)
+  if (refDestructuringErrors && result.type === "MemberExpression") {
+    if (refDestructuringErrors.parenthesizedAssign >= result.start) refDestructuringErrors.parenthesizedAssign = -1
+    if (refDestructuringErrors.parenthesizedBind >= result.start) refDestructuringErrors.parenthesizedBind = -1
+  }
+  return result
+}
+
+pp$3.parseSubscripts = function(base, startPos, startLoc, noCalls) {
+  var this$1 = this;
+
+  var maybeAsyncArrow = this.options.ecmaVersion >= 8 && base.type === "Identifier" && base.name === "async" &&
+      this.lastTokEnd == base.end && !this.canInsertSemicolon()
+  for (var computed;;) {
+    if ((computed = this$1.eat(tt.bracketL)) || this$1.eat(tt.dot)) {
+      var node = this$1.startNodeAt(startPos, startLoc)
+      node.object = base
+      node.property = computed ? this$1.parseExpression() : this$1.parseIdent(true)
+      node.computed = !!computed
+      if (computed) this$1.expect(tt.bracketR)
+      base = this$1.finishNode(node, "MemberExpression")
+    } else if (!noCalls && this$1.eat(tt.parenL)) {
+      var refDestructuringErrors = new DestructuringErrors, oldYieldPos = this$1.yieldPos, oldAwaitPos = this$1.awaitPos
+      this$1.yieldPos = 0
+      this$1.awaitPos = 0
+      var exprList = this$1.parseExprList(tt.parenR, this$1.options.ecmaVersion >= 8, false, refDestructuringErrors)
+      if (maybeAsyncArrow && !this$1.canInsertSemicolon() && this$1.eat(tt.arrow)) {
+        this$1.checkPatternErrors(refDestructuringErrors, false)
+        this$1.checkYieldAwaitInDefaultParams()
+        this$1.yieldPos = oldYieldPos
+        this$1.awaitPos = oldAwaitPos
+        return this$1.parseArrowExpression(this$1.startNodeAt(startPos, startLoc), exprList, true)
+      }
+      this$1.checkExpressionErrors(refDestructuringErrors, true)
+      this$1.yieldPos = oldYieldPos || this$1.yieldPos
+      this$1.awaitPos = oldAwaitPos || this$1.awaitPos
+      var node$1 = this$1.startNodeAt(startPos, startLoc)
+      node$1.callee = base
+      node$1.arguments = exprList
+      base = this$1.finishNode(node$1, "CallExpression")
+    } else if (this$1.type === tt.backQuote) {
+      var node$2 = this$1.startNodeAt(startPos, startLoc)
+      node$2.tag = base
+      node$2.quasi = this$1.parseTemplate()
+      base = this$1.finishNode(node$2, "TaggedTemplateExpression")
+    } else {
+      return base
+    }
+  }
+}
+
+// Parse an atomic expression — either a single token that is an
+// expression, an expression started by a keyword like `function` or
+// `new`, or an expression wrapped in punctuation like `()`, `[]`,
+// or `{}`.
+
+pp$3.parseExprAtom = function(refDestructuringErrors) {
+  var node, canBeArrow = this.potentialArrowAt == this.start
+  switch (this.type) {
+  case tt._super:
+    if (!this.inFunction)
+      this.raise(this.start, "'super' outside of function or class")
+
+  case tt._this:
+    var type = this.type === tt._this ? "ThisExpression" : "Super"
+    node = this.startNode()
+    this.next()
+    return this.finishNode(node, type)
+
+  case tt.name:
+    var startPos = this.start, startLoc = this.startLoc
+    var id = this.parseIdent(this.type !== tt.name)
+    if (this.options.ecmaVersion >= 8 && id.name === "async" && !this.canInsertSemicolon() && this.eat(tt._function))
+      return this.parseFunction(this.startNodeAt(startPos, startLoc), false, false, true)
+    if (canBeArrow && !this.canInsertSemicolon()) {
+      if (this.eat(tt.arrow))
+        return this.parseArrowExpression(this.startNodeAt(startPos, startLoc), [id], false)
+      if (this.options.ecmaVersion >= 8 && id.name === "async" && this.type === tt.name) {
+        id = this.parseIdent()
+        if (this.canInsertSemicolon() || !this.eat(tt.arrow))
+          this.unexpected()
+        return this.parseArrowExpression(this.startNodeAt(startPos, startLoc), [id], true)
+      }
+    }
+    return id
+
+  case tt.regexp:
+    var value = this.value
+    node = this.parseLiteral(value.value)
+    node.regex = {pattern: value.pattern, flags: value.flags}
+    return node
+
+  case tt.num: case tt.string:
+    return this.parseLiteral(this.value)
+
+  case tt._null: case tt._true: case tt._false:
+    node = this.startNode()
+    node.value = this.type === tt._null ? null : this.type === tt._true
+    node.raw = this.type.keyword
+    this.next()
+    return this.finishNode(node, "Literal")
+
+  case tt.parenL:
+    var start = this.start, expr = this.parseParenAndDistinguishExpression(canBeArrow)
+    if (refDestructuringErrors) {
+      if (refDestructuringErrors.parenthesizedAssign < 0 && !this.isSimpleAssignTarget(expr))
+        refDestructuringErrors.parenthesizedAssign = start
+      if (refDestructuringErrors.parenthesizedBind < 0)
+        refDestructuringErrors.parenthesizedBind = start
+    }
+    return expr
+
+  case tt.bracketL:
+    node = this.startNode()
+    this.next()
+    node.elements = this.parseExprList(tt.bracketR, true, true, refDestructuringErrors)
+    return this.finishNode(node, "ArrayExpression")
+
+  case tt.braceL:
+    return this.parseObj(false, refDestructuringErrors)
+
+  case tt._function:
+    node = this.startNode()
+    this.next()
+    return this.parseFunction(node, false)
+
+  case tt._class:
+    return this.parseClass(this.startNode(), false)
+
+  case tt._new:
+    return this.parseNew()
+
+  case tt.backQuote:
+    return this.parseTemplate()
+
+  default:
+    this.unexpected()
+  }
+}
+
+pp$3.parseLiteral = function(value) {
+  var node = this.startNode()
+  node.value = value
+  node.raw = this.input.slice(this.start, this.end)
+  this.next()
+  return this.finishNode(node, "Literal")
+}
+
+pp$3.parseParenExpression = function() {
+  this.expect(tt.parenL)
+  var val = this.parseExpression()
+  this.expect(tt.parenR)
+  return val
+}
+
+pp$3.parseParenAndDistinguishExpression = function(canBeArrow) {
+  var this$1 = this;
+
+  var startPos = this.start, startLoc = this.startLoc, val, allowTrailingComma = this.options.ecmaVersion >= 8
+  if (this.options.ecmaVersion >= 6) {
+    this.next()
+
+    var innerStartPos = this.start, innerStartLoc = this.startLoc
+    var exprList = [], first = true, lastIsComma = false
+    var refDestructuringErrors = new DestructuringErrors, oldYieldPos = this.yieldPos, oldAwaitPos = this.awaitPos, spreadStart, innerParenStart
+    this.yieldPos = 0
+    this.awaitPos = 0
+    while (this.type !== tt.parenR) {
+      first ? first = false : this$1.expect(tt.comma)
+      if (allowTrailingComma && this$1.afterTrailingComma(tt.parenR, true)) {
+        lastIsComma = true
+        break
+      } else if (this$1.type === tt.ellipsis) {
+        spreadStart = this$1.start
+        exprList.push(this$1.parseParenItem(this$1.parseRest()))
+        if (this$1.type === tt.comma) this$1.raise(this$1.start, "Comma is not permitted after the rest element")
+        break
+      } else {
+        if (this$1.type === tt.parenL && !innerParenStart) {
+          innerParenStart = this$1.start
+        }
+        exprList.push(this$1.parseMaybeAssign(false, refDestructuringErrors, this$1.parseParenItem))
+      }
+    }
+    var innerEndPos = this.start, innerEndLoc = this.startLoc
+    this.expect(tt.parenR)
+
+    if (canBeArrow && !this.canInsertSemicolon() && this.eat(tt.arrow)) {
+      this.checkPatternErrors(refDestructuringErrors, false)
+      this.checkYieldAwaitInDefaultParams()
+      if (innerParenStart) this.unexpected(innerParenStart)
+      this.yieldPos = oldYieldPos
+      this.awaitPos = oldAwaitPos
+      return this.parseParenArrowList(startPos, startLoc, exprList)
+    }
+
+    if (!exprList.length || lastIsComma) this.unexpected(this.lastTokStart)
+    if (spreadStart) this.unexpected(spreadStart)
+    this.checkExpressionErrors(refDestructuringErrors, true)
+    this.yieldPos = oldYieldPos || this.yieldPos
+    this.awaitPos = oldAwaitPos || this.awaitPos
+
+    if (exprList.length > 1) {
+      val = this.startNodeAt(innerStartPos, innerStartLoc)
+      val.expressions = exprList
+      this.finishNodeAt(val, "SequenceExpression", innerEndPos, innerEndLoc)
+    } else {
+      val = exprList[0]
+    }
+  } else {
+    val = this.parseParenExpression()
+  }
+
+  if (this.options.preserveParens) {
+    var par = this.startNodeAt(startPos, startLoc)
+    par.expression = val
+    return this.finishNode(par, "ParenthesizedExpression")
+  } else {
+    return val
+  }
+}
+
+pp$3.parseParenItem = function(item) {
+  return item
+}
+
+pp$3.parseParenArrowList = function(startPos, startLoc, exprList) {
+  return this.parseArrowExpression(this.startNodeAt(startPos, startLoc), exprList)
+}
+
+// New's precedence is slightly tricky. It must allow its argument to
+// be a `[]` or dot subscript expression, but not a call — at least,
+// not without wrapping it in parentheses. Thus, it uses the noCalls
+// argument to parseSubscripts to prevent it from consuming the
+// argument list.
+
+var empty$1 = []
+
+pp$3.parseNew = function() {
+  var node = this.startNode()
+  var meta = this.parseIdent(true)
+  if (this.options.ecmaVersion >= 6 && this.eat(tt.dot)) {
+    node.meta = meta
+    node.property = this.parseIdent(true)
+    if (node.property.name !== "target")
+      this.raiseRecoverable(node.property.start, "The only valid meta property for new is new.target")
+    if (!this.inFunction)
+      this.raiseRecoverable(node.start, "new.target can only be used in functions")
+    return this.finishNode(node, "MetaProperty")
+  }
+  var startPos = this.start, startLoc = this.startLoc
+  node.callee = this.parseSubscripts(this.parseExprAtom(), startPos, startLoc, true)
+  if (this.eat(tt.parenL)) node.arguments = this.parseExprList(tt.parenR, this.options.ecmaVersion >= 8, false)
+  else node.arguments = empty$1
+  return this.finishNode(node, "NewExpression")
+}
+
+// Parse template expression.
+
+pp$3.parseTemplateElement = function() {
+  var elem = this.startNode()
+  elem.value = {
+    raw: this.input.slice(this.start, this.end).replace(/\r\n?/g, "\n"),
+    cooked: this.value
+  }
+  this.next()
+  elem.tail = this.type === tt.backQuote
+  return this.finishNode(elem, "TemplateElement")
+}
+
+pp$3.parseTemplate = function() {
+  var this$1 = this;
+
+  var node = this.startNode()
+  this.next()
+  node.expressions = []
+  var curElt = this.parseTemplateElement()
+  node.quasis = [curElt]
+  while (!curElt.tail) {
+    this$1.expect(tt.dollarBraceL)
+    node.expressions.push(this$1.parseExpression())
+    this$1.expect(tt.braceR)
+    node.quasis.push(curElt = this$1.parseTemplateElement())
+  }
+  this.next()
+  return this.finishNode(node, "TemplateLiteral")
+}
+
+// Parse an object literal or binding pattern.
+
+pp$3.parseObj = function(isPattern, refDestructuringErrors) {
+  var this$1 = this;
+
+  var node = this.startNode(), first = true, propHash = {}
+  node.properties = []
+  this.next()
+  while (!this.eat(tt.braceR)) {
+    if (!first) {
+      this$1.expect(tt.comma)
+      if (this$1.afterTrailingComma(tt.braceR)) break
+    } else first = false
+
+    var prop = this$1.startNode(), isGenerator, isAsync, startPos, startLoc
+    if (this$1.options.ecmaVersion >= 6) {
+      prop.method = false
+      prop.shorthand = false
+      if (isPattern || refDestructuringErrors) {
+        startPos = this$1.start
+        startLoc = this$1.startLoc
+      }
+      if (!isPattern)
+        isGenerator = this$1.eat(tt.star)
+    }
+    this$1.parsePropertyName(prop)
+    if (!isPattern && this$1.options.ecmaVersion >= 8 && !isGenerator && !prop.computed &&
+        prop.key.type === "Identifier" && prop.key.name === "async" && this$1.type !== tt.parenL &&
+        this$1.type !== tt.colon && !this$1.canInsertSemicolon()) {
+      isAsync = true
+      this$1.parsePropertyName(prop, refDestructuringErrors)
+    } else {
+      isAsync = false
+    }
+    this$1.parsePropertyValue(prop, isPattern, isGenerator, isAsync, startPos, startLoc, refDestructuringErrors)
+    this$1.checkPropClash(prop, propHash)
+    node.properties.push(this$1.finishNode(prop, "Property"))
+  }
+  return this.finishNode(node, isPattern ? "ObjectPattern" : "ObjectExpression")
+}
+
+pp$3.parsePropertyValue = function(prop, isPattern, isGenerator, isAsync, startPos, startLoc, refDestructuringErrors) {
+  if ((isGenerator || isAsync) && this.type === tt.colon)
+    this.unexpected()
+
+  if (this.eat(tt.colon)) {
+    prop.value = isPattern ? this.parseMaybeDefault(this.start, this.startLoc) : this.parseMaybeAssign(false, refDestructuringErrors)
+    prop.kind = "init"
+  } else if (this.options.ecmaVersion >= 6 && this.type === tt.parenL) {
+    if (isPattern) this.unexpected()
+    prop.kind = "init"
+    prop.method = true
+    prop.value = this.parseMethod(isGenerator, isAsync)
+  } else if (this.options.ecmaVersion >= 5 && !prop.computed && prop.key.type === "Identifier" &&
+             (prop.key.name === "get" || prop.key.name === "set") &&
+             (this.type != tt.comma && this.type != tt.braceR)) {
+    if (isGenerator || isAsync || isPattern) this.unexpected()
+    prop.kind = prop.key.name
+    this.parsePropertyName(prop)
+    prop.value = this.parseMethod(false)
+    var paramCount = prop.kind === "get" ? 0 : 1
+    if (prop.value.params.length !== paramCount) {
+      var start = prop.value.start
+      if (prop.kind === "get")
+        this.raiseRecoverable(start, "getter should have no params")
+      else
+        this.raiseRecoverable(start, "setter should have exactly one param")
+    } else {
+      if (prop.kind === "set" && prop.value.params[0].type === "RestElement")
+        this.raiseRecoverable(prop.value.params[0].start, "Setter cannot use rest params")
+    }
+  } else if (this.options.ecmaVersion >= 6 && !prop.computed && prop.key.type === "Identifier") {
+    if (this.keywords.test(prop.key.name) ||
+        (this.strict ? this.reservedWordsStrict : this.reservedWords).test(prop.key.name) ||
+        (this.inGenerator && prop.key.name == "yield") ||
+        (this.inAsync && prop.key.name == "await"))
+      this.raiseRecoverable(prop.key.start, "'" + prop.key.name + "' can not be used as shorthand property")
+    prop.kind = "init"
+    if (isPattern) {
+      prop.value = this.parseMaybeDefault(startPos, startLoc, prop.key)
+    } else if (this.type === tt.eq && refDestructuringErrors) {
+      if (refDestructuringErrors.shorthandAssign < 0)
+        refDestructuringErrors.shorthandAssign = this.start
+      prop.value = this.parseMaybeDefault(startPos, startLoc, prop.key)
+    } else {
+      prop.value = prop.key
+    }
+    prop.shorthand = true
+  } else this.unexpected()
+}
+
+pp$3.parsePropertyName = function(prop) {
+  if (this.options.ecmaVersion >= 6) {
+    if (this.eat(tt.bracketL)) {
+      prop.computed = true
+      prop.key = this.parseMaybeAssign()
+      this.expect(tt.bracketR)
+      return prop.key
+    } else {
+      prop.computed = false
+    }
+  }
+  return prop.key = this.type === tt.num || this.type === tt.string ? this.parseExprAtom() : this.parseIdent(true)
+}
+
+// Initialize empty function node.
+
+pp$3.initFunction = function(node) {
+  node.id = null
+  if (this.options.ecmaVersion >= 6) {
+    node.generator = false
+    node.expression = false
+  }
+  if (this.options.ecmaVersion >= 8)
+    node.async = false
+}
+
+// Parse object or class method.
+
+pp$3.parseMethod = function(isGenerator, isAsync) {
+  var node = this.startNode(), oldInGen = this.inGenerator, oldInAsync = this.inAsync,
+      oldYieldPos = this.yieldPos, oldAwaitPos = this.awaitPos, oldInFunc = this.inFunction
+
+  this.initFunction(node)
+  if (this.options.ecmaVersion >= 6)
+    node.generator = isGenerator
+  if (this.options.ecmaVersion >= 8)
+    node.async = !!isAsync
+
+  this.inGenerator = node.generator
+  this.inAsync = node.async
+  this.yieldPos = 0
+  this.awaitPos = 0
+  this.inFunction = true
+  this.enterFunctionScope()
+
+  this.expect(tt.parenL)
+  node.params = this.parseBindingList(tt.parenR, false, this.options.ecmaVersion >= 8)
+  this.checkYieldAwaitInDefaultParams()
+  this.parseFunctionBody(node, false)
+
+  this.inGenerator = oldInGen
+  this.inAsync = oldInAsync
+  this.yieldPos = oldYieldPos
+  this.awaitPos = oldAwaitPos
+  this.inFunction = oldInFunc
+  return this.finishNode(node, "FunctionExpression")
+}
+
+// Parse arrow function expression with given parameters.
+
+pp$3.parseArrowExpression = function(node, params, isAsync) {
+  var oldInGen = this.inGenerator, oldInAsync = this.inAsync,
+      oldYieldPos = this.yieldPos, oldAwaitPos = this.awaitPos, oldInFunc = this.inFunction
+
+  this.enterFunctionScope()
+  this.initFunction(node)
+  if (this.options.ecmaVersion >= 8)
+    node.async = !!isAsync
+
+  this.inGenerator = false
+  this.inAsync = node.async
+  this.yieldPos = 0
+  this.awaitPos = 0
+  this.inFunction = true
+
+  node.params = this.toAssignableList(params, true)
+  this.parseFunctionBody(node, true)
+
+  this.inGenerator = oldInGen
+  this.inAsync = oldInAsync
+  this.yieldPos = oldYieldPos
+  this.awaitPos = oldAwaitPos
+  this.inFunction = oldInFunc
+  return this.finishNode(node, "ArrowFunctionExpression")
+}
+
+// Parse function body and check parameters.
+
+pp$3.parseFunctionBody = function(node, isArrowFunction) {
+  var isExpression = isArrowFunction && this.type !== tt.braceL
+  var oldStrict = this.strict, useStrict = false
+
+  if (isExpression) {
+    node.body = this.parseMaybeAssign()
+    node.expression = true
+    this.checkParams(node, false)
+  } else {
+    var nonSimple = this.options.ecmaVersion >= 7 && !this.isSimpleParamList(node.params)
+    if (!oldStrict || nonSimple) {
+      useStrict = this.strictDirective(this.end)
+      // If this is a strict mode function, verify that argument names
+      // are not repeated, and it does not try to bind the words `eval`
+      // or `arguments`.
+      if (useStrict && nonSimple)
+        this.raiseRecoverable(node.start, "Illegal 'use strict' directive in function with non-simple parameter list")
+    }
+    // Start a new scope with regard to labels and the `inFunction`
+    // flag (restore them to their old value afterwards).
+    var oldLabels = this.labels
+    this.labels = []
+    if (useStrict) this.strict = true
+
+    // Add the params to varDeclaredNames to ensure that an error is thrown
+    // if a let/const declaration in the function clashes with one of the params.
+    this.checkParams(node, !oldStrict && !useStrict && !isArrowFunction && this.isSimpleParamList(node.params))
+    node.body = this.parseBlock(false)
+    node.expression = false
+    this.labels = oldLabels
+  }
+  this.exitFunctionScope()
+
+  if (this.strict && node.id) {
+    // Ensure the function name isn't a forbidden identifier in strict mode, e.g. 'eval'
+    this.checkLVal(node.id, "none")
+  }
+  this.strict = oldStrict
+}
+
+pp$3.isSimpleParamList = function(params) {
+  for (var i = 0; i < params.length; i++)
+    if (params[i].type !== "Identifier") return false
+  return true
+}
+
+// Checks function params for various disallowed patterns such as using "eval"
+// or "arguments" and duplicate parameters.
+
+pp$3.checkParams = function(node, allowDuplicates) {
+  var this$1 = this;
+
+  var nameHash = {}
+  for (var i = 0; i < node.params.length; i++) this$1.checkLVal(node.params[i], "var", allowDuplicates ? null : nameHash)
+}
+
+// Parses a comma-separated list of expressions, and returns them as
+// an array. `close` is the token type that ends the list, and
+// `allowEmpty` can be turned on to allow subsequent commas with
+// nothing in between them to be parsed as `null` (which is needed
+// for array literals).
+
+pp$3.parseExprList = function(close, allowTrailingComma, allowEmpty, refDestructuringErrors) {
+  var this$1 = this;
+
+  var elts = [], first = true
+  while (!this.eat(close)) {
+    if (!first) {
+      this$1.expect(tt.comma)
+      if (allowTrailingComma && this$1.afterTrailingComma(close)) break
+    } else first = false
+
+    var elt
+    if (allowEmpty && this$1.type === tt.comma)
+      elt = null
+    else if (this$1.type === tt.ellipsis) {
+      elt = this$1.parseSpread(refDestructuringErrors)
+      if (refDestructuringErrors && this$1.type === tt.comma && refDestructuringErrors.trailingComma < 0)
+        refDestructuringErrors.trailingComma = this$1.start
+    } else {
+      elt = this$1.parseMaybeAssign(false, refDestructuringErrors)
+    }
+    elts.push(elt)
+  }
+  return elts
+}
+
+// Parse the next token as an identifier. If `liberal` is true (used
+// when parsing properties), it will also convert keywords into
+// identifiers.
+
+pp$3.parseIdent = function(liberal) {
+  var node = this.startNode()
+  if (liberal && this.options.allowReserved == "never") liberal = false
+  if (this.type === tt.name) {
+    if (!liberal && (this.strict ? this.reservedWordsStrict : this.reservedWords).test(this.value) &&
+        (this.options.ecmaVersion >= 6 ||
+         this.input.slice(this.start, this.end).indexOf("\\") == -1))
+      this.raiseRecoverable(this.start, "The keyword '" + this.value + "' is reserved")
+    if (this.inGenerator && this.value === "yield")
+      this.raiseRecoverable(this.start, "Can not use 'yield' as identifier inside a generator")
+    if (this.inAsync && this.value === "await")
+      this.raiseRecoverable(this.start, "Can not use 'await' as identifier inside an async function")
+    node.name = this.value
+  } else if (liberal && this.type.keyword) {
+    node.name = this.type.keyword
+  } else {
+    this.unexpected()
+  }
+  this.next()
+  return this.finishNode(node, "Identifier")
+}
+
+// Parses yield expression inside generator.
+
+pp$3.parseYield = function() {
+  if (!this.yieldPos) this.yieldPos = this.start
+
+  var node = this.startNode()
+  this.next()
+  if (this.type == tt.semi || this.canInsertSemicolon() || (this.type != tt.star && !this.type.startsExpr)) {
+    node.delegate = false
+    node.argument = null
+  } else {
+    node.delegate = this.eat(tt.star)
+    node.argument = this.parseMaybeAssign()
+  }
+  return this.finishNode(node, "YieldExpression")
+}
+
+pp$3.parseAwait = function() {
+  if (!this.awaitPos) this.awaitPos = this.start
+
+  var node = this.startNode()
+  this.next()
+  node.argument = this.parseMaybeUnary(null, true)
+  return this.finishNode(node, "AwaitExpression")
+}
+
+var pp$4 = Parser.prototype
+
+// This function is used to raise exceptions on parse errors. It
+// takes an offset integer (into the current `input`) to indicate
+// the location of the error, attaches the position to the end
+// of the error message, and then raises a `SyntaxError` with that
+// message.
+
+pp$4.raise = function(pos, message) {
+  var loc = getLineInfo(this.input, pos)
+  message += " (" + loc.line + ":" + loc.column + ")"
+  var err = new SyntaxError(message)
+  err.pos = pos; err.loc = loc; err.raisedAt = this.pos
+  throw err
+}
+
+pp$4.raiseRecoverable = pp$4.raise
+
+pp$4.curPosition = function() {
+  if (this.options.locations) {
+    return new Position(this.curLine, this.pos - this.lineStart)
+  }
+}
+
+var pp$5 = Parser.prototype
+
+// Object.assign polyfill
+var assign = Object.assign || function(target) {
+  var sources = [], len = arguments.length - 1;
+  while ( len-- > 0 ) sources[ len ] = arguments[ len + 1 ];
+
+  for (var i = 0; i < sources.length; i++) {
+    var source = sources[i]
+    for (var key in source) {
+      if (has(source, key)) {
+        target[key] = source[key]
+      }
+    }
+  }
+  return target
+}
+
+// The functions in this module keep track of declared variables in the current scope in order to detect duplicate variable names.
+
+pp$5.enterFunctionScope = function() {
+  // var: a hash of var-declared names in the current lexical scope
+  // lexical: a hash of lexically-declared names in the current lexical scope
+  // childVar: a hash of var-declared names in all child lexical scopes of the current lexical scope (within the current function scope)
+  // parentLexical: a hash of lexically-declared names in all parent lexical scopes of the current lexical scope (within the current function scope)
+  this.scopeStack.push({var: {}, lexical: {}, childVar: {}, parentLexical: {}})
+}
+
+pp$5.exitFunctionScope = function() {
+  this.scopeStack.pop()
+}
+
+pp$5.enterLexicalScope = function() {
+  var parentScope = this.scopeStack[this.scopeStack.length - 1]
+  var childScope = {var: {}, lexical: {}, childVar: {}, parentLexical: {}}
+
+  this.scopeStack.push(childScope)
+  assign(childScope.parentLexical, parentScope.lexical, parentScope.parentLexical)
+}
+
+pp$5.exitLexicalScope = function() {
+  var childScope = this.scopeStack.pop()
+  var parentScope = this.scopeStack[this.scopeStack.length - 1]
+
+  assign(parentScope.childVar, childScope.var, childScope.childVar)
+}
+
+/**
+ * A name can be declared with `var` if there are no variables with the same name declared with `let`/`const`
+ * in the current lexical scope or any of the parent lexical scopes in this function.
+ */
+pp$5.canDeclareVarName = function(name) {
+  var currentScope = this.scopeStack[this.scopeStack.length - 1]
+
+  return !has(currentScope.lexical, name) && !has(currentScope.parentLexical, name)
+}
+
+/**
+ * A name can be declared with `let`/`const` if there are no variables with the same name declared with `let`/`const`
+ * in the current scope, and there are no variables with the same name declared with `var` in the current scope or in
+ * any child lexical scopes in this function.
+ */
+pp$5.canDeclareLexicalName = function(name) {
+  var currentScope = this.scopeStack[this.scopeStack.length - 1]
+
+  return !has(currentScope.lexical, name) && !has(currentScope.var, name) && !has(currentScope.childVar, name)
+}
+
+pp$5.declareVarName = function(name) {
+  this.scopeStack[this.scopeStack.length - 1].var[name] = true
+}
+
+pp$5.declareLexicalName = function(name) {
+  this.scopeStack[this.scopeStack.length - 1].lexical[name] = true
+}
+
+var Node = function Node(parser, pos, loc) {
+  this.type = ""
+  this.start = pos
+  this.end = 0
+  if (parser.options.locations)
+    this.loc = new SourceLocation(parser, loc)
+  if (parser.options.directSourceFile)
+    this.sourceFile = parser.options.directSourceFile
+  if (parser.options.ranges)
+    this.range = [pos, 0]
+};
+
+// Start an AST node, attaching a start offset.
+
+var pp$6 = Parser.prototype
+
+pp$6.startNode = function() {
+  return new Node(this, this.start, this.startLoc)
+}
+
+pp$6.startNodeAt = function(pos, loc) {
+  return new Node(this, pos, loc)
+}
+
+// Finish an AST node, adding `type` and `end` properties.
+
+function finishNodeAt(node, type, pos, loc) {
+  node.type = type
+  node.end = pos
+  if (this.options.locations)
+    node.loc.end = loc
+  if (this.options.ranges)
+    node.range[1] = pos
+  return node
+}
+
+pp$6.finishNode = function(node, type) {
+  return finishNodeAt.call(this, node, type, this.lastTokEnd, this.lastTokEndLoc)
+}
+
+// Finish node at given position
+
+pp$6.finishNodeAt = function(node, type, pos, loc) {
+  return finishNodeAt.call(this, node, type, pos, loc)
+}
+
+// The algorithm used to determine whether a regexp can appear at a
+// given point in the program is loosely based on sweet.js' approach.
+// See https://github.com/mozilla/sweet.js/wiki/design
+
+var TokContext = function TokContext(token, isExpr, preserveSpace, override, generator) {
+  this.token = token
+  this.isExpr = !!isExpr
+  this.preserveSpace = !!preserveSpace
+  this.override = override
+  this.generator = !!generator
+};
+
+var types = {
+  b_stat: new TokContext("{", false),
+  b_expr: new TokContext("{", true),
+  b_tmpl: new TokContext("${", true),
+  p_stat: new TokContext("(", false),
+  p_expr: new TokContext("(", true),
+  q_tmpl: new TokContext("`", true, true, function (p) { return p.readTmplToken(); }),
+  f_expr: new TokContext("function", true),
+  f_expr_gen: new TokContext("function", true, false, null, true),
+  f_gen: new TokContext("function", false, false, null, true)
+}
+
+var pp$7 = Parser.prototype
+
+pp$7.initialContext = function() {
+  return [types.b_stat]
+}
+
+pp$7.braceIsBlock = function(prevType) {
+  if (prevType === tt.colon) {
+    var parent = this.curContext()
+    if (parent === types.b_stat || parent === types.b_expr)
+      return !parent.isExpr
+  }
+  if (prevType === tt._return)
+    return lineBreak.test(this.input.slice(this.lastTokEnd, this.start))
+  if (prevType === tt._else || prevType === tt.semi || prevType === tt.eof || prevType === tt.parenR || prevType == tt.arrow)
+    return true
+  if (prevType == tt.braceL)
+    return this.curContext() === types.b_stat
+  return !this.exprAllowed
+}
+
+pp$7.inGeneratorContext = function() {
+  var this$1 = this;
+
+  for (var i = this.context.length - 1; i >= 0; i--)
+    if (this$1.context[i].generator) return true
+  return false
+}
+
+pp$7.updateContext = function(prevType) {
+  var update, type = this.type
+  if (type.keyword && prevType == tt.dot)
+    this.exprAllowed = false
+  else if (update = type.updateContext)
+    update.call(this, prevType)
+  else
+    this.exprAllowed = type.beforeExpr
+}
+
+// Token-specific context update code
+
+tt.parenR.updateContext = tt.braceR.updateContext = function() {
+  if (this.context.length == 1) {
+    this.exprAllowed = true
+    return
+  }
+  var out = this.context.pop(), cur
+  if (out === types.b_stat && (cur = this.curContext()) && cur.token === "function") {
+    this.context.pop()
+    this.exprAllowed = false
+  } else if (out === types.b_tmpl) {
+    this.exprAllowed = true
+  } else {
+    this.exprAllowed = !out.isExpr
+  }
+}
+
+tt.braceL.updateContext = function(prevType) {
+  this.context.push(this.braceIsBlock(prevType) ? types.b_stat : types.b_expr)
+  this.exprAllowed = true
+}
+
+tt.dollarBraceL.updateContext = function() {
+  this.context.push(types.b_tmpl)
+  this.exprAllowed = true
+}
+
+tt.parenL.updateContext = function(prevType) {
+  var statementParens = prevType === tt._if || prevType === tt._for || prevType === tt._with || prevType === tt._while
+  this.context.push(statementParens ? types.p_stat : types.p_expr)
+  this.exprAllowed = true
+}
+
+tt.incDec.updateContext = function() {
+  // tokExprAllowed stays unchanged
+}
+
+tt._function.updateContext = function(prevType) {
+  if (prevType.beforeExpr && prevType !== tt.semi && prevType !== tt._else &&
+      !((prevType === tt.colon || prevType === tt.braceL) && this.curContext() === types.b_stat))
+    this.context.push(types.f_expr)
+  this.exprAllowed = false
+}
+
+tt.backQuote.updateContext = function() {
+  if (this.curContext() === types.q_tmpl)
+    this.context.pop()
+  else
+    this.context.push(types.q_tmpl)
+  this.exprAllowed = false
+}
+
+tt.star.updateContext = function(prevType) {
+  if (prevType == tt._function) {
+    if (this.curContext() === types.f_expr)
+      this.context[this.context.length - 1] = types.f_expr_gen
+    else
+      this.context.push(types.f_gen)
+  }
+  this.exprAllowed = true
+}
+
+tt.name.updateContext = function(prevType) {
+  var allowed = false
+  if (this.options.ecmaVersion >= 6) {
+    if (this.value == "of" && !this.exprAllowed ||
+        this.value == "yield" && this.inGeneratorContext())
+      allowed = true
+  }
+  this.exprAllowed = allowed
+}
+
+// Object type used to represent tokens. Note that normally, tokens
+// simply exist as properties on the parser object. This is only
+// used for the onToken callback and the external tokenizer.
+
+var Token = function Token(p) {
+  this.type = p.type
+  this.value = p.value
+  this.start = p.start
+  this.end = p.end
+  if (p.options.locations)
+    this.loc = new SourceLocation(p, p.startLoc, p.endLoc)
+  if (p.options.ranges)
+    this.range = [p.start, p.end]
+};
+
+// ## Tokenizer
+
+var pp$8 = Parser.prototype
+
+// Are we running under Rhino?
+var isRhino = typeof Packages == "object" && Object.prototype.toString.call(Packages) == "[object JavaPackage]"
+
+// Move to the next token
+
+pp$8.next = function() {
+  if (this.options.onToken)
+    this.options.onToken(new Token(this))
+
+  this.lastTokEnd = this.end
+  this.lastTokStart = this.start
+  this.lastTokEndLoc = this.endLoc
+  this.lastTokStartLoc = this.startLoc
+  this.nextToken()
+}
+
+pp$8.getToken = function() {
+  this.next()
+  return new Token(this)
+}
+
+// If we're in an ES6 environment, make parsers iterable
+if (typeof Symbol !== "undefined")
+  pp$8[Symbol.iterator] = function() {
+    var this$1 = this;
+
+    return {
+      next: function () {
+        var token = this$1.getToken()
+        return {
+          done: token.type === tt.eof,
+          value: token
+        }
+      }
+    }
+  }
+
+// Toggle strict mode. Re-reads the next number or string to please
+// pedantic tests (`"use strict"; 010;` should fail).
+
+pp$8.curContext = function() {
+  return this.context[this.context.length - 1]
+}
+
+// Read a single token, updating the parser object's token-related
+// properties.
+
+pp$8.nextToken = function() {
+  var curContext = this.curContext()
+  if (!curContext || !curContext.preserveSpace) this.skipSpace()
+
+  this.start = this.pos
+  if (this.options.locations) this.startLoc = this.curPosition()
+  if (this.pos >= this.input.length) return this.finishToken(tt.eof)
+
+  if (curContext.override) return curContext.override(this)
+  else this.readToken(this.fullCharCodeAtPos())
+}
+
+pp$8.readToken = function(code) {
+  // Identifier or keyword. '\uXXXX' sequences are allowed in
+  // identifiers, so '\' also dispatches to that.
+  if (isIdentifierStart(code, this.options.ecmaVersion >= 6) || code === 92 /* '\' */)
+    return this.readWord()
+
+  return this.getTokenFromCode(code)
+}
+
+pp$8.fullCharCodeAtPos = function() {
+  var code = this.input.charCodeAt(this.pos)
+  if (code <= 0xd7ff || code >= 0xe000) return code
+  var next = this.input.charCodeAt(this.pos + 1)
+  return (code << 10) + next - 0x35fdc00
+}
+
+pp$8.skipBlockComment = function() {
+  var this$1 = this;
+
+  var startLoc = this.options.onComment && this.curPosition()
+  var start = this.pos, end = this.input.indexOf("*/", this.pos += 2)
+  if (end === -1) this.raise(this.pos - 2, "Unterminated comment")
+  this.pos = end + 2
+  if (this.options.locations) {
+    lineBreakG.lastIndex = start
+    var match
+    while ((match = lineBreakG.exec(this.input)) && match.index < this.pos) {
+      ++this$1.curLine
+      this$1.lineStart = match.index + match[0].length
+    }
+  }
+  if (this.options.onComment)
+    this.options.onComment(true, this.input.slice(start + 2, end), start, this.pos,
+                           startLoc, this.curPosition())
+}
+
+pp$8.skipLineComment = function(startSkip) {
+  var this$1 = this;
+
+  var start = this.pos
+  var startLoc = this.options.onComment && this.curPosition()
+  var ch = this.input.charCodeAt(this.pos += startSkip)
+  while (this.pos < this.input.length && ch !== 10 && ch !== 13 && ch !== 8232 && ch !== 8233) {
+    ++this$1.pos
+    ch = this$1.input.charCodeAt(this$1.pos)
+  }
+  if (this.options.onComment)
+    this.options.onComment(false, this.input.slice(start + startSkip, this.pos), start, this.pos,
+                           startLoc, this.curPosition())
+}
+
+// Called at the start of the parse and after every token. Skips
+// whitespace and comments, and.
+
+pp$8.skipSpace = function() {
+  var this$1 = this;
+
+  loop: while (this.pos < this.input.length) {
+    var ch = this$1.input.charCodeAt(this$1.pos)
+    switch (ch) {
+    case 32: case 160: // ' '
+      ++this$1.pos
+      break
+    case 13:
+      if (this$1.input.charCodeAt(this$1.pos + 1) === 10) {
+        ++this$1.pos
+      }
+    case 10: case 8232: case 8233:
+      ++this$1.pos
+      if (this$1.options.locations) {
+        ++this$1.curLine
+        this$1.lineStart = this$1.pos
+      }
+      break
+    case 47: // '/'
+      switch (this$1.input.charCodeAt(this$1.pos + 1)) {
+      case 42: // '*'
+        this$1.skipBlockComment()
+        break
+      case 47:
+        this$1.skipLineComment(2)
+        break
+      default:
+        break loop
+      }
+      break
+    default:
+      if (ch > 8 && ch < 14 || ch >= 5760 && nonASCIIwhitespace.test(String.fromCharCode(ch))) {
+        ++this$1.pos
+      } else {
+        break loop
+      }
+    }
+  }
+}
+
+// Called at the end of every token. Sets `end`, `val`, and
+// maintains `context` and `exprAllowed`, and skips the space after
+// the token, so that the next one's `start` will point at the
+// right position.
+
+pp$8.finishToken = function(type, val) {
+  this.end = this.pos
+  if (this.options.locations) this.endLoc = this.curPosition()
+  var prevType = this.type
+  this.type = type
+  this.value = val
+
+  this.updateContext(prevType)
+}
+
+// ### Token reading
+
+// This is the function that is called to fetch the next token. It
+// is somewhat obscure, because it works in character codes rather
+// than characters, and because operator parsing has been inlined
+// into it.
+//
+// All in the name of speed.
+//
+pp$8.readToken_dot = function() {
+  var next = this.input.charCodeAt(this.pos + 1)
+  if (next >= 48 && next <= 57) return this.readNumber(true)
+  var next2 = this.input.charCodeAt(this.pos + 2)
+  if (this.options.ecmaVersion >= 6 && next === 46 && next2 === 46) { // 46 = dot '.'
+    this.pos += 3
+    return this.finishToken(tt.ellipsis)
+  } else {
+    ++this.pos
+    return this.finishToken(tt.dot)
+  }
+}
+
+pp$8.readToken_slash = function() { // '/'
+  var next = this.input.charCodeAt(this.pos + 1)
+  if (this.exprAllowed) { ++this.pos; return this.readRegexp() }
+  if (next === 61) return this.finishOp(tt.assign, 2)
+  return this.finishOp(tt.slash, 1)
+}
+
+pp$8.readToken_mult_modulo_exp = function(code) { // '%*'
+  var next = this.input.charCodeAt(this.pos + 1)
+  var size = 1
+  var tokentype = code === 42 ? tt.star : tt.modulo
+
+  // exponentiation operator ** and **=
+  if (this.options.ecmaVersion >= 7 && next === 42) {
+    ++size
+    tokentype = tt.starstar
+    next = this.input.charCodeAt(this.pos + 2)
+  }
+
+  if (next === 61) return this.finishOp(tt.assign, size + 1)
+  return this.finishOp(tokentype, size)
+}
+
+pp$8.readToken_pipe_amp = function(code) { // '|&'
+  var next = this.input.charCodeAt(this.pos + 1)
+  if (next === code) return this.finishOp(code === 124 ? tt.logicalOR : tt.logicalAND, 2)
+  if (next === 61) return this.finishOp(tt.assign, 2)
+  return this.finishOp(code === 124 ? tt.bitwiseOR : tt.bitwiseAND, 1)
+}
+
+pp$8.readToken_caret = function() { // '^'
+  var next = this.input.charCodeAt(this.pos + 1)
+  if (next === 61) return this.finishOp(tt.assign, 2)
+  return this.finishOp(tt.bitwiseXOR, 1)
+}
+
+pp$8.readToken_plus_min = function(code) { // '+-'
+  var next = this.input.charCodeAt(this.pos + 1)
+  if (next === code) {
+    if (next == 45 && this.input.charCodeAt(this.pos + 2) == 62 &&
+        lineBreak.test(this.input.slice(this.lastTokEnd, this.pos))) {
+      // A `-->` line comment
+      this.skipLineComment(3)
+      this.skipSpace()
+      return this.nextToken()
+    }
+    return this.finishOp(tt.incDec, 2)
+  }
+  if (next === 61) return this.finishOp(tt.assign, 2)
+  return this.finishOp(tt.plusMin, 1)
+}
+
+pp$8.readToken_lt_gt = function(code) { // '<>'
+  var next = this.input.charCodeAt(this.pos + 1)
+  var size = 1
+  if (next === code) {
+    size = code === 62 && this.input.charCodeAt(this.pos + 2) === 62 ? 3 : 2
+    if (this.input.charCodeAt(this.pos + size) === 61) return this.finishOp(tt.assign, size + 1)
+    return this.finishOp(tt.bitShift, size)
+  }
+  if (next == 33 && code == 60 && this.input.charCodeAt(this.pos + 2) == 45 &&
+      this.input.charCodeAt(this.pos + 3) == 45) {
+    if (this.inModule) this.unexpected()
+    // `<!--`, an XML-style comment that should be interpreted as a line comment
+    this.skipLineComment(4)
+    this.skipSpace()
+    return this.nextToken()
+  }
+  if (next === 61) size = 2
+  return this.finishOp(tt.relational, size)
+}
+
+pp$8.readToken_eq_excl = function(code) { // '=!'
+  var next = this.input.charCodeAt(this.pos + 1)
+  if (next === 61) return this.finishOp(tt.equality, this.input.charCodeAt(this.pos + 2) === 61 ? 3 : 2)
+  if (code === 61 && next === 62 && this.options.ecmaVersion >= 6) { // '=>'
+    this.pos += 2
+    return this.finishToken(tt.arrow)
+  }
+  return this.finishOp(code === 61 ? tt.eq : tt.prefix, 1)
+}
+
+pp$8.getTokenFromCode = function(code) {
+  switch (code) {
+    // The interpretation of a dot depends on whether it is followed
+    // by a digit or another two dots.
+  case 46: // '.'
+    return this.readToken_dot()
+
+    // Punctuation tokens.
+  case 40: ++this.pos; return this.finishToken(tt.parenL)
+  case 41: ++this.pos; return this.finishToken(tt.parenR)
+  case 59: ++this.pos; return this.finishToken(tt.semi)
+  case 44: ++this.pos; return this.finishToken(tt.comma)
+  case 91: ++this.pos; return this.finishToken(tt.bracketL)
+  case 93: ++this.pos; return this.finishToken(tt.bracketR)
+  case 123: ++this.pos; return this.finishToken(tt.braceL)
+  case 125: ++this.pos; return this.finishToken(tt.braceR)
+  case 58: ++this.pos; return this.finishToken(tt.colon)
+  case 63: ++this.pos; return this.finishToken(tt.question)
+
+  case 96: // '`'
+    if (this.options.ecmaVersion < 6) break
+    ++this.pos
+    return this.finishToken(tt.backQuote)
+
+  case 48: // '0'
+    var next = this.input.charCodeAt(this.pos + 1)
+    if (next === 120 || next === 88) return this.readRadixNumber(16) // '0x', '0X' - hex number
+    if (this.options.ecmaVersion >= 6) {
+      if (next === 111 || next === 79) return this.readRadixNumber(8) // '0o', '0O' - octal number
+      if (next === 98 || next === 66) return this.readRadixNumber(2) // '0b', '0B' - binary number
+    }
+    // Anything else beginning with a digit is an integer, octal
+    // number, or float.
+  case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57: // 1-9
+    return this.readNumber(false)
+
+    // Quotes produce strings.
+  case 34: case 39: // '"', "'"
+    return this.readString(code)
+
+    // Operators are parsed inline in tiny state machines. '=' (61) is
+    // often referred to. `finishOp` simply skips the amount of
+    // characters it is given as second argument, and returns a token
+    // of the type given by its first argument.
+
+  case 47: // '/'
+    return this.readToken_slash()
+
+  case 37: case 42: // '%*'
+    return this.readToken_mult_modulo_exp(code)
+
+  case 124: case 38: // '|&'
+    return this.readToken_pipe_amp(code)
+
+  case 94: // '^'
+    return this.readToken_caret()
+
+  case 43: case 45: // '+-'
+    return this.readToken_plus_min(code)
+
+  case 60: case 62: // '<>'
+    return this.readToken_lt_gt(code)
+
+  case 61: case 33: // '=!'
+    return this.readToken_eq_excl(code)
+
+  case 126: // '~'
+    return this.finishOp(tt.prefix, 1)
+  }
+
+  this.raise(this.pos, "Unexpected character '" + codePointToString(code) + "'")
+}
+
+pp$8.finishOp = function(type, size) {
+  var str = this.input.slice(this.pos, this.pos + size)
+  this.pos += size
+  return this.finishToken(type, str)
+}
+
+// Parse a regular expression. Some context-awareness is necessary,
+// since a '/' inside a '[]' set does not end the expression.
+
+function tryCreateRegexp(src, flags, throwErrorAt, parser) {
+  try {
+    return new RegExp(src, flags)
+  } catch (e) {
+    if (throwErrorAt !== undefined) {
+      if (e instanceof SyntaxError) parser.raise(throwErrorAt, "Error parsing regular expression: " + e.message)
+      throw e
+    }
+  }
+}
+
+var regexpUnicodeSupport = !!tryCreateRegexp("\uffff", "u")
+
+pp$8.readRegexp = function() {
+  var this$1 = this;
+
+  var escaped, inClass, start = this.pos
+  for (;;) {
+    if (this$1.pos >= this$1.input.length) this$1.raise(start, "Unterminated regular expression")
+    var ch = this$1.input.charAt(this$1.pos)
+    if (lineBreak.test(ch)) this$1.raise(start, "Unterminated regular expression")
+    if (!escaped) {
+      if (ch === "[") inClass = true
+      else if (ch === "]" && inClass) inClass = false
+      else if (ch === "/" && !inClass) break
+      escaped = ch === "\\"
+    } else escaped = false
+    ++this$1.pos
+  }
+  var content = this.input.slice(start, this.pos)
+  ++this.pos
+  // Need to use `readWord1` because '\uXXXX' sequences are allowed
+  // here (don't ask).
+  var mods = this.readWord1()
+  var tmp = content, tmpFlags = ""
+  if (mods) {
+    var validFlags = /^[gim]*$/
+    if (this.options.ecmaVersion >= 6) validFlags = /^[gimuy]*$/
+    if (!validFlags.test(mods)) this.raise(start, "Invalid regular expression flag")
+    if (mods.indexOf("u") >= 0) {
+      if (regexpUnicodeSupport) {
+        tmpFlags = "u"
+      } else {
+        // Replace each astral symbol and every Unicode escape sequence that
+        // possibly represents an astral symbol or a paired surrogate with a
+        // single ASCII symbol to avoid throwing on regular expressions that
+        // are only valid in combination with the `/u` flag.
+        // Note: replacing with the ASCII symbol `x` might cause false
+        // negatives in unlikely scenarios. For example, `[\u{61}-b]` is a
+        // perfectly valid pattern that is equivalent to `[a-b]`, but it would
+        // be replaced by `[x-b]` which throws an error.
+        tmp = tmp.replace(/\\u\{([0-9a-fA-F]+)\}/g, function (_match, code, offset) {
+          code = Number("0x" + code)
+          if (code > 0x10FFFF) this$1.raise(start + offset + 3, "Code point out of bounds")
+          return "x"
+        })
+        tmp = tmp.replace(/\\u([a-fA-F0-9]{4})|[\uD800-\uDBFF][\uDC00-\uDFFF]/g, "x")
+        tmpFlags = tmpFlags.replace("u", "")
+      }
+    }
+  }
+  // Detect invalid regular expressions.
+  var value = null
+  // Rhino's regular expression parser is flaky and throws uncatchable exceptions,
+  // so don't do detection if we are running under Rhino
+  if (!isRhino) {
+    tryCreateRegexp(tmp, tmpFlags, start, this)
+    // Get a regular expression object for this pattern-flag pair, or `null` in
+    // case the current environment doesn't support the flags it uses.
+    value = tryCreateRegexp(content, mods)
+  }
+  return this.finishToken(tt.regexp, {pattern: content, flags: mods, value: value})
+}
+
+// Read an integer in the given radix. Return null if zero digits
+// were read, the integer value otherwise. When `len` is given, this
+// will return `null` unless the integer has exactly `len` digits.
+
+pp$8.readInt = function(radix, len) {
+  var this$1 = this;
+
+  var start = this.pos, total = 0
+  for (var i = 0, e = len == null ? Infinity : len; i < e; ++i) {
+    var code = this$1.input.charCodeAt(this$1.pos), val
+    if (code >= 97) val = code - 97 + 10 // a
+    else if (code >= 65) val = code - 65 + 10 // A
+    else if (code >= 48 && code <= 57) val = code - 48 // 0-9
+    else val = Infinity
+    if (val >= radix) break
+    ++this$1.pos
+    total = total * radix + val
+  }
+  if (this.pos === start || len != null && this.pos - start !== len) return null
+
+  return total
+}
+
+pp$8.readRadixNumber = function(radix) {
+  this.pos += 2 // 0x
+  var val = this.readInt(radix)
+  if (val == null) this.raise(this.start + 2, "Expected number in radix " + radix)
+  if (isIdentifierStart(this.fullCharCodeAtPos())) this.raise(this.pos, "Identifier directly after number")
+  return this.finishToken(tt.num, val)
+}
+
+// Read an integer, octal integer, or floating-point number.
+
+pp$8.readNumber = function(startsWithDot) {
+  var start = this.pos, isFloat = false, octal = this.input.charCodeAt(this.pos) === 48
+  if (!startsWithDot && this.readInt(10) === null) this.raise(start, "Invalid number")
+  if (octal && this.pos == start + 1) octal = false
+  var next = this.input.charCodeAt(this.pos)
+  if (next === 46 && !octal) { // '.'
+    ++this.pos
+    this.readInt(10)
+    isFloat = true
+    next = this.input.charCodeAt(this.pos)
+  }
+  if ((next === 69 || next === 101) && !octal) { // 'eE'
+    next = this.input.charCodeAt(++this.pos)
+    if (next === 43 || next === 45) ++this.pos // '+-'
+    if (this.readInt(10) === null) this.raise(start, "Invalid number")
+    isFloat = true
+  }
+  if (isIdentifierStart(this.fullCharCodeAtPos())) this.raise(this.pos, "Identifier directly after number")
+
+  var str = this.input.slice(start, this.pos), val
+  if (isFloat) val = parseFloat(str)
+  else if (!octal || str.length === 1) val = parseInt(str, 10)
+  else if (/[89]/.test(str) || this.strict) this.raise(start, "Invalid number")
+  else val = parseInt(str, 8)
+  return this.finishToken(tt.num, val)
+}
+
+// Read a string value, interpreting backslash-escapes.
+
+pp$8.readCodePoint = function() {
+  var ch = this.input.charCodeAt(this.pos), code
+
+  if (ch === 123) {
+    if (this.options.ecmaVersion < 6) this.unexpected()
+    var codePos = ++this.pos
+    code = this.readHexChar(this.input.indexOf("}", this.pos) - this.pos)
+    ++this.pos
+    if (code > 0x10FFFF) this.raise(codePos, "Code point out of bounds")
+  } else {
+    code = this.readHexChar(4)
+  }
+  return code
+}
+
+function codePointToString(code) {
+  // UTF-16 Decoding
+  if (code <= 0xFFFF) return String.fromCharCode(code)
+  code -= 0x10000
+  return String.fromCharCode((code >> 10) + 0xD800, (code & 1023) + 0xDC00)
+}
+
+pp$8.readString = function(quote) {
+  var this$1 = this;
+
+  var out = "", chunkStart = ++this.pos
+  for (;;) {
+    if (this$1.pos >= this$1.input.length) this$1.raise(this$1.start, "Unterminated string constant")
+    var ch = this$1.input.charCodeAt(this$1.pos)
+    if (ch === quote) break
+    if (ch === 92) { // '\'
+      out += this$1.input.slice(chunkStart, this$1.pos)
+      out += this$1.readEscapedChar(false)
+      chunkStart = this$1.pos
+    } else {
+      if (isNewLine(ch)) this$1.raise(this$1.start, "Unterminated string constant")
+      ++this$1.pos
+    }
+  }
+  out += this.input.slice(chunkStart, this.pos++)
+  return this.finishToken(tt.string, out)
+}
+
+// Reads template string tokens.
+
+pp$8.readTmplToken = function() {
+  var this$1 = this;
+
+  var out = "", chunkStart = this.pos
+  for (;;) {
+    if (this$1.pos >= this$1.input.length) this$1.raise(this$1.start, "Unterminated template")
+    var ch = this$1.input.charCodeAt(this$1.pos)
+    if (ch === 96 || ch === 36 && this$1.input.charCodeAt(this$1.pos + 1) === 123) { // '`', '${'
+      if (this$1.pos === this$1.start && this$1.type === tt.template) {
+        if (ch === 36) {
+          this$1.pos += 2
+          return this$1.finishToken(tt.dollarBraceL)
+        } else {
+          ++this$1.pos
+          return this$1.finishToken(tt.backQuote)
+        }
+      }
+      out += this$1.input.slice(chunkStart, this$1.pos)
+      return this$1.finishToken(tt.template, out)
+    }
+    if (ch === 92) { // '\'
+      out += this$1.input.slice(chunkStart, this$1.pos)
+      out += this$1.readEscapedChar(true)
+      chunkStart = this$1.pos
+    } else if (isNewLine(ch)) {
+      out += this$1.input.slice(chunkStart, this$1.pos)
+      ++this$1.pos
+      switch (ch) {
+      case 13:
+        if (this$1.input.charCodeAt(this$1.pos) === 10) ++this$1.pos
+      case 10:
+        out += "\n"
+        break
+      default:
+        out += String.fromCharCode(ch)
+        break
+      }
+      if (this$1.options.locations) {
+        ++this$1.curLine
+        this$1.lineStart = this$1.pos
+      }
+      chunkStart = this$1.pos
+    } else {
+      ++this$1.pos
+    }
+  }
+}
+
+// Used to read escaped characters
+
+pp$8.readEscapedChar = function(inTemplate) {
+  var ch = this.input.charCodeAt(++this.pos)
+  ++this.pos
+  switch (ch) {
+  case 110: return "\n" // 'n' -> '\n'
+  case 114: return "\r" // 'r' -> '\r'
+  case 120: return String.fromCharCode(this.readHexChar(2)) // 'x'
+  case 117: return codePointToString(this.readCodePoint()) // 'u'
+  case 116: return "\t" // 't' -> '\t'
+  case 98: return "\b" // 'b' -> '\b'
+  case 118: return "\u000b" // 'v' -> '\u000b'
+  case 102: return "\f" // 'f' -> '\f'
+  case 13: if (this.input.charCodeAt(this.pos) === 10) ++this.pos // '\r\n'
+  case 10: // ' \n'
+    if (this.options.locations) { this.lineStart = this.pos; ++this.curLine }
+    return ""
+  default:
+    if (ch >= 48 && ch <= 55) {
+      var octalStr = this.input.substr(this.pos - 1, 3).match(/^[0-7]+/)[0]
+      var octal = parseInt(octalStr, 8)
+      if (octal > 255) {
+        octalStr = octalStr.slice(0, -1)
+        octal = parseInt(octalStr, 8)
+      }
+      if (octalStr !== "0" && (this.strict || inTemplate)) {
+        this.raise(this.pos - 2, "Octal literal in strict mode")
+      }
+      this.pos += octalStr.length - 1
+      return String.fromCharCode(octal)
+    }
+    return String.fromCharCode(ch)
+  }
+}
+
+// Used to read character escape sequences ('\x', '\u', '\U').
+
+pp$8.readHexChar = function(len) {
+  var codePos = this.pos
+  var n = this.readInt(16, len)
+  if (n === null) this.raise(codePos, "Bad character escape sequence")
+  return n
+}
+
+// Read an identifier, and return it as a string. Sets `this.containsEsc`
+// to whether the word contained a '\u' escape.
+//
+// Incrementally adds only escaped chars, adding other chunks as-is
+// as a micro-optimization.
+
+pp$8.readWord1 = function() {
+  var this$1 = this;
+
+  this.containsEsc = false
+  var word = "", first = true, chunkStart = this.pos
+  var astral = this.options.ecmaVersion >= 6
+  while (this.pos < this.input.length) {
+    var ch = this$1.fullCharCodeAtPos()
+    if (isIdentifierChar(ch, astral)) {
+      this$1.pos += ch <= 0xffff ? 1 : 2
+    } else if (ch === 92) { // "\"
+      this$1.containsEsc = true
+      word += this$1.input.slice(chunkStart, this$1.pos)
+      var escStart = this$1.pos
+      if (this$1.input.charCodeAt(++this$1.pos) != 117) // "u"
+        this$1.raise(this$1.pos, "Expecting Unicode escape sequence \\uXXXX")
+      ++this$1.pos
+      var esc = this$1.readCodePoint()
+      if (!(first ? isIdentifierStart : isIdentifierChar)(esc, astral))
+        this$1.raise(escStart, "Invalid Unicode escape")
+      word += codePointToString(esc)
+      chunkStart = this$1.pos
+    } else {
+      break
+    }
+    first = false
+  }
+  return word + this.input.slice(chunkStart, this.pos)
+}
+
+// Read an identifier or keyword token. Will check for reserved
+// words when necessary.
+
+pp$8.readWord = function() {
+  var word = this.readWord1()
+  var type = tt.name
+  if (this.keywords.test(word)) {
+    if (this.containsEsc) this.raiseRecoverable(this.start, "Escape sequence in keyword " + word)
+    type = keywordTypes[word]
+  }
+  return this.finishToken(type, word)
+}
+
+// Acorn is a tiny, fast JavaScript parser written in JavaScript.
+//
+// Acorn was written by Marijn Haverbeke, Ingvar Stepanyan, and
+// various contributors and released under an MIT license.
+//
+// Git repositories for Acorn are available at
+//
+//     http://marijnhaverbeke.nl/git/acorn
+//     https://github.com/ternjs/acorn.git
+//
+// Please use the [github bug tracker][ghbt] to report issues.
+//
+// [ghbt]: https://github.com/ternjs/acorn/issues
+//
+// This file defines the main parser interface. The library also comes
+// with a [error-tolerant parser][dammit] and an
+// [abstract syntax tree walker][walk], defined in other files.
+//
+// [dammit]: acorn_loose.js
+// [walk]: util/walk.js
+
+var version = "5.0.3"
+
+// The main exported interface (under `self.acorn` when in the
+// browser) is a `parse` function that takes a code string and
+// returns an abstract syntax tree as specified by [Mozilla parser
+// API][api].
+//
+// [api]: https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API
+
+function parse(input, options) {
+  return new Parser(options, input).parse()
+}
+
+// This function tries to parse a single expression at a given
+// offset in a string. Useful for parsing mixed-language formats
+// that embed JavaScript expressions.
+
+function parseExpressionAt(input, pos, options) {
+  var p = new Parser(options, input, pos)
+  p.nextToken()
+  return p.parseExpression()
+}
+
+// Acorn is organized as a tokenizer and a recursive-descent parser.
+// The `tokenizer` export provides an interface to the tokenizer.
+
+function tokenizer(input, options) {
+  return new Parser(options, input)
+}
+
+// This is a terrible kludge to support the existing, pre-ES6
+// interface where the loose parser module retroactively adds exports
+// to this module.
+// eslint-disable-line camelcase
+function addLooseExports(parse, Parser, plugins) {
+  exports.parse_dammit = parse // eslint-disable-line camelcase
+  exports.LooseParser = Parser
+  exports.pluginsLoose = plugins
+}
+
+exports.version = version;
+exports.parse = parse;
+exports.parseExpressionAt = parseExpressionAt;
+exports.tokenizer = tokenizer;
+exports.addLooseExports = addLooseExports;
+exports.Parser = Parser;
+exports.plugins = plugins;
+exports.defaultOptions = defaultOptions;
+exports.Position = Position;
+exports.SourceLocation = SourceLocation;
+exports.getLineInfo = getLineInfo;
+exports.Node = Node;
+exports.TokenType = TokenType;
+exports.tokTypes = tt;
+exports.keywordTypes = keywordTypes;
+exports.TokContext = TokContext;
+exports.tokContexts = types;
+exports.isIdentifierChar = isIdentifierChar;
+exports.isIdentifierStart = isIdentifierStart;
+exports.Token = Token;
+exports.isNewLine = isNewLine;
+exports.lineBreak = lineBreak;
+exports.lineBreakG = lineBreakG;
+exports.nonASCIIwhitespace = nonASCIIwhitespace;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+
+/***/ }),
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40617,7 +44419,7 @@ function initLiterature() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_InfiltrationBox_js__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_InfiltrationBox_js__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__ = __webpack_require__(5);
 
 
@@ -41435,7 +45237,7 @@ function getInfiltrationEscapeChance(inst) {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -41557,7 +45359,7 @@ function infiltrationBoxCreate(inst) {
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -41697,7 +45499,7 @@ let FactionInfo = {
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -56254,7 +60056,7 @@ let FactionInfo = {
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56314,7 +60116,7 @@ function factionInvitationBoxCreate(faction) {
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***** BEGIN LICENSE BLOCK *****
@@ -73114,7 +76916,7 @@ var WorkerClient = function(topLevelNamespaces, mod, classname, workerUrl) {
 
     try {
             var workerSrc = mod.src;
-    var Blob = __webpack_require__(51);
+    var Blob = __webpack_require__(52);
     var blob = new Blob([ workerSrc ], { type: 'application/javascript' });
     var blobUrl = (window.URL || window.webkitURL).createObjectURL(blob);
 
@@ -75395,7 +79197,7 @@ exports.version = "1.2.6";
 module.exports = window.ace.acequire("ace/ace");
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {module.exports = get_blob()
@@ -75427,10 +79229,10 @@ function get_blob() {
   }
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(52)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports) {
 
 var g;
@@ -75457,7 +79259,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ace.define("ace/mode/doc_comment_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
@@ -76245,7 +80047,7 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ace.define("ace/mode/doc_comment_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
@@ -77053,7 +80855,7 @@ exports.Mode = Mode;
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports) {
 
 ace.define("ace/theme/chaos",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
@@ -77215,7 +81017,7 @@ dom.importCssString(exports.cssText, exports.cssClass);
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports) {
 
 ace.define("ace/theme/chrome",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
@@ -77349,7 +81151,7 @@ dom.importCssString(exports.cssText, exports.cssClass);
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports) {
 
 ace.define("ace/theme/monokai",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
@@ -77460,7 +81262,7 @@ dom.importCssString(exports.cssText, exports.cssClass);
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 ace.define("ace/theme/solarized_dark",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
@@ -77554,7 +81356,7 @@ dom.importCssString(exports.cssText, exports.cssClass);
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports) {
 
 ace.define("ace/theme/solarized_light",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
@@ -77651,7 +81453,7 @@ dom.importCssString(exports.cssText, exports.cssClass);
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 ace.define("ace/theme/terminal",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
@@ -77771,7 +81573,7 @@ dom.importCssString(exports.cssText, exports.cssClass);
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 ace.define("ace/theme/twilight",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
@@ -77886,7 +81688,7 @@ dom.importCssString(exports.cssText, exports.cssClass);
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports) {
 
 ace.define("ace/theme/xcode",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
@@ -77980,7 +81782,7 @@ dom.importCssString(exports.cssText, exports.cssClass);
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports) {
 
 ace.define("ace/keyboard/vim",["require","exports","module","ace/range","ace/lib/event_emitter","ace/lib/dom","ace/lib/oop","ace/lib/keys","ace/lib/event","ace/search","ace/lib/useragent","ace/search_highlight","ace/commands/multi_select_commands","ace/mode/text","ace/multi_select"], function(acequire, exports, module) {
@@ -83576,7 +87378,7 @@ dom.importCssString(".normal-mode .ace_cursor{\
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports) {
 
 ace.define("ace/occur",["require","exports","module","ace/lib/oop","ace/range","ace/search","ace/edit_session","ace/search_highlight","ace/lib/dom"], function(acequire, exports, module) {
@@ -84763,7 +88565,7 @@ exports.killRing = {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84773,7 +88575,7 @@ exports.killRing = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_YesNoBox_js__ = __webpack_require__(21);
 
 
@@ -84844,7 +88646,7 @@ function purchaseRamForHomeComputer(cost) {
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -85058,3642 +88860,6 @@ let HelpTexts = {
 
 
 /***/ }),
-/* 67 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-acorn.js 
-https://github.com/ternjs/acorn
-
-Copyright (C) 2012-2017 by various contributors (see AUTHORS)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
-
-(function (global, factory) {
-   true ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.acorn = global.acorn || {})));
-}(this, (function (exports) { 'use strict';
-
-// Reserved word lists for various dialects of the language
-
-var reservedWords = {
-  3: "abstract boolean byte char class double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized throws transient volatile",
-  5: "class enum extends super const export import",
-  6: "enum",
-  strict: "implements interface let package private protected public static yield",
-  strictBind: "eval arguments"
-}
-
-// And the keywords
-
-var ecma5AndLessKeywords = "break case catch continue debugger default do else finally for function if return switch throw try var while with null true false instanceof typeof void delete new in this"
-
-var keywords = {
-  5: ecma5AndLessKeywords,
-  6: ecma5AndLessKeywords + " const class extends export import super"
-}
-
-// ## Character categories
-
-// Big ugly regular expressions that match characters in the
-// whitespace, identifier, and identifier-start categories. These
-// are only applied when a character is found to actually have a
-// code point above 128.
-// Generated by `bin/generate-identifier-regex.js`.
-
-var nonASCIIidentifierStartChars = "\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u037f\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u052f\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0-\u08b4\u08b6-\u08bd\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0af9\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c39\u0c3d\u0c58-\u0c5a\u0c60\u0c61\u0c80\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d54-\u0d56\u0d5f-\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f5\u13f8-\u13fd\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f8\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191e\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19b0-\u19c9\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1c80-\u1c88\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2118-\u211d\u2124\u2126\u2128\u212a-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309b-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fd5\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua69d\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua7ae\ua7b0-\ua7b7\ua7f7-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua8fd\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\ua9e0-\ua9e4\ua9e6-\ua9ef\ua9fa-\ua9fe\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa7e-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uab30-\uab5a\uab5c-\uab65\uab70-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc"
-var nonASCIIidentifierChars = "\u200c\u200d\xb7\u0300-\u036f\u0387\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u064b-\u0669\u0670\u06d6-\u06dc\u06df-\u06e4\u06e7\u06e8\u06ea-\u06ed\u06f0-\u06f9\u0711\u0730-\u074a\u07a6-\u07b0\u07c0-\u07c9\u07eb-\u07f3\u0816-\u0819\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0859-\u085b\u08d4-\u08e1\u08e3-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09cb-\u09cd\u09d7\u09e2\u09e3\u09e6-\u09ef\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2\u0ae3\u0ae6-\u0aef\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b62\u0b63\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c00-\u0c03\u0c3e-\u0c44\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62\u0c63\u0c66-\u0c6f\u0c81-\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2\u0ce3\u0ce6-\u0cef\u0d01-\u0d03\u0d3e-\u0d44\u0d46-\u0d48\u0d4a-\u0d4d\u0d57\u0d62\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0de6-\u0def\u0df2\u0df3\u0e31\u0e34-\u0e3a\u0e47-\u0e4e\u0e50-\u0e59\u0eb1\u0eb4-\u0eb9\u0ebb\u0ebc\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f3e\u0f3f\u0f71-\u0f84\u0f86\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u102b-\u103e\u1040-\u1049\u1056-\u1059\u105e-\u1060\u1062-\u1064\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u1369-\u1371\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17b4-\u17d3\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u18a9\u1920-\u192b\u1930-\u193b\u1946-\u194f\u19d0-\u19da\u1a17-\u1a1b\u1a55-\u1a5e\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1ab0-\u1abd\u1b00-\u1b04\u1b34-\u1b44\u1b50-\u1b59\u1b6b-\u1b73\u1b80-\u1b82\u1ba1-\u1bad\u1bb0-\u1bb9\u1be6-\u1bf3\u1c24-\u1c37\u1c40-\u1c49\u1c50-\u1c59\u1cd0-\u1cd2\u1cd4-\u1ce8\u1ced\u1cf2-\u1cf4\u1cf8\u1cf9\u1dc0-\u1df5\u1dfb-\u1dff\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2cef-\u2cf1\u2d7f\u2de0-\u2dff\u302a-\u302f\u3099\u309a\ua620-\ua629\ua66f\ua674-\ua67d\ua69e\ua69f\ua6f0\ua6f1\ua802\ua806\ua80b\ua823-\ua827\ua880\ua881\ua8b4-\ua8c5\ua8d0-\ua8d9\ua8e0-\ua8f1\ua900-\ua909\ua926-\ua92d\ua947-\ua953\ua980-\ua983\ua9b3-\ua9c0\ua9d0-\ua9d9\ua9e5\ua9f0-\ua9f9\uaa29-\uaa36\uaa43\uaa4c\uaa4d\uaa50-\uaa59\uaa7b-\uaa7d\uaab0\uaab2-\uaab4\uaab7\uaab8\uaabe\uaabf\uaac1\uaaeb-\uaaef\uaaf5\uaaf6\uabe3-\uabea\uabec\uabed\uabf0-\uabf9\ufb1e\ufe00-\ufe0f\ufe20-\ufe2f\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f"
-
-var nonASCIIidentifierStart = new RegExp("[" + nonASCIIidentifierStartChars + "]")
-var nonASCIIidentifier = new RegExp("[" + nonASCIIidentifierStartChars + nonASCIIidentifierChars + "]")
-
-nonASCIIidentifierStartChars = nonASCIIidentifierChars = null
-
-// These are a run-length and offset encoded representation of the
-// >0xffff code points that are a valid part of identifiers. The
-// offset starts at 0x10000, and each pair of numbers represents an
-// offset to the next range, and then a size of the range. They were
-// generated by bin/generate-identifier-regex.js
-
-// eslint-disable-next-line comma-spacing
-var astralIdentifierStartCodes = [0,11,2,25,2,18,2,1,2,14,3,13,35,122,70,52,268,28,4,48,48,31,17,26,6,37,11,29,3,35,5,7,2,4,43,157,19,35,5,35,5,39,9,51,157,310,10,21,11,7,153,5,3,0,2,43,2,1,4,0,3,22,11,22,10,30,66,18,2,1,11,21,11,25,71,55,7,1,65,0,16,3,2,2,2,26,45,28,4,28,36,7,2,27,28,53,11,21,11,18,14,17,111,72,56,50,14,50,785,52,76,44,33,24,27,35,42,34,4,0,13,47,15,3,22,0,2,0,36,17,2,24,85,6,2,0,2,3,2,14,2,9,8,46,39,7,3,1,3,21,2,6,2,1,2,4,4,0,19,0,13,4,159,52,19,3,54,47,21,1,2,0,185,46,42,3,37,47,21,0,60,42,86,25,391,63,32,0,449,56,264,8,2,36,18,0,50,29,881,921,103,110,18,195,2749,1070,4050,582,8634,568,8,30,114,29,19,47,17,3,32,20,6,18,881,68,12,0,67,12,65,0,32,6124,20,754,9486,1,3071,106,6,12,4,8,8,9,5991,84,2,70,2,1,3,0,3,1,3,3,2,11,2,0,2,6,2,64,2,3,3,7,2,6,2,27,2,3,2,4,2,0,4,6,2,339,3,24,2,24,2,30,2,24,2,30,2,24,2,30,2,24,2,30,2,24,2,7,4149,196,60,67,1213,3,2,26,2,1,2,0,3,0,2,9,2,3,2,0,2,0,7,0,5,0,2,0,2,0,2,2,2,1,2,0,3,0,2,0,2,0,2,0,2,0,2,1,2,0,3,3,2,6,2,3,2,3,2,0,2,9,2,16,6,2,2,4,2,16,4421,42710,42,4148,12,221,3,5761,10591,541]
-
-// eslint-disable-next-line comma-spacing
-var astralIdentifierCodes = [509,0,227,0,150,4,294,9,1368,2,2,1,6,3,41,2,5,0,166,1,1306,2,54,14,32,9,16,3,46,10,54,9,7,2,37,13,2,9,52,0,13,2,49,13,10,2,4,9,83,11,7,0,161,11,6,9,7,3,57,0,2,6,3,1,3,2,10,0,11,1,3,6,4,4,193,17,10,9,87,19,13,9,214,6,3,8,28,1,83,16,16,9,82,12,9,9,84,14,5,9,423,9,838,7,2,7,17,9,57,21,2,13,19882,9,135,4,60,6,26,9,1016,45,17,3,19723,1,5319,4,4,5,9,7,3,6,31,3,149,2,1418,49,513,54,5,49,9,0,15,0,23,4,2,14,1361,6,2,16,3,6,2,1,2,4,2214,6,110,6,6,9,792487,239]
-
-// This has a complexity linear to the value of the code. The
-// assumption is that looking up astral identifier characters is
-// rare.
-function isInAstralSet(code, set) {
-  var pos = 0x10000
-  for (var i = 0; i < set.length; i += 2) {
-    pos += set[i]
-    if (pos > code) return false
-    pos += set[i + 1]
-    if (pos >= code) return true
-  }
-}
-
-// Test whether a given character code starts an identifier.
-
-function isIdentifierStart(code, astral) {
-  if (code < 65) return code === 36
-  if (code < 91) return true
-  if (code < 97) return code === 95
-  if (code < 123) return true
-  if (code <= 0xffff) return code >= 0xaa && nonASCIIidentifierStart.test(String.fromCharCode(code))
-  if (astral === false) return false
-  return isInAstralSet(code, astralIdentifierStartCodes)
-}
-
-// Test whether a given character is part of an identifier.
-
-function isIdentifierChar(code, astral) {
-  if (code < 48) return code === 36
-  if (code < 58) return true
-  if (code < 65) return false
-  if (code < 91) return true
-  if (code < 97) return code === 95
-  if (code < 123) return true
-  if (code <= 0xffff) return code >= 0xaa && nonASCIIidentifier.test(String.fromCharCode(code))
-  if (astral === false) return false
-  return isInAstralSet(code, astralIdentifierStartCodes) || isInAstralSet(code, astralIdentifierCodes)
-}
-
-// ## Token types
-
-// The assignment of fine-grained, information-carrying type objects
-// allows the tokenizer to store the information it has about a
-// token in a way that is very cheap for the parser to look up.
-
-// All token type variables start with an underscore, to make them
-// easy to recognize.
-
-// The `beforeExpr` property is used to disambiguate between regular
-// expressions and divisions. It is set on all token types that can
-// be followed by an expression (thus, a slash after them would be a
-// regular expression).
-//
-// The `startsExpr` property is used to check if the token ends a
-// `yield` expression. It is set on all token types that either can
-// directly start an expression (like a quotation mark) or can
-// continue an expression (like the body of a string).
-//
-// `isLoop` marks a keyword as starting a loop, which is important
-// to know when parsing a label, in order to allow or disallow
-// continue jumps to that label.
-
-var TokenType = function TokenType(label, conf) {
-  if ( conf === void 0 ) conf = {};
-
-  this.label = label
-  this.keyword = conf.keyword
-  this.beforeExpr = !!conf.beforeExpr
-  this.startsExpr = !!conf.startsExpr
-  this.isLoop = !!conf.isLoop
-  this.isAssign = !!conf.isAssign
-  this.prefix = !!conf.prefix
-  this.postfix = !!conf.postfix
-  this.binop = conf.binop || null
-  this.updateContext = null
-};
-
-function binop(name, prec) {
-  return new TokenType(name, {beforeExpr: true, binop: prec})
-}
-var beforeExpr = {beforeExpr: true};
-var startsExpr = {startsExpr: true};
-// Map keyword names to token types.
-
-var keywordTypes = {}
-
-// Succinct definitions of keyword token types
-function kw(name, options) {
-  if ( options === void 0 ) options = {};
-
-  options.keyword = name
-  return keywordTypes[name] = new TokenType(name, options)
-}
-
-var tt = {
-  num: new TokenType("num", startsExpr),
-  regexp: new TokenType("regexp", startsExpr),
-  string: new TokenType("string", startsExpr),
-  name: new TokenType("name", startsExpr),
-  eof: new TokenType("eof"),
-
-  // Punctuation token types.
-  bracketL: new TokenType("[", {beforeExpr: true, startsExpr: true}),
-  bracketR: new TokenType("]"),
-  braceL: new TokenType("{", {beforeExpr: true, startsExpr: true}),
-  braceR: new TokenType("}"),
-  parenL: new TokenType("(", {beforeExpr: true, startsExpr: true}),
-  parenR: new TokenType(")"),
-  comma: new TokenType(",", beforeExpr),
-  semi: new TokenType(";", beforeExpr),
-  colon: new TokenType(":", beforeExpr),
-  dot: new TokenType("."),
-  question: new TokenType("?", beforeExpr),
-  arrow: new TokenType("=>", beforeExpr),
-  template: new TokenType("template"),
-  ellipsis: new TokenType("...", beforeExpr),
-  backQuote: new TokenType("`", startsExpr),
-  dollarBraceL: new TokenType("${", {beforeExpr: true, startsExpr: true}),
-
-  // Operators. These carry several kinds of properties to help the
-  // parser use them properly (the presence of these properties is
-  // what categorizes them as operators).
-  //
-  // `binop`, when present, specifies that this operator is a binary
-  // operator, and will refer to its precedence.
-  //
-  // `prefix` and `postfix` mark the operator as a prefix or postfix
-  // unary operator.
-  //
-  // `isAssign` marks all of `=`, `+=`, `-=` etcetera, which act as
-  // binary operators with a very low precedence, that should result
-  // in AssignmentExpression nodes.
-
-  eq: new TokenType("=", {beforeExpr: true, isAssign: true}),
-  assign: new TokenType("_=", {beforeExpr: true, isAssign: true}),
-  incDec: new TokenType("++/--", {prefix: true, postfix: true, startsExpr: true}),
-  prefix: new TokenType("prefix", {beforeExpr: true, prefix: true, startsExpr: true}),
-  logicalOR: binop("||", 1),
-  logicalAND: binop("&&", 2),
-  bitwiseOR: binop("|", 3),
-  bitwiseXOR: binop("^", 4),
-  bitwiseAND: binop("&", 5),
-  equality: binop("==/!=", 6),
-  relational: binop("</>", 7),
-  bitShift: binop("<</>>", 8),
-  plusMin: new TokenType("+/-", {beforeExpr: true, binop: 9, prefix: true, startsExpr: true}),
-  modulo: binop("%", 10),
-  star: binop("*", 10),
-  slash: binop("/", 10),
-  starstar: new TokenType("**", {beforeExpr: true}),
-
-  // Keyword token types.
-  _break: kw("break"),
-  _case: kw("case", beforeExpr),
-  _catch: kw("catch"),
-  _continue: kw("continue"),
-  _debugger: kw("debugger"),
-  _default: kw("default", beforeExpr),
-  _do: kw("do", {isLoop: true, beforeExpr: true}),
-  _else: kw("else", beforeExpr),
-  _finally: kw("finally"),
-  _for: kw("for", {isLoop: true}),
-  _function: kw("function", startsExpr),
-  _if: kw("if"),
-  _return: kw("return", beforeExpr),
-  _switch: kw("switch"),
-  _throw: kw("throw", beforeExpr),
-  _try: kw("try"),
-  _var: kw("var"),
-  _const: kw("const"),
-  _while: kw("while", {isLoop: true}),
-  _with: kw("with"),
-  _new: kw("new", {beforeExpr: true, startsExpr: true}),
-  _this: kw("this", startsExpr),
-  _super: kw("super", startsExpr),
-  _class: kw("class"),
-  _extends: kw("extends", beforeExpr),
-  _export: kw("export"),
-  _import: kw("import"),
-  _null: kw("null", startsExpr),
-  _true: kw("true", startsExpr),
-  _false: kw("false", startsExpr),
-  _in: kw("in", {beforeExpr: true, binop: 7}),
-  _instanceof: kw("instanceof", {beforeExpr: true, binop: 7}),
-  _typeof: kw("typeof", {beforeExpr: true, prefix: true, startsExpr: true}),
-  _void: kw("void", {beforeExpr: true, prefix: true, startsExpr: true}),
-  _delete: kw("delete", {beforeExpr: true, prefix: true, startsExpr: true})
-}
-
-// Matches a whole line break (where CRLF is considered a single
-// line break). Used to count lines.
-
-var lineBreak = /\r\n?|\n|\u2028|\u2029/
-var lineBreakG = new RegExp(lineBreak.source, "g")
-
-function isNewLine(code) {
-  return code === 10 || code === 13 || code === 0x2028 || code === 0x2029
-}
-
-var nonASCIIwhitespace = /[\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff]/
-
-var skipWhiteSpace = /(?:\s|\/\/.*|\/\*[^]*?\*\/)*/g
-
-var ref = Object.prototype;
-var hasOwnProperty = ref.hasOwnProperty;
-var toString = ref.toString;
-
-// Checks if an object has a property.
-
-function has(obj, propName) {
-  return hasOwnProperty.call(obj, propName)
-}
-
-var isArray = Array.isArray || (function (obj) { return (
-  toString.call(obj) === "[object Array]"
-); })
-
-// These are used when `options.locations` is on, for the
-// `startLoc` and `endLoc` properties.
-
-var Position = function Position(line, col) {
-  this.line = line
-  this.column = col
-};
-
-Position.prototype.offset = function offset (n) {
-  return new Position(this.line, this.column + n)
-};
-
-var SourceLocation = function SourceLocation(p, start, end) {
-  this.start = start
-  this.end = end
-  if (p.sourceFile !== null) this.source = p.sourceFile
-};
-
-// The `getLineInfo` function is mostly useful when the
-// `locations` option is off (for performance reasons) and you
-// want to find the line/column position for a given character
-// offset. `input` should be the code string that the offset refers
-// into.
-
-function getLineInfo(input, offset) {
-  for (var line = 1, cur = 0;;) {
-    lineBreakG.lastIndex = cur
-    var match = lineBreakG.exec(input)
-    if (match && match.index < offset) {
-      ++line
-      cur = match.index + match[0].length
-    } else {
-      return new Position(line, offset - cur)
-    }
-  }
-}
-
-// A second optional argument can be given to further configure
-// the parser process. These options are recognized:
-
-var defaultOptions = {
-  // `ecmaVersion` indicates the ECMAScript version to parse. Must
-  // be either 3, 5, 6 (2015), 7 (2016), or 8 (2017). This influences support
-  // for strict mode, the set of reserved words, and support for
-  // new syntax features. The default is 7.
-  ecmaVersion: 7,
-  // `sourceType` indicates the mode the code should be parsed in.
-  // Can be either `"script"` or `"module"`. This influences global
-  // strict mode and parsing of `import` and `export` declarations.
-  sourceType: "script",
-  // `onInsertedSemicolon` can be a callback that will be called
-  // when a semicolon is automatically inserted. It will be passed
-  // th position of the comma as an offset, and if `locations` is
-  // enabled, it is given the location as a `{line, column}` object
-  // as second argument.
-  onInsertedSemicolon: null,
-  // `onTrailingComma` is similar to `onInsertedSemicolon`, but for
-  // trailing commas.
-  onTrailingComma: null,
-  // By default, reserved words are only enforced if ecmaVersion >= 5.
-  // Set `allowReserved` to a boolean value to explicitly turn this on
-  // an off. When this option has the value "never", reserved words
-  // and keywords can also not be used as property names.
-  allowReserved: null,
-  // When enabled, a return at the top level is not considered an
-  // error.
-  allowReturnOutsideFunction: false,
-  // When enabled, import/export statements are not constrained to
-  // appearing at the top of the program.
-  allowImportExportEverywhere: false,
-  // When enabled, hashbang directive in the beginning of file
-  // is allowed and treated as a line comment.
-  allowHashBang: false,
-  // When `locations` is on, `loc` properties holding objects with
-  // `start` and `end` properties in `{line, column}` form (with
-  // line being 1-based and column 0-based) will be attached to the
-  // nodes.
-  locations: false,
-  // A function can be passed as `onToken` option, which will
-  // cause Acorn to call that function with object in the same
-  // format as tokens returned from `tokenizer().getToken()`. Note
-  // that you are not allowed to call the parser from the
-  // callback—that will corrupt its internal state.
-  onToken: null,
-  // A function can be passed as `onComment` option, which will
-  // cause Acorn to call that function with `(block, text, start,
-  // end)` parameters whenever a comment is skipped. `block` is a
-  // boolean indicating whether this is a block (`/* */`) comment,
-  // `text` is the content of the comment, and `start` and `end` are
-  // character offsets that denote the start and end of the comment.
-  // When the `locations` option is on, two more parameters are
-  // passed, the full `{line, column}` locations of the start and
-  // end of the comments. Note that you are not allowed to call the
-  // parser from the callback—that will corrupt its internal state.
-  onComment: null,
-  // Nodes have their start and end characters offsets recorded in
-  // `start` and `end` properties (directly on the node, rather than
-  // the `loc` object, which holds line/column data. To also add a
-  // [semi-standardized][range] `range` property holding a `[start,
-  // end]` array with the same numbers, set the `ranges` option to
-  // `true`.
-  //
-  // [range]: https://bugzilla.mozilla.org/show_bug.cgi?id=745678
-  ranges: false,
-  // It is possible to parse multiple files into a single AST by
-  // passing the tree produced by parsing the first file as
-  // `program` option in subsequent parses. This will add the
-  // toplevel forms of the parsed file to the `Program` (top) node
-  // of an existing parse tree.
-  program: null,
-  // When `locations` is on, you can pass this to record the source
-  // file in every node's `loc` object.
-  sourceFile: null,
-  // This value, if given, is stored in every node, whether
-  // `locations` is on or off.
-  directSourceFile: null,
-  // When enabled, parenthesized expressions are represented by
-  // (non-standard) ParenthesizedExpression nodes
-  preserveParens: false,
-  plugins: {}
-}
-
-// Interpret and default an options object
-
-function getOptions(opts) {
-  var options = {}
-
-  for (var opt in defaultOptions)
-    options[opt] = opts && has(opts, opt) ? opts[opt] : defaultOptions[opt]
-
-  if (options.ecmaVersion >= 2015)
-    options.ecmaVersion -= 2009
-
-  if (options.allowReserved == null)
-    options.allowReserved = options.ecmaVersion < 5
-
-  if (isArray(options.onToken)) {
-    var tokens = options.onToken
-    options.onToken = function (token) { return tokens.push(token); }
-  }
-  if (isArray(options.onComment))
-    options.onComment = pushComment(options, options.onComment)
-
-  return options
-}
-
-function pushComment(options, array) {
-  return function(block, text, start, end, startLoc, endLoc) {
-    var comment = {
-      type: block ? "Block" : "Line",
-      value: text,
-      start: start,
-      end: end
-    }
-    if (options.locations)
-      comment.loc = new SourceLocation(this, startLoc, endLoc)
-    if (options.ranges)
-      comment.range = [start, end]
-    array.push(comment)
-  }
-}
-
-// Registered plugins
-var plugins = {}
-
-function keywordRegexp(words) {
-  return new RegExp("^(" + words.replace(/ /g, "|") + ")$")
-}
-
-var Parser = function Parser(options, input, startPos) {
-  this.options = options = getOptions(options)
-  this.sourceFile = options.sourceFile
-  this.keywords = keywordRegexp(keywords[options.ecmaVersion >= 6 ? 6 : 5])
-  var reserved = ""
-  if (!options.allowReserved) {
-    for (var v = options.ecmaVersion;; v--)
-      if (reserved = reservedWords[v]) break
-    if (options.sourceType == "module") reserved += " await"
-  }
-  this.reservedWords = keywordRegexp(reserved)
-  var reservedStrict = (reserved ? reserved + " " : "") + reservedWords.strict
-  this.reservedWordsStrict = keywordRegexp(reservedStrict)
-  this.reservedWordsStrictBind = keywordRegexp(reservedStrict + " " + reservedWords.strictBind)
-  this.input = String(input)
-
-  // Used to signal to callers of `readWord1` whether the word
-  // contained any escape sequences. This is needed because words with
-  // escape sequences must not be interpreted as keywords.
-  this.containsEsc = false
-
-  // Load plugins
-  this.loadPlugins(options.plugins)
-
-  // Set up token state
-
-  // The current position of the tokenizer in the input.
-  if (startPos) {
-    this.pos = startPos
-    this.lineStart = this.input.lastIndexOf("\n", startPos - 1) + 1
-    this.curLine = this.input.slice(0, this.lineStart).split(lineBreak).length
-  } else {
-    this.pos = this.lineStart = 0
-    this.curLine = 1
-  }
-
-  // Properties of the current token:
-  // Its type
-  this.type = tt.eof
-  // For tokens that include more information than their type, the value
-  this.value = null
-  // Its start and end offset
-  this.start = this.end = this.pos
-  // And, if locations are used, the {line, column} object
-  // corresponding to those offsets
-  this.startLoc = this.endLoc = this.curPosition()
-
-  // Position information for the previous token
-  this.lastTokEndLoc = this.lastTokStartLoc = null
-  this.lastTokStart = this.lastTokEnd = this.pos
-
-  // The context stack is used to superficially track syntactic
-  // context to predict whether a regular expression is allowed in a
-  // given position.
-  this.context = this.initialContext()
-  this.exprAllowed = true
-
-  // Figure out if it's a module code.
-  this.inModule = options.sourceType === "module"
-  this.strict = this.inModule || this.strictDirective(this.pos)
-
-  // Used to signify the start of a potential arrow function
-  this.potentialArrowAt = -1
-
-  // Flags to track whether we are in a function, a generator, an async function.
-  this.inFunction = this.inGenerator = this.inAsync = false
-  // Positions to delayed-check that yield/await does not exist in default parameters.
-  this.yieldPos = this.awaitPos = 0
-  // Labels in scope.
-  this.labels = []
-
-  // If enabled, skip leading hashbang line.
-  if (this.pos === 0 && options.allowHashBang && this.input.slice(0, 2) === "#!")
-    this.skipLineComment(2)
-
-  // Scope tracking for duplicate variable names (see scope.js)
-  this.scopeStack = []
-  this.enterFunctionScope()
-};
-
-// DEPRECATED Kept for backwards compatibility until 3.0 in case a plugin uses them
-Parser.prototype.isKeyword = function isKeyword (word) { return this.keywords.test(word) };
-Parser.prototype.isReservedWord = function isReservedWord (word) { return this.reservedWords.test(word) };
-
-Parser.prototype.extend = function extend (name, f) {
-  this[name] = f(this[name])
-};
-
-Parser.prototype.loadPlugins = function loadPlugins (pluginConfigs) {
-    var this$1 = this;
-
-  for (var name in pluginConfigs) {
-    var plugin = plugins[name]
-    if (!plugin) throw new Error("Plugin '" + name + "' not found")
-    plugin(this$1, pluginConfigs[name])
-  }
-};
-
-Parser.prototype.parse = function parse () {
-  var node = this.options.program || this.startNode()
-  this.nextToken()
-  return this.parseTopLevel(node)
-};
-
-var pp = Parser.prototype
-
-// ## Parser utilities
-
-var literal = /^(?:'((?:[^']|\.)*)'|"((?:[^"]|\.)*)"|;)/
-pp.strictDirective = function(start) {
-  var this$1 = this;
-
-  for (;;) {
-    skipWhiteSpace.lastIndex = start
-    start += skipWhiteSpace.exec(this$1.input)[0].length
-    var match = literal.exec(this$1.input.slice(start))
-    if (!match) return false
-    if ((match[1] || match[2]) == "use strict") return true
-    start += match[0].length
-  }
-}
-
-// Predicate that tests whether the next token is of the given
-// type, and if yes, consumes it as a side effect.
-
-pp.eat = function(type) {
-  if (this.type === type) {
-    this.next()
-    return true
-  } else {
-    return false
-  }
-}
-
-// Tests whether parsed token is a contextual keyword.
-
-pp.isContextual = function(name) {
-  return this.type === tt.name && this.value === name
-}
-
-// Consumes contextual keyword if possible.
-
-pp.eatContextual = function(name) {
-  return this.value === name && this.eat(tt.name)
-}
-
-// Asserts that following token is given contextual keyword.
-
-pp.expectContextual = function(name) {
-  if (!this.eatContextual(name)) this.unexpected()
-}
-
-// Test whether a semicolon can be inserted at the current position.
-
-pp.canInsertSemicolon = function() {
-  return this.type === tt.eof ||
-    this.type === tt.braceR ||
-    lineBreak.test(this.input.slice(this.lastTokEnd, this.start))
-}
-
-pp.insertSemicolon = function() {
-  if (this.canInsertSemicolon()) {
-    if (this.options.onInsertedSemicolon)
-      this.options.onInsertedSemicolon(this.lastTokEnd, this.lastTokEndLoc)
-    return true
-  }
-}
-
-// Consume a semicolon, or, failing that, see if we are allowed to
-// pretend that there is a semicolon at this position.
-
-pp.semicolon = function() {
-  if (!this.eat(tt.semi) && !this.insertSemicolon()) this.unexpected()
-}
-
-pp.afterTrailingComma = function(tokType, notNext) {
-  if (this.type == tokType) {
-    if (this.options.onTrailingComma)
-      this.options.onTrailingComma(this.lastTokStart, this.lastTokStartLoc)
-    if (!notNext)
-      this.next()
-    return true
-  }
-}
-
-// Expect a token of a given type. If found, consume it, otherwise,
-// raise an unexpected token error.
-
-pp.expect = function(type) {
-  this.eat(type) || this.unexpected()
-}
-
-// Raise an unexpected token error.
-
-pp.unexpected = function(pos) {
-  this.raise(pos != null ? pos : this.start, "Unexpected token")
-}
-
-var DestructuringErrors = function DestructuringErrors() {
-  this.shorthandAssign = this.trailingComma = this.parenthesizedAssign = this.parenthesizedBind = -1
-};
-
-pp.checkPatternErrors = function(refDestructuringErrors, isAssign) {
-  if (!refDestructuringErrors) return
-  if (refDestructuringErrors.trailingComma > -1)
-    this.raiseRecoverable(refDestructuringErrors.trailingComma, "Comma is not permitted after the rest element")
-  var parens = isAssign ? refDestructuringErrors.parenthesizedAssign : refDestructuringErrors.parenthesizedBind
-  if (parens > -1) this.raiseRecoverable(parens, "Parenthesized pattern")
-}
-
-pp.checkExpressionErrors = function(refDestructuringErrors, andThrow) {
-  var pos = refDestructuringErrors ? refDestructuringErrors.shorthandAssign : -1
-  if (!andThrow) return pos >= 0
-  if (pos > -1) this.raise(pos, "Shorthand property assignments are valid only in destructuring patterns")
-}
-
-pp.checkYieldAwaitInDefaultParams = function() {
-  if (this.yieldPos && (!this.awaitPos || this.yieldPos < this.awaitPos))
-    this.raise(this.yieldPos, "Yield expression cannot be a default value")
-  if (this.awaitPos)
-    this.raise(this.awaitPos, "Await expression cannot be a default value")
-}
-
-pp.isSimpleAssignTarget = function(expr) {
-  if (expr.type === "ParenthesizedExpression")
-    return this.isSimpleAssignTarget(expr.expression)
-  return expr.type === "Identifier" || expr.type === "MemberExpression"
-}
-
-var pp$1 = Parser.prototype
-
-// ### Statement parsing
-
-// Parse a program. Initializes the parser, reads any number of
-// statements, and wraps them in a Program node.  Optionally takes a
-// `program` argument.  If present, the statements will be appended
-// to its body instead of creating a new node.
-
-pp$1.parseTopLevel = function(node) {
-  var this$1 = this;
-
-  var exports = {}
-  if (!node.body) node.body = []
-  while (this.type !== tt.eof) {
-    var stmt = this$1.parseStatement(true, true, exports)
-    node.body.push(stmt)
-  }
-  this.next()
-  if (this.options.ecmaVersion >= 6) {
-    node.sourceType = this.options.sourceType
-  }
-  return this.finishNode(node, "Program")
-}
-
-var loopLabel = {kind: "loop"};
-var switchLabel = {kind: "switch"};
-pp$1.isLet = function() {
-  if (this.type !== tt.name || this.options.ecmaVersion < 6 || this.value != "let") return false
-  skipWhiteSpace.lastIndex = this.pos
-  var skip = skipWhiteSpace.exec(this.input)
-  var next = this.pos + skip[0].length, nextCh = this.input.charCodeAt(next)
-  if (nextCh === 91 || nextCh == 123) return true // '{' and '['
-  if (isIdentifierStart(nextCh, true)) {
-    var pos = next + 1
-    while (isIdentifierChar(this.input.charCodeAt(pos), true)) ++pos
-    var ident = this.input.slice(next, pos)
-    if (!this.isKeyword(ident)) return true
-  }
-  return false
-}
-
-// check 'async [no LineTerminator here] function'
-// - 'async /*foo*/ function' is OK.
-// - 'async /*\n*/ function' is invalid.
-pp$1.isAsyncFunction = function() {
-  if (this.type !== tt.name || this.options.ecmaVersion < 8 || this.value != "async")
-    return false
-
-  skipWhiteSpace.lastIndex = this.pos
-  var skip = skipWhiteSpace.exec(this.input)
-  var next = this.pos + skip[0].length
-  return !lineBreak.test(this.input.slice(this.pos, next)) &&
-    this.input.slice(next, next + 8) === "function" &&
-    (next + 8 == this.input.length || !isIdentifierChar(this.input.charAt(next + 8)))
-}
-
-// Parse a single statement.
-//
-// If expecting a statement and finding a slash operator, parse a
-// regular expression literal. This is to handle cases like
-// `if (foo) /blah/.exec(foo)`, where looking at the previous token
-// does not help.
-
-pp$1.parseStatement = function(declaration, topLevel, exports) {
-  var starttype = this.type, node = this.startNode(), kind
-
-  if (this.isLet()) {
-    starttype = tt._var
-    kind = "let"
-  }
-
-  // Most types of statements are recognized by the keyword they
-  // start with. Many are trivial to parse, some require a bit of
-  // complexity.
-
-  switch (starttype) {
-  case tt._break: case tt._continue: return this.parseBreakContinueStatement(node, starttype.keyword)
-  case tt._debugger: return this.parseDebuggerStatement(node)
-  case tt._do: return this.parseDoStatement(node)
-  case tt._for: return this.parseForStatement(node)
-  case tt._function:
-    if (!declaration && this.options.ecmaVersion >= 6) this.unexpected()
-    return this.parseFunctionStatement(node, false)
-  case tt._class:
-    if (!declaration) this.unexpected()
-    return this.parseClass(node, true)
-  case tt._if: return this.parseIfStatement(node)
-  case tt._return: return this.parseReturnStatement(node)
-  case tt._switch: return this.parseSwitchStatement(node)
-  case tt._throw: return this.parseThrowStatement(node)
-  case tt._try: return this.parseTryStatement(node)
-  case tt._const: case tt._var:
-    kind = kind || this.value
-    if (!declaration && kind != "var") this.unexpected()
-    return this.parseVarStatement(node, kind)
-  case tt._while: return this.parseWhileStatement(node)
-  case tt._with: return this.parseWithStatement(node)
-  case tt.braceL: return this.parseBlock()
-  case tt.semi: return this.parseEmptyStatement(node)
-  case tt._export:
-  case tt._import:
-    if (!this.options.allowImportExportEverywhere) {
-      if (!topLevel)
-        this.raise(this.start, "'import' and 'export' may only appear at the top level")
-      if (!this.inModule)
-        this.raise(this.start, "'import' and 'export' may appear only with 'sourceType: module'")
-    }
-    return starttype === tt._import ? this.parseImport(node) : this.parseExport(node, exports)
-
-    // If the statement does not start with a statement keyword or a
-    // brace, it's an ExpressionStatement or LabeledStatement. We
-    // simply start parsing an expression, and afterwards, if the
-    // next token is a colon and the expression was a simple
-    // Identifier node, we switch to interpreting it as a label.
-  default:
-    if (this.isAsyncFunction() && declaration) {
-      this.next()
-      return this.parseFunctionStatement(node, true)
-    }
-
-    var maybeName = this.value, expr = this.parseExpression()
-    if (starttype === tt.name && expr.type === "Identifier" && this.eat(tt.colon))
-      return this.parseLabeledStatement(node, maybeName, expr)
-    else return this.parseExpressionStatement(node, expr)
-  }
-}
-
-pp$1.parseBreakContinueStatement = function(node, keyword) {
-  var this$1 = this;
-
-  var isBreak = keyword == "break"
-  this.next()
-  if (this.eat(tt.semi) || this.insertSemicolon()) node.label = null
-  else if (this.type !== tt.name) this.unexpected()
-  else {
-    node.label = this.parseIdent()
-    this.semicolon()
-  }
-
-  // Verify that there is an actual destination to break or
-  // continue to.
-  var i = 0
-  for (; i < this.labels.length; ++i) {
-    var lab = this$1.labels[i]
-    if (node.label == null || lab.name === node.label.name) {
-      if (lab.kind != null && (isBreak || lab.kind === "loop")) break
-      if (node.label && isBreak) break
-    }
-  }
-  if (i === this.labels.length) this.raise(node.start, "Unsyntactic " + keyword)
-  return this.finishNode(node, isBreak ? "BreakStatement" : "ContinueStatement")
-}
-
-pp$1.parseDebuggerStatement = function(node) {
-  this.next()
-  this.semicolon()
-  return this.finishNode(node, "DebuggerStatement")
-}
-
-pp$1.parseDoStatement = function(node) {
-  this.next()
-  this.labels.push(loopLabel)
-  node.body = this.parseStatement(false)
-  this.labels.pop()
-  this.expect(tt._while)
-  node.test = this.parseParenExpression()
-  if (this.options.ecmaVersion >= 6)
-    this.eat(tt.semi)
-  else
-    this.semicolon()
-  return this.finishNode(node, "DoWhileStatement")
-}
-
-// Disambiguating between a `for` and a `for`/`in` or `for`/`of`
-// loop is non-trivial. Basically, we have to parse the init `var`
-// statement or expression, disallowing the `in` operator (see
-// the second parameter to `parseExpression`), and then check
-// whether the next token is `in` or `of`. When there is no init
-// part (semicolon immediately after the opening parenthesis), it
-// is a regular `for` loop.
-
-pp$1.parseForStatement = function(node) {
-  this.next()
-  this.labels.push(loopLabel)
-  this.enterLexicalScope()
-  this.expect(tt.parenL)
-  if (this.type === tt.semi) return this.parseFor(node, null)
-  var isLet = this.isLet()
-  if (this.type === tt._var || this.type === tt._const || isLet) {
-    var init$1 = this.startNode(), kind = isLet ? "let" : this.value
-    this.next()
-    this.parseVar(init$1, true, kind)
-    this.finishNode(init$1, "VariableDeclaration")
-    if ((this.type === tt._in || (this.options.ecmaVersion >= 6 && this.isContextual("of"))) && init$1.declarations.length === 1 &&
-        !(kind !== "var" && init$1.declarations[0].init))
-      return this.parseForIn(node, init$1)
-    return this.parseFor(node, init$1)
-  }
-  var refDestructuringErrors = new DestructuringErrors
-  var init = this.parseExpression(true, refDestructuringErrors)
-  if (this.type === tt._in || (this.options.ecmaVersion >= 6 && this.isContextual("of"))) {
-    this.toAssignable(init)
-    this.checkLVal(init)
-    this.checkPatternErrors(refDestructuringErrors, true)
-    return this.parseForIn(node, init)
-  } else {
-    this.checkExpressionErrors(refDestructuringErrors, true)
-  }
-  return this.parseFor(node, init)
-}
-
-pp$1.parseFunctionStatement = function(node, isAsync) {
-  this.next()
-  return this.parseFunction(node, true, false, isAsync)
-}
-
-pp$1.isFunction = function() {
-  return this.type === tt._function || this.isAsyncFunction()
-}
-
-pp$1.parseIfStatement = function(node) {
-  this.next()
-  node.test = this.parseParenExpression()
-  // allow function declarations in branches, but only in non-strict mode
-  node.consequent = this.parseStatement(!this.strict && this.isFunction())
-  node.alternate = this.eat(tt._else) ? this.parseStatement(!this.strict && this.isFunction()) : null
-  return this.finishNode(node, "IfStatement")
-}
-
-pp$1.parseReturnStatement = function(node) {
-  if (!this.inFunction && !this.options.allowReturnOutsideFunction)
-    this.raise(this.start, "'return' outside of function")
-  this.next()
-
-  // In `return` (and `break`/`continue`), the keywords with
-  // optional arguments, we eagerly look for a semicolon or the
-  // possibility to insert one.
-
-  if (this.eat(tt.semi) || this.insertSemicolon()) node.argument = null
-  else { node.argument = this.parseExpression(); this.semicolon() }
-  return this.finishNode(node, "ReturnStatement")
-}
-
-pp$1.parseSwitchStatement = function(node) {
-  var this$1 = this;
-
-  this.next()
-  node.discriminant = this.parseParenExpression()
-  node.cases = []
-  this.expect(tt.braceL)
-  this.labels.push(switchLabel)
-  this.enterLexicalScope()
-
-  // Statements under must be grouped (by label) in SwitchCase
-  // nodes. `cur` is used to keep the node that we are currently
-  // adding statements to.
-
-  var cur
-  for (var sawDefault = false; this.type != tt.braceR;) {
-    if (this$1.type === tt._case || this$1.type === tt._default) {
-      var isCase = this$1.type === tt._case
-      if (cur) this$1.finishNode(cur, "SwitchCase")
-      node.cases.push(cur = this$1.startNode())
-      cur.consequent = []
-      this$1.next()
-      if (isCase) {
-        cur.test = this$1.parseExpression()
-      } else {
-        if (sawDefault) this$1.raiseRecoverable(this$1.lastTokStart, "Multiple default clauses")
-        sawDefault = true
-        cur.test = null
-      }
-      this$1.expect(tt.colon)
-    } else {
-      if (!cur) this$1.unexpected()
-      cur.consequent.push(this$1.parseStatement(true))
-    }
-  }
-  this.exitLexicalScope()
-  if (cur) this.finishNode(cur, "SwitchCase")
-  this.next() // Closing brace
-  this.labels.pop()
-  return this.finishNode(node, "SwitchStatement")
-}
-
-pp$1.parseThrowStatement = function(node) {
-  this.next()
-  if (lineBreak.test(this.input.slice(this.lastTokEnd, this.start)))
-    this.raise(this.lastTokEnd, "Illegal newline after throw")
-  node.argument = this.parseExpression()
-  this.semicolon()
-  return this.finishNode(node, "ThrowStatement")
-}
-
-// Reused empty array added for node fields that are always empty.
-
-var empty = []
-
-pp$1.parseTryStatement = function(node) {
-  this.next()
-  node.block = this.parseBlock()
-  node.handler = null
-  if (this.type === tt._catch) {
-    var clause = this.startNode()
-    this.next()
-    this.expect(tt.parenL)
-    clause.param = this.parseBindingAtom()
-    this.enterLexicalScope()
-    this.checkLVal(clause.param, "let")
-    this.expect(tt.parenR)
-    clause.body = this.parseBlock(false)
-    this.exitLexicalScope()
-    node.handler = this.finishNode(clause, "CatchClause")
-  }
-  node.finalizer = this.eat(tt._finally) ? this.parseBlock() : null
-  if (!node.handler && !node.finalizer)
-    this.raise(node.start, "Missing catch or finally clause")
-  return this.finishNode(node, "TryStatement")
-}
-
-pp$1.parseVarStatement = function(node, kind) {
-  this.next()
-  this.parseVar(node, false, kind)
-  this.semicolon()
-  return this.finishNode(node, "VariableDeclaration")
-}
-
-pp$1.parseWhileStatement = function(node) {
-  this.next()
-  node.test = this.parseParenExpression()
-  this.labels.push(loopLabel)
-  node.body = this.parseStatement(false)
-  this.labels.pop()
-  return this.finishNode(node, "WhileStatement")
-}
-
-pp$1.parseWithStatement = function(node) {
-  if (this.strict) this.raise(this.start, "'with' in strict mode")
-  this.next()
-  node.object = this.parseParenExpression()
-  node.body = this.parseStatement(false)
-  return this.finishNode(node, "WithStatement")
-}
-
-pp$1.parseEmptyStatement = function(node) {
-  this.next()
-  return this.finishNode(node, "EmptyStatement")
-}
-
-pp$1.parseLabeledStatement = function(node, maybeName, expr) {
-  var this$1 = this;
-
-  for (var i = 0; i < this.labels.length; ++i)
-    if (this$1.labels[i].name === maybeName) this$1.raise(expr.start, "Label '" + maybeName + "' is already declared")
-  var kind = this.type.isLoop ? "loop" : this.type === tt._switch ? "switch" : null
-  for (var i$1 = this.labels.length - 1; i$1 >= 0; i$1--) {
-    var label = this$1.labels[i$1]
-    if (label.statementStart == node.start) {
-      label.statementStart = this$1.start
-      label.kind = kind
-    } else break
-  }
-  this.labels.push({name: maybeName, kind: kind, statementStart: this.start})
-  node.body = this.parseStatement(true)
-  if (node.body.type == "ClassDeclaration" ||
-      node.body.type == "VariableDeclaration" && node.body.kind != "var" ||
-      node.body.type == "FunctionDeclaration" && (this.strict || node.body.generator))
-    this.raiseRecoverable(node.body.start, "Invalid labeled declaration")
-  this.labels.pop()
-  node.label = expr
-  return this.finishNode(node, "LabeledStatement")
-}
-
-pp$1.parseExpressionStatement = function(node, expr) {
-  node.expression = expr
-  this.semicolon()
-  return this.finishNode(node, "ExpressionStatement")
-}
-
-// Parse a semicolon-enclosed block of statements, handling `"use
-// strict"` declarations when `allowStrict` is true (used for
-// function bodies).
-
-pp$1.parseBlock = function(createNewLexicalScope) {
-  var this$1 = this;
-  if ( createNewLexicalScope === void 0 ) createNewLexicalScope = true;
-
-  var node = this.startNode()
-  node.body = []
-  this.expect(tt.braceL)
-  if (createNewLexicalScope) {
-    this.enterLexicalScope()
-  }
-  while (!this.eat(tt.braceR)) {
-    var stmt = this$1.parseStatement(true)
-    node.body.push(stmt)
-  }
-  if (createNewLexicalScope) {
-    this.exitLexicalScope()
-  }
-  return this.finishNode(node, "BlockStatement")
-}
-
-// Parse a regular `for` loop. The disambiguation code in
-// `parseStatement` will already have parsed the init statement or
-// expression.
-
-pp$1.parseFor = function(node, init) {
-  node.init = init
-  this.expect(tt.semi)
-  node.test = this.type === tt.semi ? null : this.parseExpression()
-  this.expect(tt.semi)
-  node.update = this.type === tt.parenR ? null : this.parseExpression()
-  this.expect(tt.parenR)
-  this.exitLexicalScope()
-  node.body = this.parseStatement(false)
-  this.labels.pop()
-  return this.finishNode(node, "ForStatement")
-}
-
-// Parse a `for`/`in` and `for`/`of` loop, which are almost
-// same from parser's perspective.
-
-pp$1.parseForIn = function(node, init) {
-  var type = this.type === tt._in ? "ForInStatement" : "ForOfStatement"
-  this.next()
-  node.left = init
-  node.right = this.parseExpression()
-  this.expect(tt.parenR)
-  this.exitLexicalScope()
-  node.body = this.parseStatement(false)
-  this.labels.pop()
-  return this.finishNode(node, type)
-}
-
-// Parse a list of variable declarations.
-
-pp$1.parseVar = function(node, isFor, kind) {
-  var this$1 = this;
-
-  node.declarations = []
-  node.kind = kind
-  for (;;) {
-    var decl = this$1.startNode()
-    this$1.parseVarId(decl, kind)
-    if (this$1.eat(tt.eq)) {
-      decl.init = this$1.parseMaybeAssign(isFor)
-    } else if (kind === "const" && !(this$1.type === tt._in || (this$1.options.ecmaVersion >= 6 && this$1.isContextual("of")))) {
-      this$1.unexpected()
-    } else if (decl.id.type != "Identifier" && !(isFor && (this$1.type === tt._in || this$1.isContextual("of")))) {
-      this$1.raise(this$1.lastTokEnd, "Complex binding patterns require an initialization value")
-    } else {
-      decl.init = null
-    }
-    node.declarations.push(this$1.finishNode(decl, "VariableDeclarator"))
-    if (!this$1.eat(tt.comma)) break
-  }
-  return node
-}
-
-pp$1.parseVarId = function(decl, kind) {
-  decl.id = this.parseBindingAtom(kind)
-  this.checkLVal(decl.id, kind, false)
-}
-
-// Parse a function declaration or literal (depending on the
-// `isStatement` parameter).
-
-pp$1.parseFunction = function(node, isStatement, allowExpressionBody, isAsync) {
-  this.initFunction(node)
-  if (this.options.ecmaVersion >= 6 && !isAsync)
-    node.generator = this.eat(tt.star)
-  if (this.options.ecmaVersion >= 8)
-    node.async = !!isAsync
-
-  if (isStatement) {
-    node.id = isStatement === "nullableID" && this.type != tt.name ? null : this.parseIdent()
-    if (node.id) {
-      this.checkLVal(node.id, "var")
-    }
-  }
-
-  var oldInGen = this.inGenerator, oldInAsync = this.inAsync,
-      oldYieldPos = this.yieldPos, oldAwaitPos = this.awaitPos, oldInFunc = this.inFunction
-  this.inGenerator = node.generator
-  this.inAsync = node.async
-  this.yieldPos = 0
-  this.awaitPos = 0
-  this.inFunction = true
-  this.enterFunctionScope()
-
-  if (!isStatement)
-    node.id = this.type == tt.name ? this.parseIdent() : null
-
-  this.parseFunctionParams(node)
-  this.parseFunctionBody(node, allowExpressionBody)
-
-  this.inGenerator = oldInGen
-  this.inAsync = oldInAsync
-  this.yieldPos = oldYieldPos
-  this.awaitPos = oldAwaitPos
-  this.inFunction = oldInFunc
-  return this.finishNode(node, isStatement ? "FunctionDeclaration" : "FunctionExpression")
-}
-
-pp$1.parseFunctionParams = function(node) {
-  this.expect(tt.parenL)
-  node.params = this.parseBindingList(tt.parenR, false, this.options.ecmaVersion >= 8, true)
-  this.checkYieldAwaitInDefaultParams()
-}
-
-// Parse a class declaration or literal (depending on the
-// `isStatement` parameter).
-
-pp$1.parseClass = function(node, isStatement) {
-  var this$1 = this;
-
-  this.next()
-
-  this.parseClassId(node, isStatement)
-  this.parseClassSuper(node)
-  var classBody = this.startNode()
-  var hadConstructor = false
-  classBody.body = []
-  this.expect(tt.braceL)
-  while (!this.eat(tt.braceR)) {
-    if (this$1.eat(tt.semi)) continue
-    var method = this$1.startNode()
-    var isGenerator = this$1.eat(tt.star)
-    var isAsync = false
-    var isMaybeStatic = this$1.type === tt.name && this$1.value === "static"
-    this$1.parsePropertyName(method)
-    method.static = isMaybeStatic && this$1.type !== tt.parenL
-    if (method.static) {
-      if (isGenerator) this$1.unexpected()
-      isGenerator = this$1.eat(tt.star)
-      this$1.parsePropertyName(method)
-    }
-    if (this$1.options.ecmaVersion >= 8 && !isGenerator && !method.computed &&
-        method.key.type === "Identifier" && method.key.name === "async" && this$1.type !== tt.parenL &&
-        !this$1.canInsertSemicolon()) {
-      isAsync = true
-      this$1.parsePropertyName(method)
-    }
-    method.kind = "method"
-    var isGetSet = false
-    if (!method.computed) {
-      var key = method.key;
-      if (!isGenerator && !isAsync && key.type === "Identifier" && this$1.type !== tt.parenL && (key.name === "get" || key.name === "set")) {
-        isGetSet = true
-        method.kind = key.name
-        key = this$1.parsePropertyName(method)
-      }
-      if (!method.static && (key.type === "Identifier" && key.name === "constructor" ||
-          key.type === "Literal" && key.value === "constructor")) {
-        if (hadConstructor) this$1.raise(key.start, "Duplicate constructor in the same class")
-        if (isGetSet) this$1.raise(key.start, "Constructor can't have get/set modifier")
-        if (isGenerator) this$1.raise(key.start, "Constructor can't be a generator")
-        if (isAsync) this$1.raise(key.start, "Constructor can't be an async method")
-        method.kind = "constructor"
-        hadConstructor = true
-      }
-    }
-    this$1.parseClassMethod(classBody, method, isGenerator, isAsync)
-    if (isGetSet) {
-      var paramCount = method.kind === "get" ? 0 : 1
-      if (method.value.params.length !== paramCount) {
-        var start = method.value.start
-        if (method.kind === "get")
-          this$1.raiseRecoverable(start, "getter should have no params")
-        else
-          this$1.raiseRecoverable(start, "setter should have exactly one param")
-      } else {
-        if (method.kind === "set" && method.value.params[0].type === "RestElement")
-          this$1.raiseRecoverable(method.value.params[0].start, "Setter cannot use rest params")
-      }
-    }
-  }
-  node.body = this.finishNode(classBody, "ClassBody")
-  return this.finishNode(node, isStatement ? "ClassDeclaration" : "ClassExpression")
-}
-
-pp$1.parseClassMethod = function(classBody, method, isGenerator, isAsync) {
-  method.value = this.parseMethod(isGenerator, isAsync)
-  classBody.body.push(this.finishNode(method, "MethodDefinition"))
-}
-
-pp$1.parseClassId = function(node, isStatement) {
-  node.id = this.type === tt.name ? this.parseIdent() : isStatement === true ? this.unexpected() : null
-}
-
-pp$1.parseClassSuper = function(node) {
-  node.superClass = this.eat(tt._extends) ? this.parseExprSubscripts() : null
-}
-
-// Parses module export declaration.
-
-pp$1.parseExport = function(node, exports) {
-  var this$1 = this;
-
-  this.next()
-  // export * from '...'
-  if (this.eat(tt.star)) {
-    this.expectContextual("from")
-    node.source = this.type === tt.string ? this.parseExprAtom() : this.unexpected()
-    this.semicolon()
-    return this.finishNode(node, "ExportAllDeclaration")
-  }
-  if (this.eat(tt._default)) { // export default ...
-    this.checkExport(exports, "default", this.lastTokStart)
-    var isAsync
-    if (this.type === tt._function || (isAsync = this.isAsyncFunction())) {
-      var fNode = this.startNode()
-      this.next()
-      if (isAsync) this.next()
-      node.declaration = this.parseFunction(fNode, "nullableID", false, isAsync)
-    } else if (this.type === tt._class) {
-      var cNode = this.startNode()
-      node.declaration = this.parseClass(cNode, "nullableID")
-    } else {
-      node.declaration = this.parseMaybeAssign()
-      this.semicolon()
-    }
-    return this.finishNode(node, "ExportDefaultDeclaration")
-  }
-  // export var|const|let|function|class ...
-  if (this.shouldParseExportStatement()) {
-    node.declaration = this.parseStatement(true)
-    if (node.declaration.type === "VariableDeclaration")
-      this.checkVariableExport(exports, node.declaration.declarations)
-    else
-      this.checkExport(exports, node.declaration.id.name, node.declaration.id.start)
-    node.specifiers = []
-    node.source = null
-  } else { // export { x, y as z } [from '...']
-    node.declaration = null
-    node.specifiers = this.parseExportSpecifiers(exports)
-    if (this.eatContextual("from")) {
-      node.source = this.type === tt.string ? this.parseExprAtom() : this.unexpected()
-    } else {
-      // check for keywords used as local names
-      for (var i = 0; i < node.specifiers.length; i++) {
-        if (this$1.keywords.test(node.specifiers[i].local.name) || this$1.reservedWords.test(node.specifiers[i].local.name)) {
-          this$1.unexpected(node.specifiers[i].local.start)
-        }
-      }
-
-      node.source = null
-    }
-    this.semicolon()
-  }
-  return this.finishNode(node, "ExportNamedDeclaration")
-}
-
-pp$1.checkExport = function(exports, name, pos) {
-  if (!exports) return
-  if (has(exports, name))
-    this.raiseRecoverable(pos, "Duplicate export '" + name + "'")
-  exports[name] = true
-}
-
-pp$1.checkPatternExport = function(exports, pat) {
-  var this$1 = this;
-
-  var type = pat.type
-  if (type == "Identifier")
-    this.checkExport(exports, pat.name, pat.start)
-  else if (type == "ObjectPattern")
-    for (var i = 0; i < pat.properties.length; ++i)
-      this$1.checkPatternExport(exports, pat.properties[i].value)
-  else if (type == "ArrayPattern")
-    for (var i$1 = 0; i$1 < pat.elements.length; ++i$1) {
-      var elt = pat.elements[i$1]
-      if (elt) this$1.checkPatternExport(exports, elt)
-    }
-  else if (type == "AssignmentPattern")
-    this.checkPatternExport(exports, pat.left)
-  else if (type == "ParenthesizedExpression")
-    this.checkPatternExport(exports, pat.expression)
-}
-
-pp$1.checkVariableExport = function(exports, decls) {
-  var this$1 = this;
-
-  if (!exports) return
-  for (var i = 0; i < decls.length; i++)
-    this$1.checkPatternExport(exports, decls[i].id)
-}
-
-pp$1.shouldParseExportStatement = function() {
-  return this.type.keyword === "var" ||
-    this.type.keyword === "const" ||
-    this.type.keyword === "class" ||
-    this.type.keyword === "function" ||
-    this.isLet() ||
-    this.isAsyncFunction()
-}
-
-// Parses a comma-separated list of module exports.
-
-pp$1.parseExportSpecifiers = function(exports) {
-  var this$1 = this;
-
-  var nodes = [], first = true
-  // export { x, y as z } [from '...']
-  this.expect(tt.braceL)
-  while (!this.eat(tt.braceR)) {
-    if (!first) {
-      this$1.expect(tt.comma)
-      if (this$1.afterTrailingComma(tt.braceR)) break
-    } else first = false
-
-    var node = this$1.startNode()
-    node.local = this$1.parseIdent(true)
-    node.exported = this$1.eatContextual("as") ? this$1.parseIdent(true) : node.local
-    this$1.checkExport(exports, node.exported.name, node.exported.start)
-    nodes.push(this$1.finishNode(node, "ExportSpecifier"))
-  }
-  return nodes
-}
-
-// Parses import declaration.
-
-pp$1.parseImport = function(node) {
-  this.next()
-  // import '...'
-  if (this.type === tt.string) {
-    node.specifiers = empty
-    node.source = this.parseExprAtom()
-  } else {
-    node.specifiers = this.parseImportSpecifiers()
-    this.expectContextual("from")
-    node.source = this.type === tt.string ? this.parseExprAtom() : this.unexpected()
-  }
-  this.semicolon()
-  return this.finishNode(node, "ImportDeclaration")
-}
-
-// Parses a comma-separated list of module imports.
-
-pp$1.parseImportSpecifiers = function() {
-  var this$1 = this;
-
-  var nodes = [], first = true
-  if (this.type === tt.name) {
-    // import defaultObj, { x, y as z } from '...'
-    var node = this.startNode()
-    node.local = this.parseIdent()
-    this.checkLVal(node.local, "let")
-    nodes.push(this.finishNode(node, "ImportDefaultSpecifier"))
-    if (!this.eat(tt.comma)) return nodes
-  }
-  if (this.type === tt.star) {
-    var node$1 = this.startNode()
-    this.next()
-    this.expectContextual("as")
-    node$1.local = this.parseIdent()
-    this.checkLVal(node$1.local, "let")
-    nodes.push(this.finishNode(node$1, "ImportNamespaceSpecifier"))
-    return nodes
-  }
-  this.expect(tt.braceL)
-  while (!this.eat(tt.braceR)) {
-    if (!first) {
-      this$1.expect(tt.comma)
-      if (this$1.afterTrailingComma(tt.braceR)) break
-    } else first = false
-
-    var node$2 = this$1.startNode()
-    node$2.imported = this$1.parseIdent(true)
-    if (this$1.eatContextual("as")) {
-      node$2.local = this$1.parseIdent()
-    } else {
-      node$2.local = node$2.imported
-      if (this$1.isKeyword(node$2.local.name)) this$1.unexpected(node$2.local.start)
-      if (this$1.reservedWordsStrict.test(node$2.local.name)) this$1.raiseRecoverable(node$2.local.start, "The keyword '" + node$2.local.name + "' is reserved")
-    }
-    this$1.checkLVal(node$2.local, "let")
-    nodes.push(this$1.finishNode(node$2, "ImportSpecifier"))
-  }
-  return nodes
-}
-
-var pp$2 = Parser.prototype
-
-// Convert existing expression atom to assignable pattern
-// if possible.
-
-pp$2.toAssignable = function(node, isBinding) {
-  var this$1 = this;
-
-  if (this.options.ecmaVersion >= 6 && node) {
-    switch (node.type) {
-    case "Identifier":
-      if (this.inAsync && node.name === "await")
-        this.raise(node.start, "Can not use 'await' as identifier inside an async function")
-      break
-
-    case "ObjectPattern":
-    case "ArrayPattern":
-      break
-
-    case "ObjectExpression":
-      node.type = "ObjectPattern"
-      for (var i = 0; i < node.properties.length; i++) {
-        var prop = node.properties[i]
-        if (prop.kind !== "init") this$1.raise(prop.key.start, "Object pattern can't contain getter or setter")
-        this$1.toAssignable(prop.value, isBinding)
-      }
-      break
-
-    case "ArrayExpression":
-      node.type = "ArrayPattern"
-      this.toAssignableList(node.elements, isBinding)
-      break
-
-    case "AssignmentExpression":
-      if (node.operator === "=") {
-        node.type = "AssignmentPattern"
-        delete node.operator
-        this.toAssignable(node.left, isBinding)
-        // falls through to AssignmentPattern
-      } else {
-        this.raise(node.left.end, "Only '=' operator can be used for specifying default value.")
-        break
-      }
-
-    case "AssignmentPattern":
-      break
-
-    case "ParenthesizedExpression":
-      node.expression = this.toAssignable(node.expression, isBinding)
-      break
-
-    case "MemberExpression":
-      if (!isBinding) break
-
-    default:
-      this.raise(node.start, "Assigning to rvalue")
-    }
-  }
-  return node
-}
-
-// Convert list of expression atoms to binding list.
-
-pp$2.toAssignableList = function(exprList, isBinding) {
-  var this$1 = this;
-
-  var end = exprList.length
-  if (end) {
-    var last = exprList[end - 1]
-    if (last && last.type == "RestElement") {
-      --end
-    } else if (last && last.type == "SpreadElement") {
-      last.type = "RestElement"
-      var arg = last.argument
-      this.toAssignable(arg, isBinding)
-      if (arg.type !== "Identifier" && arg.type !== "MemberExpression" && arg.type !== "ArrayPattern")
-        this.unexpected(arg.start)
-      --end
-    }
-
-    if (isBinding && last && last.type === "RestElement" && last.argument.type !== "Identifier")
-      this.unexpected(last.argument.start)
-  }
-  for (var i = 0; i < end; i++) {
-    var elt = exprList[i]
-    if (elt) this$1.toAssignable(elt, isBinding)
-  }
-  return exprList
-}
-
-// Parses spread element.
-
-pp$2.parseSpread = function(refDestructuringErrors) {
-  var node = this.startNode()
-  this.next()
-  node.argument = this.parseMaybeAssign(false, refDestructuringErrors)
-  return this.finishNode(node, "SpreadElement")
-}
-
-pp$2.parseRest = function(allowNonIdent) {
-  var node = this.startNode()
-  this.next()
-
-  // RestElement inside of a function parameter must be an identifier
-  if (allowNonIdent) node.argument = this.type === tt.name ? this.parseIdent() : this.unexpected()
-  else node.argument = this.type === tt.name || this.type === tt.bracketL ? this.parseBindingAtom() : this.unexpected()
-
-  return this.finishNode(node, "RestElement")
-}
-
-// Parses lvalue (assignable) atom.
-
-pp$2.parseBindingAtom = function() {
-  if (this.options.ecmaVersion < 6) return this.parseIdent()
-  switch (this.type) {
-  case tt.name:
-    return this.parseIdent()
-
-  case tt.bracketL:
-    var node = this.startNode()
-    this.next()
-    node.elements = this.parseBindingList(tt.bracketR, true, true)
-    return this.finishNode(node, "ArrayPattern")
-
-  case tt.braceL:
-    return this.parseObj(true)
-
-  default:
-    this.unexpected()
-  }
-}
-
-pp$2.parseBindingList = function(close, allowEmpty, allowTrailingComma, allowNonIdent) {
-  var this$1 = this;
-
-  var elts = [], first = true
-  while (!this.eat(close)) {
-    if (first) first = false
-    else this$1.expect(tt.comma)
-    if (allowEmpty && this$1.type === tt.comma) {
-      elts.push(null)
-    } else if (allowTrailingComma && this$1.afterTrailingComma(close)) {
-      break
-    } else if (this$1.type === tt.ellipsis) {
-      var rest = this$1.parseRest(allowNonIdent)
-      this$1.parseBindingListItem(rest)
-      elts.push(rest)
-      if (this$1.type === tt.comma) this$1.raise(this$1.start, "Comma is not permitted after the rest element")
-      this$1.expect(close)
-      break
-    } else {
-      var elem = this$1.parseMaybeDefault(this$1.start, this$1.startLoc)
-      this$1.parseBindingListItem(elem)
-      elts.push(elem)
-    }
-  }
-  return elts
-}
-
-pp$2.parseBindingListItem = function(param) {
-  return param
-}
-
-// Parses assignment pattern around given atom if possible.
-
-pp$2.parseMaybeDefault = function(startPos, startLoc, left) {
-  left = left || this.parseBindingAtom()
-  if (this.options.ecmaVersion < 6 || !this.eat(tt.eq)) return left
-  var node = this.startNodeAt(startPos, startLoc)
-  node.left = left
-  node.right = this.parseMaybeAssign()
-  return this.finishNode(node, "AssignmentPattern")
-}
-
-// Verify that a node is an lval — something that can be assigned
-// to.
-// bindingType can be either:
-// 'var' indicating that the lval creates a 'var' binding
-// 'let' indicating that the lval creates a lexical ('let' or 'const') binding
-// 'none' indicating that the binding should be checked for illegal identifiers, but not for duplicate references
-
-pp$2.checkLVal = function(expr, bindingType, checkClashes) {
-  var this$1 = this;
-
-  switch (expr.type) {
-  case "Identifier":
-    if (this.strict && this.reservedWordsStrictBind.test(expr.name))
-      this.raiseRecoverable(expr.start, (bindingType ? "Binding " : "Assigning to ") + expr.name + " in strict mode")
-    if (checkClashes) {
-      if (has(checkClashes, expr.name))
-        this.raiseRecoverable(expr.start, "Argument name clash")
-      checkClashes[expr.name] = true
-    }
-    if (bindingType && bindingType !== "none") {
-      if (
-        bindingType === "var" && !this.canDeclareVarName(expr.name) ||
-        bindingType !== "var" && !this.canDeclareLexicalName(expr.name)
-      ) {
-        this.raiseRecoverable(expr.start, ("Identifier '" + (expr.name) + "' has already been declared"))
-      }
-      if (bindingType === "var") {
-        this.declareVarName(expr.name)
-      } else {
-        this.declareLexicalName(expr.name)
-      }
-    }
-    break
-
-  case "MemberExpression":
-    if (bindingType) this.raiseRecoverable(expr.start, (bindingType ? "Binding" : "Assigning to") + " member expression")
-    break
-
-  case "ObjectPattern":
-    for (var i = 0; i < expr.properties.length; i++)
-      this$1.checkLVal(expr.properties[i].value, bindingType, checkClashes)
-    break
-
-  case "ArrayPattern":
-    for (var i$1 = 0; i$1 < expr.elements.length; i$1++) {
-      var elem = expr.elements[i$1]
-      if (elem) this$1.checkLVal(elem, bindingType, checkClashes)
-    }
-    break
-
-  case "AssignmentPattern":
-    this.checkLVal(expr.left, bindingType, checkClashes)
-    break
-
-  case "RestElement":
-    this.checkLVal(expr.argument, bindingType, checkClashes)
-    break
-
-  case "ParenthesizedExpression":
-    this.checkLVal(expr.expression, bindingType, checkClashes)
-    break
-
-  default:
-    this.raise(expr.start, (bindingType ? "Binding" : "Assigning to") + " rvalue")
-  }
-}
-
-// A recursive descent parser operates by defining functions for all
-// syntactic elements, and recursively calling those, each function
-// advancing the input stream and returning an AST node. Precedence
-// of constructs (for example, the fact that `!x[1]` means `!(x[1])`
-// instead of `(!x)[1]` is handled by the fact that the parser
-// function that parses unary prefix operators is called first, and
-// in turn calls the function that parses `[]` subscripts — that
-// way, it'll receive the node for `x[1]` already parsed, and wraps
-// *that* in the unary operator node.
-//
-// Acorn uses an [operator precedence parser][opp] to handle binary
-// operator precedence, because it is much more compact than using
-// the technique outlined above, which uses different, nesting
-// functions to specify precedence, for all of the ten binary
-// precedence levels that JavaScript defines.
-//
-// [opp]: http://en.wikipedia.org/wiki/Operator-precedence_parser
-
-var pp$3 = Parser.prototype
-
-// Check if property name clashes with already added.
-// Object/class getters and setters are not allowed to clash —
-// either with each other or with an init property — and in
-// strict mode, init properties are also not allowed to be repeated.
-
-pp$3.checkPropClash = function(prop, propHash) {
-  if (this.options.ecmaVersion >= 6 && (prop.computed || prop.method || prop.shorthand))
-    return
-  var key = prop.key;
-  var name
-  switch (key.type) {
-  case "Identifier": name = key.name; break
-  case "Literal": name = String(key.value); break
-  default: return
-  }
-  var kind = prop.kind;
-  if (this.options.ecmaVersion >= 6) {
-    if (name === "__proto__" && kind === "init") {
-      if (propHash.proto) this.raiseRecoverable(key.start, "Redefinition of __proto__ property")
-      propHash.proto = true
-    }
-    return
-  }
-  name = "$" + name
-  var other = propHash[name]
-  if (other) {
-    var redefinition
-    if (kind === "init") {
-      redefinition = this.strict && other.init || other.get || other.set
-    } else {
-      redefinition = other.init || other[kind]
-    }
-    if (redefinition)
-      this.raiseRecoverable(key.start, "Redefinition of property")
-  } else {
-    other = propHash[name] = {
-      init: false,
-      get: false,
-      set: false
-    }
-  }
-  other[kind] = true
-}
-
-// ### Expression parsing
-
-// These nest, from the most general expression type at the top to
-// 'atomic', nondivisible expression types at the bottom. Most of
-// the functions will simply let the function(s) below them parse,
-// and, *if* the syntactic construct they handle is present, wrap
-// the AST node that the inner parser gave them in another node.
-
-// Parse a full expression. The optional arguments are used to
-// forbid the `in` operator (in for loops initalization expressions)
-// and provide reference for storing '=' operator inside shorthand
-// property assignment in contexts where both object expression
-// and object pattern might appear (so it's possible to raise
-// delayed syntax error at correct position).
-
-pp$3.parseExpression = function(noIn, refDestructuringErrors) {
-  var this$1 = this;
-
-  var startPos = this.start, startLoc = this.startLoc
-  var expr = this.parseMaybeAssign(noIn, refDestructuringErrors)
-  if (this.type === tt.comma) {
-    var node = this.startNodeAt(startPos, startLoc)
-    node.expressions = [expr]
-    while (this.eat(tt.comma)) node.expressions.push(this$1.parseMaybeAssign(noIn, refDestructuringErrors))
-    return this.finishNode(node, "SequenceExpression")
-  }
-  return expr
-}
-
-// Parse an assignment expression. This includes applications of
-// operators like `+=`.
-
-pp$3.parseMaybeAssign = function(noIn, refDestructuringErrors, afterLeftParse) {
-  if (this.inGenerator && this.isContextual("yield")) return this.parseYield()
-
-  var ownDestructuringErrors = false, oldParenAssign = -1, oldTrailingComma = -1
-  if (refDestructuringErrors) {
-    oldParenAssign = refDestructuringErrors.parenthesizedAssign
-    oldTrailingComma = refDestructuringErrors.trailingComma
-    refDestructuringErrors.parenthesizedAssign = refDestructuringErrors.trailingComma = -1
-  } else {
-    refDestructuringErrors = new DestructuringErrors
-    ownDestructuringErrors = true
-  }
-
-  var startPos = this.start, startLoc = this.startLoc
-  if (this.type == tt.parenL || this.type == tt.name)
-    this.potentialArrowAt = this.start
-  var left = this.parseMaybeConditional(noIn, refDestructuringErrors)
-  if (afterLeftParse) left = afterLeftParse.call(this, left, startPos, startLoc)
-  if (this.type.isAssign) {
-    this.checkPatternErrors(refDestructuringErrors, true)
-    if (!ownDestructuringErrors) DestructuringErrors.call(refDestructuringErrors)
-    var node = this.startNodeAt(startPos, startLoc)
-    node.operator = this.value
-    node.left = this.type === tt.eq ? this.toAssignable(left) : left
-    refDestructuringErrors.shorthandAssign = -1 // reset because shorthand default was used correctly
-    this.checkLVal(left)
-    this.next()
-    node.right = this.parseMaybeAssign(noIn)
-    return this.finishNode(node, "AssignmentExpression")
-  } else {
-    if (ownDestructuringErrors) this.checkExpressionErrors(refDestructuringErrors, true)
-  }
-  if (oldParenAssign > -1) refDestructuringErrors.parenthesizedAssign = oldParenAssign
-  if (oldTrailingComma > -1) refDestructuringErrors.trailingComma = oldTrailingComma
-  return left
-}
-
-// Parse a ternary conditional (`?:`) operator.
-
-pp$3.parseMaybeConditional = function(noIn, refDestructuringErrors) {
-  var startPos = this.start, startLoc = this.startLoc
-  var expr = this.parseExprOps(noIn, refDestructuringErrors)
-  if (this.checkExpressionErrors(refDestructuringErrors)) return expr
-  if (this.eat(tt.question)) {
-    var node = this.startNodeAt(startPos, startLoc)
-    node.test = expr
-    node.consequent = this.parseMaybeAssign()
-    this.expect(tt.colon)
-    node.alternate = this.parseMaybeAssign(noIn)
-    return this.finishNode(node, "ConditionalExpression")
-  }
-  return expr
-}
-
-// Start the precedence parser.
-
-pp$3.parseExprOps = function(noIn, refDestructuringErrors) {
-  var startPos = this.start, startLoc = this.startLoc
-  var expr = this.parseMaybeUnary(refDestructuringErrors, false)
-  if (this.checkExpressionErrors(refDestructuringErrors)) return expr
-  return expr.start == startPos && expr.type === "ArrowFunctionExpression" ? expr : this.parseExprOp(expr, startPos, startLoc, -1, noIn)
-}
-
-// Parse binary operators with the operator precedence parsing
-// algorithm. `left` is the left-hand side of the operator.
-// `minPrec` provides context that allows the function to stop and
-// defer further parser to one of its callers when it encounters an
-// operator that has a lower precedence than the set it is parsing.
-
-pp$3.parseExprOp = function(left, leftStartPos, leftStartLoc, minPrec, noIn) {
-  var prec = this.type.binop
-  if (prec != null && (!noIn || this.type !== tt._in)) {
-    if (prec > minPrec) {
-      var logical = this.type === tt.logicalOR || this.type === tt.logicalAND
-      var op = this.value
-      this.next()
-      var startPos = this.start, startLoc = this.startLoc
-      var right = this.parseExprOp(this.parseMaybeUnary(null, false), startPos, startLoc, prec, noIn)
-      var node = this.buildBinary(leftStartPos, leftStartLoc, left, right, op, logical)
-      return this.parseExprOp(node, leftStartPos, leftStartLoc, minPrec, noIn)
-    }
-  }
-  return left
-}
-
-pp$3.buildBinary = function(startPos, startLoc, left, right, op, logical) {
-  var node = this.startNodeAt(startPos, startLoc)
-  node.left = left
-  node.operator = op
-  node.right = right
-  return this.finishNode(node, logical ? "LogicalExpression" : "BinaryExpression")
-}
-
-// Parse unary operators, both prefix and postfix.
-
-pp$3.parseMaybeUnary = function(refDestructuringErrors, sawUnary) {
-  var this$1 = this;
-
-  var startPos = this.start, startLoc = this.startLoc, expr
-  if (this.inAsync && this.isContextual("await")) {
-    expr = this.parseAwait(refDestructuringErrors)
-    sawUnary = true
-  } else if (this.type.prefix) {
-    var node = this.startNode(), update = this.type === tt.incDec
-    node.operator = this.value
-    node.prefix = true
-    this.next()
-    node.argument = this.parseMaybeUnary(null, true)
-    this.checkExpressionErrors(refDestructuringErrors, true)
-    if (update) this.checkLVal(node.argument)
-    else if (this.strict && node.operator === "delete" &&
-             node.argument.type === "Identifier")
-      this.raiseRecoverable(node.start, "Deleting local variable in strict mode")
-    else sawUnary = true
-    expr = this.finishNode(node, update ? "UpdateExpression" : "UnaryExpression")
-  } else {
-    expr = this.parseExprSubscripts(refDestructuringErrors)
-    if (this.checkExpressionErrors(refDestructuringErrors)) return expr
-    while (this.type.postfix && !this.canInsertSemicolon()) {
-      var node$1 = this$1.startNodeAt(startPos, startLoc)
-      node$1.operator = this$1.value
-      node$1.prefix = false
-      node$1.argument = expr
-      this$1.checkLVal(expr)
-      this$1.next()
-      expr = this$1.finishNode(node$1, "UpdateExpression")
-    }
-  }
-
-  if (!sawUnary && this.eat(tt.starstar))
-    return this.buildBinary(startPos, startLoc, expr, this.parseMaybeUnary(null, false), "**", false)
-  else
-    return expr
-}
-
-// Parse call, dot, and `[]`-subscript expressions.
-
-pp$3.parseExprSubscripts = function(refDestructuringErrors) {
-  var startPos = this.start, startLoc = this.startLoc
-  var expr = this.parseExprAtom(refDestructuringErrors)
-  var skipArrowSubscripts = expr.type === "ArrowFunctionExpression" && this.input.slice(this.lastTokStart, this.lastTokEnd) !== ")"
-  if (this.checkExpressionErrors(refDestructuringErrors) || skipArrowSubscripts) return expr
-  var result = this.parseSubscripts(expr, startPos, startLoc)
-  if (refDestructuringErrors && result.type === "MemberExpression") {
-    if (refDestructuringErrors.parenthesizedAssign >= result.start) refDestructuringErrors.parenthesizedAssign = -1
-    if (refDestructuringErrors.parenthesizedBind >= result.start) refDestructuringErrors.parenthesizedBind = -1
-  }
-  return result
-}
-
-pp$3.parseSubscripts = function(base, startPos, startLoc, noCalls) {
-  var this$1 = this;
-
-  var maybeAsyncArrow = this.options.ecmaVersion >= 8 && base.type === "Identifier" && base.name === "async" &&
-      this.lastTokEnd == base.end && !this.canInsertSemicolon()
-  for (var computed;;) {
-    if ((computed = this$1.eat(tt.bracketL)) || this$1.eat(tt.dot)) {
-      var node = this$1.startNodeAt(startPos, startLoc)
-      node.object = base
-      node.property = computed ? this$1.parseExpression() : this$1.parseIdent(true)
-      node.computed = !!computed
-      if (computed) this$1.expect(tt.bracketR)
-      base = this$1.finishNode(node, "MemberExpression")
-    } else if (!noCalls && this$1.eat(tt.parenL)) {
-      var refDestructuringErrors = new DestructuringErrors, oldYieldPos = this$1.yieldPos, oldAwaitPos = this$1.awaitPos
-      this$1.yieldPos = 0
-      this$1.awaitPos = 0
-      var exprList = this$1.parseExprList(tt.parenR, this$1.options.ecmaVersion >= 8, false, refDestructuringErrors)
-      if (maybeAsyncArrow && !this$1.canInsertSemicolon() && this$1.eat(tt.arrow)) {
-        this$1.checkPatternErrors(refDestructuringErrors, false)
-        this$1.checkYieldAwaitInDefaultParams()
-        this$1.yieldPos = oldYieldPos
-        this$1.awaitPos = oldAwaitPos
-        return this$1.parseArrowExpression(this$1.startNodeAt(startPos, startLoc), exprList, true)
-      }
-      this$1.checkExpressionErrors(refDestructuringErrors, true)
-      this$1.yieldPos = oldYieldPos || this$1.yieldPos
-      this$1.awaitPos = oldAwaitPos || this$1.awaitPos
-      var node$1 = this$1.startNodeAt(startPos, startLoc)
-      node$1.callee = base
-      node$1.arguments = exprList
-      base = this$1.finishNode(node$1, "CallExpression")
-    } else if (this$1.type === tt.backQuote) {
-      var node$2 = this$1.startNodeAt(startPos, startLoc)
-      node$2.tag = base
-      node$2.quasi = this$1.parseTemplate()
-      base = this$1.finishNode(node$2, "TaggedTemplateExpression")
-    } else {
-      return base
-    }
-  }
-}
-
-// Parse an atomic expression — either a single token that is an
-// expression, an expression started by a keyword like `function` or
-// `new`, or an expression wrapped in punctuation like `()`, `[]`,
-// or `{}`.
-
-pp$3.parseExprAtom = function(refDestructuringErrors) {
-  var node, canBeArrow = this.potentialArrowAt == this.start
-  switch (this.type) {
-  case tt._super:
-    if (!this.inFunction)
-      this.raise(this.start, "'super' outside of function or class")
-
-  case tt._this:
-    var type = this.type === tt._this ? "ThisExpression" : "Super"
-    node = this.startNode()
-    this.next()
-    return this.finishNode(node, type)
-
-  case tt.name:
-    var startPos = this.start, startLoc = this.startLoc
-    var id = this.parseIdent(this.type !== tt.name)
-    if (this.options.ecmaVersion >= 8 && id.name === "async" && !this.canInsertSemicolon() && this.eat(tt._function))
-      return this.parseFunction(this.startNodeAt(startPos, startLoc), false, false, true)
-    if (canBeArrow && !this.canInsertSemicolon()) {
-      if (this.eat(tt.arrow))
-        return this.parseArrowExpression(this.startNodeAt(startPos, startLoc), [id], false)
-      if (this.options.ecmaVersion >= 8 && id.name === "async" && this.type === tt.name) {
-        id = this.parseIdent()
-        if (this.canInsertSemicolon() || !this.eat(tt.arrow))
-          this.unexpected()
-        return this.parseArrowExpression(this.startNodeAt(startPos, startLoc), [id], true)
-      }
-    }
-    return id
-
-  case tt.regexp:
-    var value = this.value
-    node = this.parseLiteral(value.value)
-    node.regex = {pattern: value.pattern, flags: value.flags}
-    return node
-
-  case tt.num: case tt.string:
-    return this.parseLiteral(this.value)
-
-  case tt._null: case tt._true: case tt._false:
-    node = this.startNode()
-    node.value = this.type === tt._null ? null : this.type === tt._true
-    node.raw = this.type.keyword
-    this.next()
-    return this.finishNode(node, "Literal")
-
-  case tt.parenL:
-    var start = this.start, expr = this.parseParenAndDistinguishExpression(canBeArrow)
-    if (refDestructuringErrors) {
-      if (refDestructuringErrors.parenthesizedAssign < 0 && !this.isSimpleAssignTarget(expr))
-        refDestructuringErrors.parenthesizedAssign = start
-      if (refDestructuringErrors.parenthesizedBind < 0)
-        refDestructuringErrors.parenthesizedBind = start
-    }
-    return expr
-
-  case tt.bracketL:
-    node = this.startNode()
-    this.next()
-    node.elements = this.parseExprList(tt.bracketR, true, true, refDestructuringErrors)
-    return this.finishNode(node, "ArrayExpression")
-
-  case tt.braceL:
-    return this.parseObj(false, refDestructuringErrors)
-
-  case tt._function:
-    node = this.startNode()
-    this.next()
-    return this.parseFunction(node, false)
-
-  case tt._class:
-    return this.parseClass(this.startNode(), false)
-
-  case tt._new:
-    return this.parseNew()
-
-  case tt.backQuote:
-    return this.parseTemplate()
-
-  default:
-    this.unexpected()
-  }
-}
-
-pp$3.parseLiteral = function(value) {
-  var node = this.startNode()
-  node.value = value
-  node.raw = this.input.slice(this.start, this.end)
-  this.next()
-  return this.finishNode(node, "Literal")
-}
-
-pp$3.parseParenExpression = function() {
-  this.expect(tt.parenL)
-  var val = this.parseExpression()
-  this.expect(tt.parenR)
-  return val
-}
-
-pp$3.parseParenAndDistinguishExpression = function(canBeArrow) {
-  var this$1 = this;
-
-  var startPos = this.start, startLoc = this.startLoc, val, allowTrailingComma = this.options.ecmaVersion >= 8
-  if (this.options.ecmaVersion >= 6) {
-    this.next()
-
-    var innerStartPos = this.start, innerStartLoc = this.startLoc
-    var exprList = [], first = true, lastIsComma = false
-    var refDestructuringErrors = new DestructuringErrors, oldYieldPos = this.yieldPos, oldAwaitPos = this.awaitPos, spreadStart, innerParenStart
-    this.yieldPos = 0
-    this.awaitPos = 0
-    while (this.type !== tt.parenR) {
-      first ? first = false : this$1.expect(tt.comma)
-      if (allowTrailingComma && this$1.afterTrailingComma(tt.parenR, true)) {
-        lastIsComma = true
-        break
-      } else if (this$1.type === tt.ellipsis) {
-        spreadStart = this$1.start
-        exprList.push(this$1.parseParenItem(this$1.parseRest()))
-        if (this$1.type === tt.comma) this$1.raise(this$1.start, "Comma is not permitted after the rest element")
-        break
-      } else {
-        if (this$1.type === tt.parenL && !innerParenStart) {
-          innerParenStart = this$1.start
-        }
-        exprList.push(this$1.parseMaybeAssign(false, refDestructuringErrors, this$1.parseParenItem))
-      }
-    }
-    var innerEndPos = this.start, innerEndLoc = this.startLoc
-    this.expect(tt.parenR)
-
-    if (canBeArrow && !this.canInsertSemicolon() && this.eat(tt.arrow)) {
-      this.checkPatternErrors(refDestructuringErrors, false)
-      this.checkYieldAwaitInDefaultParams()
-      if (innerParenStart) this.unexpected(innerParenStart)
-      this.yieldPos = oldYieldPos
-      this.awaitPos = oldAwaitPos
-      return this.parseParenArrowList(startPos, startLoc, exprList)
-    }
-
-    if (!exprList.length || lastIsComma) this.unexpected(this.lastTokStart)
-    if (spreadStart) this.unexpected(spreadStart)
-    this.checkExpressionErrors(refDestructuringErrors, true)
-    this.yieldPos = oldYieldPos || this.yieldPos
-    this.awaitPos = oldAwaitPos || this.awaitPos
-
-    if (exprList.length > 1) {
-      val = this.startNodeAt(innerStartPos, innerStartLoc)
-      val.expressions = exprList
-      this.finishNodeAt(val, "SequenceExpression", innerEndPos, innerEndLoc)
-    } else {
-      val = exprList[0]
-    }
-  } else {
-    val = this.parseParenExpression()
-  }
-
-  if (this.options.preserveParens) {
-    var par = this.startNodeAt(startPos, startLoc)
-    par.expression = val
-    return this.finishNode(par, "ParenthesizedExpression")
-  } else {
-    return val
-  }
-}
-
-pp$3.parseParenItem = function(item) {
-  return item
-}
-
-pp$3.parseParenArrowList = function(startPos, startLoc, exprList) {
-  return this.parseArrowExpression(this.startNodeAt(startPos, startLoc), exprList)
-}
-
-// New's precedence is slightly tricky. It must allow its argument to
-// be a `[]` or dot subscript expression, but not a call — at least,
-// not without wrapping it in parentheses. Thus, it uses the noCalls
-// argument to parseSubscripts to prevent it from consuming the
-// argument list.
-
-var empty$1 = []
-
-pp$3.parseNew = function() {
-  var node = this.startNode()
-  var meta = this.parseIdent(true)
-  if (this.options.ecmaVersion >= 6 && this.eat(tt.dot)) {
-    node.meta = meta
-    node.property = this.parseIdent(true)
-    if (node.property.name !== "target")
-      this.raiseRecoverable(node.property.start, "The only valid meta property for new is new.target")
-    if (!this.inFunction)
-      this.raiseRecoverable(node.start, "new.target can only be used in functions")
-    return this.finishNode(node, "MetaProperty")
-  }
-  var startPos = this.start, startLoc = this.startLoc
-  node.callee = this.parseSubscripts(this.parseExprAtom(), startPos, startLoc, true)
-  if (this.eat(tt.parenL)) node.arguments = this.parseExprList(tt.parenR, this.options.ecmaVersion >= 8, false)
-  else node.arguments = empty$1
-  return this.finishNode(node, "NewExpression")
-}
-
-// Parse template expression.
-
-pp$3.parseTemplateElement = function() {
-  var elem = this.startNode()
-  elem.value = {
-    raw: this.input.slice(this.start, this.end).replace(/\r\n?/g, "\n"),
-    cooked: this.value
-  }
-  this.next()
-  elem.tail = this.type === tt.backQuote
-  return this.finishNode(elem, "TemplateElement")
-}
-
-pp$3.parseTemplate = function() {
-  var this$1 = this;
-
-  var node = this.startNode()
-  this.next()
-  node.expressions = []
-  var curElt = this.parseTemplateElement()
-  node.quasis = [curElt]
-  while (!curElt.tail) {
-    this$1.expect(tt.dollarBraceL)
-    node.expressions.push(this$1.parseExpression())
-    this$1.expect(tt.braceR)
-    node.quasis.push(curElt = this$1.parseTemplateElement())
-  }
-  this.next()
-  return this.finishNode(node, "TemplateLiteral")
-}
-
-// Parse an object literal or binding pattern.
-
-pp$3.parseObj = function(isPattern, refDestructuringErrors) {
-  var this$1 = this;
-
-  var node = this.startNode(), first = true, propHash = {}
-  node.properties = []
-  this.next()
-  while (!this.eat(tt.braceR)) {
-    if (!first) {
-      this$1.expect(tt.comma)
-      if (this$1.afterTrailingComma(tt.braceR)) break
-    } else first = false
-
-    var prop = this$1.startNode(), isGenerator, isAsync, startPos, startLoc
-    if (this$1.options.ecmaVersion >= 6) {
-      prop.method = false
-      prop.shorthand = false
-      if (isPattern || refDestructuringErrors) {
-        startPos = this$1.start
-        startLoc = this$1.startLoc
-      }
-      if (!isPattern)
-        isGenerator = this$1.eat(tt.star)
-    }
-    this$1.parsePropertyName(prop)
-    if (!isPattern && this$1.options.ecmaVersion >= 8 && !isGenerator && !prop.computed &&
-        prop.key.type === "Identifier" && prop.key.name === "async" && this$1.type !== tt.parenL &&
-        this$1.type !== tt.colon && !this$1.canInsertSemicolon()) {
-      isAsync = true
-      this$1.parsePropertyName(prop, refDestructuringErrors)
-    } else {
-      isAsync = false
-    }
-    this$1.parsePropertyValue(prop, isPattern, isGenerator, isAsync, startPos, startLoc, refDestructuringErrors)
-    this$1.checkPropClash(prop, propHash)
-    node.properties.push(this$1.finishNode(prop, "Property"))
-  }
-  return this.finishNode(node, isPattern ? "ObjectPattern" : "ObjectExpression")
-}
-
-pp$3.parsePropertyValue = function(prop, isPattern, isGenerator, isAsync, startPos, startLoc, refDestructuringErrors) {
-  if ((isGenerator || isAsync) && this.type === tt.colon)
-    this.unexpected()
-
-  if (this.eat(tt.colon)) {
-    prop.value = isPattern ? this.parseMaybeDefault(this.start, this.startLoc) : this.parseMaybeAssign(false, refDestructuringErrors)
-    prop.kind = "init"
-  } else if (this.options.ecmaVersion >= 6 && this.type === tt.parenL) {
-    if (isPattern) this.unexpected()
-    prop.kind = "init"
-    prop.method = true
-    prop.value = this.parseMethod(isGenerator, isAsync)
-  } else if (this.options.ecmaVersion >= 5 && !prop.computed && prop.key.type === "Identifier" &&
-             (prop.key.name === "get" || prop.key.name === "set") &&
-             (this.type != tt.comma && this.type != tt.braceR)) {
-    if (isGenerator || isAsync || isPattern) this.unexpected()
-    prop.kind = prop.key.name
-    this.parsePropertyName(prop)
-    prop.value = this.parseMethod(false)
-    var paramCount = prop.kind === "get" ? 0 : 1
-    if (prop.value.params.length !== paramCount) {
-      var start = prop.value.start
-      if (prop.kind === "get")
-        this.raiseRecoverable(start, "getter should have no params")
-      else
-        this.raiseRecoverable(start, "setter should have exactly one param")
-    } else {
-      if (prop.kind === "set" && prop.value.params[0].type === "RestElement")
-        this.raiseRecoverable(prop.value.params[0].start, "Setter cannot use rest params")
-    }
-  } else if (this.options.ecmaVersion >= 6 && !prop.computed && prop.key.type === "Identifier") {
-    if (this.keywords.test(prop.key.name) ||
-        (this.strict ? this.reservedWordsStrict : this.reservedWords).test(prop.key.name) ||
-        (this.inGenerator && prop.key.name == "yield") ||
-        (this.inAsync && prop.key.name == "await"))
-      this.raiseRecoverable(prop.key.start, "'" + prop.key.name + "' can not be used as shorthand property")
-    prop.kind = "init"
-    if (isPattern) {
-      prop.value = this.parseMaybeDefault(startPos, startLoc, prop.key)
-    } else if (this.type === tt.eq && refDestructuringErrors) {
-      if (refDestructuringErrors.shorthandAssign < 0)
-        refDestructuringErrors.shorthandAssign = this.start
-      prop.value = this.parseMaybeDefault(startPos, startLoc, prop.key)
-    } else {
-      prop.value = prop.key
-    }
-    prop.shorthand = true
-  } else this.unexpected()
-}
-
-pp$3.parsePropertyName = function(prop) {
-  if (this.options.ecmaVersion >= 6) {
-    if (this.eat(tt.bracketL)) {
-      prop.computed = true
-      prop.key = this.parseMaybeAssign()
-      this.expect(tt.bracketR)
-      return prop.key
-    } else {
-      prop.computed = false
-    }
-  }
-  return prop.key = this.type === tt.num || this.type === tt.string ? this.parseExprAtom() : this.parseIdent(true)
-}
-
-// Initialize empty function node.
-
-pp$3.initFunction = function(node) {
-  node.id = null
-  if (this.options.ecmaVersion >= 6) {
-    node.generator = false
-    node.expression = false
-  }
-  if (this.options.ecmaVersion >= 8)
-    node.async = false
-}
-
-// Parse object or class method.
-
-pp$3.parseMethod = function(isGenerator, isAsync) {
-  var node = this.startNode(), oldInGen = this.inGenerator, oldInAsync = this.inAsync,
-      oldYieldPos = this.yieldPos, oldAwaitPos = this.awaitPos, oldInFunc = this.inFunction
-
-  this.initFunction(node)
-  if (this.options.ecmaVersion >= 6)
-    node.generator = isGenerator
-  if (this.options.ecmaVersion >= 8)
-    node.async = !!isAsync
-
-  this.inGenerator = node.generator
-  this.inAsync = node.async
-  this.yieldPos = 0
-  this.awaitPos = 0
-  this.inFunction = true
-  this.enterFunctionScope()
-
-  this.expect(tt.parenL)
-  node.params = this.parseBindingList(tt.parenR, false, this.options.ecmaVersion >= 8)
-  this.checkYieldAwaitInDefaultParams()
-  this.parseFunctionBody(node, false)
-
-  this.inGenerator = oldInGen
-  this.inAsync = oldInAsync
-  this.yieldPos = oldYieldPos
-  this.awaitPos = oldAwaitPos
-  this.inFunction = oldInFunc
-  return this.finishNode(node, "FunctionExpression")
-}
-
-// Parse arrow function expression with given parameters.
-
-pp$3.parseArrowExpression = function(node, params, isAsync) {
-  var oldInGen = this.inGenerator, oldInAsync = this.inAsync,
-      oldYieldPos = this.yieldPos, oldAwaitPos = this.awaitPos, oldInFunc = this.inFunction
-
-  this.enterFunctionScope()
-  this.initFunction(node)
-  if (this.options.ecmaVersion >= 8)
-    node.async = !!isAsync
-
-  this.inGenerator = false
-  this.inAsync = node.async
-  this.yieldPos = 0
-  this.awaitPos = 0
-  this.inFunction = true
-
-  node.params = this.toAssignableList(params, true)
-  this.parseFunctionBody(node, true)
-
-  this.inGenerator = oldInGen
-  this.inAsync = oldInAsync
-  this.yieldPos = oldYieldPos
-  this.awaitPos = oldAwaitPos
-  this.inFunction = oldInFunc
-  return this.finishNode(node, "ArrowFunctionExpression")
-}
-
-// Parse function body and check parameters.
-
-pp$3.parseFunctionBody = function(node, isArrowFunction) {
-  var isExpression = isArrowFunction && this.type !== tt.braceL
-  var oldStrict = this.strict, useStrict = false
-
-  if (isExpression) {
-    node.body = this.parseMaybeAssign()
-    node.expression = true
-    this.checkParams(node, false)
-  } else {
-    var nonSimple = this.options.ecmaVersion >= 7 && !this.isSimpleParamList(node.params)
-    if (!oldStrict || nonSimple) {
-      useStrict = this.strictDirective(this.end)
-      // If this is a strict mode function, verify that argument names
-      // are not repeated, and it does not try to bind the words `eval`
-      // or `arguments`.
-      if (useStrict && nonSimple)
-        this.raiseRecoverable(node.start, "Illegal 'use strict' directive in function with non-simple parameter list")
-    }
-    // Start a new scope with regard to labels and the `inFunction`
-    // flag (restore them to their old value afterwards).
-    var oldLabels = this.labels
-    this.labels = []
-    if (useStrict) this.strict = true
-
-    // Add the params to varDeclaredNames to ensure that an error is thrown
-    // if a let/const declaration in the function clashes with one of the params.
-    this.checkParams(node, !oldStrict && !useStrict && !isArrowFunction && this.isSimpleParamList(node.params))
-    node.body = this.parseBlock(false)
-    node.expression = false
-    this.labels = oldLabels
-  }
-  this.exitFunctionScope()
-
-  if (this.strict && node.id) {
-    // Ensure the function name isn't a forbidden identifier in strict mode, e.g. 'eval'
-    this.checkLVal(node.id, "none")
-  }
-  this.strict = oldStrict
-}
-
-pp$3.isSimpleParamList = function(params) {
-  for (var i = 0; i < params.length; i++)
-    if (params[i].type !== "Identifier") return false
-  return true
-}
-
-// Checks function params for various disallowed patterns such as using "eval"
-// or "arguments" and duplicate parameters.
-
-pp$3.checkParams = function(node, allowDuplicates) {
-  var this$1 = this;
-
-  var nameHash = {}
-  for (var i = 0; i < node.params.length; i++) this$1.checkLVal(node.params[i], "var", allowDuplicates ? null : nameHash)
-}
-
-// Parses a comma-separated list of expressions, and returns them as
-// an array. `close` is the token type that ends the list, and
-// `allowEmpty` can be turned on to allow subsequent commas with
-// nothing in between them to be parsed as `null` (which is needed
-// for array literals).
-
-pp$3.parseExprList = function(close, allowTrailingComma, allowEmpty, refDestructuringErrors) {
-  var this$1 = this;
-
-  var elts = [], first = true
-  while (!this.eat(close)) {
-    if (!first) {
-      this$1.expect(tt.comma)
-      if (allowTrailingComma && this$1.afterTrailingComma(close)) break
-    } else first = false
-
-    var elt
-    if (allowEmpty && this$1.type === tt.comma)
-      elt = null
-    else if (this$1.type === tt.ellipsis) {
-      elt = this$1.parseSpread(refDestructuringErrors)
-      if (refDestructuringErrors && this$1.type === tt.comma && refDestructuringErrors.trailingComma < 0)
-        refDestructuringErrors.trailingComma = this$1.start
-    } else {
-      elt = this$1.parseMaybeAssign(false, refDestructuringErrors)
-    }
-    elts.push(elt)
-  }
-  return elts
-}
-
-// Parse the next token as an identifier. If `liberal` is true (used
-// when parsing properties), it will also convert keywords into
-// identifiers.
-
-pp$3.parseIdent = function(liberal) {
-  var node = this.startNode()
-  if (liberal && this.options.allowReserved == "never") liberal = false
-  if (this.type === tt.name) {
-    if (!liberal && (this.strict ? this.reservedWordsStrict : this.reservedWords).test(this.value) &&
-        (this.options.ecmaVersion >= 6 ||
-         this.input.slice(this.start, this.end).indexOf("\\") == -1))
-      this.raiseRecoverable(this.start, "The keyword '" + this.value + "' is reserved")
-    if (this.inGenerator && this.value === "yield")
-      this.raiseRecoverable(this.start, "Can not use 'yield' as identifier inside a generator")
-    if (this.inAsync && this.value === "await")
-      this.raiseRecoverable(this.start, "Can not use 'await' as identifier inside an async function")
-    node.name = this.value
-  } else if (liberal && this.type.keyword) {
-    node.name = this.type.keyword
-  } else {
-    this.unexpected()
-  }
-  this.next()
-  return this.finishNode(node, "Identifier")
-}
-
-// Parses yield expression inside generator.
-
-pp$3.parseYield = function() {
-  if (!this.yieldPos) this.yieldPos = this.start
-
-  var node = this.startNode()
-  this.next()
-  if (this.type == tt.semi || this.canInsertSemicolon() || (this.type != tt.star && !this.type.startsExpr)) {
-    node.delegate = false
-    node.argument = null
-  } else {
-    node.delegate = this.eat(tt.star)
-    node.argument = this.parseMaybeAssign()
-  }
-  return this.finishNode(node, "YieldExpression")
-}
-
-pp$3.parseAwait = function() {
-  if (!this.awaitPos) this.awaitPos = this.start
-
-  var node = this.startNode()
-  this.next()
-  node.argument = this.parseMaybeUnary(null, true)
-  return this.finishNode(node, "AwaitExpression")
-}
-
-var pp$4 = Parser.prototype
-
-// This function is used to raise exceptions on parse errors. It
-// takes an offset integer (into the current `input`) to indicate
-// the location of the error, attaches the position to the end
-// of the error message, and then raises a `SyntaxError` with that
-// message.
-
-pp$4.raise = function(pos, message) {
-  var loc = getLineInfo(this.input, pos)
-  message += " (" + loc.line + ":" + loc.column + ")"
-  var err = new SyntaxError(message)
-  err.pos = pos; err.loc = loc; err.raisedAt = this.pos
-  throw err
-}
-
-pp$4.raiseRecoverable = pp$4.raise
-
-pp$4.curPosition = function() {
-  if (this.options.locations) {
-    return new Position(this.curLine, this.pos - this.lineStart)
-  }
-}
-
-var pp$5 = Parser.prototype
-
-// Object.assign polyfill
-var assign = Object.assign || function(target) {
-  var sources = [], len = arguments.length - 1;
-  while ( len-- > 0 ) sources[ len ] = arguments[ len + 1 ];
-
-  for (var i = 0; i < sources.length; i++) {
-    var source = sources[i]
-    for (var key in source) {
-      if (has(source, key)) {
-        target[key] = source[key]
-      }
-    }
-  }
-  return target
-}
-
-// The functions in this module keep track of declared variables in the current scope in order to detect duplicate variable names.
-
-pp$5.enterFunctionScope = function() {
-  // var: a hash of var-declared names in the current lexical scope
-  // lexical: a hash of lexically-declared names in the current lexical scope
-  // childVar: a hash of var-declared names in all child lexical scopes of the current lexical scope (within the current function scope)
-  // parentLexical: a hash of lexically-declared names in all parent lexical scopes of the current lexical scope (within the current function scope)
-  this.scopeStack.push({var: {}, lexical: {}, childVar: {}, parentLexical: {}})
-}
-
-pp$5.exitFunctionScope = function() {
-  this.scopeStack.pop()
-}
-
-pp$5.enterLexicalScope = function() {
-  var parentScope = this.scopeStack[this.scopeStack.length - 1]
-  var childScope = {var: {}, lexical: {}, childVar: {}, parentLexical: {}}
-
-  this.scopeStack.push(childScope)
-  assign(childScope.parentLexical, parentScope.lexical, parentScope.parentLexical)
-}
-
-pp$5.exitLexicalScope = function() {
-  var childScope = this.scopeStack.pop()
-  var parentScope = this.scopeStack[this.scopeStack.length - 1]
-
-  assign(parentScope.childVar, childScope.var, childScope.childVar)
-}
-
-/**
- * A name can be declared with `var` if there are no variables with the same name declared with `let`/`const`
- * in the current lexical scope or any of the parent lexical scopes in this function.
- */
-pp$5.canDeclareVarName = function(name) {
-  var currentScope = this.scopeStack[this.scopeStack.length - 1]
-
-  return !has(currentScope.lexical, name) && !has(currentScope.parentLexical, name)
-}
-
-/**
- * A name can be declared with `let`/`const` if there are no variables with the same name declared with `let`/`const`
- * in the current scope, and there are no variables with the same name declared with `var` in the current scope or in
- * any child lexical scopes in this function.
- */
-pp$5.canDeclareLexicalName = function(name) {
-  var currentScope = this.scopeStack[this.scopeStack.length - 1]
-
-  return !has(currentScope.lexical, name) && !has(currentScope.var, name) && !has(currentScope.childVar, name)
-}
-
-pp$5.declareVarName = function(name) {
-  this.scopeStack[this.scopeStack.length - 1].var[name] = true
-}
-
-pp$5.declareLexicalName = function(name) {
-  this.scopeStack[this.scopeStack.length - 1].lexical[name] = true
-}
-
-var Node = function Node(parser, pos, loc) {
-  this.type = ""
-  this.start = pos
-  this.end = 0
-  if (parser.options.locations)
-    this.loc = new SourceLocation(parser, loc)
-  if (parser.options.directSourceFile)
-    this.sourceFile = parser.options.directSourceFile
-  if (parser.options.ranges)
-    this.range = [pos, 0]
-};
-
-// Start an AST node, attaching a start offset.
-
-var pp$6 = Parser.prototype
-
-pp$6.startNode = function() {
-  return new Node(this, this.start, this.startLoc)
-}
-
-pp$6.startNodeAt = function(pos, loc) {
-  return new Node(this, pos, loc)
-}
-
-// Finish an AST node, adding `type` and `end` properties.
-
-function finishNodeAt(node, type, pos, loc) {
-  node.type = type
-  node.end = pos
-  if (this.options.locations)
-    node.loc.end = loc
-  if (this.options.ranges)
-    node.range[1] = pos
-  return node
-}
-
-pp$6.finishNode = function(node, type) {
-  return finishNodeAt.call(this, node, type, this.lastTokEnd, this.lastTokEndLoc)
-}
-
-// Finish node at given position
-
-pp$6.finishNodeAt = function(node, type, pos, loc) {
-  return finishNodeAt.call(this, node, type, pos, loc)
-}
-
-// The algorithm used to determine whether a regexp can appear at a
-// given point in the program is loosely based on sweet.js' approach.
-// See https://github.com/mozilla/sweet.js/wiki/design
-
-var TokContext = function TokContext(token, isExpr, preserveSpace, override, generator) {
-  this.token = token
-  this.isExpr = !!isExpr
-  this.preserveSpace = !!preserveSpace
-  this.override = override
-  this.generator = !!generator
-};
-
-var types = {
-  b_stat: new TokContext("{", false),
-  b_expr: new TokContext("{", true),
-  b_tmpl: new TokContext("${", true),
-  p_stat: new TokContext("(", false),
-  p_expr: new TokContext("(", true),
-  q_tmpl: new TokContext("`", true, true, function (p) { return p.readTmplToken(); }),
-  f_expr: new TokContext("function", true),
-  f_expr_gen: new TokContext("function", true, false, null, true),
-  f_gen: new TokContext("function", false, false, null, true)
-}
-
-var pp$7 = Parser.prototype
-
-pp$7.initialContext = function() {
-  return [types.b_stat]
-}
-
-pp$7.braceIsBlock = function(prevType) {
-  if (prevType === tt.colon) {
-    var parent = this.curContext()
-    if (parent === types.b_stat || parent === types.b_expr)
-      return !parent.isExpr
-  }
-  if (prevType === tt._return)
-    return lineBreak.test(this.input.slice(this.lastTokEnd, this.start))
-  if (prevType === tt._else || prevType === tt.semi || prevType === tt.eof || prevType === tt.parenR || prevType == tt.arrow)
-    return true
-  if (prevType == tt.braceL)
-    return this.curContext() === types.b_stat
-  return !this.exprAllowed
-}
-
-pp$7.inGeneratorContext = function() {
-  var this$1 = this;
-
-  for (var i = this.context.length - 1; i >= 0; i--)
-    if (this$1.context[i].generator) return true
-  return false
-}
-
-pp$7.updateContext = function(prevType) {
-  var update, type = this.type
-  if (type.keyword && prevType == tt.dot)
-    this.exprAllowed = false
-  else if (update = type.updateContext)
-    update.call(this, prevType)
-  else
-    this.exprAllowed = type.beforeExpr
-}
-
-// Token-specific context update code
-
-tt.parenR.updateContext = tt.braceR.updateContext = function() {
-  if (this.context.length == 1) {
-    this.exprAllowed = true
-    return
-  }
-  var out = this.context.pop(), cur
-  if (out === types.b_stat && (cur = this.curContext()) && cur.token === "function") {
-    this.context.pop()
-    this.exprAllowed = false
-  } else if (out === types.b_tmpl) {
-    this.exprAllowed = true
-  } else {
-    this.exprAllowed = !out.isExpr
-  }
-}
-
-tt.braceL.updateContext = function(prevType) {
-  this.context.push(this.braceIsBlock(prevType) ? types.b_stat : types.b_expr)
-  this.exprAllowed = true
-}
-
-tt.dollarBraceL.updateContext = function() {
-  this.context.push(types.b_tmpl)
-  this.exprAllowed = true
-}
-
-tt.parenL.updateContext = function(prevType) {
-  var statementParens = prevType === tt._if || prevType === tt._for || prevType === tt._with || prevType === tt._while
-  this.context.push(statementParens ? types.p_stat : types.p_expr)
-  this.exprAllowed = true
-}
-
-tt.incDec.updateContext = function() {
-  // tokExprAllowed stays unchanged
-}
-
-tt._function.updateContext = function(prevType) {
-  if (prevType.beforeExpr && prevType !== tt.semi && prevType !== tt._else &&
-      !((prevType === tt.colon || prevType === tt.braceL) && this.curContext() === types.b_stat))
-    this.context.push(types.f_expr)
-  this.exprAllowed = false
-}
-
-tt.backQuote.updateContext = function() {
-  if (this.curContext() === types.q_tmpl)
-    this.context.pop()
-  else
-    this.context.push(types.q_tmpl)
-  this.exprAllowed = false
-}
-
-tt.star.updateContext = function(prevType) {
-  if (prevType == tt._function) {
-    if (this.curContext() === types.f_expr)
-      this.context[this.context.length - 1] = types.f_expr_gen
-    else
-      this.context.push(types.f_gen)
-  }
-  this.exprAllowed = true
-}
-
-tt.name.updateContext = function(prevType) {
-  var allowed = false
-  if (this.options.ecmaVersion >= 6) {
-    if (this.value == "of" && !this.exprAllowed ||
-        this.value == "yield" && this.inGeneratorContext())
-      allowed = true
-  }
-  this.exprAllowed = allowed
-}
-
-// Object type used to represent tokens. Note that normally, tokens
-// simply exist as properties on the parser object. This is only
-// used for the onToken callback and the external tokenizer.
-
-var Token = function Token(p) {
-  this.type = p.type
-  this.value = p.value
-  this.start = p.start
-  this.end = p.end
-  if (p.options.locations)
-    this.loc = new SourceLocation(p, p.startLoc, p.endLoc)
-  if (p.options.ranges)
-    this.range = [p.start, p.end]
-};
-
-// ## Tokenizer
-
-var pp$8 = Parser.prototype
-
-// Are we running under Rhino?
-var isRhino = typeof Packages == "object" && Object.prototype.toString.call(Packages) == "[object JavaPackage]"
-
-// Move to the next token
-
-pp$8.next = function() {
-  if (this.options.onToken)
-    this.options.onToken(new Token(this))
-
-  this.lastTokEnd = this.end
-  this.lastTokStart = this.start
-  this.lastTokEndLoc = this.endLoc
-  this.lastTokStartLoc = this.startLoc
-  this.nextToken()
-}
-
-pp$8.getToken = function() {
-  this.next()
-  return new Token(this)
-}
-
-// If we're in an ES6 environment, make parsers iterable
-if (typeof Symbol !== "undefined")
-  pp$8[Symbol.iterator] = function() {
-    var this$1 = this;
-
-    return {
-      next: function () {
-        var token = this$1.getToken()
-        return {
-          done: token.type === tt.eof,
-          value: token
-        }
-      }
-    }
-  }
-
-// Toggle strict mode. Re-reads the next number or string to please
-// pedantic tests (`"use strict"; 010;` should fail).
-
-pp$8.curContext = function() {
-  return this.context[this.context.length - 1]
-}
-
-// Read a single token, updating the parser object's token-related
-// properties.
-
-pp$8.nextToken = function() {
-  var curContext = this.curContext()
-  if (!curContext || !curContext.preserveSpace) this.skipSpace()
-
-  this.start = this.pos
-  if (this.options.locations) this.startLoc = this.curPosition()
-  if (this.pos >= this.input.length) return this.finishToken(tt.eof)
-
-  if (curContext.override) return curContext.override(this)
-  else this.readToken(this.fullCharCodeAtPos())
-}
-
-pp$8.readToken = function(code) {
-  // Identifier or keyword. '\uXXXX' sequences are allowed in
-  // identifiers, so '\' also dispatches to that.
-  if (isIdentifierStart(code, this.options.ecmaVersion >= 6) || code === 92 /* '\' */)
-    return this.readWord()
-
-  return this.getTokenFromCode(code)
-}
-
-pp$8.fullCharCodeAtPos = function() {
-  var code = this.input.charCodeAt(this.pos)
-  if (code <= 0xd7ff || code >= 0xe000) return code
-  var next = this.input.charCodeAt(this.pos + 1)
-  return (code << 10) + next - 0x35fdc00
-}
-
-pp$8.skipBlockComment = function() {
-  var this$1 = this;
-
-  var startLoc = this.options.onComment && this.curPosition()
-  var start = this.pos, end = this.input.indexOf("*/", this.pos += 2)
-  if (end === -1) this.raise(this.pos - 2, "Unterminated comment")
-  this.pos = end + 2
-  if (this.options.locations) {
-    lineBreakG.lastIndex = start
-    var match
-    while ((match = lineBreakG.exec(this.input)) && match.index < this.pos) {
-      ++this$1.curLine
-      this$1.lineStart = match.index + match[0].length
-    }
-  }
-  if (this.options.onComment)
-    this.options.onComment(true, this.input.slice(start + 2, end), start, this.pos,
-                           startLoc, this.curPosition())
-}
-
-pp$8.skipLineComment = function(startSkip) {
-  var this$1 = this;
-
-  var start = this.pos
-  var startLoc = this.options.onComment && this.curPosition()
-  var ch = this.input.charCodeAt(this.pos += startSkip)
-  while (this.pos < this.input.length && ch !== 10 && ch !== 13 && ch !== 8232 && ch !== 8233) {
-    ++this$1.pos
-    ch = this$1.input.charCodeAt(this$1.pos)
-  }
-  if (this.options.onComment)
-    this.options.onComment(false, this.input.slice(start + startSkip, this.pos), start, this.pos,
-                           startLoc, this.curPosition())
-}
-
-// Called at the start of the parse and after every token. Skips
-// whitespace and comments, and.
-
-pp$8.skipSpace = function() {
-  var this$1 = this;
-
-  loop: while (this.pos < this.input.length) {
-    var ch = this$1.input.charCodeAt(this$1.pos)
-    switch (ch) {
-    case 32: case 160: // ' '
-      ++this$1.pos
-      break
-    case 13:
-      if (this$1.input.charCodeAt(this$1.pos + 1) === 10) {
-        ++this$1.pos
-      }
-    case 10: case 8232: case 8233:
-      ++this$1.pos
-      if (this$1.options.locations) {
-        ++this$1.curLine
-        this$1.lineStart = this$1.pos
-      }
-      break
-    case 47: // '/'
-      switch (this$1.input.charCodeAt(this$1.pos + 1)) {
-      case 42: // '*'
-        this$1.skipBlockComment()
-        break
-      case 47:
-        this$1.skipLineComment(2)
-        break
-      default:
-        break loop
-      }
-      break
-    default:
-      if (ch > 8 && ch < 14 || ch >= 5760 && nonASCIIwhitespace.test(String.fromCharCode(ch))) {
-        ++this$1.pos
-      } else {
-        break loop
-      }
-    }
-  }
-}
-
-// Called at the end of every token. Sets `end`, `val`, and
-// maintains `context` and `exprAllowed`, and skips the space after
-// the token, so that the next one's `start` will point at the
-// right position.
-
-pp$8.finishToken = function(type, val) {
-  this.end = this.pos
-  if (this.options.locations) this.endLoc = this.curPosition()
-  var prevType = this.type
-  this.type = type
-  this.value = val
-
-  this.updateContext(prevType)
-}
-
-// ### Token reading
-
-// This is the function that is called to fetch the next token. It
-// is somewhat obscure, because it works in character codes rather
-// than characters, and because operator parsing has been inlined
-// into it.
-//
-// All in the name of speed.
-//
-pp$8.readToken_dot = function() {
-  var next = this.input.charCodeAt(this.pos + 1)
-  if (next >= 48 && next <= 57) return this.readNumber(true)
-  var next2 = this.input.charCodeAt(this.pos + 2)
-  if (this.options.ecmaVersion >= 6 && next === 46 && next2 === 46) { // 46 = dot '.'
-    this.pos += 3
-    return this.finishToken(tt.ellipsis)
-  } else {
-    ++this.pos
-    return this.finishToken(tt.dot)
-  }
-}
-
-pp$8.readToken_slash = function() { // '/'
-  var next = this.input.charCodeAt(this.pos + 1)
-  if (this.exprAllowed) { ++this.pos; return this.readRegexp() }
-  if (next === 61) return this.finishOp(tt.assign, 2)
-  return this.finishOp(tt.slash, 1)
-}
-
-pp$8.readToken_mult_modulo_exp = function(code) { // '%*'
-  var next = this.input.charCodeAt(this.pos + 1)
-  var size = 1
-  var tokentype = code === 42 ? tt.star : tt.modulo
-
-  // exponentiation operator ** and **=
-  if (this.options.ecmaVersion >= 7 && next === 42) {
-    ++size
-    tokentype = tt.starstar
-    next = this.input.charCodeAt(this.pos + 2)
-  }
-
-  if (next === 61) return this.finishOp(tt.assign, size + 1)
-  return this.finishOp(tokentype, size)
-}
-
-pp$8.readToken_pipe_amp = function(code) { // '|&'
-  var next = this.input.charCodeAt(this.pos + 1)
-  if (next === code) return this.finishOp(code === 124 ? tt.logicalOR : tt.logicalAND, 2)
-  if (next === 61) return this.finishOp(tt.assign, 2)
-  return this.finishOp(code === 124 ? tt.bitwiseOR : tt.bitwiseAND, 1)
-}
-
-pp$8.readToken_caret = function() { // '^'
-  var next = this.input.charCodeAt(this.pos + 1)
-  if (next === 61) return this.finishOp(tt.assign, 2)
-  return this.finishOp(tt.bitwiseXOR, 1)
-}
-
-pp$8.readToken_plus_min = function(code) { // '+-'
-  var next = this.input.charCodeAt(this.pos + 1)
-  if (next === code) {
-    if (next == 45 && this.input.charCodeAt(this.pos + 2) == 62 &&
-        lineBreak.test(this.input.slice(this.lastTokEnd, this.pos))) {
-      // A `-->` line comment
-      this.skipLineComment(3)
-      this.skipSpace()
-      return this.nextToken()
-    }
-    return this.finishOp(tt.incDec, 2)
-  }
-  if (next === 61) return this.finishOp(tt.assign, 2)
-  return this.finishOp(tt.plusMin, 1)
-}
-
-pp$8.readToken_lt_gt = function(code) { // '<>'
-  var next = this.input.charCodeAt(this.pos + 1)
-  var size = 1
-  if (next === code) {
-    size = code === 62 && this.input.charCodeAt(this.pos + 2) === 62 ? 3 : 2
-    if (this.input.charCodeAt(this.pos + size) === 61) return this.finishOp(tt.assign, size + 1)
-    return this.finishOp(tt.bitShift, size)
-  }
-  if (next == 33 && code == 60 && this.input.charCodeAt(this.pos + 2) == 45 &&
-      this.input.charCodeAt(this.pos + 3) == 45) {
-    if (this.inModule) this.unexpected()
-    // `<!--`, an XML-style comment that should be interpreted as a line comment
-    this.skipLineComment(4)
-    this.skipSpace()
-    return this.nextToken()
-  }
-  if (next === 61) size = 2
-  return this.finishOp(tt.relational, size)
-}
-
-pp$8.readToken_eq_excl = function(code) { // '=!'
-  var next = this.input.charCodeAt(this.pos + 1)
-  if (next === 61) return this.finishOp(tt.equality, this.input.charCodeAt(this.pos + 2) === 61 ? 3 : 2)
-  if (code === 61 && next === 62 && this.options.ecmaVersion >= 6) { // '=>'
-    this.pos += 2
-    return this.finishToken(tt.arrow)
-  }
-  return this.finishOp(code === 61 ? tt.eq : tt.prefix, 1)
-}
-
-pp$8.getTokenFromCode = function(code) {
-  switch (code) {
-    // The interpretation of a dot depends on whether it is followed
-    // by a digit or another two dots.
-  case 46: // '.'
-    return this.readToken_dot()
-
-    // Punctuation tokens.
-  case 40: ++this.pos; return this.finishToken(tt.parenL)
-  case 41: ++this.pos; return this.finishToken(tt.parenR)
-  case 59: ++this.pos; return this.finishToken(tt.semi)
-  case 44: ++this.pos; return this.finishToken(tt.comma)
-  case 91: ++this.pos; return this.finishToken(tt.bracketL)
-  case 93: ++this.pos; return this.finishToken(tt.bracketR)
-  case 123: ++this.pos; return this.finishToken(tt.braceL)
-  case 125: ++this.pos; return this.finishToken(tt.braceR)
-  case 58: ++this.pos; return this.finishToken(tt.colon)
-  case 63: ++this.pos; return this.finishToken(tt.question)
-
-  case 96: // '`'
-    if (this.options.ecmaVersion < 6) break
-    ++this.pos
-    return this.finishToken(tt.backQuote)
-
-  case 48: // '0'
-    var next = this.input.charCodeAt(this.pos + 1)
-    if (next === 120 || next === 88) return this.readRadixNumber(16) // '0x', '0X' - hex number
-    if (this.options.ecmaVersion >= 6) {
-      if (next === 111 || next === 79) return this.readRadixNumber(8) // '0o', '0O' - octal number
-      if (next === 98 || next === 66) return this.readRadixNumber(2) // '0b', '0B' - binary number
-    }
-    // Anything else beginning with a digit is an integer, octal
-    // number, or float.
-  case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57: // 1-9
-    return this.readNumber(false)
-
-    // Quotes produce strings.
-  case 34: case 39: // '"', "'"
-    return this.readString(code)
-
-    // Operators are parsed inline in tiny state machines. '=' (61) is
-    // often referred to. `finishOp` simply skips the amount of
-    // characters it is given as second argument, and returns a token
-    // of the type given by its first argument.
-
-  case 47: // '/'
-    return this.readToken_slash()
-
-  case 37: case 42: // '%*'
-    return this.readToken_mult_modulo_exp(code)
-
-  case 124: case 38: // '|&'
-    return this.readToken_pipe_amp(code)
-
-  case 94: // '^'
-    return this.readToken_caret()
-
-  case 43: case 45: // '+-'
-    return this.readToken_plus_min(code)
-
-  case 60: case 62: // '<>'
-    return this.readToken_lt_gt(code)
-
-  case 61: case 33: // '=!'
-    return this.readToken_eq_excl(code)
-
-  case 126: // '~'
-    return this.finishOp(tt.prefix, 1)
-  }
-
-  this.raise(this.pos, "Unexpected character '" + codePointToString(code) + "'")
-}
-
-pp$8.finishOp = function(type, size) {
-  var str = this.input.slice(this.pos, this.pos + size)
-  this.pos += size
-  return this.finishToken(type, str)
-}
-
-// Parse a regular expression. Some context-awareness is necessary,
-// since a '/' inside a '[]' set does not end the expression.
-
-function tryCreateRegexp(src, flags, throwErrorAt, parser) {
-  try {
-    return new RegExp(src, flags)
-  } catch (e) {
-    if (throwErrorAt !== undefined) {
-      if (e instanceof SyntaxError) parser.raise(throwErrorAt, "Error parsing regular expression: " + e.message)
-      throw e
-    }
-  }
-}
-
-var regexpUnicodeSupport = !!tryCreateRegexp("\uffff", "u")
-
-pp$8.readRegexp = function() {
-  var this$1 = this;
-
-  var escaped, inClass, start = this.pos
-  for (;;) {
-    if (this$1.pos >= this$1.input.length) this$1.raise(start, "Unterminated regular expression")
-    var ch = this$1.input.charAt(this$1.pos)
-    if (lineBreak.test(ch)) this$1.raise(start, "Unterminated regular expression")
-    if (!escaped) {
-      if (ch === "[") inClass = true
-      else if (ch === "]" && inClass) inClass = false
-      else if (ch === "/" && !inClass) break
-      escaped = ch === "\\"
-    } else escaped = false
-    ++this$1.pos
-  }
-  var content = this.input.slice(start, this.pos)
-  ++this.pos
-  // Need to use `readWord1` because '\uXXXX' sequences are allowed
-  // here (don't ask).
-  var mods = this.readWord1()
-  var tmp = content, tmpFlags = ""
-  if (mods) {
-    var validFlags = /^[gim]*$/
-    if (this.options.ecmaVersion >= 6) validFlags = /^[gimuy]*$/
-    if (!validFlags.test(mods)) this.raise(start, "Invalid regular expression flag")
-    if (mods.indexOf("u") >= 0) {
-      if (regexpUnicodeSupport) {
-        tmpFlags = "u"
-      } else {
-        // Replace each astral symbol and every Unicode escape sequence that
-        // possibly represents an astral symbol or a paired surrogate with a
-        // single ASCII symbol to avoid throwing on regular expressions that
-        // are only valid in combination with the `/u` flag.
-        // Note: replacing with the ASCII symbol `x` might cause false
-        // negatives in unlikely scenarios. For example, `[\u{61}-b]` is a
-        // perfectly valid pattern that is equivalent to `[a-b]`, but it would
-        // be replaced by `[x-b]` which throws an error.
-        tmp = tmp.replace(/\\u\{([0-9a-fA-F]+)\}/g, function (_match, code, offset) {
-          code = Number("0x" + code)
-          if (code > 0x10FFFF) this$1.raise(start + offset + 3, "Code point out of bounds")
-          return "x"
-        })
-        tmp = tmp.replace(/\\u([a-fA-F0-9]{4})|[\uD800-\uDBFF][\uDC00-\uDFFF]/g, "x")
-        tmpFlags = tmpFlags.replace("u", "")
-      }
-    }
-  }
-  // Detect invalid regular expressions.
-  var value = null
-  // Rhino's regular expression parser is flaky and throws uncatchable exceptions,
-  // so don't do detection if we are running under Rhino
-  if (!isRhino) {
-    tryCreateRegexp(tmp, tmpFlags, start, this)
-    // Get a regular expression object for this pattern-flag pair, or `null` in
-    // case the current environment doesn't support the flags it uses.
-    value = tryCreateRegexp(content, mods)
-  }
-  return this.finishToken(tt.regexp, {pattern: content, flags: mods, value: value})
-}
-
-// Read an integer in the given radix. Return null if zero digits
-// were read, the integer value otherwise. When `len` is given, this
-// will return `null` unless the integer has exactly `len` digits.
-
-pp$8.readInt = function(radix, len) {
-  var this$1 = this;
-
-  var start = this.pos, total = 0
-  for (var i = 0, e = len == null ? Infinity : len; i < e; ++i) {
-    var code = this$1.input.charCodeAt(this$1.pos), val
-    if (code >= 97) val = code - 97 + 10 // a
-    else if (code >= 65) val = code - 65 + 10 // A
-    else if (code >= 48 && code <= 57) val = code - 48 // 0-9
-    else val = Infinity
-    if (val >= radix) break
-    ++this$1.pos
-    total = total * radix + val
-  }
-  if (this.pos === start || len != null && this.pos - start !== len) return null
-
-  return total
-}
-
-pp$8.readRadixNumber = function(radix) {
-  this.pos += 2 // 0x
-  var val = this.readInt(radix)
-  if (val == null) this.raise(this.start + 2, "Expected number in radix " + radix)
-  if (isIdentifierStart(this.fullCharCodeAtPos())) this.raise(this.pos, "Identifier directly after number")
-  return this.finishToken(tt.num, val)
-}
-
-// Read an integer, octal integer, or floating-point number.
-
-pp$8.readNumber = function(startsWithDot) {
-  var start = this.pos, isFloat = false, octal = this.input.charCodeAt(this.pos) === 48
-  if (!startsWithDot && this.readInt(10) === null) this.raise(start, "Invalid number")
-  if (octal && this.pos == start + 1) octal = false
-  var next = this.input.charCodeAt(this.pos)
-  if (next === 46 && !octal) { // '.'
-    ++this.pos
-    this.readInt(10)
-    isFloat = true
-    next = this.input.charCodeAt(this.pos)
-  }
-  if ((next === 69 || next === 101) && !octal) { // 'eE'
-    next = this.input.charCodeAt(++this.pos)
-    if (next === 43 || next === 45) ++this.pos // '+-'
-    if (this.readInt(10) === null) this.raise(start, "Invalid number")
-    isFloat = true
-  }
-  if (isIdentifierStart(this.fullCharCodeAtPos())) this.raise(this.pos, "Identifier directly after number")
-
-  var str = this.input.slice(start, this.pos), val
-  if (isFloat) val = parseFloat(str)
-  else if (!octal || str.length === 1) val = parseInt(str, 10)
-  else if (/[89]/.test(str) || this.strict) this.raise(start, "Invalid number")
-  else val = parseInt(str, 8)
-  return this.finishToken(tt.num, val)
-}
-
-// Read a string value, interpreting backslash-escapes.
-
-pp$8.readCodePoint = function() {
-  var ch = this.input.charCodeAt(this.pos), code
-
-  if (ch === 123) {
-    if (this.options.ecmaVersion < 6) this.unexpected()
-    var codePos = ++this.pos
-    code = this.readHexChar(this.input.indexOf("}", this.pos) - this.pos)
-    ++this.pos
-    if (code > 0x10FFFF) this.raise(codePos, "Code point out of bounds")
-  } else {
-    code = this.readHexChar(4)
-  }
-  return code
-}
-
-function codePointToString(code) {
-  // UTF-16 Decoding
-  if (code <= 0xFFFF) return String.fromCharCode(code)
-  code -= 0x10000
-  return String.fromCharCode((code >> 10) + 0xD800, (code & 1023) + 0xDC00)
-}
-
-pp$8.readString = function(quote) {
-  var this$1 = this;
-
-  var out = "", chunkStart = ++this.pos
-  for (;;) {
-    if (this$1.pos >= this$1.input.length) this$1.raise(this$1.start, "Unterminated string constant")
-    var ch = this$1.input.charCodeAt(this$1.pos)
-    if (ch === quote) break
-    if (ch === 92) { // '\'
-      out += this$1.input.slice(chunkStart, this$1.pos)
-      out += this$1.readEscapedChar(false)
-      chunkStart = this$1.pos
-    } else {
-      if (isNewLine(ch)) this$1.raise(this$1.start, "Unterminated string constant")
-      ++this$1.pos
-    }
-  }
-  out += this.input.slice(chunkStart, this.pos++)
-  return this.finishToken(tt.string, out)
-}
-
-// Reads template string tokens.
-
-pp$8.readTmplToken = function() {
-  var this$1 = this;
-
-  var out = "", chunkStart = this.pos
-  for (;;) {
-    if (this$1.pos >= this$1.input.length) this$1.raise(this$1.start, "Unterminated template")
-    var ch = this$1.input.charCodeAt(this$1.pos)
-    if (ch === 96 || ch === 36 && this$1.input.charCodeAt(this$1.pos + 1) === 123) { // '`', '${'
-      if (this$1.pos === this$1.start && this$1.type === tt.template) {
-        if (ch === 36) {
-          this$1.pos += 2
-          return this$1.finishToken(tt.dollarBraceL)
-        } else {
-          ++this$1.pos
-          return this$1.finishToken(tt.backQuote)
-        }
-      }
-      out += this$1.input.slice(chunkStart, this$1.pos)
-      return this$1.finishToken(tt.template, out)
-    }
-    if (ch === 92) { // '\'
-      out += this$1.input.slice(chunkStart, this$1.pos)
-      out += this$1.readEscapedChar(true)
-      chunkStart = this$1.pos
-    } else if (isNewLine(ch)) {
-      out += this$1.input.slice(chunkStart, this$1.pos)
-      ++this$1.pos
-      switch (ch) {
-      case 13:
-        if (this$1.input.charCodeAt(this$1.pos) === 10) ++this$1.pos
-      case 10:
-        out += "\n"
-        break
-      default:
-        out += String.fromCharCode(ch)
-        break
-      }
-      if (this$1.options.locations) {
-        ++this$1.curLine
-        this$1.lineStart = this$1.pos
-      }
-      chunkStart = this$1.pos
-    } else {
-      ++this$1.pos
-    }
-  }
-}
-
-// Used to read escaped characters
-
-pp$8.readEscapedChar = function(inTemplate) {
-  var ch = this.input.charCodeAt(++this.pos)
-  ++this.pos
-  switch (ch) {
-  case 110: return "\n" // 'n' -> '\n'
-  case 114: return "\r" // 'r' -> '\r'
-  case 120: return String.fromCharCode(this.readHexChar(2)) // 'x'
-  case 117: return codePointToString(this.readCodePoint()) // 'u'
-  case 116: return "\t" // 't' -> '\t'
-  case 98: return "\b" // 'b' -> '\b'
-  case 118: return "\u000b" // 'v' -> '\u000b'
-  case 102: return "\f" // 'f' -> '\f'
-  case 13: if (this.input.charCodeAt(this.pos) === 10) ++this.pos // '\r\n'
-  case 10: // ' \n'
-    if (this.options.locations) { this.lineStart = this.pos; ++this.curLine }
-    return ""
-  default:
-    if (ch >= 48 && ch <= 55) {
-      var octalStr = this.input.substr(this.pos - 1, 3).match(/^[0-7]+/)[0]
-      var octal = parseInt(octalStr, 8)
-      if (octal > 255) {
-        octalStr = octalStr.slice(0, -1)
-        octal = parseInt(octalStr, 8)
-      }
-      if (octalStr !== "0" && (this.strict || inTemplate)) {
-        this.raise(this.pos - 2, "Octal literal in strict mode")
-      }
-      this.pos += octalStr.length - 1
-      return String.fromCharCode(octal)
-    }
-    return String.fromCharCode(ch)
-  }
-}
-
-// Used to read character escape sequences ('\x', '\u', '\U').
-
-pp$8.readHexChar = function(len) {
-  var codePos = this.pos
-  var n = this.readInt(16, len)
-  if (n === null) this.raise(codePos, "Bad character escape sequence")
-  return n
-}
-
-// Read an identifier, and return it as a string. Sets `this.containsEsc`
-// to whether the word contained a '\u' escape.
-//
-// Incrementally adds only escaped chars, adding other chunks as-is
-// as a micro-optimization.
-
-pp$8.readWord1 = function() {
-  var this$1 = this;
-
-  this.containsEsc = false
-  var word = "", first = true, chunkStart = this.pos
-  var astral = this.options.ecmaVersion >= 6
-  while (this.pos < this.input.length) {
-    var ch = this$1.fullCharCodeAtPos()
-    if (isIdentifierChar(ch, astral)) {
-      this$1.pos += ch <= 0xffff ? 1 : 2
-    } else if (ch === 92) { // "\"
-      this$1.containsEsc = true
-      word += this$1.input.slice(chunkStart, this$1.pos)
-      var escStart = this$1.pos
-      if (this$1.input.charCodeAt(++this$1.pos) != 117) // "u"
-        this$1.raise(this$1.pos, "Expecting Unicode escape sequence \\uXXXX")
-      ++this$1.pos
-      var esc = this$1.readCodePoint()
-      if (!(first ? isIdentifierStart : isIdentifierChar)(esc, astral))
-        this$1.raise(escStart, "Invalid Unicode escape")
-      word += codePointToString(esc)
-      chunkStart = this$1.pos
-    } else {
-      break
-    }
-    first = false
-  }
-  return word + this.input.slice(chunkStart, this.pos)
-}
-
-// Read an identifier or keyword token. Will check for reserved
-// words when necessary.
-
-pp$8.readWord = function() {
-  var word = this.readWord1()
-  var type = tt.name
-  if (this.keywords.test(word)) {
-    if (this.containsEsc) this.raiseRecoverable(this.start, "Escape sequence in keyword " + word)
-    type = keywordTypes[word]
-  }
-  return this.finishToken(type, word)
-}
-
-// Acorn is a tiny, fast JavaScript parser written in JavaScript.
-//
-// Acorn was written by Marijn Haverbeke, Ingvar Stepanyan, and
-// various contributors and released under an MIT license.
-//
-// Git repositories for Acorn are available at
-//
-//     http://marijnhaverbeke.nl/git/acorn
-//     https://github.com/ternjs/acorn.git
-//
-// Please use the [github bug tracker][ghbt] to report issues.
-//
-// [ghbt]: https://github.com/ternjs/acorn/issues
-//
-// This file defines the main parser interface. The library also comes
-// with a [error-tolerant parser][dammit] and an
-// [abstract syntax tree walker][walk], defined in other files.
-//
-// [dammit]: acorn_loose.js
-// [walk]: util/walk.js
-
-var version = "5.0.3"
-
-// The main exported interface (under `self.acorn` when in the
-// browser) is a `parse` function that takes a code string and
-// returns an abstract syntax tree as specified by [Mozilla parser
-// API][api].
-//
-// [api]: https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API
-
-function parse(input, options) {
-  return new Parser(options, input).parse()
-}
-
-// This function tries to parse a single expression at a given
-// offset in a string. Useful for parsing mixed-language formats
-// that embed JavaScript expressions.
-
-function parseExpressionAt(input, pos, options) {
-  var p = new Parser(options, input, pos)
-  p.nextToken()
-  return p.parseExpression()
-}
-
-// Acorn is organized as a tokenizer and a recursive-descent parser.
-// The `tokenizer` export provides an interface to the tokenizer.
-
-function tokenizer(input, options) {
-  return new Parser(options, input)
-}
-
-// This is a terrible kludge to support the existing, pre-ES6
-// interface where the loose parser module retroactively adds exports
-// to this module.
-// eslint-disable-line camelcase
-function addLooseExports(parse, Parser, plugins) {
-  exports.parse_dammit = parse // eslint-disable-line camelcase
-  exports.LooseParser = Parser
-  exports.pluginsLoose = plugins
-}
-
-exports.version = version;
-exports.parse = parse;
-exports.parseExpressionAt = parseExpressionAt;
-exports.tokenizer = tokenizer;
-exports.addLooseExports = addLooseExports;
-exports.Parser = Parser;
-exports.plugins = plugins;
-exports.defaultOptions = defaultOptions;
-exports.Position = Position;
-exports.SourceLocation = SourceLocation;
-exports.getLineInfo = getLineInfo;
-exports.Node = Node;
-exports.TokenType = TokenType;
-exports.tokTypes = tt;
-exports.keywordTypes = keywordTypes;
-exports.TokContext = TokContext;
-exports.tokContexts = types;
-exports.isIdentifierChar = isIdentifierChar;
-exports.isIdentifierStart = isIdentifierStart;
-exports.Token = Token;
-exports.isNewLine = isNewLine;
-exports.lineBreak = lineBreak;
-exports.lineBreakG = lineBreakG;
-exports.nonASCIIwhitespace = nonASCIIwhitespace;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-/***/ }),
 /* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -88701,7 +88867,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return saveObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return loadGame; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Alias_js__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Company_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Company_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Faction_js__ = __webpack_require__(10);
@@ -88709,9 +88875,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__HacknetNode_js__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Message_js__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Script_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Script_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Settings_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Settings_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__SpecialServerIps_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__StockMarket_js__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__ = __webpack_require__(1);

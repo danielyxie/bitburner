@@ -1,8 +1,11 @@
 import {BitNodeMultipliers}                             from "./BitNode.js";
 import {CONSTANTS}                                      from "./Constants.js";
+import {Factions, getNextNeurofluxLevel}                from "./Faction.js";
+import {addWorkerScript}                                from "./NetscriptWorker.js";
 import {Player}                                         from "./Player.js";
 import {prestigeAugmentation}                           from "./Prestige.js";
-import {Factions, getNextNeurofluxLevel}                from "./Faction.js";
+import {Script, RunningScript}                          from "./Script.js";
+import {Server}                                         from "./Server.js";
 import {dialogBoxCreate} from "../utils/DialogBox.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON} from "../utils/JSONReviver.js";
@@ -1910,7 +1913,7 @@ function PlayerOwnedAugmentation(name) {
     this.level = 1;
 }
 
-function installAugmentations() {
+function installAugmentations(cbScript=null) {
     if (Player.queuedAugmentations.length == 0) {
         dialogBoxCreate("You have not purchased any Augmentations to install!");
         return false;
@@ -1930,6 +1933,25 @@ function installAugmentations() {
                     "to install the following Augmentations:<br>" + augmentationList +
                     "<br>You wake up in your home...you feel different...");
     prestigeAugmentation();
+
+    //Run a script after prestiging
+    if (cbScript) {
+        var home = Player.getHomeComputer();
+        for (var i = 0; i < home.scripts.length; ++i) {
+            if (home.scripts[i].filename === cbScript) {
+                var script = home.scripts[i];
+                var ramUsage = script.ramUsage;
+                var ramAvailable = home.maxRam - home.ramUsed;
+                if (ramUsage > ramAvailable) {
+                    return; //Not enough RAM
+                }
+                var runningScriptObj = new RunningScript(script, []); //No args
+                runningScriptObj.threads = 1; //Only 1 thread
+                home.runningScripts.push(runningScriptObj);
+                addWorkerScript(runningScriptObj, home);
+            }
+        }
+    }
 }
 
 function augmentationExists(name) {
