@@ -8,6 +8,7 @@ import {Settings}                           from "./Settings.js";
 import {Script, findRunningScript,
         RunningScript}                      from "./Script.js";
 
+import {Node}                               from "../utils/acorn.js";
 import {printArray}                         from "../utils/HelperFunctions.js";
 import {isValidIPAddress}                   from "../utils/IPAddress.js";
 import {isString}                           from "../utils/StringHelperFunctions.js";
@@ -19,7 +20,7 @@ import {isString}                           from "../utils/StringHelperFunctions
  */
 function evaluate(exp, workerScript) {
     return new Promise(function(resolve, reject) {
-	var env = workerScript.env;
+    var env = workerScript.env;
     if (env.stopFlag) {return reject(workerScript);}
     if (exp == null) {
         return reject(makeRuntimeRejectMsg(workerScript, "Error: NULL expression"));
@@ -33,7 +34,10 @@ function evaluate(exp, workerScript) {
                 evaluateProgPromise.then(function(w) {
                     resolve(workerScript);
                 }, function(e) {
-                    if (isString(e)) {
+                    if (e.constructor === Array && e.length === 2 && e[0] === "RETURNSTATEMENT") {
+                        //Returning from a Player-defined function
+                        resolve(e[1]);
+                    } else if (isString(e)) {
                         workerScript.errorMessage = e;
                         reject(workerScript);
                     } else if (e instanceof WorkerScript) {
@@ -55,7 +59,7 @@ function evaluate(exp, workerScript) {
             case "ExpressionStatement":
                 var e = evaluate(exp.expression, workerScript);
                 e.then(function(res) {
-                    resolve("expression done");
+                    resolve(res);
                 }, function(e) {
                     reject(e);
                 });
@@ -76,7 +80,34 @@ function evaluate(exp, workerScript) {
                         return evaluate(arg, workerScript);
                     });
                     Promise.all(argPromises).then(function(args) {
-                        if (exp.callee.type == "MemberExpression"){
+                        if (func instanceof Node) { //Player-defined function
+                            //Create new Environment for the function
+                            //Should be automatically garbage collected...
+                            var funcEnv = env.extend();
+                            console.log("Printing new environment for function:");
+                            console.log(funcEnv);
+
+                            //Define function arguments in this new environment
+                            for (var i = 0; i < func.params.length; ++i) {
+                                var arg;
+                                if (i >= args.length) {
+                                    arg = null;
+                                } else {
+                                    arg = args[i];
+                                }
+                                funcEnv.def(func.params[i].name, arg);
+                            }
+
+                            //Create a new WorkerScript for this function evaluation
+                            var funcWorkerScript = new WorkerScript(workerScript.scriptRef);
+                            funcWorkerScript.env = funcEnv;
+
+                            evaluate(func.body, funcWorkerScript).then(function(res) {
+                                resolve(res);
+                            }).catch(function(e) {
+                                reject(e);
+                            });
+                        } else if (exp.callee.type == "MemberExpression"){
                             evaluate(exp.callee.object, workerScript).then(function(object) {
                                 try {
                                     var res = func.apply(object,args);
@@ -125,7 +156,6 @@ function evaluate(exp, workerScript) {
                             }
                             resolve(object[index]);
                         }).catch(function(e) {
-                            console.log("here");
                             reject(makeRuntimeRejectMsg(workerScript, "Invalid MemberExpression"));
                         });
                     } else {
@@ -195,8 +225,14 @@ function evaluate(exp, workerScript) {
                 resolve(false);
                 break;
             case "ReturnStatement":
-                var lineNum = getErrorLineNumber(exp, workerScript);
-                reject(makeRuntimeRejectMsg(workerScript, "Return statements are not yet implemented in Netscript (line " + (lineNum+1) + ")"));
+                console.log("Evaluating Return Statement");
+                //var lineNum = getErrorLineNumber(exp, workerScript);
+                //reject(makeRuntimeRejectMsg(workerScript, "Return statements are not yet implemented in Netscript (line " + (lineNum+1) + ")"));
+                evaluate(exp.argument, workerScript).then(function(res) {
+                    reject(["RETURNSTATEMENT", res]);
+                }).catch(function(e) {
+                    reject(e);
+                });
                 break;
             case "BreakStatement":
                 reject("BREAKSTATEMENT");
@@ -206,7 +242,7 @@ function evaluate(exp, workerScript) {
                 break;
             case "IfStatement":
                 evaluateIf(exp, workerScript).then(function(forLoopRes) {
-                    resolve("forLoopDone");
+                    resolve(forLoopRes);
                 }).catch(function(e) {
                     reject(e);
                 });
@@ -217,7 +253,7 @@ function evaluate(exp, workerScript) {
                 break;e
             case "WhileStatement":
                 evaluateWhile(exp, workerScript).then(function(forLoopRes) {
-                    resolve("forLoopDone");
+                    resolve(forLoopRes);
                 }).catch(function(e) {
                     if (e == "BREAKSTATEMENT" ||
                        (e instanceof WorkerScript && e.errorMessage == "BREAKSTATEMENT")) {
@@ -240,6 +276,15 @@ function evaluate(exp, workerScript) {
                         reject(e);
                     }
                 });
+                break;
+            case "FunctionDeclaration":
+                if (exp.id && exp.id.name) {
+                    env.set(exp.id.name, exp);
+                    resolve(true);
+                } else {
+                    var lineNum = getErrorLineNumber(exp, workerScript);
+                    reject(makeRuntimeRejectMsg(workerScript, "Invalid function declaration at line " + lineNum+1));
+                }
                 break;
             default:
                 var lineNum = getErrorLineNumber(exp, workerScript);

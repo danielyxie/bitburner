@@ -94,6 +94,12 @@ function scriptEditorInit() {
         VimApi.defineEx('quit', 'q', function(cm, input) {
             Engine.loadTerminalContent();
         });
+        VimApi.defineEx('xwritequit', 'x', function(cm, input) {
+            saveAndCloseScriptEditor();
+        });
+        VimApi.defineEx('wqwritequit', 'wq', function(cm, input) {
+            saveAndCloseScriptEditor();
+        });
     });
 }
 document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
@@ -243,6 +249,7 @@ function calculateRamUsage(codeCopy) {
                          numOccurrences(codeCopy, "getServerMaxMoney(") +
                          numOccurrences(codeCopy, "getServerSecurityLevel(") +
                          numOccurrences(codeCopy, "getServerBaseSecurityLevel(") +
+                         numOccurrences(codeCopy, "getServerMinSecurityLevel(") +
                          numOccurrences(codeCopy, "getServerGrowth(") +
                          numOccurrences(codeCopy, "getServerRequiredHackingLevel(") +
                          numOccurrences(codeCopy, "getServerNumPortsRequired(") +
@@ -260,7 +267,8 @@ function calculateRamUsage(codeCopy) {
     var scriptBuySellStockCount = numOccurrences(codeCopy, "buyStock(") +
                                   numOccurrences(codeCopy, "sellStock(");
     var scriptPurchaseServerCount = numOccurrences(codeCopy, "purchaseServer(") +
-                                    numOccurrences(codeCopy, "deleteServer(");
+                                    numOccurrences(codeCopy, "deleteServer(") +
+                                    numOccurrences(codeCopy, "getPurchasedServers(");
     var scriptRoundCount = numOccurrences(codeCopy, "round(");
     var scriptWriteCount = numOccurrences(codeCopy, "write(");
     var scriptReadCount = numOccurrences(codeCopy, "read(");
@@ -271,7 +279,8 @@ function calculateRamUsage(codeCopy) {
                          numOccurrences(codeCopy, "getScriptExpGain(");
     var getHackTimeCount = numOccurrences(codeCopy, "getHackTime(") +
                            numOccurrences(codeCopy, "getGrowTime(") +
-                           numOccurrences(codeCopy, "getWeakenTime(");
+                           numOccurrences(codeCopy, "getWeakenTime(") +
+                           numOccurrences(codeCopy, "getTimeSinceLastAug(");
     var singFn1Count = numOccurrences(codeCopy, "universityCourse(") +
                        numOccurrences(codeCopy, "gymWorkout(") +
                        numOccurrences(codeCopy, "travelToCity(") +

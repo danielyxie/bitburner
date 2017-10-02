@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.29.1",
+    Version:                "0.29.2",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -33,7 +33,6 @@ let CONSTANTS = {
     FactionReputationToFavorMult: 1.02,
     CompanyReputationToFavorBase: 500,
     CompanyReputationToFavorMult: 1.02,
-
 
     /* Augmentation */
     //NeuroFlux Governor cost multiplier as you level up
@@ -116,17 +115,18 @@ let CONSTANTS = {
     //Intelligence-related constants
     IntelligenceCrimeWeight: 0.05,  //Weight for how much int affects crime success rates
     IntelligenceInfiltrationWeight: 0.1, //Weight for how much int affects infiltration success rates
-    IntelligenceCrimeBaseExpGain: 0.0002,
+    IntelligenceCrimeBaseExpGain: 0.001,
     IntelligenceProgramBaseExpGain: 1000, //Program required hack level divided by this to determine int exp gain
     IntelligenceTerminalHackBaseExpGain: 200, //Hacking exp divided by this to determine int exp gain
     IntelligenceSingFnBaseExpGain: 0.0005,
     IntelligenceClassBaseExpGain: 0.0000001,
 
     //Hacking Missions
-    HackingMissionRepToDiffConversion: 5000, //Faction rep is divided by this to get mission difficulty
-    HackingMissionRepToRewardConversion: 12, //Faction rep divided byt his to get mission rep reward
+    HackingMissionRepToDiffConversion: 10000, //Faction rep is divided by this to get mission difficulty
+    HackingMissionRepToRewardConversion: 10, //Faction rep divided byt his to get mission rep reward
     HackingMissionSpamTimeIncrease: 20000, //How much time limit increase is gained when conquering a Spam Node (ms)
     HackingMissionTransferAttackIncrease: 1.05, //Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
+    HackingMissionMiscDefenseIncrease: 5, //The amount by which every misc node's defense increases when one is conquered
     HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with faction reputation.<br><br>" +
                              "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
                              "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray " +
@@ -161,8 +161,8 @@ let CONSTANTS = {
                              "select its action using the Action Buttons near the top of the screen. Every action also has a corresponding keyboard " +
                              "shortcut that can be used as well.<br><br>" +
                              "For certain actions such as attacking, scanning, and weakening, the Node performing the action must have a target. To target " +
-                             "another node, simply click-and-drag from the 'source' Node to a target. A Node can only have one target, and you can only target " +
-                             "Nodes that are adjacent to one of your Nodes (immediately above, below, or to the side. NOT diagonal). Furthermore, only CPU Cores and Transfer Nodes " +
+                             "another node, simply click-and-drag from the 'source' Node to a target. A Node can only have one target, and you can target " +
+                             "any Node that is adjacent to one of your Nodes (immediately above, below, or to the side. NOT diagonal). Furthermore, only CPU Cores and Transfer Nodes " +
                              "can target, since they are the only ones that can perform actions. To remove a target, you can simply click on the line that represents " +
                              "the connection between one of your Nodes and its target. Alternatively, you can select the 'source' Node and click the 'Drop Connection' button, " +
                              "or press 'd',",
@@ -515,11 +515,12 @@ let CONSTANTS = {
                            "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" +
                            "<i>scp(script, [source], destination)</i><br>Copies a script or literature (.lit) file to another server. The first argument is a string with " +
                            "the filename of the script or literature file " +
-                           "to be copied. The next two arguments are strings containing the hostname/IPs of the source and target server. " +
+                           "to be copied, or an array of filenames to be copied. The next two arguments are strings containing the hostname/IPs of the source and target server. " +
                            "The source refers to the server from which the script/literature file will be copied, while the destination " +
                            "refers to the server to which it will be copied. The source server argument is optional, and if ommitted the source " +
                            "will be the current server (the server on which the script is running). Returns true if the script/literature file is " +
-                           "successfully copied over and false otherwise. <br><br>" +
+                           "successfully copied over and false otherwise. If the first argument passed in is an array, then the function " +
+                           "will return if at least one of the files in the array is successfully copied over.<br><br>" +
                            "Example: scp('hack-template.script', 'foodnstuff'); //Copies hack-template.script from the current server to foodnstuff<br>" +
                            "Example: scp('foo.lit', 'helios', 'home'); //Copies foo.lit from the helios server to the home computer<br><br>" +
                            "<i>ls(hostname/ip)</i><br>Returns an array containing the names of all files on the specified server. The argument must be a " +
@@ -632,6 +633,9 @@ let CONSTANTS = {
                            "an empty string. The function will fail if the arguments passed in are invalid or if the player does not have enough money to purchase the specified server.<br><br>" +
                            "<i>deleteServer(hostname)</i><br>Deletes one of the servers you've purchased with the specified hostname. The function will fail if " +
                            "there are any scripts running on the specified server. Returns true if successful and false otherwise<br><br>" +
+                           "<i>getPurchasedServers([hostname=true])</i><br>Returns an array with either the hostname or IPs of all of the servers you " +
+                           "have purchased. It takes an optional parameter specifying whether the hostname or IP addresses will be returned. If this " +
+                           "parameter is not specified, it is true by default and hostnames will be returned<br><br>" +
                            "<i>round(n)</i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" +
                            "<i>write(port, data)</i><br>Writes data to a port. The first argument must be a number between 1 and 10 that specifies the port. The second " +
                            "argument defines the data to write to the port. If the second argument is not specified then it will write an empty string to the port.<br><br>" +
@@ -905,10 +909,14 @@ let CONSTANTS = {
                                         "This function will try to purchase the specified Augmentation through the given Faction.<br><br>" +
                                         "The two arguments must be strings specifying the name of the Faction and Augmentation, respectively. These arguments are both CASE-SENSITIVE.<br><br>" +
                                         "This function will return true if the Augmentation is successfully purchased, and false otherwise.<br><br>" +
-                                        "<i>installAugmentations()</i><br>" +
+                                        "<i>installAugmentations(cbScript)</i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will automatically install your Augmentations, resetting the game as usual.<br><br>" +
-                                        "It will return true if successful, and false otherwise.",
+                                        "It will return true if successful, and false otherwise.<br><br>" +
+                                        "This function takes a single optional parameter that specifies a callback script. This is " +
+                                        "a script that will automatically be run after Augmentations are installed (after the reset). " +
+                                        "This script will be run with no arguments and 1 thread. It must be located on your home computer. This argument, if used, " +
+                                        "must be a string with the name of the script.",
 
     TutorialTravelingText:"There are six major cities in the world that you are able to travel to: <br><br> "  +
                            "    Aevum<br>" +
@@ -1008,6 +1016,17 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.29.2<br>" +
+    "-installAugmentations() Singularity Function now takes a callback script as an argument. This is a script " +
+    "that gets ran automatically after Augmentations are installed. The script is run with no arguments and only a single thread, " +
+    "and must be found on your home computer.<br>" +
+    "-Added the ability to create your own functions in Netscript. See <a href='http://bitburner.wikia.com/wiki/Netscript_Functions' target='_blank'>this link</a> for details<br>" +
+    "-Added :q, :x, and :wq Vim Ex Commands when using the Vim script editor keybindings. :w, :x, and :wq will all save the script and return to Terminal. " +
+    ":q will quit (return to Terminal) WITHOUT saving. If anyone thinks theres an issue with this please let me know, I don't use Vim<br>" +
+    "-Added a new Augmentation: ADR-V2 Pheromone Gene<br>" +
+    "-In Hacking Missions, enemy nodes will now automatically target Nodes and perform actions.<br>" +
+    "-Re-balanced Hacking Missions through minor tweaking of many numbers<br>" +
+    "-The faction reputation reward for Hacking Missions was slightly increased<br><br>" +
     "v0.29.1<br>" +
     "-New gameplay feature that is currently in BETA: Hacking Missions. Hacking Missions is an active gameplay mechanic (its a minigame) " +
     "that is meant to be used to earn faction reputation. However, since this is currently in beta, hacking missions will NOT grant reputation " +

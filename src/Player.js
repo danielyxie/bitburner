@@ -1483,6 +1483,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     break;
                 case CONSTANTS.CrimeKidnap:
                     this.karma -= 6;
+                    this.gainIntelligenceExp(CONSTANTS.IntelligenceCrimeBaseExpGain);
                     break;
                 case CONSTANTS.CrimeAssassination:
                     ++this.numPeopleKilled;

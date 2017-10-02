@@ -1,11 +1,15 @@
 import {BitNodeMultipliers}                             from "./BitNode.js";
 import {CONSTANTS}                                      from "./Constants.js";
+import {Factions, getNextNeurofluxLevel}                from "./Faction.js";
+import {addWorkerScript}                                from "./NetscriptWorker.js";
 import {Player}                                         from "./Player.js";
 import {prestigeAugmentation}                           from "./Prestige.js";
-import {Factions, getNextNeurofluxLevel}                from "./Faction.js";
-import {dialogBoxCreate} from "../utils/DialogBox.js";
+import {Script, RunningScript}                          from "./Script.js";
+import {Server}                                         from "./Server.js";
+import {dialogBoxCreate}                                from "../utils/DialogBox.js";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON} from "../utils/JSONReviver.js";
+        Generic_fromJSON}                               from "../utils/JSONReviver.js";
+import {isString}                                       from "../utils/StringHelperFunctions.js";
 
 //Augmentations
 function Augmentation(name) {
@@ -121,6 +125,7 @@ let AugmentationNames = {
     PCDNIOptimizer:                     "PC Direct-Neural Interface Optimization Submodule",
     PCDNINeuralNetwork:                 "PC Direct-Neural Interface NeuroNet Injector",
     ADRPheromone1:                      "ADR-V1 Pheromone Gene",
+    ADRPheromone2:                      "ADR-V2 Pheromone Gene",
     HacknetNodeCPUUpload:               "Hacknet Node CPU Architecture Neural-Upload",
     HacknetNodeCacheUpload:             "Hacknet Node Cache Architecture Neural-Upload",
     HacknetNodeNICUpload:               "HacknetNode NIC Architecture Neural-Upload",
@@ -817,8 +822,8 @@ function initAugmentations() {
     ADRPheromone1.setRequirements(1500, 3500000);
     ADRPheromone1.setInfo("The body is genetically re-engineered so that it produces the ADR-V1 pheromone, " +
                           "an artificial pheromone discovered by scientists. The ADR-V1 pheromone, when excreted, " +
-                          "triggers feelings of admiration and approval in other people. <br><br>" +
-                          "This augmentation: <br>" +
+                          "triggers feelings of admiration and approval in other people.<br><br>" +
+                          "This augmentation:<br>" +
                           "Increases the amount of reputation the player gains when working for a company by 10% <br>" +
                           "Increases the amount of reputation the player gains for a faction by 10%");
     ADRPheromone1.addToFactions(["Tian Di Hui", "The Syndicate", "NWO", "MegaCorp", "Four Sigma"]);
@@ -826,6 +831,19 @@ function initAugmentations() {
         delete Augmentations[AugmentationNames.ADRPheromone1];
     }
     AddToAugmentations(ADRPheromone1);
+
+    var ADRPheromone2 = new Augmentation(AugmentationNames.ADRPheromone2);
+    ADRPheromone2.setRequirements(25000, 90000000000);
+    ADRPheromone2.setInfo("The body is genetically re-engineered so that it produces the ADR-V2 pheromone, " +
+                          "which is similar to but more potent than ADR-V1. This pheromone, when excreted, " +
+                          "triggers feelings of admiration, approval, and respect in others.<br><br>" +
+                          "This augmentation:<br>" +
+                          "Increases the amount of reputation the player gains for a faction and company by 20%.");
+    ADRPheromone2.addToFactions(["Silhouette", "Four Sigma", "Bachman & Associates", "Clarke Incorporated"]);
+    if (augmentationExists(AugmentationNames.ADRPheromone2)) {
+        delete Augmentations[AugmentationNames.ADRPheromone2];
+    }
+    AddToAugmentations(ADRPheromone2);
 
     //HacknetNode Augmentations
     var HacknetNodeCPUUpload = new Augmentation(AugmentationNames.HacknetNodeCPUUpload);
@@ -1626,6 +1644,10 @@ function applyAugmentation(aug, reapply=false) {
             Player.company_rep_mult     *= 1.1;
             Player.faction_rep_mult     *= 1.1;
             break;
+        case AugmentationNames.ADRPheromone2:
+            Player.company_rep_mult     *= 1.2;
+            Player.faction_rep_mult     *= 1.2;
+            break;
 
         //Hacknet Node Augmentations
         case AugmentationNames.HacknetNodeCPUUpload:
@@ -1910,7 +1932,7 @@ function PlayerOwnedAugmentation(name) {
     this.level = 1;
 }
 
-function installAugmentations() {
+function installAugmentations(cbScript=null) {
     if (Player.queuedAugmentations.length == 0) {
         dialogBoxCreate("You have not purchased any Augmentations to install!");
         return false;
@@ -1930,6 +1952,25 @@ function installAugmentations() {
                     "to install the following Augmentations:<br>" + augmentationList +
                     "<br>You wake up in your home...you feel different...");
     prestigeAugmentation();
+
+    //Run a script after prestiging
+    if (cbScript && isString(cbScript)) {
+        var home = Player.getHomeComputer();
+        for (var i = 0; i < home.scripts.length; ++i) {
+            if (home.scripts[i].filename === cbScript) {
+                var script = home.scripts[i];
+                var ramUsage = script.ramUsage;
+                var ramAvailable = home.maxRam - home.ramUsed;
+                if (ramUsage > ramAvailable) {
+                    return; //Not enough RAM
+                }
+                var runningScriptObj = new RunningScript(script, []); //No args
+                runningScriptObj.threads = 1; //Only 1 thread
+                home.runningScripts.push(runningScriptObj);
+                addWorkerScript(runningScriptObj, home);
+            }
+        }
+    }
 }
 
 function augmentationExists(name) {

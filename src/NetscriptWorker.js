@@ -12,7 +12,6 @@ import {parse}                              from "../utils/acorn.js";
 import {dialogBoxCreate}                    from "../utils/DialogBox.js";
 import {compareArrays, printArray}          from "../utils/HelperFunctions.js";
 
-
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
 	this.running 		= false;
@@ -180,6 +179,14 @@ function addWorkerScript(runningScriptObj, server) {
     }
     var ramUsage = runningScriptObj.scriptRef.ramUsage * threads
                    * Math.pow(CONSTANTS.MultithreadingRAMCost, threads-1);
+    var ramAvailable = server.maxRam - server.ramUsed;
+    if (ramUsage > ramAvailable) {
+        dialogBoxCreate("Not enough RAM to run script " + runningScriptObj.filename + " with args " +
+                        printArray(runningScriptObj.args) + ". This likely occurred because you re-loaded " +
+                        "the game and the script's RAM usage increased (either because of an update to the game or " +
+                        "your changes to the script.)");
+        return;
+    }
 	server.ramUsed += ramUsage;
 
 	//Create the WorkerScript

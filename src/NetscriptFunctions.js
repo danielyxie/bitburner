@@ -1973,7 +1973,7 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
         },
-        installAugmentations() {
+        installAugmentations(cbScript) {
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run installAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
@@ -1987,7 +1987,7 @@ function NetscriptFunctions(workerScript) {
             }
             Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
             workerScript.scriptRef.log("Installing Augmentations. This will cause this script to be killed");
-            installAugmentations();
+            installAugmentations(cbScript);
             return true;
         }
     }

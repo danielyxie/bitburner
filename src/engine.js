@@ -484,6 +484,11 @@ let Engine = {
         if (Player.sourceFiles.length !== 0) {
             bnText = "<br>Current BitNode: " + Player.bitNodeN;
         }
+
+        var intText = "";
+        if (Player.intelligence > 0) {
+            intText = 'Intelligence:  ' + (Player.intelligence).toLocaleString() + "<br><br><br>";
+        }
         Engine.Display.characterInfo.innerHTML =
        ('<b>General</b><br><br>' +
         'Current City: ' + Player.city + '<br><br>' +
@@ -502,7 +507,8 @@ let Engine = {
         'Agility:       ' + (Player.agility).toLocaleString() +
                   " (" + numeral(Player.agility_exp).format('(0.000a)') + ' experience)<br>' +
         'Charisma:      ' + (Player.charisma).toLocaleString() +
-                   " (" + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br><br><br>' +
+                   " (" + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br>' +
+        intText + 
         '<b>Multipliers</b><br><br>' +
         'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +
         'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' +
