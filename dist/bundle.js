@@ -2645,9 +2645,9 @@ let CONSTANTS = {
     //Hacking Missions
     HackingMissionRepToDiffConversion: 10000, //Faction rep is divided by this to get mission difficulty
     HackingMissionRepToRewardConversion: 10, //Faction rep divided byt his to get mission rep reward
-    HackingMissionSpamTimeIncrease: 20000, //How much time limit increase is gained when conquering a Spam Node (ms)
+    HackingMissionSpamTimeIncrease: 15000, //How much time limit increase is gained when conquering a Spam Node (ms)
     HackingMissionTransferAttackIncrease: 1.05, //Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
-    HackingMissionMiscDefenseIncrease: 5, //The amount by which every misc node's defense increases when one is conquered
+    HackingMissionMiscDefenseIncrease: 10, //The amount by which every misc node's defense increases when one is conquered
     HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with faction reputation.<br><br>" +
                              "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
                              "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray " +
@@ -2686,7 +2686,10 @@ let CONSTANTS = {
                              "any Node that is adjacent to one of your Nodes (immediately above, below, or to the side. NOT diagonal). Furthermore, only CPU Cores and Transfer Nodes " +
                              "can target, since they are the only ones that can perform actions. To remove a target, you can simply click on the line that represents " +
                              "the connection between one of your Nodes and its target. Alternatively, you can select the 'source' Node and click the 'Drop Connection' button, " +
-                             "or press 'd',",
+                             "or press 'd'.<br><br>" +
+                             "Other Notes:<br><br>" +
+                             "-Whenever you conquer a miscellenaous Node (not owned by the enemy), the defense of all remaining miscellaneous Nodes will increase " +
+                             "by a smal fixed amount.",
 
 
     //Gang constants
@@ -35192,7 +35195,7 @@ function HackingMission(rep, fac) {
     this.faction = fac;
 
     this.started = false;
-    this.time = 300000; //5 minutes to start, milliseconds
+    this.time = 180000; //5 minutes to start, milliseconds
 
     this.playerCores = [];
     this.playerNodes = []; //Non-core nodes
@@ -35250,7 +35253,7 @@ HackingMission.prototype.init = function() {
     }
 
     //Randomly generate enemy nodes (CPU and Firewall) based on difficulty
-    var numNodes = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(this.difficulty, this.difficulty + 1);
+    var numNodes = this.difficulty;
     var numFirewalls = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(this.difficulty, this.difficulty + 1);
     var numDatabases = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(this.difficulty, this.difficulty + 1);
     var totalNodes = numNodes + numFirewalls + numDatabases;
@@ -35262,7 +35265,7 @@ HackingMission.prototype.init = function() {
     var randMult = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["a" /* addOffset */])(this.difficulty, 20);
     for (var i = 0; i < numNodes; ++i) {
         var stats = {
-            atk: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(30, 50),
+            atk: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(40, 60),
             def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(20, 40),
             hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(100, 120)
         }
@@ -35282,7 +35285,7 @@ HackingMission.prototype.init = function() {
     }
     for (var i = 0; i < numDatabases; ++i) {
         var stats = {
-            atk: 0,
+            atk: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(10, 20),
             def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(20, 30),
             hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(120, 150)
         }
@@ -35945,6 +35948,10 @@ HackingMission.prototype.initJsPlumb = function() {
     instance.bind("connection", (info)=>{
         var targetNode = this.getNodeFromElement(info.target);
 
+        //Do not detach for enemy nodes
+        var thisNode = this.getNodeFromElement(info.source);
+        if (thisNode.enmyCtrl) {return;}
+
         //If the node is not reachable, drop the connection
         if (!this.nodeReachable(targetNode)) {
             info.sourceEndpoint.detachFrom(info.targetEndpoint);
@@ -35961,14 +35968,6 @@ HackingMission.prototype.initJsPlumb = function() {
         sourceNode.conn = null;
     });
 
-    //Set connection type for enemy connections
-    instance.registerConnectionTypes({
-        "basic": {
-            paintStyle:{ stroke:"red", strokeWidth:5  },
-            hoverPaintStyle:{ stroke:"red", strokeWidth:7 },
-            anchor:"Continuous",
-          },
-    })
 }
 
 //Drops all connections where the specified node is the source
@@ -36284,7 +36283,6 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                         nodeObj.conn = this.jsplumbinstance.connect({
                             source:nodeObj.el,
                             target:node.el,
-                            type:"basic"
                         });
                     }
                 }

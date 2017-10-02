@@ -156,7 +156,7 @@ function HackingMission(rep, fac) {
     this.faction = fac;
 
     this.started = false;
-    this.time = 300000; //5 minutes to start, milliseconds
+    this.time = 180000; //5 minutes to start, milliseconds
 
     this.playerCores = [];
     this.playerNodes = []; //Non-core nodes
@@ -214,7 +214,7 @@ HackingMission.prototype.init = function() {
     }
 
     //Randomly generate enemy nodes (CPU and Firewall) based on difficulty
-    var numNodes = getRandomInt(this.difficulty, this.difficulty + 1);
+    var numNodes = this.difficulty;
     var numFirewalls = getRandomInt(this.difficulty, this.difficulty + 1);
     var numDatabases = getRandomInt(this.difficulty, this.difficulty + 1);
     var totalNodes = numNodes + numFirewalls + numDatabases;
@@ -226,7 +226,7 @@ HackingMission.prototype.init = function() {
     var randMult = addOffset(this.difficulty, 20);
     for (var i = 0; i < numNodes; ++i) {
         var stats = {
-            atk: randMult * getRandomInt(30, 50),
+            atk: randMult * getRandomInt(40, 60),
             def: randMult * getRandomInt(20, 40),
             hp: randMult * getRandomInt(100, 120)
         }
@@ -246,7 +246,7 @@ HackingMission.prototype.init = function() {
     }
     for (var i = 0; i < numDatabases; ++i) {
         var stats = {
-            atk: 0,
+            atk: randMult * getRandomInt(10, 20),
             def: randMult * getRandomInt(20, 30),
             hp: randMult * getRandomInt(120, 150)
         }
@@ -909,6 +909,10 @@ HackingMission.prototype.initJsPlumb = function() {
     instance.bind("connection", (info)=>{
         var targetNode = this.getNodeFromElement(info.target);
 
+        //Do not detach for enemy nodes
+        var thisNode = this.getNodeFromElement(info.source);
+        if (thisNode.enmyCtrl) {return;}
+
         //If the node is not reachable, drop the connection
         if (!this.nodeReachable(targetNode)) {
             info.sourceEndpoint.detachFrom(info.targetEndpoint);
@@ -925,14 +929,6 @@ HackingMission.prototype.initJsPlumb = function() {
         sourceNode.conn = null;
     });
 
-    //Set connection type for enemy connections
-    instance.registerConnectionTypes({
-        "basic": {
-            paintStyle:{ stroke:"red", strokeWidth:5  },
-            hoverPaintStyle:{ stroke:"red", strokeWidth:7 },
-            anchor:"Continuous",
-          },
-    })
 }
 
 //Drops all connections where the specified node is the source
@@ -1248,7 +1244,6 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                         nodeObj.conn = this.jsplumbinstance.connect({
                             source:nodeObj.el,
                             target:node.el,
-                            type:"basic"
                         });
                     }
                 }
