@@ -4,7 +4,9 @@ import {NetscriptFunctions}             from "./NetscriptFunctions.js";
  */
 function Environment(workerScript,parent) {
     if (parent){
-        this.vars = parent.vars;
+        //Create a copy of parent's variables
+        //this.vars = parent.vars;
+        this.vars = Object.assign({}, parent.vars);
     } else {
         this.vars = NetscriptFunctions(workerScript);
     }
@@ -22,10 +24,12 @@ Environment.prototype = {
     lookup: function(name) {
         var scope = this;
         while (scope) {
-            if (Object.prototype.hasOwnProperty.call(scope.vars, name))
+            if (Object.prototype.hasOwnProperty.call(scope.vars, name)) {
                 return scope;
+            }
             scope = scope.parent;
         }
+        return null;
     },
 
 	//Get the current value of a variable
@@ -39,15 +43,14 @@ Environment.prototype = {
 	//Sets the value of a variable in any scope
     set: function(name, value) {
         var scope = this.lookup(name);
-        // let's not allow defining globals from a nested environment
-		//
-		// If scope is null (aka existing variable with name could not be found)
-		// and this is NOT the global scope, throw error
-        if (!scope && this.parent) {
-            console.log("Here");
-            throw new Error("Undefined variable " + name);
+
+        //If scope has a value, then this variable is already set in a higher scope, so
+        //set is there. Otherwise, create a new variable in the local scope
+        if (scope !== null) {
+            return scope.vars[name] = value;
+        } else {
+            return this.vars[name] = value;
         }
-        return (scope || this).vars[name] = value;
     },
 
     setArrayElement: function(name, idx, value) {
@@ -56,7 +59,6 @@ Environment.prototype = {
         }
         var scope = this.lookup(name);
         if (!scope && this.parent) {
-            console.log("Here");
             throw new Error("Undefined variable " + name);
         }
         var arr = (scope || this).vars[name];

@@ -209,7 +209,24 @@ a:link, a:visited {
     z-index: 99;
 }
 
-.tooltip:hover .tooltiptext {
+/* Same thing as a normal tooltip except its a bit higher */
+.tooltip .tooltiptexthigh {
+    visibility: hidden;
+    width: 300px;
+    background-color: var(--my-background-color);
+    border: 2px solid var(--my-highlight-color);;
+    color: white;
+    text-align: center;
+    padding: 4px;
+    left: 101%;
+    bottom:-25%;
+
+    position: absolute;
+    z-index: 99;
+}
+
+.tooltip:hover .tooltiptext,
+.tooltip:hover .tooltiptexthigh {
     visibility: visible;
 }
 

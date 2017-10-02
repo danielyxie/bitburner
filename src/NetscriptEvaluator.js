@@ -84,6 +84,8 @@ function evaluate(exp, workerScript) {
                             //Create new Environment for the function
                             //Should be automatically garbage collected...
                             var funcEnv = env.extend();
+                            console.log("Printing new environment for function:");
+                            console.log(funcEnv);
 
                             //Define function arguments in this new environment
                             for (var i = 0; i < func.params.length; ++i) {
