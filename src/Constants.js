@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.29.2",
+    Version:                "0.29.3",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -116,17 +116,18 @@ let CONSTANTS = {
     IntelligenceCrimeWeight: 0.05,  //Weight for how much int affects crime success rates
     IntelligenceInfiltrationWeight: 0.1, //Weight for how much int affects infiltration success rates
     IntelligenceCrimeBaseExpGain: 0.001,
-    IntelligenceProgramBaseExpGain: 1000, //Program required hack level divided by this to determine int exp gain
+    IntelligenceProgramBaseExpGain: 500, //Program required hack level divided by this to determine int exp gain
     IntelligenceTerminalHackBaseExpGain: 200, //Hacking exp divided by this to determine int exp gain
     IntelligenceSingFnBaseExpGain: 0.0005,
-    IntelligenceClassBaseExpGain: 0.0000001,
+    IntelligenceClassBaseExpGain: 0.0000005,
 
     //Hacking Missions
     HackingMissionRepToDiffConversion: 10000, //Faction rep is divided by this to get mission difficulty
     HackingMissionRepToRewardConversion: 10, //Faction rep divided byt his to get mission rep reward
     HackingMissionSpamTimeIncrease: 15000, //How much time limit increase is gained when conquering a Spam Node (ms)
     HackingMissionTransferAttackIncrease: 1.05, //Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
-    HackingMissionMiscDefenseIncrease: 10, //The amount by which every misc node's defense increases when one is conquered
+    HackingMissionMiscDefenseIncrease: 1.12, //The amount by which every misc node's defense is multiplied when one is conquered
+    HackingMissionDifficultyToHacking: 120, //Difficulty is multiplied by this to determine enemy's "hacking" level (to determine effects of scan/attack, etc)
     HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with faction reputation.<br><br>" +
                              "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
                              "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray " +
@@ -168,7 +169,7 @@ let CONSTANTS = {
                              "or press 'd'.<br><br>" +
                              "Other Notes:<br><br>" +
                              "-Whenever you conquer a miscellenaous Node (not owned by the enemy), the defense of all remaining miscellaneous Nodes will increase " +
-                             "by a smal fixed amount.",
+                             "by a fixed percentage.",
 
 
     //Gang constants
@@ -1019,6 +1020,10 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.29.3<br>" +
+    "-Fixed bug for killing scripts and showing error messages when there are errors in a player-defined function<br>" +
+    "-Added function name autocompletion in Script Editor. Press Ctrl+space on a prefix to show autocompletion options.<br>" +
+    "-Minor rebalancing and bug fixes for Infiltration<br><br>" +
     "v0.29.2<br>" +
     "-installAugmentations() Singularity Function now takes a callback script as an argument. This is a script " +
     "that gets ran automatically after Augmentations are installed. The script is run with no arguments and only a single thread, " +

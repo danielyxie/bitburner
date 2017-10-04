@@ -84,8 +84,6 @@ function evaluate(exp, workerScript) {
                             //Create new Environment for the function
                             //Should be automatically garbage collected...
                             var funcEnv = env.extend();
-                            console.log("Printing new environment for function:");
-                            console.log(funcEnv);
 
                             //Define function arguments in this new environment
                             for (var i = 0; i < func.params.length; ++i) {
@@ -105,7 +103,23 @@ function evaluate(exp, workerScript) {
                             evaluate(func.body, funcWorkerScript).then(function(res) {
                                 resolve(res);
                             }).catch(function(e) {
-                                reject(e);
+                                if (isString(e)) {
+                                    reject(makeRuntimeRejectMsg(workerScript, e));
+                                } else if (e instanceof WorkerScript) {
+                                    //Parse out the err message from the WorkerScript and re-reject
+                                    var errorMsg = e.errorMessage;
+                                    var errorTextArray = errorMsg.split("|");
+                                    console.log("Printing error message from Function:");
+                                    console.log(errorMsg);
+                                    if (errorTextArray.length === 4) {
+                                        errorMsg = errorTextArray[3];
+                                        reject(makeRuntimeRejectMsg(workerScript, errorMsg));
+                                    } else {
+                                        reject(makeRuntimeRejectMsg(workerScript, "Error in one of your functions. Could not identify which function"));
+                                    }
+                                } else if (e instanceof Error) {
+                                    reject(makeRuntimeRejectMsg(workerScript, e.toString()));
+                                }
                             });
                         } else if (exp.callee.type == "MemberExpression"){
                             evaluate(exp.callee.object, workerScript).then(function(object) {

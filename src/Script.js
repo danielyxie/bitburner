@@ -11,11 +11,13 @@ require('brace/theme/twilight');
 require('brace/theme/xcode');
 require("brace/keybinding/vim");
 require("brace/keybinding/emacs");
+require("brace/ext/language_tools");
 
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {iTutorialSteps, iTutorialNextStep,
         iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial.js";
+import {NetscriptFunctions}                     from "./NetscriptFunctions.js";
 import {addWorkerScript, killWorkerScript}      from "./NetscriptWorker.js";
 import {Player}                                 from "./Player.js";
 import {AllServers, processSingleServerGrowth}  from "./Server.js";
@@ -101,6 +103,26 @@ function scriptEditorInit() {
             saveAndCloseScriptEditor();
         });
     });
+
+    //Function autocompleter
+    editor.setOption("enableBasicAutocompletion", true);
+    var autocompleter = {
+        getCompletions: function(editor, session, pos, prefix, callback) {
+            if (prefix.length === 0) {callback(null, []); return;}
+            var words = [];
+            var fns = NetscriptFunctions(null);
+            for (var name in fns) {
+                if (fns.hasOwnProperty(name)) {
+                    words.push({
+                                name: name,
+                                value: name,
+                               });
+                }
+            }
+            callback(null, words);
+        },
+    }
+    editor.completers = [autocompleter];
 }
 document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 

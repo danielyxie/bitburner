@@ -665,8 +665,7 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
         txt = "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " <br><br> " +
               "Since you cancelled your work early, you only gained half of the reputation you earned. <br><br>" + txt;
     } else {
-        txt = "You worked a full shift of 8 hours! <br><br> " +
-              "You earned a total of: <br>" + txt;
+        txt = "You worked a full shift of 8 hours! <br><br> " + txt;
     }
     if (!sing) {dialogBoxCreate(txt);}
 
@@ -1483,16 +1482,16 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     break;
                 case CONSTANTS.CrimeKidnap:
                     this.karma -= 6;
-                    this.gainIntelligenceExp(CONSTANTS.IntelligenceCrimeBaseExpGain);
+                    this.gainIntelligenceExp(2 * CONSTANTS.IntelligenceCrimeBaseExpGain);
                     break;
                 case CONSTANTS.CrimeAssassination:
                     ++this.numPeopleKilled;
                     this.karma -= 10;
-                    this.gainIntelligenceExp(CONSTANTS.IntelligenceCrimeBaseExpGain);
+                    this.gainIntelligenceExp(5 * CONSTANTS.IntelligenceCrimeBaseExpGain);
                     break;
                 case CONSTANTS.CrimeHeist:
                     this.karma -= 15;
-                    this.gainIntelligenceExp(5 * CONSTANTS.IntelligenceCrimeBaseExpGain);
+                    this.gainIntelligenceExp(10 * CONSTANTS.IntelligenceCrimeBaseExpGain);
                     break;
                 default:
                     console.log(this.crimeType);

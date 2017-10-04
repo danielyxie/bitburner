@@ -601,7 +601,7 @@ function getInfiltrationKillChance(inst) {
     return Math.min(0.95,
            (Player.strength +
             Player.dexterity +
-            Player.agility) / (1.5 * lvl));
+            Player.agility) / (1.45 * lvl));
 }
 
 
@@ -627,7 +627,7 @@ function getInfiltrationKnockoutChance(inst) {
     return Math.min(0.95,
            (Player.strength +
             Player.dexterity +
-            Player.agility) / (1.75 * lvl));
+            Player.agility) / (1.7 * lvl));
 }
 
 //Stealth knockout
@@ -648,7 +648,7 @@ function attemptInfiltrationStealthKnockout(inst) {
 function getInfiltrationStealthKnockoutChance(inst) {
     var lvl = inst.securityLevel;
     return Math.min(0.95,
-           (0.5 * Player.strength +
+           (0.55 * Player.strength +
             2 * Player.dexterity +
             2 * Player.agility +
             intWgt * Player.intelligence) / (3 * lvl));

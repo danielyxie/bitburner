@@ -508,7 +508,7 @@ let Engine = {
                   " (" + numeral(Player.agility_exp).format('(0.000a)') + ' experience)<br>' +
         'Charisma:      ' + (Player.charisma).toLocaleString() +
                    " (" + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br>' +
-        intText + 
+        intText +
         '<b>Multipliers</b><br><br>' +
         'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +
         'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' +
@@ -1145,6 +1145,8 @@ let Engine = {
             }
             initLiterature();
             initSingularitySFFlags();
+
+            console.log(Player.intelligence_exp);
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
