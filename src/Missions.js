@@ -203,7 +203,7 @@ HackingMission.prototype.init = function() {
     var home = Player.getHomeComputer()
     for (var i = 0; i < home.cpuCores; ++i) {
         var stats = {
-            atk: (Player.hacking_skill / 6),
+            atk: (Player.hacking_skill / 5),
             def: (Player.hacking_skill / 20),
             hp: (Player.hacking_skill / 5),
         };
@@ -214,7 +214,7 @@ HackingMission.prototype.init = function() {
     }
 
     //Randomly generate enemy nodes (CPU and Firewall) based on difficulty
-    var numNodes = this.difficulty;
+    var numNodes = Math.max(1, Math.round(this.difficulty / 3));
     var numFirewalls = getRandomInt(this.difficulty, this.difficulty + 1);
     var numDatabases = getRandomInt(this.difficulty, this.difficulty + 1);
     var totalNodes = numNodes + numFirewalls + numDatabases;
@@ -223,10 +223,11 @@ HackingMission.prototype.init = function() {
     console.log("numFirewalls: " + numFirewalls);
     console.log("numDatabases: " + numDatabases);
     console.log("totalNodes: " + totalNodes);
-    var randMult = addOffset(this.difficulty, 20);
+    console.log("xlimit: " + xlimit);
+    var randMult = addOffset(0.85 + (this.difficulty / 6), 10);
     for (var i = 0; i < numNodes; ++i) {
         var stats = {
-            atk: randMult * getRandomInt(40, 60),
+            atk: randMult * getRandomInt(50, 75),
             def: randMult * getRandomInt(20, 40),
             hp: randMult * getRandomInt(100, 120)
         }
@@ -246,7 +247,7 @@ HackingMission.prototype.init = function() {
     }
     for (var i = 0; i < numDatabases; ++i) {
         var stats = {
-            atk: randMult * getRandomInt(10, 20),
+            atk: 0,
             def: randMult * getRandomInt(20, 30),
             hp: randMult * getRandomInt(120, 150)
         }
@@ -586,6 +587,10 @@ HackingMission.prototype.setNodePosition = function(nodeObj, x, y) {
 
 HackingMission.prototype.setNodeRandomPosition = function(nodeObj, xlimit=0) {
     var i = getRandomInt(0, this.availablePositions.length - 1);
+    if (this.availablePositions[i][1] < xlimit) {
+        //Recurse if not within limit
+        return this.setNodeRandomPosition(nodeObj, xlimit);
+    }
     var pos = this.availablePositions.splice(i, 1);
     pos = pos[0];
     this.setNodePosition(nodeObj, pos[0], pos[1]);
@@ -604,7 +609,7 @@ HackingMission.prototype.createMap = function() {
         for (var y = 0; y < 8; ++y) {
             if (!(this.map[x][y] instanceof Node)) {
                 var node, type = getRandomInt(0, 2);
-                var randMult = addOffset(this.difficulty, 20);
+                var randMult = addOffset(0.75 + (this.difficulty / 3), 20);
                 switch (type) {
                     case 0: //Spam
                         var stats = {
@@ -828,6 +833,7 @@ HackingMission.prototype.nodeReachable = function(node) {
 }
 
 HackingMission.prototype.nodeReachableByEnemy = function(node) {
+    if (node === null) {return false;}
     var x = node.pos[0], y = node.pos[1];
     if (x > 0 && this.map[x-1][y].enmyCtrl) {return true;}
     if (x < 7 && this.map[x+1][y].enmyCtrl) {return true;}
@@ -987,8 +993,15 @@ HackingMission.prototype.process = function(numCycles=1) {
         this.calculateDefenses();
     }
 
+    //Win if all enemy databases are conquered
     if (this.enemyDatabases.length === 0) {
         this.finishMission(true);
+        return;
+    }
+
+    //Lose if all your cores are gone
+    if (this.playerCores.length === 0) {
+        this.finishMission(false);
         return;
     }
 
@@ -1037,22 +1050,23 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
     }
 
     //Calculations are per second, so divide everything by 5
-    var calcStats = false;
+    var calcStats = false, plyr = nodeObj.plyrCtrl;
+    var enmyHacking = this.difficulty * CONSTANTS.HackingMissionDifficultyToHacking;
     switch(nodeObj.action) {
         case NodeActions.Attack:
             if (nodeObj.conn === null) {break;}
-            var dmg = this.calculateAttackDamage(atk, def, Player.hacking_skill);
+            var dmg = this.calculateAttackDamage(atk, def, plyr ? Player.hacking_skill : enmyHacking);
             targetNode.hp -= (dmg/5 * numCycles);
             break;
         case NodeActions.Scan:
             if (nodeObj.conn === null) {break;}
-            var eff = this.calculateScanEffect(atk, def, Player.hacking_skill);
+            var eff = this.calculateScanEffect(atk, def, plyr ? Player.hacking_skill : enmyHacking);
             targetNode.def -= (eff/5 * numCycles);
             calcStats = true;
             break;
         case NodeActions.Weaken:
             if (nodeObj.conn === null) {break;}
-            var eff = this.calculateWeakenEffect(atk, def, Player.hacking_skill);
+            var eff = this.calculateWeakenEffect(atk, def, plyr ? Player.hacking_skill : enmyHacking);
             targetNode.atk -= (eff/5 * numCycles);
             calcStats = true;
             break;
@@ -1086,7 +1100,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
         targetNode.action = null;
         targetNode.conn = null;
         if (this.selectedNode == targetNode) {
-            targetNode.deselect();
+            targetNode.deselect(this.actionButtons);
         }
 
         //Flag for whether the target node was a misc node
@@ -1191,9 +1205,11 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
         }
 
         //If a misc node was conquered, the defense for all misc nodes increases by some fixed amount
-        this.miscNodes.forEach((node)=>{
-            node.def += CONSTANTS.HackingMissionMiscDefenseIncrease;
-        });
+        if (isMiscNode && conqueredByPlayer) {
+            this.miscNodes.forEach((node)=>{
+                node.def *= CONSTANTS.HackingMissionMiscDefenseIncrease;
+            });
+        }
     }
 
     //Update node DOMs
@@ -1214,7 +1230,12 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                 if (this.miscNodes.length === 0) {
                     //Randomly pick a player node and attack it if its reachable
                     var rand = getRandomInt(0, this.playerNodes.length-1);
-                    var node = this.playerNodes[rand];
+                    var node;
+                    if (this.playerNodes.length === 0) {
+                        node = null;
+                    } else {
+                        node = this.playerNodes[rand];
+                    }
                     if (this.nodeReachableByEnemy(node)) {
                         //Create connection
                         console.log("Enemy core selected a Player Node as target");
@@ -1225,7 +1246,12 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                     } else {
                         //Randomly pick a player core and attack it if its reachable
                         rand = getRandomInt(0, this.playerCores.length-1);
-                        node = this.playerCores[rand];
+                        if (this.playerCores.length === 0) {
+                            return; //No Misc Nodes, no player Nodes, no Player cores. Player lost
+                        } else {
+                            node = this.playerCores[rand];
+                        }
+
                         if (this.nodeReachableByEnemy(node)) {
                             //Create connection
                             console.log("Enemy core selected a Player Core as target");
@@ -1251,6 +1277,7 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                 //If no connection was made, set the Core to Fortify
                 nodeObj.action = NodeActions.Fortify;
             } else {
+                //If this node has a selected target
                 var targetNode;
                 if (nodeObj.conn.target) {
                     targetNode = this.getNodeFromElement(nodeObj.conn.target);
@@ -1261,7 +1288,13 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                     console.log("Error getting Target node Object in enemyAISelectAction()");
                 }
 
-                if (targetNode.def > this.enemyAtk - 25) {
+                if (targetNode.def > this.enemyAtk + 25) {
+                    if (nodeObj.def < 50) {
+                        nodeObj.action = NodeActions.Fortify;
+                    } else {
+                        nodeObj.action = NodeActions.Overflow;
+                    }
+                } else if (Math.abs(targetNode.def - this.enemyAtk) <= 25) {
                     nodeObj.action = NodeActions.Scan;
                 } else {
                     nodeObj.action = NodeActions.Attack;
@@ -1291,11 +1324,11 @@ HackingMission.prototype.calculateAttackDamage = function(atk, def, hacking = 0)
 }
 
 HackingMission.prototype.calculateScanEffect = function(atk, def, hacking=0) {
-    return Math.max((atk/2) + hacking / hackEffWeightTarget - def, 1);
+    return Math.max((atk) + hacking / hackEffWeightTarget - def, 1);
 }
 
 HackingMission.prototype.calculateWeakenEffect = function(atk, def, hacking=0) {
-    return Math.max((atk/2) + hacking / hackEffWeightTarget - def, 1);
+    return Math.max((atk) + hacking / hackEffWeightTarget - def, 1);
 }
 
 HackingMission.prototype.calculateFortifyEffect = function(hacking=0) {
