@@ -43,12 +43,10 @@ import {printArray, powerOfTwo}                     from "../utils/HelperFunctio
 import {createRandomIp}                             from "../utils/IPAddress.js";
 import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions.js";
 
-var hasSingularitySF = false;
-var hasAISF = false;
+var hasSingularitySF = false, hasAISF = false, hasBn11SF = false;
 var singularitySFLvl = 1;
 
-//Also used to check for Artificial Intelligence Source File, don't want to change
-//name though
+//Used to check and set flags for every Source File, despite the name of the function
 function initSingularitySFFlags() {
     for (var i = 0; i < Player.sourceFiles.length; ++i) {
         if (Player.sourceFiles[i].n === 4) {
@@ -57,6 +55,9 @@ function initSingularitySFFlags() {
         }
         if (Player.sourceFiles[i].n === 5) {
             hasAISF = true;
+        }
+        if (Player.sourceFiles[i].n === 11) {
+            hasBn11SF = true;
         }
     }
 }
@@ -1898,6 +1899,44 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("Began creating program: " + name);
             return true;
         },
+        getOwnedAugmentations(purchased=false) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getOwnedAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return [];
+                }
+            }
+            var res = [];
+            for (var i = 0; i < Player.augmentations.length; ++i) {
+                res.push(Player.augmentations[i].name);
+            }
+            if (purchased) {
+                for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
+                    res.push(Player.queuedAugmentations[i].name);
+                }
+            }
+            return res;
+        },
+        getAugmentationsFromFaction(facname) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getAugmentationsFromFaction(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return [];
+                }
+            }
+
+            if (!factionExists(facname)) {
+                workerScript.scriptRef.log("ERROR: getAugmentationsFromFaction() failed. Invalid faction name passed in (this is case-sensitive): " + facname);
+                return [];
+            }
+
+            var fac = Factions[facname];
+            var res = [];
+            for (var i = 0; i < fac.augmentations.length; ++i) {
+                res.push(fac.augmentations[i]);
+            }
+            return res;
+        },
         getAugmentationCost(name) {
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
@@ -1993,4 +2032,4 @@ function NetscriptFunctions(workerScript) {
     }
 }
 
-export {NetscriptFunctions, initSingularitySFFlags, hasSingularitySF};
+export {NetscriptFunctions, initSingularitySFFlags, hasSingularitySF, hasBn11SF};

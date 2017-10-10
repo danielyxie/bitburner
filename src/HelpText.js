@@ -18,6 +18,7 @@ let TerminalHelpText =
                 "kill [script] [args...]        Stops the specified script on the current server <br>" +
                 "killall                        Stops all running scripts on the current machine<br>" +
                 "ls [| grep pattern]            Displays all files on the machine<br>" +
+                "lscpu                          Displays the number of CPU cores on the machine<br>" +
                 "mem [script] [-t] [n]          Displays the amount of RAM required to run the script<br>" +
                 "nano [script]                  Script editor - Open up and edit a script<br>" +
                 "ps                             Display all scripts that are currently running<br>" +

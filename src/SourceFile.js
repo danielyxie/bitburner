@@ -47,10 +47,12 @@ function initSourceFiles() {
     SourceFiles["SourceFile8"] = new SourceFile(8);
     SourceFiles["SourceFile9"] = new SourceFile(9);
     SourceFiles["SourceFile10"] = new SourceFile(10);
-    SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File increases the player's company salary and reputation gain multipliers by:<br><br>" +
-                                        "Level 1: 60%<br>" +
-                                        "Level 2: 90%<br>" +
-                                        "Level 3: 105%<br>");
+    SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so that company favor increases BOTH the player's salary and reputation gain rate " +
+                                                     "at that company by 1% per favor (rather than just the reputation gain). This Source-File also " +
+                                                     " increases the player's company salary and reputation gain multipliers by:<br><br>" +
+                                                     "Level 1: 24%<br>" +
+                                                     "Level 2: 36%<br>" +
+                                                     "Level 3: 42%<br>");
     SourceFiles["SourceFile12"] = new SourceFile(12);
 }
 
@@ -126,11 +128,13 @@ function applySourceFile(srcFile) {
             Player.hacking_speed_mult   *= incMult;
             Player.hacking_money_mult   *= incMult;
             Player.hacking_grow_mult    *= incMult;
+            Player.hacking_mult         *= incMult;
+            Player.hacking_exp_mult     *= incMult;
             break;
         case 11: //The Big Crash
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (60 / (Math.pow(2, i)));
+                mult += (24 / (Math.pow(2, i)));
             }
             var incMult = 1 + (mult / 100);
             Player.work_money_mult    *= incMult;

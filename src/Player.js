@@ -13,6 +13,7 @@ import {Factions, Faction,
         displayFactionContent}                  from "./Faction.js";
 import {Gang, resetGangs}                       from "./Gang.js";
 import {Locations}                              from "./Location.js";
+import {hasBn11SF}                              from "./NetscriptFunctions.js";
 import {AllServers, Server, AddToAllServers}    from "./Server.js";
 import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps.js";
 import {SourceFiles, applySourceFile}           from "./SourceFile.js";
@@ -1459,12 +1460,14 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     break;
                 case CONSTANTS.CrimeRobStore:
                     this.karma -= 0.5;
+                    this.gainIntelligenceExp(0.25 * CONSTANTS.IntelligenceCrimeBaseExpGain);
                     break;
                 case CONSTANTS.CrimeMug:
                     this.karma -= 0.25;
                     break;
                 case CONSTANTS.CrimeLarceny:
                     this.karma -= 1.5;
+                    this.gainIntelligenceExp(0.5 * CONSTANTS.IntelligenceCrimeBaseExpGain);
                     break;
                 case CONSTANTS.CrimeDrugs:
                     this.karma -= 0.5;

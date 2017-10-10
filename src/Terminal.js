@@ -297,7 +297,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     if (index == -1) {
         return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "free",
                 "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
-                "ls", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze",
+                "ls", "lscpu", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze",
                 "scp", "sudov", "tail", "theme", "top"].concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
     }
 
@@ -899,6 +899,9 @@ let Terminal = {
 			case "ls":
                 Terminal.executeListCommand(commandArray);
 				break;
+            case "lscpu":
+                post(Player.getCurrentServer().cpuCores + " Core(s)");
+                break;
             case "mem":
                 if (commandArray.length != 2) {
                     post("Incorrect usage of mem command. usage: mem [scriptname] [-t] [number threads]"); return;
