@@ -35,8 +35,7 @@ function evaluate(exp, workerScript) {
                     resolve(workerScript);
                 }, function(e) {
                     if (e.constructor === Array && e.length === 2 && e[0] === "RETURNSTATEMENT") {
-                        //Returning from a Player-defined function
-                        resolve(e[1]);
+                        reject(e);
                     } else if (isString(e)) {
                         workerScript.errorMessage = e;
                         reject(workerScript);
@@ -101,16 +100,19 @@ function evaluate(exp, workerScript) {
                             funcWorkerScript.env = funcEnv;
 
                             evaluate(func.body, funcWorkerScript).then(function(res) {
-                                resolve(res);
+                                //If the function finished successfuly, that means there
+                                //was no return statement since a return statement rejects. So resolve to null
+                                resolve(null);
                             }).catch(function(e) {
-                                if (isString(e)) {
+                                if (e.constructor === Array && e.length === 2 && e[0] === "RETURNSTATEMENT") {
+                                    //Return statement from function
+                                    resolve(e[1]);
+                                } else if (isString(e)) {
                                     reject(makeRuntimeRejectMsg(workerScript, e));
                                 } else if (e instanceof WorkerScript) {
                                     //Parse out the err message from the WorkerScript and re-reject
                                     var errorMsg = e.errorMessage;
                                     var errorTextArray = errorMsg.split("|");
-                                    console.log("Printing error message from Function:");
-                                    console.log(errorMsg);
                                     if (errorTextArray.length === 4) {
                                         errorMsg = errorTextArray[3];
                                         reject(makeRuntimeRejectMsg(workerScript, errorMsg));

@@ -22,6 +22,7 @@ import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {clearEventListeners}                    from "../utils/HelperFunctions.js";
 import {createRandomIp}                         from "../utils/IPAddress.js";
+import numeral                                  from "../utils/numeral.min.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
@@ -173,6 +174,7 @@ function displayLocationContent() {
     var purchase1tb             = document.getElementById("location-purchase-1tb");
     var purchaseTor             = document.getElementById("location-purchase-tor");
     var purchaseHomeRam         = document.getElementById("location-purchase-home-ram");
+    var purchaseHomeCores       = document.getElementById("location-purchase-home-cores");
 
     var travelAgencyText        = document.getElementById("location-travel-agency-text");
     var travelToAevum           = document.getElementById("location-travel-to-aevum");
@@ -264,6 +266,7 @@ function displayLocationContent() {
     purchase1tb.style.display = "none";
     purchaseTor.style.display = "none";
     purchaseHomeRam.style.display = "none";
+    purchaseHomeCores.style.display = "none";
 
     purchase2gb.innerHTML = "Purchase 2GB Server - $" + formatNumber(2*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
     purchase4gb.innerHTML = "Purchase 4GB Server - $" + formatNumber(4*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
@@ -419,6 +422,7 @@ function displayLocationContent() {
             purchase1tb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            purchaseHomeCores.style.display = "block";
             setInfiltrateButton(infiltrate, Locations.AevumECorp,
                                 6000, 116, 150, 8.5);
             break;
@@ -464,6 +468,7 @@ function displayLocationContent() {
             purchase1tb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            purchaseHomeCores.style.display = "block";
             setInfiltrateButton(infiltrate, Locations.AevumFulcrumTechnologies,
                                 6000, 96, 100, 9);
             break;
@@ -539,6 +544,7 @@ function displayLocationContent() {
             purchase8gb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            purchaseHomeCores.style.display = "block";
             setInfiltrateButton(infiltrate, Locations.AevumNetLinkTechnologies,
                                 160, 10, 15, 1.8);
             break;
@@ -718,6 +724,7 @@ function displayLocationContent() {
             purchase4gb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            purchaseHomeCores.style.display = "block";
             setInfiltrateButton(infiltrate, Locations.Sector12AlphaEnterprises,
                                 250, 14, 40, 2.7);
             break;
@@ -847,6 +854,7 @@ function displayLocationContent() {
             purchase128gb.style.display = "block";
             purchase256gb.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            purchaseHomeCores.style.display = "block";
             setInfiltrateButton(infiltrate, Locations.IshimaStormTechnologies,
                                 700, 24, 100, 5.9);
             break;
@@ -878,6 +886,7 @@ function displayLocationContent() {
             purchase32gb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            purchaseHomeCores.style.display = "block";
             setInfiltrateButton(infiltrate, Locations.IshimaOmegaSoftware,
                                 200, 10, 40, 2.3);
             break;
@@ -994,6 +1003,7 @@ function displayLocationContent() {
             purchase256gb.style.display = "block";
             purchaseTor.style.display = "block";
             purchaseHomeRam.style.display = "block";
+            purchaseHomeCores.style.display = "block";
             setInfiltrateButton(infiltrate, Locations.VolhavenCompuTek,
                                 300, 12, 35, 3.1);
             break;
@@ -1574,6 +1584,7 @@ function initLocationButtons() {
     var purchase1tb         = document.getElementById("location-purchase-1tb");
     var purchaseTor         = document.getElementById("location-purchase-tor");
     var purchaseHomeRam     = document.getElementById("location-purchase-home-ram");
+    var purchaseHomeCores   = document.getElementById("location-purchase-home-cores");
 
     var travelToAevum       = document.getElementById("location-travel-to-aevum");
     var travelToChongqing   = document.getElementById("location-travel-to-chongqing");
@@ -1740,6 +1751,42 @@ function initLocationButtons() {
         yesNoBoxCreate("Would you like to purchase additional RAM for your home computer? <br><br>" +
                        "This will upgrade your RAM from " + currentRam + "GB to " + newRam + "GB. <br><br>" +
                        "This will cost $" + formatNumber(cost, 2));
+    });
+
+    purchaseHomeCores.addEventListener("click", function() {
+        var currentCores = Player.getHomeComputer().cpuCores;
+        if (currentCores >= 8) {return;} //Max of 8 cores
+
+        //Cost of purchasing another cost is found by indexing this array with number of current cores
+        var cost = [0,
+                    10000000000,                 //1->2 Cores - 10 bn
+                    250000000000,               //2->3 Cores - 250 bn
+                    5000000000000,              //3->4 Cores - 5 trillion
+                    100000000000000,            //4->5 Cores - 100 trillion
+                    1000000000000000,           //5->6 Cores - 1 quadrillion
+                    20000000000000000,          //6->7 Cores - 20 quadrillion
+                    200000000000000000];        //7->8 Cores - 200 quadrillion
+        cost = cost[currentCores];
+        var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
+        yesBtn.innerHTML = "Purchase"; noBtn.innerHTML = "Cancel";
+        yesBtn.addEventListener("click", ()=>{
+            if (Player.money.lt(cost)) {
+                dialogBoxCreate("You do not have enough mone to purchase an additional CPU Core for your home computer!");
+            } else {
+                Player.loseMoney(cost);
+                Player.getHomeComputer().cpuCores++;
+                dialogBoxCreate("You purchased an additional CPU Core for your home computer! It now has " +
+                                Player.getHomeComputer().cpuCores +  " cores.");
+            }
+            yesNoBoxClose();
+        });
+        noBtn.addEventListener("click", ()=>{
+            yesNoBoxClose();
+        });
+        yesNoBoxCreate("Would you like to purchase an additional CPU Core for your home computer? Each CPU Core " +
+                       "lets you start with an additional Core Node in Hacking Missions.<br><br>" +
+                       "Purchasing an additional core (for a total of " + (Player.getHomeComputer().cpuCores + 1) + ") will " +
+                       "cost " + numeral(cost).format('$0.000a'));
     });
 
     travelToAevum.addEventListener("click", function() {

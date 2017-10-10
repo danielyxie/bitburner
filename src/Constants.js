@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.29.3",
+    Version:                "0.30.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -118,16 +118,17 @@ let CONSTANTS = {
     IntelligenceCrimeBaseExpGain: 0.001,
     IntelligenceProgramBaseExpGain: 500, //Program required hack level divided by this to determine int exp gain
     IntelligenceTerminalHackBaseExpGain: 200, //Hacking exp divided by this to determine int exp gain
-    IntelligenceSingFnBaseExpGain: 0.0005,
-    IntelligenceClassBaseExpGain: 0.0000005,
+    IntelligenceSingFnBaseExpGain: 0.001,
+    IntelligenceClassBaseExpGain: 0.000001,
+    IntelligenceHackingMissionBaseExpGain: 0.03, //Hacking Mission difficulty multiplied by this to get exp gain
 
     //Hacking Missions
     HackingMissionRepToDiffConversion: 10000, //Faction rep is divided by this to get mission difficulty
-    HackingMissionRepToRewardConversion: 10, //Faction rep divided byt his to get mission rep reward
+    HackingMissionRepToRewardConversion: 7, //Faction rep divided byt his to get mission rep reward
     HackingMissionSpamTimeIncrease: 15000, //How much time limit increase is gained when conquering a Spam Node (ms)
     HackingMissionTransferAttackIncrease: 1.05, //Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
-    HackingMissionMiscDefenseIncrease: 1.12, //The amount by which every misc node's defense is multiplied when one is conquered
-    HackingMissionDifficultyToHacking: 120, //Difficulty is multiplied by this to determine enemy's "hacking" level (to determine effects of scan/attack, etc)
+    HackingMissionMiscDefenseIncrease: 1.05, //The amount by which every misc node's defense is multiplied when one is conquered
+    HackingMissionDifficultyToHacking: 150, //Difficulty is multiplied by this to determine enemy's "hacking" level (to determine effects of scan/attack, etc)
     HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with faction reputation.<br><br>" +
                              "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
                              "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray " +
@@ -168,8 +169,11 @@ let CONSTANTS = {
                              "the connection between one of your Nodes and its target. Alternatively, you can select the 'source' Node and click the 'Drop Connection' button, " +
                              "or press 'd'.<br><br>" +
                              "Other Notes:<br><br>" +
-                             "-Whenever you conquer a miscellenaous Node (not owned by the enemy), the defense of all remaining miscellaneous Nodes will increase " +
-                             "by a fixed percentage.",
+                             "-Whenever a miscellenaous Node (not owned by the player or enemy) is conquered, the defense of all remaining miscellaneous Nodes that " +
+                             "are not actively being targeted will increase by a fixed percentage.<br><br>" +
+                             "-Whenever a Node is conquered, its stats are significantly reduced<br><br>" +
+                             "-Miscellaneous Nodes slowly raise their defense over time<br><br>" +
+                             "-Nodes slowly regenerate health and raise over time.",
 
 
     //Gang constants
@@ -1016,44 +1020,28 @@ let CONSTANTS = {
                                "Here is everything you will KEEP when you install an Augmentation: <br><br>" +
                                "Every Augmentation you have installed<br>"  +
                                "Scripts on your home computer<br>" +
-                               "RAM Upgrades on your home computer<br>" +
+                               "RAM and CPU Core Upgrades on your home computer<br>" +
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.30.0<br>" +
+    "-Added getAugmentations() and getAugmentationsFromFaction() Netscript Singularity Functions<br>" +
+    "-Increased the rate of Intelligence exp gain<br>" +
+    "-Added a new upgrade for home computers: CPU Cores. Each CPU core on the home computer " +
+    "grants an additional starting Core Node in Hacking Missions. I may add in other benefits later. Like RAM upgrades, upgrading " +
+    "the CPU Core on your home computer persists until you enter a new BitNode.<br>" +
+    "-Added lscpu Terminal command to check number of CPU Cores<br>" +
+    "-Changed the effect of Source-File 5 and made BitNode-5 a little bit harder<br>" +
+    "-Fixed a bug with Netscript functions (the ones you create yourself)<br>" +
+    "-Hacking Missions officially released (they give reputation now). Notable changes in the last few updates:<br><br>" +
+    "---Misc Nodes slowly gain hp/defense over time<br>" +
+    "---Conquering a Misc Node will increase the defense of all remaining Misc Nodes that are not being targeted by a certain percentage<br>" +
+    "---Reputation reward for winning a Mission is now affected by faction favor and Player's faction rep multiplier<br>" +
+    "---Whenever a Node is conquered, its stats are reduced<br><br>" +
     "v0.29.3<br>" +
     "-Fixed bug for killing scripts and showing error messages when there are errors in a player-defined function<br>" +
     "-Added function name autocompletion in Script Editor. Press Ctrl+space on a prefix to show autocompletion options.<br>" +
-    "-Minor rebalancing and bug fixes for Infiltration<br><br>" +
-    "v0.29.2<br>" +
-    "-installAugmentations() Singularity Function now takes a callback script as an argument. This is a script " +
-    "that gets ran automatically after Augmentations are installed. The script is run with no arguments and only a single thread, " +
-    "and must be found on your home computer.<br>" +
-    "-Added the ability to create your own functions in Netscript. See <a href='http://bitburner.wikia.com/wiki/Netscript_Functions' target='_blank'>this link</a> for details<br>" +
-    "-Added :q, :x, and :wq Vim Ex Commands when using the Vim script editor keybindings. :w, :x, and :wq will all save the script and return to Terminal. " +
-    ":q will quit (return to Terminal) WITHOUT saving. If anyone thinks theres an issue with this please let me know, I don't use Vim<br>" +
-    "-Added a new Augmentation: ADR-V2 Pheromone Gene<br>" +
-    "-In Hacking Missions, enemy nodes will now automatically target Nodes and perform actions.<br>" +
-    "-Re-balanced Hacking Missions through minor tweaking of many numbers<br>" +
-    "-The faction reputation reward for Hacking Missions was slightly increased<br><br>" +
-    "v0.29.1<br>" +
-    "-New gameplay feature that is currently in BETA: Hacking Missions. Hacking Missions is an active gameplay mechanic (its a minigame) " +
-    "that is meant to be used to earn faction reputation. However, since this is currently in beta, hacking missions will NOT grant reputation " +
-    "for the time being, since the feature likely has many bugs, balance problems, and other issues. If you have any feedback " +
-    "regarding the new feature, feel free to let me know<br>" +
-    "-CHANGED THE RETURN VALUE OF getScriptIncome() WHEN RAN WITH NO ARGUMENTS. It will now return an array of " +
-    "two values rather than a single value. This may break your scripts, so make sure to update them!<br>" +
-    "-Added continue statement for for/while loops<br>" +
-    "-Added getServerMinSecurityLevel(), getPurchasedServers(), and getTimeSinceLastAug() Netscript functions<br>" +
-    "-Netscript scp() function can now take an array as the first argument, and will try to copy " +
-    "every file specified in the array (it will just call scp() normally for every element in the array). " +
-    "If an array is passed in, then the scp() function returns true if at least one element from the array is successfully copied<br>" +
-    "-Added Javascript's Date module to Netscript. Since 'new' is not supported in Netscript yet, only the Date module's " +
-    "static methods will work (now(), UTC(), parse(), etc.).<br>" +
-    "-Failing a crime now gives half the experience it did before<br>" +
-    "-The forced repeated 'Find The-Cave' message after installing The Red Pill Augmentation now only happens " +
-    "if you've never destroyed a BitNode before, and will only popup every 15 minutes. If you have already destroyed a BitNode, " +
-    "the message will not pop up if you have messages suppressed (if you don't have messages suppressed it WILL still repeatedly popup)<br>" +
-    "-fileExists() function now works on literature files<br><br>",
+    "-Minor rebalancing and bug fixes for Infiltration and Hacking Missions<br><br>"
 }
 
 export {CONSTANTS};

@@ -115,6 +115,11 @@ function runScriptsLoop() {
                     dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
 					console.log("ERROR: Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
                     return;
+                } else if (w.constructor === Array && w.length === 2 && w[0] === "RETURNSTATEMENT") {
+                    //Script ends with a return statement
+                    console.log("Script returning with value: " + w[1]);
+                    //TODO maybe do something with this in the future
+                    return;
                 } else if (w instanceof WorkerScript) {
                     if (isScriptErrorMessage(w.errorMessage)) {
                         var errorTextArray = w.errorMessage.split("|");

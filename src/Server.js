@@ -38,6 +38,7 @@ function Server(ip=createRandomIp(), hostname="", organizationName="",
 	this.runningScripts = 	[]; 	//Stores RunningScript objects
 	this.programs 		= 	[];
     this.messages       =   [];
+    this.dir            =   0; //new Directory(this, null, "");
 
 	/* Hacking information (only valid for "foreign" aka non-purchased servers) */
 	//Skill required to attempt a hack. Whether a hack is successful will be determined
@@ -761,6 +762,34 @@ function PrintAllServers() {
             console.log("Ip: " + ip + ", hostname: " + AllServers[ip].hostname);
         }
     }
+}
+
+// Directory object (folders)
+function Directory(server, parent, name) {
+    this.s = server; //Ref to server
+    this.p = parent; //Ref to parent directory
+    this.c = [];     //Subdirs
+    this.n = name;
+    this.d = parent.d + 1; //We'll only have a maximum depth of 3 or something
+    this.scrs   = []; //Holds references to the scripts in server.scripts
+    this.pgms   = [];
+    this.msgs   = [];
+}
+
+Directory.prototype.createSubdir = function(name) {
+    var subdir = new Directory(this.s, this, name);
+
+}
+
+Directory.prototype.getPath = function(name) {
+    var res = [];
+    var i = this;
+    while (i !== null) {
+        res.unshift(i.n, "/");
+        i = i.parent;
+    }
+    res.unshift("/");
+    return res.join("");
 }
 
 export {Server, AllServers, getServer, GetServerByHostname, loadAllServers,

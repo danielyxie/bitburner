@@ -13,6 +13,7 @@ import {Factions, Faction,
         displayFactionContent}                  from "./Faction.js";
 import {Gang, resetGangs}                       from "./Gang.js";
 import {Locations}                              from "./Location.js";
+import {hasBn11SF}                              from "./NetscriptFunctions.js";
 import {AllServers, Server, AddToAllServers}    from "./Server.js";
 import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps.js";
 import {SourceFiles, applySourceFile}           from "./SourceFile.js";
@@ -1068,9 +1069,13 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
 
 //Money gained per game cycle
 PlayerObject.prototype.getWorkMoneyGain = function() {
+    var bn11Mult = 1;
     var company = Companies[this.companyName];
+    if (hasBn11SF) {
+        bn11Mult = 1 + (company.favor / 100);
+    }
     return this.companyPosition.baseSalary * company.salaryMultiplier *
-           this.work_money_mult * BitNodeMultipliers.CompanyWorkMoney;
+           this.work_money_mult * BitNodeMultipliers.CompanyWorkMoney * bn11Mult;
 }
 
 //Hack exp gained per game cycle
@@ -1459,12 +1464,14 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     break;
                 case CONSTANTS.CrimeRobStore:
                     this.karma -= 0.5;
+                    this.gainIntelligenceExp(0.25 * CONSTANTS.IntelligenceCrimeBaseExpGain);
                     break;
                 case CONSTANTS.CrimeMug:
                     this.karma -= 0.25;
                     break;
                 case CONSTANTS.CrimeLarceny:
                     this.karma -= 1.5;
+                    this.gainIntelligenceExp(0.5 * CONSTANTS.IntelligenceCrimeBaseExpGain);
                     break;
                 case CONSTANTS.CrimeDrugs:
                     this.karma -= 0.5;

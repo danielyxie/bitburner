@@ -37,6 +37,10 @@
     font-size:12px;
     margin-top: 8px;
     text-align:center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .hack-mission-player-node {

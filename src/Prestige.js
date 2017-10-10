@@ -166,6 +166,7 @@ function prestigeSourceFile() {
     } else {
         homeComp.setMaxRam(8);
     }
+    homeComp.cpuCores = 1;
 
     AddToAllServers(homeComp);
 

@@ -79,7 +79,7 @@ function initBitNodes() {
     BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "COMING SOON");      //Trading only viable strategy
     BitNodes["BitNode9"] = new BitNode(9, "MegaCorp", "COMING SOON");                  //Single corp/server with increasing difficulty
     BitNodes["BitNode10"] = new BitNode(10, "Wasteland", "COMING SOON");               //Postapocalyptic
-    BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",             //Crashing economy
+    BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
                                             "The 2050s was defined by the massive amounts of violent civil unrest and anarchic rebellion that rose all around the world. It was this period " +
                                             "of disorder that eventually lead to the governmental reformation of many global superpowers, most notably " +
                                             "the USA and China. But just as the world was slowly beginning to recover from these dark times, financial catastrophe hit.<br><br>" +
@@ -94,12 +94,35 @@ function initBitNodes() {
                                             "Hacknet Node production is significantly decreased<br>" +
                                             "Augmentations are twice as expensive<br><br>" +
                                             "Destroying this BitNode will give you Source-File 11, or if you already have this Source-File it will " +
-                                            "upgrade its level up to a maximum of 3. This Source-File increases the player's company salary and reputation gain multipliers by:<br><br>" +
-                                            "Level 1: 60%<br>" +
-                                            "Level 2: 90%<br>" +
-                                            "Level 3: 105%");
+                                            "upgrade its level up to a maximum of 3. This Source-File makes it so that company favor increases BOTH " +
+                                            "the player's salary and reputation gain rate at that company by 1% per favor (rather than just the reputation gain). " +
+                                            "This Source-File also increases the player's company salary and reputation gain multipliers by:<br><br>" +
+                                            "Level 1: 24%<br>" +
+                                            "Level 2: 36%<br>" +
+                                            "Level 3: 42%");
 
+    //Books: Frontera, Shiner
     BitNodes["BitNode12"] = new BitNode(12, "Eye of the World", "COMING SOON");         //Become AI
+    BitNodes["BitNode13"] = new BitNode(13, "", "COMING SOON");
+    BitNodes["BitNode14"] = new BitNode(14, "", "COMING SOON");
+    BitNodes["BitNode15"] = new BitNode(15, "", "COMING SOON");
+    BitNodes["BitNode16"] = new BitNode(16, "fOS", "COMING SOON");  //Unlocks the new game mode and the rest of the BitNodes
+    BitNodes["BitNode17"] = new BitNode(17, "", "COMING SOON");
+    BitNodes["BitNode18"] = new BitNode(18, "", "COMING SOON");
+    BitNodes["BitNode19"] = new BitNode(19, "", "COMING SOON");
+    BitNodes["BitNode20"] = new BitNode(20, "", "COMING SOON");
+    BitNodes["BitNode21"] = new BitNode(21, "", "COMING SOON");
+    BitNodes["BitNode22"] = new BitNode(22, "", "COMING SOON");
+    BitNodes["BitNode23"] = new BitNode(23, "", "COMING SOON");
+    BitNodes["BitNode24"] = new BitNode(24, "", "COMING SOON");
+    BitNodes["BitNode25"] = new BitNode(25, "", "COMING SOON");
+    BitNodes["BitNode26"] = new BitNode(26, "", "COMING SOON");
+    BitNodes["BitNode27"] = new BitNode(27, "", "COMING SOON");
+    BitNodes["BitNode28"] = new BitNode(28, "", "COMING SOON");
+    BitNodes["BitNode29"] = new BitNode(29, "", "COMING SOON");
+    BitNodes["BitNode30"] = new BitNode(30, "", "COMING SOON");
+    BitNodes["BitNode31"] = new BitNode(31, "", "COMING SOON");
+    BitNodes["BitNode32"] = new BitNode(32, "", "COMING SOON");
 }
 
 let BitNodeMultipliers = {
@@ -172,7 +195,7 @@ function initBitNodeMultipliers() {
             break;
         case 11: //The Big Crash
             BitNodeMultipliers.ServerMaxMoney           = 0.1;
-            BitNodeMultipliers.ServerStartingMoney      = 0.25;
+            BitNodeMultipliers.ServerStartingMoney      = 0.1;
             BitNodeMultipliers.ServerGrowthRate         = 0.5;
             BitNodeMultipliers.ServerWeakenRate         = 2;
             BitNodeMultipliers.CompanyWorkMoney         = 0.5;
