@@ -1069,9 +1069,13 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
 
 //Money gained per game cycle
 PlayerObject.prototype.getWorkMoneyGain = function() {
+    var bn11Mult = 1;
     var company = Companies[this.companyName];
+    if (hasBn11SF) {
+        bn11Mult = 1 + (company.favor / 100);
+    }
     return this.companyPosition.baseSalary * company.salaryMultiplier *
-           this.work_money_mult * BitNodeMultipliers.CompanyWorkMoney;
+           this.work_money_mult * BitNodeMultipliers.CompanyWorkMoney * bn11Mult;
 }
 
 //Hack exp gained per game cycle

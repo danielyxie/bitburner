@@ -1155,9 +1155,13 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
 
 //Money gained per game cycle
 PlayerObject.prototype.getWorkMoneyGain = function() {
+    var bn11Mult = 1;
     var company = __WEBPACK_IMPORTED_MODULE_2__Company_js__["a" /* Companies */][this.companyName];
+    if (__WEBPACK_IMPORTED_MODULE_10__NetscriptFunctions_js__["b" /* hasBn11SF */]) {
+        bn11Mult = 1 + (company.favor / 100);
+    }
     return this.companyPosition.baseSalary * company.salaryMultiplier *
-           this.work_money_mult * __WEBPACK_IMPORTED_MODULE_1__BitNode_js__["a" /* BitNodeMultipliers */].CompanyWorkMoney;
+           this.work_money_mult * __WEBPACK_IMPORTED_MODULE_1__BitNode_js__["a" /* BitNodeMultipliers */].CompanyWorkMoney * bn11Mult;
 }
 
 //Hack exp gained per game cycle
@@ -4898,7 +4902,7 @@ let Engine = {
                 Object(__WEBPACK_IMPORTED_MODULE_31__StockMarket_js__["f" /* initSymbolToStockMap */])();
             }
             Object(__WEBPACK_IMPORTED_MODULE_17__Literature_js__["a" /* initLiterature */])();
-            Object(__WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__["c" /* initSingularitySFFlags */])();
+            Object(__WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__["d" /* initSingularitySFFlags */])();
 
             console.log(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].intelligence_exp);
 
@@ -4983,7 +4987,7 @@ let Engine = {
             Object(__WEBPACK_IMPORTED_MODULE_18__Message_js__["d" /* initMessages */])();
             Object(__WEBPACK_IMPORTED_MODULE_31__StockMarket_js__["e" /* initStockSymbols */])();
             Object(__WEBPACK_IMPORTED_MODULE_17__Literature_js__["a" /* initLiterature */])();
-            Object(__WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__["c" /* initSingularitySFFlags */])();
+            Object(__WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__["d" /* initSingularitySFFlags */])();
 
             //Open main menu accordions for new game
             //Main menu accordions
@@ -5110,7 +5114,7 @@ let Engine = {
 
         Engine.Clickables.tutorialNetscriptButton = document.getElementById("tutorial-netscript-link");
         Engine.Clickables.tutorialNetscriptButton.addEventListener("click", function() {
-            if (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].bitNodeN === 4 || __WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__["b" /* hasSingularitySF */]) {
+            if (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].bitNodeN === 4 || __WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__["c" /* hasSingularitySF */]) {
                 Engine.displayTutorialPage(__WEBPACK_IMPORTED_MODULE_10__Constants_js__["a" /* CONSTANTS */].TutorialNetscriptText + __WEBPACK_IMPORTED_MODULE_10__Constants_js__["a" /* CONSTANTS */].TutorialSingularityFunctionsText);
             } else {
                 Engine.displayTutorialPage(__WEBPACK_IMPORTED_MODULE_10__Constants_js__["a" /* CONSTANTS */].TutorialNetscriptText);
@@ -26196,9 +26200,9 @@ let Terminal = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NetscriptFunctions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSingularitySFFlags; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasSingularitySF; });
-/* unused harmony export hasBn11SF */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initSingularitySFFlags; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasSingularitySF; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasBn11SF; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BitNode_js__ = __webpack_require__(9);
@@ -38358,7 +38362,7 @@ function prestigeSourceFile() {
     __WEBPACK_IMPORTED_MODULE_5__engine_js__["Engine"].loadTerminalContent();
 
     //Reinitialize flags in case you just finished BN-4
-    Object(__WEBPACK_IMPORTED_MODULE_9__NetscriptFunctions_js__["c" /* initSingularitySFFlags */])();
+    Object(__WEBPACK_IMPORTED_MODULE_9__NetscriptFunctions_js__["d" /* initSingularitySFFlags */])();
 
     //Gain int exp
     __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].gainIntelligenceExp(5);
