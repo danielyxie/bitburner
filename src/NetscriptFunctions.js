@@ -1,3 +1,6 @@
+var sprintf = require('sprintf-js').sprintf,
+    vsprintf = require('sprintf-js').vsprintf
+
 import {updateActiveScriptsItems}                   from "./ActiveScriptsUI.js";
 import {Augmentations, Augmentation,
         augmentationExists, installAugmentations,
@@ -73,6 +76,8 @@ function NetscriptFunctions(workerScript) {
         Math : Math,
         Date : Date,
         hacknetnodes : Player.hacknetNodes,
+        sprintf : sprintf,
+        vsprintf: vsprintf,
         scan : function(ip=workerScript.serverIp, hostnames=true){
             var server = getServer(ip);
             if (server == null) {

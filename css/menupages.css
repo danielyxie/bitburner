@@ -35,9 +35,6 @@
     font-family: 'Lucida Console', 'Lucida Sans Unicode', 'Fira Mono', 'Consolas', 'Courier New', Courier, monospace, 'Times New Roman';
 }
 
-#javascript-editor textarea {
-}
-
 .ace_line,
 .ace_line * {
     background-color:transparent;
@@ -628,8 +625,6 @@ div.faction-clear {
     position: fixed;
     padding: 6px;
 }
-
-
 
 .gang-member-header {
     background-color: #444;

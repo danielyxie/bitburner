@@ -1046,12 +1046,19 @@ let CONSTANTS = {
     "no longer have trouble saving the game when your save file gets too big (from running " +
     "too many scripts). " +
     "The game will still be saved to localStorage as well<br>" +
+    "-New file type: text files (.txt). You can read or write to text files using the read()/write() Netscript commands. " +
+    "You can view text files in Terminal using 'cat'. Eventually I will make it so you can edit them in the editor " +
+    "but that's not available yet. You can also download files to your real computer using the 'download' Terminal command<br>" +
     "-Added a new Crime: Bond Forgery. This crime takes 5 minutes to attempt " +
     "and gives $4,500,000 if successful. It is meant for mid game.<br>" +
     "-Added commitCrime() and getStats() Singularity Functions.<br>" +
     "-Removed getIntelligence() Netscript function<br>" +
-    "-Increased the amount of money gained from infiltration by 20%, and the amount of faction reputation by 12%<br>" +
-    "-Crime and Infiltration are now more lucrative in BitNodes 11 and 2<br>",
+    "-Added sprintf and vsprintf to Netscript. See <a href='https://github.com/alexei/sprintf.js' target='_blank'>this Github page for details</a><br>" +
+    "-Increased the amount of money gained from Infiltration by 20%, and the amount of faction reputation by 12%<br>" +
+    "-Rebalanced BitNode-2 so that Crime and Infiltration are more profitable but hacking is less profitable. Infiltration also gives more faction rep<br>" +
+    "-Rebalanced BitNode-4 so that hacking is slightly less profitable<br>" +
+    "-Rebalanced BitNode-5 so that Infiltration is more profitable and gives more faction rep<br>" +
+    "-Rebalanced BitNode-11 so that Crime and Infiltration are more profitable. Infiltration also gives more faction rep.<br>"
 }
 
 export {CONSTANTS};

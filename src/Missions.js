@@ -696,12 +696,12 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
     var txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
-            txt = "<p>CPU Core<br>" + "HP: " +
+            txt = "CPU Core<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-cpu-node");
             break;
         case NodeTypes.Firewall:
-            txt = "<p>Firewall<br>" + "HP: " +
+            txt = "Firewall<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-firewall-node");
             break;
@@ -711,7 +711,7 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
             nodeDiv.classList.add("hack-mission-database-node");
             break;
         case NodeTypes.Spam:
-            txt = "<p>Spam<br>" + "HP: " +
+            txt = "Spam<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-spam-node");
             break;
@@ -722,14 +722,14 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
             break;
         case NodeTypes.Shield:
         default:
-            txt = "<p>Shield<br>" + "HP: " +
+            txt = "<br>Shield<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-shield-node");
             break;
     }
 
     txt += "<br>Atk: " + formatNumber(nodeObj.atk, 1) +
-           "<br>Def: " + formatNumber(nodeObj.def, 1) + "</p>";
+           "<br>Def: " + formatNumber(nodeObj.def, 1);
     nodeDiv.innerHTML = txt;
 }
 
@@ -747,11 +747,11 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
     var txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
-            txt = "<p>CPU Core<br>" + "HP: " +
+            txt = "CPU Core<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Firewall:
-            txt = "<p>Firewall<br>" + "HP: " +
+            txt = "Firewall<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Database:
@@ -759,7 +759,7 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Spam:
-            txt = "<p>Spam<br>" + "HP: " +
+            txt = "Spam<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Transfer:
@@ -768,7 +768,7 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
             break;
         case NodeTypes.Shield:
         default:
-            txt = "<p>Shield<br>" + "HP: " +
+            txt = "<br>Shield<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
     }
@@ -778,7 +778,7 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
     if (nodeObj.action) {
         txt += "<br>" + nodeObj.action;
     }
-    txt += "</p>";
+    //txt += "</p>";
     nodeDiv.innerHTML = txt;
 }
 

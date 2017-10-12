@@ -44,7 +44,7 @@ function dialogBoxCreate(txt) {
     closeButton.innerHTML = "&times;"
 
     var textE = document.createElement("p");
-    textE.innerHTML = txt;
+    textE.innerHTML = txt.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
     content.appendChild(closeButton);
     content.appendChild(textE);

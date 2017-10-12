@@ -402,6 +402,7 @@ function displayStockMarketContent() {
         return;
     }
 
+    //Create stock market content if you have an account
     if (!stockMarketContentCreated && Player.hasWseAccount) {
         console.log("Creating Stock Market UI");
         document.getElementById("stock-market-commission").innerHTML =

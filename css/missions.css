@@ -24,18 +24,13 @@
 }
 
 .hack-mission-node {
-    color:gray;
     z-index:5;
     background-color:gray;
     align-self: center;
     justify-self: center;
     display:inline-block;
-}
-
-.hack-mission-node p {
     color:white;
     font-size:12px;
-    margin-top: 8px;
     text-align:center;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -50,12 +45,11 @@
 
 .hack-mission-player-node-active {
     border: 2px solid white;
-    color: #6666ff;
     background-color: #6666ff;
 }
 
 .hack-mission-enemy-node {
-    color:red;
+    color:white;
     background-color:red;
 }
 
@@ -84,10 +78,39 @@
     -webkit-transform: skew(-20deg);
 	-moz-transform: skew(-20deg);
 	-o-transform: skew(-20deg);
+    color:white;
+    font-size:12px;
+    margin-top: 8px;
+    text-align:center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.hack-mission-transfer-node {
+    width: 100%;
+	height: 90%;
+	-webkit-transform: skew(-20deg);
+	-moz-transform: skew(-20deg);
+	-o-transform: skew(-20deg);
+}
+
+.hack-mission-transfer-node p {
+    -webkit-transform: skew(20deg);
+	-moz-transform: skew(20deg);
+	-o-transform: skew(20deg);
+    color:white;
+    font-size:12px;
+    margin-top: 8px;
+    text-align:center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .hack-mission-spam-node,
-.hack-mission-transfer-node,
 .hack-mission-shield-node {
     height:100%;
     width: 100%;
