@@ -58,7 +58,7 @@ let CONSTANTS = {
     ScriptKillRamCost:              0.5, //Kill and killall
     ScriptHasRootAccessRamCost:     0.05,
     ScriptGetHostnameRamCost:       0.05, //getHostname() and getIp()
-    ScriptGetHackingLevelRamCost:   0.05, //getHackingLevel() and getIntelligence()
+    ScriptGetHackingLevelRamCost:   0.05, //getHackingLevel()
     ScriptGetMultipliersRamCost:    4.0, //getHackingMultipliers() and getBitNodeMultipliers()
     ScriptGetServerCost:            0.1,
     ScriptFileExistsRamCost:        0.1,
@@ -101,8 +101,9 @@ let CONSTANTS = {
     TorRouterCost: 200000,
 
     //Infiltration constants
-    InfiltrationBribeBaseAmount: 100000, //Amount per clearance level
-    InfiltrationMoneyValue:   2000,    //Convert "secret" value to money
+    InfiltrationBribeBaseAmount: 100000,    //Amount per clearance level
+    InfiltrationMoneyValue:   2500,         //Convert "secret" value to money
+    InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
 
     //Stock market constants
     WSEAccountCost:         200000000,
@@ -238,11 +239,13 @@ let CONSTANTS = {
     ClassLeadershipBaseCost: 320,
     ClassGymBaseCost: 120,
 
+    CrimeSingFnDivider: 2, //Factor by which exp/profit is reduced when commiting crime through Sing Fn
     CrimeShoplift: "shoplift",
     CrimeRobStore: "rob a store",
     CrimeMug: "mug someone",
     CrimeLarceny: "commit larceny",
     CrimeDrugs: "deal drugs",
+    CrimeBondForgery: "forge corporate bonds",
     CrimeTraffickArms: "traffick illegal arms",
     CrimeHomicide: "commit homicide",
     CrimeGrandTheftAuto: "commit grand theft auto",
@@ -539,7 +542,6 @@ let CONSTANTS = {
                            "<i>getIp()</i><br>Returns a string with the IP Address of the server that the script is running on <br><br>" +
                            "<i>getHostname()</i><br>Returns a string with the hostname of the server that the script is running on<br><br>" +
                            "<i>getHackingLevel()</i><br>Returns the Player's current hacking level.<br><br> " +
-                           "<i>getIntelligence()</i><br>Returns the Player's current intelligence level. Requires Source-File 5 to run<br><br>" +
                            "<i>getHackingMultipliers()</i><br>Returns an object containing the Player's hacking related multipliers. " +
                            "These multipliers are returned in integer forms, not percentages (e.g. 1.5 instead of 150%). " +
                            "The object has the following structure:<br><br>" +
@@ -844,6 +846,11 @@ let CONSTANTS = {
                                         "The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web (using " +
                                         "the buy Terminal command).<br><br>" +
                                         "This function will return true if the specified program is purchased, and false otherwise.<br><br>" +
+                                        "<i>getStats()</i><br>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this " +
+                                        "function.<br><br>Returns an object with the Player's stats. The object has the following properties:<br><br>" +
+                                        "Player.hacking<br>Player.strength<br>Player.defense<br>Player.dexterity<br>Player.agility<br>Player.charisma<br>Player.intelligence<br><br>" +
+                                        "Example: <br><br>" +
+                                        "res = getStats();<br>print('My charisma level is: ' + res.charisma);<br><br>" +
                                         "<i>upgradeHomeRam()</i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will upgrade amount of RAM on the player's home computer. The cost is the same as if you were to do it manually.<br><br>" +
@@ -905,6 +912,16 @@ let CONSTANTS = {
                                         "BruteSSH.exe: 50<br>FTPCrack.exe: 100<br>relaySMTP.exe: 250<br>HTTPWorm.exe: 500<br>SQLInject.exe: 750<br>" +
                                         "DeepscanV1.exe: 75<br>DeepscanV2.exe: 400<br>ServerProfiler.exe: 75<br>AutoLink.exe: 25<br><br>" +
                                         "This function returns true if you successfully start working on the specified program, and false otherwise.<br><br>" +
+                                        "<i>getOwnedAugmentations(purchased=false)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function returns an array of the names of all Augmentations you own as strings. It takes a single optional " +
+                                        "boolean argument that specifies whether the returned array should include Augmentations you have purchased " +
+                                        "but not yet installed. If it is true, then the returned array will include these Augmentations. By default, " +
+                                        "this argument is false.<br><br>" +
+                                        "<i>getAugmentationsFromFaction(facName)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
+                                        "Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction. " +
+                                        "The argument must be a string with the faction's name. This argument is case-sensitive.<br><br>" +
                                         "<i>getAugmentationCost(augName)</i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function returns an array with two elements that gives the cost for the specified Augmentation" +
@@ -1024,24 +1041,17 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.30.0<br>" +
-    "-Added getAugmentations() and getAugmentationsFromFaction() Netscript Singularity Functions<br>" +
-    "-Increased the rate of Intelligence exp gain<br>" +
-    "-Added a new upgrade for home computers: CPU Cores. Each CPU core on the home computer " +
-    "grants an additional starting Core Node in Hacking Missions. I may add in other benefits later. Like RAM upgrades, upgrading " +
-    "the CPU Core on your home computer persists until you enter a new BitNode.<br>" +
-    "-Added lscpu Terminal command to check number of CPU Cores<br>" +
-    "-Changed the effect of Source-File 5 and made BitNode-5 a little bit harder<br>" +
-    "-Fixed a bug with Netscript functions (the ones you create yourself)<br>" +
-    "-Hacking Missions officially released (they give reputation now). Notable changes in the last few updates:<br><br>" +
-    "---Misc Nodes slowly gain hp/defense over time<br>" +
-    "---Conquering a Misc Node will increase the defense of all remaining Misc Nodes that are not being targeted by a certain percentage<br>" +
-    "---Reputation reward for winning a Mission is now affected by faction favor and Player's faction rep multiplier<br>" +
-    "---Whenever a Node is conquered, its stats are reduced<br><br>" +
-    "v0.29.3<br>" +
-    "-Fixed bug for killing scripts and showing error messages when there are errors in a player-defined function<br>" +
-    "-Added function name autocompletion in Script Editor. Press Ctrl+space on a prefix to show autocompletion options.<br>" +
-    "-Minor rebalancing and bug fixes for Infiltration and Hacking Missions<br><br>"
+    "v0.31.0<br>" +
+    "-Game now saves to IndexedDb (if your browser supports it). This means you should " +
+    "no longer have trouble saving the game when your save file gets too big (from running " +
+    "too many scripts). " +
+    "The game will still be saved to localStorage as well<br>" +
+    "-Added a new Crime: Bond Forgery. This crime takes 5 minutes to attempt " +
+    "and gives $4,500,000 if successful. It is meant for mid game.<br>" +
+    "-Added commitCrime() Singularity Function.<br>" +
+    "-Increased the amount of money gained from infiltration by 20%, and the amount of faction reputation by 12%<br>" +
+    "-Crime and Infiltration are now more lucrative in BitNodes 11 and 2<br>" +
+    "-Added getStats() Singularity function. Removed getIntelligence() Netscript function.<br>",
 }
 
 export {CONSTANTS};

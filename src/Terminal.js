@@ -25,6 +25,8 @@ import {AllServers, GetServerByHostname,
         getServer, Server}                  from "./Server.js";
 import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps.js";
+import {TextFile, getTextFile,
+        createTextFile}                     from "./TextFile.js";
 
 import {containsAllStrings, longestCommonStart,
         formatNumber, isString}             from "../utils/StringHelperFunctions.js";
@@ -295,7 +297,7 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
 
     //Autocomplete the command
     if (index == -1) {
-        return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "free",
+        return ["alias", "analyze", "cat", "check", "clear", "cls", "connect", "download", "free",
                 "hack", "help", "home", "hostname", "ifconfig", "kill", "killall",
                 "ls", "lscpu", "mem", "nano", "ps", "rm", "run", "scan", "scan-analyze",
                 "scp", "sudov", "tail", "theme", "top"].concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
@@ -362,6 +364,9 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
                 allPos.push(currServ.messages[i]);
             }
         }
+        for (var i = 0; i < currServ.textFiles.length; ++i) {
+            allPos.push(currServ.textFiles[i].fn);
+        }
         return allPos;
     }
 
@@ -386,9 +391,17 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
             } else {
                 allPos.push(currServ.messages[i]);
             }
-
+        }
+        for (var i = 0; i < currServ.textFiles.length; ++i) {
+            allPos.push(currServ.textFiles[i].fn);
         }
         return allPos;
+    }
+
+    if (input.startsWith("download ")) {
+        for (var i = 0; i < currServ.textFiles.length; ++i) {
+            allPos.push(currServ.textFiles[i].fn);
+        }
     }
     return allPos;
 }
@@ -739,9 +752,8 @@ let Terminal = {
                     post("Incorrect usage of cat command. Usage: cat [file]"); return;
                 }
                 var filename = commandArray[1];
-                //Can only edit script files
-				if (!filename.endsWith(".msg") && !filename.endsWith(".lit")) {
-					post("Error: Only .msg and .lit files are viewable with cat (filename must end with .msg or .lit)"); return;
+				if (!filename.endsWith(".msg") && !filename.endsWith(".lit") && !filename.endsWith(".txt")) {
+					post("Error: Only .msg, .txt, and .lit files are viewable with cat (filename must end with .msg, .txt, or .lit)"); return;
 				}
                 for (var i = 0; i < s.messages.length; ++i) {
                     if (filename.endsWith(".lit") && s.messages[i] == filename) {
@@ -749,6 +761,12 @@ let Terminal = {
                         return;
                     } else if (filename.endsWith(".msg") && s.messages[i].filename == filename) {
                         showMessage(s.messages[i]);
+                        return;
+                    }
+                }
+                for (var i = 0; i < s.textFiles.length; ++i) {
+                    if (s.textFiles[i].fn === filename) {
+                        s.textFiles[i].show();
                         return;
                     }
                 }
@@ -805,6 +823,19 @@ let Terminal = {
 
                 post("Host not found");
 				break;
+            case "download":
+                if (commandArray.length != 2) {
+                    post("Incorrect usage of download command. Usage: download [text file]");
+                    return;
+                }
+                var fn = commandArray[1];
+                var txtFile = getTextFile(fn, s);
+                if (txtFile !== null) {
+                    txtFile.download();
+                } else {
+                    post("Error: " + fn + " does not exist");
+                }
+                break;
 			case "free":
 				Terminal.executeFreeCommand(commandArray);
 				break;
@@ -978,38 +1009,45 @@ let Terminal = {
 
                 //Check programs
                 var delTarget = commandArray[1];
-                for (var i = 0; i < s.programs.length; ++i) {
-                    if (s.programs[i] == delTarget) {
-                       s.programs.splice(i, 1);
-                       return;
-                    }
-                }
 
-                //Check scripts
-                for (var i = 0; i < s.scripts.length; ++i) {
-                    if (s.scripts[i].filename == delTarget) {
-                        //Check that the script isnt currently running
-                        for (var j = 0; j < s.runningScripts.length; ++j) {
-                            if (s.runningScripts[j].filename == delTarget) {
-                                post("Cannot delete a script that is currently running!");
-                                return;
-                            }
+                if (delTarget.endsWith(".exe")) {
+                    for (var i = 0; i < s.programs.length; ++i) {
+                        if (s.programs[i] == delTarget) {
+                           s.programs.splice(i, 1);
+                           return;
                         }
-                        s.scripts.splice(i, 1);
-                        return;
+                    }
+                } else if (delTarget.endsWith(".script")) {
+                    for (var i = 0; i < s.scripts.length; ++i) {
+                        if (s.scripts[i].filename == delTarget) {
+                            //Check that the script isnt currently running
+                            for (var j = 0; j < s.runningScripts.length; ++j) {
+                                if (s.runningScripts[j].filename == delTarget) {
+                                    post("Cannot delete a script that is currently running!");
+                                    return;
+                                }
+                            }
+                            s.scripts.splice(i, 1);
+                            return;
+                        }
+                    }
+                } else if (delTarget.endsWith(".lit")) {
+                    for (var i = 0; i < s.messages.length; ++i) {
+                        var f = s.messages[i];
+                        if (!(f instanceof Message) && isString(f) && f === delTarget) {
+                            s.messages.splice(i, 1);
+                            return;
+                        }
+                    }
+                } else if (delTarget.endsWith(".txt")) {
+                    for (var i = 0; i < s.textFiles.length; ++i) {
+                        if (s.textFiles[i].fn === delTarget) {
+                            s.textFiles.splice(i, 1);
+                            return;
+                        }
                     }
                 }
-
-                //Check literature files
-                for (var i = 0; i < s.messages.length; ++i) {
-                    var f = s.messages[i];
-                    if (!(f instanceof Message) && isString(f) && f === delTarget) {
-                        s.messages.splice(i, 1);
-                        return;
-                    }
-                }
-
-                post("No such file exists");
+                post("Error: No such file exists");
 				break;
 			case "run":
 				//Run a program or a script
@@ -1344,6 +1382,15 @@ let Terminal = {
                 } else {
                     allFiles.push(s.messages[i]);
                 }
+            }
+        }
+        for (var i = 0; i < s.textFiles.length; ++i) {
+            if (filter) {
+                if (s.textFiles[i].fn.includes(filter)) {
+                    allFiles.push(s.textFiles[i].fn);
+                }
+            } else {
+                allFiles.push(s.textFiles[i].fn);
             }
         }
 

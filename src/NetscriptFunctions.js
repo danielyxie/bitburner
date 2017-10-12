@@ -3,6 +3,11 @@ import {Augmentations, Augmentation,
         augmentationExists, installAugmentations,
         AugmentationNames}                          from "./Augmentations.js";
 import {BitNodeMultipliers}                         from "./BitNode.js";
+import {commitShopliftCrime, commitRobStoreCrime, commitMugCrime,
+        commitLarcenyCrime, commitDealDrugsCrime, commitBondForgeryCrime,
+        commitTraffickArmsCrime,
+        commitHomicideCrime, commitGrandTheftAutoCrime, commitKidnapCrime,
+        commitAssassinationCrime, commitHeistCrime} from "./Crimes.js";
 import {Companies, Company, CompanyPosition,
         CompanyPositions, companyExists}            from "./Company.js";
 import {CONSTANTS}                                  from "./Constants.js";
@@ -28,6 +33,7 @@ import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         updateStockTicker, updateStockPlayerPosition,
         Stock}                                      from "./StockMarket.js";
 import {post}                                       from "./Terminal.js";
+import {TextFile, getTextFile, createTextFile}      from "./TextFile.js";
 
 import {WorkerScript, workerScripts,
         killWorkerScript, NetscriptPorts}           from "./NetscriptWorker.js";
@@ -662,14 +668,6 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
             return Player.hacking_skill;
         },
-        getIntelligence : function () {
-            if (!hasAISF) {
-                throw makeRuntimeRejectMsg(workerScript, "Cannot run getIntelligence(). It requires Source-File 5 to run.");
-            }
-            Player.updateSkillLevels();
-            workerScript.scriptRef.log("getHackingLevel() returned " + Player.intelligence);
-            return Player.intelligence;
-        },
         getHackingMultipliers : function() {
             return {
                 chance: Player.hacking_chance_mult,
@@ -1026,8 +1024,8 @@ function NetscriptFunctions(workerScript) {
             if (isNaN(n)) {return 0;}
             return Math.round(n);
         },
-        write : function(port, data="") {
-            if (!isNaN(port)) {
+        write : function(port, data="", mode="a") {
+            if (!isNaN(port)) { //Write to port
                 //Port 1-10
                 if (port < 1 || port > 10) {
                     throw makeRuntimeRejectMsg(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
@@ -1043,12 +1041,29 @@ function NetscriptFunctions(workerScript) {
                     return true;
                 }
                 return false;
+            } else if (isString(port)) { //Write to text file
+                var fn = port;
+                var server = getServer(workerScript.serverIp);
+                if (server === null) {
+                    throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in write(). This is a bug please contact game dev");
+                }
+                var txtFile = getTextFile(fn, server);
+                if (txtFile === null) {
+                    txtFile = createTextFile(fn, data, server);
+                    return true;
+                }
+                if (mode === "w") {
+                    txtFile.write(data);
+                } else {
+                    txtFile.append(data);
+                }
+                return true;
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for port: " + port + ". Must be a number between 1 and 10");
             }
         },
         read : function(port) {
-            if (!isNaN(port)) {
+            if (!isNaN(port)) { //Read from port
                 //Port 1-10
                 if (port < 1 || port > 10) {
                     throw makeRuntimeRejectMsg(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
@@ -1062,6 +1077,18 @@ function NetscriptFunctions(workerScript) {
                     return "NULL PORT DATA";
                 } else {
                     return port.shift();
+                }
+            } else if (isString(port)) { //Read from text file
+                var fn = port;
+                var server = getServer(workerScript.serverIp);
+                if (server === null) {
+                    throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in read(). This is a bug please contact game dev");
+                }
+                var txtFile = getTextFile(fn, server);
+                if (txtFile !== null) {
+                    return txtFile.text;
+                } else {
+                    return "";
                 }
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for port: " + port + ". Must be a number between 1 and 10");
@@ -1513,6 +1540,24 @@ function NetscriptFunctions(workerScript) {
             }
             return true;
         },
+        getStats : function() {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getStats(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return {};
+                }
+            }
+
+            return {
+                hacking:        Player.hacking_skill,
+                strength:       Player.strength,
+                defense:        Player.defense,
+                dexterity:      Player.dexterity,
+                agility:        Player.agility,
+                charisma:       Player.charisma,
+                intelligence:   Player.intelligence
+            }
+        },
         upgradeHomeRam() {
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
@@ -1898,6 +1943,60 @@ function NetscriptFunctions(workerScript) {
             }
             workerScript.scriptRef.log("Began creating program: " + name);
             return true;
+        },
+        commitCrime(crime) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run commitCrime(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return;
+                }
+            }
+
+            if (Player.isWorking) {
+                var txt = Player.singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+
+            crime = crime.toLowerCase();
+            if (crime.includes("shoplift")) {
+                workerScript.scriptRef.log("Attempting to shoplift...");
+                commitShopliftCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("rob") && crime.includes("store")) {
+                workerScript.scriptRef.log("Attempting to rob a store...");
+                commitRobStoreCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("mug")) {
+                workerScript.scriptRef.log("Attempting to mug someone...");
+                commitMugCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("larceny")) {
+                workerScript.scriptRef.log("Attempting to commit larceny...");
+                commitLarcenyCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("drugs")) {
+                workerScript.scriptRef.log("Attempting to deal drugs...");
+                commitDealDrugsCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("bond") && crime.includes("forge")) {
+                workerScript.scriptRef.log("Attempting to forge corporate bonds...");
+                commitBondForgeryCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("traffick") && crime.includes("arms")) {
+                workerScript.scriptRef.log("Attempting to traffick illegal arms...");
+                commitTraffickArmsCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("homicide")) {
+                workerScript.scriptRef.log("Attempting to commit homicide...");
+                commitHomicideCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("grand") && crime.includes("auto")) {
+                workerScript.scriptRef.log("Attempting to commit grand theft auto...");
+                commitGrandTheftAutoCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("kidnap")) {
+                workerScript.scriptRef.log("Attempting to kidnap and ransom a high-profile target...");
+                commitKidnapCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("assassinate")) {
+                workerScript.scriptRef.log("Attempting to assassinate a high-profile target...");
+                commitAssassinationCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript})
+            } else if (crime.includes("heist")) {
+                workerScript.scriptRef.log("Attempting to pull off a heist...");
+                commitHeistCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into commitCrime(): " + crime);
+            }
         },
         getOwnedAugmentations(purchased=false) {
             if (Player.bitNodeN != 4) {

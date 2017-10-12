@@ -97,16 +97,20 @@ function evaluate(exp, workerScript) {
 
                             //Create a new WorkerScript for this function evaluation
                             var funcWorkerScript = new WorkerScript(workerScript.scriptRef);
+                            funcWorkerScript.serverIp = workerScript.serverIp;
                             funcWorkerScript.env = funcEnv;
+                            workerScript.fnWorker = funcWorkerScript;
 
                             evaluate(func.body, funcWorkerScript).then(function(res) {
                                 //If the function finished successfuly, that means there
                                 //was no return statement since a return statement rejects. So resolve to null
                                 resolve(null);
+                                workerScript.fnWorker = null;
                             }).catch(function(e) {
                                 if (e.constructor === Array && e.length === 2 && e[0] === "RETURNSTATEMENT") {
                                     //Return statement from function
                                     resolve(e[1]);
+                                    workerScript.fnWorker = null;
                                 } else if (isString(e)) {
                                     reject(makeRuntimeRejectMsg(workerScript, e));
                                 } else if (e instanceof WorkerScript) {
@@ -117,7 +121,11 @@ function evaluate(exp, workerScript) {
                                         errorMsg = errorTextArray[3];
                                         reject(makeRuntimeRejectMsg(workerScript, errorMsg));
                                     } else {
-                                        reject(makeRuntimeRejectMsg(workerScript, "Error in one of your functions. Could not identify which function"));
+                                        if (env.stopFlag) {
+                                            reject(workerScript);
+                                        } else {
+                                            reject(makeRuntimeRejectMsg(workerScript, "Error in one of your functions. Could not identify which function"));
+                                        }
                                     }
                                 } else if (e instanceof Error) {
                                     reject(makeRuntimeRejectMsg(workerScript, e.toString()));

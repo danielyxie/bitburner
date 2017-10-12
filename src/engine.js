@@ -896,7 +896,7 @@ let Engine = {
     //is necessary and then resets the counter
     checkCounters: function() {
         if (Engine.Counters.autoSaveCounter <= 0) {
-            saveObject.saveGame();
+            saveObject.saveGame(indexedDb);
             Engine.Counters.autoSaveCounter = 300;
         }
 
@@ -1112,7 +1112,7 @@ let Engine = {
         }
     },
 
-    load: function() {
+    load: function(saveString) {
         //Initialize main menu accordion panels to all start as "open"
         var terminal            = document.getElementById("terminal-tab");
         var createScript        = document.getElementById("create-script-tab");
@@ -1129,7 +1129,7 @@ let Engine = {
         var options             = document.getElementById("options-tab");
 
         //Load game from save or create new game
-        if (loadGame(saveObject)) {
+        if (loadGame(saveString)) {
             console.log("Loaded game from save");
             initBitNodes();
             initBitNodeMultipliers();
@@ -1579,13 +1579,13 @@ let Engine = {
         //Save, Delete, Import/Export buttons
         Engine.Clickables.saveMainMenuButton = document.getElementById("save-game-link");
         Engine.Clickables.saveMainMenuButton.addEventListener("click", function() {
-            saveObject.saveGame();
+            saveObject.saveGame(indexedDb);
             return false;
         });
 
         Engine.Clickables.deleteMainMenuButton = document.getElementById("delete-game-link");
         Engine.Clickables.deleteMainMenuButton.addEventListener("click", function() {
-            saveObject.deleteGame();
+            saveObject.deleteGame(indexedDb);
             return false;
         });
 
@@ -1596,7 +1596,7 @@ let Engine = {
 
         //Character Overview buttons
         document.getElementById("character-overview-save-button").addEventListener("click", function() {
-            saveObject.saveGame();
+            saveObject.saveGame(indexedDb);
             return false;
         });
 
@@ -1672,8 +1672,42 @@ let Engine = {
     }
 };
 
+var indexedDb, indexedDbRequest;
 window.onload = function() {
-    Engine.load();
+    if (!window.indexedDB) {
+        return Engine.load(null); //Will try to load from localstorage
+    }
+
+    //DB is called bitburnerSave
+    //Object store is called savestring
+    //key for the Object store is called save
+    indexedDbRequest = window.indexedDB.open("bitburnerSave", 1);
+
+    indexedDbRequest.onerror = function(e) {
+        console.log("Error opening indexedDB: " + e);
+        return Engine.load(null); //Try to load from localstorage
+    };
+
+    indexedDbRequest.onsuccess = function(e) {
+        console.log("Opening bitburnerSave database successful!");
+        indexedDb = e.target.result;
+        var transaction = indexedDb.transaction(["savestring"]);
+        var objectStore = transaction.objectStore("savestring");
+        var request = objectStore.get("save");
+        request.onerror = function(e) {
+            console.log("Error in Database request to get savestring: " + e);
+            return Engine.load(null); //Try to load from localstorage
+        }
+
+        request.onsuccess = function(e) {
+            Engine.load(request.result); //Is this right?
+        }
+    };
+
+    indexedDbRequest.onupgradeneeded = function(e) {
+        var db = event.target.result;
+        var objectStore = db.createObjectStore("savestring");
+    }
 };
 
 export {Engine};

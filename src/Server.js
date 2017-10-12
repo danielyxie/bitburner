@@ -32,12 +32,13 @@ function Server(ip=createRandomIp(), hostname="", organizationName="",
 	//RAM, CPU speed and Scripts
 	this.maxRam			=	maxRam;  //GB
 	this.ramUsed		=	0;
-	this.cpuCores		= 	1;       //Max of 8, affects hacking times and Hacking MIssion starting Cores
+	this.cpuCores		= 	1;       //Max of 8, affects hacking times and Hacking Mission starting Cores
 
 	this.scripts 		= 	[];
 	this.runningScripts = 	[]; 	//Stores RunningScript objects
 	this.programs 		= 	[];
     this.messages       =   [];
+    this.textFiles      =   [];
     this.dir            =   0; //new Directory(this, null, "");
 
 	/* Hacking information (only valid for "foreign" aka non-purchased servers) */
@@ -54,7 +55,6 @@ function Server(ip=createRandomIp(), hostname="", organizationName="",
     this.baseDifficulty         = 1;    //Starting difficulty
     this.minDifficulty          = 1;
 	this.serverGrowth			= 0;	//Affects how the moneyAvailable increases (0-100)
-	this.timesHacked 			= 0;
 
 	//The IP's of all servers reachable from this one (what shows up if you run scan/netstat)
     //  NOTE: Only contains IP and not the Server objects themselves

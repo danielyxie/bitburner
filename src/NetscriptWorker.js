@@ -25,6 +25,7 @@ function WorkerScript(runningScriptObj) {
     this.errorMessage   = "";
     this.args           = runningScriptObj.args;
     this.killTrigger    = function() {}; //CB func used to clear any delays (netscriptDelay())
+    this.fnWorker       = null; //Workerscript for a function call
 }
 
 //Returns the server on which the workerScript is running
@@ -165,6 +166,10 @@ function killWorkerScript(runningScriptObj, serverIp) {
             compareArrays(workerScripts[i].args, runningScriptObj.args)) {
 			workerScripts[i].env.stopFlag = true;
             workerScripts[i].killTrigger();
+            if (workerScripts[i].fnWorker) {
+                workerScripts[i].fnWorker.env.stopFlag = true;
+                workerScripts[i].fnWorker.killTrigger();
+            }
             return true;
 		}
 	}

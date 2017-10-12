@@ -28,7 +28,7 @@ function initBitNodes() {
                             "people quickly succumbed to the innate human impulse of evil and savagery. The organized crime " +
                             "factions quickly rose to the top of the modern world.<br><br>" +
                             "In this BitNode:<br><br>The maximum amount of money available on a server is significantly decreased<br>" +
-                            "The amount of money gained from crimes is doubled<br>" +
+                            "The amount of money gained from crimes and Infiltration is doubled<br>" +
                             "Certain Factions (Slum Snakes, Tetrads, The Syndicate, The Dark Army, Speakers for the Dead, " +
                             "NiteSec, The Black Hand) give the player the ability to form and manage their own gangs. These gangs " +
                             "will earn the player money and reputation with the corresponding Faction<br>" +
@@ -92,6 +92,7 @@ function initBitNodes() {
                                             "Weakening a server is twice as effective<br>" +
                                             "Company wages are decreased by 50%<br>" +
                                             "Hacknet Node production is significantly decreased<br>" +
+                                            "Crime and Infiltration are more lucrative<br>" +
                                             "Augmentations are twice as expensive<br><br>" +
                                             "Destroying this BitNode will give you Source-File 11, or if you already have this Source-File it will " +
                                             "upgrade its level up to a maximum of 3. This Source-File makes it so that company favor increases BOTH " +
@@ -149,6 +150,9 @@ let BitNodeMultipliers = {
 
     AugmentationRepCost:    1,
     AugmentationMoneyCost:  1,
+
+    InfiltrationMoney:      1,
+    InfiltrationRep:        1,
 }
 
 function initBitNodeMultipliers() {
@@ -167,6 +171,7 @@ function initBitNodeMultipliers() {
         case 2: //Rise of the Underworld
             BitNodeMultipliers.ServerMaxMoney           = 0.2;
             BitNodeMultipliers.CrimeMoney               = 2;
+            BitNodeMultipliers.InfiltrationMoney        = 2;
             BitNodeMultipliers.FactionWorkRepGain       = 0.5;
             BitNodeMultipliers.FactionPassiveRepGain    = 0;
             break;
@@ -198,9 +203,12 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.ServerStartingMoney      = 0.1;
             BitNodeMultipliers.ServerGrowthRate         = 0.5;
             BitNodeMultipliers.ServerWeakenRate         = 2;
+            BitNodeMultipliers.CrimeMoney               = 3;
             BitNodeMultipliers.CompanyWorkMoney         = 0.5;
             BitNodeMultipliers.HacknetNodeMoney         = 0.1;
             BitNodeMultipliers.AugmentationMoneyCost    = 2;
+            BitNodeMultipliers.InfiltrationMoney        = 2.5;
+            BitNodeMultipliers.InfiltrationRep          = 2.5;
             break;
         default:
             console.log("WARNING: Player.bitNodeN invalid");
