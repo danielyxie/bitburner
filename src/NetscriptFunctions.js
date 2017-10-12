@@ -662,6 +662,21 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
             return Player.hacking_skill;
         },
+        getStatLevels : function(){
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getStatLevels(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+            return {
+                strength: Player.strength,
+                defense: Player.defense,
+                dexterity: Player.dexterity,
+                agility: Player.agility,
+                charisma: Player.charisma
+            }
+        },
         getIntelligence : function () {
             if (!hasAISF) {
                 throw makeRuntimeRejectMsg(workerScript, "Cannot run getIntelligence(). It requires Source-File 5 to run.");

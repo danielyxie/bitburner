@@ -310,6 +310,7 @@ function calculateRamUsage(codeCopy) {
                        numOccurrences(codeCopy, "purchaseProgram(");
     var singFn2Count = numOccurrences(codeCopy, "upgradeHomeRam(") +
                        numOccurrences(codeCopy, "getUpgradeHomeRamCost(") +
+                       numOccurrences(codeCopy, "getStatLevels(") +
                        numOccurrences(codeCopy, "workForCompany(") +
                        numOccurrences(codeCopy, "applyToCompany(") +
                        numOccurrences(codeCopy, "getCompanyRep(") +
