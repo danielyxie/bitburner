@@ -1048,10 +1048,10 @@ let CONSTANTS = {
     "The game will still be saved to localStorage as well<br>" +
     "-Added a new Crime: Bond Forgery. This crime takes 5 minutes to attempt " +
     "and gives $4,500,000 if successful. It is meant for mid game.<br>" +
-    "-Added commitCrime() Singularity Function.<br>" +
+    "-Added commitCrime() and getStats() Singularity Functions.<br>" +
+    "-Removed getIntelligence() Netscript function<br>" +
     "-Increased the amount of money gained from infiltration by 20%, and the amount of faction reputation by 12%<br>" +
-    "-Crime and Infiltration are now more lucrative in BitNodes 11 and 2<br>" +
-    "-Added getStats() Singularity function. Removed getIntelligence() Netscript function.<br>",
+    "-Crime and Infiltration are now more lucrative in BitNodes 11 and 2<br>",
 }
 
 export {CONSTANTS};
