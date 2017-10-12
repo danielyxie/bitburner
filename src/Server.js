@@ -15,12 +15,13 @@ function Server(ip=createRandomIp(), hostname="", organizationName="",
 	//Connection information
 	this.ip					= 	ip;
     var i = 0;
-    while (GetServerByHostname(hostname) != null) {
+    var suffix = "";
+    while (GetServerByHostname(hostname+suffix) != null) {
         //Server already exists
-        hostname = hostname + "-" + i;
+        suffix = "-" + i;
         ++i;
     }
-	this.hostname			= 	hostname;
+	this.hostname			= 	hostname + suffix;
 	this.organizationName 	= 	organizationName;
 	this.isConnectedTo		= 	isConnectedTo;	//Whether the player is connected to this server
 
