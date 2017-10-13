@@ -1058,7 +1058,8 @@ let CONSTANTS = {
     "-Rebalanced BitNode-2 so that Crime and Infiltration are more profitable but hacking is less profitable. Infiltration also gives more faction rep<br>" +
     "-Rebalanced BitNode-4 so that hacking is slightly less profitable<br>" +
     "-Rebalanced BitNode-5 so that Infiltration is more profitable and gives more faction rep<br>" +
-    "-Rebalanced BitNode-11 so that Crime and Infiltration are more profitable. Infiltration also gives more faction rep.<br>"
+    "-Rebalanced BitNode-11 so that Crime and Infiltration are more profitable. Infiltration also gives more faction rep.<br>" +
+    "-Fixed an annoying issue in Hacking Missions where sometimes you would click a Node but it wouldnt actually get selected<br>" 
 }
 
 export {CONSTANTS};

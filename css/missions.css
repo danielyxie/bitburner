@@ -29,6 +29,10 @@
     align-self: center;
     justify-self: center;
     display:inline-block;
+}
+
+.hack-mission-node p {
+    margin-top:8px;
     color:white;
     font-size:12px;
     text-align:center;

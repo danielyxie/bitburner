@@ -696,12 +696,12 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
     var txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
-            txt = "CPU Core<br>" + "HP: " +
+            txt = "<p>CPU Core<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-cpu-node");
             break;
         case NodeTypes.Firewall:
-            txt = "Firewall<br>" + "HP: " +
+            txt = "<p>Firewall<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-firewall-node");
             break;
@@ -711,7 +711,7 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
             nodeDiv.classList.add("hack-mission-database-node");
             break;
         case NodeTypes.Spam:
-            txt = "Spam<br>" + "HP: " +
+            txt = "<p>Spam<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-spam-node");
             break;
@@ -722,14 +722,14 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
             break;
         case NodeTypes.Shield:
         default:
-            txt = "<br>Shield<br>" + "HP: " +
+            txt = "<p>Shield<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-shield-node");
             break;
     }
 
     txt += "<br>Atk: " + formatNumber(nodeObj.atk, 1) +
-           "<br>Def: " + formatNumber(nodeObj.def, 1);
+           "<br>Def: " + formatNumber(nodeObj.def, 1) + "</p>";
     nodeDiv.innerHTML = txt;
 }
 
@@ -747,11 +747,11 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
     var txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
-            txt = "CPU Core<br>" + "HP: " +
+            txt = "<p>CPU Core<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Firewall:
-            txt = "Firewall<br>" + "HP: " +
+            txt = "<p>Firewall<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Database:
@@ -759,7 +759,7 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Spam:
-            txt = "Spam<br>" + "HP: " +
+            txt = "<p>Spam<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Transfer:
@@ -768,7 +768,7 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
             break;
         case NodeTypes.Shield:
         default:
-            txt = "<br>Shield<br>" + "HP: " +
+            txt = "<p>Shield<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
     }
@@ -778,8 +778,11 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
     if (nodeObj.action) {
         txt += "<br>" + nodeObj.action;
     }
-    //txt += "</p>";
+    txt += "</p>";
     nodeDiv.innerHTML = txt;
+    if (nodeObj.type === NodeTypes.Core || nodeObj.type === NodeTypes.Transfer) {
+        this.configurePlayerNodeElement(nodeObj.el, true);
+    }
 }
 
 //Gets a Node DOM element's corresponding Node object using its
@@ -806,23 +809,38 @@ HackingMission.prototype.getNodeFromElement = function(el) {
     return this.map[x][y];
 }
 
+function selectNode(hackMissionInst, el) {
+    var nodeObj = hackMissionInst.getNodeFromElement(el);
+    if (nodeObj === null) {console.log("Error getting Node object");}
+    if (!nodeObj.plyrCtrl) {return;}
+
+    if (hackMissionInst.selectedNode instanceof Node) {
+        hackMissionInst.selectedNode.deselect(hackMissionInst.actionButtons);
+        hackMissionInst.selectedNode = null;
+    }
+    console.log("Selecting node :" + el.id);
+    nodeObj.select(hackMissionInst.actionButtons);
+    hackMissionInst.selectedNode = nodeObj;
+}
+
 //Configures a DOM element representing a player-owned node to
 //be selectable and actionable
 //Note: Does NOT change its css class. This is handled by Node.setControlledBy...
-HackingMission.prototype.configurePlayerNodeElement = function(el) {
+HackingMission.prototype.configurePlayerNodeElement = function(el, reconfigureChildOnly=false) {
     var nodeObj = this.getNodeFromElement(el);
     if (nodeObj === null) {console.log("Error getting Node object");}
 
     //Add event listener
-    el.addEventListener("click", ()=>{
-        if (this.selectedNode instanceof Node) {
-            this.selectedNode.deselect(this.actionButtons);
-            this.selectedNode = null;
-        }
-        console.log("Selecting node :" + el.id);
-        nodeObj.select(this.actionButtons);
-        this.selectedNode = nodeObj;
-    });
+    function selectNodeWrapper() {
+        selectNode(this, el);
+    }
+    if (!reconfigureChildOnly) {
+        el.addEventListener("click", selectNodeWrapper);
+    }
+
+    if (el.firstChild) {
+        el.firstChild.addEventListener("click", selectNodeWrapper);
+    }
 }
 
 //Configures a DOM element representing an enemy-node by removing
@@ -833,8 +851,6 @@ HackingMission.prototype.configureEnemyNodeElement = function(el) {
     if (this.selectedNode == nodeObj) {
         nodeObj.deselect(this.actionButtons);
     }
-
-    //TODO Need to remove event listeners
 }
 
 //Returns bool indicating whether a node is reachable by player

@@ -398,3 +398,59 @@ a:link, a:visited {
 .scan-analyze-link:hover {
     text-decoration:none;
 }
+
+/* Accordion menus (Header with collapsible panel) */
+.accordion-header {
+    background-color: #444;
+    font-size: 20px;
+    color: white;
+    margin: 6px 6px 0px 6px;
+    padding: 6px;
+    cursor: pointer;
+    width: 80%;
+    text-align: left;
+    border: none;
+    outline: none;
+}
+
+.accordion-header.active,
+.accordion-header:hover {
+    background-color: #555;
+}
+
+.accordion-header.active:hover {
+    background-color: #666;
+}
+
+.accordion-header:after {
+    content: '\02795'; /* "plus" sign (+) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.accordion-header.active:after {
+    content: "\2796"; /* "minus" sign (-) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.accordion-panel {
+    margin: 0px 6px 6px 6px;
+    padding: 0px 6px 6px 6px;
+    width: 75%;
+    margin-left: 5%;
+    display: none;
+    background-color: #555;
+    overflow:auto;
+}
+
+.accordion-panel div,
+.accordion-panel ul,
+.accordion-panel p,
+.accordion-panel ul > li {
+    background-color: #555;
+}
