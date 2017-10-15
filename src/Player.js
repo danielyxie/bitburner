@@ -1141,7 +1141,7 @@ PlayerObject.prototype.getFactionSecurityWorkRepGain = function() {
                    this.strength       / CONSTANTS.MaxSkillLevel +
                    this.defense        / CONSTANTS.MaxSkillLevel +
                    this.dexterity      / CONSTANTS.MaxSkillLevel +
-                   this.agility        / CONSTANTS.MaxSkillLevel) / 5;
+                   this.agility        / CONSTANTS.MaxSkillLevel) / 4.5;
     return t * this.faction_rep_mult;
 }
 
@@ -1152,7 +1152,7 @@ PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
                    this.dexterity      / CONSTANTS.MaxSkillLevel +
                    this.agility        / CONSTANTS.MaxSkillLevel +
                    this.charisma       / CONSTANTS.MaxSkillLevel +
-                   this.intelligence   / CONSTANTS.MaxSkillLevel) / 6;
+                   this.intelligence   / CONSTANTS.MaxSkillLevel) / 5.5;
     return t * this.faction_rep_mult;
 }
 

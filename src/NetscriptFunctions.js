@@ -10,7 +10,14 @@ import {commitShopliftCrime, commitRobStoreCrime, commitMugCrime,
         commitLarcenyCrime, commitDealDrugsCrime, commitBondForgeryCrime,
         commitTraffickArmsCrime,
         commitHomicideCrime, commitGrandTheftAutoCrime, commitKidnapCrime,
-        commitAssassinationCrime, commitHeistCrime} from "./Crimes.js";
+        commitAssassinationCrime, commitHeistCrime, determineCrimeSuccess,
+        determineCrimeChanceShoplift, determineCrimeChanceRobStore,
+        determineCrimeChanceMug, determineCrimeChanceLarceny,
+        determineCrimeChanceDealDrugs, determineCrimeChanceBondForgery,
+        determineCrimeChanceTraffickArms,
+        determineCrimeChanceHomicide, determineCrimeChanceGrandTheftAuto,
+        determineCrimeChanceKidnap, determineCrimeChanceAssassination,
+        determineCrimeChanceHeist}                  from "./Crimes.js";
 import {Companies, Company, CompanyPosition,
         CompanyPositions, companyExists}            from "./Company.js";
 import {CONSTANTS}                                  from "./Constants.js";
@@ -848,12 +855,12 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPrice()");
             }
-            if (shares == 0) {return false;}
             if (stock == null || shares < 0 || isNaN(shares)) {
                 workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to buyStock()");
                 return false;
             }
             shares = Math.round(shares);
+            if (shares === 0) {return false;}
 
             var totalPrice = stock.price * shares;
             if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
@@ -883,13 +890,14 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPrice()");
             }
-            if (shares == 0) {return false;}
+
             if (stock == null || shares < 0 || isNaN(shares)) {
                 workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to sellStock()");
                 return false;
             }
+            shares = Math.round(shares);
             if (shares > stock.playerShares) {shares = stock.playerShares;}
-            if (shares == 0) {return false;}
+            if (shares === 0) {return false;}
             var gains = stock.price * shares - CONSTANTS.StockMarketCommission;
             Player.gainMoney(gains);
 
@@ -2001,6 +2009,43 @@ function NetscriptFunctions(workerScript) {
                 commitHeistCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into commitCrime(): " + crime);
+            }
+        },
+        getCrimeChance(crime) {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getCrimeChance(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return;
+                }
+            }
+
+            crime = crime.toLowerCase();
+            if (crime.includes("shoplift")) {
+                return determineCrimeChanceShoplift();
+            } else if (crime.includes("rob") && crime.includes("store")) {
+                return determineCrimeChanceRobStore();
+            } else if (crime.includes("mug")) {
+                return determineCrimeChanceMug();
+            } else if (crime.includes("larceny")) {
+                return determineCrimeChanceLarceny();
+            } else if (crime.includes("drugs")) {
+                return determineCrimeChanceDealDrugs();
+            } else if (crime.includes("bond") && crime.includes("forge")) {
+                return determineCrimeChanceBondForgery();
+            } else if (crime.includes("traffick") && crime.includes("arms")) {
+                return determineCrimeChanceTraffickArms();
+            } else if (crime.includes("homicide")) {
+                return determineCrimeChanceHomicide();
+            } else if (crime.includes("grand") && crime.includes("auto")) {
+                return determineCrimeChanceGrandTheftAuto();
+            } else if (crime.includes("kidnap")) {
+                return determineCrimeChanceKidnap();
+            } else if (crime.includes("assassinate")) {
+                return determineCrimeChanceAssassination();
+            } else if (crime.includes("heist")) {
+                return determineCrimeChanceHeist();
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into getCrimeChance(): " + crime);
             }
         },
         getOwnedAugmentations(purchased=false) {

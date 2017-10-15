@@ -75,11 +75,11 @@ function initBitNodes() {
                                           "Level 1: 4%<br>" +
                                           "Level 2: 6%<br>" +
                                           "Level 3: 7%");
-    BitNodes["BitNode6"] = new BitNode(6, "Hacktocracy", "COMING SOON");               //Healthy Hacknet balancing mechanic
-    BitNodes["BitNode7"] = new BitNode(7, "Do Androids Dream?", "COMING SOON");        //Build androids for automation
+    BitNodes["BitNode6"] = new BitNode(6, "Do Androids Dream?", "COMING SOON");        //Build androids for automation
+    BitNodes["BitNode7"] = new BitNode(7, "Waste Runner", "COMING SOON");              //Postapocalyptic wasteland + blade runner
     BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "COMING SOON");      //Trading only viable strategy
-    BitNodes["BitNode9"] = new BitNode(9, "MegaCorp", "COMING SOON");                  //Single corp/server with increasing difficulty
-    BitNodes["BitNode10"] = new BitNode(10, "Wasteland", "COMING SOON");               //Postapocalyptic
+    BitNodes["BitNode9"] = new BitNode(9, "Hacktocracy", "COMING SOON");               //Healthy Hacknet balancing mechanic
+    BitNodes["BitNode10"] = new BitNode(10, "MegaCorp", "COMING SOON");                //Not sure yet
     BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
                                             "The 2050s was defined by the massive amounts of violent civil unrest and anarchic rebellion that rose all around the world. It was this period " +
                                             "of disorder that eventually lead to the governmental reformation of many global superpowers, most notably " +

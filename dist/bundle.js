@@ -80,9 +80,9 @@
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Gang_js__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Location_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptFunctions_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptFunctions_js__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__SpecialServerIps_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__SourceFile_js__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_decimal_js__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__utils_decimal_js__);
@@ -1227,7 +1227,7 @@ PlayerObject.prototype.getFactionSecurityWorkRepGain = function() {
                    this.strength       / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
                    this.defense        / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
                    this.dexterity      / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   this.agility        / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel) / 5;
+                   this.agility        / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel) / 4.5;
     return t * this.faction_rep_mult;
 }
 
@@ -1238,7 +1238,7 @@ PlayerObject.prototype.getFactionFieldWorkRepGain = function() {
                    this.dexterity      / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
                    this.agility        / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
                    this.charisma       / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel +
-                   this.intelligence   / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel) / 6;
+                   this.intelligence   / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel) / 5.5;
     return t * this.faction_rep_mult;
 }
 
@@ -2677,7 +2677,7 @@ let CONSTANTS = {
     IntelligenceCrimeBaseExpGain: 0.001,
     IntelligenceProgramBaseExpGain: 500, //Program required hack level divided by this to determine int exp gain
     IntelligenceTerminalHackBaseExpGain: 200, //Hacking exp divided by this to determine int exp gain
-    IntelligenceSingFnBaseExpGain: 0.001,
+    IntelligenceSingFnBaseExpGain: 0.002,
     IntelligenceClassBaseExpGain: 0.000001,
     IntelligenceHackingMissionBaseExpGain: 0.03, //Hacking Mission difficulty multiplied by this to get exp gain
 
@@ -2692,7 +2692,7 @@ let CONSTANTS = {
                              "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
                              "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray " +
                              "that initially belong to neither you nor the enemy. The goal of the game is " +
-                             "to capture all of the enemy's database nodes, which are the parallelogram-shaped ones, within the time limit. " +
+                             "to capture all of the enemy's database nodes within the time limit. " +
                              "If you cannot capture all of the enemy's database nodes in the time limit, you will lose.<br><br>" +
                              "Each Node has three stats: Attack, Defense, and HP. There are five different actions that " +
                              "a Node can take:<br><br> " +
@@ -2705,7 +2705,7 @@ let CONSTANTS = {
                              "Fortify - Raises the Node's Defense. The effectiveness is determined by your hacking level.<br>" +
                              "Overflow - Raises the Node's Attack but lowers its Defense. The effectiveness is determined by your hacking level.<br><br>" +
                              "Note that when determining the effectiveness of the above actions, the TOTAL Attack or Defense of the team is used, not just the " +
-                             "Attack/Defense of the individual Node that is performing the action.<br><br." +
+                             "Attack/Defense of the individual Node that is performing the action.<br><br>" +
                              "To capture a Node, you must lower its HP down to 0.<br><br>" +
                              "There are six different types of Nodes:<br><br>" +
                              "CPU Core - These are your main Nodes that are used to perform actions. Capable of performing every action<br>" +
@@ -2720,7 +2720,7 @@ let CONSTANTS = {
                              "To assign an action to a Node, you must first select one of your Nodes. This can be done by simply clicking on it. Only " +
                              "one Node can be selected at a time, and it will be denoted with a white highlight. After selecting the Node, " +
                              "select its action using the Action Buttons near the top of the screen. Every action also has a corresponding keyboard " +
-                             "shortcut that can be used as well.<br><br>" +
+                             "shortcut.<br><br>" +
                              "For certain actions such as attacking, scanning, and weakening, the Node performing the action must have a target. To target " +
                              "another node, simply click-and-drag from the 'source' Node to a target. A Node can only have one target, and you can target " +
                              "any Node that is adjacent to one of your Nodes (immediately above, below, or to the side. NOT diagonal). Furthermore, only CPU Cores and Transfer Nodes " +
@@ -2732,7 +2732,7 @@ let CONSTANTS = {
                              "are not actively being targeted will increase by a fixed percentage.<br><br>" +
                              "-Whenever a Node is conquered, its stats are significantly reduced<br><br>" +
                              "-Miscellaneous Nodes slowly raise their defense over time<br><br>" +
-                             "-Nodes slowly regenerate health and raise over time.",
+                             "-Nodes slowly regenerate health over time.",
 
 
     //Gang constants
@@ -3609,7 +3609,7 @@ let CONSTANTS = {
     "but that's not available yet. You can also download files to your real computer using the 'download' Terminal command<br>" +
     "-Added a new Crime: Bond Forgery. This crime takes 5 minutes to attempt " +
     "and gives $4,500,000 if successful. It is meant for mid game.<br>" +
-    "-Added commitCrime() and getStats() Singularity Functions.<br>" +
+    "-Added commitCrime(), getCrimeChance(), and getStats() Singularity Functions.<br>" +
     "-Removed getIntelligence() Netscript function<br>" +
     "-Added sprintf and vsprintf to Netscript. See <a href='https://github.com/alexei/sprintf.js' target='_blank'>this Github page for details</a><br>" +
     "-Increased the amount of money gained from Infiltration by 20%, and the amount of faction reputation by 12%<br>" +
@@ -3617,7 +3617,9 @@ let CONSTANTS = {
     "-Rebalanced BitNode-4 so that hacking is slightly less profitable<br>" +
     "-Rebalanced BitNode-5 so that Infiltration is more profitable and gives more faction rep<br>" +
     "-Rebalanced BitNode-11 so that Crime and Infiltration are more profitable. Infiltration also gives more faction rep.<br>" +
-    "-Fixed an annoying issue in Hacking Missions where sometimes you would click a Node but it wouldnt actually get selected<br>" 
+    "-Fixed an annoying issue in Hacking Missions where sometimes you would click a Node but it wouldnt actually get selected<br>" +
+    "-Made the Hacking Mission gameplay a bit slower by lowering the effect of Scan and reducing Attack damage<br>" +
+    "-Slightly increased the base reputation gain rate for factions when doing Field Work and Security Work<br>"
 }
 
 
@@ -3793,7 +3795,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_GameOptions_js__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_LogBox_js__ = __webpack_require__(29);
@@ -3809,10 +3811,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__HacknetNode_js__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__InteractiveTutorial_js__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__Literature_js__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__Message_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__Message_js__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Missions_js__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__Prestige_js__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__RedPill_js__ = __webpack_require__(36);
@@ -3821,7 +3823,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__Settings_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__SourceFile_js__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__SpecialServerIps_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__StockMarket_js__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__Terminal_js__ = __webpack_require__(20);
 
@@ -5490,7 +5492,8 @@ window.onload = function() {
     indexedDbRequest = window.indexedDB.open("bitburnerSave", 1);
 
     indexedDbRequest.onerror = function(e) {
-        console.log("Error opening indexedDB: " + e);
+        console.log("Error opening indexedDB: ");
+        console.log(e);
         return Engine.load(null); //Try to load from localstorage
     };
 
@@ -5511,7 +5514,7 @@ window.onload = function() {
     };
 
     indexedDbRequest.onupgradeneeded = function(e) {
-        var db = event.target.result;
+        var db = e.target.result;
         var objectStore = db.createObjectStore("savestring");
     }
 };
@@ -5540,7 +5543,7 @@ window.onload = function() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Script_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SpecialServerIps_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_IPAddress_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(8);
@@ -6429,11 +6432,11 @@ function initBitNodes() {
                                           "Level 1: 4%<br>" +
                                           "Level 2: 6%<br>" +
                                           "Level 3: 7%");
-    BitNodes["BitNode6"] = new BitNode(6, "Hacktocracy", "COMING SOON");               //Healthy Hacknet balancing mechanic
-    BitNodes["BitNode7"] = new BitNode(7, "Do Androids Dream?", "COMING SOON");        //Build androids for automation
+    BitNodes["BitNode6"] = new BitNode(6, "Do Androids Dream?", "COMING SOON");        //Build androids for automation
+    BitNodes["BitNode7"] = new BitNode(7, "Waste Runner", "COMING SOON");              //Postapocalyptic wasteland + blade runner
     BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "COMING SOON");      //Trading only viable strategy
-    BitNodes["BitNode9"] = new BitNode(9, "MegaCorp", "COMING SOON");                  //Single corp/server with increasing difficulty
-    BitNodes["BitNode10"] = new BitNode(10, "Wasteland", "COMING SOON");               //Postapocalyptic
+    BitNodes["BitNode9"] = new BitNode(9, "Hacktocracy", "COMING SOON");               //Healthy Hacknet balancing mechanic
+    BitNodes["BitNode10"] = new BitNode(10, "MegaCorp", "COMING SOON");                //Not sure yet
     BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
                                             "The 2050s was defined by the massive amounts of violent civil unrest and anarchic rebellion that rose all around the world. It was this period " +
                                             "of disorder that eventually lead to the governmental reformation of many global superpowers, most notably " +
@@ -16949,7 +16952,7 @@ return jQuery;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_JSONReviver_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_StringHelperFunctions_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_YesNoBox_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_YesNoBox_js__ = __webpack_require__(23);
 
 
 
@@ -18000,68 +18003,6 @@ function processPassiveFactionRepGain(numCycles) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SpecialServerNames; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SpecialServerIps; });
-/* unused harmony export SpecialServerIpsMap */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadSpecialServerIps; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeSpecialServerIps; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSpecialServerIps; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__ = __webpack_require__(8);
-
-
-/* Holds IP of Special Servers */
-let SpecialServerNames = {
-    FulcrumSecretTechnologies:  "Fulcrum Secret Technologies Server",
-    CyberSecServer:             "CyberSec Server",
-    NiteSecServer:              "NiteSec Server",
-    TheBlackHandServer:         "The Black Hand Server",
-    BitRunnersServer:           "BitRunners Server",
-    TheDarkArmyServer:          "The Dark Army Server",
-    DaedalusServer:             "Daedalus Server",
-    WorldDaemon:                "w0r1d_d43m0n",
-}
-function SpecialServerIpsMap() {}
-
-SpecialServerIpsMap.prototype.addIp = function(name, ip) {
-    this[name] = ip;
-}
-
-SpecialServerIpsMap.prototype.toJSON = function() {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__["b" /* Generic_toJSON */])("SpecialServerIpsMap", this);
-}
-
-SpecialServerIpsMap.fromJSON = function(value) {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(SpecialServerIpsMap, value.data);
-}
-
-__WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__["c" /* Reviver */].constructors.SpecialServerIpsMap = SpecialServerIpsMap;
-
-let SpecialServerIps = new SpecialServerIpsMap();
-
-function prestigeSpecialServerIps() {
-    for (var member in SpecialServerIps) {
-        delete SpecialServerIps[member];
-    }
-    SpecialServerIps = null;
-    SpecialServerIps = new SpecialServerIpsMap();
-}
-
-function loadSpecialServerIps(saveString) {
-    SpecialServerIps = JSON.parse(saveString, __WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__["c" /* Reviver */]);
-}
-
-function initSpecialServerIps() {
-    SpecialServerIps = new SpecialServerIpsMap();
-}
-
-
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return WorkerScript; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return workerScripts; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NetscriptPorts; });
@@ -18305,6 +18246,68 @@ function updateOnlineScriptTimes(numCycles = 1) {
 
 
 /***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SpecialServerNames; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SpecialServerIps; });
+/* unused harmony export SpecialServerIpsMap */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadSpecialServerIps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return prestigeSpecialServerIps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initSpecialServerIps; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__ = __webpack_require__(8);
+
+
+/* Holds IP of Special Servers */
+let SpecialServerNames = {
+    FulcrumSecretTechnologies:  "Fulcrum Secret Technologies Server",
+    CyberSecServer:             "CyberSec Server",
+    NiteSecServer:              "NiteSec Server",
+    TheBlackHandServer:         "The Black Hand Server",
+    BitRunnersServer:           "BitRunners Server",
+    TheDarkArmyServer:          "The Dark Army Server",
+    DaedalusServer:             "Daedalus Server",
+    WorldDaemon:                "w0r1d_d43m0n",
+}
+function SpecialServerIpsMap() {}
+
+SpecialServerIpsMap.prototype.addIp = function(name, ip) {
+    this[name] = ip;
+}
+
+SpecialServerIpsMap.prototype.toJSON = function() {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__["b" /* Generic_toJSON */])("SpecialServerIpsMap", this);
+}
+
+SpecialServerIpsMap.fromJSON = function(value) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(SpecialServerIpsMap, value.data);
+}
+
+__WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__["c" /* Reviver */].constructors.SpecialServerIpsMap = SpecialServerIpsMap;
+
+let SpecialServerIps = new SpecialServerIpsMap();
+
+function prestigeSpecialServerIps() {
+    for (var member in SpecialServerIps) {
+        delete SpecialServerIps[member];
+    }
+    SpecialServerIps = null;
+    SpecialServerIps = new SpecialServerIpsMap();
+}
+
+function loadSpecialServerIps(saveString) {
+    SpecialServerIps = JSON.parse(saveString, __WEBPACK_IMPORTED_MODULE_0__utils_JSONReviver_js__["c" /* Reviver */]);
+}
+
+function initSpecialServerIps() {
+    SpecialServerIps = new SpecialServerIpsMap();
+}
+
+
+
+
+/***/ }),
 /* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -18320,14 +18323,14 @@ function updateOnlineScriptTimes(numCycles = 1) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ServerPurchases_js__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__SpecialServerIps_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_IPAddress_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_numeral_min_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_numeral_min_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_StringHelperFunctions_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_YesNoBox_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_YesNoBox_js__ = __webpack_require__(23);
 
 
 
@@ -20720,8 +20723,8 @@ function initCreateProgramButtons() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptFunctions_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptFunctions_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Settings_js__ = __webpack_require__(14);
@@ -21438,7 +21441,7 @@ function isValidIPAddress(ipaddress) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BitNode_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Faction_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Prestige_js__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Script_js__ = __webpack_require__(16);
@@ -24621,14 +24624,14 @@ function getJobRequirementText(company, pos, tooltiptext=false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__HelpText_js__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__InteractiveTutorial_js__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Literature_js__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Message_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Message_js__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__NetscriptEvaluator_js__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptWorker_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__RedPill_js__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Script_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__SpecialServerIps_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__TextFile_js__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_StringHelperFunctions_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_HelperFunctions_js__ = __webpack_require__(2);
@@ -26359,6 +26362,23 @@ let Terminal = {
 
 /***/ }),
 /* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
+ * numeral.js
+ * version : 2.0.6
+ * author : Adam Draper
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
+ */
+!function(a,b){ true?!(__WEBPACK_AMD_DEFINE_FACTORY__ = (b),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"object"==typeof module&&module.exports?module.exports=b():a.numeral=b()}(this,function(){function a(a,b){this._input=a,this._value=b}var b,c,d="2.0.6",e={},f={},g={currentLocale:"en",zeroFormat:null,nullFormat:null,defaultFormat:"0,0",scalePercentBy100:!0},h={currentLocale:g.currentLocale,zeroFormat:g.zeroFormat,nullFormat:g.nullFormat,defaultFormat:g.defaultFormat,scalePercentBy100:g.scalePercentBy100};return b=function(d){var f,g,i,j;if(b.isNumeral(d))f=d.value();else if(0===d||"undefined"==typeof d)f=0;else if(null===d||c.isNaN(d))f=null;else if("string"==typeof d)if(h.zeroFormat&&d===h.zeroFormat)f=0;else if(h.nullFormat&&d===h.nullFormat||!d.replace(/[^0-9]+/g,"").length)f=null;else{for(g in e)if(j="function"==typeof e[g].regexps.unformat?e[g].regexps.unformat():e[g].regexps.unformat,j&&d.match(j)){i=e[g].unformat;break}i=i||b._.stringToNumber,f=i(d)}else f=Number(d)||null;return new a(d,f)},b.version=d,b.isNumeral=function(b){return b instanceof a},b._=c={numberToFormat:function(a,c,d){var e,g,h,i,j,k,l,m=f[b.options.currentLocale],n=!1,o=!1,p=0,q="",r=1e12,s=1e9,t=1e6,u=1e3,v="",w=!1;if(a=a||0,g=Math.abs(a),b._.includes(c,"(")?(n=!0,c=c.replace(/[\(|\)]/g,"")):(b._.includes(c,"+")||b._.includes(c,"-"))&&(j=b._.includes(c,"+")?c.indexOf("+"):0>a?c.indexOf("-"):-1,c=c.replace(/[\+|\-]/g,"")),b._.includes(c,"a")&&(e=c.match(/a(k|m|b|t)?/),e=e?e[1]:!1,b._.includes(c," a")&&(q=" "),c=c.replace(new RegExp(q+"a[kmbt]?"),""),g>=r&&!e||"t"===e?(q+=m.abbreviations.trillion,a/=r):r>g&&g>=s&&!e||"b"===e?(q+=m.abbreviations.billion,a/=s):s>g&&g>=t&&!e||"m"===e?(q+=m.abbreviations.million,a/=t):(t>g&&g>=u&&!e||"k"===e)&&(q+=m.abbreviations.thousand,a/=u)),b._.includes(c,"[.]")&&(o=!0,c=c.replace("[.]",".")),h=a.toString().split(".")[0],i=c.split(".")[1],k=c.indexOf(","),p=(c.split(".")[0].split(",")[0].match(/0/g)||[]).length,i?(b._.includes(i,"[")?(i=i.replace("]",""),i=i.split("["),v=b._.toFixed(a,i[0].length+i[1].length,d,i[1].length)):v=b._.toFixed(a,i.length,d),h=v.split(".")[0],v=b._.includes(v,".")?m.delimiters.decimal+v.split(".")[1]:"",o&&0===Number(v.slice(1))&&(v="")):h=b._.toFixed(a,0,d),q&&!e&&Number(h)>=1e3&&q!==m.abbreviations.trillion)switch(h=String(Number(h)/1e3),q){case m.abbreviations.thousand:q=m.abbreviations.million;break;case m.abbreviations.million:q=m.abbreviations.billion;break;case m.abbreviations.billion:q=m.abbreviations.trillion}if(b._.includes(h,"-")&&(h=h.slice(1),w=!0),h.length<p)for(var x=p-h.length;x>0;x--)h="0"+h;return k>-1&&(h=h.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1"+m.delimiters.thousands)),0===c.indexOf(".")&&(h=""),l=h+v+(q?q:""),n?l=(n&&w?"(":"")+l+(n&&w?")":""):j>=0?l=0===j?(w?"-":"+")+l:l+(w?"-":"+"):w&&(l="-"+l),l},stringToNumber:function(a){var b,c,d,e=f[h.currentLocale],g=a,i={thousand:3,million:6,billion:9,trillion:12};if(h.zeroFormat&&a===h.zeroFormat)c=0;else if(h.nullFormat&&a===h.nullFormat||!a.replace(/[^0-9]+/g,"").length)c=null;else{c=1,"."!==e.delimiters.decimal&&(a=a.replace(/\./g,"").replace(e.delimiters.decimal,"."));for(b in i)if(d=new RegExp("[^a-zA-Z]"+e.abbreviations[b]+"(?:\\)|(\\"+e.currency.symbol+")?(?:\\))?)?$"),g.match(d)){c*=Math.pow(10,i[b]);break}c*=(a.split("-").length+Math.min(a.split("(").length-1,a.split(")").length-1))%2?1:-1,a=a.replace(/[^0-9\.]+/g,""),c*=Number(a)}return c},isNaN:function(a){return"number"==typeof a&&isNaN(a)},includes:function(a,b){return-1!==a.indexOf(b)},insert:function(a,b,c){return a.slice(0,c)+b+a.slice(c)},reduce:function(a,b){if(null===this)throw new TypeError("Array.prototype.reduce called on null or undefined");if("function"!=typeof b)throw new TypeError(b+" is not a function");var c,d=Object(a),e=d.length>>>0,f=0;if(3===arguments.length)c=arguments[2];else{for(;e>f&&!(f in d);)f++;if(f>=e)throw new TypeError("Reduce of empty array with no initial value");c=d[f++]}for(;e>f;f++)f in d&&(c=b(c,d[f],f,d));return c},multiplier:function(a){var b=a.toString().split(".");return b.length<2?1:Math.pow(10,b[1].length)},correctionFactor:function(){var a=Array.prototype.slice.call(arguments);return a.reduce(function(a,b){var d=c.multiplier(b);return a>d?a:d},1)},toFixed:function(a,b,c,d){var e,f,g,h,i=a.toString().split("."),j=b-(d||0);return e=2===i.length?Math.min(Math.max(i[1].length,j),b):j,g=Math.pow(10,e),h=(c(a+"e+"+e)/g).toFixed(e),d>b-e&&(f=new RegExp("\\.?0{1,"+(d-(b-e))+"}$"),h=h.replace(f,"")),h}},b.options=h,b.formats=e,b.locales=f,b.locale=function(a){return a&&(h.currentLocale=a.toLowerCase()),h.currentLocale},b.localeData=function(a){if(!a)return f[h.currentLocale];if(a=a.toLowerCase(),!f[a])throw new Error("Unknown locale : "+a);return f[a]},b.reset=function(){for(var a in g)h[a]=g[a]},b.zeroFormat=function(a){h.zeroFormat="string"==typeof a?a:null},b.nullFormat=function(a){h.nullFormat="string"==typeof a?a:null},b.defaultFormat=function(a){h.defaultFormat="string"==typeof a?a:"0.0"},b.register=function(a,b,c){if(b=b.toLowerCase(),this[a+"s"][b])throw new TypeError(b+" "+a+" already registered.");return this[a+"s"][b]=c,c},b.validate=function(a,c){var d,e,f,g,h,i,j,k;if("string"!=typeof a&&(a+="",console.warn&&console.warn("Numeral.js: Value is not string. It has been co-erced to: ",a)),a=a.trim(),a.match(/^\d+$/))return!0;if(""===a)return!1;try{j=b.localeData(c)}catch(l){j=b.localeData(b.locale())}return f=j.currency.symbol,h=j.abbreviations,d=j.delimiters.decimal,e="."===j.delimiters.thousands?"\\.":j.delimiters.thousands,k=a.match(/^[^\d]+/),null!==k&&(a=a.substr(1),k[0]!==f)?!1:(k=a.match(/[^\d]+$/),null!==k&&(a=a.slice(0,-1),k[0]!==h.thousand&&k[0]!==h.million&&k[0]!==h.billion&&k[0]!==h.trillion)?!1:(i=new RegExp(e+"{2}"),a.match(/[^\d.,]/g)?!1:(g=a.split(d),g.length>2?!1:g.length<2?!!g[0].match(/^\d+.*\d$/)&&!g[0].match(i):1===g[0].length?!!g[0].match(/^\d+$/)&&!g[0].match(i)&&!!g[1].match(/^\d+$/):!!g[0].match(/^\d+.*\d$/)&&!g[0].match(i)&&!!g[1].match(/^\d+$/))))},b.fn=a.prototype={clone:function(){return b(this)},format:function(a,c){var d,f,g,i=this._value,j=a||h.defaultFormat;if(c=c||Math.round,0===i&&null!==h.zeroFormat)f=h.zeroFormat;else if(null===i&&null!==h.nullFormat)f=h.nullFormat;else{for(d in e)if(j.match(e[d].regexps.format)){g=e[d].format;break}g=g||b._.numberToFormat,f=g(i,j,c)}return f},value:function(){return this._value},input:function(){return this._input},set:function(a){return this._value=Number(a),this},add:function(a){function b(a,b,c,e){return a+Math.round(d*b)}var d=c.correctionFactor.call(null,this._value,a);return this._value=c.reduce([this._value,a],b,0)/d,this},subtract:function(a){function b(a,b,c,e){return a-Math.round(d*b)}var d=c.correctionFactor.call(null,this._value,a);return this._value=c.reduce([a],b,Math.round(this._value*d))/d,this},multiply:function(a){function b(a,b,d,e){var f=c.correctionFactor(a,b);return Math.round(a*f)*Math.round(b*f)/Math.round(f*f)}return this._value=c.reduce([this._value,a],b,1),this},divide:function(a){function b(a,b,d,e){var f=c.correctionFactor(a,b);return Math.round(a*f)/Math.round(b*f)}return this._value=c.reduce([this._value,a],b),this},difference:function(a){return Math.abs(b(this._value).subtract(a).value())}},b.register("locale","en",{delimiters:{thousands:",",decimal:"."},abbreviations:{thousand:"k",million:"m",billion:"b",trillion:"t"},ordinal:function(a){var b=a%10;return 1===~~(a%100/10)?"th":1===b?"st":2===b?"nd":3===b?"rd":"th"},currency:{symbol:"$"}}),function(){b.register("format","bps",{regexps:{format:/(BPS)/,unformat:/(BPS)/},format:function(a,c,d){var e,f=b._.includes(c," BPS")?" ":"";return a=1e4*a,c=c.replace(/\s?BPS/,""),e=b._.numberToFormat(a,c,d),b._.includes(e,")")?(e=e.split(""),e.splice(-1,0,f+"BPS"),e=e.join("")):e=e+f+"BPS",e},unformat:function(a){return+(1e-4*b._.stringToNumber(a)).toFixed(15)}})}(),function(){var a={base:1e3,suffixes:["B","KB","MB","GB","TB","PB","EB","ZB","YB"]},c={base:1024,suffixes:["B","KiB","MiB","GiB","TiB","PiB","EiB","ZiB","YiB"]},d=a.suffixes.concat(c.suffixes.filter(function(b){return a.suffixes.indexOf(b)<0})),e=d.join("|");e="("+e.replace("B","B(?!PS)")+")",b.register("format","bytes",{regexps:{format:/([0\s]i?b)/,unformat:new RegExp(e)},format:function(d,e,f){var g,h,i,j,k=b._.includes(e,"ib")?c:a,l=b._.includes(e," b")||b._.includes(e," ib")?" ":"";for(e=e.replace(/\s?i?b/,""),h=0;h<=k.suffixes.length;h++)if(i=Math.pow(k.base,h),j=Math.pow(k.base,h+1),null===d||0===d||d>=i&&j>d){l+=k.suffixes[h],i>0&&(d/=i);break}return g=b._.numberToFormat(d,e,f),g+l},unformat:function(d){var e,f,g=b._.stringToNumber(d);if(g){for(e=a.suffixes.length-1;e>=0;e--){if(b._.includes(d,a.suffixes[e])){f=Math.pow(a.base,e);break}if(b._.includes(d,c.suffixes[e])){f=Math.pow(c.base,e);break}}g*=f||1}return g}})}(),function(){b.register("format","currency",{regexps:{format:/(\$)/},format:function(a,c,d){var e,f,g,h=b.locales[b.options.currentLocale],i={before:c.match(/^([\+|\-|\(|\s|\$]*)/)[0],after:c.match(/([\+|\-|\)|\s|\$]*)$/)[0]};for(c=c.replace(/\s?\$\s?/,""),e=b._.numberToFormat(a,c,d),a>=0?(i.before=i.before.replace(/[\-\(]/,""),i.after=i.after.replace(/[\-\)]/,"")):0>a&&!b._.includes(i.before,"-")&&!b._.includes(i.before,"(")&&(i.before="-"+i.before),g=0;g<i.before.length;g++)switch(f=i.before[g]){case"$":e=b._.insert(e,h.currency.symbol,g);break;case" ":e=b._.insert(e," ",g+h.currency.symbol.length-1)}for(g=i.after.length-1;g>=0;g--)switch(f=i.after[g]){case"$":e=g===i.after.length-1?e+h.currency.symbol:b._.insert(e,h.currency.symbol,-(i.after.length-(1+g)));break;case" ":e=g===i.after.length-1?e+" ":b._.insert(e," ",-(i.after.length-(1+g)+h.currency.symbol.length-1))}return e}})}(),function(){b.register("format","exponential",{regexps:{format:/(e\+|e-)/,unformat:/(e\+|e-)/},format:function(a,c,d){var e,f="number"!=typeof a||b._.isNaN(a)?"0e+0":a.toExponential(),g=f.split("e");return c=c.replace(/e[\+|\-]{1}0/,""),e=b._.numberToFormat(Number(g[0]),c,d),e+"e"+g[1]},unformat:function(a){function c(a,c,d,e){var f=b._.correctionFactor(a,c),g=a*f*(c*f)/(f*f);return g}var d=b._.includes(a,"e+")?a.split("e+"):a.split("e-"),e=Number(d[0]),f=Number(d[1]);return f=b._.includes(a,"e-")?f*=-1:f,b._.reduce([e,Math.pow(10,f)],c,1)}})}(),function(){b.register("format","ordinal",{regexps:{format:/(o)/},format:function(a,c,d){var e,f=b.locales[b.options.currentLocale],g=b._.includes(c," o")?" ":"";return c=c.replace(/\s?o/,""),g+=f.ordinal(a),e=b._.numberToFormat(a,c,d),e+g}})}(),function(){b.register("format","percentage",{regexps:{format:/(%)/,unformat:/(%)/},format:function(a,c,d){var e,f=b._.includes(c," %")?" ":"";return b.options.scalePercentBy100&&(a=100*a),c=c.replace(/\s?\%/,""),e=b._.numberToFormat(a,c,d),b._.includes(e,")")?(e=e.split(""),e.splice(-1,0,f+"%"),e=e.join("")):e=e+f+"%",e},unformat:function(a){var c=b._.stringToNumber(a);return b.options.scalePercentBy100?.01*c:c}})}(),function(){b.register("format","time",{regexps:{format:/(:)/,unformat:/(:)/},format:function(a,b,c){var d=Math.floor(a/60/60),e=Math.floor((a-60*d*60)/60),f=Math.round(a-60*d*60-60*e);return d+":"+(10>e?"0"+e:e)+":"+(10>f?"0"+f:f)},unformat:function(a){var b=a.split(":"),c=0;return 3===b.length?(c+=60*Number(b[0])*60,c+=60*Number(b[1]),c+=Number(b[2])):2===b.length&&(c+=60*Number(b[0]),c+=Number(b[1])),Number(c)}})}(),b});
+
+/***/ }),
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26378,16 +26398,16 @@ let Terminal = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__HacknetNode_js__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Location_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Message_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Message_js__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Script_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__Settings_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__SpecialServerIps_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Terminal_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__TextFile_js__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__NetscriptEnvironment_js__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__utils_decimal_js__ = __webpack_require__(27);
@@ -27227,12 +27247,12 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid stock symbol passed into getStockPrice()");
             }
-            if (shares == 0) {return false;}
             if (stock == null || shares < 0 || isNaN(shares)) {
                 workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to buyStock()");
                 return false;
             }
             shares = Math.round(shares);
+            if (shares === 0) {return false;}
 
             var totalPrice = stock.price * shares;
             if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.lt(totalPrice + __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission)) {
@@ -27262,13 +27282,14 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid stock symbol passed into getStockPrice()");
             }
-            if (shares == 0) {return false;}
+
             if (stock == null || shares < 0 || isNaN(shares)) {
                 workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to sellStock()");
                 return false;
             }
+            shares = Math.round(shares);
             if (shares > stock.playerShares) {shares = stock.playerShares;}
-            if (shares == 0) {return false;}
+            if (shares === 0) {return false;}
             var gains = stock.price * shares - __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission;
             __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainMoney(gains);
 
@@ -28382,6 +28403,43 @@ function NetscriptFunctions(workerScript) {
                 throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid crime passed into commitCrime(): " + crime);
             }
         },
+        getCrimeChance(crime) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getCrimeChance(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return;
+                }
+            }
+
+            crime = crime.toLowerCase();
+            if (crime.includes("shoplift")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["w" /* determineCrimeChanceShoplift */])();
+            } else if (crime.includes("rob") && crime.includes("store")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["v" /* determineCrimeChanceRobStore */])();
+            } else if (crime.includes("mug")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["u" /* determineCrimeChanceMug */])();
+            } else if (crime.includes("larceny")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["t" /* determineCrimeChanceLarceny */])();
+            } else if (crime.includes("drugs")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["o" /* determineCrimeChanceDealDrugs */])();
+            } else if (crime.includes("bond") && crime.includes("forge")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["n" /* determineCrimeChanceBondForgery */])();
+            } else if (crime.includes("traffick") && crime.includes("arms")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["x" /* determineCrimeChanceTraffickArms */])();
+            } else if (crime.includes("homicide")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["r" /* determineCrimeChanceHomicide */])();
+            } else if (crime.includes("grand") && crime.includes("auto")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["p" /* determineCrimeChanceGrandTheftAuto */])();
+            } else if (crime.includes("kidnap")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["s" /* determineCrimeChanceKidnap */])();
+            } else if (crime.includes("assassinate")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["m" /* determineCrimeChanceAssassination */])();
+            } else if (crime.includes("heist")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["q" /* determineCrimeChanceHeist */])();
+            } else {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid crime passed into getCrimeChance(): " + crime);
+            }
+        },
         getOwnedAugmentations(purchased=false) {
             if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
@@ -28519,7 +28577,7 @@ function NetscriptFunctions(workerScript) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28616,7 +28674,7 @@ function yesNoTxtInpBoxCreate(txt) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28830,23 +28888,6 @@ function initMessages()  {
 
 
 /***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
- * numeral.js
- * version : 2.0.6
- * author : Adam Draper
- * license : MIT
- * http://adamwdraper.github.com/Numeral-js/
- */
-!function(a,b){ true?!(__WEBPACK_AMD_DEFINE_FACTORY__ = (b),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-				__WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"object"==typeof module&&module.exports?module.exports=b():a.numeral=b()}(this,function(){function a(a,b){this._input=a,this._value=b}var b,c,d="2.0.6",e={},f={},g={currentLocale:"en",zeroFormat:null,nullFormat:null,defaultFormat:"0,0",scalePercentBy100:!0},h={currentLocale:g.currentLocale,zeroFormat:g.zeroFormat,nullFormat:g.nullFormat,defaultFormat:g.defaultFormat,scalePercentBy100:g.scalePercentBy100};return b=function(d){var f,g,i,j;if(b.isNumeral(d))f=d.value();else if(0===d||"undefined"==typeof d)f=0;else if(null===d||c.isNaN(d))f=null;else if("string"==typeof d)if(h.zeroFormat&&d===h.zeroFormat)f=0;else if(h.nullFormat&&d===h.nullFormat||!d.replace(/[^0-9]+/g,"").length)f=null;else{for(g in e)if(j="function"==typeof e[g].regexps.unformat?e[g].regexps.unformat():e[g].regexps.unformat,j&&d.match(j)){i=e[g].unformat;break}i=i||b._.stringToNumber,f=i(d)}else f=Number(d)||null;return new a(d,f)},b.version=d,b.isNumeral=function(b){return b instanceof a},b._=c={numberToFormat:function(a,c,d){var e,g,h,i,j,k,l,m=f[b.options.currentLocale],n=!1,o=!1,p=0,q="",r=1e12,s=1e9,t=1e6,u=1e3,v="",w=!1;if(a=a||0,g=Math.abs(a),b._.includes(c,"(")?(n=!0,c=c.replace(/[\(|\)]/g,"")):(b._.includes(c,"+")||b._.includes(c,"-"))&&(j=b._.includes(c,"+")?c.indexOf("+"):0>a?c.indexOf("-"):-1,c=c.replace(/[\+|\-]/g,"")),b._.includes(c,"a")&&(e=c.match(/a(k|m|b|t)?/),e=e?e[1]:!1,b._.includes(c," a")&&(q=" "),c=c.replace(new RegExp(q+"a[kmbt]?"),""),g>=r&&!e||"t"===e?(q+=m.abbreviations.trillion,a/=r):r>g&&g>=s&&!e||"b"===e?(q+=m.abbreviations.billion,a/=s):s>g&&g>=t&&!e||"m"===e?(q+=m.abbreviations.million,a/=t):(t>g&&g>=u&&!e||"k"===e)&&(q+=m.abbreviations.thousand,a/=u)),b._.includes(c,"[.]")&&(o=!0,c=c.replace("[.]",".")),h=a.toString().split(".")[0],i=c.split(".")[1],k=c.indexOf(","),p=(c.split(".")[0].split(",")[0].match(/0/g)||[]).length,i?(b._.includes(i,"[")?(i=i.replace("]",""),i=i.split("["),v=b._.toFixed(a,i[0].length+i[1].length,d,i[1].length)):v=b._.toFixed(a,i.length,d),h=v.split(".")[0],v=b._.includes(v,".")?m.delimiters.decimal+v.split(".")[1]:"",o&&0===Number(v.slice(1))&&(v="")):h=b._.toFixed(a,0,d),q&&!e&&Number(h)>=1e3&&q!==m.abbreviations.trillion)switch(h=String(Number(h)/1e3),q){case m.abbreviations.thousand:q=m.abbreviations.million;break;case m.abbreviations.million:q=m.abbreviations.billion;break;case m.abbreviations.billion:q=m.abbreviations.trillion}if(b._.includes(h,"-")&&(h=h.slice(1),w=!0),h.length<p)for(var x=p-h.length;x>0;x--)h="0"+h;return k>-1&&(h=h.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1"+m.delimiters.thousands)),0===c.indexOf(".")&&(h=""),l=h+v+(q?q:""),n?l=(n&&w?"(":"")+l+(n&&w?")":""):j>=0?l=0===j?(w?"-":"+")+l:l+(w?"-":"+"):w&&(l="-"+l),l},stringToNumber:function(a){var b,c,d,e=f[h.currentLocale],g=a,i={thousand:3,million:6,billion:9,trillion:12};if(h.zeroFormat&&a===h.zeroFormat)c=0;else if(h.nullFormat&&a===h.nullFormat||!a.replace(/[^0-9]+/g,"").length)c=null;else{c=1,"."!==e.delimiters.decimal&&(a=a.replace(/\./g,"").replace(e.delimiters.decimal,"."));for(b in i)if(d=new RegExp("[^a-zA-Z]"+e.abbreviations[b]+"(?:\\)|(\\"+e.currency.symbol+")?(?:\\))?)?$"),g.match(d)){c*=Math.pow(10,i[b]);break}c*=(a.split("-").length+Math.min(a.split("(").length-1,a.split(")").length-1))%2?1:-1,a=a.replace(/[^0-9\.]+/g,""),c*=Number(a)}return c},isNaN:function(a){return"number"==typeof a&&isNaN(a)},includes:function(a,b){return-1!==a.indexOf(b)},insert:function(a,b,c){return a.slice(0,c)+b+a.slice(c)},reduce:function(a,b){if(null===this)throw new TypeError("Array.prototype.reduce called on null or undefined");if("function"!=typeof b)throw new TypeError(b+" is not a function");var c,d=Object(a),e=d.length>>>0,f=0;if(3===arguments.length)c=arguments[2];else{for(;e>f&&!(f in d);)f++;if(f>=e)throw new TypeError("Reduce of empty array with no initial value");c=d[f++]}for(;e>f;f++)f in d&&(c=b(c,d[f],f,d));return c},multiplier:function(a){var b=a.toString().split(".");return b.length<2?1:Math.pow(10,b[1].length)},correctionFactor:function(){var a=Array.prototype.slice.call(arguments);return a.reduce(function(a,b){var d=c.multiplier(b);return a>d?a:d},1)},toFixed:function(a,b,c,d){var e,f,g,h,i=a.toString().split("."),j=b-(d||0);return e=2===i.length?Math.min(Math.max(i[1].length,j),b):j,g=Math.pow(10,e),h=(c(a+"e+"+e)/g).toFixed(e),d>b-e&&(f=new RegExp("\\.?0{1,"+(d-(b-e))+"}$"),h=h.replace(f,"")),h}},b.options=h,b.formats=e,b.locales=f,b.locale=function(a){return a&&(h.currentLocale=a.toLowerCase()),h.currentLocale},b.localeData=function(a){if(!a)return f[h.currentLocale];if(a=a.toLowerCase(),!f[a])throw new Error("Unknown locale : "+a);return f[a]},b.reset=function(){for(var a in g)h[a]=g[a]},b.zeroFormat=function(a){h.zeroFormat="string"==typeof a?a:null},b.nullFormat=function(a){h.nullFormat="string"==typeof a?a:null},b.defaultFormat=function(a){h.defaultFormat="string"==typeof a?a:"0.0"},b.register=function(a,b,c){if(b=b.toLowerCase(),this[a+"s"][b])throw new TypeError(b+" "+a+" already registered.");return this[a+"s"][b]=c,c},b.validate=function(a,c){var d,e,f,g,h,i,j,k;if("string"!=typeof a&&(a+="",console.warn&&console.warn("Numeral.js: Value is not string. It has been co-erced to: ",a)),a=a.trim(),a.match(/^\d+$/))return!0;if(""===a)return!1;try{j=b.localeData(c)}catch(l){j=b.localeData(b.locale())}return f=j.currency.symbol,h=j.abbreviations,d=j.delimiters.decimal,e="."===j.delimiters.thousands?"\\.":j.delimiters.thousands,k=a.match(/^[^\d]+/),null!==k&&(a=a.substr(1),k[0]!==f)?!1:(k=a.match(/[^\d]+$/),null!==k&&(a=a.slice(0,-1),k[0]!==h.thousand&&k[0]!==h.million&&k[0]!==h.billion&&k[0]!==h.trillion)?!1:(i=new RegExp(e+"{2}"),a.match(/[^\d.,]/g)?!1:(g=a.split(d),g.length>2?!1:g.length<2?!!g[0].match(/^\d+.*\d$/)&&!g[0].match(i):1===g[0].length?!!g[0].match(/^\d+$/)&&!g[0].match(i)&&!!g[1].match(/^\d+$/):!!g[0].match(/^\d+.*\d$/)&&!g[0].match(i)&&!!g[1].match(/^\d+$/))))},b.fn=a.prototype={clone:function(){return b(this)},format:function(a,c){var d,f,g,i=this._value,j=a||h.defaultFormat;if(c=c||Math.round,0===i&&null!==h.zeroFormat)f=h.zeroFormat;else if(null===i&&null!==h.nullFormat)f=h.nullFormat;else{for(d in e)if(j.match(e[d].regexps.format)){g=e[d].format;break}g=g||b._.numberToFormat,f=g(i,j,c)}return f},value:function(){return this._value},input:function(){return this._input},set:function(a){return this._value=Number(a),this},add:function(a){function b(a,b,c,e){return a+Math.round(d*b)}var d=c.correctionFactor.call(null,this._value,a);return this._value=c.reduce([this._value,a],b,0)/d,this},subtract:function(a){function b(a,b,c,e){return a-Math.round(d*b)}var d=c.correctionFactor.call(null,this._value,a);return this._value=c.reduce([a],b,Math.round(this._value*d))/d,this},multiply:function(a){function b(a,b,d,e){var f=c.correctionFactor(a,b);return Math.round(a*f)*Math.round(b*f)/Math.round(f*f)}return this._value=c.reduce([this._value,a],b,1),this},divide:function(a){function b(a,b,d,e){var f=c.correctionFactor(a,b);return Math.round(a*f)/Math.round(b*f)}return this._value=c.reduce([this._value,a],b),this},difference:function(a){return Math.abs(b(this._value).subtract(a).value())}},b.register("locale","en",{delimiters:{thousands:",",decimal:"."},abbreviations:{thousand:"k",million:"m",billion:"b",trillion:"t"},ordinal:function(a){var b=a%10;return 1===~~(a%100/10)?"th":1===b?"st":2===b?"nd":3===b?"rd":"th"},currency:{symbol:"$"}}),function(){b.register("format","bps",{regexps:{format:/(BPS)/,unformat:/(BPS)/},format:function(a,c,d){var e,f=b._.includes(c," BPS")?" ":"";return a=1e4*a,c=c.replace(/\s?BPS/,""),e=b._.numberToFormat(a,c,d),b._.includes(e,")")?(e=e.split(""),e.splice(-1,0,f+"BPS"),e=e.join("")):e=e+f+"BPS",e},unformat:function(a){return+(1e-4*b._.stringToNumber(a)).toFixed(15)}})}(),function(){var a={base:1e3,suffixes:["B","KB","MB","GB","TB","PB","EB","ZB","YB"]},c={base:1024,suffixes:["B","KiB","MiB","GiB","TiB","PiB","EiB","ZiB","YiB"]},d=a.suffixes.concat(c.suffixes.filter(function(b){return a.suffixes.indexOf(b)<0})),e=d.join("|");e="("+e.replace("B","B(?!PS)")+")",b.register("format","bytes",{regexps:{format:/([0\s]i?b)/,unformat:new RegExp(e)},format:function(d,e,f){var g,h,i,j,k=b._.includes(e,"ib")?c:a,l=b._.includes(e," b")||b._.includes(e," ib")?" ":"";for(e=e.replace(/\s?i?b/,""),h=0;h<=k.suffixes.length;h++)if(i=Math.pow(k.base,h),j=Math.pow(k.base,h+1),null===d||0===d||d>=i&&j>d){l+=k.suffixes[h],i>0&&(d/=i);break}return g=b._.numberToFormat(d,e,f),g+l},unformat:function(d){var e,f,g=b._.stringToNumber(d);if(g){for(e=a.suffixes.length-1;e>=0;e--){if(b._.includes(d,a.suffixes[e])){f=Math.pow(a.base,e);break}if(b._.includes(d,c.suffixes[e])){f=Math.pow(c.base,e);break}}g*=f||1}return g}})}(),function(){b.register("format","currency",{regexps:{format:/(\$)/},format:function(a,c,d){var e,f,g,h=b.locales[b.options.currentLocale],i={before:c.match(/^([\+|\-|\(|\s|\$]*)/)[0],after:c.match(/([\+|\-|\)|\s|\$]*)$/)[0]};for(c=c.replace(/\s?\$\s?/,""),e=b._.numberToFormat(a,c,d),a>=0?(i.before=i.before.replace(/[\-\(]/,""),i.after=i.after.replace(/[\-\)]/,"")):0>a&&!b._.includes(i.before,"-")&&!b._.includes(i.before,"(")&&(i.before="-"+i.before),g=0;g<i.before.length;g++)switch(f=i.before[g]){case"$":e=b._.insert(e,h.currency.symbol,g);break;case" ":e=b._.insert(e," ",g+h.currency.symbol.length-1)}for(g=i.after.length-1;g>=0;g--)switch(f=i.after[g]){case"$":e=g===i.after.length-1?e+h.currency.symbol:b._.insert(e,h.currency.symbol,-(i.after.length-(1+g)));break;case" ":e=g===i.after.length-1?e+" ":b._.insert(e," ",-(i.after.length-(1+g)+h.currency.symbol.length-1))}return e}})}(),function(){b.register("format","exponential",{regexps:{format:/(e\+|e-)/,unformat:/(e\+|e-)/},format:function(a,c,d){var e,f="number"!=typeof a||b._.isNaN(a)?"0e+0":a.toExponential(),g=f.split("e");return c=c.replace(/e[\+|\-]{1}0/,""),e=b._.numberToFormat(Number(g[0]),c,d),e+"e"+g[1]},unformat:function(a){function c(a,c,d,e){var f=b._.correctionFactor(a,c),g=a*f*(c*f)/(f*f);return g}var d=b._.includes(a,"e+")?a.split("e+"):a.split("e-"),e=Number(d[0]),f=Number(d[1]);return f=b._.includes(a,"e-")?f*=-1:f,b._.reduce([e,Math.pow(10,f)],c,1)}})}(),function(){b.register("format","ordinal",{regexps:{format:/(o)/},format:function(a,c,d){var e,f=b.locales[b.options.currentLocale],g=b._.includes(c," o")?" ":"";return c=c.replace(/\s?o/,""),g+=f.ordinal(a),e=b._.numberToFormat(a,c,d),e+g}})}(),function(){b.register("format","percentage",{regexps:{format:/(%)/,unformat:/(%)/},format:function(a,c,d){var e,f=b._.includes(c," %")?" ":"";return b.options.scalePercentBy100&&(a=100*a),c=c.replace(/\s?\%/,""),e=b._.numberToFormat(a,c,d),b._.includes(e,")")?(e=e.split(""),e.splice(-1,0,f+"%"),e=e.join("")):e=e+f+"%",e},unformat:function(a){var c=b._.stringToNumber(a);return b.options.scalePercentBy100?.01*c:c}})}(),function(){b.register("format","time",{regexps:{format:/(:)/,unformat:/(:)/},format:function(a,b,c){var d=Math.floor(a/60/60),e=Math.floor((a-60*d*60)/60),f=Math.round(a-60*d*60-60*e);return d+":"+(10>e?"0"+e:e)+":"+(10>f?"0"+f:f)},unformat:function(a){var b=a.split(":"),c=0;return 3===b.length?(c+=60*Number(b[0])*60,c+=60*Number(b[1]),c+=Number(b[2])):2===b.length&&(c+=60*Number(b[0]),c+=Number(b[1])),Number(c)}})}(),b});
-
-/***/ }),
 /* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -28855,13 +28896,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addActiveScriptsItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return deleteActiveScriptsItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return updateActiveScriptsItems; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NetscriptWorker_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_LogBox_js__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_numeral_min_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_numeral_min_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__ = __webpack_require__(4);
 
@@ -34665,11 +34706,16 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*! decimal.js v7.2.3 https://github.com/MikeM
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Location_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+
+
 
 
 
@@ -34686,22 +34732,28 @@ function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
     this.name       = name;
     this.price      = initPrice;
 
-    this.playerShares   = 0;
-    this.playerAvgPx    = 0;
+    this.playerShares       = 0;
+    this.playerAvgPx        = 0;
+    this.playerShortShares  = 0;
+    this.playerAvgShortPx   = 0;
     this.mv             = mv;
     this.b              = b;
     this.otlkMag        = otlkMag;
 }
 
 Stock.prototype.toJSON = function() {
-	return Object(__WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__["b" /* Generic_toJSON */])("Stock", this);
+	return Object(__WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__["b" /* Generic_toJSON */])("Stock", this);
 }
 
 Stock.fromJSON = function(value) {
-	return Object(__WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(Stock, value.data);
+	return Object(__WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(Stock, value.data);
 }
 
-__WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__["c" /* Reviver */].constructors.Stock = Stock;
+__WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__["c" /* Reviver */].constructors.Stock = Stock;
+
+//Order types (long and short for each):
+// - Limit Order
+// - Stop Order
 
 let StockMarket = {}        //Full name to stock object
 let StockSymbols = {}       //Full name to symbol
@@ -34711,7 +34763,7 @@ function loadStockMarket(saveString) {
     if (saveString === "") {
         StockMarket = {};
     } else {
-        StockMarket = JSON.parse(saveString, __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__["c" /* Reviver */]);
+        StockMarket = JSON.parse(saveString, __WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__["c" /* Reviver */]);
     }
 }
 
@@ -34762,135 +34814,135 @@ function initStockMarket() {
     }
 
     var ecorp = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumECorp;
-    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], 0.5, true, 16, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
+    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], 0.5, true, 16, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
     StockMarket[ecorp] = ecorpStk;
 
     var megacorp = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12MegaCorp;
-    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], 0.5, true, 16, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(25000, 33000));
+    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], 0.5, true, 16, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(25000, 33000));
     StockMarket[megacorp] = megacorpStk;
 
     var blade = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12BladeIndustries;
-    var bladeStk = new Stock(blade, StockSymbols[blade], 0.75, true, 13, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 22000));
+    var bladeStk = new Stock(blade, StockSymbols[blade], 0.75, true, 13, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 22000));
     StockMarket[blade] = bladeStk;
 
     var clarke = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumClarkeIncorporated;
-    var clarkeStk = new Stock(clarke, StockSymbols[clarke], 0.7, true, 12, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 20000));
+    var clarkeStk = new Stock(clarke, StockSymbols[clarke], 0.7, true, 12, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 20000));
     StockMarket[clarke] = clarkeStk;
 
     var omnitek = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenOmniTekIncorporated;
-    var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], 0.65, true, 12, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(35000, 40000));
+    var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], 0.65, true, 12, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(35000, 40000));
     StockMarket[omnitek] = omnitekStk;
 
     var foursigma = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12FourSigma;
-    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], 1.1, true, 18, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(60000, 70000));
+    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], 1.1, true, 18, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(60000, 70000));
     StockMarket[foursigma] = foursigmaStk;
 
     var kuaigong = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].ChongqingKuaiGongInternational;
-    var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], 0.8, true, 10, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 24000));
+    var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], 0.8, true, 10, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 24000));
     StockMarket[kuaigong] = kuaigongStk;
 
     var fulcrum = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumFulcrumTechnologies;
-    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], 1.25, true, 17, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(30000, 35000));
+    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], 1.25, true, 17, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(30000, 35000));
     StockMarket[fulcrum] = fulcrumStk;
 
     var storm = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].IshimaStormTechnologies;
-    var stormStk = new Stock(storm, StockSymbols[storm], 0.85, true, 7, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(21000, 24000));
+    var stormStk = new Stock(storm, StockSymbols[storm], 0.85, true, 7, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(21000, 24000));
     StockMarket[storm] = stormStk;
 
     var defcomm = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].NewTokyoDefComm;
-    var defcommStk = new Stock(defcomm, StockSymbols[defcomm], 0.65, true, 10, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 15000));
+    var defcommStk = new Stock(defcomm, StockSymbols[defcomm], 0.65, true, 10, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 15000));
     StockMarket[defcomm] = defcommStk;
 
     var helios = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenHeliosLabs;
-    var heliosStk = new Stock(helios, StockSymbols[helios], 0.6, true, 9, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(12000, 16000));
+    var heliosStk = new Stock(helios, StockSymbols[helios], 0.6, true, 9, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(12000, 16000));
     StockMarket[helios] = heliosStk;
 
     var vitalife = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].NewTokyoVitaLife;
-    var vitalifeStk = new Stock(vitalife, StockSymbols[vitalife], 0.75, true, 7, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 12000));
+    var vitalifeStk = new Stock(vitalife, StockSymbols[vitalife], 0.75, true, 7, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 12000));
     StockMarket[vitalife] = vitalifeStk;
 
     var icarus = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12IcarusMicrosystems;
-    var icarusStk = new Stock(icarus, StockSymbols[icarus], 0.65, true, 7.5, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(16000, 20000));
+    var icarusStk = new Stock(icarus, StockSymbols[icarus], 0.65, true, 7.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(16000, 20000));
     StockMarket[icarus] = icarusStk;
 
     var universalenergy = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12UniversalEnergy;
-    var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], 0.55, true, 10, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
+    var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], 0.55, true, 10, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
     StockMarket[universalenergy] = universalenergyStk;
 
     var aerocorp = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumAeroCorp;
-    var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], 0.6, true, 6, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 15000));
+    var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], 0.6, true, 6, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 15000));
     StockMarket[aerocorp] = aerocorpStk;
 
     var omnia = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenOmniaCybersystems;
-    var omniaStk = new Stock(omnia, StockSymbols[omnia], 0.7, true, 4.5, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(9000, 12000));
+    var omniaStk = new Stock(omnia, StockSymbols[omnia], 0.7, true, 4.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(9000, 12000));
     StockMarket[omnia] = omniaStk;
 
     var solaris = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].ChongqingSolarisSpaceSystems;
-    var solarisStk = new Stock(solaris, StockSymbols[solaris], 0.75, true, 8.5, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
+    var solarisStk = new Stock(solaris, StockSymbols[solaris], 0.75, true, 8.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
     StockMarket[solaris] = solarisStk;
 
     var globalpharm = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].NewTokyoGlobalPharmaceuticals;
-    var globalpharmStk = new Stock(globalpharm, StockSymbols[globalpharm], 0.6, true, 10.5, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
+    var globalpharmStk = new Stock(globalpharm, StockSymbols[globalpharm], 0.6, true, 10.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
     StockMarket[globalpharm] = globalpharmStk;
 
     var nova = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].IshimaNovaMedical;
-    var novaStk = new Stock(nova, StockSymbols[nova], 0.75, true, 5, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
+    var novaStk = new Stock(nova, StockSymbols[nova], 0.75, true, 5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
     StockMarket[nova] = novaStk;
 
     var watchdog = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumWatchdogSecurity;
-    var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], 1, true, 1.5, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
+    var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], 1, true, 1.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
     StockMarket[watchdog] = watchdogStk;
 
     var lexocorp = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenLexoCorp;
-    var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], 1.25, true, 3, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
+    var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], 1.25, true, 3, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
     StockMarket[lexocorp] = lexocorpStk;
 
     var rho = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumRhoConstruction;
-    var rhoStk = new Stock(rho, StockSymbols[rho], 0.6, true, 1, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(3000, 6000));
+    var rhoStk = new Stock(rho, StockSymbols[rho], 0.6, true, 1, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(3000, 6000));
     StockMarket[rho] = rhoStk;
 
     var alpha = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12AlphaEnterprises;
-    var alphaStk = new Stock(alpha, StockSymbols[alpha], 1.05, true, 2, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
+    var alphaStk = new Stock(alpha, StockSymbols[alpha], 1.05, true, 2, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
     StockMarket[alpha] = alphaStk;
 
     var syscore = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenSysCoreSecurities;
-    var syscoreStk = new Stock(syscore, StockSymbols[syscore], 1.25, true, 0, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(4000, 7000))
+    var syscoreStk = new Stock(syscore, StockSymbols[syscore], 1.25, true, 0, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(4000, 7000))
     StockMarket[syscore] = syscoreStk;
 
     var computek = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenCompuTek;
-    var computekStk = new Stock(computek, StockSymbols[computek], 0.9, true, 0, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 5000));
+    var computekStk = new Stock(computek, StockSymbols[computek], 0.9, true, 0, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 5000));
     StockMarket[computek] = computekStk;
 
     var netlink = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumNetLinkTechnologies;
-    var netlinkStk = new Stock(netlink, StockSymbols[netlink], 1, true, 1, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 4000));
+    var netlinkStk = new Stock(netlink, StockSymbols[netlink], 1, true, 1, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 4000));
     StockMarket[netlink] = netlinkStk;
 
     var omega = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].IshimaOmegaSoftware;
-    var omegaStk = new Stock(omega, StockSymbols[omega], 1, true, 0.5, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(3000, 6000));
+    var omegaStk = new Stock(omega, StockSymbols[omega], 1, true, 0.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(3000, 6000));
     StockMarket[omega] = omegaStk;
 
     var fns = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12FoodNStuff;
-    var fnsStk = new Stock(fns, StockSymbols[fns], 0.75, false, 1, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(1000, 4000));
+    var fnsStk = new Stock(fns, StockSymbols[fns], 0.75, false, 1, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(1000, 4000));
     StockMarket[fns] = fnsStk;
 
     var sigmacosm = "Sigma Cosmetics";
-    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], 0.9, true, 0, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 3000));
+    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], 0.9, true, 0, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 3000));
     StockMarket[sigmacosm] = sigmacosmStk;
 
     var joesguns = "Joes Guns";
-    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 1, true, 1, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(500, 1000));
+    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 1, true, 1, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(500, 1000));
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.25, true, 0, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(1000, 1500));
+    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.25, true, 0, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(1000, 1500));
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";
-    var microdyneStk = new Stock(microdyne, StockSymbols[microdyne], 0.75, true, 8, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
+    var microdyneStk = new Stock(microdyne, StockSymbols[microdyne], 0.75, true, 8, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
     StockMarket[microdyne] = microdyneStk;
 
     var titanlabs = "Titan Laboratories";
-    var titanlabsStk = new Stock(titanlabs, StockSymbols[titanlabs], 0.6, true, 11, Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 20000));
+    var titanlabsStk = new Stock(titanlabs, StockSymbols[titanlabs], 0.6, true, 11, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 20000));
     StockMarket[titanlabs] = titanlabsStk;
 }
 
@@ -34924,52 +34976,146 @@ function stockMarketCycle() {
 
 //Returns true if successful, false otherwise
 function buyStock(stock, shares) {
-    if (shares == 0) {return false;}
     if (stock == null || shares < 0 || isNaN(shares)) {
-        Object(__WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to buy stock. This may be a bug, contact developer");
+        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to buy stock. This may be a bug, contact developer");
         return false;
     }
     shares = Math.round(shares);
+    if (shares == 0) {return false;}
 
     var totalPrice = stock.price * shares;
-    if (__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].money.lt(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission)) {
-        Object(__WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You do not have enough money to purchase this. You need $" +
-                        Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2).toString() + ".");
+    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].money.lt(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission)) {
+        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You do not have enough money to purchase this. You need $" +
+                        Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2).toString() + ".");
         return false;
     }
 
     var origTotal = stock.playerShares * stock.playerAvgPx;
-    __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].loseMoney(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission);
+    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].loseMoney(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission);
     var newTotal = origTotal + totalPrice;
     stock.playerShares += shares;
     stock.playerAvgPx = newTotal / stock.playerShares;
     updateStockPlayerPosition(stock);
-    Object(__WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Bought " + Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                    Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. You also paid $" +
-                    Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + " in commission fees.");
+    Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Bought " + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                    Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. You also paid $" +
+                    Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + " in commission fees.");
     return true;
 }
-
 
 //Returns true if successful and false otherwise
 function sellStock(stock, shares) {
     if (shares == 0) {return false;}
     if (stock == null || shares < 0 || isNaN(shares)) {
-        Object(__WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to sell stock. This may be a bug, contact developer");
+        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to sell stock. This may be a bug, contact developer");
         return false;
     }
+    shares = Math.round(shares);
     if (shares > stock.playerShares) {shares = stock.playerShares;}
-    if (shares == 0) {return false;}
+    if (shares === 0) {return false;}
     var gains = stock.price * shares - __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission;
-    __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].gainMoney(gains);
+    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].gainMoney(gains);
     stock.playerShares -= shares;
     if (stock.playerShares == 0) {
         stock.playerAvgPx = 0;
     }
     updateStockPlayerPosition(stock);
-    Object(__WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Sold " + Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                    Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. After commissions, you gained " +
-                    "a total of $" + Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(gains, 2));
+    Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Sold " + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                    Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. After commissions, you gained " +
+                    "a total of $" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(gains, 2));
+    return true;
+}
+
+//Returns true if successful and false otherwise
+function shortStock(stock, shares, workerScript=null) {
+    var tixApi = (workerScript instanceof __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__["b" /* WorkerScript */]);
+    if (stock === null || isNaN(shares) || shares < 0) {
+        if (tixApi) {
+            workerScript.scriptRef.log("ERROR: shortStock() failed because of invalid arguments.");
+        } else {
+            Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to initiate a short position in a stock. This is probably " +
+                            "due to an invalid quantity. Otherwise, this may be a bug,  so contact developer");
+        }
+        return false;
+    }
+    shares = Math.round(shares);
+    if (shares === 0) {return false;}
+
+    var totalPrice = stock.price * shares;
+    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].money.lt(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission)) {
+        if (tixApi) {
+            workerScript.scriptRef.log("ERROR: shortStock() failed because you do not have " +
+                                       "money to purchase this short position. You need " +
+                                       __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default()(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission).format('($0.000a)'));
+        } else {
+            Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You do not have enough money to purchase this short position. You need $" +
+                            Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + ".");
+        }
+
+        return false;
+    }
+
+    var origTotal = stock.playerShortShares * stock.playerAvgShortPx;
+    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].loseMoney(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission);
+    var newTotal = origTotal + totalPrice;
+    stock.playerShortShares += shares;
+    stock.playerAvgShortPx = newTotal / stock.playerShortShares;
+    if (__WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].currentPage === __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].Page.StockMarket) {
+        updateStockPlayerPosition(stock);
+    }
+    if (tixApi) {
+        workerScript.scriptRef.log("Bought a short position of " + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at " +
+                                   __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default()(stock.price).format('($0.000a)') + " per share. Paid " +
+                                   __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default()(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission).format('($0.000a)') + " in commission fees.");
+    } else {
+        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Bought a short position of " + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                        Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. You also paid $" +
+                        Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + " in commission fees.");
+    }
+    return true;
+}
+
+//Returns true if successful and false otherwise
+function sellShort(stock, shares, workerScript=null) {
+    var tixApi = (workerScript instanceof __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__["b" /* WorkerScript */]);
+    if (stock === null || isNaN(shares) || shares < 0) {
+        if (tixApi) {
+            workerScript.scriptRef.log("ERROR: sellShort() failed because of invalid arguments.");
+        } else {
+            Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to sell a short position in a stock. This is probably " +
+                            "due to an invalid quantity. Otherwise, this may be a bug, so contact developer");
+        }
+        return false;
+    }
+    shares = Math.round(shares);
+    if (shares > stock.playerShortShares) {shares = stock.playerShortShares;}
+    if (shares === 0) {return false;}
+
+    var origCost = shares * stock.playerAvgShortPx;
+    var profit = ((stock.playerAvgShortPx - stock.price) * shares) - __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission;
+    if (isNaN(profit)) {profit = 0;}
+    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].gainMoney(origCost + profit);
+    if (tixApi) {
+        workerScript.scriptRef.onlineMoneyMade += profit;
+        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].scriptProdSinceLastAug += profit;
+    }
+
+    stock.playerShortShares -= shares;
+    if (stock.playerShortShares === 0) {
+        stock.playerAvgShortPx = 0;
+    }
+    if (__WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].currentPage === __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].Page.StockMarket) {
+        updateStockPlayerPosition(stock);
+    }
+    if (tixApi) {
+        workerScript.scriptRef.log("Sold your short position of " + shares + " shares of " + stock.symbol + " at " +
+                                   __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default()(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
+                                   "a total of " + __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default()(origCost + profit).format('($0.000a)'));
+    } else {
+        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Sold your short position of " + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                        Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. After commissions, you gained " +
+                        "a total of $" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(origCost + profit, 2));
+    }
+
     return true;
 }
 
@@ -35026,38 +35172,38 @@ function setStockMarketContentCreated(b) {
 
 var stockMarketContentCreated = false;
 function displayStockMarketContent() {
-    if (__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hasWseAccount == null) {__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hasWseAccount = false;}
-    if (__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hasTixApiAccess == null) {__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hasTixApiAccess = false;}
+    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount == null) {__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount = false;}
+    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasTixApiAccess == null) {__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasTixApiAccess = false;}
 
     //Purchase WSE Account button
-    var wseAccountButton = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["b" /* clearEventListeners */])("stock-market-buy-account");
-    wseAccountButton.innerText = "Buy WSE Account - $" + Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost, 2).toString();
-    if (!__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hasWseAccount && __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].money.gte(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost)) {
+    var wseAccountButton = Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["b" /* clearEventListeners */])("stock-market-buy-account");
+    wseAccountButton.innerText = "Buy WSE Account - $" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost, 2).toString();
+    if (!__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount && __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].money.gte(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost)) {
         wseAccountButton.setAttribute("class", "a-link-button");
     } else {
         wseAccountButton.setAttribute("class", "a-link-button-inactive");
     }
     wseAccountButton.addEventListener("click", function() {
-        __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hasWseAccount = true;
+        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount = true;
         initStockMarket();
         initSymbolToStockMap();
-        __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].loseMoney(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost);
+        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].loseMoney(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost);
         displayStockMarketContent();
         return false;
     });
 
     //Purchase TIX API Access account
-    var tixApiAccessButton = Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["b" /* clearEventListeners */])("stock-market-buy-tix-api");
+    var tixApiAccessButton = Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["b" /* clearEventListeners */])("stock-market-buy-tix-api");
     tixApiAccessButton.innerText = "Buy Trade Information eXchange (TIX) API Access - $" +
-                                   Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost, 2).toString();
-    if (!__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hasTixApiAccess && __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].money.gte(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost)) {
+                                   Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost, 2).toString();
+    if (!__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasTixApiAccess && __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].money.gte(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost)) {
         tixApiAccessButton.setAttribute("class", "a-link-button");
     } else {
         tixApiAccessButton.setAttribute("class", "a-link-button-inactive");
     }
     tixApiAccessButton.addEventListener("click", function() {
-        __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hasTixApiAccess = true;
-        __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].loseMoney(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost);
+        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasTixApiAccess = true;
+        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].loseMoney(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost);
         displayStockMarketContent();
         return false;
     });
@@ -35065,7 +35211,7 @@ function displayStockMarketContent() {
     var stockList = document.getElementById("stock-market-list");
     if (stockList == null) {return;}
 
-    if (!__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hasWseAccount) {
+    if (!__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount) {
         stockMarketContentCreated = false;
         while (stockList.firstChild) {
             stockList.removeChild(stockList.firstChild);
@@ -35074,11 +35220,11 @@ function displayStockMarketContent() {
     }
 
     //Create stock market content if you have an account
-    if (!stockMarketContentCreated && __WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hasWseAccount) {
+    if (!stockMarketContentCreated && __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount) {
         console.log("Creating Stock Market UI");
         document.getElementById("stock-market-commission").innerHTML =
             "Commission Fees: Every transaction you make has a $" +
-            Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + " commission fee.<br><br>" +
+            Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + " commission fee.<br><br>" +
             "WARNING: When you reset after installing Augmentations, the Stock Market is reset. " +
             "This means all your positions are lost, so make sure to sell your stocks before installing " +
             "Augmentations!";
@@ -35218,7 +35364,7 @@ function displayStockMarketContent() {
         stockMarketContentCreated = true;
     }
 
-    if (__WEBPACK_IMPORTED_MODULE_3__Player_js__["a" /* Player */].hasWseAccount) {
+    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount) {
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
                 var stock = StockMarket[name];
@@ -35242,15 +35388,15 @@ function updateStockTicker(stock, increase) {
     }
     stkName.innerText = stock.name;
     stkSym.innerText = stock.symbol;
-    stkPrice.innerText = "$" + Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2).toString();
+    stkPrice.innerText = "$" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2).toString();
 
     var returnTxt = document.getElementById(tickerId + "-return");
     var totalCost = stock.playerShares * stock.playerAvgPx;
     var gains = (stock.price - stock.playerAvgPx) * stock.playerShares;
     var percentageGains = gains / totalCost;
     if (totalCost > 0) {
-        returnTxt.innerText = "$" + Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(gains, 2) + " (" +
-                              Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(percentageGains * 100, 2) + "%)";
+        returnTxt.innerText = "$" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(gains, 2) + " (" +
+                              Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(percentageGains * 100, 2) + "%)";
     } else {
         returnTxt.innerText = "N/A";
     }
@@ -35272,11 +35418,11 @@ function updateStockPlayerPosition(stock) {
     var avgPriceTxt = document.getElementById(tickerId + "-avgprice");
     var sharesTxt = document.getElementById(tickerId + "-shares");
     if (avgPriceTxt == null || sharesTxt == null) {
-        Object(__WEBPACK_IMPORTED_MODULE_4__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Could not find element for player positions for stock " +
+        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Could not find element for player positions for stock " +
                         stock.symbol + ". This is a bug please contact developer");
         return;
     }
-    avgPriceTxt.innerText = "$" + Object(__WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.playerAvgPx, 2);
+    avgPriceTxt.innerText = "$" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.playerAvgPx, 2);
     sharesTxt.innerText = stock.playerShares.toString();
 }
 
@@ -35360,7 +35506,7 @@ function logBoxUpdateText() {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Environment; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NetscriptFunctions_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NetscriptFunctions_js__ = __webpack_require__(22);
 
 /* Environment
  * 	NetScript program environment
@@ -36004,8 +36150,8 @@ HackingMission.prototype.init = function() {
     for (var i = 0; i < numNodes; ++i) {
         var stats = {
             atk: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(75, 85),
-            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(20, 40),
-            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(200, 220)
+            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(25, 35),
+            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(210, 230)
         }
         this.enemyCores.push(new Node(NodeTypes.Core, stats));
         this.enemyCores[i].setControlledByEnemy();
@@ -36014,8 +36160,8 @@ HackingMission.prototype.init = function() {
     for (var i = 0; i < numFirewalls; ++i) {
         var stats = {
             atk: 0,
-            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(80, 100),
-            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(250, 275)
+            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(80, 90),
+            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(275, 300)
         }
         this.enemyNodes.push(new Node(NodeTypes.Firewall, stats));
         this.enemyNodes[i].setControlledByEnemy();
@@ -36024,8 +36170,8 @@ HackingMission.prototype.init = function() {
     for (var i = 0; i < numDatabases; ++i) {
         var stats = {
             atk: 0,
-            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(75, 100),
-            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(200, 250)
+            def: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(70, 85),
+            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(210, 275)
         }
         var node = new Node(NodeTypes.Database, stats);
         node.setControlledByEnemy();
@@ -36396,16 +36542,16 @@ HackingMission.prototype.createMap = function() {
                     case 0: //Spam
                         var stats = {
                             atk: 0,
-                            def: averageAttack * 1.2 + Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(10, 50),
-                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(160, 180)
+                            def: averageAttack * 1.15 + Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(10, 50),
+                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(200, 225)
                         }
                         node = new Node(NodeTypes.Spam, stats);
                         break;
                     case 1: //Transfer
                         var stats = {
                             atk: 0,
-                            def: averageAttack * 1.2 + Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(10, 50),
-                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(210, 230)
+                            def: averageAttack * 1.15 + Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(10, 50),
+                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(250, 275)
                         }
                         node = new Node(NodeTypes.Transfer, stats);
                         break;
@@ -36413,8 +36559,8 @@ HackingMission.prototype.createMap = function() {
                     default:
                         var stats = {
                             atk: 0,
-                            def: averageAttack * 1.2 + Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(25, 75),
-                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(275, 300)
+                            def: averageAttack * 1.15 + Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(25, 75),
+                            hp: randMult * Object(__WEBPACK_IMPORTED_MODULE_5__utils_HelperFunctions_js__["d" /* getRandomInt */])(300, 320)
                         }
                         node = new Node(NodeTypes.Shield, stats);
                         break;
@@ -36441,14 +36587,13 @@ HackingMission.prototype.createMap = function() {
 }
 
 HackingMission.prototype.createNodeDomElement = function(nodeObj) {
-    var nodeDiv = document.createElement("a");
+    var nodeDiv = document.createElement("a"), txtEl = document.createElement('p');
     nodeObj.el = nodeDiv;
-    document.getElementById("hacking-mission-map").appendChild(nodeDiv);
 
     //Set the node element's id based on its coordinates
-    nodeDiv.setAttribute("id", "hacking-mission-node-" +
-                                nodeObj.pos[0] + "-" +
-                                nodeObj.pos[1]);
+    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
+    nodeDiv.setAttribute("id", id);
+    txtEl.setAttribute("id", id + "-txt");
 
     //Set node classes for owner
     nodeDiv.classList.add("hack-mission-node");
@@ -36462,41 +36607,44 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
     var txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
-            txt = "<p>CPU Core<br>" + "HP: " +
+            txt = "CPU Core<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-cpu-node");
             break;
         case NodeTypes.Firewall:
-            txt = "<p>Firewall<br>" + "HP: " +
+            txt = "Firewall<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-firewall-node");
             break;
         case NodeTypes.Database:
-            txt = "<p>Database<br>" + "HP: " +
+            txt = "Database<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-database-node");
             break;
         case NodeTypes.Spam:
-            txt = "<p>Spam<br>" + "HP: " +
+            txt = "Spam<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-spam-node");
             break;
         case NodeTypes.Transfer:
-            txt = "<p>Transfer<br>" + "HP: " +
+            txt = "Transfer<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-transfer-node");
             break;
         case NodeTypes.Shield:
         default:
-            txt = "<p>Shield<br>" + "HP: " +
+            txt = "Shield<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-shield-node");
             break;
     }
 
     txt += "<br>Atk: " + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.atk, 1) +
-           "<br>Def: " + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.def, 1) + "</p>";
-    nodeDiv.innerHTML = txt;
+           "<br>Def: " + Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.def, 1);
+    txtEl.innerHTML = txt;
+
+    nodeDiv.appendChild(txtEl);
+    document.getElementById("hacking-mission-map").appendChild(nodeDiv);
 }
 
 HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
@@ -36505,36 +36653,35 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
         return;
     }
 
-    var nodeDiv = document.getElementById("hacking-mission-node-" +
-                                          nodeObj.pos[0] + "-" +
-                                          nodeObj.pos[1]);
+    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
+    var nodeDiv = document.getElementById(id), txtEl = document.getElementById(id + "-txt");
 
     //Set node classes based on type
     var txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
-            txt = "<p>CPU Core<br>" + "HP: " +
+            txt = "CPU Core<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
         case NodeTypes.Firewall:
-            txt = "<p>Firewall<br>" + "HP: " +
+            txt = "Firewall<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
         case NodeTypes.Database:
-            txt = "<p>Database<br>" + "HP: " +
+            txt = "Database<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
         case NodeTypes.Spam:
-            txt = "<p>Spam<br>" + "HP: " +
+            txt = "Spam<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
         case NodeTypes.Transfer:
-            txt = "<p>Transfer<br>" + "HP: " +
+            txt = "Transfer<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
         case NodeTypes.Shield:
         default:
-            txt = "<p>Shield<br>" + "HP: " +
+            txt = "Shield<br>" + "HP: " +
                   Object(__WEBPACK_IMPORTED_MODULE_6__utils_StringHelperFunctions_js__["c" /* formatNumber */])(nodeObj.hp, 1);
             break;
     }
@@ -36544,11 +36691,7 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
     if (nodeObj.action) {
         txt += "<br>" + nodeObj.action;
     }
-    txt += "</p>";
-    nodeDiv.innerHTML = txt;
-    if (nodeObj.type === NodeTypes.Core || nodeObj.type === NodeTypes.Transfer) {
-        this.configurePlayerNodeElement(nodeObj.el, true);
-    }
+    txtEl.innerHTML = txt;
 }
 
 //Gets a Node DOM element's corresponding Node object using its
@@ -36584,7 +36727,6 @@ function selectNode(hackMissionInst, el) {
         hackMissionInst.selectedNode.deselect(hackMissionInst.actionButtons);
         hackMissionInst.selectedNode = null;
     }
-    console.log("Selecting node :" + el.id);
     nodeObj.select(hackMissionInst.actionButtons);
     hackMissionInst.selectedNode = nodeObj;
 }
@@ -36592,17 +36734,16 @@ function selectNode(hackMissionInst, el) {
 //Configures a DOM element representing a player-owned node to
 //be selectable and actionable
 //Note: Does NOT change its css class. This is handled by Node.setControlledBy...
-HackingMission.prototype.configurePlayerNodeElement = function(el, reconfigureChildOnly=false) {
+HackingMission.prototype.configurePlayerNodeElement = function(el) {
     var nodeObj = this.getNodeFromElement(el);
     if (nodeObj === null) {console.log("Error getting Node object");}
 
     //Add event listener
+    var self = this;
     function selectNodeWrapper() {
-        selectNode(this, el);
+        selectNode(self, el);
     }
-    if (!reconfigureChildOnly) {
-        el.addEventListener("click", selectNodeWrapper);
-    }
+    el.addEventListener("click", selectNodeWrapper);
 
     if (el.firstChild) {
         el.firstChild.addEventListener("click", selectNodeWrapper);
@@ -36916,8 +37057,8 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
         }
 
         //The conquered node has its stats reduced
-        targetNode.atk /= 3;
-        targetNode.def /= 3;
+        targetNode.atk /= 2;
+        targetNode.def /= 3.5;
 
         //Flag for whether the target node was a misc node
         var isMiscNode = !targetNode.plyrCtrl && !targetNode.enmyCtrl;
@@ -37138,11 +37279,11 @@ var hackEffWeightAttack = 80; //Weight for Attack action
 
 //Returns damage per cycle based on stats
 HackingMission.prototype.calculateAttackDamage = function(atk, def, hacking = 0) {
-    return Math.max(atk + (hacking / hackEffWeightAttack) - def, 1);
+    return Math.max(0.75 * (atk + (hacking / hackEffWeightAttack) - def), 1);
 }
 
 HackingMission.prototype.calculateScanEffect = function(atk, def, hacking=0) {
-    return Math.max(0.85 * ((atk) + hacking / hackEffWeightTarget - (def * 0.95)), 2);
+    return Math.max(0.7 * ((atk) + hacking / hackEffWeightTarget - (def * 0.95)), 2);
 }
 
 HackingMission.prototype.calculateWeakenEffect = function(atk, def, hacking=0) {
@@ -37224,10 +37365,10 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_YesNoBox_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_YesNoBox_js__ = __webpack_require__(23);
 
 
 
@@ -38707,12 +38848,12 @@ function applySourceFile(srcFile) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__engine_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Location_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Message_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__NetscriptFunctions_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptWorker_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Message_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__NetscriptFunctions_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__SpecialServerIps_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__StockMarket_js__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Terminal_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_decimal_js__ = __webpack_require__(27);
@@ -38956,7 +39097,7 @@ function prestigeSourceFile() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Terminal_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_YesNoBox_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_YesNoBox_js__ = __webpack_require__(23);
 
 
 
@@ -39300,7 +39441,7 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptEnvironment_js__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Settings_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Script_js__ = __webpack_require__(16);
@@ -41155,7 +41296,7 @@ function substituteAliases(origCommand) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DarkWebItems; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SpecialServerIps_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Terminal_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__ = __webpack_require__(4);
@@ -91549,7 +91690,7 @@ acequire("../config").defineOptions(Editor.prototype, "editor", {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_YesNoBox_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_YesNoBox_js__ = __webpack_require__(23);
 
 
 
@@ -91851,12 +91992,12 @@ let HelpTexts = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Gang_js__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__HacknetNode_js__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Message_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Message_js__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Script_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Settings_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__SpecialServerIps_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__StockMarket_js__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__utils_GameOptions_js__ = __webpack_require__(39);

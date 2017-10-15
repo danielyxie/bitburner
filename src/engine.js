@@ -1684,7 +1684,8 @@ window.onload = function() {
     indexedDbRequest = window.indexedDB.open("bitburnerSave", 1);
 
     indexedDbRequest.onerror = function(e) {
-        console.log("Error opening indexedDB: " + e);
+        console.log("Error opening indexedDB: ");
+        console.log(e);
         return Engine.load(null); //Try to load from localstorage
     };
 
@@ -1705,7 +1706,7 @@ window.onload = function() {
     };
 
     indexedDbRequest.onupgradeneeded = function(e) {
-        var db = event.target.result;
+        var db = e.target.result;
         var objectStore = db.createObjectStore("savestring");
     }
 };

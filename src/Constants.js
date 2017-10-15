@@ -119,7 +119,7 @@ let CONSTANTS = {
     IntelligenceCrimeBaseExpGain: 0.001,
     IntelligenceProgramBaseExpGain: 500, //Program required hack level divided by this to determine int exp gain
     IntelligenceTerminalHackBaseExpGain: 200, //Hacking exp divided by this to determine int exp gain
-    IntelligenceSingFnBaseExpGain: 0.001,
+    IntelligenceSingFnBaseExpGain: 0.002,
     IntelligenceClassBaseExpGain: 0.000001,
     IntelligenceHackingMissionBaseExpGain: 0.03, //Hacking Mission difficulty multiplied by this to get exp gain
 
@@ -134,7 +134,7 @@ let CONSTANTS = {
                              "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
                              "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray " +
                              "that initially belong to neither you nor the enemy. The goal of the game is " +
-                             "to capture all of the enemy's database nodes, which are the parallelogram-shaped ones, within the time limit. " +
+                             "to capture all of the enemy's database nodes within the time limit. " +
                              "If you cannot capture all of the enemy's database nodes in the time limit, you will lose.<br><br>" +
                              "Each Node has three stats: Attack, Defense, and HP. There are five different actions that " +
                              "a Node can take:<br><br> " +
@@ -147,7 +147,7 @@ let CONSTANTS = {
                              "Fortify - Raises the Node's Defense. The effectiveness is determined by your hacking level.<br>" +
                              "Overflow - Raises the Node's Attack but lowers its Defense. The effectiveness is determined by your hacking level.<br><br>" +
                              "Note that when determining the effectiveness of the above actions, the TOTAL Attack or Defense of the team is used, not just the " +
-                             "Attack/Defense of the individual Node that is performing the action.<br><br." +
+                             "Attack/Defense of the individual Node that is performing the action.<br><br>" +
                              "To capture a Node, you must lower its HP down to 0.<br><br>" +
                              "There are six different types of Nodes:<br><br>" +
                              "CPU Core - These are your main Nodes that are used to perform actions. Capable of performing every action<br>" +
@@ -162,7 +162,7 @@ let CONSTANTS = {
                              "To assign an action to a Node, you must first select one of your Nodes. This can be done by simply clicking on it. Only " +
                              "one Node can be selected at a time, and it will be denoted with a white highlight. After selecting the Node, " +
                              "select its action using the Action Buttons near the top of the screen. Every action also has a corresponding keyboard " +
-                             "shortcut that can be used as well.<br><br>" +
+                             "shortcut.<br><br>" +
                              "For certain actions such as attacking, scanning, and weakening, the Node performing the action must have a target. To target " +
                              "another node, simply click-and-drag from the 'source' Node to a target. A Node can only have one target, and you can target " +
                              "any Node that is adjacent to one of your Nodes (immediately above, below, or to the side. NOT diagonal). Furthermore, only CPU Cores and Transfer Nodes " +
@@ -174,7 +174,7 @@ let CONSTANTS = {
                              "are not actively being targeted will increase by a fixed percentage.<br><br>" +
                              "-Whenever a Node is conquered, its stats are significantly reduced<br><br>" +
                              "-Miscellaneous Nodes slowly raise their defense over time<br><br>" +
-                             "-Nodes slowly regenerate health and raise over time.",
+                             "-Nodes slowly regenerate health over time.",
 
 
     //Gang constants
@@ -1051,7 +1051,7 @@ let CONSTANTS = {
     "but that's not available yet. You can also download files to your real computer using the 'download' Terminal command<br>" +
     "-Added a new Crime: Bond Forgery. This crime takes 5 minutes to attempt " +
     "and gives $4,500,000 if successful. It is meant for mid game.<br>" +
-    "-Added commitCrime() and getStats() Singularity Functions.<br>" +
+    "-Added commitCrime(), getCrimeChance(), and getStats() Singularity Functions.<br>" +
     "-Removed getIntelligence() Netscript function<br>" +
     "-Added sprintf and vsprintf to Netscript. See <a href='https://github.com/alexei/sprintf.js' target='_blank'>this Github page for details</a><br>" +
     "-Increased the amount of money gained from Infiltration by 20%, and the amount of faction reputation by 12%<br>" +
@@ -1059,7 +1059,9 @@ let CONSTANTS = {
     "-Rebalanced BitNode-4 so that hacking is slightly less profitable<br>" +
     "-Rebalanced BitNode-5 so that Infiltration is more profitable and gives more faction rep<br>" +
     "-Rebalanced BitNode-11 so that Crime and Infiltration are more profitable. Infiltration also gives more faction rep.<br>" +
-    "-Fixed an annoying issue in Hacking Missions where sometimes you would click a Node but it wouldnt actually get selected<br>" 
+    "-Fixed an annoying issue in Hacking Missions where sometimes you would click a Node but it wouldnt actually get selected<br>" +
+    "-Made the Hacking Mission gameplay a bit slower by lowering the effect of Scan and reducing Attack damage<br>" +
+    "-Slightly increased the base reputation gain rate for factions when doing Field Work and Security Work<br>"
 }
 
 export {CONSTANTS};

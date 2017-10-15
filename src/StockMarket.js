@@ -1,12 +1,14 @@
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {Locations}                              from "./Location.js";
+import {WorkerScript}                           from "./NetscriptWorker.js";
 import {Player}                                 from "./Player.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {clearEventListeners, getRandomInt}      from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
+import numeral                                  from "../utils/numeral.min.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 
 /* StockMarket.js */
@@ -15,8 +17,10 @@ function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
     this.name       = name;
     this.price      = initPrice;
 
-    this.playerShares   = 0;
-    this.playerAvgPx    = 0;
+    this.playerShares       = 0;
+    this.playerAvgPx        = 0;
+    this.playerShortShares  = 0;
+    this.playerAvgShortPx   = 0;
     this.mv             = mv;
     this.b              = b;
     this.otlkMag        = otlkMag;
@@ -31,6 +35,10 @@ Stock.fromJSON = function(value) {
 }
 
 Reviver.constructors.Stock = Stock;
+
+//Order types (long and short for each):
+// - Limit Order
+// - Stop Order
 
 let StockMarket = {}        //Full name to stock object
 let StockSymbols = {}       //Full name to symbol
@@ -253,12 +261,12 @@ function stockMarketCycle() {
 
 //Returns true if successful, false otherwise
 function buyStock(stock, shares) {
-    if (shares == 0) {return false;}
     if (stock == null || shares < 0 || isNaN(shares)) {
         dialogBoxCreate("Failed to buy stock. This may be a bug, contact developer");
         return false;
     }
     shares = Math.round(shares);
+    if (shares == 0) {return false;}
 
     var totalPrice = stock.price * shares;
     if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
@@ -279,7 +287,6 @@ function buyStock(stock, shares) {
     return true;
 }
 
-
 //Returns true if successful and false otherwise
 function sellStock(stock, shares) {
     if (shares == 0) {return false;}
@@ -287,8 +294,9 @@ function sellStock(stock, shares) {
         dialogBoxCreate("Failed to sell stock. This may be a bug, contact developer");
         return false;
     }
+    shares = Math.round(shares);
     if (shares > stock.playerShares) {shares = stock.playerShares;}
-    if (shares == 0) {return false;}
+    if (shares === 0) {return false;}
     var gains = stock.price * shares - CONSTANTS.StockMarketCommission;
     Player.gainMoney(gains);
     stock.playerShares -= shares;
@@ -299,6 +307,100 @@ function sellStock(stock, shares) {
     dialogBoxCreate("Sold " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
                     formatNumber(stock.price, 2) + " per share. After commissions, you gained " +
                     "a total of $" + formatNumber(gains, 2));
+    return true;
+}
+
+//Returns true if successful and false otherwise
+function shortStock(stock, shares, workerScript=null) {
+    var tixApi = (workerScript instanceof WorkerScript);
+    if (stock === null || isNaN(shares) || shares < 0) {
+        if (tixApi) {
+            workerScript.scriptRef.log("ERROR: shortStock() failed because of invalid arguments.");
+        } else {
+            dialogBoxCreate("Failed to initiate a short position in a stock. This is probably " +
+                            "due to an invalid quantity. Otherwise, this may be a bug,  so contact developer");
+        }
+        return false;
+    }
+    shares = Math.round(shares);
+    if (shares === 0) {return false;}
+
+    var totalPrice = stock.price * shares;
+    if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
+        if (tixApi) {
+            workerScript.scriptRef.log("ERROR: shortStock() failed because you do not have " +
+                                       "money to purchase this short position. You need " +
+                                       numeral(totalPrice + CONSTANTS.StockMarketCommission).format('($0.000a)'));
+        } else {
+            dialogBoxCreate("You do not have enough money to purchase this short position. You need $" +
+                            formatNumber(totalPrice + CONSTANTS.StockMarketCommission, 2) + ".");
+        }
+
+        return false;
+    }
+
+    var origTotal = stock.playerShortShares * stock.playerAvgShortPx;
+    Player.loseMoney(totalPrice + CONSTANTS.StockMarketCommission);
+    var newTotal = origTotal + totalPrice;
+    stock.playerShortShares += shares;
+    stock.playerAvgShortPx = newTotal / stock.playerShortShares;
+    if (Engine.currentPage === Engine.Page.StockMarket) {
+        updateStockPlayerPosition(stock);
+    }
+    if (tixApi) {
+        workerScript.scriptRef.log("Bought a short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at " +
+                                   numeral(stock.price).format('($0.000a)') + " per share. Paid " +
+                                   numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
+    } else {
+        dialogBoxCreate("Bought a short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
+                        formatNumber(stock.price, 2) + " per share. You also paid $" +
+                        formatNumber(CONSTANTS.StockMarketCommission, 2) + " in commission fees.");
+    }
+    return true;
+}
+
+//Returns true if successful and false otherwise
+function sellShort(stock, shares, workerScript=null) {
+    var tixApi = (workerScript instanceof WorkerScript);
+    if (stock === null || isNaN(shares) || shares < 0) {
+        if (tixApi) {
+            workerScript.scriptRef.log("ERROR: sellShort() failed because of invalid arguments.");
+        } else {
+            dialogBoxCreate("Failed to sell a short position in a stock. This is probably " +
+                            "due to an invalid quantity. Otherwise, this may be a bug, so contact developer");
+        }
+        return false;
+    }
+    shares = Math.round(shares);
+    if (shares > stock.playerShortShares) {shares = stock.playerShortShares;}
+    if (shares === 0) {return false;}
+
+    var origCost = shares * stock.playerAvgShortPx;
+    var profit = ((stock.playerAvgShortPx - stock.price) * shares) - CONSTANTS.StockMarketCommission;
+    if (isNaN(profit)) {profit = 0;}
+    Player.gainMoney(origCost + profit);
+    if (tixApi) {
+        workerScript.scriptRef.onlineMoneyMade += profit;
+        Player.scriptProdSinceLastAug += profit;
+    }
+
+    stock.playerShortShares -= shares;
+    if (stock.playerShortShares === 0) {
+        stock.playerAvgShortPx = 0;
+    }
+    if (Engine.currentPage === Engine.Page.StockMarket) {
+        updateStockPlayerPosition(stock);
+    }
+    if (tixApi) {
+        workerScript.scriptRef.log("Sold your short position of " + shares + " shares of " + stock.symbol + " at " +
+                                   numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
+                                   "a total of " + numeral(origCost + profit).format('($0.000a)'));
+    } else {
+        dialogBoxCreate("Sold your short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
+                        formatNumber(stock.price, 2) + " per share. After commissions, you gained " +
+                        "a total of $" + formatNumber(origCost + profit, 2));
+    }
+
     return true;
 }
 
