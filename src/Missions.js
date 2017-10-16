@@ -238,8 +238,8 @@ HackingMission.prototype.init = function() {
     for (var i = 0; i < numNodes; ++i) {
         var stats = {
             atk: randMult * getRandomInt(75, 85),
-            def: randMult * getRandomInt(20, 40),
-            hp: randMult * getRandomInt(200, 220)
+            def: randMult * getRandomInt(25, 35),
+            hp: randMult * getRandomInt(210, 230)
         }
         this.enemyCores.push(new Node(NodeTypes.Core, stats));
         this.enemyCores[i].setControlledByEnemy();
@@ -248,8 +248,8 @@ HackingMission.prototype.init = function() {
     for (var i = 0; i < numFirewalls; ++i) {
         var stats = {
             atk: 0,
-            def: randMult * getRandomInt(80, 100),
-            hp: randMult * getRandomInt(250, 275)
+            def: randMult * getRandomInt(80, 90),
+            hp: randMult * getRandomInt(275, 300)
         }
         this.enemyNodes.push(new Node(NodeTypes.Firewall, stats));
         this.enemyNodes[i].setControlledByEnemy();
@@ -258,8 +258,8 @@ HackingMission.prototype.init = function() {
     for (var i = 0; i < numDatabases; ++i) {
         var stats = {
             atk: 0,
-            def: randMult * getRandomInt(75, 100),
-            hp: randMult * getRandomInt(200, 250)
+            def: randMult * getRandomInt(70, 85),
+            hp: randMult * getRandomInt(210, 275)
         }
         var node = new Node(NodeTypes.Database, stats);
         node.setControlledByEnemy();
@@ -630,16 +630,16 @@ HackingMission.prototype.createMap = function() {
                     case 0: //Spam
                         var stats = {
                             atk: 0,
-                            def: averageAttack * 1.2 + getRandomInt(10, 50),
-                            hp: randMult * getRandomInt(160, 180)
+                            def: averageAttack * 1.15 + getRandomInt(10, 50),
+                            hp: randMult * getRandomInt(200, 225)
                         }
                         node = new Node(NodeTypes.Spam, stats);
                         break;
                     case 1: //Transfer
                         var stats = {
                             atk: 0,
-                            def: averageAttack * 1.2 + getRandomInt(10, 50),
-                            hp: randMult * getRandomInt(210, 230)
+                            def: averageAttack * 1.15 + getRandomInt(10, 50),
+                            hp: randMult * getRandomInt(250, 275)
                         }
                         node = new Node(NodeTypes.Transfer, stats);
                         break;
@@ -647,8 +647,8 @@ HackingMission.prototype.createMap = function() {
                     default:
                         var stats = {
                             atk: 0,
-                            def: averageAttack * 1.2 + getRandomInt(25, 75),
-                            hp: randMult * getRandomInt(275, 300)
+                            def: averageAttack * 1.15 + getRandomInt(25, 75),
+                            hp: randMult * getRandomInt(300, 320)
                         }
                         node = new Node(NodeTypes.Shield, stats);
                         break;
@@ -675,14 +675,13 @@ HackingMission.prototype.createMap = function() {
 }
 
 HackingMission.prototype.createNodeDomElement = function(nodeObj) {
-    var nodeDiv = document.createElement("a");
+    var nodeDiv = document.createElement("a"), txtEl = document.createElement('p');
     nodeObj.el = nodeDiv;
-    document.getElementById("hacking-mission-map").appendChild(nodeDiv);
 
     //Set the node element's id based on its coordinates
-    nodeDiv.setAttribute("id", "hacking-mission-node-" +
-                                nodeObj.pos[0] + "-" +
-                                nodeObj.pos[1]);
+    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
+    nodeDiv.setAttribute("id", id);
+    txtEl.setAttribute("id", id + "-txt");
 
     //Set node classes for owner
     nodeDiv.classList.add("hack-mission-node");
@@ -696,41 +695,44 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
     var txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
-            txt = "<p>CPU Core<br>" + "HP: " +
+            txt = "CPU Core<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-cpu-node");
             break;
         case NodeTypes.Firewall:
-            txt = "<p>Firewall<br>" + "HP: " +
+            txt = "Firewall<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-firewall-node");
             break;
         case NodeTypes.Database:
-            txt = "<p>Database<br>" + "HP: " +
+            txt = "Database<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-database-node");
             break;
         case NodeTypes.Spam:
-            txt = "<p>Spam<br>" + "HP: " +
+            txt = "Spam<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-spam-node");
             break;
         case NodeTypes.Transfer:
-            txt = "<p>Transfer<br>" + "HP: " +
+            txt = "Transfer<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-transfer-node");
             break;
         case NodeTypes.Shield:
         default:
-            txt = "<p>Shield<br>" + "HP: " +
+            txt = "Shield<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             nodeDiv.classList.add("hack-mission-shield-node");
             break;
     }
 
     txt += "<br>Atk: " + formatNumber(nodeObj.atk, 1) +
-           "<br>Def: " + formatNumber(nodeObj.def, 1) + "</p>";
-    nodeDiv.innerHTML = txt;
+           "<br>Def: " + formatNumber(nodeObj.def, 1);
+    txtEl.innerHTML = txt;
+
+    nodeDiv.appendChild(txtEl);
+    document.getElementById("hacking-mission-map").appendChild(nodeDiv);
 }
 
 HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
@@ -739,36 +741,35 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
         return;
     }
 
-    var nodeDiv = document.getElementById("hacking-mission-node-" +
-                                          nodeObj.pos[0] + "-" +
-                                          nodeObj.pos[1]);
+    var id = "hacking-mission-node-" + nodeObj.pos[0] + "-" + nodeObj.pos[1];
+    var nodeDiv = document.getElementById(id), txtEl = document.getElementById(id + "-txt");
 
     //Set node classes based on type
     var txt;
     switch (nodeObj.type) {
         case NodeTypes.Core:
-            txt = "<p>CPU Core<br>" + "HP: " +
+            txt = "CPU Core<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Firewall:
-            txt = "<p>Firewall<br>" + "HP: " +
+            txt = "Firewall<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Database:
-            txt = "<p>Database<br>" + "HP: " +
+            txt = "Database<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Spam:
-            txt = "<p>Spam<br>" + "HP: " +
+            txt = "Spam<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Transfer:
-            txt = "<p>Transfer<br>" + "HP: " +
+            txt = "Transfer<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
         case NodeTypes.Shield:
         default:
-            txt = "<p>Shield<br>" + "HP: " +
+            txt = "Shield<br>" + "HP: " +
                   formatNumber(nodeObj.hp, 1);
             break;
     }
@@ -778,8 +779,7 @@ HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
     if (nodeObj.action) {
         txt += "<br>" + nodeObj.action;
     }
-    txt += "</p>";
-    nodeDiv.innerHTML = txt;
+    txtEl.innerHTML = txt;
 }
 
 //Gets a Node DOM element's corresponding Node object using its
@@ -806,6 +806,19 @@ HackingMission.prototype.getNodeFromElement = function(el) {
     return this.map[x][y];
 }
 
+function selectNode(hackMissionInst, el) {
+    var nodeObj = hackMissionInst.getNodeFromElement(el);
+    if (nodeObj === null) {console.log("Error getting Node object");}
+    if (!nodeObj.plyrCtrl) {return;}
+
+    if (hackMissionInst.selectedNode instanceof Node) {
+        hackMissionInst.selectedNode.deselect(hackMissionInst.actionButtons);
+        hackMissionInst.selectedNode = null;
+    }
+    nodeObj.select(hackMissionInst.actionButtons);
+    hackMissionInst.selectedNode = nodeObj;
+}
+
 //Configures a DOM element representing a player-owned node to
 //be selectable and actionable
 //Note: Does NOT change its css class. This is handled by Node.setControlledBy...
@@ -814,15 +827,15 @@ HackingMission.prototype.configurePlayerNodeElement = function(el) {
     if (nodeObj === null) {console.log("Error getting Node object");}
 
     //Add event listener
-    el.addEventListener("click", ()=>{
-        if (this.selectedNode instanceof Node) {
-            this.selectedNode.deselect(this.actionButtons);
-            this.selectedNode = null;
-        }
-        console.log("Selecting node :" + el.id);
-        nodeObj.select(this.actionButtons);
-        this.selectedNode = nodeObj;
-    });
+    var self = this;
+    function selectNodeWrapper() {
+        selectNode(self, el);
+    }
+    el.addEventListener("click", selectNodeWrapper);
+
+    if (el.firstChild) {
+        el.firstChild.addEventListener("click", selectNodeWrapper);
+    }
 }
 
 //Configures a DOM element representing an enemy-node by removing
@@ -833,8 +846,6 @@ HackingMission.prototype.configureEnemyNodeElement = function(el) {
     if (this.selectedNode == nodeObj) {
         nodeObj.deselect(this.actionButtons);
     }
-
-    //TODO Need to remove event listeners
 }
 
 //Returns bool indicating whether a node is reachable by player
@@ -1134,8 +1145,8 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
         }
 
         //The conquered node has its stats reduced
-        targetNode.atk /= 3;
-        targetNode.def /= 3;
+        targetNode.atk /= 2;
+        targetNode.def /= 3.5;
 
         //Flag for whether the target node was a misc node
         var isMiscNode = !targetNode.plyrCtrl && !targetNode.enmyCtrl;
@@ -1356,11 +1367,11 @@ var hackEffWeightAttack = 80; //Weight for Attack action
 
 //Returns damage per cycle based on stats
 HackingMission.prototype.calculateAttackDamage = function(atk, def, hacking = 0) {
-    return Math.max(atk + (hacking / hackEffWeightAttack) - def, 1);
+    return Math.max(0.75 * (atk + (hacking / hackEffWeightAttack) - def), 1);
 }
 
 HackingMission.prototype.calculateScanEffect = function(atk, def, hacking=0) {
-    return Math.max(0.85 * ((atk) + hacking / hackEffWeightTarget - (def * 0.95)), 2);
+    return Math.max(0.7 * ((atk) + hacking / hackEffWeightTarget - (def * 0.95)), 2);
 }
 
 HackingMission.prototype.calculateWeakenEffect = function(atk, def, hacking=0) {

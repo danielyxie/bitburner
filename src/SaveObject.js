@@ -43,12 +43,11 @@ function BitburnerSaveObject() {
     this.VersionSave                = "";
 }
 
-BitburnerSaveObject.prototype.saveGame = function() {
+BitburnerSaveObject.prototype.saveGame = function(db) {
     this.PlayerSave                 = JSON.stringify(Player);
 
     //Delete all logs from all running scripts
     var TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
-    //var TempAllServers = jQuery.extend(true, {}, AllServers);   //Deep copy
     for (var ip in TempAllServers) {
         var server = TempAllServers[ip];
         if (server == null) {continue;}
@@ -73,28 +72,49 @@ BitburnerSaveObject.prototype.saveGame = function() {
         this.AllGangsSave           = JSON.stringify(AllGangs);
     }
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
+
+    //We'll save to both localstorage and indexedDb
+    var objectStore = db.transaction(["savestring"], "readwrite").objectStore("savestring");
+    var request = objectStore.put(saveString, "save");
+
+    request.onerror = function(e) {
+        console.log("Error saving game to IndexedDB: " + e);
+    }
+
+    request.onsuccess = function(e) {
+        console.log("Successfully saved game to IndexedDB!");
+    }
+
     try {
         window.localStorage.setItem("bitburnerSave", saveString);
     } catch(e) {
         if (e.code == 22) {
-            dialogBoxCreate("Failed to save game because the size of the save file " +
-                            "is too large. Consider killing several of your scripts to " +
-                            "fix this, or increasing the size of your browsers localStorage");
+            console.log("Failed to save game to localStorage because the size of the save file " +
+                        "is too large. However, the game will still be saved to IndexedDb if your browser " +
+                        "supports it. If you would like to save to localStorage as well, then " +
+                        "consider killing several of your scripts to " +
+                        "fix this, or increasing the size of your browsers localStorage");
         }
     }
-
 
     console.log("Game saved!");
     Engine.createStatusText("Game saved!");
 }
 
-function loadGame(saveObj) {
-    if (!window.localStorage.getItem("bitburnerSave")) {
-        console.log("No save file to load");
-        return false;
+function loadGame(saveString) {
+    if (saveString === "" || saveString === null || saveString === undefined) {
+        if (!window.localStorage.getItem("bitburnerSave")) {
+            console.log("No save file to load");
+            return false;
+        }
+        saveString = decodeURIComponent(escape(atob(window.localStorage.getItem("bitburnerSave"))));
+        console.log("Loading game from localStorage");
+    } else {
+        saveString = decodeURIComponent(escape(atob(saveString)));
+        console.log("Loading game from IndexedDB");
     }
-    var saveString = decodeURIComponent(escape(atob(window.localStorage.getItem("bitburnerSave"))));
-    saveObj = JSON.parse(saveString, Reviver);
+
+    var saveObj = JSON.parse(saveString, Reviver);
 
     loadPlayer(saveObj.PlayerSave);
     loadAllServers(saveObj.AllServersSave);
@@ -504,9 +524,19 @@ BitburnerSaveObject.prototype.importGame = function() {
 
 }
 
-BitburnerSaveObject.prototype.deleteGame = function() {
+BitburnerSaveObject.prototype.deleteGame = function(db) {
+    //Delete from local storage
     if (window.localStorage.getItem("bitburnerSave")) {
         window.localStorage.removeItem("bitburnerSave");
+    }
+
+    //Delete from indexedDB
+    var request = db.transaction(["savestring"], "readwrite").objectStore("savestring").delete("save");
+    request.onsuccess = function(e) {
+        console.log("Successfully deleted save from indexedDb");
+    }
+    request.onerror = function(e) {
+        console.log("Failed to delete save from indexedDb: " + e);
     }
     Engine.createStatusText("Game deleted!");
 }

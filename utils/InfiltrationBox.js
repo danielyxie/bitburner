@@ -1,3 +1,4 @@
+import {BitNodeMultipliers}                 from "../src/BitNode.js";
 import {CONSTANTS}                          from "../src/Constants.js";
 import {Factions, Faction}                  from "../src/Faction.js";
 import {Player}                             from "../src/Player.js";
@@ -47,8 +48,9 @@ function infiltrationBoxCreate(inst) {
                         formatNumber(inst.chaExpGained, 3) + " cha exp<br>");
         return;
     }
-    var facValue = totalValue * Player.faction_rep_mult * 1.25
-    var moneyValue = totalValue * CONSTANTS.InfiltrationMoneyValue;
+    var facValue = totalValue * Player.faction_rep_mult *
+                   CONSTANTS.InfiltrationRepValue * BitNodeMultipliers.InfiltrationRep;
+    var moneyValue = totalValue * CONSTANTS.InfiltrationMoneyValue * BitNodeMultipliers.InfiltrationMoney;
     infiltrationSetText("You can sell the classified documents and secrets " +
                         "you stole from " + inst.companyName + " for $" +
                         formatNumber(moneyValue, 2) + " on the black market or you can give it " +

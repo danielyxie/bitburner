@@ -263,8 +263,7 @@ function calculateRamUsage(codeCopy) {
     var hasRootAccessCount = numOccurrences(codeCopy, "hasRootAccess(");
     var getHostnameCount = numOccurrences(codeCopy, "getHostname(") +
                            numOccurrences(codeCopy, "getIp(");
-    var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(") +
-                               numOccurrences(codeCopy, "getIntelligence(");
+    var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
     var getMultipliersCount = numOccurrences(codeCopy, "getHackingMultipliers(") +
                               numOccurrences(codeCopy, "getBitNodeMultipliers(");
     var getServerCount = numOccurrences(codeCopy, "getServerMoneyAvailable(") +
@@ -307,7 +306,8 @@ function calculateRamUsage(codeCopy) {
                        numOccurrences(codeCopy, "gymWorkout(") +
                        numOccurrences(codeCopy, "travelToCity(") +
                        numOccurrences(codeCopy, "purchaseTor(") +
-                       numOccurrences(codeCopy, "purchaseProgram(");
+                       numOccurrences(codeCopy, "purchaseProgram(") +
+                       numOccurrences(codeCopy, "getStats(");
     var singFn2Count = numOccurrences(codeCopy, "upgradeHomeRam(") +
                        numOccurrences(codeCopy, "getUpgradeHomeRamCost(") +
                        numOccurrences(codeCopy, "workForCompany(") +
@@ -318,6 +318,9 @@ function calculateRamUsage(codeCopy) {
                        numOccurrences(codeCopy, "workForFaction(") +
                        numOccurrences(codeCopy, "getFactionRep(");
     var singFn3Count = numOccurrences(codeCopy, "createProgram(") +
+                       numOccurrences(codeCopy, "commitCrime(") +
+                       numOccurrences(codeCopy, "getOwnedAugmentations(") +
+                       numOccurrences(codeCopy, "getAugmentationsFromFaction(") +
                        numOccurrences(codeCopy, "getAugmentationCost(") +
                        numOccurrences(codeCopy, "purchaseAugmentation(") +
                        numOccurrences(codeCopy, "installAugmentations(");

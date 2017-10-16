@@ -9,6 +9,7 @@ let TerminalHelpText =
                 "clear                          Clear all text on the terminal <br>" +
                 "cls                            See 'clear' command <br>" +
                 "connect [ip/hostname]          Connects to a remote server<br>" +
+                "download [text file]           Downloads a text (.txt) file to your computer<br>" +
                 "free                           Check the machine's memory (RAM) usage<br>" +
                 "hack                           Hack the current machine<br>" +
                 "help [command]                 Display this help text, or the help text for a command<br>" +
@@ -85,6 +86,9 @@ let HelpTexts = {
                     "Connect to a remote server. The hostname or IP address of the remote server must be given as the argument " +
                     "to this command. Note that only servers that are immediately adjacent to the current server in the network can be connected to. To " +
                     "see which servers can be connected to, use the 'scan' command.",
+    download:       "download [text file]<br>" +
+                    "Downloads a text file to your computer (like your real life computer). Only works on text files, " +
+                    "which are the ones with a .txt extension.",
     free:           "free<br>" +
                     "Display's the memory usage on the current machine. Print the amount of RAM that is available on the current server as well as " +
                     "how much of it is being used.",

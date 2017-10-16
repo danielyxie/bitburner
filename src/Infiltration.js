@@ -1,3 +1,4 @@
+import {BitNodeMultipliers}                     from "./BitNode.js";
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {Player}                                 from "./Player.js";
@@ -405,8 +406,10 @@ function endInfiltrationLevel(inst) {
     //Check if you gained any secrets
     if (inst.clearanceLevel % 5 == 0) {
         var baseSecretValue = inst.baseValue * inst.clearanceLevel / 2;
-        var secretValue = baseSecretValue * Player.faction_rep_mult * 1.25;
-        var secretMoneyValue = baseSecretValue * CONSTANTS.InfiltrationMoneyValue;
+        var secretValue = baseSecretValue * Player.faction_rep_mult *
+                          CONSTANTS.InfiltrationRepValue * BitNodeMultipliers.InfiltrationRep;
+        var secretMoneyValue = baseSecretValue * CONSTANTS.InfiltrationMoneyValue *
+                               BitNodeMultipliers.InfiltrationMoney;
         inst.secretsStolen.push(baseSecretValue);
         dialogBoxCreate("You found and stole a set of classified documents from the company. " +
                         "These classified secrets could probably be sold for money ($" +
@@ -441,8 +444,10 @@ function updateInfiltrationLevelText(inst) {
     var totalValue = 0;
     var totalMoneyValue = 0;
     for (var i = 0; i < inst.secretsStolen.length; ++i) {
-        totalValue += (inst.secretsStolen[i] * Player.faction_rep_mult * 1.25);
-        totalMoneyValue += inst.secretsStolen[i] * CONSTANTS.InfiltrationMoneyValue;
+        totalValue += (inst.secretsStolen[i] * Player.faction_rep_mult *
+                       CONSTANTS.InfiltrationRepValue * BitNodeMultipliers.InfiltrationRep);
+        totalMoneyValue += inst.secretsStolen[i] * CONSTANTS.InfiltrationMoneyValue *
+                           BitNodeMultipliers.InfiltrationMoney;
     }
     document.getElementById("infiltration-level-text").innerHTML =
         "Facility name: " + inst.companyName + "<br>" +

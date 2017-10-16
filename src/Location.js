@@ -2,12 +2,14 @@ import {CompanyPositions, initCompanies,
         Companies, getJobRequirementText}       from "./Company.js";
 import {CONSTANTS}                              from "./Constants.js";
 import {commitShopliftCrime, commitRobStoreCrime, commitMugCrime,
-        commitLarcenyCrime, commitDealDrugsCrime, commitTraffickArmsCrime,
+        commitLarcenyCrime, commitDealDrugsCrime, commitBondForgeryCrime,
+        commitTraffickArmsCrime,
         commitHomicideCrime, commitGrandTheftAutoCrime, commitKidnapCrime,
         commitAssassinationCrime, commitHeistCrime, determineCrimeSuccess,
         determineCrimeChanceShoplift, determineCrimeChanceRobStore,
         determineCrimeChanceMug, determineCrimeChanceLarceny,
-        determineCrimeChanceDealDrugs, determineCrimeChanceTraffickArms,
+        determineCrimeChanceDealDrugs, determineCrimeChanceBondForgery,
+        determineCrimeChanceTraffickArms,
         determineCrimeChanceHomicide, determineCrimeChanceGrandTheftAuto,
         determineCrimeChanceKidnap, determineCrimeChanceAssassination,
         determineCrimeChanceHeist}              from "./Crimes.js";
@@ -194,6 +196,7 @@ function displayLocationContent() {
     var slumsMug                = document.getElementById("location-slums-mug");
     var slumsLarceny            = document.getElementById("location-slums-larceny");
     var slumsDealDrugs          = document.getElementById("location-slums-deal-drugs");
+    var slumsBondForgery        = document.getElementById("location-slums-bond-forgery");
     var slumsTrafficArms        = document.getElementById("location-slums-traffic-arms");
     var slumsHomicide           = document.getElementById("location-slums-homicide");
     var slumsGta                = document.getElementById("location-slums-gta");
@@ -298,6 +301,7 @@ function displayLocationContent() {
     slumsMug.style.display = "none";
     slumsLarceny.style.display = "none";
     slumsDealDrugs.style.display = "none";
+    slumsBondForgery.style.display = "none";
     slumsTrafficArms.style.display = "none";
     slumsHomicide.style.display = "none";
     slumsGta.style.display = "none";
@@ -1026,6 +1030,7 @@ function displayLocationContent() {
             var mugChance = determineCrimeChanceMug();
             var larcenyChance = determineCrimeChanceLarceny();
             var drugsChance = determineCrimeChanceDealDrugs();
+            var bondChance = determineCrimeChanceBondForgery();
             var armsChance = determineCrimeChanceTraffickArms();
             var homicideChance = determineCrimeChanceHomicide();
             var gtaChance = determineCrimeChanceGrandTheftAuto();
@@ -1049,6 +1054,9 @@ function displayLocationContent() {
             slumsDealDrugs.style.display = "block";
             slumsDealDrugs.innerHTML = "Deal Drugs (" + (drugsChance*100).toFixed(3) + "% chance of success)";
             slumsDealDrugs.innerHTML += '<span class="tooltiptext"> Attempt to deal drugs </span>';
+            slumsBondForgery.style.display = "block";
+            slumsBondForgery.innerHTML = "Bond Forgery(" + (bondChance*100).toFixed(3) + "% chance of success)";
+            slumsBondForgery.innerHTML += "<span class='tooltiptext'> Attempt to forge corporate bonds</span>";
             slumsTrafficArms.style.display = "block";
             slumsTrafficArms.innerHTML = "Traffick Illegal Arms (" + (armsChance*100).toFixed(3) + "% chance of success)";
             slumsTrafficArms.innerHTML += '<span class="tooltiptext"> Attempt to smuggle illegal arms into the city and sell them to gangs and criminal organizations </span>';
@@ -1598,6 +1606,7 @@ function initLocationButtons() {
     var slumsMug            = document.getElementById("location-slums-mug");
     var slumsLarceny        = document.getElementById("location-slums-larceny");
     var slumsDealDrugs      = document.getElementById("location-slums-deal-drugs");
+    var slumsBondForgery    = document.getElementById("location-slums-bond-forgery");
     var slumsTrafficArms    = document.getElementById("location-slums-traffic-arms");
     var slumsHomicide       = document.getElementById("location-slums-homicide");
     var slumsGta            = document.getElementById("location-slums-gta");
@@ -1841,6 +1850,11 @@ function initLocationButtons() {
 
     slumsDealDrugs.addEventListener("click", function() {
         commitDealDrugsCrime();
+        return false;
+    });
+
+    slumsBondForgery.addEventListener("click", function() {
+        commitBondForgeryCrime();
         return false;
     });
 
