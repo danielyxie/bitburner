@@ -6,73 +6,97 @@ import {dialogBoxCreate} from "../utils/DialogBox.js";
 function commitShopliftCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeShoplift;
-    Player.startCrime(0, 0, 0, 2/div, 2/div, 0, 15000/div, 2000, singParams); //$7500/s, 1 exp/s
+    var time = 2000;
+    Player.startCrime(0, 0, 0, 2/div, 2/div, 0, 15000/div, time, singParams); //$7500/s, 1 exp/s
+    return time;
 }
 
 function commitRobStoreCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeRobStore;
-    Player.startCrime(30/div, 0, 0, 45/div, 45/div, 0, 400000/div, 60000, singParams); //$6666,6/2, 0.5exp/s, 0.75exp/s
+    var time = 60000;
+    Player.startCrime(30/div, 0, 0, 45/div, 45/div, 0, 400000/div, time, singParams); //$6666,6/2, 0.5exp/s, 0.75exp/s
+    return time;
 }
 
 function commitMugCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeMug;
-    Player.startCrime(0, 3/div, 3/div, 3/div, 3/div, 0, 36000/div, 4000, singParams); //$9000/s, .66 exp/s
+    var time = 4000;
+    Player.startCrime(0, 3/div, 3/div, 3/div, 3/div, 0, 36000/div, time, singParams); //$9000/s, .66 exp/s
+    return time;
 }
 
 function commitLarcenyCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeLarceny;
-    Player.startCrime(45/div, 0, 0, 60/div, 60/div, 0, 800000/div, 90000, singParams) // $8888.88/s, .5 exp/s, .66 exp/s
+    var time = 90000;
+    Player.startCrime(45/div, 0, 0, 60/div, 60/div, 0, 800000/div, time, singParams) // $8888.88/s, .5 exp/s, .66 exp/s
+    return time;
 }
 
 function commitDealDrugsCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeDrugs;
-    Player.startCrime(0, 0, 0, 5/div, 5/div, 10/div, 120000/div, 10000, singParams); //$12000/s, .5 exp/s, 1 exp/s
+    var time = 10000;
+    Player.startCrime(0, 0, 0, 5/div, 5/div, 10/div, 120000/div, time, singParams); //$12000/s, .5 exp/s, 1 exp/s
+    return time;
 }
 
 function commitBondForgeryCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeBondForgery;
-    Player.startCrime(100/div, 0, 0, 150/div, 0, 15/div, 4500000/div, 300000, singParams); //$15000/s, 0.33 hack exp/s, .5 dex exp/s, .05 cha exp
+    var time = 300000;
+    Player.startCrime(100/div, 0, 0, 150/div, 0, 15/div, 4500000/div, time, singParams); //$15000/s, 0.33 hack exp/s, .5 dex exp/s, .05 cha exp
+    return time;
 }
 
 function commitTraffickArmsCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeTraffickArms;
-    Player.startCrime(0, 20/div, 20/div, 20/div, 20/div, 40/div, 600000/div, 40000, singParams); //$15000/s, .5 combat exp/s, 1 cha exp/s
+    var time = 40000;
+    Player.startCrime(0, 20/div, 20/div, 20/div, 20/div, 40/div, 600000/div, time, singParams); //$15000/s, .5 combat exp/s, 1 cha exp/s
+    return time;
 }
 
 function commitHomicideCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeHomicide;
-    Player.startCrime(0, 2/div, 2/div, 2/div, 2/div, 0, 45000/div, 3000, singParams); //$15000/s, 0.66 combat exp/s
+    var time = 3000;
+    Player.startCrime(0, 2/div, 2/div, 2/div, 2/div, 0, 45000/div, time, singParams); //$15000/s, 0.66 combat exp/s
+    return time;
 }
 
 function commitGrandTheftAutoCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeGrandTheftAuto;
-    Player.startCrime(0, 20/div, 20/div, 20/div, 80/div, 40/div, 1600000/div, 80000, singParams); //$20000/s, .25 exp/s, 1 exp/s, .5 exp/s
+    var time = 80000;
+    Player.startCrime(0, 20/div, 20/div, 20/div, 80/div, 40/div, 1600000/div, time, singParams); //$20000/s, .25 exp/s, 1 exp/s, .5 exp/s
+    return time;
 }
 
 function commitKidnapCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeKidnap;
-    Player.startCrime(0, 80/div, 80/div, 80/div, 80/div, 80/div, 3600000/div, 120000, singParams); //$30000/s. .66 exp/s
+    var time = 120000;
+    Player.startCrime(0, 80/div, 80/div, 80/div, 80/div, 80/div, 3600000/div, time, singParams); //$30000/s. .66 exp/s
+    return time;
 }
 
 function commitAssassinationCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeAssassination;
-    Player.startCrime(0, 300/div, 300/div, 300/div, 300/div, 0, 12000000/div, 300000, singParams); //$40000/s, 1 exp/s
+    var time = 300000;
+    Player.startCrime(0, 300/div, 300/div, 300/div, 300/div, 0, 12000000/div, time, singParams); //$40000/s, 1 exp/s
+    return time;
 }
 
 function commitHeistCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     Player.crimeType = CONSTANTS.CrimeHeist;
-    Player.startCrime(450/div, 450/div, 450/div, 450/div, 450/div, 450/div, 120000000/div, 600000, singParams); //$200000/s, .75exp/s
+    var time = 600000;
+    Player.startCrime(450/div, 450/div, 450/div, 450/div, 450/div, 450/div, 120000000/div, time, singParams); //$200000/s, .75exp/s
+    return time;
 }
 
 function determineCrimeSuccess(crime, moneyGained) {

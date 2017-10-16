@@ -1556,7 +1556,7 @@ function NetscriptFunctions(workerScript) {
         getStats : function() {
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getStats(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getStats(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return {};
                 }
             }
@@ -1570,6 +1570,15 @@ function NetscriptFunctions(workerScript) {
                 charisma:       Player.charisma,
                 intelligence:   Player.intelligence
             }
+        },
+        isBusy : function() {
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run isBusy(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return;
+                }
+            }
+            return Player.isWorking;
         },
         upgradeHomeRam() {
             if (Player.bitNodeN != 4) {
@@ -1973,40 +1982,40 @@ function NetscriptFunctions(workerScript) {
             crime = crime.toLowerCase();
             if (crime.includes("shoplift")) {
                 workerScript.scriptRef.log("Attempting to shoplift...");
-                commitShopliftCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+                return commitShopliftCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("rob") && crime.includes("store")) {
                 workerScript.scriptRef.log("Attempting to rob a store...");
-                commitRobStoreCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+                return commitRobStoreCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("mug")) {
                 workerScript.scriptRef.log("Attempting to mug someone...");
-                commitMugCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+                return commitMugCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("larceny")) {
                 workerScript.scriptRef.log("Attempting to commit larceny...");
-                commitLarcenyCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+                return commitLarcenyCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("drugs")) {
                 workerScript.scriptRef.log("Attempting to deal drugs...");
-                commitDealDrugsCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+                return commitDealDrugsCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("bond") && crime.includes("forge")) {
                 workerScript.scriptRef.log("Attempting to forge corporate bonds...");
-                commitBondForgeryCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+                return commitBondForgeryCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("traffick") && crime.includes("arms")) {
                 workerScript.scriptRef.log("Attempting to traffick illegal arms...");
-                commitTraffickArmsCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+                return commitTraffickArmsCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("homicide")) {
                 workerScript.scriptRef.log("Attempting to commit homicide...");
-                commitHomicideCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+                return commitHomicideCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("grand") && crime.includes("auto")) {
                 workerScript.scriptRef.log("Attempting to commit grand theft auto...");
-                commitGrandTheftAutoCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+                return commitGrandTheftAutoCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("kidnap")) {
                 workerScript.scriptRef.log("Attempting to kidnap and ransom a high-profile target...");
-                commitKidnapCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+                return commitKidnapCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("assassinate")) {
                 workerScript.scriptRef.log("Attempting to assassinate a high-profile target...");
-                commitAssassinationCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript})
+                return commitAssassinationCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript})
             } else if (crime.includes("heist")) {
                 workerScript.scriptRef.log("Attempting to pull off a heist...");
-                commitHeistCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
+                return commitHeistCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into commitCrime(): " + crime);
             }

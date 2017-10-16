@@ -70,9 +70,9 @@
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Player; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadPlayer; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BitNode_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Company_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Company_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Crimes_js__ = __webpack_require__(31);
@@ -90,7 +90,10 @@
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__utils_IPAddress_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__utils_JSONReviver_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__utils_numeral_min_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__utils_numeral_min_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+
 
 
 
@@ -739,17 +742,17 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
     this.updateSkillLevels();
 
     var txt = "You earned a total of: <br>" +
-              "$" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + "<br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " reputation for the company <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp<br>";
+              "$" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + "<br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " reputation for the company <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp<br>";
 
     if (cancelled) {
-        txt = "You worked a short shift of " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + " <br><br> " +
+        txt = "You worked a short shift of " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + " <br><br> " +
               "Since you cancelled your work early, you only gained half of the reputation you earned. <br><br>" + txt;
     } else {
         txt = "You worked a full shift of 8 hours! <br><br> " + txt;
@@ -763,15 +766,15 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
     __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].loadLocationContent();
 
     if (sing) {
-        return "You worked a short shift of " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + " and " +
-               "earned $" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + ", " +
-               Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " reputation, " +
-               Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp, " +
-               Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp, " +
-               Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp, " +
-               Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp, " +
-               Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp, and " +
-               Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp.";
+        return "You worked a short shift of " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + " and " +
+               "earned $" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + ", " +
+               Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " reputation, " +
+               Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp, " +
+               Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp, " +
+               Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp, " +
+               Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp, " +
+               Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp, and " +
+               Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp.";
     }
 }
 
@@ -837,16 +840,16 @@ PlayerObject.prototype.work = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName +
                     " at " + this.companyName + "<br><br>" +
-                    "You have been working for " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
+                    "You have been working for " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + " ($" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this company <br><br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
+                    "$" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + " ($" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this company <br><br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
                     "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, " +
                     "but you will only gain half of the reputation you've earned so far."
 
@@ -913,16 +916,16 @@ PlayerObject.prototype.workPartTime = function(numCycles) {
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName +
                     " at " + Player.companyName + "<br><br>" +
-                    "You have been working for " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
+                    "You have been working for " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + " ($" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this company <br><br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
+                    "$" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + " ($" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this company <br><br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
                     "You will automatically finish after working for 8 hours. You can cancel earlier if you wish, <br>" +
                     "and there will be no penalty because this is a part-time job.";
 
@@ -939,15 +942,15 @@ PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     this.updateSkillLevels();
 
     var txt = "You earned a total of: <br>" +
-              "$" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + "<br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " reputation for the company <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp<br>";
-    txt = "You worked for " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br> " + txt;
+              "$" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + "<br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " reputation for the company <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp<br>";
+    txt = "You worked for " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br> " + txt;
     if (!sing) {Object(__WEBPACK_IMPORTED_MODULE_15__utils_DialogBox_js__["a" /* dialogBoxCreate */])(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
@@ -956,16 +959,16 @@ PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     //Engine.loadTerminalContent();
     __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].loadLocationContent();
     if (sing) {
-        return "You worked for " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + " and " +
+        return "You worked for " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + " and " +
                "earned a total of " +
-               "$" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + ", " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " reputation, " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp, " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp, " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp, " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp, " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp, and " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp";
+               "$" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + ", " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " reputation, " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp, " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp, " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp, " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp, " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp, and " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp";
     }
 }
 
@@ -980,16 +983,16 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
 
     this.updateSkillLevels();
 
-    var txt = "You worked for your faction " + faction.name + " for a total of " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + " <br><br> " +
+    var txt = "You worked for your faction " + faction.name + " for a total of " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + " <br><br> " +
               "You earned a total of: <br>" +
-              "$" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + "<br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " reputation for the faction <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp<br>";
+              "$" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + "<br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " reputation for the faction <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp<br>";
     if (!sing) {Object(__WEBPACK_IMPORTED_MODULE_15__utils_DialogBox_js__["a" /* dialogBoxCreate */])(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
@@ -1001,15 +1004,15 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
     __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].loadFactionContent();
     Object(__WEBPACK_IMPORTED_MODULE_7__Faction_js__["c" /* displayFactionContent */])(faction.name);
     if (sing) {
-        return "You worked for your faction " + faction.name + " for a total of " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + ". " +
+        return "You worked for your faction " + faction.name + " for a total of " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + ". " +
                "You earned " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " rep, " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp, " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " str exp, " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " def exp, " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dex exp, " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agi exp, and " +
-                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " cha exp.";
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " rep, " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp, " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " str exp, " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " def exp, " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dex exp, " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agi exp, and " +
+                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " cha exp.";
     }
 }
 
@@ -1137,16 +1140,16 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name + "." +
-                    "  You have been doing this for " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
+                    "  You have been doing this for " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
-                    "$" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this faction <br><br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
+                    "$" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this faction <br><br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br><br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br><br> " +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br><br>" +
 
                     "You will automatically finish after working for 20 hours. You can cancel earlier if you wish.<br>" +
                     "There is no penalty for cancelling earlier.";
@@ -1299,7 +1302,7 @@ PlayerObject.prototype.createProgramWork = function(numCycles) {
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working on coding " + programName + ".<br><br> " +
-                    "You have been working for " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
+                    "You have been working for " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
                     "The program is " + (this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 100).toFixed(2) + "% complete. <br>" +
                     "If you cancel, your work will be saved and you can come back to complete the program later.";
 }
@@ -1439,16 +1442,16 @@ PlayerObject.prototype.takeClass = function(numCycles) {
     var cyclesPerSec = 1000 / __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"]._idleSpeed;
 
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You have been " + className + " for " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
+    txt.innerHTML = "You have been " + className + " for " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + "<br><br>" +
                     "This has cost you: <br>" +
-                    "$" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + " ($" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyLossRate * cyclesPerSec, 2) + " / sec) <br><br>" +
+                    "$" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + " ($" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyLossRate * cyclesPerSec, 2) + " / sec) <br><br>" +
                     "You have gained: <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br>" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br>" +
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " (" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br>" +
                     "You may cancel at any time";
 }
 
@@ -1464,15 +1467,15 @@ PlayerObject.prototype.finishClass = function(sing=false) {
     this.loseMoney(this.workMoneyGained * -1);
 
     this.updateSkillLevels();
-    var txt = "After " + this.className + " for " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + ", <br>" +
-              "you spent a total of $" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained * -1, 2) + ". <br><br>" +
+    var txt = "After " + this.className + " for " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + ", <br>" +
+              "you spent a total of $" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained * -1, 2) + ". <br><br>" +
               "You earned a total of: <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp <br>" +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp<br>";
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility exp <br>" +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma exp<br>";
     if (!sing) {Object(__WEBPACK_IMPORTED_MODULE_15__utils_DialogBox_js__["a" /* dialogBoxCreate */])(txt);}
 
     var mainMenu = document.getElementById("mainmenu-container");
@@ -1482,15 +1485,15 @@ PlayerObject.prototype.finishClass = function(sing=false) {
 
     __WEBPACK_IMPORTED_MODULE_6__engine_js__["Engine"].loadLocationContent();
 
-    if (sing) {return  "After " + this.className + " for " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + ", " +
-              "you spent a total of $" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained * -1, 2) + ". " +
+    if (sing) {return  "After " + this.className + " for " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeWorked) + ", " +
+              "you spent a total of $" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained * -1, 2) + ". " +
               "You earned a total of: " +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 3) + " hacking exp, " +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 3) + " strength exp, " +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 3) + " defense exp, " +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 3) + " dexterity exp, " +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 3) + " agility exp, and " +
-              Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 3) + " charisma exp";}
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 3) + " hacking exp, " +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 3) + " strength exp, " +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 3) + " defense exp, " +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 3) + " dexterity exp, " +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 3) + " agility exp, and " +
+              Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 3) + " charisma exp";}
 }
 
 //The EXP and $ gains are hardcoded. Time is in ms
@@ -1539,7 +1542,7 @@ PlayerObject.prototype.commitCrime = function (numCycles) {
 
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are attempting to " + this.crimeType + ".<br>" +
-                    "Time remaining: " + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeNeededToCompleteWork - this.timeWorked) + "<br>" +
+                    "Time remaining: " + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["b" /* convertTimeMsToTimeElapsedString */])(this.timeNeededToCompleteWork - this.timeWorked) + "<br>" +
                     progressBar.replace( / /g, "&nbsp;" );
 }
 
@@ -1610,23 +1613,23 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             this.workChaExpGained   *= 2;
             if (this.committingCrimeThruSingFn) {
                 this.singFnCrimeWorkerScript.scriptRef.log("Crime successful! Gained " +
-                                                           numeral(this.workMoneyGained).format("$0.000a") + ", " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 3) + " hack exp, " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 3) + " str exp, " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 3) + " def exp, " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 3) + " dex exp, " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 3) + " agi exp, " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 3) + " cha exp.");
+                                                           __WEBPACK_IMPORTED_MODULE_19__utils_numeral_min_js___default()(this.workMoneyGained).format("$0.000a") + ", " +
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 3) + " hack exp, " +
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 3) + " str exp, " +
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 3) + " def exp, " +
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 3) + " dex exp, " +
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 3) + " agi exp, " +
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 3) + " cha exp.");
             } else {
                 Object(__WEBPACK_IMPORTED_MODULE_15__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Crime successful! <br><br>" +
                                 "You gained:<br>"+
-                                "$" + Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + "<br>" +
-                                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking experience <br>" +
-                                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength experience<br>" +
-                                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense experience<br>" +
-                                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity experience<br>" +
-                                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility experience<br>" +
-                                Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma experience");
+                                "$" + Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workMoneyGained, 2) + "<br>" +
+                                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking experience <br>" +
+                                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength experience<br>" +
+                                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense experience<br>" +
+                                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity experience<br>" +
+                                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility experience<br>" +
+                                Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma experience");
             }
 
         } else {
@@ -1639,21 +1642,21 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             this.workChaExpGained   /= 2;
             if (this.committingCrimeThruSingFn) {
                 this.singFnCrimeWorkerScript.scriptRef.log("Crime failed! Gained " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 3) + " hack exp, " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 3) + " str exp, " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 3) + " def exp, " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 3) + " dex exp, " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 3) + " agi exp, " +
-                                                           Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 3) + " chaexp.");
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 3) + " hack exp, " +
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 3) + " str exp, " +
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 3) + " def exp, " +
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 3) + " dex exp, " +
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 3) + " agi exp, " +
+                                                           Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 3) + " chaexp.");
             } else {
                 Object(__WEBPACK_IMPORTED_MODULE_15__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Crime failed! <br><br>" +
                         "You gained:<br>"+
-                        Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking experience <br>" +
-                        Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength experience<br>" +
-                        Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense experience<br>" +
-                        Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity experience<br>" +
-                        Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility experience<br>" +
-                        Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma experience");
+                        Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workHackExpGained, 4) + " hacking experience <br>" +
+                        Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workStrExpGained, 4) + " strength experience<br>" +
+                        Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDefExpGained, 4) + " defense experience<br>" +
+                        Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workDexExpGained, 4) + " dexterity experience<br>" +
+                        Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workAgiExpGained, 4) + " agility experience<br>" +
+                        Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.workChaExpGained, 4) + " charisma experience");
             }
         }
 
@@ -1688,6 +1691,9 @@ PlayerObject.prototype.singularityStopWork = function() {
         case __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].WorkTypeCreateProgram:
             res = this.finishCreateProgramWork(true, true);
             break;
+        case __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].WorkTypeCrime:
+            res = this.finishCrime(true);
+            break;
         default:
             console.log("ERROR: Unrecognized work type");
             return "";
@@ -1710,7 +1716,7 @@ PlayerObject.prototype.takeDamage = function(amt) {
 PlayerObject.prototype.hospitalize = function() {
     Object(__WEBPACK_IMPORTED_MODULE_15__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You were in critical condition! You were taken to the hospital where " +
                     "luckily they were able to save your life. You were charged $" +
-                    Object(__WEBPACK_IMPORTED_MODULE_19__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.max_hp * __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].HospitalCostPerHp, 2));
+                    Object(__WEBPACK_IMPORTED_MODULE_20__utils_StringHelperFunctions_js__["c" /* formatNumber */])(this.max_hp * __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].HospitalCostPerHp, 2));
     this.loseMoney(this.max_hp * __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].HospitalCostPerHp);
     this.hp = this.max_hp;
 }
@@ -3409,6 +3415,10 @@ let CONSTANTS = {
                                         "Player.hacking<br>Player.strength<br>Player.defense<br>Player.dexterity<br>Player.agility<br>Player.charisma<br>Player.intelligence<br><br>" +
                                         "Example: <br><br>" +
                                         "res = getStats();<br>print('My charisma level is: ' + res.charisma);<br><br>" +
+                                        "<i>isBusy()</i><br>If youa re not in bitNode-4, then you must have Level 1 of Source-File 4 in order to run this " +
+                                        "function.<br><br>Returns a boolean indicating whether or not the player is currently performing an 'action'. " +
+                                        "These actions include working for a company/faction, studying at a univeristy, working out at a gym, " +
+                                        "creating a program, or committing a crime.<br><br>" +
                                         "<i>upgradeHomeRam()</i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will upgrade amount of RAM on the player's home computer. The cost is the same as if you were to do it manually.<br><br>" +
@@ -3470,6 +3480,26 @@ let CONSTANTS = {
                                         "BruteSSH.exe: 50<br>FTPCrack.exe: 100<br>relaySMTP.exe: 250<br>HTTPWorm.exe: 500<br>SQLInject.exe: 750<br>" +
                                         "DeepscanV1.exe: 75<br>DeepscanV2.exe: 400<br>ServerProfiler.exe: 75<br>AutoLink.exe: 25<br><br>" +
                                         "This function returns true if you successfully start working on the specified program, and false otherwise.<br><br>" +
+                                        "<i>commitCrime(crime)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function is used to automatically attempt to commit crimes. If you are already in the middle of some 'working' " +
+                                        "action (such as working for a company or training at a gym), then running this function will automatically cancel " +
+                                        "that action and give you your earnings.<br><br>" +
+                                        "The function takes a string that specifies what crime to attempt. This argument is not case-sensitive and is fairly " +
+                                        "lenient in terms of what inputs it accepts. Here is a list of valid inputs for all of the crimes:<br><br>" +
+                                        "shoplift, rob store, mug, larceny, deal drugs, bond forgery, traffick arms, homicide, grand theft auto, " +
+                                        "kidnap, assassinate, heist<br><br> " +
+                                        "This function returns the number of seconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt " +
+                                        "the 'Rob Store' crime, so running commitCrime('rob store') will return 60). Warning: I do not recommend using the time " +
+                                        "returned from this function to try and schedule your crime attempts. Instead, I would use the isBusy() Singularity function " +
+                                        "to check whether you have finished attempting a crime. This is because although the game sets a certain crime to be X amount of seconds, " +
+                                        "there is no guarantee that your browser will follow that time limit.<br><br>" +
+                                        "<i>getCrimeChance(crime)</i><br>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to " +
+                                        "use this function.<br><br>" +
+                                        "This function returns your chance of success at commiting the specified crime. The chance is returned as a decimal " +
+                                        "(i.e. 60% would be returned as 0.6). The argument for this function is a string. It is not case-sensitive and is fairly " +
+                                        "lenient in terms of what inputs it accepts. Check the documentation for the commitCrime() Singularity Function to see " +
+                                        "examples of valid inputs.<br><br>" + 
                                         "<i>getOwnedAugmentations(purchased=false)</i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function returns an array of the names of all Augmentations you own as strings. It takes a single optional " +
@@ -3609,7 +3639,7 @@ let CONSTANTS = {
     "but that's not available yet. You can also download files to your real computer using the 'download' Terminal command<br>" +
     "-Added a new Crime: Bond Forgery. This crime takes 5 minutes to attempt " +
     "and gives $4,500,000 if successful. It is meant for mid game.<br>" +
-    "-Added commitCrime(), getCrimeChance(), and getStats() Singularity Functions.<br>" +
+    "-Added commitCrime(), getCrimeChance(), isBusy(), and getStats() Singularity Functions.<br>" +
     "-Removed getIntelligence() Netscript function<br>" +
     "-Added sprintf and vsprintf to Netscript. See <a href='https://github.com/alexei/sprintf.js' target='_blank'>this Github page for details</a><br>" +
     "-Increased the amount of money gained from Infiltration by 20%, and the amount of faction reputation by 12%<br>" +
@@ -3795,14 +3825,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_GameOptions_js__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_LogBox_js__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ActiveScriptsUI_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Augmentations_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Augmentations_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__BitNode_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Company_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Company_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Faction_js__ = __webpack_require__(10);
@@ -3825,7 +3855,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__SourceFile_js__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__StockMarket_js__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__Terminal_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__Terminal_js__ = __webpack_require__(21);
 
 
 
@@ -16938,7 +16968,7 @@ return jQuery;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Faction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return purchaseAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return factionExists; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BitNode_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(5);
@@ -18315,7 +18345,7 @@ function initSpecialServerIps() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Locations; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return displayLocationContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initLocationButtons; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Company_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Company_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Crimes_js__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(5);
@@ -18327,7 +18357,7 @@ function initSpecialServerIps() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_IPAddress_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_numeral_min_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_numeral_min_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_StringHelperFunctions_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_YesNoBox_js__ = __webpack_require__(23);
@@ -21427,6 +21457,23 @@ function isValidIPAddress(ipaddress) {
 
 /***/ }),
 /* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
+ * numeral.js
+ * version : 2.0.6
+ * author : Adam Draper
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
+ */
+!function(a,b){ true?!(__WEBPACK_AMD_DEFINE_FACTORY__ = (b),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"object"==typeof module&&module.exports?module.exports=b():a.numeral=b()}(this,function(){function a(a,b){this._input=a,this._value=b}var b,c,d="2.0.6",e={},f={},g={currentLocale:"en",zeroFormat:null,nullFormat:null,defaultFormat:"0,0",scalePercentBy100:!0},h={currentLocale:g.currentLocale,zeroFormat:g.zeroFormat,nullFormat:g.nullFormat,defaultFormat:g.defaultFormat,scalePercentBy100:g.scalePercentBy100};return b=function(d){var f,g,i,j;if(b.isNumeral(d))f=d.value();else if(0===d||"undefined"==typeof d)f=0;else if(null===d||c.isNaN(d))f=null;else if("string"==typeof d)if(h.zeroFormat&&d===h.zeroFormat)f=0;else if(h.nullFormat&&d===h.nullFormat||!d.replace(/[^0-9]+/g,"").length)f=null;else{for(g in e)if(j="function"==typeof e[g].regexps.unformat?e[g].regexps.unformat():e[g].regexps.unformat,j&&d.match(j)){i=e[g].unformat;break}i=i||b._.stringToNumber,f=i(d)}else f=Number(d)||null;return new a(d,f)},b.version=d,b.isNumeral=function(b){return b instanceof a},b._=c={numberToFormat:function(a,c,d){var e,g,h,i,j,k,l,m=f[b.options.currentLocale],n=!1,o=!1,p=0,q="",r=1e12,s=1e9,t=1e6,u=1e3,v="",w=!1;if(a=a||0,g=Math.abs(a),b._.includes(c,"(")?(n=!0,c=c.replace(/[\(|\)]/g,"")):(b._.includes(c,"+")||b._.includes(c,"-"))&&(j=b._.includes(c,"+")?c.indexOf("+"):0>a?c.indexOf("-"):-1,c=c.replace(/[\+|\-]/g,"")),b._.includes(c,"a")&&(e=c.match(/a(k|m|b|t)?/),e=e?e[1]:!1,b._.includes(c," a")&&(q=" "),c=c.replace(new RegExp(q+"a[kmbt]?"),""),g>=r&&!e||"t"===e?(q+=m.abbreviations.trillion,a/=r):r>g&&g>=s&&!e||"b"===e?(q+=m.abbreviations.billion,a/=s):s>g&&g>=t&&!e||"m"===e?(q+=m.abbreviations.million,a/=t):(t>g&&g>=u&&!e||"k"===e)&&(q+=m.abbreviations.thousand,a/=u)),b._.includes(c,"[.]")&&(o=!0,c=c.replace("[.]",".")),h=a.toString().split(".")[0],i=c.split(".")[1],k=c.indexOf(","),p=(c.split(".")[0].split(",")[0].match(/0/g)||[]).length,i?(b._.includes(i,"[")?(i=i.replace("]",""),i=i.split("["),v=b._.toFixed(a,i[0].length+i[1].length,d,i[1].length)):v=b._.toFixed(a,i.length,d),h=v.split(".")[0],v=b._.includes(v,".")?m.delimiters.decimal+v.split(".")[1]:"",o&&0===Number(v.slice(1))&&(v="")):h=b._.toFixed(a,0,d),q&&!e&&Number(h)>=1e3&&q!==m.abbreviations.trillion)switch(h=String(Number(h)/1e3),q){case m.abbreviations.thousand:q=m.abbreviations.million;break;case m.abbreviations.million:q=m.abbreviations.billion;break;case m.abbreviations.billion:q=m.abbreviations.trillion}if(b._.includes(h,"-")&&(h=h.slice(1),w=!0),h.length<p)for(var x=p-h.length;x>0;x--)h="0"+h;return k>-1&&(h=h.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1"+m.delimiters.thousands)),0===c.indexOf(".")&&(h=""),l=h+v+(q?q:""),n?l=(n&&w?"(":"")+l+(n&&w?")":""):j>=0?l=0===j?(w?"-":"+")+l:l+(w?"-":"+"):w&&(l="-"+l),l},stringToNumber:function(a){var b,c,d,e=f[h.currentLocale],g=a,i={thousand:3,million:6,billion:9,trillion:12};if(h.zeroFormat&&a===h.zeroFormat)c=0;else if(h.nullFormat&&a===h.nullFormat||!a.replace(/[^0-9]+/g,"").length)c=null;else{c=1,"."!==e.delimiters.decimal&&(a=a.replace(/\./g,"").replace(e.delimiters.decimal,"."));for(b in i)if(d=new RegExp("[^a-zA-Z]"+e.abbreviations[b]+"(?:\\)|(\\"+e.currency.symbol+")?(?:\\))?)?$"),g.match(d)){c*=Math.pow(10,i[b]);break}c*=(a.split("-").length+Math.min(a.split("(").length-1,a.split(")").length-1))%2?1:-1,a=a.replace(/[^0-9\.]+/g,""),c*=Number(a)}return c},isNaN:function(a){return"number"==typeof a&&isNaN(a)},includes:function(a,b){return-1!==a.indexOf(b)},insert:function(a,b,c){return a.slice(0,c)+b+a.slice(c)},reduce:function(a,b){if(null===this)throw new TypeError("Array.prototype.reduce called on null or undefined");if("function"!=typeof b)throw new TypeError(b+" is not a function");var c,d=Object(a),e=d.length>>>0,f=0;if(3===arguments.length)c=arguments[2];else{for(;e>f&&!(f in d);)f++;if(f>=e)throw new TypeError("Reduce of empty array with no initial value");c=d[f++]}for(;e>f;f++)f in d&&(c=b(c,d[f],f,d));return c},multiplier:function(a){var b=a.toString().split(".");return b.length<2?1:Math.pow(10,b[1].length)},correctionFactor:function(){var a=Array.prototype.slice.call(arguments);return a.reduce(function(a,b){var d=c.multiplier(b);return a>d?a:d},1)},toFixed:function(a,b,c,d){var e,f,g,h,i=a.toString().split("."),j=b-(d||0);return e=2===i.length?Math.min(Math.max(i[1].length,j),b):j,g=Math.pow(10,e),h=(c(a+"e+"+e)/g).toFixed(e),d>b-e&&(f=new RegExp("\\.?0{1,"+(d-(b-e))+"}$"),h=h.replace(f,"")),h}},b.options=h,b.formats=e,b.locales=f,b.locale=function(a){return a&&(h.currentLocale=a.toLowerCase()),h.currentLocale},b.localeData=function(a){if(!a)return f[h.currentLocale];if(a=a.toLowerCase(),!f[a])throw new Error("Unknown locale : "+a);return f[a]},b.reset=function(){for(var a in g)h[a]=g[a]},b.zeroFormat=function(a){h.zeroFormat="string"==typeof a?a:null},b.nullFormat=function(a){h.nullFormat="string"==typeof a?a:null},b.defaultFormat=function(a){h.defaultFormat="string"==typeof a?a:"0.0"},b.register=function(a,b,c){if(b=b.toLowerCase(),this[a+"s"][b])throw new TypeError(b+" "+a+" already registered.");return this[a+"s"][b]=c,c},b.validate=function(a,c){var d,e,f,g,h,i,j,k;if("string"!=typeof a&&(a+="",console.warn&&console.warn("Numeral.js: Value is not string. It has been co-erced to: ",a)),a=a.trim(),a.match(/^\d+$/))return!0;if(""===a)return!1;try{j=b.localeData(c)}catch(l){j=b.localeData(b.locale())}return f=j.currency.symbol,h=j.abbreviations,d=j.delimiters.decimal,e="."===j.delimiters.thousands?"\\.":j.delimiters.thousands,k=a.match(/^[^\d]+/),null!==k&&(a=a.substr(1),k[0]!==f)?!1:(k=a.match(/[^\d]+$/),null!==k&&(a=a.slice(0,-1),k[0]!==h.thousand&&k[0]!==h.million&&k[0]!==h.billion&&k[0]!==h.trillion)?!1:(i=new RegExp(e+"{2}"),a.match(/[^\d.,]/g)?!1:(g=a.split(d),g.length>2?!1:g.length<2?!!g[0].match(/^\d+.*\d$/)&&!g[0].match(i):1===g[0].length?!!g[0].match(/^\d+$/)&&!g[0].match(i)&&!!g[1].match(/^\d+$/):!!g[0].match(/^\d+.*\d$/)&&!g[0].match(i)&&!!g[1].match(/^\d+$/))))},b.fn=a.prototype={clone:function(){return b(this)},format:function(a,c){var d,f,g,i=this._value,j=a||h.defaultFormat;if(c=c||Math.round,0===i&&null!==h.zeroFormat)f=h.zeroFormat;else if(null===i&&null!==h.nullFormat)f=h.nullFormat;else{for(d in e)if(j.match(e[d].regexps.format)){g=e[d].format;break}g=g||b._.numberToFormat,f=g(i,j,c)}return f},value:function(){return this._value},input:function(){return this._input},set:function(a){return this._value=Number(a),this},add:function(a){function b(a,b,c,e){return a+Math.round(d*b)}var d=c.correctionFactor.call(null,this._value,a);return this._value=c.reduce([this._value,a],b,0)/d,this},subtract:function(a){function b(a,b,c,e){return a-Math.round(d*b)}var d=c.correctionFactor.call(null,this._value,a);return this._value=c.reduce([a],b,Math.round(this._value*d))/d,this},multiply:function(a){function b(a,b,d,e){var f=c.correctionFactor(a,b);return Math.round(a*f)*Math.round(b*f)/Math.round(f*f)}return this._value=c.reduce([this._value,a],b,1),this},divide:function(a){function b(a,b,d,e){var f=c.correctionFactor(a,b);return Math.round(a*f)/Math.round(b*f)}return this._value=c.reduce([this._value,a],b),this},difference:function(a){return Math.abs(b(this._value).subtract(a).value())}},b.register("locale","en",{delimiters:{thousands:",",decimal:"."},abbreviations:{thousand:"k",million:"m",billion:"b",trillion:"t"},ordinal:function(a){var b=a%10;return 1===~~(a%100/10)?"th":1===b?"st":2===b?"nd":3===b?"rd":"th"},currency:{symbol:"$"}}),function(){b.register("format","bps",{regexps:{format:/(BPS)/,unformat:/(BPS)/},format:function(a,c,d){var e,f=b._.includes(c," BPS")?" ":"";return a=1e4*a,c=c.replace(/\s?BPS/,""),e=b._.numberToFormat(a,c,d),b._.includes(e,")")?(e=e.split(""),e.splice(-1,0,f+"BPS"),e=e.join("")):e=e+f+"BPS",e},unformat:function(a){return+(1e-4*b._.stringToNumber(a)).toFixed(15)}})}(),function(){var a={base:1e3,suffixes:["B","KB","MB","GB","TB","PB","EB","ZB","YB"]},c={base:1024,suffixes:["B","KiB","MiB","GiB","TiB","PiB","EiB","ZiB","YiB"]},d=a.suffixes.concat(c.suffixes.filter(function(b){return a.suffixes.indexOf(b)<0})),e=d.join("|");e="("+e.replace("B","B(?!PS)")+")",b.register("format","bytes",{regexps:{format:/([0\s]i?b)/,unformat:new RegExp(e)},format:function(d,e,f){var g,h,i,j,k=b._.includes(e,"ib")?c:a,l=b._.includes(e," b")||b._.includes(e," ib")?" ":"";for(e=e.replace(/\s?i?b/,""),h=0;h<=k.suffixes.length;h++)if(i=Math.pow(k.base,h),j=Math.pow(k.base,h+1),null===d||0===d||d>=i&&j>d){l+=k.suffixes[h],i>0&&(d/=i);break}return g=b._.numberToFormat(d,e,f),g+l},unformat:function(d){var e,f,g=b._.stringToNumber(d);if(g){for(e=a.suffixes.length-1;e>=0;e--){if(b._.includes(d,a.suffixes[e])){f=Math.pow(a.base,e);break}if(b._.includes(d,c.suffixes[e])){f=Math.pow(c.base,e);break}}g*=f||1}return g}})}(),function(){b.register("format","currency",{regexps:{format:/(\$)/},format:function(a,c,d){var e,f,g,h=b.locales[b.options.currentLocale],i={before:c.match(/^([\+|\-|\(|\s|\$]*)/)[0],after:c.match(/([\+|\-|\)|\s|\$]*)$/)[0]};for(c=c.replace(/\s?\$\s?/,""),e=b._.numberToFormat(a,c,d),a>=0?(i.before=i.before.replace(/[\-\(]/,""),i.after=i.after.replace(/[\-\)]/,"")):0>a&&!b._.includes(i.before,"-")&&!b._.includes(i.before,"(")&&(i.before="-"+i.before),g=0;g<i.before.length;g++)switch(f=i.before[g]){case"$":e=b._.insert(e,h.currency.symbol,g);break;case" ":e=b._.insert(e," ",g+h.currency.symbol.length-1)}for(g=i.after.length-1;g>=0;g--)switch(f=i.after[g]){case"$":e=g===i.after.length-1?e+h.currency.symbol:b._.insert(e,h.currency.symbol,-(i.after.length-(1+g)));break;case" ":e=g===i.after.length-1?e+" ":b._.insert(e," ",-(i.after.length-(1+g)+h.currency.symbol.length-1))}return e}})}(),function(){b.register("format","exponential",{regexps:{format:/(e\+|e-)/,unformat:/(e\+|e-)/},format:function(a,c,d){var e,f="number"!=typeof a||b._.isNaN(a)?"0e+0":a.toExponential(),g=f.split("e");return c=c.replace(/e[\+|\-]{1}0/,""),e=b._.numberToFormat(Number(g[0]),c,d),e+"e"+g[1]},unformat:function(a){function c(a,c,d,e){var f=b._.correctionFactor(a,c),g=a*f*(c*f)/(f*f);return g}var d=b._.includes(a,"e+")?a.split("e+"):a.split("e-"),e=Number(d[0]),f=Number(d[1]);return f=b._.includes(a,"e-")?f*=-1:f,b._.reduce([e,Math.pow(10,f)],c,1)}})}(),function(){b.register("format","ordinal",{regexps:{format:/(o)/},format:function(a,c,d){var e,f=b.locales[b.options.currentLocale],g=b._.includes(c," o")?" ":"";return c=c.replace(/\s?o/,""),g+=f.ordinal(a),e=b._.numberToFormat(a,c,d),e+g}})}(),function(){b.register("format","percentage",{regexps:{format:/(%)/,unformat:/(%)/},format:function(a,c,d){var e,f=b._.includes(c," %")?" ":"";return b.options.scalePercentBy100&&(a=100*a),c=c.replace(/\s?\%/,""),e=b._.numberToFormat(a,c,d),b._.includes(e,")")?(e=e.split(""),e.splice(-1,0,f+"%"),e=e.join("")):e=e+f+"%",e},unformat:function(a){var c=b._.stringToNumber(a);return b.options.scalePercentBy100?.01*c:c}})}(),function(){b.register("format","time",{regexps:{format:/(:)/,unformat:/(:)/},format:function(a,b,c){var d=Math.floor(a/60/60),e=Math.floor((a-60*d*60)/60),f=Math.round(a-60*d*60-60*e);return d+":"+(10>e?"0"+e:e)+":"+(10>f?"0"+f:f)},unformat:function(a){var b=a.split(":"),c=0;return 3===b.length?(c+=60*Number(b[0])*60,c+=60*Number(b[1]),c+=Number(b[2])):2===b.length&&(c+=60*Number(b[0]),c+=Number(b[1])),Number(c)}})}(),b});
+
+/***/ }),
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23442,7 +23489,7 @@ function giveAllAugmentations() {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24609,7 +24656,7 @@ function getJobRequirementText(company, pos, tooltiptext=false) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26361,23 +26408,6 @@ let Terminal = {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(9)))
 
 /***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
- * numeral.js
- * version : 2.0.6
- * author : Adam Draper
- * license : MIT
- * http://adamwdraper.github.com/Numeral-js/
- */
-!function(a,b){ true?!(__WEBPACK_AMD_DEFINE_FACTORY__ = (b),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-				__WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"object"==typeof module&&module.exports?module.exports=b():a.numeral=b()}(this,function(){function a(a,b){this._input=a,this._value=b}var b,c,d="2.0.6",e={},f={},g={currentLocale:"en",zeroFormat:null,nullFormat:null,defaultFormat:"0,0",scalePercentBy100:!0},h={currentLocale:g.currentLocale,zeroFormat:g.zeroFormat,nullFormat:g.nullFormat,defaultFormat:g.defaultFormat,scalePercentBy100:g.scalePercentBy100};return b=function(d){var f,g,i,j;if(b.isNumeral(d))f=d.value();else if(0===d||"undefined"==typeof d)f=0;else if(null===d||c.isNaN(d))f=null;else if("string"==typeof d)if(h.zeroFormat&&d===h.zeroFormat)f=0;else if(h.nullFormat&&d===h.nullFormat||!d.replace(/[^0-9]+/g,"").length)f=null;else{for(g in e)if(j="function"==typeof e[g].regexps.unformat?e[g].regexps.unformat():e[g].regexps.unformat,j&&d.match(j)){i=e[g].unformat;break}i=i||b._.stringToNumber,f=i(d)}else f=Number(d)||null;return new a(d,f)},b.version=d,b.isNumeral=function(b){return b instanceof a},b._=c={numberToFormat:function(a,c,d){var e,g,h,i,j,k,l,m=f[b.options.currentLocale],n=!1,o=!1,p=0,q="",r=1e12,s=1e9,t=1e6,u=1e3,v="",w=!1;if(a=a||0,g=Math.abs(a),b._.includes(c,"(")?(n=!0,c=c.replace(/[\(|\)]/g,"")):(b._.includes(c,"+")||b._.includes(c,"-"))&&(j=b._.includes(c,"+")?c.indexOf("+"):0>a?c.indexOf("-"):-1,c=c.replace(/[\+|\-]/g,"")),b._.includes(c,"a")&&(e=c.match(/a(k|m|b|t)?/),e=e?e[1]:!1,b._.includes(c," a")&&(q=" "),c=c.replace(new RegExp(q+"a[kmbt]?"),""),g>=r&&!e||"t"===e?(q+=m.abbreviations.trillion,a/=r):r>g&&g>=s&&!e||"b"===e?(q+=m.abbreviations.billion,a/=s):s>g&&g>=t&&!e||"m"===e?(q+=m.abbreviations.million,a/=t):(t>g&&g>=u&&!e||"k"===e)&&(q+=m.abbreviations.thousand,a/=u)),b._.includes(c,"[.]")&&(o=!0,c=c.replace("[.]",".")),h=a.toString().split(".")[0],i=c.split(".")[1],k=c.indexOf(","),p=(c.split(".")[0].split(",")[0].match(/0/g)||[]).length,i?(b._.includes(i,"[")?(i=i.replace("]",""),i=i.split("["),v=b._.toFixed(a,i[0].length+i[1].length,d,i[1].length)):v=b._.toFixed(a,i.length,d),h=v.split(".")[0],v=b._.includes(v,".")?m.delimiters.decimal+v.split(".")[1]:"",o&&0===Number(v.slice(1))&&(v="")):h=b._.toFixed(a,0,d),q&&!e&&Number(h)>=1e3&&q!==m.abbreviations.trillion)switch(h=String(Number(h)/1e3),q){case m.abbreviations.thousand:q=m.abbreviations.million;break;case m.abbreviations.million:q=m.abbreviations.billion;break;case m.abbreviations.billion:q=m.abbreviations.trillion}if(b._.includes(h,"-")&&(h=h.slice(1),w=!0),h.length<p)for(var x=p-h.length;x>0;x--)h="0"+h;return k>-1&&(h=h.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1"+m.delimiters.thousands)),0===c.indexOf(".")&&(h=""),l=h+v+(q?q:""),n?l=(n&&w?"(":"")+l+(n&&w?")":""):j>=0?l=0===j?(w?"-":"+")+l:l+(w?"-":"+"):w&&(l="-"+l),l},stringToNumber:function(a){var b,c,d,e=f[h.currentLocale],g=a,i={thousand:3,million:6,billion:9,trillion:12};if(h.zeroFormat&&a===h.zeroFormat)c=0;else if(h.nullFormat&&a===h.nullFormat||!a.replace(/[^0-9]+/g,"").length)c=null;else{c=1,"."!==e.delimiters.decimal&&(a=a.replace(/\./g,"").replace(e.delimiters.decimal,"."));for(b in i)if(d=new RegExp("[^a-zA-Z]"+e.abbreviations[b]+"(?:\\)|(\\"+e.currency.symbol+")?(?:\\))?)?$"),g.match(d)){c*=Math.pow(10,i[b]);break}c*=(a.split("-").length+Math.min(a.split("(").length-1,a.split(")").length-1))%2?1:-1,a=a.replace(/[^0-9\.]+/g,""),c*=Number(a)}return c},isNaN:function(a){return"number"==typeof a&&isNaN(a)},includes:function(a,b){return-1!==a.indexOf(b)},insert:function(a,b,c){return a.slice(0,c)+b+a.slice(c)},reduce:function(a,b){if(null===this)throw new TypeError("Array.prototype.reduce called on null or undefined");if("function"!=typeof b)throw new TypeError(b+" is not a function");var c,d=Object(a),e=d.length>>>0,f=0;if(3===arguments.length)c=arguments[2];else{for(;e>f&&!(f in d);)f++;if(f>=e)throw new TypeError("Reduce of empty array with no initial value");c=d[f++]}for(;e>f;f++)f in d&&(c=b(c,d[f],f,d));return c},multiplier:function(a){var b=a.toString().split(".");return b.length<2?1:Math.pow(10,b[1].length)},correctionFactor:function(){var a=Array.prototype.slice.call(arguments);return a.reduce(function(a,b){var d=c.multiplier(b);return a>d?a:d},1)},toFixed:function(a,b,c,d){var e,f,g,h,i=a.toString().split("."),j=b-(d||0);return e=2===i.length?Math.min(Math.max(i[1].length,j),b):j,g=Math.pow(10,e),h=(c(a+"e+"+e)/g).toFixed(e),d>b-e&&(f=new RegExp("\\.?0{1,"+(d-(b-e))+"}$"),h=h.replace(f,"")),h}},b.options=h,b.formats=e,b.locales=f,b.locale=function(a){return a&&(h.currentLocale=a.toLowerCase()),h.currentLocale},b.localeData=function(a){if(!a)return f[h.currentLocale];if(a=a.toLowerCase(),!f[a])throw new Error("Unknown locale : "+a);return f[a]},b.reset=function(){for(var a in g)h[a]=g[a]},b.zeroFormat=function(a){h.zeroFormat="string"==typeof a?a:null},b.nullFormat=function(a){h.nullFormat="string"==typeof a?a:null},b.defaultFormat=function(a){h.defaultFormat="string"==typeof a?a:"0.0"},b.register=function(a,b,c){if(b=b.toLowerCase(),this[a+"s"][b])throw new TypeError(b+" "+a+" already registered.");return this[a+"s"][b]=c,c},b.validate=function(a,c){var d,e,f,g,h,i,j,k;if("string"!=typeof a&&(a+="",console.warn&&console.warn("Numeral.js: Value is not string. It has been co-erced to: ",a)),a=a.trim(),a.match(/^\d+$/))return!0;if(""===a)return!1;try{j=b.localeData(c)}catch(l){j=b.localeData(b.locale())}return f=j.currency.symbol,h=j.abbreviations,d=j.delimiters.decimal,e="."===j.delimiters.thousands?"\\.":j.delimiters.thousands,k=a.match(/^[^\d]+/),null!==k&&(a=a.substr(1),k[0]!==f)?!1:(k=a.match(/[^\d]+$/),null!==k&&(a=a.slice(0,-1),k[0]!==h.thousand&&k[0]!==h.million&&k[0]!==h.billion&&k[0]!==h.trillion)?!1:(i=new RegExp(e+"{2}"),a.match(/[^\d.,]/g)?!1:(g=a.split(d),g.length>2?!1:g.length<2?!!g[0].match(/^\d+.*\d$/)&&!g[0].match(i):1===g[0].length?!!g[0].match(/^\d+$/)&&!g[0].match(i)&&!!g[1].match(/^\d+$/):!!g[0].match(/^\d+.*\d$/)&&!g[0].match(i)&&!!g[1].match(/^\d+$/))))},b.fn=a.prototype={clone:function(){return b(this)},format:function(a,c){var d,f,g,i=this._value,j=a||h.defaultFormat;if(c=c||Math.round,0===i&&null!==h.zeroFormat)f=h.zeroFormat;else if(null===i&&null!==h.nullFormat)f=h.nullFormat;else{for(d in e)if(j.match(e[d].regexps.format)){g=e[d].format;break}g=g||b._.numberToFormat,f=g(i,j,c)}return f},value:function(){return this._value},input:function(){return this._input},set:function(a){return this._value=Number(a),this},add:function(a){function b(a,b,c,e){return a+Math.round(d*b)}var d=c.correctionFactor.call(null,this._value,a);return this._value=c.reduce([this._value,a],b,0)/d,this},subtract:function(a){function b(a,b,c,e){return a-Math.round(d*b)}var d=c.correctionFactor.call(null,this._value,a);return this._value=c.reduce([a],b,Math.round(this._value*d))/d,this},multiply:function(a){function b(a,b,d,e){var f=c.correctionFactor(a,b);return Math.round(a*f)*Math.round(b*f)/Math.round(f*f)}return this._value=c.reduce([this._value,a],b,1),this},divide:function(a){function b(a,b,d,e){var f=c.correctionFactor(a,b);return Math.round(a*f)/Math.round(b*f)}return this._value=c.reduce([this._value,a],b),this},difference:function(a){return Math.abs(b(this._value).subtract(a).value())}},b.register("locale","en",{delimiters:{thousands:",",decimal:"."},abbreviations:{thousand:"k",million:"m",billion:"b",trillion:"t"},ordinal:function(a){var b=a%10;return 1===~~(a%100/10)?"th":1===b?"st":2===b?"nd":3===b?"rd":"th"},currency:{symbol:"$"}}),function(){b.register("format","bps",{regexps:{format:/(BPS)/,unformat:/(BPS)/},format:function(a,c,d){var e,f=b._.includes(c," BPS")?" ":"";return a=1e4*a,c=c.replace(/\s?BPS/,""),e=b._.numberToFormat(a,c,d),b._.includes(e,")")?(e=e.split(""),e.splice(-1,0,f+"BPS"),e=e.join("")):e=e+f+"BPS",e},unformat:function(a){return+(1e-4*b._.stringToNumber(a)).toFixed(15)}})}(),function(){var a={base:1e3,suffixes:["B","KB","MB","GB","TB","PB","EB","ZB","YB"]},c={base:1024,suffixes:["B","KiB","MiB","GiB","TiB","PiB","EiB","ZiB","YiB"]},d=a.suffixes.concat(c.suffixes.filter(function(b){return a.suffixes.indexOf(b)<0})),e=d.join("|");e="("+e.replace("B","B(?!PS)")+")",b.register("format","bytes",{regexps:{format:/([0\s]i?b)/,unformat:new RegExp(e)},format:function(d,e,f){var g,h,i,j,k=b._.includes(e,"ib")?c:a,l=b._.includes(e," b")||b._.includes(e," ib")?" ":"";for(e=e.replace(/\s?i?b/,""),h=0;h<=k.suffixes.length;h++)if(i=Math.pow(k.base,h),j=Math.pow(k.base,h+1),null===d||0===d||d>=i&&j>d){l+=k.suffixes[h],i>0&&(d/=i);break}return g=b._.numberToFormat(d,e,f),g+l},unformat:function(d){var e,f,g=b._.stringToNumber(d);if(g){for(e=a.suffixes.length-1;e>=0;e--){if(b._.includes(d,a.suffixes[e])){f=Math.pow(a.base,e);break}if(b._.includes(d,c.suffixes[e])){f=Math.pow(c.base,e);break}}g*=f||1}return g}})}(),function(){b.register("format","currency",{regexps:{format:/(\$)/},format:function(a,c,d){var e,f,g,h=b.locales[b.options.currentLocale],i={before:c.match(/^([\+|\-|\(|\s|\$]*)/)[0],after:c.match(/([\+|\-|\)|\s|\$]*)$/)[0]};for(c=c.replace(/\s?\$\s?/,""),e=b._.numberToFormat(a,c,d),a>=0?(i.before=i.before.replace(/[\-\(]/,""),i.after=i.after.replace(/[\-\)]/,"")):0>a&&!b._.includes(i.before,"-")&&!b._.includes(i.before,"(")&&(i.before="-"+i.before),g=0;g<i.before.length;g++)switch(f=i.before[g]){case"$":e=b._.insert(e,h.currency.symbol,g);break;case" ":e=b._.insert(e," ",g+h.currency.symbol.length-1)}for(g=i.after.length-1;g>=0;g--)switch(f=i.after[g]){case"$":e=g===i.after.length-1?e+h.currency.symbol:b._.insert(e,h.currency.symbol,-(i.after.length-(1+g)));break;case" ":e=g===i.after.length-1?e+" ":b._.insert(e," ",-(i.after.length-(1+g)+h.currency.symbol.length-1))}return e}})}(),function(){b.register("format","exponential",{regexps:{format:/(e\+|e-)/,unformat:/(e\+|e-)/},format:function(a,c,d){var e,f="number"!=typeof a||b._.isNaN(a)?"0e+0":a.toExponential(),g=f.split("e");return c=c.replace(/e[\+|\-]{1}0/,""),e=b._.numberToFormat(Number(g[0]),c,d),e+"e"+g[1]},unformat:function(a){function c(a,c,d,e){var f=b._.correctionFactor(a,c),g=a*f*(c*f)/(f*f);return g}var d=b._.includes(a,"e+")?a.split("e+"):a.split("e-"),e=Number(d[0]),f=Number(d[1]);return f=b._.includes(a,"e-")?f*=-1:f,b._.reduce([e,Math.pow(10,f)],c,1)}})}(),function(){b.register("format","ordinal",{regexps:{format:/(o)/},format:function(a,c,d){var e,f=b.locales[b.options.currentLocale],g=b._.includes(c," o")?" ":"";return c=c.replace(/\s?o/,""),g+=f.ordinal(a),e=b._.numberToFormat(a,c,d),e+g}})}(),function(){b.register("format","percentage",{regexps:{format:/(%)/,unformat:/(%)/},format:function(a,c,d){var e,f=b._.includes(c," %")?" ":"";return b.options.scalePercentBy100&&(a=100*a),c=c.replace(/\s?\%/,""),e=b._.numberToFormat(a,c,d),b._.includes(e,")")?(e=e.split(""),e.splice(-1,0,f+"%"),e=e.join("")):e=e+f+"%",e},unformat:function(a){var c=b._.stringToNumber(a);return b.options.scalePercentBy100?.01*c:c}})}(),function(){b.register("format","time",{regexps:{format:/(:)/,unformat:/(:)/},format:function(a,b,c){var d=Math.floor(a/60/60),e=Math.floor((a-60*d*60)/60),f=Math.round(a-60*d*60-60*e);return d+":"+(10>e?"0"+e:e)+":"+(10>f?"0"+f:f)},unformat:function(a){var b=a.split(":"),c=0;return 3===b.length?(c+=60*Number(b[0])*60,c+=60*Number(b[1]),c+=Number(b[2])):2===b.length&&(c+=60*Number(b[0]),c+=Number(b[1])),Number(c)}})}(),b});
-
-/***/ }),
 /* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -26387,10 +26417,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasSingularitySF; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasBn11SF; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BitNode_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Crimes_js__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Company_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Company_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__ = __webpack_require__(44);
@@ -26405,7 +26435,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__Settings_js__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Terminal_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Terminal_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__TextFile_js__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__ = __webpack_require__(37);
@@ -27948,7 +27978,7 @@ function NetscriptFunctions(workerScript) {
         getStats : function() {
             if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getStats(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getStats(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return {};
                 }
             }
@@ -27962,6 +27992,15 @@ function NetscriptFunctions(workerScript) {
                 charisma:       __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].charisma,
                 intelligence:   __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].intelligence
             }
+        },
+        isBusy : function() {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run isBusy(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return;
+                }
+            }
+            return __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking;
         },
         upgradeHomeRam() {
             if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
@@ -28365,40 +28404,40 @@ function NetscriptFunctions(workerScript) {
             crime = crime.toLowerCase();
             if (crime.includes("shoplift")) {
                 workerScript.scriptRef.log("Attempting to shoplift...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["k" /* commitShopliftCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["k" /* commitShopliftCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("rob") && crime.includes("store")) {
                 workerScript.scriptRef.log("Attempting to rob a store...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["j" /* commitRobStoreCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["j" /* commitRobStoreCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("mug")) {
                 workerScript.scriptRef.log("Attempting to mug someone...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["i" /* commitMugCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["i" /* commitMugCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("larceny")) {
                 workerScript.scriptRef.log("Attempting to commit larceny...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["h" /* commitLarcenyCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["h" /* commitLarcenyCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("drugs")) {
                 workerScript.scriptRef.log("Attempting to deal drugs...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["c" /* commitDealDrugsCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["c" /* commitDealDrugsCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("bond") && crime.includes("forge")) {
                 workerScript.scriptRef.log("Attempting to forge corporate bonds...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["b" /* commitBondForgeryCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["b" /* commitBondForgeryCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("traffick") && crime.includes("arms")) {
                 workerScript.scriptRef.log("Attempting to traffick illegal arms...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["l" /* commitTraffickArmsCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["l" /* commitTraffickArmsCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("homicide")) {
                 workerScript.scriptRef.log("Attempting to commit homicide...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["f" /* commitHomicideCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["f" /* commitHomicideCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("grand") && crime.includes("auto")) {
                 workerScript.scriptRef.log("Attempting to commit grand theft auto...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["d" /* commitGrandTheftAutoCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["d" /* commitGrandTheftAutoCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("kidnap")) {
                 workerScript.scriptRef.log("Attempting to kidnap and ransom a high-profile target...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["g" /* commitKidnapCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["g" /* commitKidnapCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("assassinate")) {
                 workerScript.scriptRef.log("Attempting to assassinate a high-profile target...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["a" /* commitAssassinationCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript})
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["a" /* commitAssassinationCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript})
             } else if (crime.includes("heist")) {
                 workerScript.scriptRef.log("Attempting to pull off a heist...");
-                Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["e" /* commitHeistCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["e" /* commitHeistCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
             } else {
                 throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid crime passed into commitCrime(): " + crime);
             }
@@ -28685,7 +28724,7 @@ function yesNoTxtInpBoxCreate(txt) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Missions_js__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
@@ -28902,7 +28941,7 @@ function initMessages()  {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_LogBox_js__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_numeral_min_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_numeral_min_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_StringHelperFunctions_js__ = __webpack_require__(4);
 
@@ -34711,7 +34750,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*! decimal.js v7.2.3 https://github.com/MikeM
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__ = __webpack_require__(4);
 
@@ -35648,73 +35687,97 @@ Environment.prototype = {
 function commitShopliftCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeShoplift;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 0, 0, 2/div, 2/div, 0, 15000/div, 2000, singParams); //$7500/s, 1 exp/s
+    var time = 2000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 0, 0, 2/div, 2/div, 0, 15000/div, time, singParams); //$7500/s, 1 exp/s
+    return time;
 }
 
 function commitRobStoreCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeRobStore;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(30/div, 0, 0, 45/div, 45/div, 0, 400000/div, 60000, singParams); //$6666,6/2, 0.5exp/s, 0.75exp/s
+    var time = 60000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(30/div, 0, 0, 45/div, 45/div, 0, 400000/div, time, singParams); //$6666,6/2, 0.5exp/s, 0.75exp/s
+    return time;
 }
 
 function commitMugCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeMug;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 3/div, 3/div, 3/div, 3/div, 0, 36000/div, 4000, singParams); //$9000/s, .66 exp/s
+    var time = 4000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 3/div, 3/div, 3/div, 3/div, 0, 36000/div, time, singParams); //$9000/s, .66 exp/s
+    return time;
 }
 
 function commitLarcenyCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeLarceny;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(45/div, 0, 0, 60/div, 60/div, 0, 800000/div, 90000, singParams) // $8888.88/s, .5 exp/s, .66 exp/s
+    var time = 90000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(45/div, 0, 0, 60/div, 60/div, 0, 800000/div, time, singParams) // $8888.88/s, .5 exp/s, .66 exp/s
+    return time;
 }
 
 function commitDealDrugsCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeDrugs;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 0, 0, 5/div, 5/div, 10/div, 120000/div, 10000, singParams); //$12000/s, .5 exp/s, 1 exp/s
+    var time = 10000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 0, 0, 5/div, 5/div, 10/div, 120000/div, time, singParams); //$12000/s, .5 exp/s, 1 exp/s
+    return time;
 }
 
 function commitBondForgeryCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeBondForgery;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(100/div, 0, 0, 150/div, 0, 15/div, 4500000/div, 300000, singParams); //$15000/s, 0.33 hack exp/s, .5 dex exp/s, .05 cha exp
+    var time = 300000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(100/div, 0, 0, 150/div, 0, 15/div, 4500000/div, time, singParams); //$15000/s, 0.33 hack exp/s, .5 dex exp/s, .05 cha exp
+    return time;
 }
 
 function commitTraffickArmsCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeTraffickArms;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 20/div, 20/div, 20/div, 20/div, 40/div, 600000/div, 40000, singParams); //$15000/s, .5 combat exp/s, 1 cha exp/s
+    var time = 40000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 20/div, 20/div, 20/div, 20/div, 40/div, 600000/div, time, singParams); //$15000/s, .5 combat exp/s, 1 cha exp/s
+    return time;
 }
 
 function commitHomicideCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeHomicide;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 2/div, 2/div, 2/div, 2/div, 0, 45000/div, 3000, singParams); //$15000/s, 0.66 combat exp/s
+    var time = 3000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 2/div, 2/div, 2/div, 2/div, 0, 45000/div, time, singParams); //$15000/s, 0.66 combat exp/s
+    return time;
 }
 
 function commitGrandTheftAutoCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeGrandTheftAuto;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 20/div, 20/div, 20/div, 80/div, 40/div, 1600000/div, 80000, singParams); //$20000/s, .25 exp/s, 1 exp/s, .5 exp/s
+    var time = 80000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 20/div, 20/div, 20/div, 80/div, 40/div, 1600000/div, time, singParams); //$20000/s, .25 exp/s, 1 exp/s, .5 exp/s
+    return time;
 }
 
 function commitKidnapCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeKidnap;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 80/div, 80/div, 80/div, 80/div, 80/div, 3600000/div, 120000, singParams); //$30000/s. .66 exp/s
+    var time = 120000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 80/div, 80/div, 80/div, 80/div, 80/div, 3600000/div, time, singParams); //$30000/s. .66 exp/s
+    return time;
 }
 
 function commitAssassinationCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeAssassination;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 300/div, 300/div, 300/div, 300/div, 0, 12000000/div, 300000, singParams); //$40000/s, 1 exp/s
+    var time = 300000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(0, 300/div, 300/div, 300/div, 300/div, 0, 12000000/div, time, singParams); //$40000/s, 1 exp/s
+    return time;
 }
 
 function commitHeistCrime(div=1, singParams=null) {
     if (div <= 0) {div = 1;}
     __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].crimeType = __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].CrimeHeist;
-    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(450/div, 450/div, 450/div, 450/div, 450/div, 450/div, 120000000/div, 600000, singParams); //$200000/s, .75exp/s
+    var time = 600000;
+    __WEBPACK_IMPORTED_MODULE_1__Player_js__["a" /* Player */].startCrime(450/div, 450/div, 450/div, 450/div, 450/div, 450/div, 120000000/div, time, singParams); //$200000/s, .75exp/s
+    return time;
 }
 
 function determineCrimeSuccess(crime, moneyGained) {
@@ -37365,7 +37428,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_JSONReviver_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_YesNoBox_js__ = __webpack_require__(23);
@@ -38841,9 +38904,9 @@ function applySourceFile(srcFile) {
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BitNode_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Company_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Company_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__engine_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Faction_js__ = __webpack_require__(10);
@@ -38855,7 +38918,7 @@ function applySourceFile(srcFile) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__StockMarket_js__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Terminal_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Terminal_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_decimal_js__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__utils_decimal_js__);
 
@@ -39094,7 +39157,7 @@ function prestigeSourceFile() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Prestige_js__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SourceFile_js__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Terminal_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Terminal_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_YesNoBox_js__ = __webpack_require__(23);
@@ -41167,7 +41230,7 @@ module.exports.src = "\"no use strict\";(function(window){function resolveModule
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return substituteAliases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAliases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadGlobalAliases; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Terminal_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Terminal_js__ = __webpack_require__(21);
 
 
 let Aliases = {};
@@ -41297,7 +41360,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SpecialServerIps_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Terminal_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Terminal_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__ = __webpack_require__(4);
 
@@ -81279,7 +81342,7 @@ var NetscriptHighlightRules = function(options) {
             "isNaN|parseFloat|parseInt|"                                               +
             "hack|sleep|grow|weaken|print|tprint|scan|nuke|brutessh|ftpcrack|"         + //Netscript functions
             "relaysmtp|httpworm|sqlinject|run|exec|kill|killall|scp|ls|hasRootAccess|" +
-            "getIp|getHackingMultipliers|getBitNodeMultipliers|getStats|"              +
+            "getIp|getHackingMultipliers|getBitNodeMultipliers|getStats|isBusy|"       +
             "getHostname|getHackingLevel|getServerMoneyAvailable|getServerMaxMoney|"   +
             "getServerGrowth|getServerSecurityLevel|getServerBaseSecurityLevel|"       +
             "getServerMinSecurityLevel|"                                               +
@@ -81293,7 +81356,7 @@ var NetscriptHighlightRules = function(options) {
             "gymWorkout|travelToCity|purchaseTor|purchaseProgram|upgradeHomeRam|"      +
             "getUpgradeHomeRamCost|workForCompany|applyToCompany|getCompanyRep|"       +
             "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
-            "createProgram|commitCrime|getOwnedAugmentations|"                         +
+            "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
             "getAugmentationsFromFaction|"                                             +
             "getAugmentationCost|purchaseAugmentation|"                                +
             "installAugmentations|hacknetnodes|upgradeLevel|upgradeRam|upgradeCore|"   +
@@ -91986,7 +92049,7 @@ let HelpTexts = {
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return saveObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return loadGame; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Alias_js__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Company_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Company_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Faction_js__ = __webpack_require__(10);

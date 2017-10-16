@@ -24,6 +24,7 @@ import {clearEventListeners}                    from "../utils/HelperFunctions.j
 import {createRandomIp}                         from "../utils/IPAddress.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
+import numeral                                  from "../utils/numeral.min.js";
 import {formatNumber,
         convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
 
@@ -1601,6 +1602,9 @@ PlayerObject.prototype.singularityStopWork = function() {
             break;
         case CONSTANTS.WorkTypeCreateProgram:
             res = this.finishCreateProgramWork(true, true);
+            break;
+        case CONSTANTS.WorkTypeCrime:
+            res = this.finishCrime(true);
             break;
         default:
             console.log("ERROR: Unrecognized work type");

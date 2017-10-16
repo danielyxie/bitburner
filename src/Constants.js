@@ -851,6 +851,10 @@ let CONSTANTS = {
                                         "Player.hacking<br>Player.strength<br>Player.defense<br>Player.dexterity<br>Player.agility<br>Player.charisma<br>Player.intelligence<br><br>" +
                                         "Example: <br><br>" +
                                         "res = getStats();<br>print('My charisma level is: ' + res.charisma);<br><br>" +
+                                        "<i>isBusy()</i><br>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this " +
+                                        "function.<br><br>Returns a boolean indicating whether or not the player is currently performing an 'action'. " +
+                                        "These actions include working for a company/faction, studying at a univeristy, working out at a gym, " +
+                                        "creating a program, or committing a crime.<br><br>" +
                                         "<i>upgradeHomeRam()</i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will upgrade amount of RAM on the player's home computer. The cost is the same as if you were to do it manually.<br><br>" +
@@ -912,6 +916,26 @@ let CONSTANTS = {
                                         "BruteSSH.exe: 50<br>FTPCrack.exe: 100<br>relaySMTP.exe: 250<br>HTTPWorm.exe: 500<br>SQLInject.exe: 750<br>" +
                                         "DeepscanV1.exe: 75<br>DeepscanV2.exe: 400<br>ServerProfiler.exe: 75<br>AutoLink.exe: 25<br><br>" +
                                         "This function returns true if you successfully start working on the specified program, and false otherwise.<br><br>" +
+                                        "<i>commitCrime(crime)</i><br>" +
+                                        "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
+                                        "This function is used to automatically attempt to commit crimes. If you are already in the middle of some 'working' " +
+                                        "action (such as working for a company or training at a gym), then running this function will automatically cancel " +
+                                        "that action and give you your earnings.<br><br>" +
+                                        "The function takes a string that specifies what crime to attempt. This argument is not case-sensitive and is fairly " +
+                                        "lenient in terms of what inputs it accepts. Here is a list of valid inputs for all of the crimes:<br><br>" +
+                                        "shoplift, rob store, mug, larceny, deal drugs, bond forgery, traffick arms, homicide, grand theft auto, " +
+                                        "kidnap, assassinate, heist<br><br> " +
+                                        "This function returns the number of seconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt " +
+                                        "the 'Rob Store' crime, so running commitCrime('rob store') will return 60). Warning: I do not recommend using the time " +
+                                        "returned from this function to try and schedule your crime attempts. Instead, I would use the isBusy() Singularity function " +
+                                        "to check whether you have finished attempting a crime. This is because although the game sets a certain crime to be X amount of seconds, " +
+                                        "there is no guarantee that your browser will follow that time limit.<br><br>" +
+                                        "<i>getCrimeChance(crime)</i><br>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to " +
+                                        "use this function.<br><br>" +
+                                        "This function returns your chance of success at commiting the specified crime. The chance is returned as a decimal " +
+                                        "(i.e. 60% would be returned as 0.6). The argument for this function is a string. It is not case-sensitive and is fairly " +
+                                        "lenient in terms of what inputs it accepts. Check the documentation for the commitCrime() Singularity Function to see " +
+                                        "examples of valid inputs.<br><br>" +
                                         "<i>getOwnedAugmentations(purchased=false)</i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function returns an array of the names of all Augmentations you own as strings. It takes a single optional " +
@@ -1051,7 +1075,7 @@ let CONSTANTS = {
     "but that's not available yet. You can also download files to your real computer using the 'download' Terminal command<br>" +
     "-Added a new Crime: Bond Forgery. This crime takes 5 minutes to attempt " +
     "and gives $4,500,000 if successful. It is meant for mid game.<br>" +
-    "-Added commitCrime(), getCrimeChance(), and getStats() Singularity Functions.<br>" +
+    "-Added commitCrime(), getCrimeChance(), isBusy(), and getStats() Singularity Functions.<br>" +
     "-Removed getIntelligence() Netscript function<br>" +
     "-Added sprintf and vsprintf to Netscript. See <a href='https://github.com/alexei/sprintf.js' target='_blank'>this Github page for details</a><br>" +
     "-Increased the amount of money gained from Infiltration by 20%, and the amount of faction reputation by 12%<br>" +
