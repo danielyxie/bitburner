@@ -2563,7 +2563,7 @@ function powerOfTwo(n) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CONSTANTS; });
 let CONSTANTS = {
-    Version:                "0.30.0",
+    Version:                "0.31.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -3415,7 +3415,7 @@ let CONSTANTS = {
                                         "Player.hacking<br>Player.strength<br>Player.defense<br>Player.dexterity<br>Player.agility<br>Player.charisma<br>Player.intelligence<br><br>" +
                                         "Example: <br><br>" +
                                         "res = getStats();<br>print('My charisma level is: ' + res.charisma);<br><br>" +
-                                        "<i>isBusy()</i><br>If youa re not in bitNode-4, then you must have Level 1 of Source-File 4 in order to run this " +
+                                        "<i>isBusy()</i><br>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this " +
                                         "function.<br><br>Returns a boolean indicating whether or not the player is currently performing an 'action'. " +
                                         "These actions include working for a company/faction, studying at a univeristy, working out at a gym, " +
                                         "creating a program, or committing a crime.<br><br>" +
@@ -3499,7 +3499,7 @@ let CONSTANTS = {
                                         "This function returns your chance of success at commiting the specified crime. The chance is returned as a decimal " +
                                         "(i.e. 60% would be returned as 0.6). The argument for this function is a string. It is not case-sensitive and is fairly " +
                                         "lenient in terms of what inputs it accepts. Check the documentation for the commitCrime() Singularity Function to see " +
-                                        "examples of valid inputs.<br><br>" + 
+                                        "examples of valid inputs.<br><br>" +
                                         "<i>getOwnedAugmentations(purchased=false)</i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function returns an array of the names of all Augmentations you own as strings. It takes a single optional " +
