@@ -596,21 +596,25 @@ div.faction-clear {
     margin: 10px;
 }
 
-.stock-market-qty-input {
+.stock-market-input {
+    display: inline-block;
+    padding: 4px;
+    margin: 2px;
+    background-color: black;
     border: 1px solid white;
     color: var(--my-font-color);
-    padding: 4px;
-    margin: 4px;
-    background-color:black;
+}
+
+.stock-market-position-text {
+    color:white;
+    white-space: pre;
+    display:block;
 }
 
 .stock-market-buy-sell-button {
     color: #aaa;
     font-size: 16px;
     font-weight: bold;
-    padding: 2px;
-    margin: 6px;
-    border: 1px solid white;
 }
 
 .stock-market-buy-sell-button:hover,
@@ -618,6 +622,11 @@ div.faction-clear {
     color: var(--my-font-color);
     text-decoration: none;
     cursor: pointer;
+}
+
+.stock-market-order-list {
+    overflow-y:auto;
+    max-height: 100px;
 }
 
 /* Gang */

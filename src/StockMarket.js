@@ -1,6 +1,7 @@
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {Locations}                              from "./Location.js";
+import {hasWallStreetSF, wallStreetSFLvl}       from "./NetscriptFunctions.js";
 import {WorkerScript}                           from "./NetscriptWorker.js";
 import {Player}                                 from "./Player.js";
 
@@ -10,6 +11,11 @@ import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import numeral                                  from "../utils/numeral.min.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
+        yesNoBoxGetYesButton, yesNoBoxGetNoButton,
+        yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,
+        yesNoTxtInpBoxGetInput, yesNoBoxClose,
+        yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox.js";
 
 /* StockMarket.js */
 function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
@@ -36,9 +42,95 @@ Stock.fromJSON = function(value) {
 
 Reviver.constructors.Stock = Stock;
 
-//Order types (long and short for each):
-// - Limit Order
-// - Stop Order
+var OrderTypes = {
+    LimitBuy: "Limit Buy Order",
+    LimitSell: "Limit Sell Order",
+    StopBuy: "Stop Buy Order",
+    StopSell: "Stop Sell Order"
+}
+
+var PositionTypes = {
+    Long: "L",
+    Short: "S"
+}
+
+function placeOrder(stock, shares, price, type, position, workerScript=null) {
+    var tixApi = (workerScript instanceof WorkerScript);
+    var order = new Order(stock, shares, price, type, position);
+    if (isNaN(shares)) {
+        dialogBoxCreate("ERROR: Invalid number of shares specifies for order");
+        return false;
+    }
+    if (StockMarket["Orders"] === null) {
+        var orders = {};
+        for (var name in StockMarket) {
+            if (StockMarket.hasOwnProperty(name)) {
+                var stock = StockMarket[name];
+                if (!(stock instanceof Stock)) {continue;}
+                orders[stock.symbol] = [];
+            }
+        }
+        StockMarket["Orders"] = orders;
+    }
+    StockMarket["Orders"].push(order);
+    //Process to see if it should be executed immediately
+    processOrders(order.stock, order.type, order.pos);
+    return true;
+}
+
+function executeOrder(order) {
+    var stock = order.stock;
+    var orderBook = StockMarket["Orders"];
+    var stockOrders = orderBook[stock.symbol];
+    var res = true;
+    switch (order.type) {
+        case OrderTypes.LimitBuy:
+        case OrderTypes.StopBuy:
+            if (order.pos === PositionTypes.Long) {
+                res = buyStock(order.stock, order.shares) && res;
+            } else if (order.pos === PositionTypes.Short) {
+                res = shortStock(oder.stock, order.shares) && res;
+            }
+            break;
+        case OrderTypes.LimitSell:
+        case OrderTypes.StopSell:
+            if (order.pos === PositionTypes.Long) {
+                res = sellStock(order.stock, order.shares) && res;
+            } else if (order.pos === PositionTypes.Short) {
+                res = sellShort(order.stock, order.shares) && res;
+            }
+            break;
+    }
+    if (res) {
+        //Remove order from order book
+        for (var i = 0; i < stockOrders.length; ++i) {
+            if (order == stockOrders[i]) {
+                stockOrders.splice(i, 1);
+                return;
+            }
+        }
+        console.log("ERROR: Could not find the following Order in Order Book: ");
+        console.log(order);
+    }
+}
+
+function Order(stock, price, type, position) {
+    this.stock = stock;
+    this.shares = shares;
+    this.price = price;
+    this.type = type;
+    this.pos = position;
+}
+
+Order.prototype.toJSON = function() {
+	return Generic_toJSON("Order", this);
+}
+
+Order.fromJSON = function(value) {
+	return Generic_fromJSON(Order, value.data);
+}
+
+Reviver.constructors.Order = Order;
 
 let StockMarket = {}        //Full name to stock object
 let StockSymbols = {}       //Full name to symbol
@@ -229,6 +321,16 @@ function initStockMarket() {
     var titanlabs = "Titan Laboratories";
     var titanlabsStk = new Stock(titanlabs, StockSymbols[titanlabs], 0.6, true, 11, getRandomInt(15000, 20000));
     StockMarket[titanlabs] = titanlabsStk;
+
+    var orders = {};
+    for (var name in StockMarket) {
+        if (StockMarket.hasOwnProperty(name)) {
+            var stock = StockMarket[name];
+            if (!(stock instanceof Stock)) {continue;}
+            orders[stock.symbol] = [];
+        }
+    }
+    StockMarket["Orders"] = orders;
 }
 
 function initSymbolToStockMap() {
@@ -408,6 +510,7 @@ function updateStockPrices() {
     var v = Math.random();
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
+            if (!(stock instanceof Stock)) {continue;}
             var stock = StockMarket[name];
             var av = (v * stock.mv) / 100;
             if (isNaN(av)) {av = .02;}
@@ -424,11 +527,19 @@ function updateStockPrices() {
             var c = Math.random();
             if (c < chc) {
                 stock.price *= (1 + av);
+                processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Short);
+                processOrders(stock, OrderTypes.LimitSell, PositionTypes.Long);
+                processOrders(stock, OrderTypes.StopBuy, PositionTypes.Long);
+                processOrders(stock, OrderTypes.StopSell, PositionTypes.Short);
                 if (Engine.currentPage == Engine.Page.StockMarket) {
                     updateStockTicker(stock, true);
                 }
             } else {
                 stock.price /= (1 + av);
+                processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Long);
+                processOrders(stock, OrderTypes.LimitSell, PositionTypes.Short);
+                processOrders(stock, OrderTypes.StopBuy, PositionTypes.Short);
+                processOrders(stock, OrderTypes.StopSell, PositionTypes.Long);
                 if (Engine.currentPage == Engine.Page.StockMarket) {
                     updateStockTicker(stock, false);
                 }
@@ -446,6 +557,68 @@ function updateStockPrices() {
             if (stock.otlkMag < 0) {
                 stock.otlkMag *= -1;
                 stock.b = !stock.b;
+            }
+
+        }
+    }
+}
+
+//Checks and triggers any orders for the specified stock
+function processOrders(stock, orderType, posType) {
+    var orderBook = StockMarket["Orders"];
+    if (orderBook === null) {
+        var orders = {};
+        for (var name in StockMarket) {
+            if (StockMarket.hasOwnProperty(name)) {
+                var stock = StockMarket[name];
+                if (!(stock instanceof Stock)) {continue;}
+                orders[stock.symbol] = [];
+            }
+        }
+        StockMarket["Orders"] = orders;
+        return; //Newly created, so no orders to process
+    }
+    var stockOrders = orderBook[stock.symbol];
+    if (stockOrders === null || !(stockOrders.constructor === Array)) {
+        console.log("ERROR: Invalid Order book for " + stock.symbol + " in processOrders()");
+        stockOrders = [];
+        return;
+    }
+    for (var i = 0; i < stockOrders.length; ++i) {
+        var order = stockOrders[i];
+        if (order.type === orderType && order.pos === posType) {
+            switch(order.type) {
+                case OrderTypes.LimitBuy:
+                    if (order.pos === PositionTypes.Long && stock.price <= order.price) {
+                        executeOrder/*66*/(order);
+                    } else if (order.pos === PositionTypes.Short && stock.price >= order.price) {
+                        executeOrder/*66*/(order);
+                    }
+                    break;
+                case OrderTypes.LimitSell:
+                    if (order.pos === PositionTypes.Long && stock.price >= order.price) {
+                        executeOrder/*66*/(order);
+                    } else if (order.pos === PositionTypes.Short && stock.price <= order.price) {
+                        executeOrder/*66*/(order);
+                    }
+                    break;
+                case OrderTypes.StopBuy:
+                    if (order.pos === PositionTypes.Long && stock.price >= order.price) {
+                        executeOrder/*66*/(order);
+                    } else if (order.pos === PositionTypes.Short && stock.price <= order.price) {
+                        executeOrder/*66*/(order);
+                    }
+                    break;
+                case OrderTypes.StopSell:
+                    if (order.pos === PositionTypes.Long && stock.price <= order.price) {
+                        executeOrder/*66*/(order);
+                    } else if (order.pos === PositionTypes.Short && stock.price >= order.price) {
+                        executeOrder/*66*/(order);
+                    }
+                    break;
+                default:
+                    console.log("Invalid order type: " + order.type);
+                    return;
             }
         }
     }
@@ -514,138 +687,14 @@ function displayStockMarketContent() {
             "This means all your positions are lost, so make sure to sell your stocks before installing " +
             "Augmentations!";
 
-        var hdrLi       = document.createElement("li");
-        var hdrName     = document.createElement("p");
-        var hdrSym      = document.createElement("p");
-        var hdrPrice    = document.createElement("p");
-        var hdrQty      = document.createElement("p");
-        var hdrBuySell  = document.createElement("p")
-        var hdrAvgPrice = document.createElement("p");
-        var hdrShares   = document.createElement("p");
-        var hdrReturn   = document.createElement("p");
-        hdrName.style.display = "inline-block";
-        hdrName.innerText = "Stock Name";
-        hdrName.style.width = "8%";
-        hdrSym.style.display = "inline-block";
-        hdrSym.innerText = "Symbol";
-        hdrSym.style.width = "4%";
-        hdrPrice.style.display = "inline-block";
-        hdrPrice.innerText = "Price";
-        hdrPrice.style.width = "8%";
-        hdrQty.style.display = "inline-block";
-        hdrQty.innerText = "Quantity";
-        hdrQty.style.width = "3%";
-        hdrBuySell.style.display = "inline-block";
-        hdrBuySell.innerText = "Buy/Sell";
-        hdrBuySell.style.width = "5%";
-        hdrAvgPrice.style.display = "inline-block";
-        hdrAvgPrice.innerText = "Avg price of owned shares";
-        hdrAvgPrice.style.width = "7.5%";
-        hdrShares.style.display = "inline-block";
-        hdrShares.innerText = "Shares owned";
-        hdrShares.style.width = "4%";
-        hdrReturn.style.display = "inline-block";
-        hdrReturn.innerText = "Total Return";
-        hdrReturn.style.width = "6%";
-        hdrLi.appendChild(hdrName);
-        hdrLi.appendChild(hdrSym);
-        hdrLi.appendChild(hdrPrice);
-        hdrLi.appendChild(hdrQty);
-        hdrLi.appendChild(hdrBuySell);
-        hdrLi.appendChild(hdrAvgPrice);
-        hdrLi.appendChild(hdrShares);
-        hdrLi.appendChild(hdrReturn);
-        stockList.appendChild(hdrLi);
-
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
-            (function() {
                 var stock = StockMarket[name];
-
-                var li          = document.createElement("li");
-                var stkName     = document.createElement("p");
-                var stkSym      = document.createElement("p");
-                var stkPrice    = document.createElement("p");
-                var qtyInput    = document.createElement("input");
-                var buyButton   = document.createElement("span");
-                var sellButton  = document.createElement("span");
-                var avgPriceTxt = document.createElement("p");
-                var sharesTxt   = document.createElement("p");
-                var returnTxt   = document.createElement("p");
-
-                var tickerId = "stock-market-ticker-" + stock.symbol;
-                stkName.setAttribute("id", tickerId + "-name");
-                stkSym.setAttribute("id", tickerId + "-sym");
-                stkPrice.setAttribute("id", tickerId + "-price");
-                stkName.style.display = "inline-block";
-                stkName.style.width = "8%";
-                stkSym.style.display = "inline-block";
-                stkSym.style.width = "4%";
-                stkPrice.style.display = "inline-block";
-                stkPrice.style.width = "9%";
-
-                li.setAttribute("display", "inline-block");
-
-                qtyInput.setAttribute("type", "text");
-                qtyInput.setAttribute("id", tickerId + "-qty-input");
-                qtyInput.setAttribute("class", "stock-market-qty-input");
-                qtyInput.setAttribute("onkeydown", "return ( event.ctrlKey || event.altKey " +
-                                      " || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) " +
-                                      " || (95<event.keyCode && event.keyCode<106) " +
-                                      " || (event.keyCode==8) || (event.keyCode==9) " +
-                                      " || (event.keyCode>34 && event.keyCode<40) " +
-                                      " || (event.keyCode==46) )");
-                qtyInput.style.width = "3%";
-                qtyInput.style.display = "inline-block";
-
-                buyButton.innerHTML = "Buy";
-                buyButton.setAttribute("class", "stock-market-buy-sell-button");
-                buyButton.style.width = "3%";
-                buyButton.style.display = "inline-block";
-                buyButton.addEventListener("click", function() {
-                    var shares = document.getElementById(tickerId + "-qty-input").value;
-                    shares = Number(shares);
-                    if (isNaN(shares)) {return false;}
-                    buyStock(stock, shares);
-                });
-                sellButton.innerHTML = "Sell";
-                sellButton.setAttribute("class", "stock-market-buy-sell-button");
-                sellButton.style.width = "3%";
-                sellButton.style.display = "inline-block";
-                sellButton.addEventListener("click", function() {
-                    var shares = document.getElementById(tickerId + "-qty-input").value;
-                    shares = Number(shares);
-                    if (isNaN(shares)) {return false;}
-                    sellStock(stock, shares);
-                });
-
-                avgPriceTxt.setAttribute("id", tickerId + "-avgprice");
-                avgPriceTxt.style.display = "inline-block";
-                avgPriceTxt.style.width = "8%";
-                avgPriceTxt.style.color = "white";
-                sharesTxt.setAttribute("id", tickerId + "-shares");
-                sharesTxt.style.display = "inline-block";
-                sharesTxt.style.width = "4%";
-                sharesTxt.style.color = "white";
-                returnTxt.setAttribute("id", tickerId + "-return");
-                returnTxt.style.display = "inline-block";
-                returnTxt.style.width = "6%";
-                returnTxt.style.color = "white";
-
-                li.appendChild(stkName);
-                li.appendChild(stkSym);
-                li.appendChild(stkPrice);
-                li.appendChild(qtyInput);
-                li.appendChild(buyButton);
-                li.appendChild(sellButton);
-                li.appendChild(avgPriceTxt);
-                li.appendChild(sharesTxt);
-                li.appendChild(returnTxt);
-                stockList.appendChild(li);
-            }()); //Immediate invocation
-            }//End if
-
+                if (!(stock instanceof Stock)) {continue;} //orders property is an array
+                createStockTicker(stock);
+            }
         }
+        setStockTickerClickHandlers(); //Clicking headers opens/closes panels
         stockMarketContentCreated = true;
     }
 
@@ -660,59 +709,278 @@ function displayStockMarketContent() {
     }
 }
 
-//'increase' argument is a boolean indicating whether the price increased or decreased
-function updateStockTicker(stock, increase) {
-    var tickerId = "stock-market-ticker-" + stock.symbol;
-    let stkName = document.getElementById(tickerId + "-name");
-    let stkSym = document.getElementById(tickerId + "-sym");
-    let stkPrice = document.getElementById(tickerId + "-price");
-
-    if (stkName == null || stkSym == null || stkPrice == null) {
-        console.log("ERROR, couldn't find elements with tickerId " + tickerId);
+function createStockTicker(stock) {
+    if (!(stock instanceof Stock)) {
+        console.log("Invalid stock in createStockSticker()");
         return;
     }
-    stkName.innerText = stock.name;
-    stkSym.innerText = stock.symbol;
-    stkPrice.innerText = "$" + formatNumber(stock.price, 2).toString();
+    var tickerId = "stock-market-ticker-" + stock.symbol;
+    var li = document.createElement("li"), hdr = document.createElement("button");
+    hdr.classList.add("accordion-header");
+    hdr.setAttribute("id", tickerId + "-hdr");
+    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + stock.price;
 
-    var returnTxt = document.getElementById(tickerId + "-return");
-    var totalCost = stock.playerShares * stock.playerAvgPx;
-    var gains = (stock.price - stock.playerAvgPx) * stock.playerShares;
-    var percentageGains = gains / totalCost;
-    if (totalCost > 0) {
-        returnTxt.innerText = "$" + formatNumber(gains, 2) + " (" +
-                              formatNumber(percentageGains * 100, 2) + "%)";
-    } else {
-        returnTxt.innerText = "N/A";
+    //Div for entire panel
+    var stockDiv = document.createElement("div");
+    stockDiv.classList.add("accordion-panel");
+
+    /* Create panel DOM */
+    var qtyInput = document.createElement("input"),
+        longShortSelect = document.createElement("select"),
+        orderTypeSelect = document.createElement("select"),
+        buyButton = document.createElement("span"),
+        sellButton = document.createElement("span"),
+        positionTxt = document.createElement("p"),
+        orderList = document.createElement("ul");
+
+    qtyInput.classList.add("stock-market-input");
+    qtyInput.setAttribute("id", tickerId + "-qty-input");
+    qtyInput.setAttribute("onkeydown", "return ( event.ctrlKey || event.altKey " +
+                          " || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) " +
+                          " || (95<event.keyCode && event.keyCode<106) " +
+                          " || (event.keyCode==8) || (event.keyCode==9) " +
+                          " || (event.keyCode>34 && event.keyCode<40) " +
+                          " || (event.keyCode==46) )");
+
+    longShortSelect.classList.add("stock-market-input");
+    longShortSelect.setAttribute("id", tickerId + "-pos-selector");
+    var longOpt = document.createElement("option");
+    longOpt.text = "Long";
+    longShortSelect.add(longOpt);
+    if (Player.bitNodeN === 8 || (hasWallStreetSF && wallStreetSFLvl >= 2)) {
+        var shortOpt = document.createElement("option");
+        shortOpt.text = "Short";
+        longShortSelect.add(shortOpt);
     }
 
+    orderTypeSelect.classList.add("stock-market-input");
+    orderTypeSelect.setAttribute("id", tickerId + "-order-selector");
+    var marketOpt = document.createElement("option");
+    marketOpt.text = "Market Order";
+    orderTypeSelect.add(marketOpt);
+    if (Player.bitNodeN === 8 || (hasWallStreetSF && wallStreetSFLvl >= 3)) {
+        var limitOpt = document.createElement("option");
+        limitOpt.text = "Limit Order";
+        orderTypeSelect.add(limitOpt);
+        var stopOpt = document.createElement("option");
+        stopOpt.text = "Stop Order";
+        orderTypeSelect.add(stopOpt);
+    }
 
-    if (increase) {
-        stkName.style.color = "#66ff33";
-        stkSym.style.color = "#66ff33";
-        stkPrice.style.color = "#66ff33";
-    } else {
-        stkName.style.color = "red";
-        stkSym.style.color = "red";
-        stkPrice.style.color = "red";
+    buyButton.classList.add("stock-market-input");
+    buyButton.innerHTML = "Buy";
+    buyButton.addEventListener("click", ()=>{
+        var pos = longShortSelect.options[longShortSelect.selectedIndex].text;
+        pos === "Long" ? pos = PositionTypes.Long : pos = PositionTypes.Short;
+        var ordType = orderTypeSelect.options[orderTypeSelect.selectedIndex].text;
+        var shares = Number(document.getElementById(tickerId + "-qty-input").value);
+        if (isNaN(shares)) {return false;}
+        switch (ordType) {
+            case "Market Order":
+                buyStock(stock, shares);
+                break;
+            case "Limit Order":
+            case "Stop Order":
+                var yesBtn = yesNoTxtInpBoxGetYesButton(),
+                    noBtn = yesNoTxtInpBoxGetNoButton();
+                yesBtn.innerText = "Place Buy" + ordType;
+                noBtn.innerText = "Cancel Order";
+                yesBtn.addEventListener("click", ()=>{
+                    var price = Number(yesNoTxtInpBoxGetInput()), type;
+                    if (ordType === "Limit Order") {
+                        type = OrderTypes.LimitBuy;
+                    } else {
+                        type = OrderTypes.StopBuy;
+                    }
+                    placeOrder(stock, shares, price, type, pos);
+                });
+                noBtn.addEventListener("click", ()=>{
+                    yesNoTxtInpBoxClose();
+                });
+                yesNoTxtInpBoxCreate("Enter the price for your " + ordType);
+                break;
+            default:
+                console.log("ERROR: Invalid order type");
+                break;
+        }
+        return false;
+    });
+
+    sellButton.classList.add("stock-market-input");
+    sellButton.innerHTML = "Sell";
+    sellButton.addEventListener("click", ()=>{
+        var pos = longShortSelect.options[longShortSelect.selectedIndex].text;
+        pos === "Long" ? pos = PositionTypes.Long : pos = PositionTypes.Short;
+        var ordType = orderTypeSelect.options[orderTypeSelect.selectedIndex].text;
+        var shares = Number(document.getElementById(tickerId + "-qty-input").value);
+        if (isNaN(shares)) {return false;}
+        switch (ordType) {
+            case "Market Order":
+                buyStock(stock, shares);
+                break;
+            case "Limit Order":
+            case "Stop Order":
+                var yesBtn = yesNoTxtInpBoxGetYesButton(),
+                    noBtn = yesNoTxtInpBoxGetNoButton();
+                yesBtn.innerText = "Place Sell" + ordType;
+                noBtn.innerText = "Cancel Order";
+                yesBtn.addEventListener("click", ()=>{
+                    var price = Number(yesNoTxtInpBoxGetInput()), type;
+                    if (ordType === "Limit Order") {
+                        type = OrderTypes.LimitSell;
+                    } else {
+                        type = OrderTypes.StopSell;
+                    }
+                    placeOrder(stock, shares, price, type, pos);
+                });
+                noBtn.addEventListener("click", ()=>{
+                    yesNoTxtInpBoxClose();
+                });
+                break;
+            default:
+                console.log("ERROR: Invalid order type");
+                break;
+        }
+        return false;
+    });
+
+    positionTxt.setAttribute("id", tickerId + "-position-text");
+    positionTxt.classList.add("stock-market-position-text");
+
+    orderList.setAttribute("id", tickerId + "-order-list");
+    orderList.classList.add("stock-market-order-list");
+
+    stockDiv.appendChild(qtyInput);
+    stockDiv.appendChild(longShortSelect);
+    stockDiv.appendChild(orderTypeSelect);
+    stockDiv.appendChild(buyButton);
+    stockDiv.appendChild(sellButton);
+    stockDiv.appendChild(positionTxt);
+    stockDiv.appendChild(orderList);
+
+    li.appendChild(hdr);
+    li.appendChild(stockDiv);
+    document.getElementById("stock-market-list").appendChild(li);
+
+    updateStockTicker(stock, true);
+}
+
+function setStockTickerClickHandlers() {
+    var stockList = document.getElementById("stock-market-list");
+    var tickerHdrs = stockList.getElementsByClassName("accordion-header");
+    if (tickerHdrs === null) {
+        console.log("ERROR: Could not find header elements for stock tickers");
+        return;
+    }
+    for (var i = 0; i < tickerHdrs.length; ++i) {
+        tickerHdrs[i].onclick = function() {
+            this.classList.toggle("active");
+
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        }
+    }
+}
+
+//'increase' argument is a boolean indicating whether the price increased or decreased
+function updateStockTicker(stock, increase) {
+    if (!(stock instanceof Stock)) {
+        console.log("Invalid stock in updateStockTicker()");
+        return;
+    }
+    var tickerId = "stock-market-ticker-" + stock.symbol;
+    var hdr = document.getElementById(tickerId + "-hdr");
+
+    if (hdr === null) {
+        console.log("ERROR: Couldn't find ticker element for stock: " + stock.symbol);
+        return;
+    }
+    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + stock.price;
+    increase ? hdr.style.color = "#66ff33" : hdr.style.color = "red";
+
+    if (stock.playerShares > 0 || stock.playerShortShares > 0) {
+        updateStockPlayerPosition(stock);
     }
 }
 
 function updateStockPlayerPosition(stock) {
-    var tickerId = "stock-market-ticker-" + stock.symbol;
-    var avgPriceTxt = document.getElementById(tickerId + "-avgprice");
-    var sharesTxt = document.getElementById(tickerId + "-shares");
-    if (avgPriceTxt == null || sharesTxt == null) {
-        dialogBoxCreate("Could not find element for player positions for stock " +
-                        stock.symbol + ". This is a bug please contact developer");
+    if (!(stock instanceof Stock)) {
+        console.log("Invalid stock in updateStockTicker()");
         return;
     }
-    avgPriceTxt.innerText = "$" + formatNumber(stock.playerAvgPx, 2);
-    sharesTxt.innerText = stock.playerShares.toString();
+    var tickerId = "stock-market-ticker-" + stock.symbol,
+        positionTxt = document.getElementById(tickerId + "-position-text");
+    if (positionTxt === null) {
+        console.log("ERROR: Could not find stock position element for: " + stock.symbol);
+        return;
+    }
+
+    //Calculate returns
+    var totalCost = stock.playerShares * stock.playerAvgPx,
+        gains = (stock.price - stock.playerAvgPx) * stock.playerShares,
+        percentageGains = gains / totalCost;
+
+    var shortTotalCost = stock.playerShortShares * stock.playerAvgShortPx,
+        shortGains = (stock.playerAvgShortPx - stock.price) * stock.playerShortShares,
+        shortPercentageGains = shortGains/ shortTotalCost;
+
+    positionTxt.innerHTML =
+        "<h1 class='tooltip stock-market-position-text'>Long Position: " +
+        "<span class='tooltiptext'>Shares in the long position will increase " +
+        "in value if the price of the corresponding stock increases</span></h1>" +
+        "<br>Shares: " + formatNumber(stock.playerShares, 0) +
+        "<br>Average Price: " + numeral(stock.playerAvgPx).format('$0.000a') +
+        "<br>Profit: " + numeral(gains).format('$0.000a') +
+                     " (" + formatNumber(percentageGains, 2) + "%)<br><br>" +
+        "<h1 class='tooltip stock-market-position-text'>Short Position: " +
+        "<span class='tooltiptext'>Shares in short position will increase " +
+        "in value if the price of the corresponding stock decreases</span></h1>" +
+        "<br>Shares: " + formatNumber(stock.playerShortShares, 0) +
+        "<br>Average Price: " + numeral(stock.playerAvgShortPx).format('$0.000a') +
+        "<br>Profit: " + numeral(shortGains).format('$0.000a') +
+                     " (" + formatNumber(shortPercentageGains, 2) + "%)";
+}
+
+function updateStockOrderList(stock) {
+    var tickerId = "stock-market-ticker-" + stock.symbol;
+    var orderList = document.getElementById(tickerId + "-order-list");
+    if (orderList === null) {
+        console.log("ERROR: Could not find order list for " + stock.symbol);
+        return;
+    }
+
+    var orderBook = StockMarket["Orders"];
+    if (orderBook === null) {
+        console.log("ERROR: Could not find order book in stock market");
+        return;
+    }
+    var stockOrders = orderBook[stock.symbol];
+    if (stockOrders === null) {
+        console.log("ERROR: Could nto find orders for: " + stock.symbol);
+        return;
+    }
+
+    //Remove everything from list
+    while (orderList.firstChild) {
+        orderList.removeChild(orderList.firstChild);
+    }
+
+    for (var i = 0; i < stockOrders.length; ++i) {
+        var order = stockOrders[i];
+        var li = document.createElement("li");
+        var posText = (order.pos === PositionTypes.Long ? "Long Position" : "Short Position");
+        li.innerText = order.type + " - " + posText + " - " +
+                       order.shares + " @ $" + formatNumber(order.price, 2);
+        orderList.appendChild(li);
+    }
 }
 
 export {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         initStockMarket, initSymbolToStockMap, stockMarketCycle, buyStock,
         sellStock, updateStockPrices, displayStockMarketContent,
         updateStockTicker, updateStockPlayerPosition, loadStockMarket,
-        setStockMarketContentCreated};
+        setStockMarketContentCreated, placeOrder, Order, OrderTypes};

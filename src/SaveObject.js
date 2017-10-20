@@ -89,6 +89,7 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
         window.localStorage.setItem("bitburnerSave", saveString);
     } catch(e) {
         if (e.code == 22) {
+            Engine.createStatusText("Save failed for localStorage! Check console(F12)");
             console.log("Failed to save game to localStorage because the size of the save file " +
                         "is too large. However, the game will still be saved to IndexedDb if your browser " +
                         "supports it. If you would like to save to localStorage as well, then " +

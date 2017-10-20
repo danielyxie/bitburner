@@ -59,8 +59,8 @@ import {printArray, powerOfTwo}                     from "../utils/HelperFunctio
 import {createRandomIp}                             from "../utils/IPAddress.js";
 import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions.js";
 
-var hasSingularitySF = false, hasAISF = false, hasBn11SF = false;
-var singularitySFLvl = 1;
+var hasSingularitySF=false, hasAISF=false, hasBn11SF=false, hasWallStreetSF=false;
+var singularitySFLvl=1, wallStreetSFLvl=1;
 
 //Used to check and set flags for every Source File, despite the name of the function
 function initSingularitySFFlags() {
@@ -71,6 +71,10 @@ function initSingularitySFFlags() {
         }
         if (Player.sourceFiles[i].n === 5) {
             hasAISF = true;
+        }
+        if (Player.sourceFiles[i].n === 8) {
+            hasWallStreetSF = true;
+            wallStreetSFLvl = Player.sourceFiles[i].lvl;
         }
         if (Player.sourceFiles[i].n === 11) {
             hasBn11SF = true;
@@ -1979,6 +1983,30 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log(txt);
             }
 
+            //Set Location to slums
+            switch(Player.city) {
+                case Locations.Aevum:
+                    Player.location = Locations.AevumSlums;
+                    break;
+                case Locations.Chongqing:
+                    Player.location = Locations.ChongqingSlums;
+                    break;
+                case Locations.Sector12:
+                    Player.location = Locations.Sector12Slums;
+                    break;
+                case Locations.NewTokyo:
+                    Player.location = Locations.NewTokyoSlums;
+                    break;
+                case Locations.Ishima:
+                    Player.location = Locations.IshimaSlums;
+                    break;
+                case Locations.Volhaven:
+                    Player.location = Locations.VolhavenSlums;
+                    break;
+                default:
+                    console.log("Invalid Player.city value");
+            }
+
             crime = crime.toLowerCase();
             if (crime.includes("shoplift")) {
                 workerScript.scriptRef.log("Attempting to shoplift...");
@@ -2190,4 +2218,5 @@ function NetscriptFunctions(workerScript) {
     }
 }
 
-export {NetscriptFunctions, initSingularitySFFlags, hasSingularitySF, hasBn11SF};
+export {NetscriptFunctions, initSingularitySFFlags, hasSingularitySF, hasBn11SF, hasWallStreetSF,
+        wallStreetSFLvl};

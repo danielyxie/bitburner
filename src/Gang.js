@@ -1132,7 +1132,7 @@ function setGangMemberClickHandlers() {
     //Server panel click handlers
     var gangMemberHdrs = document.getElementsByClassName("gang-member-header");
     if (gangMemberHdrs == null) {
-        console.log("ERROR: Could not find Active Scripts server panels");
+        console.log("ERROR: Could not find Gang Member Headers");
         return;
     }
     for (let i = 0; i < gangMemberHdrs.length; ++i) {
@@ -1242,7 +1242,6 @@ function createGangMemberDisplayElement(memberObj) {
     taskDescP.setAttribute("id", name + "gang-member-task-description");
     taskDescP.style.display = "inline";
     taskDescDiv.appendChild(taskDescP);
-
 
     statsDiv.style.width = "30%";
     taskDiv.style.width = "30%";

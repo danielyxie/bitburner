@@ -70,9 +70,9 @@
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Player; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return loadPlayer; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BitNode_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Company_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Company_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Crimes_js__ = __webpack_require__(31);
@@ -80,7 +80,7 @@
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Gang_js__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Location_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptFunctions_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptFunctions_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__SourceFile_js__ = __webpack_require__(34);
@@ -3830,9 +3830,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_StringHelperFunctions_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_LogBox_js__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ActiveScriptsUI_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Augmentations_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Augmentations_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__BitNode_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Company_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Company_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Faction_js__ = __webpack_require__(10);
@@ -3843,7 +3843,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__Literature_js__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__Message_js__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Missions_js__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__Prestige_js__ = __webpack_require__(35);
@@ -3855,7 +3855,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__SourceFile_js__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__StockMarket_js__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__Terminal_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__Terminal_js__ = __webpack_require__(23);
 
 
 
@@ -4982,7 +4982,7 @@ let Engine = {
                 Object(__WEBPACK_IMPORTED_MODULE_31__StockMarket_js__["f" /* initSymbolToStockMap */])();
             }
             Object(__WEBPACK_IMPORTED_MODULE_17__Literature_js__["a" /* initLiterature */])();
-            Object(__WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__["d" /* initSingularitySFFlags */])();
+            Object(__WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__["e" /* initSingularitySFFlags */])();
 
             console.log(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].intelligence_exp);
 
@@ -5067,7 +5067,7 @@ let Engine = {
             Object(__WEBPACK_IMPORTED_MODULE_18__Message_js__["d" /* initMessages */])();
             Object(__WEBPACK_IMPORTED_MODULE_31__StockMarket_js__["e" /* initStockSymbols */])();
             Object(__WEBPACK_IMPORTED_MODULE_17__Literature_js__["a" /* initLiterature */])();
-            Object(__WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__["d" /* initSingularitySFFlags */])();
+            Object(__WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__["e" /* initSingularitySFFlags */])();
 
             //Open main menu accordions for new game
             //Main menu accordions
@@ -16968,7 +16968,7 @@ return jQuery;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Faction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return purchaseAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return factionExists; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BitNode_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(5);
@@ -16982,7 +16982,7 @@ return jQuery;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_HelperFunctions_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_JSONReviver_js__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_StringHelperFunctions_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_YesNoBox_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_YesNoBox_js__ = __webpack_require__(22);
 
 
 
@@ -18345,7 +18345,7 @@ function initSpecialServerIps() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Locations; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return displayLocationContent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return initLocationButtons; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Company_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Company_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Crimes_js__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(5);
@@ -18360,7 +18360,7 @@ function initSpecialServerIps() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_numeral_min_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils_StringHelperFunctions_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_YesNoBox_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils_YesNoBox_js__ = __webpack_require__(22);
 
 
 
@@ -20753,7 +20753,7 @@ function initCreateProgramButtons() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__InteractiveTutorial_js__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptFunctions_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptFunctions_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Server_js__ = __webpack_require__(6);
@@ -21474,6 +21474,2244 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
 
 /***/ }),
 /* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NetscriptFunctions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return initSingularitySFFlags; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasSingularitySF; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasBn11SF; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return hasWallStreetSF; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return wallStreetSFLvl; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BitNode_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Crimes_js__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Company_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Constants_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__engine_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Faction_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__HacknetNode_js__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Location_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Message_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Player_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Script_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Server_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__Settings_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__SpecialServerIps_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Terminal_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__TextFile_js__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__NetscriptEnvironment_js__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__utils_decimal_js__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__utils_decimal_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__utils_IPAddress_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+var sprintf = __webpack_require__(40).sprintf,
+    vsprintf = __webpack_require__(40).vsprintf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var hasSingularitySF=false, hasAISF=false, hasBn11SF=false, hasWallStreetSF=false;
+var singularitySFLvl=1, wallStreetSFLvl=1;
+
+//Used to check and set flags for every Source File, despite the name of the function
+function initSingularitySFFlags() {
+    for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles.length; ++i) {
+        if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles[i].n === 4) {
+            hasSingularitySF = true;
+            singularitySFLvl = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles[i].lvl;
+        }
+        if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles[i].n === 5) {
+            hasAISF = true;
+        }
+        if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles[i].n === 8) {
+            hasWallStreetSF = true;
+            wallStreetSFLvl = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles[i].lvl;
+        }
+        if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles[i].n === 11) {
+            hasBn11SF = true;
+        }
+    }
+}
+
+function NetscriptFunctions(workerScript) {
+    return {
+        Math : Math,
+        Date : Date,
+        hacknetnodes : __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacknetNodes,
+        sprintf : sprintf,
+        vsprintf: vsprintf,
+        scan : function(ip=workerScript.serverIp, hostnames=true){
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, 'Invalid IP or hostname passed into scan() command');
+            }
+            var out = [];
+            for (var i = 0; i < server.serversOnNetwork.length; i++) {
+                var entry;
+                if (hostnames) {
+                    entry = server.getServerOnNetwork(i).hostname;
+                } else {
+                    entry = server.getServerOnNetwork(i).ip;
+                }
+                if (entry == null) {
+                    continue;
+                }
+                out.push(entry);
+            }
+            workerScript.scriptRef.log('scan() returned ' + server.serversOnNetwork.length + ' connections for ' + server.hostname);
+            return out;
+        },
+        hack : function(ip){
+            if (ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Hack() call has incorrect number of arguments. Takes 1 argument");
+            }
+            var threads = workerScript.scriptRef.threads;
+            if (isNaN(threads) || threads < 1) {threads = 1;}
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
+            }
+
+            //Calculate the hacking time
+            var hackingTime = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["i" /* scriptCalculateHackingTime */])(server); //This is in seconds
+
+            //No root access or skill level too low
+            if (server.hasAdminRights == false) {
+                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user does not have root access");
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot hack this server (" + server.hostname + ") because user does not have root access");
+            }
+
+            if (server.requiredHackingSkill > __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill) {
+                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
+            }
+
+            workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
+            //console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds (t=" + threads + ")");
+            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["d" /* netscriptDelay */])(hackingTime* 1000, workerScript).then(function() {
+                if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
+                var hackChance = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["h" /* scriptCalculateHackingChance */])(server);
+                var rand = Math.random();
+                var expGainedOnSuccess = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["f" /* scriptCalculateExpGain */])(server) * threads;
+                var expGainedOnFailure = (expGainedOnSuccess / 4);
+                if (rand < hackChance) {	//Success!
+                    var moneyGained = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["j" /* scriptCalculatePercentMoneyHacked */])(server);
+                    moneyGained = Math.floor(server.moneyAvailable * moneyGained) * threads;
+
+                    //Over-the-top safety checks
+                    if (moneyGained <= 0) {
+                        moneyGained = 0;
+                        expGainedOnSuccess = expGainedOnFailure;
+                    }
+                    if (moneyGained > server.moneyAvailable) {moneyGained = server.moneyAvailable;}
+                    server.moneyAvailable -= moneyGained;
+                    if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
+
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainMoney(moneyGained);
+                    workerScript.scriptRef.onlineMoneyMade += moneyGained;
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].scriptProdSinceLastAug += moneyGained;
+                    workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainHackingExp(expGainedOnSuccess);
+                    workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
+                    //console.log("Script successfully hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
+                    workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(moneyGained, 2) + " and " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
+                    server.fortify(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ServerFortifyAmount * threads);
+                    return Promise.resolve(true);
+                } else {
+                    //Player only gains 25% exp for failure? TODO Can change this later to balance
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainHackingExp(expGainedOnFailure);
+                    workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
+                    //console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp");
+                    workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
+                    return Promise.resolve(false);
+                }
+            });
+        },
+        sleep : function(time,log=true){
+            if (time === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "sleep() call has incorrect number of arguments. Takes 1 argument");
+            }
+            if (log) {
+                workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
+            }
+            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["d" /* netscriptDelay */])(time, workerScript).then(function() {
+                return Promise.resolve(true);
+            });
+        },
+        grow : function(ip){
+            var threads = workerScript.scriptRef.threads;
+            if (isNaN(threads) || threads < 1) {threads = 1;}
+            if (ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "grow() call has incorrect number of arguments. Takes 1 argument");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("Cannot grow(). Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot grow(). Invalid IP or hostname passed in: " + ip);
+            }
+
+            //No root access or skill level too low
+            if (server.hasAdminRights == false) {
+                workerScript.scriptRef.log("Cannot grow this server (" + server.hostname + ") because user does not have root access");
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot grow this server (" + server.hostname + ") because user does not have root access");
+            }
+
+            var growTime = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["g" /* scriptCalculateGrowTime */])(server);
+            //console.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds")
+            workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(growTime/1000, 3) + " seconds (t=" + threads + ")");
+            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["d" /* netscriptDelay */])(growTime, workerScript).then(function() {
+                if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
+                server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
+                var growthPercentage = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["j" /* processSingleServerGrowth */])(server, 450 * threads);
+                workerScript.scriptRef.recordGrow(server.ip, threads);
+                var expGain = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["f" /* scriptCalculateExpGain */])(server) * threads;
+                if (growthPercentage == 1) {
+                    expGain = 0;
+                }
+                workerScript.scriptRef.log("Available money on " + server.hostname + " grown by "
+                                           + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(growthPercentage*100 - 100, 6) + "%. Gained " +
+                                           Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGain, 4) + " hacking exp (t=" + threads +")");
+                workerScript.scriptRef.onlineExpGained += expGain;
+                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainHackingExp(expGain);
+                return Promise.resolve(growthPercentage);
+            });
+        },
+        weaken : function(ip){
+            var threads = workerScript.scriptRef.threads;
+            if (isNaN(threads) || threads < 1) {threads = 1;}
+            if (ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "weaken() call has incorrect number of arguments. Takes 1 argument");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("Cannot weaken(). Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot weaken(). Invalid IP or hostname passed in: " + ip);
+            }
+
+            //No root access or skill level too low
+            if (server.hasAdminRights == false) {
+                workerScript.scriptRef.log("Cannot weaken this server (" + server.hostname + ") because user does not have root access");
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot weaken this server (" + server.hostname + ") because user does not have root access");
+            }
+
+            var weakenTime = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["k" /* scriptCalculateWeakenTime */])(server);
+            workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " +
+                                       Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(weakenTime/1000, 3) + " seconds (t=" + threads + ")");
+            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["d" /* netscriptDelay */])(weakenTime, workerScript).then(function() {
+                if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
+                server.weaken(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ServerWeakenAmount * threads);
+                workerScript.scriptRef.recordWeaken(server.ip, threads);
+                var expGain = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["f" /* scriptCalculateExpGain */])(server) * threads;
+                workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty +
+                                           ". Gained " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGain, 4) + " hacking exp (t=" + threads + ")");
+                workerScript.scriptRef.onlineExpGained += expGain;
+                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainHackingExp(expGain);
+                return Promise.resolve(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ServerWeakenAmount * threads);
+            });
+        },
+        print : function(args){
+            if (args === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "print() call has incorrect number of arguments. Takes 1 argument");
+            }
+            workerScript.scriptRef.log(args.toString());
+        },
+        tprint : function(args) {
+            if (args === undefined || args === null) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "tprint() call has incorrect number of arguments. Takes 1 argument");
+            }
+            var x = args.toString();
+            if (Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["d" /* isHTML */])(x)) {
+                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].takeDamage(1);
+                Object(__WEBPACK_IMPORTED_MODULE_25__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You suddenly feel a sharp shooting pain through your body as an angry voice in your head exclaims: <br><br>" +
+                                "DON'T USE TPRINT() TO OUTPUT HTML ELEMENTS TO YOUR TERMINAL!!!!<br><br>" +
+                                "(You lost 1 HP)");
+                return;
+            }
+            Object(__WEBPACK_IMPORTED_MODULE_19__Terminal_js__["b" /* post */])(workerScript.scriptRef.filename + ": " + args.toString());
+        },
+        clearLog : function() {
+            workerScript.scriptRef.clearLog();
+        },
+        nuke : function(ip){
+            if (ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
+            }
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].NukeProgram)) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the NUKE.exe virus!");
+            }
+            if (server.openPortCount < server.numOpenPortsRequired) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Not enough ports opened to use NUKE.exe virus");
+            }
+            if (server.hasAdminRights) {
+                workerScript.scriptRef.log("Already have root access to " + server.hostname);
+            } else {
+                server.hasAdminRights = true;
+                workerScript.scriptRef.log("Executed NUKE.exe virus on " + server.hostname + " to gain root access");
+            }
+            return true;
+        },
+        brutessh : function(ip){
+            if (ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
+            }
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].BruteSSHProgram)) {
+                workerScript.scriptRef.log("You do not have the BruteSSH.exe program!");
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the BruteSSH.exe program!");
+            }
+            if (!server.sshPortOpen) {
+                workerScript.scriptRef.log("Executed BruteSSH.exe on " + server.hostname + " to open SSH port (22)");
+                server.sshPortOpen = true;
+                ++server.openPortCount;
+            } else {
+                workerScript.scriptRef.log("SSH Port (22) already opened on " + server.hostname);
+            }
+            return true;
+        },
+        ftpcrack : function(ip){
+            if (ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
+            }
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].FTPCrackProgram)) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the FTPCrack.exe program!");
+            }
+            if (!server.ftpPortOpen) {
+                workerScript.scriptRef.log("Executed FTPCrack.exe on " + server.hostname + " to open FTP port (21)");
+                server.ftpPortOpen = true;
+                ++server.openPortCount;
+            } else {
+                workerScript.scriptRef.log("FTP Port (21) already opened on " + server.hostname);
+            }
+            return true;
+        },
+        relaysmtp : function(ip){
+            if (ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
+            }
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].RelaySMTPProgram)) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the relaySMTP.exe program!");
+            }
+            if (!server.smtpPortOpen) {
+                workerScript.scriptRef.log("Executed relaySMTP.exe on " + server.hostname + " to open SMTP port (25)");
+                server.smtpPortOpen = true;
+                ++server.openPortCount;
+            } else {
+                workerScript.scriptRef.log("SMTP Port (25) already opened on " + server.hostname);
+            }
+            return true;
+        },
+        httpworm : function(ip){
+            if (ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
+            }
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].HTTPWormProgram)) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the HTTPWorm.exe program!");
+            }
+            if (!server.httpPortOpen) {
+                workerScript.scriptRef.log("Executed HTTPWorm.exe on " + server.hostname + " to open HTTP port (80)");
+                server.httpPortOpen = true;
+                ++server.openPortCount;
+            } else {
+                workerScript.scriptRef.log("HTTP Port (80) already opened on " + server.hostname);
+            }
+            return true;
+        },
+        sqlinject : function(ip){
+            if (ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
+            }
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].SQLInjectProgram)) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the SQLInject.exe program!");
+            }
+            if (!server.sqlPortOpen) {
+                workerScript.scriptRef.log("Executed SQLInject.exe on " + server.hostname + " to open SQL port (1433)");
+                server.sqlPortOpen = true;
+                ++server.openPortCount;
+            } else {
+                workerScript.scriptRef.log("SQL Port (1433) already opened on " + server.hostname);
+            }
+            return true;
+        },
+        run : function(scriptname,threads = 1){
+            if (scriptname === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "run() call has incorrect number of arguments. Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
+            }
+            if (isNaN(threads) || threads < 1) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
+            }
+            var argsForNewScript = [];
+            for (var i = 2; i < arguments.length; ++i) {
+                argsForNewScript.push(arguments[i]);
+            }
+            var scriptServer = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
+            if (scriptServer == null) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
+            }
+
+            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["e" /* runScriptFromScript */])(scriptServer, scriptname, argsForNewScript, workerScript, threads);
+        },
+        exec : function(scriptname,ip,threads = 1){
+            if (scriptname === undefined || ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "exec() call has incorrect number of arguments. Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
+            }
+            if (isNaN(threads) || threads < 1) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid argument for thread count passed into exec(). Must be numeric and greater than 0");
+            }
+            var argsForNewScript = [];
+            for (var i = 3; i < arguments.length; ++i) {
+                argsForNewScript.push(arguments[i]);
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid hostname/ip passed into exec() command: " + ip);
+            }
+            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["e" /* runScriptFromScript */])(server, scriptname, argsForNewScript, workerScript, threads);
+        },
+        kill : function(filename,ip){
+            if (filename === undefined || ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "kill() call has incorrect number of arguments. Usage: kill(scriptname, server, [arg1], [arg2]...)");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("kill() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "kill() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            var argsForKillTarget = [];
+            for (var i = 2; i < arguments.length; ++i) {
+                argsForKillTarget.push(arguments[i]);
+            }
+            var runningScriptObj = Object(__WEBPACK_IMPORTED_MODULE_14__Script_js__["d" /* findRunningScript */])(filename, argsForKillTarget, server);
+            if (runningScriptObj == null) {
+                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget));
+                return false;
+            }
+            var res = Object(__WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["d" /* killWorkerScript */])(runningScriptObj, server.ip);
+            if (res) {
+                workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
+                return true;
+            } else {
+                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget));
+                return false;
+            }
+        },
+        killall : function(ip){
+            if (ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "killall() call has incorrect number of arguments. Takes 1 argument");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("killall() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "killall() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            for (var i = server.runningScripts.length-1; i >= 0; --i) {
+                Object(__WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["d" /* killWorkerScript */])(server.runningScripts[i], server.ip);
+            }
+            workerScript.scriptRef.log("killall(): Killing all scripts on " + server.hostname + ". May take a few minutes for the scripts to die");
+            return true;
+        },
+        scp : function(scriptname, ip1, ip2){
+            if (arguments.length !== 2 && arguments.length !== 3) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+            }
+            if (scriptname && scriptname.constructor === Array) {
+                //Recursively call scp on all elements of array
+                var res = false;
+                scriptname.forEach(function(script) {
+                    if (NetscriptFunctions(workerScript).scp(script, ip1, ip2)) {
+                        res = true;
+                    };
+                });
+                return res;
+            }
+            if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script")) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: scp() only works for .script and .lit files");
+            }
+
+            var destServer, currServ;
+
+            if (arguments.length === 3) {   //scriptname, source, destination
+                if (scriptname === undefined || ip1 === undefined || ip2 === undefined) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+                }
+                destServer = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip2);
+                if (destServer == null) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: Invalid hostname/ip passed into scp() command: " + ip);
+                }
+
+                currServ = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip1);
+                if (currServ == null) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
+                }
+            } else if (arguments.length === 2) {    //scriptname, destination
+                if (scriptname === undefined || ip1 === undefined) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+                }
+                destServer = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip1);
+                if (destServer == null) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: Invalid hostname/ip passed into scp() command: " + ip);
+                }
+
+                currServ = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
+                if (currServ == null) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
+                }
+            }
+
+            //Scp for lit files
+            if (scriptname.endsWith(".lit")) {
+                var found = false;
+                for (var i = 0; i < currServ.messages.length; ++i) {
+                    if (!(currServ.messages[i] instanceof __WEBPACK_IMPORTED_MODULE_12__Message_js__["a" /* Message */]) && currServ.messages[i] == scriptname) {
+                        found = true;
+                    }
+                }
+
+                if (!found) {
+                    workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
+                    return false;
+                }
+
+                for (var i = 0; i < destServer.messages.length; ++i) {
+                    if (destServer.messages[i] === scriptname) {
+                        workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                        return true; //Already exists
+                    }
+                }
+                destServer.messages.push(scriptname);
+                workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                return true;
+            }
+
+            //Scp for script files
+            var sourceScript = null;
+            for (var i = 0; i < currServ.scripts.length; ++i) {
+                if (scriptname == currServ.scripts[i].filename) {
+                    sourceScript = currServ.scripts[i];
+                    break;
+                }
+            }
+            if (sourceScript == null) {
+                workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
+                return false;
+            }
+
+            //Overwrite script if it already exists
+            for (var i = 0; i < destServer.scripts.length; ++i) {
+                if (scriptname == destServer.scripts[i].filename) {
+                    workerScript.scriptRef.log("WARNING: " + scriptname + " already exists on " + destServer.hostname + " and it will be overwritten.");
+                    workerScript.scriptRef.log(scriptname + " overwritten on " + destServer.hostname);
+                    var oldScript = destServer.scripts[i];
+                    oldScript.code = sourceScript.code;
+                    oldScript.ramUsage = sourceScript.ramUsage;
+                    return true;
+                }
+            }
+
+            //Create new script if it does not already exist
+            var newScript = new __WEBPACK_IMPORTED_MODULE_14__Script_js__["c" /* Script */]();
+            newScript.filename = scriptname;
+            newScript.code = sourceScript.code;
+            newScript.ramUsage = sourceScript.ramUsage;
+            newScript.server = destServer.ip;
+            destServer.scripts.push(newScript);
+            workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+            return true;
+        },
+        ls : function(ip, grep) {
+            if (ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "ls() failed because of invalid arguments. Usage: ls(ip/hostname, [grep filter])");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server === null) {
+                workerScript.scriptRef.log("ls() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "ls() failed. Invalid IP or hostname passed in: " + ip);
+            }
+
+            //Get the grep filter, if one exists
+            var filter = false;
+            if (arguments.length >= 2) {
+                filter = grep.toString();
+            }
+
+            var allFiles = [];
+            for (var i = 0; i < server.programs.length; i++) {
+                if (filter) {
+                    if (server.programs[i].includes(filter)) {
+                        allFiles.push(server.programs[i]);
+                    }
+                } else {
+                    allFiles.push(server.programs[i]);
+                }
+            }
+            for (var i = 0; i < server.scripts.length; i++) {
+                if (filter) {
+                    if (server.scripts[i].filename.includes(filter)) {
+                        allFiles.push(server.scripts[i].filename);
+                    }
+                } else {
+                    allFiles.push(server.scripts[i].filename);
+                }
+
+            }
+            for (var i = 0; i < server.messages.length; i++) {
+                if (filter) {
+                    if (server.messages[i] instanceof __WEBPACK_IMPORTED_MODULE_12__Message_js__["a" /* Message */]) {
+                        if (server.messages[i].filename.includes(filter)) {
+                            allFiles.push(server.messages[i].filename);
+                        }
+                    } else if (server.messages[i].includes(filter)) {
+                        allFiles.push(server.messages[i]);
+                    }
+                } else {
+                    if (server.messages[i] instanceof __WEBPACK_IMPORTED_MODULE_12__Message_js__["a" /* Message */]) {
+                        allFiles.push(server.messages[i].filename);
+                    } else {
+                        allFiles.push(server.messages[i]);
+                    }
+                }
+            }
+
+            //Sort the files alphabetically then print each
+            allFiles.sort();
+            return allFiles;
+        },
+        hasRootAccess : function(ip){
+            if (ip===undefined){
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "hasRootAccess() call has incorrect number of arguments. Takes 1 argument");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null){
+                workerScript.scriptRef.log("hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            return server.hasAdminRights;
+        },
+        getIp : function() {
+            var scriptServer = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
+            if (scriptServer == null) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
+            }
+            return scriptServer.ip;
+        },
+        getHostname : function(){
+            var scriptServer = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
+            if (scriptServer == null) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
+            }
+            return scriptServer.hostname;
+        },
+        getHackingLevel : function(){
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].updateSkillLevels();
+            workerScript.scriptRef.log("getHackingLevel() returned " + __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill);
+            return __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill;
+        },
+        getHackingMultipliers : function() {
+            return {
+                chance: __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_chance_mult,
+                speed: __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_speed_mult,
+                money: __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_money_mult,
+                growth: __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_grow_mult,
+            };
+        },
+        getBitNodeMultipliers: function() {
+            if (!hasAISF) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getBitNodeMultipliers(). It requires Source-File 5 to run.");
+            }
+            return __WEBPACK_IMPORTED_MODULE_2__BitNode_js__["a" /* BitNodeMultipliers */];
+        },
+        getServerMoneyAvailable : function(ip){
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            if (server.hostname == "home") {
+                //Return player's money
+                workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.toNumber(), 2));
+                return __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.toNumber();
+            }
+            workerScript.scriptRef.log("getServerMoneyAvailable() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.moneyAvailable, 2) + " for " + server.hostname);
+            return server.moneyAvailable;
+        },
+        getServerSecurityLevel : function(ip){
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.hackDifficulty, 3) + " for " + server.hostname);
+            return server.hackDifficulty;
+        },
+        getServerBaseSecurityLevel : function(ip){
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.baseDifficulty, 3) + " for " + server.hostname);
+            return server.baseDifficulty;
+        },
+        getServerMinSecurityLevel : function(ip) {
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerMinSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.minDifficulty, 3) + " for " + server.hostname);
+            return server.minDifficulty;
+        },
+        getServerRequiredHackingLevel : function(ip){
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.requiredHackingSkill, 0) + " for " + server.hostname);
+            return server.requiredHackingSkill;
+        },
+        getServerMaxMoney : function(ip){
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerMaxMoney() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.moneyMax, 0) + " for " + server.hostname);
+            return server.moneyMax;
+        },
+        getServerGrowth : function(ip) {
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerGrowth() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.serverGrowth, 0) + " for " + server.hostname);
+            return server.serverGrowth;
+        },
+        getServerNumPortsRequired : function(ip){
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerNumPortsRequired() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.numOpenPortsRequired, 0) + " for " + server.hostname);
+            return server.numOpenPortsRequired;
+        },
+        getServerRam : function(ip) {
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getServerRam() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerRam() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            workerScript.scriptRef.log("getServerRam() returned [" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.maxRam, 2) + "GB, " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.ramUsed, 2) + "GB]");
+            return [server.maxRam, server.ramUsed];
+        },
+        serverExists : function(ip) {
+            return (Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip) !== null);
+        },
+        fileExists : function(filename,ip=workerScript.serverIp){
+            if (filename === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "fileExists() call has incorrect number of arguments. Usage: fileExists(scriptname, [server])");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("fileExists() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "fileExists() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            for (var i = 0; i < server.scripts.length; ++i) {
+                if (filename == server.scripts[i].filename) {
+                    return true;
+                }
+            }
+            for (var i = 0; i < server.programs.length; ++i) {
+                if (filename.toLowerCase() == server.programs[i].toLowerCase()) {
+                    return true;
+                }
+            }
+            for (var i = 0; i < server.messages.length; ++i) {
+                if (!(server.messages[i] instanceof __WEBPACK_IMPORTED_MODULE_12__Message_js__["a" /* Message */]) &&
+                    filename.toLowerCase() === server.messages[i]) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        isRunning : function(filename,ip){
+            if (filename === undefined || ip === undefined) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "isRunning() call has incorrect number of arguments. Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
+            }
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("isRunning() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "isRunning() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            var argsForTargetScript = [];
+            for (var i = 2; i < arguments.length; ++i) {
+                argsForTargetScript.push(arguments[i]);
+            }
+            return (Object(__WEBPACK_IMPORTED_MODULE_14__Script_js__["d" /* findRunningScript */])(filename, argsForTargetScript, server) != null);
+        },
+        getNextHacknetNodeCost : __WEBPACK_IMPORTED_MODULE_10__HacknetNode_js__["b" /* getCostOfNextHacknetNode */],
+        purchaseHacknetNode : __WEBPACK_IMPORTED_MODULE_10__HacknetNode_js__["d" /* purchaseHacknet */],
+        getStockPrice : function(symbol) {
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasTixApiAccess) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You don't have TIX API Access! Cannot use getStockPrice()");
+            }
+            var stock = __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["b" /* SymbolToStockMap */][symbol];
+            if (stock == null) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid stock symbol passed into getStockPrice()");
+            }
+            return parseFloat(stock.price.toFixed(3));
+        },
+        getStockPosition : function(symbol) {
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasTixApiAccess) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You don't have TIX API Access! Cannot use getStockPosition()");
+            }
+            var stock = __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["b" /* SymbolToStockMap */][symbol];
+            if (stock == null) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid stock symbol passed into getStockPrice()");
+            }
+            return [stock.playerShares, stock.playerAvgPx];
+        },
+        buyStock : function(symbol, shares) {
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasTixApiAccess) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You don't have TIX API Access! Cannot use buyStock()");
+            }
+            var stock = __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["b" /* SymbolToStockMap */][symbol];
+            if (stock == null) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid stock symbol passed into getStockPrice()");
+            }
+            if (stock == null || shares < 0 || isNaN(shares)) {
+                workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to buyStock()");
+                return false;
+            }
+            shares = Math.round(shares);
+            if (shares === 0) {return false;}
+
+            var totalPrice = stock.price * shares;
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.lt(totalPrice + __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission)) {
+                workerScript.scriptRef.log("Not enough money to purchase " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " +
+                                           symbol + ". Need $" +
+                                           Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(totalPrice + __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2).toString());
+                return false;
+            }
+
+            var origTotal = stock.playerShares * stock.playerAvgPx;
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(totalPrice + __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission);
+            var newTotal = origTotal + totalPrice;
+            stock.playerShares += shares;
+            stock.playerAvgPx = newTotal / stock.playerShares;
+            if (__WEBPACK_IMPORTED_MODULE_8__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_8__engine_js__["Engine"].Page.StockMarket) {
+                Object(__WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["j" /* updateStockPlayerPosition */])(stock);
+            }
+            workerScript.scriptRef.log("Bought " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                                       Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share");
+            return true;
+        },
+        sellStock : function(symbol, shares) {
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasTixApiAccess) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You don't have TIX API Access! Cannot use sellStock()");
+            }
+            var stock = __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["b" /* SymbolToStockMap */][symbol];
+            if (stock == null) {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid stock symbol passed into getStockPrice()");
+            }
+
+            if (stock == null || shares < 0 || isNaN(shares)) {
+                workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to sellStock()");
+                return false;
+            }
+            shares = Math.round(shares);
+            if (shares > stock.playerShares) {shares = stock.playerShares;}
+            if (shares === 0) {return false;}
+            var gains = stock.price * shares - __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission;
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainMoney(gains);
+
+            //Calculate net profit and add to script stats
+            var netProfit = ((stock.price - stock.playerAvgPx) * shares) - __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission;
+            if (isNaN(netProfit)) {netProfit = 0;}
+            workerScript.scriptRef.onlineMoneyMade += netProfit;
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].scriptProdSinceLastAug += netProfit;
+
+            stock.playerShares -= shares;
+            if (stock.playerShares == 0) {
+                stock.playerAvgPx = 0;
+            }
+            if (__WEBPACK_IMPORTED_MODULE_8__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_8__engine_js__["Engine"].Page.StockMarket) {
+                Object(__WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["j" /* updateStockPlayerPosition */])(stock);
+            }
+            workerScript.scriptRef.log("Sold " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                                       Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. Gained " +
+                                       "$" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(gains, 2));
+            return true;
+        },
+        purchaseServer : function(hostname, ram) {
+            var hostnameStr = String(hostname);
+            hostnameStr = hostnameStr.replace(/\s\s+/g, '');
+            if (hostnameStr == "") {
+                workerScript.scriptRef.log("Error: Passed empty string for hostname argument of purchaseServer()");
+                return "";
+            }
+
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers.length >= __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].PurchasedServerLimit) {
+                workerScript.scriptRef.log("Error: You have reached the maximum limit of " + __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].PurchasedServerLimit +
+                                           " servers. You cannot purchase any more.");
+                return "";
+            }
+
+            ram = Math.round(ram);
+            if (isNaN(ram) || !Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["e" /* powerOfTwo */])(ram)) {
+                workerScript.scriptRef.log("Error: Invalid ram argument passed to purchaseServer(). Must be numeric and a power of 2");
+                return "";
+            }
+
+            var cost = ram * __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].BaseCostFor1GBOfRamServer;
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.lt(cost)) {
+                workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(cost, 2));
+                return "";
+            }
+            var newServ = new __WEBPACK_IMPORTED_MODULE_15__Server_js__["d" /* Server */](Object(__WEBPACK_IMPORTED_MODULE_27__utils_IPAddress_js__["a" /* createRandomIp */])(), hostnameStr, "", false, true, true, ram);
+            Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["a" /* AddToAllServers */])(newServ);
+
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers.push(newServ.ip);
+            var homeComputer = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer();
+            homeComputer.serversOnNetwork.push(newServ.ip);
+            newServ.serversOnNetwork.push(homeComputer.ip);
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(cost);
+            workerScript.scriptRef.log("Purchased new server with hostname " + newServ.hostname + " for $" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(cost, 2));
+            return newServ.hostname;
+        },
+        deleteServer : function(hostname) {
+            var hostnameStr = String(hostname);
+            hostnameStr = hostnameStr.replace(/\s\s+/g, '');
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["c" /* GetServerByHostname */])(hostnameStr);
+            if (server == null) {
+                workerScript.scriptRef.log("Error: Could not find server with hostname " + hostnameStr + ". deleteServer() failed");
+                return false;
+            }
+
+            if (!server.purchasedByPlayer || server.hostname == "home") {
+                workerScript.scriptRef.log("Error: Server " + server.hostname + " is not a purchased server. " +
+                                           "Cannot be deleted. deleteServer failed");
+                return false;
+            }
+
+            var ip = server.ip;
+
+            //A server cannot delete itself
+            if (ip == workerScript.serverIp) {
+                workerScript.scriptRef.log("Error: Cannot call deleteServer() on self. Function failed");
+                return false;
+            }
+
+            //Delete all scripts running on server
+            if (server.runningScripts.length > 0) {
+                workerScript.scriptRef.log("Error: Cannot delete server " + server.hostname + " because it still has scripts running.");
+                return false;
+            }
+
+            //Delete from player's purchasedServers array
+            var found = false;
+            for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers.length; ++i) {
+                if (ip == __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers[i]) {
+                    found = true;
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers.splice(i, 1);
+                    break;
+                }
+            }
+
+            if (!found) {
+                workerScript.scriptRef.log("Error: Could not identify server " + server.hostname +
+                                           "as a purchased server. This is likely a bug please contact game dev");
+                return false;
+            }
+
+            //Delete from all servers
+            delete __WEBPACK_IMPORTED_MODULE_15__Server_js__["b" /* AllServers */][ip];
+
+            //Delete from home computer
+            found = false;
+            var homeComputer = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer();
+            for (var i = 0; i < homeComputer.serversOnNetwork.length; ++i) {
+                if (ip == homeComputer.serversOnNetwork[i]) {
+                    homeComputer.serversOnNetwork.splice(i, 1);
+                    workerScript.scriptRef.log("Deleted server " + hostnameStr);
+                    return true;
+                }
+            }
+            //Wasn't found on home computer
+            workerScript.scriptRef.log("Error: Could not find server " + server.hostname +
+                                       "as a purchased server. This is likely a bug please contact game dev");
+            return false;
+        },
+        getPurchasedServers : function(hostname=true) {
+            var res = [];
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers.forEach(function(ip) {
+                if (hostname) {
+                    var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+                    if (server == null) {
+                        throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "ERR: Could not find server in getPurchasedServers(). This is a bug please report to game dev");
+                    }
+                    res.push(server.hostname);
+                } else {
+                    res.push(ip);
+                }
+            });
+            return res;
+        },
+        round : function(n) {
+            if (isNaN(n)) {return 0;}
+            return Math.round(n);
+        },
+        write : function(port, data="", mode="a") {
+            if (!isNaN(port)) { //Write to port
+                //Port 1-10
+                if (port < 1 || port > 10) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
+                }
+                var portName = "Port" + String(port);
+                var port = __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["a" /* NetscriptPorts */][portName];
+                if (port == null) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
+                }
+                port.push(data);
+                if (port.length > __WEBPACK_IMPORTED_MODULE_16__Settings_js__["a" /* Settings */].MaxPortCapacity) {
+                    port.shift();
+                    return true;
+                }
+                return false;
+            } else if (Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["f" /* isString */])(port)) { //Write to text file
+                var fn = port;
+                var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
+                if (server === null) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error getting Server for this script in write(). This is a bug please contact game dev");
+                }
+                var txtFile = Object(__WEBPACK_IMPORTED_MODULE_20__TextFile_js__["b" /* getTextFile */])(fn, server);
+                if (txtFile === null) {
+                    txtFile = Object(__WEBPACK_IMPORTED_MODULE_20__TextFile_js__["a" /* createTextFile */])(fn, data, server);
+                    return true;
+                }
+                if (mode === "w") {
+                    txtFile.write(data);
+                } else {
+                    txtFile.append(data);
+                }
+                return true;
+            } else {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid argument passed in for port: " + port + ". Must be a number between 1 and 10");
+            }
+        },
+        read : function(port) {
+            if (!isNaN(port)) { //Read from port
+                //Port 1-10
+                if (port < 1 || port > 10) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
+                }
+                var portName = "Port" + String(port);
+                var port = __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["a" /* NetscriptPorts */][portName];
+                if (port == null) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
+                }
+                if (port.length == 0) {
+                    return "NULL PORT DATA";
+                } else {
+                    return port.shift();
+                }
+            } else if (Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["f" /* isString */])(port)) { //Read from text file
+                var fn = port;
+                var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
+                if (server === null) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error getting Server for this script in read(). This is a bug please contact game dev");
+                }
+                var txtFile = Object(__WEBPACK_IMPORTED_MODULE_20__TextFile_js__["b" /* getTextFile */])(fn, server);
+                if (txtFile !== null) {
+                    return txtFile.text;
+                } else {
+                    return "";
+                }
+            } else {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid argument passed in for port: " + port + ". Must be a number between 1 and 10");
+            }
+        },
+        scriptRunning : function(scriptname, ip) {
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            for (var i = 0; i < server.runningScripts.length; ++i) {
+                if (server.runningScripts[i].filename == scriptname) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        scriptKill : function(scriptname, ip) {
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("scriptKill() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "scriptKill() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            var suc = false;
+            for (var i = 0; i < server.runningScripts.length; ++i) {
+                if (server.runningScripts[i].filename == scriptname) {
+                    Object(__WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["d" /* killWorkerScript */])(server.runningScripts[i], server.ip);
+                    suc = true;
+                }
+            }
+            return suc;
+        },
+        getScriptRam : function (scriptname, ip) {
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            for (var i = 0; i < server.scripts.length; ++i) {
+                if (server.scripts[i].filename == scriptname) {
+                    return server.scripts[i].ramUsage;
+                }
+            }
+            return 0;
+        },
+        getHackTime : function(ip) {
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getHackTime() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getHackTime() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["i" /* scriptCalculateHackingTime */])(server); //Returns seconds
+        },
+        getGrowTime : function(ip) {
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["g" /* scriptCalculateGrowTime */])(server) / 1000; //Returns seconds
+        },
+        getWeakenTime : function(ip) {
+            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["k" /* scriptCalculateWeakenTime */])(server) / 1000; //Returns seconds
+        },
+        getScriptIncome : function(scriptname, ip) {
+            if (arguments.length === 0) {
+                //Get total script income
+                var res = [];
+                res.push(Object(__WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__["d" /* updateActiveScriptsItems */])());
+                res.push(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].scriptProdSinceLastAug / (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].playtimeSinceLastAug/1000));
+                return res;
+            } else {
+                //Get income for a particular script
+                var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+                if (server === null) {
+                    workerScript.scriptRef.log("getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
+                }
+                var argsForScript = [];
+                for (var i = 2; i < arguments.length; ++i) {
+                    argsForScript.push(arguments[i]);
+                }
+                var runningScriptObj = Object(__WEBPACK_IMPORTED_MODULE_14__Script_js__["d" /* findRunningScript */])(scriptname, argsForScript, server);
+                if (runningScriptObj == null) {
+                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["f" /* printArray */])(argsForScript));
+                    return -1;
+                }
+                return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
+            }
+        },
+        getScriptExpGain : function(scriptname, ip) {
+            if (arguments.length === 0) {
+                var total = 0;
+                for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["h" /* workerScripts */].length; ++i) {
+                    total += (__WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["h" /* workerScripts */][i].scriptRef.onlineExpGained / __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["h" /* workerScripts */][i].scriptRef.onlineRunningTime);
+                }
+                return total;
+            } else {
+                //Get income for a particular script
+                var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
+                if (server === null) {
+                    workerScript.scriptRef.log("getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
+                }
+                var argsForScript = [];
+                for (var i = 2; i < arguments.length; ++i) {
+                    argsForScript.push(arguments[i]);
+                }
+                var runningScriptObj = Object(__WEBPACK_IMPORTED_MODULE_14__Script_js__["d" /* findRunningScript */])(scriptname, argsForScript, server);
+                if (runningScriptObj == null) {
+                    workerScript.scriptRef.log("getScriptExpGain() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["f" /* printArray */])(argsForScript));
+                    return -1;
+                }
+                return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;
+            }
+        },
+        getTimeSinceLastAug : function() {
+            return __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].playtimeSinceLastAug;
+        },
+
+        /* Singularity Functions */
+        universityCourse(universityName, className) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run universityCourse(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return false;
+                }
+            }
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
+                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+
+            var costMult, expMult;
+            switch(universityName.toLowerCase()) {
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumSummitUniversity.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Aevum) {
+                        workerScript.scriptRef.log("ERROR: You cannot study at Summit University because you are not in Aevum. universityCourse() failed");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumSummitUniversity;
+                    costMult = 4;
+                    expMult = 3;
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12RothmanUniversity.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12) {
+                        workerScript.scriptRef.log("ERROR: You cannot study at Rothman University because you are not in Sector-12. universityCourse() failed");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12RothmanUniversity;
+                    costMult = 3;
+                    expMult = 2;
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].VolhavenZBInstituteOfTechnology.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Volhaven) {
+                        workerScript.scriptRef.log("ERROR: You cannot study at ZB Institute of Technology because you are not in Volhaven. universityCourse() failed");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].VolhavenZBInstituteOfTechnology;
+                    costMult = 5;
+                    expMult = 4;
+                    break;
+                default:
+                    workerScript.scriptRef.log("Invalid university name: " + universityName + ". universityCourse() failed");
+                    return false;
+            }
+
+            var task;
+            switch(className.toLowerCase()) {
+                case "Study Computer Science".toLowerCase():
+                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassStudyComputerScience;
+                    break;
+                case "Data Structures".toLowerCase():
+                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassDataStructures;
+                    break;
+                case "Networks".toLowerCase():
+                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassNetworks;
+                    break;
+                case "Algorithms".toLowerCase():
+                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassAlgorithms;
+                    break;
+                case "Management".toLowerCase():
+                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassManagement;
+                    break;
+                case "Leadership".toLowerCase():
+                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassLeadership;
+                    break;
+                default:
+                    workerScript.scriptRef.log("Invalid class name: " + className + ". universityCourse() failed");
+                    return false;
+            }
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startClass(costMult, expMult, task);
+            workerScript.scriptRef.log("Started " + task + " at " + universityName);
+            return true;
+        },
+
+        gymWorkout(gymName, stat) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run gymWorkout(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return false;
+                }
+            }
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
+                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+            var costMult, expMult;
+            switch(gymName.toLowerCase()) {
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumCrushFitnessGym.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Aevum) {
+                        workerScript.scriptRef.log("ERROR: You cannot workout at Crush Fitness because you are not in Aevum. gymWorkout() failed");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumCrushFitnessGym;
+                    costMult = 2;
+                    expMult = 1.5;
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumSnapFitnessGym.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Aevum) {
+                        workerScript.scriptRef.log("ERROR: You cannot workout at Snap Fitness because you are not in Aevum. gymWorkout() failed");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumSnapFitnessGym;
+                    costMult = 6;
+                    expMult = 4;
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12IronGym.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12) {
+                        workerScript.scriptRef.log("ERROR: You cannot workout at Iron Gym because you are not in Sector-12. gymWorkout() failed");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12IronGym;
+                    costMult = 1;
+                    expMult = 1;
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12PowerhouseGym.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12) {
+                        workerScript.scriptRef.log("ERROR: You cannot workout at Powerhouse Gym because you are not in Sector-12. gymWorkout() failed");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12PowerhouseGym;
+                    costMult = 10;
+                    expMult = 7.5;
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].VolhavenMilleniumFitnessGym:
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Volhaven) {
+                        workerScript.scriptRef.log("ERROR: You cannot workout at Millenium Fitness Gym because you are not in Volhaven. gymWorkout() failed");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].VolhavenMilleniumFitnessGym;
+                    costMult = 3;
+                    expMult = 2.5;
+                    break;
+                default:
+                    workerScript.scriptRef.log("Invalid gym name: " + gymName + ". gymWorkout() failed");
+                    return false;
+            }
+
+            switch(stat.toLowerCase()) {
+                case "strength".toLowerCase():
+                case "str".toLowerCase():
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startClass(costMult, expMult, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassGymStrength);
+                    break;
+                case "defense".toLowerCase():
+                case "def".toLowerCase():
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startClass(costMult, expMult, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassGymDefense);
+                    break;
+                case "dexterity".toLowerCase():
+                case "dex".toLowerCase():
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startClass(costMult, expMult, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassGymDexterity);
+                    break;
+                case "agility".toLowerCase():
+                case "agi".toLowerCase():
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startClass(costMult, expMult, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassGymAgility);
+                    break;
+                default:
+                    workerScript.scriptRef.log("Invalid stat: " + stat + ". gymWorkout() failed");
+                    return false;
+            }
+            workerScript.scriptRef.log("Started training " + stat + " at " + gymName);
+            return true;
+        },
+
+        travelToCity(cityname) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run travelToCity(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return false;
+                }
+            }
+
+            switch(cityname) {
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Aevum:
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Chongqing:
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12:
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].NewTokyo:
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Ishima:
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Volhaven:
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(200000);
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city = cityname;
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
+                    workerScript.scriptRef.log("Traveled to " + cityname);
+                    return true;
+                default:
+                    workerScript.scriptRef.log("ERROR: Invalid city name passed into travelToCity().");
+                    return false;
+            }
+        },
+
+        purchaseTor() {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run purchaseTor(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return false;
+                }
+            }
+
+            if (__WEBPACK_IMPORTED_MODULE_17__SpecialServerIps_js__["a" /* SpecialServerIps */]["Darkweb Server"] != null) {
+                workerScript.scriptRef.log("You already have a TOR router! purchaseTor() failed");
+                return false;
+            }
+
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.lt(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].TorRouterCost)) {
+                workerScript.scriptRef.log("ERROR: You cannot afford to purchase a Tor router. purchaseTor() failed");
+                return false;
+            }
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].TorRouterCost);
+
+            var darkweb = new __WEBPACK_IMPORTED_MODULE_15__Server_js__["d" /* Server */](Object(__WEBPACK_IMPORTED_MODULE_27__utils_IPAddress_js__["a" /* createRandomIp */])(), "darkweb", "", false, false, false, 1);
+            Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["a" /* AddToAllServers */])(darkweb);
+            __WEBPACK_IMPORTED_MODULE_17__SpecialServerIps_js__["a" /* SpecialServerIps */].addIp("Darkweb Server", darkweb.ip);
+
+            document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
+
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().serversOnNetwork.push(darkweb.ip);
+            darkweb.serversOnNetwork.push(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().ip);
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
+            workerScript.scriptRef.log("You have purchased a Tor router!");
+            return true;
+        },
+        purchaseProgram(programName) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run purchaseProgram(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return false;
+                }
+            }
+
+            if (__WEBPACK_IMPORTED_MODULE_17__SpecialServerIps_js__["a" /* SpecialServerIps */]["Darkweb Server"] == null) {
+                workerScript.scriptRef.log("ERROR: You do not have  TOR router. purchaseProgram() failed.");
+                return false;
+            }
+
+            switch(programName.toLowerCase()) {
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].BruteSSHProgram.toLowerCase():
+                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].BruteSSHProgram);
+                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].BruteSSHProgram);
+                        workerScript.scriptRef.log("You have purchased the BruteSSH.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
+                    }
+                    return true;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].FTPCrackProgram.toLowerCase():
+                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].FTPCrackProgram);
+                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].FTPCrackProgram);
+                        workerScript.scriptRef.log("You have purchased the FTPCrack.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
+                    }
+                    return true;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].RelaySMTPProgram.toLowerCase():
+                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].RelaySMTPProgram);
+                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].RelaySMTPProgram);
+                        workerScript.scriptRef.log("You have purchased the relaySMTP.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
+                    }
+                    return true;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].HTTPWormProgram.toLowerCase():
+                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].HTTPWormProgram);
+                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].HTTPWormProgram);
+                        workerScript.scriptRef.log("You have purchased the HTTPWorm.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
+                    }
+                    return true;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].SQLInjectProgram.toLowerCase():
+                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].SQLInjectProgram);
+                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].SQLInjectProgram);
+                        workerScript.scriptRef.log("You have purchased the SQLInject.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
+                    }
+                    return true;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV1.toLowerCase():
+                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].DeepScanV1Program);
+                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV1);
+                        workerScript.scriptRef.log("You have purchased the DeepscanV1.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
+                    }
+                    return true;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV2.toLowerCase():
+                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].DeepScanV2Program);
+                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
+                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV2);
+                        workerScript.scriptRef.log("You have purchased the DeepscanV2.exe program. The new program " +
+                             "can be found on your home computer.");
+                    } else {
+                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
+                        return false;
+                    }
+                    return true;
+                default:
+                    workerScript.scriptRef.log("ERROR: Invalid program passed into purchaseProgram().");
+                    return false;
+            }
+            return true;
+        },
+        getStats : function() {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getStats(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return {};
+                }
+            }
+
+            return {
+                hacking:        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill,
+                strength:       __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].strength,
+                defense:        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].defense,
+                dexterity:      __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].dexterity,
+                agility:        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].agility,
+                charisma:       __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].charisma,
+                intelligence:   __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].intelligence
+            }
+        },
+        isBusy : function() {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run isBusy(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return;
+                }
+            }
+            return __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking;
+        },
+        upgradeHomeRam() {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run upgradeHomeRam(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            //Calculate how many times ram has been upgraded (doubled)
+            var currentRam = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().maxRam;
+            var numUpgrades = Math.log2(currentRam);
+
+            //Calculate cost
+            //Have cost increase by some percentage each time RAM has been upgraded
+            var cost = currentRam * __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].BaseCostFor1GBOfRamHome;
+            var mult = Math.pow(1.55, numUpgrades);
+            cost = cost * mult;
+
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.lt(cost)) {
+                workerScript.scriptRef.log("ERROR: upgradeHomeRam() failed because you don't have enough money");
+                return false;
+            }
+
+            var homeComputer = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer();
+            homeComputer.maxRam *= 2;
+
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(cost);
+
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
+            workerScript.scriptRef.log("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
+            return true;
+        },
+        getUpgradeHomeRamCost() {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getUpgradeHomeRamCost(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            //Calculate how many times ram has been upgraded (doubled)
+            var currentRam = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().maxRam;
+            var numUpgrades = Math.log2(currentRam);
+
+            //Calculate cost
+            //Have cost increase by some percentage each time RAM has been upgraded
+            var cost = currentRam * __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].BaseCostFor1GBOfRamHome;
+            var mult = Math.pow(1.55, numUpgrades);
+            return cost * mult;
+        },
+        workForCompany() {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run workForCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyPosition == "" || !(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyPosition instanceof __WEBPACK_IMPORTED_MODULE_4__Company_js__["c" /* CompanyPosition */])) {
+                workerScript.scriptRef.log("ERROR: workForCompany() failed because you do not have a job");
+                return false;
+            }
+
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
+                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyPosition.isPartTimeJob()) {
+                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startWorkPartTime();
+            } else {
+                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startWork();
+            }
+            workerScript.scriptRef.log("Began working at " + __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyName + " as a " + __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyPosition.positionName);
+            return true;
+        },
+        applyToCompany(companyName, field) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run applyToCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            if (!Object(__WEBPACK_IMPORTED_MODULE_4__Company_js__["e" /* companyExists */])(companyName)) {
+                workerScript.scriptRef.log("ERROR: applyToCompany() failed because specified company " + companyName + " does not exist.");
+                return false;
+            }
+
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = companyName;
+            var res;
+            switch (field.toLowerCase()) {
+                case "software":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForSoftwareJob(true);
+                    break;
+                case "software consultant":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForSoftwareConsultantJob(true);
+                    break;
+                case "it":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForItJob(true);
+                    break;
+                case "security engineer":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForSecurityEngineerJob(true);
+                    break;
+                case "network engineer":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForNetworkEngineerJob(true);
+                    break;
+                case "business":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForBusinessJob(true);
+                    break;
+                case "business consultant":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForBusinessConsultantJob(true);
+                    break;
+                case "security":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForSecurityJob(true);
+                    break;
+                case "agent":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForAgentJob(true);
+                    break;
+                case "employee":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForEmployeeJob(true);
+                    break;
+                case "part-time employee":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForPartTimeEmployeeJob(true);
+                    break;
+                case "waiter":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForWaiterJob(true);
+                    break;
+                case "part-time waiter":
+                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForPartTimeWaiterJob(true);
+                    break;
+                default:
+                    workerScript.scriptRef.log("ERROR: Invalid job passed into applyToCompany: " + field + ". applyToCompany() failed");
+                    return false;
+            }
+            //The Player object's applyForJob function can return string with special error messages
+            if (Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["f" /* isString */])(res)) {
+                workerScript.scriptRef.log(res);
+                return false;
+            }
+            if (res) {
+                workerScript.scriptRef.log("You were offered a new job at " + companyName + " as a " + __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyPosition.positionName);
+            } else {
+                workerScript.scriptRef.log("You failed to get a new job/promotion at " + companyName + " in the " + field + " field.");
+            }
+            return res;
+        },
+        getCompanyRep(companyName) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getCompanyRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            var company = __WEBPACK_IMPORTED_MODULE_4__Company_js__["a" /* Companies */][companyName];
+            if (company === null || !(company instanceof __WEBPACK_IMPORTED_MODULE_4__Company_js__["b" /* Company */])) {
+                workerScript.scriptRef.log("ERROR: Invalid companyName passed into getCompanyRep(): " + companyName);
+                return -1;
+            }
+            return company.playerReputation;
+        },
+        checkFactionInvitations() {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run checkFactionInvitations(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+            //Make a copy of Player.factionInvitations
+            return __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].factionInvitations.slice();
+        },
+        joinFaction(name) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run joinFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            if (!Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["d" /* factionExists */])(name)) {
+                workerScript.scriptRef.log("ERROR: Faction specified in joinFaction() does not exist.");
+                return false;
+            }
+
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].factionInvitations.includes(name)) {
+                workerScript.scriptRef.log("ERROR: Cannot join " + name + " Faction because you have not been invited. joinFaction() failed");
+                return false;
+            }
+
+            var index = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].factionInvitations.indexOf(name);
+            if (index === -1) {
+                //Redundant and should never happen...
+                workerScript.scriptRef.log("ERROR: Cannot join " + name + " Faction because you have not been invited. joinFaction() failed");
+                return false;
+            }
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].factionInvitations.splice(index, 1);
+            var fac = __WEBPACK_IMPORTED_MODULE_9__Faction_js__["b" /* Factions */][name];
+            Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["h" /* joinFaction */])(fac);
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
+            workerScript.scriptRef.log("Joined the " + name + " faction.");
+            return true;
+        },
+        workForFaction(name, type) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run workForFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            if (!Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["d" /* factionExists */])(name)) {
+                workerScript.scriptRef.log("ERROR: Faction specified in workForFaction() does not exist.");
+                return false;
+            }
+
+            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].factions.includes(name)) {
+                workerScript.scriptRef.log("ERROR: workForFaction() failed because you are not a member of " + name);
+                return false;
+            }
+
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
+                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+
+            var fac = __WEBPACK_IMPORTED_MODULE_9__Faction_js__["b" /* Factions */][name];
+            //Arrays listing factions that allow each time of work
+            var hackAvailable = ["Illuminati", "Daedalus", "The Covenant", "ECorp", "MegaCorp",
+                                 "Bachman & Associates", "Blade Industries", "NWO", "Clarke Incorporated",
+                                 "OmniTek Incorporated", "Four Sigma", "KuaiGong International",
+                                 "Fulcrum Secret Technologies", "BitRunners", "The Black Hand",
+                                 "NiteSec", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
+                                 "Ishima", "Volhaven", "Speakers for the Dead", "The Dark Army",
+                                 "The Syndicate", "Silhouette", "Netburners", "Tian Di Hui", "CyberSec"];
+            var fdWkAvailable = ["Illuminati", "Daedalus", "The Covenant", "ECorp", "MegaCorp",
+                                 "Bachman & Associates", "Blade Industries", "NWO", "Clarke Incorporated",
+                                 "OmniTek Incorporated", "Four Sigma", "KuaiGong International",
+                                 "The Black Hand", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
+                                 "Ishima", "Volhaven", "Speakers for the Dead", "The Dark Army",
+                                 "The Syndicate", "Silhouette", "Tetrads", "Slum Snakes"];
+            var scWkAvailable = ["ECorp", "MegaCorp",
+                                 "Bachman & Associates", "Blade Industries", "NWO", "Clarke Incorporated",
+                                 "OmniTek Incorporated", "Four Sigma", "KuaiGong International",
+                                 "Fulcrum Secret Technologies", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
+                                 "Ishima", "Volhaven", "Speakers for the Dead",
+                                 "The Syndicate", "Tetrads", "Slum Snakes", "Tian Di Hui"];
+
+            switch (type.toLowerCase()) {
+                case "hacking":
+                case "hacking contracts":
+                case "hackingcontracts":
+                    if (!hackAvailable.includes(fac.name)) {
+                        workerScript.scriptRef.log("ERROR: Cannot carry out hacking contracts for " + fac.name + ". workForFaction() failed");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startFactionHackWork(fac);
+                    workerScript.scriptRef.log("Started carrying out hacking contracts for " + fac.name);
+                    return true;
+                case "field":
+                case "fieldwork":
+                case "field work":
+                    if (!fdWkAvailable.includes(fac.name)) {
+                        workerScript.scriptRef.log("ERROR: Cannot carry out field missions for " + fac.name + ". workForFaction() failed");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startFactionFieldWork(fac);
+                    workerScript.scriptRef.log("Started carrying out field missions for " + fac.name);
+                    return true;
+                case "security":
+                case "securitywork":
+                case "security work":
+                    if (!scWkAvailable.includes(fac.name)) {
+                        workerScript.scriptRef.log("ERROR: Cannot serve as security detail for " + fac.name + ". workForFaction() failed");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startFactionSecurityWork(fac);
+                    workerScript.scriptRef.log("Started serving as security details for " + fac.name);
+                    return true;
+                default:
+                    workerScript.scriptRef.log("ERROR: Invalid work type passed into workForFaction(): " + type);
+            }
+            return true;
+        },
+        getFactionRep(name) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getFactionRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return -1;
+                }
+            }
+
+            if (!Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["d" /* factionExists */])(name)) {
+                workerScript.scriptRef.log("ERROR: Faction specified in getFactionRep() does not exist.");
+                return -1;
+            }
+
+            return __WEBPACK_IMPORTED_MODULE_9__Faction_js__["b" /* Factions */][name].playerReputation;
+        },
+        createProgram(name) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run createProgram(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
+                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+
+            switch(name.toLowerCase()) {
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].NukeProgram.toLowerCase():
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].NukeProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerFiveMinutes, 1);
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].BruteSSHProgram.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 50) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create BruteSSH (level 50 req)");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].BruteSSHProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerFiveMinutes * 2, 50);
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].FTPCrackProgram.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 100) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create FTPCrack (level 100 req)");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].FTPCrackProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerHalfHour, 100);
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].RelaySMTPProgram.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 250) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create relaySMTP (level 250 req)");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].RelaySMTPProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPer2Hours, 250);
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].HTTPWormProgram.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 500) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create HTTPWorm (level 500 req)");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].HTTPWormProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPer4Hours, 500);
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].SQLInjectProgram.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 750) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create SQLInject (level 750 req)");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].SQLInjectProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPer8Hours, 750);
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV1.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 75) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create DeepscanV1 (level 75 req)");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV1, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerQuarterHour, 75);
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV2.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 400) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create DeepscanV2 (level 400 req)");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV2, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPer2Hours, 400);
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].ServerProfiler.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 75) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create ServerProfiler (level 75 req)");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].ServerProfiler, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerHalfHour, 75);
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].AutoLink.toLowerCase():
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 25) {
+                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create AutoLink (level 25 req)");
+                        return false;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].AutoLink, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerQuarterHour, 25);
+                    break;
+                default:
+                    workerScript.scriptRef.log("ERROR: createProgram() failed because the specified program does not exist: " + name);
+                    return false;
+            }
+            workerScript.scriptRef.log("Began creating program: " + name);
+            return true;
+        },
+        commitCrime(crime) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run commitCrime(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return;
+                }
+            }
+
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
+                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
+                workerScript.scriptRef.log(txt);
+            }
+
+            //Set Location to slums
+            switch(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city) {
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Aevum:
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumSlums;
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Chongqing:
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].ChongqingSlums;
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12:
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12Slums;
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].NewTokyo:
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].NewTokyoSlums;
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Ishima:
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].IshimaSlums;
+                    break;
+                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Volhaven:
+                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].VolhavenSlums;
+                    break;
+                default:
+                    console.log("Invalid Player.city value");
+            }
+
+            crime = crime.toLowerCase();
+            if (crime.includes("shoplift")) {
+                workerScript.scriptRef.log("Attempting to shoplift...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["k" /* commitShopliftCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("rob") && crime.includes("store")) {
+                workerScript.scriptRef.log("Attempting to rob a store...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["j" /* commitRobStoreCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("mug")) {
+                workerScript.scriptRef.log("Attempting to mug someone...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["i" /* commitMugCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("larceny")) {
+                workerScript.scriptRef.log("Attempting to commit larceny...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["h" /* commitLarcenyCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("drugs")) {
+                workerScript.scriptRef.log("Attempting to deal drugs...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["c" /* commitDealDrugsCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("bond") && crime.includes("forge")) {
+                workerScript.scriptRef.log("Attempting to forge corporate bonds...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["b" /* commitBondForgeryCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("traffick") && crime.includes("arms")) {
+                workerScript.scriptRef.log("Attempting to traffick illegal arms...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["l" /* commitTraffickArmsCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("homicide")) {
+                workerScript.scriptRef.log("Attempting to commit homicide...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["f" /* commitHomicideCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("grand") && crime.includes("auto")) {
+                workerScript.scriptRef.log("Attempting to commit grand theft auto...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["d" /* commitGrandTheftAutoCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("kidnap")) {
+                workerScript.scriptRef.log("Attempting to kidnap and ransom a high-profile target...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["g" /* commitKidnapCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+            } else if (crime.includes("assassinate")) {
+                workerScript.scriptRef.log("Attempting to assassinate a high-profile target...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["a" /* commitAssassinationCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript})
+            } else if (crime.includes("heist")) {
+                workerScript.scriptRef.log("Attempting to pull off a heist...");
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["e" /* commitHeistCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
+            } else {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid crime passed into commitCrime(): " + crime);
+            }
+        },
+        getCrimeChance(crime) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getCrimeChance(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return;
+                }
+            }
+
+            crime = crime.toLowerCase();
+            if (crime.includes("shoplift")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["w" /* determineCrimeChanceShoplift */])();
+            } else if (crime.includes("rob") && crime.includes("store")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["v" /* determineCrimeChanceRobStore */])();
+            } else if (crime.includes("mug")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["u" /* determineCrimeChanceMug */])();
+            } else if (crime.includes("larceny")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["t" /* determineCrimeChanceLarceny */])();
+            } else if (crime.includes("drugs")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["o" /* determineCrimeChanceDealDrugs */])();
+            } else if (crime.includes("bond") && crime.includes("forge")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["n" /* determineCrimeChanceBondForgery */])();
+            } else if (crime.includes("traffick") && crime.includes("arms")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["x" /* determineCrimeChanceTraffickArms */])();
+            } else if (crime.includes("homicide")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["r" /* determineCrimeChanceHomicide */])();
+            } else if (crime.includes("grand") && crime.includes("auto")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["p" /* determineCrimeChanceGrandTheftAuto */])();
+            } else if (crime.includes("kidnap")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["s" /* determineCrimeChanceKidnap */])();
+            } else if (crime.includes("assassinate")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["m" /* determineCrimeChanceAssassination */])();
+            } else if (crime.includes("heist")) {
+                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["q" /* determineCrimeChanceHeist */])();
+            } else {
+                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid crime passed into getCrimeChance(): " + crime);
+            }
+        },
+        getOwnedAugmentations(purchased=false) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getOwnedAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return [];
+                }
+            }
+            var res = [];
+            for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].augmentations.length; ++i) {
+                res.push(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].augmentations[i].name);
+            }
+            if (purchased) {
+                for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].queuedAugmentations.length; ++i) {
+                    res.push(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].queuedAugmentations[i].name);
+                }
+            }
+            return res;
+        },
+        getAugmentationsFromFaction(facname) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getAugmentationsFromFaction(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return [];
+                }
+            }
+
+            if (!Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["d" /* factionExists */])(facname)) {
+                workerScript.scriptRef.log("ERROR: getAugmentationsFromFaction() failed. Invalid faction name passed in (this is case-sensitive): " + facname);
+                return [];
+            }
+
+            var fac = __WEBPACK_IMPORTED_MODULE_9__Faction_js__["b" /* Factions */][facname];
+            var res = [];
+            for (var i = 0; i < fac.augmentations.length; ++i) {
+                res.push(fac.augmentations[i]);
+            }
+            return res;
+        },
+        getAugmentationCost(name) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getAugmentationCost(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            if (!Object(__WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["f" /* augmentationExists */])(name)) {
+                workerScript.scriptRef.log("ERROR: getAugmentationCost() failed. Invalid Augmentation name passed in (note: this is case-sensitive): " + name);
+                return [-1, -1];
+            }
+
+            var aug = __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["c" /* Augmentations */][name];
+            return [aug.baseRepRequirement, aug.baseCost];
+        },
+        purchaseAugmentation(faction, name) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run purchaseAugmentation(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            var fac = __WEBPACK_IMPORTED_MODULE_9__Faction_js__["b" /* Factions */][faction];
+            if (fac === null || !(fac instanceof __WEBPACK_IMPORTED_MODULE_9__Faction_js__["a" /* Faction */])) {
+                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because of invalid faction name: " + faction);
+                return false;
+            }
+
+            if (!fac.augmentations.includes(name)) {
+                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because the faction " + faction + " does not contain the " + name + " augmentation");
+                return false;
+            }
+
+            var aug = __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["c" /* Augmentations */][name];
+            if (aug === null || !(aug instanceof __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["a" /* Augmentation */])) {
+                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because of invalid augmentation name: " + name);
+                return false;
+            }
+
+            var isNeuroflux = false;
+            if (aug.name === __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["b" /* AugmentationNames */].NeuroFluxGovernor) {
+                isNeuroflux = true;
+            }
+
+            if (!isNeuroflux) {
+                for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].queuedAugmentations.length; ++j) {
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].queuedAugmentations[j].name === aug.name) {
+                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                        return false;
+                    }
+                }
+                for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].augmentations.length; ++j) {
+                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].augmentations[j].name === aug.name) {
+                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
+                        return false;
+                    }
+                }
+            }
+
+            if (fac.playerReputation < aug.baseRepRequirement) {
+                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you do not have enough reputation with " + fac.name);
+                return false;
+            }
+
+            var res = Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["k" /* purchaseAugmentation */])(aug, fac, true);
+            workerScript.scriptRef.log(res);
+            if (Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["f" /* isString */])(res) && res.startsWith("You purchased")) {
+                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
+                return true;
+            } else {
+                return false;
+            }
+        },
+        installAugmentations(cbScript) {
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
+                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run installAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
+                    return false;
+                }
+            }
+
+            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].queuedAugmentations.length === 0) {
+                workerScript.scriptRef.log("ERROR: installAugmentations() failed because you do not have any Augmentations to be installed");
+                return false;
+            }
+            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
+            workerScript.scriptRef.log("Installing Augmentations. This will cause this script to be killed");
+            Object(__WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["h" /* installAugmentations */])(cbScript);
+            return true;
+        }
+    }
+}
+
+
+
+
+/***/ }),
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23489,7 +25727,7 @@ function giveAllAugmentations() {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24656,7 +26894,104 @@ function getJobRequirementText(company, pos, tooltiptext=false) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return yesNoBoxCreate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return yesNoTxtInpBoxCreate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return yesNoBoxGetYesButton; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return yesNoBoxGetNoButton; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return yesNoTxtInpBoxGetYesButton; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return yesNoTxtInpBoxGetNoButton; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return yesNoTxtInpBoxGetInput; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return yesNoBoxClose; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return yesNoTxtInpBoxClose; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return yesNoBoxOpen; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__ = __webpack_require__(2);
+
+/* Generic Yes-No Pop-up box
+ * Can be used to create pop-up boxes that require a yes/no response from player
+ */
+var yesNoBoxOpen = false;
+function yesNoBoxClose() {
+    var container = document.getElementById("yes-no-box-container");
+    if (container) {
+        container.style.display = "none";
+    } else {
+        console.log("ERROR: Container not found for YesNoBox");
+    }
+    yesNoBoxOpen = false;
+}
+
+function yesNoBoxGetYesButton() {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__["b" /* clearEventListeners */])("yes-no-box-yes");
+}
+
+function yesNoBoxGetNoButton() {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__["b" /* clearEventListeners */])("yes-no-box-no");
+}
+
+function yesNoBoxCreate(txt) {
+    yesNoBoxOpen = true;
+    var textElement = document.getElementById("yes-no-box-text");
+    if (textElement) {
+        textElement.innerHTML = txt;
+    }
+
+    var c = document.getElementById("yes-no-box-container");
+    if (c) {
+        c.style.display = "block";
+    } else {
+        console.log("ERROR: Container not found for YesNoBox");
+    }
+}
+
+/* Generic Yes-No POp-up Box with Text input */
+function yesNoTxtInpBoxClose() {
+    var c = document.getElementById("yes-no-text-input-box-container");
+    if (c) {
+        c.style.display = "none";
+    } else {
+        console.log("ERROR: Container not found for YesNoTextInputBox");
+    }
+    yesNoBoxOpen = false;
+}
+
+function yesNoTxtInpBoxGetYesButton() {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__["b" /* clearEventListeners */])("yes-no-text-input-box-yes");
+}
+
+function yesNoTxtInpBoxGetNoButton() {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__["b" /* clearEventListeners */])("yes-no-text-input-box-no");
+}
+
+function yesNoTxtInpBoxGetInput() {
+    var val = document.getElementById("yes-no-text-input-box-input").value;
+    val = val.replace(/\s+/g, '');
+    return val;
+}
+
+function yesNoTxtInpBoxCreate(txt) {
+    yesNoBoxOpen = true;
+    var txtE = document.getElementById("yes-no-text-input-box-text");
+    if (txtE) {
+        txtE.innerHTML = txt;
+    }
+
+    var c = document.getElementById("yes-no-text-input-box-container");
+    if (c) {
+        c.style.display = "block";
+    } else {
+        console.log("ERROR: Container not found for YesNoTextInputBox");
+    }
+}
+
+
+
+
+/***/ }),
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26408,2311 +28743,6 @@ let Terminal = {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(9)))
 
 /***/ }),
-/* 22 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NetscriptFunctions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initSingularitySFFlags; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasSingularitySF; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return hasBn11SF; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BitNode_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Crimes_js__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Company_js__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Constants_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__engine_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Faction_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__HacknetNode_js__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Location_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Message_js__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Script_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Server_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__Settings_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__SpecialServerIps_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Terminal_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__TextFile_js__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__NetscriptEnvironment_js__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__utils_decimal_js__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__utils_decimal_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__utils_IPAddress_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__ = __webpack_require__(4);
-var sprintf = __webpack_require__(40).sprintf,
-    vsprintf = __webpack_require__(40).vsprintf
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var hasSingularitySF = false, hasAISF = false, hasBn11SF = false;
-var singularitySFLvl = 1;
-
-//Used to check and set flags for every Source File, despite the name of the function
-function initSingularitySFFlags() {
-    for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles.length; ++i) {
-        if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles[i].n === 4) {
-            hasSingularitySF = true;
-            singularitySFLvl = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles[i].lvl;
-        }
-        if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles[i].n === 5) {
-            hasAISF = true;
-        }
-        if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].sourceFiles[i].n === 11) {
-            hasBn11SF = true;
-        }
-    }
-}
-
-function NetscriptFunctions(workerScript) {
-    return {
-        Math : Math,
-        Date : Date,
-        hacknetnodes : __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacknetNodes,
-        sprintf : sprintf,
-        vsprintf: vsprintf,
-        scan : function(ip=workerScript.serverIp, hostnames=true){
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, 'Invalid IP or hostname passed into scan() command');
-            }
-            var out = [];
-            for (var i = 0; i < server.serversOnNetwork.length; i++) {
-                var entry;
-                if (hostnames) {
-                    entry = server.getServerOnNetwork(i).hostname;
-                } else {
-                    entry = server.getServerOnNetwork(i).ip;
-                }
-                if (entry == null) {
-                    continue;
-                }
-                out.push(entry);
-            }
-            workerScript.scriptRef.log('scan() returned ' + server.serversOnNetwork.length + ' connections for ' + server.hostname);
-            return out;
-        },
-        hack : function(ip){
-            if (ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Hack() call has incorrect number of arguments. Takes 1 argument");
-            }
-            var threads = workerScript.scriptRef.threads;
-            if (isNaN(threads) || threads < 1) {threads = 1;}
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "hack() error. Invalid IP or hostname passed in: " + ip + ". Stopping...");
-            }
-
-            //Calculate the hacking time
-            var hackingTime = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["i" /* scriptCalculateHackingTime */])(server); //This is in seconds
-
-            //No root access or skill level too low
-            if (server.hasAdminRights == false) {
-                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user does not have root access");
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot hack this server (" + server.hostname + ") because user does not have root access");
-            }
-
-            if (server.requiredHackingSkill > __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill) {
-                workerScript.scriptRef.log("Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
-            }
-
-            workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
-            //console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds (t=" + threads + ")");
-            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["d" /* netscriptDelay */])(hackingTime* 1000, workerScript).then(function() {
-                if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
-                var hackChance = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["h" /* scriptCalculateHackingChance */])(server);
-                var rand = Math.random();
-                var expGainedOnSuccess = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["f" /* scriptCalculateExpGain */])(server) * threads;
-                var expGainedOnFailure = (expGainedOnSuccess / 4);
-                if (rand < hackChance) {	//Success!
-                    var moneyGained = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["j" /* scriptCalculatePercentMoneyHacked */])(server);
-                    moneyGained = Math.floor(server.moneyAvailable * moneyGained) * threads;
-
-                    //Over-the-top safety checks
-                    if (moneyGained <= 0) {
-                        moneyGained = 0;
-                        expGainedOnSuccess = expGainedOnFailure;
-                    }
-                    if (moneyGained > server.moneyAvailable) {moneyGained = server.moneyAvailable;}
-                    server.moneyAvailable -= moneyGained;
-                    if (server.moneyAvailable < 0) {server.moneyAvailable = 0;}
-
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainMoney(moneyGained);
-                    workerScript.scriptRef.onlineMoneyMade += moneyGained;
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].scriptProdSinceLastAug += moneyGained;
-                    workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainHackingExp(expGainedOnSuccess);
-                    workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
-                    //console.log("Script successfully hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
-                    workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(moneyGained, 2) + " and " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
-                    server.fortify(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ServerFortifyAmount * threads);
-                    return Promise.resolve(true);
-                } else {
-                    //Player only gains 25% exp for failure? TODO Can change this later to balance
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainHackingExp(expGainedOnFailure);
-                    workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
-                    //console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp");
-                    workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
-                    return Promise.resolve(false);
-                }
-            });
-        },
-        sleep : function(time,log=true){
-            if (time === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "sleep() call has incorrect number of arguments. Takes 1 argument");
-            }
-            if (log) {
-                workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
-            }
-            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["d" /* netscriptDelay */])(time, workerScript).then(function() {
-                return Promise.resolve(true);
-            });
-        },
-        grow : function(ip){
-            var threads = workerScript.scriptRef.threads;
-            if (isNaN(threads) || threads < 1) {threads = 1;}
-            if (ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "grow() call has incorrect number of arguments. Takes 1 argument");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot grow(). Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot grow(). Invalid IP or hostname passed in: " + ip);
-            }
-
-            //No root access or skill level too low
-            if (server.hasAdminRights == false) {
-                workerScript.scriptRef.log("Cannot grow this server (" + server.hostname + ") because user does not have root access");
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot grow this server (" + server.hostname + ") because user does not have root access");
-            }
-
-            var growTime = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["g" /* scriptCalculateGrowTime */])(server);
-            //console.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds")
-            workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(growTime/1000, 3) + " seconds (t=" + threads + ")");
-            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["d" /* netscriptDelay */])(growTime, workerScript).then(function() {
-                if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
-                server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
-                var growthPercentage = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["j" /* processSingleServerGrowth */])(server, 450 * threads);
-                workerScript.scriptRef.recordGrow(server.ip, threads);
-                var expGain = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["f" /* scriptCalculateExpGain */])(server) * threads;
-                if (growthPercentage == 1) {
-                    expGain = 0;
-                }
-                workerScript.scriptRef.log("Available money on " + server.hostname + " grown by "
-                                           + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(growthPercentage*100 - 100, 6) + "%. Gained " +
-                                           Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGain, 4) + " hacking exp (t=" + threads +")");
-                workerScript.scriptRef.onlineExpGained += expGain;
-                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainHackingExp(expGain);
-                return Promise.resolve(growthPercentage);
-            });
-        },
-        weaken : function(ip){
-            var threads = workerScript.scriptRef.threads;
-            if (isNaN(threads) || threads < 1) {threads = 1;}
-            if (ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "weaken() call has incorrect number of arguments. Takes 1 argument");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot weaken(). Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot weaken(). Invalid IP or hostname passed in: " + ip);
-            }
-
-            //No root access or skill level too low
-            if (server.hasAdminRights == false) {
-                workerScript.scriptRef.log("Cannot weaken this server (" + server.hostname + ") because user does not have root access");
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot weaken this server (" + server.hostname + ") because user does not have root access");
-            }
-
-            var weakenTime = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["k" /* scriptCalculateWeakenTime */])(server);
-            workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " +
-                                       Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(weakenTime/1000, 3) + " seconds (t=" + threads + ")");
-            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["d" /* netscriptDelay */])(weakenTime, workerScript).then(function() {
-                if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
-                server.weaken(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ServerWeakenAmount * threads);
-                workerScript.scriptRef.recordWeaken(server.ip, threads);
-                var expGain = Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["f" /* scriptCalculateExpGain */])(server) * threads;
-                workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty +
-                                           ". Gained " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(expGain, 4) + " hacking exp (t=" + threads + ")");
-                workerScript.scriptRef.onlineExpGained += expGain;
-                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainHackingExp(expGain);
-                return Promise.resolve(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ServerWeakenAmount * threads);
-            });
-        },
-        print : function(args){
-            if (args === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "print() call has incorrect number of arguments. Takes 1 argument");
-            }
-            workerScript.scriptRef.log(args.toString());
-        },
-        tprint : function(args) {
-            if (args === undefined || args === null) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "tprint() call has incorrect number of arguments. Takes 1 argument");
-            }
-            var x = args.toString();
-            if (Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["d" /* isHTML */])(x)) {
-                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].takeDamage(1);
-                Object(__WEBPACK_IMPORTED_MODULE_25__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You suddenly feel a sharp shooting pain through your body as an angry voice in your head exclaims: <br><br>" +
-                                "DON'T USE TPRINT() TO OUTPUT HTML ELEMENTS TO YOUR TERMINAL!!!!<br><br>" +
-                                "(You lost 1 HP)");
-                return;
-            }
-            Object(__WEBPACK_IMPORTED_MODULE_19__Terminal_js__["b" /* post */])(workerScript.scriptRef.filename + ": " + args.toString());
-        },
-        clearLog : function() {
-            workerScript.scriptRef.clearLog();
-        },
-        nuke : function(ip){
-            if (ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
-            }
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].NukeProgram)) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the NUKE.exe virus!");
-            }
-            if (server.openPortCount < server.numOpenPortsRequired) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Not enough ports opened to use NUKE.exe virus");
-            }
-            if (server.hasAdminRights) {
-                workerScript.scriptRef.log("Already have root access to " + server.hostname);
-            } else {
-                server.hasAdminRights = true;
-                workerScript.scriptRef.log("Executed NUKE.exe virus on " + server.hostname + " to gain root access");
-            }
-            return true;
-        },
-        brutessh : function(ip){
-            if (ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
-            }
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].BruteSSHProgram)) {
-                workerScript.scriptRef.log("You do not have the BruteSSH.exe program!");
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the BruteSSH.exe program!");
-            }
-            if (!server.sshPortOpen) {
-                workerScript.scriptRef.log("Executed BruteSSH.exe on " + server.hostname + " to open SSH port (22)");
-                server.sshPortOpen = true;
-                ++server.openPortCount;
-            } else {
-                workerScript.scriptRef.log("SSH Port (22) already opened on " + server.hostname);
-            }
-            return true;
-        },
-        ftpcrack : function(ip){
-            if (ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
-            }
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].FTPCrackProgram)) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the FTPCrack.exe program!");
-            }
-            if (!server.ftpPortOpen) {
-                workerScript.scriptRef.log("Executed FTPCrack.exe on " + server.hostname + " to open FTP port (21)");
-                server.ftpPortOpen = true;
-                ++server.openPortCount;
-            } else {
-                workerScript.scriptRef.log("FTP Port (21) already opened on " + server.hostname);
-            }
-            return true;
-        },
-        relaysmtp : function(ip){
-            if (ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
-            }
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].RelaySMTPProgram)) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the relaySMTP.exe program!");
-            }
-            if (!server.smtpPortOpen) {
-                workerScript.scriptRef.log("Executed relaySMTP.exe on " + server.hostname + " to open SMTP port (25)");
-                server.smtpPortOpen = true;
-                ++server.openPortCount;
-            } else {
-                workerScript.scriptRef.log("SMTP Port (25) already opened on " + server.hostname);
-            }
-            return true;
-        },
-        httpworm : function(ip){
-            if (ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
-            }
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].HTTPWormProgram)) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the HTTPWorm.exe program!");
-            }
-            if (!server.httpPortOpen) {
-                workerScript.scriptRef.log("Executed HTTPWorm.exe on " + server.hostname + " to open HTTP port (80)");
-                server.httpPortOpen = true;
-                ++server.openPortCount;
-            } else {
-                workerScript.scriptRef.log("HTTP Port (80) already opened on " + server.hostname);
-            }
-            return true;
-        },
-        sqlinject : function(ip){
-            if (ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
-            }
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasProgram(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].SQLInjectProgram)) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You do not have the SQLInject.exe program!");
-            }
-            if (!server.sqlPortOpen) {
-                workerScript.scriptRef.log("Executed SQLInject.exe on " + server.hostname + " to open SQL port (1433)");
-                server.sqlPortOpen = true;
-                ++server.openPortCount;
-            } else {
-                workerScript.scriptRef.log("SQL Port (1433) already opened on " + server.hostname);
-            }
-            return true;
-        },
-        run : function(scriptname,threads = 1){
-            if (scriptname === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "run() call has incorrect number of arguments. Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
-            }
-            if (isNaN(threads) || threads < 1) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
-            }
-            var argsForNewScript = [];
-            for (var i = 2; i < arguments.length; ++i) {
-                argsForNewScript.push(arguments[i]);
-            }
-            var scriptServer = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
-            if (scriptServer == null) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
-            }
-
-            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["e" /* runScriptFromScript */])(scriptServer, scriptname, argsForNewScript, workerScript, threads);
-        },
-        exec : function(scriptname,ip,threads = 1){
-            if (scriptname === undefined || ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "exec() call has incorrect number of arguments. Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
-            }
-            if (isNaN(threads) || threads < 1) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid argument for thread count passed into exec(). Must be numeric and greater than 0");
-            }
-            var argsForNewScript = [];
-            for (var i = 3; i < arguments.length; ++i) {
-                argsForNewScript.push(arguments[i]);
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid hostname/ip passed into exec() command: " + ip);
-            }
-            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["e" /* runScriptFromScript */])(server, scriptname, argsForNewScript, workerScript, threads);
-        },
-        kill : function(filename,ip){
-            if (filename === undefined || ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "kill() call has incorrect number of arguments. Usage: kill(scriptname, server, [arg1], [arg2]...)");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("kill() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "kill() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            var argsForKillTarget = [];
-            for (var i = 2; i < arguments.length; ++i) {
-                argsForKillTarget.push(arguments[i]);
-            }
-            var runningScriptObj = Object(__WEBPACK_IMPORTED_MODULE_14__Script_js__["d" /* findRunningScript */])(filename, argsForKillTarget, server);
-            if (runningScriptObj == null) {
-                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget));
-                return false;
-            }
-            var res = Object(__WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["d" /* killWorkerScript */])(runningScriptObj, server.ip);
-            if (res) {
-                workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
-                return true;
-            } else {
-                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["f" /* printArray */])(argsForKillTarget));
-                return false;
-            }
-        },
-        killall : function(ip){
-            if (ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "killall() call has incorrect number of arguments. Takes 1 argument");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("killall() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "killall() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            for (var i = server.runningScripts.length-1; i >= 0; --i) {
-                Object(__WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["d" /* killWorkerScript */])(server.runningScripts[i], server.ip);
-            }
-            workerScript.scriptRef.log("killall(): Killing all scripts on " + server.hostname + ". May take a few minutes for the scripts to die");
-            return true;
-        },
-        scp : function(scriptname, ip1, ip2){
-            if (arguments.length !== 2 && arguments.length !== 3) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
-            }
-            if (scriptname && scriptname.constructor === Array) {
-                //Recursively call scp on all elements of array
-                var res = false;
-                scriptname.forEach(function(script) {
-                    if (NetscriptFunctions(workerScript).scp(script, ip1, ip2)) {
-                        res = true;
-                    };
-                });
-                return res;
-            }
-            if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script")) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: scp() only works for .script and .lit files");
-            }
-
-            var destServer, currServ;
-
-            if (arguments.length === 3) {   //scriptname, source, destination
-                if (scriptname === undefined || ip1 === undefined || ip2 === undefined) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
-                }
-                destServer = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip2);
-                if (destServer == null) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: Invalid hostname/ip passed into scp() command: " + ip);
-                }
-
-                currServ = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip1);
-                if (currServ == null) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
-                }
-            } else if (arguments.length === 2) {    //scriptname, destination
-                if (scriptname === undefined || ip1 === undefined) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
-                }
-                destServer = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip1);
-                if (destServer == null) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error: Invalid hostname/ip passed into scp() command: " + ip);
-                }
-
-                currServ = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
-                if (currServ == null) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find server ip for this script. This is a bug please contact game developer");
-                }
-            }
-
-            //Scp for lit files
-            if (scriptname.endsWith(".lit")) {
-                var found = false;
-                for (var i = 0; i < currServ.messages.length; ++i) {
-                    if (!(currServ.messages[i] instanceof __WEBPACK_IMPORTED_MODULE_12__Message_js__["a" /* Message */]) && currServ.messages[i] == scriptname) {
-                        found = true;
-                    }
-                }
-
-                if (!found) {
-                    workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
-                    return false;
-                }
-
-                for (var i = 0; i < destServer.messages.length; ++i) {
-                    if (destServer.messages[i] === scriptname) {
-                        workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
-                        return true; //Already exists
-                    }
-                }
-                destServer.messages.push(scriptname);
-                workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
-                return true;
-            }
-
-            //Scp for script files
-            var sourceScript = null;
-            for (var i = 0; i < currServ.scripts.length; ++i) {
-                if (scriptname == currServ.scripts[i].filename) {
-                    sourceScript = currServ.scripts[i];
-                    break;
-                }
-            }
-            if (sourceScript == null) {
-                workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
-                return false;
-            }
-
-            //Overwrite script if it already exists
-            for (var i = 0; i < destServer.scripts.length; ++i) {
-                if (scriptname == destServer.scripts[i].filename) {
-                    workerScript.scriptRef.log("WARNING: " + scriptname + " already exists on " + destServer.hostname + " and it will be overwritten.");
-                    workerScript.scriptRef.log(scriptname + " overwritten on " + destServer.hostname);
-                    var oldScript = destServer.scripts[i];
-                    oldScript.code = sourceScript.code;
-                    oldScript.ramUsage = sourceScript.ramUsage;
-                    return true;
-                }
-            }
-
-            //Create new script if it does not already exist
-            var newScript = new __WEBPACK_IMPORTED_MODULE_14__Script_js__["c" /* Script */]();
-            newScript.filename = scriptname;
-            newScript.code = sourceScript.code;
-            newScript.ramUsage = sourceScript.ramUsage;
-            newScript.server = destServer.ip;
-            destServer.scripts.push(newScript);
-            workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
-            return true;
-        },
-        ls : function(ip, grep) {
-            if (ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "ls() failed because of invalid arguments. Usage: ls(ip/hostname, [grep filter])");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server === null) {
-                workerScript.scriptRef.log("ls() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "ls() failed. Invalid IP or hostname passed in: " + ip);
-            }
-
-            //Get the grep filter, if one exists
-            var filter = false;
-            if (arguments.length >= 2) {
-                filter = grep.toString();
-            }
-
-            var allFiles = [];
-            for (var i = 0; i < server.programs.length; i++) {
-                if (filter) {
-                    if (server.programs[i].includes(filter)) {
-                        allFiles.push(server.programs[i]);
-                    }
-                } else {
-                    allFiles.push(server.programs[i]);
-                }
-            }
-            for (var i = 0; i < server.scripts.length; i++) {
-                if (filter) {
-                    if (server.scripts[i].filename.includes(filter)) {
-                        allFiles.push(server.scripts[i].filename);
-                    }
-                } else {
-                    allFiles.push(server.scripts[i].filename);
-                }
-
-            }
-            for (var i = 0; i < server.messages.length; i++) {
-                if (filter) {
-                    if (server.messages[i] instanceof __WEBPACK_IMPORTED_MODULE_12__Message_js__["a" /* Message */]) {
-                        if (server.messages[i].filename.includes(filter)) {
-                            allFiles.push(server.messages[i].filename);
-                        }
-                    } else if (server.messages[i].includes(filter)) {
-                        allFiles.push(server.messages[i]);
-                    }
-                } else {
-                    if (server.messages[i] instanceof __WEBPACK_IMPORTED_MODULE_12__Message_js__["a" /* Message */]) {
-                        allFiles.push(server.messages[i].filename);
-                    } else {
-                        allFiles.push(server.messages[i]);
-                    }
-                }
-            }
-
-            //Sort the files alphabetically then print each
-            allFiles.sort();
-            return allFiles;
-        },
-        hasRootAccess : function(ip){
-            if (ip===undefined){
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "hasRootAccess() call has incorrect number of arguments. Takes 1 argument");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null){
-                workerScript.scriptRef.log("hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "hasRootAccess() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            return server.hasAdminRights;
-        },
-        getIp : function() {
-            var scriptServer = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
-            if (scriptServer == null) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
-            }
-            return scriptServer.ip;
-        },
-        getHostname : function(){
-            var scriptServer = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
-            if (scriptServer == null) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
-            }
-            return scriptServer.hostname;
-        },
-        getHackingLevel : function(){
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].updateSkillLevels();
-            workerScript.scriptRef.log("getHackingLevel() returned " + __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill);
-            return __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill;
-        },
-        getHackingMultipliers : function() {
-            return {
-                chance: __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_chance_mult,
-                speed: __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_speed_mult,
-                money: __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_money_mult,
-                growth: __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_grow_mult,
-            };
-        },
-        getBitNodeMultipliers: function() {
-            if (!hasAISF) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getBitNodeMultipliers(). It requires Source-File 5 to run.");
-            }
-            return __WEBPACK_IMPORTED_MODULE_2__BitNode_js__["a" /* BitNodeMultipliers */];
-        },
-        getServerMoneyAvailable : function(ip){
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            if (server.hostname == "home") {
-                //Return player's money
-                workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.toNumber(), 2));
-                return __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.toNumber();
-            }
-            workerScript.scriptRef.log("getServerMoneyAvailable() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.moneyAvailable, 2) + " for " + server.hostname);
-            return server.moneyAvailable;
-        },
-        getServerSecurityLevel : function(ip){
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            workerScript.scriptRef.log("getServerSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.hackDifficulty, 3) + " for " + server.hostname);
-            return server.hackDifficulty;
-        },
-        getServerBaseSecurityLevel : function(ip){
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.baseDifficulty, 3) + " for " + server.hostname);
-            return server.baseDifficulty;
-        },
-        getServerMinSecurityLevel : function(ip) {
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            workerScript.scriptRef.log("getServerMinSecurityLevel() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.minDifficulty, 3) + " for " + server.hostname);
-            return server.minDifficulty;
-        },
-        getServerRequiredHackingLevel : function(ip){
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.requiredHackingSkill, 0) + " for " + server.hostname);
-            return server.requiredHackingSkill;
-        },
-        getServerMaxMoney : function(ip){
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            workerScript.scriptRef.log("getServerMaxMoney() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.moneyMax, 0) + " for " + server.hostname);
-            return server.moneyMax;
-        },
-        getServerGrowth : function(ip) {
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            workerScript.scriptRef.log("getServerGrowth() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.serverGrowth, 0) + " for " + server.hostname);
-            return server.serverGrowth;
-        },
-        getServerNumPortsRequired : function(ip){
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            workerScript.scriptRef.log("getServerNumPortsRequired() returned " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.numOpenPortsRequired, 0) + " for " + server.hostname);
-            return server.numOpenPortsRequired;
-        },
-        getServerRam : function(ip) {
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getServerRam() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getServerRam() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            workerScript.scriptRef.log("getServerRam() returned [" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.maxRam, 2) + "GB, " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(server.ramUsed, 2) + "GB]");
-            return [server.maxRam, server.ramUsed];
-        },
-        serverExists : function(ip) {
-            return (Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip) !== null);
-        },
-        fileExists : function(filename,ip=workerScript.serverIp){
-            if (filename === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "fileExists() call has incorrect number of arguments. Usage: fileExists(scriptname, [server])");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("fileExists() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "fileExists() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            for (var i = 0; i < server.scripts.length; ++i) {
-                if (filename == server.scripts[i].filename) {
-                    return true;
-                }
-            }
-            for (var i = 0; i < server.programs.length; ++i) {
-                if (filename.toLowerCase() == server.programs[i].toLowerCase()) {
-                    return true;
-                }
-            }
-            for (var i = 0; i < server.messages.length; ++i) {
-                if (!(server.messages[i] instanceof __WEBPACK_IMPORTED_MODULE_12__Message_js__["a" /* Message */]) &&
-                    filename.toLowerCase() === server.messages[i]) {
-                    return true;
-                }
-            }
-            return false;
-        },
-        isRunning : function(filename,ip){
-            if (filename === undefined || ip === undefined) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "isRunning() call has incorrect number of arguments. Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
-            }
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("isRunning() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "isRunning() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            var argsForTargetScript = [];
-            for (var i = 2; i < arguments.length; ++i) {
-                argsForTargetScript.push(arguments[i]);
-            }
-            return (Object(__WEBPACK_IMPORTED_MODULE_14__Script_js__["d" /* findRunningScript */])(filename, argsForTargetScript, server) != null);
-        },
-        getNextHacknetNodeCost : __WEBPACK_IMPORTED_MODULE_10__HacknetNode_js__["b" /* getCostOfNextHacknetNode */],
-        purchaseHacknetNode : __WEBPACK_IMPORTED_MODULE_10__HacknetNode_js__["d" /* purchaseHacknet */],
-        getStockPrice : function(symbol) {
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasTixApiAccess) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You don't have TIX API Access! Cannot use getStockPrice()");
-            }
-            var stock = __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["b" /* SymbolToStockMap */][symbol];
-            if (stock == null) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid stock symbol passed into getStockPrice()");
-            }
-            return parseFloat(stock.price.toFixed(3));
-        },
-        getStockPosition : function(symbol) {
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasTixApiAccess) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You don't have TIX API Access! Cannot use getStockPosition()");
-            }
-            var stock = __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["b" /* SymbolToStockMap */][symbol];
-            if (stock == null) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid stock symbol passed into getStockPrice()");
-            }
-            return [stock.playerShares, stock.playerAvgPx];
-        },
-        buyStock : function(symbol, shares) {
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasTixApiAccess) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You don't have TIX API Access! Cannot use buyStock()");
-            }
-            var stock = __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["b" /* SymbolToStockMap */][symbol];
-            if (stock == null) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid stock symbol passed into getStockPrice()");
-            }
-            if (stock == null || shares < 0 || isNaN(shares)) {
-                workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to buyStock()");
-                return false;
-            }
-            shares = Math.round(shares);
-            if (shares === 0) {return false;}
-
-            var totalPrice = stock.price * shares;
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.lt(totalPrice + __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission)) {
-                workerScript.scriptRef.log("Not enough money to purchase " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " +
-                                           symbol + ". Need $" +
-                                           Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(totalPrice + __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2).toString());
-                return false;
-            }
-
-            var origTotal = stock.playerShares * stock.playerAvgPx;
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(totalPrice + __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission);
-            var newTotal = origTotal + totalPrice;
-            stock.playerShares += shares;
-            stock.playerAvgPx = newTotal / stock.playerShares;
-            if (__WEBPACK_IMPORTED_MODULE_8__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_8__engine_js__["Engine"].Page.StockMarket) {
-                Object(__WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["j" /* updateStockPlayerPosition */])(stock);
-            }
-            workerScript.scriptRef.log("Bought " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                                       Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share");
-            return true;
-        },
-        sellStock : function(symbol, shares) {
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hasTixApiAccess) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "You don't have TIX API Access! Cannot use sellStock()");
-            }
-            var stock = __WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["b" /* SymbolToStockMap */][symbol];
-            if (stock == null) {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid stock symbol passed into getStockPrice()");
-            }
-
-            if (stock == null || shares < 0 || isNaN(shares)) {
-                workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to sellStock()");
-                return false;
-            }
-            shares = Math.round(shares);
-            if (shares > stock.playerShares) {shares = stock.playerShares;}
-            if (shares === 0) {return false;}
-            var gains = stock.price * shares - __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission;
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainMoney(gains);
-
-            //Calculate net profit and add to script stats
-            var netProfit = ((stock.price - stock.playerAvgPx) * shares) - __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].StockMarketCommission;
-            if (isNaN(netProfit)) {netProfit = 0;}
-            workerScript.scriptRef.onlineMoneyMade += netProfit;
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].scriptProdSinceLastAug += netProfit;
-
-            stock.playerShares -= shares;
-            if (stock.playerShares == 0) {
-                stock.playerAvgPx = 0;
-            }
-            if (__WEBPACK_IMPORTED_MODULE_8__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_8__engine_js__["Engine"].Page.StockMarket) {
-                Object(__WEBPACK_IMPORTED_MODULE_18__StockMarket_js__["j" /* updateStockPlayerPosition */])(stock);
-            }
-            workerScript.scriptRef.log("Sold " + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                                       Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. Gained " +
-                                       "$" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(gains, 2));
-            return true;
-        },
-        purchaseServer : function(hostname, ram) {
-            var hostnameStr = String(hostname);
-            hostnameStr = hostnameStr.replace(/\s\s+/g, '');
-            if (hostnameStr == "") {
-                workerScript.scriptRef.log("Error: Passed empty string for hostname argument of purchaseServer()");
-                return "";
-            }
-
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers.length >= __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].PurchasedServerLimit) {
-                workerScript.scriptRef.log("Error: You have reached the maximum limit of " + __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].PurchasedServerLimit +
-                                           " servers. You cannot purchase any more.");
-                return "";
-            }
-
-            ram = Math.round(ram);
-            if (isNaN(ram) || !Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["e" /* powerOfTwo */])(ram)) {
-                workerScript.scriptRef.log("Error: Invalid ram argument passed to purchaseServer(). Must be numeric and a power of 2");
-                return "";
-            }
-
-            var cost = ram * __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].BaseCostFor1GBOfRamServer;
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.lt(cost)) {
-                workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(cost, 2));
-                return "";
-            }
-            var newServ = new __WEBPACK_IMPORTED_MODULE_15__Server_js__["d" /* Server */](Object(__WEBPACK_IMPORTED_MODULE_27__utils_IPAddress_js__["a" /* createRandomIp */])(), hostnameStr, "", false, true, true, ram);
-            Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["a" /* AddToAllServers */])(newServ);
-
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers.push(newServ.ip);
-            var homeComputer = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer();
-            homeComputer.serversOnNetwork.push(newServ.ip);
-            newServ.serversOnNetwork.push(homeComputer.ip);
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(cost);
-            workerScript.scriptRef.log("Purchased new server with hostname " + newServ.hostname + " for $" + Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["c" /* formatNumber */])(cost, 2));
-            return newServ.hostname;
-        },
-        deleteServer : function(hostname) {
-            var hostnameStr = String(hostname);
-            hostnameStr = hostnameStr.replace(/\s\s+/g, '');
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["c" /* GetServerByHostname */])(hostnameStr);
-            if (server == null) {
-                workerScript.scriptRef.log("Error: Could not find server with hostname " + hostnameStr + ". deleteServer() failed");
-                return false;
-            }
-
-            if (!server.purchasedByPlayer || server.hostname == "home") {
-                workerScript.scriptRef.log("Error: Server " + server.hostname + " is not a purchased server. " +
-                                           "Cannot be deleted. deleteServer failed");
-                return false;
-            }
-
-            var ip = server.ip;
-
-            //A server cannot delete itself
-            if (ip == workerScript.serverIp) {
-                workerScript.scriptRef.log("Error: Cannot call deleteServer() on self. Function failed");
-                return false;
-            }
-
-            //Delete all scripts running on server
-            if (server.runningScripts.length > 0) {
-                workerScript.scriptRef.log("Error: Cannot delete server " + server.hostname + " because it still has scripts running.");
-                return false;
-            }
-
-            //Delete from player's purchasedServers array
-            var found = false;
-            for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers.length; ++i) {
-                if (ip == __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers[i]) {
-                    found = true;
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers.splice(i, 1);
-                    break;
-                }
-            }
-
-            if (!found) {
-                workerScript.scriptRef.log("Error: Could not identify server " + server.hostname +
-                                           "as a purchased server. This is likely a bug please contact game dev");
-                return false;
-            }
-
-            //Delete from all servers
-            delete __WEBPACK_IMPORTED_MODULE_15__Server_js__["b" /* AllServers */][ip];
-
-            //Delete from home computer
-            found = false;
-            var homeComputer = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer();
-            for (var i = 0; i < homeComputer.serversOnNetwork.length; ++i) {
-                if (ip == homeComputer.serversOnNetwork[i]) {
-                    homeComputer.serversOnNetwork.splice(i, 1);
-                    workerScript.scriptRef.log("Deleted server " + hostnameStr);
-                    return true;
-                }
-            }
-            //Wasn't found on home computer
-            workerScript.scriptRef.log("Error: Could not find server " + server.hostname +
-                                       "as a purchased server. This is likely a bug please contact game dev");
-            return false;
-        },
-        getPurchasedServers : function(hostname=true) {
-            var res = [];
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].purchasedServers.forEach(function(ip) {
-                if (hostname) {
-                    var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-                    if (server == null) {
-                        throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "ERR: Could not find server in getPurchasedServers(). This is a bug please report to game dev");
-                    }
-                    res.push(server.hostname);
-                } else {
-                    res.push(ip);
-                }
-            });
-            return res;
-        },
-        round : function(n) {
-            if (isNaN(n)) {return 0;}
-            return Math.round(n);
-        },
-        write : function(port, data="", mode="a") {
-            if (!isNaN(port)) { //Write to port
-                //Port 1-10
-                if (port < 1 || port > 10) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
-                }
-                var portName = "Port" + String(port);
-                var port = __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["a" /* NetscriptPorts */][portName];
-                if (port == null) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
-                }
-                port.push(data);
-                if (port.length > __WEBPACK_IMPORTED_MODULE_16__Settings_js__["a" /* Settings */].MaxPortCapacity) {
-                    port.shift();
-                    return true;
-                }
-                return false;
-            } else if (Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["f" /* isString */])(port)) { //Write to text file
-                var fn = port;
-                var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
-                if (server === null) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error getting Server for this script in write(). This is a bug please contact game dev");
-                }
-                var txtFile = Object(__WEBPACK_IMPORTED_MODULE_20__TextFile_js__["b" /* getTextFile */])(fn, server);
-                if (txtFile === null) {
-                    txtFile = Object(__WEBPACK_IMPORTED_MODULE_20__TextFile_js__["a" /* createTextFile */])(fn, data, server);
-                    return true;
-                }
-                if (mode === "w") {
-                    txtFile.write(data);
-                } else {
-                    txtFile.append(data);
-                }
-                return true;
-            } else {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid argument passed in for port: " + port + ". Must be a number between 1 and 10");
-            }
-        },
-        read : function(port) {
-            if (!isNaN(port)) { //Read from port
-                //Port 1-10
-                if (port < 1 || port > 10) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
-                }
-                var portName = "Port" + String(port);
-                var port = __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["a" /* NetscriptPorts */][portName];
-                if (port == null) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
-                }
-                if (port.length == 0) {
-                    return "NULL PORT DATA";
-                } else {
-                    return port.shift();
-                }
-            } else if (Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["f" /* isString */])(port)) { //Read from text file
-                var fn = port;
-                var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(workerScript.serverIp);
-                if (server === null) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Error getting Server for this script in read(). This is a bug please contact game dev");
-                }
-                var txtFile = Object(__WEBPACK_IMPORTED_MODULE_20__TextFile_js__["b" /* getTextFile */])(fn, server);
-                if (txtFile !== null) {
-                    return txtFile.text;
-                } else {
-                    return "";
-                }
-            } else {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid argument passed in for port: " + port + ". Must be a number between 1 and 10");
-            }
-        },
-        scriptRunning : function(scriptname, ip) {
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            for (var i = 0; i < server.runningScripts.length; ++i) {
-                if (server.runningScripts[i].filename == scriptname) {
-                    return true;
-                }
-            }
-            return false;
-        },
-        scriptKill : function(scriptname, ip) {
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("scriptKill() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "scriptKill() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            var suc = false;
-            for (var i = 0; i < server.runningScripts.length; ++i) {
-                if (server.runningScripts[i].filename == scriptname) {
-                    Object(__WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["d" /* killWorkerScript */])(server.runningScripts[i], server.ip);
-                    suc = true;
-                }
-            }
-            return suc;
-        },
-        getScriptRam : function (scriptname, ip) {
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            for (var i = 0; i < server.scripts.length; ++i) {
-                if (server.scripts[i].filename == scriptname) {
-                    return server.scripts[i].ramUsage;
-                }
-            }
-            return 0;
-        },
-        getHackTime : function(ip) {
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getHackTime() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getHackTime() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["i" /* scriptCalculateHackingTime */])(server); //Returns seconds
-        },
-        getGrowTime : function(ip) {
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["g" /* scriptCalculateGrowTime */])(server) / 1000; //Returns seconds
-        },
-        getWeakenTime : function(ip) {
-            var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-            if (server == null) {
-                workerScript.scriptRef.log("getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
-            }
-            return Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["k" /* scriptCalculateWeakenTime */])(server) / 1000; //Returns seconds
-        },
-        getScriptIncome : function(scriptname, ip) {
-            if (arguments.length === 0) {
-                //Get total script income
-                var res = [];
-                res.push(Object(__WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__["d" /* updateActiveScriptsItems */])());
-                res.push(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].scriptProdSinceLastAug / (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].playtimeSinceLastAug/1000));
-                return res;
-            } else {
-                //Get income for a particular script
-                var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-                if (server === null) {
-                    workerScript.scriptRef.log("getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
-                }
-                var argsForScript = [];
-                for (var i = 2; i < arguments.length; ++i) {
-                    argsForScript.push(arguments[i]);
-                }
-                var runningScriptObj = Object(__WEBPACK_IMPORTED_MODULE_14__Script_js__["d" /* findRunningScript */])(scriptname, argsForScript, server);
-                if (runningScriptObj == null) {
-                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["f" /* printArray */])(argsForScript));
-                    return -1;
-                }
-                return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
-            }
-        },
-        getScriptExpGain : function(scriptname, ip) {
-            if (arguments.length === 0) {
-                var total = 0;
-                for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["h" /* workerScripts */].length; ++i) {
-                    total += (__WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["h" /* workerScripts */][i].scriptRef.onlineExpGained / __WEBPACK_IMPORTED_MODULE_21__NetscriptWorker_js__["h" /* workerScripts */][i].scriptRef.onlineRunningTime);
-                }
-                return total;
-            } else {
-                //Get income for a particular script
-                var server = Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["e" /* getServer */])(ip);
-                if (server === null) {
-                    workerScript.scriptRef.log("getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
-                }
-                var argsForScript = [];
-                for (var i = 2; i < arguments.length; ++i) {
-                    argsForScript.push(arguments[i]);
-                }
-                var runningScriptObj = Object(__WEBPACK_IMPORTED_MODULE_14__Script_js__["d" /* findRunningScript */])(scriptname, argsForScript, server);
-                if (runningScriptObj == null) {
-                    workerScript.scriptRef.log("getScriptExpGain() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + Object(__WEBPACK_IMPORTED_MODULE_26__utils_HelperFunctions_js__["f" /* printArray */])(argsForScript));
-                    return -1;
-                }
-                return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;
-            }
-        },
-        getTimeSinceLastAug : function() {
-            return __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].playtimeSinceLastAug;
-        },
-
-        /* Singularity Functions */
-        universityCourse(universityName, className) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run universityCourse(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
-                    return false;
-                }
-            }
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
-                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
-                workerScript.scriptRef.log(txt);
-            }
-
-            var costMult, expMult;
-            switch(universityName.toLowerCase()) {
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumSummitUniversity.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Aevum) {
-                        workerScript.scriptRef.log("ERROR: You cannot study at Summit University because you are not in Aevum. universityCourse() failed");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumSummitUniversity;
-                    costMult = 4;
-                    expMult = 3;
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12RothmanUniversity.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12) {
-                        workerScript.scriptRef.log("ERROR: You cannot study at Rothman University because you are not in Sector-12. universityCourse() failed");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12RothmanUniversity;
-                    costMult = 3;
-                    expMult = 2;
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].VolhavenZBInstituteOfTechnology.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Volhaven) {
-                        workerScript.scriptRef.log("ERROR: You cannot study at ZB Institute of Technology because you are not in Volhaven. universityCourse() failed");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].VolhavenZBInstituteOfTechnology;
-                    costMult = 5;
-                    expMult = 4;
-                    break;
-                default:
-                    workerScript.scriptRef.log("Invalid university name: " + universityName + ". universityCourse() failed");
-                    return false;
-            }
-
-            var task;
-            switch(className.toLowerCase()) {
-                case "Study Computer Science".toLowerCase():
-                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassStudyComputerScience;
-                    break;
-                case "Data Structures".toLowerCase():
-                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassDataStructures;
-                    break;
-                case "Networks".toLowerCase():
-                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassNetworks;
-                    break;
-                case "Algorithms".toLowerCase():
-                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassAlgorithms;
-                    break;
-                case "Management".toLowerCase():
-                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassManagement;
-                    break;
-                case "Leadership".toLowerCase():
-                    task = __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassLeadership;
-                    break;
-                default:
-                    workerScript.scriptRef.log("Invalid class name: " + className + ". universityCourse() failed");
-                    return false;
-            }
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startClass(costMult, expMult, task);
-            workerScript.scriptRef.log("Started " + task + " at " + universityName);
-            return true;
-        },
-
-        gymWorkout(gymName, stat) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run gymWorkout(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
-                    return false;
-                }
-            }
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
-                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
-                workerScript.scriptRef.log(txt);
-            }
-            var costMult, expMult;
-            switch(gymName.toLowerCase()) {
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumCrushFitnessGym.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Aevum) {
-                        workerScript.scriptRef.log("ERROR: You cannot workout at Crush Fitness because you are not in Aevum. gymWorkout() failed");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumCrushFitnessGym;
-                    costMult = 2;
-                    expMult = 1.5;
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumSnapFitnessGym.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Aevum) {
-                        workerScript.scriptRef.log("ERROR: You cannot workout at Snap Fitness because you are not in Aevum. gymWorkout() failed");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].AevumSnapFitnessGym;
-                    costMult = 6;
-                    expMult = 4;
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12IronGym.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12) {
-                        workerScript.scriptRef.log("ERROR: You cannot workout at Iron Gym because you are not in Sector-12. gymWorkout() failed");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12IronGym;
-                    costMult = 1;
-                    expMult = 1;
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12PowerhouseGym.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12) {
-                        workerScript.scriptRef.log("ERROR: You cannot workout at Powerhouse Gym because you are not in Sector-12. gymWorkout() failed");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12PowerhouseGym;
-                    costMult = 10;
-                    expMult = 7.5;
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].VolhavenMilleniumFitnessGym:
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city != __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Volhaven) {
-                        workerScript.scriptRef.log("ERROR: You cannot workout at Millenium Fitness Gym because you are not in Volhaven. gymWorkout() failed");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].VolhavenMilleniumFitnessGym;
-                    costMult = 3;
-                    expMult = 2.5;
-                    break;
-                default:
-                    workerScript.scriptRef.log("Invalid gym name: " + gymName + ". gymWorkout() failed");
-                    return false;
-            }
-
-            switch(stat.toLowerCase()) {
-                case "strength".toLowerCase():
-                case "str".toLowerCase():
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startClass(costMult, expMult, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassGymStrength);
-                    break;
-                case "defense".toLowerCase():
-                case "def".toLowerCase():
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startClass(costMult, expMult, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassGymDefense);
-                    break;
-                case "dexterity".toLowerCase():
-                case "dex".toLowerCase():
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startClass(costMult, expMult, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassGymDexterity);
-                    break;
-                case "agility".toLowerCase():
-                case "agi".toLowerCase():
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startClass(costMult, expMult, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].ClassGymAgility);
-                    break;
-                default:
-                    workerScript.scriptRef.log("Invalid stat: " + stat + ". gymWorkout() failed");
-                    return false;
-            }
-            workerScript.scriptRef.log("Started training " + stat + " at " + gymName);
-            return true;
-        },
-
-        travelToCity(cityname) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run travelToCity(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
-                    return false;
-                }
-            }
-
-            switch(cityname) {
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Aevum:
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Chongqing:
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Sector12:
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].NewTokyo:
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Ishima:
-                case __WEBPACK_IMPORTED_MODULE_11__Location_js__["a" /* Locations */].Volhaven:
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(200000);
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].city = cityname;
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
-                    workerScript.scriptRef.log("Traveled to " + cityname);
-                    return true;
-                default:
-                    workerScript.scriptRef.log("ERROR: Invalid city name passed into travelToCity().");
-                    return false;
-            }
-        },
-
-        purchaseTor() {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run purchaseTor(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
-                    return false;
-                }
-            }
-
-            if (__WEBPACK_IMPORTED_MODULE_17__SpecialServerIps_js__["a" /* SpecialServerIps */]["Darkweb Server"] != null) {
-                workerScript.scriptRef.log("You already have a TOR router! purchaseTor() failed");
-                return false;
-            }
-
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.lt(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].TorRouterCost)) {
-                workerScript.scriptRef.log("ERROR: You cannot afford to purchase a Tor router. purchaseTor() failed");
-                return false;
-            }
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].TorRouterCost);
-
-            var darkweb = new __WEBPACK_IMPORTED_MODULE_15__Server_js__["d" /* Server */](Object(__WEBPACK_IMPORTED_MODULE_27__utils_IPAddress_js__["a" /* createRandomIp */])(), "darkweb", "", false, false, false, 1);
-            Object(__WEBPACK_IMPORTED_MODULE_15__Server_js__["a" /* AddToAllServers */])(darkweb);
-            __WEBPACK_IMPORTED_MODULE_17__SpecialServerIps_js__["a" /* SpecialServerIps */].addIp("Darkweb Server", darkweb.ip);
-
-            document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
-
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().serversOnNetwork.push(darkweb.ip);
-            darkweb.serversOnNetwork.push(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().ip);
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
-            workerScript.scriptRef.log("You have purchased a Tor router!");
-            return true;
-        },
-        purchaseProgram(programName) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run purchaseProgram(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
-                    return false;
-                }
-            }
-
-            if (__WEBPACK_IMPORTED_MODULE_17__SpecialServerIps_js__["a" /* SpecialServerIps */]["Darkweb Server"] == null) {
-                workerScript.scriptRef.log("ERROR: You do not have  TOR router. purchaseProgram() failed.");
-                return false;
-            }
-
-            switch(programName.toLowerCase()) {
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].BruteSSHProgram.toLowerCase():
-                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].BruteSSHProgram);
-                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].BruteSSHProgram);
-                        workerScript.scriptRef.log("You have purchased the BruteSSH.exe program. The new program " +
-                             "can be found on your home computer.");
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].FTPCrackProgram.toLowerCase():
-                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].FTPCrackProgram);
-                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].FTPCrackProgram);
-                        workerScript.scriptRef.log("You have purchased the FTPCrack.exe program. The new program " +
-                             "can be found on your home computer.");
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].RelaySMTPProgram.toLowerCase():
-                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].RelaySMTPProgram);
-                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].RelaySMTPProgram);
-                        workerScript.scriptRef.log("You have purchased the relaySMTP.exe program. The new program " +
-                             "can be found on your home computer.");
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].HTTPWormProgram.toLowerCase():
-                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].HTTPWormProgram);
-                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].HTTPWormProgram);
-                        workerScript.scriptRef.log("You have purchased the HTTPWorm.exe program. The new program " +
-                             "can be found on your home computer.");
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].SQLInjectProgram.toLowerCase():
-                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].SQLInjectProgram);
-                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].SQLInjectProgram);
-                        workerScript.scriptRef.log("You have purchased the SQLInject.exe program. The new program " +
-                             "can be found on your home computer.");
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV1.toLowerCase():
-                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].DeepScanV1Program);
-                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV1);
-                        workerScript.scriptRef.log("You have purchased the DeepscanV1.exe program. The new program " +
-                             "can be found on your home computer.");
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV2.toLowerCase():
-                    var price = Object(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["d" /* parseDarkwebItemPrice */])(__WEBPACK_IMPORTED_MODULE_7__DarkWeb_js__["a" /* DarkWebItems */].DeepScanV2Program);
-                    if (price > 0 && __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.gt(price)) {
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(price);
-                        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().programs.push(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV2);
-                        workerScript.scriptRef.log("You have purchased the DeepscanV2.exe program. The new program " +
-                             "can be found on your home computer.");
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                default:
-                    workerScript.scriptRef.log("ERROR: Invalid program passed into purchaseProgram().");
-                    return false;
-            }
-            return true;
-        },
-        getStats : function() {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getStats(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
-                    return {};
-                }
-            }
-
-            return {
-                hacking:        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill,
-                strength:       __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].strength,
-                defense:        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].defense,
-                dexterity:      __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].dexterity,
-                agility:        __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].agility,
-                charisma:       __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].charisma,
-                intelligence:   __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].intelligence
-            }
-        },
-        isBusy : function() {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run isBusy(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
-                    return;
-                }
-            }
-            return __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking;
-        },
-        upgradeHomeRam() {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run upgradeHomeRam(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
-                    return false;
-                }
-            }
-
-            //Calculate how many times ram has been upgraded (doubled)
-            var currentRam = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().maxRam;
-            var numUpgrades = Math.log2(currentRam);
-
-            //Calculate cost
-            //Have cost increase by some percentage each time RAM has been upgraded
-            var cost = currentRam * __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].BaseCostFor1GBOfRamHome;
-            var mult = Math.pow(1.55, numUpgrades);
-            cost = cost * mult;
-
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].money.lt(cost)) {
-                workerScript.scriptRef.log("ERROR: upgradeHomeRam() failed because you don't have enough money");
-                return false;
-            }
-
-            var homeComputer = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer();
-            homeComputer.maxRam *= 2;
-
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].loseMoney(cost);
-
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
-            workerScript.scriptRef.log("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
-            return true;
-        },
-        getUpgradeHomeRamCost() {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getUpgradeHomeRamCost(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
-                    return false;
-                }
-            }
-
-            //Calculate how many times ram has been upgraded (doubled)
-            var currentRam = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].getHomeComputer().maxRam;
-            var numUpgrades = Math.log2(currentRam);
-
-            //Calculate cost
-            //Have cost increase by some percentage each time RAM has been upgraded
-            var cost = currentRam * __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].BaseCostFor1GBOfRamHome;
-            var mult = Math.pow(1.55, numUpgrades);
-            return cost * mult;
-        },
-        workForCompany() {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run workForCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
-                    return false;
-                }
-            }
-
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyPosition == "" || !(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyPosition instanceof __WEBPACK_IMPORTED_MODULE_4__Company_js__["c" /* CompanyPosition */])) {
-                workerScript.scriptRef.log("ERROR: workForCompany() failed because you do not have a job");
-                return false;
-            }
-
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
-                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
-                workerScript.scriptRef.log(txt);
-            }
-
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyPosition.isPartTimeJob()) {
-                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startWorkPartTime();
-            } else {
-                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startWork();
-            }
-            workerScript.scriptRef.log("Began working at " + __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyName + " as a " + __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyPosition.positionName);
-            return true;
-        },
-        applyToCompany(companyName, field) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run applyToCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
-                    return false;
-                }
-            }
-
-            if (!Object(__WEBPACK_IMPORTED_MODULE_4__Company_js__["e" /* companyExists */])(companyName)) {
-                workerScript.scriptRef.log("ERROR: applyToCompany() failed because specified company " + companyName + " does not exist.");
-                return false;
-            }
-
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].location = companyName;
-            var res;
-            switch (field.toLowerCase()) {
-                case "software":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForSoftwareJob(true);
-                    break;
-                case "software consultant":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForSoftwareConsultantJob(true);
-                    break;
-                case "it":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForItJob(true);
-                    break;
-                case "security engineer":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForSecurityEngineerJob(true);
-                    break;
-                case "network engineer":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForNetworkEngineerJob(true);
-                    break;
-                case "business":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForBusinessJob(true);
-                    break;
-                case "business consultant":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForBusinessConsultantJob(true);
-                    break;
-                case "security":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForSecurityJob(true);
-                    break;
-                case "agent":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForAgentJob(true);
-                    break;
-                case "employee":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForEmployeeJob(true);
-                    break;
-                case "part-time employee":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForPartTimeEmployeeJob(true);
-                    break;
-                case "waiter":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForWaiterJob(true);
-                    break;
-                case "part-time waiter":
-                    res = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].applyForPartTimeWaiterJob(true);
-                    break;
-                default:
-                    workerScript.scriptRef.log("ERROR: Invalid job passed into applyToCompany: " + field + ". applyToCompany() failed");
-                    return false;
-            }
-            //The Player object's applyForJob function can return string with special error messages
-            if (Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["f" /* isString */])(res)) {
-                workerScript.scriptRef.log(res);
-                return false;
-            }
-            if (res) {
-                workerScript.scriptRef.log("You were offered a new job at " + companyName + " as a " + __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].companyPosition.positionName);
-            } else {
-                workerScript.scriptRef.log("You failed to get a new job/promotion at " + companyName + " in the " + field + " field.");
-            }
-            return res;
-        },
-        getCompanyRep(companyName) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getCompanyRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
-                    return false;
-                }
-            }
-
-            var company = __WEBPACK_IMPORTED_MODULE_4__Company_js__["a" /* Companies */][companyName];
-            if (company === null || !(company instanceof __WEBPACK_IMPORTED_MODULE_4__Company_js__["b" /* Company */])) {
-                workerScript.scriptRef.log("ERROR: Invalid companyName passed into getCompanyRep(): " + companyName);
-                return -1;
-            }
-            return company.playerReputation;
-        },
-        checkFactionInvitations() {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run checkFactionInvitations(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
-                    return false;
-                }
-            }
-            //Make a copy of Player.factionInvitations
-            return __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].factionInvitations.slice();
-        },
-        joinFaction(name) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run joinFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
-                    return false;
-                }
-            }
-
-            if (!Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["d" /* factionExists */])(name)) {
-                workerScript.scriptRef.log("ERROR: Faction specified in joinFaction() does not exist.");
-                return false;
-            }
-
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].factionInvitations.includes(name)) {
-                workerScript.scriptRef.log("ERROR: Cannot join " + name + " Faction because you have not been invited. joinFaction() failed");
-                return false;
-            }
-
-            var index = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].factionInvitations.indexOf(name);
-            if (index === -1) {
-                //Redundant and should never happen...
-                workerScript.scriptRef.log("ERROR: Cannot join " + name + " Faction because you have not been invited. joinFaction() failed");
-                return false;
-            }
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].factionInvitations.splice(index, 1);
-            var fac = __WEBPACK_IMPORTED_MODULE_9__Faction_js__["b" /* Factions */][name];
-            Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["h" /* joinFaction */])(fac);
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
-            workerScript.scriptRef.log("Joined the " + name + " faction.");
-            return true;
-        },
-        workForFaction(name, type) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run workForFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
-                    return false;
-                }
-            }
-
-            if (!Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["d" /* factionExists */])(name)) {
-                workerScript.scriptRef.log("ERROR: Faction specified in workForFaction() does not exist.");
-                return false;
-            }
-
-            if (!__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].factions.includes(name)) {
-                workerScript.scriptRef.log("ERROR: workForFaction() failed because you are not a member of " + name);
-                return false;
-            }
-
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
-                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
-                workerScript.scriptRef.log(txt);
-            }
-
-            var fac = __WEBPACK_IMPORTED_MODULE_9__Faction_js__["b" /* Factions */][name];
-            //Arrays listing factions that allow each time of work
-            var hackAvailable = ["Illuminati", "Daedalus", "The Covenant", "ECorp", "MegaCorp",
-                                 "Bachman & Associates", "Blade Industries", "NWO", "Clarke Incorporated",
-                                 "OmniTek Incorporated", "Four Sigma", "KuaiGong International",
-                                 "Fulcrum Secret Technologies", "BitRunners", "The Black Hand",
-                                 "NiteSec", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
-                                 "Ishima", "Volhaven", "Speakers for the Dead", "The Dark Army",
-                                 "The Syndicate", "Silhouette", "Netburners", "Tian Di Hui", "CyberSec"];
-            var fdWkAvailable = ["Illuminati", "Daedalus", "The Covenant", "ECorp", "MegaCorp",
-                                 "Bachman & Associates", "Blade Industries", "NWO", "Clarke Incorporated",
-                                 "OmniTek Incorporated", "Four Sigma", "KuaiGong International",
-                                 "The Black Hand", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
-                                 "Ishima", "Volhaven", "Speakers for the Dead", "The Dark Army",
-                                 "The Syndicate", "Silhouette", "Tetrads", "Slum Snakes"];
-            var scWkAvailable = ["ECorp", "MegaCorp",
-                                 "Bachman & Associates", "Blade Industries", "NWO", "Clarke Incorporated",
-                                 "OmniTek Incorporated", "Four Sigma", "KuaiGong International",
-                                 "Fulcrum Secret Technologies", "Chongqing", "Sector-12", "New Tokyo", "Aevum",
-                                 "Ishima", "Volhaven", "Speakers for the Dead",
-                                 "The Syndicate", "Tetrads", "Slum Snakes", "Tian Di Hui"];
-
-            switch (type.toLowerCase()) {
-                case "hacking":
-                case "hacking contracts":
-                case "hackingcontracts":
-                    if (!hackAvailable.includes(fac.name)) {
-                        workerScript.scriptRef.log("ERROR: Cannot carry out hacking contracts for " + fac.name + ". workForFaction() failed");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startFactionHackWork(fac);
-                    workerScript.scriptRef.log("Started carrying out hacking contracts for " + fac.name);
-                    return true;
-                case "field":
-                case "fieldwork":
-                case "field work":
-                    if (!fdWkAvailable.includes(fac.name)) {
-                        workerScript.scriptRef.log("ERROR: Cannot carry out field missions for " + fac.name + ". workForFaction() failed");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startFactionFieldWork(fac);
-                    workerScript.scriptRef.log("Started carrying out field missions for " + fac.name);
-                    return true;
-                case "security":
-                case "securitywork":
-                case "security work":
-                    if (!scWkAvailable.includes(fac.name)) {
-                        workerScript.scriptRef.log("ERROR: Cannot serve as security detail for " + fac.name + ". workForFaction() failed");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startFactionSecurityWork(fac);
-                    workerScript.scriptRef.log("Started serving as security details for " + fac.name);
-                    return true;
-                default:
-                    workerScript.scriptRef.log("ERROR: Invalid work type passed into workForFaction(): " + type);
-            }
-            return true;
-        },
-        getFactionRep(name) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getFactionRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
-                    return -1;
-                }
-            }
-
-            if (!Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["d" /* factionExists */])(name)) {
-                workerScript.scriptRef.log("ERROR: Faction specified in getFactionRep() does not exist.");
-                return -1;
-            }
-
-            return __WEBPACK_IMPORTED_MODULE_9__Faction_js__["b" /* Factions */][name].playerReputation;
-        },
-        createProgram(name) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run createProgram(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
-                    return false;
-                }
-            }
-
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
-                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
-                workerScript.scriptRef.log(txt);
-            }
-
-            switch(name.toLowerCase()) {
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].NukeProgram.toLowerCase():
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].NukeProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerFiveMinutes, 1);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].BruteSSHProgram.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 50) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create BruteSSH (level 50 req)");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].BruteSSHProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerFiveMinutes * 2, 50);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].FTPCrackProgram.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 100) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create FTPCrack (level 100 req)");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].FTPCrackProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerHalfHour, 100);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].RelaySMTPProgram.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 250) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create relaySMTP (level 250 req)");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].RelaySMTPProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPer2Hours, 250);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].HTTPWormProgram.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 500) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create HTTPWorm (level 500 req)");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].HTTPWormProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPer4Hours, 500);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].SQLInjectProgram.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 750) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create SQLInject (level 750 req)");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].SQLInjectProgram, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPer8Hours, 750);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV1.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 75) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create DeepscanV1 (level 75 req)");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV1, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerQuarterHour, 75);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV2.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 400) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create DeepscanV2 (level 400 req)");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].DeepscanV2, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPer2Hours, 400);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].ServerProfiler.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 75) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create ServerProfiler (level 75 req)");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].ServerProfiler, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerHalfHour, 75);
-                    break;
-                case __WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].AutoLink.toLowerCase():
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].hacking_skill < 25) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create AutoLink (level 25 req)");
-                        return false;
-                    }
-                    __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].startCreateProgramWork(__WEBPACK_IMPORTED_MODULE_6__CreateProgram_js__["a" /* Programs */].AutoLink, __WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].MillisecondsPerQuarterHour, 25);
-                    break;
-                default:
-                    workerScript.scriptRef.log("ERROR: createProgram() failed because the specified program does not exist: " + name);
-                    return false;
-            }
-            workerScript.scriptRef.log("Began creating program: " + name);
-            return true;
-        },
-        commitCrime(crime) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run commitCrime(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
-                    return;
-                }
-            }
-
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].isWorking) {
-                var txt = __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].singularityStopWork();
-                workerScript.scriptRef.log(txt);
-            }
-
-            crime = crime.toLowerCase();
-            if (crime.includes("shoplift")) {
-                workerScript.scriptRef.log("Attempting to shoplift...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["k" /* commitShopliftCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("rob") && crime.includes("store")) {
-                workerScript.scriptRef.log("Attempting to rob a store...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["j" /* commitRobStoreCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("mug")) {
-                workerScript.scriptRef.log("Attempting to mug someone...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["i" /* commitMugCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("larceny")) {
-                workerScript.scriptRef.log("Attempting to commit larceny...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["h" /* commitLarcenyCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("drugs")) {
-                workerScript.scriptRef.log("Attempting to deal drugs...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["c" /* commitDealDrugsCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("bond") && crime.includes("forge")) {
-                workerScript.scriptRef.log("Attempting to forge corporate bonds...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["b" /* commitBondForgeryCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("traffick") && crime.includes("arms")) {
-                workerScript.scriptRef.log("Attempting to traffick illegal arms...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["l" /* commitTraffickArmsCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("homicide")) {
-                workerScript.scriptRef.log("Attempting to commit homicide...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["f" /* commitHomicideCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("grand") && crime.includes("auto")) {
-                workerScript.scriptRef.log("Attempting to commit grand theft auto...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["d" /* commitGrandTheftAutoCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("kidnap")) {
-                workerScript.scriptRef.log("Attempting to kidnap and ransom a high-profile target...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["g" /* commitKidnapCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("assassinate")) {
-                workerScript.scriptRef.log("Attempting to assassinate a high-profile target...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["a" /* commitAssassinationCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript})
-            } else if (crime.includes("heist")) {
-                workerScript.scriptRef.log("Attempting to pull off a heist...");
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["e" /* commitHeistCrime */])(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].CrimeSingFnDivider, {workerscript: workerScript});
-            } else {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid crime passed into commitCrime(): " + crime);
-            }
-        },
-        getCrimeChance(crime) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getCrimeChance(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
-                    return;
-                }
-            }
-
-            crime = crime.toLowerCase();
-            if (crime.includes("shoplift")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["w" /* determineCrimeChanceShoplift */])();
-            } else if (crime.includes("rob") && crime.includes("store")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["v" /* determineCrimeChanceRobStore */])();
-            } else if (crime.includes("mug")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["u" /* determineCrimeChanceMug */])();
-            } else if (crime.includes("larceny")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["t" /* determineCrimeChanceLarceny */])();
-            } else if (crime.includes("drugs")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["o" /* determineCrimeChanceDealDrugs */])();
-            } else if (crime.includes("bond") && crime.includes("forge")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["n" /* determineCrimeChanceBondForgery */])();
-            } else if (crime.includes("traffick") && crime.includes("arms")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["x" /* determineCrimeChanceTraffickArms */])();
-            } else if (crime.includes("homicide")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["r" /* determineCrimeChanceHomicide */])();
-            } else if (crime.includes("grand") && crime.includes("auto")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["p" /* determineCrimeChanceGrandTheftAuto */])();
-            } else if (crime.includes("kidnap")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["s" /* determineCrimeChanceKidnap */])();
-            } else if (crime.includes("assassinate")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["m" /* determineCrimeChanceAssassination */])();
-            } else if (crime.includes("heist")) {
-                return Object(__WEBPACK_IMPORTED_MODULE_3__Crimes_js__["q" /* determineCrimeChanceHeist */])();
-            } else {
-                throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Invalid crime passed into getCrimeChance(): " + crime);
-            }
-        },
-        getOwnedAugmentations(purchased=false) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getOwnedAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
-                    return [];
-                }
-            }
-            var res = [];
-            for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].augmentations.length; ++i) {
-                res.push(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].augmentations[i].name);
-            }
-            if (purchased) {
-                for (var i = 0; i < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].queuedAugmentations.length; ++i) {
-                    res.push(__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].queuedAugmentations[i].name);
-                }
-            }
-            return res;
-        },
-        getAugmentationsFromFaction(facname) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getAugmentationsFromFaction(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
-                    return [];
-                }
-            }
-
-            if (!Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["d" /* factionExists */])(facname)) {
-                workerScript.scriptRef.log("ERROR: getAugmentationsFromFaction() failed. Invalid faction name passed in (this is case-sensitive): " + facname);
-                return [];
-            }
-
-            var fac = __WEBPACK_IMPORTED_MODULE_9__Faction_js__["b" /* Factions */][facname];
-            var res = [];
-            for (var i = 0; i < fac.augmentations.length; ++i) {
-                res.push(fac.augmentations[i]);
-            }
-            return res;
-        },
-        getAugmentationCost(name) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run getAugmentationCost(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
-                    return false;
-                }
-            }
-
-            if (!Object(__WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["f" /* augmentationExists */])(name)) {
-                workerScript.scriptRef.log("ERROR: getAugmentationCost() failed. Invalid Augmentation name passed in (note: this is case-sensitive): " + name);
-                return [-1, -1];
-            }
-
-            var aug = __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["c" /* Augmentations */][name];
-            return [aug.baseRepRequirement, aug.baseCost];
-        },
-        purchaseAugmentation(faction, name) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run purchaseAugmentation(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
-                    return false;
-                }
-            }
-
-            var fac = __WEBPACK_IMPORTED_MODULE_9__Faction_js__["b" /* Factions */][faction];
-            if (fac === null || !(fac instanceof __WEBPACK_IMPORTED_MODULE_9__Faction_js__["a" /* Faction */])) {
-                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because of invalid faction name: " + faction);
-                return false;
-            }
-
-            if (!fac.augmentations.includes(name)) {
-                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because the faction " + faction + " does not contain the " + name + " augmentation");
-                return false;
-            }
-
-            var aug = __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["c" /* Augmentations */][name];
-            if (aug === null || !(aug instanceof __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["a" /* Augmentation */])) {
-                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because of invalid augmentation name: " + name);
-                return false;
-            }
-
-            var isNeuroflux = false;
-            if (aug.name === __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["b" /* AugmentationNames */].NeuroFluxGovernor) {
-                isNeuroflux = true;
-            }
-
-            if (!isNeuroflux) {
-                for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].queuedAugmentations.length; ++j) {
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].queuedAugmentations[j].name === aug.name) {
-                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
-                        return false;
-                    }
-                }
-                for (var j = 0; j < __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].augmentations.length; ++j) {
-                    if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].augmentations[j].name === aug.name) {
-                        workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you already have " + name);
-                        return false;
-                    }
-                }
-            }
-
-            if (fac.playerReputation < aug.baseRepRequirement) {
-                workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because you do not have enough reputation with " + fac.name);
-                return false;
-            }
-
-            var res = Object(__WEBPACK_IMPORTED_MODULE_9__Faction_js__["k" /* purchaseAugmentation */])(aug, fac, true);
-            workerScript.scriptRef.log(res);
-            if (Object(__WEBPACK_IMPORTED_MODULE_28__utils_StringHelperFunctions_js__["f" /* isString */])(res) && res.startsWith("You purchased")) {
-                __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
-                return true;
-            } else {
-                return false;
-            }
-        },
-        installAugmentations(cbScript) {
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].bitNodeN != 4) {
-                if (!(hasSingularitySF && singularitySFLvl >= 3)) {
-                    throw Object(__WEBPACK_IMPORTED_MODULE_22__NetscriptEvaluator_js__["c" /* makeRuntimeRejectMsg */])(workerScript, "Cannot run installAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
-                    return false;
-                }
-            }
-
-            if (__WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].queuedAugmentations.length === 0) {
-                workerScript.scriptRef.log("ERROR: installAugmentations() failed because you do not have any Augmentations to be installed");
-                return false;
-            }
-            __WEBPACK_IMPORTED_MODULE_13__Player_js__["a" /* Player */].gainIntelligenceExp(__WEBPACK_IMPORTED_MODULE_5__Constants_js__["a" /* CONSTANTS */].IntelligenceSingFnBaseExpGain);
-            workerScript.scriptRef.log("Installing Augmentations. This will cause this script to be killed");
-            Object(__WEBPACK_IMPORTED_MODULE_1__Augmentations_js__["h" /* installAugmentations */])(cbScript);
-            return true;
-        }
-    }
-}
-
-
-
-
-/***/ }),
-/* 23 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return yesNoBoxCreate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return yesNoTxtInpBoxCreate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return yesNoBoxGetYesButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return yesNoBoxGetNoButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return yesNoTxtInpBoxGetYesButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return yesNoTxtInpBoxGetNoButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return yesNoTxtInpBoxGetInput; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return yesNoBoxClose; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return yesNoTxtInpBoxClose; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return yesNoBoxOpen; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__ = __webpack_require__(2);
-
-/* Generic Yes-No Pop-up box
- * Can be used to create pop-up boxes that require a yes/no response from player
- */
-var yesNoBoxOpen = false;
-function yesNoBoxClose() {
-    var container = document.getElementById("yes-no-box-container");
-    if (container) {
-        container.style.display = "none";
-    } else {
-        console.log("ERROR: Container not found for YesNoBox");
-    }
-    yesNoBoxOpen = false;
-}
-
-function yesNoBoxGetYesButton() {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__["b" /* clearEventListeners */])("yes-no-box-yes");
-}
-
-function yesNoBoxGetNoButton() {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__["b" /* clearEventListeners */])("yes-no-box-no");
-}
-
-function yesNoBoxCreate(txt) {
-    yesNoBoxOpen = true;
-    var textElement = document.getElementById("yes-no-box-text");
-    if (textElement) {
-        textElement.innerHTML = txt;
-    }
-
-    var c = document.getElementById("yes-no-box-container");
-    if (c) {
-        c.style.display = "block";
-    } else {
-        console.log("ERROR: Container not found for YesNoBox");
-    }
-}
-
-/* Generic Yes-No POp-up Box with Text input */
-function yesNoTxtInpBoxClose() {
-    var c = document.getElementById("yes-no-text-input-box-container");
-    if (c) {
-        c.style.display = "none";
-    } else {
-        console.log("ERROR: Container not found for YesNoTextInputBox");
-    }
-    yesNoBoxOpen = false;
-}
-
-function yesNoTxtInpBoxGetYesButton() {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__["b" /* clearEventListeners */])("yes-no-text-input-box-yes");
-}
-
-function yesNoTxtInpBoxGetNoButton() {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__HelperFunctions_js__["b" /* clearEventListeners */])("yes-no-text-input-box-no");
-}
-
-function yesNoTxtInpBoxGetInput() {
-    var val = document.getElementById("yes-no-text-input-box-input").value;
-    val = val.replace(/\s+/g, '');
-    return val;
-}
-
-function yesNoTxtInpBoxCreate(txt) {
-    yesNoBoxOpen = true;
-    var txtE = document.getElementById("yes-no-text-input-box-text");
-    if (txtE) {
-        txtE.innerHTML = txt;
-    }
-
-    var c = document.getElementById("yes-no-text-input-box-container");
-    if (c) {
-        c.style.display = "block";
-    } else {
-        console.log("ERROR: Container not found for YesNoTextInputBox");
-    }
-}
-
-
-
-
-/***/ }),
 /* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -28724,7 +28754,7 @@ function yesNoTxtInpBoxCreate(txt) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loadMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return initMessages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Message; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Augmentations_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Missions_js__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Player_js__ = __webpack_require__(0);
@@ -34742,17 +34772,24 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*! decimal.js v7.2.3 https://github.com/MikeM
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return updateStockPlayerPosition; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return loadStockMarket; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return setStockMarketContentCreated; });
+/* unused harmony export placeOrder */
+/* unused harmony export Order */
+/* unused harmony export OrderTypes */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__engine_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Location_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Player_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__NetscriptFunctions_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Player_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_YesNoBox_js__ = __webpack_require__(22);
+
+
 
 
 
@@ -34781,18 +34818,104 @@ function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
 }
 
 Stock.prototype.toJSON = function() {
-	return Object(__WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__["b" /* Generic_toJSON */])("Stock", this);
+	return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["b" /* Generic_toJSON */])("Stock", this);
 }
 
 Stock.fromJSON = function(value) {
-	return Object(__WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(Stock, value.data);
+	return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(Stock, value.data);
 }
 
-__WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__["c" /* Reviver */].constructors.Stock = Stock;
+__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].constructors.Stock = Stock;
 
-//Order types (long and short for each):
-// - Limit Order
-// - Stop Order
+var OrderTypes = {
+    LimitBuy: "Limit Buy Order",
+    LimitSell: "Limit Sell Order",
+    StopBuy: "Stop Buy Order",
+    StopSell: "Stop Sell Order"
+}
+
+var PositionTypes = {
+    Long: "L",
+    Short: "S"
+}
+
+function placeOrder(stock, shares, price, type, position, workerScript=null) {
+    var tixApi = (workerScript instanceof __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__["b" /* WorkerScript */]);
+    var order = new Order(stock, shares, price, type, position);
+    if (isNaN(shares)) {
+        Object(__WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__["a" /* dialogBoxCreate */])("ERROR: Invalid number of shares specifies for order");
+        return false;
+    }
+    if (StockMarket["Orders"] === null) {
+        var orders = {};
+        for (var name in StockMarket) {
+            if (StockMarket.hasOwnProperty(name)) {
+                var stock = StockMarket[name];
+                if (!(stock instanceof Stock)) {continue;}
+                orders[stock.symbol] = [];
+            }
+        }
+        StockMarket["Orders"] = orders;
+    }
+    StockMarket["Orders"].push(order);
+    //Process to see if it should be executed immediately
+    processOrders(order.stock, order.type, order.pos);
+    return true;
+}
+
+function executeOrder(order) {
+    var stock = order.stock;
+    var orderBook = StockMarket["Orders"];
+    var stockOrders = orderBook[stock.symbol];
+    var res = true;
+    switch (order.type) {
+        case OrderTypes.LimitBuy:
+        case OrderTypes.StopBuy:
+            if (order.pos === PositionTypes.Long) {
+                res = buyStock(order.stock, order.shares) && res;
+            } else if (order.pos === PositionTypes.Short) {
+                res = shortStock(oder.stock, order.shares) && res;
+            }
+            break;
+        case OrderTypes.LimitSell:
+        case OrderTypes.StopSell:
+            if (order.pos === PositionTypes.Long) {
+                res = sellStock(order.stock, order.shares) && res;
+            } else if (order.pos === PositionTypes.Short) {
+                res = sellShort(order.stock, order.shares) && res;
+            }
+            break;
+    }
+    if (res) {
+        //Remove order from order book
+        for (var i = 0; i < stockOrders.length; ++i) {
+            if (order == stockOrders[i]) {
+                stockOrders.splice(i, 1);
+                return;
+            }
+        }
+        console.log("ERROR: Could not find the following Order in Order Book: ");
+        console.log(order);
+    }
+}
+
+function Order(stock, price, type, position) {
+    this.stock = stock;
+    this.shares = shares;
+    this.price = price;
+    this.type = type;
+    this.pos = position;
+}
+
+Order.prototype.toJSON = function() {
+	return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["b" /* Generic_toJSON */])("Order", this);
+}
+
+Order.fromJSON = function(value) {
+	return Object(__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["a" /* Generic_fromJSON */])(Order, value.data);
+}
+
+__WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */].constructors.Order = Order;
 
 let StockMarket = {}        //Full name to stock object
 let StockSymbols = {}       //Full name to symbol
@@ -34802,7 +34925,7 @@ function loadStockMarket(saveString) {
     if (saveString === "") {
         StockMarket = {};
     } else {
-        StockMarket = JSON.parse(saveString, __WEBPACK_IMPORTED_MODULE_7__utils_JSONReviver_js__["c" /* Reviver */]);
+        StockMarket = JSON.parse(saveString, __WEBPACK_IMPORTED_MODULE_8__utils_JSONReviver_js__["c" /* Reviver */]);
     }
 }
 
@@ -34853,136 +34976,146 @@ function initStockMarket() {
     }
 
     var ecorp = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumECorp;
-    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], 0.5, true, 16, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
+    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], 0.5, true, 16, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
     StockMarket[ecorp] = ecorpStk;
 
     var megacorp = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12MegaCorp;
-    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], 0.5, true, 16, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(25000, 33000));
+    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], 0.5, true, 16, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(25000, 33000));
     StockMarket[megacorp] = megacorpStk;
 
     var blade = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12BladeIndustries;
-    var bladeStk = new Stock(blade, StockSymbols[blade], 0.75, true, 13, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 22000));
+    var bladeStk = new Stock(blade, StockSymbols[blade], 0.75, true, 13, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 22000));
     StockMarket[blade] = bladeStk;
 
     var clarke = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumClarkeIncorporated;
-    var clarkeStk = new Stock(clarke, StockSymbols[clarke], 0.7, true, 12, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 20000));
+    var clarkeStk = new Stock(clarke, StockSymbols[clarke], 0.7, true, 12, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 20000));
     StockMarket[clarke] = clarkeStk;
 
     var omnitek = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenOmniTekIncorporated;
-    var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], 0.65, true, 12, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(35000, 40000));
+    var omnitekStk = new Stock(omnitek, StockSymbols[omnitek], 0.65, true, 12, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(35000, 40000));
     StockMarket[omnitek] = omnitekStk;
 
     var foursigma = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12FourSigma;
-    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], 1.1, true, 18, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(60000, 70000));
+    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], 1.1, true, 18, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(60000, 70000));
     StockMarket[foursigma] = foursigmaStk;
 
     var kuaigong = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].ChongqingKuaiGongInternational;
-    var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], 0.8, true, 10, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 24000));
+    var kuaigongStk = new Stock(kuaigong, StockSymbols[kuaigong], 0.8, true, 10, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 24000));
     StockMarket[kuaigong] = kuaigongStk;
 
     var fulcrum = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumFulcrumTechnologies;
-    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], 1.25, true, 17, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(30000, 35000));
+    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], 1.25, true, 17, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(30000, 35000));
     StockMarket[fulcrum] = fulcrumStk;
 
     var storm = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].IshimaStormTechnologies;
-    var stormStk = new Stock(storm, StockSymbols[storm], 0.85, true, 7, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(21000, 24000));
+    var stormStk = new Stock(storm, StockSymbols[storm], 0.85, true, 7, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(21000, 24000));
     StockMarket[storm] = stormStk;
 
     var defcomm = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].NewTokyoDefComm;
-    var defcommStk = new Stock(defcomm, StockSymbols[defcomm], 0.65, true, 10, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 15000));
+    var defcommStk = new Stock(defcomm, StockSymbols[defcomm], 0.65, true, 10, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 15000));
     StockMarket[defcomm] = defcommStk;
 
     var helios = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenHeliosLabs;
-    var heliosStk = new Stock(helios, StockSymbols[helios], 0.6, true, 9, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(12000, 16000));
+    var heliosStk = new Stock(helios, StockSymbols[helios], 0.6, true, 9, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(12000, 16000));
     StockMarket[helios] = heliosStk;
 
     var vitalife = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].NewTokyoVitaLife;
-    var vitalifeStk = new Stock(vitalife, StockSymbols[vitalife], 0.75, true, 7, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 12000));
+    var vitalifeStk = new Stock(vitalife, StockSymbols[vitalife], 0.75, true, 7, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 12000));
     StockMarket[vitalife] = vitalifeStk;
 
     var icarus = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12IcarusMicrosystems;
-    var icarusStk = new Stock(icarus, StockSymbols[icarus], 0.65, true, 7.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(16000, 20000));
+    var icarusStk = new Stock(icarus, StockSymbols[icarus], 0.65, true, 7.5, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(16000, 20000));
     StockMarket[icarus] = icarusStk;
 
     var universalenergy = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12UniversalEnergy;
-    var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], 0.55, true, 10, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
+    var universalenergyStk = new Stock(universalenergy, StockSymbols[universalenergy], 0.55, true, 10, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
     StockMarket[universalenergy] = universalenergyStk;
 
     var aerocorp = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumAeroCorp;
-    var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], 0.6, true, 6, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 15000));
+    var aerocorpStk = new Stock(aerocorp, StockSymbols[aerocorp], 0.6, true, 6, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(10000, 15000));
     StockMarket[aerocorp] = aerocorpStk;
 
     var omnia = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenOmniaCybersystems;
-    var omniaStk = new Stock(omnia, StockSymbols[omnia], 0.7, true, 4.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(9000, 12000));
+    var omniaStk = new Stock(omnia, StockSymbols[omnia], 0.7, true, 4.5, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(9000, 12000));
     StockMarket[omnia] = omniaStk;
 
     var solaris = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].ChongqingSolarisSpaceSystems;
-    var solarisStk = new Stock(solaris, StockSymbols[solaris], 0.75, true, 8.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
+    var solarisStk = new Stock(solaris, StockSymbols[solaris], 0.75, true, 8.5, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
     StockMarket[solaris] = solarisStk;
 
     var globalpharm = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].NewTokyoGlobalPharmaceuticals;
-    var globalpharmStk = new Stock(globalpharm, StockSymbols[globalpharm], 0.6, true, 10.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
+    var globalpharmStk = new Stock(globalpharm, StockSymbols[globalpharm], 0.6, true, 10.5, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
     StockMarket[globalpharm] = globalpharmStk;
 
     var nova = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].IshimaNovaMedical;
-    var novaStk = new Stock(nova, StockSymbols[nova], 0.75, true, 5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
+    var novaStk = new Stock(nova, StockSymbols[nova], 0.75, true, 5, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(18000, 24000));
     StockMarket[nova] = novaStk;
 
     var watchdog = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumWatchdogSecurity;
-    var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], 1, true, 1.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
+    var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], 1, true, 1.5, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
     StockMarket[watchdog] = watchdogStk;
 
     var lexocorp = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenLexoCorp;
-    var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], 1.25, true, 3, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
+    var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], 1.25, true, 3, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
     StockMarket[lexocorp] = lexocorpStk;
 
     var rho = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumRhoConstruction;
-    var rhoStk = new Stock(rho, StockSymbols[rho], 0.6, true, 1, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(3000, 6000));
+    var rhoStk = new Stock(rho, StockSymbols[rho], 0.6, true, 1, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(3000, 6000));
     StockMarket[rho] = rhoStk;
 
     var alpha = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12AlphaEnterprises;
-    var alphaStk = new Stock(alpha, StockSymbols[alpha], 1.05, true, 2, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
+    var alphaStk = new Stock(alpha, StockSymbols[alpha], 1.05, true, 2, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(5000, 7500));
     StockMarket[alpha] = alphaStk;
 
     var syscore = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenSysCoreSecurities;
-    var syscoreStk = new Stock(syscore, StockSymbols[syscore], 1.25, true, 0, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(4000, 7000))
+    var syscoreStk = new Stock(syscore, StockSymbols[syscore], 1.25, true, 0, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(4000, 7000))
     StockMarket[syscore] = syscoreStk;
 
     var computek = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].VolhavenCompuTek;
-    var computekStk = new Stock(computek, StockSymbols[computek], 0.9, true, 0, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 5000));
+    var computekStk = new Stock(computek, StockSymbols[computek], 0.9, true, 0, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 5000));
     StockMarket[computek] = computekStk;
 
     var netlink = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].AevumNetLinkTechnologies;
-    var netlinkStk = new Stock(netlink, StockSymbols[netlink], 1, true, 1, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 4000));
+    var netlinkStk = new Stock(netlink, StockSymbols[netlink], 1, true, 1, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 4000));
     StockMarket[netlink] = netlinkStk;
 
     var omega = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].IshimaOmegaSoftware;
-    var omegaStk = new Stock(omega, StockSymbols[omega], 1, true, 0.5, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(3000, 6000));
+    var omegaStk = new Stock(omega, StockSymbols[omega], 1, true, 0.5, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(3000, 6000));
     StockMarket[omega] = omegaStk;
 
     var fns = __WEBPACK_IMPORTED_MODULE_2__Location_js__["a" /* Locations */].Sector12FoodNStuff;
-    var fnsStk = new Stock(fns, StockSymbols[fns], 0.75, false, 1, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(1000, 4000));
+    var fnsStk = new Stock(fns, StockSymbols[fns], 0.75, false, 1, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(1000, 4000));
     StockMarket[fns] = fnsStk;
 
     var sigmacosm = "Sigma Cosmetics";
-    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], 0.9, true, 0, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 3000));
+    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], 0.9, true, 0, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(2000, 3000));
     StockMarket[sigmacosm] = sigmacosmStk;
 
     var joesguns = "Joes Guns";
-    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 1, true, 1, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(500, 1000));
+    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 1, true, 1, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(500, 1000));
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.25, true, 0, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(1000, 1500));
+    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.25, true, 0, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(1000, 1500));
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";
-    var microdyneStk = new Stock(microdyne, StockSymbols[microdyne], 0.75, true, 8, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
+    var microdyneStk = new Stock(microdyne, StockSymbols[microdyne], 0.75, true, 8, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(20000, 25000));
     StockMarket[microdyne] = microdyneStk;
 
     var titanlabs = "Titan Laboratories";
-    var titanlabsStk = new Stock(titanlabs, StockSymbols[titanlabs], 0.6, true, 11, Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 20000));
+    var titanlabsStk = new Stock(titanlabs, StockSymbols[titanlabs], 0.6, true, 11, Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["d" /* getRandomInt */])(15000, 20000));
     StockMarket[titanlabs] = titanlabsStk;
+
+    var orders = {};
+    for (var name in StockMarket) {
+        if (StockMarket.hasOwnProperty(name)) {
+            var stock = StockMarket[name];
+            if (!(stock instanceof Stock)) {continue;}
+            orders[stock.symbol] = [];
+        }
+    }
+    StockMarket["Orders"] = orders;
 }
 
 function initSymbolToStockMap() {
@@ -35016,28 +35149,28 @@ function stockMarketCycle() {
 //Returns true if successful, false otherwise
 function buyStock(stock, shares) {
     if (stock == null || shares < 0 || isNaN(shares)) {
-        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to buy stock. This may be a bug, contact developer");
+        Object(__WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to buy stock. This may be a bug, contact developer");
         return false;
     }
     shares = Math.round(shares);
     if (shares == 0) {return false;}
 
     var totalPrice = stock.price * shares;
-    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].money.lt(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission)) {
-        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You do not have enough money to purchase this. You need $" +
-                        Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2).toString() + ".");
+    if (__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].money.lt(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission)) {
+        Object(__WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You do not have enough money to purchase this. You need $" +
+                        Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2).toString() + ".");
         return false;
     }
 
     var origTotal = stock.playerShares * stock.playerAvgPx;
-    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].loseMoney(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission);
+    __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].loseMoney(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission);
     var newTotal = origTotal + totalPrice;
     stock.playerShares += shares;
     stock.playerAvgPx = newTotal / stock.playerShares;
     updateStockPlayerPosition(stock);
-    Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Bought " + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                    Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. You also paid $" +
-                    Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + " in commission fees.");
+    Object(__WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Bought " + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                    Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. You also paid $" +
+                    Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + " in commission fees.");
     return true;
 }
 
@@ -35045,33 +35178,33 @@ function buyStock(stock, shares) {
 function sellStock(stock, shares) {
     if (shares == 0) {return false;}
     if (stock == null || shares < 0 || isNaN(shares)) {
-        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to sell stock. This may be a bug, contact developer");
+        Object(__WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to sell stock. This may be a bug, contact developer");
         return false;
     }
     shares = Math.round(shares);
     if (shares > stock.playerShares) {shares = stock.playerShares;}
     if (shares === 0) {return false;}
     var gains = stock.price * shares - __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission;
-    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].gainMoney(gains);
+    __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].gainMoney(gains);
     stock.playerShares -= shares;
     if (stock.playerShares == 0) {
         stock.playerAvgPx = 0;
     }
     updateStockPlayerPosition(stock);
-    Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Sold " + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                    Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. After commissions, you gained " +
-                    "a total of $" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(gains, 2));
+    Object(__WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Sold " + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                    Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. After commissions, you gained " +
+                    "a total of $" + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(gains, 2));
     return true;
 }
 
 //Returns true if successful and false otherwise
 function shortStock(stock, shares, workerScript=null) {
-    var tixApi = (workerScript instanceof __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__["b" /* WorkerScript */]);
+    var tixApi = (workerScript instanceof __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__["b" /* WorkerScript */]);
     if (stock === null || isNaN(shares) || shares < 0) {
         if (tixApi) {
             workerScript.scriptRef.log("ERROR: shortStock() failed because of invalid arguments.");
         } else {
-            Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to initiate a short position in a stock. This is probably " +
+            Object(__WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to initiate a short position in a stock. This is probably " +
                             "due to an invalid quantity. Otherwise, this may be a bug,  so contact developer");
         }
         return false;
@@ -35080,21 +35213,21 @@ function shortStock(stock, shares, workerScript=null) {
     if (shares === 0) {return false;}
 
     var totalPrice = stock.price * shares;
-    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].money.lt(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission)) {
+    if (__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].money.lt(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission)) {
         if (tixApi) {
             workerScript.scriptRef.log("ERROR: shortStock() failed because you do not have " +
                                        "money to purchase this short position. You need " +
-                                       __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default()(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission).format('($0.000a)'));
+                                       __WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js___default()(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission).format('($0.000a)'));
         } else {
-            Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You do not have enough money to purchase this short position. You need $" +
-                            Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + ".");
+            Object(__WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__["a" /* dialogBoxCreate */])("You do not have enough money to purchase this short position. You need $" +
+                            Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + ".");
         }
 
         return false;
     }
 
     var origTotal = stock.playerShortShares * stock.playerAvgShortPx;
-    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].loseMoney(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission);
+    __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].loseMoney(totalPrice + __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission);
     var newTotal = origTotal + totalPrice;
     stock.playerShortShares += shares;
     stock.playerAvgShortPx = newTotal / stock.playerShortShares;
@@ -35102,25 +35235,25 @@ function shortStock(stock, shares, workerScript=null) {
         updateStockPlayerPosition(stock);
     }
     if (tixApi) {
-        workerScript.scriptRef.log("Bought a short position of " + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at " +
-                                   __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default()(stock.price).format('($0.000a)') + " per share. Paid " +
-                                   __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default()(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission).format('($0.000a)') + " in commission fees.");
+        workerScript.scriptRef.log("Bought a short position of " + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at " +
+                                   __WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js___default()(stock.price).format('($0.000a)') + " per share. Paid " +
+                                   __WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js___default()(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission).format('($0.000a)') + " in commission fees.");
     } else {
-        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Bought a short position of " + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                        Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. You also paid $" +
-                        Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + " in commission fees.");
+        Object(__WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Bought a short position of " + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                        Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. You also paid $" +
+                        Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + " in commission fees.");
     }
     return true;
 }
 
 //Returns true if successful and false otherwise
 function sellShort(stock, shares, workerScript=null) {
-    var tixApi = (workerScript instanceof __WEBPACK_IMPORTED_MODULE_3__NetscriptWorker_js__["b" /* WorkerScript */]);
+    var tixApi = (workerScript instanceof __WEBPACK_IMPORTED_MODULE_4__NetscriptWorker_js__["b" /* WorkerScript */]);
     if (stock === null || isNaN(shares) || shares < 0) {
         if (tixApi) {
             workerScript.scriptRef.log("ERROR: sellShort() failed because of invalid arguments.");
         } else {
-            Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to sell a short position in a stock. This is probably " +
+            Object(__WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Failed to sell a short position in a stock. This is probably " +
                             "due to an invalid quantity. Otherwise, this may be a bug, so contact developer");
         }
         return false;
@@ -35132,10 +35265,10 @@ function sellShort(stock, shares, workerScript=null) {
     var origCost = shares * stock.playerAvgShortPx;
     var profit = ((stock.playerAvgShortPx - stock.price) * shares) - __WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission;
     if (isNaN(profit)) {profit = 0;}
-    __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].gainMoney(origCost + profit);
+    __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].gainMoney(origCost + profit);
     if (tixApi) {
         workerScript.scriptRef.onlineMoneyMade += profit;
-        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].scriptProdSinceLastAug += profit;
+        __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].scriptProdSinceLastAug += profit;
     }
 
     stock.playerShortShares -= shares;
@@ -35147,12 +35280,12 @@ function sellShort(stock, shares, workerScript=null) {
     }
     if (tixApi) {
         workerScript.scriptRef.log("Sold your short position of " + shares + " shares of " + stock.symbol + " at " +
-                                   __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default()(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
-                                   "a total of " + __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default()(origCost + profit).format('($0.000a)'));
+                                   __WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js___default()(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
+                                   "a total of " + __WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js___default()(origCost + profit).format('($0.000a)'));
     } else {
-        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Sold your short position of " + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
-                        Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. After commissions, you gained " +
-                        "a total of $" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(origCost + profit, 2));
+        Object(__WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Sold your short position of " + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shares, 0) + " shares of " + stock.symbol + " at $" +
+                        Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2) + " per share. After commissions, you gained " +
+                        "a total of $" + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(origCost + profit, 2));
     }
 
     return true;
@@ -35162,6 +35295,7 @@ function updateStockPrices() {
     var v = Math.random();
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
+            if (!(stock instanceof Stock)) {continue;}
             var stock = StockMarket[name];
             var av = (v * stock.mv) / 100;
             if (isNaN(av)) {av = .02;}
@@ -35178,11 +35312,19 @@ function updateStockPrices() {
             var c = Math.random();
             if (c < chc) {
                 stock.price *= (1 + av);
+                processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Short);
+                processOrders(stock, OrderTypes.LimitSell, PositionTypes.Long);
+                processOrders(stock, OrderTypes.StopBuy, PositionTypes.Long);
+                processOrders(stock, OrderTypes.StopSell, PositionTypes.Short);
                 if (__WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].Page.StockMarket) {
                     updateStockTicker(stock, true);
                 }
             } else {
                 stock.price /= (1 + av);
+                processOrders(stock, OrderTypes.LimitBuy, PositionTypes.Long);
+                processOrders(stock, OrderTypes.LimitSell, PositionTypes.Short);
+                processOrders(stock, OrderTypes.StopBuy, PositionTypes.Short);
+                processOrders(stock, OrderTypes.StopSell, PositionTypes.Long);
                 if (__WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].currentPage == __WEBPACK_IMPORTED_MODULE_1__engine_js__["Engine"].Page.StockMarket) {
                     updateStockTicker(stock, false);
                 }
@@ -35201,6 +35343,68 @@ function updateStockPrices() {
                 stock.otlkMag *= -1;
                 stock.b = !stock.b;
             }
+
+        }
+    }
+}
+
+//Checks and triggers any orders for the specified stock
+function processOrders(stock, orderType, posType) {
+    var orderBook = StockMarket["Orders"];
+    if (orderBook === null) {
+        var orders = {};
+        for (var name in StockMarket) {
+            if (StockMarket.hasOwnProperty(name)) {
+                var stock = StockMarket[name];
+                if (!(stock instanceof Stock)) {continue;}
+                orders[stock.symbol] = [];
+            }
+        }
+        StockMarket["Orders"] = orders;
+        return; //Newly created, so no orders to process
+    }
+    var stockOrders = orderBook[stock.symbol];
+    if (stockOrders === null || !(stockOrders.constructor === Array)) {
+        console.log("ERROR: Invalid Order book for " + stock.symbol + " in processOrders()");
+        stockOrders = [];
+        return;
+    }
+    for (var i = 0; i < stockOrders.length; ++i) {
+        var order = stockOrders[i];
+        if (order.type === orderType && order.pos === posType) {
+            switch(order.type) {
+                case OrderTypes.LimitBuy:
+                    if (order.pos === PositionTypes.Long && stock.price <= order.price) {
+                        executeOrder/*66*/(order);
+                    } else if (order.pos === PositionTypes.Short && stock.price >= order.price) {
+                        executeOrder/*66*/(order);
+                    }
+                    break;
+                case OrderTypes.LimitSell:
+                    if (order.pos === PositionTypes.Long && stock.price >= order.price) {
+                        executeOrder/*66*/(order);
+                    } else if (order.pos === PositionTypes.Short && stock.price <= order.price) {
+                        executeOrder/*66*/(order);
+                    }
+                    break;
+                case OrderTypes.StopBuy:
+                    if (order.pos === PositionTypes.Long && stock.price >= order.price) {
+                        executeOrder/*66*/(order);
+                    } else if (order.pos === PositionTypes.Short && stock.price <= order.price) {
+                        executeOrder/*66*/(order);
+                    }
+                    break;
+                case OrderTypes.StopSell:
+                    if (order.pos === PositionTypes.Long && stock.price <= order.price) {
+                        executeOrder/*66*/(order);
+                    } else if (order.pos === PositionTypes.Short && stock.price >= order.price) {
+                        executeOrder/*66*/(order);
+                    }
+                    break;
+                default:
+                    console.log("Invalid order type: " + order.type);
+                    return;
+            }
         }
     }
 }
@@ -35211,38 +35415,38 @@ function setStockMarketContentCreated(b) {
 
 var stockMarketContentCreated = false;
 function displayStockMarketContent() {
-    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount == null) {__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount = false;}
-    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasTixApiAccess == null) {__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasTixApiAccess = false;}
+    if (__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].hasWseAccount == null) {__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].hasWseAccount = false;}
+    if (__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].hasTixApiAccess == null) {__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].hasTixApiAccess = false;}
 
     //Purchase WSE Account button
-    var wseAccountButton = Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["b" /* clearEventListeners */])("stock-market-buy-account");
-    wseAccountButton.innerText = "Buy WSE Account - $" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost, 2).toString();
-    if (!__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount && __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].money.gte(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost)) {
+    var wseAccountButton = Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["b" /* clearEventListeners */])("stock-market-buy-account");
+    wseAccountButton.innerText = "Buy WSE Account - $" + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost, 2).toString();
+    if (!__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].hasWseAccount && __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].money.gte(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost)) {
         wseAccountButton.setAttribute("class", "a-link-button");
     } else {
         wseAccountButton.setAttribute("class", "a-link-button-inactive");
     }
     wseAccountButton.addEventListener("click", function() {
-        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount = true;
+        __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].hasWseAccount = true;
         initStockMarket();
         initSymbolToStockMap();
-        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].loseMoney(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost);
+        __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].loseMoney(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].WSEAccountCost);
         displayStockMarketContent();
         return false;
     });
 
     //Purchase TIX API Access account
-    var tixApiAccessButton = Object(__WEBPACK_IMPORTED_MODULE_6__utils_HelperFunctions_js__["b" /* clearEventListeners */])("stock-market-buy-tix-api");
+    var tixApiAccessButton = Object(__WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__["b" /* clearEventListeners */])("stock-market-buy-tix-api");
     tixApiAccessButton.innerText = "Buy Trade Information eXchange (TIX) API Access - $" +
-                                   Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost, 2).toString();
-    if (!__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasTixApiAccess && __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].money.gte(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost)) {
+                                   Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost, 2).toString();
+    if (!__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].hasTixApiAccess && __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].money.gte(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost)) {
         tixApiAccessButton.setAttribute("class", "a-link-button");
     } else {
         tixApiAccessButton.setAttribute("class", "a-link-button-inactive");
     }
     tixApiAccessButton.addEventListener("click", function() {
-        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasTixApiAccess = true;
-        __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].loseMoney(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost);
+        __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].hasTixApiAccess = true;
+        __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].loseMoney(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].TIXAPICost);
         displayStockMarketContent();
         return false;
     });
@@ -35250,7 +35454,7 @@ function displayStockMarketContent() {
     var stockList = document.getElementById("stock-market-list");
     if (stockList == null) {return;}
 
-    if (!__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount) {
+    if (!__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].hasWseAccount) {
         stockMarketContentCreated = false;
         while (stockList.firstChild) {
             stockList.removeChild(stockList.firstChild);
@@ -35259,151 +35463,27 @@ function displayStockMarketContent() {
     }
 
     //Create stock market content if you have an account
-    if (!stockMarketContentCreated && __WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount) {
+    if (!stockMarketContentCreated && __WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].hasWseAccount) {
         console.log("Creating Stock Market UI");
         document.getElementById("stock-market-commission").innerHTML =
             "Commission Fees: Every transaction you make has a $" +
-            Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + " commission fee.<br><br>" +
+            Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(__WEBPACK_IMPORTED_MODULE_0__Constants_js__["a" /* CONSTANTS */].StockMarketCommission, 2) + " commission fee.<br><br>" +
             "WARNING: When you reset after installing Augmentations, the Stock Market is reset. " +
             "This means all your positions are lost, so make sure to sell your stocks before installing " +
             "Augmentations!";
 
-        var hdrLi       = document.createElement("li");
-        var hdrName     = document.createElement("p");
-        var hdrSym      = document.createElement("p");
-        var hdrPrice    = document.createElement("p");
-        var hdrQty      = document.createElement("p");
-        var hdrBuySell  = document.createElement("p")
-        var hdrAvgPrice = document.createElement("p");
-        var hdrShares   = document.createElement("p");
-        var hdrReturn   = document.createElement("p");
-        hdrName.style.display = "inline-block";
-        hdrName.innerText = "Stock Name";
-        hdrName.style.width = "8%";
-        hdrSym.style.display = "inline-block";
-        hdrSym.innerText = "Symbol";
-        hdrSym.style.width = "4%";
-        hdrPrice.style.display = "inline-block";
-        hdrPrice.innerText = "Price";
-        hdrPrice.style.width = "8%";
-        hdrQty.style.display = "inline-block";
-        hdrQty.innerText = "Quantity";
-        hdrQty.style.width = "3%";
-        hdrBuySell.style.display = "inline-block";
-        hdrBuySell.innerText = "Buy/Sell";
-        hdrBuySell.style.width = "5%";
-        hdrAvgPrice.style.display = "inline-block";
-        hdrAvgPrice.innerText = "Avg price of owned shares";
-        hdrAvgPrice.style.width = "7.5%";
-        hdrShares.style.display = "inline-block";
-        hdrShares.innerText = "Shares owned";
-        hdrShares.style.width = "4%";
-        hdrReturn.style.display = "inline-block";
-        hdrReturn.innerText = "Total Return";
-        hdrReturn.style.width = "6%";
-        hdrLi.appendChild(hdrName);
-        hdrLi.appendChild(hdrSym);
-        hdrLi.appendChild(hdrPrice);
-        hdrLi.appendChild(hdrQty);
-        hdrLi.appendChild(hdrBuySell);
-        hdrLi.appendChild(hdrAvgPrice);
-        hdrLi.appendChild(hdrShares);
-        hdrLi.appendChild(hdrReturn);
-        stockList.appendChild(hdrLi);
-
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
-            (function() {
                 var stock = StockMarket[name];
-
-                var li          = document.createElement("li");
-                var stkName     = document.createElement("p");
-                var stkSym      = document.createElement("p");
-                var stkPrice    = document.createElement("p");
-                var qtyInput    = document.createElement("input");
-                var buyButton   = document.createElement("span");
-                var sellButton  = document.createElement("span");
-                var avgPriceTxt = document.createElement("p");
-                var sharesTxt   = document.createElement("p");
-                var returnTxt   = document.createElement("p");
-
-                var tickerId = "stock-market-ticker-" + stock.symbol;
-                stkName.setAttribute("id", tickerId + "-name");
-                stkSym.setAttribute("id", tickerId + "-sym");
-                stkPrice.setAttribute("id", tickerId + "-price");
-                stkName.style.display = "inline-block";
-                stkName.style.width = "8%";
-                stkSym.style.display = "inline-block";
-                stkSym.style.width = "4%";
-                stkPrice.style.display = "inline-block";
-                stkPrice.style.width = "9%";
-
-                li.setAttribute("display", "inline-block");
-
-                qtyInput.setAttribute("type", "text");
-                qtyInput.setAttribute("id", tickerId + "-qty-input");
-                qtyInput.setAttribute("class", "stock-market-qty-input");
-                qtyInput.setAttribute("onkeydown", "return ( event.ctrlKey || event.altKey " +
-                                      " || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) " +
-                                      " || (95<event.keyCode && event.keyCode<106) " +
-                                      " || (event.keyCode==8) || (event.keyCode==9) " +
-                                      " || (event.keyCode>34 && event.keyCode<40) " +
-                                      " || (event.keyCode==46) )");
-                qtyInput.style.width = "3%";
-                qtyInput.style.display = "inline-block";
-
-                buyButton.innerHTML = "Buy";
-                buyButton.setAttribute("class", "stock-market-buy-sell-button");
-                buyButton.style.width = "3%";
-                buyButton.style.display = "inline-block";
-                buyButton.addEventListener("click", function() {
-                    var shares = document.getElementById(tickerId + "-qty-input").value;
-                    shares = Number(shares);
-                    if (isNaN(shares)) {return false;}
-                    buyStock(stock, shares);
-                });
-                sellButton.innerHTML = "Sell";
-                sellButton.setAttribute("class", "stock-market-buy-sell-button");
-                sellButton.style.width = "3%";
-                sellButton.style.display = "inline-block";
-                sellButton.addEventListener("click", function() {
-                    var shares = document.getElementById(tickerId + "-qty-input").value;
-                    shares = Number(shares);
-                    if (isNaN(shares)) {return false;}
-                    sellStock(stock, shares);
-                });
-
-                avgPriceTxt.setAttribute("id", tickerId + "-avgprice");
-                avgPriceTxt.style.display = "inline-block";
-                avgPriceTxt.style.width = "8%";
-                avgPriceTxt.style.color = "white";
-                sharesTxt.setAttribute("id", tickerId + "-shares");
-                sharesTxt.style.display = "inline-block";
-                sharesTxt.style.width = "4%";
-                sharesTxt.style.color = "white";
-                returnTxt.setAttribute("id", tickerId + "-return");
-                returnTxt.style.display = "inline-block";
-                returnTxt.style.width = "6%";
-                returnTxt.style.color = "white";
-
-                li.appendChild(stkName);
-                li.appendChild(stkSym);
-                li.appendChild(stkPrice);
-                li.appendChild(qtyInput);
-                li.appendChild(buyButton);
-                li.appendChild(sellButton);
-                li.appendChild(avgPriceTxt);
-                li.appendChild(sharesTxt);
-                li.appendChild(returnTxt);
-                stockList.appendChild(li);
-            }()); //Immediate invocation
-            }//End if
-
+                if (!(stock instanceof Stock)) {continue;} //orders property is an array
+                createStockTicker(stock);
+            }
         }
+        setStockTickerClickHandlers(); //Clicking headers opens/closes panels
         stockMarketContentCreated = true;
     }
 
-    if (__WEBPACK_IMPORTED_MODULE_4__Player_js__["a" /* Player */].hasWseAccount) {
+    if (__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].hasWseAccount) {
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
                 var stock = StockMarket[name];
@@ -35414,55 +35494,274 @@ function displayStockMarketContent() {
     }
 }
 
-//'increase' argument is a boolean indicating whether the price increased or decreased
-function updateStockTicker(stock, increase) {
-    var tickerId = "stock-market-ticker-" + stock.symbol;
-    let stkName = document.getElementById(tickerId + "-name");
-    let stkSym = document.getElementById(tickerId + "-sym");
-    let stkPrice = document.getElementById(tickerId + "-price");
-
-    if (stkName == null || stkSym == null || stkPrice == null) {
-        console.log("ERROR, couldn't find elements with tickerId " + tickerId);
+function createStockTicker(stock) {
+    if (!(stock instanceof Stock)) {
+        console.log("Invalid stock in createStockSticker()");
         return;
     }
-    stkName.innerText = stock.name;
-    stkSym.innerText = stock.symbol;
-    stkPrice.innerText = "$" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.price, 2).toString();
+    var tickerId = "stock-market-ticker-" + stock.symbol;
+    var li = document.createElement("li"), hdr = document.createElement("button");
+    hdr.classList.add("accordion-header");
+    hdr.setAttribute("id", tickerId + "-hdr");
+    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + stock.price;
 
-    var returnTxt = document.getElementById(tickerId + "-return");
-    var totalCost = stock.playerShares * stock.playerAvgPx;
-    var gains = (stock.price - stock.playerAvgPx) * stock.playerShares;
-    var percentageGains = gains / totalCost;
-    if (totalCost > 0) {
-        returnTxt.innerText = "$" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(gains, 2) + " (" +
-                              Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(percentageGains * 100, 2) + "%)";
-    } else {
-        returnTxt.innerText = "N/A";
+    //Div for entire panel
+    var stockDiv = document.createElement("div");
+    stockDiv.classList.add("accordion-panel");
+
+    /* Create panel DOM */
+    var qtyInput = document.createElement("input"),
+        longShortSelect = document.createElement("select"),
+        orderTypeSelect = document.createElement("select"),
+        buyButton = document.createElement("span"),
+        sellButton = document.createElement("span"),
+        positionTxt = document.createElement("p"),
+        orderList = document.createElement("ul");
+
+    qtyInput.classList.add("stock-market-input");
+    qtyInput.setAttribute("id", tickerId + "-qty-input");
+    qtyInput.setAttribute("onkeydown", "return ( event.ctrlKey || event.altKey " +
+                          " || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) " +
+                          " || (95<event.keyCode && event.keyCode<106) " +
+                          " || (event.keyCode==8) || (event.keyCode==9) " +
+                          " || (event.keyCode>34 && event.keyCode<40) " +
+                          " || (event.keyCode==46) )");
+
+    longShortSelect.classList.add("stock-market-input");
+    longShortSelect.setAttribute("id", tickerId + "-pos-selector");
+    var longOpt = document.createElement("option");
+    longOpt.text = "Long";
+    longShortSelect.add(longOpt);
+    if (__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].bitNodeN === 8 || (__WEBPACK_IMPORTED_MODULE_3__NetscriptFunctions_js__["d" /* hasWallStreetSF */] && __WEBPACK_IMPORTED_MODULE_3__NetscriptFunctions_js__["f" /* wallStreetSFLvl */] >= 2)) {
+        var shortOpt = document.createElement("option");
+        shortOpt.text = "Short";
+        longShortSelect.add(shortOpt);
     }
 
+    orderTypeSelect.classList.add("stock-market-input");
+    orderTypeSelect.setAttribute("id", tickerId + "-order-selector");
+    var marketOpt = document.createElement("option");
+    marketOpt.text = "Market Order";
+    orderTypeSelect.add(marketOpt);
+    if (__WEBPACK_IMPORTED_MODULE_5__Player_js__["a" /* Player */].bitNodeN === 8 || (__WEBPACK_IMPORTED_MODULE_3__NetscriptFunctions_js__["d" /* hasWallStreetSF */] && __WEBPACK_IMPORTED_MODULE_3__NetscriptFunctions_js__["f" /* wallStreetSFLvl */] >= 3)) {
+        var limitOpt = document.createElement("option");
+        limitOpt.text = "Limit Order";
+        orderTypeSelect.add(limitOpt);
+        var stopOpt = document.createElement("option");
+        stopOpt.text = "Stop Order";
+        orderTypeSelect.add(stopOpt);
+    }
 
-    if (increase) {
-        stkName.style.color = "#66ff33";
-        stkSym.style.color = "#66ff33";
-        stkPrice.style.color = "#66ff33";
-    } else {
-        stkName.style.color = "red";
-        stkSym.style.color = "red";
-        stkPrice.style.color = "red";
+    buyButton.classList.add("stock-market-input");
+    buyButton.innerHTML = "Buy";
+    buyButton.addEventListener("click", ()=>{
+        var pos = longShortSelect.options[longShortSelect.selectedIndex].text;
+        pos === "Long" ? pos = PositionTypes.Long : pos = PositionTypes.Short;
+        var ordType = orderTypeSelect.options[orderTypeSelect.selectedIndex].text;
+        var shares = Number(document.getElementById(tickerId + "-qty-input").value);
+        if (isNaN(shares)) {return false;}
+        switch (ordType) {
+            case "Market Order":
+                buyStock(stock, shares);
+                break;
+            case "Limit Order":
+            case "Stop Order":
+                var yesBtn = Object(__WEBPACK_IMPORTED_MODULE_11__utils_YesNoBox_js__["j" /* yesNoTxtInpBoxGetYesButton */])(),
+                    noBtn = Object(__WEBPACK_IMPORTED_MODULE_11__utils_YesNoBox_js__["i" /* yesNoTxtInpBoxGetNoButton */])();
+                yesBtn.innerText = "Place Buy" + ordType;
+                noBtn.innerText = "Cancel Order";
+                yesBtn.addEventListener("click", ()=>{
+                    var price = Number(Object(__WEBPACK_IMPORTED_MODULE_11__utils_YesNoBox_js__["h" /* yesNoTxtInpBoxGetInput */])()), type;
+                    if (ordType === "Limit Order") {
+                        type = OrderTypes.LimitBuy;
+                    } else {
+                        type = OrderTypes.StopBuy;
+                    }
+                    placeOrder(stock, shares, price, type, pos);
+                });
+                noBtn.addEventListener("click", ()=>{
+                    Object(__WEBPACK_IMPORTED_MODULE_11__utils_YesNoBox_js__["f" /* yesNoTxtInpBoxClose */])();
+                });
+                Object(__WEBPACK_IMPORTED_MODULE_11__utils_YesNoBox_js__["g" /* yesNoTxtInpBoxCreate */])("Enter the price for your " + ordType);
+                break;
+            default:
+                console.log("ERROR: Invalid order type");
+                break;
+        }
+        return false;
+    });
+
+    sellButton.classList.add("stock-market-input");
+    sellButton.innerHTML = "Sell";
+    sellButton.addEventListener("click", ()=>{
+        var pos = longShortSelect.options[longShortSelect.selectedIndex].text;
+        pos === "Long" ? pos = PositionTypes.Long : pos = PositionTypes.Short;
+        var ordType = orderTypeSelect.options[orderTypeSelect.selectedIndex].text;
+        var shares = Number(document.getElementById(tickerId + "-qty-input").value);
+        if (isNaN(shares)) {return false;}
+        switch (ordType) {
+            case "Market Order":
+                buyStock(stock, shares);
+                break;
+            case "Limit Order":
+            case "Stop Order":
+                var yesBtn = Object(__WEBPACK_IMPORTED_MODULE_11__utils_YesNoBox_js__["j" /* yesNoTxtInpBoxGetYesButton */])(),
+                    noBtn = Object(__WEBPACK_IMPORTED_MODULE_11__utils_YesNoBox_js__["i" /* yesNoTxtInpBoxGetNoButton */])();
+                yesBtn.innerText = "Place Sell" + ordType;
+                noBtn.innerText = "Cancel Order";
+                yesBtn.addEventListener("click", ()=>{
+                    var price = Number(Object(__WEBPACK_IMPORTED_MODULE_11__utils_YesNoBox_js__["h" /* yesNoTxtInpBoxGetInput */])()), type;
+                    if (ordType === "Limit Order") {
+                        type = OrderTypes.LimitSell;
+                    } else {
+                        type = OrderTypes.StopSell;
+                    }
+                    placeOrder(stock, shares, price, type, pos);
+                });
+                noBtn.addEventListener("click", ()=>{
+                    Object(__WEBPACK_IMPORTED_MODULE_11__utils_YesNoBox_js__["f" /* yesNoTxtInpBoxClose */])();
+                });
+                break;
+            default:
+                console.log("ERROR: Invalid order type");
+                break;
+        }
+        return false;
+    });
+
+    positionTxt.setAttribute("id", tickerId + "-position-text");
+    positionTxt.classList.add("stock-market-position-text");
+
+    orderList.setAttribute("id", tickerId + "-order-list");
+    orderList.classList.add("stock-market-order-list");
+
+    stockDiv.appendChild(qtyInput);
+    stockDiv.appendChild(longShortSelect);
+    stockDiv.appendChild(orderTypeSelect);
+    stockDiv.appendChild(buyButton);
+    stockDiv.appendChild(sellButton);
+    stockDiv.appendChild(positionTxt);
+    stockDiv.appendChild(orderList);
+
+    li.appendChild(hdr);
+    li.appendChild(stockDiv);
+    document.getElementById("stock-market-list").appendChild(li);
+
+    updateStockTicker(stock, true);
+}
+
+function setStockTickerClickHandlers() {
+    var stockList = document.getElementById("stock-market-list");
+    var tickerHdrs = stockList.getElementsByClassName("accordion-header");
+    if (tickerHdrs === null) {
+        console.log("ERROR: Could not find header elements for stock tickers");
+        return;
+    }
+    for (var i = 0; i < tickerHdrs.length; ++i) {
+        tickerHdrs[i].onclick = function() {
+            this.classList.toggle("active");
+
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        }
+    }
+}
+
+//'increase' argument is a boolean indicating whether the price increased or decreased
+function updateStockTicker(stock, increase) {
+    if (!(stock instanceof Stock)) {
+        console.log("Invalid stock in updateStockTicker()");
+        return;
+    }
+    var tickerId = "stock-market-ticker-" + stock.symbol;
+    var hdr = document.getElementById(tickerId + "-hdr");
+
+    if (hdr === null) {
+        console.log("ERROR: Couldn't find ticker element for stock: " + stock.symbol);
+        return;
+    }
+    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + stock.price;
+    increase ? hdr.style.color = "#66ff33" : hdr.style.color = "red";
+
+    if (stock.playerShares > 0 || stock.playerShortShares > 0) {
+        updateStockPlayerPosition(stock);
     }
 }
 
 function updateStockPlayerPosition(stock) {
-    var tickerId = "stock-market-ticker-" + stock.symbol;
-    var avgPriceTxt = document.getElementById(tickerId + "-avgprice");
-    var sharesTxt = document.getElementById(tickerId + "-shares");
-    if (avgPriceTxt == null || sharesTxt == null) {
-        Object(__WEBPACK_IMPORTED_MODULE_5__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Could not find element for player positions for stock " +
-                        stock.symbol + ". This is a bug please contact developer");
+    if (!(stock instanceof Stock)) {
+        console.log("Invalid stock in updateStockTicker()");
         return;
     }
-    avgPriceTxt.innerText = "$" + Object(__WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.playerAvgPx, 2);
-    sharesTxt.innerText = stock.playerShares.toString();
+    var tickerId = "stock-market-ticker-" + stock.symbol,
+        positionTxt = document.getElementById(tickerId + "-position-text");
+    if (positionTxt === null) {
+        console.log("ERROR: Could not find stock position element for: " + stock.symbol);
+        return;
+    }
+
+    //Calculate returns
+    var totalCost = stock.playerShares * stock.playerAvgPx,
+        gains = (stock.price - stock.playerAvgPx) * stock.playerShares,
+        percentageGains = gains / totalCost;
+
+    var shortTotalCost = stock.playerShortShares * stock.playerAvgShortPx,
+        shortGains = (stock.playerAvgShortPx - stock.price) * stock.playerShortShares,
+        shortPercentageGains = shortGains/ shortTotalCost;
+
+    positionTxt.innerHTML =
+        "<h1 class='tooltip stock-market-position-text'>Long Position: " +
+        "<span class='tooltiptext'>Shares in the long position will increase " +
+        "in value if the price of the corresponding stock increases</span></h1>" +
+        "<br>Shares: " + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.playerShares, 0) +
+        "<br>Average Price: " + __WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js___default()(stock.playerAvgPx).format('$0.000a') +
+        "<br>Profit: " + __WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js___default()(gains).format('$0.000a') +
+                     " (" + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(percentageGains, 2) + "%)<br><br>" +
+        "<h1 class='tooltip stock-market-position-text'>Short Position: " +
+        "<span class='tooltiptext'>Shares in short position will increase " +
+        "in value if the price of the corresponding stock decreases</span></h1>" +
+        "<br>Shares: " + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(stock.playerShortShares, 0) +
+        "<br>Average Price: " + __WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js___default()(stock.playerAvgShortPx).format('$0.000a') +
+        "<br>Profit: " + __WEBPACK_IMPORTED_MODULE_9__utils_numeral_min_js___default()(shortGains).format('$0.000a') +
+                     " (" + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(shortPercentageGains, 2) + "%)";
+}
+
+function updateStockOrderList(stock) {
+    var tickerId = "stock-market-ticker-" + stock.symbol;
+    var orderList = document.getElementById(tickerId + "-order-list");
+    if (orderList === null) {
+        console.log("ERROR: Could not find order list for " + stock.symbol);
+        return;
+    }
+
+    var orderBook = StockMarket["Orders"];
+    if (orderBook === null) {
+        console.log("ERROR: Could not find order book in stock market");
+        return;
+    }
+    var stockOrders = orderBook[stock.symbol];
+    if (stockOrders === null) {
+        console.log("ERROR: Could nto find orders for: " + stock.symbol);
+        return;
+    }
+
+    //Remove everything from list
+    while (orderList.firstChild) {
+        orderList.removeChild(orderList.firstChild);
+    }
+
+    for (var i = 0; i < stockOrders.length; ++i) {
+        var order = stockOrders[i];
+        var li = document.createElement("li");
+        var posText = (order.pos === PositionTypes.Long ? "Long Position" : "Short Position");
+        li.innerText = order.type + " - " + posText + " - " +
+                       order.shares + " @ $" + Object(__WEBPACK_IMPORTED_MODULE_10__utils_StringHelperFunctions_js__["c" /* formatNumber */])(order.price, 2);
+        orderList.appendChild(li);
+    }
 }
 
 
@@ -35545,7 +35844,7 @@ function logBoxUpdateText() {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Environment; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NetscriptFunctions_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NetscriptFunctions_js__ = __webpack_require__(19);
 
 /* Environment
  * 	NetScript program environment
@@ -37431,7 +37730,7 @@ HackingMission.prototype.finishMission = function(win) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__utils_numeral_min_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_StringHelperFunctions_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_YesNoBox_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__utils_YesNoBox_js__ = __webpack_require__(22);
 
 
 
@@ -38561,7 +38860,7 @@ function setGangMemberClickHandlers() {
     //Server panel click handlers
     var gangMemberHdrs = document.getElementsByClassName("gang-member-header");
     if (gangMemberHdrs == null) {
-        console.log("ERROR: Could not find Active Scripts server panels");
+        console.log("ERROR: Could not find Gang Member Headers");
         return;
     }
     for (let i = 0; i < gangMemberHdrs.length; ++i) {
@@ -38671,7 +38970,6 @@ function createGangMemberDisplayElement(memberObj) {
     taskDescP.setAttribute("id", name + "gang-member-task-description");
     taskDescP.style.display = "inline";
     taskDescDiv.appendChild(taskDescP);
-
 
     statsDiv.style.width = "30%";
     taskDiv.style.width = "30%";
@@ -38904,21 +39202,21 @@ function applySourceFile(srcFile) {
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return prestigeAugmentation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return prestigeSourceFile; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ActiveScriptsUI_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Augmentations_js__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BitNode_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Company_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Company_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__engine_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Faction_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Location_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Message_js__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__NetscriptFunctions_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__NetscriptFunctions_js__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NetscriptWorker_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__SpecialServerIps_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__StockMarket_js__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Terminal_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Terminal_js__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_decimal_js__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__utils_decimal_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__utils_decimal_js__);
 
@@ -39135,7 +39433,7 @@ function prestigeSourceFile() {
     __WEBPACK_IMPORTED_MODULE_5__engine_js__["Engine"].loadTerminalContent();
 
     //Reinitialize flags in case you just finished BN-4
-    Object(__WEBPACK_IMPORTED_MODULE_9__NetscriptFunctions_js__["d" /* initSingularitySFFlags */])();
+    Object(__WEBPACK_IMPORTED_MODULE_9__NetscriptFunctions_js__["e" /* initSingularitySFFlags */])();
 
     //Gain int exp
     __WEBPACK_IMPORTED_MODULE_11__Player_js__["a" /* Player */].gainIntelligenceExp(5);
@@ -39157,10 +39455,10 @@ function prestigeSourceFile() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Prestige_js__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SourceFile_js__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Terminal_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Terminal_js__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_HelperFunctions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_YesNoBox_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_YesNoBox_js__ = __webpack_require__(22);
 
 
 
@@ -41230,7 +41528,7 @@ module.exports.src = "\"no use strict\";(function(window){function resolveModule
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return substituteAliases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return loadAliases; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return loadGlobalAliases; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Terminal_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Terminal_js__ = __webpack_require__(23);
 
 
 let Aliases = {};
@@ -41360,7 +41658,7 @@ function substituteAliases(origCommand) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CreateProgram_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SpecialServerIps_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Terminal_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Terminal_js__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_StringHelperFunctions_js__ = __webpack_require__(4);
 
@@ -91753,7 +92051,7 @@ acequire("../config").defineOptions(Editor.prototype, "editor", {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Server_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_DialogBox_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_IPAddress_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_YesNoBox_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_YesNoBox_js__ = __webpack_require__(22);
 
 
 
@@ -92049,7 +92347,7 @@ let HelpTexts = {
 /* WEBPACK VAR INJECTION */(function($) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return saveObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return loadGame; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Alias_js__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Company_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Company_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Constants_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__engine_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Faction_js__ = __webpack_require__(10);
