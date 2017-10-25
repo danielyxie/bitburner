@@ -48,6 +48,7 @@ function InfiltrationInstance(companyName, startLevel, val, maxClearance, diff) 
     this.dexExpGained       = 0;
     this.agiExpGained       = 0;
     this.chaExpGained       = 0;
+    this.intExpGained       = 0;
 }
 
 InfiltrationInstance.prototype.gainHackingExp = function(amt) {
@@ -80,6 +81,11 @@ InfiltrationInstance.prototype.gainCharismaExp = function(amt) {
     this.chaExpGained       += amt;
 }
 
+InfiltrationInstance.prototype.gainIntelligenceExp = function(amt) {
+    if (isNaN(amt)) {return;}
+    this.intExpGained       += amt;
+}
+
 function beginInfiltration(companyName, startLevel, val, maxClearance, diff) {
     var inst = new InfiltrationInstance(companyName, startLevel, val, maxClearance, diff);
     clearInfiltrationStatusText();
@@ -87,9 +93,7 @@ function beginInfiltration(companyName, startLevel, val, maxClearance, diff) {
 }
 
 function endInfiltration(inst, success) {
-    if (success) {
-        infiltrationBoxCreate(inst);
-    }
+    if (success) {infiltrationBoxCreate(inst);}
 
     clearEventListeners("infiltration-kill");
     clearEventListeners("infiltration-knockout");
@@ -588,10 +592,10 @@ let intWgt = CONSTANTS.IntelligenceInfiltrationWeight;
 //Success: 5%, Failure 10%, -Karma
 function attemptInfiltrationKill(inst) {
     var chance = getInfiltrationKillChance(inst);
-    inst.gainStrengthExp(inst.securityLevel / 100) * Player.strength_exp_mult;
-    inst.gainDefenseExp(inst.securityLevel / 100) * Player.defense_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 100) * Player.dexterity_exp_mult;
-    inst.gainAgilityExp(inst.securityLevel / 100) * Player.agility_exp_mult;
+    inst.gainStrengthExp(inst.securityLevel / 90) * Player.strength_exp_mult;
+    inst.gainDefenseExp(inst.securityLevel / 90) * Player.defense_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 90) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 90) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         inst.securityLevel *= 1.05;
         return [true, 1.05];
@@ -614,10 +618,10 @@ function getInfiltrationKillChance(inst) {
 //Success: 3%, Failure: 10%
 function attemptInfiltrationKnockout(inst) {
     var chance = getInfiltrationKnockoutChance(inst);
-    inst.gainStrengthExp(inst.securityLevel / 100) * Player.strength_exp_mult;
-    inst.gainDefenseExp(inst.securityLevel / 100) * Player.defense_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 100) * Player.dexterity_exp_mult;
-    inst.gainAgilityExp(inst.securityLevel / 100) * Player.agility_exp_mult;
+    inst.gainStrengthExp(inst.securityLevel / 85) * Player.strength_exp_mult;
+    inst.gainDefenseExp(inst.securityLevel / 85) * Player.defense_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 85) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 85) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         inst.securityLevel *= 1.03;
         return [true, 1.03];
@@ -639,9 +643,9 @@ function getInfiltrationKnockoutChance(inst) {
 //Success: 0%, Failure: 10%
 function attemptInfiltrationStealthKnockout(inst) {
     var chance = getInfiltrationStealthKnockoutChance(inst);
-    inst.gainStrengthExp(inst.securityLevel / 100) * Player.strength_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 75) * Player.dexterity_exp_mult;
-    inst.gainAgilityExp(inst.securityLevel / 75) * Player.agility_exp_mult;
+    inst.gainStrengthExp(inst.securityLevel / 90) * Player.strength_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 70) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 70) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         return [true, 1];
     } else {
@@ -663,9 +667,9 @@ function getInfiltrationStealthKnockoutChance(inst) {
 //Success: 0%, Failure: 5%, -Karma
 function attemptInfiltrationAssassinate(inst) {
     var chance = getInfiltrationAssassinateChance(inst);
-    inst.gainStrengthExp(inst.securityLevel / 100) * Player.strength_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 75) * Player.dexterity_exp_mult;
-    inst.gainAgilityExp(inst.securityLevel / 75) * Player.agility_exp_mult;
+    inst.gainStrengthExp(inst.securityLevel / 90) * Player.strength_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 70) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 70) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         return [true, 1];
     } else {
@@ -687,10 +691,10 @@ function getInfiltrationAssassinateChance(inst) {
 //Success: 5%, Failure: 10%
 function attemptInfiltrationDestroySecurity(inst) {
     var chance = getInfiltrationDestroySecurityChance(inst);
-    inst.gainStrengthExp(inst.securityLevel / 100) * Player.strength_exp_mult;
-    inst.gainDefenseExp(inst.securityLevel / 100) * Player.defense_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 100) * Player.dexterity_exp_mult;
-    inst.gainAgilityExp(inst.securityLevel / 100) * Player.agility_exp_mult;
+    inst.gainStrengthExp(inst.securityLevel / 90) * Player.strength_exp_mult;
+    inst.gainDefenseExp(inst.securityLevel / 90) * Player.defense_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 90) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 90) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         inst.securityLevel *= 1.05;
         return [true, 1.05];
@@ -714,7 +718,8 @@ function getInfiltrationDestroySecurityChance(inst) {
 //Success: 1%, Failure: 5%
 function attemptInfiltrationHack(inst) {
     var chance = getInfiltrationHackChance(inst);
-    inst.gainHackingExp(inst.securityLevel / 75) * Player.hacking_exp_mult;
+    inst.gainHackingExp(inst.securityLevel / 50) * Player.hacking_exp_mult;
+    inst.gainIntelligenceExp(inst.securityLevel / 700);
     if (Math.random() <= chance) {
         inst.securityLevel *= 1.03;
         return [true, 1.03];
@@ -736,7 +741,7 @@ function getInfiltrationHackChance(inst) {
 //Success: 0%, Failure: 8%
 function attemptInfiltrationSneak(inst) {
     var chance = getInfiltrationSneakChance(inst);
-    inst.gainAgilityExp(inst.securityLevel / 75) * Player.agility_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 50) * Player.agility_exp_mult;
     if (Math.random() <= chance) {
         return [true, 1];
     } else {
@@ -757,7 +762,7 @@ function getInfiltrationSneakChance(inst) {
 //Success: 1%, Failure: 3%
 function attemptInfiltrationPickLockedDoor(inst) {
     var chance = getInfiltrationPickLockedDoorChance(inst);
-    inst.gainDexterityExp(inst.securityLevel / 75) * Player.dexterity_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 40) * Player.dexterity_exp_mult;
     if (Math.random() <= chance) {
         inst.securityLevel *= 1.01;
         return [true, 1.01];
@@ -778,7 +783,7 @@ function getInfiltrationPickLockedDoorChance(inst) {
 //Success: 0%, Failure: 15%,
 function attemptInfiltrationBribe(inst) {
     var chance = getInfiltrationBribeChance(inst);
-    inst.gainCharismaExp(inst.securityLevel / 50) * Player.charisma_exp_mult;
+    inst.gainCharismaExp(inst.securityLevel / 10) * Player.charisma_exp_mult;
     if (Math.random() <= chance) {
         return [true, 1];
     } else {
@@ -797,8 +802,8 @@ function getInfiltrationBribeChance(inst) {
 //Failure: 5%
 function attemptInfiltrationEscape(inst) {
     var chance = getInfiltrationEscapeChance(inst);
-    inst.gainAgilityExp(inst.securityLevel / 50) * Player.agility_exp_mult;
-    inst.gainDexterityExp(inst.securityLevel / 50) * Player.dexterity_exp_mult;
+    inst.gainAgilityExp(inst.securityLevel / 40) * Player.agility_exp_mult;
+    inst.gainDexterityExp(inst.securityLevel / 40) * Player.dexterity_exp_mult;
     if (Math.random() <= chance) {
         return [true, 1];
     } else {

@@ -30,6 +30,8 @@ function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
     this.mv             = mv;
     this.b              = b;
     this.otlkMag        = otlkMag;
+
+    this.posTxtEl       = null;
 }
 
 Stock.prototype.toJSON = function() {
@@ -57,8 +59,12 @@ var PositionTypes = {
 function placeOrder(stock, shares, price, type, position, workerScript=null) {
     var tixApi = (workerScript instanceof WorkerScript);
     var order = new Order(stock, shares, price, type, position);
-    if (isNaN(shares)) {
-        dialogBoxCreate("ERROR: Invalid number of shares specifies for order");
+    if (isNaN(shares) || isNaN(price)) {
+        if (tixApi) {
+            workerScript.scriptRef.log("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
+        } else {
+            dialogBoxCreate("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
+        }
         return false;
     }
     if (StockMarket["Orders"] === null) {
@@ -72,10 +78,55 @@ function placeOrder(stock, shares, price, type, position, workerScript=null) {
         }
         StockMarket["Orders"] = orders;
     }
-    StockMarket["Orders"].push(order);
+    StockMarket["Orders"][stock.symbol].push(order);
     //Process to see if it should be executed immediately
     processOrders(order.stock, order.type, order.pos);
+    updateStockOrderList(order.stock);
     return true;
+}
+
+//Returns true if successfully cancels an order, false otherwise
+function cancelOrder(params, workerScript=null) {
+    var tixApi = (workerScript instanceof WorkerScript);
+    if (StockMarket["Orders"] === null) {return false;}
+    if (params.order && params.order instanceof Order) {
+        var order = params.order;
+        //An 'Order' object is passed in
+        var stockOrders = StockMarket["Orders"][order.stock.symbol];
+        for (var i = 0; i < stockOrders.length; ++i) {
+            if (order == stockOrders[i]) {
+                stockOrders.splice(i, 1);
+                updateStockOrderList(order.stock);
+                return true;
+            }
+        }
+        return false;
+    } else if (params.stock && params.shares && params.price && params.type &&
+               params.pos && params.stock instanceof Stock) {
+        //Order properties are passed in. Need to look for the order
+        var stockOrders = StockMarket["Orders"][params.stock.symbol];
+        var orderTxt = params.stock.symbol + " - " + params.shares + " @ " +
+                       numeral(params.price).format('$0.000a');
+        for (var i = 0; i < stockOrders.length; ++i) {
+            var order = stockOrders[i];
+            if (params.shares === order.shares &&
+                params.price === order.price &&
+                params.type === order.type &&
+                params.pos === order.pos) {
+                stockOrders.splice(i, 1);
+                updateStockOrderList(order.stock);
+                if (tixApi) {
+                    workerScript.scriptRef.log("Successfully cancelled order: " + orderTxt);
+                }
+                return true;
+            }
+        }
+        if (tixApi) {
+            workerScript.scriptRef.log("Failed to cancel order: " + orderTxt);
+        }
+        return false;
+    }
+    return false;
 }
 
 function executeOrder(order) {
@@ -83,13 +134,15 @@ function executeOrder(order) {
     var orderBook = StockMarket["Orders"];
     var stockOrders = orderBook[stock.symbol];
     var res = true;
+    console.log("Executing the following order:");
+    console.log(order);
     switch (order.type) {
         case OrderTypes.LimitBuy:
         case OrderTypes.StopBuy:
             if (order.pos === PositionTypes.Long) {
                 res = buyStock(order.stock, order.shares) && res;
             } else if (order.pos === PositionTypes.Short) {
-                res = shortStock(oder.stock, order.shares) && res;
+                res = shortStock(order.stock, order.shares) && res;
             }
             break;
         case OrderTypes.LimitSell:
@@ -106,15 +159,18 @@ function executeOrder(order) {
         for (var i = 0; i < stockOrders.length; ++i) {
             if (order == stockOrders[i]) {
                 stockOrders.splice(i, 1);
+                updateStockOrderList(order.stock);
                 return;
             }
         }
         console.log("ERROR: Could not find the following Order in Order Book: ");
         console.log(order);
+    } else {
+        console.log("Order failed to execute");
     }
 }
 
-function Order(stock, price, type, position) {
+function Order(stock, shares, price, type, position) {
     this.stock = stock;
     this.shares = shares;
     this.price = price;
@@ -271,7 +327,7 @@ function initStockMarket() {
     StockMarket[watchdog] = watchdogStk;
 
     var lexocorp = Locations.VolhavenLexoCorp;
-    var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], 1.25, true, 3, getRandomInt(5000, 7500));
+    var lexocorpStk = new Stock(lexocorp, StockSymbols[lexocorp], 1.25, true, 6, getRandomInt(5000, 7500));
     StockMarket[lexocorp] = lexocorpStk;
 
     var rho = Locations.AevumRhoConstruction;
@@ -279,15 +335,15 @@ function initStockMarket() {
     StockMarket[rho] = rhoStk;
 
     var alpha = Locations.Sector12AlphaEnterprises;
-    var alphaStk = new Stock(alpha, StockSymbols[alpha], 1.05, true, 2, getRandomInt(5000, 7500));
+    var alphaStk = new Stock(alpha, StockSymbols[alpha], 2, true, 10, getRandomInt(5000, 7500));
     StockMarket[alpha] = alphaStk;
 
     var syscore = Locations.VolhavenSysCoreSecurities;
-    var syscoreStk = new Stock(syscore, StockSymbols[syscore], 1.25, true, 0, getRandomInt(4000, 7000))
+    var syscoreStk = new Stock(syscore, StockSymbols[syscore], 1.25, true, 2, getRandomInt(4000, 7000))
     StockMarket[syscore] = syscoreStk;
 
     var computek = Locations.VolhavenCompuTek;
-    var computekStk = new Stock(computek, StockSymbols[computek], 0.9, true, 0, getRandomInt(2000, 5000));
+    var computekStk = new Stock(computek, StockSymbols[computek], 0.9, true, 2, getRandomInt(2000, 5000));
     StockMarket[computek] = computekStk;
 
     var netlink = Locations.AevumNetLinkTechnologies;
@@ -303,15 +359,15 @@ function initStockMarket() {
     StockMarket[fns] = fnsStk;
 
     var sigmacosm = "Sigma Cosmetics";
-    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], 0.9, true, 0, getRandomInt(2000, 3000));
+    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], 3, true, 0, getRandomInt(2000, 3000));
     StockMarket[sigmacosm] = sigmacosmStk;
 
     var joesguns = "Joes Guns";
-    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 1, true, 1, getRandomInt(500, 1000));
+    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 4, true, 1, getRandomInt(500, 1000));
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.25, true, 0, getRandomInt(1000, 1500));
+    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.6, true, 20, getRandomInt(500, 1000));
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";
@@ -352,8 +408,8 @@ function stockMarketCycle() {
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
             var stock = StockMarket[name];
-            var thresh = 0.62;
-            if (stock.b) {thresh = 0.38;}
+            var thresh = 0.6;
+            if (stock.b) {thresh = 0.4;}
             if (Math.random() < thresh) {
                 stock.b = !stock.b;
             }
@@ -510,8 +566,8 @@ function updateStockPrices() {
     var v = Math.random();
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
-            if (!(stock instanceof Stock)) {continue;}
             var stock = StockMarket[name];
+            if (!(stock instanceof Stock)) {continue;}
             var av = (v * stock.mv) / 100;
             if (isNaN(av)) {av = .02;}
 
@@ -666,6 +722,51 @@ function displayStockMarketContent() {
         return false;
     });
 
+    var investopediaButton = clearEventListeners("stock-market-investopedia");
+    investopediaButton.addEventListener("click", function() {
+        var txt = "When making a transaction on the stock market, there are two " +
+            "types of positions: Long and Short. A Long position is the typical " +
+            "scenario where you buy a stock and earn a profit if the price of that " +
+            "stock increases. Meanwhile, a Short position is the exact opposite. " +
+            "In a Short position you purchase shares of a stock and earn a profit " +
+            "if the price of that stock decreases. This is also called 'shorting' a stock.<br><br>" +
+            "NOTE: Shorting stocks is not available immediately, and must be unlocked later on in the game.<br><br>" +
+            "There are three different types of orders you can make to buy or sell " +
+            "stocks on the exchange: Market Order, Limit Order, and Stop Order. " +
+            "Note that Limit Orders and Stop Orders are not available immediately, and must be unlocked " +
+            "later on in the game.<br><br>" +
+            "When you place a Market Order to buy or sell a stock, the order executes " +
+            "immediately at whatever the current price of the stock is. For example " +
+            "if you choose to short a stock with 5000 shares using a Market Order, " +
+            "you immediately purchase those 5000 shares in a Short position at whatever " +
+            "the current market price is for that stock.<br><br>" +
+            "A Limit Order is an order that only executes under certain conditions. " +
+            "A Limit Order is used to buy or sell a stock at a specified price or better. " +
+            "For example, lets say you purchased a Long position of 100 shares of some stock " +
+            "at a price of $10 per share. You can place a Limit Order to sell those 100 shares " +
+            "at $50 or better. The Limit Order will execute when the price of the stock reaches a  " +
+            "value of $50 or higher.<br><br>" +
+            "A Stop Order is the opposite of a Limit Order. It is used to buy or sell a stock " +
+            "at a specified price (before the price gets 'worse'). For example, lets say you purchased " +
+            "a Short position of 100 shares of some stock at a price of $100 per share. " +
+            "The current price of the stock is $80 (a profit of $20 per share). You can place a " +
+            "Stop Order to sell the Short position if the stock's price reaches $90 or higher. " +
+            "This can be used to lock in your profits and limit any losses.<br><br>" +
+            "Here is a summary of how each order works and when they execute:<br><br>" +
+            "In a LONG Position:<br><br>" +
+            "A Limit Order to buy will execute if the stock's price <= order's price<br>" +
+            "A Limit Order to sell will execute if the stock's price >= order's price<br>" +
+            "A Stop Order to buy will execute if the stock's price >= order's price<br>" +
+            "A Stop Order to sell will execute if the stock's price <= order's price<br><br>" +
+            "In a SHORT Position:<br><br>" +
+            "A Limit Order to buy will execute if the stock's price >= order's price<br>" +
+            "A Limit Order to sell will execute if the stock's price <= order's price<br>" +
+            "A Stop Order to buy will execute if the stock's price <= order's price<br>" +
+            "A Stop Order to sell will execute if the stock's price >= order's price.";
+        dialogBoxCreate(txt);
+        return false;
+    });
+
     var stockList = document.getElementById("stock-market-list");
     if (stockList == null) {return;}
 
@@ -702,8 +803,9 @@ function displayStockMarketContent() {
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
                 var stock = StockMarket[name];
-                updateStockTicker(stock, true);
+                updateStockTicker(stock, null);
                 updateStockPlayerPosition(stock);
+                updateStockOrderList(stock);
             }
         }
     }
@@ -734,6 +836,7 @@ function createStockTicker(stock) {
         orderList = document.createElement("ul");
 
     qtyInput.classList.add("stock-market-input");
+    qtyInput.placeholder = "Quantity (Shares)";
     qtyInput.setAttribute("id", tickerId + "-qty-input");
     qtyInput.setAttribute("onkeydown", "return ( event.ctrlKey || event.altKey " +
                           " || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) " +
@@ -768,6 +871,7 @@ function createStockTicker(stock) {
     }
 
     buyButton.classList.add("stock-market-input");
+    buyButton.classList.add("a-link-button");
     buyButton.innerHTML = "Buy";
     buyButton.addEventListener("click", ()=>{
         var pos = longShortSelect.options[longShortSelect.selectedIndex].text;
@@ -777,13 +881,13 @@ function createStockTicker(stock) {
         if (isNaN(shares)) {return false;}
         switch (ordType) {
             case "Market Order":
-                buyStock(stock, shares);
+                pos === PositionTypes.Long ? buyStock(stock, shares) : shortStock(stock, shares, null);
                 break;
             case "Limit Order":
             case "Stop Order":
                 var yesBtn = yesNoTxtInpBoxGetYesButton(),
                     noBtn = yesNoTxtInpBoxGetNoButton();
-                yesBtn.innerText = "Place Buy" + ordType;
+                yesBtn.innerText = "Place Buy " + ordType;
                 noBtn.innerText = "Cancel Order";
                 yesBtn.addEventListener("click", ()=>{
                     var price = Number(yesNoTxtInpBoxGetInput()), type;
@@ -793,6 +897,7 @@ function createStockTicker(stock) {
                         type = OrderTypes.StopBuy;
                     }
                     placeOrder(stock, shares, price, type, pos);
+                    yesNoTxtInpBoxClose();
                 });
                 noBtn.addEventListener("click", ()=>{
                     yesNoTxtInpBoxClose();
@@ -807,6 +912,7 @@ function createStockTicker(stock) {
     });
 
     sellButton.classList.add("stock-market-input");
+    sellButton.classList.add("a-link-button");
     sellButton.innerHTML = "Sell";
     sellButton.addEventListener("click", ()=>{
         var pos = longShortSelect.options[longShortSelect.selectedIndex].text;
@@ -816,13 +922,13 @@ function createStockTicker(stock) {
         if (isNaN(shares)) {return false;}
         switch (ordType) {
             case "Market Order":
-                buyStock(stock, shares);
+                pos === PositionTypes.Long ? sellStock(stock, shares) : sellShort(stock, shares, null);
                 break;
             case "Limit Order":
             case "Stop Order":
                 var yesBtn = yesNoTxtInpBoxGetYesButton(),
                     noBtn = yesNoTxtInpBoxGetNoButton();
-                yesBtn.innerText = "Place Sell" + ordType;
+                yesBtn.innerText = "Place Sell " + ordType;
                 noBtn.innerText = "Cancel Order";
                 yesBtn.addEventListener("click", ()=>{
                     var price = Number(yesNoTxtInpBoxGetInput()), type;
@@ -831,11 +937,13 @@ function createStockTicker(stock) {
                     } else {
                         type = OrderTypes.StopSell;
                     }
+                    yesNoTxtInpBoxClose();
                     placeOrder(stock, shares, price, type, pos);
                 });
                 noBtn.addEventListener("click", ()=>{
                     yesNoTxtInpBoxClose();
                 });
+                yesNoTxtInpBoxCreate("Enter the price for your " + ordType);
                 break;
             default:
                 console.log("ERROR: Invalid order type");
@@ -846,6 +954,7 @@ function createStockTicker(stock) {
 
     positionTxt.setAttribute("id", tickerId + "-position-text");
     positionTxt.classList.add("stock-market-position-text");
+    stock.posTxtEl = positionTxt;
 
     orderList.setAttribute("id", tickerId + "-order-list");
     orderList.classList.add("stock-market-order-list");
@@ -863,6 +972,7 @@ function createStockTicker(stock) {
     document.getElementById("stock-market-list").appendChild(li);
 
     updateStockTicker(stock, true);
+    updateStockOrderList(stock);
 }
 
 function setStockTickerClickHandlers() {
@@ -888,8 +998,10 @@ function setStockTickerClickHandlers() {
 
 //'increase' argument is a boolean indicating whether the price increased or decreased
 function updateStockTicker(stock, increase) {
+    if (Engine.currentPage !== Engine.Page.StockMarket) {return;}
     if (!(stock instanceof Stock)) {
-        console.log("Invalid stock in updateStockTicker()");
+        console.log("Invalid stock in updateStockTicker():");
+        console.log(stock);
         return;
     }
     var tickerId = "stock-market-ticker-" + stock.symbol;
@@ -899,8 +1011,10 @@ function updateStockTicker(stock, increase) {
         console.log("ERROR: Couldn't find ticker element for stock: " + stock.symbol);
         return;
     }
-    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + stock.price;
-    increase ? hdr.style.color = "#66ff33" : hdr.style.color = "red";
+    hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + formatNumber(stock.price, 2);
+    if (increase !== null) {
+        increase ? hdr.style.color = "#66ff33" : hdr.style.color = "red";
+    }
 
     if (stock.playerShares > 0 || stock.playerShortShares > 0) {
         updateStockPlayerPosition(stock);
@@ -908,13 +1022,17 @@ function updateStockTicker(stock, increase) {
 }
 
 function updateStockPlayerPosition(stock) {
+    if (Engine.currentPage !== Engine.Page.StockMarket) {return;}
     if (!(stock instanceof Stock)) {
-        console.log("Invalid stock in updateStockTicker()");
+        console.log("Invalid stock in updateStockPlayerPosition():");
+        console.log(stock);
         return;
     }
-    var tickerId = "stock-market-ticker-" + stock.symbol,
-        positionTxt = document.getElementById(tickerId + "-position-text");
-    if (positionTxt === null) {
+    var tickerId = "stock-market-ticker-" + stock.symbol;
+    if (!(stock.posTxtEl instanceof Element)) {
+        stock.posTxtEl = document.getElementById(tickerId + "-position-text");
+    }
+    if (stock.posTxtEl === null) {
         console.log("ERROR: Could not find stock position element for: " + stock.symbol);
         return;
     }
@@ -923,29 +1041,39 @@ function updateStockPlayerPosition(stock) {
     var totalCost = stock.playerShares * stock.playerAvgPx,
         gains = (stock.price - stock.playerAvgPx) * stock.playerShares,
         percentageGains = gains / totalCost;
+    if (isNaN(percentageGains)) {percentageGains = 0;}
 
     var shortTotalCost = stock.playerShortShares * stock.playerAvgShortPx,
         shortGains = (stock.playerAvgShortPx - stock.price) * stock.playerShortShares,
         shortPercentageGains = shortGains/ shortTotalCost;
+    if (isNaN(shortPercentageGains)) {shortPercentageGains = 0;}
 
-    positionTxt.innerHTML =
+    stock.posTxtEl.innerHTML =
         "<h1 class='tooltip stock-market-position-text'>Long Position: " +
         "<span class='tooltiptext'>Shares in the long position will increase " +
         "in value if the price of the corresponding stock increases</span></h1>" +
         "<br>Shares: " + formatNumber(stock.playerShares, 0) +
         "<br>Average Price: " + numeral(stock.playerAvgPx).format('$0.000a') +
+        " (Total Cost: " + numeral(totalCost).format('$0.000a') + ")" +
         "<br>Profit: " + numeral(gains).format('$0.000a') +
-                     " (" + formatNumber(percentageGains, 2) + "%)<br><br>" +
-        "<h1 class='tooltip stock-market-position-text'>Short Position: " +
-        "<span class='tooltiptext'>Shares in short position will increase " +
-        "in value if the price of the corresponding stock decreases</span></h1>" +
-        "<br>Shares: " + formatNumber(stock.playerShortShares, 0) +
-        "<br>Average Price: " + numeral(stock.playerAvgShortPx).format('$0.000a') +
-        "<br>Profit: " + numeral(shortGains).format('$0.000a') +
-                     " (" + formatNumber(shortPercentageGains, 2) + "%)";
+                     " (" + formatNumber(percentageGains*100, 2) + "%)<br><br>";
+        if (Player.bitNodeN === 8 || (hasWallStreetSF && wallStreetSFLvl >= 2)) {
+            stock.posTxtEl.innerHTML +=
+            "<h1 class='tooltip stock-market-position-text'>Short Position: " +
+            "<span class='tooltiptext'>Shares in short position will increase " +
+            "in value if the price of the corresponding stock decreases</span></h1>" +
+            "<br>Shares: " + formatNumber(stock.playerShortShares, 0) +
+            "<br>Average Price: " + numeral(stock.playerAvgShortPx).format('$0.000a') +
+            " (Total Cost: " + numeral(shortTotalCost).format('$0.000a') + ")" +
+            "<br>Profit: " + numeral(shortGains).format('$0.000a') +
+                         " (" + formatNumber(shortPercentageGains*100, 2) + "%)" +
+            "<br><br><h1 class='stock-market-position-text'>Orders: </h1>";
+        }
+
 }
 
 function updateStockOrderList(stock) {
+    if (Engine.currentPage !== Engine.Page.StockMarket) {return;}
     var tickerId = "stock-market-ticker-" + stock.symbol;
     var orderList = document.getElementById(tickerId + "-order-list");
     if (orderList === null) {
@@ -960,7 +1088,7 @@ function updateStockOrderList(stock) {
     }
     var stockOrders = orderBook[stock.symbol];
     if (stockOrders === null) {
-        console.log("ERROR: Could nto find orders for: " + stock.symbol);
+        console.log("ERROR: Could not find orders for: " + stock.symbol);
         return;
     }
 
@@ -970,17 +1098,32 @@ function updateStockOrderList(stock) {
     }
 
     for (var i = 0; i < stockOrders.length; ++i) {
-        var order = stockOrders[i];
-        var li = document.createElement("li");
-        var posText = (order.pos === PositionTypes.Long ? "Long Position" : "Short Position");
-        li.innerText = order.type + " - " + posText + " - " +
-                       order.shares + " @ $" + formatNumber(order.price, 2);
-        orderList.appendChild(li);
+        (function() {
+            var order = stockOrders[i];
+            var li = document.createElement("li");
+            li.style.padding = "4px";
+            var posText = (order.pos === PositionTypes.Long ? "Long Position" : "Short Position");
+            li.style.color = "white";
+            li.innerText = order.type + " - " + posText + " - " +
+                           order.shares + " @ $" + formatNumber(order.price, 2);
+
+            var cancelButton = document.createElement("span");
+            cancelButton.classList.add("stock-market-order-cancel-btn");
+            cancelButton.classList.add("a-link-button");
+            cancelButton.innerHTML = "Cancel Order";
+            cancelButton.addEventListener("click", function() {
+                cancelOrder({order: order}, null);
+                return false;
+            });
+            li.appendChild(cancelButton);
+            orderList.appendChild(li);
+        }());
+
     }
 }
 
 export {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         initStockMarket, initSymbolToStockMap, stockMarketCycle, buyStock,
-        sellStock, updateStockPrices, displayStockMarketContent,
+        sellStock, shortStock, sellShort, updateStockPrices, displayStockMarketContent,
         updateStockTicker, updateStockPlayerPosition, loadStockMarket,
-        setStockMarketContentCreated, placeOrder, Order, OrderTypes};
+        setStockMarketContentCreated, placeOrder, cancelOrder, Order, OrderTypes, PositionTypes};

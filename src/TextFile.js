@@ -54,6 +54,7 @@ TextFile.fromJSON = function(value) {
 Reviver.constructors.TextFile = TextFile;
 
 function getTextFile(fn, server) {
+    if (!fn.endsWith(".txt")) {fn += ".txt";}
     for (var i = 0; i < server.textFiles.length; ++i) {
         if (server.textFiles[i].fn === fn) {
             return server.textFiles[i];

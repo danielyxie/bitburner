@@ -126,7 +126,7 @@ Industries:
                      Extremely high stable demand, semi-high competition, super high markup
                      Extremely high starting cost
                      Production increase from real estate diminishes greatly in city. e.g. making many hospitals
-                     in one city has high diminishing returns, but making a few in every city is good
+                     in one city has high diminishing returns, but making a few in every city is goodIn
         Real Estate - Create 'Real Estate'.
                       Requires metal, energy, water, hardware
                       Can use Hardware/Robotics/AI Cores to increase production
@@ -150,7 +150,7 @@ Industries:
         Operations -
         Engineer -
         Business -
-        Accounting - 
+        Accounting -
         Management -
         Research and Development -
 */

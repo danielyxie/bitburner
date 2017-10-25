@@ -9,7 +9,7 @@ import {Factions, Faction, initFactions,
         joinFaction}                            from "./Faction.js";
 import {Locations}                              from "./Location.js";
 import {initMessages, Messages, Message}        from "./Message.js";
-import {initSingularitySFFlags}                 from "./NetscriptFunctions.js";
+import {initSingularitySFFlags, hasWallStreetSF}from "./NetscriptFunctions.js";
 import {WorkerScript, workerScripts,
         prestigeWorkerScripts}                  from "./NetscriptWorker.js";
 import {Player}                                 from "./Player.js";
@@ -114,6 +114,13 @@ function prestigeAugmentation() {
         if (faction instanceof Faction) {
             joinFaction(faction);
         }
+    }
+
+    //BitNode 8: Ghost of Wall Street
+    if (Player.bitNodeN === 8) {Player.money = new Decimal(100000000);}
+    if (Player.bitNodeN === 8 || hasWallStreetSF) {
+        Player.hasWseAccount = true;
+        Player.hasTixApiAccess = true;
     }
 
     var mainMenu = document.getElementById("mainmenu-container");

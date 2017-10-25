@@ -41,7 +41,8 @@ import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         initStockMarket, initSymbolToStockMap, stockMarketCycle, buyStock,
         sellStock, updateStockPrices, displayStockMarketContent,
         updateStockTicker, updateStockPlayerPosition,
-        Stock}                                      from "./StockMarket.js";
+        Stock, shortStock, sellShort, OrderTypes,
+        PositionTypes, placeOrder, cancelOrder}     from "./StockMarket.js";
 import {post}                                       from "./Terminal.js";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile.js";
 
@@ -849,7 +850,7 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPrice()");
             }
-            return [stock.playerShares, stock.playerAvgPx];
+            return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
         },
         buyStock : function(symbol, shares) {
             if (!Player.hasTixApiAccess) {
@@ -857,9 +858,9 @@ function NetscriptFunctions(workerScript) {
             }
             var stock = SymbolToStockMap[symbol];
             if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPrice()");
+                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into buyStock()");
             }
-            if (stock == null || shares < 0 || isNaN(shares)) {
+            if (shares < 0 || isNaN(shares)) {
                 workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to buyStock()");
                 return false;
             }
@@ -892,10 +893,9 @@ function NetscriptFunctions(workerScript) {
             }
             var stock = SymbolToStockMap[symbol];
             if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPrice()");
+                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into sellStock()");
             }
-
-            if (stock == null || shares < 0 || isNaN(shares)) {
+            if (shares < 0 || isNaN(shares)) {
                 workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to sellStock()");
                 return false;
             }
@@ -922,6 +922,121 @@ function NetscriptFunctions(workerScript) {
                                        formatNumber(stock.price, 2) + " per share. Gained " +
                                        "$" + formatNumber(gains, 2));
             return true;
+        },
+        shortStock(symbol, shares) {
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use shortStock()");
+            }
+            if (Player.bitNodeN !== 8) {
+                if (!(hasWallStreetSF && wallStreetSFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Cannot use shortStock(). You must either be in BitNode-8 or you must have Level 2 of Source-File 8");
+                }
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into shortStock()");
+            }
+            return shortStock(stock, shares, workerScript);
+        },
+        sellShort(symbol, shares) {
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use sellShort()");
+            }
+            if (Player.bitNodeN !== 8) {
+                if (!(hasWallStreetSF && wallStreetSFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Cannot use sellShort(). You must either be in BitNode-8 or you must have Level 2 of Source-File 8");
+                }
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into sellShort()");
+            }
+            return sellShort(stock, shares, workerScript);
+        },
+        placeOrder(symbol, shares, price, type, pos) {
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use placeOrder()");
+            }
+            if (Player.bitNodeN !== 8) {
+                if (!(hasWallStreetSF && wallStreetSFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Cannot use placeOrder(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
+                }
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into placeOrder()");
+            }
+            var orderType, orderPos;
+            type = type.toLowerCase();
+            if (type.includes("limit") && type.includes("buy")) {
+                orderType = OrderTypes.LimitBuy;
+            } else if (type.includes("limit") && type.includes("sell")) {
+                orderType = OrderTypes.LimitSell;
+            } else if (type.includes("stop") && type.includes("buy")) {
+                orderType = OrderTypes.StopBuy;
+            } else if (type.includes("stop") && type.includes("sell")) {
+                orderType = OrderTypes.StopSell;
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid Order Type passed into placeOrder()");
+            }
+
+            pos = pos.toLowerCase();
+            if (pos.includes("l")) {
+                orderPos = PositionTypes.Long;
+            } else if (pos.includes('s')) {
+                orderPos = PositionTypes.Short;
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid Position Type passed into placeOrder()");
+            }
+
+            return placeOrder(stock, shares, price, orderType, orderPos, workerScript);
+        },
+        cancelOrder(symbol, shares, price, type, pos) {
+            if (!Player.hasTixApiAccess) {
+                throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use cancelOrder()");
+            }
+            if (Player.bitNodeN !== 8) {
+                if (!(hasWallStreetSF && wallStreetSFLvl >= 3)) {
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Cannot use cancelOrder(). You must either be in BitNode-8 or have Level 3 of Source-File 8");
+                }
+            }
+            var stock = SymbolToStockMap[symbol];
+            if (stock == null) {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into cancelOrder()");
+            }
+            if (isNaN(shares) || isNaN(price)) {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid shares or price argument passed into cancelOrder(). Must be numeric");
+            }
+            var orderType, orderPos;
+            type = type.toLowerCase();
+            if (type.includes("limit") && type.includes("buy")) {
+                orderType = OrderTypes.LimitBuy;
+            } else if (type.includes("limit") && type.includes("sell")) {
+                orderType = OrderTypes.LimitSell;
+            } else if (type.includes("stop") && type.includes("buy")) {
+                orderType = OrderTypes.StopBuy;
+            } else if (type.includes("stop") && type.includes("sell")) {
+                orderType = OrderType.StopSell;
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid Order Type passed into placeOrder()");
+            }
+
+            pos = pos.toLowerCase();
+            if (pos.includes("l")) {
+                orderPos = PositionTypes.Long;
+            } else if (pos.includes('s')) {
+                orderPos = PositionTypes.Short;
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid Position Type passed into placeOrder()");
+            }
+            params = {
+                stock: stock,
+                shares: shares,
+                price: price,
+                type: orderType,
+                pos: orderPos
+            };
+            return cancelOrder(params, workerScript);
         },
         purchaseServer : function(hostname, ram) {
             var hostnameStr = String(hostname);

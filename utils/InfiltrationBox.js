@@ -31,6 +31,7 @@ function infiltrationBoxCreate(inst) {
     Player.gainDexterityExp(inst.dexExpGained);
     Player.gainAgilityExp(inst.agiExpGained);
     Player.gainCharismaExp(inst.chaExpGained);
+    Player.gainIntelligenceExp(inst.intExpGained);
 
     var totalValue = 0;
     for (var i = 0; i < inst.secretsStolen.length; ++i) {

@@ -82,11 +82,12 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
     }
 
     request.onsuccess = function(e) {
-        console.log("Successfully saved game to IndexedDB!");
+        console.log("Saved game to IndexedDB!");
     }
 
     try {
         window.localStorage.setItem("bitburnerSave", saveString);
+        console.log("Saved game to LocalStorage!");
     } catch(e) {
         if (e.code == 22) {
             Engine.createStatusText("Save failed for localStorage! Check console(F12)");
@@ -98,7 +99,6 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
         }
     }
 
-    console.log("Game saved!");
     Engine.createStatusText("Game saved!");
 }
 

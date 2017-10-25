@@ -77,7 +77,21 @@ function initBitNodes() {
                                           "Level 3: 7%");
     BitNodes["BitNode6"] = new BitNode(6, "Do Androids Dream?", "COMING SOON");        //Build androids for automation
     BitNodes["BitNode7"] = new BitNode(7, "Waste Runner", "COMING SOON");              //Postapocalyptic wasteland + blade runner
-    BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "COMING SOON");      //Trading only viable strategy
+    BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "Money never sleeps",
+                                          "You are trying to make a name for yourself as an up-and-coming hedge fund manager on Wall Street.<br><br>" +
+                                          "In this BitNode:<br><br>" +
+                                          "You start with $100 million<br>" +
+                                          "The only way to earn money is by trading on the stock market<br>" +
+                                          "You start with a WSE membership and access to the TIX API<br>" +
+                                          "You are able to short stocks and place different types of orders (limit/stop)<br>" +
+                                          "You can immediately donate to factions to gain reputation<br><br>" +
+                                          "Destroying this BitNode will give you Source-File 8, or if you already have this Source-File it will " +
+                                          "upgrade its level up to a maximum of 3. This Source-File grants the following benefits:<br><br>" +
+                                          "Level 1: Permanent access to WSE and TIX API<br>" +
+                                          "Level 2: Ability to short stocks in other BitNodes<br>" +
+                                          "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
+                                          "This Source-File also increases your hacking growth multipliers by: " +
+                                          "<br>Level 1: 8%<br>Level 2: 12%<br>Level 3: 14%");
     BitNodes["BitNode9"] = new BitNode(9, "Hacktocracy", "COMING SOON");               //Healthy Hacknet balancing mechanic
     BitNodes["BitNode10"] = new BitNode(10, "MegaCorp", "COMING SOON");                //Not sure yet
     BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
@@ -148,6 +162,7 @@ let BitNodeMultipliers = {
 
     FactionWorkRepGain:     1,
     FactionPassiveRepGain:  1,
+    RepToDonateToFaction:   1,
 
     AugmentationRepCost:    1,
     AugmentationMoneyCost:  1,
@@ -202,6 +217,15 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.InfiltrationMoney        = 1.5;
             BitNodeMultipliers.AugmentationMoneyCost    = 2;
             BitNodeMultipliers.HackExpGain              = 0.5;
+            break;
+        case 8: //Ghost of Wall Street
+            BitNodeMultipliers.ScriptHackMoney          = 0;
+            BitNodeMultipliers.ManualHackMoney          = 0;
+            BitNodeMultipliers.CompanyWorkMoney         = 0;
+            BitNodeMultipliers.CrimeMoney               = 0;
+            BitNodeMultipliers.HacknetNodeMoney         = 0;
+            BitNodeMultipliers.InfiltrationMoney        = 0;
+            BitNodeMultipliers.RepToDonateToFaction     = 0
             break;
         case 11: //The Big Crash
             BitNodeMultipliers.ServerMaxMoney           = 0.1;

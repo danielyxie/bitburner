@@ -286,7 +286,11 @@ function calculateRamUsage(codeCopy) {
     var scriptGetStockCount = numOccurrences(codeCopy, "getStockPrice(") +
                               numOccurrences(codeCopy, "getStockPosition(");
     var scriptBuySellStockCount = numOccurrences(codeCopy, "buyStock(") +
-                                  numOccurrences(codeCopy, "sellStock(");
+                                  numOccurrences(codeCopy, "sellStock(") +
+                                  numOccurrences(codeCopy, "shortStock(") +
+                                  numOccurrences(codeCopy, "sellShort(") +
+                                  numOccurrences(codeCopy, "placeOrder(") +
+                                  numOccurrences(codeCopy, "cancelOrder(");
     var scriptPurchaseServerCount = numOccurrences(codeCopy, "purchaseServer(") +
                                     numOccurrences(codeCopy, "deleteServer(") +
                                     numOccurrences(codeCopy, "getPurchasedServers(");
@@ -307,7 +311,8 @@ function calculateRamUsage(codeCopy) {
                        numOccurrences(codeCopy, "travelToCity(") +
                        numOccurrences(codeCopy, "purchaseTor(") +
                        numOccurrences(codeCopy, "purchaseProgram(") +
-                       numOccurrences(codeCopy, "getStats(");
+                       numOccurrences(codeCopy, "getStats(") +
+                       numOccurrences(codeCopy, "isBusy(");
     var singFn2Count = numOccurrences(codeCopy, "upgradeHomeRam(") +
                        numOccurrences(codeCopy, "getUpgradeHomeRamCost(") +
                        numOccurrences(codeCopy, "workForCompany(") +
@@ -319,6 +324,7 @@ function calculateRamUsage(codeCopy) {
                        numOccurrences(codeCopy, "getFactionRep(");
     var singFn3Count = numOccurrences(codeCopy, "createProgram(") +
                        numOccurrences(codeCopy, "commitCrime(") +
+                       numOccurrences(codeCopy, "getCrimeChance(") +
                        numOccurrences(codeCopy, "getOwnedAugmentations(") +
                        numOccurrences(codeCopy, "getAugmentationsFromFaction(") +
                        numOccurrences(codeCopy, "getAugmentationCost(") +
