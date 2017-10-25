@@ -140,11 +140,16 @@ Industries:
 
     Employees:
         Has morale, happiness, and energy that must be managed to maintain productivity
+        Has a city property
         Stats:
             Age, Intelligence, Charisma, Experience, Creativity, Efficiency
 
         Assigned to different positions. The productivity at each position is determined by
         stats. I.e. each employe should be assigned to positions based on stats to optimize production
+
+        Hiring Employees:
+            When you choose to hire employees you are given a randomly generated list of employees to hire
+            They will demand a certain salary and maybe stock shares
 
     Employee Position
         Operations -
@@ -166,12 +171,36 @@ Industries:
             Earnings Per Share(EPS): Net Income (Profit) / Number of Oustanding Shares
             Price to Earnings: P/E Ratio = Price per Share / EPS
 
-        Awareness:
+        Awareness: A number indicating how many people are aware of your company
+        Popularity: A number indicating how many people like your company
         Warehouse Space: How many materials it can stock
+        Office Space:
+            Costs $/s in upkeep
+            You can open one office space in each city
+            Size - increased by upgrades, increases max # employees in the city
+                    However if your # employees is near the max this affects employee happiness
+            Comfort - Increased by upgrades, affects employees in that office
+            Beauty - Increased by upgrades, affects employees in that office
+            Tiers of Office Space:
+                Basic
+                Enhanced
+                Luxurious
+                Extravagant
+            Upgrades
+                Things that increase comfort/beauty. Some may cost upkeep and some might not
 
-        Office Space - Increases max employees
-                     - However if # employees is near the max, then employee happiness decreases
-
+        Company Upgrades:
+            Can upgrade Warehouse Space and Office Space
+            Can throw 'events' (company picnic, outing, party, etc.) for one time expenses and temporary boosts
+            Advertising, Increases Company Awareness and Popularity
 
     Investors
+        When you start a company you have 1 billion shares (subject to change)
+        Four rounds of investing: Seed, Series A, Series B, Series C
+        In each round, you can give up certain shares to receive money
+        These are optional
+
+        You can choose to go public at any time, at which point your stock price
+        will fluctuate based on company performance. Then you can sell whatever
+        shares you have left on the stock market.
 */

@@ -347,7 +347,7 @@ GangMember.prototype.assignToTask = function(taskName) {
 //Gains are per cycle
 GangMember.prototype.calculateRespectGain = function() {
     var task = this.task;
-    if (task === null || !(task instanceof GangMemberTask) || task.baseRespect === 0) {return 0;}
+    if (task == null || !(task instanceof GangMemberTask) || task.baseRespect === 0) {return 0;}
     var statWeight =    (task.hackWeight/100) * this.hack +
                         (task.strWeight/100) * this.str +
                         (task.defWeight/100) * this.def +
@@ -364,7 +364,7 @@ GangMember.prototype.calculateRespectGain = function() {
 
 GangMember.prototype.calculateWantedLevelGain = function() {
     var task = this.task;
-    if (task === null || !(task instanceof GangMemberTask) || task.baseWanted === 0) {return 0;}
+    if (task == null || !(task instanceof GangMemberTask) || task.baseWanted === 0) {return 0;}
     var statWeight =    (task.hackWeight/100) * this.hack +
                         (task.strWeight/100) * this.str +
                         (task.defWeight/100) * this.def +
@@ -384,7 +384,7 @@ GangMember.prototype.calculateWantedLevelGain = function() {
 
 GangMember.prototype.calculateMoneyGain = function() {
     var task = this.task;
-    if (task === null || !(task instanceof GangMemberTask) || task.baseMoney === 0) {return 0;}
+    if (task == null || !(task instanceof GangMemberTask) || task.baseMoney === 0) {return 0;}
     var statWeight =    (task.hackWeight/100) * this.hack +
                         (task.strWeight/100) * this.str +
                         (task.defWeight/100) * this.def +
@@ -401,7 +401,7 @@ GangMember.prototype.calculateMoneyGain = function() {
 
 GangMember.prototype.gainExperience = function(numCycles=1) {
     var task = this.task;
-    if (task === null || !(task instanceof GangMemberTask)) {return;}
+    if (task == null || !(task instanceof GangMemberTask)) {return;}
     this.hack_exp   += (task.hackWeight / 1500) * task.difficulty * numCycles;
     this.str_exp    += (task.strWeight / 1500) * task.difficulty * numCycles;
     this.def_exp    += (task.defWeight / 1500) * task.difficulty * numCycles;
@@ -1101,7 +1101,7 @@ function updateGangContent() {
             var repCost = Math.pow(CONSTANTS.GangRecruitCostMultiplier, numMembers);
         }
         var faction = Factions[Player.gang.facName];
-        if (faction === null) {
+        if (faction == null) {
             dialogBoxCreate("Could not find your gang's faction. This is probably a bug please report to dev");
             return;
         }

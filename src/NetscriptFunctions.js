@@ -267,7 +267,7 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log(args.toString());
         },
         tprint : function(args) {
-            if (args === undefined || args === null) {
+            if (args === undefined || args == null) {
                 throw makeRuntimeRejectMsg(workerScript, "tprint() call has incorrect number of arguments. Takes 1 argument");
             }
             var x = args.toString();
@@ -602,7 +602,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "ls() failed because of invalid arguments. Usage: ls(ip/hostname, [grep filter])");
             }
             var server = getServer(ip);
-            if (server === null) {
+            if (server == null) {
                 workerScript.scriptRef.log("ls() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "ls() failed. Invalid IP or hostname passed in: " + ip);
             }
@@ -1176,11 +1176,11 @@ function NetscriptFunctions(workerScript) {
             } else if (isString(port)) { //Write to text file
                 var fn = port;
                 var server = getServer(workerScript.serverIp);
-                if (server === null) {
+                if (server == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in write(). This is a bug please contact game dev");
                 }
                 var txtFile = getTextFile(fn, server);
-                if (txtFile === null) {
+                if (txtFile == null) {
                     txtFile = createTextFile(fn, data, server);
                     return true;
                 }
@@ -1213,7 +1213,7 @@ function NetscriptFunctions(workerScript) {
             } else if (isString(port)) { //Read from text file
                 var fn = port;
                 var server = getServer(workerScript.serverIp);
-                if (server === null) {
+                if (server == null) {
                     throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in read(). This is a bug please contact game dev");
                 }
                 var txtFile = getTextFile(fn, server);
@@ -1301,7 +1301,7 @@ function NetscriptFunctions(workerScript) {
             } else {
                 //Get income for a particular script
                 var server = getServer(ip);
-                if (server === null) {
+                if (server == null) {
                     workerScript.scriptRef.log("getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
                     throw makeRuntimeRejectMsg(workerScript, "getScriptIncome() failed. Invalid IP or hostnamed passed in: " + ip);
                 }
@@ -1327,7 +1327,7 @@ function NetscriptFunctions(workerScript) {
             } else {
                 //Get income for a particular script
                 var server = getServer(ip);
-                if (server === null) {
+                if (server == null) {
                     workerScript.scriptRef.log("getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
                     throw makeRuntimeRejectMsg(workerScript, "getScriptExpGain() failed. Invalid IP or hostnamed passed in: " + ip);
                 }
@@ -1855,7 +1855,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             var company = Companies[companyName];
-            if (company === null || !(company instanceof Company)) {
+            if (company == null || !(company instanceof Company)) {
                 workerScript.scriptRef.log("ERROR: Invalid companyName passed into getCompanyRep(): " + companyName);
                 return -1;
             }
@@ -2263,7 +2263,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             var fac = Factions[faction];
-            if (fac === null || !(fac instanceof Faction)) {
+            if (fac == null || !(fac instanceof Faction)) {
                 workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because of invalid faction name: " + faction);
                 return false;
             }
@@ -2274,7 +2274,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             var aug = Augmentations[name];
-            if (aug === null || !(aug instanceof Augmentation)) {
+            if (aug == null || !(aug instanceof Augmentation)) {
                 workerScript.scriptRef.log("ERROR: purchaseAugmentation() failed because of invalid augmentation name: " + name);
                 return false;
             }

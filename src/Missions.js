@@ -736,7 +736,7 @@ HackingMission.prototype.createNodeDomElement = function(nodeObj) {
 }
 
 HackingMission.prototype.updateNodeDomElement = function(nodeObj) {
-    if (nodeObj.el === null) {
+    if (nodeObj.el == null) {
         console.log("ERR: Calling updateNodeDomElement on a Node without an element");
         return;
     }
@@ -808,7 +808,7 @@ HackingMission.prototype.getNodeFromElement = function(el) {
 
 function selectNode(hackMissionInst, el) {
     var nodeObj = hackMissionInst.getNodeFromElement(el);
-    if (nodeObj === null) {console.log("Error getting Node object");}
+    if (nodeObj == null) {console.log("Error getting Node object");}
     if (!nodeObj.plyrCtrl) {return;}
 
     if (hackMissionInst.selectedNode instanceof Node) {
@@ -824,7 +824,7 @@ function selectNode(hackMissionInst, el) {
 //Note: Does NOT change its css class. This is handled by Node.setControlledBy...
 HackingMission.prototype.configurePlayerNodeElement = function(el) {
     var nodeObj = this.getNodeFromElement(el);
-    if (nodeObj === null) {console.log("Error getting Node object");}
+    if (nodeObj == null) {console.log("Error getting Node object");}
 
     //Add event listener
     var self = this;
@@ -860,7 +860,7 @@ HackingMission.prototype.nodeReachable = function(node) {
 }
 
 HackingMission.prototype.nodeReachableByEnemy = function(node) {
-    if (node === null) {return false;}
+    if (node == null) {return false;}
     var x = node.pos[0], y = node.pos[1];
     if (x > 0 && this.map[x-1][y].enmyCtrl) {return true;}
     if (x < 7 && this.map[x+1][y].enmyCtrl) {return true;}
@@ -1065,7 +1065,7 @@ HackingMission.prototype.process = function(numCycles=1) {
 
 //Returns a bool representing whether defenses need to be re-calculated
 HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
-    if (nodeObj.action === null) {
+    if (nodeObj.action == null) {
         return;
     }
 
@@ -1095,18 +1095,18 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
     var enmyHacking = this.difficulty * CONSTANTS.HackingMissionDifficultyToHacking;
     switch(nodeObj.action) {
         case NodeActions.Attack:
-            if (nodeObj.conn === null) {break;}
+            if (nodeObj.conn == null) {break;}
             var dmg = this.calculateAttackDamage(atk, def, plyr ? Player.hacking_skill : enmyHacking);
             targetNode.hp -= (dmg/5 * numCycles);
             break;
         case NodeActions.Scan:
-            if (nodeObj.conn === null) {break;}
+            if (nodeObj.conn == null) {break;}
             var eff = this.calculateScanEffect(atk, def, plyr ? Player.hacking_skill : enmyHacking);
             targetNode.def -= (eff/5 * numCycles);
             calcStats = true;
             break;
         case NodeActions.Weaken:
-            if (nodeObj.conn === null) {break;}
+            if (nodeObj.conn == null) {break;}
             var eff = this.calculateWeakenEffect(atk, def, plyr ? Player.hacking_skill : enmyHacking);
             targetNode.atk -= (eff/5 * numCycles);
             calcStats = true;
@@ -1267,13 +1267,13 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
 
 //Enemy "AI" for CPU Core and Transfer Nodes
 HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
-    if (nodeObj === null) {return;}
+    if (nodeObj == null) {return;}
     switch(nodeObj.type) {
         case NodeTypes.Core:
             //Select a single RANDOM target from miscNodes and player's Nodes
             //If it is reachable, it will target it. If not, no target will
             //be selected for now, and the next time process() gets called this will repeat
-            if (nodeObj.conn === null) {
+            if (nodeObj.conn == null) {
                 if (this.miscNodes.length === 0) {
                     //Randomly pick a player node and attack it if its reachable
                     var rand = getRandomInt(0, this.playerNodes.length-1);
@@ -1331,7 +1331,7 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                 } else {
                     targetNode = this.getNodeFromElement(nodeObj.conn.targetId);
                 }
-                if (targetNode === null) {
+                if (targetNode == null) {
                     console.log("Error getting Target node Object in enemyAISelectAction()");
                 }
 

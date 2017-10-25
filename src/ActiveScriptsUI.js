@@ -251,7 +251,7 @@ function createActiveScriptsText(workerscript, item) {
 function updateActiveScriptsText(workerscript, item, statsEl=null) {
     var itemId = item.id
     var itemTextStats = document.getElementById(itemId + "-stats");
-    if (itemTextStats === null || itemTextStats === undefined) {
+    if (itemTextStats == null || itemTextStats === undefined) {
         itemTextStats = statsEl;
     }
 
