@@ -1,6 +1,6 @@
 /*
 Products
-    For certain industries, players can created their own custom products
+    For certain industries, players can creat their own custom products
     Essentially, these are just things you give a certain name to.
 
     Products have certain properties that affect how well they sell. These properties
@@ -139,18 +139,39 @@ Industries:
         Telecommunications -
 
     Employees:
-        Has morale and energy that must be managed to maintain productivity
+        Has morale, happiness, and energy that must be managed to maintain productivity
         Stats:
-            Intelligence, Charisma, Experience, Creativity, Efficiency
+            Age, Intelligence, Charisma, Experience, Creativity, Efficiency
 
         Assigned to different positions. The productivity at each position is determined by
         stats. I.e. each employe should be assigned to positions based on stats to optimize production
 
-    Position
+    Employee Position
         Operations -
         Engineer -
         Business -
         Accounting -
         Management -
         Research and Development -
+
+    Company stats
+        A Company has an inventory of products and materials
+
+        Financial stats (All numbers are in per second):
+            Revenue - Total income generated
+            Expenses - Total Expenses
+            Profit - Revenue minus Expenses
+            Private Valuation: Investor valuation of your company before you go public. Affects how much money they invest
+            Market Cap: Once you go public, it is the total number of shares times stock price
+            Earnings Per Share(EPS): Net Income (Profit) / Number of Oustanding Shares
+            Price to Earnings: P/E Ratio = Price per Share / EPS
+
+        Awareness:
+        Warehouse Space: How many materials it can stock
+
+        Office Space - Increases max employees
+                     - However if # employees is near the max, then employee happiness decreases
+
+
+    Investors
 */

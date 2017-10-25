@@ -1076,18 +1076,18 @@ function updateStockOrderList(stock) {
     if (Engine.currentPage !== Engine.Page.StockMarket) {return;}
     var tickerId = "stock-market-ticker-" + stock.symbol;
     var orderList = document.getElementById(tickerId + "-order-list");
-    if (orderList === null) {
+    if (orderList == null) {
         console.log("ERROR: Could not find order list for " + stock.symbol);
         return;
     }
 
     var orderBook = StockMarket["Orders"];
-    if (orderBook === null) {
+    if (orderBook == null) {
         console.log("ERROR: Could not find order book in stock market");
         return;
     }
     var stockOrders = orderBook[stock.symbol];
-    if (stockOrders === null) {
+    if (stockOrders == null) {
         console.log("ERROR: Could not find orders for: " + stock.symbol);
         return;
     }
