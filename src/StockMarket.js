@@ -67,7 +67,7 @@ function placeOrder(stock, shares, price, type, position, workerScript=null) {
         }
         return false;
     }
-    if (StockMarket["Orders"] === null) {
+    if (StockMarket["Orders"] == null) {
         var orders = {};
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
@@ -88,7 +88,7 @@ function placeOrder(stock, shares, price, type, position, workerScript=null) {
 //Returns true if successfully cancels an order, false otherwise
 function cancelOrder(params, workerScript=null) {
     var tixApi = (workerScript instanceof WorkerScript);
-    if (StockMarket["Orders"] === null) {return false;}
+    if (StockMarket["Orders"] == null) {return false;}
     if (params.order && params.order instanceof Order) {
         var order = params.order;
         //An 'Order' object is passed in
@@ -471,7 +471,7 @@ function sellStock(stock, shares) {
 //Returns true if successful and false otherwise
 function shortStock(stock, shares, workerScript=null) {
     var tixApi = (workerScript instanceof WorkerScript);
-    if (stock === null || isNaN(shares) || shares < 0) {
+    if (stock == null || isNaN(shares) || shares < 0) {
         if (tixApi) {
             workerScript.scriptRef.log("ERROR: shortStock() failed because of invalid arguments.");
         } else {
@@ -520,7 +520,7 @@ function shortStock(stock, shares, workerScript=null) {
 //Returns true if successful and false otherwise
 function sellShort(stock, shares, workerScript=null) {
     var tixApi = (workerScript instanceof WorkerScript);
-    if (stock === null || isNaN(shares) || shares < 0) {
+    if (stock == null || isNaN(shares) || shares < 0) {
         if (tixApi) {
             workerScript.scriptRef.log("ERROR: sellShort() failed because of invalid arguments.");
         } else {
@@ -622,7 +622,7 @@ function updateStockPrices() {
 //Checks and triggers any orders for the specified stock
 function processOrders(stock, orderType, posType) {
     var orderBook = StockMarket["Orders"];
-    if (orderBook === null) {
+    if (orderBook == null) {
         var orders = {};
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
@@ -635,7 +635,7 @@ function processOrders(stock, orderType, posType) {
         return; //Newly created, so no orders to process
     }
     var stockOrders = orderBook[stock.symbol];
-    if (stockOrders === null || !(stockOrders.constructor === Array)) {
+    if (stockOrders == null || !(stockOrders.constructor === Array)) {
         console.log("ERROR: Invalid Order book for " + stock.symbol + " in processOrders()");
         stockOrders = [];
         return;
@@ -978,7 +978,7 @@ function createStockTicker(stock) {
 function setStockTickerClickHandlers() {
     var stockList = document.getElementById("stock-market-list");
     var tickerHdrs = stockList.getElementsByClassName("accordion-header");
-    if (tickerHdrs === null) {
+    if (tickerHdrs == null) {
         console.log("ERROR: Could not find header elements for stock tickers");
         return;
     }
@@ -1007,7 +1007,7 @@ function updateStockTicker(stock, increase) {
     var tickerId = "stock-market-ticker-" + stock.symbol;
     var hdr = document.getElementById(tickerId + "-hdr");
 
-    if (hdr === null) {
+    if (hdr == null) {
         console.log("ERROR: Couldn't find ticker element for stock: " + stock.symbol);
         return;
     }
@@ -1032,7 +1032,7 @@ function updateStockPlayerPosition(stock) {
     if (!(stock.posTxtEl instanceof Element)) {
         stock.posTxtEl = document.getElementById(tickerId + "-position-text");
     }
-    if (stock.posTxtEl === null) {
+    if (stock.posTxtEl == null) {
         console.log("ERROR: Could not find stock position element for: " + stock.symbol);
         return;
     }

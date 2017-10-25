@@ -103,7 +103,7 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
 }
 
 function loadGame(saveString) {
-    if (saveString === "" || saveString === null || saveString === undefined) {
+    if (saveString === "" || saveString == null || saveString === undefined) {
         if (!window.localStorage.getItem("bitburnerSave")) {
             console.log("No save file to load");
             return false;
@@ -172,7 +172,7 @@ function loadGame(saveString) {
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
             var ver = JSON.parse(saveObj.VersionSave, Reviver);
-            if (Player.bitNodeN === null || Player.bitNodeN === 0) {
+            if (Player.bitNodeN == null || Player.bitNodeN === 0) {
                 Player.setBitNodeNumber(1);
             }
             if (ver.startsWith("0.27.") || ver.startsWith("0.28.")) {
