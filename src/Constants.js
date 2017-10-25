@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.31.0",
+    Version:                "0.32.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -440,18 +440,18 @@ let CONSTANTS = {
                            "<u><h1> Functions </h1></u><br>" +
                            "You can NOT define you own functions in Netscript (yet), but there are several built in functions that " +
                            "you may use: <br><br> " +
-                           "<i>hack(hostname/ip)</i><br>Core function that is used to try and hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
+                           "<i><u>hack(hostname/ip)</u></i><br>Core function that is used to try and hack servers to steal money and gain hacking experience. The argument passed in must be a string with " +
                            "either the IP or hostname of the server you want to hack. The runtime for this command depends on your hacking level and the target server's security level. " +
                            " A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. " +
                            "For example, you can create a script that hacks the 'foodnstuff' server and run that script on any server in the game. A successful hack() on " +
                            "a server will raise that server's security level by 0.002. Returns true if the hack is successful and " +
                            "false otherwise. <br>" +
                            "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" +
-                           "<i>sleep(n, log=true)</i><br>Suspends the script for n milliseconds. The second argument is an optional boolean that indicates " +
+                           "<i><u>sleep(n, log=true)</u></i><br>Suspends the script for n milliseconds. The second argument is an optional boolean that indicates " +
                            "whether or not the function should log the sleep action. If this argument is true, then calling this function will write " +
                            "'Sleeping for N milliseconds' to the script's logs. If it's false, then this function will not log anything. " +
                            "If this argument is not specified then it will be true by default. <br>Example: sleep(5000);<br><br>" +
-                           "<i>grow(hostname/ip)</i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " +
+                           "<i><u>grow(hostname/ip)</u></i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " +
                            "must be a string with either the IP or hostname of the target server. The runtime for this command depends on your hacking level and the target server's security level. " +
                            "When grow() completes, the money available on a target server will be increased by a certain, fixed percentage. This percentage " +
                            "is determined by the server's growth rate and varies between servers. Generally, higher-level servers have higher growth rates. <br><br> " +
@@ -460,28 +460,28 @@ let CONSTANTS = {
                            "It also raises the security level of the target server by 0.004. " +
                            "Returns the number by which the money on the server was multiplied for the growth. " +
                            "Works offline at a slower rate. <br> Example: grow('foodnstuff');<br><br>" +
-                           "<i>weaken(hostname/ip)</i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " +
+                           "<i><u>weaken(hostname/ip)</u></i><br>Use your hacking skills to attack a server's security, lowering the server's security level. The argument passed " +
                            "in must be a string with either the IP or hostname of the target server. The runtime for this command depends on your " +
                            "hacking level and the target server's security level. This function lowers the security level of the target server by " +
                            "0.05.<br><br> Like hack() and grow(), weaken() can be called on " +
                            "any server, regardless of where the script is running. This command requires root access to the target server, but " +
                            "there is no required hacking level to run the command. Returns " +
                            "0.1. Works offline at a slower rate<br> Example: weaken('foodnstuff');<br><br>" +
-                           "<i>print(x)</i><br>Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br><br>" +
-                           "<i>tprint(x)</i><br>Prints a value or a variable to the Terminal<br><br>" +
-                           "<i>clearLog()</i><br>Clears the script's logs. <br><br>" +
-                           "<i>scan(hostname/ip, [hostnames=true])</i><br>Returns an array containing the hostnames or IPs of all servers that are one node away from the specified server. " +
+                           "<i><u>print(x)</u></i><br>Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br><br>" +
+                           "<i><u>tprint(x)</u></i><br>Prints a value or a variable to the Terminal<br><br>" +
+                           "<i><u>clearLog()</u></i><br>Clears the script's logs. <br><br>" +
+                           "<i><u>scan(hostname/ip, [hostnames=true])</u></i><br>Returns an array containing the hostnames or IPs of all servers that are one node away from the specified server. " +
                            "The argument must be a string containing the IP or hostname of the target server. The second argument is a boolean that specifies whether " +
                            "the hostnames or IPs of the scanned servers should be output. If it is true then hostnames will be returned, and if false then IP addresses will. " +
                            "This second argument is optional and, if ommitted, the function will output " +
                            "the hostnames of the scanned servers. The hostnames/IPs in the returned array are strings.<br><br>" +
-                           "<i>nuke(hostname/ip)</i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer.<br> Example: nuke('foodnstuff'); <br><br>" +
-                           "<i>brutessh(hostname/ip)</i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer.<br> Example: brutessh('foodnstuff');<br><br>" +
-                           "<i>ftpcrack(hostname/ip)</i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer.<br> Example: ftpcrack('foodnstuff');<br><br>" +
-                           "<i>relaysmtp(hostname/ip)</i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer.<br> Example: relaysmtp('foodnstuff');<br><br>" +
-                           "<i>httpworm(hostname/ip)</i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer.<br> Example: httpworm('foodnstuff');<br><br>" +
-                           "<i>sqlinject(hostname/ip)</i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer.<br> Example: sqlinject('foodnstuff');<br><br>" +
-                           "<i>run(script, [numThreads], [args...])</i> <br> Run a script as a separate process. The first argument that is passed in is the name of the script as a string. This function can only " +
+                           "<i><u>nuke(hostname/ip)</u></i><br>Run NUKE.exe on the target server. NUKE.exe must exist on your home computer.<br> Example: nuke('foodnstuff'); <br><br>" +
+                           "<i><u>brutessh(hostname/ip)</u></i><br>Run BruteSSH.exe on the target server. BruteSSH.exe must exist on your home computer.<br> Example: brutessh('foodnstuff');<br><br>" +
+                           "<i><u>ftpcrack(hostname/ip)</u></i><br>Run FTPCrack.exe on the target server. FTPCrack.exe must exist on your home computer.<br> Example: ftpcrack('foodnstuff');<br><br>" +
+                           "<i><u>relaysmtp(hostname/ip)</u></i><br>Run relaySMTP.exe on the target server. relaySMTP.exe must exist on your home computer.<br> Example: relaysmtp('foodnstuff');<br><br>" +
+                           "<i><u>httpworm(hostname/ip)</u></i><br>Run HTTPWorm.exe on the target server. HTTPWorm.exe must exist on your home computer.<br> Example: httpworm('foodnstuff');<br><br>" +
+                           "<i><u>sqlinject(hostname/ip)</u></i><br>Run SQLInject.exe on the target server. SQLInject.exe must exist on your home computer.<br> Example: sqlinject('foodnstuff');<br><br>" +
+                           "<i><u>run(script, [numThreads], [args...])</u></i> <br> Run a script as a separate process. The first argument that is passed in is the name of the script as a string. This function can only " +
                            "be used to run scripts located on the current server (the server running the script that calls this function). The second argument " +
                            "is optional, and it specifies how many threads to run the script with. This argument must be a number greater than 0. If it is omitted, then the script will be run single-threaded. Any additional arguments will specify " +
                            "arguments to pass into the new script that is being run. If arguments are specified for the new script, then the second argument numThreads argument must be filled in with a value.<br><br>" +
@@ -493,7 +493,7 @@ let CONSTANTS = {
                            "run('foo.script', 5);<br><br>" +
                            "The following example will run 'foo.script' single-threaded, and will pass the string 'foodnstuff' into the script as an argument:<br><br>" +
                            "run('foo.script', 1, 'foodnstuff');<br><br>" +
-                           "<i>exec(script, hostname/ip, [numThreads], [args...])</i><br>Run a script as a separate process on another server. The first argument is the name of the script as a string. The " +
+                           "<i><u>exec(script, hostname/ip, [numThreads], [args...])</u></i><br>Run a script as a separate process on another server. The first argument is the name of the script as a string. The " +
                            "second argument is a string with the hostname or IP of the 'target server' on which to run the script. The specified script must exist on the target server. " +
                            "The third argument is optional, and it specifies how many threads to run the script with. If it is omitted, then the script will be run single-threaded. " +
                            "This argument must be a number that is greater than 0. Any additional arguments will specify arguments to pass into the new script that is being run. If " +
@@ -507,7 +507,7 @@ let CONSTANTS = {
                            "The following example will try to run the script 'foo.script' on the 'foodnstuff' server with 5 threads. It will also pass the number 1 and the string 'test' in as arguments " +
                            "to the script.<br><br>" +
                            "exec('foo.script', 'foodnstuff', 5, 1, 'test');<br><br>" +
-                           "<i>kill(script, hostname/ip, [args...])</i><br> Kills the script on the target server specified by the script's name and arguments. Remember that " +
+                           "<i><u>kill(script, hostname/ip, [args...])</u></i><br> Kills the script on the target server specified by the script's name and arguments. Remember that " +
                            "scripts are uniquely identified by both their name and arguments. For example, if 'foo.script' is run with the argument 1, then this is not the "  +
                            "same as 'foo.script' run with the argument 2, even though they have the same code. <br><br>" +
                            "The first argument must be a string with the name of the script. The name is case-sensitive. " +
@@ -522,9 +522,9 @@ let CONSTANTS = {
                            "kill('foo.script', getHostname());<br><br>" +
                            "If you are trying to kill a script named 'foo.script' on the current server that was ran with the arguments 1 and 'foodnstuff', use this:<br><br>" +
                            "kill('foo.script', getHostname(), 1, 'foodnstuff');<br><br>" +
-                           "<i>killall(hostname/ip)</i><br> Kills all running scripts on the specified server. This function takes a single argument which " +
+                           "<i><u>killall(hostname/ip)</u></i><br> Kills all running scripts on the specified server. This function takes a single argument which " +
                            "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" +
-                           "<i>scp(script, [source], destination)</i><br>Copies a script or literature (.lit) file to another server. The first argument is a string with " +
+                           "<i><u>scp(script, [source], destination)</u></i><br>Copies a script or literature (.lit) file to another server. The first argument is a string with " +
                            "the filename of the script or literature file " +
                            "to be copied, or an array of filenames to be copied. The next two arguments are strings containing the hostname/IPs of the source and target server. " +
                            "The source refers to the server from which the script/literature file will be copied, while the destination " +
@@ -534,15 +534,15 @@ let CONSTANTS = {
                            "will return if at least one of the files in the array is successfully copied over.<br><br>" +
                            "Example: scp('hack-template.script', 'foodnstuff'); //Copies hack-template.script from the current server to foodnstuff<br>" +
                            "Example: scp('foo.lit', 'helios', 'home'); //Copies foo.lit from the helios server to the home computer<br><br>" +
-                           "<i>ls(hostname/ip)</i><br>Returns an array containing the names of all files on the specified server. The argument must be a " +
+                           "<i><u>ls(hostname/ip)</u></i><br>Returns an array containing the names of all files on the specified server. The argument must be a " +
                            "string with the hostname or IP of the target server.<br><br>" +
-                           "<i>hasRootAccess(hostname/ip)</i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " +
+                           "<i><u>hasRootAccess(hostname/ip)</u></i><br> Returns a boolean (true or false) indicating whether or not the Player has root access to a server. " +
                            "The argument passed in must be a string with either the hostname or IP of the target server.<br> " +
                            "Example:<br>if (hasRootAccess('foodnstuff') == false) {<br>&nbsp;&nbsp;&nbsp;&nbsp;nuke('foodnstuff');<br>}<br><br>" +
-                           "<i>getIp()</i><br>Returns a string with the IP Address of the server that the script is running on <br><br>" +
-                           "<i>getHostname()</i><br>Returns a string with the hostname of the server that the script is running on<br><br>" +
-                           "<i>getHackingLevel()</i><br>Returns the Player's current hacking level.<br><br> " +
-                           "<i>getHackingMultipliers()</i><br>Returns an object containing the Player's hacking related multipliers. " +
+                           "<i><u>getIp()</u></i><br>Returns a string with the IP Address of the server that the script is running on <br><br>" +
+                           "<i><u>getHostname()</u></i><br>Returns a string with the hostname of the server that the script is running on<br><br>" +
+                           "<i><u>getHackingLevel()</u></i><br>Returns the Player's current hacking level.<br><br> " +
+                           "<i><u>getHackingMultipliers()</u></i><br>Returns an object containing the Player's hacking related multipliers. " +
                            "These multipliers are returned in integer forms, not percentages (e.g. 1.5 instead of 150%). " +
                            "The object has the following structure:<br><br>" +
                            "{<br>" +
@@ -554,7 +554,7 @@ let CONSTANTS = {
                            "mults = getHackingMultipliers();<br>" +
                            "print(mults.chance);<br>" +
                            "print(mults.growth);<br><br>" +
-                           "<i>getBitNodeMultipliers()</i><br>Returns an object containing the current BitNode multipliers. " +
+                           "<i><u>getBitNodeMultipliers()</u></i><br>Returns an object containing the current BitNode multipliers. " +
                            "This function requires Source-File 5 in order to run. The multipliers are returned in integer forms, not percentages " +
                            "(e.g. 1.5 instead of 150%). The multipliers represent the difference between the current BitNode and the " +
                            "original BitNode (BitNode-1). For example, if the 'CrimeMoney' multiplier has a value of 0.1 then that means " +
@@ -584,33 +584,33 @@ let CONSTANTS = {
                            "mults = getBitNodeMultipliers();<br>" +
                            "print(mults.ServerMaxMoney);<br>" +
                            "print(mults.HackExpGain);<br><br>" +
-                           "<i>getServerMoneyAvailable(hostname/ip)</i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
+                           "<i><u>getServerMoneyAvailable(hostname/ip)</u></i><br> Returns the amount of money available on a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server.<br> Example: getServerMoneyAvailable('foodnstuff');<br><br>" +
-                           "<i>getServerMaxMoney(hostname/ip)</i><br>Returns the maximum amount of money that can be available on a server. The argument passed in must be a string with " +
+                           "<i><u>getServerMaxMoney(hostname/ip)</u></i><br>Returns the maximum amount of money that can be available on a server. The argument passed in must be a string with " +
                            "the hostname or IP of the target server.<br>Example: getServerMaxMoney('foodnstuff');<br><br>" +
-                           "<i>getServerGrowth(hostname/ip)</i><br>Returns the server's intrinsic 'growth parameter'. This growth parameter is a number " +
+                           "<i><u>getServerGrowth(hostname/ip)</u></i><br>Returns the server's intrinsic 'growth parameter'. This growth parameter is a number " +
                            "between 1 and 100 that represents how quickly the server's money grows. This parameter affects the percentage by which this server's " +
                            "money is increased when using the grow() function. A higher growth parameter will result in a higher percentage from grow().<br><br>" +
                            "The argument passed in must be a string with the hostname or IP of the target server.<br><br>" +
-                           "<i>getServerSecurityLevel(hostname/ip)</i><br>Returns the security level of a server. The argument passed in must be a string with either the " +
+                           "<i><u>getServerSecurityLevel(hostname/ip)</u></i><br>Returns the security level of a server. The argument passed in must be a string with either the " +
                            "hostname or IP of the target server. A server's security is denoted by a number, typically between 1 and 100.<br><br>" +
-                           "<i>getServerBaseSecurityLevel(hostname/ip)</i><br>Returns the base security level of a server. This is the security level that the server starts out with. " +
+                           "<i><u>getServerBaseSecurityLevel(hostname/ip)</u></i><br>Returns the base security level of a server. This is the security level that the server starts out with. " +
                            "This is different than getServerSecurityLevel() because getServerSecurityLevel() returns the current security level of a server, which can constantly change " +
                            "due to hack(), grow(), and weaken() calls on that server. The base security level will stay the same until you reset by installing an Augmentation. <br><br>" +
                            "The argument passed in must be a string with either the hostname or IP of the target server. A server's base security is denoted by a number, typically between 1 and 100. " +
                            "<br><br>" +
-                           "<i>getServerMinSecurityLevel(hostname/ip)</i>Returns the minimum security level of a server. The argument passed in must be a string with " +
+                           "<i><u>getServerMinSecurityLevel(hostname/ip)</u></i>Returns the minimum security level of a server. The argument passed in must be a string with " +
                            "either the hostname or IP of the target server.<br><br>" +
-                           "<i>getServerRequiredHackingLevel(hostname/ip)</i><br>Returns the required hacking level of a server. The argument passed in must be a string with either the " +
+                           "<i><u>getServerRequiredHackingLevel(hostname/ip)</u></i><br>Returns the required hacking level of a server. The argument passed in must be a string with either the " +
                            "hostname or IP or the target server.<br><br>" +
-                           "<i>getServerNumPortsRequired(hostname/ip)</i><br>Returns the number of open ports required to successfully run NUKE.exe on a server. The argument " +
+                           "<i><u>getServerNumPortsRequired(hostname/ip)</u></i><br>Returns the number of open ports required to successfully run NUKE.exe on a server. The argument " +
                            "passed in must be a string with either the hostname or IP of the target server.<br><br>" +
-                           "<i>getServerRam(hostname/ip)</i><br>Returns an array with two elements that gives information about the target server's RAM. The first " +
+                           "<i><u>getServerRam(hostname/ip)</u></i><br>Returns an array with two elements that gives information about the target server's RAM. The first " +
                            "element in the array is the amount of RAM that the server has (in GB). The second element in the array is the amount of RAM that " +
                            "is currently being used on the server.<br><br>" +
-                           "<i>serverExists(hostname/ip)</i><br>Returns a boolean denoting whether or not the specified server exists. The argument " +
+                           "<i><u>serverExists(hostname/ip)</u></i><br>Returns a boolean denoting whether or not the specified server exists. The argument " +
                            "must be a string with the hostname or IP of the target server.<br><br>" +
-                           "<i>fileExists(filename, [hostname/ip])</i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " +
+                           "<i><u>fileExists(filename, [hostname/ip])</u></i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " +
                            "The first argument must be a string with the name of the file. A file can either be a script, program, or literature file. A script name is case-sensitive, but a " +
                            "program/literature file is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " +
                            "The second argument is a string with the hostname or IP of the server on which to search for the program. This second argument is optional. " +
@@ -619,7 +619,7 @@ let CONSTANTS = {
                            "Example: fileExists('ftpcrack.exe');<br><br>" +
                            "The first example above will return true if the script named 'foo.script' exists on the 'foodnstuff' server, and false otherwise. The second example above will " +
                            "return true if the current server (the server on which this function runs) contains the FTPCrack.exe program, and false otherwise. <br><br>" +
-                           "<i>isRunning(filename, hostname/ip, [args...])</i><br> Returns a boolean (true or false) indicating whether the specified script is running on a server. " +
+                           "<i><u>isRunning(filename, hostname/ip, [args...])</u></i><br> Returns a boolean (true or false) indicating whether the specified script is running on a server. " +
                            "Remember that a script is uniquely identified by both its name and its arguments. <br><br>" +
                            "The first argument must be a string with the name of the script. The script name is case sensitive. The second argument is a string with the " +
                            "hostname or IP of the target server. Any additional arguments passed to the function will specify the arguments passed into the target script. " +
@@ -631,45 +631,45 @@ let CONSTANTS = {
                            "example above will return true if there is a script named 'foo.script' with no arguments running on the current server, and false otherwise. " +
                            "The third example above will return true if there is a script named 'foo.script' with the arguments 1, 5, and 'test' running on the 'joesguns' server, and " +
                            "false otherwise.<br><br>" +
-                           "<i>getNextHacknetNodeCost()</i><br>Returns the cost of purchasing a new Hacknet Node<br><br>" +
-                           "<i>purchaseHacknetNode()</i><br>Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " +
+                           "<i><u>getNextHacknetNodeCost()</u></i><br>Returns the cost of purchasing a new Hacknet Node<br><br>" +
+                           "<i><u>purchaseHacknetNode()</u></i><br>Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number " +
                            "at the end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford to purchase " +
                            "a new Hacknet Node then the function will return false. Does NOT work offline<br><br>" +
-                           "<i>purchaseServer(hostname, ram)</i><br> Purchases a server with the specified hostname and amount of RAM. The first argument can be any data type, " +
+                           "<i><u>purchaseServer(hostname, ram)</u></i><br> Purchases a server with the specified hostname and amount of RAM. The first argument can be any data type, " +
                            "but it will be converted to a string using Javascript's String function. Anything that resolves to an empty string will cause the function to fail. " +
                            "The second argument specified the amount of RAM (in GB) for the server. This argument must resolve to a numeric and it must be a power of 2 " +
                            "(2, 4, 8, etc...). <br><br>" +
                            "This function returns the hostname of the newly purchased server as a string. If the function fails to purchase a server, then it will return " +
                            "an empty string. The function will fail if the arguments passed in are invalid or if the player does not have enough money to purchase the specified server.<br><br>" +
-                           "<i>deleteServer(hostname)</i><br>Deletes one of the servers you've purchased with the specified hostname. The function will fail if " +
+                           "<i><u>deleteServer(hostname)</u></i><br>Deletes one of the servers you've purchased with the specified hostname. The function will fail if " +
                            "there are any scripts running on the specified server. Returns true if successful and false otherwise<br><br>" +
-                           "<i>getPurchasedServers([hostname=true])</i><br>Returns an array with either the hostname or IPs of all of the servers you " +
+                           "<i><u>getPurchasedServers([hostname=true])</u></i><br>Returns an array with either the hostname or IPs of all of the servers you " +
                            "have purchased. It takes an optional parameter specifying whether the hostname or IP addresses will be returned. If this " +
                            "parameter is not specified, it is true by default and hostnames will be returned<br><br>" +
-                           "<i>round(n)</i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" +
-                           "<i>write(port, data)</i><br>Writes data to a port. The first argument must be a number between 1 and 10 that specifies the port. The second " +
+                           "<i><u>round(n)</u></i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" +
+                           "<i><u>write(port, data)</u></i><br>Writes data to a port. The first argument must be a number between 1 and 10 that specifies the port. The second " +
                            "argument defines the data to write to the port. If the second argument is not specified then it will write an empty string to the port.<br><br>" +
-                           "<i>read(port)</i><br>Reads data from a port. The first argument must be a number between 1 and 10 that specifies the port. A port is a serialized queue. " +
+                           "<i><u>read(port)</u></i><br>Reads data from a port. The first argument must be a number between 1 and 10 that specifies the port. A port is a serialized queue. " +
                            "This function will remove the first element from the queue and return it. If the queue is empty, then the string 'NULL PORT DATA' will be returned. <br><br>" +
-                           "<i>scriptRunning(scriptname, hostname/ip)</i><br>Returns a boolean indicating whether any instance of the specified script is running " +
+                           "<i><u>scriptRunning(scriptname, hostname/ip)</u></i><br>Returns a boolean indicating whether any instance of the specified script is running " +
                            "on a server, regardless of its arguments. This is different than the isRunning() function because it does not " +
                            "try to identify a specific instance of a running script by its arguments.<br><br>" +
                            "The first argument must be a string with the name of the script. The script name is case sensitive. The second argument is " +
                            "a string with the hostname or IP of the target server. Both arguments are required.<br><br>" +
-                           "<i>scriptKill(scriptname, hostname/ip)</i><br>Kills all scripts with the specified filename that are running on the server specified by the " +
+                           "<i><u>scriptKill(scriptname, hostname/ip)</u></i><br>Kills all scripts with the specified filename that are running on the server specified by the " +
                            "hostname/ip, regardless of arguments. Returns true if one or more scripts were successfully killed, and false if there were none. <br><br>" +
                            "The first argument must be a string with the name of the script. The script name is case sensitive. The second argument is " +
                            "a string with the hostname or IP of the target server. Both arguments are required.<br><br>" +
-                           "<i>getScriptRam(scriptname, hostname/ip)</i><br>Returns the amount of RAM required to run the specified script on the " +
+                           "<i><u>getScriptRam(scriptname, hostname/ip)</u></i><br>Returns the amount of RAM required to run the specified script on the " +
                            "target server. The first argument must be a string with the name of the script. The script name is case sensitive. " +
                            "The second argument is a string with the hostname or IP of the server where that script is. Both arguments are required.<br><br>" +
-                           "<i>getHackTime(hostname/ip)</i><br>Returns the amount of time in seconds it takes to execute the hack() Netscript function " +
+                           "<i><u>getHackTime(hostname/ip)</u></i><br>Returns the amount of time in seconds it takes to execute the hack() Netscript function " +
                            "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
-                           "<i>getGrowTime(hostname/ip)</i><br>Returns the amount of time in seconds it takes to execute the grow() Netscript function " +
+                           "<i><u>getGrowTime(hostname/ip)</u></i><br>Returns the amount of time in seconds it takes to execute the grow() Netscript function " +
                            "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
-                           "<i>getWeakenTime(hostname/ip)</i><br>Returns the amount of time in seconds it takes to execute the weaken() Netscript function " +
+                           "<i><u>getWeakenTime(hostname/ip)</u></i><br>Returns the amount of time in seconds it takes to execute the weaken() Netscript function " +
                            "on the server specified by the hostname/ip. The argument must be a string with the hostname/ip of the target server.<br><br>" +
-                           "<i>getScriptIncome([scriptname], [hostname/ip], [args...])</i><br>" +
+                           "<i><u>getScriptIncome([scriptname], [hostname/ip], [args...])</u></i><br>" +
                            "Returns the amount of income the specified script generates while online (when the game is open, does not apply for " +
                            "offline income). This function can also be called with no arguments. If called with no arguments, then this function " +
                            "will return an array of two values. The first value is the total income ($/sec) of all of your active scripts (currently running). " +
@@ -681,7 +681,7 @@ let CONSTANTS = {
                            "The second argument must be a string with the hostname/IP of the target server. If the first argument is specified " +
                            "then the second argument must be specified as well. Any additional arguments passed to the function will specify " +
                            "the arguments passed into the target script.<br><br>" +
-                           "<i>getScriptExpGain([scriptname], [hostname/ip], [args...])</i><br>" +
+                           "<i><u>getScriptExpGain([scriptname], [hostname/ip], [args...])</u></i><br>" +
                            "Returns the amount of hacking experience the specified script generates while online (when the game is open, does not apply for " +
                            "offline experience gains). This function can also return the total experience gain rate of all of your active scripts by running the function " +
                            "with no arguments.<br><br>" +
@@ -692,26 +692,28 @@ let CONSTANTS = {
                            "The second argument must be a string with the hostname/IP of the target server. If the first argument is specified " +
                            "then the second argument must be specified as well. Any additional arguments passed to the function will specify " +
                            "the arguments passed into the target script.<br><br>" +
-                           "<i>getTimeSinceLastAug()</i><br>" +
+                           "<i><u>getTimeSinceLastAug()</u></i><br>" +
                            "Returns the amount of time in milliseconds that have passed since you last installed Augmentations (or destroyed a BitNode).<br><br>" +
+                           "<i><u>sprintf()/vsprintf()</u></i><br>" +
+                           "<a href='https://github.com/alexei/sprintf.js' target='_blank'>See this link for details</a><br><br>" +
                            "<u><h1>Hacknet Nodes API</h1></u><br>" +
                            "Netscript provides the following API for accessing and upgrading your Hacknet Nodes through scripts. This API does NOT work offline.<br><br>" +
-                           "<i>hacknetnodes</i><br> A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " +
+                           "<i><u>hacknetnodes</u></i><br>A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " +
                            "indexes. These indexes correspond to the number at the end of the name of the Hacknet Node. For example, the first Hacknet Node you purchase " +
                            "will have the same 'hacknet-node-0' and can be accessed with hacknetnodes[0]. The fourth Hacknet Node you purchase will have the name " +
                            "'hacknet-node-3' and can be accessed with hacknetnodes[3]. <br><br>" +
-                           "<i>hacknetnodes.length</i><br>Returns the number of Hacknet Nodes that the player owns<br><br>" +
-                           "<i>hacknetnodes[i].level</i><br>Returns the level of the corresponding Hacknet Node<br><br>" +
-                           "<i>hacknetnodes[i].ram</i><br>Returns the amount of RAM on the corresponding Hacknet Node<br><br>" +
-                           "<i>hacknetnodes[i].cores</i><br>Returns the number of cores on the corresponding Hacknet Node<br><br>" +
-                           "<i>hacknetnodes[i].totalMoneyGenerated</i><br>Returns the total amount of money that the corresponding Hacknet Node has earned<br><br>" +
-                           "<i>hacknetnodes[i].onlineTimeSeconds</i><br>Returns the total amount of time that the corresponding Hacknet Node has existed<br><br>" +
-                           "<i>hacknetnodes[i].moneyGainRatePerSecond</i><br>Returns the income ($ / sec) that the corresponding Hacknet Node earns<br><br>" +
-                           "<i>hacknetnodes[i].upgradeLevel(n)</i><br>Tries to upgrade the level of the corresponding Hacknet Node n times. The argument n must be a " +
+                           "<i><u>hacknetnodes.length</u></i><br>Returns the number of Hacknet Nodes that the player owns<br><br>" +
+                           "<i><u>hacknetnodes[i].level</u></i><br>Returns the level of the corresponding Hacknet Node<br><br>" +
+                           "<i><u>hacknetnodes[i].ram</u></i><br>Returns the amount of RAM on the corresponding Hacknet Node<br><br>" +
+                           "<i><u>hacknetnodes[i].cores</u></i><br>Returns the number of cores on the corresponding Hacknet Node<br><br>" +
+                           "<i><u>hacknetnodes[i].totalMoneyGenerated</u></i><br>Returns the total amount of money that the corresponding Hacknet Node has earned<br><br>" +
+                           "<i><u>hacknetnodes[i].onlineTimeSeconds</u></i><br>Returns the total amount of time that the corresponding Hacknet Node has existed<br><br>" +
+                           "<i><u>hacknetnodes[i].moneyGainRatePerSecond</u></i><br>Returns the income ($ / sec) that the corresponding Hacknet Node earns<br><br>" +
+                           "<i><u>hacknetnodes[i].upgradeLevel(n)</u></i><br>Tries to upgrade the level of the corresponding Hacknet Node n times. The argument n must be a " +
                            "positive integer. Returns true if the Hacknet Node's level is successfully upgraded n times or up to the max level (200), and false otherwise.<br><br>" +
-                           "<i>hacknetnodes[i].upgradeRam()</i><br>Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " +
+                           "<i><u>hacknetnodes[i].upgradeRam()</u></i><br>Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the " +
                            "RAM is successfully upgraded, and false otherwise. <br><br>" +
-                           "<i>hacknetnodes[i].upgradeCore()</i><br>Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " +
+                           "<i><u>hacknetnodes[i].upgradeCore()</u></i><br>Attempts to purchase an additional core for the corresponding Hacknet Node. Returns true if the " +
                            "additional core is successfully purchase, and false otherwise. <br><br>" +
                            "Example: The following is an example of one way a script can be used to automate the purchasing and upgrading of Hacknet Nodes. " +
                            "This script purchases new Hacknet Nodes until the player has four. Then, it iteratively upgrades each of those four Hacknet Nodes " +
@@ -738,25 +740,53 @@ let CONSTANTS = {
                            "&nbsp;&nbsp;&nbsp;&nbsp;}<br>" +
                            "}<br><br>" +
                            "<u><h1>Trade Information eXchange (TIX) API</h1></u><br>" +
-                           "<i>getStockPrice(sym)</i><br>Returns the price of a stock. The argument passed in must be the stock's symbol (NOT THE COMPANY NAME!). The symbol " +
+                           "<i><u>getStockPrice(sym)</u></i><br>Returns the price of a stock. The argument passed in must be the stock's symbol (NOT THE COMPANY NAME!). The symbol " +
                            "is a sequence of two to four capital letters. The symbol argument must be a string. <br><br>" +
                            "Example: getStockPrice('FSIG');<br><br>" +
-                           "<i>getStockPosition(sym)</i><br>Returns an array of two elements that represents the player's position in a stock. The first element " +
+                           "<i><u>getStockPosition(sym)</u></i><br>Returns an array of two elements that represents the player's position in a stock. The first element " +
                            "in the array is the number of shares the player owns of the specified stock. The second element in the array is the average price of the player's " +
                            "shares. Both elements are numbers. The argument passed in must be the stock's symbol, which is a sequence of two to four capital letters.<br><br>" +
                            "Example: <br><br>pos = getStockPosition('ECP');<br>shares = pos[0];<br>avgPx = pos[1];<br><br>"+
-                           "<i>buyStock(sym, shares)</i><br>Attempts to purchase shares of a stock. The first argument must be a string with the stock's symbol. The second argument " +
+                           "<i><u>buyStock(sym, shares)</u></i><br>Attempts to purchase shares of a stock using a Market Order. The first argument must be a string with the stock's symbol. The second argument " +
                            "must be the number of shares to purchase.<br><br>" +
                            "If the player does not have enough money to purchase specified number of shares, then no shares will be purchased (it will not purchase the most you can afford). " +
                            "Remember that every transaction on the stock exchange costs a certain commission fee.<br><br>" +
                            "The function will return true if it successfully purchases the specified number of shares of stock, and false otherwise.<br><br>" +
-                           "<i>sellStock(sym, shares)</i><br>Attempts to sell shares of a stock. The first argument must be a string with the stock's symbol. The second argument " +
+                           "<i><u>sellStock(sym, shares)</u></i><br>Attempts to sell shares of a stock using a Market Order. The first argument must be a string with the stock's symbol. The second argument " +
                            "must be the number of shares to sell.<br><br>" +
                            "If the specified number of shares in the function exceeds the amount that the player actually owns, then this function will sell all owned shares. " +
                            "Remember that every transaction on the stock exchange costs a certain commission fee.<br><br>" +
                            "The net profit made from selling stocks with this function is reflected in the script's statistics. This net profit is calculated as: <br><br>" +
                            "shares * (sell price - average price of purchased shares)<br><br>" +
                            "This function will return true if the shares of stock are successfully sold and false otherwise.<br><br>" +
+                           "<i><u>shortStock(sym, shares)</u></i><br>" +
+                           "Attempts to purchase a short position of a stock using a Market Order. The first argument must be a string with the stock's symbol. The second argument " +
+                           "must be the number of shares to purchase.<br><br>" +
+                           "In order to use this function the player must be in BitNode-8 or must have Level 2 of Source-File 8.<br><br>" +
+                           "If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember that every " +
+                           "every transaction on the stock exchange costs a certain commission fee.<br><br>" +
+                           "Returns true if it successfully shorts the stock with the specified number of shares, and false otherwise.<br><br>" +
+                           "<i><u>sellShort(sym, shares)</u></i><br>" +
+                           "Attempts to sell a short position of a stock using a Market Order. The first argument must be a string with the stock's symbol. The second argument must be the " +
+                           "number of shares to sell.<br><br>" +
+                           "In order to use this function the player must be in BitNode-8 or must have Level 2 of Source-File 8.<br><br>" +
+                           "If the specified number of shares exceeds the amount that the player actually owns, then this function will sell all owned shares. " +
+                           "Remember that every transaction on the stock exchange costs a certain commission fee.<br><br>" +
+                           "This function returns true if it successfully sells any number of shares, and false otherwise.<br><br>" +
+                           "<i><u>placeOrder(sym, shares, price, type, pos)</u></i><br>" +
+                           "Places an order on the stock market. This function only works for Limit and Stop Orders. Use the buyStock/sellStock/shortStock/sellShort functions " +
+                           "to place Market Orders. In order to use this function the player must be in BitNode-8 or must have Level 3 of Source-File 8.<br><br>" +
+                           "The 'sym' argument must be a string with the symbol of the stock. The 'shares' and 'price' arguments " +
+                           "specify the number of shares and the execution price for the order. They must be numeric.<br><br>" +
+                           "The 'type' argument is a string that specifies the type of order. It must specify either 'limit' or 'stop', and must " +
+                           "also specify 'buy' or 'sell'. This argument is NOT case-sensitive. Here are four examples that will work: <br><br>" +
+                           "limitbuy, limitsell, stopbuy, stopsell<br><br>" +
+                           "The last argument, 'pos', is a string that specifies whether the order is a 'Long' or 'Short' position. The values 'L' and " +
+                           "'S' can also be used. This argument is NOT case-sensitive.<br><br>" +
+                           "Returns true if the order is successfully placed, and false otherwise.<br><br>" +
+                           "<i><u>cancelOrder(sym, shares, price, type, pos)</u></i><br>" +
+                           "Cancels an oustanding order on the stock market. In order to use this function the player must be in BitNode-8 or must have " +
+                           "Level 3 of Source-File 8. This function uses the same arguments as placeOrder()<br><br>" +
                            "<u><h1>While loops </h1></u><br>" +
                            "A while loop is a control flow statement that repeatedly executes code as long as a condition is met. <br><br> " +
                            "<i>while (<i>[cond]</i>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<i>[code]</i><br>}</i><br><br>" +
@@ -800,7 +830,7 @@ let CONSTANTS = {
                                         "then you will be able to access all of the Singularity Functions.<br><br>" +
                                         "Note that Singularity Functions require a lot of RAM outside of BitNode-4 (their RAM costs are multiplied by " +
                                         "10 if you are not in BitNode-4).<br><br>" +
-                                        "<i>universityCourse(universityName, courseName)</i><br>" +
+                                        "<i><u>universityCourse(universityName, courseName)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will automatically set you to start taking a course at a university. If you are already " +
                                         "in the middle of some 'working' action (such as working at a company, for a faction, or on a program), " +
@@ -814,7 +844,7 @@ let CONSTANTS = {
                                         "The cost and experience gains for all of these universities and classes are the same as if you were to manually " +
                                         "visit and take these classes.<br><br>" +
                                         "This function will return true if you successfully start taking the course, and false otherwise.<br><br>" +
-                                        "<i>gymWorkout(gymName, stat)</i><br>" +
+                                        "<i><u>gymWorkout(gymName, stat)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will automatically set you to start working out at a gym to train a particular stat. If you are " +
                                         "already in the middle of some 'working' action (such as working at a company, for a faction, or on a program), then " +
@@ -826,18 +856,18 @@ let CONSTANTS = {
                                         "The valid stats are:<br><br>strength OR str<br>defense OR def<br>dexterity OR dex<br>agility OR agi<br><br>" +
                                         "The cost and experience gains for all of these gyms are the same as if you were to manually visit these gyms and train " +
                                         "This function will return true if you successfully start working out at the gym, and false otherwise.<br><br>" +
-                                        "<i>travelToCity(cityname)</i><br>" +
+                                        "<i><u>travelToCity(cityname)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function allows the player to travel to any city. The cost for using this function is the same as the cost for traveling through the Travel Agency.<br><br>" +
                                         "The argument passed into this must be a string with the name of the city to travel to. Note that this argument IS CASE SENSITIVE. The valid cities are:<br><br>" +
                                         "Aevum<br>Chongqing<br>Sector-12<br>New Tokyo<br>Ishima<br>Volhaven<br><br>" +
                                         "This function will return true if you successfully travel to the specified city and false otherwise.<br><br>" +
-                                        "<i>purchaseTor()</i><br>" +
+                                        "<i><u>purchaseTor()</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this " +
                                         "function is the same as if you were to manually purchase one.<br><br>" +
                                         "This function will return true if it successfully purchase a TOR router and false otherwise.<br><br>" +
-                                        "<i>purchaseProgram(programName)</i><br>" +
+                                        "<i><u>purchaseProgram(programName)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function.<br><br>" +
                                         "The argument passed in must be a string with the name of the program (including the '.exe' extension). This argument is " +
@@ -846,29 +876,29 @@ let CONSTANTS = {
                                         "The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web (using " +
                                         "the buy Terminal command).<br><br>" +
                                         "This function will return true if the specified program is purchased, and false otherwise.<br><br>" +
-                                        "<i>getStats()</i><br>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this " +
+                                        "<i><u>getStats()</u></i><br>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this " +
                                         "function.<br><br>Returns an object with the Player's stats. The object has the following properties:<br><br>" +
                                         "Player.hacking<br>Player.strength<br>Player.defense<br>Player.dexterity<br>Player.agility<br>Player.charisma<br>Player.intelligence<br><br>" +
                                         "Example: <br><br>" +
                                         "res = getStats();<br>print('My charisma level is: ' + res.charisma);<br><br>" +
-                                        "<i>isBusy()</i><br>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this " +
+                                        "<i><u>isBusy()</u></i><br>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this " +
                                         "function.<br><br>Returns a boolean indicating whether or not the player is currently performing an 'action'. " +
                                         "These actions include working for a company/faction, studying at a univeristy, working out at a gym, " +
                                         "creating a program, or committing a crime.<br><br>" +
-                                        "<i>upgradeHomeRam()</i><br>" +
+                                        "<i><u>upgradeHomeRam()</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will upgrade amount of RAM on the player's home computer. The cost is the same as if you were to do it manually.<br><br>" +
                                         "This function will return true if the player's home computer RAM is successfully upgraded, and false otherwise.<br><br>" +
-                                        "<i>getUpgradeHomeRamCost()</i><br>" +
+                                        "<i><u>getUpgradeHomeRamCost()</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "Returns the cost of upgrading the player's home computer RAM.<br><br>" +
-                                        "<i>workForCompany()</i><br>" +
+                                        "<i><u>workForCompany()</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will automatically set you to start working at the company at which you are employed. If you are already " +
                                         "in the middle of some 'working' action (such as working for a faction, training at a gym, or creating a program), then " +
                                         "running this function will automatically cancel that action and give you your earnings.<br><br>" +
                                         "This function will return true if the player starts working, and false otherwise.<br><br>" +
-                                        "<i>applyToCompany(companyName, field)</i><br>" +
+                                        "<i><u>applyToCompany(companyName, field)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will automatically try to apply to the specified company for a position in the specified field. This " +
                                         "function can also be used to apply for promotions by specifying the company and field you are already employed at.<br><br>" +
@@ -879,19 +909,19 @@ let CONSTANTS = {
                                         "security<br>agent<br>employee<br>part-time employee<br>waiter<br>part-time waiter<br><br>" +
                                         "This function will return true if you successfully get a job/promotion, and false otherwise. Note " +
                                         "that if you are trying to use this function to apply for a promotion and you don't get one, it will return false.<br><br>" +
-                                        "<i>getCompanyRep(companyName)</i><br>" +
+                                        "<i><u>getCompanyRep(companyName)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will return the amount of reputation you have at the specified company. If the company passed in as " +
                                         "an argument is invalid, -1 will be returned.<br><br>" +
                                         "The argument passed in must be a string with the name of the company. This argument IS CASE-SENSITIVE.<br><br>" +
-                                        "<i>checkFactionInvitations()</i><br>" +
+                                        "<i><u>checkFactionInvitations()</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "Returns an array with the name of all Factions you currently have oustanding invitations from.<br><br>" +
-                                        "<i>joinFaction(name)</i><br>" +
+                                        "<i><u>joinFaction(name)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will automatically accept an invitation from a faction and join it.<br><br>" +
                                         "The argument must be a string with the name of the faction. This name IS CASE-SENSITIVE.<br><br>" +
-                                        "<i>workForFaction(factionName, workType)</i><br>" +
+                                        "<i><u>workForFaction(factionName, workType)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will automatically set you to start working for the specified Faction. Obviously, you " +
                                         "must be a member of the Faction or else this function will fail. If you are already in the middle of " +
@@ -901,11 +931,11 @@ let CONSTANTS = {
                                         "must be a string with the type of work you want to perform for the faction. The valid values for this argument are:<br><br>" +
                                         "<br>hacking/hacking contracts/hackingcontracts<br>field/fieldwork/field work<br>security/securitywork/security work<br><br>" +
                                         "This function will return true if you successfully start working for the specified faction, and false otherwise.<br><br>" +
-                                        "<i>getFactionRep(factionName)</i><br>" +
+                                        "<i><u>getFactionRep(factionName)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function returns the amount of reputation you have for the specified Faction. The argument must be a " +
                                         "string with the name of the Faction. The argument IS CASE-SENSITIVE.<br><br>" +
-                                        "<i>createProgram(programName)</i><br>" +
+                                        "<i><u>createProgram(programName)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will automatically set you to start working on creating the specified program. If you are already in " +
                                         "the middle of some 'working' action (such as working for a company, training at a gym, or taking a course), then " +
@@ -916,7 +946,7 @@ let CONSTANTS = {
                                         "BruteSSH.exe: 50<br>FTPCrack.exe: 100<br>relaySMTP.exe: 250<br>HTTPWorm.exe: 500<br>SQLInject.exe: 750<br>" +
                                         "DeepscanV1.exe: 75<br>DeepscanV2.exe: 400<br>ServerProfiler.exe: 75<br>AutoLink.exe: 25<br><br>" +
                                         "This function returns true if you successfully start working on the specified program, and false otherwise.<br><br>" +
-                                        "<i>commitCrime(crime)</i><br>" +
+                                        "<i><u>commitCrime(crime)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function is used to automatically attempt to commit crimes. If you are already in the middle of some 'working' " +
                                         "action (such as working for a company or training at a gym), then running this function will automatically cancel " +
@@ -925,40 +955,41 @@ let CONSTANTS = {
                                         "lenient in terms of what inputs it accepts. Here is a list of valid inputs for all of the crimes:<br><br>" +
                                         "shoplift, rob store, mug, larceny, deal drugs, bond forgery, traffick arms, homicide, grand theft auto, " +
                                         "kidnap, assassinate, heist<br><br> " +
+                                        "Crimes committed using this function will have all of their earnings halved (this applies for both money and experience!)<br><br>" +
                                         "This function returns the number of seconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt " +
                                         "the 'Rob Store' crime, so running commitCrime('rob store') will return 60). Warning: I do not recommend using the time " +
                                         "returned from this function to try and schedule your crime attempts. Instead, I would use the isBusy() Singularity function " +
                                         "to check whether you have finished attempting a crime. This is because although the game sets a certain crime to be X amount of seconds, " +
                                         "there is no guarantee that your browser will follow that time limit.<br><br>" +
-                                        "<i>getCrimeChance(crime)</i><br>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to " +
+                                        "<i><u>getCrimeChance(crime)</u></i><br>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to " +
                                         "use this function.<br><br>" +
                                         "This function returns your chance of success at commiting the specified crime. The chance is returned as a decimal " +
                                         "(i.e. 60% would be returned as 0.6). The argument for this function is a string. It is not case-sensitive and is fairly " +
                                         "lenient in terms of what inputs it accepts. Check the documentation for the commitCrime() Singularity Function to see " +
                                         "examples of valid inputs.<br><br>" +
-                                        "<i>getOwnedAugmentations(purchased=false)</i><br>" +
+                                        "<i><u>getOwnedAugmentations(purchased=false)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function returns an array of the names of all Augmentations you own as strings. It takes a single optional " +
                                         "boolean argument that specifies whether the returned array should include Augmentations you have purchased " +
                                         "but not yet installed. If it is true, then the returned array will include these Augmentations. By default, " +
                                         "this argument is false.<br><br>" +
-                                        "<i>getAugmentationsFromFaction(facName)</i><br>" +
+                                        "<i><u>getAugmentationsFromFaction(facName)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction. " +
                                         "The argument must be a string with the faction's name. This argument is case-sensitive.<br><br>" +
-                                        "<i>getAugmentationCost(augName)</i><br>" +
+                                        "<i><u>getAugmentationCost(augName)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function returns an array with two elements that gives the cost for the specified Augmentation" +
                                         ". The first element in the returned array is the reputation requirement of the Augmentation, and the second element " +
                                         "is the money cost.<br><br>" +
                                         "The argument passed in must be a string with the name of the Augmentation. This argument IS CASE-SENSITIVE. " +
                                         "If an invalid Augmentation name is passed in, this function will return the array [-1, -1].<br><br>" +
-                                        "<i>purchaseAugmentation(factionName, augName)</i><br>" +
+                                        "<i><u>purchaseAugmentation(factionName, augName)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will try to purchase the specified Augmentation through the given Faction.<br><br>" +
                                         "The two arguments must be strings specifying the name of the Faction and Augmentation, respectively. These arguments are both CASE-SENSITIVE.<br><br>" +
                                         "This function will return true if the Augmentation is successfully purchased, and false otherwise.<br><br>" +
-                                        "<i>installAugmentations(cbScript)</i><br>" +
+                                        "<i><u>installAugmentations(cbScript)</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will automatically install your Augmentations, resetting the game as usual.<br><br>" +
                                         "It will return true if successful, and false otherwise.<br><br>" +
@@ -1065,27 +1096,10 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.31.0<br>" +
-    "-Game now saves to IndexedDb (if your browser supports it). This means you should " +
-    "no longer have trouble saving the game when your save file gets too big (from running " +
-    "too many scripts). " +
-    "The game will still be saved to localStorage as well<br>" +
-    "-New file type: text files (.txt). You can read or write to text files using the read()/write() Netscript commands. " +
-    "You can view text files in Terminal using 'cat'. Eventually I will make it so you can edit them in the editor " +
-    "but that's not available yet. You can also download files to your real computer using the 'download' Terminal command<br>" +
-    "-Added a new Crime: Bond Forgery. This crime takes 5 minutes to attempt " +
-    "and gives $4,500,000 if successful. It is meant for mid game.<br>" +
-    "-Added commitCrime(), getCrimeChance(), isBusy(), and getStats() Singularity Functions.<br>" +
-    "-Removed getIntelligence() Netscript function<br>" +
-    "-Added sprintf and vsprintf to Netscript. See <a href='https://github.com/alexei/sprintf.js' target='_blank'>this Github page for details</a><br>" +
-    "-Increased the amount of money gained from Infiltration by 20%, and the amount of faction reputation by 12%<br>" +
-    "-Rebalanced BitNode-2 so that Crime and Infiltration are more profitable but hacking is less profitable. Infiltration also gives more faction rep<br>" +
-    "-Rebalanced BitNode-4 so that hacking is slightly less profitable<br>" +
-    "-Rebalanced BitNode-5 so that Infiltration is more profitable and gives more faction rep<br>" +
-    "-Rebalanced BitNode-11 so that Crime and Infiltration are more profitable. Infiltration also gives more faction rep.<br>" +
-    "-Fixed an annoying issue in Hacking Missions where sometimes you would click a Node but it wouldnt actually get selected<br>" +
-    "-Made the Hacking Mission gameplay a bit slower by lowering the effect of Scan and reducing Attack damage<br>" +
-    "-Slightly increased the base reputation gain rate for factions when doing Field Work and Security Work<br>"
+    "v0.32.0<br>" +
+    "-Released BitNode-8: Ghost of Wall Street<br>" +
+    "-Re-designed Stock Market UI<br>" +
+    "-Minor bugfixes<br>"
 }
 
 export {CONSTANTS};

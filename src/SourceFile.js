@@ -44,7 +44,12 @@ function initSourceFiles() {
                                                    "Level 3: 7%");
     SourceFiles["SourceFile6"] = new SourceFile(6);
     SourceFiles["SourceFile7"] = new SourceFile(7);
-    SourceFiles["SourceFile8"] = new SourceFile(8);
+    SourceFiles["SourceFile8"] = new SourceFile(8, "This Source-File grants the following benefits:<br><br>" +
+                                                   "Level 1: Permanent access to WSE and TIX API<br>" +
+                                                   "Level 2: Ability to short stocks in other BitNodes<br>" +
+                                                   "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
+                                                   "This Source-File also increases your hacking growth multipliers by: " +
+                                                   "<br>Level 1: 8%<br>Level 2: 12%<br>Level 3: 14%");
     SourceFiles["SourceFile9"] = new SourceFile(9);
     SourceFiles["SourceFile10"] = new SourceFile(10);
     SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so that company favor increases BOTH the player's salary and reputation gain rate " +
@@ -130,6 +135,14 @@ function applySourceFile(srcFile) {
             Player.hacking_grow_mult    *= incMult;
             Player.hacking_mult         *= incMult;
             Player.hacking_exp_mult     *= incMult;
+            break;
+        case 8: //Ghost of Wall Street
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (8 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            Player.hacking_grow_mult    *= incMult;
             break;
         case 11: //The Big Crash
             var mult = 0;

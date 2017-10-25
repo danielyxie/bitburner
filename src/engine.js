@@ -376,8 +376,8 @@ let Engine = {
     loadStockMarketContent: function() {
         Engine.hideAllContent();
         Engine.Display.stockMarketContent.style.visibility = "visible";
-        displayStockMarketContent();
         Engine.currentPage = Engine.Page.StockMarket;
+        displayStockMarketContent();
     },
 
     loadGangContent: function() {
@@ -988,7 +988,6 @@ let Engine = {
         }
 
         if (Engine.Counters.sCr <= 0) {
-            //Assume 4Sig will always indicate state of market
             if (Player.hasWseAccount) {
                 stockMarketCycle();
             }

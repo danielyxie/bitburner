@@ -445,7 +445,8 @@ a:link, a:visited {
     margin-left: 5%;
     display: none;
     background-color: #555;
-    overflow:auto;
+    overflow-y:auto;
+    overflow-x:none;
 }
 
 .accordion-panel div,

@@ -13,7 +13,7 @@ import {Factions, Faction,
         displayFactionContent}                  from "./Faction.js";
 import {Gang, resetGangs}                       from "./Gang.js";
 import {Locations}                              from "./Location.js";
-import {hasBn11SF}                              from "./NetscriptFunctions.js";
+import {hasBn11SF, hasWallStreetSF}             from "./NetscriptFunctions.js";
 import {AllServers, Server, AddToAllServers}    from "./Server.js";
 import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps.js";
 import {SourceFiles, applySourceFile}           from "./SourceFile.js";
@@ -366,6 +366,13 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     //Reset Stock market
     this.hasWseAccount = false;
     this.hasTixApiAccess = false;
+
+    //BitNode 8: Ghost of Wall Street
+    if (this.bitNodeN === 8) {this.money = new Decimal(100000000);}
+    if (this.bitNodeN === 8 || hasWallStreetSF) {
+        this.hasWseAccount = true;
+        this.hasTixApiAccess = true;
+    }
 
     this.playtimeSinceLastAug = 0;
     this.scriptProdSinceLastAug = 0;

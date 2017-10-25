@@ -605,7 +605,7 @@ function displayFactionContent(factionName) {
     }
 
 	if (faction.isMember) {
-        if (faction.favor >= 150) {
+        if (faction.favor >= (150 * BitNodeMultipliers.RepToDonateToFaction)) {
             donateDiv.style.display = "inline";
         } else {
             donateDiv.style.display = "none";
