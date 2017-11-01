@@ -4,7 +4,8 @@ import {addActiveScriptsItem,
 import {CONSTANTS}                          from "./Constants.js";
 import {Engine}                             from "./engine.js";
 import {Environment}                        from "./NetscriptEnvironment.js";
-import {evaluate, isScriptErrorMessage}     from "./NetscriptEvaluator.js";
+import {evaluate, isScriptErrorMessage,
+        killNetscriptDelay}                 from "./NetscriptEvaluator.js";
 import {AllServers}                         from "./Server.js";
 import {Settings}                           from "./Settings.js";
 
@@ -24,7 +25,8 @@ function WorkerScript(runningScriptObj) {
 	this.scriptRef		= runningScriptObj;
     this.errorMessage   = "";
     this.args           = runningScriptObj.args;
-    this.killTrigger    = function() {}; //CB func used to clear any delays (netscriptDelay())
+    //this.killTrigger    = function() {}; //CB func used to clear any delays (netscriptDelay())
+    this.delay          = null;
     this.fnWorker       = null; //Workerscript for a function call
 }
 
@@ -93,7 +95,7 @@ function runScriptsLoop() {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
 			try {
 				var ast = parse(workerScripts[i].code);
-                //console.log(ast);
+                console.log(ast);
 			} catch (e) {
                 console.log("Error parsing script: " + workerScripts[i].name);
                 dialogBoxCreate("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
@@ -110,8 +112,8 @@ function runScriptsLoop() {
 				w.running = false;
 				w.env.stopFlag = true;
                 w.scriptRef.log("Script finished running");
-			}, function(w) {
-                //console.log(w);
+			}).catch(function(w) {
+                console.log(w);
 				if (w instanceof Error) {
                     dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
 					console.log("ERROR: Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
@@ -165,11 +167,16 @@ function killWorkerScript(runningScriptObj, serverIp) {
 		if (workerScripts[i].name == runningScriptObj.filename && workerScripts[i].serverIp == serverIp &&
             compareArrays(workerScripts[i].args, runningScriptObj.args)) {
 			workerScripts[i].env.stopFlag = true;
-            workerScripts[i].killTrigger();
+            killNetscriptDelay(workerScripts[i]);
+            if (workerScripts[i].fnWorker) {
+                workerScripts[i].fnWorker.env.stopFlag = true;
+                killNetscriptDelay(workerScripts[i].fnWorker);
+            }
+            /*workerScripts[i].killTrigger();
             if (workerScripts[i].fnWorker) {
                 workerScripts[i].fnWorker.env.stopFlag = true;
                 workerScripts[i].fnWorker.killTrigger();
-            }
+            }*/
             return true;
 		}
 	}

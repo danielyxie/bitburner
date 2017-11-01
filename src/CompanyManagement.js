@@ -1,3 +1,6 @@
+import {Locations}                              from "./src/Location.js";
+import {getRandomInt}                           from "../utils/HelperFunctions.js";
+
 /*
 Products
     For certain industries, players can creat their own custom products
@@ -204,3 +207,201 @@ Industries:
         will fluctuate based on company performance. Then you can sell whatever
         shares you have left on the stock market.
 */
+var TOTALSHARES = 1000000000; //Total number of shares you have at your company
+
+var Materials = {
+    Water: 11,
+    Energy: 12,
+    Food: 13,
+    Plants: 14,
+    Metal: 15,
+    Hardware: 16,
+    Chemicals: 17,
+    RealEstate: 18,
+    Drugs: 19,
+    Robots: 20,
+    AICores:21,
+    SciResearch: 22
+}
+
+function Material(params={}) {
+    this.name = params.name ? params.name : "";
+    this.qty = 0;
+    this.qlt = 0;
+    this.dmd = 0;
+    this.cmp = 0;
+    this.mku = 0;
+
+    //How much space it takes in a Warehouse
+    this.siz = params.size ? params.size : 0;
+
+    this.purc = 0; //How much of this material is being purchased per second
+    this.cost = 0; //$ Cost per material
+
+    this.req = params.req ? params.req : [];
+}
+
+function Product(params={}) {
+    "use strict"
+    this.name = params.name         ? params.name           : 0;
+    this.dmd = params.demand        ? params.demand         : 0;
+    this.cmp = params.competition   ? params.competition    : 0;
+    this.mku = params.markup        ? params.markup         : 0;
+    this.qlt = params.quality       ? params.quality        : 0;
+    this.qty = 0;
+    this.per = params.performance   ? params.performance    : 0;
+    this.dur = params.durability    ? params.durability     : 0;
+    this.rel = params.reliability   ? params.reliability    : 0;
+    this.aes = params.aesthetics    ? params.aesthetics     : 0;
+    this.fea = params.features      ? params.features       : 0;
+    this.loc = params.location      ? params.location       : "";
+    this.siz = params.size          ? params.size           : 0; //How much space it takes in the warehouse
+
+    //Material requirements. An object that maps the name of a material to how much it requires
+    this.req = params.req           ? params.req            : {};
+}
+
+var Industries = {
+    Energy: 50,
+    Utilities: 51,
+    Agriculture: 52,
+    Fishing: 53,
+    Mining: 54,
+    Food: 55,
+    Tobacco: 56,
+    Chemical: 57,
+    Pharmaceutical: 58,
+    Computer: 59,
+    Robotics: 60,
+    Software: 61,
+    Healthcare: 62,
+    RealEstate: 63,
+}
+
+function Industry(params={}) {
+    "use strict"
+    this.offices = { //Maps locations to offices. 0 if no office at that location
+        Locations.Aevum: 0,
+        Locations.Chonqing: 0,
+        Locations.Sector12: 0,
+        Locations.NewTokyo: 0,
+        Locations.Ishima: 0,
+        Locations.Volhaven: 0
+    };
+
+    this.warehouses = { //Maps locations to warehouses. 0 if no warehouse at that location
+        Locations.Aevum: 0,
+        Locations.Chonqing: 0,
+        Locations.Sector12: 0,
+        Locations.NewTokyo: 0,
+        Locations.Ishima: 0,
+        Locations.Volhaven: 0
+    };
+
+    this.type   = params.type       ? params.type   : 0;
+    this.materials = {};
+    this.products = {};
+
+    this.awareness      = 0;
+    this.popularity     = 0;
+    this.startingCost   = 0;
+
+    /* The following are factors for how much production/other things are increased by
+       different factors. The production increase always has diminishing returns,
+       and they are all reprsented by inverse exponentials.
+       The number for these properties represent the denominator in the inverse
+       exponential (aka higher number = more diminishing returns); */
+    this.reFac      = 0; //Real estate Factor
+    this.sciFac     = 0; //Scientific Research Factor
+    this.hwFac      = 0; //Hardware factor
+    this.robFac     = 0; //Robotics Factor
+    this.aiFac      = 0; //AI Cores factor;
+    this.advFac     = 0; //Advertising factor
+
+    this.init();
+}
+
+Industry.prototype.init = function() {
+    //Set the unique properties of an industry (how much its affected by real estate/scientific research, etc.)
+    switch (this.type) {
+        case Industries.Energy:
+            break;
+        case Industries.Utilities:
+            break;
+        case Industries.Agriculture:
+            break;
+    }
+}
+
+var EmployeePositions = {
+    Operations: 1,
+    Engineer: 2,
+    Business: 3,
+    Accounting: 4,
+    Management: 5,
+    RandD: 6
+}
+
+function Employee(params={}) {
+    "use strict"
+    if (!(this instanceof Employee)) {
+        return new Employee(params);
+    }
+    this.name   = params.name           ? params.name           : "Bobby";
+    this.mor    = params.morale         ? params.morale         : getRandomInt(50, 100);
+    this.hap    = params.happiness      ? params.happiness      : getRandomInt(50, 100);
+    this.ene    = params.energy         ? params.energy         : getRandomInt(50, 100);
+    this.age    = params.age            ? params.age            : getRandomInt(20, 50);
+    this.int    = params.intelligence   ? params.intelligence   : getRandomInt(10, 50);
+    this.cha    = params.charisma       ? params.charisma       : getRandomInt(10, 50);
+    this.exp    = params.experience     ? params.experience     : getRandomInt(10, 50);
+    this.cre    = params.creativity     ? params.creativity     : getRandomInt(10, 50);
+    this.eff    = params.efficiency     ? params.efficiency     : getRandomInt(10, 50);
+    this.sal    = params.salary         ? params.salary         : getRandomInt(0.1, 5);
+    this.pro    = 0; //Calculated
+
+    this.off    = params.officeSpace    ? params.officeSpace : {};
+    this.loc    = params.officeSpace    ? params.officeSpace.loc : "";
+    this.pos    = 0;
+}
+
+var OfficeSpaceTiers = {
+    Basic: 7,
+    Enhanced: 8,
+    Luxurious: 9,
+    Extravagant: 10
+}
+
+function OfficeSpace(params={}) {
+    "use strict"
+    this.loc    = params.loc        ? params.loc        : "";
+    this.cost   = params.cost       ? params.cost       : 1;
+    this.size   = params.size       ? params.size       : 1;
+    this.comf   = params.comfort    ? params.comfort    : 1;
+    this.beau   = parms.beauty      ? params.beauty     : 1;
+    this.tier   = OfficeSpaceTiers.Basic;
+    this.employees = [];
+}
+
+function Warehouse(params={}) {
+    "use strict"
+    this.loc    = params.loc        ? params.loc    : "";
+    this.size   = params.size       ? params.size   : 0;
+
+    this.materials  = {};
+    this.products   = {};
+}
+
+function Company() {
+    "use strict"
+
+    this.industries = [];
+
+    //Financial stats
+    this.funds      = 0;
+    this.revenue    = 0;
+    this.expenses   = 0;
+    this.valuation  = 0; //Private investory valuation of company before you go public.
+    this.numShares  = TOTALSHARES;
+    this.sharePrice = 0;
+}

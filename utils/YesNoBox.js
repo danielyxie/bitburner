@@ -22,6 +22,7 @@ function yesNoBoxGetNoButton() {
 }
 
 function yesNoBoxCreate(txt) {
+    if (yesNoBoxOpen) {return false;}   //Already open
     yesNoBoxOpen = true;
     var textElement = document.getElementById("yes-no-box-text");
     if (textElement) {
@@ -34,6 +35,7 @@ function yesNoBoxCreate(txt) {
     } else {
         console.log("ERROR: Container not found for YesNoBox");
     }
+    return true;
 }
 
 /* Generic Yes-No POp-up Box with Text input */

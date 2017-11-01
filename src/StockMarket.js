@@ -367,7 +367,7 @@ function initStockMarket() {
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.6, true, 20, getRandomInt(500, 1000));
+    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.6, true, 15, getRandomInt(500, 1000));
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";
@@ -408,8 +408,8 @@ function stockMarketCycle() {
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
             var stock = StockMarket[name];
-            var thresh = 0.6;
-            if (stock.b) {thresh = 0.4;}
+            var thresh = 0.59;
+            if (stock.b) {thresh = 0.41;}
             if (Math.random() < thresh) {
                 stock.b = !stock.b;
             }
@@ -832,6 +832,8 @@ function createStockTicker(stock) {
         orderTypeSelect = document.createElement("select"),
         buyButton = document.createElement("span"),
         sellButton = document.createElement("span"),
+        buyMaxButton = document.createElement("span"),
+        sellAllButton = document.createElement("span"),
         positionTxt = document.createElement("p"),
         orderList = document.createElement("ul");
 
@@ -952,6 +954,76 @@ function createStockTicker(stock) {
         return false;
     });
 
+    buyMaxButton.classList.add("stock-market-input");
+    buyMaxButton.classList.add("a-link-button");
+    buyMaxButton.innerHTML = "Buy MAX";
+    buyMaxButton.addEventListener("click", ()=>{
+        var pos = longShortSelect.options[longShortSelect.selectedIndex].text;
+        pos === "Long" ? pos = PositionTypes.Long : pos = PositionTypes.Short;
+        var ordType = orderTypeSelect.options[orderTypeSelect.selectedIndex].text;
+        var money = Player.money.toMoney();
+        switch (ordType) {
+            case "Market Order":
+                var shares = Math.floor(money / stock.price);
+                pos === PositionTypes.Long ? buyStock(stock, shares) : shortStock(stock, shares, null);
+                break;
+            case "Limit Order":
+            case "Stop Order":
+                var yesBtn = yesNoTxtInpBoxGetYesButton(),
+                    noBtn = yesNoTxtInpBoxGetNoButton();
+                yesBtn.innerText = "Place Buy " + ordType;
+                noBtn.innerText = "Cancel Order";
+                yesBtn.addEventListener("click", ()=>{
+                    var price = Number(yesNoTxtInpBoxGetInput()), type;
+                    if (ordType === "Limit Order") {
+                        type = OrderTypes.LimitBuy;
+                    } else {
+                        type = OrderTypes.StopBuy;
+                    }
+                    var shares = Math.floor(money / price);
+                    placeOrder(stock, shares, price, type, pos);
+                    yesNoTxtInpBoxClose();
+                });
+                noBtn.addEventListener("click", ()=>{
+                    yesNoTxtInpBoxClose();
+                });
+                yesNoTxtInpBoxCreate("Enter the price for your " + ordType);
+                break;
+            default:
+                console.log("ERROR: Invalid order type");
+                break;
+        }
+        return false;
+    });
+
+    sellAllButton.classList.add("stock-market-input");
+    sellAllButton.classList.add("a-link-button");
+    sellAllButton.innerHTML = "Sell ALL";
+    sellAllButton.addEventListener("click", ()=>{
+        var pos = longShortSelect.options[longShortSelect.selectedIndex].text;
+        pos === "Long" ? pos = PositionTypes.Long : pos = PositionTypes.Short;
+        var ordType = orderTypeSelect.options[orderTypeSelect.selectedIndex].text;
+        switch (ordType) {
+            case "Market Order":
+                if (pos === PositionTypes.Long) {
+                    var shares = stock.playerShares;
+                    sellStock(stock, shares);
+                } else {
+                    var shares = stock.playerShortShares;
+                    sellShort(stock, shares, null);
+                }
+                break;
+            case "Limit Order":
+            case "Stop Order":
+                dialogBoxCreate("ERROR: 'Sell All' only works for Market Orders")
+                break;
+            default:
+                console.log("ERROR: Invalid order type");
+                break;
+        }
+        return false;
+    });
+
     positionTxt.setAttribute("id", tickerId + "-position-text");
     positionTxt.classList.add("stock-market-position-text");
     stock.posTxtEl = positionTxt;
@@ -964,6 +1036,8 @@ function createStockTicker(stock) {
     stockDiv.appendChild(orderTypeSelect);
     stockDiv.appendChild(buyButton);
     stockDiv.appendChild(sellButton);
+    stockDiv.appendChild(buyMaxButton);
+    stockDiv.appendChild(sellAllButton);
     stockDiv.appendChild(positionTxt);
     stockDiv.appendChild(orderList);
 

@@ -30,6 +30,7 @@ import {getCostOfNextHacknetNode,
         purchaseHacknet}                            from "./HacknetNode.js";
 import {Locations}                                  from "./Location.js";
 import {Message, Messages}                          from "./Message.js";
+import {inMission}                                  from "./Missions.js";
 import {Player}                                     from "./Player.js";
 import {Script, findRunningScript, RunningScript}   from "./Script.js";
 import {Server, getServer, AddToAllServers,
@@ -59,6 +60,9 @@ import {dialogBoxCreate}                            from "../utils/DialogBox.js"
 import {printArray, powerOfTwo}                     from "../utils/HelperFunctions.js";
 import {createRandomIp}                             from "../utils/IPAddress.js";
 import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions.js";
+import {yesNoBoxClose, yesNoBoxGetYesButton,
+        yesNoBoxGetNoButton, yesNoBoxCreate,
+        yesNoBoxOpen}                               from "../utils/YesNoBox.js";
 
 var hasSingularitySF=false, hasAISF=false, hasBn11SF=false, hasWallStreetSF=false;
 var singularitySFLvl=1, wallStreetSFLvl=1;
@@ -1346,14 +1350,21 @@ function NetscriptFunctions(workerScript) {
         getTimeSinceLastAug : function() {
             return Player.playtimeSinceLastAug;
         },
+        confirm : function(txt) {
+
+        },
 
         /* Singularity Functions */
-        universityCourse(universityName, className) {
+        universityCourse : function(universityName, className) {
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run universityCourse(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
                 }
+            }
+            if (inMission) {
+                workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
+                return;
             }
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
@@ -1423,12 +1434,16 @@ function NetscriptFunctions(workerScript) {
             return true;
         },
 
-        gymWorkout(gymName, stat) {
+        gymWorkout : function(gymName, stat) {
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run gymWorkout(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
                     return false;
                 }
+            }
+            if (inMission) {
+                workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
+                return;
             }
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
@@ -1757,6 +1772,11 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
+            if (inMission) {
+                workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
+                return;
+            }
+
             if (Player.companyPosition == "" || !(Player.companyPosition instanceof CompanyPosition)) {
                 workerScript.scriptRef.log("ERROR: workForCompany() failed because you do not have a job");
                 return false;
@@ -1910,6 +1930,11 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
+            if (inMission) {
+                workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
+                return;
+            }
+
             if (!factionExists(name)) {
                 workerScript.scriptRef.log("ERROR: Faction specified in workForFaction() does not exist.");
                 return false;
@@ -2005,7 +2030,10 @@ function NetscriptFunctions(workerScript) {
                     return false;
                 }
             }
-
+            if (inMission) {
+                workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
+                return;
+            }
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
                 workerScript.scriptRef.log(txt);
@@ -2085,14 +2113,17 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("Began creating program: " + name);
             return true;
         },
-        commitCrime(crime) {
+        commitCrime : function(crime) {
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run commitCrime(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
                     return;
                 }
             }
-
+            if (inMission) {
+                workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
+                return;
+            }
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
                 workerScript.scriptRef.log(txt);
