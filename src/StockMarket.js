@@ -6,7 +6,9 @@ import {WorkerScript}                           from "./NetscriptWorker.js";
 import {Player}                                 from "./Player.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {clearEventListeners, getRandomInt}      from "../utils/HelperFunctions.js";
+import {clearEventListeners, getRandomInt,
+        removeElementById,
+        clearEventListenersEl}                  from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import numeral                                  from "../utils/numeral.min.js";
@@ -267,7 +269,7 @@ function initStockMarket() {
     StockMarket[omnitek] = omnitekStk;
 
     var foursigma = Locations.Sector12FourSigma;
-    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], 1.1, true, 18, getRandomInt(60000, 70000));
+    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], 1.05, true, 18, getRandomInt(60000, 70000));
     StockMarket[foursigma] = foursigmaStk;
 
     var kuaigong = Locations.ChongqingKuaiGongInternational;
@@ -275,7 +277,7 @@ function initStockMarket() {
     StockMarket[kuaigong] = kuaigongStk;
 
     var fulcrum = Locations.AevumFulcrumTechnologies;
-    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], 1.25, true, 17, getRandomInt(30000, 35000));
+    var fulcrumStk = new Stock(fulcrum, StockSymbols[fulcrum], 1.25, true, 16, getRandomInt(30000, 35000));
     StockMarket[fulcrum] = fulcrumStk;
 
     var storm = Locations.IshimaStormTechnologies;
@@ -335,7 +337,7 @@ function initStockMarket() {
     StockMarket[rho] = rhoStk;
 
     var alpha = Locations.Sector12AlphaEnterprises;
-    var alphaStk = new Stock(alpha, StockSymbols[alpha], 2, true, 10, getRandomInt(5000, 7500));
+    var alphaStk = new Stock(alpha, StockSymbols[alpha], 1.9, true, 10, getRandomInt(5000, 7500));
     StockMarket[alpha] = alphaStk;
 
     var syscore = Locations.VolhavenSysCoreSecurities;
@@ -359,15 +361,15 @@ function initStockMarket() {
     StockMarket[fns] = fnsStk;
 
     var sigmacosm = "Sigma Cosmetics";
-    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], 3, true, 0, getRandomInt(2000, 3000));
+    var sigmacosmStk = new Stock(sigmacosm, StockSymbols[sigmacosm], 2.8, true, 0, getRandomInt(2000, 3000));
     StockMarket[sigmacosm] = sigmacosmStk;
 
     var joesguns = "Joes Guns";
-    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 4, true, 1, getRandomInt(500, 1000));
+    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 3.7, true, 1, getRandomInt(500, 1000));
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.6, true, 15, getRandomInt(500, 1000));
+    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.5, true, 13, getRandomInt(500, 1000));
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";
@@ -408,8 +410,8 @@ function stockMarketCycle() {
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
             var stock = StockMarket[name];
-            var thresh = 0.59;
-            if (stock.b) {thresh = 0.41;}
+            var thresh = 0.6;
+            if (stock.b) {thresh = 0.4;}
             if (Math.random() < thresh) {
                 stock.b = !stock.b;
             }
@@ -502,9 +504,7 @@ function shortStock(stock, shares, workerScript=null) {
     var newTotal = origTotal + totalPrice;
     stock.playerShortShares += shares;
     stock.playerAvgShortPx = newTotal / stock.playerShortShares;
-    if (Engine.currentPage === Engine.Page.StockMarket) {
-        updateStockPlayerPosition(stock);
-    }
+    updateStockPlayerPosition(stock);
     if (tixApi) {
         workerScript.scriptRef.log("Bought a short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at " +
                                    numeral(stock.price).format('($0.000a)') + " per share. Paid " +
@@ -546,9 +546,7 @@ function sellShort(stock, shares, workerScript=null) {
     if (stock.playerShortShares === 0) {
         stock.playerAvgShortPx = 0;
     }
-    if (Engine.currentPage === Engine.Page.StockMarket) {
-        updateStockPlayerPosition(stock);
-    }
+    updateStockPlayerPosition(stock);
     if (tixApi) {
         workerScript.scriptRef.log("Sold your short position of " + shares + " shares of " + stock.symbol + " at " +
                                    numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
@@ -685,6 +683,8 @@ function setStockMarketContentCreated(b) {
 }
 
 var stockMarketContentCreated = false;
+var stockMarketPortfolioMode = false;
+var COMM = CONSTANTS.StockMarketCommission;
 function displayStockMarketContent() {
     if (Player.hasWseAccount == null) {Player.hasWseAccount = false;}
     if (Player.hasTixApiAccess == null) {Player.hasTixApiAccess = false;}
@@ -722,51 +722,6 @@ function displayStockMarketContent() {
         return false;
     });
 
-    var investopediaButton = clearEventListeners("stock-market-investopedia");
-    investopediaButton.addEventListener("click", function() {
-        var txt = "When making a transaction on the stock market, there are two " +
-            "types of positions: Long and Short. A Long position is the typical " +
-            "scenario where you buy a stock and earn a profit if the price of that " +
-            "stock increases. Meanwhile, a Short position is the exact opposite. " +
-            "In a Short position you purchase shares of a stock and earn a profit " +
-            "if the price of that stock decreases. This is also called 'shorting' a stock.<br><br>" +
-            "NOTE: Shorting stocks is not available immediately, and must be unlocked later on in the game.<br><br>" +
-            "There are three different types of orders you can make to buy or sell " +
-            "stocks on the exchange: Market Order, Limit Order, and Stop Order. " +
-            "Note that Limit Orders and Stop Orders are not available immediately, and must be unlocked " +
-            "later on in the game.<br><br>" +
-            "When you place a Market Order to buy or sell a stock, the order executes " +
-            "immediately at whatever the current price of the stock is. For example " +
-            "if you choose to short a stock with 5000 shares using a Market Order, " +
-            "you immediately purchase those 5000 shares in a Short position at whatever " +
-            "the current market price is for that stock.<br><br>" +
-            "A Limit Order is an order that only executes under certain conditions. " +
-            "A Limit Order is used to buy or sell a stock at a specified price or better. " +
-            "For example, lets say you purchased a Long position of 100 shares of some stock " +
-            "at a price of $10 per share. You can place a Limit Order to sell those 100 shares " +
-            "at $50 or better. The Limit Order will execute when the price of the stock reaches a  " +
-            "value of $50 or higher.<br><br>" +
-            "A Stop Order is the opposite of a Limit Order. It is used to buy or sell a stock " +
-            "at a specified price (before the price gets 'worse'). For example, lets say you purchased " +
-            "a Short position of 100 shares of some stock at a price of $100 per share. " +
-            "The current price of the stock is $80 (a profit of $20 per share). You can place a " +
-            "Stop Order to sell the Short position if the stock's price reaches $90 or higher. " +
-            "This can be used to lock in your profits and limit any losses.<br><br>" +
-            "Here is a summary of how each order works and when they execute:<br><br>" +
-            "In a LONG Position:<br><br>" +
-            "A Limit Order to buy will execute if the stock's price <= order's price<br>" +
-            "A Limit Order to sell will execute if the stock's price >= order's price<br>" +
-            "A Stop Order to buy will execute if the stock's price >= order's price<br>" +
-            "A Stop Order to sell will execute if the stock's price <= order's price<br><br>" +
-            "In a SHORT Position:<br><br>" +
-            "A Limit Order to buy will execute if the stock's price >= order's price<br>" +
-            "A Limit Order to sell will execute if the stock's price <= order's price<br>" +
-            "A Stop Order to buy will execute if the stock's price <= order's price<br>" +
-            "A Stop Order to sell will execute if the stock's price >= order's price.";
-        dialogBoxCreate(txt);
-        return false;
-    });
-
     var stockList = document.getElementById("stock-market-list");
     if (stockList == null) {return;}
 
@@ -788,6 +743,84 @@ function displayStockMarketContent() {
             "This means all your positions are lost, so make sure to sell your stocks before installing " +
             "Augmentations!";
 
+        var investopediaButton = clearEventListeners("stock-market-investopedia");
+        investopediaButton.addEventListener("click", function() {
+            var txt = "When making a transaction on the stock market, there are two " +
+                "types of positions: Long and Short. A Long position is the typical " +
+                "scenario where you buy a stock and earn a profit if the price of that " +
+                "stock increases. Meanwhile, a Short position is the exact opposite. " +
+                "In a Short position you purchase shares of a stock and earn a profit " +
+                "if the price of that stock decreases. This is also called 'shorting' a stock.<br><br>" +
+                "NOTE: Shorting stocks is not available immediately, and must be unlocked later on in the game.<br><br>" +
+                "There are three different types of orders you can make to buy or sell " +
+                "stocks on the exchange: Market Order, Limit Order, and Stop Order. " +
+                "Note that Limit Orders and Stop Orders are not available immediately, and must be unlocked " +
+                "later on in the game.<br><br>" +
+                "When you place a Market Order to buy or sell a stock, the order executes " +
+                "immediately at whatever the current price of the stock is. For example " +
+                "if you choose to short a stock with 5000 shares using a Market Order, " +
+                "you immediately purchase those 5000 shares in a Short position at whatever " +
+                "the current market price is for that stock.<br><br>" +
+                "A Limit Order is an order that only executes under certain conditions. " +
+                "A Limit Order is used to buy or sell a stock at a specified price or better. " +
+                "For example, lets say you purchased a Long position of 100 shares of some stock " +
+                "at a price of $10 per share. You can place a Limit Order to sell those 100 shares " +
+                "at $50 or better. The Limit Order will execute when the price of the stock reaches a  " +
+                "value of $50 or higher.<br><br>" +
+                "A Stop Order is the opposite of a Limit Order. It is used to buy or sell a stock " +
+                "at a specified price (before the price gets 'worse'). For example, lets say you purchased " +
+                "a Short position of 100 shares of some stock at a price of $100 per share. " +
+                "The current price of the stock is $80 (a profit of $20 per share). You can place a " +
+                "Stop Order to sell the Short position if the stock's price reaches $90 or higher. " +
+                "This can be used to lock in your profits and limit any losses.<br><br>" +
+                "Here is a summary of how each order works and when they execute:<br><br>" +
+                "In a LONG Position:<br><br>" +
+                "A Limit Order to buy will execute if the stock's price <= order's price<br>" +
+                "A Limit Order to sell will execute if the stock's price >= order's price<br>" +
+                "A Stop Order to buy will execute if the stock's price >= order's price<br>" +
+                "A Stop Order to sell will execute if the stock's price <= order's price<br><br>" +
+                "In a SHORT Position:<br><br>" +
+                "A Limit Order to buy will execute if the stock's price >= order's price<br>" +
+                "A Limit Order to sell will execute if the stock's price <= order's price<br>" +
+                "A Stop Order to buy will execute if the stock's price <= order's price<br>" +
+                "A Stop Order to sell will execute if the stock's price >= order's price.";
+            dialogBoxCreate(txt);
+            return false;
+        });
+
+        //Switch to Portfolio Mode Button
+        var modeBtn = clearEventListeners("stock-market-mode");
+        if (modeBtn) {
+            modeBtn.innerHTML = "Switch to 'Portfolio' Mode" +
+                "<span class='tooltiptext'>Displays only the stocks for which you have shares or orders</span>";
+            modeBtn.addEventListener("click", switchToPortfolioMode);
+        }
+
+        //Expand/Collapse tickers buttons
+        var expandBtn   = clearEventListeners("stock-market-expand-tickers"),
+            collapseBtn = clearEventListeners("stock-market-collapse-tickers"),
+            stockList   = document.getElementById("stock-market-list");
+        if (expandBtn) {
+            expandBtn.addEventListener("click", ()=>{
+                var tickerHdrs = stockList.getElementsByClassName("accordion-header");
+                for (var i = 0; i < tickerHdrs.length; ++i) {
+                    if (!tickerHdrs[i].classList.contains("active")) {
+                        tickerHdrs[i].click();
+                    }
+                }
+            });
+        }
+        if (collapseBtn) {
+            collapseBtn.addEventListener("click",()=>{
+                var tickerHdrs = stockList.getElementsByClassName("accordion-header");
+                for (var i = 0; i < tickerHdrs.length; ++i) {
+                    if (tickerHdrs[i].classList.contains("active")) {
+                        tickerHdrs[i].click();
+                    }
+                }
+            });
+        }
+
         for (var name in StockMarket) {
             if (StockMarket.hasOwnProperty(name)) {
                 var stock = StockMarket[name];
@@ -804,11 +837,72 @@ function displayStockMarketContent() {
             if (StockMarket.hasOwnProperty(name)) {
                 var stock = StockMarket[name];
                 updateStockTicker(stock, null);
-                updateStockPlayerPosition(stock);
                 updateStockOrderList(stock);
             }
         }
     }
+}
+
+//Displays only stocks you have position/order in
+function switchToPortfolioMode() {
+    stockMarketPortfolioMode = true;
+    var stockList = document.getElementById("stock-market-list");
+    if (stockList == null) {return;}
+    var modeBtn = clearEventListeners("stock-market-mode");
+    if (modeBtn) {
+        modeBtn.innerHTML = "Switch to 'All stocks' Mode" +
+            "<span class='tooltiptext'>Displays all stocks on the WSE</span>";
+        modeBtn.addEventListener("click", switchToDisplayAllMode);
+    }
+    while(stockList.firstChild) {stockList.removeChild(stockList.firstChild);}
+
+    //Get Order book (create it if it hasn't been created)
+    var orderBook = StockMarket["Orders"];
+    if (orderBook == null) {
+        var orders = {};
+        for (var name in StockMarket) {
+            if (StockMarket.hasOwnProperty(name)) {
+                var stock = StockMarket[name];
+                if (!(stock instanceof Stock)) {continue;}
+                orders[stock.symbol] = [];
+            }
+        }
+        StockMarket["Orders"] = orders;
+    }
+
+    for (var name in StockMarket) {
+        if (StockMarket.hasOwnProperty(name)) {
+            var stock = StockMarket[name];
+            if (!(stock instanceof Stock)) {continue;} //orders property is an array
+            var stockOrders = orderBook[stock.symbol];
+            if (stock.playerShares === 0 && stock.playerShortShares === 0 &&
+                stockOrders.length === 0) {continue;}
+            createStockTicker(stock);
+        }
+    }
+    setStockTickerClickHandlers();
+}
+
+//Displays all stocks
+function switchToDisplayAllMode() {
+    stockMarketPortfolioMode = false;
+    var stockList = document.getElementById("stock-market-list");
+    if (stockList == null) {return;}
+    var modeBtn = clearEventListeners("stock-market-mode");
+    if (modeBtn) {
+        modeBtn.innerHTML = "Switch to 'Portfolio' Mode" +
+            "<span class='tooltiptext'>Displays only the stocks for which you have shares or orders</span>";
+        modeBtn.addEventListener("click", switchToPortfolioMode);
+    }
+    while(stockList.firstChild) {stockList.removeChild(stockList.firstChild);}
+    for (var name in StockMarket) {
+        if (StockMarket.hasOwnProperty(name)) {
+            var stock = StockMarket[name];
+            if (!(stock instanceof Stock)) {continue;} //orders property is an array
+            createStockTicker(stock);
+        }
+    }
+    setStockTickerClickHandlers();
 }
 
 function createStockTicker(stock) {
@@ -825,6 +919,7 @@ function createStockTicker(stock) {
     //Div for entire panel
     var stockDiv = document.createElement("div");
     stockDiv.classList.add("accordion-panel");
+    stockDiv.setAttribute("id", tickerId + "-panel");
 
     /* Create panel DOM */
     var qtyInput = document.createElement("input"),
@@ -961,10 +1056,10 @@ function createStockTicker(stock) {
         var pos = longShortSelect.options[longShortSelect.selectedIndex].text;
         pos === "Long" ? pos = PositionTypes.Long : pos = PositionTypes.Short;
         var ordType = orderTypeSelect.options[orderTypeSelect.selectedIndex].text;
-        var money = Player.money.toMoney();
+        var money = Player.money.toNumber();
         switch (ordType) {
             case "Market Order":
-                var shares = Math.floor(money / stock.price);
+                var shares = Math.floor((money - COMM) / stock.price);
                 pos === PositionTypes.Long ? buyStock(stock, shares) : shortStock(stock, shares, null);
                 break;
             case "Limit Order":
@@ -980,7 +1075,7 @@ function createStockTicker(stock) {
                     } else {
                         type = OrderTypes.StopBuy;
                     }
-                    var shares = Math.floor(money / price);
+                    var shares = Math.floor((money-COMM) / price);
                     placeOrder(stock, shares, price, type, pos);
                     yesNoTxtInpBoxClose();
                 });
@@ -1046,6 +1141,7 @@ function createStockTicker(stock) {
     document.getElementById("stock-market-list").appendChild(li);
 
     updateStockTicker(stock, true);
+    updateStockPlayerPosition(stock);
     updateStockOrderList(stock);
 }
 
@@ -1082,11 +1178,11 @@ function updateStockTicker(stock, increase) {
     var hdr = document.getElementById(tickerId + "-hdr");
 
     if (hdr == null) {
-        console.log("ERROR: Couldn't find ticker element for stock: " + stock.symbol);
+        if (!stockMarketPortfolioMode) {console.log("ERROR: Couldn't find ticker element for stock: " + stock.symbol);}
         return;
     }
     hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + formatNumber(stock.price, 2);
-    if (increase !== null) {
+    if (increase != null) {
         increase ? hdr.style.color = "#66ff33" : hdr.style.color = "red";
     }
 
@@ -1103,6 +1199,25 @@ function updateStockPlayerPosition(stock) {
         return;
     }
     var tickerId = "stock-market-ticker-" + stock.symbol;
+
+    if (stockMarketPortfolioMode) {
+        if (stock.playerShares === 0 && stock.playerShortShares === 0 &&
+            StockMarket["Orders"] && StockMarket["Orders"][stock.symbol] &&
+            StockMarket["Orders"][stock.symbol].length === 0) {
+            removeElementById(tickerId + "-hdr");
+            removeElementById(tickerId + "-panel");
+            return;
+        } else {
+            //If the ticker hasn't been created, create it (handles updating)
+            //If it has been created, continue normally
+            if (document.getElementById(tickerId + "-hdr") == null) {
+                createStockTicker(stock);
+                setStockTickerClickHandlers();
+                return;
+            }
+        }
+    }
+
     if (!(stock.posTxtEl instanceof Element)) {
         stock.posTxtEl = document.getElementById(tickerId + "-position-text");
     }
@@ -1151,7 +1266,7 @@ function updateStockOrderList(stock) {
     var tickerId = "stock-market-ticker-" + stock.symbol;
     var orderList = document.getElementById(tickerId + "-order-list");
     if (orderList == null) {
-        console.log("ERROR: Could not find order list for " + stock.symbol);
+        if (!stockMarketPortfolioMode) {console.log("ERROR: Could not find order list for " + stock.symbol);}
         return;
     }
 
@@ -1164,6 +1279,24 @@ function updateStockOrderList(stock) {
     if (stockOrders == null) {
         console.log("ERROR: Could not find orders for: " + stock.symbol);
         return;
+    }
+
+    if (stockMarketPortfolioMode) {
+        if (stock.playerShares === 0 && stock.playerShortShares === 0 &&
+            StockMarket["Orders"] && StockMarket["Orders"][stock.symbol] &&
+            StockMarket["Orders"][stock.symbol].length === 0) {
+            removeElementById(tickerId + "-hdr");
+            removeElementById(tickerId + "-panel");
+            return;
+        } else {
+            //If the ticker hasn't been created, create it (handles updating)
+            //If it has been created, continue normally
+            if (document.getElementById(tickerId + "-hdr") == null) {
+                createStockTicker(stock);
+                setStockTickerClickHandlers();
+                return;
+            }
+        }
     }
 
     //Remove everything from list

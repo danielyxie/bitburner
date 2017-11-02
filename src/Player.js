@@ -190,8 +190,10 @@ function PlayerObject() {
     this.totalPlaytime = 0;
     this.playtimeSinceLastAug = 0;
 
-    //Script production since last Aug installation
+    //Production since last Augmentation installation
     this.scriptProdSinceLastAug = 0;
+    this.stockProdSinceLastAug = 0;
+    this.crimeProdSinceLastAug = 0;
 };
 
 PlayerObject.prototype.init = function() {

@@ -1351,7 +1351,25 @@ function NetscriptFunctions(workerScript) {
             return Player.playtimeSinceLastAug;
         },
         confirm : function(txt) {
-
+            if (yesNoBoxOpen) {
+                workerScript.scriptRef.log("ERROR: confirm() failed because a pop-up dialog box is already open");
+                return false;
+            }
+            if (!isString(txt)) {txt = String(txt);}
+            var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
+            yesBtn.innerHTML = "Yes";
+            noBtn.innerHTML = "No";
+            return new Promise(function(resolve, reject) {
+                yesBtn.addEventListener("click", ()=>{
+                    yesNoBoxClose();
+                    resolve(true);
+                });
+                noBtn.addEventListener("click", ()=>{
+                    yesNoBoxClose();
+                    resolve(false);
+                });
+                yesNoBoxCreate(txt);
+            });
         },
 
         /* Singularity Functions */

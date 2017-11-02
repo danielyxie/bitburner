@@ -528,6 +528,7 @@ function RunningScript(script, args) {
     this.server     = script.server;    //IP Address only
 
     this.logs       = [];   //Script logging. Array of strings, with each element being a log entry
+    this.logUpd     = false;
 
 	//Stats to display on the Scripts menu, and used to determine offline progress
 	this.offlineRunningTime  	= 0.01;	//Seconds
@@ -551,6 +552,7 @@ RunningScript.prototype.log = function(txt) {
         this.logs.shift();
     }
     this.logs.push(txt);
+    this.logUpd = true;
 }
 
 RunningScript.prototype.displayLog = function() {

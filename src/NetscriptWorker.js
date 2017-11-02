@@ -95,7 +95,7 @@ function runScriptsLoop() {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
 			try {
 				var ast = parse(workerScripts[i].code);
-                console.log(ast);
+                //console.log(ast);
 			} catch (e) {
                 console.log("Error parsing script: " + workerScripts[i].name);
                 dialogBoxCreate("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
@@ -172,11 +172,6 @@ function killWorkerScript(runningScriptObj, serverIp) {
                 workerScripts[i].fnWorker.env.stopFlag = true;
                 killNetscriptDelay(workerScripts[i].fnWorker);
             }
-            /*workerScripts[i].killTrigger();
-            if (workerScripts[i].fnWorker) {
-                workerScripts[i].fnWorker.env.stopFlag = true;
-                workerScripts[i].fnWorker.killTrigger();
-            }*/
             return true;
 		}
 	}

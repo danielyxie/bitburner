@@ -647,10 +647,21 @@ let CONSTANTS = {
                            "have purchased. It takes an optional parameter specifying whether the hostname or IP addresses will be returned. If this " +
                            "parameter is not specified, it is true by default and hostnames will be returned<br><br>" +
                            "<i><u>round(n)</u></i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" +
-                           "<i><u>write(port, data)</u></i><br>Writes data to a port. The first argument must be a number between 1 and 10 that specifies the port. The second " +
-                           "argument defines the data to write to the port. If the second argument is not specified then it will write an empty string to the port.<br><br>" +
-                           "<i><u>read(port)</u></i><br>Reads data from a port. The first argument must be a number between 1 and 10 that specifies the port. A port is a serialized queue. " +
-                           "This function will remove the first element from the queue and return it. If the queue is empty, then the string 'NULL PORT DATA' will be returned. <br><br>" +
+                           "<i><u>write(port, data='', mode='a')</u></i><br>This function can be used to either write data to a port or to a text file (.txt).<br><br>" +
+                           "If the first argument is a number between 1 and 10, then it specifies a port and this function will write data to a port. If the second " +
+                           "argument is not specified then it will write an empty string to the port. The third argument, mode, is not used when writing data to a port.<br><br>" +
+                           "If the first argument is a string, then it specifies the name of a text file (.txt) and this function will write data to a text file. " +
+                           "The second argument defines the data to be written to the text file. If it is not specified then it is an empty string by default. " +
+                           "This third argument, mode, defines how the data will be written to the text file. If mode is set to 'w', then the data is written in 'write' " +
+                           "mode which means that it will overwrite the existing data on the file, or it will create a new file if it does not already exist. Otherwise, " +
+                           "the data will be written in 'append' mode which means that the data will be added at the end of the existing file, or it will create a new file if it " +
+                           "does not already exist. If mode isn't specified then it will be 'a' for 'append' mode by default.<br><br>" +
+                           "<i><u>read(port)</u></i><br>This function is used to read data from a port or from a text file (.txt).<br><br>" +
+                           "This function takes a single argument. If this argument is a number between 1 and 10, then it specifies a port and it will read data from " +
+                           "a port. A port is a serialized queue. This function will remove the first element from the queue and return it. If the queue is empty, " +
+                           "then the string 'NULL PORT DATA' will be returned.<br><br>" +
+                           "If the first argument is a string, then it specifies the name of a text file and this function will return the data in the " +
+                           "specified text file. If the text file does not exist, an empty string will be returned<br><br>" +
                            "<i><u>scriptRunning(scriptname, hostname/ip)</u></i><br>Returns a boolean indicating whether any instance of the specified script is running " +
                            "on a server, regardless of its arguments. This is different than the isRunning() function because it does not " +
                            "try to identify a specific instance of a running script by its arguments.<br><br>" +
@@ -1096,6 +1107,14 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.32.1<br>" +
+    "-Updated Netscript's 'interpreter/engine' to use the Bluebird promise library instead of native promises. " +
+    "It should now be faster and more memory-efficient. If this has broken any Netscript features please report it through Github or the subreddit (reddit.com/r/bitburner)<br>" +
+    "-Rebalanced stock market (adjusted parameters such as the volatility/trends/starting price of certain stocks)<br>" + 
+    "-Added confirm() Netscript function<br>" +
+    "-Added 'Buy Max' and 'Sell All' functions to Stock Market UI<br>" +
+    "-Added 'Portfolio' Mode to Stock Market UI so you can only view stocks you have a position/order in<br>" +
+    "-Added a button to kill a script from its log display box<br>" +
     "v0.32.0<br>" +
     "-Released BitNode-8: Ghost of Wall Street<br>" +
     "-Re-designed Stock Market UI<br>" +

@@ -72,17 +72,10 @@ function evaluate(exp, workerScript) {
                 });
                 return Promise.all(argPromises).then(function(array) {
                     return Promise.resolve(array)
-                }).catch(function(e) {
-                    return Promise.reject(e);
                 });
                 break;
             case "CallExpression":
                 return evaluate(exp.callee, workerScript).then(function(func) {
-                    /*
-                    var argPromises = exp.arguments.map(function(arg) {
-                        return evaluate(arg, workerScript);
-                    });
-                    Promise.all(argPromises).then(function(args) {*/
                     return Promise.map(exp.arguments, function(arg) {
                         return evaluate(arg, workerScript);
                     }).then(function(args) {
@@ -146,8 +139,6 @@ function evaluate(exp, workerScript) {
                                 } catch (e) {
                                     return Promise.reject(makeRuntimeRejectMsg(workerScript, e));
                                 }
-                            }).catch(function(e) {
-                                return Promise.reject(e);
                             });
                         } else {
                             try {
@@ -169,11 +160,7 @@ function evaluate(exp, workerScript) {
                                 }
                             }
                         }
-                    }).catch(function(e) {
-                        return Promise.reject(e);
                     });
-                }).catch(function(e) {
-                    return Promise.reject(e);
                 });
                 break;
             case "MemberExpression":
@@ -194,31 +181,17 @@ function evaluate(exp, workerScript) {
                             return Promise.reject(makeRuntimeRejectMsg(workerScript, "Failed to get property: " + e.toString()));
                         }
                     }
-                }).catch(function(e) {
-                    return Promise.reject(e);
                 });
                 break;
             case "LogicalExpression":
             case "BinaryExpression":
-                return evalBinary(exp, workerScript).then(function(res) {
-                    return Promise.resolve(res);
-                }).catch(function(e) {
-                    return Promise.reject(e);
-                });
+                return evalBinary(exp, workerScript);
                 break;
             case "UnaryExpression":
-                return evalUnary(exp, workerScript).then(function(res) {
-                    return Promise.resolve(res);
-                }).catch(function(e) {
-                    return Promise.reject(e);
-                });
+                return evalUnary(exp, workerScript);
                 break;
             case "AssignmentExpression":
-                return evalAssignment(exp, workerScript).then(function(res) {
-                    return Promise.resolve(res);
-                }).catch(function(e) {
-                    return Promise.reject(e);
-                });
+                return evalAssignment(exp, workerScript);
                 break;
             case "UpdateExpression":
                 if (exp.argument.type==="Identifier"){
@@ -257,8 +230,6 @@ function evaluate(exp, workerScript) {
             case "ReturnStatement":
                 return evaluate(exp.argument, workerScript).then(function(res) {
                     return Promise.reject(["RETURNSTATEMENT", res]);
-                }).catch(function(e) {
-                    return Promise.reject(e);
                 });
                 break;
             case "BreakStatement":
@@ -268,19 +239,15 @@ function evaluate(exp, workerScript) {
                 return Promise.reject("CONTINUESTATEMENT");
                 break;
             case "IfStatement":
-                return evaluateIf(exp, workerScript).then(function(forLoopRes) {
-                    return Promise.resolve(forLoopRes);
-                }).catch(function(e) {
-                    return Promise.reject(e);
-                });
+                return evaluateIf(exp, workerScript);
                 break;
             case "SwitchStatement":
                 var lineNum = getErrorLineNumber(exp, workerScript);
                 return Promise.reject(makeRuntimeRejectMsg(workerScript, "Switch statements are not yet implemented in Netscript (line " + (lineNum+1) + ")"));
                 break;
             case "WhileStatement":
-                return evaluateWhile(exp, workerScript).then(function(forLoopRes) {
-                    return Promise.resolve(forLoopRes);
+                return evaluateWhile(exp, workerScript).then(function(res) {
+                    return Promise.resolve(res);
                 }).catch(function(e) {
                     if (e == "BREAKSTATEMENT" ||
                        (e instanceof WorkerScript && e.errorMessage == "BREAKSTATEMENT")) {
@@ -388,11 +355,7 @@ function evalBinary(exp, workerScript){
                 default:
                     return Promise.reject(makeRuntimeRejectMsg(workerScript, "Unsupported operator: " + exp.operator));
             }
-        }, function(e) {
-            return Promise.reject(e);
         });
-    }, function(e) {
-        return Promise.reject(e);
     });
 }
 
@@ -411,8 +374,6 @@ function evalUnary(exp, workerScript){
         } else {
             return Promise.reject(makeRuntimeRejectMsg(workerScript, "Unimplemented unary operator: " + exp.operator));
         }
-    }).catch(function(e) {
-        return Promise.reject(e);
     });
 }
 
@@ -439,10 +400,6 @@ function getArrayElement(exp, workerScript) {
                 return Promise.resolve(indices);
             }
         }
-    }).catch(function(e) {
-        console.log(e);
-        console.log("Error getting index in getArrayElement: " + e.toString());
-        return Promise.reject(e);
     });
 }
 
@@ -507,8 +464,6 @@ function evalAssignment(exp, workerScript) {
                 return Promise.reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
             }
         }
-    }, function(e) {
-        return Promise.reject(e);
     });
 }
 
@@ -530,8 +485,6 @@ function evaluateIf(exp, workerScript, i) {
         } else {
             return Promise.resolve("endIf");
         }
-    }, function(e) {
-        return Promise.reject(e);
     });
 }
 
@@ -539,6 +492,40 @@ function evaluateIf(exp, workerScript, i) {
 function evaluateFor(exp, workerScript) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
+    return new Promise(function(resolve, reject) {
+        function recurse() {
+            //Don't return a promise so the promise chain is broken on each recursion (saving memory)
+            evaluate(exp.test, workerScript).then(function(resCond) {
+                if (resCond) {
+                    return evaluate(exp.body, workerScript).then(function(res) {
+                        return evaluate(exp.update, workerScript);
+                    }).catch(function(e) {
+                        if (e == "CONTINUESTATEMENT" ||
+                           (e instanceof WorkerScript && e.errorMessage == "CONTINUESTATEMENT")) {
+                                //Continue statement, recurse to next iteration
+                                return evaluate(exp.update, workerScript).then(function(resPostloop) {
+                                    return evaluateFor(exp, workerScript);
+                                }).then(function(foo) {
+                                    return Promise.resolve("endForLoop");
+                                }).catch(function(e) {
+                                    return Promise.reject(e);
+                                });
+                        } else {
+                            return Promise.reject(e);
+                        }
+                    }).then(recurse, reject).catch(function(e) {
+                        return Promise.reject(e);
+                    });
+                } else {
+                    resolve();
+                }
+            }).catch(function(e) {
+                reject(e);
+            });
+        }
+        recurse();
+    });
+    /*
     return evaluate(exp.test, workerScript).then(function(resCond) {
         if (resCond) {
             //Execute code (body), update, and then recurse
@@ -562,52 +549,44 @@ function evaluateFor(exp, workerScript) {
                     return evaluateFor(exp, workerScript);
             }).then(function(foo) {
                 return Promise.resolve("endForLoop");
-            }).catch(function(e) {
-                return Promise.reject(e);
             });
         } else {
             return Promise.resolve("endForLoop");    //Doesn't need to resolve to any particular value
         }
-    }, function(e) {
-        return Promise.reject(e);
-    });
+    });*/
 }
 
 function evaluateWhile(exp, workerScript) {
     var env = workerScript.env;
     if (env.stopFlag) {return Promise.reject(workerScript);}
-    return Promise.delay(CONSTANTS.CodeInstructionRunTime).then(function() {
-        return evaluate(exp.test, workerScript);
-    }).then(function(resCond) {
-        if (resCond) {
-            return evaluate(exp.body, workerScript).then(function(resCode) {
-                return Promise.resolve(resCode);
-            }).catch(function(e) {
-                if (e == "CONTINUESTATEMENT" ||
-                   (e instanceof WorkerScript && e.errorMessage == "CONTINUESTATEMENT")) {
-                    //Continue statement, recurse
-                    return evaluateWhile(exp, workerScript).then(function(foo) {
-                        return Promise.resolve("endWhileLoop");
-                    }, function(e) {
+    return new Promise(function (resolve, reject) {
+        function recurse() {
+            //Don't return a promise so the promise chain is broken on each recursion (saving memory)
+            evaluate(exp.test, workerScript).then(function(resCond) {
+                if (resCond) {
+                    return evaluate(exp.body, workerScript).catch(function(e) {
+                        if (e == "CONTINUESTATEMENT" ||
+                           (e instanceof WorkerScript && e.errorMessage == "CONTINUESTATEMENT")) {
+                            //Continue statement, recurse
+                            return evaluateWhile(exp, workerScript).then(function(foo) {
+                                return Promise.resolve("endWhileLoop");
+                            }, function(e) {
+                                return Promise.reject(e);
+                            });
+                        } else {
+                            return Promise.reject(e);
+                        }
+                    }).then(recurse, reject).catch(function(e) {
                         return Promise.reject(e);
                     });
                 } else {
-                    return Promise.reject(e);
+                    resolve();
                 }
-            }).then(function(resCode) {
-                return evaluateWhile(exp, workerScript).then(function(foo) {
-                    return Promise.resolve("endWhileLoop");
-                }, function(e) {
-                    return Promise.reject(e);
-                });
             }).catch(function(e) {
-                return Promise.reject(e);
+                reject(e);
             });
-        } else {
-            return Promise.resolve("endWhileLoop"); //Doesn't need to resolve to any particular value
         }
-    }).catch(function(e) {
-        return Promise.reject(e);
+        recurse();
     });
 }
 
@@ -630,17 +609,42 @@ function evaluateProg(exp, workerScript, index) {
 }
 
 function killNetscriptDelay(workerScript) {
+    /*
     if (workerScript instanceof WorkerScript) {
         if (workerScript.delay) {
             workerScript.delay.cancel();
         }
     }
+    */
+    if (workerScript instanceof WorkerScript) {
+        if (workerScript.delay) {
+            clearTimeout(workerScript.delay);
+            workerScript.delayResolve();
+        }
+    }
 }
 
 function netscriptDelay(time, workerScript) {
-    var delay = Promise.delay(time, true);
-    workerScript.delay = delay;
-    return delay;
+    /*
+    workerScript.delay = new Promise(function(resolve, reject, onCancel) {
+        Promise.delay(time).then(function() {
+            resolve();
+            workerScript.delay = null;
+        });
+        onCancel(function() {
+            console.log("Cancelling and rejecting this Promise");
+            reject(workerScript);
+        })
+    });
+    return workerScript.delay;
+    */
+    return new Promise(function(resolve, reject) {
+       workerScript.delay = setTimeout(()=>{
+           workerScript.delay = null;
+           resolve();
+       }, time);
+       workerScript.delayResolve = resolve;
+   });
 }
 
 function makeRuntimeRejectMsg(workerScript, msg) {
