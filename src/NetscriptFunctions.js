@@ -1460,7 +1460,7 @@ function NetscriptFunctions(workerScript) {
                 }
             }
             if (inMission) {
-                workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
+                workerScript.scriptRef.log("ERROR: gymWorkout() failed because you are in the middle of a mission.");
                 return;
             }
             if (Player.isWorking) {
@@ -1791,7 +1791,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (inMission) {
-                workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
+                workerScript.scriptRef.log("ERROR: workForCompany() failed because you are in the middle of a mission.");
                 return;
             }
 
@@ -1949,7 +1949,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (inMission) {
-                workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
+                workerScript.scriptRef.log("ERROR: workForFaction() failed because you are in the middle of a mission.");
                 return;
             }
 
@@ -2049,7 +2049,7 @@ function NetscriptFunctions(workerScript) {
                 }
             }
             if (inMission) {
-                workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
+                workerScript.scriptRef.log("ERROR: createProgram() failed because you are in the middle of a mission.");
                 return;
             }
             if (Player.isWorking) {
@@ -2139,7 +2139,7 @@ function NetscriptFunctions(workerScript) {
                 }
             }
             if (inMission) {
-                workerScript.scriptRef.log("ERROR: universityCourse() failed because you are in the middle of a mission.");
+                workerScript.scriptRef.log("ERROR: commitCrime() failed because you are in the middle of a mission.");
                 return;
             }
             if (Player.isWorking) {
