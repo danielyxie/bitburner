@@ -38,6 +38,14 @@ function clearEventListenersEl(el) {
     return newElem;
 }
 
+//Given its id, this function removes an element AND its children
+function removeElementById(id) {
+    var elem = document.getElementById(id);
+    if (elem == null) {return;}
+    while(elem.firstChild) {elem.removeChild(elem.firstChild);}
+    elem.parentNode.removeChild(elem);
+}
+
 function getRandomInt(min, max) {
     if (min > max) {return getRandomInt(max, min);}
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -67,4 +75,5 @@ function powerOfTwo(n) {
 }
 
 export {sizeOfObject, addOffset, clearEventListeners, getRandomInt,
-        compareArrays, printArray, powerOfTwo, clearEventListenersEl};
+        compareArrays, printArray, powerOfTwo, clearEventListenersEl,
+        removeElementById};

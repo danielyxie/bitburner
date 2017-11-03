@@ -73,8 +73,7 @@
     padding: 10px;
 }
 
-.dialog-box-close-button,
-#log-box-close {
+.dialog-box-close-button {
     float: right;
     color: #aaa;
     font-size: 20px;
@@ -89,13 +88,21 @@
 
 #log-box-close {
     position: fixed;
-    right: 26%;
+    right: 27%;
+}
+
+#log-box-kill-script {
+    right: 11%;
+    position: relative;
+}
+
+#log-box-close, #log-box-kill-script {
+    float:right;
+    display:inline-block;
 }
 
 .dialog-box-close-button:hover,
-.dialog-box-close-button:focus,
-#log-box-close:hover,
-#log-box-close:focus {
+.dialog-box-close-button:focus,{
     color: white;
     text-decoration: none;
     cursor: pointer;

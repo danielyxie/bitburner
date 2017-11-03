@@ -1,4 +1,5 @@
-import {printArray}                     from "./HelperFunctions.js";
+import {killWorkerScript}                   from "../src/NetscriptWorker.js";
+import {printArray, clearEventListeners}    from "./HelperFunctions.js";
 
 $(document).keydown(function(event) {
     if (logBoxOpened && event.keyCode == 27) {
@@ -15,6 +16,7 @@ function logBoxInit() {
         logBoxClose();
         return false;
     });
+    document.getElementById("log-box-text-header").style.display = "inline-block";
 };
 
 document.addEventListener("DOMContentLoaded", logBoxInit, false);
@@ -35,23 +37,30 @@ function logBoxOpen() {
 
 var logBoxOpened = false;
 var logBoxCurrentScript = null;
-//ram argument is in GB
 function logBoxCreate(script) {
     logBoxCurrentScript = script;
+    var killScriptBtn = clearEventListeners("log-box-kill-script");
+    killScriptBtn.addEventListener("click", ()=>{
+        killWorkerScript(script, script.server);
+        return false;
+    });
+    document.getElementById('log-box-kill-script').style.display = "inline-block";
     logBoxOpen();
     document.getElementById("log-box-text-header").innerHTML =
         logBoxCurrentScript.filename + " " + printArray(logBoxCurrentScript.args) + ":<br><br>";
+    logBoxCurrentScript.logUpd = true;
     logBoxUpdateText();
 }
 
 function logBoxUpdateText() {
     var txt = document.getElementById("log-box-text");
-    if (logBoxCurrentScript && logBoxOpened && txt) {
+    if (logBoxCurrentScript && logBoxOpened && txt && logBoxCurrentScript.logUpd) {
         txt.innerHTML = "";
         for (var i = 0; i < logBoxCurrentScript.logs.length; ++i) {
             txt.innerHTML += logBoxCurrentScript.logs[i];
             txt.innerHTML += "<br>";
         }
+        logBoxCurrentScript.logUpd = false;
     }
 }
 

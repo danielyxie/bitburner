@@ -266,6 +266,10 @@ function loadBitVerse(destroyedBitNodeNum) {
     }).then(function() {
         return writeRedPillLine("Welcome to the Bitverse...");
     }).then(function() {
+        return writeRedPillLine(" ");
+    }).then(function() {
+        return writeRedPillLine("(Enter a new BitNode using the image above)");
+    }).then(function() {
         return Promise.resolve(true);
     }).catch(function(e){
         console.log("ERROR: " + e.toString());
