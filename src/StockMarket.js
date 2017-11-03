@@ -249,11 +249,11 @@ function initStockMarket() {
     }
 
     var ecorp = Locations.AevumECorp;
-    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], 0.5, true, 16, getRandomInt(20000, 25000));
+    var ecorpStk = new Stock(ecorp, StockSymbols[ecorp], 0.45, true, 19, getRandomInt(20000, 25000));
     StockMarket[ecorp] = ecorpStk;
 
     var megacorp = Locations.Sector12MegaCorp;
-    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], 0.5, true, 16, getRandomInt(25000, 33000));
+    var megacorpStk = new Stock(megacorp, StockSymbols[megacorp], 0.45, true, 19, getRandomInt(25000, 33000));
     StockMarket[megacorp] = megacorpStk;
 
     var blade = Locations.Sector12BladeIndustries;
@@ -365,11 +365,11 @@ function initStockMarket() {
     StockMarket[sigmacosm] = sigmacosmStk;
 
     var joesguns = "Joes Guns";
-    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 3.7, true, 1, getRandomInt(500, 1000));
+    var joesgunsStk = new Stock(joesguns, StockSymbols[joesguns], 3.8, true, 1, getRandomInt(500, 1000));
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.5, true, 13, getRandomInt(500, 1000));
+    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.5, true, 14, getRandomInt(500, 1000));
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";

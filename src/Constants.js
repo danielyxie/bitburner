@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.32.0",
+    Version:                "0.32.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -707,6 +707,11 @@ let CONSTANTS = {
                            "Returns the amount of time in milliseconds that have passed since you last installed Augmentations (or destroyed a BitNode).<br><br>" +
                            "<i><u>sprintf()/vsprintf()</u></i><br>" +
                            "<a href='https://github.com/alexei/sprintf.js' target='_blank'>See this link for details</a><br><br>" +
+                           "<i><u>prompt(message)</u></i><br>" +
+                           "Prompts the player with a dialog box with two options: 'Yes' and 'No'. This function will returns true if " +
+                           "the player clicks 'Yes' and false if the player click's 'No'. The script's execution is halted until the " +
+                           "player selects 'Yes' or 'No'. The function takes a single string as an argument which specifies the text " +
+                           "that appears on the dialog box.<br><br>" +
                            "<u><h1>Hacknet Nodes API</h1></u><br>" +
                            "Netscript provides the following API for accessing and upgrading your Hacknet Nodes through scripts. This API does NOT work offline.<br><br>" +
                            "<i><u>hacknetnodes</u></i><br>A special variable. This is an array that maps to the Player's Hacknet Nodes. The Hacknet Nodes are accessed through " +
@@ -1110,11 +1115,11 @@ let CONSTANTS = {
     "v0.32.1<br>" +
     "-Updated Netscript's 'interpreter/engine' to use the Bluebird promise library instead of native promises. " +
     "It should now be faster and more memory-efficient. If this has broken any Netscript features please report it through Github or the subreddit (reddit.com/r/bitburner)<br>" +
-    "-Rebalanced stock market (adjusted parameters such as the volatility/trends/starting price of certain stocks)<br>" + 
-    "-Added confirm() Netscript function<br>" +
+    "-Rebalanced stock market (adjusted parameters such as the volatility/trends/starting price of certain stocks)<br>" +
+    "-Added prompt() Netscript function<br>" +
     "-Added 'Buy Max' and 'Sell All' functions to Stock Market UI<br>" +
     "-Added 'Portfolio' Mode to Stock Market UI so you can only view stocks you have a position/order in<br>" +
-    "-Added a button to kill a script from its log display box<br>" +
+    "-Added a button to kill a script from its log display box<br><br>" +
     "v0.32.0<br>" +
     "-Released BitNode-8: Ghost of Wall Street<br>" +
     "-Re-designed Stock Market UI<br>" +

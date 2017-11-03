@@ -209,9 +209,28 @@ Industries:
 */
 var TOTALSHARES = 1000000000; //Total number of shares you have at your company
 
+function Material(params={}) {
+    this.name = params.name ? params.name : "";
+    this.qty = 0; //Quantity
+    this.qlt = 0; //Quality
+    this.dmd = 0; //Demand
+    this.cmp = 0; //Competition
+    this.mku = 0; //Markup
+
+    //How much space it takes in a Warehouse
+    this.siz = params.size ? params.size : 0;
+
+    this.purc = 0; //How much of this material is being purchased per second
+    this.cost = 0; //$ Cost per material
+
+    //Material requirements. An object that maps the name of a material to how much it requires
+    //to make 1 unit of the product.
+    this.req = params.req ? params.req : {};
+}
+
 var Materials = {
-    Water: 11,
-    Energy: 12,
+    Water: new Material({name: "Water", size: 0.1}),
+    Energy: new Material
     Food: 13,
     Plants: 14,
     Metal: 15,
@@ -222,23 +241,6 @@ var Materials = {
     Robots: 20,
     AICores:21,
     SciResearch: 22
-}
-
-function Material(params={}) {
-    this.name = params.name ? params.name : "";
-    this.qty = 0;
-    this.qlt = 0;
-    this.dmd = 0;
-    this.cmp = 0;
-    this.mku = 0;
-
-    //How much space it takes in a Warehouse
-    this.siz = params.size ? params.size : 0;
-
-    this.purc = 0; //How much of this material is being purchased per second
-    this.cost = 0; //$ Cost per material
-
-    this.req = params.req ? params.req : [];
 }
 
 function Product(params={}) {
@@ -258,6 +260,7 @@ function Product(params={}) {
     this.siz = params.size          ? params.size           : 0; //How much space it takes in the warehouse
 
     //Material requirements. An object that maps the name of a material to how much it requires
+    //to make 1 unit of the product.
     this.req = params.req           ? params.req            : {};
 }
 
@@ -298,9 +301,9 @@ function Industry(params={}) {
         Locations.Volhaven: 0
     };
 
-    this.type   = params.type       ? params.type   : 0;
-    this.materials = {};
-    this.products = {};
+    this.type   = params.type ? params.type : 0;
+    this.materials = {}; //Contains both materials that are created and required
+    this.products  = {};
 
     this.awareness      = 0;
     this.popularity     = 0;
@@ -330,6 +333,31 @@ Industry.prototype.init = function() {
             break;
         case Industries.Agriculture:
             break;
+        case Industries.Fishing:
+            break;
+        case Industries.Mining:
+            break;
+        case Industries.Food:
+            break;
+        case Industries.Tobacco:
+            break;
+        case Industries.Chemical:
+            break;
+        case Industries.Pharmaceutical:
+            break;
+        case Industries.Computer:
+            break;
+        case Industries.Robotics:
+            break;
+        case Industries.Software:
+            break;
+        case Industries.Healthcare:
+            break;
+        case Industries.RealEstate:
+            break;
+        default:
+            console.log("ERR: Invalid Industry Type passed into Industry.init()");
+            return;
     }
 }
 

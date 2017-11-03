@@ -1350,7 +1350,7 @@ function NetscriptFunctions(workerScript) {
         getTimeSinceLastAug : function() {
             return Player.playtimeSinceLastAug;
         },
-        confirm : function(txt) {
+        prompt : function(txt) {
             if (yesNoBoxOpen) {
                 workerScript.scriptRef.log("ERROR: confirm() failed because a pop-up dialog box is already open");
                 return false;
