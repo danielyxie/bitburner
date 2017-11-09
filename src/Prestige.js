@@ -101,11 +101,11 @@ function prestigeAugmentation() {
     if (Player.hasWseAccount) {
         initStockMarket();
         initSymbolToStockMap();
-        setStockMarketContentCreated(false);
-        var stockMarketList = document.getElementById("stock-market-list");
-        while(stockMarketList.firstChild) {
-            stockMarketList.removeChild(stockMarketList.firstChild);
-        }
+    }
+    setStockMarketContentCreated(false);
+    var stockMarketList = document.getElementById("stock-market-list");
+    while(stockMarketList.firstChild) {
+        stockMarketList.removeChild(stockMarketList.firstChild);
     }
 
     //Gang, in BitNode 2
@@ -228,8 +228,19 @@ function prestigeSourceFile() {
     Terminal.resetTerminalInput();
     Engine.loadTerminalContent();
 
-    //Reinitialize flags in case you just finished BN-4
+    //Reinitialize Bit Node flags
     initSingularitySFFlags();
+
+    //Reset Stock market
+    if (Player.hasWseAccount) {
+        initStockMarket();
+        initSymbolToStockMap();
+    } 
+    setStockMarketContentCreated(false);
+    var stockMarketList = document.getElementById("stock-market-list");
+    while(stockMarketList.firstChild) {
+        stockMarketList.removeChild(stockMarketList.firstChild);
+    }
 
     //Gain int exp
     Player.gainIntelligenceExp(5);

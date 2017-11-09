@@ -172,7 +172,12 @@ function evaluate(exp, workerScript) {
                             }
                             return Promise.resolve(object[index]);
                         }).catch(function(e) {
-                            return Promise.reject(makeRuntimeRejectMsg(workerScript, "Invalid MemberExpression"));
+                            if (e instanceof WorkerScript || isScriptErrorMessage(e)) {
+                                return Promise.reject(e);
+                            } else {
+                                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Invalid MemberExpression"));
+                            }
+
                         });
                     } else {
                         try {

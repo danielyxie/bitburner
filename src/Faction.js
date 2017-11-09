@@ -515,7 +515,8 @@ function displayFactionContent(factionName) {
     var newPurchaseAugmentationsButton = clearEventListeners("faction-purchase-augmentations");
     newPurchaseAugmentationsButton.addEventListener("click", function() {
         Engine.hideAllContent();
-        Engine.Display.factionAugmentationsContent.style.visibility = "visible";
+        //Engine.Display.factionAugmentationsContent.style.visibility = "visible";
+        Engine.Display.factionAugmentationsContent.style.display = "block";
 
         var newBackButton = clearEventListeners("faction-augmentations-back-button");
         newBackButton.addEventListener("click", function() {

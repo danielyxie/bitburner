@@ -269,7 +269,7 @@ function initStockMarket() {
     StockMarket[omnitek] = omnitekStk;
 
     var foursigma = Locations.Sector12FourSigma;
-    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], 1.05, true, 18, getRandomInt(60000, 70000));
+    var foursigmaStk = new Stock(foursigma, StockSymbols[foursigma], 1.05, true, 17, getRandomInt(60000, 70000));
     StockMarket[foursigma] = foursigmaStk;
 
     var kuaigong = Locations.ChongqingKuaiGongInternational;
@@ -325,7 +325,7 @@ function initStockMarket() {
     StockMarket[nova] = novaStk;
 
     var watchdog = Locations.AevumWatchdogSecurity;
-    var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], 1, true, 1.5, getRandomInt(5000, 7500));
+    var watchdogStk = new Stock(watchdog, StockSymbols[watchdog], 2.5, true, 1.5, getRandomInt(5000, 7500));
     StockMarket[watchdog] = watchdogStk;
 
     var lexocorp = Locations.VolhavenLexoCorp;
@@ -341,15 +341,15 @@ function initStockMarket() {
     StockMarket[alpha] = alphaStk;
 
     var syscore = Locations.VolhavenSysCoreSecurities;
-    var syscoreStk = new Stock(syscore, StockSymbols[syscore], 1.25, true, 2, getRandomInt(4000, 7000))
+    var syscoreStk = new Stock(syscore, StockSymbols[syscore], 1.6, true, 3, getRandomInt(4000, 7000))
     StockMarket[syscore] = syscoreStk;
 
     var computek = Locations.VolhavenCompuTek;
-    var computekStk = new Stock(computek, StockSymbols[computek], 0.9, true, 2, getRandomInt(2000, 5000));
+    var computekStk = new Stock(computek, StockSymbols[computek], 0.9, true, 4, getRandomInt(2000, 5000));
     StockMarket[computek] = computekStk;
 
     var netlink = Locations.AevumNetLinkTechnologies;
-    var netlinkStk = new Stock(netlink, StockSymbols[netlink], 1, true, 1, getRandomInt(2000, 4000));
+    var netlinkStk = new Stock(netlink, StockSymbols[netlink], 4.2, true, 1, getRandomInt(2000, 4000));
     StockMarket[netlink] = netlinkStk;
 
     var omega = Locations.IshimaOmegaSoftware;
@@ -369,7 +369,7 @@ function initStockMarket() {
     StockMarket[joesguns] = joesgunsStk;
 
     var catalyst = "Catalyst Ventures";
-    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.5, true, 14, getRandomInt(500, 1000));
+    var catalystStk = new Stock(catalyst, StockSymbols[catalyst], 1.45, true, 13.5, getRandomInt(500, 1000));
     StockMarket[catalyst] = catalystStk;
 
     var microdyne = "Microdyne Technologies";
@@ -1175,6 +1175,11 @@ function updateStockTicker(stock, increase) {
         return;
     }
     var tickerId = "stock-market-ticker-" + stock.symbol;
+
+    if (stock.playerShares > 0 || stock.playerShortShares > 0) {
+        updateStockPlayerPosition(stock);
+    }
+
     var hdr = document.getElementById(tickerId + "-hdr");
 
     if (hdr == null) {
@@ -1184,10 +1189,6 @@ function updateStockTicker(stock, increase) {
     hdr.innerHTML = stock.name + "  -  " + stock.symbol + "  -  $" + formatNumber(stock.price, 2);
     if (increase != null) {
         increase ? hdr.style.color = "#66ff33" : hdr.style.color = "red";
-    }
-
-    if (stock.playerShares > 0 || stock.playerShortShares > 0) {
-        updateStockPlayerPosition(stock);
     }
 }
 
