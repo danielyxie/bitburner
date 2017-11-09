@@ -106,12 +106,12 @@ let CONSTANTS = {
     InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
 
     //Stock market constants
-    WSEAccountCost:         200000000,
-    TIXAPICost:             5000000000,
-    StockMarketCommission:  100000,
+    WSEAccountCost:         200e6,
+    TIXAPICost:             5e9,
+    StockMarketCommission:  100e3,
 
     //Hospital/Health
-    HospitalCostPerHp: 100000,
+    HospitalCostPerHp: 100e3,
 
     //Intelligence-related constants
     IntelligenceCrimeWeight: 0.05,  //Weight for how much int affects crime success rates

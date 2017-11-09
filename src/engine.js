@@ -217,14 +217,16 @@ let Engine = {
     /* Load content when a main menu button is clicked */
     loadTerminalContent: function() {
         Engine.hideAllContent();
-        Engine.Display.terminalContent.style.visibility = "visible";
+        //Engine.Display.terminalContent.style.display = "none";
+        Engine.Display.terminalContent.style.display = "block";
         Engine.currentPage = Engine.Page.Terminal;
         document.getElementById("terminal-menu-link").classList.add("active");
     },
 
     loadCharacterContent: function() {
         Engine.hideAllContent();
-        Engine.Display.characterContent.style.visibility = "visible";
+        //Engine.Display.characterContent.style.visibility = "visible";
+        Engine.Display.characterContent.style.display = "block";
         Engine.displayCharacterInfo();
         Engine.currentPage = Engine.Page.CharacterInfo;
         document.getElementById("stats-menu-link").classList.add("active");
@@ -232,7 +234,8 @@ let Engine = {
 
     loadScriptEditorContent: function(filename = "", code = "") {
         Engine.hideAllContent();
-        Engine.Display.scriptEditorContent.style.visibility = "visible";
+        //Engine.Display.scriptEditorContent.style.visibility = "visible";
+        Engine.Display.scriptEditorContent.style.display = "block";
         var editor = ace.edit('javascript-editor');
         if (filename != "") {
             document.getElementById("script-editor-filename").value = filename;
@@ -246,7 +249,8 @@ let Engine = {
 
     loadActiveScriptsContent: function() {
         Engine.hideAllContent();
-        Engine.Display.activeScriptsContent.style.visibility = "visible";
+        //Engine.Display.activeScriptsContent.style.visibility = "visible";
+        Engine.Display.activeScriptsContent.style.display = "block";
         setActiveScriptsClickHandlers();
         updateActiveScriptsItems();
         Engine.currentPage = Engine.Page.ActiveScripts;
@@ -255,7 +259,8 @@ let Engine = {
 
     loadHacknetNodesContent: function() {
         Engine.hideAllContent();
-        Engine.Display.hacknetNodesContent.style.visibility = "visible";
+        //Engine.Display.hacknetNodesContent.style.visibility = "visible";
+        Engine.Display.hacknetNodesContent.style.display = "block";
         displayHacknetNodesContent();
         Engine.currentPage = Engine.Page.HacknetNodes;
         document.getElementById("hacknet-nodes-menu-link").classList.add("active");
@@ -263,7 +268,8 @@ let Engine = {
 
     loadWorldContent: function() {
         Engine.hideAllContent();
-        Engine.Display.worldContent.style.visibility = "visible";
+        //Engine.Display.worldContent.style.visibility = "visible";
+        Engine.Display.worldContent.style.display = "block";
         Engine.displayWorldInfo();
         Engine.currentPage = Engine.Page.World;
         document.getElementById("city-menu-link").classList.add("active");
@@ -271,7 +277,8 @@ let Engine = {
 
     loadCreateProgramContent: function() {
         Engine.hideAllContent();
-        Engine.Display.createProgramContent.style.visibility = "visible";
+        //Engine.Display.createProgramContent.style.visibility = "visible";
+        Engine.Display.createProgramContent.style.display = "block";
         displayCreateProgramContent();
         Engine.currentPage = Engine.Page.CreateProgram;
         document.getElementById("create-program-menu-link").classList.add("active");
@@ -279,7 +286,8 @@ let Engine = {
 
     loadFactionsContent: function() {
         Engine.hideAllContent();
-        Engine.Display.factionsContent.style.visibility = "visible";
+        //Engine.Display.factionsContent.style.visibility = "visible";
+        Engine.Display.factionsContent.style.display = "block";
         Engine.displayFactionsInfo();
         Engine.currentPage = Engine.Page.Factions;
         document.getElementById("factions-menu-link").classList.add("active");
@@ -287,13 +295,15 @@ let Engine = {
 
     loadFactionContent: function() {
         Engine.hideAllContent();
-        Engine.Display.factionContent.style.visibility = "visible";
+        //Engine.Display.factionContent.style.visibility = "visible";
+        Engine.Display.factionContent.style.display = "block";
         Engine.currentPage = Engine.Page.Faction;
     },
 
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
-        Engine.Display.augmentationsContent.style.visibility = "visible";
+        //Engine.Display.augmentationsContent.style.visibility = "visible";
+        Engine.Display.augmentationsContent.style.display = "block";
         Engine.displayAugmentationsContent();
         Engine.currentPage = Engine.Page.Augmentations;
         document.getElementById("augmentations-menu-link").classList.add("active");
@@ -301,7 +311,8 @@ let Engine = {
 
     loadTutorialContent: function() {
         Engine.hideAllContent();
-        Engine.Display.tutorialContent.style.visibility = "visible";
+        //Engine.Display.tutorialContent.style.visibility = "visible";
+        Engine.Display.tutorialContent.style.display = "block";
         Engine.displayTutorialContent();
         Engine.currentPage = Engine.Page.Tutorial;
         document.getElementById("tutorial-menu-link").classList.add("active");
@@ -309,7 +320,8 @@ let Engine = {
 
     loadLocationContent: function() {
         Engine.hideAllContent();
-        Engine.Display.locationContent.style.visibility = "visible";
+        //Engine.Display.locationContent.style.visibility = "visible";
+        Engine.Display.locationContent.style.display = "block";
         displayLocationContent();
         Engine.currentPage = Engine.Page.Location;
     },
@@ -354,8 +366,10 @@ let Engine = {
     loadWorkInProgressContent: function() {
         Engine.hideAllContent();
         var mainMenu = document.getElementById("mainmenu-container");
+        //mainMenu.style.visibility = "hidden";
         mainMenu.style.visibility = "hidden";
-        Engine.Display.workInProgressContent.style.visibility = "visible";
+        //Engine.Display.workInProgressContent.style.visibility = "visible";
+        Engine.Display.workInProgressContent.style.display = "block";
         Engine.currentPage = Engine.Page.WorkInProgress;
     },
 
@@ -363,19 +377,22 @@ let Engine = {
         Engine.hideAllContent();
         var mainMenu = document.getElementById("mainmenu-container");
         mainMenu.style.visibility = "hidden";
-        Engine.Display.redPillContent.style.visibility = "visible";
+        //Engine.Display.redPillContent.style.visibility = "visible";
+        Engine.Display.redPillContent.style.display = "block";
         Engine.currentPage = Engine.Page.RedPill;
     },
 
     loadInfiltrationContent: function() {
         Engine.hideAllContent();
-        Engine.Display.infiltrationContent.style.visibility = "visible";
+        //Engine.Display.infiltrationContent.style.visibility = "visible";
+        Engine.Display.infiltrationContent.style.display = "block";
         Engine.currentPage = Engine.Page.Infiltration;
     },
 
     loadStockMarketContent: function() {
         Engine.hideAllContent();
-        Engine.Display.stockMarketContent.style.visibility = "visible";
+        //Engine.Display.stockMarketContent.style.visibility = "visible";
+        Engine.Display.stockMarketContent.style.display = "block";
         Engine.currentPage = Engine.Page.StockMarket;
         displayStockMarketContent();
     },
@@ -401,6 +418,7 @@ let Engine = {
 
     //Helper function that hides all content
     hideAllContent: function() {
+        /*
         Engine.Display.terminalContent.style.visibility = "hidden";
         Engine.Display.characterContent.style.visibility = "hidden";
         Engine.Display.scriptEditorContent.style.visibility = "hidden";
@@ -421,6 +439,28 @@ let Engine = {
         Engine.Display.missionContent.style.visibility = "hidden";
         if (document.getElementById("gang-container")) {
             document.getElementById("gang-container").style.visibility = "hidden";
+        }
+        */
+        Engine.Display.terminalContent.style.display = "none";
+        Engine.Display.characterContent.style.display = "none";
+        Engine.Display.scriptEditorContent.style.display = "none";
+        Engine.Display.activeScriptsContent.style.display = "none";
+        Engine.Display.hacknetNodesContent.style.display = "none";
+        Engine.Display.worldContent.style.display = "none";
+        Engine.Display.createProgramContent.style.display = "none";
+        Engine.Display.factionsContent.style.display = "none";
+        Engine.Display.factionContent.style.display = "none";
+        Engine.Display.factionAugmentationsContent.style.display = "none";
+        Engine.Display.augmentationsContent.style.display = "none";
+        Engine.Display.tutorialContent.style.display = "none";
+        Engine.Display.locationContent.style.display = "none";
+        Engine.Display.workInProgressContent.style.display = "none";
+        Engine.Display.redPillContent.style.display = "none";
+        Engine.Display.infiltrationContent.style.display = "none";
+        Engine.Display.stockMarketContent.style.display = "none";
+        Engine.Display.missionContent.style.display = "none";
+        if (document.getElementById("gang-container")) {
+            document.getElementById("gang-container").style.display = "none";
         }
 
         //Location lists
@@ -1269,47 +1309,62 @@ let Engine = {
         Engine.currentPage = Engine.Page.Terminal;
 
         Engine.Display.characterContent = document.getElementById("character-container");
-        Engine.Display.characterContent.style.visibility = "hidden";
+        //Engine.Display.characterContent.style.visibility = "hidden";
+        Engine.Display.characterContent.style.display = "none";
 
         Engine.Display.scriptEditorContent = document.getElementById("script-editor-container");
-        Engine.Display.scriptEditorContent.style.visibility = "hidden";
+        //Engine.Display.scriptEditorContent.style.visibility = "hidden";
+        Engine.Display.scriptEditorContent.style.display = "none";
 
         Engine.Display.activeScriptsContent = document.getElementById("active-scripts-container");
-        Engine.Display.activeScriptsContent.style.visibility = "hidden";
+        //Engine.Display.activeScriptsContent.style.visibility = "hidden";
+        Engine.Display.activeScriptsContent.style.display = "none";
 
         Engine.Display.hacknetNodesContent = document.getElementById("hacknet-nodes-container");
-        Engine.Display.hacknetNodesContent.style.visibility = "hidden";
+        //Engine.Display.hacknetNodesContent.style.visibility = "hidden";
+        Engine.Display.hacknetNodesContent.style.display = "none";
 
         Engine.Display.worldContent = document.getElementById("world-container");
-        Engine.Display.worldContent.style.visibility = "hidden";
+        //Engine.Display.worldContent.style.visibility = "hidden";
+        Engine.Display.worldContent.style.display = "none";
 
         Engine.Display.createProgramContent = document.getElementById("create-program-container");
-        Engine.Display.createProgramContent.style.visibility = "hidden";
+        //Engine.Display.createProgramContent.style.visibility = "hidden";
+        Engine.Display.createProgramContent.style.display = "none";
 
         Engine.Display.factionsContent = document.getElementById("factions-container");
-        Engine.Display.factionsContent.style.visibility = "hidden";
+        //Engine.Display.factionsContent.style.visibility = "hidden";
+        Engine.Display.factionsContent.style.display = "none";
 
 
         Engine.Display.factionContent = document.getElementById("faction-container");
-        Engine.Display.factionContent.style.visibility = "hidden";
+        //Engine.Display.factionContent.style.visibility = "hidden";
+        Engine.Display.factionContent.style.display = "none";
 
         Engine.Display.factionAugmentationsContent = document.getElementById("faction-augmentations-container");
-        Engine.Display.factionAugmentationsContent.style.visibility = "hidden";
+        //Engine.Display.factionAugmentationsContent.style.visibility = "hidden";
+        Engine.Display.factionAugmentationsContent.style.display = "none";
 
         Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
-        Engine.Display.augmentationsContent.style.visibility = "hidden";
+        //Engine.Display.augmentationsContent.style.visibility = "hidden";
+        Engine.Display.augmentationsContent.style.display = "none";
+
 
         Engine.Display.tutorialContent = document.getElementById("tutorial-container");
-        Engine.Display.tutorialContent.style.visibility = "hidden";
+        //Engine.Display.tutorialContent.style.visibility = "hidden";
+        Engine.Display.tutorialContent.style.display = "none";
 
         Engine.Display.infiltrationContent = document.getElementById("infiltration-container");
-        Engine.Display.infiltrationContent.style.visibility = "hidden";
+        //Engine.Display.infiltrationContent.style.visibility = "hidden";
+        Engine.Display.infiltrationContent.style.display = "none";
 
         Engine.Display.stockMarketContent = document.getElementById("stock-market-container");
-        Engine.Display.stockMarketContent.style.visibility = "hidden";
+        //Engine.Display.stockMarketContent.style.visibility = "hidden";
+        Engine.Display.stockMarketContent.style.display = "none";
 
         Engine.Display.missionContent = document.getElementById("mission-container");
-        Engine.Display.missionContent.style.visibility = "hidden";
+        //Engine.Display.missionContent.style.visibility = "hidden";
+        Engine.Display.missionContent.style.display = "none";
 
         //Character info
         Engine.Display.characterInfo = document.getElementById("character-info");
@@ -1324,15 +1379,18 @@ let Engine = {
 
         //Location page (page that shows up when you visit a specific location in World)
         Engine.Display.locationContent = document.getElementById("location-container");
-        Engine.Display.locationContent.style.visibility = "hidden";
+        //Engine.Display.locationContent.style.visibility = "hidden";
+        Engine.Display.locationContent.style.display = "none";
 
         //Work In Progress
         Engine.Display.workInProgressContent = document.getElementById("work-in-progress-container");
-        Engine.Display.workInProgressContent.style.visibility = "hidden";
+        //Engine.Display.workInProgressContent.style.visibility = "hidden";
+        Engine.Display.workInProgressContent.style.display = "none";
 
         //Red Pill / Hack World Daemon
         Engine.Display.redPillContent = document.getElementById("red-pill-container");
-        Engine.Display.redPillContent.style.visibility = "hidden";
+        //Engine.Display.redPillContent.style.visibility = "hidden";
+        Engine.Display.redPillContent.style.display = "none";
 
 		//Init Location buttons
 		initLocationButtons();
