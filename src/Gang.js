@@ -1037,7 +1037,7 @@ function displayGangContent() {
 
         territorySubpage.appendChild(territoryBorder);
     }
-    document.getElementById("gang-container").style.visibility = "visible";
+    document.getElementById("gang-container").style.display = "block";
     updateGangContent();
 }
 
