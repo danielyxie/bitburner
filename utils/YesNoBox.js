@@ -11,6 +11,7 @@ function yesNoBoxClose() {
         console.log("ERROR: Container not found for YesNoBox");
     }
     yesNoBoxOpen = false;
+    return false;
 }
 
 function yesNoBoxGetYesButton() {
@@ -47,6 +48,7 @@ function yesNoTxtInpBoxClose() {
         console.log("ERROR: Container not found for YesNoTextInputBox");
     }
     yesNoBoxOpen = false;
+    return false;
 }
 
 function yesNoTxtInpBoxGetYesButton() {

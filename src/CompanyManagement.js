@@ -106,7 +106,7 @@ Industries:
                          High starting cost
                          Requires constant creation of new and better products to be successful
                          Product quality significantly affected by scientific research
-        Computer - Creates 'Hardware' material
+        Computer - Creates 'Hardware' material and your own Computer products
                    Requires metal, energy
                    Can use Robotics/AI Cores to increase production
                    More real estate = more production with high diminishing returns
@@ -130,7 +130,7 @@ Industries:
                      Extremely high starting cost
                      Production increase from real estate diminishes greatly in city. e.g. making many hospitals
                      in one city has high diminishing returns, but making a few in every city is goodIn
-        Real Estate - Create 'Real Estate'.
+        Real Estate - Create 'Real Estate' and your own Real Estate Products
                       Requires metal, energy, water, hardware
                       Can use Robotics/AI Cores to increase production
                       Production slightly affected by scientific research
@@ -240,6 +240,7 @@ function Material(params={}) {
     this.bCost = 0; //$ Cost/sec to buy material
     this.sCost = 0; //$ Cost/sec to sell material
 
+    //[Whether production/sale is limited, limit amount]
     this.prdman = [false, 0]; //Production for this material is manually limited
     this.sllman = [false, 0]; //Sale of this material is manually limited
 }
@@ -370,18 +371,26 @@ function Product(params={}) {
     this.dmd = params.demand        ? params.demand         : 0;
     this.cmp = params.competition   ? params.competition    : 0;
     this.mku = params.markup        ? params.markup         : 0;
+    this.prd = 0;
 
-    //Aggregate score for quality based on the other properties below
+    //Variables for creation of product
+    this.fin = false; //Finished being created
+    this.prog = 0; //0-100% created
+
+
+    //Aggregate score for a product's 'rating' based on the other properties below
     //The weighting of the other properties (performance, durability)
     //differs between industries
-    this.qlt = params.quality       ? params.quality        : 0;
+    this.rat = 0;
 
-    this.qty = 0;
+    this.qlt = params.quality       ? params.quality        : 0;
     this.per = params.performance   ? params.performance    : 0;
     this.dur = params.durability    ? params.durability     : 0;
     this.rel = params.reliability   ? params.reliability    : 0;
     this.aes = params.aesthetics    ? params.aesthetics     : 0;
     this.fea = params.features      ? params.features       : 0;
+
+    this.qty = 0;
 
     //Only applicable for certain products like Restaurants
     this.loc = params.location      ? params.location       : "";
@@ -391,7 +400,92 @@ function Product(params={}) {
 
     //Material requirements. An object that maps the name of a material to how much it requires
     //to make 1 unit of the product.
-    this.req = params.req           ? params.req            : {};
+    this.reqMats = params.req           ? params.req            : {};
+
+    //[Whether production/sale is limited, limit amount]
+    this.prdman = [false, 0];
+    this.sllman = [false, 0];
+}
+
+Product.prototype.createProduct = function() {
+
+}
+
+Product.prototype.finishProduct = function() {
+
+}
+
+
+var ProductRatingWeights = {
+    Industries.Food: {
+        Quality:        0.7,
+        Durability:     0.1,
+        Aesthetics:     0.2,
+    },
+    Industries.Tobacco: {
+        Quality:        0.4,
+        Durability:     0.2,
+        Reliability:    0.2,
+        Aesthetics:     0.2,
+    },
+    Industries.Pharmaceutical: {
+        Quality:        0.2,
+        Performance:    0.2,
+        Durability:     0.1,
+        Reliability:    0.3,
+        Features:       0.2,
+    },
+    Industries.Computer: {
+        Quality:        0.15,
+        Performance:    0.25,
+        Durability:     0.25,
+        Reliability:    0.2,
+        Aesthetics:     0.05,
+        Features:       0.1,
+    },
+    Industries.Robotics: {
+        Quality:        0.1,
+        Performance:    0.2,
+        Durability:     0.2,
+        Reliability:    0.2,
+        Aesthetics:     0.1,
+        Features:       0.2,
+    },
+    Industries.Software: {
+        Quality:        0.2,
+        Performance:    0.2,
+        Reliability:    0.2,
+        Durability:     0.2,
+        Features:       0.2,
+    },
+    Industries.Healthcare: {
+        Quality:        0.4,
+        Performance:    0.1,
+        Durability:     0.1,
+        Reliability:    0.3,
+        Features:       0.1,
+    },
+    Industries.RealEstate: {
+        Quality:        0.2,
+        Durability:     0.25,
+        Reliability:    0.1,
+        Aesthetics:     0.35,
+        Features:       0.1,
+    }
+}
+Product.prototype.calculateRating = function(industry) {
+    var weights = ProductRatingWeights.industry;
+    if (weights == null) {
+        console.log("ERROR: Could not find product rating weights for: " + industry);
+        return;
+    }
+    this.rat = 0;
+    this.rat += weights.Quality     ? this.qlt * weights.Quality : 0;
+    this.rat += weights.Performance ? this.per * weights.Performance : 0;
+    this.rat += weights.Durability  ? this.dur * weights.Durability : 0;
+    this.rat += weights.Reliability ? this.rel * weights.Reliability : 0;
+    this.rat += weights.Aesthetics  ? this.aes * weights.Aesthetics : 0;
+    this.rat += weights.Features    ? this.fea * weights.Features : 0;
 }
 
 var Industries = {
@@ -889,21 +983,81 @@ Industry.prototype.processMaterials = function(marketCycles=1) {
 
 //Process this industry's producton of products (including all of their stats)
 Industry.prototype.processProducts = function(marketCycles=1) {
-    for (var i = 0; i < Cities.length; ++i) {
-        var city = Cities[i], office = this.offices[city];
-
-        if (this.warehouses[city] instanceof Warehouse) {
-            var warehouse = this.warehouses[city];
-
-            //Process production of products
-            var total =
+    for (var prodName in this.products) {
+        if (this.products.hasOwnProperty(prodName)) {
+            var prod = this.products[prodName];
+            if (prod instanceof Product) {
+                this.processProduct(marketCycles, prod);
+            } else {
+                console.log("ERROR: Trying to process a non-Product object in Industry.products");
+            }
         }
-
     }
 }
 
 Industry.prototype.processProduct = function(marketCycles=1, product) {
+    for (var i = 0; i < Cities.length; ++i) {
+        var city = Cities[i], office = this.offices[city], warehouse = this.warehouses[city];
+        if (warehouse instanceof Warehouse) {
+            //Calculate the maximum production of this Product based on
+            //office's productivity, materials, etc.
+            var total = office.employeeProd[EmployeePositions.Operations] +
+                        office.employeeProd[EmployeePositions.Engineer] +
+                        office.employeeProd[EmployeePositions.Management];
+            var ratio = (office.employeeProd[EmployeePositions.Operations] / total) *
+                        (office.employeeProd[EmployeePositions.Engineer] / total) *
+                        (office.employeeProd[EmployeePositions.Management] / total);
+            var maxProd = ratio * (0.35 * total), prod;
 
+            //Account for whether production is manually limited
+            if (mat.prdman[0]) {
+                prod = Math.min(maxProd, mat.prdman[1]);
+            } else {
+                prod = maxProd;
+            }
+            prod *= (SecsPerMarketCycle * marketCycles);
+
+
+            //Calculate net change in warehouse storage making the Products will cost
+            var netStorageSize = product.siz;
+            for (var reqMatName in product.reqMats) {
+                if (product.reqMats.hasOwnProperty(reqMatName)) {
+                    var normQty = product.reqMats[reqMatName];
+                    netStorageSize -= (MaterialSizes[reqMatName] * normQty);
+                }
+            }
+
+            //If there's not enough space in warehouse, limit the amount of Product
+            if (netStorageSize > 0) {
+                var maxAmt = Math.floor((warehouse.size - warehouse.sizedUsed) / netStorageSize);
+                prod = Math.min(maxAmt, prod);
+            }
+
+            //Make sure we have enough resources to make our Products
+            var producableFrac = 1;
+            for (var reqMatName in product.reqMats) {
+                if (product.reqMats.hasOwnProperty(reqMatName)) {
+                    var req = product.reqMats[reqMatName] * prod;
+                    if (warehouse[reqMatName].qty < req) {
+                        producableFrac = Math.min(producableFrac, warehouse[reqMatName].qty / req);
+                    }
+                }
+            }
+
+            //Make our Products if they are producable
+            if (producableFrac > 0) {
+                for (var reqMatName in product.reqMats) {
+                    if (product.reqMats.hasOwnProperty(reqMatName)) {
+                        warehouse[reqMatName].qty -= (product.reqMats[reqMatName] * prod * producableFrac);
+                    }
+                }
+                product.qty += (prod * producableFrac * this.prodMult);
+            }
+
+            //Per second
+            product.prd = prod * producableFrac * this.prodMult / (SecsPerMarketCycle * marketCycles);
+        }
+    }
 }
 
 var EmployeePositions = {
