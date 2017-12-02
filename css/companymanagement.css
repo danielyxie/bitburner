@@ -1,0 +1,100 @@
+#cmpy-mgmt-container p,
+#cmpy-mgmt-container a {
+    font-size: 14px;
+}
+
+
+/* Header tabs */
+.cmpy-mgmt-header-tab {
+    display: inline-block;
+    color: white;
+    background-color:#555;
+    border:1px solid white;
+    padding: 4px;
+}
+
+.cmpy-mgmt-header-tab:hover {
+    background-color: #666;
+}
+
+.cmpy-mgmt-header-tab.current {
+    background-color: #777;
+}
+
+/* Select industry type when creating a new division */
+.cmpy-mgmt-industry-select {
+    color:white;
+    background-color:black;
+}
+
+/* Switch between Cities */
+.cmpy-mgmt-city-tab {
+    display:inline-block;
+    color: white;
+    background-color: #555;
+    border: 1px solid white;
+    padding: 4px;
+}
+
+.cmpy-mgmt-city-tab:hover {
+    background-color: #666;
+}
+
+.cmpy-mgmt-city-tab.current {
+    background-color: #777;
+}
+
+/* Panels */
+#cmpy-mgmt-panel {
+    height: 90%;
+}
+
+.cmpy-mgmt-industry-left-panel,
+.cmpy-mgmt-industry-right-panel {
+    display:inline-block;
+    width: 45%;
+    height: 100%;
+    top: 10px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.cmpy-mgmt-industry-overview-panel {
+    border: 1px solid white;
+    color: var(--my-font-color);
+    display:inline-block;
+    width: 100%;
+}
+
+.cmpy-mgmt-employee-panel {
+    border: 1px solid white;
+    display:block;
+    width:100%;
+}
+
+.cmpy-mgmt-warehouse-panel {
+    border: 1px solid white;
+    display:inline-block;
+    width:100%;
+}
+
+/* Hiring new employees*/
+.cmpy-mgmt-find-employee-option {
+    border:1px solid white;
+    margin: 6px;
+}
+
+.cmpy-mgmt-find-employee-option:hover {
+    background-color:#3d4044;
+}
+
+/* Warehouse */
+.cmpy-mgmt-warehouse-material-div {
+    padding:2px;
+    border:1px solid white;
+}
+
+.cmpy-mgmt-warehouse-product-div {
+    padding:2px;
+    border:1px solid white;
+}

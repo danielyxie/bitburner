@@ -1,6 +1,6 @@
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions.js";
-import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {clearEventListeners, createElement}     from "../utils/HelperFunctions.js";
 import numeral                                  from "../utils/numeral.min.js";
 import {formatNumber,
         convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
@@ -14,6 +14,7 @@ import {Augmentations, installAugmentations,
 import {BitNodes, initBitNodes,
         initBitNodeMultipliers}                 from "./BitNode.js";
 import {CompanyPositions, initCompanies}        from "./Company.js";
+import {Corporation}                            from "./CompanyManagement.js";
 import {CONSTANTS}                              from "./Constants.js";
 import {Programs, displayCreateProgramContent,
         getNumAvailableCreateProgram,
@@ -205,6 +206,7 @@ let Engine = {
         StockMarket:        "StockMarket",
         Gang:               "Gang",
         Mission:            "Mission",
+        Corporation:        "Corporation",
     },
     currentPage:    null,
 
@@ -400,6 +402,15 @@ let Engine = {
         Engine.currentPage = Engine.Page.Mission;
     },
 
+    loadCorporationContent: function() {
+        if (Player.corporation instanceof Corporation) {
+            Engine.hideAllContent();
+            document.getElementById("character-overview-wrapper").style.visibility = "hidden";
+            Player.corporation.createUI();
+            Engine.currentPage = Engine.Page.Corporation;
+        }
+    },
+
     //Helper function that hides all content
     hideAllContent: function() {
         Engine.Display.terminalContent.style.display = "none";
@@ -422,6 +433,10 @@ let Engine = {
         Engine.Display.missionContent.style.display = "none";
         if (document.getElementById("gang-container")) {
             document.getElementById("gang-container").style.display = "none";
+        }
+
+        if (Player.corporation instanceof Corporation) {
+            Player.corporation.clearUI();
         }
 
         //Location lists
@@ -573,6 +588,13 @@ let Engine = {
                 break;
             case Locations.Sector12:
                 Engine.sector12LocationsList.style.display = "inline";
+
+                //City hall only in BitNode-3
+                if (Player.bitNodeN === 3) {
+                    document.getElementById("sector12-cityhall-li").style.display = "block";
+                } else {
+                    document.getElementById("sector12-cityhall-li").style.display = "none";
+                }
                 break;
             case Locations.NewTokyo:
                 Engine.newTokyoLocationsList.style.display = "inline";
@@ -588,7 +610,20 @@ let Engine = {
                 break;
         }
 
-        document.getElementById("generic-locations-list").style.display = "inline";
+        var genericLocationsList = document.getElementById("generic-locations-list");
+        genericLocationsList.style.display = "inline";
+        if (Player.corporation instanceof Corporation && document.getElementById("location-corporation-button") == null) {
+            var li = createElement("li", {});
+            li.appendChild(createElement("a", {
+                innerText:Player.corporation.name, id:"location-corporation-button",
+                class:"a-link-button",
+                clickListener:()=>{
+                    Engine.loadCorporationContent();
+                    return false;
+                }
+            }));
+            genericLocationsList.appendChild(li);
+        }
     },
 
     displayFactionsInfo: function() {
@@ -852,6 +887,11 @@ let Engine = {
             currMission.process(numCycles);
         }
 
+        //Corporation
+        if (Player.corporation instanceof Corporation) {
+            Player.corporation.process(numCycles);
+        }
+
         //Counters
         Engine.decrementAllCounters(numCycles);
         Engine.checkCounters();
@@ -926,6 +966,8 @@ let Engine = {
         if (Engine.Counters.updateDisplaysMed <= 0) {
             if (Engine.currentPage == Engine.Page.ActiveScripts) {
                 updateActiveScriptsItems();
+            } else if (Engine.currentPage === Engine.Page.Corporation) {
+                Player.corporation.updateUIContent();
             }
             Engine.Counters.updateDisplaysMed = 9;
         }
