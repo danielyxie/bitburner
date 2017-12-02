@@ -6,6 +6,7 @@ import {Company, Companies, getNextCompanyPosition,
         getJobRequirementText, CompanyPosition,
         CompanyPositions}                       from "./Company.js";
 import {CONSTANTS}                              from "./Constants.js";
+import {Corporation}                            from "./CompanyManagement.js";
 import {Programs}                               from "./CreateProgram.js";
 import {determineCrimeSuccess}                  from "./Crimes.js";
 import {Engine}                                 from "./engine.js";
@@ -174,6 +175,9 @@ function PlayerObject() {
 
     //Gang
     this.gang = 0;
+
+    //Corporation
+    this.corporation = 0;
 
     //bitnode
     this.bitNodeN = 1;
@@ -369,6 +373,9 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     //Reset Stock market
     this.hasWseAccount = false;
     this.hasTixApiAccess = false;
+
+    //BitNode 3: Corporatocracy
+    if (this.bitNodeN === 3) {this.money = new Decimal(150e9);}
 
     //BitNode 8: Ghost of Wall Street
     if (this.bitNodeN === 8) {this.money = new Decimal(100000000);}
@@ -2304,6 +2311,20 @@ function loadPlayer(saveString) {
     Player.money = new Decimal(Player.money);
     Player.total_money = new Decimal(Player.total_money);
     Player.lifetime_money = new Decimal(Player.lifetime_money);
+
+    if (Player.corporation instanceof Corporation) {
+        Player.corporation.funds = new Decimal(Player.corporation.funds);
+        Player.corporation.revenue = new Decimal(Player.corporation.revenue);
+        Player.corporation.expenses = new Decimal(Player.corporation.expenses);
+
+        for (var i = 0; i < Player.corporation.divisions.length; ++i) {
+            var ind = Player.corporation.divisions[i];
+            ind.lastCycleRevenue = new Decimal(ind.lastCycleRevenue);
+            ind.lastCycleExpenses = new Decimal(ind.lastCycleExpenses);
+            ind.thisCycleRevenue = new Decimal(ind.thisCycleRevenue);
+            ind.thisCycleExpenses = new Decimal(ind.thisCycleExpenses);
+        }
+    }
 }
 
 PlayerObject.prototype.toJSON = function() {

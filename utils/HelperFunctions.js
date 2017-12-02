@@ -1,4 +1,5 @@
 //General helper functions
+import {isString}           from "./StringHelperFunctions.js";
 
 //Returns the size (number of keys) of an object
 function sizeOfObject(obj) {
@@ -46,6 +47,115 @@ function removeElementById(id) {
     elem.parentNode.removeChild(elem);
 }
 
+function removeChildrenFromElement(el) {
+    if (isString(el)) {
+        el = document.getElementById(el);
+    }
+    if (el == null) {return;}
+    if (el instanceof Element) {
+        while(el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+    }
+}
+
+function createElement(type, params) {
+    var el = document.createElement(type);
+    if (params.id)          {el.id = params.id;}
+    if (params.class)       {el.className = params.class;}
+    if (params.innerHTML)   {el.innerHTML = params.innerHTML;}
+    if (params.innerText)   {el.innerText = params.innerText;}
+    if (params.value)       {el.value = params.value;}
+    if (params.text)        {el.text = params.text;}
+    if (params.display)     {el.style.display = params.display;}
+    if (params.visibility)  {el.style.visibility = params.visibility;}
+    if (params.margin)      {el.style.margin = params.margin;}
+    if (params.padding)     {el.style.padding = params.padding;}
+    if (params.color)       {el.style.color = params.color;}
+    if (params.border)      {el.style.border = params.border;}
+    if (params.float)       {el.style.cssFloat = params.float;}
+    if (params.backgroundColor) {
+        el.style.backgroundColor = params.backgroundColor
+    }
+    if (params.position)    {el.style.position = params.position;}
+    if (params.type)        {el.type = params.type;}
+    if (params.checked)     {el.checked = params.checked;}
+    if (params.for)         {el.htmlFor = params.for;}
+    if (params.pattern)     {el.pattern = params.pattern;}
+    if (params.maxLength)   {el.maxLength = params.maxLength;}
+    if (params.placeholder) {el.placeholder = params.placeholder;}
+    if (params.tooltip)     {
+        el.className += " tooltip";
+        el.appendChild(createElement("span", {
+            class:"tooltiptext",
+            innerHTML:params.tooltip
+        }));
+    }
+    if (params.clickListener) {
+        el.addEventListener("click", params.clickListener);
+    }
+    if (params.inputListener) {
+        el.addEventListener("input", params.inputListener);
+    }
+    if (params.changeListener) {
+        el.addEventListener("change", params.changeListener);
+    }
+    return el;
+}
+
+function createPopup(id, elems) {
+    var container = createElement("div", {
+            class:"popup-box-container",
+            id:id,
+            display:"block"
+        }),
+        content = createElement("div", {
+            class:"popup-box-content",
+        });
+
+    for (var i = 0; i < elems.length; ++i) {
+        content.appendChild(elems[i]);
+    }
+    container.appendChild(content);
+    document.getElementById("entire-game-container").appendChild(container);
+}
+
+//Creates both the header and panel element of an accordion and sets the click handler
+//Returns the 'li' element that contains the hedaer and panel
+function createAccordionElement(params) {
+    var li = document.createElement("li"),
+        hdr = document.createElement("button"),
+        panel = document.createElement("div");
+    hdr.classList.add("accordion-header");
+    panel.classList.add("accordion-panel");
+
+    if (params.id) {
+        hdr.id = params.id + "-hdr";
+        panel.id = params.id + "-panel";
+    }
+    if (params.hdrText)         {hdr.innerHTML = params.hdrText;}
+    if (params.panelText)       {panel.innerHTML = params.panelText;}
+    li.appendChild(hdr);
+    li.appendChild(panel);
+    //Click handler
+    hdr.onclick = function() {
+        this.classList.toggle("active");
+        var tmpPanel = this.nextElementSibling;
+        if (tmpPanel.style.display === "block") {
+            tmpPanel.style.display = "none";
+        } else {
+            tmpPanel.style.display = "block";
+        }
+    }
+    return li;
+}
+
+function clearSelector(selector) {
+    for (var i = selector.options.length - 1; i >= 0; --i) {
+        selector.remove(i);
+    }
+}
+
 function getRandomInt(min, max) {
     if (min > max) {return getRandomInt(max, min);}
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -76,4 +186,5 @@ function powerOfTwo(n) {
 
 export {sizeOfObject, addOffset, clearEventListeners, getRandomInt,
         compareArrays, printArray, powerOfTwo, clearEventListenersEl,
-        removeElementById};
+        removeElementById, createElement, createAccordionElement,
+        removeChildrenFromElement, createPopup, clearSelector};

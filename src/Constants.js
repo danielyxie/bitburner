@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.32.1",
+    Version:                "0.33.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -1112,18 +1112,9 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.32.1<br>" +
-    "-Updated Netscript's 'interpreter/engine' to use the Bluebird promise library instead of native promises. " +
-    "It should now be faster and more memory-efficient. If this has broken any Netscript features please report it through Github or the subreddit (reddit.com/r/bitburner)<br>" +
-    "-Rebalanced stock market (adjusted parameters such as the volatility/trends/starting price of certain stocks)<br>" +
-    "-Added prompt() Netscript function<br>" +
-    "-Added 'Buy Max' and 'Sell All' functions to Stock Market UI<br>" +
-    "-Added 'Portfolio' Mode to Stock Market UI so you can only view stocks you have a position/order in<br>" +
-    "-Added a button to kill a script from its log display box<br><br>" +
-    "v0.32.0<br>" +
-    "-Released BitNode-8: Ghost of Wall Street<br>" +
-    "-Re-designed Stock Market UI<br>" +
-    "-Minor bugfixes<br>"
+    "v0.33.0<br>" +
+    "-Released BitNode 3: Corporatocracy<br>" +
+    "-Minor bug fixes"
 }
 
 export {CONSTANTS};

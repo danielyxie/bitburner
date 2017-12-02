@@ -116,8 +116,11 @@ function prestigeAugmentation() {
         }
     }
 
+    //BitNode 3: Corporatocracy
+    if (Player.bitNodeN === 3) {Player.money = new Decimal(150e9);}
+
     //BitNode 8: Ghost of Wall Street
-    if (Player.bitNodeN === 8) {Player.money = new Decimal(100000000);}
+    if (Player.bitNodeN === 8) {Player.money = new Decimal(100e6);}
     if (Player.bitNodeN === 8 || hasWallStreetSF) {
         Player.hasWseAccount = true;
         Player.hasTixApiAccess = true;
@@ -235,7 +238,7 @@ function prestigeSourceFile() {
     if (Player.hasWseAccount) {
         initStockMarket();
         initSymbolToStockMap();
-    } 
+    }
     setStockMarketContentCreated(false);
     var stockMarketList = document.getElementById("stock-market-list");
     while(stockMarketList.firstChild) {

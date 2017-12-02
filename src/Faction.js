@@ -515,7 +515,6 @@ function displayFactionContent(factionName) {
     var newPurchaseAugmentationsButton = clearEventListeners("faction-purchase-augmentations");
     newPurchaseAugmentationsButton.addEventListener("click", function() {
         Engine.hideAllContent();
-        //Engine.Display.factionAugmentationsContent.style.visibility = "visible";
         Engine.Display.factionAugmentationsContent.style.display = "block";
 
         var newBackButton = clearEventListeners("faction-augmentations-back-button");
@@ -532,6 +531,7 @@ function displayFactionContent(factionName) {
         factionName == "The Syndicate" || factionName == "The Dark Army" || factionName == "Speakers for the Dead" ||
         factionName == "NiteSec" || factionName == "The Black Hand")) {
         //Set everything else to invisible
+        hackMissionDiv.style.display = "none";
         hackDiv.style.display = "none";
         fieldWorkDiv.style.display = "none";
         securityWorkDiv.style.display = "none";
