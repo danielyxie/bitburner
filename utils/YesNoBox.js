@@ -11,7 +11,7 @@ function yesNoBoxClose() {
         console.log("ERROR: Container not found for YesNoBox");
     }
     yesNoBoxOpen = false;
-    return false;
+    return false; //So that 'return yesNoBoxClose()' is return false in event listeners
 }
 
 function yesNoBoxGetYesButton() {
@@ -48,6 +48,7 @@ function yesNoTxtInpBoxClose() {
         console.log("ERROR: Container not found for YesNoTextInputBox");
     }
     yesNoBoxOpen = false;
+    document.getElementById("yes-no-text-input-box-input").value = "";
     return false;
 }
 
@@ -78,6 +79,8 @@ function yesNoTxtInpBoxCreate(txt) {
     } else {
         console.log("ERROR: Container not found for YesNoTextInputBox");
     }
+
+    document.getElementById("yes-no-text-input-box-input").focus();
 }
 
 export {yesNoBoxCreate, yesNoTxtInpBoxCreate,

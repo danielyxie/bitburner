@@ -1,5 +1,6 @@
 import {CompanyPositions, initCompanies,
         Companies, getJobRequirementText}       from "./Company.js";
+import {Corporation}                            from "./CompanyManagement.js";
 import {CONSTANTS}                              from "./Constants.js";
 import {commitShopliftCrime, commitRobStoreCrime, commitMugCrime,
         commitLarcenyCrime, commitDealDrugsCrime, commitBondForgeryCrime,
@@ -22,7 +23,7 @@ import {purchaseServer,
 import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {clearEventListeners, createElement}     from "../utils/HelperFunctions.js";
 import {createRandomIp}                         from "../utils/IPAddress.js";
 import numeral                                  from "../utils/numeral.min.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
@@ -84,6 +85,7 @@ let Locations = {
     Sector12IronGym:            "Iron Gym",
     Sector12PowerhouseGym:      "Powerhouse Gym",
     Sector12Slums:              "Sector-12 Slums",
+    Sector12CityHall:           "Sector-12 City Hall",
 
     //New Tokyo
     NewTokyoTravelAgency:           "New Tokyo Travel Agency",
@@ -204,6 +206,8 @@ function displayLocationContent() {
     var slumsAssassinate        = document.getElementById("location-slums-assassinate");
     var slumsHeist              = document.getElementById("location-slums-heist");
 
+    var cityHallCreateCorporation   = document.getElementById("location-cityhall-create-corporation");
+
     var loc = Player.location;
 
     returnToWorld.addEventListener("click", function() {
@@ -308,6 +312,8 @@ function displayLocationContent() {
     slumsKidnap.style.display = "none";
     slumsAssassinate.style.display = "none";
     slumsHeist.style.display = "none";
+
+    cityHallCreateCorporation.style.display = "none";
 
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
@@ -775,6 +781,15 @@ function displayLocationContent() {
             setGymLocationButtons(costMult, expMult);
             break;
 
+        case Locations.Sector12CityHall:
+            cityHallCreateCorporation.style.display = "block";
+            if (Player.corporation instanceof Corporation) {
+                cityHallCreateCorporation.className = "a-link-button-inactive";
+            } else {
+                cityHallCreateCorporation.className = "a-link-button";
+            }
+            break;
+
         case Locations.NewTokyoTravelAgency:
             travelAgencyText.style.display = "block";
             travelToAevum.style.display = "block";
@@ -1085,7 +1100,6 @@ function displayLocationContent() {
 
         default:
             console.log("ERROR: INVALID LOCATION");
-
     }
 
     //Make the "Apply to be Employee and Waiter" texts disappear if you already hold the job
@@ -1380,6 +1394,13 @@ function initLocationButtons() {
         return false;
     });
 
+    let sector12CityHall = document.getElementById("sector12-cityhall");
+    sector12CityHall.addEventListener("click", function() {
+        Player.location = Locations.Sector12CityHall;
+        Engine.loadLocationContent();
+        return false;
+    });
+
 	let newTokyoTravelAgency = document.getElementById("newtokyo-travelagency");
 	newTokyoTravelAgency.addEventListener("click", function() {
 		Player.location = Locations.NewTokyoTravelAgency;
@@ -1613,6 +1634,8 @@ function initLocationButtons() {
     var slumsKidnap         = document.getElementById("location-slums-kidnap");
     var slumsAssassinate    = document.getElementById("location-slums-assassinate");
     var slumsHeist          = document.getElementById("location-slums-heist");
+
+    var cityHallCreateCorporation = document.getElementById("location-cityhall-create-corporation");
 
     var hospitalTreatment   = document.getElementById("location-hospital-treatment");
 
@@ -1886,6 +1909,42 @@ function initLocationButtons() {
     slumsHeist.addEventListener("click", function() {
         commitHeistCrime();
         return false;
+    });
+
+    cityHallCreateCorporation.addEventListener("click", function() {
+        var yesBtn = yesNoTxtInpBoxGetYesButton(),
+            noBtn = yesNoTxtInpBoxGetNoButton();
+        yesBtn.innerText = "Create Corporation";
+        noBtn.innerText = "Cancel";
+        yesBtn.addEventListener("click", function() {
+            if (Player.money.lt(150e9)) {
+                dialogBoxCreate("You don't have enough money to create a corporation! You need $150b");
+                return yesNoTxtInpBoxClose();
+            }
+            Player.loseMoney(150e9);
+            var companyName = yesNoTxtInpBoxGetInput();
+            if (companyName == null || companyName == "") {
+                dialogBoxCreate("Invalid company name!");
+                return false;
+            }
+            Player.corporation = new Corporation({
+                name:companyName,
+            });
+            displayLocationContent();
+            dialogBoxCreate("Congratulations! You just started your own corporation. You can visit " +
+                            "and manage your company in the City");
+            return yesNoTxtInpBoxClose();
+        });
+        noBtn.addEventListener("click", function() {
+            return yesNoTxtInpBoxClose();
+        });
+        if (Player.corporation instanceof Corporation) {
+            return;
+        } else {
+            yesNoTxtInpBoxCreate("Would you like to start a corporation? This will require $150b " +
+                                 "for registration and initial funding.<br><br>If so, please enter " +
+                                 "a name for your corporation below:");
+        }
     });
 
     hospitalTreatment.addEventListener("click", function() {

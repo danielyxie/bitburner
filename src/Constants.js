@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.32.1",
+    Version:                "0.33.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -126,7 +126,7 @@ let CONSTANTS = {
     //Hacking Missions
     HackingMissionRepToDiffConversion: 10000, //Faction rep is divided by this to get mission difficulty
     HackingMissionRepToRewardConversion: 7, //Faction rep divided byt his to get mission rep reward
-    HackingMissionSpamTimeIncrease: 15000, //How much time limit increase is gained when conquering a Spam Node (ms)
+    HackingMissionSpamTimeIncrease: 25000, //How much time limit increase is gained when conquering a Spam Node (ms)
     HackingMissionTransferAttackIncrease: 1.05, //Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
     HackingMissionMiscDefenseIncrease: 1.05, //The amount by which every misc node's defense is multiplied when one is conquered
     HackingMissionDifficultyToHacking: 150, //Difficulty is multiplied by this to determine enemy's "hacking" level (to determine effects of scan/attack, etc)
@@ -767,28 +767,28 @@ let CONSTANTS = {
                            "must be the number of shares to purchase.<br><br>" +
                            "If the player does not have enough money to purchase specified number of shares, then no shares will be purchased (it will not purchase the most you can afford). " +
                            "Remember that every transaction on the stock exchange costs a certain commission fee.<br><br>" +
-                           "The function will return true if it successfully purchases the specified number of shares of stock, and false otherwise.<br><br>" +
+                           "If this function successfully purchases the shares, it will return the stock price at which each share was purchased. Otherwise, it will return 0.<br><br>" +
                            "<i><u>sellStock(sym, shares)</u></i><br>Attempts to sell shares of a stock using a Market Order. The first argument must be a string with the stock's symbol. The second argument " +
                            "must be the number of shares to sell.<br><br>" +
                            "If the specified number of shares in the function exceeds the amount that the player actually owns, then this function will sell all owned shares. " +
                            "Remember that every transaction on the stock exchange costs a certain commission fee.<br><br>" +
                            "The net profit made from selling stocks with this function is reflected in the script's statistics. This net profit is calculated as: <br><br>" +
                            "shares * (sell price - average price of purchased shares)<br><br>" +
-                           "This function will return true if the shares of stock are successfully sold and false otherwise.<br><br>" +
+                           "If the sale is successful, this function will return the stock price at which each share was sold. Otherwise, it will return 0.<br><br>" +
                            "<i><u>shortStock(sym, shares)</u></i><br>" +
                            "Attempts to purchase a short position of a stock using a Market Order. The first argument must be a string with the stock's symbol. The second argument " +
                            "must be the number of shares to purchase.<br><br>" +
                            "In order to use this function the player must be in BitNode-8 or must have Level 2 of Source-File 8.<br><br>" +
                            "If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember that every " +
                            "every transaction on the stock exchange costs a certain commission fee.<br><br>" +
-                           "Returns true if it successfully shorts the stock with the specified number of shares, and false otherwise.<br><br>" +
+                           "If the purchase is successful, this function will return the stock price at which each share was purchased. Otherwise, it will return 0.<br><br>" +
                            "<i><u>sellShort(sym, shares)</u></i><br>" +
                            "Attempts to sell a short position of a stock using a Market Order. The first argument must be a string with the stock's symbol. The second argument must be the " +
                            "number of shares to sell.<br><br>" +
                            "In order to use this function the player must be in BitNode-8 or must have Level 2 of Source-File 8.<br><br>" +
                            "If the specified number of shares exceeds the amount that the player actually owns, then this function will sell all owned shares. " +
                            "Remember that every transaction on the stock exchange costs a certain commission fee.<br><br>" +
-                           "This function returns true if it successfully sells any number of shares, and false otherwise.<br><br>" +
+                           "If the sale was successful, this function will return the stock price at which each sale was sold. Otherwise, it will return 0.<br><br>" +
                            "<i><u>placeOrder(sym, shares, price, type, pos)</u></i><br>" +
                            "Places an order on the stock market. This function only works for Limit and Stop Orders. Use the buyStock/sellStock/shortStock/sellShort functions " +
                            "to place Market Orders. In order to use this function the player must be in BitNode-8 or must have Level 3 of Source-File 8.<br><br>" +
@@ -1112,18 +1112,18 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.32.1<br>" +
-    "-Updated Netscript's 'interpreter/engine' to use the Bluebird promise library instead of native promises. " +
-    "It should now be faster and more memory-efficient. If this has broken any Netscript features please report it through Github or the subreddit (reddit.com/r/bitburner)<br>" +
-    "-Rebalanced stock market (adjusted parameters such as the volatility/trends/starting price of certain stocks)<br>" +
-    "-Added prompt() Netscript function<br>" +
-    "-Added 'Buy Max' and 'Sell All' functions to Stock Market UI<br>" +
-    "-Added 'Portfolio' Mode to Stock Market UI so you can only view stocks you have a position/order in<br>" +
-    "-Added a button to kill a script from its log display box<br><br>" +
-    "v0.32.0<br>" +
-    "-Released BitNode-8: Ghost of Wall Street<br>" +
-    "-Re-designed Stock Market UI<br>" +
-    "-Minor bugfixes<br>"
+    "v0.34.0<br>" +
+    "-Slightly increased experience gain from Infiltration<br>" +
+    "-buyStock(), sellStock(), shortStock(), and sellShort() Netscript function now return the stock price at which the transaction occurred, rather than a boolean. " +
+    "If the function fails for some reason, 0 will be returned.<br>" +
+    "-Hacking Mission Changes:<br>" +
+    "---Shield and Firewall Nodes can now fortify<br>" +
+    "---The effects of Fortifying are now ~30% lower<br>" +
+    "---Conquering a Spam Node now increases your time limit by 25 secs instead of 15<br>" +
+    "---Damage dealt by Attacking was slightly reduced<br>" +
+    "---The effect of Scanning was slightly reduced<br>" +
+    ""
+
 }
 
 export {CONSTANTS};

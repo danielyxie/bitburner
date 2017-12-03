@@ -30,7 +30,11 @@ function initSourceFiles() {
                                       "Level 1: 20%<br>" +
                                       "Level 2: 30%<br>" +
                                       "Level 3: 35%");
-    SourceFiles["SourceFile3"] = new SourceFile(3);
+    SourceFiles["SourceFile3"] = new SourceFile(3,"This Source-File lets you create corporations on other BitNodes (although " +
+                                                  "some BitNodes will disable this mechanic). This Source-File also increases your charisma and company salary multipliers by:<br>" +
+                                                  "Level 1: 8%<br>" +
+                                                  "Level 2: 12%<br>" +
+                                                  "Level 3: 14%");
     SourceFiles["SourceFile4"] = new SourceFile(4, "This Source-File lets you access and use the Singularity Functions in every BitNode. Every " +
                                         "level of this Source-File opens up more of the Singularity Functions you can use.");
     SourceFiles["SourceFile5"] = new SourceFile(5, "This Source-File grants a special new stat called Intelligence. Intelligence " +
@@ -119,6 +123,15 @@ function applySourceFile(srcFile) {
             Player.crime_money_mult    *= incMult;
             Player.crime_success_mult  *= incMult;
             Player.charisma_mult       *= incMult;
+            break;
+        case 3: //Corporatocracy
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (8 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            Player.charisma_mult    *= incMult;
+            Player.work_money_mult  *= incMult;
             break;
         case 4: //The Singularity
             //No effects, just gives access to Singularity functions

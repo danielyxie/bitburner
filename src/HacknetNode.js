@@ -91,6 +91,7 @@ HacknetNode.prototype.getLevelUpgradeCost = function(levels=1) {
 }
 
 HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
+    levels = Math.round(levels);
     var cost = this.calculateLevelUpgradeCost(levels);
     if (isNaN(cost) || levels < 0) {return false;}
     if (this.level + levels > CONSTANTS.HacknetNodeMaxLevel) {

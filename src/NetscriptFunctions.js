@@ -866,17 +866,17 @@ function NetscriptFunctions(workerScript) {
             }
             if (shares < 0 || isNaN(shares)) {
                 workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to buyStock()");
-                return false;
+                return 0;
             }
             shares = Math.round(shares);
-            if (shares === 0) {return false;}
+            if (shares === 0) {return 0;}
 
             var totalPrice = stock.price * shares;
             if (Player.money.lt(totalPrice + CONSTANTS.StockMarketCommission)) {
                 workerScript.scriptRef.log("Not enough money to purchase " + formatNumber(shares, 0) + " shares of " +
                                            symbol + ". Need $" +
                                            formatNumber(totalPrice + CONSTANTS.StockMarketCommission, 2).toString());
-                return false;
+                return 0;
             }
 
             var origTotal = stock.playerShares * stock.playerAvgPx;
@@ -889,7 +889,7 @@ function NetscriptFunctions(workerScript) {
             }
             workerScript.scriptRef.log("Bought " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
                                        formatNumber(stock.price, 2) + " per share");
-            return true;
+            return stock.price;
         },
         sellStock : function(symbol, shares) {
             if (!Player.hasTixApiAccess) {
@@ -901,11 +901,11 @@ function NetscriptFunctions(workerScript) {
             }
             if (shares < 0 || isNaN(shares)) {
                 workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to sellStock()");
-                return false;
+                return 0;
             }
             shares = Math.round(shares);
             if (shares > stock.playerShares) {shares = stock.playerShares;}
-            if (shares === 0) {return false;}
+            if (shares === 0) {return 0;}
             var gains = stock.price * shares - CONSTANTS.StockMarketCommission;
             Player.gainMoney(gains);
 
@@ -925,7 +925,7 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("Sold " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
                                        formatNumber(stock.price, 2) + " per share. Gained " +
                                        "$" + formatNumber(gains, 2));
-            return true;
+            return stock.price;
         },
         shortStock(symbol, shares) {
             if (!Player.hasTixApiAccess) {
@@ -940,7 +940,8 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into shortStock()");
             }
-            return shortStock(stock, shares, workerScript);
+            var res = shortStock(stock, shares, workerScript);
+            return res ? stock.price : 0;
         },
         sellShort(symbol, shares) {
             if (!Player.hasTixApiAccess) {
@@ -955,7 +956,8 @@ function NetscriptFunctions(workerScript) {
             if (stock == null) {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid stock symbol passed into sellShort()");
             }
-            return sellShort(stock, shares, workerScript);
+            var res = sellShort(stock, shares, workerScript);
+            return res ? stock.price : 0;
         },
         placeOrder(symbol, shares, price, type, pos) {
             if (!Player.hasTixApiAccess) {

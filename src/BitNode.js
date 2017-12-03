@@ -41,7 +41,26 @@ function initBitNodes() {
                             "Level 1: 20%<br>" +
                             "Level 2: 30%<br>" +
                             "Level 3: 35%");
-    BitNodes["BitNode3"] = new BitNode(3, "The Price of Civilization", "COMING SOON"); //Corporate Warfare, Run own company
+    BitNodes["BitNode3"] = new BitNode(3, "Corporatocracy", "The Price of Civilization",
+                                          "Our greatest illusion is that a healthy society can revolve around a " +
+                                          "single-minded pursuit of wealth.<br><br>" +
+                                          "Sometime in the early 21st century economic and political globalization turned " +
+                                          "the world into a corporatocracy, and it never looked back. Now, the privileged " +
+                                          "elite will happily bankrupt their own countrymen, decimate their own community, " +
+                                          "and evict their neighbors from houses in their desperate bid to increase their wealth.<br><br>" +
+                                          "In this BitNode you can create and manage your own corporation. Running a successful corporation " +
+                                          "has the potential of generating massive profits. All other forms of income are reduced by 75%. Furthermore: <br><br>" +
+                                          "The price and reputation cost of all Augmentations is tripled<br>" +
+                                          "The starting and maximum amount of money on servers is halved<br>" +
+                                          "Server growth rate is reduced by 80%<br>" +
+                                          "You will start out with $150b so that you can start your corporation<br>" +
+                                          "You now only need 75 reputation with a faction in order to donate to it, rather than 150<br><br>" +
+                                          "Destroying this BitNode will give you Source-File 3, or if you already have this Source-File it will " +
+                                          "upgrade its level up to a maximum of 3. This Source-File lets you create corporations on other BitNodes (although " +
+                                          "some BitNodes will disable this mechanic). This Source-File also increases your charisma and company salary multipliers by:<br>" +
+                                          "Level 1: 8%<br>" +
+                                          "Level 2: 12%<br>" +
+                                          "Level 3: 14%");
     BitNodes["BitNode4"] = new BitNode(4, "The Singularity", "The Man and the Machine",  "The Singularity has arrived. The human race is gone, replaced " +
                                           "by artificially superintelligent beings that are more machine than man. <br><br>" +
                                           "In this BitNode, progressing is significantly harder. Experience gain rates " +
@@ -76,7 +95,7 @@ function initBitNodes() {
                                           "Level 2: 6%<br>" +
                                           "Level 3: 7%");
     BitNodes["BitNode6"] = new BitNode(6, "Do Androids Dream?", "COMING SOON");        //Build androids for automation
-    BitNodes["BitNode7"] = new BitNode(7, "Waste Runner", "COMING SOON");              //Postapocalyptic wasteland + blade runner
+    BitNodes["BitNode7"] = new BitNode(7, "Bladeburners", "COMING SOON");               //Blade burner
     BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "Money never sleeps",
                                           "You are trying to make a name for yourself as an up-and-coming hedge fund manager on Wall Street.<br><br>" +
                                           "In this BitNode:<br><br>" +
@@ -191,6 +210,18 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.InfiltrationMoney        = 3;
             BitNodeMultipliers.FactionWorkRepGain       = 0.5;
             BitNodeMultipliers.FactionPassiveRepGain    = 0;
+            break;
+        case 3: //Corporatocracy
+            BitNodeMultipliers.RepToDonateToFaction     = 0.5;
+            BitNodeMultipliers.AugmentationRepCost      = 3;
+            BitNodeMultipliers.AugmentationMoneyCost    = 3;
+            BitNodeMultipliers.ServerMaxMoney           = 0.50;
+            BitNodeMultipliers.ServerStartingMoney      = 0.50;
+            BitNodeMultipliers.ServerGrowthRate         = 0.20;
+            BitNodeMultipliers.ScriptHackMoney          = 0.25;
+            BitNodeMultipliers.CompanyWorkMoney         = 0.25;
+            BitNodeMultipliers.CrimeMoney               = 0.25;
+            BitNodeMultipliers.HacknetNodeMoney         = 0.25;
             break;
         case 4: //The Singularity
             BitNodeMultipliers.ServerMaxMoney           = 0.15;
