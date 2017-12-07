@@ -376,6 +376,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
 
     //BitNode 3: Corporatocracy
     if (this.bitNodeN === 3) {this.money = new Decimal(150e9);}
+    this.corporation = 0;
 
     //BitNode 8: Ghost of Wall Street
     if (this.bitNodeN === 8) {this.money = new Decimal(100000000);}

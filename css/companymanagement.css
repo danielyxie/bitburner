@@ -1,5 +1,6 @@
 #cmpy-mgmt-container p,
-#cmpy-mgmt-container a {
+#cmpy-mgmt-container a,
+#cmpy-mgmt-container div {
     font-size: 14px;
 }
 
@@ -97,4 +98,37 @@
 .cmpy-mgmt-warehouse-product-div {
     padding:2px;
     border:1px solid white;
+}
+
+/* Exporting materials/products */
+.cmpy-mgmt-existing-export {
+    border:1px solid white;
+    border-radius:25px;
+    margin:4px;
+    padding:4px;
+}
+
+.cmpy-mgmt-existing-export:hover {
+    background-color:#333333;
+}
+
+
+/* Upgrades */
+.cmpy-mgmt-upgrade-container {
+    border:1px solid white;
+    width: 60%;
+    margin:4px;
+}
+
+.cmpy-mgmt-upgrade-div {
+    border:1px solid white;
+    margin:4px;
+    padding:12px;
+    border-radius:25px;
+    width:95%;
+    color:var(--my-font-color);
+}
+
+.cmpy-mgmt-upgrade-div:hover {
+    background-color:#333333;
 }

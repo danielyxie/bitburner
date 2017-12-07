@@ -1,6 +1,7 @@
-import {Engine} from "./engine.js";
-import {dialogBoxCreate} from "../utils/DialogBox.js";
-import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {Engine}                         from "./engine.js";
+import {Player}                         from "./Player.js";
+import {dialogBoxCreate}                from "../utils/DialogBox.js";
+import {clearEventListeners}            from "../utils/HelperFunctions.js";
 
 /* InteractiveTutorial.js */
 let iTutorialSteps = {
@@ -646,7 +647,10 @@ function iTutorialEnd() {
     document.getElementById("interactive-tutorial-container").style.display = "none";
     dialogBoxCreate("If you are new to the game, the following links may be useful for you!<br><br>" +
                     "<a class='a-link-button' href='http://bitburner.wikia.com/wiki/Chapt3rs_Guide_to_Getting_Started_with_Bitburner' target='_blank'>Getting Started Guide</a>" +
-                    "<a class='a-link-button' href='http://bitburner.wikia.com/wiki/Bitburner_Wiki' target='_blank'>Wiki</a>");
+                    "<a class='a-link-button' href='http://bitburner.wikia.com/wiki/Bitburner_Wiki' target='_blank'>Wiki</a><br><br>" +
+                    "The Beginner's Guide to Hacking was added to your home computer! It contains stop tips/pointers for starting out with the game. " +
+                    "To read it, go to Terminal and enter<br><br>cat hackers-starting-handbook.lit");
+    Player.getHomeComputer().messages.push("hackers-starting-handbook.lit");
 }
 
 function iTutorialSetText(txt) {

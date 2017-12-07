@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.33.0",
+    Version:                "0.34.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -126,47 +126,48 @@ let CONSTANTS = {
     //Hacking Missions
     HackingMissionRepToDiffConversion: 10000, //Faction rep is divided by this to get mission difficulty
     HackingMissionRepToRewardConversion: 7, //Faction rep divided byt his to get mission rep reward
-    HackingMissionSpamTimeIncrease: 15000, //How much time limit increase is gained when conquering a Spam Node (ms)
+    HackingMissionSpamTimeIncrease: 25000, //How much time limit increase is gained when conquering a Spam Node (ms)
     HackingMissionTransferAttackIncrease: 1.05, //Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
     HackingMissionMiscDefenseIncrease: 1.05, //The amount by which every misc node's defense is multiplied when one is conquered
-    HackingMissionDifficultyToHacking: 150, //Difficulty is multiplied by this to determine enemy's "hacking" level (to determine effects of scan/attack, etc)
+    HackingMissionDifficultyToHacking: 135, //Difficulty is multiplied by this to determine enemy's "hacking" level (to determine effects of scan/attack, etc)
     HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with faction reputation.<br><br>" +
                              "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
                              "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray " +
                              "that initially belong to neither you nor the enemy. The goal of the game is " +
-                             "to capture all of the enemy's database nodes within the time limit. " +
-                             "If you cannot capture all of the enemy's database nodes in the time limit, you will lose.<br><br>" +
+                             "to capture all of the enemy's Database nodes within the time limit. " +
+                             "If you fail to do this, you will lose.<br><br>" +
                              "Each Node has three stats: Attack, Defense, and HP. There are five different actions that " +
                              "a Node can take:<br><br> " +
                              "Attack - Targets an enemy Node and lowers its HP. The effectiveness is determined by the owner's Attack, the Player's " +
-                             "hacking level, and the enemy's defense.<br>" +
+                             "hacking level, and the enemy's defense.<br><br>" +
                              "Scan - Targets an enemy Node and lowers its Defense. The effectiveness is determined by the owner's Attack, the Player's hacking level, and the " +
-                             "enemy's defense.<br>"  +
+                             "enemy's defense.<br><br>"  +
                              "Weaken - Targets an enemy Node and lowers its Attack. The effectiveness is determined by the owner's Attack, the Player's hacking level, and the enemy's " +
-                             "defense.<br>" +
-                             "Fortify - Raises the Node's Defense. The effectiveness is determined by your hacking level.<br>" +
+                             "defense.<br><br>" +
+                             "Fortify - Raises the Node's Defense. The effectiveness is determined by your hacking level.<br><br>" +
                              "Overflow - Raises the Node's Attack but lowers its Defense. The effectiveness is determined by your hacking level.<br><br>" +
                              "Note that when determining the effectiveness of the above actions, the TOTAL Attack or Defense of the team is used, not just the " +
                              "Attack/Defense of the individual Node that is performing the action.<br><br>" +
                              "To capture a Node, you must lower its HP down to 0.<br><br>" +
                              "There are six different types of Nodes:<br><br>" +
-                             "CPU Core - These are your main Nodes that are used to perform actions. Capable of performing every action<br>" +
-                             "Firewall - Nodes with high defense. These Nodes cannot perform any actions<br>" +
+                             "CPU Core - These are your main Nodes that are used to perform actions. Capable of performing every action<br><br>" +
+                             "Firewall - Nodes with high defense. These Nodes can 'Fortify'<br><br>" +
                              "Database - A special type of Node. The player's objective is to conquer all of the enemy's Database Nodes within " +
-                             "the time limit. These Nodes cannot perform any actions<br>"  +
+                             "the time limit. These Nodes cannot perform any actions<br><br>"  +
                              "Spam - Conquering one of these Nodes will slow the enemy's trace, giving the player additional time to complete " +
-                             "the mission. These Nodes cannot perform any actions<br>" +
+                             "the mission. These Nodes cannot perform any actions<br><br>" +
                              "Transfer - Conquering one of these nodes will increase the Attack of all of your CPU Cores by a small fixed percentage. " +
-                             "These Nodes are capable of performing every action except the 'Attack' action<br>" +
-                             "Shield - Nodes with high defense. These Nodes cannot perform any actions<br><br>" +
-                             "To assign an action to a Node, you must first select one of your Nodes. This can be done by simply clicking on it. Only " +
-                             "one Node can be selected at a time, and it will be denoted with a white highlight. After selecting the Node, " +
+                             "These Nodes are capable of performing every action except the 'Attack' action<br><br>" +
+                             "Shield - Nodes with high defense. These Nodes can 'Fortify'<br><br>" +
+                             "To assign an action to a Node, you must first select one of your Nodes. This can be done by simply clicking on it. Double-clicking " +
+                             "a node will select all of your Nodes of the same type (e.g. select all CPU Core Nodes or all Transfer Nodes). Note that only Nodes " +
+                             "that can perform actions (CPU Core, Transfer, Shield, Firewall) can be selected. Selected Nodes will be denoted with a white highlight. After selecting a Node or multiple Nodes, " +
                              "select its action using the Action Buttons near the top of the screen. Every action also has a corresponding keyboard " +
                              "shortcut.<br><br>" +
                              "For certain actions such as attacking, scanning, and weakening, the Node performing the action must have a target. To target " +
                              "another node, simply click-and-drag from the 'source' Node to a target. A Node can only have one target, and you can target " +
                              "any Node that is adjacent to one of your Nodes (immediately above, below, or to the side. NOT diagonal). Furthermore, only CPU Cores and Transfer Nodes " +
-                             "can target, since they are the only ones that can perform actions. To remove a target, you can simply click on the line that represents " +
+                             "can target, since they are the only ones that can perform the related actions. To remove a target, you can simply click on the line that represents " +
                              "the connection between one of your Nodes and its target. Alternatively, you can select the 'source' Node and click the 'Drop Connection' button, " +
                              "or press 'd'.<br><br>" +
                              "Other Notes:<br><br>" +
@@ -767,28 +768,28 @@ let CONSTANTS = {
                            "must be the number of shares to purchase.<br><br>" +
                            "If the player does not have enough money to purchase specified number of shares, then no shares will be purchased (it will not purchase the most you can afford). " +
                            "Remember that every transaction on the stock exchange costs a certain commission fee.<br><br>" +
-                           "The function will return true if it successfully purchases the specified number of shares of stock, and false otherwise.<br><br>" +
+                           "If this function successfully purchases the shares, it will return the stock price at which each share was purchased. Otherwise, it will return 0.<br><br>" +
                            "<i><u>sellStock(sym, shares)</u></i><br>Attempts to sell shares of a stock using a Market Order. The first argument must be a string with the stock's symbol. The second argument " +
                            "must be the number of shares to sell.<br><br>" +
                            "If the specified number of shares in the function exceeds the amount that the player actually owns, then this function will sell all owned shares. " +
                            "Remember that every transaction on the stock exchange costs a certain commission fee.<br><br>" +
                            "The net profit made from selling stocks with this function is reflected in the script's statistics. This net profit is calculated as: <br><br>" +
                            "shares * (sell price - average price of purchased shares)<br><br>" +
-                           "This function will return true if the shares of stock are successfully sold and false otherwise.<br><br>" +
+                           "If the sale is successful, this function will return the stock price at which each share was sold. Otherwise, it will return 0.<br><br>" +
                            "<i><u>shortStock(sym, shares)</u></i><br>" +
                            "Attempts to purchase a short position of a stock using a Market Order. The first argument must be a string with the stock's symbol. The second argument " +
                            "must be the number of shares to purchase.<br><br>" +
                            "In order to use this function the player must be in BitNode-8 or must have Level 2 of Source-File 8.<br><br>" +
                            "If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember that every " +
                            "every transaction on the stock exchange costs a certain commission fee.<br><br>" +
-                           "Returns true if it successfully shorts the stock with the specified number of shares, and false otherwise.<br><br>" +
+                           "If the purchase is successful, this function will return the stock price at which each share was purchased. Otherwise, it will return 0.<br><br>" +
                            "<i><u>sellShort(sym, shares)</u></i><br>" +
                            "Attempts to sell a short position of a stock using a Market Order. The first argument must be a string with the stock's symbol. The second argument must be the " +
                            "number of shares to sell.<br><br>" +
                            "In order to use this function the player must be in BitNode-8 or must have Level 2 of Source-File 8.<br><br>" +
                            "If the specified number of shares exceeds the amount that the player actually owns, then this function will sell all owned shares. " +
                            "Remember that every transaction on the stock exchange costs a certain commission fee.<br><br>" +
-                           "This function returns true if it successfully sells any number of shares, and false otherwise.<br><br>" +
+                           "If the sale was successful, this function will return the stock price at which each sale was sold. Otherwise, it will return 0.<br><br>" +
                            "<i><u>placeOrder(sym, shares, price, type, pos)</u></i><br>" +
                            "Places an order on the stock market. This function only works for Limit and Stop Orders. Use the buyStock/sellStock/shortStock/sellShort functions " +
                            "to place Market Orders. In order to use this function the player must be in BitNode-8 or must have Level 3 of Source-File 8.<br><br>" +
@@ -1112,9 +1113,27 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.33.0<br>" +
-    "-Released BitNode 3: Corporatocracy<br>" +
-    "-Minor bug fixes"
+    "v0.34.0<br>" +
+    "-Added clear() and exit() Netscript functions<br>" +
+    "-When starting out or prestiging, you will now receive a 'Hacking Starter Guide'. It provides tips/pointers for new players<br>" +
+    "-Doubled the amount of RAM on low-level servers (up to required hacking level 150)<br>" +
+    "-Slightly increased experience gain from Infiltration<br>" +
+    "-buyStock(), sellStock(), shortStock(), and sellShort() Netscript function now return the stock price at which the transaction occurred, rather than a boolean. " +
+    "If the function fails for some reason, 0 will be returned.<br>" +
+    "-Hacking Mission Changes:<br>" +
+    "---You can now select multiple Nodes of the same type by double clicking. This allows you to set the " +
+    "action of all of selected nodes at once (e.g. set all Transfer Nodes to Fortify). Creating connections " +
+    "does not work with this multi-select functionality yet<br>" +
+    "---Shield and Firewall Nodes can now fortify<br>" +
+    "---The effects of Fortifying are now ~5% lower<br>" +
+    "---Conquering a Spam Node now increases your time limit by 25 seconds instead of 15<br>" +
+    "---Damage dealt by Attacking was slightly reduced<br>" +
+    "---The effect of Scanning was slightly reduced<br>" +
+    "---Enemy CPU Core Nodes start with slightly more attack. Misc Nodes start with slightly less defense<br>" +
+    "-Corporation Management changes:<br>" +
+    "---Added several upgrades that unlock new features<br>" +
+    "---Implemented Exporting mechanic<br>" +
+    "---Fixed many bugs<br>"
 }
 
 export {CONSTANTS};

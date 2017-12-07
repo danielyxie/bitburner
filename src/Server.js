@@ -402,23 +402,23 @@ function initForeignServers() {
     AddToAllServers(JohnsonOrthopedicsServer);
 
     //"Low level" targets
-    var FoodNStuffServer = new Server(createRandomIp(), "foodnstuff", "Food N Stuff Supermarket", false, false, false, 8);
+    var FoodNStuffServer = new Server(createRandomIp(), "foodnstuff", "Food N Stuff Supermarket", false, false, false, 16);
     FoodNStuffServer.setHackingParameters(1, 2000000, 10, 5);
     FoodNStuffServer.setPortProperties(0);
     FoodNStuffServer.messages.push("sector-12-crime.lit");
     AddToAllServers(FoodNStuffServer);
 
-    var SigmaCosmeticsServer = new Server(createRandomIp(), "sigma-cosmetics", "Sigma Cosmetics", false, false, false, 8);
+    var SigmaCosmeticsServer = new Server(createRandomIp(), "sigma-cosmetics", "Sigma Cosmetics", false, false, false, 16);
     SigmaCosmeticsServer.setHackingParameters(5, 2300000, 10, 10);
     SigmaCosmeticsServer.setPortProperties(0);
     AddToAllServers(SigmaCosmeticsServer);
 
-    var JoesGunsServer = new Server(createRandomIp(), "joesguns", "Joe's Guns", false, false, false, 8);
+    var JoesGunsServer = new Server(createRandomIp(), "joesguns", "Joe's Guns", false, false, false, 16);
     JoesGunsServer.setHackingParameters(10, 2500000, 15, 20);
     JoesGunsServer.setPortProperties(0);
     AddToAllServers(JoesGunsServer);
 
-    var Zer0NightclubServer = new Server(createRandomIp(), "zer0", "ZER0 Nightclub", false, false, false, 16);
+    var Zer0NightclubServer = new Server(createRandomIp(), "zer0", "ZER0 Nightclub", false, false, false, 32);
     Zer0NightclubServer.setHackingParameters(75, 7500000, 25, 40);
     Zer0NightclubServer.setPortProperties(1);
     AddToAllServers(Zer0NightclubServer);
@@ -428,40 +428,40 @@ function initForeignServers() {
     NectarNightclubServer.setPortProperties(0);
     AddToAllServers(NectarNightclubServer);
 
-    var NeoNightclubServer = new Server(createRandomIp(), "neo-net", "Neo Nightclub Network", false, false, false, 16);
+    var NeoNightclubServer = new Server(createRandomIp(), "neo-net", "Neo Nightclub Network", false, false, false, 32);
     NeoNightclubServer.setHackingParameters(50, 5000000, 25, 25);
     NeoNightclubServer.setPortProperties(1);
     NeoNightclubServer.messages.push("the-hidden-world.lit");
     AddToAllServers(NeoNightclubServer);
 
-    var SilverHelixServer = new Server(createRandomIp(), "silver-helix", "Silver Helix", false, false, false, 32);
+    var SilverHelixServer = new Server(createRandomIp(), "silver-helix", "Silver Helix", false, false, false, 64);
     SilverHelixServer.setHackingParameters(150, 45000000, 30, 30);
     SilverHelixServer.setPortProperties(2);
     SilverHelixServer.messages.push("new-triads.lit");
     AddToAllServers(SilverHelixServer);
 
-    var HongFangTeaHouseServer = new Server(createRandomIp(), "hong-fang-tea", "HongFang Teahouse", false, false, false, 8);
+    var HongFangTeaHouseServer = new Server(createRandomIp(), "hong-fang-tea", "HongFang Teahouse", false, false, false, 16);
     HongFangTeaHouseServer.setHackingParameters(30, 3000000, 15, 20);
     HongFangTeaHouseServer.setPortProperties(0);
     HongFangTeaHouseServer.messages.push("brighter-than-the-sun.lit");
     AddToAllServers(HongFangTeaHouseServer);
 
-    var HaraKiriSushiBarServer = new Server(createRandomIp(), "harakiri-sushi", "HaraKiri Sushi Bar Network", false, false, false, 8);
+    var HaraKiriSushiBarServer = new Server(createRandomIp(), "harakiri-sushi", "HaraKiri Sushi Bar Network", false, false, false, 16);
     HaraKiriSushiBarServer.setHackingParameters(40, 4000000, 15, 40);
     HaraKiriSushiBarServer.setPortProperties(0);
     AddToAllServers(HaraKiriSushiBarServer);
 
-    var PhantasyServer = new Server(createRandomIp(), "phantasy", "Phantasy Club", false, false, false, 16);
+    var PhantasyServer = new Server(createRandomIp(), "phantasy", "Phantasy Club", false, false, false, 32);
     PhantasyServer.setHackingParameters(100, 24000000, 20, 35);
     PhantasyServer.setPortProperties(2);
     AddToAllServers(PhantasyServer);
 
-    var MaxHardwareServer = new Server(createRandomIp(), "max-hardware", "Max Hardware Store", false, false, false, 16);
+    var MaxHardwareServer = new Server(createRandomIp(), "max-hardware", "Max Hardware Store", false, false, false, 32);
     MaxHardwareServer.setHackingParameters(80, 10000000, 15, 30);
     MaxHardwareServer.setPortProperties(1);
     AddToAllServers(MaxHardwareServer);
 
-    var OmegaSoftwareServer = new Server(createRandomIp(), "omega-net", "Omega Software", false, false, false, 16);
+    var OmegaSoftwareServer = new Server(createRandomIp(), "omega-net", "Omega Software", false, false, false, 32);
     OmegaSoftwareServer.setHackingParameters(getRandomInt(180, 220), getRandomInt(60000000, 70000000), getRandomInt(25, 35), getRandomInt(30, 40));
     OmegaSoftwareServer.setPortProperties(2);
     OmegaSoftwareServer.messages.push("the-new-god.lit");
@@ -473,7 +473,7 @@ function initForeignServers() {
     CrushFitnessGymServer.setPortProperties(2);
     AddToAllServers(CrushFitnessGymServer);
 
-    var IronGymServer = new Server(createRandomIp(), "iron-gym", "Iron Gym Network", false, false, false, 16);
+    var IronGymServer = new Server(createRandomIp(), "iron-gym", "Iron Gym Network", false, false, false, 32);
     IronGymServer.setHackingParameters(100, 20000000, 30, 20);
     IronGymServer.setPortProperties(1);
     AddToAllServers(IronGymServer);
@@ -697,6 +697,7 @@ function prestigeHomeComputer(homeComp) {
     homeComp.programs.push(Programs.NukeProgram);
 
     homeComp.messages.length = 0;
+    homeComp.messages.push("hackers-starting-handbook.lit");
 }
 
 //List of all servers that exist in the game, indexed by their ip

@@ -22,7 +22,7 @@ function setInMission(bool, mission) {
 
 //Keyboard shortcuts
 $(document).keydown(function(e) {
-    if (inMission && currMission && currMission.selectedNode != null) {
+    if (inMission && currMission && currMission.selectedNode.length != 0) {
         switch (e.keyCode) {
             case 65: //a for Attack
                 currMission.actionButtons[0].click();
@@ -137,6 +137,11 @@ Node.prototype.select = function(actionButtons) {
             actionButtons[5].classList.remove("a-link-button-inactive");
             actionButtons[5].classList.add("a-link-button");
             break;
+        case NodeTypes.Shield:
+        case NodeTypes.Firewall:
+            actionButtons[3].classList.remove("a-link-button-inactive");
+            actionButtons[3].classList.add("a-link-button");
+            break;
         default:
             break;
     }
@@ -181,7 +186,7 @@ function HackingMission(rep, fac) {
 
     this.miscNodes = [];
 
-    this.selectedNode = null; //Which of the player's nodes is currently selected
+    this.selectedNode = []; //Which of the player's nodes are currently selected
 
     this.actionButtons = []; //DOM buttons for actions
 
@@ -225,20 +230,15 @@ HackingMission.prototype.init = function() {
     //Randomly generate enemy nodes (CPU and Firewall) based on difficulty
     var numNodes = Math.min(8, Math.max(1, Math.round(this.difficulty / 4)));
     var numFirewalls = Math.min(20,
-                                getRandomInt(Math.round(this.difficulty/2), Math.round(this.difficulty/2) + 1));
+                                getRandomInt(Math.round(this.difficulty/3), Math.round(this.difficulty/3) + 1));
     var numDatabases = Math.min(10, getRandomInt(1, Math.round(this.difficulty / 3) + 1));
     var totalNodes = numNodes + numFirewalls + numDatabases;
     var xlimit = 7 - Math.floor(totalNodes / 8);
-    console.log("numNodes: " + numNodes);
-    console.log("numFirewalls: " + numFirewalls);
-    console.log("numDatabases: " + numDatabases);
-    console.log("totalNodes: " + totalNodes);
-    console.log("xlimit: " + xlimit);
     var randMult = addOffset(0.8 + (this.difficulty / 5), 10);
     for (var i = 0; i < numNodes; ++i) {
         var stats = {
-            atk: randMult * getRandomInt(75, 85),
-            def: randMult * getRandomInt(25, 35),
+            atk: randMult * getRandomInt(80, 86),
+            def: randMult * getRandomInt(5, 10),
             hp: randMult * getRandomInt(210, 230)
         }
         this.enemyCores.push(new Node(NodeTypes.Core, stats));
@@ -248,7 +248,7 @@ HackingMission.prototype.init = function() {
     for (var i = 0; i < numFirewalls; ++i) {
         var stats = {
             atk: 0,
-            def: randMult * getRandomInt(80, 90),
+            def: randMult * getRandomInt(10, 20),
             hp: randMult * getRandomInt(275, 300)
         }
         this.enemyNodes.push(new Node(NodeTypes.Firewall, stats));
@@ -258,7 +258,7 @@ HackingMission.prototype.init = function() {
     for (var i = 0; i < numDatabases; ++i) {
         var stats = {
             atk: 0,
-            def: randMult * getRandomInt(70, 85),
+            def: randMult * getRandomInt(30, 55),
             hp: randMult * getRandomInt(210, 275)
         }
         var node = new Node(NodeTypes.Database, stats);
@@ -398,65 +398,88 @@ HackingMission.prototype.createPageDom = function() {
 
     //Set Action Button event listeners
     this.actionButtons[0].addEventListener("click", ()=>{
-        if (!(this.selectedNode instanceof Node)) {
+        if (!(this.selectedNode.length > 0)) {
             console.log("ERR: Pressing Action button without selected node");
             return;
         }
-        if (this.selectedNode.type !== NodeTypes.Core) {return;}
-        this.setActionButtonsActive();
+        if (this.selectedNode[0].type !== NodeTypes.Core) {return;}
+        this.setActionButtonsActive(this.selectedNode[0].type);
         this.setActionButton(NodeActions.Attack, false); //Set attack button inactive
-        this.selectedNode.action = NodeActions.Attack;
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Attack;
+        });
     });
 
     this.actionButtons[1].addEventListener("click", ()=>{
-        if (!(this.selectedNode instanceof Node)) {
+        if (!(this.selectedNode.length > 0)) {
             console.log("ERR: Pressing Action button without selected node");
             return;
         }
-        this.setActionButtonsActive();
+        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
+        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
+        this.setActionButtonsActive(nodeType);
         this.setActionButton(NodeActions.Scan, false); //Set scan button inactive
-        this.selectedNode.action = NodeActions.Scan;
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Scan;
+        });
     });
 
     this.actionButtons[2].addEventListener("click", ()=>{
-        if (!(this.selectedNode instanceof Node)) {
+        if (!(this.selectedNode.length > 0)) {
             console.log("ERR: Pressing Action button without selected node");
             return;
         }
-        this.setActionButtonsActive();
+        var nodeType = this.selectedNode[0].type; //In a multiselect, every Node will have the same type
+        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
+        this.setActionButtonsActive(nodeType);
         this.setActionButton(NodeActions.Weaken, false); //Set Weaken button inactive
-        this.selectedNode.action = NodeActions.Weaken;
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Weaken;
+        });
     });
 
     this.actionButtons[3].addEventListener("click", ()=>{
-        if (!(this.selectedNode instanceof Node)) {
+        if (!(this.selectedNode.length > 0)) {
             console.log("ERR: Pressing Action button without selected node");
             return;
         }
-        this.setActionButtonsActive();
+        this.setActionButtonsActive(this.selectedNode[0].type);
         this.setActionButton(NodeActions.Fortify, false); //Set Fortify button inactive
-        this.selectedNode.action = NodeActions.Fortify;
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Fortify;
+        });
     });
 
     this.actionButtons[4].addEventListener("click", ()=>{
-        if (!(this.selectedNode instanceof Node)) {
+        if (!(this.selectedNode.length > 0)) {
             console.log("ERR: Pressing Action button without selected node");
             return;
         }
-        this.setActionButtonsActive();
+        var nodeType = this.selectedNode[0].type;
+        if (nodeType !== NodeTypes.Core && nodeType !== NodeTypes.Transfer) {return;}
+        this.setActionButtonsActive(nodeType);
         this.setActionButton(NodeActions.Overflow, false); //Set Overflow button inactive
-        this.selectedNode.action = NodeActions.Overflow;
+        this.selectedNode.forEach(function(node){
+            node.action = NodeActions.Overflow;
+        });
     });
 
     this.actionButtons[5].addEventListener("click", ()=>{
-        if (!(this.selectedNode instanceof Node)) {
+        if (!(this.selectedNode.length > 0)) {
             console.log("ERR: Pressing Action button without selected node");
             return;
         }
-        if (this.selectedNode.conn) {
-            var endpoints = this.selectedNode.conn.endpoints;
-            endpoints[0].detachFrom(endpoints[1]);
-        }
+        this.selectedNode.forEach(function(node){
+            if (node.conn) {
+                var endpoints = node.conn.endpoints;
+                endpoints[0].detachFrom(endpoints[1]);
+            }
+            node.action = NodeActions.Fortify;
+        });
+        // if (this.selectedNode.conn) {
+        //     var endpoints = this.selectedNode.conn.endpoints;
+        //     endpoints[0].detachFrom(endpoints[1]);
+        // }
     })
 
     var timeDisplay = document.createElement("p");
@@ -478,10 +501,36 @@ HackingMission.prototype.setActionButtonsInactive = function() {
     }
 }
 
-HackingMission.prototype.setActionButtonsActive = function() {
+HackingMission.prototype.setActionButtonsActive = function(nodeType=null) {
     for (var i = 0; i < this.actionButtons.length; ++i) {
         this.actionButtons[i].classList.add("a-link-button");
         this.actionButtons[i].classList.remove("a-link-button-inactive");
+    }
+
+    //For Transfer, FireWall and Shield Nodes, certain buttons should always be disabled
+    //0 = Attack, 1 = Scan, 2 = Weaken, 3 = Fortify, 4 = overflow, 5 = Drop conn
+    if (nodeType) {
+        switch (nodeType) {
+            case NodeTypes.Firewall:
+            case NodeTypes.Shield:
+                this.actionButtons[0].classList.remove("a-link-button");
+                this.actionButtons[0].classList.add("a-link-button-inactive");
+                this.actionButtons[1].classList.remove("a-link-button");
+                this.actionButtons[1].classList.add("a-link-button-inactive");
+                this.actionButtons[2].classList.remove("a-link-button");
+                this.actionButtons[2].classList.add("a-link-button-inactive");
+                this.actionButtons[4].classList.remove("a-link-button");
+                this.actionButtons[4].classList.add("a-link-button-inactive");
+                this.actionButtons[5].classList.remove("a-link-button");
+                this.actionButtons[5].classList.add("a-link-button-inactive");
+                break;
+            case NodeTypes.Transfer:
+                this.actionButtons[0].classList.remove("a-link-button");
+                this.actionButtons[0].classList.add("a-link-button-inactive");
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -630,7 +679,7 @@ HackingMission.prototype.createMap = function() {
                     case 0: //Spam
                         var stats = {
                             atk: 0,
-                            def: averageAttack * 1.15 + getRandomInt(10, 50),
+                            def: averageAttack * 1.1 + getRandomInt(15, 45),
                             hp: randMult * getRandomInt(200, 225)
                         }
                         node = new Node(NodeTypes.Spam, stats);
@@ -638,7 +687,7 @@ HackingMission.prototype.createMap = function() {
                     case 1: //Transfer
                         var stats = {
                             atk: 0,
-                            def: averageAttack * 1.15 + getRandomInt(10, 50),
+                            def: averageAttack * 1.1 + getRandomInt(15, 45),
                             hp: randMult * getRandomInt(250, 275)
                         }
                         node = new Node(NodeTypes.Transfer, stats);
@@ -647,7 +696,7 @@ HackingMission.prototype.createMap = function() {
                     default:
                         var stats = {
                             atk: 0,
-                            def: averageAttack * 1.15 + getRandomInt(25, 75),
+                            def: averageAttack * 1.1 + getRandomInt(30, 70),
                             hp: randMult * getRandomInt(300, 320)
                         }
                         node = new Node(NodeTypes.Shield, stats);
@@ -811,12 +860,40 @@ function selectNode(hackMissionInst, el) {
     if (nodeObj == null) {console.log("Error getting Node object");}
     if (!nodeObj.plyrCtrl) {return;}
 
-    if (hackMissionInst.selectedNode instanceof Node) {
-        hackMissionInst.selectedNode.deselect(hackMissionInst.actionButtons);
-        hackMissionInst.selectedNode = null;
-    }
+    clearAllSelectedNodes(hackMissionInst);
     nodeObj.select(hackMissionInst.actionButtons);
-    hackMissionInst.selectedNode = nodeObj;
+    hackMissionInst.selectedNode.push(nodeObj);
+}
+
+function multiselectNode(hackMissionInst, el) {
+    var nodeObj = hackMissionInst.getNodeFromElement(el);
+    if (nodeObj == null) {console.log("ERROR: Getting Node Object in multiselectNode()");}
+    if (!nodeObj.plyrCtrl) {return;}
+
+    clearAllSelectedNodes(hackMissionInst);
+    var type = nodeObj.type;
+    if (type === NodeTypes.Core) {
+        hackMissionInst.playerCores.forEach(function(node) {
+            node.select(hackMissionInst.actionButtons);
+            hackMissionInst.selectedNode.push(node);
+        });
+    } else {
+        hackMissionInst.playerNodes.forEach(function(node) {
+            if (node.type === type) {
+                node.select(hackMissionInst.actionButtons);
+                hackMissionInst.selectedNode.push(node);
+            }
+        });
+    }
+}
+
+function clearAllSelectedNodes(hackMissionInst) {
+    if (hackMissionInst.selectedNode.length > 0) {
+        hackMissionInst.selectedNode.forEach(function(node){
+            node.deselect(hackMissionInst.actionButtons);
+        });
+        hackMissionInst.selectedNode.length = 0;
+    }
 }
 
 //Configures a DOM element representing a player-owned node to
@@ -833,6 +910,12 @@ HackingMission.prototype.configurePlayerNodeElement = function(el) {
     }
     el.addEventListener("click", selectNodeWrapper);
 
+    function multiselectNodeWrapper() {
+        multiselectNode(self, el);
+    }
+    el.addEventListener("dblclick", multiselectNodeWrapper);
+
+
     if (el.firstChild) {
         el.firstChild.addEventListener("click", selectNodeWrapper);
     }
@@ -843,8 +926,12 @@ HackingMission.prototype.configurePlayerNodeElement = function(el) {
 HackingMission.prototype.configureEnemyNodeElement = function(el) {
     //Deselect node if it was the selected node
     var nodeObj = this.getNodeFromElement(el);
-    if (this.selectedNode == nodeObj) {
-        nodeObj.deselect(this.actionButtons);
+    for (var i = 0; i < this.selectedNode.length; ++i) {
+        if (this.selectedNode[i] == nodeObj) {
+            nodeObj.deselect(this.actionButtons);
+            this.selectedNode.splice(i, 1);
+            break;
+        }
     }
 }
 
@@ -1002,7 +1089,9 @@ HackingMission.prototype.process = function(numCycles=1) {
     });
 
     this.playerNodes.forEach((node)=>{
-        if (node.type === NodeTypes.Transfer) {
+        if (node.type === NodeTypes.Transfer ||
+            node.type === NodeTypes.Shield ||
+            node.type === NodeTypes.Firewall) {
             res |= this.processNode(node, storedCycles);
         }
     });
@@ -1014,7 +1103,9 @@ HackingMission.prototype.process = function(numCycles=1) {
     });
 
     this.enemyNodes.forEach((node)=>{
-        if (node.type === NodeTypes.Transfer) {
+        if (node.type === NodeTypes.Transfer ||
+            node.type === NodeTypes.Shield ||
+            node.type === NodeTypes.Firewall) {
             this.enemyAISelectAction(node);
             res |= this.processNode(node, storedCycles);
         }
@@ -1205,6 +1296,7 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
                     swapNodes(this.enemyNodes, this.playerNodes, targetNode);
                 } else {
                     swapNodes(this.playerNodes, this.enemyNodes, targetNode);
+                    this.configureEnemyNodeElement(targetNode.el);
                 }
                 break;
             case NodeTypes.Database:
@@ -1243,8 +1335,10 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
             case NodeTypes.Shield:
                 if (conqueredByPlayer) {
                     swapNodes(isMiscNode ? this.miscNodes : this.enemyNodes, this.playerNodes, targetNode);
+                    this.configurePlayerNodeElement(targetNode.el);
                 } else {
                     swapNodes(isMiscNode ? this.miscNodes : this.playerNodes, this.enemyNodes, targetNode);
+                    this.configureEnemyNodeElement(targetNode.el);
                 }
                 break;
         }
@@ -1356,6 +1450,10 @@ HackingMission.prototype.enemyAISelectAction = function(nodeObj) {
                 nodeObj.action = NodeActions.Overflow;
             }
             break;
+        case NodeTypes.Firewall:
+        case NodeTypes.Shield:
+            nodeObj.action = NodeActions.Fortify;
+            break;
         default:
             break;
     }
@@ -1367,11 +1465,11 @@ var hackEffWeightAttack = 80; //Weight for Attack action
 
 //Returns damage per cycle based on stats
 HackingMission.prototype.calculateAttackDamage = function(atk, def, hacking = 0) {
-    return Math.max(0.75 * (atk + (hacking / hackEffWeightAttack) - def), 1);
+    return Math.max(0.55 * (atk + (hacking / hackEffWeightAttack) - def), 1);
 }
 
 HackingMission.prototype.calculateScanEffect = function(atk, def, hacking=0) {
-    return Math.max(0.7 * ((atk) + hacking / hackEffWeightTarget - (def * 0.95)), 2);
+    return Math.max(0.6 * ((atk) + hacking / hackEffWeightTarget - (def * 0.95)), 2);
 }
 
 HackingMission.prototype.calculateWeakenEffect = function(atk, def, hacking=0) {
@@ -1379,11 +1477,11 @@ HackingMission.prototype.calculateWeakenEffect = function(atk, def, hacking=0) {
 }
 
 HackingMission.prototype.calculateFortifyEffect = function(hacking=0) {
-    return hacking / hackEffWeightSelf;
+    return 0.9 * hacking / hackEffWeightSelf;
 }
 
 HackingMission.prototype.calculateOverflowEffect = function(hacking=0) {
-    return hacking / hackEffWeightSelf;
+    return 0.95 * hacking / hackEffWeightSelf;
 }
 
 //Updates timer display

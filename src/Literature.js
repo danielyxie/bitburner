@@ -12,8 +12,8 @@ function Literature(title, filename, txt) {
 function showLiterature(fn) {
     var litObj = Literatures[fn];
     if (litObj == null) {return;}
-    var txt = litObj.title + "<br><br>" +
-              "<i>" + litObj.txt + "</i>";
+    var txt = "<i>" + litObj.title + "</i><br><br>" +
+              litObj.txt;
     dialogBoxCreate(txt);
 }
 
@@ -21,6 +21,24 @@ let Literatures = {}
 
 function initLiterature() {
     var title, fn, txt;
+    title   = "The Beginner's Guide to Hacking";
+    fn      = "hackers-starting-handbook.lit";
+    txt     = "When starting out, hacking is the most profitable way to earn money and progress. This " +
+              "is a brief collection of tips/pointers on how to make the most out of your hacking scripts.<br><br>" +
+              "-hack() and grow() both work by percentages. hack() steals a certain percentage of the " +
+              "money on a server, and grow() increases the amount of money on a server by some percentage (multiplicatively)<br><br>" +
+              "-Because hack() and grow() work by percentages, they are more effective if the target server has a high amount of money. " +
+              "Therefore, you should try to increase the amount of money on a server (using grow()) to a certain amount before hacking it. Two " +
+              "import Netscript functions for this are getServerMoneyAvailable() and getServerMaxMoney()<br><br>" +
+              "-Keep security level low. Security level affects everything when hacking. Two important Netscript functions " +
+              "for this are getServerSecurityLevel() and getServerMinSecurityLevel()<br><br>" +
+              "-Purchase additional servers by visiting 'Alpha Enterprises' in the city. They are relatively cheap " +
+              "and give you valuable RAM to run more scripts early in the game<br><br>" +
+              "-Prioritize upgrading the RAM on your home computer. This can also be done at 'Alpha Enterprises'<br><br>" +
+              "-Many low level servers have free RAM. You can use this RAM to run your scripts. Use the scp Terminal or " +
+              "Netscript command to copy your scripts onto these servers and then run them.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
     title   = "A Green Tomorrow";
     fn      = "A-Green-Tomorrow.lit";
     txt     = "Starting a few decades ago, there was a massive global movement towards the generation of renewable energy in an effort to " +
