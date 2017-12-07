@@ -352,7 +352,6 @@ Product.prototype.finishProduct = function(employeeProd, industry) {
     var advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
     console.log("advMult: " + advMult);
     this.mku = 100 / (advMult * this.qlt * (busRatio + mgmtRatio));
-    console.log("product mku: " + this.mku);
     this.dmd = industry.awareness === 0 ? 100 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
     this.cmp = getRandomInt(0, 70);
 
@@ -848,7 +847,7 @@ Industry.prototype.updateWarehouseSizeUsed = function(warehouse) {
     }
 }
 
-Industry.prototype.process = function(marketCycles=1, state) {
+Industry.prototype.process = function(marketCycles=1, state, company) {
     this.state = state;
 
     //At the start of a cycle, store and reset revenue/expenses
@@ -876,7 +875,7 @@ Industry.prototype.process = function(marketCycles=1, state) {
     }
 
     //Process production, purchase, and import/export of materials
-    var res = this.processMaterials(marketCycles);
+    var res = this.processMaterials(marketCycles, company);
     this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
     this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
 
@@ -936,7 +935,7 @@ Industry.prototype.processProductMarket = function(marketCycles=1) {
 }
 
 //Process production, purchase, and import/export of materials
-Industry.prototype.processMaterials = function(marketCycles=1) {
+Industry.prototype.processMaterials = function(marketCycles=1, company) {
     var revenue = 0, expenses = 0;
     for (var i = 0; i < Cities.length; ++i) {
         var city = Cities[i], office = this.offices[city];
@@ -1113,9 +1112,39 @@ Industry.prototype.processMaterials = function(marketCycles=1) {
             break;
 
             /* TODO Process Export of materials */
+            case "EXPORT":
+                for (var matName in warehouse.materials) {
+                    if (warehouse.materials.hasOwnProperty(matName)) {
+                        var mat = warehouse.materials[matName];
+                        for (var expI = 0; expI < mat.exp.length; ++expI) {
+                            var exp = mat.exp[expI];
+                            var amt = exp.amt * SecsPerMarketCycle * marketCycles;
+                            if (mat.qty <= amt) {
+                                amt = mat.qty;
+                            }
+                            if (amt === 0) {
+                                break; //None left
+                            }
+                            for (var foo = 0; foo < company.divisions.length; ++foo) {
+                                if (company.divisions[foo].name === exp.ind) {
+                                    var expIndustry = company.divisions[foo];
+                                    var expWarehouse = expIndustry.warehouses[exp.city];
+                                    if (!(expWarehouse instanceof Warehouse)) {
+                                        console.log("ERROR: Invalid export!");
+                                        break;
+                                    }
+                                    expWarehouse.materials[mat.name].qty += amt;
+                                    mat.qty -= amt;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                break;
 
             case "START":
-            case "EXPORT":
                 break;
             default:
                 console.log("ERROR: Invalid state: " + this.state);
@@ -1257,7 +1286,6 @@ Industry.prototype.processProduct = function(marketCycles=1, product) {
 
             //Since its a product, its production cost is increased for labor
             product.pCost *= 3;
-            console.log("Product pCost:" + product.pCost);
 
             var markup = 1, markupLimit = product.rat / product.mku;
             if (product.sCost > product.pCost) {
@@ -1826,21 +1854,31 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
         totalExport += mat.exp[i].amt;
     }
     var totalGain = mat.buy + mat.prd + mat.imp - mat.sll - totalExport;
-    div.appendChild(createElement("p", {
-        innerHTML: "<p class='tooltip'>" + mat.name + ": " + formatNumber(mat.qty, 3) +
+
+    //If Market Research upgrades are unlocked, add competition and demand info
+    var cmpAndDmdText = "";
+    if (company.unlockUpgrades[2] === 1) {
+        cmpAndDmdText += "<br>Competition: " + formatNumber(mat.cmp, 3);
+    }
+    if (company.unlockUpgrades[3] === 1) {
+        cmpAndDmdText += "<br>Demand: " + formatNumber(mat.dmd, 3);
+    }
+    var innerTxt = "<p class='tooltip'>" + mat.name + ": " + formatNumber(mat.qty, 3) +
                    "(" + formatNumber(totalGain, 3) +  "/s)" +
                    "<span class='tooltiptext'>Buy: " + formatNumber(mat.buy, 3) +
                    "/s<br>Prod: " + formatNumber(mat.prd, 3) + "/s<br>Sell: " + formatNumber(mat.sll, 3) +
                    "/s<br>Export: " + formatNumber(totalExport, 3) + "/s<br>Import: " +
-                   formatNumber(mat.imp, 3) + "/s</span></p><br>" +
+                   formatNumber(mat.imp, 3) + "/s" + cmpAndDmdText + "</span></p><br>" +
                    "<p class='tooltip'>MP: $" + formatNumber(mat.bCost, 2) +
                    "<span class='tooltiptext'>Market Price: The price you would pay if " +
                    "you were to buy this material on the market</span></p><br>" +
                    "<p class='tooltip'>Quality: " + formatNumber(mat.qlt, 2) +
                    "<span class='tooltiptext'>The quality of your material. Higher quality " +
-                   "will lead to more sales</span></p>",
-        id: "cmpy-mgmt-warehouse-" + matName + "-text",
-        display:"inline-block",
+                   "will lead to more sales</span></p>";
+
+    div.appendChild(createElement("p", {
+        innerHTML: innerTxt,
+        id: "cmpy-mgmt-warehouse-" + matName + "-text", display:"inline-block",
     }));
 
     var buttonPanel = createElement("div", {
@@ -1885,9 +1923,8 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
     }));
 
     //Button to manage exports
-    buttonPanel.appendChild(createElement("a", {
-        innerText:"Export", display:"inline-block", class:"a-link-button",
-        clickListener:()=>{
+    if (company.unlockUpgrades[0] === 1) { //Export unlock upgrade
+        function createExportPopup() {
             var popupId = "cmpy-mgmt-export-popup";
             var exportTxt = createElement("p", {
                 innerText:"Select the industry and city to export this material to, as well as " +
@@ -1922,7 +1959,6 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             } //End for
 
             var currIndustry = industrySelector.options[industrySelector.selectedIndex].value;
-            console.log(currIndustry);
             for (var i = 0; i < company.divisions.length; ++i) {
                 if (company.divisions[i].name == currIndustry) {
                     for (var cityName in company.divisions[i].warehouses) {
@@ -1990,24 +2026,25 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             for (var i = 0; i < mat.exp.length; ++i) {
                 (function(i, mat, currExports){
                 currExports.push(createElement("div", {
+                    class:"cmpy-mgmt-existing-export",
                     innerHTML: "Industry: " + mat.exp[i].ind + "<br>" +
                                "City: " + mat.exp[i].city + "<br>" +
                                "Amount/s: " + mat.exp[i].amt,
                     clickListener:()=>{
-                        mat.exp[i].splice(i, 1);
-
                         //Go to the target city and decrease the mat.imp attribute for the corresponding material
-                        for (var i = 0; i < company.divisions.length; ++i) {
-                            if (company.divisions[i].name === mat.exp[i].ind) {
-                                var warehouse = company.divisions[i].warehouses[mat.exp[i].city];
+                        for (var j = 0; j < company.divisions.length; ++j) {
+                            if (company.divisions[j].name === mat.exp[i].ind) {
+                                var warehouse = company.divisions[j].warehouses[mat.exp[i].city];
                                 if (warehouse instanceof Warehouse) {
                                     warehouse.materials[matName].imp -= mat.exp[i].amt;
-                                    return false;
                                 } else {
                                     console.log("ERROR: Target city for export does not have warehouse in specified city");
                                 }
                             }
                         }
+                        mat.exp.splice(i, 1); //Remove export object
+                        removeElementById(popupId);
+                        createExportPopup();
                     }
                 }));
                 })(i, mat, currExports);
@@ -2015,8 +2052,11 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             createPopup(popupId, [exportTxt, industrySelector, citySelector, exportAmount,
                                   exportBtn, cancelBtn, currExportsText].concat(currExports));
         }
-    }));
-
+        buttonPanel.appendChild(createElement("a", {
+            innerText:"Export", display:"inline-block", class:"a-link-button",
+            clickListener:()=>{createExportPopup();}
+        }));
+    }
 
     buttonPanel.appendChild(createElement("br", {})); // Force line break
 
@@ -2318,6 +2358,81 @@ Warehouse.fromJSON = function(value) {
 
 Reviver.constructors.Warehouse = Warehouse;
 
+//Corporation Unlock Upgrades
+//Upgrades for entire corporation, unlocks features, either you have it or you dont
+//The structure is [index in Corporation feature upgrades array, price ]
+var CorporationUnlockUpgrades = {
+    //Lets you export goods
+    "0":  [0, 20e9, "Export",
+                    "Develop infrastructure to export your materials to your other facilities. " +
+                    "This allows you to move materials around between different divisions and cities."],
+
+    //Lets you buy exactly however many required materials you need for production
+    "1":  [1, 999999e9, "Smart Supply", "NOT YET IMPLEMENTED!!!!!! - Use advanced AI to anticipate your supply needs. " +
+                     "This allows you to purchase exactly however many materials you need for production."],
+
+    //Displays each material/product's demand
+    "2":  [2, 25e9, "Market Research - Demand",
+                    "Mine and analyze market data to determine the demand of all resources. " +
+                    "The demand attribute, which affects sales, will be displayed for every material and product."],
+
+    //Display's each material/product's competition
+    "3":  [3, 25e9, "Market Data - Competition",
+                    "Mine and analyze market data to determine how much competition there is on the market " +
+                    "for all resources. The competition attribute, which affects sales, will be displayed for " +
+                    "for every material and product."],
+}
+
+//Corporation Upgrades
+//Upgrades for entire corporation, levelable upgrades
+//The structure is [index in Corporation upgrades array, base price, price mult, benefit mult (additive),
+//                  name, desc]
+var CorporationUpgrades = {
+    //Smart factories, increases production
+    "0":    [0, 10e9, 1.07, 0.02,
+            "Smart Factories", "Advanced AI automatically optimizes the operation and productivity " +
+            "of factories. Each level of this upgrade increases your global production by 2% (additive)."],
+
+    //Smart warehouses, increases storage size
+    "1":    [1, 20e9, 1.07, .1,
+             "Smart Storage", "Advanced AI automatically optimizes your warehouse storage methods. " +
+             "Each level of this upgrade increases your global warehouse storage size by 10% (additive)."],
+
+    //Advertise through dreams, passive popularity/ awareness gain
+    "2":    [2, 100e9, 1.08, .001,
+            "DreamSense", "Use DreamSense LCC Technologies to advertise your corporation " +
+            "to consumers through their dreams. Each level of this upgrade provides a passive " +
+            "increase in awareness of your company by 0.001 / second."],
+
+    //Makes advertising more effective
+    "3":    [3, 5e9, 1.11, 0.1,
+            "Wilson Analytics", "Purchase data and analysis from Wilson, a marketing research " +
+            "firm. Each level of this upgrades increases the effectiveness of your " +
+            "advertising by 10% (additive)."],
+
+    //Augmentation for employees, increases cre
+    "4":    [4, 10e9, 1.05, 0.1,
+            "Nuoptimal Nootropic Injector Implants", "Purchase the Nuoptimal Nootropic " +
+            "Injector augmentation for your employees. Each level of this upgrade " +
+            "globally increases the creativity of your employees by 10% (additive)."],
+
+    //Augmentation for employees, increases cha
+    "5":    [5, 10e9, 1.05, 0.1,
+            "Speech Processor Implants", "Purchase the Speech Processor augmentation for your employees. " +
+            "Each level of this upgrade globally increases the charisma of your employees by 10% (additive)."],
+
+    //Augmentation for employees, increases int
+    "6":    [6, 10e9, 1.05, 0.1,
+            "Neural Acelerators", "Purchase the Neural Accelerator augmentation for your employees. " +
+            "Each level of this upgrade globally increases the intelligence of your employees " +
+            "by 10% (additive)."],
+
+    //Augmentation for employees, increases eff
+    "7":    [7, 10e9, 1.05, 0.1,
+            "FocusWires", "Purchase the FocusWire augmentation for your employees. Each level " +
+            "of this upgrade globally increases the efficiency of your employees by 10% (additive)."],
+}
+
 function Corporation(params={}) {
     this.name = params.name ? params.name : "The Corporation";
 
@@ -2335,6 +2450,13 @@ function Corporation(params={}) {
     this.sharePrice = 0;
     this.storedCycles = 0;
 
+    var numUnlockUpgrades = Object.keys(CorporationUnlockUpgrades).length,
+        numUpgrades = Object.keys(CorporationUpgrades).length;
+
+    this.unlockUpgrades = Array(numUnlockUpgrades).fill(0);
+    this.upgrades = Array(numUpgrades).fill(0);
+    this.upgradeMultipliers = Array(numUpgrades).fill(1);
+
     this.state = new CorporationState();
 }
 
@@ -2343,12 +2465,13 @@ Corporation.prototype.getState = function() {
 }
 
 Corporation.prototype.process = function(numCycles=1) {
+    var corp = this;
     this.storedCycles += numCycles;
     if (this.storedCycles >= CyclesPerIndustryStateCycle) {
         var state = this.getState(), marketCycles = 1;
         this.storedCycles -= (marketCycles * CyclesPerIndustryStateCycle);
         this.divisions.forEach(function(ind) {
-            ind.process(marketCycles, state);
+            ind.process(marketCycles, state, corp);
         });
 
         //At the start of a new cycle, calculate profits from previous cycle
@@ -2369,13 +2492,13 @@ Corporation.prototype.process = function(numCycles=1) {
 }
 
 Corporation.prototype.determineValuation = function() {
-    var val, profit = (this.revenue - this.expenses);
+    var val, profit = (this.revenue.minus(this.expenses)).toNumber();
     if (this.public) {
-        val = 50e9 + this.funds + (profit * getRandomInt(7000, 8500));
+        val = 25e9 + this.funds.toNumber() + (profit * getRandomInt(7000, 8500));
         val *= (Math.pow(1.1, this.divisions.length));
         val = Math.max(val, 0);
     } else {
-        val = 10e9 + Math.max(this.funds, 0); //Base valuation
+        val = 10e9 + Math.max(this.funds.toNumber(), 0); //Base valuation
         if (profit > 0) {
             val += (profit * getRandomInt(12e3, 14e3));
             val *= (Math.pow(1.1, this.divisions.length));
@@ -2483,12 +2606,46 @@ Corporation.prototype.updateSharePrice = function() {
     } else {
         this.sharePrice *= (1 - (Math.random() * 0.01));
     }
+    if (this.sharePrice <= 0.01) {this.sharePrice = 0.01;}
+}
+
+//One time upgrades that unlock new features
+Corporation.prototype.unlock = function(upgrade) {
+    var upgN = upgrade[0], price = upgrade[1];
+    while (this.unlockUpgrades.length <= upgN) {
+        this.unlockUpgrades.push(0);
+    }
+    if (this.funds.lt(price)) {
+        dialogBoxCreate("You don't have enough funds to unlock this!");
+        return;
+    }
+    this.unlockUpgrades[upgN] = 1;
+    this.funds = this.funds.minus(price);
+}
+
+//Levelable upgrades
+Corporation.prototype.upgrade = function(upgrade) {
+    var upgN = upgrade[0], basePrice = upgrade[1], priceMult = upgrade[2],
+        upgradeAmt = upgrade[3]; //Amount by which the upgrade multiplier gets increased (additive)
+    while (this.upgrades.length <= upgN) {this.upgrades.push(0);}
+    while (this.upgradeMultipliers.length <= upgN) {this.upgradeMultipliers.push(1);}
+    var totalCost = basePrice * Math.pow(this.upgrades[upgN], priceMult);
+    if (this.funds.lt(totalCost)) {
+        dialogBoxCreate("You don't have enough funds to purchase this!");
+        return;
+    }
+    ++this.upgrades[upgN];
+    this.funds = this.funds.minus(totalCost);
+
+    //Increase upgrade multiplier
+    this.upgradeMultipliers[upgN] = 1 + (this.upgrades[upgN] * upgradeAmt);
 }
 
 //Keep 'global' variables for DOM elements so we don't have to search
 //through the DOM tree repeatedly when updating UI
 var companyManagementDiv, companyManagementHeaderTabs, companyManagementPanel,
     currentCityUi,
+    corporationUnlockUpgrades, corporationUpgrades,
     industryOverviewPanel, industryOverviewText,
     industryEmployeePanel, industryEmployeeText, industryEmployeeHireButton, industryEmployeeList,
     industryOfficeUpgradeSizeButton,
@@ -2756,7 +2913,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                         } else {
                             this.numShares -= shares;
                             this.issuedShares += shares;
-                            //TODO ADD TO PLAYER MONEY
+                            Player.gainMoney(shares * this.sharePrice);
                             removeElementById(popupId);
                             return false;
                         }
@@ -2890,7 +3047,81 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
         companyManagementPanel.appendChild(goPublic);
     }
 
+    //Update overview text
     this.updateCorporationOverviewContent();
+
+    //Don't show upgrades if player hasn't opened any divisions
+    if (this.divisions.length <= 0) {return; }
+    //Corporation Upgrades
+    var upgradeContainer = createElement("div", {
+        class:"cmpy-mgmt-upgrade-container",
+    });
+    upgradeContainer.appendChild(createElement("h1", {
+        innerText:"Upgrades", margin:"6px", padding:"6px",
+    }));
+
+    //Unlock upgrades
+    var corp = this;
+    if (this.unlockUpgrades == null || this.upgrades == null) { //Backwards compatibility
+        var numUnlockUpgrades = Object.keys(CorporationUnlockUpgrades).length,
+            numUpgrades = Object.keys(CorporationUpgrades).length;
+
+        this.unlockUpgrades = Array(numUnlockUpgrades).fill(0);
+        this.upgrades = Array(numUpgrades).fill(0);
+    }
+    for (var i = 0; i < this.unlockUpgrades.length; ++i) {
+        (function(i, corp) {
+            if (corp.unlockUpgrades[i] === 0) {
+                var upgrade = CorporationUnlockUpgrades[i.toString()];
+                if (upgrade == null) {
+                    console.log("ERROR: Could not find upgrade index " + i);
+                    return;
+                }
+
+                upgradeContainer.appendChild(createElement("div", {
+                    class:"cmpy-mgmt-upgrade-div",
+                    innerHTML:upgrade[2] +  " - " + numeral(upgrade[1]).format("$0.000a") + "<br><br>" + upgrade[3],
+                    clickListener:()=>{
+                        if (corp.funds.lt(upgrade[1])) {
+                            dialogBoxCreate("Insufficient funds");
+                        } else {
+                            corp.unlock(upgrade);
+                            corp.displayCorporationOverviewContent();
+                        }
+                    }
+                }));
+            }
+        })(i, corp);
+    }
+
+    //Levelable upgrades
+    /*
+    for (var i = 0; i < this.upgrades.length; ++i) {
+        (function(i, corp) {
+            var upgrade = CorporationUpgrades[i.toString()];
+            if (upgrade == null) {
+                console.log("ERROR: Could not find levelable upgrade index " + i);
+                return;
+            }
+
+            var baseCost = upgrade[1], priceMult = upgrade[2];
+            var cost = baseCost * Math.pow(corp.upgrades[i], priceMult);
+            upgradeContainer.appendChild(createElement("div", {
+                class:"cmpy-mgmt-upgrade-div",
+                innerHTML:upgrade[4] + " - " + numeral(cost).format("$0.000a") + "<br><br>" + upgrade[5],
+                clickListener:()=>{
+                    if (corp.funds.lt(cost)) {
+                        dialogBoxCreate("Insufficient funds");
+                    } else {
+                        corp.upgrade(upgrade);
+                        corp.displayCorporationOverviewContent();
+                    }
+                }
+            }));
+        })(i, corp);
+    }*/
+
+    companyManagementPanel.appendChild(upgradeContainer);
 }
 
 Corporation.prototype.updateCorporationOverviewContent = function() {
@@ -3428,6 +3659,9 @@ Corporation.prototype.clearUI = function() {
     companyManagementDiv        = null;
     companyManagementPanel      = null;
     currentCityUi               = null;
+
+    corporationUnlockUpgrades   = null;
+    corporationUpgrades         = null;
 
     industryOverviewPanel       = null;
     industryOverviewText        = null;

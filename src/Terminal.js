@@ -1010,7 +1010,7 @@ let Terminal = {
                 //Check programs
                 var delTarget = commandArray[1];
 
-                if (delTarget.endsWith(".exe")) {
+                if (delTarget.includes(".exe")) {
                     for (var i = 0; i < s.programs.length; ++i) {
                         if (s.programs[i] == delTarget) {
                            s.programs.splice(i, 1);

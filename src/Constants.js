@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.33.0",
+    Version:                "0.34.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -129,44 +129,45 @@ let CONSTANTS = {
     HackingMissionSpamTimeIncrease: 25000, //How much time limit increase is gained when conquering a Spam Node (ms)
     HackingMissionTransferAttackIncrease: 1.05, //Multiplier by which the attack for all Core Nodes is increased when conquering a Transfer Node
     HackingMissionMiscDefenseIncrease: 1.05, //The amount by which every misc node's defense is multiplied when one is conquered
-    HackingMissionDifficultyToHacking: 150, //Difficulty is multiplied by this to determine enemy's "hacking" level (to determine effects of scan/attack, etc)
+    HackingMissionDifficultyToHacking: 135, //Difficulty is multiplied by this to determine enemy's "hacking" level (to determine effects of scan/attack, etc)
     HackingMissionHowToPlay: "Hacking missions are a minigame that, if won, will reward you with faction reputation.<br><br>" +
                              "In this game you control a set of Nodes and use them to try and defeat an enemy. Your Nodes " +
                              "are colored blue, while the enemy's are red. There are also other nodes on the map colored gray " +
                              "that initially belong to neither you nor the enemy. The goal of the game is " +
-                             "to capture all of the enemy's database nodes within the time limit. " +
-                             "If you cannot capture all of the enemy's database nodes in the time limit, you will lose.<br><br>" +
+                             "to capture all of the enemy's Database nodes within the time limit. " +
+                             "If you fail to do this, you will lose.<br><br>" +
                              "Each Node has three stats: Attack, Defense, and HP. There are five different actions that " +
                              "a Node can take:<br><br> " +
                              "Attack - Targets an enemy Node and lowers its HP. The effectiveness is determined by the owner's Attack, the Player's " +
-                             "hacking level, and the enemy's defense.<br>" +
+                             "hacking level, and the enemy's defense.<br><br>" +
                              "Scan - Targets an enemy Node and lowers its Defense. The effectiveness is determined by the owner's Attack, the Player's hacking level, and the " +
-                             "enemy's defense.<br>"  +
+                             "enemy's defense.<br><br>"  +
                              "Weaken - Targets an enemy Node and lowers its Attack. The effectiveness is determined by the owner's Attack, the Player's hacking level, and the enemy's " +
-                             "defense.<br>" +
-                             "Fortify - Raises the Node's Defense. The effectiveness is determined by your hacking level.<br>" +
+                             "defense.<br><br>" +
+                             "Fortify - Raises the Node's Defense. The effectiveness is determined by your hacking level.<br><br>" +
                              "Overflow - Raises the Node's Attack but lowers its Defense. The effectiveness is determined by your hacking level.<br><br>" +
                              "Note that when determining the effectiveness of the above actions, the TOTAL Attack or Defense of the team is used, not just the " +
                              "Attack/Defense of the individual Node that is performing the action.<br><br>" +
                              "To capture a Node, you must lower its HP down to 0.<br><br>" +
                              "There are six different types of Nodes:<br><br>" +
-                             "CPU Core - These are your main Nodes that are used to perform actions. Capable of performing every action<br>" +
-                             "Firewall - Nodes with high defense. These Nodes cannot perform any actions<br>" +
+                             "CPU Core - These are your main Nodes that are used to perform actions. Capable of performing every action<br><br>" +
+                             "Firewall - Nodes with high defense. These Nodes can 'Fortify'<br><br>" +
                              "Database - A special type of Node. The player's objective is to conquer all of the enemy's Database Nodes within " +
-                             "the time limit. These Nodes cannot perform any actions<br>"  +
+                             "the time limit. These Nodes cannot perform any actions<br><br>"  +
                              "Spam - Conquering one of these Nodes will slow the enemy's trace, giving the player additional time to complete " +
-                             "the mission. These Nodes cannot perform any actions<br>" +
+                             "the mission. These Nodes cannot perform any actions<br><br>" +
                              "Transfer - Conquering one of these nodes will increase the Attack of all of your CPU Cores by a small fixed percentage. " +
-                             "These Nodes are capable of performing every action except the 'Attack' action<br>" +
-                             "Shield - Nodes with high defense. These Nodes cannot perform any actions<br><br>" +
-                             "To assign an action to a Node, you must first select one of your Nodes. This can be done by simply clicking on it. Only " +
-                             "one Node can be selected at a time, and it will be denoted with a white highlight. After selecting the Node, " +
+                             "These Nodes are capable of performing every action except the 'Attack' action<br><br>" +
+                             "Shield - Nodes with high defense. These Nodes can 'Fortify'<br><br>" +
+                             "To assign an action to a Node, you must first select one of your Nodes. This can be done by simply clicking on it. Double-clicking " +
+                             "a node will select all of your Nodes of the same type (e.g. select all CPU Core Nodes or all Transfer Nodes). Note that only Nodes " +
+                             "that can perform actions (CPU Core, Transfer, Shield, Firewall) can be selected. Selected Nodes will be denoted with a white highlight. After selecting a Node or multiple Nodes, " +
                              "select its action using the Action Buttons near the top of the screen. Every action also has a corresponding keyboard " +
                              "shortcut.<br><br>" +
                              "For certain actions such as attacking, scanning, and weakening, the Node performing the action must have a target. To target " +
                              "another node, simply click-and-drag from the 'source' Node to a target. A Node can only have one target, and you can target " +
                              "any Node that is adjacent to one of your Nodes (immediately above, below, or to the side. NOT diagonal). Furthermore, only CPU Cores and Transfer Nodes " +
-                             "can target, since they are the only ones that can perform actions. To remove a target, you can simply click on the line that represents " +
+                             "can target, since they are the only ones that can perform the related actions. To remove a target, you can simply click on the line that represents " +
                              "the connection between one of your Nodes and its target. Alternatively, you can select the 'source' Node and click the 'Drop Connection' button, " +
                              "or press 'd'.<br><br>" +
                              "Other Notes:<br><br>" +
@@ -1113,17 +1114,26 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.34.0<br>" +
+    "-Added clear() and exit() Netscript functions<br>" +
+    "-When starting out or prestiging, you will now receive a 'Hacking Starter Guide'. It provides tips/pointers for new players<br>" +
+    "-Doubled the amount of RAM on low-level servers (up to required hacking level 150)<br>" +
     "-Slightly increased experience gain from Infiltration<br>" +
     "-buyStock(), sellStock(), shortStock(), and sellShort() Netscript function now return the stock price at which the transaction occurred, rather than a boolean. " +
     "If the function fails for some reason, 0 will be returned.<br>" +
     "-Hacking Mission Changes:<br>" +
+    "---You can now select multiple Nodes of the same type by double clicking. This allows you to set the " +
+    "action of all of selected nodes at once (e.g. set all Transfer Nodes to Fortify). Creating connections " +
+    "does not work with this multi-select functionality yet<br>" +
     "---Shield and Firewall Nodes can now fortify<br>" +
-    "---The effects of Fortifying are now ~30% lower<br>" +
-    "---Conquering a Spam Node now increases your time limit by 25 secs instead of 15<br>" +
+    "---The effects of Fortifying are now ~5% lower<br>" +
+    "---Conquering a Spam Node now increases your time limit by 25 seconds instead of 15<br>" +
     "---Damage dealt by Attacking was slightly reduced<br>" +
     "---The effect of Scanning was slightly reduced<br>" +
-    ""
-
+    "---Enemy CPU Core Nodes start with slightly more attack. Misc Nodes start with slightly less defense<br>" +
+    "-Corporation Management changes:<br>" +
+    "---Added several upgrades that unlock new features<br>" +
+    "---Implemented Exporting mechanic<br>" +
+    "---Fixed many bugs<br>"
 }
 
 export {CONSTANTS};

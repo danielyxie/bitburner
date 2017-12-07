@@ -258,7 +258,8 @@ function calculateRamUsage(codeCopy) {
     var sqlinjectCount = numOccurrences(codeCopy, "sqlinject(");
     var runCount = numOccurrences(codeCopy, "run(");
     var execCount = numOccurrences(codeCopy, "exec(");
-    var killCount = numOccurrences(codeCopy, "kill(") + numOccurrences(codeCopy, "killall(");
+    var killCount = numOccurrences(codeCopy, "kill(") + numOccurrences(codeCopy, "killall(") +
+                    numOccurrences(codeCopy, "exit(");
     var scpCount = numOccurrences(codeCopy, "scp(");
     var hasRootAccessCount = numOccurrences(codeCopy, "hasRootAccess(");
     var getHostnameCount = numOccurrences(codeCopy, "getHostname(") +
@@ -295,7 +296,7 @@ function calculateRamUsage(codeCopy) {
                                     numOccurrences(codeCopy, "deleteServer(") +
                                     numOccurrences(codeCopy, "getPurchasedServers(");
     var scriptRoundCount = numOccurrences(codeCopy, "round(");
-    var scriptWriteCount = numOccurrences(codeCopy, "write(");
+    var scriptWriteCount = numOccurrences(codeCopy, "write(") + numOccurrences(codeCopy, "clear(");
     var scriptReadCount = numOccurrences(codeCopy, "read(");
     var arbScriptCount = numOccurrences(codeCopy, "scriptRunning(") +
                          numOccurrences(codeCopy, "scriptKill(");

@@ -493,6 +493,17 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("killall(): Killing all scripts on " + server.hostname + ". May take a few minutes for the scripts to die");
             return true;
         },
+        exit : function() {
+            var server = getServer(workerScript.serverIp);
+            if (server == null) {
+                throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in exit(). This is a bug please contact game dev");
+            }
+            if (killWorkerScript(workerScript.scriptRef, server.ip)) {
+                workerScript.scriptRef.log("Exiting...");
+            } else {
+                workerScript.scriptRef.log("Exit failed(). This is a bug please contact game developer");
+            }
+        },
         scp : function(scriptname, ip1, ip2){
             if (arguments.length !== 2 && arguments.length !== 3) {
                 throw makeRuntimeRejectMsg(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
@@ -1166,7 +1177,7 @@ function NetscriptFunctions(workerScript) {
             if (!isNaN(port)) { //Write to port
                 //Port 1-10
                 if (port < 1 || port > 10) {
-                    throw makeRuntimeRejectMsg(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
+                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
                 }
                 var portName = "Port" + String(port);
                 var port = NetscriptPorts[portName];
@@ -1197,19 +1208,19 @@ function NetscriptFunctions(workerScript) {
                 }
                 return true;
             } else {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for port: " + port + ". Must be a number between 1 and 10");
+                throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for write: " + port);
             }
         },
         read : function(port) {
             if (!isNaN(port)) { //Read from port
                 //Port 1-10
                 if (port < 1 || port > 10) {
-                    throw makeRuntimeRejectMsg(workerScript, "Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
+                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to read from invalid port: " + port + ". Only ports 1-10 are valid.");
                 }
                 var portName = "Port" + String(port);
                 var port = NetscriptPorts[portName];
                 if (port == null) {
-                    throw makeRuntimeRejectMsg(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
+                    throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 if (port.length == 0) {
                     return "NULL PORT DATA";
@@ -1229,8 +1240,34 @@ function NetscriptFunctions(workerScript) {
                     return "";
                 }
             } else {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for port: " + port + ". Must be a number between 1 and 10");
+                throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for read(): " + port);
             }
+        },
+        clear : function(port) {
+            if (!isNaN(port)) { //Clear port
+                if (port < 1 || port > 10) {
+                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to read from invalid port: " + port + ". Only ports 1-10 are valid");
+                }
+                var portName = "Port" + String(port);
+                var port = NetscriptPorts[portName];
+                if (port == null) {
+                    throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
+                }
+                port.length = 0;
+            } else if (isString(port)) { //Clear text file
+                var fn = port;
+                var server = getServer(workerScript.serverIp);
+                if (server == null) {
+                    throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in clear(). This is a bug please contact game dev");
+                }
+                var txtFile = getTextFile(fn, server);
+                if (txtFile != null) {
+                    txtFile.write("");
+                }
+            } else {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for clear(): " + port);
+            }
+            return 0;
         },
         scriptRunning : function(scriptname, ip) {
             var server = getServer(ip);
