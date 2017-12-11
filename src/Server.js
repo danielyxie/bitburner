@@ -696,6 +696,11 @@ function prestigeHomeComputer(homeComp) {
     homeComp.ramUsed = 0;
     homeComp.programs.push(Programs.NukeProgram);
 
+    //Update RAM usage on all scripts
+    homeComp.scripts.forEach(function(script) {
+        script.updateRamUsage();
+    });
+
     homeComp.messages.length = 0;
     homeComp.messages.push("hackers-starting-handbook.lit");
 }

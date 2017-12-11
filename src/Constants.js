@@ -525,6 +525,7 @@ let CONSTANTS = {
                            "kill('foo.script', getHostname(), 1, 'foodnstuff');<br><br>" +
                            "<i><u>killall(hostname/ip)</u></i><br> Kills all running scripts on the specified server. This function takes a single argument which " +
                            "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" +
+                           "<i><u>exit()</u></i><br>Terminates the script immediately<br><br>" + 
                            "<i><u>scp(script, [source], destination)</u></i><br>Copies a script or literature (.lit) file to another server. The first argument is a string with " +
                            "the filename of the script or literature file " +
                            "to be copied, or an array of filenames to be copied. The next two arguments are strings containing the hostname/IPs of the source and target server. " +
@@ -648,7 +649,7 @@ let CONSTANTS = {
                            "have purchased. It takes an optional parameter specifying whether the hostname or IP addresses will be returned. If this " +
                            "parameter is not specified, it is true by default and hostnames will be returned<br><br>" +
                            "<i><u>round(n)</u></i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" +
-                           "<i><u>write(port, data='', mode='a')</u></i><br>This function can be used to either write data to a port or to a text file (.txt).<br><br>" +
+                           "<i><u>write(port/fn, data='', mode='a')</u></i><br>This function can be used to either write data to a port or to a text file (.txt).<br><br>" +
                            "If the first argument is a number between 1 and 10, then it specifies a port and this function will write data to a port. If the second " +
                            "argument is not specified then it will write an empty string to the port. The third argument, mode, is not used when writing data to a port.<br><br>" +
                            "If the first argument is a string, then it specifies the name of a text file (.txt) and this function will write data to a text file. " +
@@ -657,12 +658,15 @@ let CONSTANTS = {
                            "mode which means that it will overwrite the existing data on the file, or it will create a new file if it does not already exist. Otherwise, " +
                            "the data will be written in 'append' mode which means that the data will be added at the end of the existing file, or it will create a new file if it " +
                            "does not already exist. If mode isn't specified then it will be 'a' for 'append' mode by default.<br><br>" +
-                           "<i><u>read(port)</u></i><br>This function is used to read data from a port or from a text file (.txt).<br><br>" +
+                           "<i><u>read(port/fn)</u></i><br>This function is used to read data from a port or from a text file (.txt).<br><br>" +
                            "This function takes a single argument. If this argument is a number between 1 and 10, then it specifies a port and it will read data from " +
                            "a port. A port is a serialized queue. This function will remove the first element from the queue and return it. If the queue is empty, " +
                            "then the string 'NULL PORT DATA' will be returned.<br><br>" +
                            "If the first argument is a string, then it specifies the name of a text file and this function will return the data in the " +
                            "specified text file. If the text file does not exist, an empty string will be returned<br><br>" +
+                           "<i><u>clear(port/fn)</u></i><br>This function is used to clear a Netscript Port or a text file.<br><br>" +
+                           "It takes a single argument. If this argument is a number between 1 and 10, then it specifies a port and will clear it (deleting all data from it). " +
+                           "If the argument is a string, then it specifies the name of a text file (.txt) and will clear the text file so that it is empty.<br><br>" +
                            "<i><u>scriptRunning(scriptname, hostname/ip)</u></i><br>Returns a boolean indicating whether any instance of the specified script is running " +
                            "on a server, regardless of its arguments. This is different than the isRunning() function because it does not " +
                            "try to identify a specific instance of a running script by its arguments.<br><br>" +

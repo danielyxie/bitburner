@@ -1,5 +1,6 @@
 import {Engine}                                         from "./engine.js";
 import {Locations}                                      from "./Location.js";
+import {Player}                                         from "./Player.js";
 
 import Decimal                                          from '../utils/decimal.js';
 import {dialogBoxCreate}                                from "../utils/DialogBox.js";
