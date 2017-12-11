@@ -697,7 +697,7 @@ function prestigeHomeComputer(homeComp) {
     homeComp.programs.push(Programs.NukeProgram);
 
     //Update RAM usage on all scripts
-    this.scripts.forEach(function(script) {
+    homeComp.scripts.forEach(function(script) {
         script.updateRamUsage();
     });
 
