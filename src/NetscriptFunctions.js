@@ -1033,7 +1033,7 @@ function NetscriptFunctions(workerScript) {
             } else if (type.includes("stop") && type.includes("buy")) {
                 orderType = OrderTypes.StopBuy;
             } else if (type.includes("stop") && type.includes("sell")) {
-                orderType = OrderType.StopSell;
+                orderType = OrderTypes.StopSell;
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid Order Type passed into placeOrder()");
             }
@@ -1046,7 +1046,7 @@ function NetscriptFunctions(workerScript) {
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid Position Type passed into placeOrder()");
             }
-            params = {
+            var params = {
                 stock: stock,
                 shares: shares,
                 price: price,
