@@ -828,6 +828,10 @@ function NetscriptFunctions(workerScript) {
                     return true;
                 }
             }
+            var txtFile = getTextFile(filename, server);
+            if (txtFile !== null) {
+              return true;
+            }
             return false;
         },
         isRunning : function(filename,ip){
