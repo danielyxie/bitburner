@@ -525,7 +525,7 @@ let CONSTANTS = {
                            "kill('foo.script', getHostname(), 1, 'foodnstuff');<br><br>" +
                            "<i><u>killall(hostname/ip)</u></i><br> Kills all running scripts on the specified server. This function takes a single argument which " +
                            "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" +
-                           "<i><u>exit()</u></i><br>Terminates the script immediately<br><br>" + 
+                           "<i><u>exit()</u></i><br>Terminates the script immediately<br><br>" +
                            "<i><u>scp(script, [source], destination)</u></i><br>Copies a script or literature (.lit) file to another server. The first argument is a string with " +
                            "the filename of the script or literature file " +
                            "to be copied, or an array of filenames to be copied. The next two arguments are strings containing the hostname/IPs of the source and target server. " +
@@ -1117,6 +1117,9 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.34.1<br>" +
+    "-Added new 'secret' Terminal command. Try: run musicplayer<br>" +
+
     "v0.34.0<br>" +
     "-Added clear() and exit() Netscript functions<br>" +
     "-When starting out or prestiging, you will now receive a 'Hacking Starter Guide'. It provides tips/pointers for new players<br>" +

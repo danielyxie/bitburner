@@ -2976,17 +2976,21 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     display:"inline-block",
                     clickListener:()=>{
                         var shares = Math.round(input.value);
+                        var tempStockPrice = this.sharePrice;
                         if (isNaN(shares)) {
                             dialogBoxCreate("ERROR: Invalid value for number of shares");
                         } else if (shares > this.issuedShares) {
                             dialogBoxCreate("ERROR: There are not this many oustanding shares to buy back");
+                        } else if (shares * tempStockPrice > Player.money) {
+                            dialogBoxCreate("ERROR: You do not have enough money to purchase this many shares (you need " +
+                                            numeral(shares * tempStockPrice).format("$0.000a") + ")");
                         } else {
                             this.numShares += shares;
                             this.issuedShares -= shares;
                             //TODO REMOVE from Player money
                             removeElementById(popupId);
-                            return false;
                         }
+                        return false;
 
                     }
                 });

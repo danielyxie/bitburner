@@ -1,0 +1,377 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="English">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Netscript Trade Information eXchange (TIX) API &#8212; Bitburner 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Netscript Singularity Functions" href="netscriptsingularityfunctions.html" />
+    <link rel="prev" title="Netscript Hacknet Node API" href="netscripthacknetnodeapi.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">Bitburner 1.0 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="netscripthacknetnodeapi.html" title="Netscript Hacknet Node API"
+             accesskey="P">previous</a> |
+          <a href="netscriptsingularityfunctions.html" title="Netscript Singularity Functions"
+             accesskey="N">next</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="netscript-trade-information-exchange-tix-api">
+<h1>Netscript Trade Information eXchange (TIX) API<a class="headerlink" href="#netscript-trade-information-exchange-tix-api" title="Permalink to this headline">¶</a></h1>
+<p>The Trade Information eXchange (TIX) is the communications protocol supported by the World Stock Exchange (WSE).
+The WESE provides an API that allows you to automatically communicate with the
+<a class="reference external" href="http://bitburner.wikia.com/wiki/Stock_Market">Stock Market</a>. This API lets you write code using Netscript
+to build automated trading systems and create your own algorithmic trading strategies. Access to this
+TIX API can be purchased by visiting the World Stock Exchange in-game.</p>
+<p>Access to the TIX API currently costs $5 billion. After you purchase it, you will retain this
+access even after you 'reset' by installing Augmentations</p>
+<div class="section" id="getstockprice">
+<h2>getStockPrice<a class="headerlink" href="#getstockprice" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getStockPrice">
+<code class="descname">getStockPrice</code><span class="sig-paren">(</span><em>sym</em><span class="sig-paren">)</span><a class="headerlink" href="#getStockPrice" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sym</strong> (<em>string</em>) -- Stock symbol</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns the price of a stock, given its symbol (NOT the company name). The symbol is a sequence
+of two to four capital letters.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">getStockPrice</span><span class="p">(</span><span class="s2">&quot;FISG&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="getstockposition">
+<h2>getStockPosition<a class="headerlink" href="#getstockposition" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getStockPosition">
+<code class="descname">getStockPosition</code><span class="sig-paren">(</span><em>sym</em><span class="sig-paren">)</span><a class="headerlink" href="#getStockPosition" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sym</strong> (<em>string</em>) -- Stock symbol</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns an array of four elements that represents the player's position in a stock.</p>
+<p>The first element is the returned array is the number of shares the player owns of the stock in the
+<a class="reference external" href="http://bitburner.wikia.com/wiki/Stock_Market#Positions:_Long_vs_Short">Long position</a>. The second
+element in the array is the average price of the player's shares in the Long position.</p>
+<p>The third element in the array is the number of shares the player owns of the stock in the
+<a class="reference external" href="http://bitburner.wikia.com/wiki/Stock_Market#Positions:_Long_vs_Short">Short position</a>. The fourth
+element in the array is the average price of the player's Short position.</p>
+<p>All elements in the returned array are numeric.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pos</span> <span class="o">=</span> <span class="n">getStockPosition</span><span class="p">(</span><span class="s2">&quot;ECP&quot;</span><span class="p">);</span>
+<span class="n">shares</span>      <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">avgPx</span>       <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="n">sharesShort</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">avgPxShort</span>  <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="buystock">
+<h2>buyStock<a class="headerlink" href="#buystock" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="buyStock">
+<code class="descname">buyStock</code><span class="sig-paren">(</span><em>sym</em>, <em>shares</em><span class="sig-paren">)</span><a class="headerlink" href="#buyStock" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sym</strong> (<em>string</em>) -- Symbol of stock to purchase</li>
+<li><strong>shares</strong> (<em>number</em>) -- Number of shares to purchased. Must be positive. Will be rounded to nearest integer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Attempts to purchase shares of a stock using a <a class="reference external" href="http://bitburner.wikia.com/wiki/Stock_Market#Order_Types">Market Order</a>.</p>
+<p>If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember
+that every transaction on the stock exchange costs a certain commission fee.</p>
+<p>If this function successfully purchases the shares, it will return the stock price at which each share was purchased. Otherwise,
+it will return 0.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="sellstock">
+<h2>sellStock<a class="headerlink" href="#sellstock" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sellStock">
+<code class="descname">sellStock</code><span class="sig-paren">(</span><em>sym</em>, <em>shares</em><span class="sig-paren">)</span><a class="headerlink" href="#sellStock" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sym</strong> (<em>string</em>) -- Symbol of stock to sell</li>
+<li><strong>shares</strong> (<em>number</em>) -- Number of shares to sell. Must be positive. Will be rounded to nearest integer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Attempts to sell shares of a stock using a <a class="reference external" href="http://bitburner.wikia.com/wiki/Stock_Market#Order_Types">Market Order</a>.</p>
+<p>If the specified number of shares in the function exceeds the amount that the player actually owns, then this function will
+sell all owned shares. Remember that every transaction on the stock exchange costs a certain commission fee.</p>
+<p>The net profit made from selling stocks with this function is reflected in the script's statistics.
+This net profit is calculated as:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">shares</span> <span class="o">*</span> <span class="p">(</span><span class="n">sell</span> <span class="n">price</span> <span class="o">-</span> <span class="n">average</span> <span class="n">price</span> <span class="n">of</span> <span class="n">purchased</span> <span class="n">shares</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the sale is successful, this function will return the stock price at which each share was sold. Otherwise, it will return 0.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="shortstock">
+<h2>shortStock<a class="headerlink" href="#shortstock" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="shortStock">
+<code class="descname">shortStock</code><span class="sig-paren">(</span><em>sym</em>, <em>shares</em><span class="sig-paren">)</span><a class="headerlink" href="#shortStock" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sym</strong> (<em>string</em>) -- Symbol of stock to short</li>
+<li><strong>shares</strong> (<em>number</em>) -- Number of shares to short. Must be positive. Will be rounded to nearest integer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Attempts to purchase a <a class="reference external" href="http://bitburner.wikia.com/wiki/Stock_Market#Positions:_Long_vs_Short">short</a> position of a stock
+using a <a class="reference external" href="http://bitburner.wikia.com/wiki/Stock_Market#Order_Types">Market Order</a>.</p>
+<p>The ability to short a stock is <strong>not</strong> immediately available to the player and must be unlocked later on in the game.</p>
+<p>If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased.
+Remember that every transaction on the stock exchange costs a certain commission fee.</p>
+<p>If the purchase is successful, this function will return the stock price at which each share was purchased. Otherwise, it will return 0.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="sellshort">
+<h2>sellShort<a class="headerlink" href="#sellshort" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sellShort">
+<code class="descname">sellShort</code><span class="sig-paren">(</span><em>sym</em>, <em>shares</em><span class="sig-paren">)</span><a class="headerlink" href="#sellShort" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sym</strong> (<em>string</em>) -- Symbol of stock to sell</li>
+<li><strong>shares</strong> (<em>number</em>) -- Number of shares to sell. Must be positive. Will be rounded to nearest integer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Attempts to sell a <a class="reference external" href="http://bitburner.wikia.com/wiki/Stock_Market#Positions:_Long_vs_Short">short</a> position of a stock
+using a <a class="reference external" href="http://bitburner.wikia.com/wiki/Stock_Market#Order_Types">Market Order</a>.</p>
+<p>The ability to short a stock is <strong>not</strong> immediately available to the player and must be unlocked later on in the game.</p>
+<p>If the specified number of shares exceeds the amount that the player actually owns, then this function will sell all owned
+shares. Remember that every transaction on the stock exchange costs a certain commission fee.</p>
+<p>If the sale is successful, this function will return the stock price at which each share was sold. Otherwise it will return 0.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="placeorder">
+<h2>placeOrder<a class="headerlink" href="#placeorder" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="placeOrder">
+<code class="descname">placeOrder</code><span class="sig-paren">(</span><em>sym</em>, <em>shares</em>, <em>price</em>, <em>type</em>, <em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#placeOrder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sym</strong> (<em>string</em>) -- Symbol of stock to player order for</li>
+<li><strong>shares</strong> (<em>number</em>) -- Number of shares for order. Must be positive. Will be rounded to nearest integer</li>
+<li><strong>price</strong> (<em>number</em>) -- Execution price for the order</li>
+<li><strong>type</strong> (<em>string</em>) -- <p>Type of order. It must specify &quot;limit&quot; or &quot;stop&quot;, and must also specify &quot;buy&quot; or &quot;sell&quot;. This is NOT
+case-sensitive. Here are four examples that will work:</p>
+<ul>
+<li>limitbuy</li>
+<li>limitsell</li>
+<li>stopbuy</li>
+<li>stopsell</li>
+</ul>
+</li>
+<li><strong>pos</strong> (<em>string</em>) -- Specifies whether the order is a &quot;Long&quot; or &quot;Short&quot; position. The Values &quot;L&quot; or &quot;S&quot; can also be used. This is
+NOT case-sensitive.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Places an order on the stock market. This function only works for <a class="reference external" href="http://bitburner.wikia.com/wiki/Stock_Market#Order_Types">Limit and Stop Orders</a>.</p>
+<p>The ability to place limit and stop orders is <strong>not</strong> immediately available to the player and must be unlocked later on in the game.</p>
+<p>Returns true if the order is successfully placed, and false otherwise.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="cancelorder">
+<h2>cancelOrder<a class="headerlink" href="#cancelorder" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="cancelOrder">
+<code class="descname">cancelOrder</code><span class="sig-paren">(</span><em>sym</em>, <em>shares</em>, <em>price</em>, <em>type</em>, <em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#cancelOrder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sym</strong> (<em>string</em>) -- Symbol of stock to player order for</li>
+<li><strong>shares</strong> (<em>number</em>) -- Number of shares for order. Must be positive. Will be rounded to nearest integer</li>
+<li><strong>price</strong> (<em>number</em>) -- Execution price for the order</li>
+<li><strong>type</strong> (<em>string</em>) -- <p>Type of order. It must specify &quot;limit&quot; or &quot;stop&quot;, and must also specify &quot;buy&quot; or &quot;sell&quot;. This is NOT
+case-sensitive. Here are four examples that will work:</p>
+<ul>
+<li>limitbuy</li>
+<li>limitsell</li>
+<li>stopbuy</li>
+<li>stopsell</li>
+</ul>
+</li>
+<li><strong>pos</strong> (<em>string</em>) -- Specifies whether the order is a &quot;Long&quot; or &quot;Short&quot; position. The Values &quot;L&quot; or &quot;S&quot; can also be used. This is
+NOT case-sensitive.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Cancels an oustanding Limit or Stop order on the stock market.</p>
+<p>The ability to use limit and stop orders is <strong>not</strong> immediately available to the player and must be unlocked later on in the game.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="netscript.html"> Netscript</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="netscriptdatatypes.html"> Data Types and Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptoperators.html"> Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptloopsandconditionals.html"> Loops and Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptscriptarguments.html"> Script Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptfunctions.html"> Basic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptadvancedfunctions.html"> Advanced Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscripthacknetnodeapi.html"> Hacknet Node API</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"> Trade Information eXchange (TIX) API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#getstockprice">getStockPrice</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getstockposition">getStockPosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#buystock">buyStock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sellstock">sellStock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shortstock">shortStock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sellshort">sellShort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#placeorder">placeOrder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cancelorder">cancelOrder</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptsingularityfunctions.html"> Singularity Functions</a></li>
+</ul>
+</li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="netscripthacknetnodeapi.html" title="Netscript Hacknet Node API"
+              >previous</a> |
+            <a href="netscriptsingularityfunctions.html" title="Netscript Singularity Functions"
+              >next</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/netscriptixapi.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Bitburner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.4.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -70,6 +70,12 @@ function runScriptsLoop() {
             var ip = workerScripts[i].serverIp;
             var name = workerScripts[i].name;
 
+            //Free RAM
+            AllServers[ip].ramUsed -= workerScripts[i].ramUsage;
+
+            //Delete script from Active Scripts
+            deleteActiveScriptsItem(workerScripts[i]);
+
             for (var j = 0; j < AllServers[ip].runningScripts.length; j++) {
                 if (AllServers[ip].runningScripts[j].filename == name &&
                     compareArrays(AllServers[ip].runningScripts[j].args, workerScripts[i].args)) {
@@ -77,12 +83,6 @@ function runScriptsLoop() {
                     break;
                 }
             }
-
-            //Free RAM
-            AllServers[ip].ramUsed -= workerScripts[i].ramUsage;
-
-            //Delete script from Active Scripts
-            deleteActiveScriptsItem(workerScripts[i]);
 
             //Delete script from workerScripts
             workerScripts.splice(i, 1);

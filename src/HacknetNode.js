@@ -74,7 +74,8 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
 }
 
 HacknetNode.prototype.calculateLevelUpgradeCost = function(levels=1) {
-    if (levels < 1) {return 0;}
+    levels = Math.round(levels);
+    if (isNaN(levels) || levels < 1) {return 0;}
     var mult = CONSTANTS.HacknetNodeUpgradeLevelMult;
     var totalMultiplier = 0; //Summed
     var currLevel = this.level;
