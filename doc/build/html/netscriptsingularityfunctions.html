@@ -1,0 +1,724 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="English">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Netscript Singularity Functions &#8212; Bitburner 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Netscript Trade Information eXchange (TIX) API" href="netscriptixapi.html" /> 
+  </head>
+  <body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">Bitburner 1.0 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="netscriptixapi.html" title="Netscript Trade Information eXchange (TIX) API"
+             accesskey="P">previous</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="netscript-singularity-functions">
+<h1>Netscript Singularity Functions<a class="headerlink" href="#netscript-singularity-functions" title="Permalink to this headline">¶</a></h1>
+<p>The Singularity Functions are a special set of Netscript functions. These functions allow you to control
+many additional aspects of the game through scripts, such as working for factions/companies, purchasing/installing Augmentations,
+and creating programs.</p>
+<p>The Singularity Functions are <strong>not</strong> immediately available to the player and must be unlocked later in the game.</p>
+<p><strong>WARNING: This page contains spoilers for the game</strong>.</p>
+<p>The Singularity Functions are unlocked in BitNode-4. If you are in BitNode-4, then you will automatically have access to all of these functions.
+You can use the Singularity Functions in other BitNodes if and only if you have the Source-File for BitNode-4 (aka Source-File 4). Each level of
+Source-File 4 will open up additional Singularity Functions that you can use in other BitNodes. If your Source-File 4 is upgraded all the way to
+level 3, then you will be able to access all of the Singularity Functions.</p>
+<p>Note that Singularity Functions require a lot of RAM outside of BitNode-4 (their RAM costs are multiplied by 10 if you are not in BitNode-4)</p>
+<div class="section" id="universitycourse">
+<h2>universityCourse<a class="headerlink" href="#universitycourse" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="universityCourse">
+<code class="descname">universityCourse</code><span class="sig-paren">(</span><em>universityName</em>, <em>courseName</em><span class="sig-paren">)</span><a class="headerlink" href="#universityCourse" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>universityName</strong> (<em>string</em>) -- <p>Name of university. Not case-sensitive. You must be in the correct city for whatever university you specify.</p>
+<ul>
+<li>Summit University</li>
+<li>Rothman University</li>
+<li>ZB Institute Of Technology</li>
+</ul>
+</li>
+<li><strong>courseName</strong> (<em>string</em>) -- <p>Name of course. Not case-sensitive.</p>
+<ul>
+<li>Study Computer Science</li>
+<li>Data Strucures</li>
+<li>Networks</li>
+<li>Algorithms</li>
+<li>Management</li>
+<li>Leadership</li>
+</ul>
+<p>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.</p>
+<p>This function will automatically set you to start taking a course at a university. If you are already in the middle of some
+&quot;working&quot; action (such as working at a company, for a faction, or on a program), then running this function will automatically
+cancel that action and give you your earnings.</p>
+<p>The cost and experience gains for all of these universities and classes are the same as if you were to manually visit and take these classes.</p>
+<p>This function will return true if you successfully start taking the course, and false otherwise.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="gymworkout">
+<h2>gymWorkout<a class="headerlink" href="#gymworkout" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="gymWorkout">
+<code class="descname">gymWorkout</code><span class="sig-paren">(</span><em>gymName</em>, <em>stat</em><span class="sig-paren">)</span><a class="headerlink" href="#gymWorkout" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>gymName</strong> (<em>string</em>) -- <p>Name of gym. Not case-sensitive. You must be in the correct city for whatever gym you specify.</p>
+<ul>
+<li>Crush Fitness Gym</li>
+<li>Snap Fitness Gym</li>
+<li>Iron Gym</li>
+<li>Powerhouse Gym</li>
+<li>Millenium Fitness Gym</li>
+</ul>
+</li>
+<li><strong>stat</strong> (<em>string</em>) -- <p>The stat you want to train. Not case-sensitive.</p>
+<ul>
+<li>strength OR str</li>
+<li>defense OR def</li>
+<li>dexterity OR dex</li>
+<li>agility OR agi</li>
+</ul>
+<p>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.</p>
+<p>This function will automatically set you to start working out at a gym to train a particular stat. If you are
+already in the middle of some &quot;working&quot; action (such as working at a company, for a faction, or on a program),
+then running this function will automatically cancel that action and give you your earnings.</p>
+<p>The cost and experience gains for all of these gyms are the same as if you were to manually visit these gyms and train</p>
+<p>This function will return true if you successfully start working out at the gym, and false otherwise.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="traveltocity">
+<h2>travelToCity<a class="headerlink" href="#traveltocity" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="travelToCity">
+<code class="descname">travelToCity</code><span class="sig-paren">(</span><em>cityName</em><span class="sig-paren">)</span><a class="headerlink" href="#travelToCity" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cityName</strong> (<em>string</em>) -- <p>City to travel to. CASE-SENSITIVE.</p>
+<ul>
+<li>Aevum</li>
+<li>Chongqing</li>
+<li>Sector-12</li>
+<li>New Tokyo</li>
+<li>Ishima</li>
+<li>Volhaven</li>
+</ul>
+<p>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.</p>
+<p>This function allows the player to travel to any city. The cost for using this function is the same as the cost for traveling through the Travel Agency.</p>
+<p>This function will return true if you successfully travel to the specified city and false otherwise.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="purchasetor">
+<h2>purchaseTor<a class="headerlink" href="#purchasetor" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="purchaseTor">
+<code class="descname">purchaseTor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#purchaseTor" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.</p>
+<p>This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this
+function is the same as if you were to manually purchase one.</p>
+<p>This function will return true if it successfully purchase a TOR router and false otherwise.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="purchaseprogram">
+<h2>purchaseProgram<a class="headerlink" href="#purchaseprogram" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="purchaseProgram">
+<code class="descname">purchaseProgram</code><span class="sig-paren">(</span><em>programName</em><span class="sig-paren">)</span><a class="headerlink" href="#purchaseProgram" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>programName</strong> (<em>string</em>) -- Name of program to purchase. Must include '.exe' extension. Not case-sensitive.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function.</p>
+<p>This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function.
+The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web using the
+Terminal <em>buy</em> command.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">purchaseProgram</span><span class="p">(</span><span class="s2">&quot;brutessh.exe&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This function will return true if the specified program is purchased, and false otherwise.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="getstats">
+<h2>getStats<a class="headerlink" href="#getstats" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getStats">
+<code class="descname">getStats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getStats" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this function.</p>
+<p>Returns an object with the Player's stats. The object has the following properties:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Player</span><span class="o">.</span><span class="n">hacking</span>
+<span class="n">Player</span><span class="o">.</span><span class="n">strength</span>
+<span class="n">Player</span><span class="o">.</span><span class="n">defense</span>
+<span class="n">Player</span><span class="o">.</span><span class="n">dexterity</span>
+<span class="n">Player</span><span class="o">.</span><span class="n">agility</span>
+<span class="n">Player</span><span class="o">.</span><span class="n">charisma</span>
+<span class="n">Player</span><span class="o">.</span><span class="n">intelligence</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">getStats</span><span class="p">();</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;My charisma level is: &#39;</span> <span class="o">+</span> <span class="n">res</span><span class="o">.</span><span class="n">charisma</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="isbusy">
+<h2>isBusy<a class="headerlink" href="#isbusy" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="isBusy">
+<code class="descname">isBusy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isBusy" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this function.</p>
+<p>Returns a boolean indicating whether or not the player is currently performing an 'action'. These actions include
+working for a company/faction, studying at a univeristy, working out at a gym, creating a program, or committing a crime.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="upgradehomeram">
+<h2>upgradeHomeRam<a class="headerlink" href="#upgradehomeram" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="upgradeHomeRam">
+<code class="descname">upgradeHomeRam</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#upgradeHomeRam" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
+<p>This function will upgrade amount of RAM on the player's home computer. The cost is the same as if you were to do it manually.</p>
+<p>This function will return true if the player's home computer RAM is successfully upgraded, and false otherwise.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="getupgradehomeramcost">
+<h2>getUpgradeHomeRamCost<a class="headerlink" href="#getupgradehomeramcost" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getUpgradeHomeRamCost">
+<code class="descname">getUpgradeHomeRamCost</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getUpgradeHomeRamCost" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
+<p>Returns the cost of upgrading the player's home computer RAM.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="workforcompany">
+<h2>workForCompany<a class="headerlink" href="#workforcompany" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="workForCompany">
+<code class="descname">workForCompany</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#workForCompany" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
+<p>This function will automatically set you to start working at the company at which you are employed.
+If you are already in the middle of some &quot;working&quot; action (such as working for a faction, training at
+a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.</p>
+<p>This function will return true if the player starts working, and false otherwise.</p>
+<p>Note that when you are working for a company, you will not actually receive your earnings
+(reputation, money, experience) until you FINISH the action. This can be an issue if, for example,
+you only want to work until you get 100,000 company reputation. One small hack to get around this is to
+continuously restart the action to receive your earnings:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="p">(</span><span class="n">getCompanyRep</span><span class="p">(</span><span class="n">COMPANY</span> <span class="n">HERE</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">VALUE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">workForCompany</span><span class="p">();</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">60000</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This way, your company reputation will be updated every minute.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="applytocompany">
+<h2>applyToCompany<a class="headerlink" href="#applytocompany" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="applyToCompany">
+<code class="descname">applyToCompany</code><span class="sig-paren">(</span><em>companyName</em>, <em>field</em><span class="sig-paren">)</span><a class="headerlink" href="#applyToCompany" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>companyName</strong> (<em>string</em>) -- Name of company to apply to. CASE-SENSITIVE.</li>
+<li><strong>field</strong> (<em>string</em>) -- <p>Field to which you want to apply. Not case-sensitive</p>
+<ul>
+<li>software</li>
+<li>software consultant</li>
+<li>it</li>
+<li>security engineer</li>
+<li>network engineer</li>
+<li>business</li>
+<li>business consultant</li>
+<li>security</li>
+<li>agent</li>
+<li>employee</li>
+<li>part-time employee</li>
+<li>waiter</li>
+<li>part-time waiter</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
+<p>This function will automatically try to apply to the specified company for a position in the specified
+field. This function can also be used to apply for promotions by specifying the company and field you
+are already employed at.</p>
+<p>This function will return true if you successfully get a job/promotion, and false otherwise. Note that
+if you are trying to use this function to apply for a promotion and you don't get one, it will return false.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="getcompanyrep">
+<h2>getCompanyRep<a class="headerlink" href="#getcompanyrep" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getCompanyRep">
+<code class="descname">getCompanyRep</code><span class="sig-paren">(</span><em>companyName</em><span class="sig-paren">)</span><a class="headerlink" href="#getCompanyRep" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>companyName</strong> (<em>string</em>) -- Name of the company. CASE-SENSITIVE</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
+<p>This function will return the amount of reputation you have at the specified company.
+If the company passed in as an argument is invalid, -1 will be returned.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="checkfactioninvitations">
+<h2>checkFactionInvitations<a class="headerlink" href="#checkfactioninvitations" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="checkFactionInvitations">
+<code class="descname">checkFactionInvitations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#checkFactionInvitations" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
+<p>Returns an array with the name of all Factions you currently have oustanding invitations from.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="joinfaction">
+<h2>joinFaction<a class="headerlink" href="#joinfaction" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="joinFaction">
+<code class="descname">joinFaction</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#joinFaction" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) -- Name of faction to join. CASE-SENSITIVE</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
+<p>This function will automatically accept an invitation from a faction and join it.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="workforfaction">
+<h2>workForFaction<a class="headerlink" href="#workforfaction" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="workForFaction">
+<code class="descname">workForFaction</code><span class="sig-paren">(</span><em>factionName</em>, <em>workType</em><span class="sig-paren">)</span><a class="headerlink" href="#workForFaction" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>factionName</strong> (<em>string</em>) -- Name of faction to work for. CASE-SENSITIVE</li>
+<li><strong>workType</strong> (<em>string</em>) -- <p>Type of work to perform for the faction</p>
+<ul>
+<li>hacking/hacking contracts/hackingcontracts</li>
+<li>field/fieldwork/field work</li>
+<li>security/securitywork/security work</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
+<p>This function will automatically set you to start working for the specified faction.
+Obviously, you must be a member of the faction or else this function will fail. If you are already in
+the middle of some &quot;working&quot; action (such as working for a company, training at a gym, or creating a program),
+then running this function will automatically cancel that action and give you your earnings.</p>
+<p>This function will return true if you successfully start working for the specified faction, and false otherwise.</p>
+<p>Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience)
+until you FINISH the action. This can be an issue if, for example, you only want to work until you get 100,000 faction
+reputation. One small hack to get around this is to continuously restart the action to receive your earnings:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="p">(</span><span class="n">getFactionRep</span><span class="p">(</span><span class="n">FACTION</span> <span class="n">NAME</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">VALUE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">workForFaction</span><span class="p">(</span><span class="n">FACNAME</span><span class="p">,</span> <span class="n">WORKTYPE</span><span class="p">);</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">60000</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This way, your faction reputation will be updated every minute.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="getfactionrep">
+<h2>getFactionRep<a class="headerlink" href="#getfactionrep" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getFactionRep">
+<code class="descname">getFactionRep</code><span class="sig-paren">(</span><em>factionName</em><span class="sig-paren">)</span><a class="headerlink" href="#getFactionRep" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>factionName</strong> (<em>string</em>) -- Name of faction. CASE-SENSITIVE</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
+<p>This function returns the amount of reputation you have for the specified faction.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="createprogram">
+<h2>createProgram<a class="headerlink" href="#createprogram" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="createProgram">
+<code class="descname">createProgram</code><span class="sig-paren">(</span><em>programName</em><span class="sig-paren">)</span><a class="headerlink" href="#createProgram" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>programName</strong> (<em>string</em>) -- Name of program to create. Not case-sensitive</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.</p>
+<p>This function will automatically set you to start working on creating the specified program. If you are
+already in the middle of some &quot;working&quot; action (such as working for a company, training at a gym, or taking a course),
+then running this function will automatically cancel that action and give you your earnings.</p>
+<p>Example:</p>
+<blockquote>
+<div><p>createProgram(&quot;relaysmtp.exe&quot;);</p>
+<p>Note that creating a program using this function has the same hacking level requirements as it normally would. These level requirements are:</p>
+<ul class="simple">
+<li>BruteSSH.exe: 50</li>
+<li>FTPCrack.exe: 100</li>
+<li>relaySMTP.exe: 250</li>
+<li>HTTPWorm.exe: 500</li>
+<li>SQLInject.exe: 750</li>
+<li>DeepscanV1.exe: 75</li>
+<li>DeepscanV2.exe: 400</li>
+<li>ServerProfiler.exe: 75</li>
+<li>AutoLink.exe: 25</li>
+</ul>
+<p>This function returns true if you successfully start working on the specified program, and false otherwise.</p>
+</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="commitcrime">
+<h2>commitCrime<a class="headerlink" href="#commitcrime" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="getcrimechance">
+<h2>getCrimeChance<a class="headerlink" href="#getcrimechance" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getCrimeChance">
+<code class="descname">getCrimeChance</code><span class="sig-paren">(</span><em>crime</em><span class="sig-paren">)</span><a class="headerlink" href="#getCrimeChance" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>crime</strong> (<em>string</em>) -- Name of crime. Not case-sensitive. This argument is fairlyn lenient in terms of what inputs it accepts.
+Check the documentation for the <em>commitCrime()</em> function for a list of example inputs.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.</p>
+<p>This function returns your chance of success at commiting the specified crime. The chance is returned as a decimal (i.e. 60% would be returned as 0.6).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="getownedaugmentations">
+<h2>getOwnedAugmentations<a class="headerlink" href="#getownedaugmentations" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getOwnedAugmentations">
+<code class="descname">getOwnedAugmentations</code><span class="sig-paren">(</span><em>purchased=false</em><span class="sig-paren">)</span><a class="headerlink" href="#getOwnedAugmentations" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>purchase</strong> (<em>boolean</em>) -- Specifies whether the returned array should include Augmentations you have purchased but not yet installed.
+By default, this argument is false which means that the return value will NOT have the purchased Augmentations.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.</p>
+<p>This function returns an array containing the names (as strings) of all Augmentations you have.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="getaugmentationsfromfaction">
+<h2>getAugmentationsFromFaction<a class="headerlink" href="#getaugmentationsfromfaction" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getAugmentationsFromFaction">
+<code class="descname">getAugmentationsFromFaction</code><span class="sig-paren">(</span><em>facName</em><span class="sig-paren">)</span><a class="headerlink" href="#getAugmentationsFromFaction" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>facName</strong> (<em>string</em>) -- Name of faction. CASE-SENSITIVE</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.</p>
+<p>Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="getaugmentationcost">
+<h2>getAugmentationCost<a class="headerlink" href="#getaugmentationcost" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getAugmentationCost">
+<code class="descname">getAugmentationCost</code><span class="sig-paren">(</span><em>augName</em><span class="sig-paren">)</span><a class="headerlink" href="#getAugmentationCost" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>augName</strong> (<em>string</em>) -- Name of Augmentation. CASE-SENSITIVE</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.</p>
+<p>This function returns an array with two elements that gives the cost for the specified Augmentation.
+The first element in the returned array is the reputation requirement of the Augmentation, and the second element is the money cost.</p>
+<p>If an invalid Augmentation name is passed in for the <em>augName</em> argument, this function will return the array [-1, -1].</p>
+</dd></dl>
+
+</div>
+<div class="section" id="purchaseaugmentation">
+<h2>purchaseAugmentation<a class="headerlink" href="#purchaseaugmentation" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="purchaseAugmentation">
+<code class="descname">purchaseAugmentation</code><span class="sig-paren">(</span><em>factionName</em>, <em>augName</em><span class="sig-paren">)</span><a class="headerlink" href="#purchaseAugmentation" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>factionName</strong> (<em>string</em>) -- Name of faction to purchase Augmentation from. CASE-SENSITIVE</li>
+<li><strong>augName</strong> (<em>string</em>) -- Name of Augmentation to purchase. CASE-SENSITIVE</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.</p>
+<p>This function will try to purchase the specified Augmentation through the given Faction.</p>
+<p>This function will return true if the Augmentation is successfully purchased, and false otherwise.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="installaugmentations">
+<h2>installAugmentations<a class="headerlink" href="#installaugmentations" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="installAugmentations">
+<code class="descname">installAugmentations</code><span class="sig-paren">(</span><em>cbScript</em><span class="sig-paren">)</span><a class="headerlink" href="#installAugmentations" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cbScript</strong> (<em>string</em>) -- Optional callback script. This is a script that will automatically be run after Augmentations are installed (after the reset).
+This script will be run with no arguments and 1 thread. It must be located on your home computer.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.</p>
+<p>This function will automatically install your Augmentations, resetting the game as usual.</p>
+<p>It will return true if successful, and false otherwise.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table Of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="netscript.html"> Netscript</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="netscriptdatatypes.html"> Data Types and Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptoperators.html"> Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptloopsandconditionals.html"> Loops and Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptscriptarguments.html"> Script Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptfunctions.html"> Basic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptadvancedfunctions.html"> Advanced Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscripthacknetnodeapi.html"> Hacknet Node API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptixapi.html"> Trade Information eXchange (TIX) API</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"> Singularity Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#universitycourse">universityCourse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gymworkout">gymWorkout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#traveltocity">travelToCity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#purchasetor">purchaseTor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#purchaseprogram">purchaseProgram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getstats">getStats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#isbusy">isBusy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#upgradehomeram">upgradeHomeRam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getupgradehomeramcost">getUpgradeHomeRamCost</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#workforcompany">workForCompany</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#applytocompany">applyToCompany</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getcompanyrep">getCompanyRep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checkfactioninvitations">checkFactionInvitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#joinfaction">joinFaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#workforfaction">workForFaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getfactionrep">getFactionRep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#createprogram">createProgram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#commitcrime">commitCrime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getcrimechance">getCrimeChance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getownedaugmentations">getOwnedAugmentations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getaugmentationsfromfaction">getAugmentationsFromFaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getaugmentationcost">getAugmentationCost</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#purchaseaugmentation">purchaseAugmentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installaugmentations">installAugmentations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="netscriptixapi.html" title="Netscript Trade Information eXchange (TIX) API"
+              >previous</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/netscriptsingularityfunctions.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Bitburner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.4.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

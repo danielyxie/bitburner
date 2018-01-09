@@ -493,7 +493,12 @@ BitburnerSaveObject.prototype.exportGame = function() {
     this.AliasesSave                = JSON.stringify(Aliases);
     this.GlobalAliasesSave          = JSON.stringify(GlobalAliases);
     this.MessagesSave               = JSON.stringify(Messages);
+    this.StockMarketSave            = JSON.stringify(StockMarket);
+    this.SettingsSave               = JSON.stringify(Settings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
+    if (Player.bitNodeN == 2 && Player.inGang()) {
+        this.AllGangsSave           = JSON.stringify(AllGangs);
+    }
 
     var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
     var filename = "bitburnerSave.json";

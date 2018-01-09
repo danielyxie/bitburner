@@ -129,10 +129,9 @@ function addActiveScriptsItem(workerscript) {
     //Create the element itself. Each element is an accordion collapsible
     var itemNameArray = ["active", "scripts", server.hostname, workerscript.name];
     for (var i = 0; i < workerscript.args.length; ++i) {
-        itemNameArray.push(workerscript.args[i].toString());
+        itemNameArray.push(String(workerscript.args[i]));
     }
     var itemName = itemNameArray.join("-");
-    //var itemName = "active-scripts-" + server.hostname + "-" + workerscript.name;
     var item = document.createElement("li");
     item.setAttribute("id", itemName);
 
@@ -164,10 +163,9 @@ function deleteActiveScriptsItem(workerscript) {
     }
     var itemNameArray = ["active", "scripts", server.hostname, workerscript.name];
     for (var i = 0; i < workerscript.args.length; ++i) {
-        itemNameArray.push(workerscript.args[i].toString());
+        itemNameArray.push(String(workerscript.args[i]));
     }
     var itemName = itemNameArray.join("-");
-    //var itemName = "active-scripts-" + server.hostname + "-" + workerscript.name;
     var li = document.getElementById(itemName);
     if (li == null) {
         console.log("could not find Active scripts li element for: " + workerscript.name);
@@ -200,7 +198,7 @@ function updateActiveScriptsItemContent(workerscript) {
     }
     var itemNameArray = ["active", "scripts", server.hostname, workerscript.name];
     for (var i = 0; i < workerscript.args.length; ++i) {
-        itemNameArray.push(workerscript.args[i].toString());
+        itemNameArray.push(String(workerscript.args[i]));
     }
     var itemName = itemNameArray.join("-");
     var itemContent = document.getElementById(itemName + "-content")

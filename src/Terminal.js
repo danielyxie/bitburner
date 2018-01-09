@@ -1055,6 +1055,13 @@ let Terminal = {
 					post("Incorrect number of arguments. Usage: run [program/script] [-t] [num threads] [arg1] [arg2]...");
 				} else {
 					var executableName = commandArray[1];
+
+                    //Music player!
+                    if (executableName === "musicplayer") {
+                        post('<iframe src="https://open.spotify.com/embed/user/danielyxie/playlist/1ORnnL6YNvXOracUaUV2kh" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>', false);
+                        return;
+                    }
+
 					//Check if its a script or just a program/executable
 					if (executableName.indexOf(".script") == -1) {
 						//Not a script
@@ -1246,9 +1253,9 @@ let Terminal = {
                         post("Theme not found");
                     }
                 }else{
-                    inputBackgroundHex = args[0];
-                    inputTextHex = args[1];
-                    inputHighlightHex = args[2];
+                    var inputBackgroundHex = args[0];
+                    var inputTextHex = args[1];
+                    var inputHighlightHex = args[2];
                     if(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputBackgroundHex) &&
                        /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputTextHex) &&
                        /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputHighlightHex)){
