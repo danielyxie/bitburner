@@ -480,7 +480,10 @@ function processAllHacknetNodeEarnings(numCycles) {
 function processSingleHacknetNodeEarnings(numCycles, nodeObj) {
     var cyclesPerSecond = 1000 / Engine._idleSpeed;
     var earningPerCycle = nodeObj.moneyGainRatePerSecond / cyclesPerSecond;
-    if (isNaN(earningPerCycle)) {throw new Error("Calculated Earnings is not a number");}
+    if (isNaN(earningPerCycle)) {
+        console.log("ERROR: Hacknet Node Calculated earnings is NaN");
+        earningPerCycle = 0;
+    }
     var totalEarnings = numCycles * earningPerCycle;
     nodeObj.totalMoneyGenerated += totalEarnings;
     nodeObj.onlineTimeSeconds += (numCycles * (Engine._idleSpeed / 1000));
