@@ -121,11 +121,12 @@
 }
 
 .cmpy-mgmt-upgrade-div {
+    display:inline-block;
     border:1px solid white;
     margin:4px;
     padding:12px;
     border-radius:25px;
-    width:95%;
+    width:45%;
     color:var(--my-font-color);
 }
 

@@ -70,10 +70,13 @@ function createElement(type, params) {
     if (params.display)     {el.style.display = params.display;}
     if (params.visibility)  {el.style.visibility = params.visibility;}
     if (params.margin)      {el.style.margin = params.margin;}
+    if (params.marginLeft)  {el.style.marginLeft = params.marginLeft;}
     if (params.padding)     {el.style.padding = params.padding;}
     if (params.color)       {el.style.color = params.color;}
     if (params.border)      {el.style.border = params.border;}
     if (params.float)       {el.style.cssFloat = params.float;}
+    if (params.fontSize)    {el.style.fontSize = params.fontSize;}
+    if (params.width)       {el.style.width = params.width;}
     if (params.backgroundColor) {
         el.style.backgroundColor = params.backgroundColor
     }

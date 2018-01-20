@@ -1768,6 +1768,7 @@ PlayerObject.prototype.getNextCompanyPosition = function(company, entryPosType) 
     //Employed at this company, so just return the next position if it exists.
     if ((this.companyPosition.isSoftwareJob() && entryPosType.isSoftwareJob()) ||
         (this.companyPosition.isITJob() && entryPosType.isITJob()) ||
+        (this.companyPosition.isBusinessJob() && entryPosType.isBusinessJob()) ||
         (this.companyPosition.isSecurityEngineerJob() && entryPosType.isSecurityEngineerJob()) ||
         (this.companyPosition.isNetworkEngineerJob() && entryPosType.isNetworkEngineerJob()) ||
         (this.companyPosition.isSecurityJob() && entryPosType.isSecurityJob()) ||

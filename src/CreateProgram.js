@@ -1,5 +1,6 @@
-import {CONSTANTS} from "./Constants.js";
-import {Player} from "./Player.js";
+import {CONSTANTS}          from "./Constants.js";
+import {Player}             from "./Player.js";
+import {createElement}      from "../utils/HelperFunctions.js";
 
 /* Create programs */
 let Programs = {
@@ -14,22 +15,12 @@ let Programs = {
     ServerProfiler:       "ServerProfiler.exe",
     AutoLink:             "AutoLink.exe",
     Flight:               "fl1ght.exe",
+    BitFlume:             "b1t_flum3.exe"
 };
 
-//TODO Right now the times needed to complete work are hard-coded...
-//maybe later make this dependent on hacking level or something
+var nukeALink, bruteSshALink, ftpCrackALink, relaySmtpALink, httpWormALink, sqlInjectALink,
+    deepscanv1ALink, deepscanv2ALink, servProfilerALink, autolinkALink, bitFlumeALink;
 function displayCreateProgramContent() {
-    var nukeALink           = document.getElementById("create-program-nuke");
-    var bruteSshALink       = document.getElementById("create-program-brutessh");
-    var ftpCrackALink       = document.getElementById("create-program-ftpcrack");
-    var relaySmtpALink      = document.getElementById("create-program-relaysmtp");
-    var httpWormALink       = document.getElementById("create-program-httpworm");
-    var sqlInjectALink      = document.getElementById("create-program-sqlinject");
-    var deepscanv1ALink     = document.getElementById("create-program-deepscanv1");
-    var deepscanv2ALink     = document.getElementById("create-program-deepscanv2");
-    var servProfilerALink   = document.getElementById("create-program-serverprofiler");
-    var autolinkALink       = document.getElementById("create-program-autolink");
-
     nukeALink.style.display = "none";
     bruteSshALink.style.display = "none";
     ftpCrackALink.style.display = "none";
@@ -40,6 +31,7 @@ function displayCreateProgramContent() {
     deepscanv2ALink.style.display = "none";
     servProfilerALink.style.display = "none";
     autolinkALink.style.display = "none";
+    bitFlumeALink.style.display = "none";
 
     //NUKE.exe (in case you delete it lol)
     if (Player.getHomeComputer().programs.indexOf(Programs.NukeProgram) == -1) {
@@ -84,6 +76,10 @@ function displayCreateProgramContent() {
     //Auto Link
     if (!Player.hasProgram(Programs.AutoLink) && Player.hacking_skill >= 25) {
         autolinkALink.style.display = "inline-block";
+    }
+    //Bit Flume
+    if (!Player.hasProgram(Programs.BitFlume) && Player.sourceFiles.length > 0 && Player.hacking_skill >= 5) {
+        bitFlumeALink.style.display = "inline-block";
     }
 }
 
@@ -134,6 +130,10 @@ function getNumAvailableCreateProgram() {
     if (!Player.hasProgram(Programs.AutoLink) && Player.hacking_skill >= 25) {
         ++count;
     }
+    //Bit Flume
+    if (!Player.hasProgram(Programs.BitFlume) && Player.sourceFiles.length > 0 && Player.hacking_skill >= 5) {
+        ++count;
+    }
     if (Player.firstProgramAvailable === false && count > 0) {
         Player.firstProgramAvailable = true;
         document.getElementById("create-program-tab").style.display = "list-item";
@@ -144,16 +144,72 @@ function getNumAvailableCreateProgram() {
 }
 
 function initCreateProgramButtons() {
-    var nukeALink           = document.getElementById("create-program-nuke");
-    var bruteSshALink       = document.getElementById("create-program-brutessh");
-    var ftpCrackALink       = document.getElementById("create-program-ftpcrack");
-    var relaySmtpALink      = document.getElementById("create-program-relaysmtp");
-    var httpWormALink       = document.getElementById("create-program-httpworm");
-    var sqlInjectALink      = document.getElementById("create-program-sqlinject");
-    var deepscanv1ALink     = document.getElementById("create-program-deepscanv1");
-    var deepscanv2ALink     = document.getElementById("create-program-deepscanv2");
-    var servProfilerALink   = document.getElementById("create-program-serverprofiler");
-    var autolinkALink       = document.getElementById("create-program-autolink");
+    var createProgramList = document.getElementById("create-program-list");
+    nukeALink = createElement("a", {
+        class:"a-link-button", id:"create-program-nuke", innerText:Programs.NukeProgram,
+        tooltip:"This virus is used to gain root access to a machine if enough ports are opened.",
+    });
+    createProgramList.appendChild(nukeALink);
+
+    bruteSshALink = createElement("a", {
+        class:"a-link-button", id:"create-program-brutessh", innerText:Programs.BruteSSHProgram,
+        tooltip:"This program executes a brute force attack that opens SSH ports"
+    });
+    createProgramList.appendChild(bruteSshALink);
+
+    ftpCrackALink = createElement("a", {
+        class:"a-link-button", id:"create-program-ftpcrack", innerText:Programs.FTPCrackProgram,
+        tooltip:"This program cracks open FTP ports"
+    });
+    createProgramList.appendChild(ftpCrackALink);
+
+    relaySmtpALink = createElement("a", {
+        class:"a-link-button", id:"create-program-relaysmtp", innerText:Programs.RelaySMTPProgram,
+        tooltip:"This program opens SMTP ports by redirecting data"
+    }) ;
+    createProgramList.appendChild(relaySmtpALink);
+
+    httpWormALink = createElement("a", {
+        class:"a-link-button", id:"create-program-httpworm", innerText:Programs.HTTPWormProgram,
+        tooltip:"This virus opens up HTTP ports"
+    });
+    createProgramList.appendChild(httpWormALink);
+
+    sqlInjectALink = createElement("a", {
+        class:"a-link-button", id:"create-program-sqlinject", innerText:Programs.SQLInjectProgram,
+        tooltip:"This virus opens SQL ports"
+    });
+    createProgramList.appendChild(sqlInjectALink);
+
+    deepscanv1ALink = createElement("a", {
+        class:"a-link-button", id:"create-program-deepscanv1", innerText:Programs.DeepscanV1,
+        tooltip:"This program allows you to use the scan-analyze command with a depth up to 5"
+    });
+    createProgramList.appendChild(deepscanv1ALink);
+
+    deepscanv2ALink = createElement("a", {
+        class:"a-link-button", id:"create-program-deepscanv2", innerText:Programs.DeepscanV2,
+        tooltip:"This program allows you to use the scan-analyze command with a depth up to 10"
+    });
+    createProgramList.appendChild(deepscanv2ALink);
+
+    servProfilerALink = createElement("a", {
+        class:"a-link-button", id:"create-program-serverprofiler", innerText:Programs.ServerProfiler,
+        tooltip:"This program is used to display hacking and Netscript-related information about servers"
+    });
+    createProgramList.appendChild(servProfilerALink);
+
+    bitFlumeALink = createElement("a", {
+        class:"a-link-button", id:"create-program-bitflume", innerText:Programs.BitFlume,
+        tooltip:"This program creates a portal to the BitNode Nexus (allows you to restart and switch BitNodes)"
+    });
+    createProgramList.appendChild(bitFlumeALink);
+
+    autolinkALink = createElement("a", {
+        class:"a-link-button", id:"create-program-autolink", innerText:"AutoLink.exe",
+        tooltip:"This program allows you to directly connect to other servers through the 'scan-analyze' command"
+    });
+    createProgramList.appendChild(autolinkALink);
 
     nukeALink.addEventListener("click", function() {
         Player.startCreateProgramWork(Programs.NukeProgram, CONSTANTS.MillisecondsPerFiveMinutes, 1);
@@ -193,6 +249,10 @@ function initCreateProgramButtons() {
     });
     autolinkALink.addEventListener("click", function() {
         Player.startCreateProgramWork(Programs.AutoLink, CONSTANTS.MillisecondsPerQuarterHour, 25);
+        return false;
+    });
+    bitFlumeALink.addEventListener("click", function() {
+        Player.startCreateProgramWork(Programs.BitFlume, CONSTANTS.MillisecondsPerFiveMinutes / 5, 5);
         return false;
     });
 }

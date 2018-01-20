@@ -261,7 +261,7 @@ function iTutorialEvaluateStep() {
         //next step triggered by terminal commmand
         break;
     case iTutorialSteps.TerminalRunScript:
-        iTutorialSetText("We have 8GB of free RAM on this machine, which is enough to run our " +
+        iTutorialSetText("We have 16GB of free RAM on this machine, which is enough to run our " +
                          "script. Let's run our script using 'run foodnstuff.script'.");
         //next step triggered by terminal commmand
         break;

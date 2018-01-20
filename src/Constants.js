@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.34.0",
+    Version:                "0.34.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -1118,29 +1118,19 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.34.1<br>" +
-    "-Added new 'secret' Terminal command. Try: run musicplayer<br>" +
-
-    "v0.34.0<br>" +
-    "-Added clear() and exit() Netscript functions<br>" +
-    "-When starting out or prestiging, you will now receive a 'Hacking Starter Guide'. It provides tips/pointers for new players<br>" +
-    "-Doubled the amount of RAM on low-level servers (up to required hacking level 150)<br>" +
-    "-Slightly increased experience gain from Infiltration<br>" +
-    "-buyStock(), sellStock(), shortStock(), and sellShort() Netscript function now return the stock price at which the transaction occurred, rather than a boolean. " +
-    "If the function fails for some reason, 0 will be returned.<br>" +
-    "-Hacking Mission Changes:<br>" +
-    "---You can now select multiple Nodes of the same type by double clicking. This allows you to set the " +
-    "action of all of selected nodes at once (e.g. set all Transfer Nodes to Fortify). Creating connections " +
-    "does not work with this multi-select functionality yet<br>" +
-    "---Shield and Firewall Nodes can now fortify<br>" +
-    "---The effects of Fortifying are now ~5% lower<br>" +
-    "---Conquering a Spam Node now increases your time limit by 25 seconds instead of 15<br>" +
-    "---Damage dealt by Attacking was slightly reduced<br>" +
-    "---The effect of Scanning was slightly reduced<br>" +
-    "---Enemy CPU Core Nodes start with slightly more attack. Misc Nodes start with slightly less defense<br>" +
-    "-Corporation Management changes:<br>" +
-    "---Added several upgrades that unlock new features<br>" +
-    "---Implemented Exporting mechanic<br>" +
-    "---Fixed many bugs<br>"
+    "-Updates to Corporation Management:<br>" +
+    "---Added a number of upgrades to various aspects of your Corporation<br>" +
+    "---Rebalanced the properties of Materials and the formula for determining the valuation of the Corporation<br>" +
+    "---Fixed a number of bugs<br>" +
+    "-'Stats' page now shows information about current BitNode<br>" +
+    "-You should now be able to create Corporations in other BitNodes if you have Source-File 3<br>" +
+    "-Added a new create-able program called b1t_flum3.exe. This program can be used to reset and switch BitNodes<br>" +
+    "-Added an option to adjust autosave interval<br>" +
+    "-Line feeds, newlines, and tabs will now work with the tprint() Netscript function<br>" +
+    "-Bug fix: 'check' Terminal command was broken<br>" +
+    "-Bug fix: 'theme' Terminal command was broken when manually specifying hex codes<br>" +
+    "-Bug fix: Incorrect promotion requirement for 'Business'-type jobs<br>" +
+    "-Bug fix: Settings input bars were incorrectly formatted when loading game<br>"
 }
 
 export {CONSTANTS};

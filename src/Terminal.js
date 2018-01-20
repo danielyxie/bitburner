@@ -37,7 +37,7 @@ import {logBoxCreate}                       from "../utils/LogBox.js";
 //If replace is true then spaces are replaced with "&nbsp;"
 function post(input, replace=true) {
     if (replace) {
-        $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
+        $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color); white-space:pre;">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
     } else {
         $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
     }
@@ -1634,6 +1634,9 @@ let Terminal = {
                 post("Defense: " + Player.defense + " / 1500");
                 post("Dexterity: " + Player.dexterity + " / 1500");
                 post("Agility: " + Player.agility + " / 1500");
+                break;
+            case Programs.BitFlume:
+                hackWorldDaemon(Player.bitNodeN, true);
                 break;
 			default:
 				post("Invalid executable. Cannot be run");
