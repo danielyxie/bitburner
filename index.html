@@ -164,9 +164,7 @@
 
 	<!-- Character Info page -->
     <div id="character-container" class="generic-menupage-container">
-        <div id="character-content">
-            <p id="character-info"> </p>
-        </div>
+        <div id="character-content"></div>
     </div>
 
 	<!-- Active scripts info page -->
@@ -441,48 +439,7 @@
             at any time. Your progress will be saved and you can continue later.
         </p>
 
-        <ul id="create-program-list">
-            <a class="a-link-button tooltip" id="create-program-nuke">
-                NUKE.exe
-                <span class="tooltiptext"> This virus is used to gain root access to a machine if enough ports are opened. </span>
-            </a>
-            <a class="a-link-button tooltip" id="create-program-brutessh">
-                BruteSSH.exe
-                <span class="tooltiptext"> This program executes a brute force attack that opens SSH ports </span>
-            </a>
-            <a class="a-link-button tooltip" id="create-program-ftpcrack">
-                FTPCrack.exe
-                <span class="tooltiptext"> This program cracks open FTP ports</span>
-            </a>
-            <a class="a-link-button tooltip" id="create-program-relaysmtp">
-                relaySMTP.exe
-                <span class="tooltiptext"> This program opens SMTP ports by redirecting data </span>
-            </a>
-            <a class="a-link-button tooltip" id="create-program-httpworm">
-                HTTPWorm.exe
-                <span class="tooltiptext"> This virus opens up HTTP ports </span>
-            </a>
-            <a class="a-link-button tooltip" id="create-program-sqlinject">
-                SQLInject.exe
-                <span class="tooltiptext"> This virus opens SQL ports</span>
-            </a>
-            <a class="a-link-button tooltip" id="create-program-deepscanv1">
-                DeepscanV1.exe
-                <span class="tooltiptext"> This program allows you to use the scan-analyze command with a depth up to 5</span>
-            </a>
-            <a class="a-link-button tooltip" id="create-program-deepscanv2">
-                DeepscanV2.exe
-                <span class="tooltiptext"> This program allows you to use the scan-analyze command with a depth up to 10</span>
-            </a>
-            <a class="a-link-button tooltip" id="create-program-serverprofiler">
-                ServerProfiler.exe
-                <span class="tooltiptext">This program is used to display hacking and Netscript-related information about servers</span>
-            </a>
-            <a class="a-link-button tooltip" id="create-program-autolink">
-                AutoLink.exe
-                <span class="tooltiptext">This program allows you to directly connect to other servers through the 'scan-analyze' command</span>
-            </a>
-        </ul>
+        <ul id="create-program-list"></ul>
 	</div>
 
 	<!-- Factions -->
@@ -945,6 +902,20 @@
                         step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50">
                     </input>
                     <em id="settingsNSPortRangeValLabel" style="font-style: normal;"></em>
+                </fieldset>
+
+                <!-- Autosave Interval -->
+                <fieldset>
+                    <label for="settingsAutosaveIntervalVal" class="tooltip">Autosave Interval
+                        <span class="tooltiptext">
+                            The time (in seconds) between each autosave. Set to 0 to disable autosave.
+                        </span>
+                    </label>
+
+                    <input type="range" max="600" min="0"
+                        step="1" name="settingsAutosaveIntervalVal" id="settingsAutosaveIntervalVal" value="60">
+                    </input>
+                    <em id="settingsAutosaveIntervalValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
                 <!-- Suppress messages -->

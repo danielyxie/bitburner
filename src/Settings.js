@@ -1,3 +1,5 @@
+import {Engine} from "./engine.js";
+
 /* Settings.js */
 let Settings = {
     CodeInstructionRunTime: 50,
@@ -5,6 +7,7 @@ let Settings = {
     MaxPortCapacity:        50,
     SuppressMessages:       false,
     SuppressFactionInvites: false,
+    AutosaveInterval:       60,
 }
 
 function loadSettings(saveString) {
@@ -17,6 +20,7 @@ function initSettings()  {
     Settings.MaxPortCapacity = 50;
     Settings.SuppressMessages = false;
     Settings.SuppressFactionInvites = false;
+    Settings.AutosaveInterval = 60;
 }
 
 function setSettingsLabels() {
@@ -25,6 +29,7 @@ function setSettingsLabels() {
     var nsPortLimit = document.getElementById("settingsNSPortRangeValLabel");
     var suppressMsgs = document.getElementById("settingsSuppressMessages");
     var suppressFactionInv = document.getElementById("settingsSuppressFactionInvites")
+    var autosaveInterval = document.getElementById("settingsAutosaveIntervalValLabel");
 
     //Initialize values on labels
     nsExecTime.innerHTML = Settings.CodeInstructionRunTime + "ms";
@@ -32,21 +37,41 @@ function setSettingsLabels() {
     nsPortLimit.innerHTML = Settings.MaxPortCapacity;
     suppressMsgs.checked = Settings.SuppressMessages;
     suppressFactionInv.checked = Settings.SuppressFactionInvites;
+    autosaveInterval.innerHTML = Settings.AutosaveInterval;
 
     //Set handlers for when input changes
-    document.getElementById("settingsNSExecTimeRangeVal").oninput = function() {
+    var nsExecTimeInput = document.getElementById("settingsNSExecTimeRangeVal");
+    var nsLogRangeInput = document.getElementById("settingsNSLogRangeVal");
+    var nsPortRangeInput = document.getElementById("settingsNSPortRangeVal");
+    var nsAutosaveIntervalInput = document.getElementById("settingsAutosaveIntervalVal");
+    nsExecTimeInput.value = Settings.CodeInstructionRunTime;
+    nsLogRangeInput.value = Settings.MaxLogCapacity;
+    nsPortRangeInput.value = Settings.MaxPortCapacity;
+    nsAutosaveIntervalInput.value = Settings.AutosaveInterval;
+
+    nsExecTimeInput.oninput = function() {
         nsExecTime.innerHTML = this.value + 'ms';
         Settings.CodeInstructionRunTime = this.value;
     };
 
-    document.getElementById("settingsNSLogRangeVal").oninput = function() {
+    nsLogRangeInput.oninput = function() {
         nsLogLimit.innerHTML = this.value;
         Settings.MaxLogCapacity = this.value;
     };
 
-    document.getElementById("settingsNSPortRangeVal").oninput = function() {
+    nsPortRangeInput.oninput = function() {
         nsPortLimit.innerHTML = this.value;
         Settings.MaxPortCapacity = this.value;
+    };
+
+    nsAutosaveIntervalInput.oninput = function() {
+        autosaveInterval.innerHTML = this.value;
+        Settings.AutosaveInterval = Number(this.value);
+        if (Number(this.value) === 0) {
+            Engine.Counters.autoSaveCounter = Infinity;
+        } else {
+            Engine.Counters.autoSaveCounter = Number(this.value) * 5;
+        }
     };
 
     document.getElementById("settingsSuppressMessages").onclick = function() {

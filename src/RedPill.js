@@ -7,7 +7,8 @@ import {SourceFiles, SourceFile,
 import {Terminal}                               from "./Terminal.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {clearEventListeners,
+        removeChildrenFromElement}              from "../utils/HelperFunctions.js";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
 
@@ -52,7 +53,7 @@ function writeRedPillLetter(pElem, line, i=0) {
 }
 
 let redPillFlag = false;
-function hackWorldDaemon(currentNodeNumber) {
+function hackWorldDaemon(currentNodeNumber, flume=false) {
     redPillFlag = true;
     Engine.loadRedPillContent();
     return writeRedPillLine("[ERROR] SEMPOOL INVALID").then(function() {
@@ -84,7 +85,7 @@ function hackWorldDaemon(currentNodeNumber) {
     }).then(function() {
         return writeRedPillLine("..............................................")
     }).then(function() {
-        return loadBitVerse(currentNodeNumber);
+        return loadBitVerse(currentNodeNumber, flume);
     }).catch(function(e){
         console.log("ERROR: " + e.toString());
     });
@@ -131,12 +132,10 @@ function giveSourceFile(bitNodeNumber) {
     }
 }
 
-function loadBitVerse(destroyedBitNodeNum) {
+function loadBitVerse(destroyedBitNodeNum, flume=false) {
     //Clear the screen
     var container = document.getElementById("red-pill-container");
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
+    removeChildrenFromElement(container);
 
     //Create the Bit Verse
     var bitVerseImage = document.createElement("pre");
@@ -218,7 +217,7 @@ function loadBitVerse(destroyedBitNodeNum) {
                         return;
                     }
                     yesNoBoxCreate("BitNode-" + i + ": " + bitNode.name + "<br><br>" + bitNode.info);
-                    createBitNodeYesNoEventListeners(i, destroyedBitNodeNum);
+                    createBitNodeYesNoEventListeners(i, destroyedBitNodeNum, flume);
                 });
             } else {
                 elem.addEventListener("click", function() {
@@ -289,16 +288,14 @@ function createBitNode(n) {
              "</span></a>";
 }
 
-function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode) {
+function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=false) {
     var yesBtn = yesNoBoxGetYesButton();
     yesBtn.innerHTML = "Enter BitNode-" + newBitNode;
     yesBtn.addEventListener("click", function() {
-        giveSourceFile(destroyedBitNode);
+        if (!flume) {giveSourceFile(destroyedBitNode);}
         redPillFlag = false;
         var container = document.getElementById("red-pill-container");
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
+        removeChildrenFromElement(container);
 
         //Set new Bit Node
         Player.bitNodeN = newBitNode;

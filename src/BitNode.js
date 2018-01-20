@@ -78,7 +78,7 @@ function initBitNodes() {
                                           "by 1's and 0's. They were wrong.<br><br>" +
                                           "In this BitNode:<br><br>" +
                                           "The base security level of servers is doubled<br>" +
-                                          "The starting money on servers is halved, but the maximum money is doubled<br>" +
+                                          "The starting money on servers is halved, but the maximum money remains the same<br>" +
                                           "Most methods of earning money now give significantly less<br>" +
                                           "Infiltration gives 50% more reputation and money<br>" +
                                           "Augmentations are more expensive<br>" +

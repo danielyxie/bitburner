@@ -1,6 +1,7 @@
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions.js";
-import {clearEventListeners, createElement}     from "../utils/HelperFunctions.js";
+import {clearEventListeners, createElement,
+        removeChildrenFromElement}              from "../utils/HelperFunctions.js";
 import numeral                                  from "../utils/numeral.min.js";
 import {formatNumber,
         convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
@@ -33,7 +34,7 @@ import {initLiterature}                         from "./Literature.js";
 import {checkForMessagesToSend, initMessages}   from "./Message.js";
 import {inMission, currMission}                 from "./Missions.js";
 import {initSingularitySFFlags,
-        hasSingularitySF}                       from "./NetscriptFunctions.js";
+        hasSingularitySF, hasCorporationSF}     from "./NetscriptFunctions.js";
 import {updateOnlineScriptTimes,
         runScriptsLoop}                         from "./NetscriptWorker.js";
 import {Player}                                 from "./Player.js";
@@ -491,74 +492,88 @@ let Engine = {
 
     /* Display character info */
     displayCharacterInfo: function() {
+        removeChildrenFromElement(Engine.Display.characterInfo);
+
         var companyPosition = "";
         if (Player.companyPosition != "") {
             companyPosition = Player.companyPosition.positionName;
-        }
-
-        var bnText = "";
-        if (Player.sourceFiles.length !== 0) {
-            bnText = "<br>Current BitNode: " + Player.bitNodeN;
         }
 
         var intText = "";
         if (Player.intelligence > 0) {
             intText = 'Intelligence:  ' + (Player.intelligence).toLocaleString() + "<br><br><br>";
         }
-        Engine.Display.characterInfo.innerHTML =
-       ('<b>General</b><br><br>' +
-        'Current City: ' + Player.city + '<br><br>' +
-        'Employer: ' + Player.companyName + '<br>' +
-        'Job Title: ' + companyPosition + '<br><br>' +
-        'Money: $' + formatNumber(Player.money.toNumber(), 2)+ '<br><br><br>' +
-        '<b>Stats</b><br><br>' +
-        'Hacking Level: ' + (Player.hacking_skill).toLocaleString() +
-                        " (" + numeral(Player.hacking_exp).format('(0.000a)') + ' experience)<br>' +
-        'Strength:      ' + (Player.strength).toLocaleString() +
-                   " (" + numeral(Player.strength_exp).format('(0.000a)') + ' experience)<br>' +
-        'Defense:       ' + (Player.defense).toLocaleString() +
-                  " (" + numeral(Player.defense_exp).format('(0.000a)')+ ' experience)<br>' +
-        'Dexterity:     ' + (Player.dexterity).toLocaleString() +
-                   " (" + numeral(Player.dexterity_exp).format('(0.000a)') + ' experience)<br>' +
-        'Agility:       ' + (Player.agility).toLocaleString() +
-                  " (" + numeral(Player.agility_exp).format('(0.000a)') + ' experience)<br>' +
-        'Charisma:      ' + (Player.charisma).toLocaleString() +
-                   " (" + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br>' +
-        intText +
-        '<b>Multipliers</b><br><br>' +
-        'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +
-        'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' +
-        'Hacking Money multiplier:  ' + formatNumber(Player.hacking_money_mult * 100, 2) + '%<br>' +
-        'Hacking Growth multiplier: ' + formatNumber(Player.hacking_grow_mult * 100, 2) + '%<br><br>' +
-        'Hacking Level multiplier:      ' + formatNumber(Player.hacking_mult * 100, 2) + '%<br>' +
-        'Hacking Experience multiplier: ' + formatNumber(Player.hacking_exp_mult * 100, 2) + '%<br><br>' +
-        'Strength Level multiplier:      ' + formatNumber(Player.strength_mult * 100, 2) + '%<br>' +
-        'Strength Experience multiplier: ' + formatNumber(Player.strength_exp_mult * 100, 2) + '%<br><br>' +
-        'Defense Level multiplier:      ' + formatNumber(Player.defense_mult * 100, 2) + '%<br>' +
-        'Defense Experience multiplier: ' + formatNumber(Player.defense_exp_mult * 100, 2) + '%<br><br>' +
-        'Dexterity Level multiplier:      ' + formatNumber(Player.dexterity_mult * 100, 2) + '%<br>' +
-        'Dexterity Experience multiplier: ' + formatNumber(Player.dexterity_exp_mult * 100, 2) + '%<br><br>' +
-        'Agility Level multiplier:      ' + formatNumber(Player.agility_mult * 100, 2) + '%<br>' +
-        'Agility Experience multiplier: ' + formatNumber(Player.agility_exp_mult * 100, 2) + '%<br><br>' +
-        'Charisma Level multiplier:      ' + formatNumber(Player.charisma_mult * 100, 2) + '%<br>' +
-        'Charisma Experience multiplier: ' + formatNumber(Player.charisma_exp_mult * 100, 2) + '%<br><br>' +
-        'Hacknet Node production multiplier:         ' + formatNumber(Player.hacknet_node_money_mult * 100, 2) + '%<br>' +
-        'Hacknet Node purchase cost multiplier:      ' + formatNumber(Player.hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
-        'Hacknet Node RAM upgrade cost multiplier:   ' + formatNumber(Player.hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
-        'Hacknet Node Core purchase cost multiplier: ' + formatNumber(Player.hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
-        'Hacknet Node level upgrade cost multiplier: ' + formatNumber(Player.hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
-        'Company reputation gain multiplier: ' + formatNumber(Player.company_rep_mult * 100, 2) + '%<br>' +
-        'Faction reputation gain multiplier: ' + formatNumber(Player.faction_rep_mult * 100, 2) + '%<br>' +
-        'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br>' +
-        'Crime success multiplier: ' + formatNumber(Player.crime_success_mult * 100, 2) + '%<br>' +
-        'Crime money multiplier: ' + formatNumber(Player.crime_money_mult * 100, 2) + '%<br><br><br>' +
-        '<b>Misc</b><br><br>' +
-        'Servers owned:       ' + Player.purchasedServers.length + '<br>' +
-        'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
-        'Augmentations installed: ' + Player.augmentations.length + '<br>' +
-        'Time played since last Augmentation: ' + convertTimeMsToTimeElapsedString(Player.playtimeSinceLastAug) + '<br>' +
-        'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime) +
-        bnText + '<br><br><br>').replace( / /g, "&nbsp;" );
+
+        Engine.Display.characterInfo.appendChild(createElement("pre", {
+            innerHTML:
+            '<b>General</b><br><br>' +
+            'Current City: ' + Player.city + '<br><br>' +
+            'Employer: ' + Player.companyName + '<br>' +
+            'Job Title: ' + companyPosition + '<br><br>' +
+            'Money: $' + formatNumber(Player.money.toNumber(), 2)+ '<br><br><br>' +
+            '<b>Stats</b><br><br>' +
+            'Hacking Level: ' + (Player.hacking_skill).toLocaleString() +
+                            " (" + numeral(Player.hacking_exp).format('(0.000a)') + ' experience)<br>' +
+            'Strength:      ' + (Player.strength).toLocaleString() +
+                       " (" + numeral(Player.strength_exp).format('(0.000a)') + ' experience)<br>' +
+            'Defense:       ' + (Player.defense).toLocaleString() +
+                      " (" + numeral(Player.defense_exp).format('(0.000a)')+ ' experience)<br>' +
+            'Dexterity:     ' + (Player.dexterity).toLocaleString() +
+                       " (" + numeral(Player.dexterity_exp).format('(0.000a)') + ' experience)<br>' +
+            'Agility:       ' + (Player.agility).toLocaleString() +
+                      " (" + numeral(Player.agility_exp).format('(0.000a)') + ' experience)<br>' +
+            'Charisma:      ' + (Player.charisma).toLocaleString() +
+                       " (" + numeral(Player.charisma_exp).format('(0.000a)') + ' experience)<br>' +
+            intText +
+            '<b>Multipliers</b><br><br>' +
+            'Hacking Chance multiplier: ' + formatNumber(Player.hacking_chance_mult * 100, 2) + '%<br>' +
+            'Hacking Speed multiplier:  ' + formatNumber(Player.hacking_speed_mult * 100, 2) + '%<br>' +
+            'Hacking Money multiplier:  ' + formatNumber(Player.hacking_money_mult * 100, 2) + '%<br>' +
+            'Hacking Growth multiplier: ' + formatNumber(Player.hacking_grow_mult * 100, 2) + '%<br><br>' +
+            'Hacking Level multiplier:      ' + formatNumber(Player.hacking_mult * 100, 2) + '%<br>' +
+            'Hacking Experience multiplier: ' + formatNumber(Player.hacking_exp_mult * 100, 2) + '%<br><br>' +
+            'Strength Level multiplier:      ' + formatNumber(Player.strength_mult * 100, 2) + '%<br>' +
+            'Strength Experience multiplier: ' + formatNumber(Player.strength_exp_mult * 100, 2) + '%<br><br>' +
+            'Defense Level multiplier:      ' + formatNumber(Player.defense_mult * 100, 2) + '%<br>' +
+            'Defense Experience multiplier: ' + formatNumber(Player.defense_exp_mult * 100, 2) + '%<br><br>' +
+            'Dexterity Level multiplier:      ' + formatNumber(Player.dexterity_mult * 100, 2) + '%<br>' +
+            'Dexterity Experience multiplier: ' + formatNumber(Player.dexterity_exp_mult * 100, 2) + '%<br><br>' +
+            'Agility Level multiplier:      ' + formatNumber(Player.agility_mult * 100, 2) + '%<br>' +
+            'Agility Experience multiplier: ' + formatNumber(Player.agility_exp_mult * 100, 2) + '%<br><br>' +
+            'Charisma Level multiplier:      ' + formatNumber(Player.charisma_mult * 100, 2) + '%<br>' +
+            'Charisma Experience multiplier: ' + formatNumber(Player.charisma_exp_mult * 100, 2) + '%<br><br>' +
+            'Hacknet Node production multiplier:         ' + formatNumber(Player.hacknet_node_money_mult * 100, 2) + '%<br>' +
+            'Hacknet Node purchase cost multiplier:      ' + formatNumber(Player.hacknet_node_purchase_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node RAM upgrade cost multiplier:   ' + formatNumber(Player.hacknet_node_ram_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node Core purchase cost multiplier: ' + formatNumber(Player.hacknet_node_core_cost_mult * 100, 2) + '%<br>' +
+            'Hacknet Node level upgrade cost multiplier: ' + formatNumber(Player.hacknet_node_level_cost_mult * 100, 2) + '%<br><br>' +
+            'Company reputation gain multiplier: ' + formatNumber(Player.company_rep_mult * 100, 2) + '%<br>' +
+            'Faction reputation gain multiplier: ' + formatNumber(Player.faction_rep_mult * 100, 2) + '%<br>' +
+            'Salary multiplier: ' + formatNumber(Player.work_money_mult * 100, 2) + '%<br>' +
+            'Crime success multiplier: ' + formatNumber(Player.crime_success_mult * 100, 2) + '%<br>' +
+            'Crime money multiplier: ' + formatNumber(Player.crime_money_mult * 100, 2) + '%<br><br><br>' +
+            '<b>Misc</b><br><br>' +
+            'Servers owned:       ' + Player.purchasedServers.length + '<br>' +
+            'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
+            'Augmentations installed: ' + Player.augmentations.length + '<br>' +
+            'Time played since last Augmentation: ' + convertTimeMsToTimeElapsedString(Player.playtimeSinceLastAug) + '<br>' +
+            'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime),
+        }));
+
+        if (Player.sourceFiles.length !== 0) {
+            var index = "BitNode" + Player.bitNodeN;
+
+            Engine.Display.characterInfo.appendChild(createElement("p", {
+                width:"60%",
+                innerHTML:
+                    "<br>Current BitNode: " + Player.bitNodeN + " (" + BitNodes[index].name + ")<br><br>",
+            }));
+
+            Engine.Display.characterInfo.appendChild(createElement("p", {
+                width:"60%", fontSize: "13px", marginLeft:"4%",
+                innerHTML:BitNodes[index].info,
+            }))
+        }
     },
 
     /* Display locations in the world*/
@@ -589,8 +604,8 @@ let Engine = {
             case Locations.Sector12:
                 Engine.sector12LocationsList.style.display = "inline";
 
-                //City hall only in BitNode-3
-                if (Player.bitNodeN === 3) {
+                //City hall only in BitNode-3/with Source-File 3
+                if (Player.bitNodeN === 3 || hasCorporationSF) {
                     document.getElementById("sector12-cityhall-li").style.display = "block";
                 } else {
                     document.getElementById("sector12-cityhall-li").style.display = "none";
@@ -938,7 +953,14 @@ let Engine = {
     checkCounters: function() {
         if (Engine.Counters.autoSaveCounter <= 0) {
             saveObject.saveGame(indexedDb);
-            Engine.Counters.autoSaveCounter = 300;
+            if (Settings.AutosaveInterval == null) {
+                Settings.AutosaveInterval = 60;
+            }
+            if (Settings.AutosaveInterval === 0) {
+                Engine.Counters.autoSaveCounter = Infinity;
+            } else {
+                Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
+            }
         }
 
         if (Engine.Counters.updateSkillLevelsCounter <= 0) {
@@ -1370,7 +1392,7 @@ let Engine = {
         Engine.Display.missionContent.style.display = "none";
 
         //Character info
-        Engine.Display.characterInfo = document.getElementById("character-info");
+        Engine.Display.characterInfo = document.getElementById("character-content");
 
         //Location lists
         Engine.aevumLocationsList = document.getElementById("aevum-locations-list");

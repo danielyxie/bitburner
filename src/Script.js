@@ -22,6 +22,7 @@ import {addWorkerScript, killWorkerScript}      from "./NetscriptWorker.js";
 import {Player}                                 from "./Player.js";
 import {AllServers, processSingleServerGrowth}  from "./Server.js";
 import {Settings}                               from "./Settings.js";
+import {post}                                   from "./Terminal.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {Reviver, Generic_toJSON,

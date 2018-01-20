@@ -64,12 +64,20 @@ import {yesNoBoxClose, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxCreate,
         yesNoBoxOpen}                               from "../utils/YesNoBox.js";
 
-var hasSingularitySF=false, hasAISF=false, hasBn11SF=false, hasWallStreetSF=false;
+var hasSingularitySF=false,     //Source-File 4
+    hasAISF=false,              //Source-File 5
+    hasBn11SF=false,
+    hasWallStreetSF=false,      //Source-File 8
+    hasCorporationSF=false;     //Source-File 3
+
 var singularitySFLvl=1, wallStreetSFLvl=1;
 
 //Used to check and set flags for every Source File, despite the name of the function
 function initSingularitySFFlags() {
     for (var i = 0; i < Player.sourceFiles.length; ++i) {
+        if (Player.sourceFiles[i].n === 3) {
+            hasCorporationSF = true;
+        }
         if (Player.sourceFiles[i].n === 4) {
             hasSingularitySF = true;
             singularitySFLvl = Player.sourceFiles[i].lvl;
@@ -2421,5 +2429,5 @@ function NetscriptFunctions(workerScript) {
     }
 }
 
-export {NetscriptFunctions, initSingularitySFFlags, hasSingularitySF, hasBn11SF, hasWallStreetSF,
+export {NetscriptFunctions, initSingularitySFFlags, hasSingularitySF, hasBn11SF, hasWallStreetSF, hasCorporationSF,
         wallStreetSFLvl};

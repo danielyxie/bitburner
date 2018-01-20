@@ -101,68 +101,70 @@ Material.prototype.init = function(mats={}) {
         case "Water":
             this.dmd = 75; this.dmdR = [65, 85];
             this.cmp = 50; this.cmpR = [40, 60];
-            this.bCost = 750; this.mv = 0.2;
-            this.mku = 15;
+            this.bCost = 1000; this.mv = 0.2;
+            this.mku = 12;
             break;
         case "Energy":
             this.dmd = 90; this.dmdR = [80, 100];
             this.cmp = 80; this.cmpR = [65, 95];
-            this.bCost = 1125; this.mv = 0.2;
-            this.mku = 15;
+            this.bCost = 1500; this.mv = 0.2;
+            this.mku = 12;
             break;
         case "Food":
             this.dmd = 80; this.dmdR = [70, 90];
             this.cmp = 60; this.cmpR = [35, 85];
-            this.bCost = 3750; this.mv = 1;
-            this.mku = 9;
+            this.bCost = 5000; this.mv = 1;
+            this.mku = 7.5;
             break;
         case "Plants":
             this.dmd = 70; this.dmdR = [20, 90];
             this.cmp = 50; this.cmpR = [30, 70];
-            this.bCost = 2250; this.mv = 0.6;
-            this.mku = 12;
+            this.bCost = 3000; this.mv = 0.6;
+            this.mku = 10;
             break;
         case "Metal":
             this.dmd = 80; this.dmdR = [75, 85];
             this.cmp = 70; this.cmpR = [60, 80];
-            this.bCost = 2000; this.mv = 1;
-            this.mku = 15;
+            this.bCost = 2650; this.mv = 1;
+            this.mku = 12;
             break;
         case "Hardware":
             this.dmd = 85; this.dmdR = [80, 90];
             this.cmp = 80; this.cmpR = [65, 95];
-            this.bCost = 3000; this.mv = 0.5; //Less mv bc its processed twice
-            this.mku = 7;
+            this.bCost = 4000; this.mv = 0.5; //Less mv bc its processed twice
+            this.mku = 5.5;
             break;
         case "Chemicals":
             this.dmd = 55; this.dmdR = [40, 70];
             this.cmp = 60; this.cmpR = [40, 80];
-            this.bCost = 5000; this.mv = 1.2;
-            this.mku = 8;
+            this.bCost = 6750; this.mv = 1.2;
+            this.mku = 6.5;
             break;
         case "Real Estate":
             this.dmd = 50; this.dmdR = [5, 100];
             this.cmp = 50; this.cmpR = [25, 75];
-            this.bCost = 12000; this.mv = 1.5; //Less mv bc its processed twice
-            this.mku = 6;
+            this.bCost = 16e3; this.mv = 1.5; //Less mv bc its processed twice
+            this.mku = 5;
             break;
         case "Drugs":
             this.dmd = 60; this.dmdR = [45, 75];
             this.cmp = 70; this.cmpR = [40, 100];
-            this.bCost = 6000; this.mv = 1.6;
-            this.mku = 5;
+            this.bCost = 8e3; this.mv = 1.6;
+            this.mku = 4;
             break;
         case "Robots":
             this.dmd = 90; this.dmdR = [80, 100];
             this.cmp = 90; this.cmpR = [80, 100];
-            this.bCost = 15000; this.mv = 0.5; //Less mv bc its processed twice
-            this.mku = 3;
+            this.bCost = 20e3; this.mv = 0.5; //Less mv bc its processed twice
+            this.mku = 2.5;
             break;
         case "AI Cores":
             this.dmd = 90; this.dmdR = [80, 100];
             this.cmp = 90; this.cmpR = [80, 100];
-            this.bCost = 20000; this.mv = 0.8; //Less mv bc its processed twice
-            this.mku = 2;
+            this.bCost = 27e3; this.mv = 0.8; //Less mv bc its processed twice
+            this.mku = 1.8;
+            break;
+        case "Scientific Research":
             break;
         default:
             console.log("Invalid material type in init(): " + this.name);
@@ -175,7 +177,7 @@ Material.prototype.processMarket = function() {
     //This 1st random check determines whether competition increases or decreases
     //More competition = lower market price
     var v = (Math.random() * this.mv) / 100;
-    var pv = (Math.random() * this.mv) / 100;
+    var pv = (Math.random() * this.mv) / 300;
     if (Math.random() < 0.42) {
         this.cmp *= (1+v);
         if (this.cmp > this.cmpR[1]) {this.cmp = this.cmpR[1]};
@@ -189,7 +191,7 @@ Material.prototype.processMarket = function() {
     //This 2nd random check determines whether demand increases or decreases
     //More demand = higher market price
     v = (Math.random() * this.mv) / 100;
-    pv = (Math.random() * this.mv) / 100;
+    pv = (Math.random() * this.mv) / 300;
     if (Math.random() < 0.45) {
         this.dmd *= (1+v);
         if (this.dmd > this.dmdR[1]) {this.dmd = this.dmdR[1];}
@@ -591,7 +593,7 @@ function Industry(params={}) {
     this.thisCycleRevenue   = new Decimal(0);
     this.thisCycleExpenses  = new Decimal(0);
 
-    this.state = 0;
+    this.state = "START";
 
     this.init();
 }
@@ -613,6 +615,7 @@ Industry.prototype.init = function() {
             this.prodMats = ["Energy"];
             break;
         case Industries.Utilities:
+        case "Utilities":
             this.reFac  = 0.4;
             this.sciFac = 0.6;
             this.robFac = 0.3;
@@ -718,6 +721,7 @@ Industry.prototype.init = function() {
             this.makesProducts = true;
             break;
         case Industries.Computer:
+        case "Computer":
             this.reFac  = 0.2;
             this.sciFac = 0.65;
             this.robFac = 0.4;
@@ -796,6 +800,7 @@ Industry.prototype.getProductDescriptionText = function() {
             return "develop new pharmaceutical drugs";
             break;
         case Industries.Computer:
+        case "Computer":
             return "create new computer hardware and networking infrastructures";
             break;
         case Industries.Robotics:
@@ -864,7 +869,7 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
         for (var officeLoc in this.offices) {
             if (this.offices.hasOwnProperty(officeLoc) &&
                 this.offices[officeLoc] instanceof OfficeSpace) {
-                employeeSalary += this.offices[officeLoc].process(marketCycles, this);
+                employeeSalary += this.offices[officeLoc].process(marketCycles, {industry:this, corporation:company});
             }
         }
         this.thisCycleExpenses = this.thisCycleExpenses.plus(employeeSalary);
@@ -881,7 +886,7 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
     this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
 
     //Process creation, production & sale of products
-    res = this.processProducts(marketCycles);
+    res = this.processProducts(marketCycles, company);
     this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
     this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
 }
@@ -995,7 +1000,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                 } else {
                     prod = maxProd;
                 }
-                prod *= (SecsPerMarketCycle * marketCycles * this.prodMult); //Convert production from per second to per market cycle
+                prod *= (SecsPerMarketCycle * marketCycles * this.prodMult * company.getProductionMultiplier()); //Convert production from per second to per market cycle
                 //Calculate net change in warehouse storage making
                 //the produced materials will cost
                 var totalMatSize = 0;
@@ -1095,7 +1100,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     } else {
                         sellAmt = maxSell;
                     }
-                    sellAmt = (sellAmt * SecsPerMarketCycle * marketCycles);
+                    sellAmt = (sellAmt * company.getSalesMultiplier() * SecsPerMarketCycle * marketCycles);
                     sellAmt = Math.min(mat.qty, sellAmt);
                     if (sellAmt < 0) {
                         console.log("ERROR: sellAmt is negative");
@@ -1112,7 +1117,6 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
             } //End processing of sale of materials
             break;
 
-            /* TODO Process Export of materials */
             case "EXPORT":
                 for (var matName in warehouse.materials) {
                     if (warehouse.materials.hasOwnProperty(matName)) {
@@ -1158,14 +1162,15 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
         //Produce Scientific Research based on R&D employees
         //Scientific Research can be produced without a warehouse
         if (office instanceof OfficeSpace) {
-            this.sciResearch.qty += .01 * Math.pow(office.employeeProd[EmployeePositions.RandD], 0.5);
+            this.sciResearch.qty += (.01 * Math.pow(office.employeeProd[EmployeePositions.RandD], 0.5)
+                                     * company.getScientificResearchMultiplier());
         }
     }
     return [revenue, expenses];
 }
 
 //Process production & sale of this industry's FINISHED products (including all of their stats)
-Industry.prototype.processProducts = function(marketCycles=1) {
+Industry.prototype.processProducts = function(marketCycles=1, corporation) {
     var revenue = 0, expenses = 0;
 
     //Create products
@@ -1198,7 +1203,7 @@ Industry.prototype.processProducts = function(marketCycles=1) {
         if (this.products.hasOwnProperty(prodName)) {
             var prod = this.products[prodName];
             if (prod instanceof Product && prod.fin) {
-                revenue += this.processProduct(marketCycles, prod);
+                revenue += this.processProduct(marketCycles, prod, corporation);
             }
         }
     }
@@ -1206,7 +1211,7 @@ Industry.prototype.processProducts = function(marketCycles=1) {
 }
 
 //Processes FINISHED products
-Industry.prototype.processProduct = function(marketCycles=1, product) {
+Industry.prototype.processProduct = function(marketCycles=1, product, corporation) {
     var totalProfit = 0;
     for (var i = 0; i < Cities.length; ++i) {
         var city = Cities[i], office = this.offices[city], warehouse = this.warehouses[city];
@@ -1230,7 +1235,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product) {
             } else {
                 prod = maxProd;
             }
-            prod *= (this.prodMult * SecsPerMarketCycle * marketCycles);
+            prod *= (this.prodMult * corporation.getProductionMultiplier() * SecsPerMarketCycle * marketCycles);
 
 
             //Calculate net change in warehouse storage making the Products will cost
@@ -1303,7 +1308,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product) {
             } else {
                 sellAmt = maxSell;
             }
-            sellAmt = sellAmt * SecsPerMarketCycle * marketCycles;
+            sellAmt = sellAmt * corporation.getSalesMultiplier() * SecsPerMarketCycle * marketCycles;
             sellAmt = Math.min(product.data[city][0], sellAmt); //data[0] is qty
             if (sellAmt && product.sCost) {
                 product.data[city][0] -= sellAmt; //data[0] is qty
@@ -1409,29 +1414,33 @@ Employee.prototype.process = function(marketCycles=1, office) {
     return salary;
 }
 
-Employee.prototype.calculateProductivity = function() {
+Employee.prototype.calculateProductivity = function(corporation) {
+    var effCre = this.cre * corporation.getEmployeeCreMultiplier(),
+        effCha = this.cha * corporation.getEmployeeChaMultiplier(),
+        effInt = this.int * corporation.getEmployeeIntMultiplier(),
+        effEff = this.eff * corporation.getEmployeeEffMultiplier();
     var prodBase = this.mor * this.hap * this.ene * 1e-6, prodMult;
     switch(this.pos) {
         //Calculate productivity based on position. This is multipled by prodBase
         //to get final value
         case EmployeePositions.Operations:
-            prodMult = (0.6 * this.int) + (0.1 * this.cha) + (this.exp) +
-                       (0.5 * this.cre) + (this.eff);
+            prodMult = (0.6 * effInt) + (0.1 * effCha) + (this.exp) +
+                       (0.5 * effCre) + (effEff);
             break;
         case EmployeePositions.Engineer:
-            prodMult = (this.int) + (0.1 * this.cha) + (1.5 * this.exp) +
-                       (this.eff);
+            prodMult = (effInt) + (0.1 * effCha) + (1.5 * this.exp) +
+                       (effEff);
             break;
         case EmployeePositions.Business:
-            prodMult = (0.4 * this.int) + (this.cha) + (0.5 * this.exp);
+            prodMult = (0.4 * effInt) + (effCha) + (0.5 * this.exp);
             break;
         case EmployeePositions.Management:
-            prodMult = (2 * this.cha) + (this.exp) + (0.2 * this.cre) +
-                       (0.7 * this.eff);
+            prodMult = (2 * effCha) + (this.exp) + (0.2 * effCre) +
+                       (0.7 * effEff);
             break;
         case EmployeePositions.RandD:
-            prodMult = (1.5 * this.int) + (0.8 * this.exp) + (this.cre) +
-                       (0.5 * this.eff);
+            prodMult = (1.5 * effInt) + (0.8 * this.exp) + (effCre) +
+                       (0.5 * effEff);
             break;
         default:
             console.log("Invalid employee position: " + this.pos);
@@ -1451,7 +1460,11 @@ Employee.prototype.throwParty = function(money) {
 }
 
 //'panel' is the DOM element on which to create the UI
-Employee.prototype.createUI = function(panel) {
+Employee.prototype.createUI = function(panel, corporation) {
+    var effCre = this.cre * corporation.getEmployeeCreMultiplier(),
+        effCha = this.cha * corporation.getEmployeeChaMultiplier(),
+        effInt = this.int * corporation.getEmployeeIntMultiplier(),
+        effEff = this.eff * corporation.getEmployeeEffMultiplier();
     panel.style.color = "white";
     panel.appendChild(createElement("p", {
         id:"cmpy-mgmt-employee-" + this.name + "-panel-text",
@@ -1459,11 +1472,11 @@ Employee.prototype.createUI = function(panel) {
                   "Happiness: " + formatNumber(this.hap, 3) + "<br>" +
                   "Energy: " + formatNumber(this.ene, 3) + "<br>" +
                   "Age: " + formatNumber(this.age, 3) + "<br>" +
-                  "Intelligence: " + formatNumber(this.int, 3) + "<br>" +
-                  "Charisma: " + formatNumber(this.cha, 3) + "<br>" +
+                  "Intelligence: " + formatNumber(effInt, 3) + "<br>" +
+                  "Charisma: " + formatNumber(effCha, 3) + "<br>" +
                   "Experience: " + formatNumber(this.exp, 3) + "<br>" +
-                  "Creativity: " + formatNumber(this.cre, 3) + "<br>" +
-                  "Efficiency: " + formatNumber(this.eff, 3) + "<br>" +
+                  "Creativity: " + formatNumber(effCre, 3) + "<br>" +
+                  "Efficiency: " + formatNumber(effEff, 3) + "<br>" +
                   "Salary: " + numeral(this.sal).format("$0.000a") + "/ s<br>",
     }));
 
@@ -1492,7 +1505,11 @@ Employee.prototype.createUI = function(panel) {
     panel.appendChild(selector);
 }
 
-Employee.prototype.updateUI = function(panel) {
+Employee.prototype.updateUI = function(panel, corporation) {
+    var effCre = this.cre * corporation.getEmployeeCreMultiplier(),
+        effCha = this.cha * corporation.getEmployeeChaMultiplier(),
+        effInt = this.int * corporation.getEmployeeIntMultiplier(),
+        effEff = this.eff * corporation.getEmployeeEffMultiplier();
     if (panel == null) {
         console.log("ERROR: Employee.updateUI() called with null panel");
         return;
@@ -1505,11 +1522,11 @@ Employee.prototype.updateUI = function(panel) {
                       "Happiness: " + formatNumber(this.hap, 3) + "<br>" +
                       "Energy: " + formatNumber(this.ene, 3) + "<br>" +
                       "Age: " + formatNumber(this.age, 3) + "<br>" +
-                      "Intelligence: " + formatNumber(this.int, 3) + "<br>" +
-                      "Charisma: " + formatNumber(this.cha, 3) + "<br>" +
+                      "Intelligence: " + formatNumber(effInt, 3) + "<br>" +
+                      "Charisma: " + formatNumber(effCha, 3) + "<br>" +
                       "Experience: " + formatNumber(this.exp, 3) + "<br>" +
-                      "Creativity: " + formatNumber(this.cre, 3) + "<br>" +
-                      "Efficiency: " + formatNumber(this.eff, 3) + "<br>" +
+                      "Creativity: " + formatNumber(effCre, 3) + "<br>" +
+                      "Efficiency: " + formatNumber(effEff, 3) + "<br>" +
                       "Salary: " + numeral(this.sal).format("$0.000a") + "/ s<br>";
 }
 
@@ -1552,7 +1569,8 @@ function OfficeSpace(params={}) {
     };
 }
 
-OfficeSpace.prototype.process = function(marketCycles=1, industry) {
+OfficeSpace.prototype.process = function(marketCycles=1, parentRefs) {
+    var corporation = parentRefs.corporation, industry = parentRefs.industry;
     var perfMult=1; //Multiplier for employee morale/happiness/energy based on company performance
     if (industry.funds < 0 && industry.lastCycleRevenue < 0) {
         perfMult = Math.pow(0.99, marketCycles);
@@ -1569,11 +1587,11 @@ OfficeSpace.prototype.process = function(marketCycles=1, industry) {
         var salary = emp.process(marketCycles, this);
         salaryPaid += salary;
     }
-    this.calculateEmployeeProductivity(marketCycles);
+    this.calculateEmployeeProductivity(marketCycles, corporation);
     return salaryPaid;
 }
 
-OfficeSpace.prototype.calculateEmployeeProductivity = function(marketCycles=1) {
+OfficeSpace.prototype.calculateEmployeeProductivity = function(marketCycles=1, corporation) {
     //Reset
     for (var name in this.employeeProd) {
         if (this.employeeProd.hasOwnProperty(name)) {
@@ -1584,7 +1602,7 @@ OfficeSpace.prototype.calculateEmployeeProductivity = function(marketCycles=1) {
     var total = 0;
     for (var i = 0; i < this.employees.length; ++i) {
         var employee = this.employees[i];
-        var prod = employee.calculateProductivity();
+        var prod = employee.calculateProductivity(corporation);
         this.employeeProd[employee.pos] += prod;
         total += prod;
     }
@@ -1711,6 +1729,8 @@ Reviver.constructors.OfficeSpace = OfficeSpace;
 function Warehouse(params={}) {
     this.loc    = params.loc        ? params.loc    : "";
     this.size   = params.size       ? params.size   : 0;
+    this.level  = 0;
+
     this.sizeUsed = 0;
 
     this.materials = {
@@ -1743,6 +1763,15 @@ Warehouse.prototype.updateMaterialSizeUsed = function() {
     }
 }
 
+Warehouse.prototype.updateSize = function(corporation) {
+    //Backwards compatibility
+    if (this.level == null || this.level === 0) {
+        this.level = Math.round(this.size / 100);
+    }
+
+    this.size = (this.level * 100) * corporation.getStorageMultiplier();
+}
+
 Warehouse.prototype.createUI = function(parentRefs) {
     if (parentRefs.company == null || parentRefs.industry == null) {
         console.log("ERROR: Warehouse.createUI called without parentRefs.company or parentRefs.industry");
@@ -1766,7 +1795,13 @@ Warehouse.prototype.createUI = function(parentRefs) {
         display:"inline-block",
         class: company.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
         clickListener:()=>{
-            this.size += 100;
+            //Backwards compatibility
+            if (this.level == null || this.level === 0) {
+                this.level = Math.round(this.size / 100);
+            }
+
+            ++this.level;
+            this.updateSize(company);
             company.funds = company.funds.minus(upgradeCost);
             this.createUI(parentRefs);
             return;
@@ -2390,48 +2425,60 @@ var CorporationUnlockUpgrades = {
 //                  name, desc]
 var CorporationUpgrades = {
     //Smart factories, increases production
-    "0":    [0, 10e9, 1.07, 0.02,
+    "0":    [0, 4e9, 1.07, 0.02,
             "Smart Factories", "Advanced AI automatically optimizes the operation and productivity " +
             "of factories. Each level of this upgrade increases your global production by 2% (additive)."],
 
     //Smart warehouses, increases storage size
-    "1":    [1, 20e9, 1.07, .1,
+    "1":    [1, 4e9, 1.07, .1,
              "Smart Storage", "Advanced AI automatically optimizes your warehouse storage methods. " +
              "Each level of this upgrade increases your global warehouse storage size by 10% (additive)."],
 
     //Advertise through dreams, passive popularity/ awareness gain
-    "2":    [2, 100e9, 1.08, .001,
-            "DreamSense", "Use DreamSense LCC Technologies to advertise your corporation " +
+    "2":    [2, 999999e9, 1.08, .001,
+            "DreamSense", "NOT YET IMPLEMENTED! - Use DreamSense LCC Technologies to advertise your corporation " +
             "to consumers through their dreams. Each level of this upgrade provides a passive " +
             "increase in awareness of your company by 0.001 / second."],
 
     //Makes advertising more effective
-    "3":    [3, 5e9, 1.11, 0.1,
-            "Wilson Analytics", "Purchase data and analysis from Wilson, a marketing research " +
+    "3":    [3, 999999e9, 1.11, 0.1,
+            "Wilson Analytics", "NOT YET IMPLEMENTED - Purchase data and analysis from Wilson, a marketing research " +
             "firm. Each level of this upgrades increases the effectiveness of your " +
             "advertising by 10% (additive)."],
 
     //Augmentation for employees, increases cre
-    "4":    [4, 10e9, 1.05, 0.1,
+    "4":    [4, 2e9, 1.06, 0.1,
             "Nuoptimal Nootropic Injector Implants", "Purchase the Nuoptimal Nootropic " +
             "Injector augmentation for your employees. Each level of this upgrade " +
             "globally increases the creativity of your employees by 10% (additive)."],
 
     //Augmentation for employees, increases cha
-    "5":    [5, 10e9, 1.05, 0.1,
+    "5":    [5, 2e9, 1.06, 0.1,
             "Speech Processor Implants", "Purchase the Speech Processor augmentation for your employees. " +
             "Each level of this upgrade globally increases the charisma of your employees by 10% (additive)."],
 
     //Augmentation for employees, increases int
-    "6":    [6, 10e9, 1.05, 0.1,
-            "Neural Acelerators", "Purchase the Neural Accelerator augmentation for your employees. " +
+    "6":    [6, 2e9, 1.06, 0.1,
+            "Neural Accelerators", "Purchase the Neural Accelerator augmentation for your employees. " +
             "Each level of this upgrade globally increases the intelligence of your employees " +
             "by 10% (additive)."],
 
     //Augmentation for employees, increases eff
-    "7":    [7, 10e9, 1.05, 0.1,
+    "7":    [7, 2e9, 1.06, 0.1,
             "FocusWires", "Purchase the FocusWire augmentation for your employees. Each level " +
             "of this upgrade globally increases the efficiency of your employees by 10% (additive)."],
+
+    //Improves sales of materials/products
+    "8":    [8, 1e9, 1.09, 0.01,
+            "ABC SalesBots", "Always Be Closing. Purchase these robotic salesmen to increase the amount of " +
+            "materials and products you sell. Each level of this upgrade globally increases your sales " +
+            "by 1% (additive)."],
+
+    //Improves scientific research rate
+    "9":    [9, 5e9, 1.08, 0.05,
+            "Project Insight", "Purchase 'Project Insight', a R&D service provided by the secretive " +
+            "Fulcrum Technologies. Each level of this upgrade globally increases the amount of " +
+            "Scientific Research you produce by 5% (additive)."],
 }
 
 function Corporation(params={}) {
@@ -2495,13 +2542,13 @@ Corporation.prototype.process = function(numCycles=1) {
 Corporation.prototype.determineValuation = function() {
     var val, profit = (this.revenue.minus(this.expenses)).toNumber();
     if (this.public) {
-        val = 25e9 + this.funds.toNumber() + (profit * getRandomInt(7000, 8500));
+        val = 25e9 + this.funds.toNumber() + (profit * 25e3);
         val *= (Math.pow(1.1, this.divisions.length));
         val = Math.max(val, 0);
     } else {
-        val = 10e9 + Math.max(this.funds.toNumber(), 0); //Base valuation
+        val = 10e9 + Math.max(this.funds.toNumber(), 0) / 3; //Base valuation
         if (profit > 0) {
-            val += (profit * getRandomInt(12e3, 14e3));
+            val += (profit * 400e3);
             val *= (Math.pow(1.1, this.divisions.length));
         } else {
             val = 10e9 * Math.pow(1.1, this.divisions.length);
@@ -2630,7 +2677,7 @@ Corporation.prototype.upgrade = function(upgrade) {
         upgradeAmt = upgrade[3]; //Amount by which the upgrade multiplier gets increased (additive)
     while (this.upgrades.length <= upgN) {this.upgrades.push(0);}
     while (this.upgradeMultipliers.length <= upgN) {this.upgradeMultipliers.push(1);}
-    var totalCost = basePrice * Math.pow(this.upgrades[upgN], priceMult);
+    var totalCost = basePrice * Math.pow(priceMult, this.upgrades[upgN]);
     if (this.funds.lt(totalCost)) {
         dialogBoxCreate("You don't have enough funds to purchase this!");
         return;
@@ -2640,7 +2687,67 @@ Corporation.prototype.upgrade = function(upgrade) {
 
     //Increase upgrade multiplier
     this.upgradeMultipliers[upgN] = 1 + (this.upgrades[upgN] * upgradeAmt);
+
+    //If storage size is being updated, update values in Warehouse objects
+    if (upgN === 1) {
+        for (var i = 0; i < this.divisions.length; ++i) {
+            var industry = this.divisions[i];
+            for (var city in industry.warehouses) {
+                if (industry.warehouses.hasOwnProperty(city) && industry.warehouses[city] instanceof Warehouse) {
+                    industry.warehouses[city].updateSize(this);
+                }
+            }
+        }
+    }
+
+    this.updateCorporationOverviewContent();
 }
+
+Corporation.prototype.getProductionMultiplier = function() {
+    var mult = this.upgradeMultipliers[0];
+    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
+}
+
+Corporation.prototype.getStorageMultiplier = function() {
+    var mult = this.upgradeMultipliers[1];
+    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
+}
+
+Corporation.prototype.getAdvertisingMultiplier = function() {
+    var mult = this.upgradeMultipliers[3];
+    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
+}
+
+Corporation.prototype.getEmployeeCreMultiplier = function() {
+    var mult = this.upgradeMultipliers[4];
+    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
+}
+
+Corporation.prototype.getEmployeeChaMultiplier = function() {
+    var mult = this.upgradeMultipliers[5];
+    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
+}
+
+Corporation.prototype.getEmployeeIntMultiplier = function() {
+    var mult = this.upgradeMultipliers[6];
+    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
+}
+
+Corporation.prototype.getEmployeeEffMultiplier = function() {
+    var mult = this.upgradeMultipliers[7];
+    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
+}
+
+Corporation.prototype.getSalesMultiplier = function() {
+    var mult = this.upgradeMultipliers[8];
+    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
+}
+
+Corporation.prototype.getScientificResearchMultiplier = function() {
+    var mult = this.upgradeMultipliers[9];
+    if (isNaN(mult) || mult < 1) {return 1;} else {return mult;}
+}
+
 
 //Keep 'global' variables for DOM elements so we don't have to search
 //through the DOM tree repeatedly when updating UI
@@ -3062,19 +3169,22 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
         class:"cmpy-mgmt-upgrade-container",
     });
     upgradeContainer.appendChild(createElement("h1", {
-        innerText:"Upgrades", margin:"6px", padding:"6px",
+        innerText:"Unlocks", margin:"6px", padding:"6px",
     }));
 
     //Unlock upgrades
     var corp = this;
+    var numUnlockUpgrades = Object.keys(CorporationUnlockUpgrades).length,
+        numUpgrades = Object.keys(CorporationUpgrades).length;
     if (this.unlockUpgrades == null || this.upgrades == null) { //Backwards compatibility
-        var numUnlockUpgrades = Object.keys(CorporationUnlockUpgrades).length,
-            numUpgrades = Object.keys(CorporationUpgrades).length;
-
         this.unlockUpgrades = Array(numUnlockUpgrades).fill(0);
         this.upgrades = Array(numUpgrades).fill(0);
     }
-    for (var i = 0; i < this.unlockUpgrades.length; ++i) {
+    while (this.unlockUpgrades.length < numUnlockUpgrades) {this.unlockUpgrades.push(0);}
+    while (this.upgrades.length < numUpgrades) {this.upgrades.push(0);}
+    while (this.upgradeMultipliers < numUpgrades) {this.upgradeMultipliers.push(1);}
+
+    for (var i = 0; i < numUnlockUpgrades; ++i) {
         (function(i, corp) {
             if (corp.unlockUpgrades[i] === 0) {
                 var upgrade = CorporationUnlockUpgrades[i.toString()];
@@ -3085,7 +3195,8 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
 
                 upgradeContainer.appendChild(createElement("div", {
                     class:"cmpy-mgmt-upgrade-div",
-                    innerHTML:upgrade[2] +  " - " + numeral(upgrade[1]).format("$0.000a") + "<br><br>" + upgrade[3],
+                    innerHTML:upgrade[2] +  " - " + numeral(upgrade[1]).format("$0.000a"),
+                    tooltip: upgrade[3],
                     clickListener:()=>{
                         if (corp.funds.lt(upgrade[1])) {
                             dialogBoxCreate("Insufficient funds");
@@ -3100,8 +3211,11 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
     }
 
     //Levelable upgrades
-    /*
-    for (var i = 0; i < this.upgrades.length; ++i) {
+    upgradeContainer.appendChild(createElement("h1", {
+        innerText:"Upgrades", margin:"6px", padding:"6px",
+    }));
+
+    for (var i = 0; i < numUpgrades; ++i) {
         (function(i, corp) {
             var upgrade = CorporationUpgrades[i.toString()];
             if (upgrade == null) {
@@ -3110,10 +3224,11 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
             }
 
             var baseCost = upgrade[1], priceMult = upgrade[2];
-            var cost = baseCost * Math.pow(corp.upgrades[i], priceMult);
+            var cost = baseCost * Math.pow(priceMult, corp.upgrades[i]);
             upgradeContainer.appendChild(createElement("div", {
                 class:"cmpy-mgmt-upgrade-div",
-                innerHTML:upgrade[4] + " - " + numeral(cost).format("$0.000a") + "<br><br>" + upgrade[5],
+                innerHTML:upgrade[4] + " - " + numeral(cost).format("$0.000a"),
+                tooltip:upgrade[5],
                 clickListener:()=>{
                     if (corp.funds.lt(cost)) {
                         dialogBoxCreate("Insufficient funds");
@@ -3124,7 +3239,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                 }
             }));
         })(i, corp);
-    }*/
+    }
 
     companyManagementPanel.appendChild(upgradeContainer);
 }
@@ -3148,9 +3263,27 @@ Corporation.prototype.updateCorporationOverviewContent = function() {
               "Total Profits: " + profitStr + " / s<br>" +
               "Publicly Traded: " + (this.public ? "Yes" : "No") + "<br>" +
               "Owned Stock Shares: " + numeral(this.numShares).format('0.000a') + "<br>" +
-              "Stock Price: " + (this.public ? "$" + formatNumber(this.sharePrice, 2) : "N/A") + "<br>";
-    p.innerHTML = txt;
+              "Stock Price: " + (this.public ? "$" + formatNumber(this.sharePrice, 2) : "N/A") + "<br><br>";
 
+    var prodMult        = this.getProductionMultiplier(),
+        storageMult     = this.getStorageMultiplier(),
+        advMult         = this.getAdvertisingMultiplier(),
+        empCreMult      = this.getEmployeeCreMultiplier(),
+        empChaMult      = this.getEmployeeChaMultiplier(),
+        empIntMult      = this.getEmployeeIntMultiplier(),
+        empEffMult      = this.getEmployeeEffMultiplier(),
+        salesMult       = this.getSalesMultiplier(),
+        sciResMult      = this.getScientificResearchMultiplier();
+    if (prodMult > 1)       {txt += "Production Multiplier: " + formatNumber(prodMult, 3) + "<br>";}
+    if (storageMult > 1)    {txt += "Storage Multiplier: " + formatNumber(storageMult, 3) + "<br>";}
+    if (advMult > 1)        {txt += "Advertising Multiplier: " + formatNumber(advMult, 3) + "<br>";}
+    if (empCreMult > 1)     {txt += "Empl. Creativity Multiplier: " + formatNumber(empCreMult, 3) + "<br>";}
+    if (empChaMult > 1)     {txt += "Empl. Charisma Multiplier: " + formatNumber(empChaMult, 3) + "<br>";}
+    if (empIntMult > 1)     {txt += "Empl. Intelligence Multiplier: " + formatNumber(empIntMult, 3) + "<br>";}
+    if (empEffMult > 1)     {txt += "Empl. Efficiency Multiplier: " + formatNumber(empEffMult, 3) + "<br>";}
+    if (salesMult > 1)      {txt += "Sales Multiplier: " + formatNumber(salesMult, 3) + "<br>";}
+    if (sciResMult > 1)     {txt += "Scientific Research Multiplier: " + formatNumber(sciResMult, 3) + "<br>";}
+    p.innerHTML = txt;
 }
 
 Corporation.prototype.displayDivisionContent = function(division, city) {
@@ -3272,6 +3405,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 createProductPopupText = "Design and develop a new pharmaceutical drug!";
                 break;
             case Industries.Computer:
+            case "Computer":
                 createProductButtonText = "Create Product";
                 createProductPopupText = "Design and manufacture a new computer hardware product!";
                 break;
@@ -3528,7 +3662,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     });
     industryEmployeePanel.appendChild(industryEmployeeList);
     for (var i = 0; i < office.employees.length; ++i) {
-        (function() {
+        (function(corp) {
         var emp = office.employees[i];
         var li = createAccordionElement({
             id:"cmpy-mgmt-employee-" + emp.name,
@@ -3539,9 +3673,9 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
             console.log("ERROR: Could not find employee accordion panel");
             return;
         }
-        emp.createUI(panel);
+        emp.createUI(panel, corp);
         industryEmployeeList.appendChild(li);
-        })();
+        })(this);
     }
 
     //Warehouse Panel
@@ -3615,11 +3749,11 @@ Corporation.prototype.updateDivisionContent = function(division) {
                     hdrText:emp.name,
                 });
                 panel = li.children[1];
-                emp.createUI(panel);
+                emp.createUI(panel, company);
                 employeeList.appendChild(li);
                 return;
             }
-            emp.updateUI(panel);
+            emp.updateUI(panel, company);
             })(this);
         }
     }
