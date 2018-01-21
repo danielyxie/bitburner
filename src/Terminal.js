@@ -32,6 +32,9 @@ import {containsAllStrings, longestCommonStart,
         formatNumber, isString}             from "../utils/StringHelperFunctions.js";
 import {addOffset, printArray}              from "../utils/HelperFunctions.js";
 import {logBoxCreate}                       from "../utils/LogBox.js";
+import {yesNoBoxCreate,
+        yesNoBoxGetYesButton,
+        yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox.js";
 
 /* Write text to terminal */
 //If replace is true then spaces are replaced with "&nbsp;"
@@ -1636,7 +1639,21 @@ let Terminal = {
                 post("Agility: " + Player.agility + " / 1500");
                 break;
             case Programs.BitFlume:
-                hackWorldDaemon(Player.bitNodeN, true);
+                var yesBtn = yesNoBoxGetYesButton(),
+                    noBtn = yesNoBoxGetNoButton();
+                yesBtn.innerHTML = "Travel to BitNode Nexus";
+                noBtn.innerHTML = "Cancel";
+                yesBtn.addEventListener("click", function() {
+                    hackWorldDaemon(Player.bitNodeN, true);
+                    return yesNoBoxClose();
+                });
+                noBtn.addEventListener("click", function() {
+                    return yesNoBoxClose();
+                });
+                yesNoBoxCreate("WARNING: USING THIS PROGRAM WILL CAUSE YOU TO LOSE ALL OF YOUR PROGRESS ON THE CURRENT BITNODE.<br><br>" +
+                               "Do you want to travel to the BitNode Nexus? This allows you to reset the current BitNode " +
+                               "and select a new one.");
+
                 break;
 			default:
 				post("Invalid executable. Cannot be run");
