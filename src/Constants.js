@@ -1117,20 +1117,8 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.34.1<br>" +
-    "-Updates to Corporation Management:<br>" +
-    "---Added a number of upgrades to various aspects of your Corporation<br>" +
-    "---Rebalanced the properties of Materials and the formula for determining the valuation of the Corporation<br>" +
-    "---Fixed a number of bugs<br>" +
-    "-'Stats' page now shows information about current BitNode<br>" +
-    "-You should now be able to create Corporations in other BitNodes if you have Source-File 3<br>" +
-    "-Added a new create-able program called b1t_flum3.exe. This program can be used to reset and switch BitNodes<br>" +
-    "-Added an option to adjust autosave interval<br>" +
-    "-Line feeds, newlines, and tabs will now work with the tprint() Netscript function<br>" +
-    "-Bug fix: 'check' Terminal command was broken<br>" +
-    "-Bug fix: 'theme' Terminal command was broken when manually specifying hex codes<br>" +
-    "-Bug fix: Incorrect promotion requirement for 'Business'-type jobs<br>" +
-    "-Bug fix: Settings input bars were incorrectly formatted when loading game<br>"
+    "v0.34.2<br>" +
+    "-The fileExists() Netscript function now works on text files (.txt). Thanks to Github user devoidfury for this<br>"
 }
 
 export {CONSTANTS};

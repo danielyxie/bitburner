@@ -529,6 +529,7 @@ var ProductRatingWeights = {
     }
 }
 
+var empManualAssignmentModeActive = false;
 function Industry(params={}) {
     this.offices = { //Maps locations to offices. 0 if no office at that location
         [Locations.Aevum]: 0,
@@ -1359,7 +1360,8 @@ var EmployeePositions = {
     Engineer: "Engineer",
     Business: "Business",
     Management: "Management",
-    RandD: "Research & Development"
+    RandD: "Research & Development",
+    Unassigned:"Unassigned"
 }
 
 function Employee(params={}) {
@@ -1443,7 +1445,7 @@ Employee.prototype.calculateProductivity = function(corporation) {
                        (0.5 * effEff);
             break;
         default:
-            console.log("Invalid employee position: " + this.pos);
+            console.log("ERROR: Invalid employee position: " + this.pos);
             break;
     }
     return prodBase * prodMult;
@@ -3656,6 +3658,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         }
     }));
 
+    /*
     //Employee list
     var industryEmployeeList = createElement("ul", {
         id:"cmpy-mgmt-employee-ul"
@@ -3676,6 +3679,14 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         emp.createUI(panel, corp);
         industryEmployeeList.appendChild(li);
         })(this);
+    }
+    */
+    if (empManualAssignmentModeActive) {
+        //Employees manually assigned
+
+    } else {
+        //Player only manages the number of each occupation, not who gets what job
+
     }
 
     //Warehouse Panel

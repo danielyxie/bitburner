@@ -837,7 +837,7 @@ function NetscriptFunctions(workerScript) {
                 }
             }
             var txtFile = getTextFile(filename, server);
-            if (txtFile !== null) {
+            if (txtFile != null) {
               return true;
             }
             return false;
