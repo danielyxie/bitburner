@@ -71,6 +71,7 @@ function createElement(type, params) {
     if (params.visibility)  {el.style.visibility = params.visibility;}
     if (params.margin)      {el.style.margin = params.margin;}
     if (params.marginLeft)  {el.style.marginLeft = params.marginLeft;}
+    if (params.marginTop)   {el.style.marginTop = params.marginTop;}
     if (params.padding)     {el.style.padding = params.padding;}
     if (params.color)       {el.style.color = params.color;}
     if (params.border)      {el.style.border = params.border;}
@@ -94,6 +95,8 @@ function createElement(type, params) {
             innerHTML:params.tooltip
         }));
     }
+    if (params.href)        {el.href = params.href;}
+    if (params.target)      {el.target = params.target;}
     if (params.clickListener) {
         el.addEventListener("click", params.clickListener);
     }

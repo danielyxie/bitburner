@@ -64,26 +64,6 @@
     margin-right: 0px;
 }
 
-#script-editor-save-and-close-button,
-#script-editor-netscript-doc-button,
-#script-editor-status-text {
-    display: inline-block;
-}
-
-#script-editor-status-text {
-    margin: 10px;
-}
-
-#script-editor-save-and-close-button {
-    float:left;
-}
-
-#script-editor-netscript-doc-button {
-    float: right;
-    padding-right: 0px;
-    margin-right: 2px;
-}
-
 #script-editor-wrapper {
     height:100%;
     width: 70%;

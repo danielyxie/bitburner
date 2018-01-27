@@ -58,6 +58,11 @@ function evaluate(exp, workerScript) {
                 return Promise.resolve(exp.value);
                 break;
             case "Identifier":
+                //Javascript constructor() method can be used as an exploit to run arbitrary code
+                if (exp.name == "constructor") {
+                    return Promise.reject(makeRuntimeRejectMsg(workerScript, "Illegal usage of constructor() method. If you have your own function named 'constructor', you must re-name it."));
+                }
+
                 if (!(exp.name in env.vars)){
                     return Promise.reject(makeRuntimeRejectMsg(workerScript, "variable " + exp.name + " not defined"));
                 }
@@ -177,9 +182,11 @@ function evaluate(exp, workerScript) {
                             } else {
                                 return Promise.reject(makeRuntimeRejectMsg(workerScript, "Invalid MemberExpression"));
                             }
-
                         });
                     } else {
+                        if (exp.property.name === "constructor") {
+                            return Promise.reject(makeRuntimeRejectMsg(workerScript, "Illegal usage of constructor() method. If you have your own function named 'constructor', you must re-name it."));
+                        }
                         try {
                             return Promise.resolve(object[exp.property.name])
                         } catch (e) {

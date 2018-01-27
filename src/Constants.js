@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.34.1",
+    Version:                "0.34.2",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -10,8 +10,8 @@ let CONSTANTS = {
     CorpFactionRepRequirement: 250000,
 
     /* Base costs */
-    BaseCostFor1GBOfRamHome: 30000,
-    BaseCostFor1GBOfRamServer: 50000,     //1 GB of RAM
+    BaseCostFor1GBOfRamHome: 32000,
+    BaseCostFor1GBOfRamServer: 55000, //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
 
     BaseCostForHacknetNode: 1000,
@@ -41,29 +41,23 @@ let CONSTANTS = {
     //RAM Costs for different commands
     ScriptWhileRamCost:             0.2,
     ScriptForRamCost:               0.2,
-    ScriptIfRamCost:                0.1,
+    ScriptIfRamCost:                0.15,
     ScriptHackRamCost:              0.1,
     ScriptGrowRamCost:              0.15,
     ScriptWeakenRamCost:            0.15,
     ScriptScanRamCost:              0.2,
-    ScriptNukeRamCost:              0.05,
-    ScriptBrutesshRamCost:          0.05,
-    ScriptFtpcrackRamCost:          0.05,
-    ScriptRelaysmtpRamCost:         0.05,
-    ScriptHttpwormRamCost:          0.05,
-    ScriptSqlinjectRamCost:         0.05,
-    ScriptRunRamCost:               0.8,
-    ScriptExecRamCost:              1.1,
-    ScriptScpRamCost:               0.5,
+    ScriptPortProgramRamCost:       0.05,
+    ScriptRunRamCost:               1.0,
+    ScriptExecRamCost:              1.3,
+    ScriptScpRamCost:               0.6,
     ScriptKillRamCost:              0.5, //Kill and killall
     ScriptHasRootAccessRamCost:     0.05,
     ScriptGetHostnameRamCost:       0.05, //getHostname() and getIp()
     ScriptGetHackingLevelRamCost:   0.05, //getHackingLevel()
     ScriptGetMultipliersRamCost:    4.0, //getHackingMultipliers() and getBitNodeMultipliers()
-    ScriptGetServerCost:            0.1,
+    ScriptGetServerRamCost:         0.1,
     ScriptFileExistsRamCost:        0.1,
     ScriptIsRunningRamCost:         0.1,
-    ScriptOperatorRamCost:          0.01,
     ScriptPurchaseHacknetRamCost:   1.5,
     ScriptHacknetNodesRamCost:      1.0, //Base cost for accessing hacknet nodes array
     ScriptHNUpgLevelRamCost:        0.4,
@@ -71,7 +65,7 @@ let CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     ScriptGetStockRamCost:          2.0,
     ScriptBuySellStockRamCost:      2.5,
-    ScriptPurchaseServerRamCost:    2.0,
+    ScriptPurchaseServerRamCost:    2.25,
     ScriptRoundRamCost:             0.05,
     ScriptReadWriteRamCost:         1.0,
     ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args
@@ -613,8 +607,8 @@ let CONSTANTS = {
                            "<i><u>serverExists(hostname/ip)</u></i><br>Returns a boolean denoting whether or not the specified server exists. The argument " +
                            "must be a string with the hostname or IP of the target server.<br><br>" +
                            "<i><u>fileExists(filename, [hostname/ip])</u></i><br> Returns a boolean (true or false) indicating whether the specified file exists on a server. " +
-                           "The first argument must be a string with the name of the file. A file can either be a script, program, or literature file. A script name is case-sensitive, but a " +
-                           "program/literature file is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " +
+                           "The first argument must be a string with the filename. A file can either be a script, program, literature file, or a text file. The filename for a script is case-sensitive, but " +
+                           "for the other files it is not. For example, fileExists('brutessh.exe') will work fine, even though the actual program is named BruteSSH.exe. <br><br> " +
                            "The second argument is a string with the hostname or IP of the server on which to search for the program. This second argument is optional. " +
                            "If it is omitted, then the function will search through the current server (the server running the script that calls this function) for the file. <br> " +
                            "Example: fileExists('foo.script', 'foodnstuff');<br>" +
@@ -667,6 +661,8 @@ let CONSTANTS = {
                            "<i><u>clear(port/fn)</u></i><br>This function is used to clear a Netscript Port or a text file.<br><br>" +
                            "It takes a single argument. If this argument is a number between 1 and 10, then it specifies a port and will clear it (deleting all data from it). " +
                            "If the argument is a string, then it specifies the name of a text file (.txt) and will clear the text file so that it is empty.<br><br>" +
+                           "<i><u>rm(fn)</u></i><br>This function is used to remove a file. It takes a string with the filename as the argument. Returns " +
+                           "true if it successfully deletes the given file, and false otherwise. This function works for every file type except message files (.msg).<br><br>" +
                            "<i><u>scriptRunning(scriptname, hostname/ip)</u></i><br>Returns a boolean indicating whether any instance of the specified script is running " +
                            "on a server, regardless of its arguments. This is different than the isRunning() function because it does not " +
                            "try to identify a specific instance of a running script by its arguments.<br><br>" +
@@ -1117,20 +1113,32 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.34.1<br>" +
-    "-Updates to Corporation Management:<br>" +
-    "---Added a number of upgrades to various aspects of your Corporation<br>" +
-    "---Rebalanced the properties of Materials and the formula for determining the valuation of the Corporation<br>" +
-    "---Fixed a number of bugs<br>" +
-    "-'Stats' page now shows information about current BitNode<br>" +
-    "-You should now be able to create Corporations in other BitNodes if you have Source-File 3<br>" +
-    "-Added a new create-able program called b1t_flum3.exe. This program can be used to reset and switch BitNodes<br>" +
-    "-Added an option to adjust autosave interval<br>" +
-    "-Line feeds, newlines, and tabs will now work with the tprint() Netscript function<br>" +
-    "-Bug fix: 'check' Terminal command was broken<br>" +
-    "-Bug fix: 'theme' Terminal command was broken when manually specifying hex codes<br>" +
-    "-Bug fix: Incorrect promotion requirement for 'Business'-type jobs<br>" +
-    "-Bug fix: Settings input bars were incorrectly formatted when loading game<br>"
+    "v0.34.2<br>" +
+    "-Corporation Management Changes:<br>" +
+    "---Added advertising mechanics<br>" +
+    "---Added Industry-specific purchases<br>" +
+    "---Re-designed employee management UI<br>" +
+    "---Rebalancing: Made many upgrades/purchases cheaper. Receive more money from investors in early stage. Company valuation is higher after going public<br>" +
+    "---Multiple bug fixes<br>" +
+    "-Added rm() Netscript function<br>" +
+    "-Updated the way script RAM usage is calculated. Now, a function only increases RAM usage the " +
+    "first time it is called. i.e. even if you call hack() multiple times in a script, it only counts " +
+    "against RAM usage once. The same change applies for while/for loops and if conditionals.<br>" +
+    "-The RAM cost of the following were increased:<br>" +
+    "---If statements: increased by 0.05GB<br>" +
+    "---run() and exec(): increased by 0.2GB<br>" +
+    "---scp(): increased by 0.1GB<br>" +
+    "---purchaseServer(): increased by 0.25GB<br>" +
+    "-Note: You may need to re-save all of your scripts in order to re-calculate their RAM usages. Otherwise, " +
+    "it should automatically be re-calculated when you reset/prestige<br>" +
+    "-The cost to upgrade your home computer's RAM has been increased (both the base cost and the exponential upgrade multiplier)<br>" +
+    "-The cost of purchasing a server was increased by 10% (it is now $55k per RAM)<br>" +
+    "-Bug fix: (Hopefully) removed an exploit where you could avoid RAM usage for Netscript function calls " +
+    "by assigning functions to a variable (foo = hack(); foo('helios');)<br>" +
+    "-Bug fix: (Hopefully) removed an exploit where you could run arbitrary Javascript code using the constructor() " +
+    "method<br>" +
+    "-Thanks to Github user mateon1 and Reddit users havoc_mayhem and spaceglace for notifying me of the above exploits<br>" +
+    "-The fileExists() Netscript function now works on text files (.txt). Thanks to Github user devoidfury for this<br>"
 }
 
 export {CONSTANTS};

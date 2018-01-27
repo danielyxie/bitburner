@@ -38,12 +38,8 @@ import {yesNoBoxCreate,
 
 /* Write text to terminal */
 //If replace is true then spaces are replaced with "&nbsp;"
-function post(input, replace=true) {
-    if (replace) {
-        $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color); white-space:pre;">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
-    } else {
-        $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
-    }
+function post(input) {
+    $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color); white-space:pre-wrap;">' + input + '</td></tr>');
 	updateTerminalScroll();
 }
 
@@ -747,7 +743,7 @@ let Terminal = {
                 if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
                     executeDarkwebTerminalCommand(commandArray);
                 } else {
-                    post("You need to be connected to the Dark Web to use the buy command");
+                    post("You need to be able to connect to the Dark Web to use the buy command. (Maybe there's a TOR router you can buy somewhere)");
                 }
                 break;
             case "cat":

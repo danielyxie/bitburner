@@ -18,16 +18,18 @@ import {Engine}                                 from "./engine.js";
 import {iTutorialSteps, iTutorialNextStep,
         iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial.js";
 import {NetscriptFunctions}                     from "./NetscriptFunctions.js";
-import {addWorkerScript, killWorkerScript}      from "./NetscriptWorker.js";
+import {addWorkerScript, killWorkerScript,
+        WorkerScript}                           from "./NetscriptWorker.js";
 import {Player}                                 from "./Player.js";
 import {AllServers, processSingleServerGrowth}  from "./Server.js";
 import {Settings}                               from "./Settings.js";
 import {post}                                   from "./Terminal.js";
 
+import {parse, Node}                            from "../utils/acorn.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import {compareArrays}                          from "../utils/HelperFunctions.js";
+import {compareArrays, createElement}           from "../utils/HelperFunctions.js";
 import {formatNumber, numOccurrences,
         numNetscriptOperators}                  from "../utils/StringHelperFunctions.js";
 
@@ -37,14 +39,52 @@ var keybindings = {
     emacs: "ace/keyboard/emacs",
 };
 
+var scriptEditorRamCheck = null, scriptEditorRamText = null;
 function scriptEditorInit() {
-    //Initialize save and close button
-    var closeButton = document.getElementById("script-editor-save-and-close-button");
-
-    closeButton.addEventListener("click", function() {
-        saveAndCloseScriptEditor();
-        return false;
+    //Create buttons at the bottom of script editor
+    var wrapper = document.getElementById("script-editor-buttons-wrapper");
+    if (wrapper == null) {
+        console.log("Error finding 'script-editor-buttons-wrapper'");
+        return;
+    }
+    var closeButton = createElement("a", {
+        class:"a-link-button", display:"inline-block",
+        innerText:"Save & Close (Ctrl + b)",
+        clickListener:()=>{
+            saveAndCloseScriptEditor();
+            return false;
+        }
     });
+
+    scriptEditorRamText = createElement("p", {
+        display:"inline-block", margin:"10px", id:"script-editor-status-text"
+    });
+
+    var checkboxLabel = createElement("label", {
+        for:"script-editor-ram-check", margin:"4px", marginTop: "8px",
+        innerText:"Dynamic RAM Usage Checker", color:"white",
+        tooltip:"Enable/Disable the dynamic RAM Usage display. You may " +
+                "want to disable it for very long scripts because there may be " +
+                "performance issues"
+    });
+
+    scriptEditorRamCheck = createElement("input", {
+        type:"checkbox", name:"script-editor-ram-check", id:"script-editor-ram-check",
+        margin:"4px", marginTop: "8px",
+    });
+    scriptEditorRamCheck.checked = true;
+
+    var documentationButton = createElement("a", {
+        display:"inline-block", class:"a-link-button", innerText:"Netscript Documentation",
+        href:"https://bitburner.wikia.com/wiki/Netscript",
+        target:"_blank"
+    });
+
+    wrapper.appendChild(closeButton);
+    wrapper.appendChild(scriptEditorRamText);
+    wrapper.appendChild(scriptEditorRamCheck);
+    wrapper.appendChild(checkboxLabel);
+    wrapper.appendChild(documentationButton);
 
     //Initialize ACE Script editor
     var editor = ace.edit('javascript-editor');
@@ -127,14 +167,19 @@ function scriptEditorInit() {
 }
 document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 
-//Updates line number and RAM usage in script
+//Updates RAM usage in script
 function updateScriptEditorContent() {
+    if (scriptEditorRamCheck == null || !scriptEditorRamCheck.checked) {
+        scriptEditorRamText.innerText = "N/A";
+        return;
+    }
     var editor = ace.edit('javascript-editor');
     var code = editor.getValue();
     var codeCopy = code.repeat(1);
     var ramUsage = calculateRamUsage(codeCopy);
-    document.getElementById("script-editor-status-text").innerText =
-        "RAM: " + formatNumber(ramUsage, 2).toString() + "GB";
+    if (ramUsage !== -1) {
+        scriptEditorRamText.innerText = "RAM: " + formatNumber(ramUsage, 2).toString() + "GB";
+    }
 }
 
 //Define key commands in script editor (ctrl o to save + close, etc.)
@@ -233,154 +278,87 @@ Script.prototype.saveScript = function() {
 //Updates how much RAM the script uses when it is running.
 Script.prototype.updateRamUsage = function() {
     var codeCopy = this.code.repeat(1);
-    this.ramUsage = calculateRamUsage(codeCopy);
-    console.log("ram usage: " + this.ramUsage);
-    if (isNaN(this.ramUsage)) {
-        dialogBoxCreate("ERROR in calculating ram usage. This is a bug, please report to game develoepr");
+    var res = calculateRamUsage(codeCopy);
+    if (res !== -1) {
+        this.ramUsage = res;
     }
 }
 
 function calculateRamUsage(codeCopy) {
-    codeCopy = codeCopy.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1'); //Delete comments
-    codeCopy = codeCopy.replace(/\s/g,''); //Remove all whitespace
-    var baseRam = 1.4;
-    var whileCount = numOccurrences(codeCopy, "while(");
-    var forCount = numOccurrences(codeCopy, "for(");
-    var ifCount = numOccurrences(codeCopy, "if(");
-    var hackCount = numOccurrences(codeCopy, "hack(");
-    var growCount = numOccurrences(codeCopy, "grow(");
-    var weakenCount = numOccurrences(codeCopy, "weaken(");
-    var scanCount = numOccurrences(codeCopy, "scan(");
-    var nukeCount = numOccurrences(codeCopy, "nuke(");
-    var brutesshCount = numOccurrences(codeCopy, "brutessh(");
-    var ftpcrackCount = numOccurrences(codeCopy, "ftpcrack(");
-    var relaysmtpCount = numOccurrences(codeCopy, "relaysmtp(");
-    var httpwormCount = numOccurrences(codeCopy, "httpworm(");
-    var sqlinjectCount = numOccurrences(codeCopy, "sqlinject(");
-    var runCount = numOccurrences(codeCopy, "run(");
-    var execCount = numOccurrences(codeCopy, "exec(");
-    var killCount = numOccurrences(codeCopy, "kill(") + numOccurrences(codeCopy, "killall(") +
-                    numOccurrences(codeCopy, "exit(");
-    var scpCount = numOccurrences(codeCopy, "scp(");
-    var hasRootAccessCount = numOccurrences(codeCopy, "hasRootAccess(");
-    var getHostnameCount = numOccurrences(codeCopy, "getHostname(") +
-                           numOccurrences(codeCopy, "getIp(");
-    var getHackingLevelCount = numOccurrences(codeCopy, "getHackingLevel(");
-    var getMultipliersCount = numOccurrences(codeCopy, "getHackingMultipliers(") +
-                              numOccurrences(codeCopy, "getBitNodeMultipliers(");
-    var getServerCount = numOccurrences(codeCopy, "getServerMoneyAvailable(") +
-                         numOccurrences(codeCopy, "getServerMaxMoney(") +
-                         numOccurrences(codeCopy, "getServerSecurityLevel(") +
-                         numOccurrences(codeCopy, "getServerBaseSecurityLevel(") +
-                         numOccurrences(codeCopy, "getServerMinSecurityLevel(") +
-                         numOccurrences(codeCopy, "getServerGrowth(") +
-                         numOccurrences(codeCopy, "getServerRequiredHackingLevel(") +
-                         numOccurrences(codeCopy, "getServerNumPortsRequired(") +
-                         numOccurrences(codeCopy, "getServerRam(") +
-                         numOccurrences(codeCopy, "serverExists(");
-    var fileExistsCount = numOccurrences(codeCopy, "fileExists(");
-    var isRunningCount = numOccurrences(codeCopy, "isRunning(");
-    var purchaseHacknetCount = numOccurrences(codeCopy, "purchaseHacknetNode(");
-    var hacknetnodesArrayCount = numOccurrences(codeCopy, "hacknetnodes[");
-    var hnUpgLevelCount = numOccurrences(codeCopy, ".upgradeLevel(");
-    var hnUpgRamCount = numOccurrences(codeCopy, ".upgradeRam()");
-    var hnUpgCoreCount = numOccurrences(codeCopy, ".upgradeCore()");
-    var scriptGetStockCount = numOccurrences(codeCopy, "getStockPrice(") +
-                              numOccurrences(codeCopy, "getStockPosition(");
-    var scriptBuySellStockCount = numOccurrences(codeCopy, "buyStock(") +
-                                  numOccurrences(codeCopy, "sellStock(") +
-                                  numOccurrences(codeCopy, "shortStock(") +
-                                  numOccurrences(codeCopy, "sellShort(") +
-                                  numOccurrences(codeCopy, "placeOrder(") +
-                                  numOccurrences(codeCopy, "cancelOrder(");
-    var scriptPurchaseServerCount = numOccurrences(codeCopy, "purchaseServer(") +
-                                    numOccurrences(codeCopy, "deleteServer(") +
-                                    numOccurrences(codeCopy, "getPurchasedServers(");
-    var scriptRoundCount = numOccurrences(codeCopy, "round(");
-    var scriptWriteCount = numOccurrences(codeCopy, "write(") + numOccurrences(codeCopy, "clear(");
-    var scriptReadCount = numOccurrences(codeCopy, "read(");
-    var arbScriptCount = numOccurrences(codeCopy, "scriptRunning(") +
-                         numOccurrences(codeCopy, "scriptKill(");
-    var getScriptCount = numOccurrences(codeCopy, "getScriptRam(") +
-                         numOccurrences(codeCopy, "getScriptIncome(") +
-                         numOccurrences(codeCopy, "getScriptExpGain(");
-    var getHackTimeCount = numOccurrences(codeCopy, "getHackTime(") +
-                           numOccurrences(codeCopy, "getGrowTime(") +
-                           numOccurrences(codeCopy, "getWeakenTime(") +
-                           numOccurrences(codeCopy, "getTimeSinceLastAug(");
-    var singFn1Count = numOccurrences(codeCopy, "universityCourse(") +
-                       numOccurrences(codeCopy, "gymWorkout(") +
-                       numOccurrences(codeCopy, "travelToCity(") +
-                       numOccurrences(codeCopy, "purchaseTor(") +
-                       numOccurrences(codeCopy, "purchaseProgram(") +
-                       numOccurrences(codeCopy, "getStats(") +
-                       numOccurrences(codeCopy, "isBusy(");
-    var singFn2Count = numOccurrences(codeCopy, "upgradeHomeRam(") +
-                       numOccurrences(codeCopy, "getUpgradeHomeRamCost(") +
-                       numOccurrences(codeCopy, "workForCompany(") +
-                       numOccurrences(codeCopy, "applyToCompany(") +
-                       numOccurrences(codeCopy, "getCompanyRep(") +
-                       numOccurrences(codeCopy, "checkFactionInvitations(") +
-                       numOccurrences(codeCopy, "joinFaction(") +
-                       numOccurrences(codeCopy, "workForFaction(") +
-                       numOccurrences(codeCopy, "getFactionRep(");
-    var singFn3Count = numOccurrences(codeCopy, "createProgram(") +
-                       numOccurrences(codeCopy, "commitCrime(") +
-                       numOccurrences(codeCopy, "getCrimeChance(") +
-                       numOccurrences(codeCopy, "getOwnedAugmentations(") +
-                       numOccurrences(codeCopy, "getAugmentationsFromFaction(") +
-                       numOccurrences(codeCopy, "getAugmentationCost(") +
-                       numOccurrences(codeCopy, "purchaseAugmentation(") +
-                       numOccurrences(codeCopy, "installAugmentations(");
+    //Create a temporary/mock WorkerScript and an AST from the code
+    var workerScript = new WorkerScript({
+        filename:"foo",
+        scriptRef: {code:""},
+        args:[]
+    });
+    workerScript.checkingRam = true; //Netscript functions will return RAM usage
 
-    if (Player.bitNodeN != 4) {
-        singFn1Count *= 10;
-        singFn2Count *= 10;
-        singFn3Count *= 10;
+    try {
+        var ast = parse(codeCopy);
+    } catch(e) {
+        console.log("returning -1 bc parsing error: " + e.toString());
+        return -1;
     }
 
-    return baseRam +
-        ((whileCount * CONSTANTS.ScriptWhileRamCost) +
-        (forCount * CONSTANTS.ScriptForRamCost) +
-        (ifCount * CONSTANTS.ScriptIfRamCost) +
-        (hackCount * CONSTANTS.ScriptHackRamCost) +
-        (growCount * CONSTANTS.ScriptGrowRamCost) +
-        (weakenCount * CONSTANTS.ScriptWeakenRamCost) +
-        (scanCount * CONSTANTS.ScriptScanRamCost) +
-        (nukeCount * CONSTANTS.ScriptNukeRamCost) +
-        (brutesshCount * CONSTANTS.ScriptBrutesshRamCost) +
-        (ftpcrackCount * CONSTANTS.ScriptFtpcrackRamCost) +
-        (relaysmtpCount * CONSTANTS.ScriptRelaysmtpRamCost) +
-        (httpwormCount * CONSTANTS.ScriptHttpwormRamCost) +
-        (sqlinjectCount * CONSTANTS.ScriptSqlinjectRamCost) +
-        (runCount * CONSTANTS.ScriptRunRamCost) +
-        (execCount * CONSTANTS.ScriptExecRamCost) +
-        (killCount * CONSTANTS.ScriptKillRamCost) +
-        (scpCount * CONSTANTS.ScriptScpRamCost) +
-        (hasRootAccessCount * CONSTANTS.ScriptHasRootAccessRamCost) +
-        (getHostnameCount * CONSTANTS.ScriptGetHostnameRamCost) +
-        (getHackingLevelCount * CONSTANTS.ScriptGetHackingLevelRamCost) +
-        (getMultipliersCount * CONSTANTS.ScriptGetMultipliersRamCost) +
-        (getServerCount * CONSTANTS.ScriptGetServerCost) +
-        (fileExistsCount * CONSTANTS.ScriptFileExistsRamCost) +
-        (isRunningCount * CONSTANTS.ScriptIsRunningRamCost) +
-        (purchaseHacknetCount * CONSTANTS.ScriptPurchaseHacknetRamCost) +
-        (hacknetnodesArrayCount * CONSTANTS.ScriptHacknetNodesRamCost) +
-        (hnUpgLevelCount * CONSTANTS.ScriptHNUpgLevelRamCost) +
-        (hnUpgRamCount * CONSTANTS.ScriptHNUpgRamRamCost) +
-        (hnUpgCoreCount * CONSTANTS.ScriptHNUpgCoreRamCost) +
-        (scriptGetStockCount * CONSTANTS.ScriptGetStockRamCost) +
-        (scriptBuySellStockCount * CONSTANTS.ScriptBuySellStockRamCost) +
-        (scriptPurchaseServerCount * CONSTANTS.ScriptPurchaseServerRamCost) +
-        (scriptRoundCount * CONSTANTS.ScriptRoundRamCost) +
-        (scriptWriteCount * CONSTANTS.ScriptReadWriteRamCost) +
-        (scriptReadCount * CONSTANTS.ScriptReadWriteRamCost) +
-        (arbScriptCount * CONSTANTS.ScriptArbScriptRamCost) +
-        (getScriptCount * CONSTANTS.ScriptGetScriptRamCost) +
-        (getHackTimeCount * CONSTANTS.ScriptGetHackTimeRamCost) +
-        (singFn1Count * CONSTANTS.ScriptSingularityFn1RamCost) +
-        (singFn2Count * CONSTANTS.ScriptSingularityFn2RamCost) +
-        (singFn3Count * CONSTANTS.ScriptSingularityFn3RamCost));
+    //Search through AST, scanning for any 'Identifier' nodes for functions, or While/For/If nodes
+    var queue = [], ramUsage = 1.4;
+    var whileUsed = false, forUsed = false, ifUsed = false;
+    queue.push(ast);
+    while (queue.length != 0) {
+        var exp = queue.shift();
+        switch (exp.type) {
+            case "BlockStatement":
+            case "Program":
+                for (var i = 0; i < exp.body.length; ++i) {
+                    if (exp.body[i] instanceof Node) {
+                        queue.push(exp.body[i]);
+                    }
+                }
+                break;
+            case "WhileStatement":
+                if (!whileUsed) {
+                    ramUsage += CONSTANTS.ScriptWhileRamCost;
+                    whileUsed = true;
+                }
+                break;
+            case "ForStatement":
+                if (!forUsed) {
+                    ramUsage += CONSTANTS.ScriptForRamCost;
+                    forUsed = true;
+                }
+                break;
+            case "IfStatement":
+                if (!ifUsed) {
+                    ramUsage += CONSTANTS.ScriptIfRamCost;
+                    ifUsed = true;
+                }
+                break;
+            case "Identifier":
+                if (exp.name in workerScript.env.vars) {
+                    var func = workerScript.env.get(exp.name);
+                    if (typeof func === "function") {
+                        try {
+                            var res = func.apply(null, []);
+                            if (!isNaN(res)) {ramUsage += res;}
+                        } catch(e) {
+                            console.log("ERROR applying function: " + e);
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        for (var prop in exp) {
+            if (exp.hasOwnProperty(prop)) {
+                if (exp[prop] instanceof Node) {
+                    queue.push(exp[prop]);
+                }
+            }
+        }
+    }
+    return ramUsage;
 }
 
 Script.prototype.toJSON = function() {
