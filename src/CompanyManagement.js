@@ -2630,7 +2630,9 @@ Corporation.prototype.process = function(numCycles=1) {
                 this.revenue = this.revenue.plus(ind.lastCycleRevenue);
                 this.expenses = this.expenses.plus(ind.lastCycleExpenses);
             });
-            this.funds = this.funds.plus(this.revenue.minus(this.expenses));
+            var profit = this.revenue.minus(this.expenses);
+            var cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
+            this.funds = this.funds.plus(cycleProfit);
             this.updateSharePrice();
         }
         this.state.nextState();
