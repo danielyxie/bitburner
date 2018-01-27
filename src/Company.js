@@ -356,7 +356,7 @@ let CompanyPositions = {
         CompanyPositions.VicePresident.setPerformanceParameters(70, 0, 0, 0, 0, 30, 1.75);
         CompanyPositions.VicePresident.setExperienceGains(1.2, 0, 0, 0, 0, .6);
         CompanyPositions.CTO.setPerformanceParameters(65, 0, 0, 0, 0, 35, 2);
-        CompanyPositions.CTO.setExperienceGains(1.5, 0, 0, 0, 1);
+        CompanyPositions.CTO.setExperienceGains(1.5, 0, 0, 0, 0, 1);
 
         //Business
         CompanyPositions.BusinessIntern.setPerformanceParameters(10, 0, 0, 0, 0, 90, 0.9);

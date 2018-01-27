@@ -937,7 +937,6 @@ let Engine = {
         messages: 150,
         stockTick:  30,                     //Update stock prices
         sCr: 1500,
-        updateScriptEditorDisplay: 5,
     },
 
     decrementAllCounters: function(numCycles = 1) {
@@ -997,6 +996,8 @@ let Engine = {
         if (Engine.Counters.updateDisplaysLong <= 0) {
             if (Engine.currentPage === Engine.Page.Gang) {
                 updateGangContent();
+            } else if (Engine.currentPage === Engine.Page.ScriptEditor) {
+                updateScriptEditorContent();
             }
             Engine.Counters.updateDisplaysLong = 15;
         }
@@ -1057,13 +1058,6 @@ let Engine = {
                 stockMarketCycle();
             }
             Engine.Counters.sCr = 1500;
-        }
-
-        if (Engine.Counters.updateScriptEditorDisplay <= 0) {
-            if (Engine.currentPage == Engine.Page.ScriptEditor) {
-                updateScriptEditorContent();
-            }
-            Engine.Counters.updateScriptEditorDisplay = 5;
         }
     },
 

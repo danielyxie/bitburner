@@ -32,15 +32,14 @@ import {containsAllStrings, longestCommonStart,
         formatNumber, isString}             from "../utils/StringHelperFunctions.js";
 import {addOffset, printArray}              from "../utils/HelperFunctions.js";
 import {logBoxCreate}                       from "../utils/LogBox.js";
+import {yesNoBoxCreate,
+        yesNoBoxGetYesButton,
+        yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox.js";
 
 /* Write text to terminal */
 //If replace is true then spaces are replaced with "&nbsp;"
-function post(input, replace=true) {
-    if (replace) {
-        $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color); white-space:pre;">' + input.replace( / /g, "&nbsp;" ) + '</td></tr>');
-    } else {
-        $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color);">' + input + '</td></tr>');
-    }
+function post(input) {
+    $("#terminal-input").before('<tr class="posted"><td class="terminal-line" style="color: var(--my-font-color); background-color: var(--my-background-color); white-space:pre-wrap;">' + input + '</td></tr>');
 	updateTerminalScroll();
 }
 
@@ -744,7 +743,7 @@ let Terminal = {
                 if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
                     executeDarkwebTerminalCommand(commandArray);
                 } else {
-                    post("You need to be connected to the Dark Web to use the buy command");
+                    post("You need to be able to connect to the Dark Web to use the buy command. (Maybe there's a TOR router you can buy somewhere)");
                 }
                 break;
             case "cat":
@@ -1636,7 +1635,21 @@ let Terminal = {
                 post("Agility: " + Player.agility + " / 1500");
                 break;
             case Programs.BitFlume:
-                hackWorldDaemon(Player.bitNodeN, true);
+                var yesBtn = yesNoBoxGetYesButton(),
+                    noBtn = yesNoBoxGetNoButton();
+                yesBtn.innerHTML = "Travel to BitNode Nexus";
+                noBtn.innerHTML = "Cancel";
+                yesBtn.addEventListener("click", function() {
+                    hackWorldDaemon(Player.bitNodeN, true);
+                    return yesNoBoxClose();
+                });
+                noBtn.addEventListener("click", function() {
+                    return yesNoBoxClose();
+                });
+                yesNoBoxCreate("WARNING: USING THIS PROGRAM WILL CAUSE YOU TO LOSE ALL OF YOUR PROGRESS ON THE CURRENT BITNODE.<br><br>" +
+                               "Do you want to travel to the BitNode Nexus? This allows you to reset the current BitNode " +
+                               "and select a new one.");
+
                 break;
 			default:
 				post("Invalid executable. Cannot be run");

@@ -39,6 +39,21 @@ function initLiterature() {
               "Netscript command to copy your scripts onto these servers and then run them.";
     Literatures[fn] = new Literature(title, fn, txt);
 
+    title   = "The Complete Handbook for Creating a Successful Corporation";
+    fn      = "corporation-management-handbook.lit";
+    txt     = "This is a brief collection of tips/pointers on how to successfully start and manage a Corporation.<br><br>" +
+              "-Purchasing Hardware, Robots, AI Cores, and Real Estate can potentially increase your production. " +
+              "The effects of these depend on what industry you are in.<br><br>" +
+              "-In order to optimize your production, you will need a good balance of Operators, Managers, and Engineers<br><br>" +
+              "-Different employees excel in different jobs. For example, the highly intelligent employees will probably do best " +
+              "if they are assigned to do Engineering work or Research & Development.<br><br>" +
+              "-If your employees have low morale, energy, or happiness, their production will greatly suffer.<br><br>" +
+              "-Tech is important, but don't neglect sales! Having several Businessmen can boost your sales and your bottom line.<br><br>" +
+              "-Don't forget to advertise your company. You won't have any business if nobody knows you.<br><br>" +
+              "-Having company awareness is great, but what's really important is your company's popularity. Try to keep " +
+              "your popularity as high as possible to see the biggest benefit for your sales<br><br>";
+    Literatures[fn] = new Literature(title, fn, txt);
+
     title   = "A Green Tomorrow";
     fn      = "A-Green-Tomorrow.lit";
     txt     = "Starting a few decades ago, there was a massive global movement towards the generation of renewable energy in an effort to " +

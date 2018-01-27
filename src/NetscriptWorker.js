@@ -25,9 +25,10 @@ function WorkerScript(runningScriptObj) {
 	this.scriptRef		= runningScriptObj;
     this.errorMessage   = "";
     this.args           = runningScriptObj.args;
-    //this.killTrigger    = function() {}; //CB func used to clear any delays (netscriptDelay())
     this.delay          = null;
     this.fnWorker       = null; //Workerscript for a function call
+    this.checkingRam    = false;
+    this.loadedFns      = {}; //Stores names of fns that are "loaded" by this script, thus using RAM
 }
 
 //Returns the server on which the workerScript is running
@@ -65,7 +66,6 @@ function runScriptsLoop() {
     //items fucks up the indexing
     for (var i = workerScripts.length - 1; i >= 0; i--) {
         if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
-            console.log("Deleting script: " + workerScripts[i].name);
             //Delete script from the runningScripts array on its host serverIp
             var ip = workerScripts[i].serverIp;
             var name = workerScripts[i].name;
@@ -95,7 +95,7 @@ function runScriptsLoop() {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
 			try {
 				var ast = parse(workerScripts[i].code);
-                //console.log(ast);
+                console.log(ast);
 			} catch (e) {
                 console.log("Error parsing script: " + workerScripts[i].name);
                 dialogBoxCreate("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
@@ -113,7 +113,6 @@ function runScriptsLoop() {
 				w.env.stopFlag = true;
                 w.scriptRef.log("Script finished running");
 			}).catch(function(w) {
-                console.log(w);
 				if (w instanceof Error) {
                     dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
 					console.log("ERROR: Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());

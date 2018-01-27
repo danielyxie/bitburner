@@ -1768,7 +1768,7 @@ function initLocationButtons() {
         //Calculate cost
         //Have cost increase by some percentage each time RAM has been upgraded
         var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome;
-        var mult = Math.pow(1.55, numUpgrades);
+        var mult = Math.pow(1.58, numUpgrades);
         cost = cost * mult;
 
         var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();

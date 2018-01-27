@@ -75,4 +75,15 @@ function createTextFile(fn, txt, server) {
     return file;
 }
 
+function deleteTextFile(fn, server) {
+    if (!fn.endsWith(".txt")) {fn += ".txt";}
+    for (var i = 0; i < server.textFiles.length; ++i) {
+        if (server.textFiles[i].fn === fn) {
+            server.textFiles.splice(i, 1);
+            return true;
+        }
+    }
+    return false;
+}
+
 export {TextFile, getTextFile, createTextFile};
