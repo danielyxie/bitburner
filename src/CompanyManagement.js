@@ -1127,6 +1127,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     var maxSell = (mat.qlt + .001) * mat.dmd * (100 - mat.cmp)/100 * markup * businessFactor *
                                   Math.pow(this.awareness + 1, 0.05) * Math.pow(this.popularity + 1, 0.07) *
                                   (this.awareness === 0 ? 0.01 : Math.max((this.popularity + .001) / this.awareness, 0.01));
+
                     var sellAmt;
                     if (mat.sllman[1] !== -1) {
                         //Sell amount is manually limited
@@ -1140,7 +1141,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                         console.log("ERROR: sellAmt is negative");
                         continue;
                     }
-                    if (sellAmt && sCost) {
+                    if (sellAmt && sCost >= 0) {
                         mat.qty -= sellAmt;
                         revenue += (sellAmt * sCost);
                         mat.sll = sellAmt / (SecsPerMarketCycle * marketCycles);
@@ -1333,6 +1334,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
                     markup = markupLimit / (product.sCost - product.pCost);
                 }
             }
+            var businessFactor = 1 + (office.employeeProd[EmployeePositions.Business] / office.employeeProd["total"]);
             var maxSell = Math.pow(product.rat, 0.95) * product.dmd * (1-(product.cmp/100)) *
                           markup * businessFactor * Math.pow(this.awareness + 1, 0.05) * Math.pow(this.popularity + 1, 0.07) *
                           (this.awareness === 0 ? 0.01 : Math.max((this.popularity + .001) / this.awareness, 0.01));
