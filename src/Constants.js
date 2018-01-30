@@ -59,7 +59,7 @@ let CONSTANTS = {
     ScriptFileExistsRamCost:        0.1,
     ScriptIsRunningRamCost:         0.1,
     ScriptPurchaseHacknetRamCost:   1.5,
-    ScriptHacknetNodesRamCost:      1.0, //Base cost for accessing hacknet nodes array
+    ScriptHacknetNodesRamCost:      4.0, //Base cost for accessing hacknet nodes array
     ScriptHNUpgLevelRamCost:        0.4,
     ScriptHNUpgRamRamCost:          0.6,
     ScriptHNUpgCoreRamCost:         0.8,
@@ -1121,24 +1121,24 @@ let CONSTANTS = {
     "---Rebalancing: Made many upgrades/purchases cheaper. Receive more money from investors in early stage. Company valuation is higher after going public<br>" +
     "---Multiple bug fixes<br>" +
     "-Added rm() Netscript function<br>" +
-    "-Updated the way script RAM usage is calculated. Now, a function only increases RAM usage the " +
-    "first time it is called. i.e. even if you call hack() multiple times in a script, it only counts " +
-    "against RAM usage once. The same change applies for while/for loops and if conditionals.<br>" +
+    "-Updated the way script RAM usage is calculated. Now, a function only increases RAM usage the first time it is called. i.e. even if you call hack() multiple times in a script, it only counts against RAM usage once. The same change applies for while/for loops and if conditionals.<br>" +
     "-The RAM cost of the following were increased:<br>" +
     "---If statements: increased by 0.05GB<br>" +
     "---run() and exec(): increased by 0.2GB<br>" +
     "---scp(): increased by 0.1GB<br>" +
     "---purchaseServer(): increased by 0.25GB<br>" +
-    "-Note: You may need to re-save all of your scripts in order to re-calculate their RAM usages. Otherwise, " +
-    "it should automatically be re-calculated when you reset/prestige<br>" +
+    "-Note: You may need to re-save all of your scripts in order to re-calculate their RAM usages. Otherwise, it should automatically be re-calculated when you reset/prestige<br>" +
     "-The cost to upgrade your home computer's RAM has been increased (both the base cost and the exponential upgrade multiplier)<br>" +
     "-The cost of purchasing a server was increased by 10% (it is now $55k per RAM)<br>" +
-    "-Bug fix: (Hopefully) removed an exploit where you could avoid RAM usage for Netscript function calls " +
-    "by assigning functions to a variable (foo = hack(); foo('helios');)<br>" +
-    "-Bug fix: (Hopefully) removed an exploit where you could run arbitrary Javascript code using the constructor() " +
-    "method<br>" +
+    "-Bug fix: (Hopefully) removed an exploit where you could avoid RAM usage for Netscript function calls by assigning functions to a variable (foo = hack(); foo('helios');)<br>" +
+    "-Bug fix: (Hopefully) removed an exploit where you could run arbitrary Javascript code using the constructor() method<br>" +
     "-Thanks to Github user mateon1 and Reddit users havoc_mayhem and spaceglace for notifying me of the above exploits<br>" +
-    "-The fileExists() Netscript function now works on text files (.txt). Thanks to Github user devoidfury for this<br>"
+    "-The fileExists() Netscript function now works on text files (.txt). Thanks to Github user devoidfury for this<br><br>" + 
+    "v0.34.3<br>" +
+    "-Minor balance changes to Corporation. Upgrades are generally cheaper and/or have more powerful effects. " +
+    "You will receive more funding while your are a private company. "
+    "-Accessing the hacknetnodes array in Netscript now costs 4.0GB of RAM (only counts against RAM usage once)<br>"
+
 }
 
 export {CONSTANTS};

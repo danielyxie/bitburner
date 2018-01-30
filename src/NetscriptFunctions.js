@@ -1164,7 +1164,7 @@ function NetscriptFunctions(workerScript) {
                     return CONSTANTS.ScriptPurchaseHacknetRamCost;
                 }
             }
-            purchaseHacknet();
+            return purchaseHacknet();
         },
         getStockPrice : function(symbol) {
             if (workerScript.checkingRam) {

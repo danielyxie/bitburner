@@ -353,7 +353,7 @@ Product.prototype.finishProduct = function(employeeProd, industry) {
     var advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
     console.log("advMult: " + advMult);
     this.mku = 100 / (advMult * this.qlt * (busRatio + mgmtRatio));
-    this.dmd = industry.awareness === 0 ? 100 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
+    this.dmd = industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
     this.cmp = getRandomInt(0, 70);
 
     //Calculate the product's required materials
@@ -880,10 +880,18 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
     //At the start of a cycle, store and reset revenue/expenses
     //Then calculate salaries and processs the markets
     if (state === "START") {
+        if (this.thisCycleRevenue.isNaN() || this.thisCycleExpenses.isNaN()) {
+            console.log("ERROR: NaN in Corporation's computed revenue/expenses");
+            console.log(this.thisCycleRevenue.toString());
+            console.log(this.thisCycleExpenses.toString());
+            dialogBoxCreate("Something went wrong when compting Corporation's revenue/expenses. This is a bug. Please report to game developer");
+            this.thisCycleRevenue = new Decimal(0);
+            this.thisCycleExpenses = new Decimal(0);
+        }
         this.lastCycleRevenue = this.thisCycleRevenue.dividedBy(marketCycles * SecsPerMarketCycle);
         this.lastCycleExpenses = this.thisCycleExpenses.dividedBy(marketCycles * SecsPerMarketCycle);
-        this.thisCycleRevenue = this.thisCycleRevenue.times(0);
-        this.thisCycleExpenses = this.thisCycleExpenses.times(0);
+        this.thisCycleRevenue = new Decimal(0);
+        this.thisCycleExpenses = new Decimal(0);
 
         //Process offices (and the employees in them)
         var employeeSalary = 0;
@@ -922,6 +930,7 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
     res = this.processProducts(marketCycles, company);
     this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
     this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
+
 }
 
 //Process change in demand and competition for this industry's materials
@@ -961,14 +970,16 @@ Industry.prototype.processProductMarket = function(marketCycles=1) {
     for (var name in this.products) {
         if (this.products.hasOwnProperty(name)) {
             var product = this.products[name];
-            var change = getRandomInt(1, 5) * 0.001;
+            var change = getRandomInt(1, 4) * 0.0005;
             if (this.type === Industries.Pharmaceutical || this.type === Industries.Software ||
                 this.type === Industries.Robotics) {
-                change *= 2.5;
+                change *= 3;
             }
             change *= marketCycles;
             product.dmd -= change;
             product.cmp += change;
+            product.cmp = Math.min(product.cmp, 99.99);
+            product.dmd = Math.max(product.dmd, 0.001);
         }
     }
 }
@@ -1062,6 +1073,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                         }
                     }
                 }
+                if (producableFrac <= 0) {producableFrac = 0; prod = 0;}
 
                 //Make our materials if they are producable
                 if (producableFrac > 0 && prod > 0) {
@@ -1080,7 +1092,14 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                              Math.pow(this.sciResearch.qty, this.sciFac) +
                              Math.pow(warehouse.materials["AICores"].qty, this.aiFac) / 10e3);
                     }
+                } else {
+                    for (var reqMatName in this.reqMats) {
+                        if (this.reqMats.hasOwnProperty(reqMatName)) {
+                            warehouse.materials[reqMatName].prd = 0;
+                        }
+                    }
                 }
+
                 //Per second
                 var fooProd = prod * producableFrac / (SecsPerMarketCycle * marketCycles);
                 for (var fooI = 0; fooI < this.prodMats.length; ++fooI) {
@@ -1125,7 +1144,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     }
                     var businessFactor = 1 + (office.employeeProd[EmployeePositions.Business] / office.employeeProd["total"]);
                     var maxSell = (mat.qlt + .001) * mat.dmd * (100 - mat.cmp)/100 * markup * businessFactor *
-                                  Math.pow(this.awareness + 1, 0.05) * Math.pow(this.popularity + 1, 0.07) *
+                                  Math.pow(this.awareness + 1, 0.05) * Math.pow(this.popularity + 1, 0.07) * company.getSalesMultiplier() *
                                   (this.awareness === 0 ? 0.01 : Math.max((this.popularity + .001) / this.awareness, 0.01));
 
                     var sellAmt;
@@ -1135,7 +1154,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     } else {
                         sellAmt = maxSell;
                     }
-                    sellAmt = (sellAmt * company.getSalesMultiplier() * SecsPerMarketCycle * marketCycles);
+                    sellAmt = (sellAmt * SecsPerMarketCycle * marketCycles);
                     sellAmt = Math.min(mat.qty, sellAmt);
                     if (sellAmt < 0) {
                         console.log("ERROR: sellAmt is negative");
@@ -1254,15 +1273,21 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             switch(this.state) {
 
             case "PRODUCTION":
-            //Calculate the maximum production of this Product based on
-            //office's productivity, materials, etc.
+            //Calculate the maximum production of this material based
+            //on the office's productivity
             var total = office.employeeProd[EmployeePositions.Operations] +
                         office.employeeProd[EmployeePositions.Engineer] +
-                        office.employeeProd[EmployeePositions.Management];
-            var ratio = (office.employeeProd[EmployeePositions.Operations] / total) *
+                        office.employeeProd[EmployeePositions.Management], ratio;
+            if (total === 0) {
+                ratio = 0;
+            } else {
+                ratio = (office.employeeProd[EmployeePositions.Operations] / total) *
                         (office.employeeProd[EmployeePositions.Engineer] / total) *
                         (office.employeeProd[EmployeePositions.Management] / total);
-            var maxProd = ratio * Math.pow(total, 0.2), prod;
+                ratio = Math.max(0.01, ratio); //Minimum ratio value if you have employees
+            }
+            var maxProd = ratio * Math.pow(total, 0.2) *
+                          corporation.getProductionMultiplier() * this.prodMult, prod;
 
             //Account for whether production is manually limited
             if (product.prdman[city][0]) {
@@ -1270,7 +1295,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             } else {
                 prod = maxProd;
             }
-            prod *= (this.prodMult * corporation.getProductionMultiplier() * SecsPerMarketCycle * marketCycles);
+            prod *= (SecsPerMarketCycle * marketCycles);
 
 
             //Calculate net change in warehouse storage making the Products will cost
@@ -1300,7 +1325,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             }
 
             //Make our Products if they are producable
-            if (producableFrac > 0) {
+            if (producableFrac > 0 && prod > 0) {
                 for (var reqMatName in product.reqMats) {
                     if (product.reqMats.hasOwnProperty(reqMatName)) {
                         var reqMatQtyNeeded = (product.reqMats[reqMatName] * prod * producableFrac);
@@ -1335,9 +1360,9 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
                 }
             }
             var businessFactor = 1 + (office.employeeProd[EmployeePositions.Business] / office.employeeProd["total"]);
-            var maxSell = Math.pow(product.rat, 0.95) * product.dmd * (1-(product.cmp/100)) *
+            var maxSell = Math.pow(product.rat, 0.95) * product.dmd * (1-(product.cmp/100)) * corporation.getSalesMultiplier() *
                           markup * businessFactor * Math.pow(this.awareness + 1, 0.05) * Math.pow(this.popularity + 1, 0.07) *
-                          (this.awareness === 0 ? 0.01 : Math.max((this.popularity + .001) / this.awareness, 0.01));
+                          (this.awareness === 0 ? 0.01 : Math.max((this.popularity + .001) / this.awareness, 0.01)) ;
             var sellAmt;
             if (product.sllman[city][0] && product.sllman[city][1] > 0) {
                 //Sell amount is manually limited
@@ -1345,7 +1370,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             } else {
                 sellAmt = maxSell;
             }
-            sellAmt = sellAmt * corporation.getSalesMultiplier() * SecsPerMarketCycle * marketCycles;
+            sellAmt = sellAmt * SecsPerMarketCycle * marketCycles;
             sellAmt = Math.min(product.data[city][0], sellAmt); //data[0] is qty
             if (sellAmt && product.sCost) {
                 product.data[city][0] -= sellAmt; //data[0] is qty
@@ -2305,6 +2330,13 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
     }
 
     //Completed products
+    var cmpAndDmdText = "";
+    if (company.unlockUpgrades[2] === 1) {
+        cmpAndDmdText += "<br>Competition: " + formatNumber(product.cmp, 3);
+    }
+    if (company.unlockUpgrades[3] === 1) {
+        cmpAndDmdText += "<br>Demand: " + formatNumber(product.dmd, 3);
+    }
     var totalGain = product.data[city][1] - product.data[city][2]; //Production - sale
     div.appendChild(createElement("p", {
         innerHTML: "<p class='tooltip'>" + product.name + ": " + formatNumber(product.data[city][0], 3) + //Quantity
@@ -2317,7 +2349,8 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                    "Durability: " + formatNumber(product.dur, 3) + "<br>" +
                    "Reliability: " + formatNumber(product.rel, 3) + "<br>" +
                    "Aesthetics: " + formatNumber(product.aes, 3) + "<br>" +
-                   "Features: " + formatNumber(product.fea, 3) + "</span></p><br>" +
+                   "Features: " + formatNumber(product.fea, 3) +
+                   cmpAndDmdText + "</span></p><br>" +
                    "<p class='tooltip'>Est. Production Cost: " + numeral(product.pCost).format("$0.000a") +
                    "<span class='tooltiptext'>An estimate of how much it costs to produce one unit of this product. " +
                    "If your sell price exceeds this by too much, people won't buy your product. The better your " +
@@ -2523,9 +2556,9 @@ var CorporationUnlockUpgrades = {
 //                  name, desc]
 var CorporationUpgrades = {
     //Smart factories, increases production
-    "0":    [0, 2e9, 1.07, 0.02,
+    "0":    [0, 2e9, 1.07, 0.03,
             "Smart Factories", "Advanced AI automatically optimizes the operation and productivity " +
-            "of factories. Each level of this upgrade increases your global production by 2% (additive)."],
+            "of factories. Each level of this upgrade increases your global production by 3% (additive)."],
 
     //Smart warehouses, increases storage size
     "1":    [1, 2e9, 1.07, .1,
@@ -2569,7 +2602,7 @@ var CorporationUpgrades = {
             "of this upgrade globally increases the efficiency of your employees by 10% (additive)."],
 
     //Improves sales of materials/products
-    "8":    [8, 1e9, 1.09, 0.01,
+    "8":    [8, 1e9, 1.08, 0.01,
             "ABC SalesBots", "Always Be Closing. Purchase these robotic salesmen to increase the amount of " +
             "materials and products you sell. Each level of this upgrade globally increases your sales " +
             "by 1% (additive)."],
@@ -2624,14 +2657,20 @@ Corporation.prototype.process = function(numCycles=1) {
 
         //At the start of a new cycle, calculate profits from previous cycle
         if (state === "START") {
-            this.revenue = this.revenue.times(0);
-            this.expenses = this.expenses.times(0);
+            this.revenue = new Decimal(0);
+            this.expenses = new Decimal(0);
             this.divisions.forEach((ind)=>{
                 this.revenue = this.revenue.plus(ind.lastCycleRevenue);
                 this.expenses = this.expenses.plus(ind.lastCycleExpenses);
             });
             var profit = this.revenue.minus(this.expenses);
             var cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
+            if (this.funds.isNaN()) {
+                dialogBoxCreate("There was an error calculating your Corporations funds and they got reset to 0. " +
+                                "This is a bug. Please report to game developer.<br><br>" +
+                                "(Your funds have been set to $150b for the inconvenience)");
+                this.funds = new Decimal(150e9);
+            }
             this.funds = this.funds.plus(cycleProfit);
             this.updateSharePrice();
         }
@@ -2678,7 +2717,7 @@ Corporation.prototype.getInvestment = function() {
         case 4:
             return;
     }
-    var funding = val * percShares * 2,
+    var funding = val * percShares * 4,
         investShares = Math.floor(TOTALSHARES * percShares),
         yesBtn = yesNoBoxGetYesButton(),
         noBtn = yesNoBoxGetNoButton();
