@@ -1135,9 +1135,9 @@ let CONSTANTS = {
     "-Thanks to Github user mateon1 and Reddit users havoc_mayhem and spaceglace for notifying me of the above exploits<br>" +
     "-The fileExists() Netscript function now works on text files (.txt). Thanks to Github user devoidfury for this<br><br>" + 
     "v0.34.3<br>" +
-    "-Minor balance changes to Corporation. Upgrades are generally cheaper and/or have more powerful effects. " +
-    "You will receive more funding while your are a private company. " + 
-    "-Accessing the hacknetnodes array in Netscript now costs 4.0GB of RAM (only counts against RAM usage once)<br>"
+    "-Minor balance changes to Corporation. Upgrades are generally cheaper and/or have more powerful effects<br>" +
+    "You will receive more funding while your are a private company<br>" + 
+    "-Accessing the hacknetnodes array in Netscript now costs 4.0GB of RAM (only counts against RAM usage once)<br><br>"
 
 }
 
