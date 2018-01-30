@@ -296,7 +296,6 @@ function calculateRamUsage(codeCopy) {
     try {
         var ast = parse(codeCopy);
     } catch(e) {
-        console.log("returning -1 bc parsing error: " + e.toString());
         return -1;
     }
 
@@ -339,7 +338,9 @@ function calculateRamUsage(codeCopy) {
                     if (typeof func === "function") {
                         try {
                             var res = func.apply(null, []);
-                            if (!isNaN(res)) {ramUsage += res;}
+                            if (typeof res === "number") {
+                                ramUsage += res;
+                            }
                         } catch(e) {
                             console.log("ERROR applying function: " + e);
                         }
@@ -357,6 +358,11 @@ function calculateRamUsage(codeCopy) {
                 }
             }
         }
+    }
+
+    //Special case: hacknetnodes array
+    if (codeCopy.includes("hacknetnodes")) {
+        ramUsage += CONSTANTS.ScriptHacknetNodesRamCost;
     }
     return ramUsage;
 }
