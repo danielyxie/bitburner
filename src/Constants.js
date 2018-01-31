@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.34.2",
+    Version:                "0.34.3",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -1133,11 +1133,18 @@ let CONSTANTS = {
     "-Bug fix: (Hopefully) removed an exploit where you could avoid RAM usage for Netscript function calls by assigning functions to a variable (foo = hack(); foo('helios');)<br>" +
     "-Bug fix: (Hopefully) removed an exploit where you could run arbitrary Javascript code using the constructor() method<br>" +
     "-Thanks to Github user mateon1 and Reddit users havoc_mayhem and spaceglace for notifying me of the above exploits<br>" +
-    "-The fileExists() Netscript function now works on text files (.txt). Thanks to Github user devoidfury for this<br><br>" + 
+    "-The fileExists() Netscript function now works on text files (.txt). Thanks to Github user devoidfury for this<br><br>" +
     "v0.34.3<br>" +
-    "-Minor balance changes to Corporation. Upgrades are generally cheaper and/or have more powerful effects. " +
-    "You will receive more funding while your are a private company. " + 
-    "-Accessing the hacknetnodes array in Netscript now costs 4.0GB of RAM (only counts against RAM usage once)<br>"
+    "-Minor balance changes to Corporations: <br>" +
+    "---Upgrades are generally cheaper and/or have more powerful effects.<br>" +
+    "---You will receive more funding while your are a private company.<br>" +
+    "---Product demand decreases at a slower rate.<br>" +
+    "---Production multiplier for Industries (receives for owning real estate/hardware/robots/etc.) is slightly higher<br>" +
+    "-Accessing the hacknetnodes array in Netscript now costs 4.0GB of RAM (only counts against RAM usage once)<br>" +
+    "-Bug Fix: Corporation oustanding shares should now be numeric rather than a string<br>" +
+    "-Bug Fix: Corporation production now properly calculated for industries that dont produce materials.<br>" +
+    "-Bug Fix: Gangs should now properly reset when switching BitNodes<br>" +
+    "-Bug Fix: Corporation UI should now properly reset when you go public<br>"
 
 }
 

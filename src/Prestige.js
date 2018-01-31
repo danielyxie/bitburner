@@ -247,6 +247,9 @@ function prestigeSourceFile() {
 
     //Gain int exp
     Player.gainIntelligenceExp(5);
+
+    //Reset gang
+    Player.gang = null;
 }
 
 export {prestigeAugmentation, prestigeSourceFile};
