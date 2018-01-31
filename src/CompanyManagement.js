@@ -535,7 +535,7 @@ var IndustryUpgrades = {
             "Coffee", "Provide your employees with coffee, increasing their energy by 5%."],
     "1":    [1, 1e9, 1.02, 1.01,
             "AdVert.Inc", "Hire AdVert.Inc to advertise your company. Each level of " +
-            "this upgrade grants your company a static increase of 5 and 1 to its awareness and " +
+            "this upgrade grants your company a static increase of 4 and 1 to its awareness and " +
             "popularity, respectively. It will then increase your company's awareness by 1%, and its popularity " +
             "by a random percentage between 5% and 15%. These effects are increased by other upgrades " +
             "that increase the power of your advertising."]
@@ -688,6 +688,7 @@ Industry.prototype.init = function() {
             this.robFac = 0.3;
             this.aiFac  = 0.25;
             this.advFac = 0.75;
+            this.reFac  = 0.05;
             this.reqMats = {
                 "Food":     0.5,
                 "Water":    0.5,
@@ -711,9 +712,9 @@ Industry.prototype.init = function() {
         case Industries.Chemical:
             this.reFac  = 0.25;
             this.sciFac = 0.75;
-            this.hwFac  = 0.15;
-            this.robFac = 0.2;
-            this.aiFac  = 0.15;
+            this.hwFac  = 0.2;
+            this.robFac = 0.25;
+            this.aiFac  = 0.2;
             this.advFac = 0.1;
             this.reqMats = {
                 "Plants":   1,
@@ -756,6 +757,7 @@ Industry.prototype.init = function() {
             this.sciFac = 0.7;
             this.aiFac  = 0.4;
             this.advFac = 0.6;
+            this.hwFac  = 0.2;
             this.reqMats = {
                 "Hardware":     5,
                 "Energy":       3,
@@ -880,7 +882,7 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
     //At the start of a cycle, store and reset revenue/expenses
     //Then calculate salaries and processs the markets
     if (state === "START") {
-        if (this.thisCycleRevenue.isNaN() || this.thisCycleExpenses.isNaN()) {
+        if (isNaN(this.thisCycleRevenue) || isNaN(this.thisCycleExpenses)) {
             console.log("ERROR: NaN in Corporation's computed revenue/expenses");
             console.log(this.thisCycleRevenue.toString());
             console.log(this.thisCycleExpenses.toString());
@@ -970,7 +972,7 @@ Industry.prototype.processProductMarket = function(marketCycles=1) {
     for (var name in this.products) {
         if (this.products.hasOwnProperty(name)) {
             var product = this.products[name];
-            var change = getRandomInt(1, 4) * 0.0005;
+            var change = getRandomInt(1, 3) * 0.0004;
             if (this.type === Industries.Pharmaceutical || this.type === Industries.Software ||
                 this.type === Industries.Robotics) {
                 change *= 3;
@@ -1104,6 +1106,15 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                 var fooProd = prod * producableFrac / (SecsPerMarketCycle * marketCycles);
                 for (var fooI = 0; fooI < this.prodMats.length; ++fooI) {
                     warehouse.materials[this.prodMats[fooI]].prd = fooProd;
+                }
+            } else {
+                //If this doesn't produce any materials, then it only creates
+                //Products. Creating products will consume materials. The
+                //Production of all consumed materials must be set to 0
+                for (var reqMatName in this.reqMats) {
+                    if (this.reqMats.hasOwnProperty(reqMatName)) {
+                        warehouse.materials[reqMatName].prd = 0;
+                    }
                 }
             }
             break;
@@ -1422,7 +1433,7 @@ Industry.prototype.upgrade = function(upgrade, refs) {
             break;
         case 1: //AdVert.Inc,
             var advMult = corporation.getAdvertisingMultiplier();
-            this.awareness += (5 * advMult);
+            this.awareness += (4 * advMult);
             this.popularity += (1 * advMult);
             this.awareness *= (1.01 * advMult);
             this.popularity *= ((1 + Math.random(5, 15) / 100) * advMult);
@@ -2665,7 +2676,7 @@ Corporation.prototype.process = function(numCycles=1) {
             });
             var profit = this.revenue.minus(this.expenses);
             var cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
-            if (this.funds.isNaN()) {
+            if (isNaN(this.funds)) {
                 dialogBoxCreate("There was an error calculating your Corporations funds and they got reset to 0. " +
                                 "This is a bug. Please report to game developer.<br><br>" +
                                 "(Your funds have been set to $150b for the inconvenience)");
@@ -2760,7 +2771,7 @@ Corporation.prototype.goPublic = function() {
         class:"a-link-button",
         innerText:"Go Public",
         clickListener:()=>{
-            var numShares = input.value;
+            var numShares = Math.round(input.value);
             var initialSharePrice = this.determineValuation() / (TOTALSHARES);
             if (isNaN(numShares)) {
                 dialogBoxCreate("Invalid value for number of issued shares");
@@ -2775,6 +2786,7 @@ Corporation.prototype.goPublic = function() {
             this.issuedShares = numShares;
             this.numShares -= numShares;
             this.funds = this.funds.plus(numShares * initialSharePrice);
+            this.displayCorporationOverviewContent();
             removeElementById(goPublicPopupId);
             return false;
         }
@@ -3188,6 +3200,16 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             dialogBoxCreate("ERROR: You don't have this many shares to sell");
                         } else {
                             this.numShares -= shares;
+                            if (isNaN(this.issuedShares)) {
+                                console.log("ERROR: Corporation issuedShares is NaN: " + this.issuedShares);
+                                console.log("Converting to number now");
+                                var res = parseInt(this.issuedShares);
+                                if (isNaN(res)) {
+                                    this.issuedShares = 0;
+                                } else {
+                                    this.issuedShares = res;
+                                }
+                            }
                             this.issuedShares += shares;
                             Player.gainMoney(shares * this.sharePrice);
                             removeElementById(popupId);
@@ -3216,7 +3238,8 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                 var currentStockPrice = this.sharePrice;
                 var txt = createElement("p", {
                     innerHTML: "Enter the number of shares you would like to buy back at market price. The current price of your " +
-                               "company's stock is " + numeral(currentStockPrice).format("$0.000a"),
+                               "company's stock is " + numeral(currentStockPrice).format("$0.000a") +
+                               ". Your company currently has " + formatNumber(this.issuedShares, 3) + " outstanding stock shares",
                 });
                 var costIndicator = createElement("p", {});
                 var input = createElement("input", {
@@ -3249,6 +3272,16 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                                             numeral(shares * tempStockPrice).format("$0.000a") + ")");
                         } else {
                             this.numShares += shares;
+                            if (isNaN(this.issuedShares)) {
+                                console.log("ERROR: Corporation issuedShares is NaN: " + this.issuedShares);
+                                console.log("Converting to number now");
+                                var res = parseInt(this.issuedShares);
+                                if (isNaN(res)) {
+                                    this.issuedShares = 0;
+                                } else {
+                                    this.issuedShares = res;
+                                }
+                            }
                             this.issuedShares -= shares;
                             Player.loseMoney(shares * tempStockPrice);
                             //TODO REMOVE from Player money

@@ -292,7 +292,13 @@ function createBitNodeYesNoEventListeners(newBitNode, destroyedBitNode, flume=fa
     var yesBtn = yesNoBoxGetYesButton();
     yesBtn.innerHTML = "Enter BitNode-" + newBitNode;
     yesBtn.addEventListener("click", function() {
-        if (!flume) {giveSourceFile(destroyedBitNode);}
+        if (!flume) {
+            giveSourceFile(destroyedBitNode);
+        } else {
+            //If player used flume, subtract 5 int exp. The prestigeSourceFile()
+            //function below grants 5 int exp, so this allows sets net gain to 0
+            Player.gainIntelligenceExp(-5);
+        }
         redPillFlag = false;
         var container = document.getElementById("red-pill-container");
         removeChildrenFromElement(container);
