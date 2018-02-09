@@ -6,7 +6,9 @@ import {Player}                                 from "./Player.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import {getRandomInt}                           from "../utils/HelperFunctions.js";
+import {getRandomInt, createElement,
+        removeChildrenFromElement,
+        createAccordionElement}                 from "../utils/HelperFunctions.js";
 import  numeral                                 from "../utils/numeral.min.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
@@ -272,6 +274,26 @@ Gang.prototype.calculatePower = function() {
     return (0.0005 * memberTotal);
 }
 
+Gang.prototype.autoAssignMemberToTask = function(taskName) {
+    for (var i = 0; i < this.members.length; ++i) {
+        if (this.members[i].task.name === taskName) {
+            this.members[i].assignToTask(taskName);
+            return true;
+        }
+    }
+    return false;
+}
+
+Gang.prototype.autoUnassignMemberFromTask = function(taskName) {
+    for (var i = 0; i < this.members.length; ++i) {
+        if (this.members[i].task.name === taskName) {
+            this.members[i].unassignFromTask();
+            return true;
+        }
+    }
+    return false;
+}
+
 Gang.prototype.toJSON = function() {
 	return Generic_toJSON("Gang", this);
 }
@@ -285,7 +307,7 @@ Reviver.constructors.Gang = Gang;
 /*** Gang Member object ***/
 function GangMember(name) {
     this.name   = name;
-    this.task   = null; //GangMemberTask object
+    this.task   = GangMemberTasks["Unassigned"]; //GangMemberTask object
     this.city   = Player.city;
 
     //Name of upgrade only
@@ -314,6 +336,8 @@ function GangMember(name) {
     this.dex_mult   = 1;
     this.agi_mult   = 1;
     this.cha_mult   = 1;
+
+    this.upgrades = []; //Names of upgrades
 }
 
 //Same formula for Player
@@ -340,6 +364,15 @@ GangMember.prototype.assignToTask = function(taskName) {
         this.task = GangMemberTasks[taskName];
     } else {
         console.log("ERROR: Invalid task " + taskName);
+        this.task = null;
+    }
+}
+
+GangMember.prototype.unassignFromTask = function() {
+    if (GangMemberTasks.hasOwnProperty("Unassigned")) {
+        this.task = GangMemberTasks["Unassigned"];
+    } else {
+        console.log("ERROR: Can't find Unassigned Gang member task");
         this.task = null;
     }
 }
@@ -457,6 +490,9 @@ Reviver.constructors.GangMemberTask = GangMemberTask;
 
 //TODO Human trafficking and an equivalent hacking crime
 let GangMemberTasks = {
+    "Unassigned" :              new GangMemebrTask(
+                                        "Unassigned",
+                                        "This gang member is currently idle"),
     "Ransomware" :              new GangMemberTask(
                                         "Ransomware",
                                         "Assign this gang member to create and distribute ransomware<br><br>" +
@@ -581,90 +617,89 @@ let GangMemberTasks = {
 }
 
 
-function GangMemberUpgrade(name="", desc="", cost=0, type="-") {
+function GangMemberUpgrade(name="", desc="", cost=0) {
     this.name = name;
     this.desc = desc;
     this.cost = cost;
-    this.type = type; //w, a, v, r
 }
 
 //Passes in a GangMember object
-GangMemberUpgrade.prototype.apply = function(member, unapply=false) {
+GangMemberUpgrade.prototype.apply = function(member) {
     switch(this.name) {
         case "Baseball Bat":
-            unapply ? member.str_mult /= 1.1 : member.str_mult *= 1.1;
-            unapply ? member.def_mult /= 1.1 : member.def_mult *= 1.1;
+            member.str_mult *= 1.05;
+            member.def_mult *= 1.05;
             break;
         case "Katana":
-            unapply ? member.str_mult /= 1.15 : member.str_mult *= 1.15;
-            unapply ? member.def_mult /= 1.15 : member.def_mult *= 1.15;
-            unapply ? member.dex_mult /= 1.15 : member.dex_mult *= 1.15;
+            member.str_mult *= 1.1;
+            member.def_mult *= 1.1;
+            member.dex_mult *= 1.1;
             break;
         case "Glock 18C":
-            unapply ? member.str_mult /= 1.2 : member.str_mult *= 1.2;
-            unapply ? member.def_mult /= 1.2 : member.def_mult *= 1.2;
-            unapply ? member.dex_mult /= 1.2 : member.dex_mult *= 1.2;
-            unapply ? member.agi_mult /= 1.2 : member.agi_mult *= 1.2;
+            member.str_mult *= 1.15;
+            member.def_mult *= 1.15;
+            member.dex_mult *= 1.15;
+            member.agi_mult *= 1.15;
             break;
         case "P90":
-            unapply ? member.str_mult /= 1.4 : member.str_mult *= 1.4;
-            unapply ? member.def_mult /= 1.4 : member.def_mult *= 1.4;
-            unapply ? member.agi_mult /= 1.2 : member.agi_mult *= 1.2;
+            member.str_mult *= 1.2;
+            member.def_mult *= 1.2;
+            member.agi_mult *= 1.1;
             break;
         case "Steyr AUG":
-            unapply ? member.str_mult /= 1.6 : member.str_mult *= 1.6;
-            unapply ? member.def_mult /= 1.6 : member.def_mult *= 1.6;
+            member.str_mult *= 1.25;
+            member.def_mult *= 1.25;
             break;
         case "AK-47":
-            unapply ? member.str_mult /= 1.8 : member.str_mult *= 1.8;
-            unapply ? member.def_mult /= 1.8 : member.def_mult *= 1.8;
+            member.str_mult *= 1.5;
+            member.def_mult *= 1.5;
             break;
         case "M15A10 Assault Rifle":
-            unapply ? member.str_mult /= 1.9 : member.str_mult *= 1.9;
-            unapply ? member.def_mult /= 1.9 : member.def_mult *= 1.9;
+            member.str_mult *= 1.6;
+            member.def_mult *= 1.6;
             break;
         case "AWM Sniper Rifle":
-            unapply ? member.str_mult /= 1.8 : member.str_mult *= 1.8;
-            unapply ? member.dex_mult /= 1.8 : member.dex_mult *= 1.8;
-            unapply ? member.agi_mult /= 1.8 : member.agi_mult *= 1.8;
+            member.str_mult *= 1.5;
+            member.dex_mult *= 1.5;
+            member.agi_mult *= 1.5;
             break;
         case "Bulletproof Vest":
-            unapply ? member.def_mult /= 1.15 : member.def_mult *= 1.15;
+            member.def_mult *= 1.05;
             break;
         case "Full Body Armor":
-            unapply ? member.def_mult /= 1.3 : member.def_mult *= 1.3;
+            member.def_mult *= 1.1;
             break;
         case "Liquid Body Armor":
-            unapply ? member.def_mult /= 1.5 : member.def_mult *= 1.5;
-            unapply ? member.agi_mult /= 1.5 : member.agi_mult *= 1.5;
+            member.def_mult *= 1.25;
+            member.agi_mult *= 1.25;
             break;
         case "Graphene Plating Armor":
-            unapply ? member.def_mult /= 2 : member.def_mult *= 2;
+            member.def_mult *= 5;
             break;
         case "Ford Flex V20":
-            unapply ? member.agi_mult /= 1.2 : member.agi_mult *= 1.2;
-            unapply ? member.cha_mult /= 1.2 : member.cha_mult *= 1.2;
+            member.agi_mult *= 1.1;
+            member.cha_mult *= 1.1;
             break;
         case "ATX1070 Superbike":
-            unapply ? member.agi_mult /= 1.4 : member.agi_mult *= 1.4;
-            unapply ? member.cha_mult /= 1.4 : member.cha_mult *= 1.4;
+            member.agi_mult *= 1.15;
+            member.cha_mult *= 1.15;
             break;
         case "Mercedes-Benz S9001":
-            unapply ? member.agi_mult /= 1.6 : member.agi_mult *= 1.6;
-            unapply ? member.cha_mult /= 1.6 : member.cha_mult *= 1.6;
+            member.agi_mult *= 1.2;
+            member.cha_mult *= 1.2;
             break;
         case "White Ferrari":
-            unapply ? member.agi_mult /= 1.8 : member.agi_mult *= 1.8;
-            unapply ? member.cha_mult /= 1.8 : member.cha_mult *= 1.8;
+            member.agi_mult *= 1.25;
+            member.cha_mult *= 1.25;
             break;
         case "NUKE Rootkit":
-            unapply ? member.hack_mult /= 1.2 : member.hack_mult *= 1.2;
+            member.hack_mult *= 1.1;
             break;
         case "Soulstealer Rootkit":
-            unapply ? member.hack_mult /= 1.3 : member.hack_mult *= 1.3;
+            member.hack_mult *= 1.2;
             break;
         case "Demon Rootkit":
-            unapply ? member.hack_mult /= 1.5 : member.hack_mult *= 1.5;
+            member.hack_mult *= 1.3;
             break;
         default:
             console.log("ERROR: Could not find this upgrade: " + this.name);
@@ -727,43 +762,43 @@ Reviver.constructors.GangMemberUpgrade = GangMemberUpgrade;
 
 let GangMemberUpgrades = {
     "Baseball Bat" : new GangMemberUpgrade("Baseball Bat",
-                            "Increases strength and defense by 10%", 1000000, "w"),
+                            "Increases strength and defense by 5%", 1e6),
     "Katana" :       new GangMemberUpgrade("Katana",
-                            "Increases strength, defense, and dexterity by 15%", 12000000, "w"),
+                            "Increases strength, defense, and dexterity by 10%", 12e6),
     "Glock 18C" :    new GangMemberUpgrade("Glock 18C",
-                            "Increases strength, defense, dexterity, and agility by 20%", 25000000, "w"),
+                            "Increases strength, defense, dexterity, and agility by 15%", 25e6),
     "P90" :          new GangMemberUpgrade("P90C",
-                            "Increases strength and defense by 40%. Increases agility by 20%", 50000000, "w"),
+                            "Increases strength and defense by 20%. Increases agility by 10%", 50e6),
     "Steyr AUG" :    new GangMemberUpgrade("Steyr AUG",
-                            "Increases strength and defense by 60%", 60000000, "w"),
+                            "Increases strength and defense by 25%", 60e6),
     "AK-47" :        new GangMemberUpgrade("AK-47",
-                            "Increases strength and defense by 80%", 100000000, "w"),
+                            "Increases strength and defense by 50%", 100e6),
     "M15A10 Assault Rifle" :    new GangMemberUpgrade("M15A10 Assault Rifle",
-                                        "Increases strength and defense by 90%", 150000000, "w"),
+                                        "Increases strength and defense by 60%", 150e6),
     "AWM Sniper Rifle" :        new GangMemberUpgrade("AWM Sniper Rifle",
-                                        "Increases strength, dexterity, and agility by 80%", 225000000, "w"),
+                                        "Increases strength, dexterity, and agility by 50%", 225e6),
     "Bulletproof Vest" :        new GangMemberUpgrade("Bulletproof Vest",
-                                        "Increases defense by 15%", 2000000, "a"),
+                                        "Increases defense by 5%", 2e6),
     "Full Body Armor" :         new GangMemberUpgrade("Full Body Armor",
-                                        "Increases defense by 30%", 5000000, "a"),
+                                        "Increases defense by 10%", 5e6),
     "Liquid Body Armor" :       new GangMemberUpgrade("Liquid Body Armor",
-                                        "Increases defense and agility by 50%", 25000000, "a"),
+                                        "Increases defense and agility by 25%", 25e6),
     "Graphene Plating Armor" :  new GangMemberUpgrade("Graphene Plating Armor",
-                                        "Increases defense by 100%", 40000000, "a"),
+                                        "Increases defense by 50%", 40e6),
     "Ford Flex V20" :           new GangMemberUpgrade("Ford Flex V20",
-                                        "Increases agility and charisma by 20%", 3000000, "v"),
+                                        "Increases agility and charisma by 10%", 3e6),
     "ATX1070 Superbike" :       new GangMemberUpgrade("ATX1070 Superbike",
-                                        "Increases agility and charisma by 40%", 9000000, "v"),
+                                        "Increases agility and charisma by 15%", 9e6),
     "Mercedes-Benz S9001" :     new GangMemberUpgrade("Mercedes-Benz S9001",
-                                        "Increases agility and charisma by 60%", 18000000, "v"),
+                                        "Increases agility and charisma by 20%", 18e6),
     "White Ferrari" :           new GangMemberUpgrade("White Ferrari",
-                                        "Increases agility and charisma by 80%", 30000000, "v"),
+                                        "Increases agility and charisma by 25%", 30e6),
     "NUKE Rootkit" :            new GangMemberUpgrade("NUKE Rootkit",
-                                        "Increases hacking by 20%", 5000000, "r"),
+                                        "Increases hacking by 10%", 5e6),
     "Soulstealer Rootkit" :     new GangMemberUpgrade("Soulstealer Rootkit",
-                                        "Increases hacking by 30%", 15000000, "r"),
+                                        "Increases hacking by 20%", 15e6),
     "Demon Rootkit" :           new GangMemberUpgrade("Demon Rootkit",
-                                        "Increases hacking by 50%", 50000000, "r"),
+                                        "Increases hacking by 30%", 50e6),
 }
 
 //Create a pop-up box that lets player purchase upgrades
@@ -889,131 +924,189 @@ function createGangMemberUpgradeButtons(memberObj, upgNames, memberUpgrade, cont
     }
 }
 
-let gangContentCreated = false;
+//Gang DOM elements
+let gangContentCreated = false,
+    gangContainer = null, managementButton = null, territoryButton = null;
+
+//Subpages
+let gangManagementSubpage = null, gangTerritorySubpage = null;
+
+//Gang Management Elements
+let gangDesc = null, gangInfo = null,
+    gangRecruitMemberButton = null, gangRecruitRequirementText = null,
+    gangExpandAllButton = null, gangCollapseAllButton, gangMemberFilter = null,
+    gangMemberList = null;
+
+
+//Gang Territory Elements
+let gangTerritoryDescText = null, gangTerritoryInfoText = null;
+
 function displayGangContent() {
-    if (!gangContentCreated) {
+    if (!gangContentCreated || gangContainer == null) {
         gangContentCreated = true;
 
         //Create gang container
-        var container = document.createElement("div");
-        document.getElementById("entire-game-container").appendChild(container);
-        container.setAttribute("id", "gang-container");
-        container.setAttribute("class", "generic-menupage-container");
+        gangContainer = createElement("div", {
+            id:"gang-container", class:"generic-menupage-container",
+        });
 
         //Get variables
-        var facName = Player.gang.facName;
-        var members = Player.gang.members;
-        var wanted = Player.gang.wanted;
-        var respect = Player.gang.respect;
+        var facName = Player.gang.facName,
+            members = Player.gang.members,
+            wanted = Player.gang.wanted,
+            respect = Player.gang.respect;
 
         //Buttons to switch between panels
-        var managementButton = document.createElement("a");
-        managementButton.setAttribute("id", "gang-management-subpage-button");
-        managementButton.innerHTML = "Gang Management (1)";
-        managementButton.setAttribute("class", "a-link-button-inactive");
-        managementButton.style.display = "inline-block";
-        var territoryButton = document.createElement("a");
-        territoryButton.setAttribute("id", "gang-territory-subpage-button");
-        territoryButton.innerHTML = "Gang Territory (2)";
-        territoryButton.setAttribute("class", "a-link-button");
-        territoryButton.style.display = "inline-block";
-
-        managementButton.addEventListener("click", function() {
-            document.getElementById("gang-management-subpage").style.display = "block";
-            document.getElementById("gang-territory-subpage").style.display = "none";
-            managementButton.classList.toggle("a-link-button-inactive");
-            managementButton.classList.toggle("a-link-button");
-            territoryButton.classList.toggle("a-link-button-inactive");
-            territoryButton.classList.toggle("a-link-button");
-            updateGangContent();
-            return false;
+        managementButton = createElement("a", {
+            id:"gang-management-subpage-button", class:"a-link-button-inactive",
+            display:"inline-block", innerHTML: "Gang Management (1)",
+            clickListener:()=>{
+                gangManagementSubpage.style.display = "block";
+                gangTerritorySubpage.style.display = "none";
+                managementButton.classList.toggle("a-link-button-inactive");
+                managementButton.classList.toggle("a-link-button");
+                territoryButton.classList.toggle("a-link-button-inactive");
+                territoryButton.classList.toggle("a-link-button");
+                updateGangContent();
+                return false;
+            }
+        })
+        territoryButton = createElement("a", {
+            id:"gang-territory-subpage-button", class:"a-link-button",
+            display:"inline-block", innerHTML:"Gang Territory (2)",
+            clickListener:()=>{
+                gangManagementSubpage.style.display = "none";
+                gangTerritorySubpage.style.display = "block";
+                managementButton.classList.toggle("a-link-button-inactive");
+                managementButton.classList.toggle("a-link-button");
+                territoryButton.classList.toggle("a-link-button-inactive");
+                territoryButton.classList.toggle("a-link-button");
+                updateGangContent();
+                return false;
+            }
         });
-
-        territoryButton.addEventListener("click", function() {
-            document.getElementById("gang-management-subpage").style.display = "none";
-            document.getElementById("gang-territory-subpage").style.display = "block";
-            managementButton.classList.toggle("a-link-button-inactive");
-            managementButton.classList.toggle("a-link-button");
-            territoryButton.classList.toggle("a-link-button-inactive");
-            territoryButton.classList.toggle("a-link-button");
-            updateGangContent();
-            return false;
-        });
-
-        container.appendChild(managementButton);
-        container.appendChild(territoryButton);
+        gangContainer.appendChild(managementButton);
+        gangContainer.appendChild(territoryButton);
 
         //Subpage for managing gang members
-        var managementSubpage = document.createElement("div");
-        container.appendChild(managementSubpage);
-        managementSubpage.style.display = "block";
-        managementSubpage.setAttribute("id", "gang-management-subpage");
-        var infoText = document.createElement("p");
-        managementSubpage.appendChild(infoText);
-        infoText.setAttribute("id", "gang-info");
-        infoText.style.width = "70%";
-
-        var recruitGangMemberBtn = document.createElement("a");
-        managementSubpage.appendChild(recruitGangMemberBtn);
-        recruitGangMemberBtn.setAttribute("id", "gang-management-recruit-member-btn");
-        recruitGangMemberBtn.setAttribute("class", "a-link-button-inactive");
-        recruitGangMemberBtn.innerHTML = "Recruit Gang Member";
-        recruitGangMemberBtn.style.display = "inline-block";
-        recruitGangMemberBtn.style.margin = "10px";
-        recruitGangMemberBtn.addEventListener("click", () => {
-            var yesBtn = yesNoTxtInpBoxGetYesButton(), noBtn = yesNoTxtInpBoxGetNoButton();
-            yesBtn.innerHTML = "Recruit Gang Member";
-            noBtn.innerHTML = "Cancel";
-            yesBtn.addEventListener("click", ()=>{
-                var name = yesNoTxtInpBoxGetInput();
-                if (name == "") {
-                    dialogBoxCreate("You must enter a name for your Gang member!");
-                } else {
-                    for (var i = 0; i < Player.gang.members.length; ++i) {
-                        if (name == Player.gang.members[i].name) {
-                            dialogBoxCreate("You already have a gang member with this name!");
-                            return false;
-                        }
-                    }
-                    var member = new GangMember(name);
-                    Player.gang.members.push(member);
-                    createGangMemberDisplayElement(member);
-                    updateGangContent();
-                }
-                yesNoTxtInpBoxClose();
-            });
-            noBtn.addEventListener("click", ()=>{
-                yesNoTxtInpBoxClose();
-            });
-            yesNoTxtInpBoxCreate("Please enter a name for your new Gang member:");
-            return false;
+        gangManagementSubpage = createElement("div", {
+            display:"block", id:"gang-management-subpage",
         });
 
-        //Text for how much reputation is required for recruiting next memberList
-        var recruitRequirementText = document.createElement("p");
-        managementSubpage.appendChild(recruitRequirementText);
-        recruitRequirementText.setAttribute("id", "gang-recruit-requirement-text");
-        recruitRequirementText.style.color = "red";
-
-        var memberList = document.createElement("ul");
-        managementSubpage.appendChild(memberList);
-        memberList.setAttribute("id", "gang-member-list");
-        for (var i = 0; i < members.length; ++i) {
-            createGangMemberDisplayElement(members[i]);
+        var lowerWantedTask = "";
+        if (Player.gang.isHackingGang) {
+            lowerWantedTask = "Ethical Hacking";
+        } else {
+            lowerWantedTask = "Vigilante Justice";
         }
-        setGangMemberClickHandlers(); //Set buttons to toggle the gang member info panels
+        gangDesc = createElement("p", {width:"70%",
+            innerHTML:
+            "This page is used to manage your gang members and get an overview of your  " +
+            "gang's stats.<br><br>" +
+            "If a gang member is not earning much money or respect, the task that you " +
+            "have assigned to that member might be too difficult. Consider training that " +
+            "member's stats or choosing an easier task. The tasks closer to the " +
+            "top of the dropdown list are generally easier. Alternatively, the gang member's " +
+            "low production might be due to the fact that your wanted level is too high. " +
+            "Consider assigning a few members to the '" + lowerWantedTask + "' " +
+            "task to lower your wanted level. <br><br>" +
+            "Installing Augmentations does NOT reset your progress with your Gang. " +
+            "Furthermore, after installing Augmentations, you will " +
+            "automatically be a member of whatever Faction you created your gang with.<br><br>"
+        });
+        gangManagementSubpage.appendChild(gangDesc);
+
+        gangInfo = createElement("p", {id:"gang-info", width:"70%"});
+        gangManagementSubpage.appendChild(gangInfo);
+
+        gangRecruitMemberButton = createElement("a", {
+            id:"gang-management-recruit-member-btn", class:"a-link-button-inactive",
+            innerHTML:"Recruit Gang Member", display:"inline-block", margin:"10px",
+            clickListener:()=>{
+                var yesBtn = yesNoTxtInpBoxGetYesButton(), noBtn = yesNoTxtInpBoxGetNoButton();
+                yesBtn.innerHTML = "Recruit Gang Member";
+                noBtn.innerHTML = "Cancel";
+                yesBtn.addEventListener("click", ()=>{
+                    var name = yesNoTxtInpBoxGetInput();
+                    if (name === "") {
+                        dialogBoxCreate("You must enter a name for your Gang member!");
+                    } else {
+                        for (var i = 0; i < Player.gang.members.length; ++i) {
+                            if (name == Player.gang.members[i].name) {
+                                dialogBoxCreate("You already have a gang member with this name!");
+                                return false;
+                            }
+                        }
+                        var member = new GangMember(name);
+                        Player.gang.members.push(member);
+                        createGangMemberDisplayElement(member);
+                        updateGangContent();
+                    }
+                    yesNoTxtInpBoxClose();
+                });
+                noBtn.addEventListener("click", ()=>{
+                    yesNoTxtInpBoxClose();
+                });
+                yesNoTxtInpBoxCreate("Please enter a name for your new Gang member:");
+                return false;
+            }
+        });
+        gangManagementSubpage.appendChild(recruitGangMemberBtn);
+
+        //Text for how much reputation is required for recruiting next memberList
+        gangRecruitRequirementText = createElement("p", {color:"red", id:"gang-recruit-requirement-text"});
+        gangManagementSubpage.appendChild(gangRecruitRequirementText);
+
+        //Gang Member List management buttons (Expand/Collapse All, select a single member)
+        gangManagementSubpage.appendChild(createElement("br", {}));
+        gangExpandAllButton = createElement("a", {
+            class:"a-link-button", display:"inline-block", margin:"4px", padding:"2px",
+            innerHTML:"Expand All",
+            clickListener:()=>{
+                var allHeaders = gangManagementSubpage.getElementsByClassName("accordion-header");
+                allHeaders.forEach((hdr)=>{
+                    if (!hdr.classList.contains("active")) {
+                        hdr.click();
+                    }
+                })
+            }
+        });
+        gangCollapseAllButton = createElement("a", {
+            class:"a-link-button", display:"inline-block", margin:"4px", padding:"2px",
+            innerHTML:"Collapse All",
+            clickListener:()=>{
+                var allHeaders = gangManagementSubpage.getElementsByClassName("accordion-header");
+                allHeaders.forEach((hdr)=>{
+                    if (hdr.classList.contains("active")) {
+                        hdr.click();
+                    }
+                })
+            }
+        });
+        gangMemberFilter = createElement("input", {
+            type:"text", placeholder:"Filter gang members",
+            onkeyup:()=>{
+                displayGangMemberList();
+            }
+        });
+        gangManagementSubpage.appendChild(gangExpandAllButton);
+        gangManagementSubpage.appendChild(gangCollapseAllButton);
+        gangManagementSubpage.appendChild(gangMemberFilter);
+
+        //Gang Member list
+        gangMemberList = createElement("ul", {id:"gang-member-list"});
+        displayGangMemberList();
+        gangManagementSubpage.appendChild(gangMemberList);
 
         //Subpage for seeing gang territory information
-        var territorySubpage = document.createElement("div");
-        container.appendChild(territorySubpage);
-        territorySubpage.setAttribute("id", "gang-territory-subpage");
-        territorySubpage.style.display = "none";
+        gangTerritorySubpage = createElement("div", {
+            id:"gang-territory-subpage", display:"none"
+        });
 
         //Info text for territory page
-        var territoryInfoText = document.createElement("p");
-        territorySubpage.appendChild(territoryInfoText);
-        territoryInfoText.innerHTML =
-            "This page shows how much territory your Gang controls. This statistic is listed as a percentage, " +
+        gangTerritoryDescText = createElement("p", {
+            width:"70%",
+            innerHTML:"This page shows how much territory your Gang controls. This statistic is listed as a percentage, " +
             "which represents how much of the total territory you control.<br><br>" +
             "Territory gain and loss is processed automatically and is updated every ~30 seconds. Your chances " +
             "to gain and lose territory depend on your Gang's power, which is listed in the display below. " +
@@ -1022,47 +1115,55 @@ function displayGangContent() {
             "your Gang's power.<br><br>" +
             "The amount of territory you have affects all aspects of your Gang members' production, including " +
             "money, respect, and wanted level. It is very beneficial to have high territory control.<br><br>"
-        territoryInfoText.style.width = "70%";
+        });
+        gangTerritorySubpage.appendChild(gangTerritoryDescText);
 
+        var territoryBorder = createElement("fieldset", {width:"50%", display:"inline-block"});
 
-        var territoryBorder = document.createElement("fieldset");
-        territoryBorder.style.width = "50%";
-        territoryBorder.style.display = "inline-block";
+        gangTerritoryInfoText = createElement("p", {id:"gang-territory-info"});
 
-        var territoryP = document.createElement("p");
-        territoryP.setAttribute("id", "gang-territory-info");
+        territoryBorder.appendChild(gangTerritoryInfoText);
+        gangTerritorySubpage.appendChild(territoryBorder);
 
-        territoryBorder.appendChild(territoryP);
-
-
-        territorySubpage.appendChild(territoryBorder);
+        gangContainer.appendChild(territorySubpage);
+        gangContainer.appendChild(gangManagementSubpage);
+        document.getElementById("entire-game-container").appendChild(gangContainer);
     }
-    document.getElementById("gang-container").style.display = "block";
+    gangContainer.style.display = "block";
     updateGangContent();
+}
+
+function displayGangMemberList() {
+    removeChildrenFromElement(gangMemberList);
+    var filter = gangMemberFilter.value.toString();
+    for (var i = 0; i < members.length; ++i) {
+        if (members[i].name.indexOf(filter) > -1) {
+            createGangMemberDisplayElement(members[i]);
+        }
+    }
+    //setGangMemberClickHandlers(); //Set buttons to toggle the gang member info panels
 }
 
 function updateGangContent() {
     if (!gangContentCreated || !Player.inGang()) {return;}
 
-    if(document.getElementById("gang-territory-subpage").style.display === "block") {
+    if(gangTerritorySubpage.style.display === "block") {
         //Update territory information
-        var elem = document.getElementById("gang-territory-info");
-        elem.innerHTML = "";
+        gangTerritoryInfoText.innerHTML = "";
         for (var gangname in AllGangs) {
             if (AllGangs.hasOwnProperty(gangname)) {
                 var gangInfo = AllGangs[gangname];
                 if (gangname == Player.gang.facName) {
-                    elem.innerHTML += ("<b>" + gangname + "</b><br>(Power: " + formatNumber(gangInfo.power, 6) + "): " +
+                    gangTerritoryInfoText.innerHTML += ("<b>" + gangname + "</b><br>(Power: " + formatNumber(gangInfo.power, 6) + "): " +
                                        formatNumber(100*gangInfo.territory, 2) + "%<br><br>");
                 } else {
-                    elem.innerHTML += (gangname + "<br>(Power: " + formatNumber(gangInfo.power, 6) + "): " +
+                    gangTerritoryInfoText.innerHTML += (gangname + "<br>(Power: " + formatNumber(gangInfo.power, 6) + "): " +
                                        formatNumber(100*gangInfo.territory, 2) + "%<br><br>");
                 }
             }
         }
     } else {
         //Update information for overall gang
-        var gangInfo = document.getElementById("gang-info");
         if (gangInfo) {
             var faction = Factions[Player.gang.facName];
             var rep;
@@ -1071,25 +1172,48 @@ function updateGangContent() {
             } else {
                 rep = faction.playerReputation;
             }
-            gangInfo.innerHTML =
-                "<p>This page is used to manage your gang members and get an overview of your gang's stats. <br><br>" +
-                "If a gang member is not earning much money or respect, the task that you have assigned to that member " +
-                "might be too difficult. Consider training that member's stats or choosing an easier task. The tasks closer to the " +
-                "top of the dropdown list are generally easier. Alternatively, the gang member's low production might be due to the " +
-                "fact that your wanted level is too high. Consider assigning a few members to the 'Vigilante Justice' or 'Ethical Hacking' " +
-                "tasks to lower your wanted level. <br><br>" +
-                "Installing Augmentations does NOT reset your progress with your Gang. Furthermore, after installing Augmentations, you will " +
-                "automatically be a member of whatever Faction you created your gang with.<br><br>" +
-                "<p class='tooltip'>Respect: <span class='tooltiptext'>Represents the amount of respect " +
-                "your gang has from other gangs and criminal organizations. Your respect affects the amount of money " +
-                "your gang members will earn, and also determines how much reputation you are earning with your gang's " +
-                "correpsonding Faction.</span></p><p>" + formatNumber(Player.gang.respect, 6) + " (" + formatNumber(5*Player.gang.respectGainRate, 6) + " / sec)</p><br>" +
-                "<p class='tooltip'>Wanted Level: <span class='tooltiptext'>Represents how much the gang is wanted by law " +
-                "enforcement. The higher your gang's wanted level, the harder it will be for your gang members to make " +
-                "money and earn respect. Note that the minimum respect value is 1." +
-                "</span></p><p>" + formatNumber(Player.gang.wanted, 6) + " (" + formatNumber(5*Player.gang.wantedGainRate, 6) + " / sec)<br><br>" +
-                "Money gain rate: $" + formatNumber(5*Player.gang.moneyGainRate, 2) + " / sec<br><br>" +
-                "Faction reputation: " + formatNumber(rep, 3) + "</p>";
+            removeChildrenFromElement(gangInfo);
+            gangInfo.appendChild(createElement("p", {   //Respect
+                display:"block",
+                innerText:"Respect: " + formatNumber(Player.gang.respect, 6) +
+                          " (" + formatNumber(5*Player.gang.respectGainRate, 6) + " / sec)",
+                tooltip:"Represents the amount of respect your gang has from other gangs and criminal " +
+                        "organizations. Your respect affects the amount of money " +
+                        "your gang members will earn, and also determines how much " +
+                        "reputation you are earning with your gang's corresponding Faction."
+            }));
+            gangInfo.appendChild(createElement("p", {   //Wanted level
+                display:"block",
+                innerText:"Wanted Level: " + formatNumber(Player.gang.wanted, 6) +
+                          " (" + formatNumber(5*Player.gang.wantedGainRate, 6) + " / sec)",
+                tooltip:"Represents how much the gang is wanted by law enforcement. The higher " +
+                        "your gang's wanted level, the harder it will be for your gang members " +
+                        "to make money and earn respect. Note that the minimum wanted level is 1."
+            }));
+
+            var wantedPenalty = (Player.gang.respect) / (Player.gang.respect + Player.gang.wanted);
+            wantedPenalty = (1 - wantedPenalty) * 100;
+            gangInfo.appendChild(createElement("p", {   //Wanted Level multiplier
+                display:"block",
+                innerText:"Wanted Level Penalty: -" + formatNumber(wantedPenalty, 2) + "%",
+                tooltip:"Penalty for respect and money gain rates due to Wanted Level"
+            }));
+            gangInfo.appendChild(createElement("p", {   //Money gain rate
+                display:"block",
+                innerText:"Money gain rate: $" + formatNumber(5*Player.gang.moneyGainRate, 2) +
+                          " / sec",
+            }));
+
+            var territoryMult = AllGangs[Player.gang.facName].territory;
+            gangInfo.appendChild(createElement("p", {  //Territory multiplier
+                display:"block",
+                innerText:"Territory: " + formatNumber(territoryMult * 100, 3),
+                tooltip:"The percentage of total territory your Gang controls"
+            }));
+            gangInfo.appendChild(createElement("p", {  //Faction reputation
+                display:"block",
+                innerText:"Faction reputation: " + formatNumber(rep, 3)
+            }));
         } else {
             console.log("ERROR: gang-info DOM element DNE");
         }
@@ -1105,19 +1229,19 @@ function updateGangContent() {
             dialogBoxCreate("Could not find your gang's faction. This is probably a bug please report to dev");
             return;
         }
-        var btn = document.getElementById("gang-management-recruit-member-btn");
+        var btn = gangRecruitMemberButton;
         if (numMembers >= CONSTANTS.MaximumGangMembers) {
             btn.className = "a-link-button-inactive";
-            document.getElementById("gang-recruit-requirement-text").style.display = "block";
-            document.getElementById("gang-recruit-requirement-text").innerHTML =
+            gangRecruitRequirementText.style.display = "block";
+            gangRecruitRequirementText.innerHTML =
                 "You have reached the maximum amount of gang members";
         } else if (faction.playerReputation >= repCost) {
             btn.className = "a-link-button";
-            document.getElementById("gang-recruit-requirement-text").style.display = "none";
+            gangRecruitRequirementText.style.display = "none";
         } else {
             btn.className = "a-link-button-inactive";
-            document.getElementById("gang-recruit-requirement-text").style.display = "block";
-            document.getElementById("gang-recruit-requirement-text").innerHTML =
+            gangRecruitRequirementText.style.display = "block";
+            gangRecruitRequirementText.innerHTML =
                 formatNumber(repCost, 2) + " Faction reputation needed to recruit next member";
         }
 
@@ -1128,6 +1252,7 @@ function updateGangContent() {
     }
 }
 
+/*
 function setGangMemberClickHandlers() {
     //Server panel click handlers
     var gangMemberHdrs = document.getElementsByClassName("gang-member-header");
@@ -1148,12 +1273,21 @@ function setGangMemberClickHandlers() {
         }
     }
 }
+*/
 
 //Takes in a GangMember object
 function createGangMemberDisplayElement(memberObj) {
     if (!gangContentCreated || !Player.inGang()) {return;}
     var name = memberObj.name;
 
+    var accordion = createAccordionElement({
+        id:name + "gang-member",
+        hdrText:name,
+    });
+    var li = accordion[0];
+    var hdr = accordion[2];
+    var gangMemberDiv = accordion[3];
+    /*
     var li = document.createElement("li");
 
     var hdr = document.createElement("button");
@@ -1164,11 +1298,21 @@ function createGangMemberDisplayElement(memberObj) {
     //Div for entire panel
     var gangMemberDiv = document.createElement("div");
     gangMemberDiv.setAttribute("class", "gang-member-panel");
+    */
 
     //Gang member content divided into 3 panels:
     //Stats Panel
+    var statsDiv = createElement("div", {
+        id: name + "gang-member-stats", class: "gang-member-info-div",
+        width:"30%", display:"inline"
+    });
+    var statsP = createElement("p", {
+        id:name + "gang-member-stats-text", display:"inline"
+    });
+
+    /*
     var statsDiv = document.createElement("div");
-    statsDiv.setAttribute("id", name + "gang-member-stats");
+    statsDiv.setAttribute("id", );
     statsDiv.setAttribute("class", "gang-member-info-div");
     var statsP = document.createElement("p");
     statsP.setAttribute("id", name + "gang-member-stats-text");
@@ -1181,10 +1325,20 @@ function createGangMemberDisplayElement(memberObj) {
     upgradeButton.addEventListener("click", function() {
         createGangMemberUpgradeBox(memberObj);
     });
+    */
     statsDiv.appendChild(statsP);
-    statsDiv.appendChild(upgradeButton);
+    //statsDiv.appendChild(upgradeButton);
 
     //Panel for Selecting task and show respect/wanted gain
+    var taskDiv = createElement("div", {
+        id: name + "gang-member-task", class:"gang-member-info-div",
+        width:"30%", display:"inline"
+    });
+    var taskSelector = createElement("select", {
+        color:"white", backgroundColor:"black",
+        id:name + "gang-member-task-selector"
+    });
+    /*
     var taskDiv = document.createElement("div");
     taskDiv.setAttribute("id", name + "gang-member-task");
     taskDiv.setAttribute("class", "gang-member-info-div");
@@ -1192,6 +1346,7 @@ function createGangMemberDisplayElement(memberObj) {
     taskSelector.style.color = "white";
     taskSelector.style.backgroundColor = "black";
     taskSelector.setAttribute("id", name + "gang-member-task-selector");
+    */
     var tasks = null;
     if (Player.gang.isHackingGang) {
         tasks = ["---", "Ransomware", "Phishing", "Identity Theft", "DDoS Attacks",
@@ -1228,19 +1383,29 @@ function createGangMemberDisplayElement(memberObj) {
         taskSelector.selectedIndex = taskIndex;
     }
 
-    var gainInfo = document.createElement("p"); //Wanted, respect, reputation, and money gain
-    gainInfo.setAttribute("id", name + "gang-member-gain-info");
+    var gainInfo = createElement("p", {id:name + "gang-member-gain-info"});
+    /*var gainInfo = document.createElement("p"); //Wanted, respect, reputation, and money gain
+    gainInfo.setAttribute("id", name + "gang-member-gain-info");*/
     taskDiv.appendChild(taskSelector);
     taskDiv.appendChild(gainInfo);
 
     //Panel for Description of task
+    var taskDescDiv = createElement("div", {
+        id:name + "gang-member-task-desc", class:"gang-member-info-div",
+        width:"30%", display:"inline"
+    });
+    /*
     var taskDescDiv = document.createElement("div");
     taskDescDiv.setAttribute("id", name + "gang-member-task-desc");
     taskDescDiv.setAttribute("class", "gang-member-info-div");
+    */
 
+    var taskDescP = createElement("p", {id: name + "gang-member-task-description", display:"inline"});
+    /*
     var taskDescP = document.createElement("p");
     taskDescP.setAttribute("id", name + "gang-member-task-description");
     taskDescP.style.display = "inline";
+    */
     taskDescDiv.appendChild(taskDescP);
 
     statsDiv.style.width = "30%";
@@ -1253,8 +1418,8 @@ function createGangMemberDisplayElement(memberObj) {
     gangMemberDiv.appendChild(taskDiv);
     gangMemberDiv.appendChild(taskDescDiv);
 
-    li.appendChild(hdr);
-    li.appendChild(gangMemberDiv);
+    //li.appendChild(hdr);
+    //li.appendChild(gangMemberDiv);
 
     document.getElementById("gang-member-list").appendChild(li);
     setGangMemberTaskDescription(memberObj, taskName); //Initialize description
