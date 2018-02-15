@@ -361,7 +361,6 @@ GangMember.prototype.assignToTask = function(taskName) {
         this.task = GangMemberTasks[taskName];
     } else {
         this.task = GangMemberTasks["Unassigned"];
-        this.task = null;
     }
 }
 

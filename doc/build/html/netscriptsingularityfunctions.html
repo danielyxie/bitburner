@@ -248,6 +248,26 @@ working for a company/faction, studying at a univeristy, working out at a gym, c
 </dd></dl>
 
 </div>
+<div class="section" id="stopaction">
+<h2>stopAction<a class="headerlink" href="#stopaction" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="stopAction">
+<code class="descname">stopAction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#stopAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this function.
+This function is used to end whatever 'action' the player is currently performing. The player
+will receive whatever money/experience/etc. he has earned from that action.</p>
+<p>The actions that can be stopped with this function are:</p>
+<ul class="simple">
+<li>Studying at a university</li>
+<li>Working for a company/faction</li>
+<li>Creating a program</li>
+<li>Committing a Crime</li>
+</ul>
+<p>This function will return true if the player's action was ended. It will return false if the player was not
+performing an action when this function was called.</p>
+</dd></dl>
+
+</div>
 <div class="section" id="upgradehomeram">
 <h2>upgradeHomeRam<a class="headerlink" href="#upgradehomeram" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -656,6 +676,7 @@ This script will be run with no arguments and 1 thread. It must be located on yo
 <li class="toctree-l3"><a class="reference internal" href="#purchaseprogram">purchaseProgram</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getstats">getStats</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#isbusy">isBusy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stopaction">stopAction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#upgradehomeram">upgradeHomeRam</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getupgradehomeramcost">getUpgradeHomeRamCost</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#workforcompany">workForCompany</a></li>
