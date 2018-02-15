@@ -559,6 +559,24 @@ function NetscriptFunctions(workerScript) {
             }
             return runScriptFromScript(server, scriptname, argsForNewScript, workerScript, threads);
         },
+        spawn : function(scriptname, threads) {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.spawn) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.spawn = true;
+                    return CONSTANTS.ScriptSpawnRamCost;
+                }
+            }
+            if (scriptname == null || threads == 1) {
+                throw makeRuntimeRejectMsg(workerScript, "Invalid scriptname or numThreads argument passed to spawn()");
+            }
+            setTimeout(()=>{
+                NetscriptFunctions(workerScript).run.apply(this, arguments);
+            }, 20000);
+            workerScript.scriptRef.log("spawn() will execute " + scriptname + " in 20 seconds");
+            NetscriptFunctions(workerScript).exit();
+        },
         kill : function(filename,ip) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.kill) {
@@ -2397,6 +2415,24 @@ function NetscriptFunctions(workerScript) {
                 }
             }
             return Player.isWorking;
+        },
+        stopAction : function() {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.stopAction) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.stopAction = true;
+                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
+                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    return ramCost;
+                }
+            }
+            if (Player.isWorking) {
+                var txt = Player.singularityStopWork();
+                workerScript.scriptRef.log(txt);
+                return true;
+            }
+            return false;
         },
         upgradeHomeRam() {
             if (workerScript.checkingRam) {

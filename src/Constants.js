@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.34.3",
+    Version:                "0.34.4",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -49,6 +49,7 @@ let CONSTANTS = {
     ScriptPortProgramRamCost:       0.05,
     ScriptRunRamCost:               1.0,
     ScriptExecRamCost:              1.3,
+    ScriptSpawnRamCost:             2.0,
     ScriptScpRamCost:               0.6,
     ScriptKillRamCost:              0.5, //Kill and killall
     ScriptHasRootAccessRamCost:     0.05,
@@ -502,7 +503,15 @@ let CONSTANTS = {
                            "The following example will try to run the script 'foo.script' on the 'foodnstuff' server with 5 threads. It will also pass the number 1 and the string 'test' in as arguments " +
                            "to the script.<br><br>" +
                            "exec('foo.script', 'foodnstuff', 5, 1, 'test');<br><br>" +
-                           "<i><u>kill(script, hostname/ip, [args...])</u></i><br> Kills the script on the target server specified by the script's name and arguments. Remember that " +
+                           "<i><u>spawn(script, numThreads, [args...])</u></i><br>Terminates the current script, and then after a delay of about 20 seconds " +
+                           "it will execute the newly specified script. The purpose of this function is to execute a new script without being constrained " +
+                           "by the RAM usage of the current one. This function can only be used to run scripts on the local server.<br><br>" +
+                           "The first argument must be a string with the name of the script. The second argument must be an integer specifying the number " +
+                           "of threads to run the script with. Any additional arguments will specify arguments to pass into the 'newly-spawned' script." +
+                           "Because this function immediately terminates the script, it does not have a return value.<br><br>" +
+                           "The following example will execute the script 'foo.script' with 10 threads and the arguments 'foodnstuff' and 90:<br><br>" +
+                           "spawn('foo.script', 10, 'foodnstuff', 90);<br><br>" +
+                           "<i><u>kill(script, hostname/ip, [args...])</u></i><br>Kills the script on the target server specified by the script's name and arguments. Remember that " +
                            "scripts are uniquely identified by both their name and arguments. For example, if 'foo.script' is run with the argument 1, then this is not the "  +
                            "same as 'foo.script' run with the argument 2, even though they have the same code. <br><br>" +
                            "The first argument must be a string with the name of the script. The name is case-sensitive. " +
@@ -902,6 +911,13 @@ let CONSTANTS = {
                                         "function.<br><br>Returns a boolean indicating whether or not the player is currently performing an 'action'. " +
                                         "These actions include working for a company/faction, studying at a univeristy, working out at a gym, " +
                                         "creating a program, or committing a crime.<br><br>" +
+                                        "<i><u>stopAction()</u></i><br>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to " +
+                                        "run this function.<br><br>This function is used to end whatever 'action' the player is currently performing. The player " +
+                                        "will receive whatever money/experience/etc. he has earned from that action. The actions that can be stopped with this function " +
+                                        "are:<br><br> " +
+                                        "-Studying at a university<br>-Working for a company/faction<br>-Creating a program<br>-Committing a Crime<br><br> " +
+                                        "This function will return true if the player's action was ended. It will return false if the player was not " +
+                                        "performing an action when this function was called.<br><br>" +
                                         "<i><u>upgradeHomeRam()</u></i><br>" +
                                         "If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.<br><br>" +
                                         "This function will upgrade amount of RAM on the player's home computer. The cost is the same as if you were to do it manually.<br><br>" +
@@ -1113,39 +1129,20 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.34.2<br>" +
-    "-Corporation Management Changes:<br>" +
-    "---Added advertising mechanics<br>" +
-    "---Added Industry-specific purchases<br>" +
-    "---Re-designed employee management UI<br>" +
-    "---Rebalancing: Made many upgrades/purchases cheaper. Receive more money from investors in early stage. Company valuation is higher after going public<br>" +
-    "---Multiple bug fixes<br>" +
-    "-Added rm() Netscript function<br>" +
-    "-Updated the way script RAM usage is calculated. Now, a function only increases RAM usage the first time it is called. i.e. even if you call hack() multiple times in a script, it only counts against RAM usage once. The same change applies for while/for loops and if conditionals.<br>" +
-    "-The RAM cost of the following were increased:<br>" +
-    "---If statements: increased by 0.05GB<br>" +
-    "---run() and exec(): increased by 0.2GB<br>" +
-    "---scp(): increased by 0.1GB<br>" +
-    "---purchaseServer(): increased by 0.25GB<br>" +
-    "-Note: You may need to re-save all of your scripts in order to re-calculate their RAM usages. Otherwise, it should automatically be re-calculated when you reset/prestige<br>" +
-    "-The cost to upgrade your home computer's RAM has been increased (both the base cost and the exponential upgrade multiplier)<br>" +
-    "-The cost of purchasing a server was increased by 10% (it is now $55k per RAM)<br>" +
-    "-Bug fix: (Hopefully) removed an exploit where you could avoid RAM usage for Netscript function calls by assigning functions to a variable (foo = hack(); foo('helios');)<br>" +
-    "-Bug fix: (Hopefully) removed an exploit where you could run arbitrary Javascript code using the constructor() method<br>" +
-    "-Thanks to Github user mateon1 and Reddit users havoc_mayhem and spaceglace for notifying me of the above exploits<br>" +
-    "-The fileExists() Netscript function now works on text files (.txt). Thanks to Github user devoidfury for this<br><br>" +
-    "v0.34.3<br>" +
-    "-Minor balance changes to Corporations: <br>" +
-    "---Upgrades are generally cheaper and/or have more powerful effects.<br>" +
-    "---You will receive more funding while your are a private company.<br>" +
-    "---Product demand decreases at a slower rate.<br>" +
-    "---Production multiplier for Industries (receives for owning real estate/hardware/robots/etc.) is slightly higher<br>" +
-    "-Accessing the hacknetnodes array in Netscript now costs 4.0GB of RAM (only counts against RAM usage once)<br>" +
-    "-Bug Fix: Corporation oustanding shares should now be numeric rather than a string<br>" +
-    "-Bug Fix: Corporation production now properly calculated for industries that dont produce materials.<br>" +
-    "-Bug Fix: Gangs should now properly reset when switching BitNodes<br>" +
-    "-Bug Fix: Corporation UI should now properly reset when you go public<br>"
-
+    "v0.34.4<br>" +
+    "-Added several new features to Gang UI to make it easier to manage your Gang.<br>" +
+    "-Changed the Gang Member upgrade mechanic. Now, rather than only being able to have " +
+    "one weapon/armor/vehicle/etc., you can purchase all the upgrades for each Gang member " +
+    "and their multipliers will stack. To balance this out, the effects (AKA multipliers) of each Gang member upgrade " +
+    "were reduced.<br>" +
+    "-Added a new script editor option: Max Error Count. This affects how many approximate lines the script editor will " +
+    "process (JSHint) for common errors. Increase this option can affect performance<br>" +
+    "-Game theme colors (set using 'theme' Terminal command) are now saved when re-opening the game<br>" +
+    "-'download' Terminal command now works on scripts<br>" +
+    "-Added stopAction() Singularity function and the spawn() Netscript function<br>" +
+    "-The 'Purchase Augmentations' UI screen will now tell you if you need a certain prerequisite for Augmentations.<br>" +
+    "-Augmentations with prerequisites can now be purchased as long as their prerequisites are puchased (" +
+    "before, you had to actually install the prerequisites before being able to purchase)<br>"
 }
 
 export {CONSTANTS};

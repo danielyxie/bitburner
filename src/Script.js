@@ -128,6 +128,15 @@ function scriptEditorInit() {
         editor.getSession().setUseSoftTabs(softTabChkBox.checked);
     };
 
+    //Jshint Maxerr
+    var maxerr = document.getElementById("script-editor-option-maxerr");
+    var maxerrLabel = document.getElementById("script-editor-option-maxerror-value-label");
+    maxerrLabel.innerHTML = maxerr.value;
+    maxerr.onchange = function() {
+        editor.getSession().$worker.send("changeOptions", [{maxerr:maxerr.value}]);
+        maxerrLabel.innerHTML = maxerr.value;
+    }
+
     //Configure some of the VIM keybindings
     ace.config.loadModule('ace/keyboard/vim', function(module) {
         var VimApi = module.CodeMirror.Vim;
@@ -365,6 +374,25 @@ function calculateRamUsage(codeCopy) {
         ramUsage += CONSTANTS.ScriptHacknetNodesRamCost;
     }
     return ramUsage;
+}
+
+Script.prototype.download = function() {
+    var filename = this.filename;
+    var file = new Blob([this.code], {type: 'text/plain'});
+    if (window.navigator.msSaveOrOpenBlob) {// IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    } else { // Others
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = this.filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    }
 }
 
 Script.prototype.toJSON = function() {

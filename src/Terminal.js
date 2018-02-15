@@ -23,6 +23,7 @@ import {findRunningScript, RunningScript,
         AllServersMap, Script}              from "./Script.js";
 import {AllServers, GetServerByHostname,
         getServer, Server}                  from "./Server.js";
+import {Settings}                           from "./Settings.js";
 import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps.js";
 import {TextFile, getTextFile,
@@ -400,6 +401,9 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     if (input.startsWith("download ")) {
         for (var i = 0; i < currServ.textFiles.length; ++i) {
             allPos.push(currServ.textFiles[i].fn);
+        }
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push(currServ.scripts[i].filename);
         }
     }
     return allPos;
@@ -828,12 +832,19 @@ let Terminal = {
                     return;
                 }
                 var fn = commandArray[1];
-                var txtFile = getTextFile(fn, s);
-                if (txtFile !== null) {
-                    txtFile.download();
-                } else {
-                    post("Error: " + fn + " does not exist");
+                if (fn.endsWith(".script")) {
+                    for (var i = 0; i < s.scripts.length; ++i) {
+                        if (s.scripts[i].filename === fn) {
+                            return s.scripts[i].download();
+                        }
+                    }
+                } else if (fn.endsWith(".txt")) {
+                    var txtFile = getTextFile(fn, s);
+                    if (txtFile !== null) {
+                        return txtFile.download();
+                    }
                 }
+                post("Error: " + fn + " does not exist");
                 break;
 			case "free":
 				Terminal.executeFreeCommand(commandArray);
@@ -1055,7 +1066,7 @@ let Terminal = {
 				} else {
 					var executableName = commandArray[1];
 
-                    //Music player!
+                    //Secret Music player!
                     if (executableName === "musicplayer") {
                         post('<iframe src="https://open.spotify.com/embed/user/danielyxie/playlist/1ORnnL6YNvXOracUaUV2kh" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>', false);
                         return;
@@ -1231,38 +1242,44 @@ let Terminal = {
             case "theme":
                 //todo support theme saving
                 var args = commandArray[1] ? commandArray[1].split(" ") : [];
-                if(args.length != 1 && args.length != 3) {
+                if (args.length != 1 && args.length != 3) {
                     post("Incorrect number of arguments.");
                     post("Usage: theme [default|muted|solarized] | #[background color hex] #[text color hex] #[highlight color hex]");
-                }else if(args.length == 1){
+                } else if(args.length == 1){
                     var themeName = args[0];
-                    if(themeName == "default"){
+                    if (themeName == "default"){
                         document.body.style.setProperty('--my-highlight-color',"#ffffff");
                         document.body.style.setProperty('--my-font-color',"#66ff33");
                         document.body.style.setProperty('--my-background-color',"#000000");
-                    }else if(themeName == "muted"){
+                    } else if (themeName == "muted"){
                         document.body.style.setProperty('--my-highlight-color',"#ffffff");
                         document.body.style.setProperty('--my-font-color',"#66ff33");
                         document.body.style.setProperty('--my-background-color',"#252527");
-                    }else if(themeName == "solarized"){
+                    } else if (themeName == "solarized"){
                         document.body.style.setProperty('--my-highlight-color',"#6c71c4");
                         document.body.style.setProperty('--my-font-color',"#839496");
                         document.body.style.setProperty('--my-background-color',"#002b36");
-                    }else{
-                        post("Theme not found");
+                    } else {
+                        return post("Theme not found");
                     }
-                }else{
+                    Settings.ThemeHighlightColor = document.body.style.getPropertyValue("--my-highlight-color");
+                    Settings.ThemeFontColor = document.body.style.getPropertyValue("--my-font-color");
+                    Settings.ThemeBackgroundColor = document.body.style.getPropertyValue("--my-background-color");
+                } else {
                     var inputBackgroundHex = args[0];
                     var inputTextHex = args[1];
                     var inputHighlightHex = args[2];
-                    if(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputBackgroundHex) &&
+                    if (/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputBackgroundHex) &&
                        /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputTextHex) &&
                        /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(inputHighlightHex)){
                         document.body.style.setProperty('--my-highlight-color',inputHighlightHex);
                         document.body.style.setProperty('--my-font-color',inputTextHex);
                         document.body.style.setProperty('--my-background-color',inputBackgroundHex);
-                    }else{
-                        post("Invalid Hex Input for theme");
+                        Settings.ThemeHighlightColor = document.body.style.getPropertyValue("--my-highlight-color");
+                        Settings.ThemeFontColor = document.body.style.getPropertyValue("--my-font-color");
+                        Settings.ThemeBackgroundColor = document.body.style.getPropertyValue("--my-background-color");
+                    } else {
+                        return post("Invalid Hex Input for theme");
                     }
                 }
                 break;

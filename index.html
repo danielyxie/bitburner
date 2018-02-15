@@ -135,13 +135,21 @@
             </fieldset>
 
             <fieldset>
-            <label for="script-editor-option-showinvisibles">Show Invisibles</label></td>
+            <label for="script-editor-option-showinvisibles">Show Invisibles</label>
             <input type="checkbox" name="script-editor-option-showinvisibles" id="script-editor-option-showinvisibles">
             </fieldset>
 
             <fieldset>
-            <label for="script-editor-option-usesofttab">Use Soft Tab</label></td>
+            <label for="script-editor-option-usesofttab">Use Soft Tab</label>
             <input type="checkbox" name="script-editor-option-usesofttab" id="script-editor-option-usesofttab" checked>
+            </fieldset>
+
+            <fieldset>
+            <label for="script-editor-option-maxerr" class="tooltip">Max Error Count</label>
+            <input type="range" max="1000" min="50" value="200"
+                step="1" name="script-editor-option-maxerr" id="script-editor-option-maxerr"
+            </input>
+            <em id="script-editor-option-maxerror-value-label" style="font-style: normal;"></em>
             </fieldset>
         </div> <!-- End script editor options panel -->
 	</div>

@@ -126,6 +126,7 @@ function createPopup(id, elems) {
         }),
         content = createElement("div", {
             class:"popup-box-content",
+            id:id + "-content",
         });
 
     for (var i = 0; i < elems.length; ++i) {
@@ -133,6 +134,7 @@ function createPopup(id, elems) {
     }
     container.appendChild(content);
     document.getElementById("entire-game-container").appendChild(container);
+    return container;
 }
 
 //Creates both the header and panel element of an accordion and sets the click handler
