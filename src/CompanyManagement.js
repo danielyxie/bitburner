@@ -537,7 +537,7 @@ var IndustryUpgrades = {
             "AdVert.Inc", "Hire AdVert.Inc to advertise your company. Each level of " +
             "this upgrade grants your company a static increase of 4 and 1 to its awareness and " +
             "popularity, respectively. It will then increase your company's awareness by 1%, and its popularity " +
-            "by a random percentage between 5% and 15%. These effects are increased by other upgrades " +
+            "by a random percentage between 5% and 10%. These effects are increased by other upgrades " +
             "that increase the power of your advertising."]
 }
 
@@ -1436,7 +1436,7 @@ Industry.prototype.upgrade = function(upgrade, refs) {
             this.awareness += (4 * advMult);
             this.popularity += (1 * advMult);
             this.awareness *= (1.01 * advMult);
-            this.popularity *= ((1 + Math.random(5, 15) / 100) * advMult);
+            this.popularity *= ((1 + getRandomInt(5, 10) / 100) * advMult);
             break;
         default:
             console.log("ERROR: Un-implemented function index: " + upgN);

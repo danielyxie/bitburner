@@ -1,6 +1,3 @@
-/** This removes all padding and margins as well as
-    setting a default font size and family for the page **/
-
 :root{
     --my-font-color: #66ff33;
     --my-background-color: #000000;

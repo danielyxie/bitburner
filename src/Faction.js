@@ -846,7 +846,12 @@ function displayFactionAugmentations(factionName) {
             var pElem = document.createElement("p");
             aElem.setAttribute("href", "#");
             var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
-            if (aug.name != AugmentationNames.NeuroFluxGovernor && (aug.owned || owned)) {
+            var hasPrereqs = hasAugmentationPrereqs(aug);
+            if (!hasPrereqs) {
+                aElem.setAttribute("class", "a-link-button-inactive");
+                pElem.innerHTML = "LOCKED (Requires " + aug.prereqs.join(",") + " as prerequisite(s))";
+                pElem.style.color = "red";
+            } else if (aug.name != AugmentationNames.NeuroFluxGovernor && (aug.owned || owned)) {
                 aElem.setAttribute("class", "a-link-button-inactive");
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
@@ -901,57 +906,38 @@ function purchaseAugmentationBoxCreate(aug, fac) {
                    formatNumber(aug.baseCost * fac.augmentationPriceMult, 2)  + "?");
 }
 
+//Returns a boolean indicating whether the player has the prerequisites for the
+//specified Augmentation
+function hasAugmentationPrereqs(aug) {
+    var hasPrereqs = true;
+    if (aug.prereqs && aug.prereqs.length > 0) {
+        for (var i = 0; i < aug.prereqs.length; ++i) {
+            var prereqAug = Augmentations[aug.prereqs[i]];
+            if (prereqAug == null) {
+                console.log("ERROR: Invalid prereq Augmentation: " + aug.prereqs[i]);
+                continue;
+            }
+            if (prereqAug.owned === false) {
+                hasPrereqs = false;
+
+                //Check if the aug is purchased
+                for (var j = 0; j < Player.queuedAugmentations.length; ++j) {
+                    if (Player.queuedAugmentations[j].name === prereqAug.name) {
+                        hasPrereqs = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    return hasPrereqs;
+}
+
 function purchaseAugmentation(aug, fac, sing=false) {
-    if (aug.name == AugmentationNames.Targeting2 &&
-        Augmentations[AugmentationNames.Targeting1].owned == false) {
-        var txt = "You must first install Augmented Targeting I before you can upgrade it to Augmented Targeting II";
-        if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (aug.name == AugmentationNames.Targeting3 &&
-               Augmentations[AugmentationNames.Targeting2].owned == false) {
-        var txt = "You must first install Augmented Targeting II before you can upgrade it to Augmented Targeting III";
-        if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (aug.name == AugmentationNames.CombatRib2 &&
-               Augmentations[AugmentationNames.CombatRib1].owned == false) {
-        var txt = "You must first install Combat Rib I before you can upgrade it to Combat Rib II";
-        if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (aug.name == AugmentationNames.CombatRib3 &&
-               Augmentations[AugmentationNames.CombatRib2].owned == false) {
-        var txt = "You must first install Combat Rib II before you can upgrade it to Combat Rib III";
-        if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (aug.name == AugmentationNames.GrapheneBionicSpine &&
-               Augmentations[AugmentationNames.BionicSpine].owned == false) {
-        var txt = "You must first install a Bionic Spine before you can upgrade it to a Graphene Bionic Spine";
-        if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (aug.name == AugmentationNames.GrapheneBionicLegs &&
-               Augmentations[AugmentationNames.BionicLegs].owned == false) {
-        var txt = "You must first install Bionic Legs before you can upgrade it to Graphene Bionic Legs";
-        if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (aug.name == AugmentationNames.ENMCoreV2 &&
-               Augmentations[AugmentationNames.ENMCore].owned == false) {
-        var txt = "You must first install Embedded Netburner Module Core Implant before you can upgrade it to V2";
-        if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (aug.name == AugmentationNames.ENMCoreV3 &&
-               Augmentations[AugmentationNames.ENMCoreV2].owned == false) {
-        var txt = "You must first install Embedded Netburner Module Core V2 Upgrade before you can upgrade it to V3";
-        if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if ((aug.name == AugmentationNames.ENMCore ||
-               aug.name == AugmentationNames.ENMAnalyzeEngine ||
-               aug.name == AugmentationNames.ENMDMA) &&
-               Augmentations[AugmentationNames.ENM].owned == false) {
-       var txt = "You must first install the Embedded Netburner Module before installing any upgrades to it";
-       if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if ((aug.name ==  AugmentationNames.PCDNIOptimizer ||
-               aug.name ==  AugmentationNames.PCDNINeuralNetwork) &&
-               Augmentations[AugmentationNames.PCDNI].owned == false) {
-        var txt = "You must first install the Pc Direct-Neural Interface before installing this upgrade";
-        if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (aug.name == AugmentationNames.GrapheneBrachiBlades &&
-               Augmentations[AugmentationNames.BrachiBlades].owned == false) {
-        var txt = "You must first install the Brachi Blades augmentation before installing this upgrade";
-        if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (aug.name == AugmentationNames.GrapheneBionicArms &&
-               Augmentations[AugmentationNames.BionicArms].owned == false) {
-        var txt = "You must first install the Bionic Arms augmentation before installing this upgrade";
+    var hasPrereqs = hasAugmentationPrereqs(aug);
+    if (!hasPrereqs) {
+        var txt = "You must first purchase or install " + aug.prereqs.join(",") + " before you can " +
+                  "purchase this one.";
         if (sing) {return txt;} else {dialogBoxCreate(txt);}
     } else if (Player.money.gte(aug.baseCost * fac.augmentationPriceMult)) {
         if (Player.firstAugPurchased === false) {
@@ -974,7 +960,8 @@ function purchaseAugmentation(aug, fac, sing=false) {
             var nextLevel = getNextNeurofluxLevel();
             --nextLevel;
             var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-            aug.setRequirements(500 * mult, 750000 * mult);
+            aug.baseRepRequirement = 500 * mult * CONSTANTS.AugmentationRepMultiplier * BitNodeMultipliers.AugmentationRepCost;
+            aug.baseCost = 750e3 * mult * CONSTANTS.AugmentationCostMultiplier * BitNodeMultipliers.AugmentationMoneyCost;
 
             for (var i = 0; i < Player.queuedAugmentations.length-1; ++i) {
                 aug.baseCost *= CONSTANTS.MultipleAugMultiplier;

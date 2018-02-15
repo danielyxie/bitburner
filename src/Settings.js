@@ -8,6 +8,9 @@ let Settings = {
     SuppressMessages:       false,
     SuppressFactionInvites: false,
     AutosaveInterval:       60,
+    ThemeHighlightColor:    "#ffffff",
+    ThemeFontColor:         "#66ff33",
+    ThemeBackgroundColor:   "#000000",
 }
 
 function loadSettings(saveString) {
@@ -81,6 +84,19 @@ function setSettingsLabels() {
     document.getElementById("settingsSuppressFactionInvites").onclick = function() {
         Settings.SuppressFactionInvites = this.checked;
     };
+
+    //Theme
+    if (Settings.ThemeHighlightColor == null || Settings.ThemeFontColor == null || Settings.ThemeBackgroundColor == null) {
+        console.log("ERROR: Cannot find Theme Settings");
+        return;
+    }
+    if (/^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(Settings.ThemeHighlightColor) &&
+        /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(Settings.ThemeFontColor) &&
+        /^#[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(Settings.ThemeBackgroundColor)) {
+        document.body.style.setProperty('--my-highlight-color', Settings.ThemeHighlightColor);
+        document.body.style.setProperty('--my-font-color', Settings.ThemeFontColor);
+        document.body.style.setProperty('--my-background-color', Settings.ThemeBackgroundColor);
+    }
 }
 
 export {Settings, initSettings, setSettingsLabels, loadSettings};

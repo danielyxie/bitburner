@@ -461,6 +461,35 @@ the number 1 and the string &quot;test&quot; in as arguments to the script:</p>
 </dd></dl>
 
 </div>
+<div class="section" id="spawn">
+<h2>spawn<a class="headerlink" href="#spawn" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt>
+<code class="descname">spawn</code><span class="sig-paren">(</span><em>script</em>, <em>numThreads</em><span class="optional">[</span>, <em>args...</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>script</strong> (<em>string</em>) -- Filename of script to execute</li>
+<li><strong>numThreads</strong> (<em>number</em>) -- Number of threads to spawn new script with. Will be rounded to nearest integer</li>
+<li><strong>args...</strong> -- Additional arguments to pass into the new script that is being run.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Terminates the current script, and then after a delay of about 20 seconds it will execute the newly-specified script.
+The purpose of this function is to execute a new script without being constrained by the RAM usage of the current one.
+This function can only be used to run scripts on the local server.</p>
+<p>Because this function immediately terminates the script, it does not have a return value.</p>
+<p>The following example will execute the script 'foo.script' with 10 threads and the arguments 'foodnstuff' and 90:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">spawn</span><span class="p">(</span><span class="s1">&#39;foo.script&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;foodnstuff&#39;</span><span class="p">,</span> <span class="mi">90</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="kill">
 <h2>kill<a class="headerlink" href="#kill" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -1485,6 +1514,7 @@ you create in functions such as <a class="reference external" href="https://deve
 <li class="toctree-l3"><a class="reference internal" href="#sqlinject">sqlinject</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#run">run</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#exec">exec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spawn">spawn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#kill">kill</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#killall">killall</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#exit">exit</a></li>

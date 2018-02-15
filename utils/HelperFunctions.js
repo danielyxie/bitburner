@@ -47,6 +47,12 @@ function removeElementById(id) {
     elem.parentNode.removeChild(elem);
 }
 
+function removeElement(elem) {
+    if (elem == null) {return;}
+    while(elem.firstChild) {elem.removeChild(elem.firstChild);}
+    elem.parentNode.removeChild(elem);
+}
+
 function removeChildrenFromElement(el) {
     if (isString(el)) {
         el = document.getElementById(el);
@@ -106,6 +112,9 @@ function createElement(type, params) {
     if (params.changeListener) {
         el.addEventListener("change", params.changeListener);
     }
+    if (params.onkeyup) {
+        el.addEventListener("keyup", params.onkeyup);
+    }
     return el;
 }
 
@@ -117,6 +126,7 @@ function createPopup(id, elems) {
         }),
         content = createElement("div", {
             class:"popup-box-content",
+            id:id + "-content",
         });
 
     for (var i = 0; i < elems.length; ++i) {
@@ -124,10 +134,10 @@ function createPopup(id, elems) {
     }
     container.appendChild(content);
     document.getElementById("entire-game-container").appendChild(container);
+    return container;
 }
 
 //Creates both the header and panel element of an accordion and sets the click handler
-//Returns the 'li' element that contains the hedaer and panel
 function createAccordionElement(params) {
     var li = document.createElement("li"),
         hdr = document.createElement("button"),
@@ -153,7 +163,7 @@ function createAccordionElement(params) {
             tmpPanel.style.display = "block";
         }
     }
-    return li;
+    return [li, hdr, panel];
 }
 
 function clearSelector(selector) {
@@ -192,5 +202,5 @@ function powerOfTwo(n) {
 
 export {sizeOfObject, addOffset, clearEventListeners, getRandomInt,
         compareArrays, printArray, powerOfTwo, clearEventListenersEl,
-        removeElementById, createElement, createAccordionElement,
+        removeElementById, removeElement, createElement, createAccordionElement,
         removeChildrenFromElement, createPopup, clearSelector};
