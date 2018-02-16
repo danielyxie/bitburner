@@ -32,7 +32,7 @@ $(document).on('click', '.dialog-box-close-button', function( event ) {
 
 var dialogBoxOpened = false;
 
-function dialogBoxCreate(txt) {
+function dialogBoxCreate(txt, preformatted) {
     var container = document.createElement("div");
     container.setAttribute("class", "dialog-box-container");
 
@@ -43,8 +43,16 @@ function dialogBoxCreate(txt) {
     closeButton.setAttribute("class", "dialog-box-close-button");
     closeButton.innerHTML = "&times;"
 
-    var textE = document.createElement("p");
-    textE.innerHTML = txt.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    var textE;
+    if (preformatted) {
+        // For text files as they are often computed data that
+        // shouldn't be wrapped and should retain tabstops.
+        textE = document.createElement("pre");
+        textE.innerHTML = txt;
+    } else {
+        textE = document.createElement("p");
+        textE.innerHTML = txt.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    }
 
     content.appendChild(closeButton);
     content.appendChild(textE);
