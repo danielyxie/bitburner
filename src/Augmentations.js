@@ -124,7 +124,7 @@ let AugmentationNames = {
     ADRPheromone2:                      "ADR-V2 Pheromone Gene",
     HacknetNodeCPUUpload:               "Hacknet Node CPU Architecture Neural-Upload",
     HacknetNodeCacheUpload:             "Hacknet Node Cache Architecture Neural-Upload",
-    HacknetNodeNICUpload:               "HacknetNode NIC Architecture Neural-Upload",
+    HacknetNodeNICUpload:               "Hacknet Node NIC Architecture Neural-Upload",
     HacknetNodeKernelDNI:               "Hacknet Node Kernel Direct-Neural Interface",
     HacknetNodeCoreDNI:                 "Hacknet Node Core Direct-Neural Interface",
     NeuroFluxGovernor:                  "NeuroFlux Governor",
