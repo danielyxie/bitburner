@@ -1142,7 +1142,13 @@ let CONSTANTS = {
     "-Added stopAction() Singularity function and the spawn() Netscript function<br>" +
     "-The 'Purchase Augmentations' UI screen will now tell you if you need a certain prerequisite for Augmentations.<br>" +
     "-Augmentations with prerequisites can now be purchased as long as their prerequisites are puchased (" +
-    "before, you had to actually install the prerequisites before being able to purchase)<br>"
+    "before, you had to actually install the prerequisites before being able to purchase)<br><br>" +
+    "v0.34.5<br>" +
+    "-Changes courtesy of Wraithan:<br>" +
+    "---Text files are now displayed using 'pre' rather than 'p' elements when using the 'cat' Terminal command. " +
+    "This means tabs are retained and lines don't automatically wrap<br>" +
+    "---ls() Netscript function now returns text files as well<br>"
+
 }
 
 export {CONSTANTS};

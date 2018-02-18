@@ -834,6 +834,16 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
+            for (var i = 0; i < server.textFiles.length; i++) {
+                if (filter) {
+                    if (server.textFiles[i].fn.includes(filter)) {
+                        allFiles.push(server.textFiles[i].fn);
+                    }
+                } else {
+                    allFiles.push(server.textFiles[i].fn);
+                }
+            }
+
             //Sort the files alphabetically then print each
             allFiles.sort();
             return allFiles;
