@@ -864,10 +864,26 @@ The example above prints the following in its log::
 **Note about variable scope in functions:**
 
 Functions can access "global" variables declared outside of the function's scope. However, they cannot change the value of any "global" variables.
-Any changes to "global" variables will only be applied locally to the function. This also means that any variable that is first defined inside a
-function will NOT be accessible outside of the function.
+Any changes to "global" variables will only be applied locally to the function. 
 
-For example, the following code::
+The following example shows that any change to "global" variable inside a function only applies in the function's local scope::
+
+    function foo() {
+        i = 5;
+        return "foo";
+    }
+
+    i = 0;
+    print(i);
+    foo();
+    print(i);
+
+Results in the following log::
+
+    0
+    0
+    
+Furthermore, this also means that any variable that is first defined inside a function will NOT be accessible outside of the function as shown in the following example::
 
     function sum(values) {
         res = 0;
@@ -886,22 +902,7 @@ results in the following runtime error::
     Args:[]
     variable res not defined
 
-The following example shows that any change to "global" variable inside a function only applies in the function's local scope::
 
-    function foo() {
-        i = 5;
-        return "foo";
-    }
-
-    i = 0;
-    print(i);
-    foo();
-    print(i);
-
-Results in the following log::
-
-    0
-    0
 
 **Other Notes about creating your own functions:**
 
