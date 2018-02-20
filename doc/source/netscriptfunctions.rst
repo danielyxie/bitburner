@@ -861,6 +861,26 @@ The example above prints the following in its log::
     15
     11
 
+For those with experience in other languages, especially Javascript it may be important to note that function declarations are not hoisted and must be declared BEFORE you use them.
+
+    print(hello());
+    
+    function hello() {
+        return "world";
+    }
+
+Will cause an error saying `variable hello not defined` whereas::
+    
+    function hello() {
+        return "world";
+    }
+    
+    print(hello());
+
+Will print out
+    
+    world
+
 **Note about variable scope in functions:**
 
 Functions can access "global" variables declared outside of the function's scope. However, they cannot change the value of any "global" variables.
