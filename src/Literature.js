@@ -41,17 +41,51 @@ function initLiterature() {
 
     title   = "The Complete Handbook for Creating a Successful Corporation";
     fn      = "corporation-management-handbook.lit";
-    txt     = "This is a brief collection of tips/pointers on how to successfully start and manage a Corporation.<br><br>" +
-              "-Purchasing Hardware, Robots, AI Cores, and Real Estate can potentially increase your production. " +
-              "The effects of these depend on what industry you are in.<br><br>" +
-              "-In order to optimize your production, you will need a good balance of Operators, Managers, and Engineers<br><br>" +
-              "-Different employees excel in different jobs. For example, the highly intelligent employees will probably do best " +
-              "if they are assigned to do Engineering work or Research & Development.<br><br>" +
-              "-If your employees have low morale, energy, or happiness, their production will greatly suffer.<br><br>" +
-              "-Tech is important, but don't neglect sales! Having several Businessmen can boost your sales and your bottom line.<br><br>" +
-              "-Don't forget to advertise your company. You won't have any business if nobody knows you.<br><br>" +
-              "-Having company awareness is great, but what's really important is your company's popularity. Try to keep " +
-              "your popularity as high as possible to see the biggest benefit for your sales<br><br>";
+    txt     =   "<u>Getting Started with Corporations</u><br>" +
+                "To get started, visit the City Hall in Sector-12 in order to create a Corporation. This requires " +
+                "$150b of your own money, but this $150b will get put into your Corporation's funds. " +
+                "After creating your Corporation, you will see it listed as one of the locations in the city. Click on " +
+                "your Corporation in order to manage it.<br><br>" +
+                "Your Corporation can have many different divisions, each in a different Industry. There are many different " +
+                "types of Industries, each with different properties. To create your first division, click the " +
+                "'Expand into new Industry' button at the top of the management UI. The Agriculture " +
+                "and Software industries are recommended for your first division.<br><br>" +
+                "The first thing you'll need to do is hire some employees. Employees can be assigned to five different positions. " +
+                "Each position has a different effect on various aspects of your Corporation. It is recommended to have at least " +
+                "one employee at each position.<br><br>" +
+                "Each industry uses some combination of Materials in order to produce other Materials and/or create Products. " +
+                "Specific information about this is displayed in each of your divisions' UI.<br><br>" +
+                "Products are special, industry-specific objects. They are different than Materials because you " +
+                "must manually choose to develop them, and you can choose to develop any number of Products. Developing " +
+                "a Product takes time, but a Product typically generates significantly more revenue than any Material. " +
+                "Not all industries allow you to create Products. To create a Product, look for a button " +
+                "in the top-left panel of the division UI (e.g. For the Software Industry, the button says 'Develop Software').<br><br>" +
+                "To get your supply chain system started, " +
+                "purchase the Materials that your industry needs to produce other Materials/Products. This can be done " +
+                "by clicking the 'Buy' button next to the corresponding Material(s). After you have the required Materials, " +
+                "you will immediately start production. The amount of Materials/Products you produce is based on a variety of factors, " +
+                "one of which is your employees and their productivity.<br><br>" +
+                "Once you start producing Materials/Products, you can sell them in order to start earning revenue. This can be done " +
+                "by clicking the 'Sell' button next to the corresponding Material or Product. The amount of Material/Product you sell is dependent " +
+                "on a wide variety of different factors.<br><br>" +
+                "These are the basics of getting your Corporation up and running! Now, you can start purchasing upgrades to improve " +
+                "your bottom line. If you need money, consider looking for seed investors, who will give you money in exchange for stock shares. " +
+                "Otherwise, once you feel you are ready, take your Corporation public! Once your Corporation goes public, you can no longer " +
+                "find investors. Instead, your Corporation will be publicly traded and its stock price will change based on how well "  +
+                "it's performing financially. You can then sell your stock shares in order to make money.<br><br>" +
+                "<u>Tips/Pointers</u><br>" +
+                "-Purchasing Hardware, Robots, AI Cores, and Real Estate can potentially increase your production. " +
+                "The effects of these depend on what industry you are in.<br><br>" +
+                "-In order to optimize your production, you will need a good balance of Operators, Managers, and Engineers<br><br>" +
+                "-Different employees excel in different jobs. For example, the highly intelligent employees will probably do best " +
+                "if they are assigned to do Engineering work or Research & Development.<br><br>" +
+                "-If your employees have low morale, energy, or happiness, their production will greatly suffer.<br><br>" +
+                "-Tech is important, but don't neglect sales! Having several Businessmen can boost your sales and your bottom line.<br><br>" +
+                "-Don't forget to advertise your company. You won't have any business if nobody knows you.<br><br>" +
+                "-Having company awareness is great, but what's really important is your company's popularity. Try to keep " +
+                "your popularity as high as possible to see the biggest benefit for your sales<br><br>" +
+                "-Remember, you need to spend money to make money!<br><br>" +
+                "-Corporations do not reset when installing Augmentations, but they do reset when destroying a BitNode";
     Literatures[fn] = new Literature(title, fn, txt);
 
     title   = "A Green Tomorrow";

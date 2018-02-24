@@ -25,6 +25,7 @@ import {initStockMarket, initSymbolToStockMap,
         setStockMarketContentCreated}           from "./StockMarket.js";
 import {Terminal, postNetburnerText}            from "./Terminal.js";
 import Decimal                                  from '../utils/decimal.js';
+import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 
 //Prestige by purchasing augmentation
 function prestigeAugmentation() {
@@ -148,11 +149,8 @@ function prestigeAugmentation() {
 function prestigeSourceFile() {
     initBitNodeMultipliers();
 
-    //Crime statistics
     Player.prestigeSourceFile();
-
-    //Delete all Worker Scripts objects
-    prestigeWorkerScripts();
+    prestigeWorkerScripts(); //Delete all Worker Scripts objects
 
     var homeComp = Player.getHomeComputer();
 
@@ -234,7 +232,7 @@ function prestigeSourceFile() {
     //Reinitialize Bit Node flags
     initSingularitySFFlags();
 
-    //Reset Stock market
+    //Reset Stock market, gang, and corporation
     if (Player.hasWseAccount) {
         initStockMarket();
         initSymbolToStockMap();
@@ -245,11 +243,17 @@ function prestigeSourceFile() {
         stockMarketList.removeChild(stockMarketList.firstChild);
     }
 
+    Player.gang = null;
+    Player.corporation = null;
+
+
+    //BitNode 3, get Handbook .lit file
+    homeComp.messages.push("corporation-management-handbook.lit");
+    dialogBoxCreate("You received a copy of the Corporation Management Handbook on your home computer. " +
+                    "Read it if you need help getting started with Corporations!");
+
     //Gain int exp
     Player.gainIntelligenceExp(5);
-
-    //Reset gang
-    Player.gang = null;
 }
 
 export {prestigeAugmentation, prestigeSourceFile};

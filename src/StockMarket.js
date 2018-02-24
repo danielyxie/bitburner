@@ -506,9 +506,11 @@ function shortStock(stock, shares, workerScript=null) {
     stock.playerAvgShortPx = newTotal / stock.playerShortShares;
     updateStockPlayerPosition(stock);
     if (tixApi) {
-        workerScript.scriptRef.log("Bought a short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at " +
-                                   numeral(stock.price).format('($0.000a)') + " per share. Paid " +
-                                   numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
+        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.shortStock == null) {
+            workerScript.scriptRef.log("Bought a short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at " +
+                                       numeral(stock.price).format('($0.000a)') + " per share. Paid " +
+                                       numeral(CONSTANTS.StockMarketCommission).format('($0.000a)') + " in commission fees.");
+        }
     } else {
         dialogBoxCreate("Bought a short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
                         formatNumber(stock.price, 2) + " per share. You also paid $" +
@@ -548,9 +550,11 @@ function sellShort(stock, shares, workerScript=null) {
     }
     updateStockPlayerPosition(stock);
     if (tixApi) {
-        workerScript.scriptRef.log("Sold your short position of " + shares + " shares of " + stock.symbol + " at " +
-                                   numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
-                                   "a total of " + numeral(origCost + profit).format('($0.000a)'));
+        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sellShort == null) {
+            workerScript.scriptRef.log("Sold your short position of " + shares + " shares of " + stock.symbol + " at " +
+                                       numeral(stock.price).format('($0.000a)') + " per share. After commissions, you gained " +
+                                       "a total of " + numeral(origCost + profit).format('($0.000a)'));
+        }
     } else {
         dialogBoxCreate("Sold your short position of " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
                         formatNumber(stock.price, 2) + " per share. After commissions, you gained " +

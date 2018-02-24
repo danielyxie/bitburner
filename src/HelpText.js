@@ -4,7 +4,7 @@ let TerminalHelpText =
                 'alias [-g] [name="value"]      Create or display Terminal aliases<br>' +
                 "analyze                        Get information about the current machine <br>" +
                 "buy [-l/program]               Purchase a program through the Dark Web<br>" +
-                "cat [file]                     Display a .msg or .lit file<br>" +
+                "cat [file]                     Display a .msg, .lit, or .txt file<br>" +
                 "check [script] [args...]       Print a script's logs to Terminal<br>" +
                 "clear                          Clear all text on the terminal <br>" +
                 "cls                            See 'clear' command <br>" +
@@ -27,7 +27,7 @@ let TerminalHelpText =
                 "run [name] [-t] [n] [args...]  Execute a program or script<br>" +
                 "scan                           Prints all immediately-available network connections<br>" +
                 "scan-analyze [d] [-a]          Prints info for all servers up to <i>d</i> nodes away<br>" +
-                "scp [file] [server]            Copies a script or .lit file to a destination server<br>" +
+                "scp [file] [server]            Copies a file to a destination server<br>" +
                 "sudov                          Shows whether you have root access on this computer<br>" +
                 "tail [script] [args...]        Displays dynamic logs for the specified script<br>" +
                 "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" +
@@ -65,10 +65,10 @@ let HelpTexts = {
                     "dark web to the Terminal, as well as their costs.<br><br>" +
                     "Otherwise, the name of the program must be passed in as a parameter. This is name is NOT case-sensitive.",
     cat:            "cat [file]<br>" +
-                    "Display message files, which are files ending with the '.msg' extension, or a literature file, which " +
-                    "are files ending with the '.lit' extension. Examples:<br><br>" +
+                    "Display message (.msg), literature (.lit), or text (.txt) files. Examples:<br><br>" +
                     "cat j1.msg<br>" +
-                    "cat foo.lit",
+                    "cat foo.lit<br>" +
+                    "cat servers.txt",
     check:          "check [script name] [args...]<br>" +
                     "Print the logs of the script specified by the script name and arguments to the Terminal. Each argument must be separated by " +
                     "a space. Remember that a running script is uniquely " +
@@ -171,7 +171,8 @@ let HelpTexts = {
                     "-a flag at the end of the command if you would like to enable that.",
     scp:            "scp [filename] [target server]<br>" +
                     "Copies the specified file from the current server to the target server. " +
-                    "This command only works for script files (.script extension) and literature files (.lit extension). " +
+                    "This command only works for script files (.script extension), literature files (.lit extension), " +
+                    "and text files (.txt extension). " +
                     "The second argument passed in must be the hostname or IP of the target server.",
     sudov:          "sudov<br>" +
                     "Prints whether or not you have root access to the current machine",

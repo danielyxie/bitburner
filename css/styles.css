@@ -222,8 +222,26 @@ a:link, a:visited {
     z-index: 99;
 }
 
+/* Similar to a normal tooltip except its positioned on the left of the elemnt
+   rather than the right to avoid exceeding the elements normal width */
+.tooltip .tooltiptextleft {
+    visibility: hidden;
+    width: 300px;
+    background-color: var(--my-background-color);
+    border: 2px solid var(--my-highlight-color);;
+    color: white;
+    text-align: center;
+    padding: 4px;
+    left: 40%;
+    bottom:-10%;
+
+    position: absolute;
+    z-index: 99;
+}
+
 .tooltip:hover .tooltiptext,
-.tooltip:hover .tooltiptexthigh {
+.tooltip:hover .tooltiptexthigh,
+.tooltip:hover .tooltiptextleft {
     visibility: visible;
 }
 

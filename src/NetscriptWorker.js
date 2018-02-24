@@ -19,16 +19,17 @@ function WorkerScript(runningScriptObj) {
 	this.serverIp 		= null;
 	this.code 			= runningScriptObj.scriptRef.code;
 	this.env 			= new Environment(this);
-    this.env.set("args", runningScriptObj.args);
+    this.env.set("args", runningScriptObj.args.slice());
 	this.output			= "";
 	this.ramUsage		= 0;
 	this.scriptRef		= runningScriptObj;
     this.errorMessage   = "";
-    this.args           = runningScriptObj.args;
+    this.args           = runningScriptObj.args.slice();
     this.delay          = null;
     this.fnWorker       = null; //Workerscript for a function call
     this.checkingRam    = false;
     this.loadedFns      = {}; //Stores names of fns that are "loaded" by this script, thus using RAM
+    this.disableLogs    = {}; //Stores names of fns that should have logs disabled
 }
 
 //Returns the server on which the workerScript is running

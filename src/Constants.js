@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.34.4",
+    Version:                "0.34.5",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -380,9 +380,9 @@ let CONSTANTS = {
                          "the execution of a script is when it saves/loads. </strong><br><br>",
     TutorialNetscriptText: "Netscript is a programming language implemented for this game. The language has " +
                            "your basic programming constructs and several built-in commands that are used to hack. <br><br>" +
-                           "<u><h1>Official Wiki and Documentation</h1></u><br>" +
-                           "<a href='https://bitburner.wikia.com/wiki/Netscript' target='_blank'>Check out Bitburner's wiki for the official Netscript documentation</a>" +
-                           ". The wiki documentation will contain more details and " +
+                           "<u><h1>Official Documentation</h1></u><br>" +
+                           "<a href='https://bitburner.readthedocs.io/en/latest/index.html' target='_blank'>Check out Bitburner's official Netscript documentation</a>" +
+                           ". This official documentation will contain more details and " +
                            "code examples than this documentation page. Also, it can be opened up in another tab/window for convenience!<br><br>" +
                            "<u><h1> Variables and data types </h1></u><br>" +
                            "The following data types are supported by Netscript: <br>" +
@@ -440,13 +440,10 @@ let CONSTANTS = {
                            "either the IP or hostname of the server you want to hack. The runtime for this command depends on your hacking level and the target server's security level. " +
                            " A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. " +
                            "For example, you can create a script that hacks the 'foodnstuff' server and run that script on any server in the game. A successful hack() on " +
-                           "a server will raise that server's security level by 0.002. Returns true if the hack is successful and " +
-                           "false otherwise. <br>" +
+                           "a server will raise that server's security level by 0.002. Returns the amount of money stolen if the hack is successful and " +
+                           "0 if the hack fails. <br>" +
                            "Examples: hack('foodnstuff'); or hack('148.192.0.12');<br><br>" +
-                           "<i><u>sleep(n, log=true)</u></i><br>Suspends the script for n milliseconds. The second argument is an optional boolean that indicates " +
-                           "whether or not the function should log the sleep action. If this argument is true, then calling this function will write " +
-                           "'Sleeping for N milliseconds' to the script's logs. If it's false, then this function will not log anything. " +
-                           "If this argument is not specified then it will be true by default. <br>Example: sleep(5000);<br><br>" +
+                           "<i><u>sleep(n)</u></i><br>Suspends the script for n milliseconds.<br>Example: sleep(5000);<br><br>" +
                            "<i><u>grow(hostname/ip)</u></i><br>Use your hacking skills to increase the amount of money available on a server. The argument passed in " +
                            "must be a string with either the IP or hostname of the target server. The runtime for this command depends on your hacking level and the target server's security level. " +
                            "When grow() completes, the money available on a target server will be increased by a certain, fixed percentage. This percentage " +
@@ -466,6 +463,13 @@ let CONSTANTS = {
                            "<i><u>print(x)</u></i><br>Prints a value or a variable to the scripts logs (which can be viewed with the 'tail [script]' terminal command ). <br><br>" +
                            "<i><u>tprint(x)</u></i><br>Prints a value or a variable to the Terminal<br><br>" +
                            "<i><u>clearLog()</u></i><br>Clears the script's logs. <br><br>" +
+                           "<i><u>disableLog(fn)</u></i><br>Disables logging for the given function. Logging can be disabled for every function " +
+                           "by passing 'ALL' as an argument.<br><br>" +
+                           "Note that this does not completely remove all logging functionality. This only stops a function from logging " +
+                           "when the function is successful. If the function fails, it will still log the reason for failure.<br><br>" +
+                           "Notable functions that cannot have their logs disabled: run, exec, exit<br><br>" +
+                           "<i><u>enableLog(fn)</u></i><br>Re-enables logging for the given function. If 'ALL' is passed into this function " +
+                           "as an argument, then it will revert the effects of disableLog('ALL')<br><br>" +
                            "<i><u>scan(hostname/ip, [hostnames=true])</u></i><br>Returns an array containing the hostnames or IPs of all servers that are one node away from the specified server. " +
                            "The argument must be a string containing the IP or hostname of the target server. The second argument is a boolean that specifies whether " +
                            "the hostnames or IPs of the scanned servers should be output. If it is true then hostnames will be returned, and if false then IP addresses will. " +
@@ -526,8 +530,8 @@ let CONSTANTS = {
                            "kill('foo.script', getHostname());<br><br>" +
                            "If you are trying to kill a script named 'foo.script' on the current server that was ran with the arguments 1 and 'foodnstuff', use this:<br><br>" +
                            "kill('foo.script', getHostname(), 1, 'foodnstuff');<br><br>" +
-                           "<i><u>killall(hostname/ip)</u></i><br> Kills all running scripts on the specified server. This function takes a single argument which " +
-                           "must be a string containing the hostname or IP of the target server. This function will always return true. <br><br>" +
+                           "<i><u>killall(hostname/ip)</u></i><br>Kills all running scripts on the specified server. This function takes a single argument which " +
+                           "must be a string containing the hostname or IP of the target server. This function returns true if any scripts were killed, and false otherwise.<br><br>" +
                            "<i><u>exit()</u></i><br>Terminates the script immediately<br><br>" +
                            "<i><u>scp(script, [source], destination)</u></i><br>Copies a script or literature (.lit) file to another server. The first argument is a string with " +
                            "the filename of the script or literature file " +
@@ -651,7 +655,6 @@ let CONSTANTS = {
                            "<i><u>getPurchasedServers([hostname=true])</u></i><br>Returns an array with either the hostname or IPs of all of the servers you " +
                            "have purchased. It takes an optional parameter specifying whether the hostname or IP addresses will be returned. If this " +
                            "parameter is not specified, it is true by default and hostnames will be returned<br><br>" +
-                           "<i><u>round(n)</u></i><br>Rounds the number n to the nearest integer. If the argument passed in is not a number, then the function will return 0.<br><br>" +
                            "<i><u>write(port/fn, data='', mode='a')</u></i><br>This function can be used to either write data to a port or to a text file (.txt).<br><br>" +
                            "If the first argument is a number between 1 and 10, then it specifies a port and this function will write data to a port. If the second " +
                            "argument is not specified then it will write an empty string to the port. The third argument, mode, is not used when writing data to a port.<br><br>" +
@@ -667,6 +670,9 @@ let CONSTANTS = {
                            "then the string 'NULL PORT DATA' will be returned.<br><br>" +
                            "If the first argument is a string, then it specifies the name of a text file and this function will return the data in the " +
                            "specified text file. If the text file does not exist, an empty string will be returned<br><br>" +
+                           "<i><u>peek(port)</u></i><br>This function is used to peek data from a port. It returns the first element from the specified " +
+                           "Netscript Port without removing that element. If the port is empty, then the string 'NULL PORT DATA' will be returned.<br><br>"  +
+                           "The argument must be an integer between 1 and 10.<br><br>" +
                            "<i><u>clear(port/fn)</u></i><br>This function is used to clear a Netscript Port or a text file.<br><br>" +
                            "It takes a single argument. If this argument is a number between 1 and 10, then it specifies a port and will clear it (deleting all data from it). " +
                            "If the argument is a string, then it specifies the name of a text file (.txt) and will clear the text file so that it is empty.<br><br>" +
@@ -1129,26 +1135,38 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.34.4<br>" +
-    "-Added several new features to Gang UI to make it easier to manage your Gang.<br>" +
-    "-Changed the Gang Member upgrade mechanic. Now, rather than only being able to have " +
-    "one weapon/armor/vehicle/etc., you can purchase all the upgrades for each Gang member " +
-    "and their multipliers will stack. To balance this out, the effects (AKA multipliers) of each Gang member upgrade " +
-    "were reduced.<br>" +
-    "-Added a new script editor option: Max Error Count. This affects how many approximate lines the script editor will " +
-    "process (JSHint) for common errors. Increase this option can affect performance<br>" +
-    "-Game theme colors (set using 'theme' Terminal command) are now saved when re-opening the game<br>" +
-    "-'download' Terminal command now works on scripts<br>" +
-    "-Added stopAction() Singularity function and the spawn() Netscript function<br>" +
-    "-The 'Purchase Augmentations' UI screen will now tell you if you need a certain prerequisite for Augmentations.<br>" +
-    "-Augmentations with prerequisites can now be purchased as long as their prerequisites are puchased (" +
-    "before, you had to actually install the prerequisites before being able to purchase)<br><br>" +
     "v0.34.5<br>" +
+    "-Corporation Management Changes:<br>" +
+    "---Market Research unlocks are now cheaper<br>" +
+    "---New 'VeChain' upgrade: displays useful statistics about Corporation<br>" +
+    "---Corporation cycles are processed 25% faster<br>" +
+    "---Corporation valuation was lowered by ~10% (this affects stock price and investments)<br>" +
+    "---Rebalanced the effects of advertising. Should now be more effective for every Industry<br>" +
+    "---Fixed several bugs/exploits involving selling and buying back stock shares<br>" +
+    "---You will now receive a Corporation Handbook (.lit file) when starting out BitNode-3. It contains a brief guide to help you get started. " +
+    "This same handbook can be viewed from the Corporation management screen<br>" +
+    "---Slightly decreased the amount by which a Product's sell price can be marked up<br>" +
+    "---Employees can now be assigned to a 'Training' task, during which they will slowly increase several of their stats<br>" +
+    "-Hopefully fixed an exploit with Array.forEach(). If there are any issues with using forEach, let me know<br>" +
+    "-Arguments passed into a script are now passed by value. This means modifying the 'args' array in a script " +
+    "should no longer cause issues<br>" +
+    "-Scripts executed programatically (via run(), exec(), etc.) will now fail if null/undefined is passed in " +
+    "as an argument<br>" +
+    "-Added peek() Netscript function<br>" +
+    "-killall() Netscript function now returns true if any scripts were killed, and false otherwise.<br>" +
+    "-hack() Netscript function now returns the amount of money gained for successful hacks, and 0 for failed hacks<br>" +
+    "-scp Terminal command and Netscript function now work for txt files<br>" +
     "-Changes courtesy of Wraithan:<br>" +
     "---Text files are now displayed using 'pre' rather than 'p' elements when using the 'cat' Terminal command. " +
     "This means tabs are retained and lines don't automatically wrap<br>" +
-    "---ls() Netscript function now returns text files as well<br>"
-
+    "---ls() Netscript function now returns text files as well<br>" +
+    "-Removed round() Netscript function, since you can just use Math.round() instead<br>" +
+    "-Added disableLog() and enableLog() Netscript functions<br>" +
+    "-Removed the 'log' argument from sleep(), since you can now use the new disableLog function<br>" +
+    "-'Netscript Documentation' button on script editor now points to new readthedocs documentation rather than wiki<br>" +
+    "-When working for a faction, your current faction reputation is now displayed<br>" +
+    "-Bug Fix: Hacking Missions should no longer break when dragging an existing connection to another Node<br>" +
+    "-Bug Fix: Fixed RAM usage of getNextHacknetNodeCost() (is not 1.5GB instead of 4GB)<br>"
 }
 
 export {CONSTANTS};

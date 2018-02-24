@@ -12,7 +12,7 @@ hack
 .. js:function:: hack(hostname/ip)
 
     :param string hostname/ip: IP or hostname of the target server to hack
-    :returns: True if the hack is successful, false otherwise
+    :returns: The amount of money stolen if the hack is successful, and zero otherwise
 
     Function that is used to try and hack servers to steal money and gain hacking experience. The runtime for this command depends
     on your hacking level and the target server's security level. In order to hack a server you must first gain root access
@@ -72,10 +72,9 @@ weaken
 sleep
 ^^^^^
 
-.. js:function:: sleep(n[, log=true])
+.. js:function:: sleep(n)
 
     :param number n: Number of milliseconds to sleep
-    :param boolean log: Optional boolean specifying whether or not to log the action
 
     Suspends the script for n milliseconds.
 
@@ -96,6 +95,39 @@ tprint
     :param x: Value to be printed
 
     Prints a value or a variable to the Terminal
+
+clearLog
+^^^^^^^^
+
+.. js:function:: clearLog()
+
+    Clears the script's logs
+
+disableLog
+^^^^^^^^^^
+
+.. js:function:: disableLog(fn)
+
+    :param string fn: Name of function for which to disable logging
+
+    Disables logging for the given function. Logging can be disabled for
+    all functions by passing 'ALL' as the argument.
+
+    Note that this does not completely remove all logging functionality.
+    This only stops a function from logging
+    when the function is successful. If the function fails, it will still log the reason for failure.
+
+    Notable functions that cannot have their logs disabled: run, exec, exit
+
+enableLog
+^^^^^^^^^
+
+.. js:function:: enableLog(fn)
+
+    :param string fn: Name of function for which to enable logging
+
+    Re-enables logging for the given function. If 'ALL' is passed into this function
+    as an argument, then it will revert the effects of disableLog('ALL')
 
 scan
 ^^^^
@@ -304,7 +336,8 @@ killall
 
     :param string hostname/ip: IP or hostname of the server on which to kill all scripts
 
-    Kills all running scripts on the specified server. This function will always return true.
+    Kills all running scripts on the specified server. This function returns true if any scripts were killed, and
+    false otherwise. In other words, it will return true if there are any scripts running on the target server.
 
 
 exit
@@ -640,15 +673,6 @@ getPurchasedServers
 
     Returns an array with either the hostnames or IPs of all of the servers you have purchased.
 
-round
-^^^^^
-
-.. js:function:: round(n)
-
-    :param number n: Number to round
-
-    Returns the argument *n* rounded to the nearest integer. If the argument passed in is not a number, then the function will return 0.
-
 write
 ^^^^^
 
@@ -685,6 +709,18 @@ read
     If the argument *port/fn* is a string, then it specifies the name of a text file (.txt) and this function will return the data in the specified text file. If
     the text file does not exist, an empty string will be returned.
 
+peek
+^^^^
+
+.. js:function:: peek(port)
+
+    :param number port: Port to peek. Must be an integer between 1 and 10
+
+    This function is used to peek at the data from a port. It returns the first element in the specified port
+    without removing that element. If the port is empty, the string "NULL PORT DATA" will be returned.
+
+    Read about how `Netscript Ports work here <http://bitburner.wikia.com/wiki/Netscript_Ports>`_.
+
 clear
 ^^^^^
 
@@ -697,6 +733,16 @@ clear
     If the *port/fn* argument is a number between 1 and 10, then it specifies a port and will clear it (deleting all data from the underlying queue).
 
     If the *port/fn* argument is a string, then it specifies the name of a text file (.txt) and will delete all data from that text file.
+
+rm
+^^
+
+.. js:function:: rm(fn)
+
+    :param string fn: Filename of file to remove. Must include the extension
+    :returns: True if it successfully deletes the file, and false otherwise
+
+    Removes the specified file from the current server. This function works for every file type except message (.msg) files. 
 
 scriptRunning
 ^^^^^^^^^^^^^

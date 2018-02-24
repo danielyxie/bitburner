@@ -42,7 +42,7 @@ function showMessage(msg) {
     var txt = "Message received from unknown sender: <br><br>" +
               "<i>" + msg.msg + "</i><br><br>" +
               "This message was saved as " + msg.filename + " onto your home computer.";
-    dialogBoxCreate(txt, true);
+    dialogBoxCreate(txt);
 }
 
 //Adds a message to a server

@@ -139,6 +139,17 @@ function isHTML(str) {
     return false;
 }
 
+//Generates a random alphanumeric string with N characters
+function generateRandomString(n) {
+    var str = "",
+        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < n; i++)
+        str += chars.charAt(Math.floor(Math.random() * chars.length));
+
+    return str;
+}
+
 export {getIndicesOf, convertTimeMsToTimeElapsedString, longestCommonStart,
         isString, isPositiveNumber, containsAllStrings, formatNumber,
-        numOccurrences, numNetscriptOperators, isHTML};
+        numOccurrences, numNetscriptOperators, isHTML, generateRandomString};
