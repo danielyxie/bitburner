@@ -27,7 +27,6 @@ Promise.config({
  * Returns a promise
  */
 function evaluate(exp, workerScript) {
-    /* return new Promise(function(resolve, reject) {*/
     return Promise.delay(Settings.CodeInstructionRunTime).then(function() {
         var env = workerScript.env;
         if (env.stopFlag) {return Promise.reject(workerScript);}
@@ -139,6 +138,13 @@ function evaluate(exp, workerScript) {
                         } else if (exp.callee.type == "MemberExpression"){
                             return evaluate(exp.callee.object, workerScript).then(function(object) {
                                 try {
+                                    if (func === "NETSCRIPTFOREACH") {
+                                        return evaluateForeach(object, args, workerScript).then(function(res) {
+                                            return Promise.resolve(res);
+                                        }).catch(function(e) {
+                                            return Promise.reject(e);
+                                        });
+                                    }
                                     var res = func.apply(object,args);
                                     return Promise.resolve(res);
                                 } catch (e) {
@@ -186,6 +192,9 @@ function evaluate(exp, workerScript) {
                     } else {
                         if (exp.property.name === "constructor") {
                             return Promise.reject(makeRuntimeRejectMsg(workerScript, "Illegal usage of constructor() method. If you have your own function named 'constructor', you must re-name it."));
+                        }
+                        if (object != null && object instanceof Array && exp.property.name === "forEach") {
+                            return "NETSCRIPTFOREACH";
                         }
                         try {
                             return Promise.resolve(object[exp.property.name])
@@ -537,35 +546,43 @@ function evaluateFor(exp, workerScript) {
         }
         recurse();
     });
-    /*
-    return evaluate(exp.test, workerScript).then(function(resCond) {
-        if (resCond) {
-            //Execute code (body), update, and then recurse
-            return evaluate(exp.body, workerScript).then(function(resCode) {
-                return evaluate(exp.update, workerScript);
-            }).catch(function(e) {
-                if (e == "CONTINUESTATEMENT" ||
-                   (e instanceof WorkerScript && e.errorMessage == "CONTINUESTATEMENT")) {
-                        //Continue statement, recurse to next iteration
-                        return evaluate(exp.update, workerScript).then(function(resPostloop) {
-                            return evaluateFor(exp, workerScript);
-                        }).then(function(foo) {
-                            return Promise.resolve("endForLoop");
-                        }).catch(function(e) {
-                            return Promise.reject(e);
-                        });
-                } else {
-                    return Promise.reject(e);
-                }
-            }).then(function(resPostloop) {
-                    return evaluateFor(exp, workerScript);
-            }).then(function(foo) {
-                return Promise.resolve("endForLoop");
-            });
-        } else {
-            return Promise.resolve("endForLoop");    //Doesn't need to resolve to any particular value
+}
+
+function evaluateForeach(arr, args, workerScript) {
+    console.log("evaluateForeach called");
+    if (!(arr instanceof Array)) {
+        return Promise.reject("Invalid array passed into forEach");
+    }
+    if (!(args instanceof Array) && args.length != 1) {
+        return Promise.reject("Invalid argument passed into forEach");
+    }
+    var func = args[0];
+    if (typeof func !== "function") {
+        return Promise.reject("Invalid function passed into forEach");
+    }
+    console.log(func);
+    return new Promise(function(resolve, reject) {
+        //Don't return a promise so the promise chain is broken on each recursion
+        function recurse(i) {
+            console.log("recurse() called with i: " + i);
+            if (i >= arr.length) {
+                resolve();
+            } else {
+                return Promise.delay(Settings.CodeInstructionRunTime).then(function() {
+                    console.log("About to apply function");
+                    var res = func.apply(null, [arr[i]]);
+                    console.log("Applied function");
+                    ++i;
+                    Promise.resolve(res).then(function(val) {
+                        recurse(i);
+                    }, reject).catch(function(e) {
+                        return Promise.reject(e);
+                    });
+                });
+            }
         }
-    });*/
+        recurse(0);
+    });
 }
 
 function evaluateWhile(exp, workerScript) {
@@ -701,6 +718,14 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
     if (runningScriptObj != null) {
         workerScript.scriptRef.log(scriptname + " is already running on " + server.hostname);
         return Promise.resolve(false);
+    }
+
+    //'null/undefined' arguments are not allowed
+    for (var i = 0; i < args.length; ++i) {
+        if (args[i] == null) {
+            workerScript.scriptRef.log("ERROR: Cannot execute a script with null/undefined as an argument");
+            return Promise.resolve(false);
+        }
     }
 
     //Check if the script exists and if it does run it

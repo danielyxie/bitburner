@@ -75,19 +75,6 @@ Environment.prototype = {
         }
         return res[idx[idx.length-1]] = value;
     },
-    /*
-    setArrayElement: function(name, idx, value) {
-        var scope = this.lookup(name);
-        if (!scope && this.parent) {
-            console.log("Here");
-            throw new Error("Undefined variable " + name);
-        }
-        var arr = (scope || this).vars[name];
-        if (!(arr.constructor === Array || arr instanceof Array)) {
-            throw new Error("Variable is not an array: " + name);
-        }
-        return (scope || this).vars[name][idx] = value;
-    },*/
 
 	//Creates (or overwrites) a variable in the current scope
     def: function(name, value) {

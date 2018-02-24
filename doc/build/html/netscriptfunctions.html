@@ -70,7 +70,7 @@ This includes information such as function signatures, what they do, and their r
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if the hack is successful, false otherwise</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The amount of money stolen if the hack is successful, and zero otherwise</p>
 </td>
 </tr>
 </tbody>
@@ -158,14 +158,13 @@ root access to the target server, but there is no required hacking level to run 
 <h2>sleep<a class="headerlink" href="#sleep" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt>
-<code class="descname">sleep</code><span class="sig-paren">(</span><em>n</em><span class="optional">[</span>, <em>log=true</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<code class="descname">sleep</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
 <li><strong>n</strong> (<em>number</em>) -- Number of milliseconds to sleep</li>
-<li><strong>log</strong> (<em>boolean</em>) -- Optional boolean specifying whether or not to log the action</li>
 </ul>
 </td>
 </tr>
@@ -212,6 +211,61 @@ root access to the target server, but there is no required hacking level to run 
 </tbody>
 </table>
 <p>Prints a value or a variable to the Terminal</p>
+</dd></dl>
+
+</div>
+<div class="section" id="clearlog">
+<h2>clearLog<a class="headerlink" href="#clearlog" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="clearLog">
+<code class="descname">clearLog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#clearLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the script's logs</p>
+</dd></dl>
+
+</div>
+<div class="section" id="disablelog">
+<h2>disableLog<a class="headerlink" href="#disablelog" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="disableLog">
+<code class="descname">disableLog</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#disableLog" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fn</strong> (<em>string</em>) -- Name of function for which to disable logging</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Disables logging for the given function. Logging can be disabled for
+all functions by passing 'ALL' as the argument.</p>
+<p>Note that this does not completely remove all logging functionality.
+This only stops a function from logging
+when the function is successful. If the function fails, it will still log the reason for failure.</p>
+<p>Notable functions that cannot have their logs disabled: run, exec, exit</p>
+</dd></dl>
+
+</div>
+<div class="section" id="enablelog">
+<h2>enableLog<a class="headerlink" href="#enablelog" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="enableLog">
+<code class="descname">enableLog</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#enableLog" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fn</strong> (<em>string</em>) -- Name of function for which to enable logging</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Re-enables logging for the given function. If 'ALL' is passed into this function
+as an argument, then it will revert the effects of disableLog('ALL')</p>
 </dd></dl>
 
 </div>
@@ -544,7 +598,8 @@ is not the same as <em>foo.script</em> run with the argument 2, even though they
 </tr>
 </tbody>
 </table>
-<p>Kills all running scripts on the specified server. This function will always return true.</p>
+<p>Kills all running scripts on the specified server. This function returns true if any scripts were killed, and
+false otherwise. In other words, it will return true if there are any scripts running on the target server.</p>
 </dd></dl>
 
 </div>
@@ -599,13 +654,14 @@ then this function will return true if at least one of the files in the array is
 <h2>ls<a class="headerlink" href="#ls" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt>
-<code class="descname">ls</code><span class="sig-paren">(</span><em>hostname/ip</em><span class="sig-paren">)</span></dt>
+<code class="descname">ls</code><span class="sig-paren">(</span><em>hostname/ip</em><span class="optional">[</span>, <em>grep</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
 <li><strong>hostname/ip</strong> (<em>string</em>) -- Hostname or IP of the target server</li>
+<li><strong>grep</strong> (<em>string</em>) -- a substring to search for in the filename</li>
 </ul>
 </td>
 </tr>
@@ -1079,26 +1135,6 @@ then IPs will be returned. If this argument is omitted then it is true by defaul
 </dd></dl>
 
 </div>
-<div class="section" id="round">
-<h2>round<a class="headerlink" href="#round" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt>
-<code class="descname">round</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
-<li><strong>n</strong> (<em>number</em>) -- Number to round</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Returns the argument <em>n</em> rounded to the nearest integer. If the argument passed in is not a number, then the function will return 0.</p>
-</dd></dl>
-
-</div>
 <div class="section" id="write">
 <h2>write<a class="headerlink" href="#write" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -1153,6 +1189,28 @@ the text file does not exist, an empty string will be returned.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="peek">
+<h2>peek<a class="headerlink" href="#peek" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt>
+<code class="descname">peek</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>port</strong> (<em>number</em>) -- Port to peek. Must be an integer between 1 and 10</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This function is used to peek at the data from a port. It returns the first element in the specified port
+without removing that element. If the port is empty, the string &quot;NULL PORT DATA&quot; will be returned.</p>
+<p>Read about how <a class="reference external" href="http://bitburner.wikia.com/wiki/Netscript_Ports">Netscript Ports work here</a>.</p>
+</dd></dl>
+
+</div>
 <div class="section" id="clear">
 <h2>clear<a class="headerlink" href="#clear" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -1172,6 +1230,29 @@ the text file does not exist, an empty string will be returned.</p>
 <p>This function is used to clear data in a <a class="reference external" href="http://bitburner.wikia.com/wiki/Netscript_Ports">Netscript Ports</a> or a text file.</p>
 <p>If the <em>port/fn</em> argument is a number between 1 and 10, then it specifies a port and will clear it (deleting all data from the underlying queue).</p>
 <p>If the <em>port/fn</em> argument is a string, then it specifies the name of a text file (.txt) and will delete all data from that text file.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="rm">
+<h2>rm<a class="headerlink" href="#rm" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt>
+<code class="descname">rm</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> (<em>string</em>) -- Filename of file to remove. Must include the extension</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if it successfully deletes the file, and false otherwise</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Removes the specified file from the current server. This function works for every file type except message (.msg) files.</p>
 </dd></dl>
 
 </div>
@@ -1505,6 +1586,9 @@ you create in functions such as <a class="reference external" href="https://deve
 <li class="toctree-l3"><a class="reference internal" href="#sleep">sleep</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#print">print</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tprint">tprint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clearlog">clearLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disablelog">disableLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enablelog">enableLog</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scan">scan</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#nuke">nuke</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#brutessh">brutessh</a></li>
@@ -1541,10 +1625,11 @@ you create in functions such as <a class="reference external" href="https://deve
 <li class="toctree-l3"><a class="reference internal" href="#purchaseserver">purchaseServer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#deleteserver">deleteServer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getpurchasedservers">getPurchasedServers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#round">round</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#write">write</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#read">read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#peek">peek</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#clear">clear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rm">rm</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scriptrunning">scriptRunning</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scriptkill">scriptKill</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getscriptram">getScriptRam</a></li>
@@ -1566,6 +1651,7 @@ you create in functions such as <a class="reference external" href="https://deve
 <li class="toctree-l2"><a class="reference internal" href="netscripthacknetnodeapi.html"> Hacknet Node API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="netscriptixapi.html"> Trade Information eXchange (TIX) API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="netscriptsingularityfunctions.html"> Singularity Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptmisc.html"> Miscellaneous</a></li>
 </ul>
 </li>
 </ul>

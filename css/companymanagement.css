@@ -1,7 +1,7 @@
 #cmpy-mgmt-container p,
 #cmpy-mgmt-container a,
 #cmpy-mgmt-container div {
-    font-size: 14px;
+    font-size: 13px;
 }
 
 
@@ -123,9 +123,10 @@
 .cmpy-mgmt-upgrade-div {
     display:inline-block;
     border:1px solid white;
-    margin:4px;
-    padding:12px;
+    margin:2px;
+    padding:6px;
     border-radius:25px;
+    font-size:"12px";
     color:var(--my-font-color);
 }
 

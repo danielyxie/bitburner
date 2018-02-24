@@ -128,7 +128,9 @@ function NetscriptFunctions(workerScript) {
                 }
                 out.push(entry);
             }
-            workerScript.scriptRef.log('scan() returned ' + server.serversOnNetwork.length + ' connections for ' + server.hostname);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scan == null) {
+                workerScript.scriptRef.log('scan() returned ' + server.serversOnNetwork.length + ' connections for ' + server.hostname);
+            }
             return out;
         },
         hack : function(ip){
@@ -165,8 +167,9 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Cannot hack this server (" + server.hostname + ") because user's hacking skill is not high enough");
             }
 
-            workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
-            //console.log("Hacking " + server.hostname + " after " + hackingTime.toString() + " seconds (t=" + threads + ")");
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
+                workerScript.scriptRef.log("Attempting to hack " + ip + " in " + hackingTime.toFixed(3) + " seconds (t=" + threads + ")");
+            }
             return netscriptDelay(hackingTime* 1000, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 var hackChance = scriptCalculateHackingChance(server);
@@ -192,26 +195,28 @@ function NetscriptFunctions(workerScript) {
                     workerScript.scriptRef.recordHack(server.ip, moneyGained, threads);
                     Player.gainHackingExp(expGainedOnSuccess);
                     workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
-                    //console.log("Script successfully hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp");
-                    workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
+                    if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
+                        workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
+                    }
                     server.fortify(CONSTANTS.ServerFortifyAmount * threads);
-                    return Promise.resolve(true);
+                    return Promise.resolve(moneyGained);
                 } else {
-                    //Player only gains 25% exp for failure? TODO Can change this later to balance
+                    //Player only gains 25% exp for failure?
                     Player.gainHackingExp(expGainedOnFailure);
                     workerScript.scriptRef.onlineExpGained += expGainedOnFailure;
-                    //console.log("Script unsuccessful to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp");
-                    workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
-                    return Promise.resolve(false);
+                    if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
+                        workerScript.scriptRef.log("Script FAILED to hack " + server.hostname + ". Gained " + formatNumber(expGainedOnFailure, 4) + " exp (t=" + threads + ")");
+                    }
+                    return Promise.resolve(0);
                 }
             });
         },
-        sleep : function(time,log=true){
+        sleep : function(time){
             if (workerScript.checkingRam) {return 0;}
             if (time === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "sleep() call has incorrect number of arguments. Takes 1 argument");
             }
-            if (log) {
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sleep == null) {
                 workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
             }
             return netscriptDelay(time, workerScript).then(function() {
@@ -245,8 +250,9 @@ function NetscriptFunctions(workerScript) {
             }
 
             var growTime = scriptCalculateGrowTime(server);
-            //console.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds")
-            workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds (t=" + threads + ")");
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.grow == null) {
+                workerScript.scriptRef.log("Executing grow() on server " + server.hostname + " in " + formatNumber(growTime/1000, 3) + " seconds (t=" + threads + ")");
+            }
             return netscriptDelay(growTime, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
@@ -256,9 +262,11 @@ function NetscriptFunctions(workerScript) {
                 if (growthPercentage == 1) {
                     expGain = 0;
                 }
-                workerScript.scriptRef.log("Available money on " + server.hostname + " grown by "
-                                           + formatNumber(growthPercentage*100 - 100, 6) + "%. Gained " +
-                                           formatNumber(expGain, 4) + " hacking exp (t=" + threads +")");
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.grow == null) {
+                    workerScript.scriptRef.log("Available money on " + server.hostname + " grown by " +
+                                                formatNumber(growthPercentage*100 - 100, 6) + "%. Gained " +
+                                                formatNumber(expGain, 4) + " hacking exp (t=" + threads +")");
+                }
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
                 return Promise.resolve(growthPercentage);
@@ -291,15 +299,19 @@ function NetscriptFunctions(workerScript) {
             }
 
             var weakenTime = scriptCalculateWeakenTime(server);
-            workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " +
-                                       formatNumber(weakenTime/1000, 3) + " seconds (t=" + threads + ")");
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.weaken == null) {
+                workerScript.scriptRef.log("Executing weaken() on server " + server.hostname + " in " +
+                                           formatNumber(weakenTime/1000, 3) + " seconds (t=" + threads + ")");
+            }
             return netscriptDelay(weakenTime, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 server.weaken(CONSTANTS.ServerWeakenAmount * threads);
                 workerScript.scriptRef.recordWeaken(server.ip, threads);
                 var expGain = scriptCalculateExpGain(server) * threads;
-                workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty +
-                                           ". Gained " + formatNumber(expGain, 4) + " hacking exp (t=" + threads + ")");
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.weaken == null) {
+                    workerScript.scriptRef.log("Server security level on " + server.hostname + " weakened to " + server.hackDifficulty +
+                                               ". Gained " + formatNumber(expGain, 4) + " hacking exp (t=" + threads + ")");
+                }
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
                 return Promise.resolve(CONSTANTS.ServerWeakenAmount * threads);
@@ -331,6 +343,16 @@ function NetscriptFunctions(workerScript) {
             if (workerScript.checkingRam) {return 0;}
             workerScript.scriptRef.clearLog();
         },
+        disableLog : function(fn) {
+            if (workerScript.checkingRam) {return 0;}
+            workerScript.disableLogs[fn] = true;
+            workerScript.scriptRef.log("Disabled logging for " + fn);
+        },
+        enableLog : function(fn) {
+            if (workerScript.checkingRam) {return 0;}
+            delete workerScript.disableLogs[fn];
+            workerScript.scriptRef.log("Enabled logging for " + fn);
+        },
         nuke : function(ip){
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.nuke) {
@@ -355,10 +377,14 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Not enough ports opened to use NUKE.exe virus");
             }
             if (server.hasAdminRights) {
-                workerScript.scriptRef.log("Already have root access to " + server.hostname);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.nuke == null) {
+                    workerScript.scriptRef.log("Already have root access to " + server.hostname);
+                }
             } else {
                 server.hasAdminRights = true;
-                workerScript.scriptRef.log("Executed NUKE.exe virus on " + server.hostname + " to gain root access");
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.nuke == null) {
+                    workerScript.scriptRef.log("Executed NUKE.exe virus on " + server.hostname + " to gain root access");
+                }
             }
             return true;
         },
@@ -384,11 +410,15 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the BruteSSH.exe program!");
             }
             if (!server.sshPortOpen) {
-                workerScript.scriptRef.log("Executed BruteSSH.exe on " + server.hostname + " to open SSH port (22)");
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.brutessh == null) {
+                    workerScript.scriptRef.log("Executed BruteSSH.exe on " + server.hostname + " to open SSH port (22)");
+                }
                 server.sshPortOpen = true;
                 ++server.openPortCount;
             } else {
-                workerScript.scriptRef.log("SSH Port (22) already opened on " + server.hostname);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.brutessh == null) {
+                    workerScript.scriptRef.log("SSH Port (22) already opened on " + server.hostname);
+                }
             }
             return true;
         },
@@ -413,11 +443,15 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the FTPCrack.exe program!");
             }
             if (!server.ftpPortOpen) {
-                workerScript.scriptRef.log("Executed FTPCrack.exe on " + server.hostname + " to open FTP port (21)");
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.ftpcrack == null) {
+                    workerScript.scriptRef.log("Executed FTPCrack.exe on " + server.hostname + " to open FTP port (21)");
+                }
                 server.ftpPortOpen = true;
                 ++server.openPortCount;
             } else {
-                workerScript.scriptRef.log("FTP Port (21) already opened on " + server.hostname);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.ftpcrack == null) {
+                    workerScript.scriptRef.log("FTP Port (21) already opened on " + server.hostname);
+                }
             }
             return true;
         },
@@ -442,11 +476,15 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the relaySMTP.exe program!");
             }
             if (!server.smtpPortOpen) {
-                workerScript.scriptRef.log("Executed relaySMTP.exe on " + server.hostname + " to open SMTP port (25)");
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.relaysmtp == null) {
+                    workerScript.scriptRef.log("Executed relaySMTP.exe on " + server.hostname + " to open SMTP port (25)");
+                }
                 server.smtpPortOpen = true;
                 ++server.openPortCount;
             } else {
-                workerScript.scriptRef.log("SMTP Port (25) already opened on " + server.hostname);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.relaysmtp == null) {
+                    workerScript.scriptRef.log("SMTP Port (25) already opened on " + server.hostname);
+                }
             }
             return true;
         },
@@ -471,11 +509,15 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the HTTPWorm.exe program!");
             }
             if (!server.httpPortOpen) {
-                workerScript.scriptRef.log("Executed HTTPWorm.exe on " + server.hostname + " to open HTTP port (80)");
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.httpworm == null) {
+                    workerScript.scriptRef.log("Executed HTTPWorm.exe on " + server.hostname + " to open HTTP port (80)");
+                }
                 server.httpPortOpen = true;
                 ++server.openPortCount;
             } else {
-                workerScript.scriptRef.log("HTTP Port (80) already opened on " + server.hostname);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.httpworm == null) {
+                    workerScript.scriptRef.log("HTTP Port (80) already opened on " + server.hostname);
+                }
             }
             return true;
         },
@@ -500,11 +542,15 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the SQLInject.exe program!");
             }
             if (!server.sqlPortOpen) {
-                workerScript.scriptRef.log("Executed SQLInject.exe on " + server.hostname + " to open SQL port (1433)");
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sqlinject == null) {
+                    workerScript.scriptRef.log("Executed SQLInject.exe on " + server.hostname + " to open SQL port (1433)");
+                }
                 server.sqlPortOpen = true;
                 ++server.openPortCount;
             } else {
-                workerScript.scriptRef.log("SQL Port (1433) already opened on " + server.hostname);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sqlinject == null) {
+                    workerScript.scriptRef.log("SQL Port (1433) already opened on " + server.hostname);
+                }
             }
             return true;
         },
@@ -574,7 +620,9 @@ function NetscriptFunctions(workerScript) {
             setTimeout(()=>{
                 NetscriptFunctions(workerScript).run.apply(this, arguments);
             }, 20000);
-            workerScript.scriptRef.log("spawn() will execute " + scriptname + " in 20 seconds");
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.spawn == null) {
+                workerScript.scriptRef.log("spawn() will execute " + scriptname + " in 20 seconds");
+            }
             NetscriptFunctions(workerScript).exit();
         },
         kill : function(filename,ip) {
@@ -606,10 +654,14 @@ function NetscriptFunctions(workerScript) {
             }
             var res = killWorkerScript(runningScriptObj, server.ip);
             if (res) {
-                workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.kill == null) {
+                    workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
+                }
                 return true;
             } else {
-                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget));
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.kill == null) {
+                    workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget));
+                }
                 return false;
             }
         },
@@ -631,11 +683,14 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("killall() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "killall() failed. Invalid IP or hostname passed in: " + ip);
             }
+            var scriptsRunning = (server.runningScripts.length > 0);
             for (var i = server.runningScripts.length-1; i >= 0; --i) {
                 killWorkerScript(server.runningScripts[i], server.ip);
             }
-            workerScript.scriptRef.log("killall(): Killing all scripts on " + server.hostname + ". May take a few minutes for the scripts to die");
-            return true;
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.killall == null) {
+                workerScript.scriptRef.log("killall(): Killing all scripts on " + server.hostname + ". May take a few minutes for the scripts to die");
+            }
+            return scriptsRunning;
         },
         exit : function() {
             if (workerScript.checkingRam) {
@@ -678,8 +733,9 @@ function NetscriptFunctions(workerScript) {
                 });
                 return res;
             }
-            if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script")) {
-                throw makeRuntimeRejectMsg(workerScript, "Error: scp() only works for .script and .lit files");
+            if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script") &&
+                !scriptname.endsWith("txt")) {
+                throw makeRuntimeRejectMsg(workerScript, "Error: scp() does not work with this file type. It only works for .script, .lit, and .txt files");
             }
 
             var destServer, currServ;
@@ -718,6 +774,7 @@ function NetscriptFunctions(workerScript) {
                 for (var i = 0; i < currServ.messages.length; ++i) {
                     if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
                         found = true;
+                        break;
                     }
                 }
 
@@ -728,12 +785,50 @@ function NetscriptFunctions(workerScript) {
 
                 for (var i = 0; i < destServer.messages.length; ++i) {
                     if (destServer.messages[i] === scriptname) {
-                        workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
+                            workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                        }
                         return true; //Already exists
                     }
                 }
                 destServer.messages.push(scriptname);
-                workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
+                    workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                }
+                return true;
+            }
+
+            //Scp for text files
+            if (scriptname.endsWith(".txt")) {
+                var found = false, txtFile;
+                for (var i = 0; i < currServ.textFiles.length; ++i) {
+                    if (currServ.textFiles[i].fn === scriptname) {
+                        found = true;
+                        txtFile = currServ.textFiles[i];
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    workerScript.scriptRef.log(scriptname + " does not exist. scp() failed");
+                    return false;
+                }
+
+                for (var i = 0; i < destServer.textFiles.length; ++i) {
+                    if (destServer.textFiles[i].fn === scriptname) {
+                        //Overwrite
+                        destServer.textFiles[i].text = txtFile.text;
+                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
+                            workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                        }
+                        return true;
+                    }
+                }
+                var newFile = new TextFile(txtFile.fn, txtFile.text);
+                destServer.textFiles.push(newFile);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
+                    workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+                }
                 return true;
             }
 
@@ -753,8 +848,10 @@ function NetscriptFunctions(workerScript) {
             //Overwrite script if it already exists
             for (var i = 0; i < destServer.scripts.length; ++i) {
                 if (scriptname == destServer.scripts[i].filename) {
-                    workerScript.scriptRef.log("WARNING: " + scriptname + " already exists on " + destServer.hostname + " and it will be overwritten.");
-                    workerScript.scriptRef.log(scriptname + " overwritten on " + destServer.hostname);
+                    if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
+                        workerScript.scriptRef.log("WARNING: " + scriptname + " already exists on " + destServer.hostname + " and it will be overwritten.");
+                        workerScript.scriptRef.log(scriptname + " overwritten on " + destServer.hostname);
+                    }
                     var oldScript = destServer.scripts[i];
                     oldScript.code = sourceScript.code;
                     oldScript.ramUsage = sourceScript.ramUsage;
@@ -769,7 +866,9 @@ function NetscriptFunctions(workerScript) {
             newScript.ramUsage = sourceScript.ramUsage;
             newScript.server = destServer.ip;
             destServer.scripts.push(newScript);
-            workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.scp == null) {
+                workerScript.scriptRef.log(scriptname + " copied over to " + destServer.hostname);
+            }
             return true;
         },
         ls : function(ip, grep) {
@@ -831,6 +930,16 @@ function NetscriptFunctions(workerScript) {
                     } else {
                         allFiles.push(server.messages[i]);
                     }
+                }
+            }
+
+            for (var i = 0; i < server.textFiles.length; i++) {
+                if (filter) {
+                    if (server.textFiles[i].fn.includes(filter)) {
+                        allFiles.push(server.textFiles[i].fn);
+                    }
+                } else {
+                    allFiles.push(server.textFiles[i].fn);
                 }
             }
 
@@ -897,7 +1006,9 @@ function NetscriptFunctions(workerScript) {
                 }
             }
             Player.updateSkillLevels();
-            workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getHackingLevel == null) {
+                workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
+            }
             return Player.hacking_skill;
         },
         getHackingMultipliers : function() {
@@ -946,10 +1057,14 @@ function NetscriptFunctions(workerScript) {
             }
             if (server.hostname == "home") {
                 //Return player's money
-                workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + formatNumber(Player.money.toNumber(), 2));
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMoneyAvailable == null) {
+                    workerScript.scriptRef.log("getServerMoneyAvailable('home') returned player's money: $" + formatNumber(Player.money.toNumber(), 2));
+                }
                 return Player.money.toNumber();
             }
-            workerScript.scriptRef.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2) + " for " + server.hostname);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMoneyAvailable == null) {
+                workerScript.scriptRef.log("getServerMoneyAvailable() returned " + formatNumber(server.moneyAvailable, 2) + " for " + server.hostname);
+            }
             return server.moneyAvailable;
         },
         getServerSecurityLevel : function(ip){
@@ -966,7 +1081,9 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3) + " for " + server.hostname);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerSecurityLevel == null) {
+                workerScript.scriptRef.log("getServerSecurityLevel() returned " + formatNumber(server.hackDifficulty, 3) + " for " + server.hostname);
+            }
             return server.hackDifficulty;
         },
         getServerBaseSecurityLevel : function(ip){
@@ -983,7 +1100,9 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + formatNumber(server.baseDifficulty, 3) + " for " + server.hostname);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerBaseSecurityLevel == null) {
+                workerScript.scriptRef.log("getServerBaseSecurityLevel() returned " + formatNumber(server.baseDifficulty, 3) + " for " + server.hostname);
+            }
             return server.baseDifficulty;
         },
         getServerMinSecurityLevel : function(ip) {
@@ -1000,7 +1119,9 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerMinSecurityLevel() returned " + formatNumber(server.minDifficulty, 3) + " for " + server.hostname);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMinSecurityLevel == null) {
+                workerScript.scriptRef.log("getServerMinSecurityLevel() returned " + formatNumber(server.minDifficulty, 3) + " for " + server.hostname);
+            }
             return server.minDifficulty;
         },
         getServerRequiredHackingLevel : function(ip) {
@@ -1017,7 +1138,9 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + formatNumber(server.requiredHackingSkill, 0) + " for " + server.hostname);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerRequiredHackingLevel == null) {
+                workerScript.scriptRef.log("getServerRequiredHackingLevel returned " + formatNumber(server.requiredHackingSkill, 0) + " for " + server.hostname);
+            }
             return server.requiredHackingSkill;
         },
         getServerMaxMoney : function(ip){
@@ -1034,7 +1157,9 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerMaxMoney() returned " + formatNumber(server.moneyMax, 0) + " for " + server.hostname);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerMaxMoney == null) {
+                workerScript.scriptRef.log("getServerMaxMoney() returned " + formatNumber(server.moneyMax, 0) + " for " + server.hostname);
+            }
             return server.moneyMax;
         },
         getServerGrowth : function(ip) {
@@ -1051,7 +1176,9 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerGrowth() returned " + formatNumber(server.serverGrowth, 0) + " for " + server.hostname);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerGrowth == null) {
+                workerScript.scriptRef.log("getServerGrowth() returned " + formatNumber(server.serverGrowth, 0) + " for " + server.hostname);
+            }
             return server.serverGrowth;
         },
         getServerNumPortsRequired : function(ip) {
@@ -1068,7 +1195,9 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerNumPortsRequired() returned " + formatNumber(server.numOpenPortsRequired, 0) + " for " + server.hostname);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerNumPortsRequired == null) {
+                workerScript.scriptRef.log("getServerNumPortsRequired() returned " + formatNumber(server.numOpenPortsRequired, 0) + " for " + server.hostname);
+            }
             return server.numOpenPortsRequired;
         },
         getServerRam : function(ip) {
@@ -1085,7 +1214,9 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("getServerRam() failed. Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "getServerRam() failed. Invalid IP or hostname passed in: " + ip);
             }
-            workerScript.scriptRef.log("getServerRam() returned [" + formatNumber(server.maxRam, 2) + "GB, " + formatNumber(server.ramUsed, 2) + "GB]");
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getServerRam == null) {
+                workerScript.scriptRef.log("getServerRam() returned [" + formatNumber(server.maxRam, 2) + "GB, " + formatNumber(server.ramUsed, 2) + "GB]");
+            }
             return [server.maxRam, server.ramUsed];
         },
         serverExists : function(ip) {
@@ -1167,7 +1298,7 @@ function NetscriptFunctions(workerScript) {
                     return 0;
                 } else {
                     workerScript.loadedFns.getNextHacknetNodeCost = true;
-                    return CONSTANTS.ScriptHacknetNodesRamCost;
+                    return CONSTANTS.ScriptPurchaseHacknetRamCost;
                 }
             }
             return getCostOfNextHacknetNode();
@@ -1259,8 +1390,10 @@ function NetscriptFunctions(workerScript) {
             if (Engine.currentPage == Engine.Page.StockMarket) {
                 updateStockPlayerPosition(stock);
             }
-            workerScript.scriptRef.log("Bought " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                                       formatNumber(stock.price, 2) + " per share");
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.buyStock == null) {
+                workerScript.scriptRef.log("Bought " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
+                                           formatNumber(stock.price, 2) + " per share");
+            }
             return stock.price;
         },
         sellStock : function(symbol, shares) {
@@ -1302,9 +1435,11 @@ function NetscriptFunctions(workerScript) {
             if (Engine.currentPage == Engine.Page.StockMarket) {
                 updateStockPlayerPosition(stock);
             }
-            workerScript.scriptRef.log("Sold " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
-                                       formatNumber(stock.price, 2) + " per share. Gained " +
-                                       "$" + formatNumber(gains, 2));
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.sellStock == null) {
+                workerScript.scriptRef.log("Sold " + formatNumber(shares, 0) + " shares of " + stock.symbol + " at $" +
+                                           formatNumber(stock.price, 2) + " per share. Gained " +
+                                           "$" + formatNumber(gains, 2));
+            }
             return stock.price;
         },
         shortStock(symbol, shares) {
@@ -1497,7 +1632,9 @@ function NetscriptFunctions(workerScript) {
             homeComputer.serversOnNetwork.push(newServ.ip);
             newServ.serversOnNetwork.push(homeComputer.ip);
             Player.loseMoney(cost);
-            workerScript.scriptRef.log("Purchased new server with hostname " + newServ.hostname + " for $" + formatNumber(cost, 2));
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseServer == null) {
+                workerScript.scriptRef.log("Purchased new server with hostname " + newServ.hostname + " for $" + formatNumber(cost, 2));
+            }
             return newServ.hostname;
         },
         deleteServer : function(hostname) {
@@ -1562,7 +1699,9 @@ function NetscriptFunctions(workerScript) {
             for (var i = 0; i < homeComputer.serversOnNetwork.length; ++i) {
                 if (ip == homeComputer.serversOnNetwork[i]) {
                     homeComputer.serversOnNetwork.splice(i, 1);
-                    workerScript.scriptRef.log("Deleted server " + hostnameStr);
+                    if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.deleteServer == null) {
+                        workerScript.scriptRef.log("Deleted server " + hostnameStr);
+                    }
                     return true;
                 }
             }
@@ -1593,10 +1732,6 @@ function NetscriptFunctions(workerScript) {
                 }
             });
             return res;
-        },
-        round : function(n) {
-            if (isNaN(n)) {return 0;}
-            return Math.round(n);
         },
         write : function(port, data="", mode="a") {
             if (workerScript.checkingRam) {
@@ -1663,7 +1798,7 @@ function NetscriptFunctions(workerScript) {
                 if (port == null) {
                     throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
                 }
-                if (port.length == 0) {
+                if (port.length === 0) {
                     return "NULL PORT DATA";
                 } else {
                     return port.shift();
@@ -1682,6 +1817,30 @@ function NetscriptFunctions(workerScript) {
                 }
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for read(): " + port);
+            }
+        },
+        peek : function(port) {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.peek) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.peek = true;
+                    return CONSTANTS.ScriptReadWriteRamCost;
+                }
+            }
+            if (isNaN(port) || port < 1 || port > 10) {
+                throw makeRuntimeRejectMsg(workerScript, "ERR: peek() called with invalid argument. Must be a port number between 1 and 10");
+            }
+            var portName = "Port" + String(port);
+            var port = NetscriptPorts[portName];
+            if (port == null) {
+                throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
+            }
+            if (port.length === 0) {
+                return "NULL PORT DATA";
+            } else {
+                var foo = port.slice();
+                return foo[0];
             }
         },
         clear : function(port) {
@@ -2010,7 +2169,9 @@ function NetscriptFunctions(workerScript) {
             }
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
-                workerScript.scriptRef.log(txt);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.universityCourse == null) {
+                    workerScript.scriptRef.log(txt);
+                }
             }
 
             var costMult, expMult;
@@ -2072,7 +2233,9 @@ function NetscriptFunctions(workerScript) {
                     return false;
             }
             Player.startClass(costMult, expMult, task);
-            workerScript.scriptRef.log("Started " + task + " at " + universityName);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.universityCourse == null) {
+                workerScript.scriptRef.log("Started " + task + " at " + universityName);
+            }
             return true;
         },
 
@@ -2099,7 +2262,9 @@ function NetscriptFunctions(workerScript) {
             }
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
-                workerScript.scriptRef.log(txt);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.gymWorkout == null) {
+                    workerScript.scriptRef.log(txt);
+                }
             }
             var costMult, expMult;
             switch(gymName.toLowerCase()) {
@@ -2174,7 +2339,9 @@ function NetscriptFunctions(workerScript) {
                     workerScript.scriptRef.log("Invalid stat: " + stat + ". gymWorkout() failed");
                     return false;
             }
-            workerScript.scriptRef.log("Started training " + stat + " at " + gymName);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.gymWorkout == null) {
+                workerScript.scriptRef.log("Started training " + stat + " at " + gymName);
+            }
             return true;
         },
 
@@ -2206,7 +2373,9 @@ function NetscriptFunctions(workerScript) {
                     Player.loseMoney(200000);
                     Player.city = cityname;
                     Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
-                    workerScript.scriptRef.log("Traveled to " + cityname);
+                    if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.travelToCity == null) {
+                        workerScript.scriptRef.log("Traveled to " + cityname);
+                    }
                     return true;
                 default:
                     workerScript.scriptRef.log("ERROR: Invalid city name passed into travelToCity().");
@@ -2252,7 +2421,9 @@ function NetscriptFunctions(workerScript) {
             Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
             darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);
             Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
-            workerScript.scriptRef.log("You have purchased a Tor router!");
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseTor == null) {
+                workerScript.scriptRef.log("You have purchased a Tor router!");
+            }
             return true;
         },
         purchaseProgram(programName) {
@@ -2284,8 +2455,9 @@ function NetscriptFunctions(workerScript) {
                     if (price > 0 && Player.money.gt(price)) {
                         Player.loseMoney(price);
                         Player.getHomeComputer().programs.push(Programs.BruteSSHProgram);
-                        workerScript.scriptRef.log("You have purchased the BruteSSH.exe program. The new program " +
-                             "can be found on your home computer.");
+                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
+                            workerScript.scriptRef.log("You have purchased the BruteSSH.exe program. The new program can be found on your home computer.");
+                        }
                     } else {
                         workerScript.scriptRef.log("Not enough money to purchase " + programName);
                         return false;
@@ -2296,8 +2468,9 @@ function NetscriptFunctions(workerScript) {
                     if (price > 0 && Player.money.gt(price)) {
                         Player.loseMoney(price);
                         Player.getHomeComputer().programs.push(Programs.FTPCrackProgram);
-                        workerScript.scriptRef.log("You have purchased the FTPCrack.exe program. The new program " +
-                             "can be found on your home computer.");
+                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
+                            workerScript.scriptRef.log("You have purchased the FTPCrack.exe program. The new program can be found on your home computer.");
+                        }
                     } else {
                         workerScript.scriptRef.log("Not enough money to purchase " + programName);
                         return false;
@@ -2308,8 +2481,9 @@ function NetscriptFunctions(workerScript) {
                     if (price > 0 && Player.money.gt(price)) {
                         Player.loseMoney(price);
                         Player.getHomeComputer().programs.push(Programs.RelaySMTPProgram);
-                        workerScript.scriptRef.log("You have purchased the relaySMTP.exe program. The new program " +
-                             "can be found on your home computer.");
+                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
+                            workerScript.scriptRef.log("You have purchased the relaySMTP.exe program. The new program can be found on your home computer.");
+                        }
                     } else {
                         workerScript.scriptRef.log("Not enough money to purchase " + programName);
                         return false;
@@ -2320,8 +2494,9 @@ function NetscriptFunctions(workerScript) {
                     if (price > 0 && Player.money.gt(price)) {
                         Player.loseMoney(price);
                         Player.getHomeComputer().programs.push(Programs.HTTPWormProgram);
-                        workerScript.scriptRef.log("You have purchased the HTTPWorm.exe program. The new program " +
-                             "can be found on your home computer.");
+                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
+                            workerScript.scriptRef.log("You have purchased the HTTPWorm.exe program. The new program can be found on your home computer.");
+                        }
                     } else {
                         workerScript.scriptRef.log("Not enough money to purchase " + programName);
                         return false;
@@ -2332,8 +2507,9 @@ function NetscriptFunctions(workerScript) {
                     if (price > 0 && Player.money.gt(price)) {
                         Player.loseMoney(price);
                         Player.getHomeComputer().programs.push(Programs.SQLInjectProgram);
-                        workerScript.scriptRef.log("You have purchased the SQLInject.exe program. The new program " +
-                             "can be found on your home computer.");
+                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
+                            workerScript.scriptRef.log("You have purchased the SQLInject.exe program. The new program can be found on your home computer.");
+                        }
                     } else {
                         workerScript.scriptRef.log("Not enough money to purchase " + programName);
                         return false;
@@ -2344,8 +2520,9 @@ function NetscriptFunctions(workerScript) {
                     if (price > 0 && Player.money.gt(price)) {
                         Player.loseMoney(price);
                         Player.getHomeComputer().programs.push(Programs.DeepscanV1);
-                        workerScript.scriptRef.log("You have purchased the DeepscanV1.exe program. The new program " +
-                             "can be found on your home computer.");
+                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
+                            workerScript.scriptRef.log("You have purchased the DeepscanV1.exe program. The new program can be found on your home computer.");
+                        }
                     } else {
                         workerScript.scriptRef.log("Not enough money to purchase " + programName);
                         return false;
@@ -2356,8 +2533,9 @@ function NetscriptFunctions(workerScript) {
                     if (price > 0 && Player.money.gt(price)) {
                         Player.loseMoney(price);
                         Player.getHomeComputer().programs.push(Programs.DeepscanV2);
-                        workerScript.scriptRef.log("You have purchased the DeepscanV2.exe program. The new program " +
-                             "can be found on your home computer.");
+                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
+                            workerScript.scriptRef.log("You have purchased the DeepscanV2.exe program. The new program can be found on your home computer.");
+                        }
                     } else {
                         workerScript.scriptRef.log("Not enough money to purchase " + programName);
                         return false;
@@ -2429,7 +2607,9 @@ function NetscriptFunctions(workerScript) {
             }
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
-                workerScript.scriptRef.log(txt);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.stopAction == null) {
+                    workerScript.scriptRef.log(txt);
+                }
                 return true;
             }
             return false;
@@ -2473,7 +2653,9 @@ function NetscriptFunctions(workerScript) {
             Player.loseMoney(cost);
 
             Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
-            workerScript.scriptRef.log("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.upgradeHomeRam == null) {
+                workerScript.scriptRef.log("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
+            }
             return true;
         },
         getUpgradeHomeRamCost() {
@@ -2534,7 +2716,9 @@ function NetscriptFunctions(workerScript) {
 
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
-                workerScript.scriptRef.log(txt);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.workForCompany == null) {
+                    workerScript.scriptRef.log(txt);
+                }
             }
 
             if (Player.companyPosition.isPartTimeJob()) {
@@ -2542,7 +2726,9 @@ function NetscriptFunctions(workerScript) {
             } else {
                 Player.startWork();
             }
-            workerScript.scriptRef.log("Began working at " + Player.companyName + " as a " + Player.companyPosition.positionName);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.workForCompany == null) {
+                workerScript.scriptRef.log("Began working at " + Player.companyName + " as a " + Player.companyPosition.positionName);
+            }
             return true;
         },
         applyToCompany(companyName, field) {
@@ -2620,9 +2806,13 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
             if (res) {
-                workerScript.scriptRef.log("You were offered a new job at " + companyName + " as a " + Player.companyPosition.positionName);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.applyToCompany == null) {
+                    workerScript.scriptRef.log("You were offered a new job at " + companyName + " as a " + Player.companyPosition.positionName);
+                }
             } else {
-                workerScript.scriptRef.log("You failed to get a new job/promotion at " + companyName + " in the " + field + " field.");
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.applyToCompany == null) {
+                    workerScript.scriptRef.log("You failed to get a new job/promotion at " + companyName + " in the " + field + " field.");
+                }
             }
             return res;
         },
@@ -2709,7 +2899,9 @@ function NetscriptFunctions(workerScript) {
             var fac = Factions[name];
             joinFaction(fac);
             Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
-            workerScript.scriptRef.log("Joined the " + name + " faction.");
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.joinFaction == null) {
+                workerScript.scriptRef.log("Joined the " + name + " faction.");
+            }
             return true;
         },
         workForFaction(name, type) {
@@ -2747,7 +2939,9 @@ function NetscriptFunctions(workerScript) {
 
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
-                workerScript.scriptRef.log(txt);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.workForFaction == null) {
+                    workerScript.scriptRef.log(txt);
+                }
             }
 
             var fac = Factions[name];
@@ -2856,7 +3050,9 @@ function NetscriptFunctions(workerScript) {
             }
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
-                workerScript.scriptRef.log(txt);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.createProgram == null) {
+                    workerScript.scriptRef.log(txt);
+                }
             }
 
             switch(name.toLowerCase()) {
@@ -2956,7 +3152,9 @@ function NetscriptFunctions(workerScript) {
             }
             if (Player.isWorking) {
                 var txt = Player.singularityStopWork();
-                workerScript.scriptRef.log(txt);
+                if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.commitCrime == null) {
+                    workerScript.scriptRef.log(txt);
+                }
             }
 
             //Set Location to slums
