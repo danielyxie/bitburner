@@ -1372,7 +1372,7 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             //var businessFactor = 1 + (office.employeeProd[EmployeePositions.Business] / office.employeeProd["total"]);
             var businessFactor = this.getBusinessFactor(office);        //Business employee productivity
             var advertisingFactor = this.getAdvertisingFactors()[0];    //Awareness + popularity
-            var getMarketFactor = this.getMarketFactor(product);        //Competition + demand
+            var marketFactor = this.getMarketFactor(product);        //Competition + demand
             var maxSell = Math.pow(product.rat, 0.9) * marketFactor * corporation.getSalesMultiplier() *
                           markup * businessFactor * advertisingFactor;
             var sellAmt;
