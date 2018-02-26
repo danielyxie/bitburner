@@ -76,7 +76,7 @@ function scriptEditorInit() {
 
     var documentationButton = createElement("a", {
         display:"inline-block", class:"a-link-button", innerText:"Netscript Documentation",
-        href:"https://bitburner.wikia.com/wiki/Netscript",
+        href:"https://bitburner.readthedocs.io/en/latest/index.html",
         target:"_blank"
     });
 

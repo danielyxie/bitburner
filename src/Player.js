@@ -1069,8 +1069,9 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     }
 
     var txt = document.getElementById("work-in-progress-text");
-    txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name + "." +
-                    "  You have been doing this for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
+    txt.innerHTML = "You are currently " + this.currentWorkFactionDescription + " for your faction " + faction.name +
+                    " (Current Faction Reputation: " + formatNumber(faction.playerReputation, 0) + "). " +
+                    "You have been doing this for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
                     "$" + formatNumber(this.workMoneyGained, 2) + " (" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
                     formatNumber(this.workRepGained, 4) + " (" + formatNumber(this.workRepGainRate * cyclesPerSec, 4) + " / sec) reputation for this faction <br><br>" +
@@ -1949,21 +1950,17 @@ PlayerObject.prototype.reapplyAllAugmentations = function(resetMultipliers=true)
 
     for (let i = 0; i < this.augmentations.length; ++i) {
         //Compatibility with new version
-        if (typeof this.augmentations[i] === 'string' || this.augmentations[i] instanceof String) {
-            var newOwnedAug = new PlayerOwnedAugmentation(this.augmentations[i]);
-            if (this.augmentations[i] == AugmentationNames.NeuroFluxGovernor) {
-                newOwnedAug.level = Augmentations[AugmentationNames.NeuroFluxGovernor].level;
-            }
-            this.augmentations[i] = newOwnedAug;
+        if (this.augmentations[i].name === "HacknetNode NIC Architecture Neural-Upload") {
+            this.augmentations[i].name = "Hacknet Node NIC Architecture Neural-Upload";
         }
 
         var augName = this.augmentations[i].name;
         var aug = Augmentations[augName];
-        aug.owned = true;
         if (aug == null) {
             console.log("WARNING: Invalid augmentation name");
             continue;
         }
+        aug.owned = true;
         if (aug.name == AugmentationNames.NeuroFluxGovernor) {
             for (let j = 0; j < aug.level; ++j) {
                 applyAugmentation(this.augmentations[i], true);

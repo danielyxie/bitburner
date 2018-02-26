@@ -328,6 +328,9 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
                 allPos.push(currServ.messages[i]);
             }
         }
+        for (var i = 0; i < currServ.textFiles.length; ++i) {
+            allPos.push(currServ.textFiles[i].fn);
+        }
     }
 
     if (input.startsWith("connect ") || input.startsWith("telnet ")) {
@@ -1131,16 +1134,17 @@ let Terminal = {
                     return;
                 }
                 var scriptname = args[0];
-                if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script")){
-                    post("Error: scp only works for .script and .lit files");
+                if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script") &&
+                    !scriptname.endsWith(".txt")){
+                    post("Error: scp only works for .script, .txt, and .lit files");
                     return;
                 }
-                var server = getServer(args[1]);
-                if (server == null) {
+                var destServer = getServer(args[1]);
+                if (destServer == null) {
                     post("Invalid destination. " + args[1] + " not found");
                     return;
                 }
-                var ip = server.ip;
+                var ip = destServer.ip;
                 var currServ = Player.getCurrentServer();
 
                 //Scp for lit files
@@ -1149,26 +1153,49 @@ let Terminal = {
                     for (var i = 0; i < currServ.messages.length; ++i) {
                         if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
                             found = true;
+                            break;
                         }
                     }
 
-                    if (!found) {
-                        post("Error: no such file exists!");
-                        return;
-                    }
+                    if (!found) {return post("Error: no such file exists!");}
 
-                    for (var i = 0; i < server.messages.length; ++i) {
-                        if (server.messages[i] === scriptname) {
-                            post(scriptname + " copied over to " + server.hostname);
+                    for (var i = 0; i < destServer.messages.length; ++i) {
+                        if (destServer.messages[i] === scriptname) {
+                            post(scriptname + " copied over to " + destServer.hostname);
                             return; //Already exists
                         }
                     }
-                    server.messages.push(scriptname);
-                    post(scriptname + " copied over to " + server.hostname);
+                    destServer.messages.push(scriptname);
+                    post(scriptname + " copied over to " + destServer.hostname);
                     return;
                 }
 
+                //Scp for txt files
+                if (scriptname.endsWith(".txt")) {
+                    var found = false, txtFile;
+                    for (var i = 0; i < currServ.textFiles.length; ++i) {
+                        if (currServ.textFiles[i].fn === scriptname) {
+                            found = true;
+                            txtFile = currServ.textFiles[i];
+                            break;
+                        }
+                    }
 
+                    if (!found) {return post("Error: no such file exists!");}
+
+                    for (var i = 0; i < destServer.textFiles.length; ++i) {
+                        if (destServer.textFiles[i].fn === scriptname) {
+                            //Overwrite
+                            destServer.textFiles[i].text = txtFile.text;
+                            post("WARNING: " + scriptname + " already exists on " + destServer.hostname +
+                                 "and will be overwriten");
+                            return post(scriptname + " copied over to " + destServer.hostname);
+                        }
+                    }
+                    var newFile = new TextFile(txtFile.fn, txtFile.text);
+                    destServer.textFiles.push(newFile);
+                    return post(scriptname + " copied over to " + destServer.hostname);
+                }
 
                 //Get the current script
                 var sourceScript = null;
@@ -1184,13 +1211,13 @@ let Terminal = {
                 }
 
                 //Overwrite script if it exists
-                for (var i = 0; i < server.scripts.length; ++i) {
-                    if (scriptname == server.scripts[i].filename) {
-                        post("WARNING: " + scriptname + " already exists on " + server.hostname + " and will be overwritten");
-                        var oldScript = server.scripts[i];
+                for (var i = 0; i < destServer.scripts.length; ++i) {
+                    if (scriptname == destServer.scripts[i].filename) {
+                        post("WARNING: " + scriptname + " already exists on " + destServer.hostname + " and will be overwritten");
+                        var oldScript = destServer.scripts[i];
                         oldScript.code = sourceScript.code;
                         oldScript.ramUsage = sourceScript.ramUsage;
-                        post(scriptname + " overwriten on " + server.hostname);
+                        post(scriptname + " overwriten on " + destServer.hostname);
                         return;
                     }
                 }
@@ -1199,9 +1226,9 @@ let Terminal = {
                 newScript.filename = scriptname;
                 newScript.code = sourceScript.code;
                 newScript.ramUsage = sourceScript.ramUsage;
-                newScript.server = ip;
-                server.scripts.push(newScript);
-                post(scriptname + " copied over to " + server.hostname);
+                newScript.destServer = ip;
+                destServer.scripts.push(newScript);
+                post(scriptname + " copied over to " + destServer.hostname);
 				break;
             case "sudov":
                 if (commandArray.length != 1) {

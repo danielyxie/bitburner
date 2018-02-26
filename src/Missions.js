@@ -1162,14 +1162,16 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
 
     var targetNode = null, def, atk;
     if (nodeObj.conn) {
-        var targetNode;
-        if (nodeObj.conn.target) {
+        if (nodeObj.conn.target != null) {
             targetNode = this.getNodeFromElement(nodeObj.conn.target);
         } else {
             targetNode = this.getNodeFromElement(nodeObj.conn.targetId);
         }
 
-        if (targetNode.plyrCtrl) {
+        if (targetNode == null) {
+            //Player is in the middle of  dragging the connection,
+            //so the target node is null. Do nothing here
+        } else if (targetNode.plyrCtrl) {
             def = this.playerDef;
             atk = this.enemyAtk;
         } else if (targetNode.enmyCtrl) {
@@ -1186,17 +1188,20 @@ HackingMission.prototype.processNode = function(nodeObj, numCycles=1) {
     var enmyHacking = this.difficulty * CONSTANTS.HackingMissionDifficultyToHacking;
     switch(nodeObj.action) {
         case NodeActions.Attack:
+            if (targetNode == null) {break;}
             if (nodeObj.conn == null) {break;}
             var dmg = this.calculateAttackDamage(atk, def, plyr ? Player.hacking_skill : enmyHacking);
             targetNode.hp -= (dmg/5 * numCycles);
             break;
         case NodeActions.Scan:
+            if (targetNode == null) {break;}
             if (nodeObj.conn == null) {break;}
             var eff = this.calculateScanEffect(atk, def, plyr ? Player.hacking_skill : enmyHacking);
             targetNode.def -= (eff/5 * numCycles);
             calcStats = true;
             break;
         case NodeActions.Weaken:
+            if (targetNode == null) {break;}
             if (nodeObj.conn == null) {break;}
             var eff = this.calculateWeakenEffect(atk, def, plyr ? Player.hacking_skill : enmyHacking);
             targetNode.atk -= (eff/5 * numCycles);

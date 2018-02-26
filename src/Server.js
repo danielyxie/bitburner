@@ -689,7 +689,7 @@ function processSingleServerGrowth(server, numCycles) {
 }
 
 function prestigeHomeComputer(homeComp) {
-    homeComp.programs.length = 0;
+    homeComp.programs.length = 0; //Remove programs
     homeComp.runningScripts = [];
     homeComp.serversOnNetwork = [];
     homeComp.isConnectedTo = true;
@@ -701,7 +701,7 @@ function prestigeHomeComputer(homeComp) {
         script.updateRamUsage();
     });
 
-    homeComp.messages.length = 0;
+    homeComp.messages.length = 0; //Remove .lit and .msg files
     homeComp.messages.push("hackers-starting-handbook.lit");
 }
 

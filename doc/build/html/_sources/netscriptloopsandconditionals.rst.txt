@@ -2,9 +2,6 @@ Netscript Loops and Conditionals
 ================================
 
 
-Loops and Conditionals
-----------------------
-
 Netscript loops and conditionals are the same as Javascript. However, the one caveat is that when declaring variables such as the
 iterator for traversing a loop, you should not use the 'var' or 'let' keyword. For reference, you can see the Javascript
 documentation for loops/conditionals here:
