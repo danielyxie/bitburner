@@ -1,31 +1,50 @@
 LIMITED USE SOFTWARE LICENSE AGREEMENT
 
-This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and Daniel Xie, 
-the creator of the software, hereafter referred to as the Creator.  
+This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and Daniel Y Xie,
+the creator of the software, hereafter referred to as the Creator.
 
-By downloading or purchasing the software material, which includes source code (the "Source Code"), artwork data, music and software 
-tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms 
-of this Agreement, promptly destroy the Software you may have downloaded or copied. 
+By downloading or purchasing the software material, which includes source code (the "Source Code"), artwork data, music and software
+tools (collectively, the "Software"), you are agreeing to be bound by the terms of this Agreement. If you do not agree to the terms
+of this Agreement, promptly destroy the Software you may have downloaded or copied.
 
 SOFTWARE LICENSE
 
-1. Grant of License. The Creator grants to you the right to use the Software. You have no ownership or proprietary rights in or to 
+1. Grant of License. The Creator grants to you the right to use the Software. You have no ownership or proprietary rights in or to
 the Software, or the Trademark. For purposes of this section, "use" means loading the Software into RAM, as well as installation
-on a hard disk or other storage device. The Software, together with any archive copy thereof, shall be destroyed when no longer 
+on a hard disk or other storage device. The Software, together with any archive copy thereof, shall be destroyed when no longer
 used in accordance with this Agreement, or when the right to use the Software is terminated. You agree that the Software will not
-be shipped, transferred or exported into any country in violation of the U.S. Export Administration Act (or any other law governing 
+be shipped, transferred or exported into any country in violation of the U.S. Export Administration Act (or any other law governing
 such matters) and that you will not utilize, in any other manner, the Software in violation of any applicable law.
 
-2. Permitted Uses. For educational purposes only, you, the end-user, may use portions of the Source Code, such as particular 
-routines, to develop your own software, but may not duplicate the Source Code, except as noted in paragraph 4. The limited 
-right referenced in the preceding sentence is hereinafter referred to as "Educational Use." By so exercising the Educational 
-Use right you shall not obtain any ownership, copyright, proprietary or other interest in or to the Source Code, or any portion 
-of the Source Code. You may dispose of your own software in your sole discretion. With the exception of the Educational Use right, 
-you may not otherwise use the Software, or an portion of the Software, which includes the Source Code, for commercial gain.
+2. Permitted Uses.
 
-3. Prohibited Uses: Under no circumstances shall you, the end-user, be permitted, allowed or authorized to commercially 
-exploit the Software. Neither you nor anyone at your direction shall do any of the following acts with regard to the Software, 
-or any portion thereof: 
+You may copy and distribute literal (i.e., verbatim) or modified copies of the Software's source code.
+You must meet all of the following conditions with respect to any work that you distribute or publish that in whole or in part
+contains or is derived from the Software or any part thereof:
+
+(a) The distributed Software may not be used in any way for commercial gain and must not violate any of the restrictions
+    set forth in Section 3.
+(b) If you have modified the Software, you must cause cause the modified Software to carry prominent notices stating that
+    you have modified the Software's files. Modifications must not alter or remove any copyright notices in the Software.
+(c) The distributed Software must include either a written copy of this License, or a prominent written indication that
+    the Software is covered by this License and written instructions for printing and/or displaying the copy of the License
+    on the distribution medium
+(d) When modifications to the Software are released under this license, a non-exclusive royalty-free right is granted to
+    the initial developer of the Software to distribute your modification in future versions of the Software provided
+    such versions remain available under these terms in addition to any other license(s) of the initial developer.
+(d) You may not impose any further restrictions on the recipient's exercise of the rights granted herein.
+
+For educational purposes only, you, the end-user, may use portions of the Source Code, such as particular
+routines, to develop your own software, but may not duplicate the Source Code. The limited
+right referenced in the preceding sentence is hereinafter referred to as "Educational Use." By so exercising the Educational
+Use right you shall not obtain any ownership, copyright, proprietary or other interest in or to the Source Code, or any portion
+of the Source Code. You may dispose of your own software in your sole discretion. When exercising the Educational Use right,
+you may not use or exploit the Software, or an portion of the Software, which includes the Source Code, for commercial gain.
+
+3. Prohibited Uses: Under no circumstances shall you, the end-user, be permitted, allowed or authorized to commercially
+exploit the Software or any work that in whole or in part contains or is derived from the Software or any part thereof.
+Neither you nor anyone at your direction shall do any of the following acts with regard to the Software,
+or any portion thereof:
 
 Rent;
 
@@ -39,30 +58,28 @@ Distribute for money or any other consideration; or
 
 In any other manner and through any medium whatsoever commercially exploit or use for any commercial purpose.
 
-Notwithstanding the foregoing prohibitions, you may commercially exploit the software you develop by exercising the Educational 
-Use right, referenced in paragraph 2. hereinabove.
-
-4. Copyright. The Software and all copyrights related thereto (including all characters and other images generated by the 
-Software or depicted in the Software) are owned by the Creator and is protected by United States copyright laws and international treaty 
-provisions. The creator shall retain exclusive ownership and copyright in and to the Software and all portions of the Software and you 
-shall have no ownership or other proprietary interest in such materials. You must treat the Software like any other copyrighted 
-material. You may not otherwise reproduce, copy or disclose to others, in whole or in any part, the Software. You may not copy the 
-written materials accompanying the Software. You agree to use your best efforts to see that any user of the Software licensed 
+4. Copyright. The Software and all copyrights related thereto (including all characters and other images generated by the
+Software or depicted in the Software) are owned by the Creator and is protected by United States copyright laws and international treaty
+provisions. The Creator shall retain exclusive ownership and copyright in and to the Software and all portions of the Software and you
+shall have no ownership or other proprietary interest in such materials. You must treat the Software like any other copyrighted
+material. You may not copy, modify, sublicense, or distribute the Program except as expressly provided under this License.
+You may not otherwise reproduce, copy or disclose to others, in whole or in any part, the Software. You may not copy the
+written materials accompanying the Software. You agree to use your best efforts to see that any user of the Software licensed
 hereunder complies with this Agreement.
 
-5. NO WARRANTIES. The Creator DISCLAIMS ALL WARRANTIES, BOTH EXPRESS IMPLIED, INCLUDING BUT NOT LIMITED TO, IMPLIED WARRANTIES OF 
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE WITH RESPECT TO THE SOFTWARE. THIS LIMITED WARRANTY GIVES YOU SPECIFIC 
-LEGAL RIGHTS. YOU MAY HAVE OTHER RIGHTS WHICH VARY FROM JURISDICTION TO JURISDICTION. the Creator DOES NOT WARRANT THAT THE OPERATION 
-OF THE SOFTWARE WILL BE UNINTERRUPTED, ERROR FREE OR MEET YOUR SPECIFIC REQUIREMENTS. THE WARRANTY SET FORTH ABOVE IS IN LIEU 
-OF ALL OTHER EXPRESS WARRANTIES WHETHER ORAL OR WRITTEN. THE AGENTS, EMPLOYEES, DISTRIBUTORS, AND DEALERS OF THE CREATOR ARE NOT AUTHORIZED 
+5. NO WARRANTIES. The Creator DISCLAIMS ALL WARRANTIES, BOTH EXPRESS IMPLIED, INCLUDING BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE WITH RESPECT TO THE SOFTWARE. THIS LIMITED WARRANTY GIVES YOU SPECIFIC
+LEGAL RIGHTS. YOU MAY HAVE OTHER RIGHTS WHICH VARY FROM JURISDICTION TO JURISDICTION. the Creator DOES NOT WARRANT THAT THE OPERATION
+OF THE SOFTWARE WILL BE UNINTERRUPTED, ERROR FREE OR MEET YOUR SPECIFIC REQUIREMENTS. THE WARRANTY SET FORTH ABOVE IS IN LIEU
+OF ALL OTHER EXPRESS WARRANTIES WHETHER ORAL OR WRITTEN. THE AGENTS, EMPLOYEES, DISTRIBUTORS, AND DEALERS OF THE CREATOR ARE NOT AUTHORIZED
 TO MAKE MODIFICATIONS TO THIS WARRANTY, OR ADDITIONAL WARRANTIES ON BEHALF OF THE CREATOR.
 
-Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against the creator, 
-its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless 
-of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software. 
-This Agreement shall be construed in accordance with and governed by the laws of the State of Texas. Copyright and other 
-proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, THE CREATOR SHALL NOT BE LIABLE 
-FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING 
-FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF THE CREATOR OR ITS AGENT HAS BEEN ADVISED OF THE 
+Exclusive Remedies. The Software is being offered to you free of any charge. You agree that you have no remedy against the creator,
+its affiliates, contractors, suppliers, and agents for loss or damage caused by any defect or failure in the Software regardless
+of the form of action, whether in contract, tort, includinegligence, strict liability or otherwise, with regard to the Software.
+This Agreement shall be construed in accordance with and governed by the laws of the State of Texas. Copyright and other
+proprietary matters will be governed by United States laws and international treaties. IN ANY CASE, THE CREATOR SHALL NOT BE LIABLE
+FOR LOSS OF DATA, LOSS OF PROFITS, LOST SAVINGS, SPECIAL, INCIDENTAL, CONSEQUENTIAL, INDIRECT OR OTHER SIMILAR DAMAGES ARISING
+FROM BREACH OF WARRANTY, BREACH OF CONTRACT, NEGLIGENCE, OR OTHER LEGAL THEORY EVEN IF THE CREATOR OR ITS AGENT HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY OTHER PARTY. Some jurisdictions do not allow the exclusion or limitation of
 incidental or consequential damages, so the above limitation or exclusion may not apply to you.
