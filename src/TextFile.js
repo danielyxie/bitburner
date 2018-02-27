@@ -21,7 +21,7 @@ TextFile.prototype.read = function() {
 }
 
 TextFile.prototype.show = function() {
-    dialogBoxCreate(this.fn + "<br><br>" + this.text);
+    dialogBoxCreate(this.fn + "<br><br>" + this.text, true);
 }
 
 TextFile.prototype.download = function() {

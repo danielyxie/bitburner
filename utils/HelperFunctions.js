@@ -100,6 +100,12 @@ function createElement(type, params) {
             class:"tooltiptext",
             innerHTML:params.tooltip
         }));
+    } else if (params.tooltipleft) {
+        el.className += " tooltip";
+        el.appendChild(createElement("span", {
+            class:"tooltiptextleft",
+            innerHTML:params.tooltipleft
+        }));
     }
     if (params.href)        {el.href = params.href;}
     if (params.target)      {el.target = params.target;}

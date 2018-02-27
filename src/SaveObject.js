@@ -41,6 +41,7 @@ function BitburnerSaveObject() {
     this.StockMarketSave            = "";
     this.SettingsSave               = "";
     this.VersionSave                = "";
+    this.AllGangsSave               = "";
 }
 
 BitburnerSaveObject.prototype.saveGame = function(db) {
@@ -229,6 +230,7 @@ function loadImportedGame(saveObj, saveString) {
     var tempGlobalAliases = null;
     var tempMessages = null;
     var tempStockMarket = null;
+    var tempAllGangs = null;
 
     //Check to see if the imported save file can be parsed. If any
     //errors are caught it will fail
@@ -280,7 +282,7 @@ function loadImportedGame(saveObj, saveString) {
         }
         if (saveObj.hasOwnProperty("StockMarketSave")) {
             try {
-                tempStockMarket     = JSON.parse(saveObj.StockMarketSave, Reviver);
+                tempStockMarket     = JSON.parse(tempSaveObj.StockMarketSave, Reviver);
             } catch(e) {
                 console.log("Parsing StockMarket save failed: " + e);
                 tempStockMarket     = {};
@@ -309,9 +311,9 @@ function loadImportedGame(saveObj, saveString) {
         } else {
             //createNewUpdateText();
         }
-        if (tempPlayer.bitNodeN == 2 && tempPlayer.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+        if (tempPlayer.bitNodeN == 2 && tempPlayer.inGang() && tempSaveObj.hasOwnProperty("AllGangsSave")) {
             try {
-                AllGangs = JSON.parse(saveObj.AllGangsSave, Reviver);
+                loadAllGangs(tempSaveObj.AllGangsSave);
             } catch(e) {
                 console.log("ERROR: Failed to parse AllGangsSave: " + e);
             }
