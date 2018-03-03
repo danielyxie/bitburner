@@ -1509,20 +1509,46 @@ false if the player clicks &quot;No&quot;. The script's execution is halted unti
     <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]));</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]));</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]));</span>    <span class="o">//</span><span class="n">Prints</span> <span class="mi">15</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]));</span>            <span class="o">//</span><span class="n">Prints</span> <span class="mi">11</span>
 </pre></div>
 </div>
-<p>The example above prints the following in its log:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">15</span>
-<span class="mi">11</span>
+<p>For those with experience in other languages, especially Javascript, it may be important to note that
+function declarations are not hoisted and must be declared BEFORE you use them.
+For example, the following will cause an error saying <cite>variable hello not defined</cite>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">hello</span><span class="p">());</span>
+
+<span class="n">function</span> <span class="n">hello</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">&quot;world&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The following will work fine:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">hello</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">&quot;world&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">hello</span><span class="p">());</span>     <span class="o">//</span><span class="n">Prints</span> <span class="n">out</span> <span class="s2">&quot;world&quot;</span>
 </pre></div>
 </div>
 <p><strong>Note about variable scope in functions:</strong></p>
 <p>Functions can access &quot;global&quot; variables declared outside of the function's scope. However, they cannot change the value of any &quot;global&quot; variables.
-Any changes to &quot;global&quot; variables will only be applied locally to the function. This also means that any variable that is first defined inside a
-function will NOT be accessible outside of the function.</p>
-<p>For example, the following code:</p>
+Any changes to &quot;global&quot; variables will only be applied locally to the function.</p>
+<p>The following example shows that any change to a &quot;global&quot; variable
+from inside a function only applies in the function's local scope:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="k">return</span> <span class="s2">&quot;foo&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>   <span class="o">//</span><span class="n">Prints</span> <span class="mi">0</span>
+<span class="n">foo</span><span class="p">();</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>   <span class="o">//</span><span class="n">Prints</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Furthermore, this also means that any variable that is first defined inside a
+function will NOT be accessible outside of the function as shown in the following example:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="nb">sum</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">values</span><span class="o">.</span><span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
@@ -1539,23 +1565,6 @@ function will NOT be accessible outside of the function.</p>
 <span class="n">Script</span> <span class="n">name</span><span class="p">:</span> <span class="n">test</span><span class="o">.</span><span class="n">script</span>
 <span class="n">Args</span><span class="p">:[]</span>
 <span class="n">variable</span> <span class="n">res</span> <span class="ow">not</span> <span class="n">defined</span>
-</pre></div>
-</div>
-<p>The following example shows that any change to &quot;global&quot; variable inside a function only applies in the function's local scope:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
-    <span class="k">return</span> <span class="s2">&quot;foo&quot;</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-<span class="n">foo</span><span class="p">();</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Results in the following log:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span>
-<span class="mi">0</span>
 </pre></div>
 </div>
 <p><strong>Other Notes about creating your own functions:</strong></p>

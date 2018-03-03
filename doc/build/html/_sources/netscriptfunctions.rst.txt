@@ -742,7 +742,7 @@ rm
     :param string fn: Filename of file to remove. Must include the extension
     :returns: True if it successfully deletes the file, and false otherwise
 
-    Removes the specified file from the current server. This function works for every file type except message (.msg) files. 
+    Removes the specified file from the current server. This function works for every file type except message (.msg) files.
 
 scriptRunning
 ^^^^^^^^^^^^^
@@ -900,21 +900,47 @@ Functions should have some return value. Here is an example of defining and usin
         return res;
     }
 
-    print(sum([1, 2, 3, 4, 5]));
-    print(sum([1, 10]));
+    print(sum([1, 2, 3, 4, 5]));    //Prints 15
+    print(sum([1, 10]));            //Prints 11
 
-The example above prints the following in its log::
+For those with experience in other languages, especially Javascript, it may be important to note that
+function declarations are not hoisted and must be declared BEFORE you use them.
+For example, the following will cause an error saying `variable hello not defined`::
 
-    15
-    11
+    print(hello());
+
+    function hello() {
+        return "world";
+    }
+
+The following will work fine::
+
+    function hello() {
+        return "world";
+    }
+
+    print(hello());     //Prints out "world"
 
 **Note about variable scope in functions:**
 
 Functions can access "global" variables declared outside of the function's scope. However, they cannot change the value of any "global" variables.
-Any changes to "global" variables will only be applied locally to the function. This also means that any variable that is first defined inside a
-function will NOT be accessible outside of the function.
+Any changes to "global" variables will only be applied locally to the function.
 
-For example, the following code::
+The following example shows that any change to a "global" variable
+from inside a function only applies in the function's local scope::
+
+    function foo() {
+        i = 5;
+        return "foo";
+    }
+
+    i = 0;
+    print(i);   //Prints 0
+    foo();
+    print(i);   //Prints 0
+
+Furthermore, this also means that any variable that is first defined inside a
+function will NOT be accessible outside of the function as shown in the following example::
 
     function sum(values) {
         res = 0;
@@ -933,22 +959,6 @@ results in the following runtime error::
     Args:[]
     variable res not defined
 
-The following example shows that any change to "global" variable inside a function only applies in the function's local scope::
-
-    function foo() {
-        i = 5;
-        return "foo";
-    }
-
-    i = 0;
-    print(i);
-    foo();
-    print(i);
-
-Results in the following log::
-
-    0
-    0
 
 **Other Notes about creating your own functions:**
 

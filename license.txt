@@ -24,7 +24,7 @@ contains or is derived from the Software or any part thereof:
 
 (a) The distributed Software may not be used in any way for commercial gain and must not violate any of the restrictions
     set forth in Section 3.
-(b) If you have modified the Software, you must cause cause the modified Software to carry prominent notices stating that
+(b) If you have modified the Software, you must cause the modified Software to carry prominent notices stating that
     you have modified the Software's files. Modifications must not alter or remove any copyright notices in the Software.
 (c) The distributed Software must include either a written copy of this License, or a prominent written indication that
     the Software is covered by this License and written instructions for printing and/or displaying the copy of the License
