@@ -54,6 +54,7 @@ import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
         scriptCalculateExpGain, scriptCalculatePercentMoneyHacked,
         scriptCalculateGrowTime, scriptCalculateWeakenTime} from "./NetscriptEvaluator.js";
 import {Environment}                                from "./NetscriptEnvironment.js";
+import {NetscriptPort}                              from "./NetscriptPort.js";
 
 import Decimal                                      from '../utils/decimal.js';
 import {dialogBoxCreate}                            from "../utils/DialogBox.js";
@@ -99,6 +100,7 @@ function NetscriptFunctions(workerScript) {
     return {
         Math : Math,
         Date : Date,
+        Number : Number,
         hacknetnodes : Player.hacknetNodes,
         sprintf : sprintf,
         vsprintf: vsprintf,
@@ -614,7 +616,7 @@ function NetscriptFunctions(workerScript) {
                     return CONSTANTS.ScriptSpawnRamCost;
                 }
             }
-            if (scriptname == null || threads == 1) {
+            if (scriptname == null || threads == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid scriptname or numThreads argument passed to spawn()");
             }
             setTimeout(()=>{
@@ -665,7 +667,7 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
         },
-        killall : function(ip){
+        killall : function(ip=workerScript.serverIp){
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.killall) {
                     return 0;
@@ -1601,7 +1603,7 @@ function NetscriptFunctions(workerScript) {
                 }
             }
             var hostnameStr = String(hostname);
-            hostnameStr = hostnameStr.replace(/\s\s+/g, '');
+            hostnameStr = hostnameStr.replace(/\s+/g, '');
             if (hostnameStr == "") {
                 workerScript.scriptRef.log("Error: Passed empty string for hostname argument of purchaseServer()");
                 return "";
@@ -1744,20 +1746,15 @@ function NetscriptFunctions(workerScript) {
             }
             if (!isNaN(port)) { //Write to port
                 //Port 1-10
-                if (port < 1 || port > 10) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to write to invalid port: " + port + ". Only ports 1-10 are valid.");
+                port = Math.round(port);
+                if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
+                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to write to invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid.");
                 }
-                var portName = "Port" + String(port);
-                var port = NetscriptPorts[portName];
-                if (port == null) {
+                var port = NetscriptPorts[port-1];
+                if (port == null || !(port instanceof NetscriptPort)) {
                     throw makeRuntimeRejectMsg(workerScript, "Could not find port: " + port + ". This is a bug contact the game developer");
                 }
-                port.push(data);
-                if (port.length > Settings.MaxPortCapacity) {
-                    port.shift();
-                    return true;
-                }
-                return false;
+                return port.write(data);
             } else if (isString(port)) { //Write to text file
                 var fn = port;
                 var server = getServer(workerScript.serverIp);
@@ -1790,19 +1787,15 @@ function NetscriptFunctions(workerScript) {
             }
             if (!isNaN(port)) { //Read from port
                 //Port 1-10
-                if (port < 1 || port > 10) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to read from invalid port: " + port + ". Only ports 1-10 are valid.");
+                port = Math.round(port);
+                if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
+                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to read from invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid.");
                 }
-                var portName = "Port" + String(port);
-                var port = NetscriptPorts[portName];
-                if (port == null) {
+                var port = NetscriptPorts[port-1];
+                if (port == null || !(port instanceof NetscriptPort)) {
                     throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
                 }
-                if (port.length === 0) {
-                    return "NULL PORT DATA";
-                } else {
-                    return port.shift();
-                }
+                return port.read();
             } else if (isString(port)) { //Read from text file
                 var fn = port;
                 var server = getServer(workerScript.serverIp);
@@ -1828,20 +1821,18 @@ function NetscriptFunctions(workerScript) {
                     return CONSTANTS.ScriptReadWriteRamCost;
                 }
             }
-            if (isNaN(port) || port < 1 || port > 10) {
-                throw makeRuntimeRejectMsg(workerScript, "ERR: peek() called with invalid argument. Must be a port number between 1 and 10");
+            if (isNaN(port)) {
+                throw makeRuntimeRejectMsg(workerScript, "ERR: peek() called with invalid argument. Must be a port number between 1 and " + CONSTANTS.NumNetscriptPorts);
             }
-            var portName = "Port" + String(port);
-            var port = NetscriptPorts[portName];
-            if (port == null) {
+            port = Math.round(port);
+            if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
+                throw makeRuntimeRejectMsg(workerScript, "ERR: peek() called with invalid argument. Must be a port number between 1 and " + CONSTANTS.NumNetscriptPorts);
+            }
+            var port = NetscriptPorts[port-1];
+            if (port == null || !(port instanceof NetscriptPort)) {
                 throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
             }
-            if (port.length === 0) {
-                return "NULL PORT DATA";
-            } else {
-                var foo = port.slice();
-                return foo[0];
-            }
+            return port.peek();
         },
         clear : function(port) {
             if (workerScript.checkingRam) {
@@ -1853,15 +1844,15 @@ function NetscriptFunctions(workerScript) {
                 }
             }
             if (!isNaN(port)) { //Clear port
-                if (port < 1 || port > 10) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to read from invalid port: " + port + ". Only ports 1-10 are valid");
+                port = Math.round(port);
+                if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
+                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to clear invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid");
                 }
-                var portName = "Port" + String(port);
-                var port = NetscriptPorts[portName];
-                if (port == null) {
+                var port = NetscriptPorts[port-1];
+                if (port == null || !(port instanceof NetscriptPort)) {
                     throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
                 }
-                port.length = 0;
+                return port.clear();
             } else if (isString(port)) { //Clear text file
                 var fn = port;
                 var server = getServer(workerScript.serverIp);
@@ -1876,6 +1867,28 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid argument passed in for clear(): " + port);
             }
             return 0;
+        },
+        getPortHandle : function(port) {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.getPortHandle) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.getPortHandle = true;
+                    return CONSTANTS.ScriptReadWriteRamCost * 10;
+                }
+            }
+            if (isNaN(port)) {
+                throw makeRuntimeRejectMsg(workerScript, "ERR: Invalid argument passed into getPortHandle(). Must be an integer between 1 and " + CONSTANTS.NumNetscriptPorts);
+            }
+            port = Math.round(port);
+            if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
+                throw makeRuntimeRejectMsg(workerScript, "ERR: getPortHandle() called with invalid port number: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid");
+            }
+            var port = NetscriptPorts[port-1];
+            if (port == null || !(port instanceof NetscriptPort)) {
+                throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
+            }
+            return port;
         },
         rm : function(fn) {
             if (workerScript.checkingRam) {
@@ -2153,7 +2166,7 @@ function NetscriptFunctions(workerScript) {
                 } else {
                     workerScript.loadedFns.universityCourse = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2246,7 +2259,7 @@ function NetscriptFunctions(workerScript) {
                 } else {
                     workerScript.loadedFns.gymWorkout = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2351,8 +2364,8 @@ function NetscriptFunctions(workerScript) {
                     return 0;
                 } else {
                     workerScript.loadedFns.travelToCity = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 2;
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2390,7 +2403,7 @@ function NetscriptFunctions(workerScript) {
                 } else {
                     workerScript.loadedFns.purchaseTor = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2433,7 +2446,7 @@ function NetscriptFunctions(workerScript) {
                 } else {
                     workerScript.loadedFns.purchaseProgram = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2553,8 +2566,8 @@ function NetscriptFunctions(workerScript) {
                     return 0;
                 } else {
                     workerScript.loadedFns.getStats = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2575,14 +2588,55 @@ function NetscriptFunctions(workerScript) {
                 intelligence:   Player.intelligence
             }
         },
+        getCharacterInformation : function() {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.getCharacterInformation) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.getCharacterInformation = true;
+                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
+                    return ramCost;
+                }
+            }
+
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getCharacterInformation(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return {};
+                }
+            }
+
+            var companyPositionTitle = "";
+            if (Player.companyPosition instanceof CompanyPosition) {
+                companyPositionTitle = Player.companyPosition.positionName;
+            }
+            return {
+                bitnode:            Player.bitNodeN,
+                company:            Player.companyName,
+                jobTitle:           companyPositionTitle,
+                city:               Player.city,
+                factions:           Player.factions.slice(),
+                tor:                SpecialServerIps.hasOwnProperty("Darkweb Server"),
+                timeWorked:         Player.timeWorked,
+                workHackExpGain:    Player.workHackExpGained,
+                workStrExpGain:     Player.workStrExpGained,
+                workDefExpGain:     Player.workDefExpGained,
+                workDexExpGain:     Player.workDexExpGained,
+                workAgiExpGain:     Player.workAgiExpGained,
+                workChaExpGain:     Player.workChaExpGained,
+                workRepGain:        Player.workRepGained,
+                workMoneyGain:      Player.workMoneyGained,
+            };
+        },
         isBusy : function() {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.isBusy) {
                     return 0;
                 } else {
                     workerScript.loadedFns.isBusy = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2600,9 +2654,15 @@ function NetscriptFunctions(workerScript) {
                     return 0;
                 } else {
                     workerScript.loadedFns.stopAction = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 2;
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
+                }
+            }
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 1)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run stopAction(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
+                    return false;
                 }
             }
             if (Player.isWorking) {
@@ -2614,14 +2674,14 @@ function NetscriptFunctions(workerScript) {
             }
             return false;
         },
-        upgradeHomeRam() {
+        upgradeHomeRam : function() {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.upgradeHomeRam) {
                     return 0;
                 } else {
                     workerScript.loadedFns.upgradeHomeRam = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2658,14 +2718,14 @@ function NetscriptFunctions(workerScript) {
             }
             return true;
         },
-        getUpgradeHomeRamCost() {
+        getUpgradeHomeRamCost : function() {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getUpgradeHomeRamCost) {
                     return 0;
                 } else {
                     workerScript.loadedFns.getUpgradeHomeRamCost = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 2;
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2686,14 +2746,14 @@ function NetscriptFunctions(workerScript) {
             var mult = Math.pow(1.55, numUpgrades);
             return cost * mult;
         },
-        workForCompany() {
+        workForCompany : function() {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.workForCompany) {
                     return 0;
                 } else {
                     workerScript.loadedFns.workForCompany = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2731,14 +2791,14 @@ function NetscriptFunctions(workerScript) {
             }
             return true;
         },
-        applyToCompany(companyName, field) {
+        applyToCompany : function(companyName, field) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.applyToCompany) {
                     return 0;
                 } else {
                     workerScript.loadedFns.applyToCompany = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2816,14 +2876,14 @@ function NetscriptFunctions(workerScript) {
             }
             return res;
         },
-        getCompanyRep(companyName) {
+        getCompanyRep : function(companyName) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getCompanyRep) {
                     return 0;
                 } else {
                     workerScript.loadedFns.getCompanyRep = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2841,14 +2901,39 @@ function NetscriptFunctions(workerScript) {
             }
             return company.playerReputation;
         },
-        checkFactionInvitations() {
+        getCompanyFavor : function(companyName) {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.getCompanyFavor) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.getCompanyFavor = true;
+                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
+                    return ramCost;
+                }
+            }
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getCompanyFavor(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return false;
+                }
+            }
+
+            var company = Companies[companyName];
+            if (company == null || !(company instanceof Company)) {
+                workerScript.scriptRef.log("ERROR: Invalid companyName passed into getCompanyFavor(): " + companyName);
+                return -1;
+            }
+            return company.favor;
+        },
+        checkFactionInvitations : function() {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.checkFactionInvitations) {
                     return 0;
                 } else {
                     workerScript.loadedFns.checkFactionInvitations = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2861,14 +2946,14 @@ function NetscriptFunctions(workerScript) {
             //Make a copy of Player.factionInvitations
             return Player.factionInvitations.slice();
         },
-        joinFaction(name) {
+        joinFaction : function(name) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.joinFaction) {
                     return 0;
                 } else {
                     workerScript.loadedFns.joinFaction = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -2904,14 +2989,14 @@ function NetscriptFunctions(workerScript) {
             }
             return true;
         },
-        workForFaction(name, type) {
+        workForFaction : function(name, type) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.workForFaction) {
                     return 0;
                 } else {
                     workerScript.loadedFns.workForFaction = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -3002,14 +3087,14 @@ function NetscriptFunctions(workerScript) {
             }
             return true;
         },
-        getFactionRep(name) {
+        getFactionRep : function(name) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getFactionRep) {
                     return 0;
                 } else {
                     workerScript.loadedFns.getFactionRep = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -3027,14 +3112,39 @@ function NetscriptFunctions(workerScript) {
 
             return Factions[name].playerReputation;
         },
-        createProgram(name) {
+        getFactionFavor : function(name) {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.getFactionFavor) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.getFactionFavor = true;
+                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
+                    return ramCost;
+                }
+            }
+            if (Player.bitNodeN != 4) {
+                if (!(hasSingularitySF && singularitySFLvl >= 2)) {
+                    throw makeRuntimeRejectMsg(workerScript, "Cannot run getFactionFavor(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
+                    return -1;
+                }
+            }
+
+            if (!factionExists(name)) {
+                workerScript.scriptRef.log("ERROR: Faction specified in getFactionFavor() does not exist.");
+                return -1;
+            }
+
+            return Factions[name].favor;
+        },
+        createProgram : function(name) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.createProgram) {
                     return 0;
                 } else {
                     workerScript.loadedFns.createProgram = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -3136,7 +3246,7 @@ function NetscriptFunctions(workerScript) {
                 } else {
                     workerScript.loadedFns.commitCrime = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -3222,14 +3332,14 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into commitCrime(): " + crime);
             }
         },
-        getCrimeChance(crime) {
+        getCrimeChance : function(crime) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getCrimeChance) {
                     return 0;
                 } else {
                     workerScript.loadedFns.getCrimeChance = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -3269,14 +3379,14 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into getCrimeChance(): " + crime);
             }
         },
-        getOwnedAugmentations(purchased=false) {
+        getOwnedAugmentations : function(purchased=false) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getOwnedAugmentations) {
                     return 0;
                 } else {
                     workerScript.loadedFns.getOwnedAugmentations = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -3297,14 +3407,14 @@ function NetscriptFunctions(workerScript) {
             }
             return res;
         },
-        getAugmentationsFromFaction(facname) {
+        getAugmentationsFromFaction : function(facname) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getAugmentationsFromFaction) {
                     return 0;
                 } else {
                     workerScript.loadedFns.getAugmentationsFromFaction = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -3327,14 +3437,14 @@ function NetscriptFunctions(workerScript) {
             }
             return res;
         },
-        getAugmentationCost(name) {
+        getAugmentationCost : function(name) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getAugmentationCost) {
                     return 0;
                 } else {
                     workerScript.loadedFns.getAugmentationCost = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -3353,14 +3463,14 @@ function NetscriptFunctions(workerScript) {
             var aug = Augmentations[name];
             return [aug.baseRepRequirement, aug.baseCost];
         },
-        purchaseAugmentation(faction, name) {
+        purchaseAugmentation : function(faction, name) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.purchaseAugmentation) {
                     return 0;
                 } else {
                     workerScript.loadedFns.purchaseAugmentation = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }
@@ -3422,14 +3532,14 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
         },
-        installAugmentations(cbScript) {
+        installAugmentations : function(cbScript) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.installAugmentations) {
                     return 0;
                 } else {
                     workerScript.loadedFns.installAugmentations = true;
                     var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 10;}
+                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
                     return ramCost;
                 }
             }

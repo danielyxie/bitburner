@@ -75,7 +75,7 @@ function Server(ip=createRandomIp(), hostname="", organizationName="",
 Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvailable, hackDifficulty, serverGrowth) {
 	this.requiredHackingSkill = requiredHackingSkill;
     if (isNaN(moneyAvailable)) {
-        this.moneyAvailable = 1000000;
+        this.moneyAvailable = 1e6;
     } else {
         this.moneyAvailable = moneyAvailable * BitNodeMultipliers.ServerStartingMoney;
     }

@@ -48,9 +48,9 @@ function PlayerObject() {
     this.intelligence   = 0;
 
     //Hacking multipliers
-    this.hacking_chance_mult    = 1;  //Increase through ascensions/augmentations
-    this.hacking_speed_mult     = 1;  //Decrease through ascensions/augmentations
-    this.hacking_money_mult     = 1;  //Increase through ascensions/augmentations. Can't go above 1
+    this.hacking_chance_mult    = 1;
+    this.hacking_speed_mult     = 1;
+    this.hacking_money_mult     = 1;
     this.hacking_grow_mult      = 1;
 
     //Experience and multipliers
@@ -692,11 +692,10 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
-    //Engine.loadTerminalContent();
     Engine.loadLocationContent();
 
     if (sing) {
-        return "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " and " +
+        var res =  "You worked a short shift of " + convertTimeMsToTimeElapsedString(this.timeWorked) + " and " +
                "earned $" + formatNumber(this.workMoneyGained, 2) + ", " +
                formatNumber(this.workRepGained, 4) + " reputation, " +
                formatNumber(this.workHackExpGained, 4) + " hacking exp, " +
@@ -705,7 +704,10 @@ PlayerObject.prototype.finishWork = function(cancelled, sing=false) {
                formatNumber(this.workDexExpGained, 4) + " dexterity exp, " +
                formatNumber(this.workAgiExpGained, 4) + " agility exp, and " +
                formatNumber(this.workChaExpGained, 4) + " charisma exp.";
+        this.resetWorkStatus();
+        return res;
     }
+    this.resetWorkStatus();
 }
 
 PlayerObject.prototype.startWork = function() {
@@ -767,9 +769,17 @@ PlayerObject.prototype.work = function(numCycles) {
         return;
     }
 
+    var comp = Companies[this.companyName], companyRep = "0";
+    if (comp == null || !(comp instanceof Company)) {
+        console.log("ERROR: Could not find Company: " + this.companyName);
+    } else {
+        companyRep = comp.playerReputation;
+    }
+
     var txt = document.getElementById("work-in-progress-text");
     txt.innerHTML = "You are currently working as a " + this.companyPosition.positionName +
-                    " at " + this.companyName + "<br><br>" +
+                    " at " + this.companyName + " (Current Company Reputation: " +
+                    formatNumber(companyRep, 0) + ")<br><br>" +
                     "You have been working for " + convertTimeMsToTimeElapsedString(this.timeWorked) + "<br><br>" +
                     "You have earned: <br><br>" +
                     "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyGainRate * cyclesPerSec, 2) + " / sec) <br><br>" +
@@ -886,10 +896,9 @@ PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
-    //Engine.loadTerminalContent();
     Engine.loadLocationContent();
     if (sing) {
-        return "You worked for " + convertTimeMsToTimeElapsedString(this.timeWorked) + " and " +
+        var res =  "You worked for " + convertTimeMsToTimeElapsedString(this.timeWorked) + " and " +
                "earned a total of " +
                "$" + formatNumber(this.workMoneyGained, 2) + ", " +
                 formatNumber(this.workRepGained, 4) + " reputation, " +
@@ -899,7 +908,10 @@ PlayerObject.prototype.finishWorkPartTime = function(sing=false) {
                 formatNumber(this.workDexExpGained, 4) + " dexterity exp, " +
                 formatNumber(this.workAgiExpGained, 4) + " agility exp, and " +
                 formatNumber(this.workChaExpGained, 4) + " charisma exp";
+        this.resetWorkStatus();
+        return res;
     }
+    this.resetWorkStatus();
 }
 
 /* Working for Faction */
@@ -930,11 +942,10 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
 
     this.isWorking = false;
 
-    //Engine.loadTerminalContent();
     Engine.loadFactionContent();
     displayFactionContent(faction.name);
     if (sing) {
-        return "You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + ". " +
+        var res="You worked for your faction " + faction.name + " for a total of " + convertTimeMsToTimeElapsedString(this.timeWorked) + ". " +
                "You earned " +
                 formatNumber(this.workRepGained, 4) + " rep, " +
                 formatNumber(this.workHackExpGained, 4) + " hacking exp, " +
@@ -943,7 +954,10 @@ PlayerObject.prototype.finishFactionWork = function(cancelled, sing=false) {
                 formatNumber(this.workDexExpGained, 4) + " dex exp, " +
                 formatNumber(this.workAgiExpGained, 4) + " agi exp, and " +
                 formatNumber(this.workChaExpGained, 4) + " cha exp.";
+        this.resetWorkStatus();
+        return res;
     }
+    this.resetWorkStatus();
 }
 
 PlayerObject.prototype.startFactionWork = function(faction) {
@@ -1261,6 +1275,7 @@ PlayerObject.prototype.finishCreateProgramWork = function(cancelled, sing=false)
     this.isWorking = false;
 
     Engine.loadTerminalContent();
+    this.resetWorkStatus();
 }
 
 /* Studying/Taking Classes */
@@ -1415,8 +1430,8 @@ PlayerObject.prototype.finishClass = function(sing=false) {
     this.isWorking = false;
 
     Engine.loadLocationContent();
-
-    if (sing) {return  "After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", " +
+    if (sing) {
+        var res="After " + this.className + " for " + convertTimeMsToTimeElapsedString(this.timeWorked) + ", " +
               "you spent a total of $" + formatNumber(this.workMoneyGained * -1, 2) + ". " +
               "You earned a total of: " +
               formatNumber(this.workHackExpGained, 3) + " hacking exp, " +
@@ -1424,7 +1439,11 @@ PlayerObject.prototype.finishClass = function(sing=false) {
               formatNumber(this.workDefExpGained, 3) + " defense exp, " +
               formatNumber(this.workDexExpGained, 3) + " dexterity exp, " +
               formatNumber(this.workAgiExpGained, 3) + " agility exp, and " +
-              formatNumber(this.workChaExpGained, 3) + " charisma exp";}
+              formatNumber(this.workChaExpGained, 3) + " charisma exp";
+        this.resetWorkStatus();
+        return res;
+    }
+    this.resetWorkStatus();
 }
 
 //The EXP and $ gains are hardcoded. Time is in ms
@@ -1598,6 +1617,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
     var mainMenu = document.getElementById("mainmenu-container");
     mainMenu.style.visibility = "visible";
     this.isWorking = false;
+    this.resetWorkStatus();
     Engine.loadLocationContent();
 }
 

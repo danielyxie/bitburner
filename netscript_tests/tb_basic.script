@@ -1,0 +1,140 @@
+function test(name, val) {
+    if (val) {
+        tprint("Test " + name + ": OK");
+    } else {
+        tprint("Test " + name + ": FAILED");
+        //A failed test prints failure to results text file 
+        write("tb_results.txt", "FAIL");
+    }
+}
+
+test("run", (args.length === 1 && args[0] === "OK"));
+
+//Arithmetic
+test("arith1", 0 * 10 === 0);
+test("arith2", 0 + 1 === 1);
+test("arith3", 10 / 5 === 2);
+test("arith4", 6-3 === 3);
+test("arith5", 14 % 10 === 4);
+test("arith6", 5 === 24 / 6 + 1);
+test("arith7", 6 === 2 * 3);
+
+//Logical operators
+test("logic1", true && true);
+test("logic2", !(true && false));
+test("logic3", true || false);
+test("logic4", !(false || false));
+test("logic5", 1 < 3);
+test("logic6", !(3 < 1));
+test("logic7", 5 >= 5);
+test("logic8", !(5 <= 4));
+test("logic9", true == true);
+test("logic10", true === true);
+test("logic11", !(0 != 0));
+
+//Assignment
+i = 5;
+test("asgn1", i == 5);
+i = 0;
+test("asgn2", i === 0);
+test("asgn3", 10 === (i = 10));
+test("asgn4", i === 10);
+
+
+//Basic array functionality
+testArr = [1, 2, 3, 4, 5, "str1", "str2", "str3"];
+test("arr1", testArr[0] == 1);
+test("arr2", testArr[1] === 2);
+test("arr3", testArr[5] === "str1");
+test("arr4", testArr[7] === "str3");
+
+x = 1;
+y = 2;
+z = 3;
+testArr = [];
+testArr.push(x);
+testArr.push(y);
+testArr.push(z);
+test("arr5", testArr.length === 3);
+test("arr6", 1 === testArr[0]);
+test("arr7", 3 === testArr[2]);
+
+x = 10;
+y = 10;
+z = 10;
+test("arr8", testArr.toString() === "1,2,3");
+
+testArr.push(4);
+testArr.push("some str");
+test("arr9", "1,2,3,4,some str" === testArr.toString());
+testArr.pop();
+test("arr10", "1,2,3,4" === testArr.toString());
+testArr.shift();
+test("arr11", "2,3,4" === testArr.toString());
+testArr.unshift(1);
+test("arr12", "1,2,3,4" === testArr.toString());
+
+testArr[0] = 10;
+foo = 1;
+testArr[foo] = 11;
+foo = 2;
+testArr[foo] = 12;
+foo = 3;
+testArr[foo] = 13;
+test("arr13", "10,11,12,13" === testArr.join());
+testArr.splice(testArr.length, 2, 14, 15);
+test("arr14", testArr.length === 6);
+test("arr15", testArr.join() == "10,11,12,13,14,15");
+
+//Short circuiting Logical Operators
+results = [];
+res = false || results.push("OK")
+res = (0 < -5) || results.push("OK")
+res = true && results.push("OK")
+res = (1 > 0) && results.push("OK")
+res = 5 && results.push("OK")
+
+test("shortcircuit1", results.length === 5);
+for (i = 0; i < results.length; ++i) {
+    test("shortcircuit" + (2 + i), results[i] === "OK");
+}
+
+res = true || tprint('1');
+res = (true && true) || tprint('2');
+res = 1 > 0 || tprint('3');
+res = false && tprint('4');
+res = 1 < 0 && tprint('5');
+test("shortcircuit7", results.length === 5);
+
+//Conditional Statements 
+results = [];
+i = 1;
+if (i == 0) {
+    results.push("FAIL");
+} else if (i == 2) {
+    results.push("FAIL");
+} else if (i == 1) {
+    results.push("OK");
+} else {
+    results.push("FAIL");
+}
+
+i = 5;
+if (i == 0) {
+    results.push("FAIL");
+} else if (i == 2) {
+    results.push("FAIL");
+} else if (i == 1) {
+    results.push("FAIL");
+} else {
+    results.push("OK");
+}
+
+test("conditional1", results.length === 2);
+test("conditional2", results[0] === "OK");
+test("conditional3", results[1] === "OK");
+
+run("tb_multiarray.script", 1, "OK");
+exec("tb_ports.script", "home", 1, "OK");
+
+write("tb_results.txt", ",tb_basic");

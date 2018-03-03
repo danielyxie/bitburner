@@ -1,3 +1,4 @@
+import {BitNodeMultipliers}                             from "./BitNode.js";
 import {Engine}                                         from "./engine.js";
 import {showLiterature}                                 from "./Literature.js";
 import {Locations}                                      from "./Location.js";
@@ -64,6 +65,9 @@ var OfficeInitialCost           = 4e9;
 var OfficeInitialSize           = 3;
 var OfficeUpgradeBaseCost       = 1e9;
 
+var BribeThreshold              = 100e12; //Money needed to be able to bribe for faction rep
+var BribeToRepRatio             = 1e9;   //Bribe Value divided by this = rep gain
+
 function Material(params={}) {
     this.name = params.name ? params.name : "";
     this.qty    = 0; //Quantity
@@ -101,67 +105,67 @@ Material.prototype.init = function(mats={}) {
             this.dmd = 75; this.dmdR = [65, 85];
             this.cmp = 50; this.cmpR = [40, 60];
             this.bCost = 1000; this.mv = 0.2;
-            this.mku = 12;
+            this.mku = 6;
             break;
         case "Energy":
             this.dmd = 90; this.dmdR = [80, 100];
             this.cmp = 80; this.cmpR = [65, 95];
             this.bCost = 1500; this.mv = 0.2;
-            this.mku = 12;
+            this.mku = 6;
             break;
         case "Food":
             this.dmd = 80; this.dmdR = [70, 90];
             this.cmp = 60; this.cmpR = [35, 85];
             this.bCost = 5000; this.mv = 1;
-            this.mku = 7.5;
+            this.mku = 3;
             break;
         case "Plants":
             this.dmd = 70; this.dmdR = [20, 90];
             this.cmp = 50; this.cmpR = [30, 70];
             this.bCost = 3000; this.mv = 0.6;
-            this.mku = 10;
+            this.mku = 3.75;
             break;
         case "Metal":
             this.dmd = 80; this.dmdR = [75, 85];
             this.cmp = 70; this.cmpR = [60, 80];
             this.bCost = 2650; this.mv = 1;
-            this.mku = 12;
+            this.mku = 6;
             break;
         case "Hardware":
             this.dmd = 85; this.dmdR = [80, 90];
             this.cmp = 80; this.cmpR = [65, 95];
             this.bCost = 4000; this.mv = 0.5; //Less mv bc its processed twice
-            this.mku = 5.5;
+            this.mku = 1;
             break;
         case "Chemicals":
             this.dmd = 55; this.dmdR = [40, 70];
             this.cmp = 60; this.cmpR = [40, 80];
             this.bCost = 6750; this.mv = 1.2;
-            this.mku = 6.5;
+            this.mku = 2;
             break;
         case "Real Estate":
             this.dmd = 50; this.dmdR = [5, 100];
             this.cmp = 50; this.cmpR = [25, 75];
             this.bCost = 16e3; this.mv = 1.5; //Less mv bc its processed twice
-            this.mku = 5;
+            this.mku = 1.5;
             break;
         case "Drugs":
             this.dmd = 60; this.dmdR = [45, 75];
             this.cmp = 70; this.cmpR = [40, 100];
             this.bCost = 8e3; this.mv = 1.6;
-            this.mku = 4;
+            this.mku = 1;
             break;
         case "Robots":
             this.dmd = 90; this.dmdR = [80, 100];
             this.cmp = 90; this.cmpR = [80, 100];
             this.bCost = 20e3; this.mv = 0.5; //Less mv bc its processed twice
-            this.mku = 2.5;
+            this.mku = 1;
             break;
         case "AI Cores":
             this.dmd = 90; this.dmdR = [80, 100];
             this.cmp = 90; this.cmpR = [80, 100];
             this.bCost = 27e3; this.mv = 0.8; //Less mv bc its processed twice
-            this.mku = 1.8;
+            this.mku = 0.5;
             break;
         case "Scientific Research":
             break;
@@ -352,8 +356,7 @@ Product.prototype.finishProduct = function(employeeProd, industry) {
                             (0.05 * employeeProd[EmployeePositions.Business]));
     this.calculateRating(industry);
     var advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
-    console.log("advMult: " + advMult);
-    this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.9) * (busRatio + mgmtRatio));
+    this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.75) * (busRatio + mgmtRatio));
     this.dmd = industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
     this.cmp = getRandomInt(0, 70);
 
@@ -548,11 +551,11 @@ var ProductRatingWeights = {
 var IndustryUpgrades = {
     "0":    [0, 500e3, 1, 1.05,
             "Coffee", "Provide your employees with coffee, increasing their energy by 5%."],
-    "1":    [1, 1e9, 1.02, 1.01,
+    "1":    [1, 1e9, 1.03, 1.03,
             "AdVert.Inc", "Hire AdVert.Inc to advertise your company. Each level of " +
             "this upgrade grants your company a static increase of 4 and 1 to its awareness and " +
             "popularity, respectively. It will then increase your company's awareness by 1%, and its popularity " +
-            "by a random percentage between 5% and 10%. These effects are increased by other upgrades " +
+            "by a random percentage between 3% and 6%. These effects are increased by other upgrades " +
             "that increase the power of your advertising."]
 }
 
@@ -626,6 +629,7 @@ function Industry(params={}) {
     this.upgrades = Array(numUpgrades).fill(0);
 
     this.state = "START";
+    this.newInd = true;
 
     this.init();
 }
@@ -914,6 +918,10 @@ Industry.prototype.process = function(marketCycles=1, state, company) {
         this.lastCycleExpenses = this.thisCycleExpenses.dividedBy(marketCycles * SecsPerMarketCycle);
         this.thisCycleRevenue = new Decimal(0);
         this.thisCycleExpenses = new Decimal(0);
+
+        //Once you start making revenue, the player should no longer be
+        //considered new, and therefore no longer needs the 'tutorial' UI elements
+        if (this.lastCycleRevenue.gt(0)) {this.newInd = false;}
 
         //Process offices (and the employees in them)
         var employeeSalary = 0;
@@ -1256,7 +1264,9 @@ Industry.prototype.processProducts = function(marketCycles=1, corporation) {
                 var prod = this.products[prodName];
                 if (!prod.fin) {
                     var city = prod.createCity, office = this.offices[city];
-                    var total = office.employeeProd["total"], ratio;
+                    var total = office.employeeProd[EmployeePositions.Operations] +
+                                office.employeeProd[EmployeePositions.Engineer] +
+                                office.employeeProd[EmployeePositions.Management], ratio;
                     if (total === 0) {
                         ratio = 0;
                     } else {
@@ -1437,7 +1447,7 @@ Industry.prototype.upgrade = function(upgrade, refs) {
             this.awareness += (4 * advMult);
             this.popularity += (1 * advMult);
             this.awareness *= (1.01 * advMult);
-            this.popularity *= ((1 + getRandomInt(5, 10) / 100) * advMult);
+            this.popularity *= ((1 + getRandomInt(3, 6) / 100) * advMult);
             break;
         default:
             console.log("ERROR: Un-implemented function index: " + upgN);
@@ -2121,7 +2131,6 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
         class:"cmpy-mgmt-warehouse-material-div",
     });
 
-    //Storage size
     var totalExport = 0;
     for (var i = 0; i < mat.exp.length; ++i) {
         totalExport += mat.exp[i].amt;
@@ -2160,17 +2169,27 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
     div.appendChild(buttonPanel);
 
     //Button to set purchase amount
-    buttonPanel.appendChild(createElement("a", {
-        innerText: "Buy (" + formatNumber(mat.buy, 3) + ")", display:"inline-block", class:"a-link-button",
+    var tutorial = industry.newInd && Object.keys(industry.reqMats).includes(mat.name) &&
+                   mat.buy === 0 && mat.imp === 0;
+    var buyButtonParams = {
+        innerText: "Buy (" + formatNumber(mat.buy, 3) + ")", display:"inline-block",
+        class: tutorial ? "a-link-button flashing-button" : "a-link-button",
         clickListener:()=>{
             var txt = createElement("p", {
                 innerHTML: "Enter the amount of " + mat.name + " you would like " +
                            "to purchase per second. This material's cost changes constantly"
             });
+            var confirmBtn;
             var input = createElement("input", {
-                type:"number", value:mat.buy ? mat.buy : null, placeholder: "Purchase amount"
+                type:"number", value:mat.buy ? mat.buy : null, placeholder: "Purchase amount",
+                onkeyup:(e)=>{
+                    e.preventDefault();
+                    if (e.keyCode === 13) {
+                        confirmBtn.click();
+                    }
+                }
             });
-            var confirmBtn = createElement("a", {
+            confirmBtn = createElement("a", {
                 innerText:"Confirm", class:"a-link-button",
                 clickListener:()=>{
                     if (isNaN(input.value)) {
@@ -2184,16 +2203,29 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     }
                 }
             });
+            var clearButton = createElement("a", {
+                innerText:"Clear Purchase", class:"a-link-button",
+                clickListener:()=>{
+                    mat.buy = 0;
+                    removeElementById(purchasePopupId);
+                    this.createUI(parentRefs);
+                    return false;
+                }
+            });
             var cancelBtn = createElement("a", {
                 innerText:"Cancel", class:"a-link-button",
                 clickListener:()=>{
                     removeElementById(purchasePopupId);
                 }
             });
-            createPopup(purchasePopupId, [txt, input, confirmBtn, cancelBtn]);
+            createPopup(purchasePopupId, [txt, input, confirmBtn, clearButton, cancelBtn]);
             input.focus();
         }
-    }));
+    };
+    if (tutorial) {
+        buyButtonParams.tooltip = "Purchase your required materials to get production started!";
+    }
+    buttonPanel.appendChild(createElement("a", buyButtonParams));
 
     //Button to manage exports
     if (company.unlockUpgrades[0] === 1) { //Export unlock upgrade
@@ -2366,15 +2398,24 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                            "to 'MP+10' then it will always be sold at $10 above the market price.",
             });
             var br = createElement("br", {});
+            var confirmBtn;
             var inputQty = createElement("input", {
                 type:"text", marginTop:"4px",
-                value: mat.sllman[1] ? mat.sllman[1] : null, placeholder: "Sell amount"
+                value: mat.sllman[1] ? mat.sllman[1] : null, placeholder: "Sell amount",
+                onkeyup:(e)=>{
+                    e.preventDefault();
+                    if (e.keyCode === 13) {confirmBtn.click();}
+                }
             });
             var inputPx = createElement("input", {
                 type:"text", marginTop:"4px",
-                value: mat.sCost ? mat.sCost : null, placeholder: "Sell price"
+                value: mat.sCost ? mat.sCost : null, placeholder: "Sell price",
+                onkeyup:(e)=>{
+                    e.preventDefault();
+                    if (e.keyCode === 13) {confirmBtn.click();}
+                }
             });
-            var confirmBtn = createElement("a", {
+            confirmBtn = createElement("a", {
                 innerText:"Confirm", class:"a-link-button", margin:"6px",
                 clickListener:()=>{
                     //Parse price
@@ -2501,13 +2542,22 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                           "Setting the sell amount to 'MAX' will result in you always selling the " +
                           "maximum possible amount of the material.<br><br>",
             });
+            var confirmBtn;
             var inputQty = createElement("input", {
-                type:"text", value:product.sllman[city][1] ? product.sllman[city][1] : null, placeholder: "Sell amount"
+                type:"text", value:product.sllman[city][1] ? product.sllman[city][1] : null, placeholder: "Sell amount",
+                onkeyup:(e)=>{
+                    e.preventDefault();
+                    if (e.keyCode === 13) {confirmBtn.click();}
+                }
             });
             var inputPx = createElement("input", {
-                type:"text", value: product.sCost ? product.sCost : null, placeholder: "Sell price"
+                type:"text", value: product.sCost ? product.sCost : null, placeholder: "Sell price",
+                onkeyup:(e)=>{
+                    e.preventDefault();
+                    if (e.keyCode === 13) {confirmBtn.click();}
+                }
             });
-            var confirmBtn = createElement("a", {
+            confirmBtn = createElement("a", {
                 class:"a-link-button", innerText:"Confirm",
                 clickListener:()=>{
                     //Parse price
@@ -2566,10 +2616,15 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                 innerText:"Enter a limit to the amount of this product you would " +
                           "like to product per second. Leave the box empty to set no limit."
             });
+            var confirmBtn;
             var input = createElement("input", {
-                type:"number", placeholder:"Limit"
+                type:"number", placeholder:"Limit",
+                onkeyup:(e)=>{
+                    e.preventDefault();
+                    if (e.keyCode === 13) {confirmBtn.click();}
+                }
             });
-            var confirmBtn = createElement("a", {
+            confirmBtn = createElement("a", {
                 class:"a-link-button", display:"inline-block", innerText:"Limit production", margin:'6px',
                 clickListener:()=>{
                     if (input.value === "") {
@@ -2698,10 +2753,10 @@ var CorporationUpgrades = {
             "20 seconds."],
 
     //Makes advertising more effective
-    "3":    [3, 4e9, 1.11, 0.1,
+    "3":    [3, 4e9, 1.12, 0.01,
             "Wilson Analytics", "Purchase data and analysis from Wilson, a marketing research " +
             "firm. Each level of this upgrades increases the effectiveness of your " +
-            "advertising by 10% (additive)."],
+            "advertising by 1% (additive)."],
 
     //Augmentation for employees, increases cre
     "4":    [4, 1e9, 1.06, 0.1,
@@ -2776,11 +2831,32 @@ Corporation.prototype.process = function(numCycles=1) {
     if (this.storedCycles >= CyclesPerIndustryStateCycle) {
         var state = this.getState();
 
+        //At the start of a new cycle, calculate profits from previous cycle
+        if (state === "START") {
+            this.revenue = new Decimal(0);
+            this.expenses = new Decimal(0);
+            this.divisions.forEach((ind)=>{
+                this.revenue = this.revenue.plus(ind.lastCycleRevenue);
+                this.expenses = this.expenses.plus(ind.lastCycleExpenses);
+            });
+            var profit = this.revenue.minus(this.expenses);
+            var cycleProfit = profit.times(numMarketCyclesPersist * SecsPerMarketCycle);
+            if (isNaN(this.funds)) {
+                dialogBoxCreate("There was an error calculating your Corporations funds and they got reset to 0. " +
+                                "This is a bug. Please report to game developer.<br><br>" +
+                                "(Your funds have been set to $150b for the inconvenience)");
+                this.funds = new Decimal(150e9);
+            }
+            this.funds = this.funds.plus(cycleProfit);
+            this.updateSharePrice();
+        }
+
         //Determine number of market cycles at the START state
         if (state === "START") {
             if (this.storedCycles >= 2*CyclesPerMarketCycle) {
                 //Enough cycles stored for 2+ market cycles
-                numMarketCyclesPersist = Math.floor(this.storedCycles / CyclesPerMarketCycle);
+                //Capped out at 3 to prevent weird behavior
+                numMarketCyclesPersist = Math.max(3, Math.floor(this.storedCycles / CyclesPerMarketCycle));
             } else {
                 numMarketCyclesPersist = 1;
             }
@@ -2792,25 +2868,7 @@ Corporation.prototype.process = function(numCycles=1) {
             ind.process(marketCycles, state, corp);
         });
 
-        //At the start of a new cycle, calculate profits from previous cycle
-        if (state === "START") {
-            this.revenue = new Decimal(0);
-            this.expenses = new Decimal(0);
-            this.divisions.forEach((ind)=>{
-                this.revenue = this.revenue.plus(ind.lastCycleRevenue);
-                this.expenses = this.expenses.plus(ind.lastCycleExpenses);
-            });
-            var profit = this.revenue.minus(this.expenses);
-            var cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
-            if (isNaN(this.funds)) {
-                dialogBoxCreate("There was an error calculating your Corporations funds and they got reset to 0. " +
-                                "This is a bug. Please report to game developer.<br><br>" +
-                                "(Your funds have been set to $150b for the inconvenience)");
-                this.funds = new Decimal(150e9);
-            }
-            this.funds = this.funds.plus(cycleProfit);
-            this.updateSharePrice();
-        }
+
         this.state.nextState();
 
         if (Engine.currentPage === Engine.Page.Corporation) {this.updateUIContent();}
@@ -2833,7 +2891,7 @@ Corporation.prototype.determineValuation = function() {
         }
         val -= (val % 1e6); //Round down to nearest millionth
     }
-    return val;
+    return val * BitNodeMultipliers.CorporationValuation;
 }
 
 Corporation.prototype.getInvestment = function() {
@@ -2882,8 +2940,9 @@ Corporation.prototype.goPublic = function() {
     var txt = createElement("p", {
         innerHTML: "Enter the number of shares you would like to issue " +
                    "for your IPO. These shares will be publicly sold " +
-                   "and you will no longer own them. You will receive " +
-                   numeral(initialSharePrice).format('$0.000a') + " per share.<br><br>" +
+                   "and you will no longer own them. Your Corporation will receive " +
+                   numeral(initialSharePrice).format('$0.000a') + " per share " +
+                   "(the IPO money will be deposited directly into your Corporation's funds).<br><br>" +
                    "Furthermore, issuing more shares now will help drive up " +
                    "your company's stock price in the future.<br><br>" +
                    "You have a total of " + numeral(this.numShares).format("0.000a") + " of shares that you can issue.",
@@ -3101,78 +3160,87 @@ Corporation.prototype.updateUIHeaderTabs = function() {
             if (document.getElementById("cmpy-mgmt-expand-industry-popup") != null) {return;}
 
             var container = createElement("div", {
-                    class:"popup-box-container",
-                    id:"cmpy-mgmt-expand-industry-popup",
-                }),
-                content = createElement("div", {class:"popup-box-content"}),
-                txt = createElement("p", {
-                    innerHTML: "Create a new division to expand into a new industry:",
-                }),
-                selector = createElement("select", {
-                    class:"cmpy-mgmt-industry-select"
-                }),
-                industryDescription = createElement("p", {}),
-                nameInput = createElement("input", {
-                    type:"text",
-                    id:"cmpy-mgmt-expand-industry-name-input",
-                    color:"white",
-                    backgroundColor:"black",
-                    display:"block",
-                    maxLength: 30,
-                    pattern:"[a-zA-Z0-9-_]"
-                }),
-                nameLabel = createElement("label", {
-                    for:"cmpy-mgmt-expand-industry-name-input",
-                    innerText:"Division name: "
-                }),
-                yesBtn = createElement("span", {
-                    class:"popup-box-button",
-                    innerText:"Create Division",
-                    clickListener: ()=>{
-                        var ind = selector.options[selector.selectedIndex].value,
-                            newDivisionName = nameInput.value;
+                class:"popup-box-container",
+                id:"cmpy-mgmt-expand-industry-popup",
+            }),
+            content = createElement("div", {class:"popup-box-content"}),
+            txt = createElement("p", {
+                innerHTML: "Create a new division to expand into a new industry:",
+            }),
+            selector = createElement("select", {
+                class:"cmpy-mgmt-industry-select"
+            }),
+            industryDescription = createElement("p", {}),
+            nameInput = createElement("input", {
+                type:"text",
+                id:"cmpy-mgmt-expand-industry-name-input",
+                color:"white",
+                backgroundColor:"black",
+                display:"block",
+                maxLength: 30,
+                pattern:"[a-zA-Z0-9-_]"
+            }),
+            nameLabel = createElement("label", {
+                for:"cmpy-mgmt-expand-industry-name-input",
+                innerText:"Division name: "
+            }),
+            yesBtn = createElement("span", {
+                class:"popup-box-button",
+                innerText:"Create Division",
+                clickListener: ()=>{
+                    var ind = selector.options[selector.selectedIndex].value,
+                        newDivisionName = nameInput.value;
 
-                        for (var i = 0; i < this.divisions.length; ++i) {
-                            if (this.divisions[i].name === newDivisionName) {
-                                dialogBoxCreate("This name is already in use!");
-                                return false;
-                            }
+                    for (var i = 0; i < this.divisions.length; ++i) {
+                        if (this.divisions[i].name === newDivisionName) {
+                            dialogBoxCreate("This name is already in use!");
+                            return false;
                         }
-                        if (this.funds.lt(IndustryStartingCosts[ind])) {
-                            dialogBoxCreate("Not enough money to create a new division in this industry");
-                        } else if (newDivisionName === "") {
-                            dialogBoxCreate("New division must have a name!");
-                        } else {
-                            this.funds = this.funds.minus(IndustryStartingCosts[ind]);
-                            var newInd = new Industry({
-                                name:newDivisionName,
-                                type:ind,
-                            });
-                            this.divisions.push(newInd);
-                            this.updateUIHeaderTabs();
-                            this.selectHeaderTab(headerTabs[headerTabs.length-2]);
-                            removeElementById("cmpy-mgmt-expand-industry-popup");
-                            this.displayDivisionContent(newInd, Locations.Sector12);
-                        }
-                        return false;
                     }
-                }),
-                noBtn = createElement("span", {
-                    class:"popup-box-button",
-                    innerText:"Cancel",
-                    clickListener: function() {
+                    if (this.funds.lt(IndustryStartingCosts[ind])) {
+                        dialogBoxCreate("Not enough money to create a new division in this industry");
+                    } else if (newDivisionName === "") {
+                        dialogBoxCreate("New division must have a name!");
+                    } else {
+                        this.funds = this.funds.minus(IndustryStartingCosts[ind]);
+                        var newInd = new Industry({
+                            name:newDivisionName,
+                            type:ind,
+                        });
+                        this.divisions.push(newInd);
+                        this.updateUIHeaderTabs();
+                        this.selectHeaderTab(headerTabs[headerTabs.length-2]);
                         removeElementById("cmpy-mgmt-expand-industry-popup");
-                        return false;
+                        this.displayDivisionContent(newInd, Locations.Sector12);
                     }
-                });
+                    return false;
+                }
+            }),
+            noBtn = createElement("span", {
+                class:"popup-box-button",
+                innerText:"Cancel",
+                clickListener: function() {
+                    removeElementById("cmpy-mgmt-expand-industry-popup");
+                    return false;
+                }
+            });
+
+            //Make an object to keep track of what industries you're already in
+            var ownedIndustries = {}
+            for (var i = 0; i < this.divisions.length; ++i) {
+                ownedIndustries[this.divisions[i].type] = true;
+            }
 
             //Add industry types to selector
             //Have Agriculture be first as recommended option
-            selector.add(createElement("option", {
-                text:Industries["Agriculture"], value:"Agriculture"
-            }))
+            if (!ownedIndustries["Agriculture"]) {
+                selector.add(createElement("option", {
+                    text:Industries["Agriculture"], value:"Agriculture"
+                }));
+            }
+
             for (var key in Industries) {
-                if (key !== "Agriculture" && Industries.hasOwnProperty(key)) {
+                if (key !== "Agriculture" && Industries.hasOwnProperty(key) && !ownedIndustries[key]) {
                     var ind = Industries[key];
                     selector.add(createElement("option", {
                         text: ind,value:key,
@@ -3300,7 +3368,9 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                 var popupId = "cmpy-mgmt-sell-shares-popup";
                 var currentStockPrice = this.sharePrice;
                 var txt = createElement("p", {
-                    innerHTML: "Enter the number of shares you would like to sell. The current price of your " +
+                    innerHTML: "Enter the number of shares you would like to sell. The money from " +
+                               "selling your shares will go directly to you (NOT your Corporation). " +
+                               "The current price of your " +
                                "company's stock is " + numeral(currentStockPrice).format("$0.000a"),
                 });
                 var profitIndicator = createElement("p", {});
@@ -3308,7 +3378,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     type:"number", placeholder:"Shares to sell", margin:"5px",
                     inputListener: ()=> {
                         var numShares = Math.round(input.value);
-                        if (isNaN(numShares) || shares <= 0) {
+                        if (isNaN(numShares) || numShares <= 0) {
                             profitIndicator.innerText = "ERROR: Invalid value entered for number of shares to sell"
                         } else if (numShares > this.numShares) {
                             profitIndicator.innerText = "You don't have this many shares to sell!";
@@ -3365,7 +3435,9 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                 var popupId = "cmpy-mgmt-buyback-shares-popup";
                 var currentStockPrice = this.sharePrice;
                 var txt = createElement("p", {
-                    innerHTML: "Enter the number of shares you would like to buy back at market price. The current price of your " +
+                    innerHTML: "Enter the number of shares you would like to buy back at market price. To purchase " +
+                               "these shares, you must use your own money (NOT your Corporation's funds). " +
+                               "The current price of your " +
                                "company's stock is " + numeral(currentStockPrice).format("$0.000a") +
                                ". Your company currently has " + formatNumber(this.issuedShares, 3) + " outstanding stock shares",
                 });
@@ -3375,12 +3447,13 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     inputListener: ()=> {
                         var numShares = Math.round(input.value);
                         //TODO add conditional for if player doesn't have enough money
-                        if (isNaN(numShares) || shares <= 0) {
+                        if (isNaN(numShares) || numShares <= 0) {
                             costIndicator.innerText = "ERROR: Invalid value entered for number of shares to buyback"
                         } else if (numShares > this.issuedShares) {
                             costIndicator.innerText = "There are not this many shares available to buy back. " +
                                                       "There are only " + this.issuedShares + " outstanding shares.";
                         } else {
+                            console.log("here");
                             costIndicator.innerText = "Purchase " + numShares + " shares for a total of " +
                                                       numeral(numShares * currentStockPrice).format('$0.000a');
                         }
@@ -3434,6 +3507,114 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
 
         companyManagementPanel.appendChild(sellShares);
         companyManagementPanel.appendChild(buybackShares);
+
+        //If your Corporation is big enough, buy faction influence through bribes
+        var canBribe = this.determineValuation() >= BribeThreshold;
+        var bribeFactions = createElement("a", {
+            class: canBribe ? "a-link-button" : "a-link-button-inactive",
+            innerText:"Bribe Factions", display:"inline-block",
+            tooltip:canBribe
+                    ? "Use your Corporations power and influence to bribe Faction leaders in exchange for reputation"
+                    : "Your Corporation is not powerful enough to bribe Faction leaders",
+            clickListener:()=>{
+                var popupId = "cmpy-mgmt-bribe-factions-popup";
+                var txt = createElement("p", {
+                    innerText:"You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation"
+                });
+                var factionSelector = createElement("select", {margin:"3px"});
+                for (var facName in Player.factions) {
+                    if (Player.factions.hasOwnProperty(facName)) {
+                        factionSelector.add(createElement("option"), {
+                            text:facName, value:facName
+                        });
+                    }
+                }
+                var repGainText = createElement("p");
+                var stockSharesInput;
+                var moneyInput = createElement("input", {
+                    type:"number", placeholder:"Corporation funds", margin:"5px",
+                    inputListener:()=>{
+                        var money = moneyInput.value == null ? 0 : moneyInput.value;
+                        var stockPrice = this.sharePrice;
+                        var stockShares = stockSharesInput.value == null ? 0 : Math.round(stockSharesInput.value);
+                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
+                            repGainText.innerText = "ERROR: Invalid value(s) entered";
+                        } else if (this.funds.lt(money)) {
+                            repGainText.innerText = "ERROR: You do not have this much money to bribe with";
+                        } else if (this.stockShares > this.numShares) {
+                            repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
+                        } else {
+                            var totalAmount = money + (stockShares * stockPrice);
+                            var repGain = totalAmount / BribeToRepRatio;
+                            repGainText.innerText = "You will gain " + formatNumber(repGain, 0) +
+                                                    " reputation with " +
+                                                    factionSelector.options[factionSelector.selectedIndex].value +
+                                                    " with this bribe";
+                        }
+                    }
+                });
+                stockSharesInput = createElement("input", {
+                    type:"number", placeholder:"Stock Shares", margin: "5px",
+                    inputListener:()=>{
+                        var money = moneyInput.value == null ? 0 : moneyInput.value;
+                        var stockPrice = this.sharePrice;
+                        var stockShares = stockSharesInput.value == null ? 0 : Math.round(stockSharesInput.value);
+                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
+                            repGainText.innerText = "ERROR: Invalid value(s) entered";
+                        } else if (this.funds.lt(money)) {
+                            repGainText.innerText = "ERROR: You do not have this much money to bribe with";
+                        } else if (this.stockShares > this.numShares) {
+                            repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
+                        } else {
+                            var totalAmount = money + (stockShares * stockPrice);
+                            var repGain = totalAmount / BribeToRepRatio;
+                            repGainText.innerText = "You will gain " + formatNumber(repGain, 0) +
+                                                    " reputation with " +
+                                                    factionSelector.options[factionSelector.selectedIndex].value +
+                                                    " with this bribe";
+                        }
+                    }
+                });
+                var confirmButton = createElement("a", {
+                    class:"a-link-button", innerText:"Bribe", display:"inline-block",
+                    clickListener:()=>{
+                        var money = moneyInput.value == null ? 0 : moneyInput.value;
+                        var stockPrice = this.sharePrice;
+                        var stockShares = stockSharesInput.value == null ? 0 : Math.round(stockSharesInput.value);
+                        var fac = Factions[factionSelector.options[factionSelector.selectedIndex].value];
+                        if (fac == null) {
+                            dialogBoxCreate("ERROR: You must select a faction to bribe");
+                            return false;
+                        }
+                        if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
+                            dialogBoxCreate("ERROR: Invalid value(s) entered");
+                        } else if (this.funds.lt(money)) {
+                            dialogBoxCreate("ERROR: You do not have this much money to bribe with");
+                        } else if (this.stockShares > this.numShares) {
+                            dialogBoxCreate("ERROR: You do not have this many shares to bribe with");
+                        } else {
+                            var totalAmount = money + (stockShares * stockPrice);
+                            var repGain = totalAmount / BribeToRepRatio;
+                            dialogBoxCreate("You gained " + formatNumber(repGain, 0) +
+                                            " reputation with " + fac.name  + " by bribing them.");
+                            fac.playerReputation += repGain;
+                            this.funds = this.funds.lt(money);
+                            this.numShares -= stockShares;
+                            removeElementById(popupId);
+                            return false;
+                        }
+                    }
+                });
+                var cancelButton = createElement("a", {
+                    class:"a-link-button", innerText:"Cancel", display:"inline-block",
+                    clickListener:()=>{
+                        removeElementById(popupId);
+                        return false;
+                    }
+                });
+            }
+        });
+        companyManagementPanel.appendChild(bribeFactions);
     } else {
         var findInvestors = createElement("a", {
             class: this.fundingRound >= 4 ? "a-link-button-inactive" : "a-link-button tooltip",
@@ -3899,14 +4080,28 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
     industryEmployeePanel.appendChild(industryEmployeeText);
 
     //Hire Employee button
-    industryEmployeeHireButton = createElement("a", {
-        class:"a-link-button",display:"inline-block",
-        innerText:"Hire Employee", fontSize:"13px",
-        clickListener:()=>{
-            office.findEmployees({corporation:this, division:division});
-            return false;
-        }
-    });
+    if (office.employees.length === 0) {
+        industryEmployeeHireButton = createElement("a", {
+            class:"a-link-button",display:"inline-block",
+            innerText:"Hire Employee", fontSize:"13px",
+            tooltip:"You'll need to hire some employees to get your operations started! " +
+                    "It's recommended to have at least one employee in every position",
+            clickListener:()=>{
+                office.findEmployees({corporation:this, division:division});
+                return false;
+            }
+        });
+        //industryEmployeeHireButton.classList.add("flashing-button");
+    } else {
+        industryEmployeeHireButton = createElement("a", {
+            class:"a-link-button",display:"inline-block",
+            innerText:"Hire Employee", fontSize:"13px",
+            clickListener:()=>{
+                office.findEmployees({corporation:this, division:division});
+                return false;
+            }
+        });
+    }
     industryEmployeePanel.appendChild(industryEmployeeHireButton);
 
     //Autohire Employee button
@@ -4240,6 +4435,9 @@ Corporation.prototype.updateDivisionContent = function(division) {
     if (office.employees.length >= office.size) {
         industryEmployeeHireButton.className = "a-link-button-inactive";
         industryEmployeeAutohireButton.className = "a-link-button-inactive tooltip";
+    } else if (office.employees.length === 0) {
+        industryEmployeeHireButton.className = "a-link-button tooltip flashing-button";
+        industryEmployeeAutohireButton.className = "a-link-button tooltip";
     } else {
         industryEmployeeHireButton.className = "a-link-button";
         industryEmployeeAutohireButton.className = "a-link-button tooltip";

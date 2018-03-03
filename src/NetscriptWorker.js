@@ -6,6 +6,7 @@ import {Engine}                             from "./engine.js";
 import {Environment}                        from "./NetscriptEnvironment.js";
 import {evaluate, isScriptErrorMessage,
         killNetscriptDelay}                 from "./NetscriptEvaluator.js";
+import {NetscriptPort}                      from "./NetscriptPort.js";
 import {AllServers}                         from "./Server.js";
 import {Settings}                           from "./Settings.js";
 
@@ -40,17 +41,9 @@ WorkerScript.prototype.getServer = function() {
 //Array containing all scripts that are running across all servers, to easily run them all
 let workerScripts 			= [];
 
-let NetscriptPorts = {
-    Port1: [],
-    Port2: [],
-    Port3: [],
-    Port4: [],
-    Port5: [],
-    Port6: [],
-    Port7: [],
-    Port8: [],
-    Port9: [],
-    Port10: [],
+var NetscriptPorts = [];
+for (var i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
+    NetscriptPorts.push(new NetscriptPort());
 }
 
 function prestigeWorkerScripts() {
@@ -95,8 +88,8 @@ function runScriptsLoop() {
 		//If it isn't running, start the script
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
 			try {
-				var ast = parse(workerScripts[i].code);
-                //console.log(ast);
+				var ast = parse(workerScripts[i].code, {sourceType:"module"});
+                console.log(ast);
 			} catch (e) {
                 console.log("Error parsing script: " + workerScripts[i].name);
                 dialogBoxCreate("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
@@ -168,9 +161,12 @@ function killWorkerScript(runningScriptObj, serverIp) {
             compareArrays(workerScripts[i].args, runningScriptObj.args)) {
 			workerScripts[i].env.stopFlag = true;
             killNetscriptDelay(workerScripts[i]);
-            if (workerScripts[i].fnWorker) {
-                workerScripts[i].fnWorker.env.stopFlag = true;
-                killNetscriptDelay(workerScripts[i].fnWorker);
+            //Recursively kill all functions
+            var curr = workerScripts[i];
+            while (curr.fnWorker) {
+                curr.fnWorker.env.stopFlag = true;
+                killNetscriptDelay(curr.fnWorker);
+                curr = curr.fnWorker;
             }
             return true;
 		}

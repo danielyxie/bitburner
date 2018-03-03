@@ -1,4 +1,7 @@
+import {HacknetNode}                    from "./HacknetNode.js";
 import {NetscriptFunctions}             from "./NetscriptFunctions.js";
+import {NetscriptPort}                  from "./NetscriptPort.js";
+
 /* Environment
  * 	NetScript program environment
  */
@@ -72,6 +75,14 @@ Environment.prototype = {
                 throw new Error("Out-of-bounds array access");
             }
             res = res[i];
+        }
+
+        //Cant assign to ports or HacknetNodes
+        if (res[idx[idx.length-1]] instanceof HacknetNode) {
+            throw new Error("Cannot assign a Hacknet Node handle to a new value");
+        }
+        if (res[idx[idx.length-1]] instanceof NetscriptPort) {
+            throw new Error("Cannot assign a Netscript Port handle to a new value");
         }
         return res[idx[idx.length-1]] = value;
     },

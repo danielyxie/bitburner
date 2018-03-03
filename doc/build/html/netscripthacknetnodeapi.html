@@ -72,39 +72,39 @@ accessed using <em>hacknetnodes[0]</em>. The fourth Hacknet Node you purchase wi
 <p>The following is a list of member variables for a Hacknet Node object. These variables are read-only, which means you cannot assign
 a value to these.</p>
 <p>Note that these must be called on an element inside the <em>hacknetnodes</em> array, not the array itself.</p>
-<dl class="function">
+<dl class="attribute">
 <dt id="hacknetnodes[i].level">
-<code class="descclassname">hacknetnodes[i].</code><code class="descname">level</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].level" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hacknetnodes[i].</code><code class="descname">level</code><a class="headerlink" href="#hacknetnodes[i].level" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the level of the corresponding Hacknet Node</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="attribute">
 <dt id="hacknetnodes[i].ram">
-<code class="descclassname">hacknetnodes[i].</code><code class="descname">ram</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].ram" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hacknetnodes[i].</code><code class="descname">ram</code><a class="headerlink" href="#hacknetnodes[i].ram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the amount of RAM on the corresponding Hacknet Node</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="attribute">
 <dt id="hacknetnodes[i].cores">
-<code class="descclassname">hacknetnodes[i].</code><code class="descname">cores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].cores" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hacknetnodes[i].</code><code class="descname">cores</code><a class="headerlink" href="#hacknetnodes[i].cores" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of cores on the corresponding Hacknet Node</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="attribute">
 <dt id="hacknetnodes[i].totalMoneyGenerated">
-<code class="descclassname">hacknetnodes[i].</code><code class="descname">totalMoneyGenerated</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].totalMoneyGenerated" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hacknetnodes[i].</code><code class="descname">totalMoneyGenerated</code><a class="headerlink" href="#hacknetnodes[i].totalMoneyGenerated" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the total amount of money that the corresponding Hacknet Node has earned</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="attribute">
 <dt id="hacknetnodes[i].onlineTimeSeconds">
-<code class="descclassname">hacknetnodes[i].</code><code class="descname">onlineTimeSeconds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].onlineTimeSeconds" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hacknetnodes[i].</code><code class="descname">onlineTimeSeconds</code><a class="headerlink" href="#hacknetnodes[i].onlineTimeSeconds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the total amount of time (in seconds) that the corresponding Hacknet Node has existed</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="attribute">
 <dt id="hacknetnodes[i].moneyGainRatePerSecond">
-<code class="descclassname">hacknetnodes[i].</code><code class="descname">moneyGainRatePerSecond</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].moneyGainRatePerSecond" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hacknetnodes[i].</code><code class="descname">moneyGainRatePerSecond</code><a class="headerlink" href="#hacknetnodes[i].moneyGainRatePerSecond" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the amount of income that the corresponding Hacknet Node earns</p>
 </dd></dl>
 
@@ -114,9 +114,9 @@ a value to these.</p>
 <p>The following is a list of supported functions/methods for a Hacknet Node object.</p>
 <p>Note that these must be called on an element inside the <em>hacknetnodes</em> array, not the
 array itself.</p>
-<dl class="function">
-<dt id="hacknetnodes[i].upgradeLevel(n);">
-<code class="descclassname">hacknetnodes[i].</code><code class="descname">upgradeLevel(n);</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].upgradeLevel(n);" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="hacknetnodes[i].upgradeLevel">
+<code class="descclassname">hacknetnodes[i].</code><code class="descname">upgradeLevel</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].upgradeLevel" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -133,23 +133,23 @@ Hacknet Node's level is successfully upgraded <em>n</em> times or up to the max 
 otherwise.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="method">
 <dt id="hacknetnodes[i].upgradeRam">
 <code class="descclassname">hacknetnodes[i].</code><code class="descname">upgradeRam</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].upgradeRam" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the RAM is
 successfully upgraded and false otherwise.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="method">
 <dt id="hacknetnodes[i].upgradeCore">
 <code class="descclassname">hacknetnodes[i].</code><code class="descname">upgradeCore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].upgradeCore" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to purchase an additional core for the corresponding Hacknet Node. Returns true if the
 additional core is successfully purchased, and false otherwise.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="hacknetnodes[i].getLevelUpgradeCost(n);">
-<code class="descclassname">hacknetnodes[i].</code><code class="descname">getLevelUpgradeCost(n);</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].getLevelUpgradeCost(n);" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="hacknetnodes[i].getLevelUpgradeCost">
+<code class="descclassname">hacknetnodes[i].</code><code class="descname">getLevelUpgradeCost</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].getLevelUpgradeCost" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -164,13 +164,13 @@ additional core is successfully purchased, and false otherwise.</p>
 <p>Returns the cost of upgrading the specified Hacknet Node by <em>n</em> levels</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="method">
 <dt id="hacknetnodes[i].getRamUpgradeCost">
 <code class="descclassname">hacknetnodes[i].</code><code class="descname">getRamUpgradeCost</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].getRamUpgradeCost" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the cost of upgrading the RAM of the specified Hacknet Node. Upgrading a Node's RAM doubles it.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="method">
 <dt id="hacknetnodes[i].getCoreUpgradeCost">
 <code class="descclassname">hacknetnodes[i].</code><code class="descname">getCoreUpgradeCost</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hacknetnodes[i].getCoreUpgradeCost" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the cost of upgrading the number of cores of the specified Hacknet Node. Upgrading a Node's
@@ -241,6 +241,7 @@ Nodes to a level of at least 75, RAM to at least 8GB, and number of cores to at 
 </li>
 <li class="toctree-l2"><a class="reference internal" href="netscriptixapi.html"> Trade Information eXchange (TIX) API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="netscriptsingularityfunctions.html"> Singularity Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netscriptmisc.html"> Miscellaneous</a></li>
 </ul>
 </li>
 </ul>

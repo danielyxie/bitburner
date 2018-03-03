@@ -65,7 +65,7 @@ function removeChildrenFromElement(el) {
     }
 }
 
-function createElement(type, params) {
+function createElement(type, params={}) {
     var el = document.createElement(type);
     if (params.id)          {el.id = params.id;}
     if (params.class)       {el.className = params.class;}

@@ -434,9 +434,9 @@ let Terminal = {
             '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         var hdr = document.getElementById("terminal-input-header");
         hdr.style.display = "inline";
-        var lineWidth = document.getElementById("terminal-input-td").offsetWidth;
-        var width = lineWidth - hdr.offsetWidth - 10;
-        document.getElementById("terminal-input-text-box").style.width = width + "px";
+        //var lineWidth = document.getElementById("terminal-input-td").offsetWidth;
+        //var width = lineWidth - hdr.offsetWidth - 10;
+        //document.getElementById("terminal-input-text-box").style.width = width + "px";
     },
 
     //Complete the hack/analyze command

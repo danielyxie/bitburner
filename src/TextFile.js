@@ -5,6 +5,7 @@ import {Reviver, Generic_toJSON,
 
 function TextFile(fn="", txt="") {
     this.fn = fn.endsWith(".txt") ? fn : fn + ".txt";
+    this.fn = this.fn.replace(/\s+/g, '');
     this.text = String(txt);
 }
 

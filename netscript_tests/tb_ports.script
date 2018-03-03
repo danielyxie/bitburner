@@ -1,0 +1,73 @@
+import {test} from "tb_basic.script";
+
+test("run", (args.length === 1 && args[0] === "OK"));
+
+
+MAXPORTS = 20;
+MAXPORTSIZE = 100;
+
+for (i = 1; i <= MAXPORTS; ++i) {
+    clear(i);
+}
+
+//write
+for (i = 1; i <= MAXPORTS; ++i) {
+    for (j = 1; j <= 5; ++j) {
+        write(i, j);    
+    }
+}
+
+for (i = 1; i <= MAXPORTS; ++i) {
+    port = getPortHandle(i);
+    test("write" + i, port.data.length === 5);    
+}
+
+//read
+for (i = 1; i <= MAXPORTS; ++i) {
+    for (j = 1; j <= 2; ++j) {
+        res = read(i);
+        test("read-p" + i + "-" + j, res === j);
+    }
+}
+
+for (i = 1; i <= MAXPORTS; ++i) {
+    port = getPortHandle(i); //Check that read removes elements
+    test("readpops" + i, port.data.length === 3); 
+}
+
+//peek
+for (i = 1; i <= MAXPORTS; ++i) {
+    test("peek" + i, peek(i) === 3);
+    port = getPortHandle(i);
+    test("peeknopop" + i, port.data.length === 3);
+}
+
+//clear and empty
+for (i = 1; i <= MAXPORTS; ++i) {
+    clear(i);
+    port = getPortHandle(i);
+    test("clear" + i, port.data.length === 0);
+    test("empty" + i, port.empty());
+}
+
+//Write so that the port is full (only port 1 for this)
+for (i = 0; i < MAXPORTSIZE + 1; ++i) {
+    write(1, i)
+}
+
+//full
+port = getPortHandle(1);
+test("full", port.full());
+test("notempty", !port.empty());
+
+//tryWrite
+firstElem = peek(1);
+test("trywritefails", !port.tryWrite("foo"));
+test("trywritenochange", peek(1) === firstElem);
+read(1);
+test("trywritesucceeds", port.tryWrite("foo"));
+test("trywritewrites", port.data.pop() === "foo");
+test("notfull", !port.full());
+
+write("tb_results.txt", ",tb_ports");
+run("tb_functions.script", 1, "OK");

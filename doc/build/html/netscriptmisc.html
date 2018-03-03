@@ -50,6 +50,162 @@
             
   <div class="section" id="netscript-miscellaneous">
 <h1>Netscript Miscellaneous<a class="headerlink" href="#netscript-miscellaneous" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="netscript-ports">
+<h2>Netscript Ports<a class="headerlink" href="#netscript-ports" title="Permalink to this headline">¶</a></h2>
+<p>Netscript ports are endpoints that can be used to communicate between scripts.
+A port is implemented as a sort of serialized queue, where you can only write
+and read one element at a time from the port. When you read data from a port,
+the element that is read is removed from the port.</p>
+<p>The <code class="xref js js-func docutils literal"><span class="pre">read()</span></code>, <code class="xref js js-func docutils literal"><span class="pre">write()</span></code>, <code class="xref js js-func docutils literal"><span class="pre">clear()</span></code>, and <code class="xref js js-func docutils literal"><span class="pre">peek()</span></code>
+Netscript functions can be used to interact with ports.</p>
+<p>Right now, there are only 20 ports for Netscript, denoted by the number 1
+through 20. When using the functions above, the ports are specified
+by passing the number as the first argument.</p>
+<p>IMPORTANT: The data inside ports are not saved! This means if you close and
+re-open the game, or reload the page then you will lose all of the data in
+the ports!</p>
+<p><strong>Example Usage</strong></p>
+<p>Here's a brief example of how ports work. For the sake of simplicity we'll only deal with port 1.</p>
+<p>Let's assume Port 1 starts out empty (no data inside). We'll represent the port as such:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[]</span>
+</pre></div>
+</div>
+<p>Now assume we ran the following simple script:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span> <span class="o">//</span><span class="n">Writes</span> <span class="n">the</span> <span class="n">value</span> <span class="n">of</span> <span class="n">i</span> <span class="n">to</span> <span class="n">port</span> <span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>After this script executes, our script will contain every number from 0 through 9, as so:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span> <span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Then, assume we run the following script:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span> <span class="o">//</span><span class="n">Reads</span> <span class="n">a</span> <span class="n">value</span> <span class="kn">from</span> <span class="nn">port</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">then</span> <span class="n">prints</span> <span class="n">it</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This script above will read the first three values from port 1 and then print them to the script's log. The log will end up looking like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+</pre></div>
+</div>
+<p>And the data in port 1 will look like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Port Handles</strong></p>
+<p>The <code class="xref js js-func docutils literal"><span class="pre">getPortHandle()</span></code> Netscript function can be used to get a handle to a Netscript Port.
+This handle allows you to access several new port-related functions and the
+port's underlying data structure, which is just a Javascript array. The functions are:</p>
+<dl class="method">
+<dt id="NetscriptPort.write">
+<code class="descclassname">NetscriptPort.</code><code class="descname">write</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#NetscriptPort.write" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> -- Data to write to the port</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">If the port is full, the item that is removed from the port is returned.
+Otherwise, null is returned.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Writes <cite>data</cite> to the port. Works the same as the Netscript function <cite>write</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="NetscriptPort.tryWrite">
+<code class="descclassname">NetscriptPort.</code><code class="descname">tryWrite</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#NetscriptPort.tryWrite" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> -- Data to try to write to the port</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if the data is successfully written to the port, and false otherwise.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Attempts to write <cite>data</cite> to the Netscript port. If the port is full, the data will
+not be written. Otherwise, the data will be written normally.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="NetscriptPort.full">
+<code class="descclassname">NetscriptPort.</code><code class="descname">full</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#NetscriptPort.full" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the Netscript Port is full, and false otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="NetscriptPort.empty">
+<code class="descclassname">NetscriptPort.</code><code class="descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#NetscriptPort.empty" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the Netscript Port is empty, and false otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="NetscriptPort.clear">
+<code class="descclassname">NetscriptPort.</code><code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#NetscriptPort.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears all data from the port. Works the same as the Netscript function <cite>clear</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="NetscriptPort.data">
+<code class="descclassname">NetscriptPort.</code><code class="descname">data</code><a class="headerlink" href="#NetscriptPort.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Netscript port underlying data structure, which is just a Javascript array. All
+valid Javascript Array methods can be called on this.</p>
+</dd></dl>
+
+<p>Port Handle Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>port = getPortHandle(5);
+back = port.data.pop(); //Get and remove last element in port
+
+//Remove an element from the port
+i = port.data.findIndex(&quot;foo&quot;);
+if (i != -1) {
+    port.data.slice(i, 1);
+}
+
+//Wait for port data before reading
+while(port.empty()) {
+    sleep(10000);
+}
+res = port.read();
+
+//Wait for there to be room in a port before writing
+while (!port.tryWrite(5)) {
+    sleep(5000);
+}
+
+//Successfully wrote to port!
+</pre></div>
+</div>
+</div>
 <div class="section" id="comments">
 <h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
 <p>Netscript supports comments using the same syntax as <a class="reference external" href="https://www.w3schools.com/js/js_comments.asp">Javascript comments</a>.
@@ -85,6 +241,15 @@ However, since the 'new' operator does not work in Netscript, only the Date modu
 </pre></div>
 </div>
 </div>
+<div class="section" id="javascript-number-module">
+<h2>Javascript Number Module<a class="headerlink" href="#javascript-number-module" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Javascript Number module</a> is supported in Netscript.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tprint</span><span class="p">(</span><span class="n">Number</span><span class="o">.</span><span class="n">isInteger</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>        <span class="o">//</span><span class="kc">True</span>
+<span class="n">tprint</span><span class="p">(</span><span class="n">Number</span><span class="o">.</span><span class="n">isInteger</span><span class="p">(</span><span class="mf">1.534059</span><span class="p">));</span> <span class="o">//</span><span class="kc">False</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -107,9 +272,11 @@ However, since the 'new' operator does not work in Netscript, only the Date modu
 <li class="toctree-l2"><a class="reference internal" href="netscriptixapi.html"> Trade Information eXchange (TIX) API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="netscriptsingularityfunctions.html"> Singularity Functions</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#"> Miscellaneous</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#netscript-ports">Netscript Ports</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#comments">Comments</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#javascript-math-module">Javascript Math Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#javascript-date-module">Javascript Date Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#javascript-number-module">Javascript Number Module</a></li>
 </ul>
 </li>
 </ul>

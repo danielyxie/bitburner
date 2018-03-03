@@ -1,0 +1,35 @@
+tprint("Beginning testbench. A soft reset MUST be performed before running this.");
+tprint("This should be run on a Bitnode between 1 and 7, with $100k+, 16GB RAM+ " + 
+       "and access to Singularity functions otherwise some tests may fail");
+
+run("tb_basic.script", 1, "OK");
+write("tb_results.txt", "tb_start", "w");
+
+while(true) {
+    sleep(10000);
+    res = read("tb_results.txt");
+    if (res.includes("FAIL")) {
+        tprint("TESTBENCH FAILED");
+        killall();
+    }
+    if (res.includes("tb_start") && res.includes("tb_basic") && 
+        res.includes("tb_ports") && res.includes("tb_multiarray") &&
+        res.includes("tb_functions")) {
+        break;
+    }
+}
+
+
+//Check remote 
+scp("tb_results.txt", "foodnstuff", "home");
+res = read("tb_results.txt");
+if (res.includes("FAIL")) {
+    tprint("TESTBENCH FAILED");
+    killall();
+}
+if (res.includes("tb_remote")) {
+    tprint("TESTBENCH SUCCESS");
+} else {
+    tprint("TESTBENCH FAILED");
+    killall();
+}

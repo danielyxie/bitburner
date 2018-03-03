@@ -43,3 +43,15 @@
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
 }
+
+#terminal-input-td {
+    display: flex;
+}
+
+#terminal-input-header {
+    white-space: pre;
+}
+
+#terminal-input-text-box {
+    flex: 1 1 auto;
+}

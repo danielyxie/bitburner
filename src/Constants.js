@@ -38,6 +38,7 @@ let CONSTANTS = {
     //NeuroFlux Governor cost multiplier as you level up
     NeuroFluxGovernorLevelMult: 1.14,
 
+    /* Netscript Constants */
     //RAM Costs for different commands
     ScriptWhileRamCost:             0.2,
     ScriptForRamCost:               0.2,
@@ -78,6 +79,8 @@ let CONSTANTS = {
     ScriptSingularityFn3RamCost:    3,
 
     MultithreadingRAMCost:          1,
+
+    NumNetscriptPorts:              20,
 
     //Server constants
     ServerBaseGrowthRate: 1.03,     //Unadjusted Growth rate
@@ -1135,38 +1138,39 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.34.5<br>" +
+    "v0.35.0<br>" +
+    "-Minor rebalancing of BitNodes due to the fact that Corporations provide a (relatively) new method of " +
+    "progressing<br>" +
     "-Corporation Management Changes:<br>" +
-    "---Market Research unlocks are now cheaper<br>" +
-    "---New 'VeChain' upgrade: displays useful statistics about Corporation<br>" +
-    "---Corporation cycles are processed 25% faster<br>" +
-    "---Corporation valuation was lowered by ~10% (this affects stock price and investments)<br>" +
-    "---Rebalanced the effects of advertising. Should now be more effective for every Industry<br>" +
-    "---Fixed several bugs/exploits involving selling and buying back stock shares<br>" +
-    "---You will now receive a Corporation Handbook (.lit file) when starting out BitNode-3. It contains a brief guide to help you get started. " +
-    "This same handbook can be viewed from the Corporation management screen<br>" +
-    "---Slightly decreased the amount by which a Product's sell price can be marked up<br>" +
-    "---Employees can now be assigned to a 'Training' task, during which they will slowly increase several of their stats<br>" +
-    "-Hopefully fixed an exploit with Array.forEach(). If there are any issues with using forEach, let me know<br>" +
-    "-Arguments passed into a script are now passed by value. This means modifying the 'args' array in a script " +
-    "should no longer cause issues<br>" +
-    "-Scripts executed programatically (via run(), exec(), etc.) will now fail if null/undefined is passed in " +
-    "as an argument<br>" +
-    "-Added peek() Netscript function<br>" +
-    "-killall() Netscript function now returns true if any scripts were killed, and false otherwise.<br>" +
-    "-hack() Netscript function now returns the amount of money gained for successful hacks, and 0 for failed hacks<br>" +
-    "-scp Terminal command and Netscript function now work for txt files<br>" +
-    "-Changes courtesy of Wraithan:<br>" +
-    "---Text files are now displayed using 'pre' rather than 'p' elements when using the 'cat' Terminal command. " +
-    "This means tabs are retained and lines don't automatically wrap<br>" +
-    "---ls() Netscript function now returns text files as well<br>" +
-    "-Removed round() Netscript function, since you can just use Math.round() instead<br>" +
-    "-Added disableLog() and enableLog() Netscript functions<br>" +
-    "-Removed the 'log' argument from sleep(), since you can now use the new disableLog function<br>" +
-    "-'Netscript Documentation' button on script editor now points to new readthedocs documentation rather than wiki<br>" +
-    "-When working for a faction, your current faction reputation is now displayed<br>" +
-    "-Bug Fix: Hacking Missions should no longer break when dragging an existing connection to another Node<br>" +
-    "-Bug Fix: Fixed RAM usage of getNextHacknetNodeCost() (is not 1.5GB instead of 4GB)<br>"
+    "---Once your Corporation gets big/powerful enough, you can now bribe Factions for reputation using company funds an/or stock shares<br>" +
+    "---You can now only create one Division for every Industry type<br>" +
+    "---Added several new UI/UX elements<br>" +
+    "---Wilson Analytics multiplier was significantly reduced to 1% per level (additive).<br>" +
+    "---Reduced the effect of Advert Inc upgrade. Advert Inc. upgrade price increases faster<br>" +
+    "---Materials can now be marked up at higher prices<br>"  +
+    "-Added Javascript's built-in Number object to Netscript<br>" +
+    "-Added getCharacterInformation(), getCompanyFavor(), and getFactionFavor() Netscript Singularity functions<br>" +
+    "-Rebalanced Singularity Function RAM Costs. They now cost x8 as much when outside of BN-4 (rather than x10). Also, " +
+    "many of the functions now use significantly less RAM<br>" +
+    "-Refactored Netscript Ports. You can now get a handle for a Netscript port using the " +
+    "getPortHandle() Netscript function. This allows you to access a port's underlying queue (which is just an array) and also "  +
+    "makes several new functions available such as tryWrite(), full(), and empty().<br>" +
+    "-Number of Netscript Ports increased from 10 to 20<br>"  +
+    "-Netscript assignments should now return proper values. i.e. i = 5 should return 5.<br>" +
+    "-Added throw statements to Netscript. It's not super useful since 'catch' isn't implemented, but it can be used "  +
+    "to generate custom runtime error messages.<br>" +
+    "-Added import declaration to Netscript. With this, you are able to import functions (and only functions) from " +
+    "other files. Using export declarations is not necessary<br>" +
+    "-Most Netscript Runtime errors (the ones that cause your script to crash) should now include the line number where the error occured<br>" +
+    "-When working for a company, your current company reputation is now displayed<br>" +
+    "-Whenever you get a Faction Invite it will be immediately appended to your 'invited factions' list. " +
+    "Therefore the checkFactionInvitations() Singularity Function should now be properly useable since you no longer " +
+    "need to decline a Faction Invitation before it shows up in the result.<br>" +
+    "-Bug Fix: When purchasing servers, whitespace should now automatically be removed from the hostname<br>" +
+    "-Bug Fix: Can no longer have whitespace in the filename of text files created using write()<br>"  +
+    "-Bug Fix: In Netscript, you can no longer assign a Hacknet Node handle (hacknetnodes[i]) to another value <br>" +
+    "-Bug Fix: If you are in the Factions tab when you accept an invitation from a Faction, the page will now properly 'refresh'<br>" +
+    "-Bug Fix: Scripts that run recursive functions should now be killed properly<br>"
 }
 
 export {CONSTANTS};

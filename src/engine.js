@@ -42,7 +42,7 @@ import {prestigeAugmentation,
         prestigeSourceFile}                     from "./Prestige.js";
 import {redPillFlag}                            from "./RedPill.js";
 import {saveObject, loadGame}                   from "./SaveObject.js";
-import {loadAllRunningScripts,
+import {loadAllRunningScripts, scriptEditorInit,
         updateScriptEditorContent}              from "./Script.js";
 import {AllServers, Server, initForeignServers} from "./Server.js";
 import {Settings, setSettingsLabels}            from "./Settings.js";
@@ -605,7 +605,7 @@ let Engine = {
                 Engine.sector12LocationsList.style.display = "inline";
 
                 //City hall only in BitNode-3/with Source-File 3
-                if (Player.bitNodeN === 3 || hasCorporationSF) {
+                if ((Player.bitNodeN === 3 || hasCorporationSF) && Player.bitNodeN !== 8)  {
                     document.getElementById("sector12-cityhall-li").style.display = "block";
                 } else {
                     document.getElementById("sector12-cityhall-li").style.display = "none";
@@ -1319,6 +1319,7 @@ let Engine = {
         }
         //Initialize labels on game settings
         setSettingsLabels();
+        scriptEditorInit();
         Terminal.resetTerminalInput();
     },
 

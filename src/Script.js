@@ -17,6 +17,7 @@ import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {iTutorialSteps, iTutorialNextStep,
         iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial.js";
+import {evaluateImport}                         from "./NetscriptEvaluator.js";
 import {NetscriptFunctions}                     from "./NetscriptFunctions.js";
 import {addWorkerScript, killWorkerScript,
         WorkerScript}                           from "./NetscriptWorker.js";
@@ -96,19 +97,47 @@ function scriptEditorInit() {
     /* Script editor options */
     //Theme
     var themeDropdown = document.getElementById("script-editor-option-theme");
-    themeDropdown.selectedIndex = 2;
+    if (Settings.EditorTheme) {
+        var initialIndex = 2;
+        for (var i = 0; i < themeDropdown.options.length; ++i) {
+            if (themeDropdown.options[i].value === Settings.EditorTheme) {
+                initialIndex = i;
+                break;
+            }
+        }
+        themeDropdown.selectedIndex = initialIndex;
+    } else {
+        themeDropdown.selectedIndex = 2;
+    }
+
     themeDropdown.onchange = function() {
         var val = themeDropdown.value;
+        Settings.EditorTheme = val;
         var themePath = "ace/theme/" + val.toLowerCase();
         editor.setTheme(themePath);
     };
+    themeDropdown.onchange();
 
     //Keybinding
     var keybindingDropdown = document.getElementById("script-editor-option-keybinding");
+    if (Settings.EditorKeybinding) {
+        var initialIndex = 0;
+        for (var i = 0; i < keybindingDropdown.options.length; ++i) {
+            if (keybindingDropdown.options[i].value === Settings.EditorKeybinding) {
+                initialIndex = i;
+                break;
+            }
+        }
+        keybindingDropdown.selectedIndex = initialIndex;
+    } else {
+        keybindingDropdown.selectedIndex = 0;
+    }
     keybindingDropdown.onchange = function() {
         var val = keybindingDropdown.value;
+        Settings.EditorKeybinding = val;
         editor.setKeyboardHandler(keybindings[val.toLowerCase()]);
     };
+    keybindingDropdown.onchange();
 
     //Highlight Active line
     var highlightActiveChkBox = document.getElementById("script-editor-option-highlightactiveline");
@@ -174,7 +203,6 @@ function scriptEditorInit() {
     }
     editor.completers = [autocompleter];
 }
-document.addEventListener("DOMContentLoaded", scriptEditorInit, false);
 
 //Updates RAM usage in script
 function updateScriptEditorContent() {
@@ -188,6 +216,8 @@ function updateScriptEditorContent() {
     var ramUsage = calculateRamUsage(codeCopy);
     if (ramUsage !== -1) {
         scriptEditorRamText.innerText = "RAM: " + formatNumber(ramUsage, 2).toString() + "GB";
+    } else {
+        scriptEditorRamText.innerText = "RAM: Syntax Error";
     }
 }
 
@@ -295,15 +325,17 @@ Script.prototype.updateRamUsage = function() {
 
 function calculateRamUsage(codeCopy) {
     //Create a temporary/mock WorkerScript and an AST from the code
+    var currServ = Player.getCurrentServer();
     var workerScript = new WorkerScript({
         filename:"foo",
         scriptRef: {code:""},
         args:[]
     });
     workerScript.checkingRam = true; //Netscript functions will return RAM usage
+    workerScript.serverIp = currServ.ip;
 
     try {
-        var ast = parse(codeCopy);
+        var ast = parse(codeCopy, {sourceType:"module"});
     } catch(e) {
         return -1;
     }
@@ -315,6 +347,14 @@ function calculateRamUsage(codeCopy) {
     while (queue.length != 0) {
         var exp = queue.shift();
         switch (exp.type) {
+            case "ImportDeclaration":
+                //Gets an array of all imported functions as AST expressions
+                //and pushes them on the queue.
+                var res = evaluateImport(exp, workerScript, true);
+                for (var i = 0; i < res.length; ++i) {
+                    queue.push(res[i]);
+                }
+                break;
             case "BlockStatement":
             case "Program":
                 for (var i = 0; i < exp.body.length; ++i) {
@@ -659,4 +699,4 @@ AllServersMap.fromJSON = function(value) {
 Reviver.constructors.AllServersMap = AllServersMap;
 
 export {updateScriptEditorContent, loadAllRunningScripts, findRunningScript,
-        RunningScript, Script, AllServersMap};
+        RunningScript, Script, AllServersMap, scriptEditorInit};

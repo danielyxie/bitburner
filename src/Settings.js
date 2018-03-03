@@ -11,6 +11,8 @@ let Settings = {
     ThemeHighlightColor:    "#ffffff",
     ThemeFontColor:         "#66ff33",
     ThemeBackgroundColor:   "#000000",
+    EditorTheme:            "Monokai",
+    EditorKeybinding:       "ace",
 }
 
 function loadSettings(saveString) {

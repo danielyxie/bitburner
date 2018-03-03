@@ -25,27 +25,27 @@ a value to these.
 
 Note that these must be called on an element inside the *hacknetnodes* array, not the array itself.
 
-.. js:function:: hacknetnodes[i].level
+.. js:attribute:: hacknetnodes[i].level
 
     Returns the level of the corresponding Hacknet Node
 
-.. js:function:: hacknetnodes[i].ram
+.. js:attribute:: hacknetnodes[i].ram
 
     Returns the amount of RAM on the corresponding Hacknet Node
 
-.. js:function:: hacknetnodes[i].cores
+.. js:attribute:: hacknetnodes[i].cores
 
     Returns the number of cores on the corresponding Hacknet Node
 
-.. js:function:: hacknetnodes[i].totalMoneyGenerated
+.. js:attribute:: hacknetnodes[i].totalMoneyGenerated
 
     Returns the total amount of money that the corresponding Hacknet Node has earned
 
-.. js:function:: hacknetnodes[i].onlineTimeSeconds
+.. js:attribute:: hacknetnodes[i].onlineTimeSeconds
 
     Returns the total amount of time (in seconds) that the corresponding Hacknet Node has existed
 
-.. js:function:: hacknetnodes[i].moneyGainRatePerSecond
+.. js:attribute:: hacknetnodes[i].moneyGainRatePerSecond
 
     Returns the amount of income that the corresponding Hacknet Node earns
 
@@ -57,7 +57,7 @@ The following is a list of supported functions/methods for a Hacknet Node object
 Note that these must be called on an element inside the *hacknetnodes* array, not the
 array itself.
 
-.. js:function:: hacknetnodes[i].upgradeLevel(n);
+.. js:method:: hacknetnodes[i].upgradeLevel(n)
 
     :param number n: Number of levels to upgrade. Must be positive. Rounded to nearest integer
 
@@ -65,27 +65,27 @@ array itself.
     Hacknet Node's level is successfully upgraded *n* times or up to the max level (200), and false
     otherwise.
 
-.. js:function:: hacknetnodes[i].upgradeRam()
+.. js:method:: hacknetnodes[i].upgradeRam()
 
     Tries to upgrade the amount of RAM on the corresponding Hacknet Node. Returns true if the RAM is
     successfully upgraded and false otherwise.
 
-.. js:function:: hacknetnodes[i].upgradeCore()
+.. js:method:: hacknetnodes[i].upgradeCore()
 
     Tries to purchase an additional core for the corresponding Hacknet Node. Returns true if the
     additional core is successfully purchased, and false otherwise.
 
-.. js:function:: hacknetnodes[i].getLevelUpgradeCost(n);
+.. js:method:: hacknetnodes[i].getLevelUpgradeCost(n)
 
     :param number n: Number of levels to upgrade. Must be positive. Rounded to nearest integer
 
     Returns the cost of upgrading the specified Hacknet Node by *n* levels
 
-.. js:function:: hacknetnodes[i].getRamUpgradeCost()
+.. js:method:: hacknetnodes[i].getRamUpgradeCost()
 
     Returns the cost of upgrading the RAM of the specified Hacknet Node. Upgrading a Node's RAM doubles it.
 
-.. js:function:: hacknetnodes[i].getCoreUpgradeCost()
+.. js:method:: hacknetnodes[i].getCoreUpgradeCost()
 
     Returns the cost of upgrading the number of cores of the specified Hacknet Node. Upgrading a Node's
     number of cores adds one additional core.

@@ -155,10 +155,18 @@ a:link, a:visited {
     padding: 5px;
     margin: 5px;
     border: 1px solid #333333;
-    pointer-events: none;
     cursor: default;
 }
 
+.a-link-button-inactive:hover .tooltiptext,
+.a-link-button-inactive:hover .tooltiptexthigh,
+.a-link-button-inactive:hover .tooltiptextleft {
+    visibility: visible;
+}
+
+.a-link-button-inactive:active {
+    pointer-events: none;
+}
 
 /* Notification icon (for create program right now only) */
 #create-program-tab {
@@ -332,6 +340,7 @@ a:link, a:visited {
     top:0px;
     -webkit-animation:status-text 3s 1;
     background-color: transparent;
+    height: 15%;
 }
 
 #status-text-container {

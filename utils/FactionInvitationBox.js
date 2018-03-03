@@ -1,4 +1,5 @@
 import {Faction, joinFaction}       from "../src/Faction.js";
+import {Engine}                     from "../src/engine.js";
 import {Player}                     from "../src/Player.js";
 import {clearEventListeners}        from "./HelperFunctions.js";
 
@@ -26,20 +27,33 @@ function factionInvitationSetMessage(msg) {
 //ram argument is in GB
 function factionInvitationBoxCreate(faction) {
     factionInvitationSetText("You have received a faction invitation from " + faction.name);
-    //TODO Faction invitation message
+    faction.alreadyInvited = true;
+    Player.factionInvitations.push(faction.name);
+
+    if (Engine.currentPage === Engine.Page.Factions) {
+        Engine.loadFactionsContent();
+    }
 
     var newYesButton = clearEventListeners("faction-invitation-box-yes");
     newYesButton.addEventListener("click", function() {
+        //Remove from invited factions
+        var i = Player.factionInvitations.findIndex((facName)=>{return facName === faction.name});
+        if (i === -1) {
+            console.log("ERROR: Could not find faction in Player.factionInvitations");
+        } else {
+            Player.factionInvitations.splice(i, 1);
+        }
         joinFaction(faction);
         factionInvitationBoxClose();
+        if (Engine.currentPage === Engine.Page.Factions) {
+            Engine.loadFactionsContent();
+        }
         return false;
     });
 
     var noButton = clearEventListeners("faction-invitation-box-no");
     noButton.addEventListener("click", function() {
         factionInvitationBoxClose();
-        faction.alreadyInvited = true;
-        Player.factionInvitations.push(faction.name);
         return false;
     });
 

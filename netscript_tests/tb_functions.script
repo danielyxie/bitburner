@@ -1,0 +1,119 @@
+import {test} from "tb_basic.script";
+
+test("run", (args.length === 1 && args[0] === "OK"));
+
+//scan
+res = scan();
+test("scan1", res.includes("iron-gym") && res.includes("foodnstuff") &&
+              res.includes("sigma-cosmetics") && res.includes("joesguns") && 
+              res.includes("hong-fang-tea") && res.includes("harakiri-sushi"));
+test("scan2", res.length === 6);
+res = scan("foodnstuff");
+test("scan3", res.includes("home"));
+
+//hasRootAccess and nuke
+svr = "foodnstuff";
+test("hasRootAccess1", !hasRootAccess(svr));
+test("nuke", nuke(svr));
+test("hasRootAccess2", hasRootAccess(svr));
+
+//sleep and Date.now();
+time = Date.now();
+sleep(10000);
+time2 = Date.now();
+test("sleep", time2 - time > 8000);
+
+//hack, grow, weaken, and their effects
+FORTIFYAMOUNT = 0.002;
+WEAKENAMOUNT = 0.05;
+
+playerStartingMoney     = getServerMoneyAvailable("home");
+serverStartingMoney     = getServerMoneyAvailable("foodnstuff");
+startingSecLvl          = getServerSecurityLevel("foodnstuff");
+
+res = hack(svr);
+
+playerEndingMoney       = getServerMoneyAvailable("home");
+serverEndingMoney       = getServerMoneyAvailable("foodnstuff");
+endingSecLvl          = getServerSecurityLevel("foodnstuff");
+
+success = !(res == 0);
+
+if (success) {
+    tprint("Hack succeeded");
+    test("hackplyrmoney", res === (playerEndingMoney - playerStartingMoney)); 
+    test("hacksvrmoney", res === (serverStartingMoney - serverEndingMoney));
+    //Dumb JS precision
+    test("seclevel", (endingSecLvl - startingSecLvl) - FORTIFYAMOUNT < 1e2 * Number.EPSILON);
+} else {
+    tprint("Hack failed");
+    test("hackres", res === 0);
+    test("hackplymoney", playerEndingMoney === playerStartingMoney);
+    test("hacksvrmoney", serverEndingMoney === serverStartingMoney);
+    test("seclevel", endingSecLvl === startingSecLvl);
+}
+
+serverStartingMoney = getServerMoneyAvailable(svr);
+res = grow(svr);
+serverEndingMoney = getServerMoneyAvailable(svr);
+test("grow", serverEndingMoney > serverStartingMoney);
+test("growtest", res * serverStartingMoney - serverEndingMoney < Number.EPSILON);
+
+startingSecLvl = getServerSecurityLevel(svr);
+res = weaken(svr);
+endingSecLvl = getServerSecurityLevel(svr);
+test("weaken", res === WEAKENAMOUNT);
+test("weakenres", startingSecLvl - endingSecLvl - res < 1e2 * Number.EPSILON);
+
+//misc getter functions
+test("getHostname", getHostname() === "home");
+test("getHackingLevel", getHackingLevel() >= 1); //Can vary based on aug mults
+res = getHackingMultipliers();
+test("getHackingMultipliers", res.chance >= 1 && res.speed >= 1 &&
+                              res.money >= 1 && res.growth >= 1);
+svr = "joesguns";                              
+baseSecLvl = getServerBaseSecurityLevel(svr);
+minSecLvl = getServerMinSecurityLevel(svr);
+test("getServerBase/MinSecurityLevel1", minSecLvl < baseSecLvl);
+test("getServerBase/MinSecurityLevel1", minSecLvl === Math.max(1, Math.round(baseSecLvl / 3)));
+test("getServerRequiredHackingLevel", getServerRequiredHackingLevel(svr) === 10);
+test("getServerMaxMoney", getServerMaxMoney(svr) > getServerMoneyAvailable(svr)); //Can vary by BN
+test("getServerGrowth", getServerGrowth(svr) >= 1); //Can vary by BN
+test("getServerNumPortsRequired1", getServerNumPortsRequired(svr) === 0);
+test("getServerNumPortsRequired1", getServerNumPortsRequired("neo-net") === 1);
+test("getServerRam", getServerRam("home")[0] === 8 || 
+                     getServerRam("home")[0] === 16 || 
+                     getServerRam("home")[0] === 32);
+test("serverExists1", serverExists("home"));
+test("serverExists2", !serverExists("foofooofofofof"));
+test("fileExists1", fileExists("tb_start.script"));
+test("fileExists2", !fileExists("tosdifoodafgbiofdagbaod.txt"));
+
+//run a misc script
+test("isRunning1", !isRunning("tb_foo.script", "home"));
+run("tb_foo.script", 1, 1, 2, 3);
+test("isRunning2", !isRunning("tb_foo.script", "home", "foo"));
+test("isRunning3", isRunning("tb_foo.script", "home", 1, 2, 3));
+
+//kill
+kill("tb_foo.script", "home", "fee");
+sleep(10000);
+test("isRunning4", isRunning("tb_foo.script", "home", 1, 2, 3));
+kill("tb_foo.script", "home", 1, 2, 3);
+sleep(10000);
+test("isRunning4", !isRunning("tb_foo.script", "home", 1, 2, 3));
+
+//scp 
+svr = "foodnstuff";
+test("fileExists3", !fileExists("tb_remote.script", svr));
+test("fileExists4", !fileExists("tb_basic.script", svr));
+scp("tb_remote.script", "home", svr);
+scp("tb_basic.script", svr);
+test("fileExists5", fileExists("tb_remote.script", svr));
+test("fileExists6", fileExists("tb_basic.script", svr));
+
+write("tb_results.txt", ",tb_functions"); //Done, pretty much
+
+//exec and spawn
+exec("tb_remote.script", "foodnstuff", 1, "OK");
+spawn("tb_functions2.script", 1, "OK");

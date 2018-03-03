@@ -3,12 +3,12 @@ import {CONSTANTS}                          from "./Constants.js";
 import {Player}                             from "./Player.js";
 import {Environment}                        from "./NetscriptEnvironment.js";
 import {WorkerScript, addWorkerScript}      from "./NetscriptWorker.js";
-import {Server}                             from "./Server.js";
+import {Server, getServer}                  from "./Server.js";
 import {Settings}                           from "./Settings.js";
 import {Script, findRunningScript,
         RunningScript}                      from "./Script.js";
 
-import {Node}                               from "../utils/acorn.js";
+import {parse, Node}                        from "../utils/acorn.js";
 import {printArray}                         from "../utils/HelperFunctions.js";
 import {isValidIPAddress}                   from "../utils/IPAddress.js";
 import {isString}                           from "../utils/StringHelperFunctions.js";
@@ -31,7 +31,7 @@ function evaluate(exp, workerScript) {
         var env = workerScript.env;
         if (env.stopFlag) {return Promise.reject(workerScript);}
         if (exp == null) {
-            return Promise.reject(makeRuntimeRejectMsg(workerScript, "Error: NULL expression"));
+            return Promise.reject(makeRuntimeRejectMsg(workerScript, "Error: NULL expression", exp));
         }
         if (env.stopFlag) {return Promise.reject(workerScript);}
         switch (exp.type) {
@@ -59,11 +59,11 @@ function evaluate(exp, workerScript) {
             case "Identifier":
                 //Javascript constructor() method can be used as an exploit to run arbitrary code
                 if (exp.name == "constructor") {
-                    return Promise.reject(makeRuntimeRejectMsg(workerScript, "Illegal usage of constructor() method. If you have your own function named 'constructor', you must re-name it."));
+                    return Promise.reject(makeRuntimeRejectMsg(workerScript, "Illegal usage of constructor() method. If you have your own function named 'constructor', you must re-name it.", exp));
                 }
 
                 if (!(exp.name in env.vars)){
-                    return Promise.reject(makeRuntimeRejectMsg(workerScript, "variable " + exp.name + " not defined"));
+                    return Promise.reject(makeRuntimeRejectMsg(workerScript, "variable " + exp.name + " not defined", exp));
                 }
                 return Promise.resolve(env.get(exp.name))
                 break;
@@ -135,7 +135,7 @@ function evaluate(exp, workerScript) {
                                     return Promise.reject(makeRuntimeRejectMsg(workerScript, e.toString()));
                                 }
                             });
-                        } else if (exp.callee.type == "MemberExpression"){
+                        } else if (exp.callee.type === "MemberExpression"){
                             return evaluate(exp.callee.object, workerScript).then(function(object) {
                                 try {
                                     if (func === "NETSCRIPTFOREACH") {
@@ -148,7 +148,7 @@ function evaluate(exp, workerScript) {
                                     var res = func.apply(object,args);
                                     return Promise.resolve(res);
                                 } catch (e) {
-                                    return Promise.reject(makeRuntimeRejectMsg(workerScript, e));
+                                    return Promise.reject(makeRuntimeRejectMsg(workerScript, e, exp));
                                 }
                             });
                         } else {
@@ -158,6 +158,11 @@ function evaluate(exp, workerScript) {
                                     return out.then(function(res) {
                                         return Promise.resolve(res)
                                     }).catch(function(e) {
+                                        if (isScriptErrorMessage(e)) {
+                                            //Functions don't have line number appended in error message, so add it
+                                            var num = getErrorLineNumber(exp, workerScript);
+                                            e += " (Line " + num + ")";
+                                        }
                                         return Promise.reject(e);
                                     });
                                 } else {
@@ -165,9 +170,14 @@ function evaluate(exp, workerScript) {
                                 }
                             } catch (e) {
                                 if (isScriptErrorMessage(e)) {
+                                    if (isScriptErrorMessage(e)) {
+                                        //Functions don't have line number appended in error message, so add it
+                                        var num = getErrorLineNumber(exp, workerScript);
+                                        e += " (Line " + num + ")";
+                                    }
                                     return Promise.reject(e);
                                 } else {
-                                    return Promise.reject(makeRuntimeRejectMsg(workerScript, e));
+                                    return Promise.reject(makeRuntimeRejectMsg(workerScript, e, exp));
                                 }
                             }
                         }
@@ -179,19 +189,19 @@ function evaluate(exp, workerScript) {
                     if (exp.computed){
                         return evaluate(exp.property, workerScript).then(function(index) {
                             if (index >= object.length) {
-                                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Invalid index for arrays"));
+                                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Invalid index for arrays", exp));
                             }
                             return Promise.resolve(object[index]);
                         }).catch(function(e) {
                             if (e instanceof WorkerScript || isScriptErrorMessage(e)) {
                                 return Promise.reject(e);
                             } else {
-                                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Invalid MemberExpression"));
+                                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Invalid MemberExpression", exp));
                             }
                         });
                     } else {
                         if (exp.property.name === "constructor") {
-                            return Promise.reject(makeRuntimeRejectMsg(workerScript, "Illegal usage of constructor() method. If you have your own function named 'constructor', you must re-name it."));
+                            return Promise.reject(makeRuntimeRejectMsg(workerScript, "Illegal usage of constructor() method. If you have your own function named 'constructor', you must re-name it.", exp));
                         }
                         if (object != null && object instanceof Array && exp.property.name === "forEach") {
                             return "NETSCRIPTFOREACH";
@@ -199,7 +209,7 @@ function evaluate(exp, workerScript) {
                         try {
                             return Promise.resolve(object[exp.property.name])
                         } catch (e) {
-                            return Promise.reject(makeRuntimeRejectMsg(workerScript, "Failed to get property: " + e.toString()));
+                            return Promise.reject(makeRuntimeRejectMsg(workerScript, "Failed to get property: " + e.toString(), exp));
                         }
                     }
                 });
@@ -235,14 +245,14 @@ function evaluate(exp, workerScript) {
                         }
                         switch (exp.operator){
                             default:
-                                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". You are trying to use code that is currently unsupported"));
+                                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". You are trying to use code that is currently unsupported", exp));
                         }
                         return Promise.resolve(env.get(exp.argument.name))
                     } else {
-                        return Promise.reject(makeRuntimeRejectMsg(workerScript, "variable " + exp.argument.name + " not defined"));
+                        return Promise.reject(makeRuntimeRejectMsg(workerScript, "variable " + exp.argument.name + " not defined", exp));
                     }
                 } else {
-                    return Promise.reject(makeRuntimeRejectMsg(workerScript, "argument must be an identifier"));
+                    return Promise.reject(makeRuntimeRejectMsg(workerScript, "argument must be an identifier", exp));
                 }
                 break;
             case "EmptyStatement":
@@ -263,8 +273,7 @@ function evaluate(exp, workerScript) {
                 return evaluateIf(exp, workerScript);
                 break;
             case "SwitchStatement":
-                var lineNum = getErrorLineNumber(exp, workerScript);
-                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Switch statements are not yet implemented in Netscript (line " + (lineNum+1) + ")"));
+                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Switch statements are not yet implemented in Netscript", exp));
                 break;
             case "WhileStatement":
                 return evaluateWhile(exp, workerScript).then(function(res) {
@@ -297,13 +306,24 @@ function evaluate(exp, workerScript) {
                     env.set(exp.id.name, exp);
                     return Promise.resolve(true);
                 } else {
-                    var lineNum = getErrorLineNumber(exp, workerScript);
-                    return Promise.reject(makeRuntimeRejectMsg(workerScript, "Invalid function declaration at line " + lineNum+1));
+                    return Promise.reject(makeRuntimeRejectMsg(workerScript, "Invalid function declaration", exp));
                 }
                 break;
+            case "ImportDeclaration":
+                return evaluateImport(exp, workerScript).then(function(res) {
+                    return Promise.resolve(res);
+                }).catch(function(e) {
+                    return Promise.reject(e);
+                });
+                break;
+            case "ThrowStatement":
+                //return Promise.reject(makeRuntimeRejectMsg(workerScript))
+                return evaluate(exp.argument, workerScript).then(function(res) {
+                    return Promise.reject(makeRuntimeRejectMsg(workerScript, res));
+                });
+                break;
             default:
-                var lineNum = getErrorLineNumber(exp, workerScript);
-                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + " (line " + (lineNum+1) + "). This is currently unsupported in Netscript"));
+                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Unrecognized token: " + exp.type + ". This is currently unsupported in Netscript", exp));
                 break;
         } //End switch
     }).catch(function(e) {
@@ -438,6 +458,9 @@ function evalAssignment(exp, workerScript) {
 
     return evaluate(exp.right, workerScript).then(function(expRight) {
         if (exp.left.type == "MemberExpression") {
+            if (!exp.left.computed) {
+                return Promise.reject(makeRuntimeRejectMsg(workerScript, "Cannot assign to an object's property. This is currently unsupported in Netscript", exp));
+            }
             //Assign to array element
             //Array object designed by exp.left.object.name
             //Index designated by exp.left.property
@@ -450,37 +473,38 @@ function evalAssignment(exp, workerScript) {
                 var arrName = res.splice(1, 1);
                 arrName = arrName[0];
 
-                env.setArrayElement(arrName, res, expRight);
-                return Promise.resolve(false);
+                var res;
+                try {
+                    res = env.setArrayElement(arrName, res, expRight);
+                } catch (e) {
+                    return Promise.reject(makeRuntimeRejectMsg(workerScript, e));
+                }
+                return Promise.resolve(res);
             }).catch(function(e) {
                 return Promise.reject(e);
             });
         } else {
             //Other assignments
             try {
+                var assign;
                 switch (exp.operator) {
                     case "=":
-                        env.set(exp.left.name,expRight);
-                        break;
+                        assign = expRight; break;
                     case "+=":
-                        env.set(exp.left.name,env.get(exp.left.name) + expRight);
-                        break;
+                        assign = env.get(exp.left.name) + expRight; break;
                     case "-=":
-                        env.set(exp.left.name,env.get(exp.left.name) - expRight);
-                        break;
+                        assign = env.get(exp.left.name) - expRight; break;
                     case "*=":
-                        env.set(exp.left.name,env.get(exp.left.name) * expRight);
-                        break;
+                        assign = env.get(exp.left.name) * expRight; break;
                     case "/=":
-                        env.set(exp.left.name,env.get(exp.left.name) / expRight);
-                        break;
+                        assign = env.get(exp.left.name) / expRight; break;
                     case "%=":
-                        env.set(exp.left.name,env.get(exp.left.name) % expRight);
-                        break;
+                        assign = env.get(exp.left.name) % expRight; break;
                     default:
                         return Promise.reject(makeRuntimeRejectMsg(workerScript, "Bitwise assignment is not implemented"));
                 }
-                return Promise.resolve(false);
+                env.set(exp.left.name, assign);
+                return Promise.resolve(assign);
             } catch (e) {
                 return Promise.reject(makeRuntimeRejectMsg(workerScript, "Failed to set environment variable: " + e.toString()));
             }
@@ -637,14 +661,117 @@ function evaluateProg(exp, workerScript, index) {
     }
 }
 
-function killNetscriptDelay(workerScript) {
-    /*
-    if (workerScript instanceof WorkerScript) {
-        if (workerScript.delay) {
-            workerScript.delay.cancel();
+function evaluateImport(exp, workerScript, checkingRam=false) {
+    //When its checking RAM, it exports an array of nodes for each imported function
+    var ramCheckRes = [];
+
+    var env = workerScript.env;
+    if (env.stopFlag) {
+        if (checkingRam) {return ramCheckRes;}
+        return Promise.reject(workerScript);
+    }
+
+    //Get source script and name of all functions to import
+    var scriptName = exp.source.value;
+    var namespace, namespaceObj, allFns = false, fnNames = [];
+    if  (exp.specifiers.length === 1 && exp.specifiers[0].type === "ImportNamespaceSpecifier") {
+        allFns = true;
+        namespace = exp.specifiers[0].local.name;
+    } else {
+        for (var i = 0; i < exp.specifiers.length; ++i) {
+            fnNames.push(exp.specifiers[i].local.name);
         }
     }
-    */
+
+    //Get the code
+    var server = getServer(workerScript.serverIp), code = "";
+    if (server == null) {
+        if (checkingRam) {return ramCheckRes;}
+        return Promise.reject(makeRuntimeRejectMsg(workerScript, "Failed to identify server. This is a bug please report to dev", exp));
+    }
+    for (var i = 0; i < server.scripts.length; ++i) {
+        if (server.scripts[i].filename === scriptName) {
+            code = server.scripts[i].code;
+            break;
+        }
+    }
+    if (code === "") {
+        if (checkingRam) {return ramCheckRes;}
+        return Promise.reject(makeRuntimeRejectMsg(workerScript, "Could not find script " + scriptName + " to import", exp));
+    }
+
+    //Create the AST
+    try {
+        var ast = parse(code, {sourceType:"module"});
+    } catch(e) {
+        console.log("Failed to parse import script");
+        if (checkingRam) {return ramCheckRes;}
+        return Promise.reject(makeRuntimeRejectMsg(workerScript, "Failed to import functions from " + scriptName +
+                                                                 " This is most likely due to a syntax error in the imported script", exp));
+    }
+
+    if (allFns) {
+        //A namespace is implemented as a JS obj
+        env.set(namespace, {});
+        namespaceObj = env.get(namespace);
+    }
+
+    //Search through the AST for all imported functions
+    var queue = [ast];
+    while (queue.length != 0) {
+        var node = queue.shift();
+        switch (node.type) {
+            case "BlockStatement":
+            case "Program":
+                for (var i = 0; i < node.body.length; ++i) {
+                    if (node.body[i] instanceof Node) {
+                        queue.push(node.body[i]);
+                    }
+                }
+                break;
+            case "FunctionDeclaration":
+                if (node.id && node.id.name) {
+                    if (allFns) {
+                        //Import all functions under this namespace
+                        if (checkingRam) {
+                            ramCheckRes.push(node);
+                        } else {
+                            namespaceObj[node.id.name] = node;
+                        }
+                    } else {
+                        //Only import specified functions
+                        if (fnNames.includes(node.id.name)) {
+                            if (checkingRam) {
+                                ramCheckRes.push(node);
+                            } else {
+                                env.set(node.id.name, node);
+                            }
+
+                        }
+                    }
+                } else {
+                    if (checkingRam) {return ramCheckRes;}
+                    return Promise.reject(makeRuntimeRejectMsg(workerScript, "Invalid function declaration in imported script " + scriptName, exp));
+                }
+                break;
+            default:
+                break;
+        }
+
+        for (var prop in node) {
+            if (node.hasOwnProperty(prop)) {
+                if (node[prop] instanceof Node) {
+                    queue.push(node[prop]);
+                }
+            }
+        }
+    }
+    if (!checkingRam) {workerScript.scriptRef.log("Imported functions from " + scriptName);}
+    if (checkingRam) {return ramCheckRes;}
+    return Promise.resolve(true);
+}
+
+function killNetscriptDelay(workerScript) {
     if (workerScript instanceof WorkerScript) {
         if (workerScript.delay) {
             clearTimeout(workerScript.delay);
@@ -654,19 +781,6 @@ function killNetscriptDelay(workerScript) {
 }
 
 function netscriptDelay(time, workerScript) {
-    /*
-    workerScript.delay = new Promise(function(resolve, reject, onCancel) {
-        Promise.delay(time).then(function() {
-            resolve();
-            workerScript.delay = null;
-        });
-        onCancel(function() {
-            console.log("Cancelling and rejecting this Promise");
-            reject(workerScript);
-        })
-    });
-    return workerScript.delay;
-    */
     return new Promise(function(resolve, reject) {
        workerScript.delay = setTimeout(()=>{
            workerScript.delay = null;
@@ -676,40 +790,14 @@ function netscriptDelay(time, workerScript) {
    });
 }
 
-function makeRuntimeRejectMsg(workerScript, msg) {
-    return "|"+workerScript.serverIp+"|"+workerScript.name+"|" + msg;
+function makeRuntimeRejectMsg(workerScript, msg, exp=null) {
+    var lineNum = "";
+    if (exp != null) {
+        var num = getErrorLineNumber(exp, workerScript);
+        lineNum = " (Line " + num + ")"
+    }
+    return "|"+workerScript.serverIp+"|"+workerScript.name+"|" + msg + lineNum;
 }
-
-/*
-function apply_op(op, a, b) {
-    function num(x) {
-        if (typeof x != "number")
-            throw new Error("Expected number but got " + x);
-        return x;
-    }
-    function div(x) {
-        if (num(x) == 0)
-            throw new Error("Divide by zero");
-        return x;
-    }
-    switch (op) {
-      case "+": return a + b;
-      case "-": return num(a) - num(b);
-      case "*": return num(a) * num(b);
-      case "/": return num(a) / div(b);
-      case "%": return num(a) % div(b);
-      case "&&": return a !== false && b;
-      case "||": return a !== false ? a : b;
-      case "<": return num(a) < num(b);
-      case ">": return num(a) > num(b);
-      case "<=": return num(a) <= num(b);
-      case ">=": return num(a) >= num(b);
-      case "==": return a === b;
-      case "!=": return a !== b;
-    }
-    throw new Error("Can't apply operator " + op);
-}
-*/
 
 //Run a script from inside a script using run() command
 function runScriptFromScript(server, scriptname, args, workerScript, threads=1) {
@@ -759,13 +847,16 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
     return Promise.resolve(false);
 }
 
-//Takes in a
 function getErrorLineNumber(exp, workerScript) {
     var code = workerScript.scriptRef.scriptRef.code;
 
     //Split code up to the start of the node
-    code = code.substring(0, exp.start);
-    return (code.match(/\n/g) || []).length;
+    try {
+        code = code.substring(0, exp.start);
+        return (code.match(/\n/g) || []).length + 1;
+    } catch(e) {
+        return -1;
+    }
 }
 
 function isScriptErrorMessage(msg) {
@@ -838,4 +929,4 @@ export {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
         scriptCalculateHackingChance, scriptCalculateHackingTime,
         scriptCalculateExpGain, scriptCalculatePercentMoneyHacked,
         scriptCalculateGrowTime, scriptCalculateWeakenTime, evaluate,
-        isScriptErrorMessage, killNetscriptDelay};
+        isScriptErrorMessage, killNetscriptDelay, evaluateImport};

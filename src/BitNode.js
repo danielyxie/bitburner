@@ -51,7 +51,7 @@ function initBitNodes() {
                                           "In this BitNode you can create and manage your own corporation. Running a successful corporation " +
                                           "has the potential of generating massive profits. All other forms of income are reduced by 75%. Furthermore: <br><br>" +
                                           "The price and reputation cost of all Augmentations is tripled<br>" +
-                                          "The starting and maximum amount of money on servers is halved<br>" +
+                                          "The starting and maximum amount of money on servers is reduced by 75%<br>" +
                                           "Server growth rate is reduced by 80%<br>" +
                                           "You will start out with $150b so that you can start your corporation<br>" +
                                           "You now only need 75 reputation with a faction in order to donate to it, rather than 150<br><br>" +
@@ -81,6 +81,7 @@ function initBitNodes() {
                                           "The starting money on servers is halved, but the maximum money remains the same<br>" +
                                           "Most methods of earning money now give significantly less<br>" +
                                           "Infiltration gives 50% more reputation and money<br>" +
+                                          "Corporations have 50% lower valuations and are therefore less profitable<br>" +
                                           "Augmentations are more expensive<br>" +
                                           "Hacking experience gain rates are reduced<br><br>" +
                                           "Destroying this BitNode will give you Source-File 5, or if you already have this Source-File it will " +
@@ -125,6 +126,7 @@ function initBitNodes() {
                                             "The growth rate of servers is halved<br>" +
                                             "Weakening a server is twice as effective<br>" +
                                             "Company wages are decreased by 50%<br>" +
+                                            "Corporation valuations are 99% lower and are therefore significantly less profitable<br>" +
                                             "Hacknet Node production is significantly decreased<br>" +
                                             "Crime and Infiltration are more lucrative<br>" +
                                             "Augmentations are twice as expensive<br><br>" +
@@ -137,11 +139,11 @@ function initBitNodes() {
                                             "Level 3: 42%");
 
     //Books: Frontera, Shiner
-    BitNodes["BitNode12"] = new BitNode(12, "Eye of the World", "COMING SOON");         //Become AI
+    BitNodes["BitNode12"] = new BitNode(12, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
     BitNodes["BitNode13"] = new BitNode(13, "", "COMING SOON");
     BitNodes["BitNode14"] = new BitNode(14, "", "COMING SOON");
     BitNodes["BitNode15"] = new BitNode(15, "", "COMING SOON");
-    BitNodes["BitNode16"] = new BitNode(16, "fOS", "COMING SOON");  //Unlocks the new game mode and the rest of the BitNodes
+    BitNodes["BitNode16"] = new BitNode(16, "", "COMING SOON");
     BitNodes["BitNode17"] = new BitNode(17, "", "COMING SOON");
     BitNodes["BitNode18"] = new BitNode(18, "", "COMING SOON");
     BitNodes["BitNode19"] = new BitNode(19, "", "COMING SOON");
@@ -150,14 +152,6 @@ function initBitNodes() {
     BitNodes["BitNode22"] = new BitNode(22, "", "COMING SOON");
     BitNodes["BitNode23"] = new BitNode(23, "", "COMING SOON");
     BitNodes["BitNode24"] = new BitNode(24, "", "COMING SOON");
-    BitNodes["BitNode25"] = new BitNode(25, "", "COMING SOON");
-    BitNodes["BitNode26"] = new BitNode(26, "", "COMING SOON");
-    BitNodes["BitNode27"] = new BitNode(27, "", "COMING SOON");
-    BitNodes["BitNode28"] = new BitNode(28, "", "COMING SOON");
-    BitNodes["BitNode29"] = new BitNode(29, "", "COMING SOON");
-    BitNodes["BitNode30"] = new BitNode(30, "", "COMING SOON");
-    BitNodes["BitNode31"] = new BitNode(31, "", "COMING SOON");
-    BitNodes["BitNode32"] = new BitNode(32, "", "COMING SOON");
 }
 
 let BitNodeMultipliers = {
@@ -188,6 +182,8 @@ let BitNodeMultipliers = {
 
     InfiltrationMoney:      1,
     InfiltrationRep:        1,
+
+    CorporationValuation:   1,
 }
 
 function initBitNodeMultipliers() {
@@ -215,8 +211,8 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.RepToDonateToFaction     = 0.5;
             BitNodeMultipliers.AugmentationRepCost      = 3;
             BitNodeMultipliers.AugmentationMoneyCost    = 3;
-            BitNodeMultipliers.ServerMaxMoney           = 0.50;
-            BitNodeMultipliers.ServerStartingMoney      = 0.50;
+            BitNodeMultipliers.ServerMaxMoney           = 0.25;
+            BitNodeMultipliers.ServerStartingMoney      = 0.25;
             BitNodeMultipliers.ServerGrowthRate         = 0.20;
             BitNodeMultipliers.ScriptHackMoney          = 0.25;
             BitNodeMultipliers.CompanyWorkMoney         = 0.25;
@@ -241,13 +237,14 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.ServerMaxMoney           = 2;
             BitNodeMultipliers.ServerStartingSecurity   = 2;
             BitNodeMultipliers.ServerStartingMoney      = 0.5;
-            BitNodeMultipliers.ScriptHackMoney          = 0.2;
+            BitNodeMultipliers.ScriptHackMoney          = 0.15;
             BitNodeMultipliers.HacknetNodeMoney         = 0.2;
             BitNodeMultipliers.CrimeMoney               = 0.5;
             BitNodeMultipliers.InfiltrationRep          = 1.5;
             BitNodeMultipliers.InfiltrationMoney        = 1.5;
             BitNodeMultipliers.AugmentationMoneyCost    = 2;
             BitNodeMultipliers.HackExpGain              = 0.5;
+            BitNodeMultipliers.CorporationValuation     = 0.5;
             break;
         case 8: //Ghost of Wall Street
             BitNodeMultipliers.ScriptHackMoney          = 0;
@@ -256,7 +253,8 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.CrimeMoney               = 0;
             BitNodeMultipliers.HacknetNodeMoney         = 0;
             BitNodeMultipliers.InfiltrationMoney        = 0;
-            BitNodeMultipliers.RepToDonateToFaction     = 0
+            BitNodeMultipliers.RepToDonateToFaction     = 0;
+            BitNodeMultipliers.CorporationValuation     = 0;
             break;
         case 11: //The Big Crash
             BitNodeMultipliers.ServerMaxMoney           = 0.1;
@@ -269,6 +267,7 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.AugmentationMoneyCost    = 2;
             BitNodeMultipliers.InfiltrationMoney        = 2.5;
             BitNodeMultipliers.InfiltrationRep          = 2.5;
+            BitNodeMultipliers.CorporationValuation     = 0.01;
             break;
         default:
             console.log("WARNING: Player.bitNodeN invalid");
