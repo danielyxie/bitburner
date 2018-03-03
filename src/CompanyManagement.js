@@ -1,5 +1,6 @@
 import {BitNodeMultipliers}                             from "./BitNode.js";
 import {Engine}                                         from "./engine.js";
+import {Factions}                                       from "./Faction.js";
 import {showLiterature}                                 from "./Literature.js";
 import {Locations}                                      from "./Location.js";
 import {Player}                                         from "./Player.js";
@@ -3522,21 +3523,20 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                     innerText:"You can use Corporation funds or stock shares to bribe Faction Leaders in exchange for faction reputation"
                 });
                 var factionSelector = createElement("select", {margin:"3px"});
-                for (var facName in Player.factions) {
-                    if (Player.factions.hasOwnProperty(facName)) {
-                        factionSelector.add(createElement("option"), {
-                            text:facName, value:facName
-                        });
-                    }
+                for (var i = 0; i < Player.factions.length; ++i) {
+                    var facName = Player.factions[i];
+                    factionSelector.add(createElement("option", {
+                        text:facName, value:facName
+                    }));
                 }
                 var repGainText = createElement("p");
                 var stockSharesInput;
                 var moneyInput = createElement("input", {
                     type:"number", placeholder:"Corporation funds", margin:"5px",
                     inputListener:()=>{
-                        var money = moneyInput.value == null ? 0 : moneyInput.value;
+                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
                         var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null ? 0 : Math.round(stockSharesInput.value);
+                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(parseFloat(stockSharesInput.value));
                         if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
                             repGainText.innerText = "ERROR: Invalid value(s) entered";
                         } else if (this.funds.lt(money)) {
@@ -3544,7 +3544,8 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                         } else if (this.stockShares > this.numShares) {
                             repGainText.innerText = "ERROR: You do not have this many shares to bribe with";
                         } else {
-                            var totalAmount = money + (stockShares * stockPrice);
+
+                            var totalAmount = Number(money) + (stockShares * stockPrice);
                             var repGain = totalAmount / BribeToRepRatio;
                             repGainText.innerText = "You will gain " + formatNumber(repGain, 0) +
                                                     " reputation with " +
@@ -3556,9 +3557,9 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                 stockSharesInput = createElement("input", {
                     type:"number", placeholder:"Stock Shares", margin: "5px",
                     inputListener:()=>{
-                        var money = moneyInput.value == null ? 0 : moneyInput.value;
+                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : moneyInput.value;
                         var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null ? 0 : Math.round(stockSharesInput.value);
+                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(stockSharesInput.value);
                         if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
                             repGainText.innerText = "ERROR: Invalid value(s) entered";
                         } else if (this.funds.lt(money)) {
@@ -3568,6 +3569,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                         } else {
                             var totalAmount = money + (stockShares * stockPrice);
                             var repGain = totalAmount / BribeToRepRatio;
+                            console.log("repGain: " + repGain);
                             repGainText.innerText = "You will gain " + formatNumber(repGain, 0) +
                                                     " reputation with " +
                                                     factionSelector.options[factionSelector.selectedIndex].value +
@@ -3578,9 +3580,9 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                 var confirmButton = createElement("a", {
                     class:"a-link-button", innerText:"Bribe", display:"inline-block",
                     clickListener:()=>{
-                        var money = moneyInput.value == null ? 0 : moneyInput.value;
+                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
                         var stockPrice = this.sharePrice;
-                        var stockShares = stockSharesInput.value == null ? 0 : Math.round(stockSharesInput.value);
+                        var stockShares = stockSharesInput.value == null || stockSharesInput.value == ""? 0 : Math.round(parseFloat(stockSharesInput.value));
                         var fac = Factions[factionSelector.options[factionSelector.selectedIndex].value];
                         if (fac == null) {
                             dialogBoxCreate("ERROR: You must select a faction to bribe");
@@ -3598,7 +3600,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             dialogBoxCreate("You gained " + formatNumber(repGain, 0) +
                                             " reputation with " + fac.name  + " by bribing them.");
                             fac.playerReputation += repGain;
-                            this.funds = this.funds.lt(money);
+                            this.funds = this.funds.minus(money);
                             this.numShares -= stockShares;
                             removeElementById(popupId);
                             return false;
@@ -3612,6 +3614,9 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                         return false;
                     }
                 });
+
+                createPopup(popupId, [txt, factionSelector, repGainText,
+                                      moneyInput, stockSharesInput, confirmButton, cancelButton]);
             }
         });
         companyManagementPanel.appendChild(bribeFactions);
