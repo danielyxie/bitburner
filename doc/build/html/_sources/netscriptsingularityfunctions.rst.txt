@@ -139,18 +139,48 @@ getStats
 
     Returns an object with the Player's stats. The object has the following properties::
 
-        Player.hacking
-        Player.strength
-        Player.defense
-        Player.dexterity
-        Player.agility
-        Player.charisma
-        Player.intelligence
+        {
+            hacking
+            strength
+            defense
+            dexterity
+            agility
+            charisma
+            intelligence
+        }
 
     Example::
 
         res = getStats();
         print('My charisma level is: ' + res.charisma);
+
+getCharacterInformation
+-----------------------
+
+    If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this function.
+
+    Returns an object with various information about your character. The object has the following properties::
+
+        {
+            bitnode:            Current BitNode number
+            company:            Name of company
+            jobTitle:           Name of job
+            city:               Name of city you are currently in
+            factions:           Array of factions you are currently a member of
+            tor:                Boolean indicating whether or not you have a tor router
+
+            //The following apply to when the character is performing
+            //some type of working action, such as working for a company/faction
+            timeWorked:         Timed worked in ms
+            workHackExpGain:    Hacking experience earned so far from work
+            workStrExpGain:     Str experience earned so far from work
+            workDefExpGain:     Def experience earned so far from work
+            workDexExpGain:     Dex experience earned so far from work
+            workAgiExpGain:     Agi experience earned so far from work
+            workChaExpGain:     Cha experience earned so far from work
+            workRepGain:        Reputation earned so far from work, if applicable
+            workMoneyGain:      Money earned so far from work, if applicable
+        }
 
 isBusy
 ------
@@ -270,6 +300,18 @@ getCompanyRep
     This function will return the amount of reputation you have at the specified company.
     If the company passed in as an argument is invalid, -1 will be returned.
 
+getCompanyFavor
+---------------
+
+.. js:function:: getCompanyFavor(companyName)
+
+    :param string companyName: Name of the company. CASE-SENSITIVE
+
+    If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.
+
+    This function will return the amount of favor you have at the specified company.
+    If the company passed in as an argument is invalid, -1 will be returned.
+
 checkFactionInvitations
 -----------------------
 
@@ -333,6 +375,17 @@ getFactionRep
     If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.
 
     This function returns the amount of reputation you have for the specified faction.
+
+getFactionFavor
+---------------
+
+.. js:function:: getFactionFavor(factionName)
+
+    :param string factionName: Name of faction. CASE-SENSITIVE
+
+    If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.
+
+    This function returns the amount of favor you have for the specified faction.
 
 createProgram
 -------------

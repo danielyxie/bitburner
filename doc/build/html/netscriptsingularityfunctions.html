@@ -223,13 +223,15 @@ Terminal <em>buy</em> command.</p>
 <code class="descname">getStats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getStats" title="Permalink to this definition">¶</a></dt>
 <dd><p>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this function.</p>
 <p>Returns an object with the Player's stats. The object has the following properties:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Player</span><span class="o">.</span><span class="n">hacking</span>
-<span class="n">Player</span><span class="o">.</span><span class="n">strength</span>
-<span class="n">Player</span><span class="o">.</span><span class="n">defense</span>
-<span class="n">Player</span><span class="o">.</span><span class="n">dexterity</span>
-<span class="n">Player</span><span class="o">.</span><span class="n">agility</span>
-<span class="n">Player</span><span class="o">.</span><span class="n">charisma</span>
-<span class="n">Player</span><span class="o">.</span><span class="n">intelligence</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">hacking</span>
+    <span class="n">strength</span>
+    <span class="n">defense</span>
+    <span class="n">dexterity</span>
+    <span class="n">agility</span>
+    <span class="n">charisma</span>
+    <span class="n">intelligence</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Example:</p>
@@ -239,6 +241,35 @@ Terminal <em>buy</em> command.</p>
 </div>
 </dd></dl>
 
+</div>
+<div class="section" id="getcharacterinformation">
+<h2>getCharacterInformation<a class="headerlink" href="#getcharacterinformation" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to run this function.</p>
+<p>Returns an object with various information about your character. The object has the following properties:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">bitnode</span><span class="p">:</span>            <span class="n">Current</span> <span class="n">BitNode</span> <span class="n">number</span>
+    <span class="n">company</span><span class="p">:</span>            <span class="n">Name</span> <span class="n">of</span> <span class="n">company</span>
+    <span class="n">jobTitle</span><span class="p">:</span>           <span class="n">Name</span> <span class="n">of</span> <span class="n">job</span>
+    <span class="n">city</span><span class="p">:</span>               <span class="n">Name</span> <span class="n">of</span> <span class="n">city</span> <span class="n">you</span> <span class="n">are</span> <span class="n">currently</span> <span class="ow">in</span>
+    <span class="n">factions</span><span class="p">:</span>           <span class="n">Array</span> <span class="n">of</span> <span class="n">factions</span> <span class="n">you</span> <span class="n">are</span> <span class="n">currently</span> <span class="n">a</span> <span class="n">member</span> <span class="n">of</span>
+    <span class="n">tor</span><span class="p">:</span>                <span class="n">Boolean</span> <span class="n">indicating</span> <span class="n">whether</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">you</span> <span class="n">have</span> <span class="n">a</span> <span class="n">tor</span> <span class="n">router</span>
+
+    <span class="o">//</span><span class="n">The</span> <span class="n">following</span> <span class="n">apply</span> <span class="n">to</span> <span class="n">when</span> <span class="n">the</span> <span class="n">character</span> <span class="ow">is</span> <span class="n">performing</span>
+    <span class="o">//</span><span class="n">some</span> <span class="nb">type</span> <span class="n">of</span> <span class="n">working</span> <span class="n">action</span><span class="p">,</span> <span class="n">such</span> <span class="k">as</span> <span class="n">working</span> <span class="k">for</span> <span class="n">a</span> <span class="n">company</span><span class="o">/</span><span class="n">faction</span>
+    <span class="n">timeWorked</span><span class="p">:</span>         <span class="n">Timed</span> <span class="n">worked</span> <span class="ow">in</span> <span class="n">ms</span>
+    <span class="n">workHackExpGain</span><span class="p">:</span>    <span class="n">Hacking</span> <span class="n">experience</span> <span class="n">earned</span> <span class="n">so</span> <span class="n">far</span> <span class="kn">from</span> <span class="nn">work</span>
+    <span class="n">workStrExpGain</span><span class="p">:</span>     <span class="n">Str</span> <span class="n">experience</span> <span class="n">earned</span> <span class="n">so</span> <span class="n">far</span> <span class="kn">from</span> <span class="nn">work</span>
+    <span class="n">workDefExpGain</span><span class="p">:</span>     <span class="n">Def</span> <span class="n">experience</span> <span class="n">earned</span> <span class="n">so</span> <span class="n">far</span> <span class="kn">from</span> <span class="nn">work</span>
+    <span class="n">workDexExpGain</span><span class="p">:</span>     <span class="n">Dex</span> <span class="n">experience</span> <span class="n">earned</span> <span class="n">so</span> <span class="n">far</span> <span class="kn">from</span> <span class="nn">work</span>
+    <span class="n">workAgiExpGain</span><span class="p">:</span>     <span class="n">Agi</span> <span class="n">experience</span> <span class="n">earned</span> <span class="n">so</span> <span class="n">far</span> <span class="kn">from</span> <span class="nn">work</span>
+    <span class="n">workChaExpGain</span><span class="p">:</span>     <span class="n">Cha</span> <span class="n">experience</span> <span class="n">earned</span> <span class="n">so</span> <span class="n">far</span> <span class="kn">from</span> <span class="nn">work</span>
+    <span class="n">workRepGain</span><span class="p">:</span>        <span class="n">Reputation</span> <span class="n">earned</span> <span class="n">so</span> <span class="n">far</span> <span class="kn">from</span> <span class="nn">work</span><span class="p">,</span> <span class="k">if</span> <span class="n">applicable</span>
+    <span class="n">workMoneyGain</span><span class="p">:</span>      <span class="n">Money</span> <span class="n">earned</span> <span class="n">so</span> <span class="n">far</span> <span class="kn">from</span> <span class="nn">work</span><span class="p">,</span> <span class="k">if</span> <span class="n">applicable</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
 </div>
 <div class="section" id="isbusy">
 <h2>isBusy<a class="headerlink" href="#isbusy" title="Permalink to this headline">¶</a></h2>
@@ -380,6 +411,28 @@ If the company passed in as an argument is invalid, -1 will be returned.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="getcompanyfavor">
+<h2>getCompanyFavor<a class="headerlink" href="#getcompanyfavor" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getCompanyFavor">
+<code class="descname">getCompanyFavor</code><span class="sig-paren">(</span><em>companyName</em><span class="sig-paren">)</span><a class="headerlink" href="#getCompanyFavor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>companyName</strong> (<em>string</em>) -- Name of the company. CASE-SENSITIVE</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
+<p>This function will return the amount of favor you have at the specified company.
+If the company passed in as an argument is invalid, -1 will be returned.</p>
+</dd></dl>
+
+</div>
 <div class="section" id="checkfactioninvitations">
 <h2>checkFactionInvitations<a class="headerlink" href="#checkfactioninvitations" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -471,6 +524,27 @@ reputation. One small hack to get around this is to continuously restart the act
 </table>
 <p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
 <p>This function returns the amount of reputation you have for the specified faction.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="getfactionfavor">
+<h2>getFactionFavor<a class="headerlink" href="#getfactionfavor" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getFactionFavor">
+<code class="descname">getFactionFavor</code><span class="sig-paren">(</span><em>factionName</em><span class="sig-paren">)</span><a class="headerlink" href="#getFactionFavor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>factionName</strong> (<em>string</em>) -- Name of faction. CASE-SENSITIVE</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function.</p>
+<p>This function returns the amount of favor you have for the specified faction.</p>
 </dd></dl>
 
 </div>
@@ -678,6 +752,7 @@ This script will be run with no arguments and 1 thread. It must be located on yo
 <li class="toctree-l3"><a class="reference internal" href="#purchasetor">purchaseTor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#purchaseprogram">purchaseProgram</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getstats">getStats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getcharacterinformation">getCharacterInformation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#isbusy">isBusy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#stopaction">stopAction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#upgradehomeram">upgradeHomeRam</a></li>
@@ -685,10 +760,12 @@ This script will be run with no arguments and 1 thread. It must be located on yo
 <li class="toctree-l3"><a class="reference internal" href="#workforcompany">workForCompany</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#applytocompany">applyToCompany</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getcompanyrep">getCompanyRep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getcompanyfavor">getCompanyFavor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#checkfactioninvitations">checkFactionInvitations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#joinfaction">joinFaction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#workforfaction">workForFaction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getfactionrep">getFactionRep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getfactionfavor">getFactionFavor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#createprogram">createProgram</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#commitcrime">commitCrime</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getcrimechance">getCrimeChance</a></li>

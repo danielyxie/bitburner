@@ -44,6 +44,7 @@ function prestigeAugmentation() {
     prestigeSpecialServerIps(); //Must be done before initForeignServers()
 
     //Reset home computer (only the programs) and add to AllServers
+    AddToAllServers(homeComp);
     prestigeHomeComputer(homeComp);
 
     if (augmentationExists(AugmentationNames.Neurolink) &&
@@ -56,8 +57,6 @@ function prestigeAugmentation() {
         Player.setMoney(new Decimal(1000000));
         homeComp.programs.push(Programs.BruteSSHProgram);
     }
-
-    AddToAllServers(homeComp);
 
     //Re-create foreign servers
     initForeignServers();
@@ -117,9 +116,6 @@ function prestigeAugmentation() {
         }
     }
 
-    //BitNode 3: Corporatocracy
-    if (Player.bitNodeN === 3) {Player.money = new Decimal(150e9);}
-
     //BitNode 8: Ghost of Wall Street
     if (Player.bitNodeN === 8) {Player.money = new Decimal(100e6);}
     if (Player.bitNodeN === 8 || hasWallStreetSF) {
@@ -161,7 +157,11 @@ function prestigeSourceFile() {
     prestigeSpecialServerIps();
 
     //Reset home computer (only the programs) and add to AllServers
+    AddToAllServers(homeComp);
     prestigeHomeComputer(homeComp);
+
+    //Re-create foreign servers
+    initForeignServers();
 
     var srcFile1Owned = false;
     for (var i = 0; i < Player.sourceFiles.length; ++i) {
@@ -175,11 +175,6 @@ function prestigeSourceFile() {
         homeComp.setMaxRam(8);
     }
     homeComp.cpuCores = 1;
-
-    AddToAllServers(homeComp);
-
-    //Re-create foreign servers
-    initForeignServers();
 
     //Darkweb is purchase-able
     document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button");
@@ -246,8 +241,8 @@ function prestigeSourceFile() {
     Player.gang = null;
     Player.corporation = null;
 
-
-    //BitNode 3, get Handbook .lit file
+    //BitNode 3: Corporatocracy
+    if (Player.bitNodeN === 3) {Player.money = new Decimal(150e9);}
     homeComp.messages.push("corporation-management-handbook.lit");
     dialogBoxCreate("You received a copy of the Corporation Management Handbook on your home computer. " +
                     "Read it if you need help getting started with Corporations!");
