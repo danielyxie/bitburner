@@ -1275,8 +1275,7 @@ Industry.prototype.processProducts = function(marketCycles=1, corporation) {
                                 office.employeeProd[EmployeePositions.Operations] / total +
                                 office.employeeProd[EmployeePositions.Management] / total;
                     }
-                    prod.createProduct(marketCycles, ratio * Math.pow(total, 1));
-                    //prod.createProduct(marketCycles, ratio * Math.pow(total, 0.3));
+                    prod.createProduct(marketCycles, ratio * Math.pow(total, 0.3));
                     if (prod.prog >= 100) {
                          prod.finishProduct(office.employeeProd, this);
                     }
