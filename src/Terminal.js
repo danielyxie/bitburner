@@ -860,7 +860,7 @@ let Terminal = {
             case iTutorialSteps.TerminalCreateScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
-                    Engine.loadScriptEditorContent("foodnstuff", "");
+                    Engine.loadScriptEditorContent("foodnstuff.script", "");
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
             case iTutorialSteps.TerminalFree:
