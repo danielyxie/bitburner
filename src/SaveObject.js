@@ -6,6 +6,7 @@ import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {loadFactions, Factions,
         processPassiveFactionRepGain}           from "./Faction.js";
+import {FconfSettings, loadFconf}               from "./Fconf.js";
 import {loadAllGangs, AllGangs}                 from "./Gang.js";
 import {processAllHacknetNodeEarnings}          from "./HacknetNode.js";
 import {loadMessages, initMessages, Messages}   from "./Message.js";
@@ -40,6 +41,7 @@ function BitburnerSaveObject() {
     this.MessagesSave               = "";
     this.StockMarketSave            = "";
     this.SettingsSave               = "";
+    this.FconfSettingsSave          = "";
     this.VersionSave                = "";
     this.AllGangsSave               = "";
 }
@@ -68,6 +70,7 @@ BitburnerSaveObject.prototype.saveGame = function(db) {
     this.MessagesSave               = JSON.stringify(Messages);
     this.StockMarketSave            = JSON.stringify(StockMarket);
     this.SettingsSave               = JSON.stringify(Settings);
+    this.FconfSettingsSave          = JSON.stringify(FconfSettings);
     this.VersionSave                = JSON.stringify(CONSTANTS.Version);
     if (Player.bitNodeN == 2 && Player.inGang()) {
         this.AllGangsSave           = JSON.stringify(AllGangs);
@@ -169,6 +172,13 @@ function loadGame(saveString) {
         }
     } else {
         initSettings();
+    }
+    if (saveObj.hasOwnProperty("FconfSettingsSave")) {
+        try {
+            loadFconf(saveObj.FconfSettingsSave);
+        } catch(e) {
+            console.log("ERROR: Failed to parse .fconf Settings.");
+        }
     }
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {
@@ -377,6 +387,13 @@ function loadImportedGame(saveObj, saveString) {
         }
     } else {
         initSettings();
+    }
+    if (saveObj.hasOwnProperty("FconfSettingsSave")) {
+        try {
+            loadFconf(saveObj.FconfSettingsSave);
+        } catch(e) {
+            console.log("ERROR: Failed to load .fconf settings when importing");
+        }
     }
     if (saveObj.hasOwnProperty("VersionSave")) {
         try {

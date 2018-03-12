@@ -15,6 +15,7 @@ require("brace/ext/language_tools");
 
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
+import {parseFconfSettings}                     from "./Fconf.js";
 import {iTutorialSteps, iTutorialNextStep,
         iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial.js";
 import {evaluateImport}                         from "./NetscriptEvaluator.js";
@@ -25,6 +26,7 @@ import {Player}                                 from "./Player.js";
 import {AllServers, processSingleServerGrowth}  from "./Server.js";
 import {Settings}                               from "./Settings.js";
 import {post}                                   from "./Terminal.js";
+import {TextFile}                               from "./TextFile.js";
 
 import {parse, Node}                            from "../utils/acorn.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
@@ -206,7 +208,8 @@ function scriptEditorInit() {
 
 //Updates RAM usage in script
 function updateScriptEditorContent() {
-    if (scriptEditorRamCheck == null || !scriptEditorRamCheck.checked) {
+    var filename = document.getElementById("script-editor-filename").value;
+    if (scriptEditorRamCheck == null || !scriptEditorRamCheck.checked || !filename.endsWith(".script")) {
         scriptEditorRamText.innerText = "N/A";
         return;
     }
@@ -234,13 +237,13 @@ $(document).keydown(function(e) {
 
 function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
+    var editor = ace.edit('javascript-editor');
+    var code = editor.getValue();
     if (iTutorialIsRunning && currITutorialStep == iTutorialSteps.TerminalTypeScript) {
-        if (filename != "foodnstuff") {
+        if (filename != "foodnstuff.script") {
             dialogBoxCreate("Leave the script name as 'foodnstuff'!");
             return;
         }
-        var editor = ace.edit('javascript-editor');
-        var code = editor.getValue();
         code = code.replace(/\s/g, "");
         if (code.indexOf("while(true){hack('foodnstuff');}") == -1) {
             dialogBoxCreate("Please copy and paste the code from the tutorial!");
@@ -259,28 +262,50 @@ function saveAndCloseScriptEditor() {
         return;
     }
 
-    filename += ".script";
-
-    //If the current script already exists on the server, overwrite it
-    for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
-        if (filename == Player.getCurrentServer().scripts[i].filename) {
-            Player.getCurrentServer().scripts[i].saveScript();
-            Engine.loadTerminalContent();
+    var s = Player.getCurrentServer();
+    if (filename === ".fconf") {
+        try {
+            parseFconfSettings(code);
+        } catch(e) {
+            dialogBoxCreate("Invalid .fconf file");
             return;
         }
-    }
+    } else if (filename.endsWith(".script")) {
+        //If the current script already exists on the server, overwrite it
+        for (var i = 0; i < s.scripts.length; i++) {
+            if (filename == s.scripts[i].filename) {
+                s.scripts[i].saveScript();
+                Engine.loadTerminalContent();
+                return;
+            }
+        }
 
-    //If the current script does NOT exist, create a new one
-    var script = new Script();
-    script.saveScript();
-    Player.getCurrentServer().scripts.push(script);
+        //If the current script does NOT exist, create a new one
+        var script = new Script();
+        script.saveScript();
+        s.scripts.push(script);
+    } else if (filename.endsWith(".txt")) {
+        for (var i = 0; i < s.textFiles.length; ++i) {
+            if (s.textFiles[i].fn === filename) {
+                s.textFiles[i].write(code);
+                Engine.loadTerminalContent();
+                return;
+            }
+        }
+        var textFile = new TextFile(filename, code);
+        s.textFiles.push(textFile);
+    } else {
+        dialogBoxCreate("Invalid filename. Must be either a script (.script) or " +
+                        " or text file (.txt)")
+        return;
+    }
     Engine.loadTerminalContent();
 }
 
 //Checks that the string contains only valid characters for a filename, which are alphanumeric,
-// underscores and hyphens
+// underscores, hyphens, and dots
 function checkValidFilename(filename) {
-	var regex = /^[a-zA-Z0-9_-]+$/;
+	var regex = /^[.a-zA-Z0-9_-]+$/;
 
 	if (filename.match(regex)) {
 		return true;
@@ -303,7 +328,7 @@ Script.prototype.saveScript = function() {
         var code = editor.getValue();
 		this.code = code.replace(/^\s+|\s+$/g, '');
 
-		var filename = document.getElementById("script-editor-filename").value + ".script";
+		var filename = document.getElementById("script-editor-filename").value;
 		this.filename = filename;
 
 		//Server
@@ -417,7 +442,7 @@ function calculateRamUsage(codeCopy) {
 }
 
 Script.prototype.download = function() {
-    var filename = this.filename;
+    var filename = this.filename + ".js";
     var file = new Blob([this.code], {type: 'text/plain'});
     if (window.navigator.msSaveOrOpenBlob) {// IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);
@@ -425,7 +450,7 @@ Script.prototype.download = function() {
         var a = document.createElement("a"),
                 url = URL.createObjectURL(file);
         a.href = url;
-        a.download = this.filename;
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         setTimeout(function() {
@@ -670,18 +695,6 @@ function AllServersMap(arr=false, filterOwned=false) {
                 this[ip] = [0, 0, 0, 0];
             } else {
                 this[ip] = 0;
-            }
-        }
-    }
-}
-
-AllServersMap.prototype.printConsole = function() {
-    for (var ip in this) {
-        if (this.hasOwnProperty(ip)) {
-            var serv = AllServers[ip];
-            if (serv == null) {
-                console.log("Warning null server encountered with ip: " + ip);
-                continue;
             }
         }
     }

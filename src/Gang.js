@@ -1,7 +1,6 @@
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {Faction, Factions}                      from "./Faction.js";
-import {Locations}                              from "./Location.js";
 import {Player}                                 from "./Player.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {Reviver, Generic_toJSON,
@@ -53,8 +52,6 @@ $(document).mousedown(function(event) {
 
 let GangNames = ["Slum Snakes", "Tetrads", "The Syndicate", "The Dark Army", "Speakers for the Dead",
              "NiteSec", "The Black Hand"];
-let GangLocations = [Locations.Aevum, Locations.Chongqing, Locations.Sector12, Locations.NewTokyo,
-                     Locations.Ishima, Locations.Volhaven];
 let AllGangs = {
     "Slum Snakes" : {
         power: 1,
@@ -1406,5 +1403,35 @@ function setGangMemberTaskDescription(memberObj, taskName) {
     }
 }
 
+function deleteGangDisplayContent() {
+    if (gangContainer != null) {removeElementById(gangContainer.id);}
+
+    gangContentCreated = false;
+    gangContainer = null;
+    managementButton = null;
+    territoryButton = null;
+
+    //Subpages
+    gangManagementSubpage = null;
+    gangTerritorySubpage = null;
+
+    //Gang Management Elements
+    gangDesc = null;
+    gangInfo = null;
+    gangRecruitMemberButton = null;
+    gangRecruitRequirementText = null;
+    gangExpandAllButton = null;
+    gangCollapseAllButton = null;
+    gangMemberFilter = null;
+    gangManageEquipmentButton = null;
+    gangMemberList = null;
+
+    //Gang Equipment Upgrade Elements
+    gangMemberUpgradeBox = null;
+    gangMemberUpgradeBoxContent = null;
+    gangMemberUpgradeBoxFilter = null;
+    gangMemberUpgradeBoxElements = null;
+}
+
 export {Gang, displayGangContent, updateGangContent, loadAllGangs, AllGangs,
-        resetGangs};
+        resetGangs, deleteGangDisplayContent};

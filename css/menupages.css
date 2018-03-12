@@ -481,10 +481,6 @@ div.faction-clear {
     width: 95%;
 }
 
-.installed-augmentation {
-    /* TODO */
-}
-
 /* Tutorial */
 #tutorial-container {
     position: fixed;

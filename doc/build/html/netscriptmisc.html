@@ -24,6 +24,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Keyboard Shortcuts" href="shortcuts.html" />
     <link rel="prev" title="Netscript Singularity Functions" href="netscriptsingularityfunctions.html" /> 
   </head>
   <body>
@@ -34,6 +35,8 @@
         <div class="rel" role="navigation" aria-label="related navigation">
           <a href="netscriptsingularityfunctions.html" title="Netscript Singularity Functions"
              accesskey="P">previous</a> |
+          <a href="shortcuts.html" title="Keyboard Shortcuts"
+             accesskey="N">next</a> |
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a>
         </div>
@@ -218,6 +221,66 @@ Comments are not evaluated as code, and can be used to document and/or explain c
 </pre></div>
 </div>
 </div>
+<div class="section" id="importing-functions">
+<h2>Importing Functions<a class="headerlink" href="#importing-functions" title="Permalink to this headline">¶</a></h2>
+<p>In Netscript you can import functions that are declared in other scripts.
+The script will incur the RAM usage of all imported functions.
+There are two ways of doing this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="o">*</span> <span class="k">as</span> <span class="n">namespace</span> <span class="kn">from</span> <span class="s2">&quot;script filename&quot;</span><span class="p">;</span> <span class="o">//</span><span class="n">Import</span> <span class="nb">all</span> <span class="n">functions</span> <span class="kn">from</span> <span class="nn">script</span>
+<span class="k">import</span> <span class="p">{</span><span class="n">fn1</span><span class="p">,</span> <span class="n">fn2</span><span class="p">,</span> <span class="o">...</span><span class="p">}</span> <span class="kn">from</span> <span class="s2">&quot;script filename&quot;</span><span class="p">;</span> <span class="o">//</span><span class="n">Import</span> <span class="n">specific</span> <span class="n">functions</span> <span class="kn">from</span> <span class="nn">script</span>
+</pre></div>
+</div>
+<p>Suppose you have a library script called <em>testlibrary.script</em>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">foo1</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">function</span> <span class="n">definition</span><span class="o">...</span>
+<span class="p">}</span>
+
+<span class="n">function</span> <span class="n">foo2</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">function</span> <span class="n">definition</span><span class="o">...</span>
+<span class="p">}</span>
+
+<span class="n">function</span> <span class="n">foo3</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">function</span> <span class="n">definition</span><span class="o">...</span>
+<span class="p">}</span>
+
+<span class="n">function</span> <span class="n">foo4</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">function</span> <span class="n">definition</span><span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then, if you wanted to use these functions in another script, you can import them like so:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="o">*</span> <span class="k">as</span> <span class="n">testlib</span> <span class="kn">from</span> <span class="s2">&quot;testlibrary.script&quot;</span><span class="p">;</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+
+<span class="o">//</span><span class="n">The</span> <span class="n">imported</span> <span class="n">functions</span> <span class="n">must</span> <span class="n">be</span> <span class="n">specified</span> <span class="n">using</span> <span class="n">the</span> <span class="n">namespace</span>
+<span class="n">someVal1</span> <span class="o">=</span> <span class="n">testlib</span><span class="o">.</span><span class="n">foo3</span><span class="p">(</span><span class="n">values</span><span class="p">);</span>
+<span class="n">someVal2</span> <span class="o">=</span> <span class="n">testlib</span><span class="o">.</span><span class="n">foo1</span><span class="p">(</span><span class="n">values</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">someVal1</span> <span class="o">&gt;</span> <span class="n">someVal2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">//...</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="o">//...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you only wanted to import certain functions, you can do so without needing
+to specify a namespace for the import:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>import {foo1, foo3} from &quot;testlibrary.script&quot;; //Saves RAM since not all functions are imported!
+
+values = [1,2,3];
+
+//No namespace needed
+someVal1 = foo3(values);
+someVal2 = foo1(values);
+if (someVal1 &gt; someVal2) {
+    //...
+} else {
+    //...
+}
+</pre></div>
+</div>
+<p>Note that exporting functions is not required.</p>
+</div>
 <div class="section" id="javascript-math-module">
 <h2>Javascript Math Module<a class="headerlink" href="#javascript-math-module" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math">Javascript Math Module</a> is
@@ -274,6 +337,7 @@ However, since the 'new' operator does not work in Netscript, only the Date modu
 <li class="toctree-l2 current"><a class="current reference internal" href="#"> Miscellaneous</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#netscript-ports">Netscript Ports</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#comments">Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#importing-functions">Importing Functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#javascript-math-module">Javascript Math Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#javascript-date-module">Javascript Date Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#javascript-number-module">Javascript Number Module</a></li>
@@ -281,6 +345,7 @@ However, since the 'new' operator does not work in Netscript, only the Date modu
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="shortcuts.html"> Keyboard Shortcuts</a></li>
 </ul>
 
           <div role="search">
@@ -303,6 +368,8 @@ However, since the 'new' operator does not work in Netscript, only the Date modu
           <div role="navigation" aria-label="related navigaton">
             <a href="netscriptsingularityfunctions.html" title="Netscript Singularity Functions"
               >previous</a> |
+            <a href="shortcuts.html" title="Keyboard Shortcuts"
+              >next</a> |
             <a href="genindex.html" title="General Index"
               >index</a>
           </div>

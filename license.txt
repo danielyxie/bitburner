@@ -39,7 +39,7 @@ routines, to develop your own software, but may not duplicate the Source Code. T
 right referenced in the preceding sentence is hereinafter referred to as "Educational Use." By so exercising the Educational
 Use right you shall not obtain any ownership, copyright, proprietary or other interest in or to the Source Code, or any portion
 of the Source Code. You may dispose of your own software in your sole discretion. When exercising the Educational Use right,
-you may not use or exploit the Software, or an portion of the Software, which includes the Source Code, for commercial gain.
+you may not use or exploit the Software, or any portion of the Software, which includes the Source Code, for commercial gain.
 
 3. Prohibited Uses: Under no circumstances shall you, the end-user, be permitted, allowed or authorized to commercially
 exploit the Software or any work that in whole or in part contains or is derived from the Software or any part thereof.

@@ -7,12 +7,14 @@ import {Programs}                               from "./CreateProgram.js";
 import {Engine}                                 from "./engine.js";
 import {Factions, Faction, initFactions,
         joinFaction}                            from "./Faction.js";
+import {deleteGangDisplayContent}               from "./Gang.js";
 import {Locations}                              from "./Location.js";
 import {initMessages, Messages, Message}        from "./Message.js";
 import {initSingularitySFFlags, hasWallStreetSF}from "./NetscriptFunctions.js";
 import {WorkerScript, workerScripts,
         prestigeWorkerScripts}                  from "./NetscriptWorker.js";
 import {Player}                                 from "./Player.js";
+
 import {AllServers, AddToAllServers,
         initForeignServers, Server,
         prestigeAllServers,
@@ -239,13 +241,16 @@ function prestigeSourceFile() {
     }
 
     Player.gang = null;
+    deleteGangDisplayContent();
     Player.corporation = null;
 
     //BitNode 3: Corporatocracy
-    if (Player.bitNodeN === 3) {Player.money = new Decimal(150e9);}
-    homeComp.messages.push("corporation-management-handbook.lit");
-    dialogBoxCreate("You received a copy of the Corporation Management Handbook on your home computer. " +
-                    "Read it if you need help getting started with Corporations!");
+    if (Player.bitNodeN === 3) {
+        Player.money = new Decimal(150e9);
+        homeComp.messages.push("corporation-management-handbook.lit");
+        dialogBoxCreate("You received a copy of the Corporation Management Handbook on your home computer. " +
+                        "Read it if you need help getting started with Corporations!");
+    }
 
     //Gain int exp
     Player.gainIntelligenceExp(5);
