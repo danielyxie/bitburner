@@ -10,7 +10,8 @@ var FconfComments = {
                          "a real Bash-style shell. Note that when this mode is enabled,\n"  +
                          "the default browser shortcuts are overriden by the new Bash\n" +
                          "shortcuts.\n\n" +
-                         "To see a full list of the Terminal shortcuts that this enables, see:\n",
+                         "To see a full list of the Terminal shortcuts that this enables, see:\n" +
+                         "http://bitburner.readthedocs.io/en/latest/shortcuts.html",
 }
 
 //Parse Fconf settings from the config text
