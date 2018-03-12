@@ -142,6 +142,68 @@ Comments are not evaluated as code, and can be used to document and/or explain c
      * comment */
     print("This code will actually get executed");
 
+Importing Functions
+-------------------
+
+In Netscript you can import functions that are declared in other scripts.
+The script will incur the RAM usage of all imported functions.
+There are two ways of doing this::
+
+    import * as namespace from "script filename"; //Import all functions from script
+    import {fn1, fn2, ...} from "script filename"; //Import specific functions from script
+
+Suppose you have a library script called *testlibrary.script*::
+
+    function foo1(args) {
+        //function definition...
+    }
+
+    function foo2(args) {
+        //function definition...
+    }
+
+    function foo3(args) {
+        //function definition...
+    }
+
+    function foo4(args) {
+        //function definition...
+    }
+
+Then, if you wanted to use these functions in another script, you can import them like so::
+
+    import * as testlib from "testlibrary.script";
+
+    values = [1,2,3];
+
+    //The imported functions must be specified using the namespace
+    someVal1 = testlib.foo3(values);
+    someVal2 = testlib.foo1(values);
+    if (someVal1 > someVal2) {
+        //...
+    } else {
+        //...
+    }
+
+If you only wanted to import certain functions, you can do so without needing
+to specify a namespace for the import::
+
+    import {foo1, foo3} from "testlibrary.script"; //Saves RAM since not all functions are imported!
+
+    values = [1,2,3];
+
+    //No namespace needed
+    someVal1 = foo3(values);
+    someVal2 = foo1(values);
+    if (someVal1 > someVal2) {
+        //...
+    } else {
+        //...
+    }
+
+Note that exporting functions is not required. 
+
+
 Javascript Math Module
 ----------------------
 

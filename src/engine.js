@@ -23,6 +23,7 @@ import {Programs, displayCreateProgramContent,
 import {displayFactionContent, joinFaction,
         processPassiveFactionRepGain, Factions,
         inviteToFaction, initFactions}          from "./Faction.js";
+import {FconfSettings}                          from "./Fconf.js";
 import {Locations, displayLocationContent,
         initLocationButtons}                    from "./Location.js";
 import {displayGangContent, updateGangContent,
@@ -54,8 +55,6 @@ import {StockMarket, StockSymbols,
         updateStockPrices,
         displayStockMarketContent}              from "./StockMarket.js";
 import {Terminal, postNetburnerText, post}      from "./Terminal.js";
-
-
 
 /* Shortcuts to navigate through the game
  *  Alt-t - Terminal
@@ -102,6 +101,10 @@ $(document).keydown(function(e) {
             e.preventDefault();
             Engine.loadCreateProgramContent();
         } else if (e.keyCode == 70 && e.altKey) {
+            //Overriden by Fconf
+            if (Engine.currentPage === Engine.Page.Terminal && FconfSettings.ENABLE_BASH_HOTKEYS) {
+                return;
+            }
             e.preventDefault();
             Engine.loadFactionsContent();
         } else if (e.keyCode == 65 && e.altKey) {
@@ -715,47 +718,81 @@ let Engine = {
     },
 
     displayAugmentationsContent: function() {
-        //Purchased/queued augmentations
-        var queuedAugmentationsList = document.getElementById("queued-augmentations-list");
+        removeChildrenFromElement(Engine.Display.augmentationsContent);
+        Engine.Display.augmentationsContent.appendChild(createElement("h1", {
+            innerText:"Purchased Augmentations"
+        }));
 
-        while (queuedAugmentationsList.firstChild) {
-            queuedAugmentationsList.removeChild(queuedAugmentationsList.firstChild);
-        }
+        Engine.Display.augmentationsContent.appendChild(createElement("pre", {
+            width:"70%", whiteSpace:"pre-wrap", display:"block",
+            innerText:"Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them.\n" +
+                      "WARNING: Installing your Augmentations resets most of your progress, including:\n\n" +
+                      "Stats/Skill levels and Experience\n" +
+                      "Money\n" +
+                      "Scripts on every computer but your home computer\n" +
+                      "Purchased servers\n" +
+                      "Hacknet Nodes\n" +
+                      "Faction/Company reputation\n" +
+                      "Stocks\n\n" +
+                      "Installing Augmentations lets you start over with the perks and benefits granted by all " +
+                      "of the Augmentations you have ever installed. Also, you will keep any scripts and RAM/Core upgrades " +
+                      "on your home computer (but you will lose all programs besides NUKE.exe)."
+        }));
+
+        //Purchased/queued augmentations
+        var queuedAugmentationsList = createElement("ul", {
+            id:"queued-augmentations-list"
+        });
 
         for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
             var augName = Player.queuedAugmentations[i].name;
             var aug = Augmentations[augName];
 
-            var item = document.createElement("li");
-            var hElem = document.createElement("h2");
-            var pElem = document.createElement("p");
-
-            item.setAttribute("class", "installed-augmentation");
-            hElem.innerHTML = augName;
-            if (augName == AugmentationNames.NeuroFluxGovernor) {
-                hElem.innerHTML += " - Level " + (Player.queuedAugmentations[i].level);
+            var item = createElement("li", {class:"installed-augmentation"});
+            var displayName = augName;
+            if (augName === AugmentationNames.NeuroFluxGovernor) {
+                displayName += " - Level " + (Player.queuedAugmentations[i].level);
             }
-            pElem.innerHTML = aug.info;
-
-            item.appendChild(hElem);
-            item.appendChild(pElem);
+            item.appendChild(createElement("h2", {innerHTML:displayName}));
+            item.appendChild(createElement("p", {innerHTML:aug.info}));
 
             queuedAugmentationsList.appendChild(item);
         }
+        Engine.Display.augmentationsContent.appendChild(queuedAugmentationsList);
 
         //Install Augmentations button
-        var installButton = clearEventListeners("install-augmentations-button");
-        installButton.addEventListener("click", function() {
-            installAugmentations();
-            return false;
+        Engine.Display.augmentationsContent.appendChild(createElement("a", {
+            class:"a-link-button", innerText:"Install Augmentations",
+            tooltip:"'I never asked for this'",
+            clickListener:()=>{
+                installAugmentations();
+                return false;
+            }
+        }));
+
+        //Backup button
+        Engine.Display.augmentationsContent.appendChild(createElement("a", {
+            class:"a-link-button flashing-button", innerText:"Backup Save (Export)",
+            tooltip:"It's always a good idea to backup/export your save!",
+            clickListener:()=>{
+                saveObject.exportGame();
+                return false;
+            }
+        }));
+
+        //Installed augmentations list
+        Engine.Display.augmentationsContent.appendChild(createElement("h1", {
+            innerText:"Installed Augmentations"
+        }));
+        Engine.Display.augmentationsContent.appendChild(createElement("p", {
+            width:"70%", whiteSpace:"pre-wrap",
+            innerText:"List of all Augmentations (including Source Files) that have been " +
+                      "installed. You have gained the effects of these Augmentations"
+        }));
+
+        var augmentationsList = createElement("ul", {
+            id:"augmentations-list"
         });
-
-        //Installed augmentations
-        var augmentationsList = document.getElementById("augmentations-list");
-
-        while (augmentationsList.firstChild) {
-            augmentationsList.removeChild(augmentationsList.firstChild);
-        }
 
         //Source Files - Temporary...Will probably put in a separate pane Later
         for (var i = 0; i < Player.sourceFiles.length; ++i) {
@@ -765,17 +802,13 @@ let Engine = {
                 console.log("ERROR: Invalid source file number: " + Player.sourceFiles[i].n);
                 continue;
             }
-            var item = document.createElement("li");
-            var hElem = document.createElement("h2");
-            var pElem = document.createElement("p");
-
-            item.setAttribute("class", "installed-augmentation");
-            hElem.innerHTML = sourceFileObject.name + "<br>";
-            hElem.innerHTML += "Level " + (Player.sourceFiles[i].lvl) + " / 3";
-            pElem.innerHTML = sourceFileObject.info;
-
-            item.appendChild(hElem);
-            item.appendChild(pElem);
+            var item = createElement("li", {class:"installed-augmentation", });
+            item.appendChild(createElement("h2", {
+                innerHTML:sourceFileObject.name + "<br>" + "Level " + (Player.sourceFiles[i].lvl) + " / 3",
+            }));
+            item.appendChild(createElement("p", {
+                innerHTML:sourceFileObject.info,
+            }));
 
             augmentationsList.appendChild(item);
         }
@@ -784,22 +817,17 @@ let Engine = {
             var augName = Player.augmentations[i].name;
             var aug = Augmentations[augName];
 
-            var item = document.createElement("li");
-            var hElem = document.createElement("h2");
-            var pElem = document.createElement("p");
-
-            item.setAttribute("class", "installed-augmentation");
-            hElem.innerHTML = augName;
-            if (augName == AugmentationNames.NeuroFluxGovernor) {
-                hElem.innerHTML += " - Level " + (Player.augmentations[i].level);
+            var item = createElement("li", {class:"installed-augmentation"});
+            var displayName = augName;
+            if (augName === AugmentationNames.NeuroFluxGovernor) {
+                displayName += " - Level " + (Player.augmentations[i].level);
             }
-            pElem.innerHTML = aug.info;
-
-            item.appendChild(hElem);
-            item.appendChild(pElem);
+            item.appendChild(createElement("h2", {innerHTML:displayName}));
+            item.appendChild(createElement("p", {innerHTML:aug.info}));
 
             augmentationsList.appendChild(item);
         }
+        Engine.Display.augmentationsContent.appendChild(augmentationsList);
     },
 
     displayTutorialContent: function() {
@@ -904,7 +932,9 @@ let Engine = {
 
         //Corporation
         if (Player.corporation instanceof Corporation) {
-            Player.corporation.process(numCycles);
+            //Stores cycles in a "buffer". Processed separately using Engine Counters
+            //This is to avoid constant DOM redraws when Corporation is catching up
+            Player.corporation.storeCycles(numCycles);
         }
 
         //Counters
@@ -937,6 +967,7 @@ let Engine = {
         messages: 150,
         stockTick:  30,                     //Update stock prices
         sCr: 1500,
+        corpProcess: 5,
     },
 
     decrementAllCounters: function(numCycles = 1) {
@@ -1058,6 +1089,13 @@ let Engine = {
                 stockMarketCycle();
             }
             Engine.Counters.sCr = 1500;
+        }
+
+        if (Engine.Counters.corpProcess <= 0) {
+            if (Player.corporation instanceof Corporation) {
+                Player.corporation.process();
+            }
+            Engine.Counters.corpProcess = 5;
         }
     },
 

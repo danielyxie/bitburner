@@ -253,6 +253,27 @@ a:link, a:visited {
     visibility: visible;
 }
 
+/* help tip. Question mark that opens popup with info/details */
+.help-tip {
+    content:'?';
+    padding:1px;
+    margin-left:3px;
+    color:#fff;
+    border:1px solid white;
+    border-radius:5px;
+    display:inline-block;
+}
+
+.help-tip:hover {
+    background-color: #888;
+}
+
+.help-tip:active {
+    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+	-moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
 /* Flashing button (Red) */
 @-webkit-keyframes glowing {
     0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }

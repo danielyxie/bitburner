@@ -9,7 +9,7 @@ let TerminalHelpText =
                 "clear                          Clear all text on the terminal <br>" +
                 "cls                            See 'clear' command <br>" +
                 "connect [ip/hostname]          Connects to a remote server<br>" +
-                "download [script/text file]    Downloads a script or text file to your computer<br>" +
+                "download [script/text file]    Downloads scripts or text files to your computer<br>" +
                 "free                           Check the machine's memory (RAM) usage<br>" +
                 "hack                           Hack the current machine<br>" +
                 "help [command]                 Display this help text, or the help text for a command<br>" +
@@ -21,7 +21,7 @@ let TerminalHelpText =
                 "ls [| grep pattern]            Displays all files on the machine<br>" +
                 "lscpu                          Displays the number of CPU cores on the machine<br>" +
                 "mem [script] [-t] [n]          Displays the amount of RAM required to run the script<br>" +
-                "nano [script]                  Script editor - Open up and edit a script<br>" +
+                "nano [file]                    Text editor - Open up and edit a script or text file<br>" +
                 "ps                             Display all scripts that are currently running<br>" +
                 "rm [file]                      Delete a file from the server<br>" +
                 "run [name] [-t] [n] [args...]  Execute a program or script<br>" +
@@ -87,7 +87,11 @@ let HelpTexts = {
                     "to this command. Note that only servers that are immediately adjacent to the current server in the network can be connected to. To " +
                     "see which servers can be connected to, use the 'scan' command.",
     download:       "download [script/text file]<br>" +
-                    "Downloads a script or text file to your computer (like your real life computer).",
+                    "Downloads a script or text file to your computer (like your real life computer).<br>" +
+                    "You can also download all of your scripts/text files as a zip file using the following Terminal commands:<br><br>" +
+                    "Download all scripts and text files: download *<br>" +
+                    "Download all scripts: download *.script<br>" +
+                    "Download all text files: download *.txt<br>",
     free:           "free<br>" +
                     "Display's the memory usage on the current machine. Print the amount of RAM that is available on the current server as well as " +
                     "how much of it is being used.",
@@ -137,8 +141,9 @@ let HelpTexts = {
                     "mem foo.script -t 50<br>" +
                     "The first example above will print the amount of RAM needed to run 'foo.script' with a single thread. The second example " +
                     "above will print the amount of RAM needed to run 'foo.script' with 50 threads.",
-    nano:           "nano [script name]<br>" +
-                    "Opens up the specified script in the Script Editor. If the script does not already exist, then a new, empty script " +
+    nano:           "nano [file name]<br>" +
+                    "Opens up the specified file in the Text Editor. Only scripts (.script) or text files (.txt) can be " +
+                    "edited using the Text Editor. If the file does not already exist, then a new, empty one " +
                     "will be created",
     ps:             "ps<br>" +
                     "Prints all scripts that are running on the current server",

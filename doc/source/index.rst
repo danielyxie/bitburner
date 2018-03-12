@@ -20,7 +20,7 @@ secrets that you've been searching for.
    :caption: Contents:
 
     Netscript <netscript>
-
+    Keyboard Shortcuts <shortcuts>
 
 
 Indices and tables

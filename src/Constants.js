@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.35.0",
+    Version:                "0.35.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -1138,39 +1138,28 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.35.0<br>" +
-    "-Minor rebalancing of BitNodes due to the fact that Corporations provide a (relatively) new method of " +
-    "progressing<br>" +
-    "-Corporation Management Changes:<br>" +
-    "---Once your Corporation gets big/powerful enough, you can now bribe Factions for reputation using company funds an/or stock shares<br>" +
-    "---You can now only create one Division for every Industry type<br>" +
-    "---Added several new UI/UX elements<br>" +
-    "---Wilson Analytics multiplier was significantly reduced to 1% per level (additive).<br>" +
-    "---Reduced the effect of Advert Inc upgrade. Advert Inc. upgrade price increases faster<br>" +
-    "---Materials can now be marked up at higher prices<br>"  +
-    "-Added Javascript's built-in Number object to Netscript<br>" +
-    "-Added getCharacterInformation(), getCompanyFavor(), and getFactionFavor() Netscript Singularity functions<br>" +
-    "-Rebalanced Singularity Function RAM Costs. They now cost x8 as much when outside of BN-4 (rather than x10). Also, " +
-    "many of the functions now use significantly less RAM<br>" +
-    "-Refactored Netscript Ports. You can now get a handle for a Netscript port using the " +
-    "getPortHandle() Netscript function. This allows you to access a port's underlying queue (which is just an array) and also "  +
-    "makes several new functions available such as tryWrite(), full(), and empty().<br>" +
-    "-Number of Netscript Ports increased from 10 to 20<br>"  +
-    "-Netscript assignments should now return proper values. i.e. i = 5 should return 5.<br>" +
-    "-Added throw statements to Netscript. It's not super useful since 'catch' isn't implemented, but it can be used "  +
-    "to generate custom runtime error messages.<br>" +
-    "-Added import declaration to Netscript. With this, you are able to import functions (and only functions) from " +
-    "other files. Using export declarations is not necessary<br>" +
-    "-Most Netscript Runtime errors (the ones that cause your script to crash) should now include the line number where the error occured<br>" +
-    "-When working for a company, your current company reputation is now displayed<br>" +
-    "-Whenever you get a Faction Invite it will be immediately appended to your 'invited factions' list. " +
-    "Therefore the checkFactionInvitations() Singularity Function should now be properly useable since you no longer " +
-    "need to decline a Faction Invitation before it shows up in the result.<br>" +
-    "-Bug Fix: When purchasing servers, whitespace should now automatically be removed from the hostname<br>" +
-    "-Bug Fix: Can no longer have whitespace in the filename of text files created using write()<br>"  +
-    "-Bug Fix: In Netscript, you can no longer assign a Hacknet Node handle (hacknetnodes[i]) to another value <br>" +
-    "-Bug Fix: If you are in the Factions tab when you accept an invitation from a Faction, the page will now properly 'refresh'<br>" +
-    "-Bug Fix: Scripts that run recursive functions should now be killed properly<br>"
+    "v0.35.1<br>" +
+    "* You can now easily download all of your scripts/text files as zip folders. Use the 'help download' Terminal command for details<br>" +
+    "* Scripts are now downloaded with the .script.js extension at the end of their filename<br>" +
+    "* Corporation Management Changes:<br>" +
+    "*** Implemented Smart Supply unlock<br>" +
+    "*** Changed the way a division's Production Multiplier is calculated. It is now the sum of the individual Production Multiplier " +
+    "for every city. Therefore, it is now beneficial to open offices in different cities<br." +
+    "*** The breakdown of what is taking up Warehouse space is now listed as a tooltip<br>" +
+    "*** Several small UI/UX improvements<br>" +
+    "*** Numerous balance changes. The significant ones are listed below.<br>" +
+    "*** Product descriptions will now display their estimated market price<br>" +
+    "*** The sale price of Products can no longer be marked up as high as before<br>" +
+    "*** Scientific Research now affects the rating of Products<br>" +
+    "*** In general, the maximum amount of product you are able to sell is reduced<br>" +
+    "*** Sale bonus from advertising (popularity/awareness) now has diminishing returns rather than scaling linearly<br>" +
+    "* Experience gained during Infiltration now scales linearly based on the clearance level you reach. Compared to before, " +
+    "the experience gained will be much less at lower clearance levels, but much more at higher clearance levels<br>" +
+    "* The editor can now be used to edit both scripts and text files<br>" +
+    "* New Terminal config file that can be edited using the command 'nano .fconf'. Right now there is only one option, but there " +
+    "will be more in the future.<br>" +
+    "* You can now enable Bash-style Terminal hotkeys using the .fconf file referenced above<br>" +
+    "* Bug Fix: Fixed an issue with the UI elements of Gang Management persisting across different instances of BitNode-2"
 }
 
 export {CONSTANTS};

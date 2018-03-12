@@ -83,6 +83,7 @@ function createElement(type, params={}) {
     if (params.border)      {el.style.border = params.border;}
     if (params.float)       {el.style.cssFloat = params.float;}
     if (params.fontSize)    {el.style.fontSize = params.fontSize;}
+    if (params.whiteSpace)  {el.style.whiteSpace = params.whiteSpace;}
     if (params.width)       {el.style.width = params.width;}
     if (params.backgroundColor) {
         el.style.backgroundColor = params.backgroundColor

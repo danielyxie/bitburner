@@ -7,6 +7,8 @@ import {Programs}                           from "./CreateProgram.js";
 import {executeDarkwebTerminalCommand,
         checkIfConnectedToDarkweb}          from "./DarkWeb.js";
 import {Engine}                             from "./engine.js";
+import {FconfSettings, parseFconfSettings,
+        createFconf}                        from "./Fconf.js";
 import {TerminalHelpText, HelpTexts}        from "./HelpText.js";
 import {iTutorialNextStep, iTutorialSteps,
         iTutorialIsRunning,
@@ -37,6 +39,9 @@ import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox.js";
 
+import * as JSZip from 'jszip';
+import * as FileSaver from 'file-saver';
+
 /* Write text to terminal */
 //If replace is true then spaces are replaced with "&nbsp;"
 function post(input) {
@@ -65,6 +70,30 @@ function postNetburnerText() {
 	post("Bitburner v" + CONSTANTS.Version);
 }
 
+
+//Key Codes
+let KEY = {
+    TAB:            9,
+    ENTER:          13,
+    CTRL:           17,
+    UPARROW:        38,
+    DOWNARROW:      40,
+    A:              65,
+    B:              66,
+    C:              67,
+    D:              68,
+    E:              69,
+    F:              70,
+    H:              72,
+    K:              75,
+    L:              76,
+    M:              77,
+    N:              78,
+    P:              80,
+    U:              85,
+    W:              87,
+}
+
 //Defines key commands in terminal
 $(document).keydown(function(event) {
 	//Terminal
@@ -72,8 +101,7 @@ $(document).keydown(function(event) {
         var terminalInput = document.getElementById("terminal-input-text-box");
         if (terminalInput != null && !event.ctrlKey && !event.shiftKey) {terminalInput.focus();}
 
-		//Enter
-		if (event.keyCode == 13) {
+		if (event.keyCode === KEY.ENTER) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
 			if (command.length > 0) {
@@ -84,15 +112,30 @@ $(document).keydown(function(event) {
 			}
 		}
 
-		//Ctrl + c when an "Action" is in progress
-		if (event.keyCode == 67 && event.ctrlKey && Engine._actionInProgress) {
-			post("Cancelling...");
-			Engine._actionInProgress = false;
-			Terminal.finishAction(true);
+		if (event.keyCode === KEY.C && event.ctrlKey) {
+            if (Engine._actionInProgress) {
+                //Cancel action
+                post("Cancelling...");
+    			Engine._actionInProgress = false;
+    			Terminal.finishAction(true);
+            } else if (FconfSettings.ENABLE_BASH_HOTKEYS) {
+                //Dont prevent default so it still copies
+                Terminal.resetTerminalInput();  //Clear Terminal
+            }
 		}
 
-        //Up key to cycle through past commands
-        if (event.keyCode == 38) {
+        if (event.keyCode === KEY.L && event.ctrlKey) {
+            event.preventDefault();
+            Terminal.executeCommand("clear"); //Clear screen
+        }
+
+        //Ctrl p same as up arrow
+        //Ctrl n same as down arrow
+
+        if (event.keyCode === KEY.UPARROW ||
+            (FconfSettings.ENABLE_BASH_HOTKEYS && event.keyCode === KEY.P && event.ctrlKey)) {
+            if (FconfSettings.ENABLE_BASH_HOTKEYS) {event.preventDefault();}
+            //Cycle through past commands
             if (terminalInput == null) {return;}
             var i = Terminal.commandHistoryIndex;
             var len = Terminal.commandHistory.length;
@@ -110,8 +153,10 @@ $(document).keydown(function(event) {
             setTimeout(function(){terminalInput.selectionStart = terminalInput.selectionEnd = 10000; }, 0);
         }
 
-        //Down key
-        if (event.keyCode == 40) {
+        if (event.keyCode === KEY.DOWNARROW ||
+            (FconfSettings.ENABLE_BASH_HOTKEYS && event.keyCode === KEY.M && event.ctrlKey)) {
+            if (FconfSettings.ENABLE_BASH_HOTKEYS) {event.preventDefault();}
+            //Cycle through past commands
             if (terminalInput == null) {return;}
             var i = Terminal.commandHistoryIndex;
             var len = Terminal.commandHistory.length;
@@ -132,8 +177,8 @@ $(document).keydown(function(event) {
             }
         }
 
-        //Tab (autocomplete)
-        if (event.keyCode == 9) {
+        if (event.keyCode === KEY.TAB) {
+            //Autocomplete
             if (terminalInput == null) {return;}
             var input = terminalInput.value;
             if (input == "") {return;}
@@ -162,6 +207,52 @@ $(document).keydown(function(event) {
             }
 
             tabCompletion(command, arg, allPos);
+        }
+
+        //Extra Bash Emulation Hotkeys, must be enabled through .fconf
+        if (FconfSettings.ENABLE_BASH_HOTKEYS) {
+            if (event.keyCode === KEY.A && event.ctrlKey) {
+                event.preventDefault();
+                Terminal.moveTextCursor("home");
+            }
+
+            if (event.keyCode === KEY.E && event.ctrlKey) {
+                event.preventDefault();
+                Terminal.moveTextCursor("end");
+            }
+
+            if (event.keyCode === KEY.B && event.ctrlKey) {
+                event.preventDefault();
+                Terminal.moveTextCursor("prevchar");
+            }
+
+            if (event.keyCode === KEY.B && event.altKey) {
+                event.preventDefault();
+                Terminal.moveTextCursor("prevword");
+            }
+
+            if (event.keyCode === KEY.F && event.ctrlKey) {
+                event.preventDefault();
+                Terminal.moveTextCursor("nextchar");
+            }
+
+            if (event.keyCode === KEY.F && event.altKey) {
+                event.preventDefault();
+                Terminal.moveTextCursor("nextword");
+            }
+
+
+            if ((event.keyCode === KEY.H || event.keyCode === KEY.D) && event.ctrlKey) {
+                Terminal.modifyInput("backspace");
+                event.preventDefault();
+            }
+
+            //TODO AFTER THIS:
+
+            //alt + d deletes word after cursor
+            //^w deletes word before cursor
+            //^k clears line after cursor
+            //^u clears line before cursor
         }
 	}
 });
@@ -344,13 +435,24 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
         return allPos;
     }
 
-    if (input.startsWith("kill ") || input.startsWith("nano ") ||
-        input.startsWith("tail ") ||
+    if (input.startsWith("kill ") || input.startsWith("tail ") ||
         input.startsWith("mem ") || input.startsWith("check ")) {
         //All Scripts
         for (var i = 0; i < currServ.scripts.length; ++i) {
             allPos.push(currServ.scripts[i].filename);
         }
+        return allPos;
+    }
+
+    if (input.startsWith("nano ")) {
+        //Scripts and text files and .fconf
+        for (var i = 0; i < currServ.scripts.length; ++i) {
+            allPos.push(currServ.scripts[i].filename);
+        }
+        for (var i = 0; i < currServ.textFiles.length; ++i) {
+            allPos.push(currServ.textFiles[i].fn);
+        }
+        allPos.push(".fconf");
         return allPos;
     }
 
@@ -420,23 +522,113 @@ let Terminal = {
     commandHistory: [],
     commandHistoryIndex: 0,
 
-    finishAction: function(cancelled = false) {
-        if (Terminal.hackFlag) {
-            Terminal.finishHack(cancelled);
-        } else if (Terminal.analyzeFlag) {
-            Terminal.finishAnalyze(cancelled);
-        }
-    },
-
     resetTerminalInput: function() {
         document.getElementById("terminal-input-td").innerHTML =
             "<div id='terminal-input-header'>[" + Player.getCurrentServer().hostname + " ~]" + "$ </div>" +
             '<input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         var hdr = document.getElementById("terminal-input-header");
         hdr.style.display = "inline";
-        //var lineWidth = document.getElementById("terminal-input-td").offsetWidth;
-        //var width = lineWidth - hdr.offsetWidth - 10;
-        //document.getElementById("terminal-input-text-box").style.width = width + "px";
+    },
+
+    modifyInput: function(mod) {
+        try {
+            var terminalInput = document.getElementById("terminal-input-text-box");
+            if (terminalInput == null) {return;}
+            terminalInput.focus();
+
+            var inputLength = terminalInput.value.length;
+            var start = terminalInput.selectionStart;
+            var end = terminalInput.selectionEnd;
+            var inputText = terminalInput.value;
+
+            switch(mod.toLowerCase()) {
+                case "backspace":
+                    if (start > 0 && start <= inputLength+1) {
+                        terminalInput.value = inputText.substr(0, start-1) + inputText.substr(start);
+                    }
+                    break;
+                case "deletewordbefore":    //Delete rest of word before the cursor
+                    for (var delStart = start-1; delStart > 0; --delStart) {
+                        if (inputText.charAt(delStart) === " ") {
+                            terminalInput.value = inputText.substr(0, delStart) + inputText.substr(start);
+                            return;
+                        }
+                    }
+                    break;
+                case "deletewordafter":     //Delete rest of word after the cursor
+                    for (var delStart = start+1; delStart <= text.length+1; ++delStart) {
+                        if (inputText.charAt(delStart) === " ") {
+                            terminalInput.value = inputText.substr(0, start) + inputText.substr(delStart);
+                            return;
+                        }
+                    }
+                    break;
+                case "clearafter":          //Deletes everything after cursor
+                    break;
+                case "clearbefore:":        //Deleetes everything before cursor
+                    break;
+            }
+        } catch(e) {
+            console.log("Exception in Terminal.modifyInput: " + e);
+        }
+    },
+
+    moveTextCursor: function(loc) {
+        try {
+            var terminalInput = document.getElementById("terminal-input-text-box");
+            if (terminalInput == null) {return;}
+            terminalInput.focus();
+
+            var inputLength = terminalInput.value.length;
+            var start = terminalInput.selectionStart;
+            var end = terminalInput.selectionEnd;
+
+            switch(loc.toLowerCase()) {
+                case "home":
+                    terminalInput.setSelectionRange(0,0);
+                    break;
+                case "end":
+                    terminalInput.setSelectionRange(inputLength, inputLength);
+                    break;
+                case "prevchar":
+                    if (start > 0) {terminalInput.setSelectionRange(start-1, start-1);}
+                    break;
+                case "prevword":
+                    for (var i = start-2; i >= 0; --i) {
+                        if (terminalInput.value.charAt(i) === " ") {
+                            terminalInput.setSelectionRange(i+1, i+1);
+                            return;
+                        }
+                    }
+                    terminalInput.setSelectionRange(0, 0);
+                    break;
+                case "nextchar":
+                    terminalInput.setSelectionRange(start+1, start+1);
+                    break;
+                case "nextword":
+                    for (var i = start+1; i <= inputLength; ++i) {
+                        if (terminalInput.value.charAt(i) === " ") {
+                            terminalInput.setSelectionRange(i, i);
+                            return;
+                        }
+                    }
+                    terminalInput.setSelectionRange(inputLength, inputLength);
+                    break;
+                default:
+                    console.log("WARNING: Invalid loc argument in Terminal.moveTextCursor()");
+                    break;
+            }
+        } catch(e) {
+            console.log("Exception in Terminal.moveTextCursor: " + e);
+        }
+    },
+
+    finishAction: function(cancelled = false) {
+        if (Terminal.hackFlag) {
+            Terminal.finishHack(cancelled);
+        } else if (Terminal.analyzeFlag) {
+            Terminal.finishAnalyze(cancelled);
+        }
     },
 
     //Complete the hack/analyze command
@@ -484,7 +676,6 @@ let Terminal = {
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
         Terminal.resetTerminalInput();
-        //document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);
 
         Terminal.hackFlag = false;
@@ -540,7 +731,6 @@ let Terminal = {
         $("#hack-progress-bar").attr('id', "old-hack-progress-bar");
         $("#hack-progress").attr('id', "old-hack-progress");
         Terminal.resetTerminalInput();
-        //document.getElementById("terminal-input-td").innerHTML = '$ <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"/>';
         $('input[class=terminal-input]').prop('disabled', false);
     },
 
@@ -670,7 +860,7 @@ let Terminal = {
             case iTutorialSteps.TerminalCreateScript:
                 if (commandArray.length == 2 &&
                     commandArray[0] == "nano" && commandArray[1] == "foodnstuff.script") {
-                    Engine.loadScriptEditorContent("foodnstuff", "");
+                    Engine.loadScriptEditorContent("foodnstuff.script", "");
                     iTutorialNextStep();
                 } else {post("Bad command. Please follow the tutorial");}
             case iTutorialSteps.TerminalFree:
@@ -835,13 +1025,45 @@ let Terminal = {
                     return;
                 }
                 var fn = commandArray[1];
-                if (fn.endsWith(".script")) {
+                if (fn === "*" || fn === "*.script" || fn === "*.txt") {
+                    //Download all scripts as a zip
+                    var zip = new JSZip();
+                    if (fn === "*" || fn === "*.script") {
+                        for (var i = 0; i < s.scripts.length; ++i) {
+                            var file = new Blob([s.scripts[i].code], {type:"text/plain"});
+                            zip.file(s.scripts[i].filename + ".js", file);
+                        }
+                    }
+                    if (fn === "*" || fn === "*.txt") {
+                        for (var i = 0; i < s.textFiles.length; ++i) {
+                            var file = new Blob([s.textFiles[i].text], {type:"text/plain"});
+                            zip.file(s.textFiles[i].fn, file);
+                        }
+                    }
+
+                    var filename;
+                    switch (fn) {
+                        case "*.script":
+                            filename = "bitburnerScripts.zip"; break;
+                        case "*.txt":
+                            filename = "bitburnerTexts.zip"; break;
+                        default:
+                            filename = "bitburnerFiles.zip"; break;
+                    }
+
+                    zip.generateAsync({type:"blob"}).then(function(content) {
+                        FileSaver.saveAs(content, filename);
+                    });
+                    return;
+                } else if (fn.endsWith(".script")) {
+                    //Download a single script
                     for (var i = 0; i < s.scripts.length; ++i) {
                         if (s.scripts[i].filename === fn) {
                             return s.scripts[i].download();
                         }
                     }
                 } else if (fn.endsWith(".txt")) {
+                    //Download a single text file
                     var txtFile = getTextFile(fn, s);
                     if (txtFile !== null) {
                         return txtFile.download();
@@ -984,23 +1206,28 @@ let Terminal = {
 				}
 
 				var filename = commandArray[1];
-
-				//Can only edit script files
-				if (filename.endsWith(".script") == false) {
-					post("Error: Only .script files are editable with nano (filename must end with .script)"); return;
-				}
-
-				//Script name is the filename without the .script at the end
-				var scriptname = filename.substr(0, filename.indexOf(".script"));
-
-				//Check if the script already exists
-				for (var i = 0; i < Player.getCurrentServer().scripts.length; i++) {
-					if (filename == Player.getCurrentServer().scripts[i].filename) {
-						Engine.loadScriptEditorContent(scriptname, Player.getCurrentServer().scripts[i].code);
-						return;
-					}
-				}
-				Engine.loadScriptEditorContent(scriptname, "");
+                if (filename === ".fconf") {
+                    var text = createFconf();
+                    Engine.loadScriptEditorContent(filename, text);
+                    return;
+                } else if (filename.endsWith(".script")) {
+                    for (var i = 0; i < s.scripts.length; i++) {
+    					if (filename == s.scripts[i].filename) {
+    						Engine.loadScriptEditorContent(filename, s.scripts[i].code);
+    						return;
+    					}
+    				}
+                } else if (filename.endsWith(".txt")) {
+                    for (var i = 0; i < s.textFiles.length; ++i) {
+                        if (filename === s.textFiles[i].fn) {
+                            Engine.loadScriptEditorContent(filename, s.textFiles[i].text);
+                            return;
+                        }
+                    }
+                } else {
+                    post("Error: Invalid file. Only scripts (.script), text files (.txt), or .fconf can be edited with nano"); return;
+                }
+                Engine.loadScriptEditorContent(filename);
 				break;
 			case "ps":
 				if (commandArray.length != 1) {

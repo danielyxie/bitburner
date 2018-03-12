@@ -323,7 +323,8 @@ Product.prototype.finishProduct = function(employeeProd, industry) {
     console.log("designMult: " + designMult);
     var balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +
                       (1.5 * opsRatio) + (busRatio);
-    var totalMult = progrMult * balanceMult * designMult;
+    var sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 1000);
+    var totalMult = progrMult * balanceMult * designMult * sciMult;
 
     this.qlt = totalMult * ((0.10 * employeeProd[EmployeePositions.Engineer]) +
                             (0.05 * employeeProd[EmployeePositions.Management]) +
@@ -357,7 +358,7 @@ Product.prototype.finishProduct = function(employeeProd, industry) {
                             (0.05 * employeeProd[EmployeePositions.Business]));
     this.calculateRating(industry);
     var advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
-    this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.75) * (busRatio + mgmtRatio));
+    this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.6) * (busRatio + mgmtRatio));
     this.dmd = industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
     this.cmp = getRandomInt(0, 70);
 
@@ -483,7 +484,7 @@ var IndustryDescriptions = {
     Healthcare: "Create and manage hospitals.<br><br>" +
                 "Starting cost: " + numeral(IndustryStartingCosts.Healthcare).format("$0.000a") + "<br>" +
                 "Recommended starting Industry: NO",
-    RealEstate: "Develop and manuage real estate properties.<br><br>" +
+    RealEstate: "Develop and manage real estate properties.<br><br>" +
                 "Starting cost: " + numeral(IndustryStartingCosts.RealEstate).format("$0.000a") + "<br>" +
                 "Recommended starting Industry: NO",
 }
@@ -552,11 +553,11 @@ var ProductRatingWeights = {
 var IndustryUpgrades = {
     "0":    [0, 500e3, 1, 1.05,
             "Coffee", "Provide your employees with coffee, increasing their energy by 5%."],
-    "1":    [1, 1e9, 1.03, 1.03,
+    "1":    [1, 1e9, 1.05, 1.03,
             "AdVert.Inc", "Hire AdVert.Inc to advertise your company. Each level of " +
             "this upgrade grants your company a static increase of 4 and 1 to its awareness and " +
             "popularity, respectively. It will then increase your company's awareness by 1%, and its popularity " +
-            "by a random percentage between 3% and 6%. These effects are increased by other upgrades " +
+            "by a random percentage between 2% and 4%. These effects are increased by other upgrades " +
             "that increase the power of your advertising."]
 }
 
@@ -786,8 +787,8 @@ Industry.prototype.init = function() {
             this.makesProducts = true;
             break;
         case Industries.Software:
-            this.sciFac = 0.7;
-            this.advFac = 0.18;
+            this.sciFac = 0.65;
+            this.advFac = 0.16;
             this.hwFac  = 0.25;
             this.reFac  = 0.1;
             this.aiFac  = 0.1;
@@ -871,20 +872,26 @@ Industry.prototype.getProductDescriptionText = function() {
 
 //Calculates the values that factor into the production and properties of
 //materials/products (such as quality, etc.)
-Industry.prototype.calculateProductionFactors = function(city) {
-    var warehouse = this.warehouses[city];
-    if (!(warehouse instanceof Warehouse)) {
-        this.prodMult = 0;
-        return;
+Industry.prototype.calculateProductionFactors = function() {
+    var multSum = 0;
+    for (var i = 0; i < Cities.length; ++i) {
+        var city = Cities[i];
+        var warehouse = this.warehouses[city];
+        if (!(warehouse instanceof Warehouse)) {
+            continue;
+        }
+
+        var materials = warehouse.materials,
+            office = this.offices[city];
+
+        var cityMult =  Math.pow(0.002 * materials.RealEstate.qty+1, this.reFac) *
+                        Math.pow(0.002 * materials.Hardware.qty+1, this.hwFac) *
+                        Math.pow(0.002 * materials.Robots.qty+1, this.robFac) *
+                        Math.pow(0.002 * materials.AICores.qty+1, this.aiFac);
+        multSum += Math.pow(cityMult, 0.73);
     }
-    var materials = warehouse.materials,
-        office = this.offices[city];
-    //Production is multiplied by this
-    this.prodMult = Math.pow(0.002 * materials.RealEstate.qty+1, this.reFac) *
-                    Math.pow(0.002 * materials.Hardware.qty+1, this.hwFac) *
-                    Math.pow(0.002 * materials.Robots.qty+1, this.robFac) *
-                    Math.pow(0.002 * materials.AICores.qty+1, this.aiFac);
-    if (this.prodMult < 1) {this.prodMult = 1;}
+
+    multSum < 1 ? this.prodMult = 1 : this.prodMult = multSum;
 }
 
 Industry.prototype.updateWarehouseSizeUsed = function(warehouse) {
@@ -897,6 +904,9 @@ Industry.prototype.updateWarehouseSizeUsed = function(warehouse) {
         if (this.products.hasOwnProperty(prodName)) {
             var prod = this.products[prodName];
             warehouse.sizeUsed += (prod.data[warehouse.loc][0] * prod.siz);
+            if (prod.data[warehouse.loc][0] > 0 && warehouse.loc === currentCityUi) {
+                industryWarehouseStorageBreakdownText += (prodName + ": " + formatNumber(prod.data[warehouse.loc][0] * prod.siz, 0) + "<br>");
+            }
         }
     }
 }
@@ -1017,12 +1027,12 @@ Industry.prototype.processProductMarket = function(marketCycles=1) {
 
 //Process production, purchase, and import/export of materials
 Industry.prototype.processMaterials = function(marketCycles=1, company) {
-    var revenue = 0, expenses = 0;
+    var revenue = 0, expenses = 0, industry = this;
+    this.calculateProductionFactors();
     for (var i = 0; i < Cities.length; ++i) {
         var city = Cities[i], office = this.offices[city];
 
         if (this.warehouses[city] instanceof Warehouse) {
-            this.calculateProductionFactors(city);
             var warehouse = this.warehouses[city];
 
             switch(this.state) {
@@ -1031,9 +1041,17 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
             /* Process purchase of materials */
             for (var matName in warehouse.materials) {
                 if (warehouse.materials.hasOwnProperty(matName)) {
-                    (function(matName) {
+                    (function(matName, ind) {
                     var mat = warehouse.materials[matName];
-                    var buyAmt = (mat.buy * SecsPerMarketCycle * marketCycles), maxAmt
+                    var buyAmt, maxAmt;
+                    if (warehouse.smartSupplyEnabled && Object.keys(ind.reqMats).includes(matName)) {
+                        //Smart supply tracker is stored as per second rate
+                        mat.buy = ind.reqMats[matName] * warehouse.smartSupplyStore;
+                        buyAmt = mat.buy * SecsPerMarketCycle * marketCycles;
+                    } else {
+                        buyAmt = (mat.buy * SecsPerMarketCycle * marketCycles);
+                    }
+
                     if (matName == "RealEstate") {
                         maxAmt = buyAmt;
                     } else {
@@ -1044,13 +1062,15 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                         mat.qty += buyAmt;
                         expenses += (buyAmt * mat.bCost);
                     }
-                    })(matName);
+                })(matName, industry);
                     this.updateWarehouseSizeUsed(warehouse);
                 }
             } //End process purchase of materials
             break;
 
             case "PRODUCTION":
+            warehouse.smartSupplyStore = 0; //Reset smart supply amount
+
             /* Process production of materials */
             if (this.prodMats.length > 0) {
                 var mat = warehouse.materials[this.prodMats[0]];
@@ -1082,6 +1102,9 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     var maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / totalMatSize);
                     prod = Math.min(maxAmt, prod);
                 }
+
+                //Keep track of production for smart supply (/s)
+                warehouse.smartSupplyStore += (prod / (SecsPerMarketCycle * marketCycles));
 
                 //Make sure we have enough resource to make our materials
                 var producableFrac = 1;
@@ -1220,10 +1243,10 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                                     var expIndustry = company.divisions[foo];
                                     var expWarehouse = expIndustry.warehouses[exp.city];
                                     if (!(expWarehouse instanceof Warehouse)) {
-                                        console.log("ERROR: Invalid export!");
+                                        console.log("ERROR: Invalid export! " + expIndustry.name + " "  + exp.city);
                                         break;
                                     }
-                                    expWarehouse.materials[mat.name].qty += amt;
+                                    expWarehouse.materials[matName].qty += amt;
                                     mat.qty -= amt;
                                     break;
                                 }
@@ -1275,7 +1298,7 @@ Industry.prototype.processProducts = function(marketCycles=1, corporation) {
                                 office.employeeProd[EmployeePositions.Operations] / total +
                                 office.employeeProd[EmployeePositions.Management] / total;
                     }
-                    prod.createProduct(marketCycles, ratio * Math.pow(total, 0.3));
+                    prod.createProduct(marketCycles, ratio * Math.pow(total, 0.29));
                     if (prod.prog >= 100) {
                          prod.finishProduct(office.employeeProd, this);
                     }
@@ -1334,6 +1357,8 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
                 prod = Math.min(maxAmt, prod);
             }
 
+            warehouse.smartSupplyStore += (prod / (SecsPerMarketCycle * marketCycles));
+
             //Make sure we have enough resources to make our Products
             var producableFrac = 1;
             for (var reqMatName in product.reqMats) {
@@ -1384,8 +1409,8 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             var businessFactor = this.getBusinessFactor(office);        //Business employee productivity
             var advertisingFactor = this.getAdvertisingFactors()[0];    //Awareness + popularity
             var marketFactor = this.getMarketFactor(product);        //Competition + demand
-            var maxSell = Math.pow(product.rat, 0.9) * marketFactor * corporation.getSalesMultiplier() *
-                          markup * businessFactor * advertisingFactor;
+            var maxSell = 0.5 * Math.pow(product.rat, 0.65) * marketFactor * corporation.getSalesMultiplier() *
+                          Math.pow(markup, 2) * businessFactor * advertisingFactor;
             var sellAmt;
             if (product.sllman[city][0] && product.sllman[city][1] > 0) {
                 //Sell amount is manually limited
@@ -1448,7 +1473,7 @@ Industry.prototype.upgrade = function(upgrade, refs) {
             this.awareness += (4 * advMult);
             this.popularity += (1 * advMult);
             this.awareness *= (1.01 * advMult);
-            this.popularity *= ((1 + getRandomInt(3, 6) / 100) * advMult);
+            this.popularity *= ((1 + getRandomInt(2, 4) / 100) * advMult);
             break;
         default:
             console.log("ERROR: Un-implemented function index: " + upgN);
@@ -1492,7 +1517,7 @@ Industry.prototype.getAdvertisingFactors = function() {
     var awarenessFac = Math.pow(this.awareness + 1, this.advFac);
     var popularityFac = Math.pow(this.popularity + 1, this.advFac);
     var ratioFac = (this.awareness === 0 ? 0.01 : Math.max((this.popularity + .001) / this.awareness, 0.01));
-    var totalFac = awarenessFac * popularityFac * ratioFac;
+    var totalFac = Math.pow(awarenessFac * popularityFac * ratioFac, 0.85);
     return [totalFac, awarenessFac, popularityFac, ratioFac];
 }
 
@@ -1960,8 +1985,13 @@ function Warehouse(params={}) {
     this.loc    = params.loc        ? params.loc    : "";
     this.size   = params.size       ? params.size   : 0;
     this.level  = 0;
-
     this.sizeUsed = 0;
+    this.smartSupplyEnabled = false; //Whether or not smart supply is enabled
+
+    //Stores the amount of product to be produced. Used for Smart Supply unlock.
+    //The production tracked by smart supply is always based on the previous cycle,
+    //so it will always trail the "true" production by 1 cycle
+    this.smartSupplyStore = 0;
 
     this.materials = {
         Water:      new Material({name: "Water"}),
@@ -1980,11 +2010,15 @@ function Warehouse(params={}) {
 
 Warehouse.prototype.updateMaterialSizeUsed = function() {
     this.sizeUsed = 0;
+    if (this.loc === currentCityUi) {industryWarehouseStorageBreakdownText = ""; }
     for (var matName in this.materials) {
         if (this.materials.hasOwnProperty(matName)) {
             var mat = this.materials[matName];
             if (MaterialSizes.hasOwnProperty(matName)) {
                 this.sizeUsed += (mat.qty * MaterialSizes[matName]);
+                if (mat.qty > 0 && this.loc === currentCityUi) {
+                    industryWarehouseStorageBreakdownText += (matName + ": " + formatNumber(mat.qty * MaterialSizes[matName], 0) + "<br>");
+                }
             }
         }
     }
@@ -2009,18 +2043,15 @@ Warehouse.prototype.createUI = function(parentRefs) {
     }
     var company = parentRefs.company, industry = parentRefs.industry;
     removeChildrenFromElement(industryWarehousePanel);
-    var storageText = "Storage: " +
-                      (this.sizedUsed >= this.size ? formatNumber(this.sizeUsed, 3) : formatNumber(this.sizeUsed, 3)) +
-                      "/" + formatNumber(this.size, 3);
-    industryWarehousePanel.appendChild(createElement("p", {
-        innerHTML: storageText,
-        display:"inline-block",
+    industryWarehouseStorageText = createElement("p", {
+        display:"inline-block", class:"tooltip",
         color: this.sizeUsed >= this.size ? "red" : "white",
-    }));
+    });
+    industryWarehousePanel.appendChild(industryWarehouseStorageText);
 
     //Upgrade warehouse size button
     var upgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, Math.round(this.size / 100) - 1);
-    industryWarehousePanel.appendChild(createElement("a", {
+    industryWarehouseUpgradeSizeButton = createElement("a", {
         innerText:"Upgrade Warehouse Size - " + numeral(upgradeCost).format('$0.000a'),
         display:"inline-block",
         class: company.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
@@ -2036,7 +2067,8 @@ Warehouse.prototype.createUI = function(parentRefs) {
             this.createUI(parentRefs);
             return;
         }
-    }));
+    });
+    industryWarehousePanel.appendChild(industryWarehouseUpgradeSizeButton);
 
     //Material requirement text
     var reqText = "This Industry uses [" + Object.keys(industry.reqMats).join(", ") +
@@ -2050,28 +2082,7 @@ Warehouse.prototype.createUI = function(parentRefs) {
         reqText += industry.getProductDescriptionText();
     }
     reqText += "<br><br>To get started with production, purchase your required " +
-               "materials or import them from another of your company's divisions.<br><br>" +
-               "Current state: ";
-    switch(industry.state) {
-        case "START":
-            reqText += "Preparing...";
-            break;
-        case "PURCHASE":
-            reqText += "Purchasing materials...";
-            break;
-        case "PRODUCTION":
-            reqText += "Producing materials and/or products...";
-            break;
-        case "SALE":
-            reqText += "Selling materials and/or products...";
-            break;
-        case "EXPORT":
-            reqText += "Exporting materials and/or products...";
-            break;
-        default:
-            console.log("ERROR: Invalid state: " + industry.state);
-            break;
-    }
+               "materials or import them from another of your company's divisions.<br><br>";
 
     //Material ratio text for tooltip
     var reqRatioText = "The exact requirements for production are:<br>";
@@ -2094,28 +2105,116 @@ Warehouse.prototype.createUI = function(parentRefs) {
         innerHTML:reqText, tooltipleft:reqRatioText
     }));
 
+    //Current state
+    industryWarehouseStateText = createElement("p");
+    industryWarehousePanel.appendChild(industryWarehouseStateText);
+
+    //Smart Supply Enable/Disable
+    if (company.unlockUpgrades[1]) {
+        if (this.smartSupplyEnabled == null) {this.smartSupplyEnabled = false;}
+        var smartSupplyCheckboxId = "cmpy-mgmt-smart-supply-checkbox";
+        industryWarehousePanel.appendChild(createElement("label", {
+            for:smartSupplyCheckboxId, innerText:"Enable Smart Supply",
+            color:"white"
+        }));
+        industrySmartSupplyCheckbox = createElement("input", {
+            type:"checkbox", id:smartSupplyCheckboxId, margin:"3px",
+            changeListener:()=>{
+                this.smartSupplyEnabled = industrySmartSupplyCheckbox.checked;
+            }
+        });
+        industrySmartSupplyCheckbox.checked = this.smartSupplyEnabled;
+        industryWarehousePanel.appendChild(industrySmartSupplyCheckbox);
+    }
+
     //Materials
     industryWarehousePanel.appendChild(createElement("p", {
         innerHTML: "<br>Materials:<br>",
     }));
+    industryWarehouseMaterials = createElement("ul");
+    industryWarehousePanel.appendChild(industryWarehouseMaterials);
+
+    //Products
+    if (industry.makesProducts && Object.keys(industry.products).length > 0) {
+        industryWarehousePanel.appendChild(createElement("p", {
+            innerHTML: "<br>Products:<br>",
+        }));
+        industryWarehouseProducts = createElement("ul");
+        industryWarehousePanel.appendChild(industryWarehouseProducts);
+    }
+
+    this.updateUI(parentRefs);
+}
+
+Warehouse.prototype.updateUI = function(parentRefs) {
+    if (parentRefs.company == null || parentRefs.industry == null) {
+        console.log("ERROR: Warehouse.updateUI called without parentRefs.company or parentRefs.industry");
+        return;
+    }
+    var company = parentRefs.company, industry = parentRefs.industry;
+
+    //Storage text
+    var storageText = "Storage: " +
+                      (this.sizedUsed >= this.size ? formatNumber(this.sizeUsed, 3) : formatNumber(this.sizeUsed, 3)) +
+                      "/" + formatNumber(this.size, 3);
+    if (industryWarehouseStorageBreakdownText != null &&
+        industryWarehouseStorageBreakdownText != "") {
+        storageText += ("<span class='tooltiptext'>" +
+                        industryWarehouseStorageBreakdownText + "</span>");
+    }
+    industryWarehouseStorageText.innerHTML = storageText;
+
+    //Upgrade warehouse size button
+    var upgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, Math.round(this.size / 100) - 1);
+    if (company.funds.lt(upgradeCost)) {
+        industryWarehouseUpgradeSizeButton.className = "a-link-button-inactive";
+    } else {
+        industryWarehouseUpgradeSizeButton.className = "a-link-button";
+    }
+
+    //Current state
+    var stateText = "Current state: ";
+    switch(industry.state) {
+        case "START":
+            stateText += "Preparing...";
+            break;
+        case "PURCHASE":
+            stateText += "Purchasing materials...";
+            break;
+        case "PRODUCTION":
+            stateText += "Producing materials and/or products...";
+            break;
+        case "SALE":
+            stateText += "Selling materials and/or products...";
+            break;
+        case "EXPORT":
+            stateText += "Exporting materials and/or products...";
+            break;
+        default:
+            console.log("ERROR: Invalid state: " + industry.state);
+            break;
+    }
+    industryWarehouseStateText.innerText = stateText;
+
+    //Materials
+    removeChildrenFromElement(industryWarehouseMaterials);
     for (var matName in this.materials) {
         if (this.materials.hasOwnProperty(matName) && this.materials[matName] instanceof Material) {
             if (Object.keys(industry.reqMats).includes(matName) || industry.prodMats.includes(matName) ||
                 matName === "Hardware" || matName === "Robots" || matName === "AICores" ||
                 matName === "RealEstate") {
-                this.createMaterialUI(this.materials[matName], matName, parentRefs);
+                industryWarehouseMaterials.appendChild(this.createMaterialUI(this.materials[matName], matName, parentRefs));
             }
         }
     }
 
     //Products
-    if (!(industry.makesProducts && Object.keys(industry.products).length > 0)) {return;}
-    industryWarehousePanel.appendChild(createElement("p", {
-        innerHTML: "<br>Products:<br>",
-    }));
-    for (var productName in industry.products) {
-        if (industry.products.hasOwnProperty(productName) && industry.products[productName] instanceof Product) {
-            this.createProductUI(industry.products[productName], parentRefs);
+    if (industry.makesProducts && Object.keys(industry.products).length > 0) {
+        removeChildrenFromElement(industryWarehouseProducts);
+        for (var productName in industry.products) {
+            if (industry.products.hasOwnProperty(productName) && industry.products[productName] instanceof Product) {
+                industryWarehouseProducts.appendChild(this.createProductUI(industry.products[productName], parentRefs));
+            }
         }
     }
 }
@@ -2185,9 +2284,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                 type:"number", value:mat.buy ? mat.buy : null, placeholder: "Purchase amount",
                 onkeyup:(e)=>{
                     e.preventDefault();
-                    if (e.keyCode === 13) {
-                        confirmBtn.click();
-                    }
+                    if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
             confirmBtn = createElement("a", {
@@ -2239,28 +2336,30 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             });
 
             //Select industry and city to export to
-            var industrySelector = createElement("select", {}),
-                citySelector = createElement("select", {});
+            var citySelector = createElement("select");
+            var industrySelector = createElement("select", {
+                changeListener:()=>{
+                    var industryName = industrySelector.options[industrySelector.selectedIndex].value;
+                    for (var foo = 0; foo < company.divisions.length; ++foo) {
+                        if (company.divisions[foo].name == industryName) {
+                            clearSelector(citySelector);
+                            var selectedIndustry = company.divisions[foo];
+                            for (var cityName in company.divisions[foo].warehouses) {
+                                if (company.divisions[foo].warehouses[cityName] instanceof Warehouse) {
+                                    citySelector.add(createElement("option", {
+                                        value:cityName, text:cityName,
+                                    }));
+                                }
+                            }
+                            return;
+                        }
+                    }
+                }
+            });
+
             for (var i = 0; i < company.divisions.length; ++i) {
                 industrySelector.add(createElement("option", {
                     text:company.divisions[i].name, value:company.divisions[i].name,
-                    changeListener:()=>{
-                        var industryName = industrySelector.options[industrySelector.selectedIndex].value;
-                        for (var foo = 0; foo < company.divisions.length; ++foo) {
-                            if (company.divisions[foo].name == industryName) {
-                                clearSelector(citySelector);
-                                var selectedIndustry = company.divisions[foo];
-                                for (var cityName in company.divisions[foo].warehouses) {
-                                    if (company.divisions[foo].warehouses[cityName] instanceof Warehouse) {
-                                        citySelector.add(createElement("option", {
-                                            value:cityName, text:cityName,
-                                        }));
-                                    }
-                                }
-                                return;
-                            }
-                        }
-                    }
                 })); //End create element option
             } //End for
 
@@ -2471,7 +2570,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
         }
     }));
 
-    industryWarehousePanel.appendChild(div);
+    return div;
 }
 
 Warehouse.prototype.createProductUI = function(product, parentRefs) {
@@ -2487,8 +2586,7 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
             innerHTML: "Designing " + product.name + "...<br>" +
                         formatNumber(product.prog, 2) + "% complete",
         }));
-        industryWarehousePanel.appendChild(div);
-        return;
+        return div;
     }
 
     //Completed products
@@ -2517,7 +2615,10 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                    "<span class='tooltiptext'>An estimate of how much it costs to produce one unit of this product. " +
                    "If your sell price exceeds this by too much, people won't buy your product. The better your " +
                    "product is, the higher you can mark up its price.</span></p><br>" +
-                   "Size: " + formatNumber(product.siz, 3),
+                   "<p class='tooltip'>Est. Market Price: " + numeral(product.pCost + product.rat / product.mku).format("$0.000a") +
+                   "<span class='tooltiptext'>An estimate of how much consumers are willing to pay for this product. " +
+                   "Setting the sale price above this may result in less sales. Setting the sale price below this may result " +
+                   "in more sales.</span></p>"
     }));
     var buttonPanel = createElement("div", {
         display:"inline-block",
@@ -2688,7 +2789,7 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
             createPopup(popupId, [txt, confirmBtn, cancelBtn]);
         }
     }));
-    industryWarehousePanel.appendChild(div);
+    return div;
 }
 
 Warehouse.prototype.toJSON = function() {
@@ -2711,7 +2812,7 @@ var CorporationUnlockUpgrades = {
                     "This allows you to move materials around between different divisions and cities."],
 
     //Lets you buy exactly however many required materials you need for production
-    "1":  [1, 999999e9, "Smart Supply", "NOT YET IMPLEMENTED!!!!!! - Use advanced AI to anticipate your supply needs. " +
+    "1":  [1, 50e9, "Smart Supply", "Use advanced AI to anticipate your supply needs. " +
                      "This allows you to purchase exactly however many materials you need for production."],
 
     //Displays each material/product's demand
@@ -2754,10 +2855,10 @@ var CorporationUpgrades = {
             "20 seconds."],
 
     //Makes advertising more effective
-    "3":    [3, 4e9, 1.12, 0.01,
+    "3":    [3, 4e9, 1.12, 0.005,
             "Wilson Analytics", "Purchase data and analysis from Wilson, a marketing research " +
             "firm. Each level of this upgrades increases the effectiveness of your " +
-            "advertising by 1% (additive)."],
+            "advertising by 0.5% (additive)."],
 
     //Augmentation for employees, increases cre
     "4":    [4, 1e9, 1.06, 0.1,
@@ -2825,12 +2926,15 @@ Corporation.prototype.getState = function() {
     return this.state.getState();
 }
 
-var numMarketCyclesPersist = 1;
-Corporation.prototype.process = function(numCycles=1) {
-    var corp = this;
+Corporation.prototype.storeCycles = function(numCycles=1) {
     this.storedCycles += numCycles;
+}
+
+Corporation.prototype.process = function() {
+    var corp = this;
     if (this.storedCycles >= CyclesPerIndustryStateCycle) {
-        var state = this.getState();
+        var state = this.getState(), marketCycles=1;
+        this.storedCycles -= (marketCycles * CyclesPerIndustryStateCycle);
 
         //At the start of a new cycle, calculate profits from previous cycle
         if (state === "START") {
@@ -2841,7 +2945,7 @@ Corporation.prototype.process = function(numCycles=1) {
                 this.expenses = this.expenses.plus(ind.lastCycleExpenses);
             });
             var profit = this.revenue.minus(this.expenses);
-            var cycleProfit = profit.times(numMarketCyclesPersist * SecsPerMarketCycle);
+            var cycleProfit = profit.times(marketCycles * SecsPerMarketCycle);
             if (isNaN(this.funds)) {
                 dialogBoxCreate("There was an error calculating your Corporations funds and they got reset to 0. " +
                                 "This is a bug. Please report to game developer.<br><br>" +
@@ -2852,19 +2956,6 @@ Corporation.prototype.process = function(numCycles=1) {
             this.updateSharePrice();
         }
 
-        //Determine number of market cycles at the START state
-        if (state === "START") {
-            if (this.storedCycles >= 2*CyclesPerMarketCycle) {
-                //Enough cycles stored for 2+ market cycles
-                //Capped out at 3 to prevent weird behavior
-                numMarketCyclesPersist = Math.max(3, Math.floor(this.storedCycles / CyclesPerMarketCycle));
-            } else {
-                numMarketCyclesPersist = 1;
-            }
-        }
-        var marketCycles = numMarketCyclesPersist;
-
-        this.storedCycles -= (marketCycles * CyclesPerIndustryStateCycle);
         this.divisions.forEach(function(ind) {
             ind.process(marketCycles, state, corp);
         });
@@ -2948,12 +3039,17 @@ Corporation.prototype.goPublic = function() {
                    "your company's stock price in the future.<br><br>" +
                    "You have a total of " + numeral(this.numShares).format("0.000a") + " of shares that you can issue.",
     });
+    var yesBtn;
     var input = createElement("input", {
         type:"number",
         placeholder: "Shares to issue",
+        onkeyup:(e)=>{
+            e.preventDefault();
+            if (e.keyCode === 13) {yesBtn.click();}
+        }
     });
     var br = createElement("br", {});
-    var yesBtn = createElement("a", {
+    yesBtn = createElement("a", {
         class:"a-link-button",
         innerText:"Go Public",
         clickListener:()=>{
@@ -3099,11 +3195,20 @@ Corporation.prototype.getScientificResearchMultiplier = function() {
 var companyManagementDiv, companyManagementHeaderTabs, companyManagementPanel,
     currentCityUi,
     corporationUnlockUpgrades, corporationUpgrades,
+
+    //Industry Overview Panel
     industryOverviewPanel, industryOverviewText,
+
+    //Industry Employee Panel
     industryEmployeePanel, industryEmployeeText, industryEmployeeHireButton, industryEmployeeAutohireButton,
         industryEmployeeManagementUI, industryEmployeeInfo, industryIndividualEmployeeInfo,
     industryOfficeUpgradeSizeButton,
-    industryWarehousePanel,
+
+    //Industry Warehouse Panel
+    industryWarehousePanel, industrySmartSupplyCheckbox, industryWarehouseStorageText,
+        industryWarehouseStorageBreakdownText,
+        industryWarehouseUpgradeSizeButton, industryWarehouseStateText,
+        industryWarehouseMaterials, industryWarehouseProducts,
     headerTabs, cityTabs;
 Corporation.prototype.createUI = function() {
     companyManagementDiv = createElement("div", {
@@ -3163,28 +3268,33 @@ Corporation.prototype.updateUIHeaderTabs = function() {
             var container = createElement("div", {
                 class:"popup-box-container",
                 id:"cmpy-mgmt-expand-industry-popup",
-            }),
-            content = createElement("div", {class:"popup-box-content"}),
-            txt = createElement("p", {
+            });
+            var content = createElement("div", {class:"popup-box-content"});
+            var txt = createElement("p", {
                 innerHTML: "Create a new division to expand into a new industry:",
-            }),
-            selector = createElement("select", {
+            });
+            var selector = createElement("select", {
                 class:"cmpy-mgmt-industry-select"
-            }),
-            industryDescription = createElement("p", {}),
-            nameInput = createElement("input", {
+            });
+            var industryDescription = createElement("p", {});
+            var yesBtn;
+            var nameInput = createElement("input", {
                 type:"text",
                 id:"cmpy-mgmt-expand-industry-name-input",
                 color:"white",
                 backgroundColor:"black",
                 display:"block",
                 maxLength: 30,
-                pattern:"[a-zA-Z0-9-_]"
-            }),
-            nameLabel = createElement("label", {
+                pattern:"[a-zA-Z0-9-_]",
+                onkeyup:(e)=>{
+                    e.preventDefault();
+                    if (e.keyCode === 13) {yesBtn.click();}
+                }
+            });
+            var nameLabel = createElement("label", {
                 for:"cmpy-mgmt-expand-industry-name-input",
                 innerText:"Division name: "
-            }),
+            });
             yesBtn = createElement("span", {
                 class:"popup-box-button",
                 innerText:"Create Division",
@@ -3216,8 +3326,8 @@ Corporation.prototype.updateUIHeaderTabs = function() {
                     }
                     return false;
                 }
-            }),
-            noBtn = createElement("span", {
+            });
+            var noBtn = createElement("span", {
                 class:"popup-box-button",
                 innerText:"Cancel",
                 clickListener: function() {
@@ -4054,7 +4164,8 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                             division.products[product.name] = product;
                             removeElementById(popupId);
                         }
-                        this.updateUIContent();
+                        //this.updateUIContent();
+                        this.displayDivisionContent(division, city);
                         return false;
                     }
                 })
@@ -4129,16 +4240,42 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
         tooltip:"Upgrade the office's size so that it can hold more employees!",
         clickListener:()=>{
             var popupId = "cmpy-mgmt-upgrade-office-size-popup";
-            var upgradeCost = OfficeInitialCost * Math.pow(1.07, Math.round(office.size / OfficeInitialSize));
+            var initialPriceMult = Math.round(office.size / OfficeInitialSize);
+            var upgradeCost = OfficeInitialCost * Math.pow(1.07, initialPriceMult);
+
+            //Calculate cost to upgrade size by 15 employees
+            var mult = 0;
+            for (var i = 0; i < 5; ++i) {
+                mult += (Math.pow(1.07, initialPriceMult + i));
+            }
+            var upgradeCost15 = OfficeInitialCost * mult;
+
+            //Calculate max upgrade size and cost
+            var maxMult = (this.funds.dividedBy(OfficeInitialCost)).toNumber();
+            var maxNum = 1;
+            mult = Math.pow(1.07, initialPriceMult);
+            while(maxNum < 50) { //Hard cap of 50x (extra 150 employees)
+                if (mult >= maxMult) {break;}
+                var multIncrease = Math.pow(1.07, initialPriceMult + maxNum);
+                if (mult + multIncrease > maxMult) {
+                    break;
+                } else {
+                    mult += multIncrease;
+                }
+                ++maxNum;
+            }
+
+            var upgradeCostMax = OfficeInitialCost * mult;
+
             var text = createElement("p", {
-                innerHTML:"Increase the size of your office space to fit " + OfficeInitialSize +
-                          " more employees. This will cost " + numeral(upgradeCost).format('$0.000a'),
+                innerText:"Increase the size of your office space to fit additional employees!"
             });
+            var text2 = createElement("p", {innerText: "Upgrade size: "});
+
             var confirmBtn = createElement("a", {
-                class:"a-link-button",
-                display:"inline-block",
-                margin:"8px",
-                innerText:"Upgrade Office Size",
+                class: this.funds.lt(upgradeCost) ? "a-link-button-inactive" : "a-link-button",
+                display:"inline-block", margin:"4px", innerText:"by 3",
+                tooltip:numeral(upgradeCost).format("$0.000a"),
                 clickListener:()=>{
                     if (this.funds.lt(upgradeCost)) {
                         dialogBoxCreate("You don't have enough company funds to purchase this upgrade!");
@@ -4152,17 +4289,48 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                     return false;
                 }
             });
+            var confirmBtn15 = createElement("a", {
+                class: this.funds.lt(upgradeCost15) ? "a-link-button-inactive" : "a-link-button",
+                display:"inline-block", margin:"4px", innerText:"by 15",
+                tooltip:numeral(upgradeCost15).format("$0.000a"),
+                clickListener:()=>{
+                    if (this.funds.lt(upgradeCost15)) {
+                        dialogBoxCreate("You don't have enough company funds to purchase this upgrade!");
+                    } else {
+                        office.size += (OfficeInitialSize * 5);
+                        this.funds = this.funds.minus(upgradeCost15);
+                        dialogBoxCreate("Office space increased! It can now hold " + office.size + " employees");
+                        this.updateUIContent();
+                    }
+                    removeElementById(popupId);
+                    return false;
+                }
+            });
+            var confirmBtnMax = createElement("a", {
+                class:this.funds.lt(upgradeCostMax) ? "a-link-button-inactive" : "a-link-button",
+                display:"inline-block", margin:"4px", innerText:"by MAX (" + maxNum*OfficeInitialSize + ")",
+                tooltip:numeral(upgradeCostMax).format("$0.000a"),
+                clickListener:()=>{
+                    if (this.funds.lt(upgradeCostMax)) {
+                        dialogBoxCreate("You don't have enough company funds to purchase this upgrade!");
+                    } else {
+                        office.size += (OfficeInitialSize * maxNum);
+                        this.funds = this.funds.minus(upgradeCostMax);
+                        dialogBoxCreate("Office space increased! It can now hold " + office.size + " employees");
+                        this.updateUIContent();
+                    }
+                    removeElementById(popupId);
+                    return false;
+                }
+            });
             var cancelBtn = createElement("a", {
-                class:"a-link-button",
-                innerText:"Cancel",
-                display:"inline-block",
-                margin:"8px",
+                class:"a-link-button", innerText:"Cancel", display:"inline-block", margin:"4px",
                 clickListener:()=>{
                     removeElementById(popupId);
                     return false;
                 }
             })
-            createPopup(popupId, [text, confirmBtn, cancelBtn]);
+            createPopup(popupId, [text, text2, confirmBtn, confirmBtn15, confirmBtnMax, cancelBtn]);
             return false;
         }
     });
@@ -4182,6 +4350,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
             var totalCostTxt = createElement("p", {
                 innerText:"Throwing this party will cost a total of $0"
             });
+            var confirmBtn;
             var input = createElement("input", {
                 type:"number", margin:"5px", placeholder:"$ / employee",
                 inputListener:()=>{
@@ -4191,9 +4360,13 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         var totalCost = input.value * office.employees.length;
                         totalCostTxt.innerText = "Throwing this party will cost a total of " + numeral(totalCost).format('$0.000a');
                     }
+                },
+                onkeyup:(e)=>{
+                    e.preventDefault();
+                    if (e.keyCode === 13) {confirmBtn.click();}
                 }
             });
-            var confirmBtn = createElement("a", {
+            confirmBtn = createElement("a", {
                 class:"a-link-button",
                 display:"inline-block",
                 innerText:"Throw Party",
@@ -4383,7 +4556,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                         size:WarehouseInitialSize,
                     });
                     this.funds = this.funds.minus(WarehouseInitialCost);
-                    this.updateDivisionContent(division);
+                    this.displayDivisionContent(division, currentCityUi);
                 }
                 return false;
             }
@@ -4411,23 +4584,51 @@ Corporation.prototype.updateDivisionContent = function(division) {
         advertisingInfo =
             "<p class='tooltip'>Advertising Multiplier: x" + formatNumber(totalAdvertisingFac, 3) +
             "<span class='tooltiptext' style='font-size:12px'>Total multiplier for this industry's sales due to its awareness and popularity<br>" +
-            "Awareness Bonus: x" + formatNumber(awarenessFac, 3) + "<br>" +
-            "Popularity Bonus: x" + formatNumber(popularityFac, 3) + "<br>" +
-            "Ratio Multiplier: x" + formatNumber(ratioFac, 3) + "</span></p><br>"
+            "Awareness Bonus: x" + formatNumber(Math.pow(awarenessFac, 0.85), 3) + "<br>" +
+            "Popularity Bonus: x" + formatNumber(Math.pow(popularityFac, 0.85), 3) + "<br>" +
+            "Ratio Multiplier: x" + formatNumber(Math.pow(ratioFac, 0.85), 3) + "</span></p><br>"
 
     }
-    industryOverviewText.innerHTML =
-        "Industry: " + division.type + "<br><br>" +
-        "Awareness: " + formatNumber(division.awareness, 3) + "<br>" +
-        "Popularity: " + formatNumber(division.popularity, 3) +  "<br>" +
-        advertisingInfo + "<br>" +
-        "Revenue: " + numeral(division.lastCycleRevenue.toNumber()).format("$0.000a") + " / s<br>" +
-        "Expenses: " + numeral(division.lastCycleExpenses.toNumber()).format("$0.000a") + " /s<br>" +
-        "Profit: " + profitStr + " / s<br><br>" +
-        "<p class='tooltip'>Production Multiplier: " + formatNumber(division.prodMult, 2) +
-        "<span class='tooltiptext'>Production gain from owning production-boosting materials " +
-        "such as hardware, Robots, AI Cores, and Real Estate</span></p><br>" +
-        "Scientific Research: " + formatNumber(division.sciResearch.qty, 3);
+
+    removeChildrenFromElement(industryOverviewText);
+    industryOverviewText.appendChild(createElement("p", {
+        innerHTML:"Industry: " + division.type + " (Corp Funds: " + numeral(this.funds.toNumber()).format("$0.000a") + ")<br><br>" +
+                  "Awareness: " + formatNumber(division.awareness, 3) + "<br>" +
+                  "Popularity: " + formatNumber(division.popularity, 3) +  "<br>" +
+                  advertisingInfo + "<br>" +
+                  "Revenue: " + numeral(division.lastCycleRevenue.toNumber()).format("$0.000a") + " / s<br>" +
+                  "Expenses: " + numeral(division.lastCycleExpenses.toNumber()).format("$0.000a") + " /s<br>" +
+                  "Profit: " + profitStr + " / s<br><br>"
+    }));
+    industryOverviewText.appendChild(createElement("p", {
+        marginTop:"2px",
+        innerText:"Production Multiplier: " + formatNumber(division.prodMult, 2),
+        tooltip:"Production gain from owning production-boosting materials " +
+                "such as hardware, Robots, AI Cores, and Real Estate"
+    }));
+    industryOverviewText.appendChild(createElement("div", {
+        innerText:"?", class:"help-tip",
+        clickListener:()=>{
+            dialogBoxCreate("Owning Hardware, Robots, AI Cores, and Real Estate " +
+                            "can boost your Industry's production. The effect these " +
+                            "materials have on your production varies between Industries. " +
+                            "For example, Real Estate may be very effective for some Industries, " +
+                            "but ineffective for others.<br><br>" +
+                            "This division's production multiplier is calculated by summing " +
+                            "the individual production multiplier of each of its office locations. " +
+                            "This production multiplier is applied to each office. Therefore, it is " +
+                            "beneficial to expand into new cities as this can greatly increase the " +
+                            "production multiplier of your entire Division."
+                            )
+        }
+    }));
+    industryOverviewText.appendChild(createElement("br"));
+    industryOverviewText.appendChild(createElement("p", {
+        display:"inline-block",
+        innerText:"Scientific Research: " + formatNumber(division.sciResearch.qty, 3),
+        tooltip:"Scientific Research increases the quality of the materials and " +
+                "products that you produce."
+    }));
 
     //Office and Employee List
     var office = division.offices[currentCityUi];
@@ -4491,7 +4692,7 @@ Corporation.prototype.updateDivisionContent = function(division) {
     //Warehouse
     var warehouse = division.warehouses[currentCityUi];
     if (warehouse instanceof Warehouse) {
-        warehouse.createUI({industry:division, company:this});
+        warehouse.updateUI({industry:division, company:this});
     }
 }
 
@@ -4545,7 +4746,13 @@ Corporation.prototype.clearUI = function() {
 
     industryOfficeUpgradeSizeButton = null;
 
-    industryWarehousePanel      = null;
+    industryWarehousePanel              = null;
+    industrySmartSupplyCheckbox         = null;
+    industryWarehouseStorageText        = null;
+    industryWarehouseUpgradeSizeButton  = null;
+    industryWarehouseStateText          = null;
+    industryWarehouseMaterials          = null;
+    industryWarehouseProducts           = null;
 
     companyManagementHeaderTabs = null;
     headerTabs                  = null;
