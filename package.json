@@ -1,37 +1,10 @@
 {
-  "_from": "webpack",
-  "_id": "webpack@3.5.5",
-  "_inBundle": false,
-  "_integrity": "sha512-qeUx4nIbeLL53qqNTs3kObPBMkUVDrOjEfp/hTvMlx21qL2MsGNr8/tXCoX/lS12dLl9qtZaXv2qfBEctPScDg==",
-  "_location": "/webpack",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "webpack",
-    "name": "webpack",
-    "escapedName": "webpack",
-    "rawSpec": "",
-    "saveSpec": null,
-    "fetchSpec": "latest"
-  },
-  "_requiredBy": [
-    "#USER"
-  ],
-  "_resolved": "https://registry.npmjs.org/webpack/-/webpack-3.5.5.tgz",
-  "_shasum": "3226f09fc8b3e435ff781e7af34f82b68b26996c",
-  "_spec": "webpack",
-  "_where": "C:\\Users\\danie",
   "author": {
-    "name": "Tobias Koppers @sokra"
-  },
-  "bin": {
-    "webpack": "./bin/webpack.js"
+    "name": "Daniel Xie"
   },
   "bugs": {
-    "url": "https://github.com/webpack/webpack/issues"
+    "url": "https://github.com/danielyxie/bitburner/issues"
   },
-  "bundleDependencies": false,
   "dependencies": {
     "acorn": "^5.0.0",
     "acorn-dynamic-import": "^2.0.0",
@@ -64,8 +37,7 @@
     "webpack-sources": "^1.0.1",
     "yargs": "^8.0.2"
   },
-  "deprecated": false,
-  "description": "Packs CommonJs/AMD modules for the browser. Allows to split your codebase into multiple bundles, which can be loaded on demand. Support loaders to preprocess files, i.e. json, jsx, es7, css, less, ... and your custom stuff.",
+  "description": "A cyberpunk-themed incremental game",
   "devDependencies": {
     "beautify-lint": "^1.0.3",
     "benchmark": "^2.1.1",
@@ -104,28 +76,20 @@
     "url-loader": "~0.5.0",
     "val-loader": "^1.0.2",
     "vm-browserify": "~0.0.0",
-    "webpack-cli": "^2.0.9",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12",
     "webpack-dev-middleware": "^1.9.0",
     "worker-loader": "^0.8.0"
   },
   "engines": {
     "node": ">=4.3.0 <5.0.0 || >=5.10"
   },
-  "files": [
-    "lib/",
-    "bin/",
-    "buildin/",
-    "hot/",
-    "web_modules/",
-    "schemas/"
-  ],
-  "homepage": "https://github.com/webpack/webpack",
-  "license": "MIT",
-  "main": "lib/webpack.js",
-  "name": "webpack",
+  "homepage": "https://github.com/danielyxie/bitburner",
+  "license": "SEE LICENSE IN license.txt",
+  "name": "bitburner",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webpack/webpack.git"
+    "url": "git+https://github.com/danielyxie/bitburner.git"
   },
   "scripts": {
     "appveyor:benchmark": "npm run benchmark",
@@ -148,6 +112,5 @@
     "travis:lint": "npm run lint-files && npm run nsp",
     "travis:test": "npm run cover:min"
   },
-  "version": "3.5.5",
-  "web": "lib/webpack.web.js"
+  "version": "0.35.1"
 }
