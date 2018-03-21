@@ -76,7 +76,8 @@
     "url-loader": "~0.5.0",
     "val-loader": "^1.0.2",
     "vm-browserify": "~0.0.0",
-    "webpack-cli": "^2.0.9",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12",
     "webpack-dev-middleware": "^1.9.0",
     "worker-loader": "^0.8.0"
   },
