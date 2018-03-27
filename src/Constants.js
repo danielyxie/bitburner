@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.35.1",
+    Version:                "0.35.2",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -1138,28 +1138,25 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.35.1<br>" +
-    "* You can now easily download all of your scripts/text files as zip folders. Use the 'help download' Terminal command for details<br>" +
-    "* Scripts are now downloaded with the .script.js extension at the end of their filename<br>" +
-    "* Corporation Management Changes:<br>" +
-    "*** Implemented Smart Supply unlock<br>" +
-    "*** Changed the way a division's Production Multiplier is calculated. It is now the sum of the individual Production Multiplier " +
-    "for every city. Therefore, it is now beneficial to open offices in different cities<br." +
-    "*** The breakdown of what is taking up Warehouse space is now listed as a tooltip<br>" +
-    "*** Several small UI/UX improvements<br>" +
-    "*** Numerous balance changes. The significant ones are listed below.<br>" +
-    "*** Product descriptions will now display their estimated market price<br>" +
-    "*** The sale price of Products can no longer be marked up as high as before<br>" +
-    "*** Scientific Research now affects the rating of Products<br>" +
-    "*** In general, the maximum amount of product you are able to sell is reduced<br>" +
-    "*** Sale bonus from advertising (popularity/awareness) now has diminishing returns rather than scaling linearly<br>" +
-    "* Experience gained during Infiltration now scales linearly based on the clearance level you reach. Compared to before, " +
-    "the experience gained will be much less at lower clearance levels, but much more at higher clearance levels<br>" +
-    "* The editor can now be used to edit both scripts and text files<br>" +
-    "* New Terminal config file that can be edited using the command 'nano .fconf'. Right now there is only one option, but there " +
-    "will be more in the future.<br>" +
-    "* You can now enable Bash-style Terminal hotkeys using the .fconf file referenced above<br>" +
-    "* Bug Fix: Fixed an issue with the UI elements of Gang Management persisting across different instances of BitNode-2"
+    "v0.35.2<br>" +
+    "* Corporation Changes: <br>" +
+    "*** Fixed an issue with Warehouse upgrade cost. Should now be significantly cheaper than before.<br>" +
+    "*** Scientific Research now has a slightly more significant effect on Product quality<br>" +
+    "*** The Energy and Water Utilities industries are now slightly more profitable<br>" +
+    "*** The Robotics and Computer Hardware industries are now less profitable<br>" +
+    "*** The Software industry is slightly less profitable<br>" +
+    "*** When selling Materials and Products, the 'PROD' qualifier can now be used " +
+    "to set dynamic sell amounts based on your production<br>" +
+    "*** Exporting MAX should now work properly<br>" +
+    "*** You can no longer export past storage limits<br>" +
+    "*** Scientific Research production reduced<br>" +
+    "*** Effects of AdVert. Inc upgrade were reduced, but the effect that popularity and " +
+    "awareness have on sales was increased to compensate (popularity/awareness numbers were getting " +
+    "too big with Advert. Inc)<br>" +
+    "*** Bug Fix: Products from Computer Hardware division should now properly have ratings<br>" +
+    "* Improved Augmentation UI/UX. Now contains collapsible headers and sort buttons<br>" +
+    "* Improved Faction Augmentations display UI/UX. Now contains sort buttons. There is also an option " +
+    "to disable confirmation when purchasing Augmentations<br>"
 }
 
 export {CONSTANTS};

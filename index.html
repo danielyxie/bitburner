@@ -428,11 +428,7 @@
             </li>
 		</ul>
 
-        <ul id="generic-locations-list">
-			<li id="generic-location-wse-li">
-				<a id="generic-location-wse" class="a-link-button">World Stock Exchange</a>
-			</li>
-		</ul>
+        <ul id="generic-locations-list"></ul>
 	</div>
 
 	<!-- Create a program(executable) -->
@@ -447,144 +443,15 @@
 	</div>
 
 	<!-- Factions -->
-	<div id="factions-container" class="generic-menupage-container">
-		<h1> Factions </h1>
-		<p> Lists all factions you have joined </p>
-		<ul class="factions-list" id="factions-list"></ul>
-        <br><br>
-        <h1> Outstanding Faction Invitations </h1>
-        <p style="width:70%;"> Lists factions you have been invited to, as well as factions you have previously rejected.
-            You can accept these faction invitations at any times </p>
-        <ul class="factions-list" id="outstanding-faction-invitations-list"></ul>
-	</div>
+	<div id="factions-container" class="generic-menupage-container"></div>
 
 	<!-- Single Faction info (when you select a faction from the Factions menu) -->
-	<div id="faction-container" class="generic-menupage-container">
-		<h1 id="faction-name"></h1>
-		<pre id="faction-info"></pre>
-		<p> --------------- </p>
-		<p id="faction-reputation" class="tooltip"></p>
-        <p> --------------- </p>
-        <p id="faction-favor" class="tooltip"></p>
-		<p> --------------- </p>
-		<p id="faction-work-description-text">
-		Perform work/carry out assignments for your faction to help further its cause! By doing so
-        you will earn reputation for your faction. You will also gain reputation passively over time,
-        although at a very slow rate. Earning reputation will allow you to purchase Augmentations
-        through this faction, which are powerful upgrades that enhance your abilities. Note that you cannot
-		use your terminal or create scripts when you are performing a task! <br><br><br><br>
-		</p>
+	<div id="faction-container" class="generic-menupage-container"></div>
 
-        <div id="faction-hack-mission-div" class="faction-work-div">
-            <div id="faction-hack-mission-div-wrapper" class="faction-work-div-wrapper">
-                <a id="faction-hack-mission-button" class="a-link-button">Hacking Mission</a>
-                <p id="faction-hack-mission-text">
-                    Attempt a hacking mission for your faction.
-                    A mission is a mini game that, if won, earns you significant reputation with this faction. (Recommended hacking level: 200+)
-                </p>
-            </div>
-            <div class="faction-clear"></div>
-		</div>
-
-		<div id="faction-hack-div" class="faction-work-div">
-            <div id="faction-hack-div-wrapper" class="faction-work-div-wrapper">
-                <a id="faction-hack-button" class="a-link-button">Hacking Contracts</a>
-                <p id="faction-hack-text">
-                    Complete hacking contracts for your faction.
-                    Your effectiveness, which determines how much reputation you gain for this faction, is based on your hacking skill.
-                    You will gain hacking exp.
-                </p>
-            </div>
-            <div class="faction-clear"></div>
-		</div>
-
-		<div id="faction-fieldwork-div" class="faction-work-div">
-            <div id="faction-fieldwork-div-wrapper" class="faction-work-div-wrapper">
-                <a id="faction-fieldwork-button" class="a-link-button">Field Work</a>
-                <p id="faction-fieldwork-text">
-                    Carry out field missions for your faction.
-                    Your effectiveness, which determines how much reputation you gain for this faction, is based on all of your stats.
-                    You will gain exp for all stats.
-                </p>
-            </div>
-            <div class="faction-clear"></div>
-		</div>
-
-		<div id="faction-securitywork-div" class="faction-work-div">
-            <div id="faction-securitywork-div-wrapper" class="faction-work-div-wrapper">
-                <a id="faction-securitywork-button" class="a-link-button">Security Work</a>
-                <p id="faction-securitywork-text">
-                    Serve in a security detail for your faction.
-                    Your effectiveness, which determines how much reputation you gain for this faction, is based on your combat stats.
-                    You will gain exp for all combat stats.
-                </p>
-            </div>
-            <div class="faction-clear"></div>
-		</div>
-
-        <div id="faction-donate-div" class="faction-work-div">
-            <div id="faction-donate-div-wrapper" class="faction-work-div-wrapper">
-                <a id="faction-donate-button" class="a-link-button">Donate Money</a>
-                <p id="faction-donate-text">
-                    Donate money to your faction. You will gain reputation based on how much money you donate
-                </p>
-                <div>
-                    <label id="faction-donate-amount-txt">Enter amount to donate: $</label>
-                    <input id="faction-donate-input" type="number"> </input>
-                </div>
-                <p id="faction-donate-rep-gain"> This donation will result in 0 reputation gain</p>
-
-            </div>
-            <div class="faction-clear"></div>
-		</div>
-
-        <p>
-            <br>
-            As your reputation with this faction rises, you will unlock Augmentations, which you
-            can purchase to enhance your abilities.
-            <br><br>
-        </p>
-        <a id="faction-purchase-augmentations" class="a-link-button">Purchase Augmentations</a>
-        <br><br><br><br>
-	</div>
-
-    <div id="faction-augmentations-container" class="generic-menupage-container">
-        <a id="faction-augmentations-back-button" class="a-link-button"> Back </a>
-		<h1> Faction Augmentations </h1>
-		<p id="faction-augmentations-page-desc"> Lists all augmentations that are available to purchase from </p>
-
-		<ul class="faction-augmentations-list" id="faction-augmentations-list">
-		</ul>
-    </div>
+    <div id="faction-augmentations-container" class="generic-menupage-container"></div>
 
 	<!-- Augmentations -->
-	<div id="augmentations-container" class="generic-menupage-container">
-        <h1> Purchased Augmentations </h1>
-        <p style="width:70%;">
-        Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them.
-        <br>WARNING: Installing your Augmentations resets most of your progress, including: <br><br>
-                Stats/Skill levels and Experience <br>
-                Money <br>
-                Scripts on every computer but your home computer<br>
-                Purchased servers <br>
-                Hacknet Nodes <br>
-                Faction/Company reputation <br>
-                Stocks<br><br>
-                Installing Augmentations lets you start over with the perks and benefits granted by all
-                of the Augmentations you have ever installed. Also, you will keep any scripts and RAM/Core upgrades
-                on your home computer (but you will lose all programs besides NUKE.exe).
-        </p>
-        <br><br>
-        <ul id="queued-augmentations-list"></ul>
-        <br>
-        <a id="install-augmentations-button" class="a-link-button"> Install Augmentations </a>
-        <a id="install-augmentations-backup-button" class="a-link-button"> Backup Save (Export) </a>
-        <br><br>
-        <h1> Installed Augmentations </h1>
-        <p style="width:70%;"> List of all augmentations (including Source Files) that have been installed. You have gained the effects of these augmentations </p>
-        <ul id="augmentations-list">
-        </ul>
-	</div>
+	<div id="augmentations-container" class="generic-menupage-container"></div>
 
 	<!-- Tutorial content -->
 	<div id="tutorial-container" class="generic-menupage-container">

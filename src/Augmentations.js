@@ -1,12 +1,16 @@
 import {BitNodeMultipliers}                             from "./BitNode.js";
 import {CONSTANTS}                                      from "./Constants.js";
+import {Engine}                                         from "./engine.js";
 import {Factions, getNextNeurofluxLevel}                from "./Faction.js";
 import {addWorkerScript}                                from "./NetscriptWorker.js";
 import {Player}                                         from "./Player.js";
 import {prestigeAugmentation}                           from "./Prestige.js";
 import {Script, RunningScript}                          from "./Script.js";
 import {Server}                                         from "./Server.js";
+import {SourceFiles}                                    from "./SourceFile.js";
 import {dialogBoxCreate}                                from "../utils/DialogBox.js";
+import {createElement, createAccordionElement,
+        removeChildrenFromElement}                      from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver.js";
 import {isString}                                       from "../utils/StringHelperFunctions.js";
@@ -2083,5 +2087,172 @@ function giveAllAugmentations() {
     Player.reapplyAllAugmentations();
 }
 
+function displayAugmentationsContent() {
+    removeChildrenFromElement(Engine.Display.augmentationsContent);
+    Engine.Display.augmentationsContent.appendChild(createElement("h1", {
+        innerText:"Purchased Augmentations",
+    }));
+
+    Engine.Display.augmentationsContent.appendChild(createElement("pre", {
+        width:"70%", whiteSpace:"pre-wrap", display:"block",
+        innerText:"Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them.\n" +
+                  "WARNING: Installing your Augmentations resets most of your progress, including:\n\n" +
+                  "Stats/Skill levels and Experience\n" +
+                  "Money\n" +
+                  "Scripts on every computer but your home computer\n" +
+                  "Purchased servers\n" +
+                  "Hacknet Nodes\n" +
+                  "Faction/Company reputation\n" +
+                  "Stocks\n\n" +
+                  "Installing Augmentations lets you start over with the perks and benefits granted by all " +
+                  "of the Augmentations you have ever installed. Also, you will keep any scripts and RAM/Core upgrades " +
+                  "on your home computer (but you will lose all programs besides NUKE.exe)."
+    }));
+
+    //Install Augmentations button
+    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+        class:"a-link-button", innerText:"Install Augmentations",
+        tooltip:"'I never asked for this'",
+        clickListener:()=>{
+            installAugmentations();
+            return false;
+        }
+    }));
+
+    //Backup button
+    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+        class:"a-link-button flashing-button", innerText:"Backup Save (Export)",
+        tooltip:"It's always a good idea to backup/export your save!",
+        clickListener:()=>{
+            saveObject.exportGame();
+            return false;
+        }
+    }));
+
+    //Purchased/queued augmentations list
+    var queuedAugmentationsList = createElement("ul", {class:"augmentations-list"});
+
+    for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
+        var augName = Player.queuedAugmentations[i].name;
+        var aug = Augmentations[augName];
+
+        var displayName = augName;
+        if (augName === AugmentationNames.NeuroFluxGovernor) {
+            displayName += " - Level " + (Player.queuedAugmentations[i].level);
+        }
+
+        var accordion = createAccordionElement({hdrText:displayName, panelText:aug.info});
+        queuedAugmentationsList.appendChild(accordion[0]);
+    }
+    Engine.Display.augmentationsContent.appendChild(queuedAugmentationsList);
+
+    //Installed augmentations list
+    Engine.Display.augmentationsContent.appendChild(createElement("h1", {
+        innerText:"Installed Augmentations", marginTop:"8px",
+    }));
+    Engine.Display.augmentationsContent.appendChild(createElement("p", {
+        width:"70%", whiteSpace:"pre-wrap",
+        innerText:"List of all Augmentations (including Source Files) that have been " +
+                  "installed. You have gained the effects of these Augmentations."
+    }));
+
+    var augmentationsList = createElement("ul", {class:"augmentations-list"});
+
+    //Expand/Collapse All buttons
+    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+        class:"a-link-button", fontSize:"14px", innerText:"Expand All", display:"inline-block",
+        clickListener:()=>{
+            var allHeaders = augmentationsList.getElementsByClassName("accordion-header");
+            for (var i = 0; i < allHeaders.length; ++i) {
+                if (!allHeaders[i].classList.contains("active")) {allHeaders[i].click();}
+            }
+        }
+    }));
+    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+        class:"a-link-button", fontSize:"14px", innerText:"Collapse All", display:"inline-block",
+        clickListener:()=>{
+            var allHeaders = augmentationsList.getElementsByClassName("accordion-header");
+            for (var i = 0; i < allHeaders.length; ++i) {
+                if (allHeaders[i].classList.contains("active")) {allHeaders[i].click();}
+            }
+        }
+    }));
+
+    //Sort Buttons
+    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+        class:"a-link-button", fontSize:"14px", innerText:"Sort in Order",
+        tooltip:"Sorts the Augmentations alphabetically and Source Files in numerical order (1, 2, 3,...)",
+        clickListener:()=>{
+            removeChildrenFromElement(augmentationsList);
+
+            //Create a copy of Player's Source Files and augs array and sort them
+            var sourceFiles = Player.sourceFiles.slice();
+            var augs = Player.augmentations.slice();
+            sourceFiles.sort((sf1, sf2)=>{
+                return sf1.n - sf2.n;
+            });
+            augs.sort((aug1, aug2)=>{
+                return aug1.name <= aug2.name ? -1 : 1;
+            });
+            displaySourceFiles(augmentationsList, sourceFiles);
+            displayAugmentations(augmentationsList, augs);
+        }
+    }));
+
+    Engine.Display.augmentationsContent.appendChild(createElement("a", {
+        class:"a-link-button", fontSize:"14px", innerText:"Sort by Acquirement Time",
+        tooltip:"Sorts the Augmentations and Source Files based on when you acquired them (same as default)",
+        clickListener:()=>{
+            removeChildrenFromElement(augmentationsList);
+            displaySourceFiles(augmentationsList, Player.sourceFiles);
+            displayAugmentations(augmentationsList, Player.augmentations);
+        }
+    }));
+
+    //Source Files - Temporary...Will probably put in a separate pane Later
+    displaySourceFiles(augmentationsList, Player.sourceFiles);
+    displayAugmentations(augmentationsList, Player.augmentations);
+    Engine.Display.augmentationsContent.appendChild(augmentationsList);
+}
+
+//Creates the accordion elements to display Augmentations
+//  @listElement - List DOM element to append accordion elements to
+//  @augs - Array of Augmentation objects
+function displayAugmentations(listElement, augs) {
+    for (var i = 0; i < augs.length; ++i) {
+        var augName = augs[i].name;
+        var aug = Augmentations[augName];
+
+        var displayName = augName;
+        if (augName === AugmentationNames.NeuroFluxGovernor) {
+            displayName += " - Level " + (augs[i].level);
+        }
+        var accordion = createAccordionElement({hdrText:displayName, panelText:aug.info});
+        listElement.appendChild(accordion[0]);
+    }
+}
+
+//Creates the accordion elements to display Source Files
+//  @listElement - List DOM element to append accordion elements to
+//  @sourceFiles - Array of Source File objects
+function displaySourceFiles(listElement, sourceFiles) {
+    for (var i = 0; i < sourceFiles.length; ++i) {
+        var srcFileKey = "SourceFile" + sourceFiles[i].n;
+        var sourceFileObject = SourceFiles[srcFileKey];
+        if (sourceFileObject == null) {
+            console.log("ERROR: Invalid source file number: " + sourceFiles[i].n);
+            continue;
+        }
+        var accordion = createAccordionElement({
+            hdrText:sourceFileObject.name + "<br>" + "Level " + (sourceFiles[i].lvl) + " / 3",
+            panelText:sourceFileObject.info
+        });
+
+        listElement.appendChild(accordion[0]);
+    }
+}
+
+
 export {AugmentationNames, Augmentations, PlayerOwnedAugmentation, installAugmentations,
-        initAugmentations, applyAugmentation, augmentationExists, Augmentation};
+        initAugmentations, applyAugmentation, augmentationExists, Augmentation,
+        displayAugmentationsContent};

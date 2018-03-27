@@ -69,6 +69,8 @@ var OfficeUpgradeBaseCost       = 1e9;
 var BribeThreshold              = 100e12; //Money needed to be able to bribe for faction rep
 var BribeToRepRatio             = 1e9;   //Bribe Value divided by this = rep gain
 
+var ProductProductionCostRatio  = 5;    //Ratio of material cost of a product to its production cost
+
 function Material(params={}) {
     this.name = params.name ? params.name : "";
     this.qty    = 0; //Quantity
@@ -90,6 +92,7 @@ function Material(params={}) {
     this.sll = 0; //How much of this material is being sold per second
     this.prd = 0; //How much of this material is being produced per second
     this.exp = []; //Exports of this material to another warehouse/industry
+    this.totalExp = 0; //Total export amount for last cycle
     this.imp = 0;
     this.bCost = 0; //$ Cost/sec to buy material
     this.sCost = 0; //$ Cost/sec to sell material
@@ -323,7 +326,7 @@ Product.prototype.finishProduct = function(employeeProd, industry) {
     console.log("designMult: " + designMult);
     var balanceMult = (1.2 * engrRatio) + (0.9 * mgmtRatio) + (1.3 * rndRatio) +
                       (1.5 * opsRatio) + (busRatio);
-    var sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 1000);
+    var sciMult = 1 + (Math.pow(industry.sciResearch.qty, industry.sciFac) / 800);
     var totalMult = progrMult * balanceMult * designMult * sciMult;
 
     this.qlt = totalMult * ((0.10 * employeeProd[EmployeePositions.Engineer]) +
@@ -358,7 +361,7 @@ Product.prototype.finishProduct = function(employeeProd, industry) {
                             (0.05 * employeeProd[EmployeePositions.Business]));
     this.calculateRating(industry);
     var advMult = 1 + (Math.pow(this.advCost, 0.1) / 100);
-    this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.6) * (busRatio + mgmtRatio));
+    this.mku = 100 / (advMult * Math.pow((this.qlt + 0.001), 0.65) * (busRatio + mgmtRatio));
     this.dmd = industry.awareness === 0 ? 20 : Math.min(100, advMult * (100 * (industry.popularity / industry.awareness)));
     this.cmp = getRandomInt(0, 70);
 
@@ -516,6 +519,14 @@ var ProductRatingWeights = {
         Aesthetics:     0.05,
         Features:       0.1,
     },
+    "Computer" : {  //Repeat
+        Quality:        0.15,
+        Performance:    0.25,
+        Durability:     0.25,
+        Reliability:    0.2,
+        Aesthetics:     0.05,
+        Features:       0.1,
+    },
     [Industries.Robotics]: {
         Quality:        0.1,
         Performance:    0.2,
@@ -553,11 +564,11 @@ var ProductRatingWeights = {
 var IndustryUpgrades = {
     "0":    [0, 500e3, 1, 1.05,
             "Coffee", "Provide your employees with coffee, increasing their energy by 5%."],
-    "1":    [1, 1e9, 1.05, 1.03,
+    "1":    [1, 1e9, 1.06, 1.03,
             "AdVert.Inc", "Hire AdVert.Inc to advertise your company. Each level of " +
-            "this upgrade grants your company a static increase of 4 and 1 to its awareness and " +
+            "this upgrade grants your company a static increase of 3 and 1 to its awareness and " +
             "popularity, respectively. It will then increase your company's awareness by 1%, and its popularity " +
-            "by a random percentage between 2% and 4%. These effects are increased by other upgrades " +
+            "by a random percentage between 1% and 3%. These effects are increased by other upgrades " +
             "that increase the power of your advertising."]
 }
 
@@ -645,28 +656,28 @@ Industry.prototype.init = function() {
             this.sciFac = 0.7;
             this.robFac = 0.05;
             this.aiFac  = 0.3;
-            this.advFac = 0.07;
+            this.advFac = 0.08;
             this.reqMats = {
                 "Hardware": 0.1,
-                "Metal":    0.25,
+                "Metal":    0.2,
             };
             this.prodMats = ["Energy"];
             break;
         case Industries.Utilities:
         case "Utilities":
-            this.reFac  = 0.4;
+            this.reFac  = 0.5;
             this.sciFac = 0.6;
-            this.robFac = 0.3;
-            this.aiFac  = 0.3;
-            this.advFac = 0.07;
+            this.robFac = 0.4;
+            this.aiFac  = 0.4;
+            this.advFac = 0.08;
             this.reqMats = {
                 "Hardware": 0.1,
-                "Metal":    0.2,
+                "Metal":    0.1,
             }
             this.prodMats = ["Water"];
             break;
         case Industries.Agriculture:
-            this.reFac  = 0.8;
+            this.reFac  = 0.75;
             this.sciFac = 0.5;
             this.hwFac  = 0.2;
             this.robFac = 0.3;
@@ -684,7 +695,7 @@ Industry.prototype.init = function() {
             this.hwFac  = 0.35;
             this.robFac = 0.5;
             this.aiFac  = 0.2;
-            this.advFac = 0.06;
+            this.advFac = 0.08;
             this.reqMats = {
                 "Energy":   0.5,
             }
@@ -692,11 +703,11 @@ Industry.prototype.init = function() {
             break;
         case Industries.Mining:
             this.reFac  = 0.3;
-            this.sciFac = 0.25;
+            this.sciFac = 0.26;
             this.hwFac  = 0.4;
-            this.robFac = 0.5;
-            this.aiFac  = 0.5;
-            this.advFac = 0.04;
+            this.robFac = 0.45;
+            this.aiFac  = 0.45;
+            this.advFac = 0.06;
             this.reqMats = {
                 "Energy":   0.8,
             }
@@ -736,7 +747,7 @@ Industry.prototype.init = function() {
             this.hwFac  = 0.2;
             this.robFac = 0.25;
             this.aiFac  = 0.2;
-            this.advFac = 0.05;
+            this.advFac = 0.07;
             this.reqMats = {
                 "Plants":   1,
                 "Energy":   0.5,
@@ -750,7 +761,7 @@ Industry.prototype.init = function() {
             this.hwFac  = 0.15;
             this.robFac = 0.25;
             this.aiFac  = 0.2;
-            this.advFac = 0.15;
+            this.advFac = 0.16;
             this.reqMats = {
                 "Chemicals":    2,
                 "Energy":       1,
@@ -762,9 +773,9 @@ Industry.prototype.init = function() {
         case Industries.Computer:
         case "Computer":
             this.reFac  = 0.2;
-            this.sciFac = 0.65;
-            this.robFac = 0.4;
-            this.aiFac  = 0.2;
+            this.sciFac = 0.62;
+            this.robFac = 0.36;
+            this.aiFac  = 0.19;
             this.advFac = 0.17;
             this.reqMats = {
                 "Metal":    2.5,
@@ -774,11 +785,11 @@ Industry.prototype.init = function() {
             this.makesProducts = true;
             break;
         case Industries.Robotics:
-            this.reFac  = 0.35;
-            this.sciFac = 0.7;
-            this.aiFac  = 0.4;
-            this.advFac = 0.2;
-            this.hwFac  = 0.2;
+            this.reFac  = 0.32;
+            this.sciFac = 0.65;
+            this.aiFac  = 0.36;
+            this.advFac = 0.18;
+            this.hwFac  = 0.19;
             this.reqMats = {
                 "Hardware":     5,
                 "Energy":       3,
@@ -787,7 +798,7 @@ Industry.prototype.init = function() {
             this.makesProducts = true;
             break;
         case Industries.Software:
-            this.sciFac = 0.65;
+            this.sciFac = 0.62;
             this.advFac = 0.16;
             this.hwFac  = 0.25;
             this.reFac  = 0.1;
@@ -801,9 +812,9 @@ Industry.prototype.init = function() {
             this.makesProducts = true;
             break;
         case Industries.Healthcare:
-            //reFac is unique for this bc it diminishes greatly per city. Handle this separately in code?
+            this.reFac  = 0.1;
             this.sciFac = 0.75;
-            this.advFac = 0.1;
+            this.advFac = 0.11;
             this.hwFac  = 0.1;
             this.robFac = 0.1;
             this.aiFac  = 0.1;
@@ -904,8 +915,8 @@ Industry.prototype.updateWarehouseSizeUsed = function(warehouse) {
         if (this.products.hasOwnProperty(prodName)) {
             var prod = this.products[prodName];
             warehouse.sizeUsed += (prod.data[warehouse.loc][0] * prod.siz);
-            if (prod.data[warehouse.loc][0] > 0 && warehouse.loc === currentCityUi) {
-                industryWarehouseStorageBreakdownText += (prodName + ": " + formatNumber(prod.data[warehouse.loc][0] * prod.siz, 0) + "<br>");
+            if (prod.data[warehouse.loc][0] > 0) {
+                warehouse.breakdown += (prodName + ": " + formatNumber(prod.data[warehouse.loc][0] * prod.siz, 0) + "<br>");
             }
         }
     }
@@ -1029,6 +1040,24 @@ Industry.prototype.processProductMarket = function(marketCycles=1) {
 Industry.prototype.processMaterials = function(marketCycles=1, company) {
     var revenue = 0, expenses = 0, industry = this;
     this.calculateProductionFactors();
+
+    //At the start of the export state, set the imports of everything to 0
+    if (this.state === "EXPORT") {
+        for (var i = 0; i < Cities.length; ++i) {
+            var city = Cities[i], office = this.offices[city];
+            if (!(this.warehouses[city] instanceof Warehouse)) {
+                continue;
+            }
+            var warehouse = this.warehouses[city];
+            for (var matName in warehouse.materials) {
+                if (warehouse.materials.hasOwnProperty(matName)) {
+                    var mat = warehouse.materials[matName];
+                    mat.imp = 0;
+                }
+            }
+        }
+    }
+
     for (var i = 0; i < Cities.length; ++i) {
         var city = Cities[i], office = this.offices[city];
 
@@ -1102,6 +1131,8 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                     var maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / totalMatSize);
                     prod = Math.min(maxAmt, prod);
                 }
+
+                if (prod < 0) {prod = 0;}
 
                 //Keep track of production for smart supply (/s)
                 warehouse.smartSupplyStore += (prod / (SecsPerMarketCycle * marketCycles));
@@ -1202,16 +1233,32 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                                   company.getSalesMultiplier() * advertisingFactor;
 
                     var sellAmt;
-                    if (mat.sllman[1] !== -1) {
-                        //Sell amount is manually limited
-                        sellAmt = Math.min(maxSell, mat.sllman[1]);
-                    } else {
+                    if (isString(mat.sllman[1])) {
+                        //Dynamically evaluated
+                        var tmp = mat.sllman[1].replace(/MAX/g, maxSell);
+                        tmp = tmp.replace(/PROD/g, mat.prd);
+                        try {
+                            sellAmt = eval(tmp);
+                        } catch(e) {
+                            dialogBoxCreate("Error evaluating your sell amount for material " + mat.name +
+                                            " in " + this.name + "'s " + city + " office. The sell amount " +
+                                            "is being set to zero");
+                            sellAmt = 0;
+                        }
+                        sellAmt = Math.min(maxSell, sellAmt);
+                    } else if (mat.sllman[1] === -1) {
+                        //Backwards compatibility, -1 = MAX
                         sellAmt = maxSell;
+                    } else {
+                        //Player's input value is just a number
+                        sellAmt = Math.min(maxSell, mat.sllman[1]);
                     }
+
                     sellAmt = (sellAmt * SecsPerMarketCycle * marketCycles);
                     sellAmt = Math.min(mat.qty, sellAmt);
                     if (sellAmt < 0) {
-                        console.log("ERROR: sellAmt is negative");
+                        console.log("sellAmt calculated to be negative");
+                        mat.sll = 0;
                         continue;
                     }
                     if (sellAmt && sCost >= 0) {
@@ -1229,10 +1276,26 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                 for (var matName in warehouse.materials) {
                     if (warehouse.materials.hasOwnProperty(matName)) {
                         var mat = warehouse.materials[matName];
+                        mat.totalExp = 0; //Reset export
                         for (var expI = 0; expI < mat.exp.length; ++expI) {
                             var exp = mat.exp[expI];
-                            var amt = exp.amt * SecsPerMarketCycle * marketCycles;
-                            if (mat.qty <= amt) {
+                            var amt = exp.amt.replace(/MAX/g, mat.qty / (SecsPerMarketCycle * marketCycles));
+                            try {
+                                amt = eval(amt);
+                            } catch(e) {
+                                dialogBoxCreate("Calculating export for " + mat.name + " in " +
+                                                this.name +  "'s " + city + " division failed with " +
+                                                "error: " + e);
+                                continue;
+                            }
+                            if (isNaN(amt)) {
+                                dialogBoxCreate("Error calculating export amount for " + mat.name +  " in " +
+                                                this.name + "'s " + city + " division.");
+                                continue;
+                            }
+                            amt = amt * SecsPerMarketCycle * marketCycles;
+
+                            if (mat.qty < amt) {
                                 amt = mat.qty;
                             }
                             if (amt === 0) {
@@ -1246,12 +1309,26 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
                                         console.log("ERROR: Invalid export! " + expIndustry.name + " "  + exp.city);
                                         break;
                                     }
+
+                                    //Make sure theres enough space in warehouse
+                                    if (expWarehouse.sizeUsed >= expWarehouse.size) {
+                                        return; //Warehouse at capacity
+                                    } else {
+                                        var maxAmt = Math.floor((expWarehouse.size - expWarehouse.sizeUsed) / MaterialSizes[matName]);
+                                        amt = Math.min(maxAmt, amt);
+                                    }
+                                    expWarehouse.materials[matName].imp += (amt / (SecsPerMarketCycle * marketCycles));
                                     expWarehouse.materials[matName].qty += amt;
+                                    expWarehouse.materials[matName].qlt = mat.qlt;
                                     mat.qty -= amt;
+                                    mat.totalExp += amt;
+                                    expIndustry.updateWarehouseSizeUsed(expWarehouse);
                                     break;
                                 }
                             }
                         }
+                        //totalExp should be per second
+                        mat.totalExp /= (SecsPerMarketCycle * marketCycles);
                     }
                 }
 
@@ -1270,7 +1347,7 @@ Industry.prototype.processMaterials = function(marketCycles=1, company) {
         //Produce Scientific Research based on R&D employees
         //Scientific Research can be produced without a warehouse
         if (office instanceof OfficeSpace) {
-            this.sciResearch.qty += (.01 * Math.pow(office.employeeProd[EmployeePositions.RandD], 0.5)
+            this.sciResearch.qty += (.005 * Math.pow(office.employeeProd[EmployeePositions.RandD], 0.5)
                                      * company.getScientificResearchMultiplier());
         }
     }
@@ -1397,32 +1474,53 @@ Industry.prototype.processProduct = function(marketCycles=1, product, corporatio
             }
 
             //Since its a product, its production cost is increased for labor
-            product.pCost *= 3;
+            product.pCost *= ProductProductionCostRatio;
+
+            //Calculate Sale Cost (sCost), which could be dynamically evaluated
+            var sCost;
+            if (isString(product.sCost)) {
+                sCost = product.sCost.replace(/MP/g, product.pCost + product.rat / product.mku);
+                sCost = eval(sCost);
+            } else {
+                sCost = product.sCost;
+            }
 
             var markup = 1, markupLimit = product.rat / product.mku;
-            if (product.sCost > product.pCost) {
-                if ((product.sCost - product.pCost) > markupLimit) {
-                    markup = markupLimit / (product.sCost - product.pCost);
+            if (sCost > product.pCost) {
+                if ((sCost - product.pCost) > markupLimit) {
+                    markup = markupLimit / (sCost - product.pCost);
                 }
             }
-            //var businessFactor = 1 + (office.employeeProd[EmployeePositions.Business] / office.employeeProd["total"]);
             var businessFactor = this.getBusinessFactor(office);        //Business employee productivity
             var advertisingFactor = this.getAdvertisingFactors()[0];    //Awareness + popularity
             var marketFactor = this.getMarketFactor(product);        //Competition + demand
             var maxSell = 0.5 * Math.pow(product.rat, 0.65) * marketFactor * corporation.getSalesMultiplier() *
                           Math.pow(markup, 2) * businessFactor * advertisingFactor;
             var sellAmt;
-            if (product.sllman[city][0] && product.sllman[city][1] > 0) {
+            if (product.sllman[city][0] && isString(product.sllman[city][1])) {
+                //Sell amount is dynamically evaluated
+                var tmp = product.sllman[city][1].replace(/MAX/g, maxSell);
+                tmp = tmp.replace(/PROD/g, product.data[city][1]);
+                try {
+                    tmp = eval(tmp);
+                } catch(e) {
+                    dialogBoxCreate("Error evaluating your sell price expression for " + product.name +
+                                    " in " + this.name + "'s " + city + " office. Sell price is being set to MAX");
+                    tmp = maxSell;
+                }
+                sellAmt = Math.min(maxSell, tmp);
+            } else if (product.sllman[city][0] && product.sllman[city][1] > 0) {
                 //Sell amount is manually limited
                 sellAmt = Math.min(maxSell, product.sllman[city][1]);
             } else {
+                //Backwards compatibility, -1 = 0
                 sellAmt = maxSell;
             }
             sellAmt = sellAmt * SecsPerMarketCycle * marketCycles;
             sellAmt = Math.min(product.data[city][0], sellAmt); //data[0] is qty
-            if (sellAmt && product.sCost) {
+            if (sellAmt && sCost) {
                 product.data[city][0] -= sellAmt; //data[0] is qty
-                totalProfit += (sellAmt * product.sCost);
+                totalProfit += (sellAmt * sCost);
                 product.data[city][2] = sellAmt / (SecsPerMarketCycle * marketCycles); //data[2] is sell property
             } else {
                 product.data[city][2] = 0; //data[2] is sell property
@@ -1470,10 +1568,10 @@ Industry.prototype.upgrade = function(upgrade, refs) {
             break;
         case 1: //AdVert.Inc,
             var advMult = corporation.getAdvertisingMultiplier();
-            this.awareness += (4 * advMult);
+            this.awareness += (3 * advMult);
             this.popularity += (1 * advMult);
             this.awareness *= (1.01 * advMult);
-            this.popularity *= ((1 + getRandomInt(2, 4) / 100) * advMult);
+            this.popularity *= ((1 + getRandomInt(1, 3) / 100) * advMult);
             break;
         default:
             console.log("ERROR: Un-implemented function index: " + upgN);
@@ -1507,7 +1605,7 @@ Industry.prototype.getBusinessFactor = function(office) {
     if (office.employeeProd["total"] > 0) {
         ratioMult = 1 + (office.employeeProd[EmployeePositions.Business] / office.employeeProd["total"]);
     }
-    return ratioMult * Math.pow(1 + office.employeeProd[EmployeePositions.Business], 0.1);
+    return ratioMult * Math.pow(1 + office.employeeProd[EmployeePositions.Business], 0.15);
 }
 
 //Returns a set of multipliers based on the Industry's awareness, popularity, and advFac. This
@@ -1987,6 +2085,7 @@ function Warehouse(params={}) {
     this.level  = 0;
     this.sizeUsed = 0;
     this.smartSupplyEnabled = false; //Whether or not smart supply is enabled
+    this.breakdown = "";
 
     //Stores the amount of product to be produced. Used for Smart Supply unlock.
     //The production tracked by smart supply is always based on the previous cycle,
@@ -2010,14 +2109,14 @@ function Warehouse(params={}) {
 
 Warehouse.prototype.updateMaterialSizeUsed = function() {
     this.sizeUsed = 0;
-    if (this.loc === currentCityUi) {industryWarehouseStorageBreakdownText = ""; }
+    this.breakdown = "";
     for (var matName in this.materials) {
         if (this.materials.hasOwnProperty(matName)) {
             var mat = this.materials[matName];
             if (MaterialSizes.hasOwnProperty(matName)) {
                 this.sizeUsed += (mat.qty * MaterialSizes[matName]);
-                if (mat.qty > 0 && this.loc === currentCityUi) {
-                    industryWarehouseStorageBreakdownText += (matName + ": " + formatNumber(mat.qty * MaterialSizes[matName], 0) + "<br>");
+                if (mat.qty > 0) {
+                    this.breakdown += (matName + ": " + formatNumber(mat.qty * MaterialSizes[matName], 0) + "<br>");
                 }
             }
         }
@@ -2050,7 +2149,7 @@ Warehouse.prototype.createUI = function(parentRefs) {
     industryWarehousePanel.appendChild(industryWarehouseStorageText);
 
     //Upgrade warehouse size button
-    var upgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, Math.round(this.size / 100) - 1);
+    var upgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, this.level+1);
     industryWarehouseUpgradeSizeButton = createElement("a", {
         innerText:"Upgrade Warehouse Size - " + numeral(upgradeCost).format('$0.000a'),
         display:"inline-block",
@@ -2157,15 +2256,14 @@ Warehouse.prototype.updateUI = function(parentRefs) {
     var storageText = "Storage: " +
                       (this.sizedUsed >= this.size ? formatNumber(this.sizeUsed, 3) : formatNumber(this.sizeUsed, 3)) +
                       "/" + formatNumber(this.size, 3);
-    if (industryWarehouseStorageBreakdownText != null &&
-        industryWarehouseStorageBreakdownText != "") {
+    if (this.breakdown != null && this.breakdown != "") {
         storageText += ("<span class='tooltiptext'>" +
-                        industryWarehouseStorageBreakdownText + "</span>");
+                        this.breakdown + "</span>");
     }
     industryWarehouseStorageText.innerHTML = storageText;
 
     //Upgrade warehouse size button
-    var upgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, Math.round(this.size / 100) - 1);
+    var upgradeCost = WarehouseUpgradeBaseCost * Math.pow(1.07, this.level+1);
     if (company.funds.lt(upgradeCost)) {
         industryWarehouseUpgradeSizeButton.className = "a-link-button-inactive";
     } else {
@@ -2209,8 +2307,8 @@ Warehouse.prototype.updateUI = function(parentRefs) {
     }
 
     //Products
+    removeChildrenFromElement(industryWarehouseProducts);
     if (industry.makesProducts && Object.keys(industry.products).length > 0) {
-        removeChildrenFromElement(industryWarehouseProducts);
         for (var productName in industry.products) {
             if (industry.products.hasOwnProperty(productName) && industry.products[productName] instanceof Product) {
                 industryWarehouseProducts.appendChild(this.createProductUI(industry.products[productName], parentRefs));
@@ -2231,11 +2329,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
         class:"cmpy-mgmt-warehouse-material-div",
     });
 
-    var totalExport = 0;
-    for (var i = 0; i < mat.exp.length; ++i) {
-        totalExport += mat.exp[i].amt;
-    }
-    var totalGain = mat.buy + mat.prd + mat.imp - mat.sll - totalExport;
+    var totalGain = mat.buy + mat.prd + mat.imp - mat.sll - mat.totalExp;
 
     //If Market Research upgrades are unlocked, add competition and demand info
     var cmpAndDmdText = "";
@@ -2249,7 +2343,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                    "(" + formatNumber(totalGain, 3) +  "/s)" +
                    "<span class='tooltiptext'>Buy: " + formatNumber(mat.buy, 3) +
                    "/s<br>Prod: " + formatNumber(mat.prd, 3) + "/s<br>Sell: " + formatNumber(mat.sll, 3) +
-                   "/s<br>Export: " + formatNumber(totalExport, 3) + "/s<br>Import: " +
+                   "/s<br>Export: " + formatNumber(mat.totalExp, 3) + "/s<br>Import: " +
                    formatNumber(mat.imp, 3) + "/s" + cmpAndDmdText + "</span></p><br>" +
                    "<p class='tooltip'>MP: $" + formatNumber(mat.bCost, 2) +
                    "<span class='tooltiptext'>Market Price: The price you would pay if " +
@@ -2380,7 +2474,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
 
             //Select amount to export
             var exportAmount = createElement("input", {
-                type:"number", placeholder:"Export amount / s"
+                placeholder:"Export amount / s"
             });
 
             var exportBtn  = createElement("a", {
@@ -2388,28 +2482,24 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                 clickListener:()=>{
                     var industryName = industrySelector.options[industrySelector.selectedIndex].text,
                         cityName = citySelector.options[citySelector.selectedIndex].text,
-                        amt = parseFloat(exportAmount.value);
-                    if (isNaN(amt)) {
+                        amt = exportAmount.value;
+                    //Sanitize amt
+                    var sanitizedAmt = amt.replace(/\s+/g, '');
+                    sanitizedAmt = sanitizedAmt.replace(/[^-()\d/*+.MAX]/g, '');
+                    var temp = sanitizedAmt.replace(/MAX/g, 1);
+                    try {
+                        temp = eval(temp);
+                    } catch(e) {
+                        dialogBoxCreate("Invalid expression entered for export amount: " + e);
+                        return false;
+                    }
+
+                    if (temp == null || isNaN(temp)) {
                         dialogBoxCreate("Invalid amount entered for export");
                         return;
                     }
-                    var exportObj = {ind:industryName, city:cityName, amt:amt};
+                    var exportObj = {ind:industryName, city:cityName, amt:sanitizedAmt};
                     mat.exp.push(exportObj);
-
-                    //Go to the target city and increase the mat.imp attribute for the corresponding material
-                    for (var i = 0; i < company.divisions.length; ++i) {
-                        if (company.divisions[i].name === industryName) {
-                            var warehouse = company.divisions[i].warehouses[cityName];
-                            if (warehouse instanceof Warehouse) {
-                                warehouse.materials[matName].imp += amt;
-                                removeElementById(popupId);
-                                return false;
-                            } else {
-                                console.log("ERROR: Target city for export does not have warehouse in specified city");
-                            }
-                        }
-                    }
-                    console.log("ERROR: Could not find target industry/city for export");
                     removeElementById(popupId);
                     return false;
                 }
@@ -2436,17 +2526,6 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                                "City: " + mat.exp[i].city + "<br>" +
                                "Amount/s: " + mat.exp[i].amt,
                     clickListener:()=>{
-                        //Go to the target city and decrease the mat.imp attribute for the corresponding material
-                        for (var j = 0; j < company.divisions.length; ++j) {
-                            if (company.divisions[j].name === mat.exp[i].ind) {
-                                var warehouse = company.divisions[j].warehouses[mat.exp[i].city];
-                                if (warehouse instanceof Warehouse) {
-                                    warehouse.materials[matName].imp -= mat.exp[i].amt;
-                                } else {
-                                    console.log("ERROR: Target city for export does not have warehouse in specified city");
-                                }
-                            }
-                        }
                         mat.exp.splice(i, 1); //Remove export object
                         removeElementById(popupId);
                         createExportPopup();
@@ -2493,6 +2572,9 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                            "if set to 0, then the material will be discarded<br><br>" +
                            "Setting the sell amount to 'MAX' will result in you always selling the " +
                            "maximum possible amount of the material.<br><br>" +
+                           "When setting the sell amount, you can use the 'PROD' variable to designate a dynamically " +
+                           "changing amount that depends on your production. For example, if you set the sell amount " +
+                           "to 'PROD-5' then you will always sell 5 less of the material than you produce.<br><br>" +
                            "When setting the sell price, you can use the 'MP' variable to designate a dynamically " +
                            "changing price that depends on the market price. For example, if you set the sell price " +
                            "to 'MP+10' then it will always be sold at $10 above the market price.",
@@ -2519,11 +2601,16 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                 innerText:"Confirm", class:"a-link-button", margin:"6px",
                 clickListener:()=>{
                     //Parse price
-                    //Sanitize cost
                     var cost = inputPx.value.replace(/\s+/g, '');
-                    cost = cost.replace(/[^-()\d/*+.MP]/g, '');
+                    cost = cost.replace(/[^-()\d/*+.MP]/g, ''); //Sanitize cost
                     var temp = cost.replace(/MP/g, mat.bCost);
-                    var temp = eval(temp);
+                    try {
+                        temp = eval(temp);
+                    } catch(e) {
+                        dialogBoxCreate("Invalid value or expression for sell price field: " + e);
+                        return false;
+                    }
+
                     if (temp == null || isNaN(temp)) {
                         dialogBoxCreate("Invalid value or expression for sell price field");
                         return false;
@@ -2536,9 +2623,25 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
                     }
 
                     //Parse quantity
-                    if (inputQty.value === "MAX") {
+                    if (inputQty.value.includes("MAX") || inputQty.value.includes("PROD")) {
+                        var qty = inputQty.value.replace(/\s+/g, '');
+                        qty = qty.replace(/[^-()\d/*+.MAXPROD]/g, '');
+                        var temp = qty.replace(/MAX/g, 1);
+                        temp = temp.replace(/PROD/g, 1);
+                        try {
+                            temp = eval(temp);
+                        } catch(e) {
+                            dialogBoxCreate("Invalid value or expression for sell price field: " + e);
+                            return false;
+                        }
+
+                        if (temp == null || isNaN(temp)) {
+                            dialogBoxCreate("Invalid value or expression for sell price field");
+                            return false;
+                        }
+
                         mat.sllman[0] = true;
-                        mat.sllman[1] = -1;
+                        mat.sllman[1] = qty; //Use sanitized input
                     } else if (isNaN(inputQty.value)) {
                         dialogBoxCreate("Invalid value for sell quantity field! Must be numeric or 'MAX'");
                         return false;
@@ -2611,10 +2714,8 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                    "Aesthetics: " + formatNumber(product.aes, 3) + "<br>" +
                    "Features: " + formatNumber(product.fea, 3) +
                    cmpAndDmdText + "</span></p><br>" +
-                   "<p class='tooltip'>Est. Production Cost: " + numeral(product.pCost).format("$0.000a") +
-                   "<span class='tooltiptext'>An estimate of how much it costs to produce one unit of this product. " +
-                   "If your sell price exceeds this by too much, people won't buy your product. The better your " +
-                   "product is, the higher you can mark up its price.</span></p><br>" +
+                   "<p class='tooltip'>Est. Production Cost: " + numeral(product.pCost / ProductProductionCostRatio).format("$0.000a") +
+                   "<span class='tooltiptext'>An estimate of the material cost it takes to create this Product.</span></p><br>" +
                    "<p class='tooltip'>Est. Market Price: " + numeral(product.pCost + product.rat / product.mku).format("$0.000a") +
                    "<span class='tooltiptext'>An estimate of how much consumers are willing to pay for this product. " +
                    "Setting the sale price above this may result in less sales. Setting the sale price below this may result " +
@@ -2629,7 +2730,11 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
     var sellInnerTextString = (product.sllman[city][1] === -1 ? "Sell (" + formatNumber(product.data[city][2], 3) + "/MAX)" :
                               "Sell (" + formatNumber(product.data[city][2], 3) + "/" + formatNumber(product.sllman[city][1], 3) + ")");
     if (product.sCost) {
-        sellInnerTextString += (" @ " + numeral(product.sCost).format("$0.000a"));
+        if (isString(product.sCost)) {
+            sellInnerTextString += (" @ " + product.sCost);
+        } else {
+            sellInnerTextString += (" @ " + numeral(product.sCost).format("$0.000a"));
+        }
     }
     div.appendChild(createElement("a", {
         innerText:sellInnerTextString, class:"a-link-button", display:"inline-block",margin:"6px",
@@ -2642,7 +2747,15 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                           "If the sell amount is set to 0, then the product will not be sold. If the " +
                           "sell price is set to 0, then the product will be discarded.<br><br>" +
                           "Setting the sell amount to 'MAX' will result in you always selling the " +
-                          "maximum possible amount of the material.<br><br>",
+                          "maximum possible amount of the material.<br><br>" +
+                          "When setting the sell amount, you can use the 'PROD' variable to designate a " +
+                          "dynamically changing amount that depends on your production. For example, " +
+                          "if you set the sell amount to 'PROD-1' then you will always sell 1 less of  " +
+                          "the material than you produce.<br><br>" +
+                          "When setting the sell price, you can use the 'MP' variable to set a " +
+                          "dynamically changing price that depends on the Product's estimated " +
+                          "market price. For example, if you set it to 'MP*5' then it " +
+                          "will always be sold at five times the estimated market price.",
             });
             var confirmBtn;
             var inputQty = createElement("input", {
@@ -2663,17 +2776,52 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
                 class:"a-link-button", innerText:"Confirm",
                 clickListener:()=>{
                     //Parse price
-                    var cost = parseFloat(inputPx.value);
-                    if (isNaN(cost)) {
-                        dialogBoxCreate("Invalid value for sell price field");
-                        return false;
+                    if (inputPx.value.includes("MP")) {
+                        //Dynamically evaluated quantity. First test to make sure its valid
+                        //Sanitize input, then replace dynamic variables with arbitrary numbers
+                        var price = inputPx.value.replace(/\s+/g, '');
+                        price = price.replace(/[^-()\d/*+.MP]/g, '');
+                        var temp = price.replace(/MP/g, 1);
+                        try {
+                            temp = eval(temp);
+                        } catch(e) {
+                            dialogBoxCreate("Invalid value or expression for sell quantity field: " + e);
+                            return false;
+                        }
+                        if (temp == null || isNaN(temp)) {
+                            dialogBoxCreate("Invalid value or expression for sell quantity field.");
+                            return false;
+                        }
+                        product.sCost = price; //Use sanitized price
+                    } else {
+                        var cost = parseFloat(inputPx.value);
+                        if (isNaN(cost)) {
+                            dialogBoxCreate("Invalid value for sell price field");
+                            return false;
+                        }
+                        product.sCost = cost;
                     }
-                    product.sCost = cost;
 
                     //Parse quantity
-                    if (inputQty.value === "MAX") {
+                    if (inputQty.value.includes("MAX") || inputQty.value.includes("PROD")) {
+                        //Dynamically evaluated quantity. First test to make sure its valid
+                        var qty = inputQty.value.replace(/\s+/g, '');
+                        qty = qty.replace(/[^-()\d/*+.MAXPROD]/g, '');
+                        var temp = qty.replace(/MAX/g, 1);
+                        temp = temp.replace(/PROD/g, 1);
+                        try {
+                            temp = eval(temp);
+                        } catch(e) {
+                            dialogBoxCreate("Invalid value or expression for sell price field: " + e);
+                            return false;
+                        }
+
+                        if (temp == null || isNaN(temp)) {
+                            dialogBoxCreate("Invalid value or expression for sell price field");
+                            return false;
+                        }
                         product.sllman[city][0] = true;
-                        product.sllman[city][1] = -1;
+                        product.sllman[city][1] = qty; //Use sanitized input
                     } else if (isNaN(inputQty.value)) {
                         dialogBoxCreate("Invalid value for sell quantity field! Must be numeric");
                         return false;
@@ -2970,13 +3118,13 @@ Corporation.prototype.process = function() {
 Corporation.prototype.determineValuation = function() {
     var val, profit = (this.revenue.minus(this.expenses)).toNumber();
     if (this.public) {
-        val = this.funds.toNumber() + (profit * 90e3);
+        val = this.funds.toNumber() + (profit * 85e3);
         val *= (Math.pow(1.1, this.divisions.length));
         val = Math.max(val, 0);
     } else {
         val = 10e9 + Math.max(this.funds.toNumber(), 0) / 3; //Base valuation
         if (profit > 0) {
-            val += (profit * 350e3);
+            val += (profit * 320e3);
             val *= (Math.pow(1.1, this.divisions.length));
         } else {
             val = 10e9 * Math.pow(1.1, this.divisions.length);
@@ -3206,7 +3354,6 @@ var companyManagementDiv, companyManagementHeaderTabs, companyManagementPanel,
 
     //Industry Warehouse Panel
     industryWarehousePanel, industrySmartSupplyCheckbox, industryWarehouseStorageText,
-        industryWarehouseStorageBreakdownText,
         industryWarehouseUpgradeSizeButton, industryWarehouseStateText,
         industryWarehouseMaterials, industryWarehouseProducts,
     headerTabs, cityTabs;
@@ -3667,7 +3814,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                 stockSharesInput = createElement("input", {
                     type:"number", placeholder:"Stock Shares", margin: "5px",
                     inputListener:()=>{
-                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : moneyInput.value;
+                        var money = moneyInput.value == null || moneyInput.value == "" ? 0 : parseFloat(moneyInput.value);
                         var stockPrice = this.sharePrice;
                         var stockShares = stockSharesInput.value == null || stockSharesInput.value == "" ? 0 : Math.round(stockSharesInput.value);
                         if (isNaN(money) || isNaN(stockShares) || money < 0 || stockShares < 0) {
@@ -3702,7 +3849,7 @@ Corporation.prototype.displayCorporationOverviewContent = function() {
                             dialogBoxCreate("ERROR: Invalid value(s) entered");
                         } else if (this.funds.lt(money)) {
                             dialogBoxCreate("ERROR: You do not have this much money to bribe with");
-                        } else if (this.stockShares > this.numShares) {
+                        } else if (stockShares > this.numShares) {
                             dialogBoxCreate("ERROR: You do not have this many shares to bribe with");
                         } else {
                             var totalAmount = money + (stockShares * stockPrice);
