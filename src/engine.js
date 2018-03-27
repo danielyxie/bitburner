@@ -11,7 +11,8 @@ import {loxBoxCreate, logBoxUpdateText,
 import {setActiveScriptsClickHandlers,
         updateActiveScriptsItems}               from "./ActiveScriptsUI.js";
 import {Augmentations, installAugmentations,
-        initAugmentations, AugmentationNames}   from "./Augmentations.js";
+        initAugmentations, AugmentationNames,
+        displayAugmentationsContent}            from "./Augmentations.js";
 import {BitNodes, initBitNodes,
         initBitNodeMultipliers}                 from "./BitNode.js";
 import {CompanyPositions, initCompanies}        from "./Company.js";
@@ -300,7 +301,7 @@ let Engine = {
     loadAugmentationsContent: function() {
         Engine.hideAllContent();
         Engine.Display.augmentationsContent.style.display = "block";
-        Engine.displayAugmentationsContent();
+        displayAugmentationsContent();
         Engine.currentPage = Engine.Page.Augmentations;
         document.getElementById("augmentations-menu-link").classList.add("active");
     },
@@ -628,10 +629,25 @@ let Engine = {
                 break;
         }
 
+        //Generic Locations (common to every city):
+        //  World Stock Exchange
+        //  Corporation (if applicable)
         var genericLocationsList = document.getElementById("generic-locations-list");
         genericLocationsList.style.display = "inline";
+        removeChildrenFromElement(genericLocationsList);
+        var li = createElement("li");
+        li.appendChild(createElement("a", {
+            innerText:"World Stock Exchange", class:"a-link-button",
+            clickListener:()=>{
+                Player.location = Locations.WorldStockExchange;
+                Engine.loadStockMarketContent();
+                return false;
+            }
+        }));
+        genericLocationsList.appendChild(li);
+
         if (Player.corporation instanceof Corporation && document.getElementById("location-corporation-button") == null) {
-            var li = createElement("li", {});
+            var li = createElement("li");
             li.appendChild(createElement("a", {
                 innerText:Player.corporation.name, id:"location-corporation-button",
                 class:"a-link-button",
@@ -645,189 +661,80 @@ let Engine = {
     },
 
     displayFactionsInfo: function() {
-        //Clear the list of joined factions
-        var factionsList = document.getElementById("factions-list");
-        while (factionsList.firstChild) {
-            factionsList.removeChild(factionsList.firstChild);
-        }
+        removeChildrenFromElement(Engine.Display.factionsContent);
 
-        //Re-add a link for each faction you are a member of
+        //Factions
+        Engine.Display.factionsContent.appendChild(createElement("h1", {
+            innerText:"Factions"
+        }));
+        Engine.Display.factionsContent.appendChild(createElement("p", {
+            innerText:"Lists all factions you have joined"
+        }));
+        var factionsList = createElement("ul");
+        Engine.Display.factionsContent.appendChild(createElement("br"));
+
+        //Add a button for each faction you are a member of
         for (var i = 0; i < Player.factions.length; ++i) {
             (function () {
                 var factionName = Player.factions[i];
 
-                //Add the faction to the Factions page content
-                var item = document.createElement("li");
-                var aElem = document.createElement("a");
-                aElem.setAttribute("class", "a-link-button");
-                aElem.innerHTML = factionName;
-                aElem.addEventListener("click", function() {
-                    Engine.loadFactionContent();
-                    displayFactionContent(factionName);
-                    return false;
-                });
-                item.appendChild(aElem);
-                factionsList.appendChild(item);
+                factionsList.appendChild(createElement("a", {
+                    class:"a-link-button", innerText:factionName, padding:"4px", margin:"4px",
+                    display:"inline-block",
+                    clickListener:()=>{
+                        Engine.loadFactionContent();
+                        displayFactionContent(factionName);
+                        return false;
+                    }
+                }));
+                factionsList.appendChild(createElement("br"));
             }()); //Immediate invocation
         }
+        Engine.Display.factionsContent.appendChild(factionsList);
+        Engine.Display.factionsContent.appendChild(createElement("br"));
 
-        //Clear the list of invitations
-        var invitationsList = document.getElementById("outstanding-faction-invitations-list");
-        while (invitationsList.firstChild) {
-            invitationsList.removeChild(invitationsList.firstChild);
-        }
+        //Invited Factions
+        Engine.Display.factionsContent.appendChild(createElement("h1", {
+            innerText:"Outstanding Faction Invitations"
+        }));
+        Engine.Display.factionsContent.appendChild(createElement("p", {
+            width:"70%",
+            innerText:"Lists factions you have been invited to, as well as " +
+                      "factions you have previously rejected. You can accept " +
+                      "these faction invitations at any time."
+        }));
+        var invitationsList = createElement("ul");
 
-        //Add a link to accept for each faction you have invitiations for
+        //Add a button to accept for each faction you have invitiations for
         for (var i = 0; i < Player.factionInvitations.length; ++i) {
             (function () {
                 var factionName = Player.factionInvitations[i];
 
-                var item = document.createElement("li");
-
-                var pElem = document.createElement("p");
-                pElem.innerText = factionName;
-                pElem.style.display = "inline";
-                pElem.style.margin = "4px";
-                pElem.style.padding = "4px";
-
-                var aElem = document.createElement("a");
-                aElem.innerText = "Accept Faction Invitation";
-                aElem.setAttribute("class", "a-link-button");
-                aElem.style.display = "inline";
-                aElem.style.margin = "4px";
-                aElem.style.padding = "4px";
-                aElem.addEventListener("click", function() {
-                    joinFaction(Factions[factionName]);
-                    for (var i = 0; i < Player.factionInvitations.length; ++i) {
-                        if (Player.factionInvitations[i] == factionName) {
-                            Player.factionInvitations.splice(i, 1);
-                            break;
+                var item = createElement("li", {padding:"6px", margin:"6px"});
+                item.appendChild(createElement("p", {
+                    innerText:factionName, display:"inline", margin:"4px", padding:"4px"
+                }));
+                item.appendChild(createElement("a", {
+                    innerText:"Accept Faction Invitation",
+                    class:"a-link-button", display:"inline", margin:"4px", padding:"4px",
+                    clickListener:()=>{
+                        joinFaction(Factions[factionName]);
+                        for (var i = 0; i < Player.factionInvitations.length; ++i) {
+                            if (Player.factionInvitations[i] == factionName) {
+                                Player.factionInvitations.splice(i, 1);
+                                break;
+                            }
                         }
+                        Engine.displayFactionsInfo();
+                        return false;
                     }
-                    Engine.displayFactionsInfo();
-                    return false;
-                });
+                }));
 
-                item.appendChild(pElem);
-                item.appendChild(aElem);
-                item.style.margin = "6px";
-                item.style.padding = "6px";
                 invitationsList.appendChild(item);
             }());
         }
-    },
 
-    displayAugmentationsContent: function() {
-        removeChildrenFromElement(Engine.Display.augmentationsContent);
-        Engine.Display.augmentationsContent.appendChild(createElement("h1", {
-            innerText:"Purchased Augmentations"
-        }));
-
-        Engine.Display.augmentationsContent.appendChild(createElement("pre", {
-            width:"70%", whiteSpace:"pre-wrap", display:"block",
-            innerText:"Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them.\n" +
-                      "WARNING: Installing your Augmentations resets most of your progress, including:\n\n" +
-                      "Stats/Skill levels and Experience\n" +
-                      "Money\n" +
-                      "Scripts on every computer but your home computer\n" +
-                      "Purchased servers\n" +
-                      "Hacknet Nodes\n" +
-                      "Faction/Company reputation\n" +
-                      "Stocks\n\n" +
-                      "Installing Augmentations lets you start over with the perks and benefits granted by all " +
-                      "of the Augmentations you have ever installed. Also, you will keep any scripts and RAM/Core upgrades " +
-                      "on your home computer (but you will lose all programs besides NUKE.exe)."
-        }));
-
-        //Purchased/queued augmentations
-        var queuedAugmentationsList = createElement("ul", {
-            id:"queued-augmentations-list"
-        });
-
-        for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
-            var augName = Player.queuedAugmentations[i].name;
-            var aug = Augmentations[augName];
-
-            var item = createElement("li", {class:"installed-augmentation"});
-            var displayName = augName;
-            if (augName === AugmentationNames.NeuroFluxGovernor) {
-                displayName += " - Level " + (Player.queuedAugmentations[i].level);
-            }
-            item.appendChild(createElement("h2", {innerHTML:displayName}));
-            item.appendChild(createElement("p", {innerHTML:aug.info}));
-
-            queuedAugmentationsList.appendChild(item);
-        }
-        Engine.Display.augmentationsContent.appendChild(queuedAugmentationsList);
-
-        //Install Augmentations button
-        Engine.Display.augmentationsContent.appendChild(createElement("a", {
-            class:"a-link-button", innerText:"Install Augmentations",
-            tooltip:"'I never asked for this'",
-            clickListener:()=>{
-                installAugmentations();
-                return false;
-            }
-        }));
-
-        //Backup button
-        Engine.Display.augmentationsContent.appendChild(createElement("a", {
-            class:"a-link-button flashing-button", innerText:"Backup Save (Export)",
-            tooltip:"It's always a good idea to backup/export your save!",
-            clickListener:()=>{
-                saveObject.exportGame();
-                return false;
-            }
-        }));
-
-        //Installed augmentations list
-        Engine.Display.augmentationsContent.appendChild(createElement("h1", {
-            innerText:"Installed Augmentations"
-        }));
-        Engine.Display.augmentationsContent.appendChild(createElement("p", {
-            width:"70%", whiteSpace:"pre-wrap",
-            innerText:"List of all Augmentations (including Source Files) that have been " +
-                      "installed. You have gained the effects of these Augmentations"
-        }));
-
-        var augmentationsList = createElement("ul", {
-            id:"augmentations-list"
-        });
-
-        //Source Files - Temporary...Will probably put in a separate pane Later
-        for (var i = 0; i < Player.sourceFiles.length; ++i) {
-            var srcFileKey = "SourceFile" + Player.sourceFiles[i].n;
-            var sourceFileObject = SourceFiles[srcFileKey];
-            if (sourceFileObject == null) {
-                console.log("ERROR: Invalid source file number: " + Player.sourceFiles[i].n);
-                continue;
-            }
-            var item = createElement("li", {class:"installed-augmentation", });
-            item.appendChild(createElement("h2", {
-                innerHTML:sourceFileObject.name + "<br>" + "Level " + (Player.sourceFiles[i].lvl) + " / 3",
-            }));
-            item.appendChild(createElement("p", {
-                innerHTML:sourceFileObject.info,
-            }));
-
-            augmentationsList.appendChild(item);
-        }
-
-        for (var i = 0; i < Player.augmentations.length; ++i) {
-            var augName = Player.augmentations[i].name;
-            var aug = Augmentations[augName];
-
-            var item = createElement("li", {class:"installed-augmentation"});
-            var displayName = augName;
-            if (augName === AugmentationNames.NeuroFluxGovernor) {
-                displayName += " - Level " + (Player.augmentations[i].level);
-            }
-            item.appendChild(createElement("h2", {innerHTML:displayName}));
-            item.appendChild(createElement("p", {innerHTML:aug.info}));
-
-            augmentationsList.appendChild(item);
-        }
-        Engine.Display.augmentationsContent.appendChild(augmentationsList);
+        Engine.Display.factionsContent.appendChild(invitationsList);
     },
 
     displayTutorialContent: function() {
@@ -1367,61 +1274,47 @@ let Engine = {
         Engine.currentPage = Engine.Page.Terminal;
 
         Engine.Display.characterContent = document.getElementById("character-container");
-        //Engine.Display.characterContent.style.visibility = "hidden";
         Engine.Display.characterContent.style.display = "none";
 
         Engine.Display.scriptEditorContent = document.getElementById("script-editor-container");
-        //Engine.Display.scriptEditorContent.style.visibility = "hidden";
         Engine.Display.scriptEditorContent.style.display = "none";
 
         Engine.Display.activeScriptsContent = document.getElementById("active-scripts-container");
-        //Engine.Display.activeScriptsContent.style.visibility = "hidden";
         Engine.Display.activeScriptsContent.style.display = "none";
 
         Engine.Display.hacknetNodesContent = document.getElementById("hacknet-nodes-container");
-        //Engine.Display.hacknetNodesContent.style.visibility = "hidden";
         Engine.Display.hacknetNodesContent.style.display = "none";
 
         Engine.Display.worldContent = document.getElementById("world-container");
-        //Engine.Display.worldContent.style.visibility = "hidden";
         Engine.Display.worldContent.style.display = "none";
 
         Engine.Display.createProgramContent = document.getElementById("create-program-container");
-        //Engine.Display.createProgramContent.style.visibility = "hidden";
         Engine.Display.createProgramContent.style.display = "none";
 
         Engine.Display.factionsContent = document.getElementById("factions-container");
-        //Engine.Display.factionsContent.style.visibility = "hidden";
         Engine.Display.factionsContent.style.display = "none";
 
 
         Engine.Display.factionContent = document.getElementById("faction-container");
-        //Engine.Display.factionContent.style.visibility = "hidden";
         Engine.Display.factionContent.style.display = "none";
 
         Engine.Display.factionAugmentationsContent = document.getElementById("faction-augmentations-container");
-        //Engine.Display.factionAugmentationsContent.style.visibility = "hidden";
         Engine.Display.factionAugmentationsContent.style.display = "none";
 
         Engine.Display.augmentationsContent = document.getElementById("augmentations-container");
-        //Engine.Display.augmentationsContent.style.visibility = "hidden";
         Engine.Display.augmentationsContent.style.display = "none";
 
 
         Engine.Display.tutorialContent = document.getElementById("tutorial-container");
-        //Engine.Display.tutorialContent.style.visibility = "hidden";
         Engine.Display.tutorialContent.style.display = "none";
 
         Engine.Display.infiltrationContent = document.getElementById("infiltration-container");
-        //Engine.Display.infiltrationContent.style.visibility = "hidden";
         Engine.Display.infiltrationContent.style.display = "none";
 
         Engine.Display.stockMarketContent = document.getElementById("stock-market-container");
-        //Engine.Display.stockMarketContent.style.visibility = "hidden";
         Engine.Display.stockMarketContent.style.display = "none";
 
         Engine.Display.missionContent = document.getElementById("mission-container");
-        //Engine.Display.missionContent.style.visibility = "hidden";
         Engine.Display.missionContent.style.display = "none";
 
         //Character info

@@ -34,7 +34,7 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxClose}                    from "../utils/YesNoBox.js";
 
 /* Display Location Content when visiting somewhere in the World*/
-let Locations = {
+var Locations = {
     //Cities
 	Aevum: 			"Aevum",
     //AevumDesc:      ""
@@ -1575,14 +1575,6 @@ function initLocationButtons() {
         Engine.loadLocationContent();
         return false;
     });
-
-    let worldStockExchange = document.getElementById("generic-location-wse");
-    worldStockExchange.addEventListener("click", function() {
-        Player.location = Locations.WorldStockExchange;
-        Engine.loadStockMarketContent();
-        return false;
-    });
-
 
     //Buttons to interact at a location (apply for job/promotion, train, purchase, etc.)
     var softwareJob             = document.getElementById("location-software-job");

@@ -367,32 +367,17 @@
     padding-top: 10px;
 }
 
-#factions-list li {
-    padding: 6px;
-    margin: 6px;
-}
-
-#faction-favor, #faction-reputation {
-    display: inline;
-}
-
 .faction-work-div {
-    overflow: hidden;
     width: 70%;
     height: 100%;
 }
 
 .faction-work-div-wrapper {
-    float: left;
+    overflow:hidden;
     border: 2px solid #333;
-    padding: 14px 6px 4px 6px;
+    padding: 6px;
     margin: 6px;
-}
-
-#faction-hack-button,
-#faction-fieldwork-button,
-#faction-securitywork-button {
-    margin: 8px;
+    width:70%;
 }
 
 #faction-donate-amount-txt,
@@ -408,18 +393,14 @@
     width:50%;
 }
 
-div.faction-clear {
-    clear: both;
-}
-
 #faction-container p,
 #faction-container pre {
     padding: 6px;
     margin: 6px;
-    width: 70%;
 }
 
-#faction-info {
+#faction-container pre {
+    width: 70%;
     white-space: pre-wrap;       /* Since CSS 2.1 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -pre-wrap;      /* Opera 4-6 */
@@ -441,11 +422,6 @@ div.faction-clear {
     padding: 4px;
 }
 
-#faction-augmentations-list > li{
-    margin: 4px;
-    padding: 4px;
-}
-
 /* World */
 #world-container li {
     margin: 0 0 15px 0;
@@ -458,27 +434,11 @@ div.faction-clear {
     padding-top: 10px;
 }
 
-
-#augmentations-list li,
-#queued-augmentations-list li {
-    width: 70%;
-    background-color: #333;
-}
-
-#augmentations-list h2,
-#augmentations-list p,
-#queued-augmentations-list h2,
-#queued-augmentations-list p {
-    margin: 4px;
+.augmentations-list button,
+.augmentations-list div {
     color: var(--my-font-color);
 	padding: 8px;
-    width: 70%;
-    background-color: #333;
     text-decoration: none;
-}
-
-#augmentations-list li p {
-    width: 95%;
 }
 
 /* Tutorial */

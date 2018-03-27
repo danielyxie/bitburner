@@ -11,32 +11,14 @@ import {Settings}                               from "./Settings.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox.js";
-import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {clearEventListeners, createElement,
+        removeChildrenFromElement}              from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import numeral                                  from "../utils/numeral.min.js";
-import {formatNumber, isPositiveNumber}         from "../utils/StringHelperFunctions.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
-
-
-//Netburner Faction class
-function factionInit() {
-    $('#faction-donate-input').on('input', function() {
-        if (Engine.currentPage == Engine.Page.Faction) {
-            var val = document.getElementById("faction-donate-input").value;
-            if (isPositiveNumber(val)) {
-                var numMoneyDonate = Number(val);
-                document.getElementById("faction-donate-rep-gain").innerHTML =
-                    "This donation will result in " + formatNumber(numMoneyDonate/1000000 * Player.faction_rep_mult, 3) + " reputation gain";
-            } else {
-                document.getElementById("faction-donate-rep-gain").innerHTML =
-                    "This donation will result in 0 reputation gain";
-            }
-        }
-    });
-}
-document.addEventListener("DOMContentLoaded", factionInit, false);
 
 function Faction(name="") {
     this.name 				= name;
@@ -398,6 +380,7 @@ function inviteToFaction(faction) {
     if (Settings.SuppressFactionInvites) {
         faction.alreadyInvited = true;
         Player.factionInvitations.push(faction.name);
+        Engine.loadFactionsContent();
     } else {
         factionInvitationBoxCreate(faction);
     }
@@ -442,92 +425,206 @@ function joinFaction(faction) {
 //Displays the HTML content for a specific faction
 function displayFactionContent(factionName) {
 	var faction = Factions[factionName];
-    document.getElementById("faction-name").innerHTML = factionName;
-    document.getElementById("faction-info").innerHTML = "<i>" + faction.info + "</i>";
-    var repGain = faction.getFavorGain();
-    if (repGain.length != 2) {repGain = 0;}
-    repGain = repGain[0];
-    document.getElementById("faction-reputation").innerHTML = "Reputation: " + formatNumber(faction.playerReputation, 4) +
-                                                              "<span class='tooltiptext'>You will earn " +
-                                                              formatNumber(repGain, 4) +
-                                                              " faction favor upon resetting after installing an Augmentation</span>";
-    document.getElementById("faction-favor").innerHTML = "Faction Favor: " + formatNumber(faction.favor, 4) +
-                                                         "<span class='tooltiptext'>Faction favor increases the rate at which " +
-                                                         "you earn reputation for this faction by 1% per favor. Faction favor " +
-                                                         "is gained whenever you reset after installing an Augmentation. The amount of " +
-                                                         "favor you gain depends on how much reputation you have with the faction</span>";
+    if (faction == null) {
+        throw new Error("Invalid factionName passed into displayFactionContent: " + factionName);
+    }
+    removeChildrenFromElement(Engine.Display.factionContent);
+    var elements = [];
 
-    var hackMissionDiv      = document.getElementById("faction-hack-mission-div");
-	var hackDiv 			= document.getElementById("faction-hack-div");
-	var fieldWorkDiv 		= document.getElementById("faction-fieldwork-div");
-	var securityWorkDiv 	= document.getElementById("faction-securitywork-div");
-    var donateDiv           = document.getElementById("faction-donate-div");
-    var gangDiv             = document.getElementById("faction-gang-div");
+    //Header and faction info
+    elements.push(createElement("h1", {
+        innerText:factionName
+    }));
+    elements.push(createElement("pre", {
+        innerHTML:"<i>" + faction.info + "</i>"
+    }));
+    elements.push(createElement("p", {
+        innerText:"---------------",
+    }));
 
-    var newHackMissionButton = clearEventListeners("faction-hack-mission-button");
-    var newHackButton = clearEventListeners("faction-hack-button");
-    var newFieldWorkButton = clearEventListeners("faction-fieldwork-button");
-    var newSecurityWorkButton = clearEventListeners("faction-securitywork-button");
-    var newDonateWorkButton = clearEventListeners("faction-donate-button");
-    newHackMissionButton.addEventListener("click", function() {
-        Engine.loadMissionContent();
-        var mission = new HackingMission(faction.playerReputation, faction);
-        setInMission(true, mission); //Sets inMission flag to true
-        mission.init();
-        return false;
+    //Faction reputation and favor
+    var favorGain = faction.getFavorGain();
+    if (favorGain.length != 2) {favorGain = 0;}
+    favorGain = favorGain[0];
+    elements.push(createElement("p", {
+        innerText: "Reputation: " + formatNumber(faction.playerReputation, 4),
+        tooltip:"You will earn " + formatNumber(favorGain, 4) +
+                " faction favor upon resetting after installing an Augmentation"
+    }))
+    elements.push(createElement("p", {
+        innerText:"---------------",
+    }));
+    elements.push(createElement("p", {
+        innerText:"Faction Favor: " + formatNumber(faction.favor, 4),
+        tooltip:"Faction favor increases the rate at which " +
+                "you earn reputation for this faction by 1% per favor. Faction favor " +
+                "is gained whenever you reset after installing an Augmentation. The amount of " +
+                "favor you gain depends on how much reputation you have with the faction"
+    }));
+    elements.push(createElement("p", {
+        innerText:"---------------",
+    }));
+
+    //Faction Work Description Text
+    elements.push(createElement("pre", {
+        id:"faction-work-description-text",
+        innerText:"Perform work/carry out assignments for your faction to help further its cause! By doing so " +
+                  "you will earn reputation for your faction. You will also gain reputation passively over time, " +
+                  "although at a very slow rate. Earning reputation will allow you to purchase Augmentations " +
+                  "through this faction, which are powerful upgrades that enhance your abilities. Note that you cannot " +
+		          "use your terminal or create scripts when you are performing a task!"
+    }));
+    elements.push(createElement("br"));
+
+    //Hacking Mission Option
+    var hackMissionDiv = createElement("div", {
+        id:"faction-hack-mission-div", class:"faction-work-div",
     });
-
-    newHackButton.addEventListener("click", function() {
-        Player.startFactionHackWork(faction);
-        return false;
-    });
-
-    newFieldWorkButton.addEventListener("click", function() {
-        Player.startFactionFieldWork(faction);
-        return false;
-    });
-
-    newSecurityWorkButton.addEventListener("click", function() {
-        Player.startFactionSecurityWork(faction);
-        return false;
-    });
-
-    newDonateWorkButton.addEventListener("click", function() {
-        var donateAmountVal = document.getElementById("faction-donate-input").value;
-        if (isPositiveNumber(donateAmountVal)) {
-            var numMoneyDonate = Number(donateAmountVal);
-            if (Player.money.lt(numMoneyDonate)) {
-                dialogBoxCreate("You cannot afford to donate this much money!");
-                return;
-            }
-            Player.loseMoney(numMoneyDonate);
-            var repGain = numMoneyDonate / 1000000 * Player.faction_rep_mult;
-            faction.playerReputation += repGain;
-            dialogBoxCreate("You just donated $" + formatNumber(numMoneyDonate, 2) + " to " +
-                            faction.name + " to gain " + formatNumber(repGain, 3) + " reputation");
-            displayFactionContent(factionName);
-        } else {
-            dialogBoxCreate("Invalid amount entered!");
-        }
-        return false;
-    });
-
-
-    var newPurchaseAugmentationsButton = clearEventListeners("faction-purchase-augmentations");
-    newPurchaseAugmentationsButton.addEventListener("click", function() {
-        Engine.hideAllContent();
-        Engine.Display.factionAugmentationsContent.style.display = "block";
-
-        var newBackButton = clearEventListeners("faction-augmentations-back-button");
-        newBackButton.addEventListener("click", function() {
-            Engine.loadFactionContent();
-            displayFactionContent(factionName);
+    var hackMissionDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
+    hackMissionDiv.appendChild(hackMissionDivWrapper);
+    hackMissionDivWrapper.appendChild(createElement("a", {
+        class:"a-link-button", innerText:"Hacking Mission",
+        clickListener:()=>{
+            Engine.loadMissionContent();
+            var mission = new HackingMission(faction.playerReputation, faction);
+            setInMission(true, mission); //Sets inMission flag to true
+            mission.init();
             return false;
-        });
-        displayFactionAugmentations(factionName);
-        return false;
-    });
+        }
+    }));
+    hackMissionDivWrapper.appendChild(createElement("p", {
+        innerText:"Attempt a hacking mission for your faction. " +
+                  "A mission is a mini game that, if won, earns you " +
+                  "significant reputation with this faction. (Recommended hacking level: 200+)"
+    }));
+    elements.push(hackMissionDiv);
 
+    //Hacking Contracts Option
+	var hackDiv = createElement("div", {
+        id:"faction-hack-div", class:"faction-work-div",
+    });
+    var hackDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
+    hackDiv.appendChild(hackDivWrapper);
+    hackDivWrapper.appendChild(createElement("a", {
+        class:"a-link-button", innerText:"Hacking Contracts",
+        clickListener:()=>{
+            Player.startFactionHackWork(faction);
+            return false;
+        }
+    }));
+    hackDivWrapper.appendChild(createElement("p", {
+        innerText:"Complete hacking contracts for your faction. " +
+                  "Your effectiveness, which determines how much " +
+                  "reputation you gain for this faction, is based on your hacking skill. " +
+                  "You will gain hacking exp."
+    }));
+    elements.push(hackDiv);
+
+    //Field Work Option
+	var fieldWorkDiv = createElement("div", {
+        id:"faction-fieldwork-div", class:"faction-work-div"
+    });
+    var fieldWorkDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
+    fieldWorkDiv.appendChild(fieldWorkDivWrapper);
+    fieldWorkDivWrapper.appendChild(createElement("a", {
+        class:"a-link-button", innerText:"Field Work",
+        clickListener:()=>{
+            Player.startFactionFieldWork(faction);
+            return false;
+        }
+    }));
+    fieldWorkDivWrapper.appendChild(createElement("p", {
+        innerText:"Carry out field missions for your faction. " +
+                  "Your effectiveness, which determines how much " +
+                  "reputation you gain for this faction, is based on all of your stats. " +
+                  "You will gain exp for all stats."
+    }));
+    elements.push(fieldWorkDiv);
+
+    //Security Work Option
+	var securityWorkDiv = createElement("div", {
+        id:"faction-securitywork-div", class:"faction-work-div"
+    });
+    var securityWorkDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
+    securityWorkDiv.appendChild(securityWorkDivWrapper);
+    securityWorkDivWrapper.appendChild(createElement("a", {
+        class:"a-link-button", innerText:"Security Work",
+        clickListener:()=>{
+            Player.startFactionSecurityWork(faction);
+            return false;
+        }
+    }));
+    securityWorkDivWrapper.appendChild(createElement("p", {
+        innerText:"Serve in a security detail for your faction. " +
+                  "Your effectiveness, which determines how much " +
+                  "reputation you gain for this faction, is based on your combat stats. " +
+                  "You will gain exp for all combat stats."
+    }));
+    elements.push(securityWorkDiv);
+
+    //Donate for reputation
+    var donateDiv = createElement("div", {
+        id:"faction-donate-div", class:"faction-work-div"
+    });
+    var donateDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
+    donateDiv.appendChild(donateDivWrapper);
+    var donateRepGain = createElement("p", {
+        innerText:"This donation will result in 0 reputation gain"
+    });
+    var donateAmountInput = createElement("input", {
+        placeholder:"Donation amount",
+        inputListener:()=>{
+            var amt = parseFloat(donateAmountInput.value);
+            if (isNaN(amt) || amt < 0) {
+                donateRepGain.innerText = "Invalid donate amount entered!";
+            } else {
+                var repGain = amt / 1e6 * Player.faction_rep_mult;
+                donateRepGain.innerText = "This donation will result in " +
+                                          formatNumber(repGain, 3) + " reputation gain";
+            }
+        },
+    });
+    donateDivWrapper.appendChild(createElement("a", {
+        class:"a-link-button", innerText:"Donate Money",
+        clickListener:()=>{
+            var amt = parseFloat(donateAmountInput.value);
+            if (isNaN(amt) || amt < 0) {
+                dialogBoxCreate("Invalid amount entered!");
+            } else if (Player.money.lt(amt)) {
+                dialogBoxCreate("You cannot afford to donate this much money!");
+            } else {
+                Player.loseMoney(amt);
+                var repGain = amt / 1e6 * Player.faction_rep_mult;
+                faction.playerReputation += repGain;
+                dialogBoxCreate("You just donated " + numeral(amt).format("$0.000a") + " to " +
+                                faction.name + " to gain " + formatNumber(repGain, 3) + " reputation");
+                displayFactionContent(factionName);
+            }
+        }
+    }));
+    donateDivWrapper.appendChild(donateAmountInput);
+    donateDivWrapper.appendChild(donateRepGain);
+    elements.push(donateDiv);
+
+    //Purchase Augmentations
+    elements.push(createElement("pre", {
+        innerHTML: "<br>As your reputation with this faction rises, you will " +
+                   "unlock Augmentations, which you can purchase to enhance " +
+                   "your abilities.<br><br>"
+    }));
+    elements.push(createElement("a", {
+        class:"a-link-button", innerText:"Purchase Augmentations",
+        clickListener:()=>{
+            Engine.hideAllContent();
+            Engine.Display.factionAugmentationsContent.style.display = "block";
+
+
+            displayFactionAugmentations(factionName);
+            return false;
+        }
+    }));
+
+    //Gang (BitNode-2)
     if (Player.bitNodeN == 2 && (factionName == "Slum Snakes" || factionName == "Tetrads" ||
         factionName == "The Syndicate" || factionName == "The Dark Army" || factionName == "Speakers for the Dead" ||
         factionName == "NiteSec" || factionName == "The Black Hand")) {
@@ -538,72 +635,54 @@ function displayFactionContent(factionName) {
         securityWorkDiv.style.display = "none";
         donateDiv.style.display = "none";
 
-        var gangDiv = document.getElementById("faction-gang-div");
+        //Create the 'Manage Gang' button
+        var gangDiv = createElement("div", {
+            id:"faction-gang-div", class:"faction-work-div", display:"inline"
+        });
+        var gangDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
+        gangDiv.appendChild(gangDivWrapper);
+        gangDivWrapper.appendChild(createElement("a", {
+            class:"a-link-button", innerText:"Manage Gang",
+            clickListener:()=>{
+                if (!Player.inGang()) {
+                    var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
+                    yesBtn.innerHTML = "Create Gang";
+                    noBtn.innerHTML = "Cancel";
+                    yesBtn.addEventListener("click", () => {
+                        var hacking = false;
+                        if (factionName === "NiteSec" || factionName === "The Black Hand") {hacking = true;}
+                        Player.startGang(factionName, hacking);
+                        Engine.loadGangContent();
+                        yesNoBoxClose();
+                    });
+                    noBtn.addEventListener("click", () => {
+                        yesNoBoxClose();
+                    });
+                    yesNoBoxCreate("Would you like to create a new Gang with " + factionName + "?<br><br>" +
+                                   "Note that this will prevent you from creating a Gang with any other Faction until " +
+                                   "this BitNode is destroyed. There are NO differences between the Factions you can " +
+                                   "create a Gang with and each of these Factions have all Augmentations available");
+                } else {
+                    Engine.loadGangContent();
+                }
+            }
+        }));
+        gangDivWrapper.appendChild(createElement("p", {
+            innerText:"Create and manage a gang for this Faction. " +
+                      "Gangs will earn you money and faction reputation."
+        }));
+        //Manage Gang button goes before Faction work stuff
+        elements.splice(7, 1, gangDiv);
 
         if (Player.inGang() && Player.gang.facName != factionName) {
             //If the player has a gang but its not for this faction
-            if (gangDiv) {
-                gangDiv.style.display = "none";
-            }
-            return;
+            gangDiv.style.display = "none";
         }
-        //Create the "manage gang" button if it doesn't exist
-        if (gangDiv == null) {
-            gangDiv = document.createElement("div");
-            gangDiv.setAttribute("id", "faction-gang-div");
-            gangDiv.setAttribute("class", "faction-work-div");
-            gangDiv.style.display = "inline";
-
-            gangDiv.innerHTML =
-                '<div id="faction-gang-div-wrapper" class="faction-work-div-wrapper">' +
-                    '<a id="faction-gang-button" class="a-link-button">Manage Gang</a>' +
-                    '<p id="faction-gang-text">' +
-                        'Create and manage a gang for this Faction. ' +
-                        'Gangs will earn you money and faction reputation.' +
-                    '</p>' +
-                '</div>' +
-                '<div class="faction-clear"></div>';
-
-            var descText = document.getElementById("faction-work-description-text");
-            if (descText) {
-                descText.parentNode.insertBefore(gangDiv, descText.nextSibling);
-            } else {
-                console.log("ERROR: faciton-work-description-text not found");
-                dialogBoxCreate("Error loading this page. This is a bug please report to game developer");
-                return;
-            }
+        //Display all elements
+        for (var i = 0; i < elements.length; ++i) {
+            Engine.Display.factionContent.appendChild(elements[i]);
         }
-        gangDiv.style.display = "inline";
-
-        var gangButton = clearEventListeners("faction-gang-button");
-        gangButton.addEventListener("click", function() {
-            if (!Player.inGang()) {
-                var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
-                yesBtn.innerHTML = "Create Gang";
-                noBtn.innerHTML = "Cancel";
-                yesBtn.addEventListener("click", () => {
-                    var hacking = false;
-                    if (factionName === "NiteSec" || factionName === "The Black Hand") {hacking = true;}
-                    Player.startGang(factionName, hacking);
-                    Engine.loadGangContent();
-                    yesNoBoxClose();
-                });
-                noBtn.addEventListener("click", () => {
-                    yesNoBoxClose();
-                });
-                yesNoBoxCreate("Would you like to create a new Gang with " + factionName + "?<br><br>" +
-                               "Note that this will prevent you from creating a Gang with any other Faction until " +
-                               "this BitNode is destroyed. There are NO differences between the Factions you can " +
-                               "create a Gang with and each of these Factions have all Augmentations available");
-            } else {
-                Engine.loadGangContent();
-            }
-
-        });
-
         return;
-    } else {
-        if (gangDiv) {gangDiv.style.display = "none";}
     }
 
 	if (faction.isMember) {
@@ -805,28 +884,138 @@ function displayFactionContent(factionName) {
 				break;
 		}
 	} else {
-		console.log("Not a member of this faction, cannot display faction information");
+		throw new Error("Not a member of this faction, cannot display faction information");
 	}
+
+    //Display all elements
+    for (var i = 0; i < elements.length; ++i) {
+        Engine.Display.factionContent.appendChild(elements[i]);
+    }
 }
 
+var confirmingPurchases = true;
+var sortOption = null;
 function displayFactionAugmentations(factionName) {
-    document.getElementById("faction-augmentations-page-desc").innerHTML =
-        "Lists all Augmentations that are available to purchase from " + factionName + "<br><br>" +
-        "Augmentations are powerful upgrades that will enhance your abilities.";
-
     var faction = Factions[factionName];
-
-    var augmentationsList = document.getElementById("faction-augmentations-list");
-    while (augmentationsList.firstChild) {
-        augmentationsList.removeChild(augmentationsList.firstChild);
+    if (faction == null) {
+        throw new Error("Could not find faction " + factionName + " in displayFactionAugmentations");
     }
 
-    for (var i = 0; i < faction.augmentations.length; ++i) {
+    removeChildrenFromElement(Engine.Display.factionAugmentationsContent);
+    var elements = [];
+
+    //Back button
+    elements.push(createElement("a", {
+        innerText:"Back", class:"a-link-button",
+        clickListener:()=>{
+            Engine.loadFactionContent();
+            displayFactionContent(factionName);
+            return false;
+        }
+    }));
+
+    //Header text
+    elements.push(createElement("h1", {innerText:"Faction Augmentations"}));
+    elements.push(createElement("p", {
+        id:"faction-augmentations-page-desc",
+        innerHTML:"Lists all Augmentations that are available to purchase from " + factionName + "<br><br>" +
+                  "Augmentations are powerful upgrades that will enhance your abilities."
+    }));
+
+    //Confirming not confirming button
+    elements.push(createElement("label", {
+        for:"faction-augmentations-confirming-checkbox",innerText:"Confirm Purchases",
+        color:"white", margin:"4px", padding:"4px",
+    }));
+    var confirmingPurchasesCheckbox = createElement("input", {
+        type:"checkbox", id:"faction-augmentations-confirming-checkbox", checked:confirmingPurchases,
+        margin:"4px", padding:"4px",
+        clickListener:()=>{
+            confirmingPurchases = confirmingPurchasesCheckbox.checked;
+        }
+    });
+    elements.push(confirmingPurchasesCheckbox);
+    elements.push(createElement("br"));
+    elements.push(createElement("br"));
+
+    //Augmentations List
+    var augmentationsList = createElement("ul");
+
+    //Sort buttons
+    var sortByCostBtn = createElement("a", {
+        innerText:"Sort by Cost", class:"a-link-button",
+        clickListener:()=>{
+            sortOption = "cost";
+            var augs = faction.augmentations.slice();
+            augs.sort((augName1, augName2)=>{
+                var aug1 = Augmentations[augName1], aug2 = Augmentations[augName2];
+                if (aug1 == null || aug2 == null) {
+                    throw new Error("Invalid Augmentation Names");
+                }
+                return aug1.baseCost - aug2.baseCost;
+            });
+            removeChildrenFromElement(augmentationsList);
+            createFactionAugmentationDisplayElements(augmentationsList, augs, faction);
+        }
+    });
+    var sortByRepBtn = createElement("a", {
+        innerText:"Sort by Reputation", class:"a-link-button",
+        clickListener:()=>{
+            sortOption = "reputation";
+            var augs = faction.augmentations.slice();
+            augs.sort((augName1, augName2)=>{
+                var aug1 = Augmentations[augName1], aug2 = Augmentations[augName2];
+                if (aug1 == null || aug2 == null) {
+                    throw new Error("Invalid Augmentation Names");
+                }
+                return aug1.baseRepRequirement - aug2.baseRepRequirement;
+            });
+            removeChildrenFromElement(augmentationsList);
+            createFactionAugmentationDisplayElements(augmentationsList, augs, faction);
+        }
+    });
+    var defaultSortBtn = createElement("a", {
+        innerText:"Sort by Default Order", class:"a-link-button",
+        clickListener:()=>{
+            sortOption = "default";
+            removeChildrenFromElement(augmentationsList);
+            createFactionAugmentationDisplayElements(augmentationsList, faction.augmentations, faction);
+        }
+    });
+    elements.push(sortByCostBtn);
+    elements.push(sortByRepBtn);
+    elements.push(defaultSortBtn);
+    switch(sortOption) {
+        case "cost":
+            sortByCostBtn.click();
+            break;
+        case "reputation":
+            sortByRepBtn.click();
+            break;
+        default:
+            defaultSortBtn.click();
+            break;
+    }
+
+    elements.push(augmentationsList);
+
+    for (var i = 0; i < elements.length; ++i) {
+        Engine.Display.factionAugmentationsContent.appendChild(elements[i]);
+    }
+}
+
+//Takes in an array of Augmentation Names, constructs DOM elements
+//to list them on the faction page, and appends them to the given
+//DOM element
+//  @augmentationsList DOM List to append Aug DOM elements to
+//  @augs Array of Aug names
+//  @faction Faction for which to display Augmentations
+function createFactionAugmentationDisplayElements(augmentationsList, augs, faction) {
+    for (var i = 0; i < augs.length; ++i) {
         (function () {
-            var aug = Augmentations[faction.augmentations[i]];
+            var aug = Augmentations[augs[i]];
             if (aug == null) {
-                console.log("ERROR: Invalid Augmentation");
-                return;
+                throw new Error("Invalid Augmentation when trying to create Augmentation display Elements");
             }
             var owned = false;
             for (var j = 0; j < Player.queuedAugmentations.length; ++j) {
@@ -842,11 +1031,26 @@ function displayFactionAugmentations(factionName) {
                 }
             }
 
-            var item = document.createElement("li");
-            var span = document.createElement("span");
-            var aDiv = document.createElement("div");
-            var aElem = document.createElement("a");
-            var pElem = document.createElement("p");
+            var item = createElement("li");
+            var span = createElement("span", {display:"inline-block"});
+            var aDiv = createElement("div", {tooltip:aug.info});
+            var aElem = createElement("a", {
+                innerText:aug.name, display:"inline",
+                clickListener:()=>{
+                    if (confirmingPurchases) {
+                        purchaseAugmentationBoxCreate(aug, faction);
+                    } else {
+                        purchaseAugmentation(aug, faction);
+                    }
+                    return false;
+                }
+            });
+            if (aug.name == AugmentationNames.NeuroFluxGovernor) {
+                aElem.innerText += " - Level " + (getNextNeurofluxLevel());
+            }
+            var pElem = createElement("p", {
+                display:"inline",
+            })
             var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
             var hasPrereqs = hasAugmentationPrereqs(aug);
             if (!hasPrereqs) {
@@ -858,35 +1062,16 @@ function displayFactionAugmentations(factionName) {
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
                 aElem.setAttribute("class", "a-link-button");
-                //pElem.innerHTML = "UNLOCKED - $" + formatNumber(aug.baseCost * faction.augmentationPriceMult, 2);
                 pElem.innerHTML = "UNLOCKED - " + numeral(aug.baseCost * faction.augmentationPriceMult).format("$0.000a");
             } else {
                 aElem.setAttribute("class", "a-link-button-inactive");
                 pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 1) + " faction reputation) - " + numeral(aug.baseCost * faction.augmentationPriceMult).format("$0.000a");
                 pElem.style.color = "red";
             }
-            aElem.style.display = "inline";
-            pElem.style.display = "inline";
-            aElem.innerHTML = aug.name;
-            if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-                aElem.innerHTML += " - Level " + (getNextNeurofluxLevel());
-            }
-            span.style.display = "inline-block"
-
-            //The div will have the tooltip.
-            aDiv.setAttribute("class", "tooltip");
-            aDiv.innerHTML = '<span class="tooltiptext">' + aug.info + " </span>";
             aDiv.appendChild(aElem);
-
-            aElem.addEventListener("click", function() {
-                purchaseAugmentationBoxCreate(aug, faction);
-            });
-
             span.appendChild(aDiv);
             span.appendChild(pElem);
-
             item.appendChild(span);
-
             augmentationsList.appendChild(item);
         }()); //Immediate invocation closure
     }

@@ -1,61 +1,61 @@
 //Contains the "information" property for all the Factions, which is just a description
 //of each faction
 let FactionInfo = {
-	//Endgame
-	IlluminatiInfo: "Humanity never changes. No matter how civilized society becomes, it will eventually fall back " +
+    //Endgame
+    IlluminatiInfo: "Humanity never changes. No matter how civilized society becomes, it will eventually fall back " +
                     "into chaos. And from this chaos, we are the Invisible hand that guides them to order. ",
 
-	DaedalusInfo: "Yesterday we obeyed kings and bent our necks to emperors. Today we kneel only to truth.",
+    DaedalusInfo: "Yesterday we obeyed kings and bent our necks to emperors. Today we kneel only to truth.",
 
-	CovenantInfo: "Surrender yourself. Give up your empty individuality to become part of something great, something eternal. " +
+    CovenantInfo: "Surrender yourself. Give up your empty individuality to become part of something great, something eternal. " +
                   "Become a slave. Submit your mind, body, and soul. Only then can you set yourself free.<br><br> " +
                   "Only then can you discover immortality.",
 
-	//Megacorporations, each forms its own faction
-	ECorpInfo: "ECorp's mission is simple: to connect the world of today with the technology of tomorrow. " +
-			   "With our wide range of Internet-related software and commercial hardware, ECorp makes the world's " +
-			   "information universally accessible.",
+    //Megacorporations, each forms its own faction
+    ECorpInfo: "ECorp's mission is simple: to connect the world of today with the technology of tomorrow. " +
+               "With our wide range of Internet-related software and commercial hardware, ECorp makes the world's " +
+               "information universally accessible.",
 
-	MegaCorpInfo: "MegaCorp does things that others don't. We imagine. We create. We invent. We build things that " +
-				  "others have never even dreamed of. Our work fills the world's needs for food, water, power, and " +
-				  "transporation on an unprecendented scale, in ways that no other company can.<br><br>" +
-				  "In our labs and factories and on the ground with customers, MegaCorp is ushering in a new era for the world.",
+    MegaCorpInfo: "MegaCorp does things that others don't. We imagine. We create. We invent. We build things that " +
+                  "others have never even dreamed of. Our work fills the world's needs for food, water, power, and " +
+                  "transporation on an unprecendented scale, in ways that no other company can.<br><br>" +
+                  "In our labs and factories and on the ground with customers, MegaCorp is ushering in a new era for the world.",
 
-	BachmanAndAssociatesInfo: "Where Law and Business meet - thats where we are. <br><br>" +
+    BachmanAndAssociatesInfo: "Where Law and Business meet - thats where we are. <br><br>" +
                               "Legal Insight - Business Instinct - Experience Innovation",
 
-	BladeIndustriesInfo: "Augmentation is salvation",
+    BladeIndustriesInfo: "Augmentation is salvation",
 
-	NWOInfo: "The human being created civilization not because of willingness but of a need to be assimilated into higher orders of structure and meaning.",
+    NWOInfo: "The human being created civilization not because of willingness but of a need to be assimilated into higher orders of structure and meaning.",
 
-	ClarkeIncorporatedInfo: "Unlocking the power of the genome",
+    ClarkeIncorporatedInfo: "Unlocking the power of the genome",
 
-	OmniTekIncorporatedInfo: "Simply put, our mission is to design and build robots that make a difference",
+    OmniTekIncorporatedInfo: "Simply put, our mission is to design and build robots that make a difference",
 
-	FourSigmaInfo: "The scientific method is the best way to approach investing. Big strategies backed up with big data. Driven by " +
+    FourSigmaInfo: "The scientific method is the best way to approach investing. Big strategies backed up with big data. Driven by " +
                    "deep learning and innovative ideas. And improved by iteration. That's Four Sigma.",
 
-	KuaiGongInternationalInfo: "Dream big. Work hard. Make history.",
+    KuaiGongInternationalInfo: "Dream big. Work hard. Make history.",
 
     //Other Corporations
     FulcrumSecretTechnologiesInfo: "TODO",
 
-	//Hacker groups
-	BitRunnersInfo: "Our entire lives are controlled by bits. All of our actions, our thoughts, our personal information.  "+
-				    "It's all transformed into bits, stored in bits, communicated through bits. It’s impossible for any person " +
-					"to move, to live, to operate at any level without the use of bits.  " +
-					"And when a person moves, lives, and operates, they leave behind their bits, mere traces of seemingly " +
-					"meaningless fragments of information. But these bits can be reconstructed. Transformed. Used.<br><br>" +
-					"Those who run the bits, run the world",
+    //Hacker groups
+    BitRunnersInfo: "Our entire lives are controlled by bits. All of our actions, our thoughts, our personal information.  "+
+                    "It's all transformed into bits, stored in bits, communicated through bits. It’s impossible for any person " +
+                    "to move, to live, to operate at any level without the use of bits.  " +
+                    "And when a person moves, lives, and operates, they leave behind their bits, mere traces of seemingly " +
+                    "meaningless fragments of information. But these bits can be reconstructed. Transformed. Used.<br><br>" +
+                    "Those who run the bits, run the world",
 
 
-	BlackHandInfo: "The world, so afraid of strong government, now has no government. Only power - Digital power. Financial power. " +
+    BlackHandInfo: "The world, so afraid of strong government, now has no government. Only power - Digital power. Financial power. " +
                    "Technological power. " +
-				   "And those at the top rule with an invisible hand. They built a society where the rich get richer, " +
-				   "and everyone else suffers.<br><br>" +
-				   "So much pain. So many lives. Their darkness must end.",
+                   "And those at the top rule with an invisible hand. They built a society where the rich get richer, " +
+                   "and everyone else suffers.<br><br>" +
+                   "So much pain. So many lives. Their darkness must end.",
 
-	NiteSecInfo:
+    NiteSecInfo:
 "                          __..__               <br>" +
 "                      _.nITESECNIt.            <br>" +
 "                   .-'NITESECNITESEc.          <br>" +
@@ -92,22 +92,22 @@ let FactionInfo = {
 "             :bp.__.gNITESEC$$         :$   ;  <br>" +
 "             NITESECNITESECNIT         $$b :   <br>",
 
-	//City factions, essentially governments
-	ChongqingInfo: "Serve the people",
-	Sector12Info: "The City of the Future",
-	HongKongInfo: "Asia's World City",
-	AevumInfo: "The Silicon City",
+    //City factions, essentially governments
+    ChongqingInfo: "Serve the people",
+    Sector12Info: "The City of the Future",
+    HongKongInfo: "Asia's World City",
+    AevumInfo: "The Silicon City",
     IshimaInfo: "The East Asian Order of the Future",
-	VolhavenInfo: "Benefit, Honour, and Glory",
+    VolhavenInfo: "Benefit, Honour, and Glory",
 
-	//Criminal Organizations/Gangs
-	SpeakersForTheDeadInfo:	"It is better to reign in hell than to serve in heaven.",
+    //Criminal Organizations/Gangs
+    SpeakersForTheDeadInfo:    "It is better to reign in hell than to serve in heaven.",
 
-	DarkArmyInfo: "The World doesn't care about right or wrong. It's all about power.",
+    DarkArmyInfo: "The World doesn't care about right or wrong. It's all about power.",
 
-	TheSyndicateInfo: "Honor holds you back",
+    TheSyndicateInfo: "Honor holds you back",
 
-	SilhouetteInfo: "Corporations have filled the void of power left behind by the collapse of Western government. The issue is they've become so big " +
+    SilhouetteInfo: "Corporations have filled the void of power left behind by the collapse of Western government. The issue is they've become so big " +
                     "that you don't know who they're working for. And if you're employed at one of these corporations, you don't even know who you're working " +
                     "for. <br><br>" +
                     "That's terror. Terror, fear, and corruption. All born into the system, all propagated by the system.",
@@ -116,16 +116,16 @@ let FactionInfo = {
 
     SlumSnakesInfo: "Slum Snakes rule!",
 
-	//Earlygame factions - factions the player will prestige with early on that don't
-	//belong in other categories
+    //Earlygame factions - factions the player will prestige with early on that don't
+    //belong in other categories
     NetburnersInfo: "~~//*>H4CK|\|3T 8URN3R5**>?>\\~~",
 
-	TianDiHuiInfo: "Obey Heaven and Work Righteousness",
+    TianDiHuiInfo: "Obey Heaven and Work Righteousness",
 
-	CyberSecInfo: "The Internet is the first thing that humanity has built that humanity doesn’t understand, " +
-				  "the largest experiment in anarchy that we have ever had. And as the world becomes increasingly " +
-				  "dominated by the internet, society approaches the brink of total chaos. " +
-				  "We serve only to protect society, to protect humanity, to protect the world from its imminent collapse.",
+    CyberSecInfo: "The Internet is the first thing that humanity has built that humanity doesn’t understand, " +
+                  "the largest experiment in anarchy that we have ever had. And as the world becomes increasingly " +
+                  "dominated by the internet, society approaches the brink of total chaos. " +
+                  "We serve only to protect society, to protect humanity, to protect the world from its imminent collapse.",
 
 }
 

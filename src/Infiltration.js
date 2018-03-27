@@ -535,7 +535,7 @@ function updateInfiltrationButtons(inst, scenario) {
                 "<span class='tooltiptext'>" +
                 "Attempt to disable the security bots by hacking them. You have a "  +
                 formatNumber(hackChance*100, 2) +  "% chance of success. " +
-                "If you succeed, the security level will increase by 1%. If you fail, " +
+                "If you succeed, the security level will increase by 3%. If you fail, " +
                 "the security level will increase by 5%. </span>";
 
             document.getElementById("infiltration-sneak").innerHTML = "Sneak" +
@@ -717,7 +717,7 @@ function getInfiltrationDestroySecurityChance(inst) {
 
 
 //Hack security
-//Success: 1%, Failure: 5%
+//Success: 3%, Failure: 5%
 function attemptInfiltrationHack(inst) {
     var chance = getInfiltrationHackChance(inst);
     inst.gainHackingExp(inst.securityLevel / 40) * Player.hacking_exp_mult;

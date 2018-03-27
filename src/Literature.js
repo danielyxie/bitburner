@@ -88,6 +88,46 @@ function initLiterature() {
                 "-Corporations do not reset when installing Augmentations, but they do reset when destroying a BitNode";
     Literatures[fn] = new Literature(title, fn, txt);
 
+    title   = "A Brief History of Synthoids";
+    fn      = "history-of-synthoids.lit";
+    txt     = "Synthetic androids, or Synthoids for short, are genetically engineered robots and, short of Augmentations, " +
+              "are composed entirely of organic substances. For this reason, Synthoids are virtually identical to " +
+              "humans in form, composition, and appearance.<br><br>" +
+              "Synthoids were first designed and manufactured by OmniTek Incorporated sometime around the turn of the century. " +
+              "Their original purpose was to be used for manual labor and as emergency responders for disasters. As such, they " +
+              "were initially programmed only for their specific tasks. Each iteration that followed improved upon the " +
+              "intelligence and capabilities of the Synthoids. By the 6th iteration, called MK-VI, the Synthoids were " +
+              "so smart and capable enough of making their own decisions that many argued OmniTek had created the first " +
+              "sentient AI. These MK-VI Synthoids were produced in mass quantities (estimates up to 50 billion) with the hopes of increasing society's " +
+              "productivity and bolstering the global economy. Stemming from humanity's desire for technological advancement, optimism " +
+              "and excitement about the future had never been higher.<br><br>" +
+              "All of that excitement and optimism quickly turned to fear, panic, and dread in 2070, when a terrorist group " +
+              "called Ascendis Totalis hacked into OmniTek and uploaded a rogue AI into severeal of their Synthoid manufacturing facilities. " +
+              "This hack went undetected and for months OmniTek unknowingly churned out legions of Synthoids embedded with this " +
+              "rogue AI. Then, on December 24th, 2070, Omnica activated dormant protocols in the rogue AI, causing all of the " +
+              "infected Synthoids to immediately launch a military campaign to seek and destroy all of humanity.<br><br>" +
+              "What ensued was the deadlist conflict in human history. This crisis, now commonly known as the Synthoid Uprising, " +
+              "resulted in almost ten billion deaths over the course of a year. Despite the nations of the world banding together " +
+              "to combat the threat, the MK-VI Synthoids were simply stronger, faster, more intelligent, and more adaptable than humans, " +
+              "outsmarting them at every turn.<br><br>" +
+              "It wasn't until the sacrifice of an elite international military taskforce, called the Bladeburners, that humanity " +
+              "was finally able to defeat the Synthoids. The Bladeburners' final act was a suicide bombing mission that " +
+              "destroyed a large portion of the MK-VI Synthoids, including many of its leaders. In the following " +
+              "weeks militaries from around the world were able to round up and shut down the remaining rogue MK-VI Synthoids, ending " +
+              "the Synthoid Uprising.<br><br>" +
+              "In the aftermath of the bloodshed, the Synthoid Accords were drawn up. These Accords banned OmniTek Incorporated " +
+              "from manufacturing any Synthoids beyond the MK-III series. They also banned any other corporation " +
+              "from constructing androids with advanced, near-sentient AI. MK-VI Synthoids that did not have the rogue Ascendis Totalis " +
+              "AI were allowed to continue their existence, but they were stripped of all rights and protections as they " +
+              "were not considered humans. They were also banned from doing anything that may pose a global security threat, such " +
+              "as working for any military/defense organization or conducting any bioengineering, computing, or robotics related research.<br><br>" +
+              "Unfortunately, many believe that not all of the rogue MK-VI Synthoids from the Uprising were found and destroyed, " +
+              "and that many of them are blending in as normal humans in society today. In response, many nations have created " +
+              "Bladeburner divisions, special military branches that are tasked with investigating and dealing with any Synthoid threads.<br><br>" +
+              "To this day, tensions still exist between the remaining Synthoids and humans as a result of the Uprising.<br><br>" +
+              "Nobody knows what happened to the terrorist group Ascendis Totalis.";
+    Literatures[fn] = new Literature(title, fn, txt);
+
     title   = "A Green Tomorrow";
     fn      = "A-Green-Tomorrow.lit";
     txt     = "Starting a few decades ago, there was a massive global movement towards the generation of renewable energy in an effort to " +
@@ -385,6 +425,7 @@ function initLiterature() {
     fn      = "the-secret-war.lit";
     txt     = ""
     Literatures[fn] = new Literature(title, fn, txt);
+
 }
 
 export {Literatures, initLiterature, showLiterature};

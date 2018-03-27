@@ -1,5 +1,6 @@
 //General helper functions
 import {isString}           from "./StringHelperFunctions.js";
+import {dialogBoxCreate}    from "./DialogBox.js";
 
 //Returns the size (number of keys) of an object
 function sizeOfObject(obj) {
@@ -207,7 +208,15 @@ function powerOfTwo(n) {
     return n && (n & (n-1)) === 0;
 }
 
+function exceptionAlert(e) {
+    dialogBoxCreate("Caught an exception: " + e + "<br><br>" +
+                    "This is a bug, please report to game developer with this " +
+                    "message as well as details about how to reproduce the bug.<br><br>" +
+                    "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
+                    "safe doesn't get corrupted");
+}
+
 export {sizeOfObject, addOffset, clearEventListeners, getRandomInt,
         compareArrays, printArray, powerOfTwo, clearEventListenersEl,
         removeElementById, removeElement, createElement, createAccordionElement,
-        removeChildrenFromElement, createPopup, clearSelector};
+        removeChildrenFromElement, createPopup, clearSelector, exceptionAlert};

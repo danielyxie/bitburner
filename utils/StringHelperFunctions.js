@@ -70,11 +70,6 @@ function isString(str) {
     return (typeof str === 'string' || str instanceof String);
 }
 
-//Returns true if string contains only digits (meaning it would be a positive number)
-function isPositiveNumber(str) {
-    return /^\d+$/.test(str);
-}
-
 //Returns whether an array contains entirely of string objects
 function containsAllStrings(arr) {
     return arr.every(isString);
@@ -151,5 +146,5 @@ function generateRandomString(n) {
 }
 
 export {getIndicesOf, convertTimeMsToTimeElapsedString, longestCommonStart,
-        isString, isPositiveNumber, containsAllStrings, formatNumber,
+        isString, containsAllStrings, formatNumber,
         numOccurrences, numNetscriptOperators, isHTML, generateRandomString};

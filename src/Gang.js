@@ -1,6 +1,7 @@
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
-import {Faction, Factions}                      from "./Faction.js";
+import {Faction, Factions,
+        displayFactionContent}                  from "./Faction.js";
 import {Player}                                 from "./Player.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {Reviver, Generic_toJSON,
@@ -948,6 +949,16 @@ function displayGangContent() {
             members = Player.gang.members,
             wanted = Player.gang.wanted,
             respect = Player.gang.respect;
+
+        //Back button
+        gangContainer.appendChild(createElement("a", {
+            class:"a-link-button", display:"inline-block", innerText:"Back",
+            clickListener:()=>{
+                Engine.loadFactionContent();
+                displayFactionContent(facName);
+                return false;
+            }
+        }));
 
         //Buttons to switch between panels
         managementButton = createElement("a", {
