@@ -1,3 +1,4 @@
 Changelog.txt
 Netburner.txt
 /node_modules
+/dist/*.map
