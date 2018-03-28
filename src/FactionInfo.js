@@ -26,7 +26,12 @@ let FactionInfo = {
 
     BladeIndustriesInfo: "Augmentation is salvation",
 
-    NWOInfo: "The human being created civilization not because of willingness but of a need to be assimilated into higher orders of structure and meaning.",
+    NWOInfo: "The human being does not truly desire freedom. It wants " +
+             "to be observed, understood, and judged. It wants to be given purpose and " +
+             "direction in its life. That is why humans created God. " +
+             "And that is why humans created civilization - " +
+             "not because of willingness, " +
+             "but because of a need to be incorporated into higher orders of structure and meaning.",
 
     ClarkeIncorporatedInfo: "Unlocking the power of the genome",
 
@@ -38,7 +43,9 @@ let FactionInfo = {
     KuaiGongInternationalInfo: "Dream big. Work hard. Make history.",
 
     //Other Corporations
-    FulcrumSecretTechnologiesInfo: "TODO",
+    FulcrumSecretTechnologiesInfo: "The human organism has an innate desire to worship. " +
+                                   "That is why they created gods. If there were no gods, " +
+                                   "it would be necessary to create them. And now we can.",
 
     //Hacker groups
     BitRunnersInfo: "Our entire lives are controlled by bits. All of our actions, our thoughts, our personal information.  "+

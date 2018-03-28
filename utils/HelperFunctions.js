@@ -15,7 +15,7 @@ function sizeOfObject(obj) {
 //e.g. addOffset(100, 5) will return anything from 95 to 105.
 //The percentage argument must be between 0 and 100;
 function addOffset(n, percentage) {
-    if (percentage < 0 || percentage > 100) {return;}
+    if (percentage < 0 || percentage > 100) {return n;}
 
     var offset = n * (percentage / 100);
 
