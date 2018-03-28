@@ -1,6 +1,6 @@
 var ace = require('brace');
 require('brace/mode/javascript');
-require('brace/mode/netscript');
+require('../netscript');
 require('brace/theme/chaos');
 require('brace/theme/chrome');
 require('brace/theme/monokai');
