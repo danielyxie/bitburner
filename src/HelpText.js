@@ -133,6 +133,8 @@ let HelpTexts = {
                     "ls | grep .script<br><br>" +
                     "Alternatively, if you wanted to display all files with the word purchase in the filename, you could use: <br><br>" +
                     "ls | grep purchase",
+    lscpu:          "lscpu<br>" +
+                    "Prints the number of CPU Cores the current server has",
     mem:            "mem [script name] [-t] [num threads]<br>" +
                     "Displays the amount of RAM needed to run the specified script with a single thread. The command can also be used to print " +
                     "the amount of RAM needed to run a script with multiple threads using the '-t' flag. If the '-t' flag is specified, then " +

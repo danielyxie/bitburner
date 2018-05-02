@@ -11,11 +11,19 @@ function sizeOfObject(obj) {
 	return size;
 }
 
+function clearObject(obj) {
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            delete obj[key];
+        }
+    }
+}
+
 //Adds a random offset to a number within a certain percentage
 //e.g. addOffset(100, 5) will return anything from 95 to 105.
 //The percentage argument must be between 0 and 100;
 function addOffset(n, percentage) {
-    if (percentage < 0 || percentage > 100) {return;}
+    if (percentage < 0 || percentage > 100) {return n;}
 
     var offset = n * (percentage / 100);
 
@@ -49,7 +57,7 @@ function removeElementById(id) {
 }
 
 function removeElement(elem) {
-    if (elem == null) {return;}
+    if (elem == null || !(elem instanceof Element)) {return;}
     while(elem.firstChild) {elem.removeChild(elem.firstChild);}
     elem.parentNode.removeChild(elem);
 }
@@ -70,6 +78,7 @@ function createElement(type, params={}) {
     var el = document.createElement(type);
     if (params.id)          {el.id = params.id;}
     if (params.class)       {el.className = params.class;}
+    if (params.name)        {el.name = params.name;}
     if (params.innerHTML)   {el.innerHTML = params.innerHTML;}
     if (params.innerText)   {el.innerText = params.innerText;}
     if (params.value)       {el.value = params.value;}
@@ -96,7 +105,7 @@ function createElement(type, params={}) {
     if (params.pattern)     {el.pattern = params.pattern;}
     if (params.maxLength)   {el.maxLength = params.maxLength;}
     if (params.placeholder) {el.placeholder = params.placeholder;}
-    if (params.tooltip)     {
+    if (params.tooltip && params.tooltip !== "")     {
         el.className += " tooltip";
         el.appendChild(createElement("span", {
             class:"tooltiptext",
@@ -111,6 +120,7 @@ function createElement(type, params={}) {
     }
     if (params.href)        {el.href = params.href;}
     if (params.target)      {el.target = params.target;}
+    if (params.tabIndex)    {el.tabIndex = params.tabIndex;}
     if (params.clickListener) {
         el.addEventListener("click", params.clickListener);
     }
@@ -122,6 +132,9 @@ function createElement(type, params={}) {
     }
     if (params.onkeyup) {
         el.addEventListener("keyup", params.onkeyup);
+    }
+    if (params.onfocus) {
+        el.addEventListener("focus", params.onfocus);
     }
     return el;
 }
@@ -174,6 +187,13 @@ function createAccordionElement(params) {
     return [li, hdr, panel];
 }
 
+//Appends n line breaks (as children) to the Element el
+function appendLineBreaks(el, n) {
+    for (var i = 0; i < n; ++i) {
+        el.appendChild(createElement("br"));
+    }
+}
+
 function clearSelector(selector) {
     for (var i = selector.options.length - 1; i >= 0; --i) {
         selector.remove(i);
@@ -210,13 +230,34 @@ function powerOfTwo(n) {
 
 function exceptionAlert(e) {
     dialogBoxCreate("Caught an exception: " + e + "<br><br>" +
+                    "Filename: " + e.fileName + "<br><br>" +
+                    "Line Number: " + e.lineNumber + "<br><br>" +
                     "This is a bug, please report to game developer with this " +
                     "message as well as details about how to reproduce the bug.<br><br>" +
                     "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
                     "safe doesn't get corrupted");
 }
 
-export {sizeOfObject, addOffset, clearEventListeners, getRandomInt,
+/*Creates a graphical "progress bar"
+ *  e.g.: [||||---------------]
+ *  params:
+ *      @totalTicks - Total number of ticks in progress bar. Preferably a factor of 100
+ *      @progress - Current progress, taken as a decimal (i.e. 0.6 to represent 60%)
+ */
+function createProgressBarText(params={}) {
+    //Default values
+    var totalTicks = (params.totalTicks == null ? 20 : params.totalTicks);
+    var progress = (params.progress == null ? 0 : params.progress);
+
+    var percentPerTick = 1 / totalTicks;
+    var numTicks = Math.floor(progress / percentPerTick);
+    var numDashes = totalTicks - numTicks;
+    return "[" + Array(numTicks+1).join("|") + Array(numDashes+1).join("-") + "]";
+}
+
+export {sizeOfObject, clearObject, addOffset, clearEventListeners, getRandomInt,
         compareArrays, printArray, powerOfTwo, clearEventListenersEl,
         removeElementById, removeElement, createElement, createAccordionElement,
-        removeChildrenFromElement, createPopup, clearSelector, exceptionAlert};
+        appendLineBreaks,
+        removeChildrenFromElement, createPopup, clearSelector, exceptionAlert,
+        createProgressBarText};

@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.35.2",
+    Version:                "0.36.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -1138,25 +1138,11 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.35.2<br>" +
-    "* Corporation Changes: <br>" +
-    "*** Fixed an issue with Warehouse upgrade cost. Should now be significantly cheaper than before.<br>" +
-    "*** Scientific Research now has a slightly more significant effect on Product quality<br>" +
-    "*** The Energy and Water Utilities industries are now slightly more profitable<br>" +
-    "*** The Robotics and Computer Hardware industries are now less profitable<br>" +
-    "*** The Software industry is slightly less profitable<br>" +
-    "*** When selling Materials and Products, the 'PROD' qualifier can now be used " +
-    "to set dynamic sell amounts based on your production<br>" +
-    "*** Exporting MAX should now work properly<br>" +
-    "*** You can no longer export past storage limits<br>" +
-    "*** Scientific Research production reduced<br>" +
-    "*** Effects of AdVert. Inc upgrade were reduced, but the effect that popularity and " +
-    "awareness have on sales was increased to compensate (popularity/awareness numbers were getting " +
-    "too big with Advert. Inc)<br>" +
-    "*** Bug Fix: Products from Computer Hardware division should now properly have ratings<br>" +
-    "* Improved Augmentation UI/UX. Now contains collapsible headers and sort buttons<br>" +
-    "* Improved Faction Augmentations display UI/UX. Now contains sort buttons. There is also an option " +
-    "to disable confirmation when purchasing Augmentations<br>"
+    "v0.36.0<br>" +
+    "* Added BN-6: Bladeburners<br>" +
+    "* Rebalanced many combat Augmentations so that they are slightly less powerful<br>" +
+    "* Bug Fix: When faction invites are suppressed, an invitation will no longer load the Faction page<br>"
+
 }
 
 export {CONSTANTS};

@@ -1,3 +1,5 @@
+.. _shortcuts:
+
 Keyboard Shortcuts
 ==================
 This page documents the various keyboard shortcuts that can be used in the game.
@@ -16,7 +18,7 @@ These shortcuts are almost always available. Exceptions include:
 ========== ===========================================================================
 Shortcut   Action
 ========== ===========================================================================
-Alt + t    Switch to Terminal
+Alt + t    Switch to :doc:`terminal`
 Alt + c    Switch to 'Stats' page
 Alt + e    Switch to Script Editor. Will open up the last-edited file or a new file
 Alt + s    Switch to 'Active Scripts' page
@@ -38,7 +40,7 @@ These shortcuts are available only in the Script Editor
 ============= ===========================================================================
 Shortcut      Action
 ============= ===========================================================================
-Ctrl + b      Save script and return to Terminal
+Ctrl + b      Save script and return to :doc:`terminal`
 Ctrl + space  Function autocompletion
 ============= ===========================================================================
 
@@ -50,7 +52,7 @@ In the Script Editor you can configure your key binding mode to three preset opt
 
 Terminal Shortcuts
 ------------------
-These shortcuts are available only in the Terminal
+These shortcuts are available only in the :doc:`terminal`
 
 ============= ===========================================================================
 Shortcut      Action
@@ -64,7 +66,7 @@ Tab           Autocomplete command
 Terminal Bash Shortcuts
 -----------------------
 These shortcuts were implemented to better emulate a bash shell. They must be enabled
-in your Terminal's *.fconf* file. This can be done be entering the Terminal command::
+in your :doc:`terminal`'s *.fconf* file. This can be done be entering the Terminal command::
 
     nano .fconf
 

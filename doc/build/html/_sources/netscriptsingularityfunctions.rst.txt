@@ -421,7 +421,7 @@ createProgram
 commitCrime
 -----------
 
-.. js:function::commitCrime(crime)
+.. js:function:: commitCrime(crime)
 
     :param string crime:
         Name of crime to attempt. Not case-sensitive. This argument is fairly lenient in terms of what inputs it accepts.

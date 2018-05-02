@@ -18,7 +18,8 @@ import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps.js";
 import {loadStockMarket, StockMarket}           from "./StockMarket.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {gameOptionsBoxClose}                    from "../utils/GameOptions.js";
-import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {clearEventListeners, createElement,
+        createPopup, removeElementById}         from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
@@ -442,8 +443,18 @@ function loadImportedGame(saveObj, saveString) {
         }
     }
 
-    dialogBoxCreate("Imported game! I would suggest saving the game and then reloading the page " +
-                    "to make sure everything runs smoothly");
+    var popupId = "import-game-restart-game-notice";
+    var txt = createElement("p", {
+        innerText:"Imported game! I would suggest saving the game and then reloading the page " +
+                 "to make sure everything runs smoothly"
+    });
+    var gotitBtn = createElement("a", {
+        class:"a-link-button", float:"right", padding:"6px", innerText:"Got it!",
+        clickListener:()=>{
+            removeElementById(popupId);
+        }
+    });
+    createPopup(popupId, [txt, gotitBtn]);
     gameOptionsBoxClose();
 
     //Re-start game

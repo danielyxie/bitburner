@@ -20,6 +20,7 @@ secrets that you've been searching for.
    :caption: Contents:
 
     Netscript <netscript>
+    Terminal <terminal>
     Keyboard Shortcuts <shortcuts>
 
 

@@ -1,16 +1,19 @@
 import {BitNodeMultipliers}                             from "./BitNode.js";
 import {CONSTANTS}                                      from "./Constants.js";
 import {Engine}                                         from "./engine.js";
-import {Factions, getNextNeurofluxLevel}                from "./Faction.js";
+import {Factions, getNextNeurofluxLevel,
+        factionExists}                                  from "./Faction.js";
+import {hasBladeburnerSF}                               from "./NetscriptFunctions.js";
 import {addWorkerScript}                                from "./NetscriptWorker.js";
 import {Player}                                         from "./Player.js";
 import {prestigeAugmentation}                           from "./Prestige.js";
+import {saveObject}                                     from "./SaveObject.js";
 import {Script, RunningScript}                          from "./Script.js";
 import {Server}                                         from "./Server.js";
 import {SourceFiles}                                    from "./SourceFile.js";
 import {dialogBoxCreate}                                from "../utils/DialogBox.js";
 import {createElement, createAccordionElement,
-        removeChildrenFromElement}                      from "../utils/HelperFunctions.js";
+        removeChildrenFromElement, clearObject}         from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver.js";
 import {isString}                                       from "../utils/StringHelperFunctions.js";
@@ -40,7 +43,7 @@ Augmentation.prototype.addToFactions = function(factionList) {
     for (var i = 0; i < factionList.length; ++i) {
         var faction = Factions[factionList[i]];
         if (faction == null) {
-            console.log("ERROR: Could not find faction with this name:" + factionList[i]);
+            throw new Error("In Augmentation.addToFactions(), could not find faction with this name:" + factionList[i]);
             continue;
         }
         faction.augmentations.push(this.name);
@@ -164,7 +167,29 @@ let AugmentationNames = {
     GrapheneBionicArms:                 "Graphene Bionic Arms Upgrade",
     BrachiBlades:                       "BrachiBlades",
     BionicArms:                         "Bionic Arms",
-    SNA:                                "Social Negotiation Assistant (S.N.A)"
+    SNA:                                "Social Negotiation Assistant (S.N.A)",
+    EsperEyewear:                       "EsperTech Bladeburner Eyewear",
+    EMS4Recombination:                  "EMS-4 Recombination",
+    OrionShoulder:                      "ORION-MKIV Shoulder",
+    HyperionV1:                         "Hyperion Plasma Cannon V1",
+    HyperionV2:                         "Hyperion Plasma Cannon V2",
+    GolemSerum:                         "GOLEM Serum",
+    VangelisVirus:                      "Vangelis Virus",
+    VangelisVirus3:                     "Vangelis Virus 3.0",
+    INTERLINKED:                        "I.N.T.E.R.L.I.N.K.E.D",
+    BladeRunner:                        "Blade's Runners",
+    BladeArmor:                         "BLADE-51b Tesla Armor",
+    BladeArmorPowerCells:               "BLADE-51b Tesla Armor: Power Cells Upgrade",
+    BladeArmorEnergyShielding:          "BLADE-51b Tesla Armor: Energy Shielding Upgrade",
+    BladeArmorUnibeam:                  "BLADE-51b Tesla Armor: Unibeam Upgrade",
+    BladeArmorOmnibeam:                 "BLADE-51b Tesla Armor: Omnibeam Upgrade",
+    BladeArmorIPU:                      "BLADE-51b Tesla Armor: IPU Upgrade",
+
+    //Wasteland Augs
+    //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System
+    //PepBoyForceField Generates plasma force fields
+    //PepBoyBlasts Generate high density plasma concussive blasts
+    //PepBoyDataStorage STore more data on pep boy,
 }
 
 function initAugmentations() {
@@ -173,6 +198,10 @@ function initAugmentations() {
             Factions[name].augmentations = [];
         }
     }
+
+    //Reset Augmentations
+    clearObject(Augmentations);
+
     //Combat stat augmentations
     var HemoRecirculator = new Augmentation({
         name:AugmentationNames.HemoRecirculator, moneyCost: 9e6, repCost:4e3,
@@ -245,7 +274,7 @@ function initAugmentations() {
         info:"The myofibrils in human muscles are injected with special chemicals that react with the proteins inside " +
              "the myofibrils, altering their underlying structure. The end result is muscles that are stronger and more elastic. " +
              "Scientists have named these artificially enhanced units 'synfibrils'.<br><br> This augmentation increases the player's " +
-             "strength and defense by 35%."
+             "strength and defense by 30%."
     });
     SynfibrilMuscle.addToFactions(["KuaiGong International", "Fulcrum Secret Technologies", "Speakers for the Dead",
                                   "NWO", "The Covenant", "Daedalus", "Illuminati", "Blade Industries"]);
@@ -270,7 +299,7 @@ function initAugmentations() {
     var CombatRib2 = new Augmentation({
         name:AugmentationNames.CombatRib2, repCost:7.5e3, moneyCost:13e6,
         info:"This is an upgrade to the Combat Rib I augmentation, and is capable of releasing even more potent combat-enhancing " +
-             "drugs into the bloodstream.<br><br>This upgrade increases the player's strength and defense by an additional 15%.",
+             "drugs into the bloodstream.<br><br>This upgrade increases the player's strength and defense by an additional 14%.",
         prereqs:[AugmentationNames.CombatRib1]
     });
     CombatRib2.addToFactions(["The Dark Army", "The Syndicate", "Sector-12", "Volhaven", "Ishima",
@@ -283,7 +312,7 @@ function initAugmentations() {
     var CombatRib3 = new Augmentation({
         name:AugmentationNames.CombatRib3, repCost:14e3, moneyCost:24e6,
         info:"This is an upgrade to the Combat Rib II augmentation, and is capable of releasing even more potent combat-enhancing " +
-             "drugs into the bloodstream<br><br>. This upgrade increases the player's strength and defense by an additional 20%.",
+             "drugs into the bloodstream<br><br>. This upgrade increases the player's strength and defense by an additional 18%.",
         prereqs:[AugmentationNames.CombatRib2],
     });
     CombatRib3.addToFactions(["The Dark Army", "The Syndicate", "OmniTek Incorporated",
@@ -297,7 +326,7 @@ function initAugmentations() {
         name:AugmentationNames.NanofiberWeave, repCost:15e3, moneyCost:25e6,
         info:"Synthetic nanofibers are woven into the skin's extracellular matrix using electrospinning. " +
              "This improves the skin's ability to regenerate itself and protect the body from external stresses and forces.<br><br>" +
-             "This augmentation increases the player's strength and defense by 25%."
+             "This augmentation increases the player's strength and defense by 20%."
     });
     NanofiberWeave.addToFactions(["Tian Di Hui", "The Syndicate", "The Dark Army", "Speakers for the Dead",
                                  "Blade Industries", "Fulcrum Secret Technologies", "OmniTek Incorporated"]);
@@ -313,7 +342,7 @@ function initAugmentations() {
              "that has ever been created. The dilatant fluid, despite being thin and light, is extremely effective " +
              "at stopping piercing blows and reducing blunt trauma. The properties of graphene allow the plating to " +
              "mitigate damage from any fire-related or electrical traumas.<br><br>" +
-             "This augmentation increases the player's defense by 125%."
+             "This augmentation increases the player's defense by 120%."
     });
     SubdermalArmor.addToFactions(["The Syndicate", "Fulcrum Secret Technologies", "Illuminati", "Daedalus",
                                  "The Covenant"]);
@@ -353,7 +382,7 @@ function initAugmentations() {
              "Not only is the Bionic Spine physically stronger than a human spine, but it is also capable of digitally " +
              "stimulating and regulating the neural signals that are sent and received by the spinal cord. This results in " +
              "greatly improved senses and reaction speeds.<br><br>" +
-            "This augmentation increases all of the player's combat stats by 16%."
+            "This augmentation increases all of the player's combat stats by 15%."
     });
     BionicSpine.addToFactions(["Speakers for the Dead", "The Syndicate", "KuaiGong International",
                               "OmniTek Incorporated", "Blade Industries"]);
@@ -391,7 +420,7 @@ function initAugmentations() {
         name:AugmentationNames.GrapheneBionicLegs, repCost:300e3, moneyCost:900e6,
         info:"An upgrade to the Bionic Legs augmentation. It fuses the implant with an advanced graphene " +
              "material to make it much stronger and lighter.<br><br>" +
-             "This augmentation increases the player's agility by an additional 175%.",
+             "This augmentation increases the player's agility by an additional 150%.",
         prereqs:[AugmentationNames.BionicLegs],
     });
     GrapheneBionicLegs.addToFactions(["MegaCorp", "ECorp", "Fulcrum Secret Technologies"]);
@@ -1421,7 +1450,7 @@ function initAugmentations() {
         info:"A synthetic skin is grafted onto the body. The skin consists of " +
              "millions of nanobots capable of projecting high-density muon beams, " +
              "creating an energy barrier around the user. <br><br>" +
-             "This augmentation increases the player's defense by 50%"
+             "This augmentation increases the player's defense by 40%"
     });
     DermaForce.addToFactions(["Volhaven"]);
     if (augmentationExists(AugmentationNames.DermaForce)) {
@@ -1506,6 +1535,239 @@ function initAugmentations() {
     }
     AddToAugmentations(SNA);
 
+    //For BitNode-2, add all Augmentations to crime/evil factions.
+    //Do this before adding special Augmentations that become available in later BitNodes
+    if (Player.bitNodeN === 2) {
+        console.log("Adding all augmentations to crime factions for Bit node 2");
+        Factions["Slum Snakes"].addAllAugmentations();
+        Factions["Tetrads"].addAllAugmentations();
+        Factions["The Syndicate"].addAllAugmentations();
+        Factions["The Dark Army"].addAllAugmentations();
+        Factions["Speakers for the Dead"].addAllAugmentations();
+        Factions["NiteSec"].addAllAugmentations();
+        Factions["The Black Hand"].addAllAugmentations();
+    }
+
+    //Special Bladeburner Augmentations
+    var BladeburnersFactionName = "Bladeburners";
+    if (factionExists(BladeburnersFactionName)) {
+        var EsperEyewear = new Augmentation({
+            name:AugmentationNames.EsperEyewear, repCost:400, moneyCost:30e6,
+            info:"Ballistic-grade protective and retractable eyewear that was designed specially " +
+                 "for Bladeburner units. This " +
+                 "is implanted by installing a mechanical frame in the skull's orbit. " +
+                 "This frame interfaces with the brain and allows the user to " +
+                 "automatically extrude and extract the eyewear. The eyewear protects " +
+                 "against debris, shrapnel, laser, flash, and gas. It is also " +
+                 "embedded with a data processing chip that can be programmed to display an " +
+                 "AR HUD and assist the user in field missions.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 3%<br>" +
+                 "Increases the player's dexterity by 3%"
+        });
+        EsperEyewear.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(EsperEyewear);
+
+        var EMS4Recombination = new Augmentation({
+            name:AugmentationNames.EMS4Recombination, repCost: 800, moneyCost:50e6,
+            info:"A DNA recombination of the EMS-4 Gene. This genetic engineering " +
+                 "technique was originally used on Bladeburners during the Synthoid uprising " +
+                 "to induce wakefulness and concentration, suppress fear, reduce empathy, and " +
+                 "improve reflexes and memory-recall among other things.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's sucess chance in Bladeburner contracts/operations by 3%<br>" +
+                 "Increases the player's effectiveness in Bladeburner Field Analysis by 5%<br>" +
+                 "Increases the player's Bladeburner stamina gain rate by 1%"
+        });
+        EMS4Recombination.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(EMS4Recombination);
+
+        var OrionShoulder = new Augmentation({
+            name:AugmentationNames.OrionShoulder, repCost:2e3, moneyCost:100e6,
+            info:"A bionic shoulder augmentation for the right shoulder. Using cybernetics, " +
+                 "the ORION-MKIV shoulder enhances the strength and dexterity " +
+                 "of the user's right arm. It also provides protection due to its " +
+                 "crystallized graphene plating.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's defense by 5%.<br>" +
+                 "Increases the player's strength and dexterity by 3%<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 4%"
+        });
+        OrionShoulder.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(OrionShoulder);
+
+        var HyperionV1 = new Augmentation({
+            name:AugmentationNames.HyperionV1, repCost: 4e3, moneyCost:500e6,
+            info:"A pair of mini plasma cannons embedded into the hands. The Hyperion is capable " +
+                 "of rapidly firing bolts of high-density plasma. The weapon is meant to " +
+                 "be used against augmented enemies as the ionized " +
+                 "nature of the plasma disrupts the electrical systems of Augmentations. However, " +
+                 "it can also be effective against non-augmented enemies due to its high temperature " +
+                 "and concussive force.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 5%"
+        });
+        HyperionV1.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(HyperionV1);
+
+        var HyperionV2 = new Augmentation({
+            name:AugmentationNames.HyperionV2, repCost:8e3, moneyCost:1e9,
+            info:"A pair of mini plasma cannons embedded into the hands. This augmentation " +
+                 "is more advanced and powerful than the original V1 model. This V2 model is " +
+                 "more power-efficiency, more accurate, and can fire plasma bolts at a much " +
+                 "higher velocity than the V1 model.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 7%",
+            prereqs:[AugmentationNames.HyperionV1]
+        });
+        HyperionV2.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(HyperionV2);
+
+        var GolemSerum = new Augmentation({
+            name:AugmentationNames.GolemSerum, repCost:10e3, moneyCost:2e9,
+            info:"A serum that permanently enhances many aspects of a human's capabilities, " +
+                 "including strength, speed, immune system performance, and mitochondrial efficiency. The " +
+                 "serum was originally developed by the Chinese military in an attempt to " +
+                 "create super soldiers.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases all of the player's combat stats by 5%<br>" +
+                 "Increases the player's Bladeburner stamina gain rate by 5%<br>"
+        });
+        GolemSerum.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(GolemSerum);
+
+        var VangelisVirus = new Augmentation({
+            name:AugmentationNames.VangelisVirus, repCost:6e3, moneyCost:500e6,
+            info:"A synthetic symbiotic virus that is injected into the human brain tissue. The Vangelis virus " +
+                 "heightens the senses and focus of its host, and also enhances its intuition.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's effectiveness in Bladeburner Field Analysis by 10%<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 4%<br>" +
+                 "Increases the player's dexterity experience gain rate by 5%"
+        });
+        VangelisVirus.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(VangelisVirus);
+
+        var VangelisVirus3 = new Augmentation({
+            name:AugmentationNames.VangelisVirus3, repCost:12e3, moneyCost:2e9,
+            info:"An improved version of Vangelis, a synthetic symbiotic virus that is " +
+                 "injected into the human brain tissue. On top of the benefits of the original " +
+                 "virus, this also grants an accelerated healing factor and enhanced " +
+                 "agility/reflexes.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's effectiveness in Bladeburner Field Analysis by 15%<br>" +
+                 "Increases the player's defense and dexterity experience gain rate by 5%<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 5%",
+            prereqs:[AugmentationNames.VangelisVirus]
+        });
+        VangelisVirus3.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(VangelisVirus3);
+
+        var INTERLINKED = new Augmentation({
+            name:AugmentationNames.INTERLINKED, repCost:8e3, moneyCost:1e9,
+            info:"The DNA is genetically modified to enhance the human's body " +
+                 "extracellular matrix (ECM). This improves the ECM's ability to " +
+                 "structurally support the body and grants heightened strength and " +
+                 "durability.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's experience gain rate for all combat stats by 4%<br>" +
+                 "Increases the player's Bladeburner max stamina by 10%"
+        });
+        INTERLINKED.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(INTERLINKED);
+
+        var BladeRunner = new Augmentation({
+            name:AugmentationNames.BladeRunner, repCost:8e3, moneyCost:1.5e9,
+            info:"A cybernetic foot augmentation that was specially created for Bladeburners " +
+                 "during the Synthoid Uprising. The organic musculature of the human foot " +
+                 "is enhanced with flexible carbon nanotube matrices that are controlled by " +
+                 "intelligent servo-motors.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's agility by 5%<br>" +
+                 "Increases the player's Bladeburner max stamina by 5%<br>" +
+                 "Increases the player's Bladeburner stamina gain rate by 5%<br>"
+        });
+        BladeRunner.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(BladeRunner);
+
+        var BladeArmor = new Augmentation({
+            name:AugmentationNames.BladeArmor, repCost:4e3, moneyCost:250e6,
+            info:"A powered exoskeleton suit (exosuit) designed as armor for Bladeburner units. This " +
+                 "exoskeleton is incredibly adaptable and can protect the wearer from blunt, piercing, " +
+                 "concussive, thermal, chemical, and electric trauma. It also enhances the user's " +
+                 "strength and agility.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases all of the player's combat stats by 2%<br>" +
+                 "Increases the player's Bladeburner stamina gain rate by 2%<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 3%",
+        });
+        BladeArmor.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(BladeArmor);
+
+        var BladeArmorPowerCells = new Augmentation({
+            name:AugmentationNames.BladeArmorPowerCells, repCost:6e3, moneyCost:500e6,
+            info:"Upgrades the BLADE-51b Tesla Armor with Ion Power Cells, which are capable of " +
+                 "more efficiently storing and using power.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 5%" +
+                 "Increases the player's Bladeburner stamina gain rate by 2%<br>" +
+                 "Increases the player's Bladeburner max stamina by 5%<br>",
+            prereqs:[AugmentationNames.BladeArmor]
+        });
+        BladeArmorPowerCells.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(BladeArmorPowerCells);
+
+        var BladeArmorEnergyShielding = new Augmentation({
+            name:AugmentationNames.BladeArmorEnergyShielding, repCost:7e3, moneyCost:1e9,
+            info:"Upgrades the BLADE-51b Tesla Armor with a plasma energy propulsion system " +
+                 "that is capable of projecting an energy shielding force field.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's defense by 5%<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 6%",
+            prereqs:[AugmentationNames.BladeArmor]
+        });
+        BladeArmorEnergyShielding.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(BladeArmorEnergyShielding);
+
+        var BladeArmorUnibeam = new Augmentation({
+            name:AugmentationNames.BladeArmorUnibeam, repCost:10e3, moneyCost:3e9,
+            info:"Upgrades the BLADE-51b Tesla Armor with a concentrated deuterium-fluoride laser " +
+                 "weapon. It's precision an accuracy makes it useful for quickly neutralizing " +
+                 "threats while keeping casualties to a minimum.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 8%",
+            prereqs:[AugmentationNames.BladeArmor]
+        });
+        BladeArmorUnibeam.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(BladeArmorUnibeam);
+
+        var BladeArmorOmnibeam = new Augmentation({
+            name:AugmentationNames.BladeArmorOmnibeam, repCost:20e3, moneyCost:5e9,
+            info:"Upgrades the BLADE-51b Tesla Armor Unibeam augmentation to use " +
+                 "multiple-fiber system. The upgraded weapon uses multiple fiber laser " +
+                 "modules that combine together to form a single, more powerful beam of up to " +
+                 "2000MW.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 10%",
+            prereqs:[AugmentationNames.BladeArmorUnibeam]
+        });
+        BladeArmorOmnibeam.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(BladeArmorOmnibeam);
+
+        var BladeArmorIPU = new Augmentation({
+            name:AugmentationNames.BladeArmorIPU, repCost: 5e3, moneyCost:200e6,
+            info:"Upgrades the BLADE-51b Tesla Armor with an AI Information Processing " +
+                 "Unit that was specially designed to analyze Synthoid related data and " +
+                 "information.<br><br>" +
+                 "This augmentation:<br>" +
+                 "Increases the player's effectiveness in Bladeburner Field Analysis by 15%<br>" +
+                 "Increases the player's success chance in Bladeburner contracts/operations by 2%",
+            prereqs:[AugmentationNames.BladeArmor]
+        });
+        BladeArmorIPU.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(BladeArmorIPU);
+    }
+
     //Update costs based on how many have been purchased
     var mult = Math.pow(CONSTANTS.MultipleAugMultiplier, Player.queuedAugmentations.length);
     for (var name in Augmentations) {
@@ -1516,17 +1778,19 @@ function initAugmentations() {
 
     Player.reapplyAllAugmentations();
 
-    //In BitNode-2, these crime/evil factions have all AugmentationsAvailable
-    if (Player.bitNodeN == 2) {
-        console.log("Adding all augmentations to crime factions for Bit node 2");
-        Factions["Slum Snakes"].addAllAugmentations();
-        Factions["Tetrads"].addAllAugmentations();
-        Factions["The Syndicate"].addAllAugmentations();
-        Factions["The Dark Army"].addAllAugmentations();
-        Factions["Speakers for the Dead"].addAllAugmentations();
-        Factions["NiteSec"].addAllAugmentations();
-        Factions["The Black Hand"].addAllAugmentations();
+
+}
+
+//Resets an Augmentation during (re-initizliation)
+function resetAugmentation(newAugObject) {
+    if (!(newAugObject instanceof Augmentation)) {
+        throw new Error("Invalid argument 'newAugObject' passed into resetAugmentation");
     }
+    var name = newAugObject.name;
+    if (augmentationExists(name)) {
+        delete Augmentations[name];
+    }
+    AddToAugmentations(newAugObject);
 }
 
 function applyAugmentation(aug, reapply=false) {
@@ -1547,27 +1811,27 @@ function applyAugmentation(aug, reapply=false) {
             Player.strength_mult *= 1.5;
             break;
         case AugmentationNames.SynfibrilMuscle:        //Medium-high level
-            Player.strength_mult    *= 1.35;
-            Player.defense_mult     *= 1.35;
+            Player.strength_mult    *= 1.3;
+            Player.defense_mult     *= 1.3;
             break;
         case AugmentationNames.CombatRib1:
             Player.strength_mult    *= 1.1;
             Player.defense_mult     *= 1.1;
             break;
         case AugmentationNames.CombatRib2:
-            Player.strength_mult    *= 1.15;
-            Player.defense_mult     *= 1.15;
+            Player.strength_mult    *= 1.14;
+            Player.defense_mult     *= 1.14;
             break;
         case AugmentationNames.CombatRib3:
-            Player.strength_mult    *= 1.20;
-            Player.defense_mult     *= 1.20;
+            Player.strength_mult    *= 1.18;
+            Player.defense_mult     *= 1.18;
             break;
         case AugmentationNames.NanofiberWeave:         //Med level
-            Player.strength_mult    *= 1.25;
-            Player.defense_mult     *= 1.25;
+            Player.strength_mult    *= 1.2;
+            Player.defense_mult     *= 1.2;
             break;
         case AugmentationNames.SubdermalArmor:         //High level
-            Player.defense_mult     *= 2.25;
+            Player.defense_mult     *= 2.2;
             break;
         case AugmentationNames.WiredReflexes:          //Low level
             Player.agility_mult     *= 1.05;
@@ -1578,10 +1842,10 @@ function applyAugmentation(aug, reapply=false) {
             Player.defense_mult     *= 1.7;
             break;
         case AugmentationNames.BionicSpine:            //Med level
-            Player.strength_mult    *= 1.16;
-            Player.defense_mult     *= 1.16;
-            Player.agility_mult     *= 1.16;
-            Player.dexterity_mult   *= 1.16;
+            Player.strength_mult    *= 1.15;
+            Player.defense_mult     *= 1.15;
+            Player.agility_mult     *= 1.15;
+            Player.dexterity_mult   *= 1.15;
             break;
         case AugmentationNames.GrapheneBionicSpine:   //High level
             Player.strength_mult    *= 1.6;
@@ -1593,7 +1857,7 @@ function applyAugmentation(aug, reapply=false) {
             Player.agility_mult     *= 1.6;
             break;
         case AugmentationNames.GrapheneBionicLegs:    //High level
-            Player.agility_mult     *= 2.75;
+            Player.agility_mult     *= 2.5;
             break;
 
         //Labor stats augmentations
@@ -1979,7 +2243,7 @@ function applyAugmentation(aug, reapply=false) {
             Player.dexterity_mult       *= 1.1;
             break;
         case AugmentationNames.DermaForce:
-            Player.defense_mult         *= 1.5;
+            Player.defense_mult         *= 1.4;
             break;
         case AugmentationNames.GrapheneBrachiBlades:
             Player.strength_mult        *= 1.4;
@@ -2005,6 +2269,86 @@ function applyAugmentation(aug, reapply=false) {
             Player.work_money_mult      *= 1.1;
             Player.company_rep_mult     *= 1.15;
             Player.faction_rep_mult     *= 1.15;
+            break;
+
+        //Bladeburner augmentations
+        case AugmentationNames.EsperEyewear:
+            Player.bladeburner_success_chance_mult  *= 1.03;
+            Player.dexterity_mult                   *= 1.03;
+            break;
+        case AugmentationNames.EMS4Recombination:
+            Player.bladeburner_success_chance_mult  *= 1.03;
+            Player.bladeburner_analysis_mult        *= 1.05;
+            Player.bladeburner_stamina_gain_mult    *= 1.01;
+            break;
+        case AugmentationNames.OrionShoulder:
+            Player.defense_mult                     *= 1.05;
+            Player.strength_mult                    *= 1.03;
+            Player.dexterity_mult                   *= 1.03;
+            Player.bladeburner_success_chance_mult  *= 1.04;
+            break;
+        case AugmentationNames.HyperionV1:
+            Player.bladeburner_success_chance_mult  *= 1.05;
+            break;
+        case AugmentationNames.HyperionV2:
+            Player.bladeburner_success_chance_mult  *= 1.07;
+            break;
+        case AugmentationNames.GolemSerum:
+            Player.strength_mult                    *= 1.05;
+            Player.defense_mult                     *= 1.05;
+            Player.dexterity_mult                   *= 1.05;
+            Player.agility_mult                     *= 1.05;
+            Player.bladeburner_stamina_gain_mult    *= 1.05;
+            break;
+        case AugmentationNames.VangelisVirus:
+            Player.dexterity_exp_mult               *= 1.05;
+            Player.bladeburner_analysis_mult        *= 1.1;
+            Player.bladeburner_success_chance_mult  *= 1.04;
+            break;
+        case AugmentationNames.VangelisVirus3:
+            Player.defense_exp_mult                 *= 1.05;
+            Player.dexterity_exp_mult               *= 1.05;
+            Player.bladeburner_analysis_mult        *= 1.15;
+            Player.bladeburner_success_chance_mult  *= 1.05;
+            break;
+        case AugmentationNames.INTERLINKED:
+            Player.strength_exp_mult                *= 1.04;
+            Player.defense_exp_mult                 *= 1.04;
+            Player.dexterity_exp_mult               *= 1.04;
+            Player.agility_exp_mult                 *= 1.04;
+            Player.bladeburner_max_stamina_mult     *= 1.1;
+            break;
+        case AugmentationNames.BladeRunner:
+            Player.agility_mult                     *= 1.05;
+            Player.bladeburner_max_stamina_mult     *= 1.05;
+            Player.bladeburner_stamina_gain_mult    *= 1.05;
+            break;
+        case AugmentationNames.BladeArmor:
+            Player.strength_mult                    *= 1.02;
+            Player.defense_mult                     *= 1.02;
+            Player.dexterity_mult                   *= 1.02;
+            Player.agility_mult                     *= 1.02;
+            Player.bladeburner_stamina_gain_mult    *= 1.02;
+            Player.bladeburner_success_chance_mult  *= 1.03;
+            break;
+        case AugmentationNames.BladeArmorPowerCells:
+            Player.bladeburner_success_chance_mult  *= 1.05;
+            Player.bladeburner_stamina_gain_mult    *= 1.02;
+            Player.bladeburner_max_stamina_mult     *= 1.05;
+            break;
+        case AugmentationNames.BladeArmorEnergyShielding:
+            Player.defense_mult                     *= 1.05;
+            Player.bladeburner_success_chance_mult  *= 1.06;
+            break;
+        case AugmentationNames.BladeArmorUnibeam:
+            Player.bladeburner_success_chance_mult  *= 1.08;
+            break;
+        case AugmentationNames.BladeArmorOmnibeam:
+            Player.bladeburner_success_chance_mult  *= 1.1;
+            break;
+        case AugmentationNames.BladeArmorIPU:
+            Player.bladeburner_analysis_mult        *= 1.15;
+            Player.bladeburner_success_chance_mult  *= 1.02;
             break;
         default:
             throw new Error("ERROR: No such augmentation!");
@@ -2093,6 +2437,12 @@ function displayAugmentationsContent() {
         innerText:"Purchased Augmentations",
     }));
 
+    //Bladeburner text, once mechanic is unlocked
+    var bladeburnerText = "\n";
+    if (Player.bitNodeN === 6 || hasBladeburnerSF) {
+        bladeburnerText = "Bladeburner Progress\n\n";
+    }
+
     Engine.Display.augmentationsContent.appendChild(createElement("pre", {
         width:"70%", whiteSpace:"pre-wrap", display:"block",
         innerText:"Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to install them.\n" +
@@ -2103,7 +2453,8 @@ function displayAugmentationsContent() {
                   "Purchased servers\n" +
                   "Hacknet Nodes\n" +
                   "Faction/Company reputation\n" +
-                  "Stocks\n\n" +
+                  "Stocks\n" +
+                  bladeburnerText +
                   "Installing Augmentations lets you start over with the perks and benefits granted by all " +
                   "of the Augmentations you have ever installed. Also, you will keep any scripts and RAM/Core upgrades " +
                   "on your home computer (but you will lose all programs besides NUKE.exe)."

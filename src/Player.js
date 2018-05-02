@@ -14,7 +14,7 @@ import {Factions, Faction,
         displayFactionContent}                  from "./Faction.js";
 import {Gang, resetGangs}                       from "./Gang.js";
 import {Locations}                              from "./Location.js";
-import {hasBn11SF, hasWallStreetSF}             from "./NetscriptFunctions.js";
+import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions.js";
 import {AllServers, Server, AddToAllServers}    from "./Server.js";
 import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps.js";
 import {SourceFiles, applySourceFile}           from "./SourceFile.js";
@@ -179,6 +179,13 @@ function PlayerObject() {
     //Corporation
     this.corporation = 0;
 
+    //Bladeburner
+    this.bladeburner = 0;
+    this.bladeburner_max_stamina_mult               = 1;
+    this.bladeburner_stamina_gain_mult              = 1;
+    this.bladeburner_analysis_mult                  = 1; //Field Analysis Only
+    this.bladeburner_success_chance_mult            = 1;
+
     //bitnode
     this.bitNodeN = 1;
 
@@ -288,6 +295,8 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     this.hacknetNodes.length = 0;
     this.totalHacknetNodeProduction = 0;
+
+    this.bladeburner = 0;
 }
 
 PlayerObject.prototype.prestigeSourceFile = function() {
@@ -378,6 +387,9 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     if (this.bitNodeN === 3) {this.money = new Decimal(150e9);}
     this.corporation = 0;
 
+    //Reset Bladeburner
+    this.bladeburner = 0;
+
     //BitNode 8: Ghost of Wall Street
     if (this.bitNodeN === 8) {this.money = new Decimal(100000000);}
     if (this.bitNodeN === 8 || hasWallStreetSF) {
@@ -398,14 +410,12 @@ PlayerObject.prototype.getHomeComputer = function() {
 }
 
 //Calculates skill level based on experience. The same formula will be used for every skill
-//  At the maximum possible exp (MAX_INT = 9007199254740991), the hacking skill will be 1796 TODO REcalculate this
-//  Gets to level 1000 hacking skill at (TODO Determine this)
 PlayerObject.prototype.calculateSkill = function(exp) {
     return Math.max(Math.floor(32 * Math.log(exp + 534.5) - 200), 1);
 }
 
 PlayerObject.prototype.updateSkillLevels = function() {
-	this.hacking_skill = Math.floor(this.calculateSkill(this.hacking_exp) * this.hacking_mult);
+	this.hacking_skill = Math.max(1, Math.floor(this.calculateSkill(this.hacking_exp) * this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier));
 	this.strength      = Math.floor(this.calculateSkill(this.strength_exp) * this.strength_mult);
     this.defense       = Math.floor(this.calculateSkill(this.defense_exp) * this.defense_mult);
     this.dexterity     = Math.floor(this.calculateSkill(this.dexterity_exp) * this.dexterity_mult);
@@ -456,6 +466,11 @@ PlayerObject.prototype.resetMultipliers = function() {
     this.hacknet_node_level_cost_mult       = 1;
 
     this.work_money_mult = 1;
+
+    this.bladeburner_max_stamina_mult               = 1;
+    this.bladeburner_stamina_gain_mult              = 1;
+    this.bladeburner_analysis_mult                  = 1;
+    this.bladeburner_success_chance_mult            = 1;
 }
 
 //Calculates the chance of hacking a server
@@ -601,18 +616,23 @@ PlayerObject.prototype.gainIntelligenceExp = function(exp) {
     if (isNaN(exp)) {
         console.log("ERROR: NaN passed into Player.gainIntelligenceExp()"); return;
     }
-    var hasBn = false;
-    for (var i = 0; i < this.sourceFiles.length; ++i) {
-        if (this.sourceFiles[i].n === 5) {
-            hasBn = true;
-            break;
-        }
-    }
-    if (hasBn || this.intelligence > 0) {
+    if (hasAISF || this.intelligence > 0) {
         this.intelligence_exp += exp;
     } else {
         console.log("Not gaining intelligence experience bc it hasn't been unlocked yet");
     }
+}
+
+//Given a string expression like "str" or "strength", returns the given stat
+PlayerObject.prototype.queryStatFromString = function(str) {
+    var tempStr = str.toLowerCase();
+    if (tempStr.includes("hack"))   {return Player.hacking_skill;}
+    if (tempStr.includes("str"))    {return Player.strength;}
+    if (tempStr.includes("def"))    {return Player.defense;}
+    if (tempStr.includes("dex"))    {return Player.dexterity;}
+    if (tempStr.includes("agi"))    {return Player.agility;}
+    if (tempStr.includes("cha"))    {return Player.charisma;}
+    if (tempStr.includes("int"))    {return Player.intelligence;}
 }
 
 /******* Working functions *******/

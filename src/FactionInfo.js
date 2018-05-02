@@ -26,7 +26,12 @@ let FactionInfo = {
 
     BladeIndustriesInfo: "Augmentation is salvation",
 
-    NWOInfo: "The human being created civilization not because of willingness but of a need to be assimilated into higher orders of structure and meaning.",
+    NWOInfo: "The human being does not truly desire freedom. It wants " +
+             "to be observed, understood, and judged. It wants to be given purpose and " +
+             "direction in its life. That is why humans created God. " +
+             "And that is why humans created civilization - " +
+             "not because of willingness, " +
+             "but because of a need to be incorporated into higher orders of structure and meaning.",
 
     ClarkeIncorporatedInfo: "Unlocking the power of the genome",
 
@@ -38,7 +43,9 @@ let FactionInfo = {
     KuaiGongInternationalInfo: "Dream big. Work hard. Make history.",
 
     //Other Corporations
-    FulcrumSecretTechnologiesInfo: "TODO",
+    FulcrumSecretTechnologiesInfo: "The human organism has an innate desire to worship. " +
+                                   "That is why they created gods. If there were no gods, " +
+                                   "it would be necessary to create them. And now we can.",
 
     //Hacker groups
     BitRunnersInfo: "Our entire lives are controlled by bits. All of our actions, our thoughts, our personal information.  "+
@@ -109,7 +116,7 @@ let FactionInfo = {
 
     SilhouetteInfo: "Corporations have filled the void of power left behind by the collapse of Western government. The issue is they've become so big " +
                     "that you don't know who they're working for. And if you're employed at one of these corporations, you don't even know who you're working " +
-                    "for. <br><br>" +
+                    "for.\n\n" +
                     "That's terror. Terror, fear, and corruption. All born into the system, all propagated by the system.",
 
     TetradsInfo: "Following the Mandate of Heaven and Carrying out the Way",
@@ -127,6 +134,10 @@ let FactionInfo = {
                   "dominated by the internet, society approaches the brink of total chaos. " +
                   "We serve only to protect society, to protect humanity, to protect the world from its imminent collapse.",
 
+    //Special Factions
+    BladeburnersInfo: "It's too bad they won't live. But then again, who does?<br><br>" +
+                      "Note that for this faction, reputation can only be gained through Bladeburner actions. Completing " +
+                      "Bladeburner contracts/operations will increase your reputation.",
 }
 
 export {FactionInfo};
