@@ -38,7 +38,8 @@
     cursor: pointer;
 }
 
-#red-pill-container {
+#red-pill-container,
+#cinematic-text-container {
     position: fixed;
 }
 

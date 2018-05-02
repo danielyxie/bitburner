@@ -116,7 +116,7 @@ let FactionInfo = {
 
     SilhouetteInfo: "Corporations have filled the void of power left behind by the collapse of Western government. The issue is they've become so big " +
                     "that you don't know who they're working for. And if you're employed at one of these corporations, you don't even know who you're working " +
-                    "for. <br><br>" +
+                    "for.\n\n" +
                     "That's terror. Terror, fear, and corruption. All born into the system, all propagated by the system.",
 
     TetradsInfo: "Following the Mandate of Heaven and Carrying out the Way",
@@ -134,6 +134,10 @@ let FactionInfo = {
                   "dominated by the internet, society approaches the brink of total chaos. " +
                   "We serve only to protect society, to protect humanity, to protect the world from its imminent collapse.",
 
+    //Special Factions
+    BladeburnersInfo: "It's too bad they won't live. But then again, who does?<br><br>" +
+                      "Note that for this faction, reputation can only be gained through Bladeburner actions. Completing " +
+                      "Bladeburner contracts/operations will increase your reputation.",
 }
 
 export {FactionInfo};

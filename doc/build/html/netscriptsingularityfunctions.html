@@ -590,6 +590,48 @@ then running this function will automatically cancel that action and give you yo
 </div>
 <div class="section" id="commitcrime">
 <h2>commitCrime<a class="headerlink" href="#commitcrime" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="commitCrime">
+<code class="descname">commitCrime</code><span class="sig-paren">(</span><em>crime</em><span class="sig-paren">)</span><a class="headerlink" href="#commitCrime" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>crime</strong> (<em>string</em>) -- <p>Name of crime to attempt. Not case-sensitive. This argument is fairly lenient in terms of what inputs it accepts.
+Here is a list of valid inputs for all of the crimes:</p>
+<ul>
+<li>shoplift</li>
+<li>rob store</li>
+<li>mug</li>
+<li>larceny</li>
+<li>deal drugs</li>
+<li>bond forgery</li>
+<li>traffick arms</li>
+<li>homicide</li>
+<li>grand theft auto</li>
+<li>kidnap</li>
+<li>assassinate</li>
+<li>heist</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function.</p>
+<p>This function is used to automatically attempt to commit crimes. If you are already in the middle of some 'working' action
+(such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.</p>
+<p>Note that crimes committed using this function will have all of their earnings halved (this applied for both money and experience!)</p>
+<p>This function returns the number of seconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the 'Rob Store' crime,
+so running <em>commitCrime('rob store')</em> will return 60).</p>
+<p>Warning: I do not recommend using the time returned from this function to try and schedule your crime attempts.
+Instead, I would use the isBusy() Singularity function to check whether you have finished attempting a crime.
+This is because although the game sets a certain crime to be X amount of seconds, there is no guarantee that your
+browser will follow that time limit.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="getcrimechance">
 <h2>getCrimeChance<a class="headerlink" href="#getcrimechance" title="Permalink to this headline">¶</a></h2>
@@ -779,6 +821,7 @@ This script will be run with no arguments and 1 thread. It must be located on yo
 <li class="toctree-l2"><a class="reference internal" href="netscriptmisc.html"> Miscellaneous</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="shortcuts.html"> Keyboard Shortcuts</a></li>
 </ul>
 
           <div role="search">

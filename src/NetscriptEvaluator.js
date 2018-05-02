@@ -317,7 +317,6 @@ function evaluate(exp, workerScript) {
                 });
                 break;
             case "ThrowStatement":
-                //return Promise.reject(makeRuntimeRejectMsg(workerScript))
                 return evaluate(exp.argument, workerScript).then(function(res) {
                     return Promise.reject(makeRuntimeRejectMsg(workerScript, res));
                 });

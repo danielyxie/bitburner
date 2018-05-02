@@ -4765,8 +4765,7 @@ Corporation.prototype.updateDivisionContent = function(division) {
                             "the individual production multiplier of each of its office locations. " +
                             "This production multiplier is applied to each office. Therefore, it is " +
                             "beneficial to expand into new cities as this can greatly increase the " +
-                            "production multiplier of your entire Division."
-                            )
+                            "production multiplier of your entire Division.");
         }
     }));
     industryOverviewText.appendChild(createElement("br"));

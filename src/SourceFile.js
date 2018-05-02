@@ -46,7 +46,11 @@ function initSourceFiles() {
                                                    "Level 1: 4%<br>" +
                                                    "Level 2: 6%<br>" +
                                                    "Level 3: 7%");
-    SourceFiles["SourceFile6"] = new SourceFile(6);
+    SourceFiles["SourceFile6"] = new SourceFile(6, "This Source-File allows you to access the NSA's Bladeburner Division in other " +
+                                                   "BitNodes. In addition, this Source-File will raise the experience gain rate of all your combat stats by:<br><br>" +
+                                                   "Level 1: 8%<br>" +
+                                                   "Level 2: 12%<br>" +
+                                                   "Level 3: 14%");
     SourceFiles["SourceFile7"] = new SourceFile(7);
     SourceFiles["SourceFile8"] = new SourceFile(8, "This Source-File grants the following benefits:<br><br>" +
                                                    "Level 1: Permanent access to WSE and TIX API<br>" +
@@ -148,6 +152,17 @@ function applySourceFile(srcFile) {
             Player.hacking_grow_mult    *= incMult;
             Player.hacking_mult         *= incMult;
             Player.hacking_exp_mult     *= incMult;
+            break;
+        case 6: //Bladeburner
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (8 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            Player.strength_exp_mult        *= incMult;
+            Player.defense_exp_mult         *= incMult;
+            Player.dexterity_exp_mult       *= incMult;
+            Player.agility_exp_mult         *= incMult;
             break;
         case 8: //Ghost of Wall Street
             var mult = 0;
