@@ -366,7 +366,7 @@ function calculateRamUsage(codeCopy) {
     }
 
     //Search through AST, scanning for any 'Identifier' nodes for functions, or While/For/If nodes
-    var queue = [], ramUsage = 1.4;
+    var queue = [], ramUsage = CONSTANTS.ScriptBaseRamCost;
     var whileUsed = false, forUsed = false, ifUsed = false;
     queue.push(ast);
     while (queue.length != 0) {
