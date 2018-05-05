@@ -228,7 +228,7 @@ function updateScriptEditorContent() {
 $(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
 		//Ctrl + b
-        if (e.keyCode == 66 && e.ctrlKey) {
+        if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {
             e.preventDefault();
 			saveAndCloseScriptEditor();
         }
