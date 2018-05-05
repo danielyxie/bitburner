@@ -32,6 +32,7 @@
     "supports-color": "^4.2.1",
     "tapable": "^0.2.7",
     "uglifyjs-webpack-plugin": "^0.4.6",
+    "uuid": "^3.2.1",
     "w3c-blob": "0.0.1",
     "watchpack": "^1.4.0",
     "webpack-sources": "^1.0.1",
@@ -42,6 +43,8 @@
     "beautify-lint": "^1.0.3",
     "benchmark": "^2.1.1",
     "bundle-loader": "~0.5.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
     "codacy-coverage": "^2.0.1",
     "codecov.io": "^0.1.2",
     "coffee-loader": "~0.7.1",
@@ -79,6 +82,7 @@
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12",
     "webpack-dev-middleware": "^1.9.0",
+    "webpack-dev-server": "^3.1.4",
     "worker-loader": "^0.8.0"
   },
   "engines": {
@@ -92,6 +96,7 @@
     "url": "git+https://github.com/danielyxie/bitburner.git"
   },
   "scripts": {
+    "start:dev": "webpack-dev-server",
   },
   "version": "0.35.1"
 }
