@@ -92,25 +92,6 @@
     "url": "git+https://github.com/danielyxie/bitburner.git"
   },
   "scripts": {
-    "appveyor:benchmark": "npm run benchmark",
-    "appveyor:test": "node node_modules\\mocha\\bin\\mocha --max-old-space-size=4096 --harmony test/*.test.js",
-    "beautify-lint": "beautify-lint \"lib/**/*.js\" \"hot/**/*.js\" \"bin/**/*.js\" \"benchmark/*.js\" \"test/*.js\"",
-    "benchmark": "mocha --max-old-space-size=4096 --harmony test/*.benchmark.js -R spec",
-    "build:examples": "cd examples && node buildAll.js",
-    "circleci:lint": "npm run lint-files && npm run nsp",
-    "circleci:test": "node node_modules/mocha/bin/mocha --max-old-space-size=4096 --harmony test/*.test.js",
-    "cover": "node --max-old-space-size=4096 --harmony ./node_modules/istanbul/lib/cli.js cover -x '**/*.runtime.js' node_modules/mocha/bin/_mocha -- test/*.test.js",
-    "cover:min": "node --max-old-space-size=4096 --harmony ./node_modules/.bin/istanbul cover -x '**/*.runtime.js' --report lcovonly node_modules/mocha/bin/_mocha -- test/*.test.js",
-    "fix": "npm run lint -- --fix",
-    "lint": "eslint lib bin hot buildin \"test/**/webpack.config.js\" \"test/binCases/**/test.js\" \"examples/**/webpack.config.js\"",
-    "lint-files": "npm run lint && npm run beautify-lint",
-    "nsp": "nsp check --output summary",
-    "pretest": "npm run lint-files",
-    "publish-patch": "npm run lint && npm run beautify-lint && mocha && npm version patch && git push && git push --tags && npm publish",
-    "test": "mocha test/*.test.js --max-old-space-size=4096 --harmony --check-leaks",
-    "travis:benchmark": "npm run benchmark",
-    "travis:lint": "npm run lint-files && npm run nsp",
-    "travis:test": "npm run cover:min"
   },
   "version": "0.35.1"
 }
