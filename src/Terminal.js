@@ -1362,7 +1362,7 @@ let Terminal = {
                     return;
                 }
                 var scriptname = args[0];
-                if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) &&
+                if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptName) &&
                     !scriptname.endsWith(".txt")){
                     post("Error: scp only works for .script, .txt, and .lit files");
                     return;
