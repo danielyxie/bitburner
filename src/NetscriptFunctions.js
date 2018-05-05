@@ -742,7 +742,7 @@ function NetscriptFunctions(workerScript) {
                 });
                 return res;
             }
-            if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptName) &&
+            if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) &&
                 !scriptname.endsWith("txt")) {
                 throw makeRuntimeRejectMsg(workerScript, "Error: scp() does not work with this file type. It only works for .script, .lit, and .txt files");
             }
