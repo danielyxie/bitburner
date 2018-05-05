@@ -32,6 +32,7 @@
     "supports-color": "^4.2.1",
     "tapable": "^0.2.7",
     "uglifyjs-webpack-plugin": "^0.4.6",
+    "uuid": "^3.2.1",
     "w3c-blob": "0.0.1",
     "watchpack": "^1.4.0",
     "webpack-sources": "^1.0.1",
