@@ -22,7 +22,8 @@ import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker.js";
 import {Player}                             from "./Player.js";
 import {hackWorldDaemon}                    from "./RedPill.js";
 import {findRunningScript, RunningScript,
-        AllServersMap, Script}              from "./Script.js";
+        AllServersMap, Script,
+        isScriptFilename}                   from "./Script.js";
 import {AllServers, GetServerByHostname,
         getServer, Server}                  from "./Server.js";
 import {Settings}                           from "./Settings.js";
@@ -980,7 +981,7 @@ let Terminal = {
                     }
 
                     //Can only tail script files
-                    if (scriptName.endsWith(".script") == false) {
+                    if (isScriptFilename(scriptName) == false) {
                         post("Error: tail can only be called on .script files (filename must end with .script)"); return;
                     }
 
@@ -1055,7 +1056,7 @@ let Terminal = {
                         FileSaver.saveAs(content, filename);
                     });
                     return;
-                } else if (fn.endsWith(".script")) {
+                } else if (isScriptFilename(fn)) {
                     //Download a single script
                     for (var i = 0; i < s.scripts.length; ++i) {
                         if (s.scripts[i].filename === fn) {
@@ -1210,7 +1211,7 @@ let Terminal = {
                     var text = createFconf();
                     Engine.loadScriptEditorContent(filename, text);
                     return;
-                } else if (filename.endsWith(".script")) {
+                } else if (isScriptFilename(filename)) {
                     for (var i = 0; i < s.scripts.length; i++) {
     					if (filename == s.scripts[i].filename) {
     						Engine.loadScriptEditorContent(filename, s.scripts[i].code);
@@ -1257,7 +1258,7 @@ let Terminal = {
                            return;
                         }
                     }
-                } else if (delTarget.endsWith(".script")) {
+                } else if (isScriptFilename(delTarget)) {
                     for (var i = 0; i < s.scripts.length; ++i) {
                         if (s.scripts[i].filename == delTarget) {
                             //Check that the script isnt currently running
@@ -1303,8 +1304,8 @@ let Terminal = {
                     }
 
 					//Check if its a script or just a program/executable
-					if (executableName.indexOf(".script") == -1) {
-						//Not a script
+					if (isScriptFilename(executableName) == -1) {
+						// Not a script
 						Terminal.runProgram(executableName);
 					} else {
 						//Script
@@ -1361,7 +1362,7 @@ let Terminal = {
                     return;
                 }
                 var scriptname = args[0];
-                if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script") &&
+                if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) &&
                     !scriptname.endsWith(".txt")){
                     post("Error: scp only works for .script, .txt, and .lit files");
                     return;
@@ -1480,7 +1481,7 @@ let Terminal = {
                     }
 
                     //Can only tail script files
-                    if (scriptName.endsWith(".script") == false) {
+                    if (isScriptFilename(scriptName) == false) {
                         post("Error: tail can only be called on .script files (filename must end with .script)"); return;
                     }
 

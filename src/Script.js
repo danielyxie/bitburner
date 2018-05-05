@@ -45,6 +45,10 @@ var keybindings = {
     emacs: "ace/keyboard/emacs",
 };
 
+function isScriptFilename(f) {
+    return f.endsWith(".js") || f.endsWith(".script");
+}
+
 var scriptEditorRamCheck = null, scriptEditorRamText = null;
 function scriptEditorInit() {
     //Create buttons at the bottom of script editor
@@ -212,7 +216,7 @@ function scriptEditorInit() {
 //Updates RAM usage in script
 function updateScriptEditorContent() {
     var filename = document.getElementById("script-editor-filename").value;
-    if (scriptEditorRamCheck == null || !scriptEditorRamCheck.checked || !filename.endsWith(".script")) {
+    if (scriptEditorRamCheck == null || !scriptEditorRamCheck.checked || !isScriptFilename(filename)) {
         scriptEditorRamText.innerText = "N/A";
         return;
     }
@@ -273,7 +277,7 @@ function saveAndCloseScriptEditor() {
             dialogBoxCreate("Invalid .fconf file");
             return;
         }
-    } else if (filename.endsWith(".script")) {
+    } else if (isScriptFilename(filename)) {
         //If the current script already exists on the server, overwrite it
         for (var i = 0; i < s.scripts.length; i++) {
             if (filename == s.scripts[i].filename) {
@@ -936,4 +940,4 @@ AllServersMap.fromJSON = function(value) {
 Reviver.constructors.AllServersMap = AllServersMap;
 
 export {updateScriptEditorContent, loadAllRunningScripts, findRunningScript,
-        RunningScript, Script, AllServersMap, scriptEditorInit};
+        RunningScript, Script, AllServersMap, scriptEditorInit, isScriptFilename};
