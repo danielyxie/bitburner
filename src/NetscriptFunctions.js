@@ -32,7 +32,8 @@ import {Locations}                                  from "./Location.js";
 import {Message, Messages}                          from "./Message.js";
 import {inMission}                                  from "./Missions.js";
 import {Player}                                     from "./Player.js";
-import {Script, findRunningScript, RunningScript}   from "./Script.js";
+import {Script, findRunningScript, RunningScript,
+        isScriptFilename}                           from "./Script.js";
 import {Server, getServer, AddToAllServers,
         AllServers, processSingleServerGrowth,
         GetServerByHostname}                        from "./Server.js";
@@ -741,7 +742,7 @@ function NetscriptFunctions(workerScript) {
                 });
                 return res;
             }
-            if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script") &&
+            if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) &&
                 !scriptname.endsWith("txt")) {
                 throw makeRuntimeRejectMsg(workerScript, "Error: scp() does not work with this file type. It only works for .script, .lit, and .txt files");
             }
@@ -1917,7 +1918,7 @@ function NetscriptFunctions(workerScript) {
                        return true;
                     }
                 }
-            } else if (fn.endsWith(".script")) {
+            } else if (isScriptFilename(fn)) {
                 for (var i = 0; i < s.scripts.length; ++i) {
                     if (s.scripts[i].filename === fn) {
                         //Check that the script isnt currently running
