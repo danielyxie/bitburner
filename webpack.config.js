@@ -47,5 +47,8 @@ module.exports = {
         namedChunks: false,
         minimize: false,
         portableRecords: true
+    },
+    devServer: {
+        publicPath: "/dist",
     }
 };
