@@ -93,7 +93,7 @@ function initLiterature() {
     txt     = "Synthetic androids, or Synthoids for short, are genetically engineered robots and, short of Augmentations, " +
               "are composed entirely of organic substances. For this reason, Synthoids are virtually identical to " +
               "humans in form, composition, and appearance.<br><br>" +
-              "Synthoids were first designed and manufactured by OmniTek Incorporated sometime around the turn of the century. " +
+              "Synthoids were first designed and manufactured by OmniTek Incorporated sometime around the middle of the century. " +
               "Their original purpose was to be used for manual labor and as emergency responders for disasters. As such, they " +
               "were initially programmed only for their specific tasks. Each iteration that followed improved upon the " +
               "intelligence and capabilities of the Synthoids. By the 6th iteration, called MK-VI, the Synthoids were " +

@@ -1,3 +1,4 @@
+import {Bladeburner}                            from "./Bladeburner.js";
 import {CompanyPositions, initCompanies,
         Companies, getJobRequirementText}       from "./Company.js";
 import {Corporation}                            from "./CompanyManagement.js";
@@ -16,6 +17,7 @@ import {commitShopliftCrime, commitRobStoreCrime, commitMugCrime,
         determineCrimeChanceHeist}              from "./Crimes.js";
 import {Engine}                                 from "./engine.js";
 import {beginInfiltration}                      from "./Infiltration.js";
+import {hasBladeburnerSF}                       from "./NetscriptFunctions.js";
 import {Player}                                 from "./Player.js";
 import {Server, AllServers, AddToAllServers}    from "./Server.js";
 import {purchaseServer,
@@ -208,6 +210,8 @@ function displayLocationContent() {
 
     var cityHallCreateCorporation   = document.getElementById("location-cityhall-create-corporation");
 
+    var nsaBladeburner = document.getElementById("location-nsa-bladeburner");
+
     var loc = Player.location;
 
     returnToWorld.addEventListener("click", function() {
@@ -314,6 +318,7 @@ function displayLocationContent() {
     slumsHeist.style.display = "none";
 
     cityHallCreateCorporation.style.display = "none";
+    nsaBladeburner.style.display = "none";
 
     //Check if the player is employed at this Location. If he is, display the "Work" button,
     //update the job title, etc.
@@ -720,8 +725,20 @@ function displayLocationContent() {
             networkEngineerJob.style.display = "block";
             securityJob.style.display = "block";
             agentJob.style.display = "block";
-            setInfiltrateButton(infiltrate, Locations.Sector12NSA,
-                                1400, 40, 80, 7.2);
+            if (Player.bitNodeN === 6 || hasBladeburnerSF === true) {
+                if (Player.bladeburner instanceof Bladeburner) {
+                    //Note: Can't infiltrate NSA when part of bladeburner
+                    nsaBladeburner.innerText = "Enter Bladeburner Headquarters";
+                } else {
+                    setInfiltrateButton(infiltrate, Locations.Sector12NSA,
+                                        1400, 40, 80, 7.2);
+                    nsaBladeburner.innerText = "Apply to Bladeburner Division";
+                }
+                nsaBladeburner.style.display = "block";
+            } else {
+                setInfiltrateButton(infiltrate, Locations.Sector12NSA,
+                                    1400, 40, 80, 7.2);
+            }
             break;
 
         case Locations.Sector12AlphaEnterprises:
@@ -1629,6 +1646,8 @@ function initLocationButtons() {
 
     var cityHallCreateCorporation = document.getElementById("location-cityhall-create-corporation");
 
+    var nsaBladeburner = document.getElementById("location-nsa-bladeburner");
+
     var hospitalTreatment   = document.getElementById("location-hospital-treatment");
 
     softwareJob.addEventListener("click", function() {
@@ -1936,6 +1955,23 @@ function initLocationButtons() {
             yesNoTxtInpBoxCreate("Would you like to start a corporation? This will require $150b " +
                                  "for registration and initial funding.<br><br>If so, please enter " +
                                  "a name for your corporation below:");
+        }
+    });
+
+    nsaBladeburner.addEventListener("click", function() {
+        if (Player.bladeburner && Player.bladeburner instanceof Bladeburner) {
+            //Enter Bladeburner division
+            Engine.loadBladeburnerContent();
+        } else {
+            //Apply for Bladeburner division
+            if (Player.strength >= 100 && Player.defense >= 100 &&
+                Player.dexterity >= 100 && Player.agility >= 100) {
+                Player.bladeburner = new Bladeburner({new:true});
+                dialogBoxCreate("You have been accepted into the Bladeburner division!");
+                displayLocationContent();
+            } else {
+                dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
+            }
         }
     });
 

@@ -1,7 +1,8 @@
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions.js";
 import {clearEventListeners, createElement,
-        removeChildrenFromElement}              from "../utils/HelperFunctions.js";
+        removeChildrenFromElement,
+        exceptionAlert}                         from "../utils/HelperFunctions.js";
 import numeral                                  from "../utils/numeral.min.js";
 import {formatNumber,
         convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
@@ -15,6 +16,8 @@ import {Augmentations, installAugmentations,
         displayAugmentationsContent}            from "./Augmentations.js";
 import {BitNodes, initBitNodes,
         initBitNodeMultipliers}                 from "./BitNode.js";
+import {Bladeburner}                            from "./Bladeburner.js";
+import {cinematicTextFlag}                      from "./CinematicText.js";
 import {CompanyPositions, initCompanies}        from "./Company.js";
 import {Corporation}                            from "./CompanyManagement.js";
 import {CONSTANTS}                              from "./Constants.js";
@@ -73,7 +76,7 @@ import {Terminal, postNetburnerText, post}      from "./Terminal.js";
  *  Alt-o - Options
  */
 $(document).keydown(function(e) {
-    if (!Player.isWorking && !redPillFlag && !inMission) {
+    if (!Player.isWorking && !redPillFlag && !inMission && !cinematicTextFlag) {
         if (e.keyCode == 84 && e.altKey) {
             e.preventDefault();
             Engine.loadTerminalContent();
@@ -185,6 +188,7 @@ let Engine = {
         locationContent:                null,
         workInProgressContent:          null,
         redPillContent:                 null,
+        cinematicTextContent:           null,
         missionContent:                 null,
 
         //Character info
@@ -207,11 +211,13 @@ let Engine = {
         Location:           "Location",
         workInProgress:     "WorkInProgress",
         RedPill:            "RedPill",
+        CinematicText:      "CinematicText",
         Infiltration:       "Infiltration",
         StockMarket:        "StockMarket",
         Gang:               "Gang",
         Mission:            "Mission",
         Corporation:        "Corporation",
+        Bladeburner:        "Bladeburner",
     },
     currentPage:    null,
 
@@ -375,6 +381,14 @@ let Engine = {
         Engine.currentPage = Engine.Page.RedPill;
     },
 
+    loadCinematicTextContent: function() {
+        Engine.hideAllContent();
+        var mainMenu = document.getElementById("mainmenu-container");
+        mainMenu.style.visibility = "hidden";
+        Engine.Display.cinematicTextContent.style.display = "block";
+        Engine.currentPage = Engine.Page.CinematicText;
+    },
+
     loadInfiltrationContent: function() {
         Engine.hideAllContent();
         Engine.Display.infiltrationContent.style.display = "block";
@@ -416,6 +430,18 @@ let Engine = {
         }
     },
 
+    loadBladeburnerContent: function() {
+        if (Player.bladeburner instanceof Bladeburner) {
+            try {
+                Engine.hideAllContent();
+                Engine.currentPage = Engine.Page.Bladeburner;
+                Player.bladeburner.createContent();
+            } catch(e) {
+                exceptionAlert(e);
+            }
+        }
+    },
+
     //Helper function that hides all content
     hideAllContent: function() {
         Engine.Display.terminalContent.style.display = "none";
@@ -433,6 +459,7 @@ let Engine = {
         Engine.Display.locationContent.style.display = "none";
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
+        Engine.Display.cinematicTextContent.style.display = "none";
         Engine.Display.infiltrationContent.style.display = "none";
         Engine.Display.stockMarketContent.style.display = "none";
         Engine.Display.missionContent.style.display = "none";
@@ -442,6 +469,10 @@ let Engine = {
 
         if (Player.corporation instanceof Corporation) {
             Player.corporation.clearUI();
+        }
+
+        if (Player.bladeburner instanceof Bladeburner) {
+            Player.bladeburner.clearContent();
         }
 
         //Location lists
@@ -844,6 +875,10 @@ let Engine = {
             Player.corporation.storeCycles(numCycles);
         }
 
+        if (Player.bladeburner instanceof Bladeburner) {
+            Player.bladeburner.storeCycles(numCycles);
+        }
+
         //Counters
         Engine.decrementAllCounters(numCycles);
         Engine.checkCounters();
@@ -874,7 +909,7 @@ let Engine = {
         messages: 150,
         stockTick:  30,                     //Update stock prices
         sCr: 1500,
-        corpProcess: 5,
+        mechanicProcess: 5,                 //Processes certain mechanics (Corporation, Bladeburner)
     },
 
     decrementAllCounters: function(numCycles = 1) {
@@ -998,11 +1033,19 @@ let Engine = {
             Engine.Counters.sCr = 1500;
         }
 
-        if (Engine.Counters.corpProcess <= 0) {
+        if (Engine.Counters.mechanicProcess <= 0) {
             if (Player.corporation instanceof Corporation) {
                 Player.corporation.process();
             }
-            Engine.Counters.corpProcess = 5;
+            if (Player.bladeburner instanceof Bladeburner) {
+                try {
+                    Player.bladeburner.process();
+                } catch(e) {
+                    exceptionAlert("Exception caught in Bladeburner.process(): " + e);
+                }
+
+            }
+            Engine.Counters.mechanicProcess = 5;
         }
     },
 
@@ -1186,6 +1229,11 @@ let Engine = {
                 Player.gang.process(numCyclesOffline);
             }
 
+            //Bladeburner offline progress
+            if (Player.bladeburner instanceof Bladeburner) {
+                Player.bladeburner.storeCycles(numCyclesOffline);
+            }
+
             //Update total playtime
             var time = numCyclesOffline * Engine._idleSpeed;
             if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
@@ -1340,8 +1388,11 @@ let Engine = {
 
         //Red Pill / Hack World Daemon
         Engine.Display.redPillContent = document.getElementById("red-pill-container");
-        //Engine.Display.redPillContent.style.visibility = "hidden";
         Engine.Display.redPillContent.style.display = "none";
+
+        //Cinematic Text
+        Engine.Display.cinematicTextContent = document.getElementById("cinematic-text-container");
+        Engine.Display.cinematicTextContent.style.display = "none";
 
 		//Init Location buttons
 		initLocationButtons();

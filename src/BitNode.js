@@ -95,8 +95,27 @@ function initBitNodes() {
                                           "Level 1: 4%<br>" +
                                           "Level 2: 6%<br>" +
                                           "Level 3: 7%");
-    BitNodes["BitNode6"] = new BitNode(6, "Do Androids Dream?", "COMING SOON");        //Build androids for automation
-    BitNodes["BitNode7"] = new BitNode(7, "Bladeburners", "COMING SOON");               //Blade burner
+    BitNodes["BitNode6"] = new BitNode(6, "Bladeburners", "Like Tears in Rain",
+                                          "In the middle of the 21st century, OmniTek Incorporated began designing and manufacturing advanced synthetic " +
+                                          "androids, or Synthoids for short. They achieved a major technological breakthrough in the sixth generation " +
+                                          "of their Synthoid design, called MK-VI, by developing a hyperintelligent AI. Many argue that this was " +
+                                          "the first sentient AI ever created. This resulted in Synthoid models that were stronger, faster, and more intelligent " +
+                                          "than the humans that had created them.<br><br>" +
+                                          "In this BitNode you will be able to access the Bladeburner Division at the NSA, which provides a new mechanic " +
+                                          "for progression. Furthermore:<br><br>" +
+                                          "Hacking and Hacknet Nodes will be significantly less profitable<br>" +
+                                          "Your hacking level is reduced by 50%<br>" +
+                                          "Hacking experience gain from scripts is reduced by 80%<br>" +
+                                          "Corporations have 80% lower valuations and are therefore less profitable<br>" +
+                                          "Working for companies is 50% less profitable<br>" +
+                                          "Crimes and Infiltration are 75% less profitable<br><br>" +
+                                          "Destroying this BitNode will give you Source-File 6, or if you already have this Source-File it will upgrade " +
+                                          "its level up to a maximum of 3. This Source-File allows you to access the NSA's Bladeburner Division in other " +
+                                          "BitNodes. In addition, this Source-File will raise the experience gain rate of all your combat stats by:<br><br>" +
+                                          "Level 1: 8%<br>" +
+                                          "Level 2: 12%<br>" +
+                                          "Level 3: 14%");
+    BitNodes["BitNode7"] = new BitNode(7, "Hacktocracy", "COMING SOON"); //Healthy Hacknet balancing mechanic
     BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "Money never sleeps",
                                           "You are trying to make a name for yourself as an up-and-coming hedge fund manager on Wall Street.<br><br>" +
                                           "In this BitNode:<br><br>" +
@@ -112,7 +131,7 @@ function initBitNodes() {
                                           "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
                                           "This Source-File also increases your hacking growth multipliers by: " +
                                           "<br>Level 1: 8%<br>Level 2: 12%<br>Level 3: 14%");
-    BitNodes["BitNode9"] = new BitNode(9, "Hacktocracy", "COMING SOON");               //Healthy Hacknet balancing mechanic
+    BitNodes["BitNode9"] = new BitNode(9, "Do Androids Dream?", "COMING SOON");
     BitNodes["BitNode10"] = new BitNode(10, "MegaCorp", "COMING SOON");                //Not sure yet
     BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
                                             "The 2050s was defined by the massive amounts of violent civil unrest and anarchic rebellion that rose all around the world. It was this period " +
@@ -155,6 +174,8 @@ function initBitNodes() {
 }
 
 let BitNodeMultipliers = {
+    HackingLevelMultiplier: 1,
+
     ServerMaxMoney:         1,
     ServerStartingMoney:    1,
     ServerGrowthRate:       1,
@@ -245,6 +266,20 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.AugmentationMoneyCost    = 2;
             BitNodeMultipliers.HackExpGain              = 0.5;
             BitNodeMultipliers.CorporationValuation     = 0.5;
+            break;
+        case 6: //Bladeburner
+            BitNodeMultipliers.HackingLevelMultiplier   = 0.5;
+            BitNodeMultipliers.ServerMaxMoney           = 0.5;
+            BitNodeMultipliers.ServerStartingMoney      = 0.5;
+            BitNodeMultipliers.ServerStartingSecurity   = 1.5;
+            BitNodeMultipliers.ScriptHackMoney          = 0.5;
+            BitNodeMultipliers.CompanyWorkMoney         = 0.5;
+            BitNodeMultipliers.CrimeMoney               = 0.25;
+            BitNodeMultipliers.InfiltrationMoney        = 0.25;
+            BitNodeMultipliers.CorporationValuation     = 0.2;
+            BitNodeMultipliers.HacknetNodeMoney         = 0.2;
+            BitNodeMultipliers.FactionPassiveRepGain    = 0;
+            BitNodeMultipliers.HackExpGain              = 0.2;
             break;
         case 8: //Ghost of Wall Street
             BitNodeMultipliers.ScriptHackMoney          = 0;

@@ -406,7 +406,6 @@ function initSymbolToStockMap() {
 }
 
 function stockMarketCycle() {
-    console.log("Cycling the Stock Market");
     for (var name in StockMarket) {
         if (StockMarket.hasOwnProperty(name)) {
             var stock = StockMarket[name];

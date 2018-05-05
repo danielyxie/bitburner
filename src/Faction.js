@@ -120,267 +120,165 @@ function factionExists(name) {
 //      This might change in the future for balance
 function initFactions() {
 	//Endgame
-	var Illuminati 				= new Faction("Illuminati");
+	var Illuminati = new Faction("Illuminati");
     Illuminati.setInfo(FactionInfo.IlluminatiInfo);
-    if (factionExists("Illuminati")) {
-        Illuminati.favor = Factions["Illuminati"].favor;
-        delete Factions["Illuminati"];
-    }
-	AddToFactions(Illuminati);
+    resetFaction(Illuminati);
 
-	var Daedalus 				= new Faction("Daedalus");
+	var Daedalus = new Faction("Daedalus");
     Daedalus.setInfo(FactionInfo.DaedalusInfo);
-    if (factionExists("Daedalus")) {
-        Daedalus.favor = Factions["Daedalus"].favor;
-        delete Factions["Daedalus"];
-    }
-	AddToFactions(Daedalus);
+    resetFaction(Daedalus);
 
-	var Covenant 				= new Faction("The Covenant");
+	var Covenant = new Faction("The Covenant");
     Covenant.setInfo(FactionInfo.CovenantInfo);
-    if (factionExists("The Covenant")) {
-        Covenant.favor = Factions["The Covenant"].favor;
-        delete Factions["The Covenant"];
-    }
-	AddToFactions(Covenant);
+    resetFaction(Covenant);
 
 	//Megacorporations, each forms its own faction
-	var ECorp 					= new Faction("ECorp");
+	var ECorp = new Faction("ECorp");
     ECorp.setInfo(FactionInfo.ECorpInfo);
-    if (factionExists("ECorp")) {
-        ECorp.favor = Factions["ECorp"].favor;
-        delete Factions["ECorp"];
-    }
-	AddToFactions(ECorp);
+    resetFaction(ECorp);
 
-	var MegaCorp 				= new Faction("MegaCorp");
+	var MegaCorp = new Faction("MegaCorp");
     MegaCorp.setInfo(FactionInfo.MegaCorpInfo);
-    if (factionExists("MegaCorp")) {
-        MegaCorp.favor = Factions["MegaCorp"].favor;
-        delete Factions["MegaCorp"];
-    }
-	AddToFactions(MegaCorp);
+    resetFaction(MegaCorp);
 
-	var BachmanAndAssociates 	= new Faction("Bachman & Associates");
+	var BachmanAndAssociates = new Faction("Bachman & Associates");
     BachmanAndAssociates.setInfo(FactionInfo.BachmanAndAssociatesInfo);
-    if (factionExists("Bachman & Associates")) {
-        BachmanAndAssociates.favor = Factions["Bachman & Associates"].favor;
-        delete Factions["Bachman & Associates"];
-    }
-	AddToFactions(BachmanAndAssociates);
+    resetFaction(BachmanAndAssociates);
 
-	var BladeIndustries 		= new Faction("Blade Industries");
+	var BladeIndustries = new Faction("Blade Industries");
     BladeIndustries.setInfo(FactionInfo.BladeIndustriesInfo);
-    if (factionExists("Blade Industries")) {
-        BladeIndustries.favor = Factions["Blade Industries"].favor;
-        delete Factions["Blade Industries"];
-    }
-	AddToFactions(BladeIndustries);
+    resetFaction(BladeIndustries);
 
-	var NWO 					= new Faction("NWO");
+	var NWO = new Faction("NWO");
     NWO.setInfo(FactionInfo.NWOInfo);
-    if (factionExists("NWO")) {
-        NWO.favor = Factions["NWO"].favor;
-        delete Factions["NWO"];
-    }
-	AddToFactions(NWO);
+    resetFaction(NWO);
 
-	var ClarkeIncorporated 		= new Faction("Clarke Incorporated");
+	var ClarkeIncorporated = new Faction("Clarke Incorporated");
     ClarkeIncorporated.setInfo(FactionInfo.ClarkeIncorporatedInfo);
-    if (factionExists("Clarke Incorporated")) {
-        ClarkeIncorporated.favor = Factions["Clarke Incorporated"].favor;
-        delete Factions["Clarke Incorporated"];
-    }
-	AddToFactions(ClarkeIncorporated);
+    resetFaction(ClarkeIncorporated);
 
-	var OmniTekIncorporated 	= new Faction("OmniTek Incorporated");
+	var OmniTekIncorporated = new Faction("OmniTek Incorporated");
     OmniTekIncorporated.setInfo(FactionInfo.OmniTekIncorporatedInfo);
-    if (factionExists("OmniTek Incorporated")) {
-        OmniTekIncorporated.favor = Factions["OmniTek Incorporated"].favor;
-        delete Factions["OmniTek Incorporated"];
-    }
-	AddToFactions(OmniTekIncorporated);
+    resetFaction(OmniTekIncorporated);
 
-	var FourSigma 				= new Faction("Four Sigma");
+	var FourSigma = new Faction("Four Sigma");
     FourSigma.setInfo(FactionInfo.FourSigmaInfo);
-    if (factionExists("Four Sigma")) {
-        FourSigma.favor = Factions["Four Sigma"].favor;
-        delete Factions["Four Sigma"];
-    }
-	AddToFactions(FourSigma);
+    resetFaction(FourSigma);
 
-	var KuaiGongInternational 	= new Faction("KuaiGong International");
+	var KuaiGongInternational = new Faction("KuaiGong International");
     KuaiGongInternational.setInfo(FactionInfo.KuaiGongInternationalInfo);
-    if (factionExists("KuaiGong International")) {
-        KuaiGongInternational.favor = Factions["KuaiGong International"].favor;
-        delete Factions["KuaiGong International"];
-    }
-	AddToFactions(KuaiGongInternational);
+    resetFaction(KuaiGongInternational);
 
     //Other corporations
-    var FulcrumTechnologies     = new Faction("Fulcrum Secret Technologies");
+    var FulcrumTechnologies = new Faction("Fulcrum Secret Technologies");
     FulcrumTechnologies.setInfo(FactionInfo.FulcrumSecretTechnologiesInfo);
-    if (factionExists("Fulcrum Secret Technologies")) {
-        FulcrumTechnologies.favor = Factions["Fulcrum Secret Technologies"].favor;
-        delete Factions["Fulcrum Secret Technologies"];
-    }
-    AddToFactions(FulcrumTechnologies);
+    resetFaction(FulcrumTechnologies);
 
 	//Hacker groups
-	var BitRunners 				= new Faction("BitRunners");
+	var BitRunners = new Faction("BitRunners");
     BitRunners.setInfo(FactionInfo.BitRunnersInfo);
-    if (factionExists("BitRunners")) {
-        BitRunners.favor = Factions["BitRunners"].favor;
-        delete Factions["BitRunners"];
-    }
-	AddToFactions(BitRunners);
+    resetFaction(BitRunners);
 
-	var BlackHand				= new Faction("The Black Hand");
+	var BlackHand = new Faction("The Black Hand");
     BlackHand.setInfo(FactionInfo.BlackHandInfo);
-    if (factionExists("The Black Hand")) {
-        BlackHand.favor = Factions["The Black Hand"].favor;
-        delete Factions["The Black Hand"];
-    }
-	AddToFactions(BlackHand);
+    resetFaction(BlackHand);
 
-	var NiteSec 				= new Faction("NiteSec");
+	var NiteSec = new Faction("NiteSec");
     NiteSec.setInfo(FactionInfo.NiteSecInfo);
-    if (factionExists("NiteSec")) {
-        NiteSec.favor = Factions["NiteSec"].favor;
-        delete Factions["NiteSec"];
-    }
-	AddToFactions(NiteSec);
+    resetFaction(NiteSec);
 
 	//City factions, essentially governments
-	var Chongqing 				= new Faction("Chongqing");
+	var Chongqing = new Faction("Chongqing");
     Chongqing.setInfo(FactionInfo.ChongqingInfo);
-    if (factionExists("Chongqing")) {
-        Chongqing.favor = Factions["Chongqing"].favor;
-        delete Factions["Chongqing"];
-    }
-	AddToFactions(Chongqing);
+    resetFaction(Chongqing);
 
-	var Sector12 				= new Faction("Sector-12");
+	var Sector12 = new Faction("Sector-12");
     Sector12.setInfo(FactionInfo.Sector12Info);
-    if (factionExists("Sector-12")) {
-        Sector12.favor = Factions["Sector-12"].favor;
-        delete Factions["Sector-12"];
-    }
-	AddToFactions(Sector12);
+    resetFaction(Sector12);
 
-	var NewTokyo				= new Faction("New Tokyo");
+	var NewTokyo = new Faction("New Tokyo");
     NewTokyo.setInfo(FactionInfo.NewTokyoInfo);
-    if (factionExists("New Tokyo")) {
-        NewTokyo.favor = Factions["New Tokyo"].favor;
-        delete Factions["New Tokyo"];
-    }
-	AddToFactions(NewTokyo);
+    resetFaction(NewTokyo);
 
-	var Aevum 				    = new Faction("Aevum");
+	var Aevum = new Faction("Aevum");
     Aevum.setInfo(FactionInfo.AevumInfo);
-    if (factionExists("Aevum")) {
-        Aevum.favor = Factions["Aevum"].favor;
-        delete Factions["Aevum"];
-    }
-	AddToFactions(Aevum);
+    resetFaction(Aevum);
 
-    var Ishima                 	= new Faction("Ishima");
-    Ishima.setInfo
-	var Volhaven 				= new Faction("Volhaven");
+    var Ishima = new Faction("Ishima");
+    Ishima.setInfo(FactionInfo.Ishima);
+    resetFaction(Ishima);
+
+	var Volhaven = new Faction("Volhaven");
     Volhaven.setInfo(FactionInfo.VolhavenInfo);
-    if (factionExists("Volhaven")) {
-        Volhaven.favor = Factions["Volhaven"].favor;
-        delete Factions["Volhaven"];
-    }
-	AddToFactions(Volhaven);(FactionInfo.IshimaInfo);
-    if (factionExists("Ishima")) {
-        Ishima.favor = Factions["Ishima"].favor;
-        delete Factions["Ishima"];
-    }
-	AddToFactions(Ishima);
-
+    resetFaction(Volhaven);
 
 	//Criminal Organizations/Gangs
-	var SpeakersForTheDead		= new Faction("Speakers for the Dead");
+	var SpeakersForTheDead = new Faction("Speakers for the Dead");
     SpeakersForTheDead.setInfo(FactionInfo.SpeakersForTheDeadInfo);
-    if (factionExists("Speakers for the Dead")) {
-        SpeakersForTheDead.favor = Factions["Speakers for the Dead"].favor;
-        delete Factions["Speakers for the Dead"];
-    }
-	AddToFactions(SpeakersForTheDead);
+    resetFaction(SpeakersForTheDead);
 
-	var DarkArmy				= new Faction("The Dark Army");
+	var DarkArmy = new Faction("The Dark Army");
     DarkArmy.setInfo(FactionInfo.DarkArmyInfo);
-    if (factionExists("The Dark Army")) {
-        DarkArmy.favor = Factions["The Dark Army"].favor;
-        delete Factions["The Dark Army"];
-    }
-	AddToFactions(DarkArmy);
+    resetFaction(DarkArmy);
 
-	var TheSyndicate 			= new Faction("The Syndicate");
+	var TheSyndicate = new Faction("The Syndicate");
     TheSyndicate.setInfo(FactionInfo.TheSyndicateInfo);
-    if (factionExists("The Syndicate")) {
-        TheSyndicate.favor = Factions["The Syndicate"].favor;
-        delete Factions["The Syndicate"];
-    }
-	AddToFactions(TheSyndicate);
+    resetFaction(TheSyndicate);
 
-    var Silhouette              = new Faction("Silhouette");
+    var Silhouette = new Faction("Silhouette");
     Silhouette.setInfo(FactionInfo.SilhouetteInfo);
-    if (factionExists("Silhouette")) {
-        Silhouette.favor = Factions["Silhouette"].favor;
-        delete Factions["Silhouette"];
-    }
-    AddToFactions(Silhouette);
+    resetFaction(Silhouette);
 
-    var Tetrads                 = new Faction("Tetrads"); //Low-medium level asian crime gang
+    var Tetrads = new Faction("Tetrads"); //Low-medium level asian crime gang
     Tetrads.setInfo(FactionInfo.TetradsInfo);
-    if (factionExists("Tetrads")) {
-        Tetrads.favor = Factions["Tetrads"].favor;
-        delete Factions["Tetrads"];
-    }
-    AddToFactions(Tetrads);
+    resetFaction(Tetrads);
 
-    var SlumSnakes              = new Faction("Slum Snakes"); //Low level crime gang
+    var SlumSnakes = new Faction("Slum Snakes"); //Low level crime gang
     SlumSnakes.setInfo(FactionInfo.SlumSnakesInfo);
-    if (factionExists("Slum Snakes")) {
-        SlumSnakes.favor = Factions["Slum Snakes"].favor;
-        delete Factions["Slum Snakes"];
-    }
-    AddToFactions(SlumSnakes);
+    resetFaction(SlumSnakes);
 
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
-    var Netburners              = new Faction("Netburners");
+    var Netburners = new Faction("Netburners");
     Netburners.setInfo(FactionInfo.NetburnersInfo);
-    if (factionExists("Netburners")) {
-        Netburners.favor = Factions["Netburners"].favor;
-        delete Factions["Netburners"];
-    }
-    AddToFactions(Netburners);
+    resetFaction(Netburners);
 
-	var TianDiHui				= new Faction("Tian Di Hui");	//Society of the Heaven and Earth
+	var TianDiHui = new Faction("Tian Di Hui");	//Society of the Heaven and Earth
     TianDiHui.setInfo(FactionInfo.TianDiHuiInfo);
-    if (factionExists("Tian Di Hui")) {
-        TianDiHui.favor = Factions["Tian Di Hui"].favor;
-        delete Factions["Tian Di Hui"];
-    }
-	AddToFactions(TianDiHui);
+    resetFaction(TianDiHui);
 
-	var CyberSec 				= new Faction("CyberSec");
+	var CyberSec = new Faction("CyberSec");
     CyberSec.setInfo(FactionInfo.CyberSecInfo);
-    if (factionExists("CyberSec")) {
-        CyberSec.favor = Factions["CyberSec"].favor;
-        delete Factions["CyberSec"];
+    resetFaction(CyberSec);
+
+    //Special Factions
+    var Bladeburners = new Faction("Bladeburners");
+    Bladeburners.setInfo(FactionInfo.BladeburnersInfo);
+    resetFaction(Bladeburners);
+}
+
+//Resets a faction during (re-)initialization. Saves the favor in the new
+//Faction object and deletes the old Faction Object from "Factions". Then
+//reinserts the new Faction object
+function resetFaction(newFactionObject) {
+    if (!(newFactionObject instanceof Faction)) {
+        throw new Error("Invalid argument 'newFactionObject' passed into resetFaction()");
     }
-	AddToFactions(CyberSec);
+    var factionName = newFactionObject.name;
+    if (factionExists(factionName)) {
+        newFactionObject.favor = Factions[factionName].favor;
+        delete Factions[factionName];
+    }
+    AddToFactions(newFactionObject);
 }
 
 function inviteToFaction(faction) {
     if (Settings.SuppressFactionInvites) {
         faction.alreadyInvited = true;
         Player.factionInvitations.push(faction.name);
-        Engine.loadFactionsContent();
+        if (Engine.currentPage === Engine.Page.Factions) {
+            Engine.loadFactionsContent();
+        }
     } else {
         factionInvitationBoxCreate(faction);
     }
@@ -879,6 +777,12 @@ function displayFactionContent(factionName) {
 				fieldWorkDiv.style.display = "none";
 				securityWorkDiv.style.display = "none";
 				break;
+            case "Bladeburners":
+                hackMissionDiv.style.display = "none";
+                hackDiv.style.display = "none";
+                fieldWorkDiv.style.display = "none";
+                securityWorkDiv.style.display = "none";
+                break;
 			default:
 				console.log("Faction does not exist");
 				break;
