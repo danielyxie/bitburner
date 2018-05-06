@@ -137,6 +137,7 @@ function addActiveScriptsItem(workerscript) {
 
     var btn = document.createElement("button");
     btn.setAttribute("class", "active-scripts-script-header");
+    btn.setAttribute("id", itemName + "-header");
     btn.innerHTML = workerscript.name;
 
     var itemContentDiv = document.createElement("div");
