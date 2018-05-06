@@ -1139,7 +1139,12 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.36.1<br>" +
+    "* Bladeburner Changes: <br>" +
+    "** Bug Fix: You can no longer get Bladeburner faction reputation through Infiltration<br>" +
+    "** Initial difficulty of Tracking contracts reduced<br>" +
     "* The ctrl+b hotkey in the text editor is now also triggered by command+b or winkey+b<br>" +
+    "* Many servers now have additional RAM<br>" +
+    "* Added an option to disable hotkeys/keyboard shortcuts<br>" + 
     "v0.36.0<br>" +
     "* Added BN-6: Bladeburners<br>" +
     "* Rebalanced many combat Augmentations so that they are slightly less powerful<br>" +

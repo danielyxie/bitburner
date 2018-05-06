@@ -23,16 +23,16 @@ function Server(params={ip:createRandomIp(), hostname:""}) {
         ++i;
     }
     this.hostname           =     hostname + suffix;
-    this.organizationName   =     params.organizationName   ? params.organizationName   : "";
-    this.isConnectedTo      =     params.isConnectedTo      ? params.isConnectedTo      : false;
+    this.organizationName   =     params.organizationName != null ? params.organizationName   : "";
+    this.isConnectedTo      =     params.isConnectedTo  != null   ? params.isConnectedTo      : false;
 
     //Access information
-    this.hasAdminRights     =    params.adminRights         ? params.adminRights        : false;
-    this.purchasedByPlayer  =    params.purchasedByPlayer   ? params.purchasedByPlayer  : false;
+    this.hasAdminRights     =    params.adminRights != null       ? params.adminRights        : false;
+    this.purchasedByPlayer  =    params.purchasedByPlayer != null ? params.purchasedByPlayer  : false;
     this.manuallyHacked     =    false;  //Flag that tracks whether or not the server has been hacked at least once
 
     //RAM, CPU speed and Scripts
-    this.maxRam     = params.maxRam ? params.maxRam : 0;  //GB
+    this.maxRam     = params.maxRam != null ? params.maxRam : 0;  //GB
     this.ramUsed    = 0;
     this.cpuCores   = 1; //Max of 8, affects hacking times and Hacking Mission starting Cores
 
@@ -44,22 +44,22 @@ function Server(params={ip:createRandomIp(), hostname:""}) {
     this.dir            = 0;    //new Directory(this, null, ""); TODO
 
     /* Hacking information (only valid for "foreign" aka non-purchased servers) */
-    this.requiredHackingSkill   = params.requiredHackingSkill   ? params.requiredHackingSkill : 1;
-    this.moneyAvailable         = params.moneyAvailable         ? params.moneyAvailable * BitNodeMultipliers.ServerStartingMoney : 1e6;
+    this.requiredHackingSkill   = params.requiredHackingSkill != null ? params.requiredHackingSkill : 1;
+    this.moneyAvailable         = params.moneyAvailable != null       ? params.moneyAvailable * BitNodeMultipliers.ServerStartingMoney : 1e6;
     this.moneyMax               = 25 * this.moneyAvailable * BitNodeMultipliers.ServerMaxMoney;
 
     //Hack Difficulty is synonymous with server security. Base Difficulty = Starting difficulty
-    this.hackDifficulty         = params.hackDifficulty ? params.hackDifficulty * BitNodeMultipliers.ServerStartingSecurity : 1;
+    this.hackDifficulty         = params.hackDifficulty != null ? params.hackDifficulty * BitNodeMultipliers.ServerStartingSecurity : 1;
     this.baseDifficulty         = this.hackDifficulty;
     this.minDifficulty          = Math.max(1, Math.round(this.hackDifficulty / 3));
-    this.serverGrowth           = params.serverGrowth   ? params.serverGrowth : 1; //Integer from 0 to 100. Affects money increase from grow()
+    this.serverGrowth           = params.serverGrowth != null   ? params.serverGrowth : 1; //Integer from 0 to 100. Affects money increase from grow()
 
     //The IP's of all servers reachable from this one (what shows up if you run scan/netstat)
     //  NOTE: Only contains IP and not the Server objects themselves
     this.serversOnNetwork        = [];
 
     //Port information, required for porthacking servers to get admin rights
-    this.numOpenPortsRequired = params.numOpenPortsRequired ? params.numOpenPortsRequired : 5;
+    this.numOpenPortsRequired = params.numOpenPortsRequired != null ? params.numOpenPortsRequired : 5;
     this.sshPortOpen          = false;    //Port 22
     this.ftpPortOpen          = false;    //Port 21
     this.smtpPortOpen         = false;    //Port 25
@@ -527,7 +527,6 @@ function initForeignServers() {
         requiredHackingSkill:20, moneyAvailable:2.75e6,
         hackDifficulty:20, serverGrowth:25, numOpenPortsRequired:0
     });
-    NectarNightclubServer.setPortProperties(0);
     AddToAllServers(NectarNightclubServer);
 
     var NeoNightclubServer = new Server({
