@@ -59,7 +59,7 @@ function Server(params={ip:createRandomIp(), hostname:""}) {
     this.serversOnNetwork        = [];
 
     //Port information, required for porthacking servers to get admin rights
-    this.numOpenPortsRequired = params.numOpenPortsRequired ? params.numOpenPortsRequired : 5;
+    this.numOpenPortsRequired = params.numOpenPortsRequired !== undefined ? params.numOpenPortsRequired : 5;
     this.sshPortOpen          = false;    //Port 22
     this.ftpPortOpen          = false;    //Port 21
     this.smtpPortOpen         = false;    //Port 25
