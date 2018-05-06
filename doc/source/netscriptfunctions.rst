@@ -618,10 +618,10 @@ purchaseHacknetNode
     end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford
     to purchase a new Hacknet Node then the function will return false.
 
-getServerCost
+getPurchaseServerCost
 ^^^^^^^^^^^^^
 
-.. js:function:: getServerCost(ram)
+.. js:function:: getPurchaseServerCost(ram)
 
     :param number ram: Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.)
 

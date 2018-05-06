@@ -48,6 +48,10 @@ function purchaseServer(ram, cost) {
     dialogBoxCreate("Server successfully purchased with hostname " + hostname);
 }
 
+function purchaseServerCost(ram) {
+    return ram * CONSTANTS.BaseCostFor1GBOfRamServer;
+}
+
 
 function purchaseRamForHomeComputer(cost) {
     if (Player.money.lt(cost)) {
@@ -63,4 +67,4 @@ function purchaseRamForHomeComputer(cost) {
     dialogBoxCreate("Purchased additional RAM for home computer! It now has " + homeComputer.maxRam + "GB of RAM.");
 }
 
-export {purchaseServer, purchaseRamForHomeComputer};
+export {purchaseServer, purchaseRamForHomeComputer, purchaseServerCost};
