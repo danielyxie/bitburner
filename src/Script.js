@@ -367,7 +367,7 @@ function calculateRamUsage(codeCopy) {
 
     //Search through AST, scanning for any 'Identifier' nodes for functions, or While/For/If nodes
     var queue = [], ramUsage = 1.4;
-    var whileUsed = false, forUsed = false, ifUsed = false;
+    var loopUsed = false, ifUsed = false;
     queue.push(ast);
     while (queue.length != 0) {
         var exp = queue.shift();
@@ -389,15 +389,15 @@ function calculateRamUsage(codeCopy) {
                 }
                 break;
             case "WhileStatement":
-                if (!whileUsed) {
-                    ramUsage += CONSTANTS.ScriptWhileRamCost;
-                    whileUsed = true;
+                if (!loopUsed) {
+                    ramUsage += CONSTANTS.ScriptLoopRamCost;
+                    loopUsed = true;
                 }
                 break;
             case "ForStatement":
-                if (!forUsed) {
-                    ramUsage += CONSTANTS.ScriptForRamCost;
-                    forUsed = true;
+                if (!loopUsed) {
+                    ramUsage += CONSTANTS.ScriptLoopRamCost;
+                    loopUsed = true;
                 }
                 break;
             case "IfStatement":

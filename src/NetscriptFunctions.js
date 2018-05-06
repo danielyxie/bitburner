@@ -72,7 +72,53 @@ var hasCorporationSF=false,     //Source-File 3
     hasWallStreetSF=false,      //Source-File 8
     hasBn11SF=false;            //Source-File 11
 
-
+var possibleLogs = {
+    ALL: true,
+    scan: true,
+    hack: true,
+    sleep: true,
+    grow: true,
+    weaken: true,
+    nuke: true,
+    brutessh: true,
+    ftpcrack: true,
+    relaysmtp: true,
+    httpworm: true,
+    sqlinject: true,
+    spawn: true,
+    kill: true,
+    killall: true,
+    scp: true,
+    getHackingLevel: true,
+    getServerMoneyAvailable: true,
+    getServerSecurityLevel: true,
+    getServerBaseSecurityLevel: true,
+    getServerMinSecurityLevel: true,
+    getServerRequiredHackingLevel: true,
+    getServerMaxMoney: true,
+    getServerGrowth: true,
+    getServerNumPortsRequired: true,
+    getServerRam: true,
+    buyStock: true,
+    sellStock: true,
+    purchaseServer: true,
+    deleteServer: true,
+    universityCourse: true,
+    gymWorkout: true,
+    travelToCity: true,
+    purchaseTor: true,
+    purchaseProgram: true,
+    stopAction: true,
+    upgradeHomeRam: true,
+    workForCompany: true,
+    applyToCompany: true,
+    joinFaction: true,
+    workForFaction: true,
+    createProgram: true,
+    commitCrime: true,
+    shortStock: true,
+    sellShort: true,
+}
 
 var singularitySFLvl=1, wallStreetSFLvl=1;
 
@@ -353,11 +399,18 @@ function NetscriptFunctions(workerScript) {
         },
         disableLog : function(fn) {
             if (workerScript.checkingRam) {return 0;}
+            if(possibleLogs[fn]===undefined) {
+                throw makeRuntimeRejectMsg(workerScript, "invalid argument to disableLog: "+fn);
+            }
+
             workerScript.disableLogs[fn] = true;
             workerScript.scriptRef.log("Disabled logging for " + fn);
         },
         enableLog : function(fn) {
             if (workerScript.checkingRam) {return 0;}
+            if(possibleLogs[fn]===undefined) {
+                throw makeRuntimeRejectMsg(workerScript, "invalid argument to enableLog: "+fn);
+            }
             delete workerScript.disableLogs[fn];
             workerScript.scriptRef.log("Enabled logging for " + fn);
         },
@@ -3298,41 +3351,42 @@ function NetscriptFunctions(workerScript) {
             }
 
             crime = crime.toLowerCase();
+            let disableCommitCrimeLog = workerScript.disableLogs.ALL == null && workerScript.disableLogs.commitCrime == null
             if (crime.includes("shoplift")) {
-                workerScript.scriptRef.log("Attempting to shoplift...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to shoplift...");}
                 return commitShopliftCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("rob") && crime.includes("store")) {
-                workerScript.scriptRef.log("Attempting to rob a store...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to rob a store...");}
                 return commitRobStoreCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("mug")) {
-                workerScript.scriptRef.log("Attempting to mug someone...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to mug someone...");}
                 return commitMugCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("larceny")) {
-                workerScript.scriptRef.log("Attempting to commit larceny...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to commit larceny...");}
                 return commitLarcenyCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("drugs")) {
-                workerScript.scriptRef.log("Attempting to deal drugs...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to deal drugs...");}
                 return commitDealDrugsCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("bond") && crime.includes("forge")) {
-                workerScript.scriptRef.log("Attempting to forge corporate bonds...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to forge corporate bonds...");}
                 return commitBondForgeryCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("traffick") && crime.includes("arms")) {
-                workerScript.scriptRef.log("Attempting to traffick illegal arms...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to traffick illegal arms...");}
                 return commitTraffickArmsCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("homicide")) {
-                workerScript.scriptRef.log("Attempting to commit homicide...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to commit homicide...");}
                 return commitHomicideCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("grand") && crime.includes("auto")) {
-                workerScript.scriptRef.log("Attempting to commit grand theft auto...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to commit grand theft auto...");}
                 return commitGrandTheftAutoCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("kidnap")) {
-                workerScript.scriptRef.log("Attempting to kidnap and ransom a high-profile target...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to kidnap and ransom a high-profile target...");}
                 return commitKidnapCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else if (crime.includes("assassinate")) {
-                workerScript.scriptRef.log("Attempting to assassinate a high-profile target...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to assassinate a high-profile target...");}
                 return commitAssassinationCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript})
             } else if (crime.includes("heist")) {
-                workerScript.scriptRef.log("Attempting to pull off a heist...");
+                if(disableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to pull off a heist...");}
                 return commitHeistCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
             } else {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into commitCrime(): " + crime);
