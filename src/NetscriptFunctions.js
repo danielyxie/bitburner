@@ -1633,7 +1633,15 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
                 return "";
             }
-            var newServ = new Server(createRandomIp(), hostnameStr, "", false, true, true, ram);
+            var newServ = new Server({
+                ip: createRandomIp(),
+                hostname: hostnameStr,
+                organizationName: "",
+                isConnectedTo: false,
+                adminRights: true,
+                purchasedByPlayer: true,
+                maxRam: ram,
+            });
             AddToAllServers(newServ);
 
             Player.purchasedServers.push(newServ.ip);
