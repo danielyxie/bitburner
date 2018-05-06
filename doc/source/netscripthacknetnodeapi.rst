@@ -17,6 +17,22 @@ hacknetnodes
     accessed using *hacknetnodes[0]*. The fourth Hacknet Node you purchase will have the name
     "hacknet-node-3" and can be accessed using *hacknetnodes[3]*.
 
+Purchasing Hacknet Nodes
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following is a list of supported functions for purchasing Hacknet Nodes.
+
+.. js:function:: getNextHacknetNodeCost()
+
+    Returns the cost of purchasing a new Hacknet Node
+
+.. js:function:: purchaseHacknetNode()
+
+    Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number at the
+    end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford
+    to purchase a new Hacknet Node then the function will return false.
+
+
 Hacknet Node Member Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -24,6 +40,11 @@ The following is a list of member variables for a Hacknet Node object. These var
 a value to these.
 
 Note that these must be called on an element inside the *hacknetnodes* array, not the array itself.
+
+.. js:attribute:: hacknetnodes[i].name
+
+    Returns the name of the corresponding Hacknet Node
+    
 
 .. js:attribute:: hacknetnodes[i].level
 
