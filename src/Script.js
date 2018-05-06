@@ -233,6 +233,7 @@ function updateScriptEditorContent() {
 
 //Define key commands in script editor (ctrl o to save + close, etc.)
 $(document).keydown(function(e) {
+    if (Settings.DisableHotkeys === true) {return;}
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
 		//Ctrl + b
         if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {

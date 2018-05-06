@@ -62,11 +62,12 @@ function prestigeWorkerScripts() {
 function startJsScript(workerScript) {
     workerScript.running = true;
 
+    let running = null;  // The name of the currently running netscript function.
+
     // We need to go through the environment and wrap each function in such a way that it
     // can be called at most once at a time. This will prevent situations where multiple
     // hack promises are outstanding, for example.
     function wrap(propName, f) {
-        let running = null;  // The name of the currently running netscript function.
         // This function unfortunately cannot be an async function, because we don't
         // know if the original one was, and there's no way to tell.
         return function (...args) {
