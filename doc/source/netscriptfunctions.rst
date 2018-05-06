@@ -422,7 +422,7 @@ getHackingMultipliers
 .. js:function:: getHackingMultipliers()
 
     Returns an object containing the Player's hacking related multipliers. These multipliers are
-    returned in integer forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure::
+    returned in fractional forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure::
 
         {
             chance: Player's hacking chance multiplier,
@@ -443,7 +443,7 @@ getHacknetMultipliers
 .. js:function:: getHacknetMultipliers()
 
     Returns an object containing the Player's hacknet related multipliers. These multipliers are
-    returned in integer forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure::
+    returned in fractional forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure::
 
         {
             production: Player's hacknet production multiplier,
