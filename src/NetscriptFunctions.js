@@ -1600,6 +1600,23 @@ function NetscriptFunctions(workerScript) {
             };
             return cancelOrder(params, workerScript);
         },
+        getServerCost: function(ram) {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.getServerCost) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.getServerCost = true;
+                    return CONSTANTS.ScriptGetServerCostRamCost;
+                }
+            }
+            ram = Math.round(ram);
+            if (isNaN(ram) || !powerOfTwo(ram)) {
+                workerScript.scriptRef.log("Error: Invalid ram argument passed to getServerCost(). Must be numeric and a power of 2");
+                return 0;
+            }
+
+            return ram * CONSTANTS.BaseCostFor1GBOfRamServer;
+        },
         purchaseServer : function(hostname, ram) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.purchaseServer) {
