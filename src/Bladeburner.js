@@ -691,9 +691,9 @@ Bladeburner.prototype.create = function() {
              "and information-gathering ONLY. Do NOT engage. Stealth is of the utmost importance.<br><br>" +
              "Successfully completing Tracking contracts will slightly improve your Synthoid population estimate for " +
              "whatever city you are currently in.",
-        baseDifficulty:150,difficultyFac:1.02,rewardFac:1.041,
+        baseDifficulty:125,difficultyFac:1.02,rewardFac:1.041,
         rankGain:0.3, hpLoss:0.5,
-        count:getRandomInt(400, 800), countGrowth:getRandomInt(1, 5),
+        count:getRandomInt(300, 800), countGrowth:getRandomInt(1, 5),
         weights:{hack:0,str:0.05,def:0.05,dex:0.35,agi:0.35,cha:0.1, int:0.05},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.9, int:1},
         isStealth:true
@@ -705,7 +705,7 @@ Bladeburner.prototype.create = function() {
              "current city, and will also increase its chaos level.",
         baseDifficulty:250, difficultyFac:1.04,rewardFac:1.085,
         rankGain:0.9, hpLoss:1,
-        count:getRandomInt(250, 500), countGrowth:getRandomInt(1, 3),
+        count:getRandomInt(200, 750), countGrowth:getRandomInt(1, 3),
         weights:{hack:0,str:0.15,def:0.15,dex:0.25,agi:0.25,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
         isKill:true
@@ -717,7 +717,7 @@ Bladeburner.prototype.create = function() {
              "city, and will also increase its chaos level.",
         baseDifficulty:200, difficultyFac:1.03, rewardFac:1.065,
         rankGain:0.6, hpLoss:1,
-        count:getRandomInt(300, 600), countGrowth:getRandomInt(1,4),
+        count:getRandomInt(300, 900), countGrowth:getRandomInt(1,4),
         weights:{hack:0,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0.1, int:0.1},
         decays:{hack:0,str:0.91,def:0.91,dex:0.91,agi:0.91,cha:0.8, int:0.9},
         isKill:true
@@ -732,7 +732,7 @@ Bladeburner.prototype.create = function() {
              "You will NOT lose HP from failed Investigation ops.",
         baseDifficulty:400, difficultyFac:1.03,rewardFac:1.07,reqdRank:25,
         rankGain:2, rankLoss:0.2,
-        count:getRandomInt(100, 300), countGrowth:1,
+        count:getRandomInt(50, 400), countGrowth:1,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.2,agi:0.1,cha:0.25, int:0.1},
         decays:{hack:0.85,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
         isStealth:true
@@ -745,7 +745,7 @@ Bladeburner.prototype.create = function() {
              "data.",
         baseDifficulty:500, difficultyFac:1.04, rewardFac:1.09, reqdRank:100,
         rankGain:4, rankLoss:0.4, hpLoss:2,
-        count:getRandomInt(100, 250), countGrowth:1,
+        count:getRandomInt(50, 300), countGrowth:1,
         weights:{hack:0.2,str:0.05,def:0.05,dex:0.2,agi:0.2,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.9,def:0.9,dex:0.9,agi:0.9,cha:0.7, int:0.9},
         isStealth:true
@@ -756,7 +756,7 @@ Bladeburner.prototype.create = function() {
              "notorious Synthoid criminals.",
         baseDifficulty:650, difficultyFac:1.04, rewardFac:1.095, reqdRank:500,
         rankGain:5, rankLoss:0.5, hpLoss:2.5,
-        count:getRandomInt(100,250), countGrowth:0.75,
+        count:getRandomInt(25,400), countGrowth:0.75,
         weights:{hack:0.25,str:0.05,def:0.05,dex:0.25,agi:0.1,cha:0.2, int:0.1},
         decays:{hack:0.8,str:0.85,def:0.85,dex:0.85,agi:0.85,cha:0.7, int:0.9},
         isStealth:true
@@ -768,7 +768,7 @@ Bladeburner.prototype.create = function() {
              "in order for this Operation to be successful",
         baseDifficulty:800, difficultyFac:1.045, rewardFac:1.1, reqdRank:3000,
         rankGain:50,rankLoss:2.5,hpLoss:50,
-        count:getRandomInt(50, 100), countGrowth:0.2,
+        count:getRandomInt(25, 150), countGrowth:0.2,
         weights:{hack:0.1,str:0.2,def:0.2,dex:0.2,agi:0.2,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
         isKill:true
@@ -780,7 +780,7 @@ Bladeburner.prototype.create = function() {
              "drawing any attention. Stealth and discretion are key.",
         baseDifficulty:1000, difficultyFac:1.05, rewardFac:1.11, reqdRank:20e3,
         rankGain:20, rankLoss:2, hpLoss:10,
-        count:getRandomInt(50, 200), countGrowth:0.1,
+        count:getRandomInt(25, 250), countGrowth:0.1,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.7,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.9},
         isStealth:true, isKill:true
@@ -792,7 +792,7 @@ Bladeburner.prototype.create = function() {
              "in the Synthoid communities.",
         baseDifficulty:1500, difficultyFac:1.06, rewardFac:1.14, reqdRank:50e3,
         rankGain:40, rankLoss:4, hpLoss:5,
-        count:getRandomInt(50, 150), countGrowth:0.1,
+        count:getRandomInt(25, 200), countGrowth:0.1,
         weights:{hack:0.1,str:0.1,def:0.1,dex:0.3,agi:0.3,cha:0, int:0.1},
         decays:{hack:0.6,str:0.8,def:0.8,dex:0.8,agi:0.8,cha:0, int:0.8},
         isStealth:true, isKill:true

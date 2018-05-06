@@ -9,8 +9,7 @@ import {formatNumber,
 import {loxBoxCreate, logBoxUpdateText,
         logBoxOpened}                           from "../utils/LogBox.js";
 
-import {setActiveScriptsClickHandlers,
-        updateActiveScriptsItems}               from "./ActiveScriptsUI.js";
+import {updateActiveScriptsItems}               from "./ActiveScriptsUI.js";
 import {Augmentations, installAugmentations,
         initAugmentations, AugmentationNames,
         displayAugmentationsContent}            from "./Augmentations.js";
@@ -58,7 +57,7 @@ import {StockMarket, StockSymbols,
         initSymbolToStockMap, stockMarketCycle,
         updateStockPrices,
         displayStockMarketContent}              from "./StockMarket.js";
-import {Terminal, postNetburnerText, post}      from "./Terminal.js";
+import {Terminal, postNetburnerText, post, KEY} from "./Terminal.js";
 
 /* Shortcuts to navigate through the game
  *  Alt-t - Terminal
@@ -76,51 +75,52 @@ import {Terminal, postNetburnerText, post}      from "./Terminal.js";
  *  Alt-o - Options
  */
 $(document).keydown(function(e) {
+    if (Settings.DisableHotkeys === true) {return;}
     if (!Player.isWorking && !redPillFlag && !inMission && !cinematicTextFlag) {
         if (e.keyCode == 84 && e.altKey) {
             e.preventDefault();
             Engine.loadTerminalContent();
-        } else if (e.keyCode == 67 && e.altKey) {
+        } else if (e.keyCode === KEY.C && e.altKey) {
             e.preventDefault();
             Engine.loadCharacterContent();
-        } else if (e.keyCode == 69 && e.altKey) {
+        } else if (e.keyCode === KEY.E && e.altKey) {
             e.preventDefault();
             Engine.loadScriptEditorContent();
-        } else if (e.keyCode == 83 && e.altKey) {
+        } else if (e.keyCode === KEY.S && e.altKey) {
             e.preventDefault();
             Engine.loadActiveScriptsContent();
-        } else if (e.keyCode == 72 && e.altKey) {
+        } else if (e.keyCode === KEY.H && e.altKey) {
             e.preventDefault();
             Engine.loadHacknetNodesContent();
-        } else if (e.keyCode == 87 && e.altKey) {
+        } else if (e.keyCode === KEY.W && e.altKey) {
             e.preventDefault();
             Engine.loadWorldContent();
-        } else if (e.keyCode == 74 && e.altKey) {
+        } else if (e.keyCode === KEY.J && e.altKey) {
             e.preventDefault();
             Engine.loadJobContent();
-        } else if (e.keyCode == 82 && e.altKey) {
+        } else if (e.keyCode === KEY.R && e.altKey) {
             e.preventDefault();
             Engine.loadTravelContent();
-        } else if (e.keyCode == 80 && e.altKey) {
+        } else if (e.keyCode === KEY.P && e.altKey) {
             e.preventDefault();
             Engine.loadCreateProgramContent();
-        } else if (e.keyCode == 70 && e.altKey) {
+        } else if (e.keyCode === KEY.F && e.altKey) {
             //Overriden by Fconf
             if (Engine.currentPage === Engine.Page.Terminal && FconfSettings.ENABLE_BASH_HOTKEYS) {
                 return;
             }
             e.preventDefault();
             Engine.loadFactionsContent();
-        } else if (e.keyCode == 65 && e.altKey) {
+        } else if (e.keyCode === KEY.A && e.altKey) {
             e.preventDefault();
             Engine.loadAugmentationsContent();
-        } else if (e.keyCode == 85 && e.altKey) {
+        } else if (e.keyCode === KEY.U && e.altKey) {
             e.preventDefault();
             Engine.loadTutorialContent();
         }
     }
 
-    if (e.keyCode == 79 && e.altKey) {
+    if (e.keyCode === KEY.O && e.altKey) {
         e.preventDefault();
         gameOptionsBoxOpen();
     }
@@ -260,7 +260,6 @@ let Engine = {
     loadActiveScriptsContent: function() {
         Engine.hideAllContent();
         Engine.Display.activeScriptsContent.style.display = "block";
-        setActiveScriptsClickHandlers();
         updateActiveScriptsItems();
         Engine.currentPage = Engine.Page.ActiveScripts;
         document.getElementById("active-scripts-menu-link").classList.add("active");
@@ -963,7 +962,7 @@ let Engine = {
             } else if (Engine.currentPage === Engine.Page.Corporation) {
                 Player.corporation.updateUIContent();
             }
-            Engine.Counters.updateDisplaysMed = 9;
+            Engine.Counters.updateDisplaysMed = 6;
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {
