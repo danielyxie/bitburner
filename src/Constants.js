@@ -40,6 +40,7 @@ let CONSTANTS = {
 
     /* Netscript Constants */
     //RAM Costs for different commands
+    ScriptBaseRamCost:              1.4,
     ScriptWhileRamCost:             0.2,
     ScriptForRamCost:               0.2,
     ScriptIfRamCost:                0.15,
