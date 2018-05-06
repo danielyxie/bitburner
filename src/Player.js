@@ -210,7 +210,10 @@ function PlayerObject() {
 
 PlayerObject.prototype.init = function() {
     /* Initialize Player's home computer */
-    var t_homeComp = new Server(createRandomIp(), "home", "Home PC", true, true, true, 8);
+    var t_homeComp = new Server({
+        ip:createRandomIp(), hostname:"home", organizationName:"Home PC",
+        isConnectedTo:true, adminRights:true, purchasedByPlayer:true, maxRam:8
+    });
     this.homeComputer = t_homeComp.ip;
     this.currentServer = t_homeComp.ip;
     AddToAllServers(t_homeComp);

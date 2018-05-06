@@ -45,7 +45,7 @@ function Server(params={ip:createRandomIp(), hostname:""}) {
 
     /* Hacking information (only valid for "foreign" aka non-purchased servers) */
     this.requiredHackingSkill   = params.requiredHackingSkill != null ? params.requiredHackingSkill : 1;
-    this.moneyAvailable         = params.moneyAvailable != null       ? params.moneyAvailable * BitNodeMultipliers.ServerStartingMoney : 1e6;
+    this.moneyAvailable         = params.moneyAvailable != null       ? params.moneyAvailable * BitNodeMultipliers.ServerStartingMoney : 0;
     this.moneyMax               = 25 * this.moneyAvailable * BitNodeMultipliers.ServerMaxMoney;
 
     //Hack Difficulty is synonymous with server security. Base Difficulty = Starting difficulty

@@ -3202,11 +3202,11 @@ function initBladeburner() {
     Skills[SkillNames.Datamancer] = new Skill({
         name:SkillNames.Datamancer,
         desc:"Each level of this skill increases your effectiveness in " +
-             "synthoid population analysis and investigation by 4%. " +
+             "synthoid population analysis and investigation by 5%. " +
              "This affects all actions that can potentially increase " +
             "the accuracy of your synthoid population/community estimates.",
         baseCost:3,costInc:1,
-        successChanceEstimate:4
+        successChanceEstimate:5
     });
     Skills[SkillNames.Tracer] = new Skill({
         name:SkillNames.Tracer,
