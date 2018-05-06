@@ -618,6 +618,13 @@ purchaseHacknetNode
     end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford
     to purchase a new Hacknet Node then the function will return false.
 
+getPurchasedServerLimit
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. js:function:: getPurchasedServerLimit()
+
+    Return the maximum amount of servers the player can buy
+
 purchaseServer
 ^^^^^^^^^^^^^^
 
