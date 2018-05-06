@@ -62,29 +62,32 @@ function prestigeWorkerScripts() {
 function startJsScript(workerScript) {
     workerScript.running = true;
 
+    // The name of the currently running netscript function, to prevent concurrent
+    // calls to hack, grow, etc.
+    let runningFn = null;
+
     // We need to go through the environment and wrap each function in such a way that it
     // can be called at most once at a time. This will prevent situations where multiple
     // hack promises are outstanding, for example.
     function wrap(propName, f) {
-        let running = null;  // The name of the currently running netscript function.
         // This function unfortunately cannot be an async function, because we don't
         // know if the original one was, and there's no way to tell.
         return function (...args) {
             const msg = "Concurrent calls to Netscript functions not allowed! " +
                         "Did you forget to await hack(), grow(), or some other " +
                         "promise-returning function? (Currently running: %s tried to run: %s)"
-            if (running) {
-                workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, running, propName), null)
+            if (runningFn) {
+                workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, runningFn, propName), null)
                 throw workerScript;
             }
-            running = propName;
+            runningFn = propName;
             let result = f(...args);
             if (result && result.finally !== undefined) {
                 return result.finally(function () {
-                    running = null;
+                    runningFn = null;
                 });
             } else {
-                running = null;
+                runningFn = null;
                 return result;
             }
         }
@@ -104,7 +107,8 @@ function startJsScript(workerScript) {
         return [mainReturnValue, workerScript];
     }).catch(e => {
         if (e instanceof Error) {
-            workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e.message + (e.stack && ("\nstack:\n" + e.stack.toString()) || ""));
+            workerScript.errorMessage = makeRuntimeRejectMsg(
+                workerScript, e.message + (e.stack && ("\nstack:\n" + e.stack.toString()) || ""));
             throw workerScript;
         } else if (isScriptErrorMessage(e)) {
             workerScript.errorMessage = e;
