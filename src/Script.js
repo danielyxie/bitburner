@@ -389,11 +389,6 @@ function calculateRamUsage(codeCopy) {
                 }
                 break;
             case "WhileStatement":
-                if (!loopUsed) {
-                    ramUsage += CONSTANTS.ScriptLoopRamCost;
-                    loopUsed = true;
-                }
-                break;
             case "ForStatement":
                 if (!loopUsed) {
                     ramUsage += CONSTANTS.ScriptLoopRamCost;
