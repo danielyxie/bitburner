@@ -1280,7 +1280,7 @@ PlayerObject.prototype.finishCreateProgramWork = function(cancelled, sing=false)
 
         this.getHomeComputer().programs.push(programName);
     } else {
-        var perc = Math.floor(this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 100).toString();
+        var perc = (Math.floor(this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 10000)/100).toString();
         var incompleteName = programName + "-" + perc + "%-INC";
         this.getHomeComputer().programs.push(incompleteName);
     }
