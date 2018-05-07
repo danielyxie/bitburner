@@ -52,7 +52,7 @@ var Locations = {
     AevumECorp:                 "ECorp",
     AevumBachmanAndAssociates:  "Bachman & Associates",
     AevumClarkeIncorporated:    "Clarke Incorporated",
-    AevumFulcrumTechnologies:   "Fulcrum Technolgies",
+    AevumFulcrumTechnologies:   "Fulcrum Technologies",
     AevumAeroCorp:              "AeroCorp",
     AevumGalacticCybersystems:  "Galactic Cybersystems",
     AevumWatchdogSecurity:      "Watchdog Security",

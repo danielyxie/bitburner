@@ -18,7 +18,7 @@ const walk = require("acorn/dist/walk");
 
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
-import {parseFconfSettings}                     from "./Fconf.js";
+import {FconfSettings, parseFconfSettings}      from "./Fconf.js";
 import {iTutorialSteps, iTutorialNextStep,
         iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial.js";
 import {evaluateImport}                         from "./NetscriptEvaluator.js";
@@ -28,7 +28,7 @@ import {addWorkerScript, killWorkerScript,
 import {Player}                                 from "./Player.js";
 import {AllServers, processSingleServerGrowth}  from "./Server.js";
 import {Settings}                               from "./Settings.js";
-import {post}                                   from "./Terminal.js";
+import {post, Terminal}                         from "./Terminal.js";
 import {TextFile}                               from "./TextFile.js";
 
 import {parse, Node}                            from "../utils/acorn.js";
@@ -595,7 +595,7 @@ function calculateRamUsage(codeCopy) {
     }
 
     //Search through AST, scanning for any 'Identifier' nodes for functions, or While/For/If nodes
-    var queue = [], ramUsage = 1.4;
+    var queue = [], ramUsage = CONSTANTS.ScriptBaseRamCost;
     var whileUsed = false, forUsed = false, ifUsed = false;
     queue.push(ast);
     while (queue.length != 0) {
@@ -859,7 +859,11 @@ RunningScript.prototype.log = function(txt) {
         //to improve performance
         this.logs.shift();
     }
-    this.logs.push(txt);
+    let logEntry = txt;
+    if (FconfSettings.ENABLE_TIMESTAMPS) {
+        logEntry = "[" + Terminal.getTimestamp() + "] " + logEntry;
+    }
+    this.logs.push(logEntry);
     this.logUpd = true;
 }
 

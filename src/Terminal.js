@@ -110,7 +110,12 @@ $(document).keydown(function(event) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
 			if (command.length > 0) {
-                post("[" + Player.getCurrentServer().hostname + " ~]> " + command);
+                post(
+                    "[" +
+                    (FconfSettings.ENABLE_TIMESTAMPS ? Terminal.getTimestamp() + " " : "") + 
+                    Player.getCurrentServer().hostname +
+                    " ~]> " + command
+                );
 
                 Terminal.resetTerminalInput();      //Clear input first
 				Terminal.executeCommand(command);
@@ -630,6 +635,11 @@ let Terminal = {
         } catch(e) {
             console.log("Exception in Terminal.moveTextCursor: " + e);
         }
+    },
+
+    getTimestamp: function() {
+        let d = new Date();
+        return (d.getMonth() + "/" + d.getDay() + " " + d.getHours() + ":" + d.getMinutes());
     },
 
     finishAction: function(cancelled = false) {

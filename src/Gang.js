@@ -1170,12 +1170,24 @@ function updateGangContent() {
         for (var gangname in AllGangs) {
             if (AllGangs.hasOwnProperty(gangname)) {
                 var gangTerritoryInfo = AllGangs[gangname];
+                let territory = gangTerritoryInfo.territory*100;
+
+                //Fix some rounding issues graphically
+                let displayNumber;
+                if (territory <= 0) {
+                    displayNumber = formatNumber(0, 2);
+                } else if (territory >= 100) {
+                    displayNumber = formatNumber(100, 2);
+                } else {
+                    displayNumber = formatNumber(territory, 2);
+                }
+
                 if (gangname == Player.gang.facName) {
                     gangTerritoryInfoText.innerHTML += ("<b>" + gangname + "</b><br>(Power: " + formatNumber(gangTerritoryInfo.power, 6) + "): " +
-                                       formatNumber(100*gangTerritoryInfo.territory, 2) + "%<br><br>");
+                                       displayNumber + "%<br><br>");
                 } else {
                     gangTerritoryInfoText.innerHTML += (gangname + "<br>(Power: " + formatNumber(gangTerritoryInfo.power, 6) + "): " +
-                                       formatNumber(100*gangTerritoryInfo.territory, 2) + "%<br><br>");
+                                       displayNumber + "%<br><br>");
                 }
             }
         }
@@ -1227,10 +1239,19 @@ function updateGangContent() {
             }));
             gangInfo.appendChild(createElement("br", {}));
 
-            var territoryMult = AllGangs[Player.gang.facName].territory;
+            //Fix some rounding issues graphically
+            var territoryMult = AllGangs[Player.gang.facName].territory * 100;
+            let displayNumber;
+            if (territoryMult <= 0) {
+                displayNumber = formatNumber(0, 2);
+            } else if (territoryMult >= 100) {
+                displayNumber = formatNumber(100, 2);
+            } else {
+                displayNumber = formatNumber(territoryMult, 2);
+            }
             gangInfo.appendChild(createElement("p", {  //Territory multiplier
                 display:"inline-block",
-                innerText:"Territory: " + formatNumber(territoryMult * 100, 3) + "%",
+                innerText:"Territory: " + formatNumber(displayNumber, 3) + "%",
                 tooltip:"The percentage of total territory your Gang controls"
             }));
             gangInfo.appendChild(createElement("br", {}));

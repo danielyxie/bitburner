@@ -691,6 +691,7 @@ let CONSTANTS = {
                            "hostname/ip, regardless of arguments. Returns true if one or more scripts were successfully killed, and false if there were none. <br><br>" +
                            "The first argument must be a string with the name of the script. The script name is case sensitive. The second argument is " +
                            "a string with the hostname or IP of the target server. Both arguments are required.<br><br>" +
+                           "<i><u>getScriptName()</u></i><br>Returns the filename of the current script (including the extension)<br><br>" +
                            "<i><u>getScriptRam(scriptname, hostname/ip)</u></i><br>Returns the amount of RAM required to run the specified script on the " +
                            "target server. The first argument must be a string with the name of the script. The script name is case sensitive. " +
                            "The second argument is a string with the hostname or IP of the server where that script is. Both arguments are required.<br><br>" +
@@ -1143,11 +1144,16 @@ let CONSTANTS = {
     "* Bladeburner Changes: <br>" +
     "** Bug Fix: You can no longer get Bladeburner faction reputation through Infiltration<br>" +
     "** Initial difficulty of Tracking contracts reduced<br>" +
-    "* Crime, Infiltration, and Hacking are now slightly more profitable in BN-6<br>" + 
+    "** Datamancer skill effect increased from 4% per level to 5%<br>" +
+    "* Crime, Infiltration, and Hacking are now slightly more profitable in BN-6<br>" +
+    "* Added getScriptName() Netscript function (added by Github user hydroflame)<br>" +
+    "* There is now a soft-cap on stock price, which means it's no longer possible for the price of a stock to reach insanely-high values<br>" +
     "* The ctrl+b hotkey in the text editor is now also triggered by command+b or winkey+b<br>" +
     "* Many servers now have additional RAM<br>" +
     "* Added an option to disable hotkeys/keyboard shortcuts<br>" +
     "* Refactored 'Active Scripts' UI page to optimize its performance<br>" +
+    "* Added a new .fconf setting: ENABLE_TIMESTAMP<br>" +
+    "* Bug Fix: Fixed a typo in the Fulcrum Technologies company name (Technolgies -> Technologies)<br>" +
     "v0.36.0<br>" +
     "* Added BN-6: Bladeburners<br>" +
     "* Rebalanced many combat Augmentations so that they are slightly less powerful<br>" +

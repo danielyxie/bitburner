@@ -779,6 +779,13 @@ scriptKill
     Kills all scripts with the specified filename on the target server specified by *hostname/ip*, regardless of arguments. Returns
     true if one or more scripts were successfully killed, and false if none were.
 
+getScriptName
+^^^^^^^^^^^^^
+
+.. js:function:: getScriptName()
+
+    Returns the current script name
+
 getScriptRam
 ^^^^^^^^^^^^
 

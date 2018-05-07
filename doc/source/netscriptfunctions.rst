@@ -783,6 +783,7 @@ getScriptName
 ^^^^^^^^^^^^^
 
 .. js:function:: getScriptName()
+
     Returns the current script name
 
 getScriptRam
