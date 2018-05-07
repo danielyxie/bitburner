@@ -1138,6 +1138,8 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.36.1<br>" +
+    "* The ctrl+b hotkey in the text editor is now also triggered by command+b or winkey+b<br>" +
     "v0.36.0<br>" +
     "* Added BN-6: Bladeburners<br>" +
     "* Rebalanced many combat Augmentations so that they are slightly less powerful<br>" +
