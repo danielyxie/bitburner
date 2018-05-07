@@ -1994,7 +1994,7 @@ function NetscriptFunctions(workerScript) {
             }
             return suc;
         },
-        getScriptRam : function (scriptname, ip) {
+        getScriptRam : function (scriptname, ip=workerScript.serverIp) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getScriptRam) {
                     return 0;
