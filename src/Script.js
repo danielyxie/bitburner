@@ -233,6 +233,7 @@ function updateScriptEditorContent() {
 
 //Define key commands in script editor (ctrl o to save + close, etc.)
 $(document).keydown(function(e) {
+    if (Settings.DisableHotkeys === true) {return;}
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
 		//Ctrl + b
         if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {
@@ -417,7 +418,7 @@ function parseOnlyRamCalculate(server, code, workerScript) {
 
         // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
         // are those that start with __SPECIAL_INITIAL_MODULE__.
-        let ram = 1.4;
+        let ram = CONSTANTS.ScriptBaseRamCost;
         const unresolvedRefs = Object.keys(dependencyMap).filter(s => s.startsWith(initialModule));
         const resolvedRefs = new Set();
         while (unresolvedRefs.length > 0) {

@@ -1633,7 +1633,15 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
                 return "";
             }
-            var newServ = new Server(createRandomIp(), hostnameStr, "", false, true, true, ram);
+            var newServ = new Server({
+                ip: createRandomIp(),
+                hostname: hostnameStr,
+                organizationName: "",
+                isConnectedTo: false,
+                adminRights: true,
+                purchasedByPlayer: true,
+                maxRam: ram,
+            });
             AddToAllServers(newServ);
 
             Player.purchasedServers.push(newServ.ip);
@@ -1994,7 +2002,11 @@ function NetscriptFunctions(workerScript) {
             }
             return suc;
         },
-        getScriptRam : function (scriptname, ip=workerScript.serverIp) {
+        getScriptName : function() {
+            if (workerScript.checkingRam) {return 0;}
+            return workerScript.name;
+        },
+        getScriptRam : function (scriptname, ip=workerScript.serverIp) 
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getScriptRam) {
                     return 0;
@@ -2432,7 +2444,10 @@ function NetscriptFunctions(workerScript) {
             }
             Player.loseMoney(CONSTANTS.TorRouterCost);
 
-            var darkweb = new Server(createRandomIp(), "darkweb", "", false, false, false, 1);
+            var darkweb = new Server({
+                ip:createRandomIp(), hostname:"darkweb", organizationName:"",
+                isConnectedTo:false, adminRights:false, purchasedByPlayer:false, maxRam:1
+            });
             AddToAllServers(darkweb);
             SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
 

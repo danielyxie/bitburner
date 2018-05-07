@@ -86,11 +86,15 @@ var KEY = {
     E:              69,
     F:              70,
     H:              72,
+    J:              74,
     K:              75,
     L:              76,
     M:              77,
     N:              78,
+    O:              79,
     P:              80,
+    R:              82,
+    S:              83,
     U:              85,
     W:              87,
 }
@@ -259,9 +263,9 @@ $(document).keydown(function(event) {
 });
 
 //Keep terminal in focus
-let terminalCtrlPressed = false;
+let terminalCtrlPressed = false, shiftKeyPressed = false;
 $(document).ready(function() {
-	if (Engine.currentPage == Engine.Page.Terminal) {
+	if (Engine.currentPage === Engine.Page.Terminal) {
 		$('.terminal-input').focus();
 	}
 });
@@ -269,15 +273,16 @@ $(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.Terminal) {
 		if (e.which == 17) {
 			terminalCtrlPressed = true;
-		} else if (terminalCtrlPressed == true) {
+		} else if (e.shiftKey) {
+            shiftKeyPressed = true;
+        } else if (terminalCtrlPressed || shiftKeyPressed) {
 			//Don't focus
 		} else {
             var inputTextBox = document.getElementById("terminal-input-text-box");
-            if (inputTextBox != null) {
-                inputTextBox.focus();
-            }
+            if (inputTextBox != null) {inputTextBox.focus();}
 
 			terminalCtrlPressed = false;
+            shiftKeyPressed = false;
 		}
 	}
 })
@@ -286,6 +291,9 @@ $(document).keyup(function(e) {
 		if (e.which == 17) {
 			terminalCtrlPressed = false;
 		}
+        if (e.shiftKey) {
+            shiftKeyPressed = false;
+        }
 	}
 })
 
@@ -1304,12 +1312,11 @@ let Terminal = {
                     }
 
 					//Check if its a script or just a program/executable
-					if (isScriptFilename(executableName) == -1) {
-						// Not a script
-						Terminal.runProgram(executableName);
-					} else {
-						//Script
+					//if (isScriptFilename(executableName)) {
+                    if (executableName.includes(".script") || executableName.includes(".js") || executableName.includes(".ns")) {
 						Terminal.runScript(executableName);
+					} else {
+                        Terminal.runProgram(executableName);
 					}
 				}
 				break;

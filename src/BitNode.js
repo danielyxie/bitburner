@@ -105,10 +105,10 @@ function initBitNodes() {
                                           "for progression. Furthermore:<br><br>" +
                                           "Hacking and Hacknet Nodes will be significantly less profitable<br>" +
                                           "Your hacking level is reduced by 50%<br>" +
-                                          "Hacking experience gain from scripts is reduced by 80%<br>" +
+                                          "Hacking experience gain from scripts is reduced by 75%<br>" +
                                           "Corporations have 80% lower valuations and are therefore less profitable<br>" +
                                           "Working for companies is 50% less profitable<br>" +
-                                          "Crimes and Infiltration are 75% less profitable<br><br>" +
+                                          "Crimes and Infiltration are 50% less profitable<br><br>" +
                                           "Destroying this BitNode will give you Source-File 6, or if you already have this Source-File it will upgrade " +
                                           "its level up to a maximum of 3. This Source-File allows you to access the NSA's Bladeburner Division in other " +
                                           "BitNodes. In addition, this Source-File will raise the experience gain rate of all your combat stats by:<br><br>" +
@@ -274,12 +274,12 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.ServerStartingSecurity   = 1.5;
             BitNodeMultipliers.ScriptHackMoney          = 0.5;
             BitNodeMultipliers.CompanyWorkMoney         = 0.5;
-            BitNodeMultipliers.CrimeMoney               = 0.25;
-            BitNodeMultipliers.InfiltrationMoney        = 0.25;
+            BitNodeMultipliers.CrimeMoney               = 0.5;
+            BitNodeMultipliers.InfiltrationMoney        = 0.5;
             BitNodeMultipliers.CorporationValuation     = 0.2;
             BitNodeMultipliers.HacknetNodeMoney         = 0.2;
             BitNodeMultipliers.FactionPassiveRepGain    = 0;
-            BitNodeMultipliers.HackExpGain              = 0.2;
+            BitNodeMultipliers.HackExpGain              = 0.25;
             break;
         case 8: //Ghost of Wall Street
             BitNodeMultipliers.ScriptHackMoney          = 0;

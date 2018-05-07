@@ -2,17 +2,18 @@ import {Engine} from "./engine.js";
 
 /* Settings.js */
 let Settings = {
-    CodeInstructionRunTime: 50,
-    MaxLogCapacity:         50,
-    MaxPortCapacity:        50,
-    SuppressMessages:       false,
-    SuppressFactionInvites: false,
-    AutosaveInterval:       60,
-    ThemeHighlightColor:    "#ffffff",
-    ThemeFontColor:         "#66ff33",
-    ThemeBackgroundColor:   "#000000",
-    EditorTheme:            "Monokai",
-    EditorKeybinding:       "ace",
+    CodeInstructionRunTime:         50,
+    MaxLogCapacity:                 50,
+    MaxPortCapacity:                50,
+    SuppressMessages:               false,
+    SuppressFactionInvites:         false,
+    AutosaveInterval:               60,
+    DisableHotkeys:                 false,
+    ThemeHighlightColor:            "#ffffff",
+    ThemeFontColor:                 "#66ff33",
+    ThemeBackgroundColor:           "#000000",
+    EditorTheme:                    "Monokai",
+    EditorKeybinding:               "ace",
 }
 
 function loadSettings(saveString) {
@@ -26,6 +27,7 @@ function initSettings()  {
     Settings.SuppressMessages = false;
     Settings.SuppressFactionInvites = false;
     Settings.AutosaveInterval = 60;
+    Settings.DisableHotkeys = false;
 }
 
 function setSettingsLabels() {
@@ -35,6 +37,7 @@ function setSettingsLabels() {
     var suppressMsgs = document.getElementById("settingsSuppressMessages");
     var suppressFactionInv = document.getElementById("settingsSuppressFactionInvites")
     var autosaveInterval = document.getElementById("settingsAutosaveIntervalValLabel");
+    var disableHotkeys = document.getElementById("settingsDisableHotkeys");
 
     //Initialize values on labels
     nsExecTime.innerHTML = Settings.CodeInstructionRunTime + "ms";
@@ -43,6 +46,7 @@ function setSettingsLabels() {
     suppressMsgs.checked = Settings.SuppressMessages;
     suppressFactionInv.checked = Settings.SuppressFactionInvites;
     autosaveInterval.innerHTML = Settings.AutosaveInterval;
+    disableHotkeys.checked = Settings.DisableHotkeys;
 
     //Set handlers for when input changes
     var nsExecTimeInput = document.getElementById("settingsNSExecTimeRangeVal");
@@ -79,13 +83,17 @@ function setSettingsLabels() {
         }
     };
 
-    document.getElementById("settingsSuppressMessages").onclick = function() {
+    suppressMsgs.onclick = function() {
         Settings.SuppressMessages = this.checked;
     };
 
-    document.getElementById("settingsSuppressFactionInvites").onclick = function() {
+    suppressFactionInv.onclick = function() {
         Settings.SuppressFactionInvites = this.checked;
     };
+
+    disableHotkeys.onclick = function() {
+        Settings.DisableHotkeys = this.checked;
+    }
 
     //Theme
     if (Settings.ThemeHighlightColor == null || Settings.ThemeFontColor == null || Settings.ThemeBackgroundColor == null) {
