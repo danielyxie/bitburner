@@ -229,7 +229,6 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Sleeping for " + time + " milliseconds");
             }
             return netscriptDelay(time, workerScript).then(function() {
-                if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
                 return Promise.resolve(true);
             });
         },
