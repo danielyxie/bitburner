@@ -1145,6 +1145,7 @@ let CONSTANTS = {
     "** Bug Fix: You can no longer get Bladeburner faction reputation through Infiltration<br>" +
     "** Initial difficulty of Tracking contracts reduced<br>" +
     "** Datamancer skill effect increased from 4% per level to 5%<br>" +
+    "** Slightly decreased the base stamina cost of contracts/operations<br>" + 
     "* Crime, Infiltration, and Hacking are now slightly more profitable in BN-6<br>" +
     "* Added getScriptName() Netscript function (added by Github user hydroflame)<br>" +
     "* There is now a soft-cap on stock price, which means it's no longer possible for the price of a stock to reach insanely-high values<br>" +
@@ -1154,6 +1155,7 @@ let CONSTANTS = {
     "* Refactored 'Active Scripts' UI page to optimize its performance<br>" +
     "* Added a new .fconf setting: ENABLE_TIMESTAMP<br>" +
     "* Bug Fix: Fixed a typo in the Fulcrum Technologies company name (Technolgies -> Technologies)<br>" +
+    "* Bug Fix: hacknetnodes keyword should no longer incur RAM cost if its in a comment<br>" +
     "v0.36.0<br>" +
     "* Added BN-6: Bladeburners<br>" +
     "* Rebalanced many combat Augmentations so that they are slightly less powerful<br>" +

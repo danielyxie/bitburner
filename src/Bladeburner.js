@@ -24,7 +24,7 @@ var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volh
 var CyclesPerSecond             = 5;   //Game cycle is 200 ms
 
 var StaminaGainPerSecond        = 0.0085;
-var BaseStaminaLoss             = 0.29;   //Base stamina loss per action. Increased based on difficulty
+var BaseStaminaLoss             = 0.285;   //Base stamina loss per action. Increased based on difficulty
 var MaxStaminaToGainFactor      = 70000; //Max Stamina is divided by this to get bonus stamina gain
 
 var DifficultyToTimeFactor      = 10;  //Action Difficulty divided by this to get base action time
@@ -3149,9 +3149,9 @@ function initBladeburner() {
     Skills[SkillNames.BladesIntuition] = new Skill({
         name:SkillNames.BladesIntuition,
         desc:"Each level of this skill increases your success chance " +
-             "for all contracts and operations by 2%",
+             "for all contracts and operations by 3%",
         baseCost:5, costInc:2,
-        successChanceAll:2
+        successChanceAll:3
     });
     Skills[SkillNames.Reaper] = new Skill({
         name:SkillNames.Reaper,
@@ -3163,9 +3163,9 @@ function initBladeburner() {
     Skills[SkillNames.Cloak] = new Skill({
         name:SkillNames.Cloak,
         desc:"Each level of this skill increases your " +
-             "success chance in stealth-related contracts and operations by 5%",
+             "success chance in stealth-related contracts and operations by 5.5%",
         baseCost:3, costInc:1,
-        successChanceStealth:5
+        successChanceStealth:5.5
     });
 
     //TODO Marksman
@@ -3188,16 +3188,16 @@ function initBladeburner() {
     Skills[SkillNames.ShortCircuit] = new Skill({
         name:SkillNames.ShortCircuit,
         desc:"Each level of this skill increases your success chance " +
-             "in contracts and operations that involve retirement by 5%",
+             "in contracts and operations that involve retirement by 5.5%",
         baseCost:3, costInc:2,
-        successChanceKill:5
+        successChanceKill:5.5
     });
     Skills[SkillNames.DigitalObserver] = new Skill({
         name:SkillNames.DigitalObserver,
         desc:"Each level of this skill increases your success chance in " +
-             "all operations by 3%",
+             "all operations by 4%",
         baseCost:5, costInc:2,
-        successChanceOperation:3
+        successChanceOperation:4
     });
     Skills[SkillNames.Datamancer] = new Skill({
         name:SkillNames.Datamancer,
@@ -3211,9 +3211,9 @@ function initBladeburner() {
     Skills[SkillNames.Tracer] = new Skill({
         name:SkillNames.Tracer,
         desc:"Each level of this skill increases your success chance in " +
-             "all contracts by 3%",
+             "all contracts by 4%",
         baseCost:3, costInc:2,
-        successChanceContract:3
+        successChanceContract:4
     });
     Skills[SkillNames.CybersEdge] = new Skill({
         name:SkillNames.CybersEdge,
