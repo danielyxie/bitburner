@@ -1036,6 +1036,23 @@ function NetscriptFunctions(workerScript) {
                 growth: Player.hacking_grow_mult,
             };
         },
+        getHacknetMultipliers : function() {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.getHacknetMultipliers) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.getHacknetMultipliers = true;
+                    return CONSTANTS.ScriptGetMultipliersRamCost;
+                }
+            }
+            return {
+                production: Player.hacknet_node_money_mult,
+                purchaseCost: Player.hacknet_node_purchase_cost_mult,
+                ramCost: Player.hacknet_node_ram_cost_mult,
+                coreCost: Player.hacknet_node_core_cost_mult,
+                levelCost: Player.hacknet_node_level_cost_mult,
+            };
+        },
         getBitNodeMultipliers: function() {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getBitNodeMultipliers) {

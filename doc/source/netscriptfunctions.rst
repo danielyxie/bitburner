@@ -422,7 +422,7 @@ getHackingMultipliers
 .. js:function:: getHackingMultipliers()
 
     Returns an object containing the Player's hacking related multipliers. These multipliers are
-    returned in integer forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure::
+    returned in fractional forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure::
 
         {
             chance: Player's hacking chance multiplier,
@@ -436,6 +436,30 @@ getHackingMultipliers
         mults = getHackingMultipliers();
         print(mults.chance);
         print(mults.growth);
+
+getHacknetMultipliers
+^^^^^^^^^^^^^^^^^^^^^
+
+.. js:function:: getHacknetMultipliers()
+
+    Returns an object containing the Player's hacknet related multipliers. These multipliers are
+    returned in fractional forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure::
+
+        {
+            production: Player's hacknet production multiplier,
+            purchaseCost: Player's hacknet purchase cost multiplier,
+            ramCost: Player's hacknet ram cost multiplier,
+            coreCost: Player's hacknet core cost multiplier,
+            levelCost: Player's hacknet level cost multiplier
+        }
+
+    Example of how this can be used::
+
+        mults = getHacknetMultipliers();
+        print(mults.production);
+        print(mults.purchaseCost);
+
+
 
 getServerMoneyAvailable
 ^^^^^^^^^^^^^^^^^^^^^^^
