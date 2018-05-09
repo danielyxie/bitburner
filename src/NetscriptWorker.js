@@ -78,7 +78,9 @@ function startJsScript(workerScript) {
             // netscript functions that don't check this.
             // This is not a problem for legacy Netscript because it also checks the
             // stop flag in the evaluator.
-            if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
+            if (workerScript.env.stopFlag) {throw workerScript;}
+
+            if (propName === "sleep") return f(...args);  // OK for multiple simultaneous calls to sleep.
 
             const msg = "Concurrent calls to Netscript functions not allowed! " +
                         "Did you forget to await hack(), grow(), or some other " +
@@ -99,9 +101,9 @@ function startJsScript(workerScript) {
             }
         }
     };
+
     for (let prop in workerScript.env.vars) {
         if (typeof workerScript.env.vars[prop] !== "function") continue;
-        if (prop === "sleep") continue;  // OK for multiple simultaneous calls to sleep.
         workerScript.env.vars[prop] = wrap(prop, workerScript.env.vars[prop]);
     }
 
