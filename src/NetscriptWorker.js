@@ -73,6 +73,15 @@ function startJsScript(workerScript) {
         // This function unfortunately cannot be an async function, because we don't
         // know if the original one was, and there's no way to tell.
         return function (...args) {
+            // Wrap every netscript function with a check for the stop flag.
+            // This prevents cases where we never stop because we are only calling
+            // netscript functions that don't check this.
+            // This is not a problem for legacy Netscript because it also checks the
+            // stop flag in the evaluator.
+            if (workerScript.env.stopFlag) {throw workerScript;}
+
+            if (propName === "sleep") return f(...args);  // OK for multiple simultaneous calls to sleep.
+
             const msg = "Concurrent calls to Netscript functions not allowed! " +
                         "Did you forget to await hack(), grow(), or some other " +
                         "promise-returning function? (Currently running: %s tried to run: %s)"
@@ -92,9 +101,9 @@ function startJsScript(workerScript) {
             }
         }
     };
+
     for (let prop in workerScript.env.vars) {
         if (typeof workerScript.env.vars[prop] !== "function") continue;
-        if (prop === "sleep") continue;  // OK for multiple simultaneous calls to sleep.
         workerScript.env.vars[prop] = wrap(prop, workerScript.env.vars[prop]);
     }
 
