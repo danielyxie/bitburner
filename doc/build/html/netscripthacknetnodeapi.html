@@ -202,6 +202,31 @@ number of cores adds one additional core.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="utils">
+<h2>Utils<a class="headerlink" href="#utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getHacknetMultipliers">
+<code class="descname">getHacknetMultipliers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getHacknetMultipliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an object containing the Player's hacknet related multipliers. These multipliers are
+returned in integer forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">production</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet production multiplier,</span>
+    <span class="n">purchaseCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet purchase cost multiplier,</span>
+    <span class="n">ramCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet ram cost multiplier,</span>
+    <span class="n">coreCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet core cost multiplier,</span>
+    <span class="n">levelCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet level cost multiplier</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example of how this can be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mults</span> <span class="o">=</span> <span class="n">getHacknetMultipliers</span><span class="p">();</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mults</span><span class="o">.</span><span class="n">production</span><span class="p">);</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mults</span><span class="o">.</span><span class="n">purchaseCost</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="example-s">
 <h2>Example(s)<a class="headerlink" href="#example-s" title="Permalink to this headline">¶</a></h2>
 <p>The following is an example of one way a script can be used to automate the purchasing and upgrading of Hacknet Nodes.
@@ -261,6 +286,7 @@ Nodes to a level of at least 75, RAM to at least 8GB, and number of cores to at 
 <li class="toctree-l3"><a class="reference internal" href="#purchasing-hacknet-nodes">Purchasing Hacknet Nodes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hacknet-node-member-variables">Hacknet Node Member Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hacknet-node-methods">Hacknet Node Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils">Utils</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example-s">Example(s)</a></li>
 </ul>
 </li>

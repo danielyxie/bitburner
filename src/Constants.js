@@ -1146,9 +1146,10 @@ let CONSTANTS = {
     "** Initial difficulty of Tracking contracts reduced<br>" +
     "** Datamancer skill effect increased from 4% per level to 5%<br>" +
     "** Slightly decreased the base stamina cost of contracts/operations<br>" +
-    "** Slightly increased the effects of the Tracer, Digital Observer, Short Circuit, Cloak, and Blade's Intuition skills<br>" + 
+    "** Slightly increased the effects of the Tracer, Digital Observer, Short Circuit, Cloak, and Blade's Intuition skills<br>" +
     "* Crime, Infiltration, and Hacking are now slightly more profitable in BN-6<br>" +
-    "* Added getScriptName() Netscript function (added by Github user hydroflame)<br>" +
+    "* Added getScriptName() and getHacknetMultipliers() Netscript functions (added by Github user hydroflame)<br>" +
+    "* getScriptRam() Netscript function now has default value for the second argument, which is hostname/ip (implemented by Github user hydroflame)<br>" + 
     "* There is now a soft-cap on stock price, which means it's no longer possible for the price of a stock to reach insanely-high values<br>" +
     "* The ctrl+b hotkey in the text editor is now also triggered by command+b or winkey+b<br>" +
     "* Many servers now have additional RAM<br>" +

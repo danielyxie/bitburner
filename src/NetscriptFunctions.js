@@ -2023,7 +2023,7 @@ function NetscriptFunctions(workerScript) {
             if (workerScript.checkingRam) {return 0;}
             return workerScript.name;
         },
-        getScriptRam : function (scriptname, ip=workerScript.serverIp) 
+        getScriptRam : function (scriptname, ip=workerScript.serverIp) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getScriptRam) {
                     return 0;

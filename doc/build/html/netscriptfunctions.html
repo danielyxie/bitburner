@@ -722,7 +722,7 @@ is sorted in alphabetic order</p>
 <dt id="getHackingMultipliers">
 <code class="descname">getHackingMultipliers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getHackingMultipliers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an object containing the Player's hacking related multipliers. These multipliers are
-returned in integer forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure:</p>
+returned in fractional forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="n">chance</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacking chance multiplier,</span>
     <span class="n">speed</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacking speed multiplier,</span>
@@ -735,6 +735,31 @@ returned in integer forms, not percentages (e.g. 1.5 instead of 150%). The objec
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mults</span> <span class="o">=</span> <span class="n">getHackingMultipliers</span><span class="p">();</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">mults</span><span class="o">.</span><span class="n">chance</span><span class="p">);</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">mults</span><span class="o">.</span><span class="n">growth</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="gethacknetmultipliers">
+<h2>getHacknetMultipliers<a class="headerlink" href="#gethacknetmultipliers" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getHacknetMultipliers">
+<code class="descname">getHacknetMultipliers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getHacknetMultipliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an object containing the Player's hacknet related multipliers. These multipliers are
+returned in fractional forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">production</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet production multiplier,</span>
+    <span class="n">purchaseCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet purchase cost multiplier,</span>
+    <span class="n">ramCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet ram cost multiplier,</span>
+    <span class="n">coreCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet core cost multiplier,</span>
+    <span class="n">levelCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet level cost multiplier</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example of how this can be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mults</span> <span class="o">=</span> <span class="n">getHacknetMultipliers</span><span class="p">();</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mults</span><span class="o">.</span><span class="n">production</span><span class="p">);</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mults</span><span class="o">.</span><span class="n">purchaseCost</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1324,14 +1349,14 @@ true if one or more scripts were successfully killed, and false if none were.</p
 <h2>getScriptRam<a class="headerlink" href="#getscriptram" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="getScriptRam">
-<code class="descname">getScriptRam</code><span class="sig-paren">(</span><em>scriptname</em>, <em>hostname/ip</em><span class="sig-paren">)</span><a class="headerlink" href="#getScriptRam" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getScriptRam</code><span class="sig-paren">(</span><em>scriptname</em><span class="optional">[</span>, <em>hostname/ip</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getScriptRam" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
 <li><strong>scriptname</strong> (<em>string</em>) -- Filename of script. This is case-sensitive.</li>
-<li><strong>hostname/ip</strong> (<em>string</em>) -- Hostname or IP of target server</li>
+<li><strong>hostname/ip</strong> (<em>string</em>) -- Hostname or IP of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.</li>
 </ul>
 </td>
 </tr>
@@ -1626,6 +1651,7 @@ you create in functions such as <a class="reference external" href="https://deve
 <li class="toctree-l3"><a class="reference internal" href="#gethostname">getHostname</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gethackinglevel">getHackingLevel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gethackingmultipliers">getHackingMultipliers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gethacknetmultipliers">getHacknetMultipliers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getservermoneyavailable">getServerMoneyAvailable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getservermaxmoney">getServerMaxMoney</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getservergrowth">getServerGrowth</a></li>
