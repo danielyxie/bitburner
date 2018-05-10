@@ -1095,7 +1095,6 @@ function getNextNeurofluxLevel() {
             }
         }
         if (aug == null) {
-            console.log("ERROR, Could not find NeuroFlux Governor aug");
             return 1;
         }
     }
