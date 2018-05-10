@@ -1585,14 +1585,16 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             this.workAgiExpGained   *= 2;
             this.workChaExpGained   *= 2;
             if (this.committingCrimeThruSingFn) {
-                this.singFnCrimeWorkerScript.scriptRef.log("Crime successful! Gained " +
-                                                           numeral(this.workMoneyGained).format("$0.000a") + ", " +
-                                                           formatNumber(this.workHackExpGained, 3) + " hack exp, " +
-                                                           formatNumber(this.workStrExpGained, 3) + " str exp, " +
-                                                           formatNumber(this.workDefExpGained, 3) + " def exp, " +
-                                                           formatNumber(this.workDexExpGained, 3) + " dex exp, " +
-                                                           formatNumber(this.workAgiExpGained, 3) + " agi exp, " +
-                                                           formatNumber(this.workChaExpGained, 3) + " cha exp.");
+                if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
+                    this.singFnCrimeWorkerScript.scriptRef.log("Crime successful! Gained " +
+                                                               numeral(this.workMoneyGained).format("$0.000a") + ", " +
+                                                               formatNumber(this.workHackExpGained, 3) + " hack exp, " +
+                                                               formatNumber(this.workStrExpGained, 3) + " str exp, " +
+                                                               formatNumber(this.workDefExpGained, 3) + " def exp, " +
+                                                               formatNumber(this.workDexExpGained, 3) + " dex exp, " +
+                                                               formatNumber(this.workAgiExpGained, 3) + " agi exp, " +
+                                                               formatNumber(this.workChaExpGained, 3) + " cha exp.");
+                }
             } else {
                 dialogBoxCreate("Crime successful! <br><br>" +
                                 "You gained:<br>"+
@@ -1614,13 +1616,15 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             this.workAgiExpGained   /= 2;
             this.workChaExpGained   /= 2;
             if (this.committingCrimeThruSingFn) {
-                this.singFnCrimeWorkerScript.scriptRef.log("Crime failed! Gained " +
-                                                           formatNumber(this.workHackExpGained, 3) + " hack exp, " +
-                                                           formatNumber(this.workStrExpGained, 3) + " str exp, " +
-                                                           formatNumber(this.workDefExpGained, 3) + " def exp, " +
-                                                           formatNumber(this.workDexExpGained, 3) + " dex exp, " +
-                                                           formatNumber(this.workAgiExpGained, 3) + " agi exp, " +
-                                                           formatNumber(this.workChaExpGained, 3) + " chaexp.");
+                if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
+                    this.singFnCrimeWorkerScript.scriptRef.log("Crime failed! Gained " +
+                                                               formatNumber(this.workHackExpGained, 3) + " hack exp, " +
+                                                               formatNumber(this.workStrExpGained, 3) + " str exp, " +
+                                                               formatNumber(this.workDefExpGained, 3) + " def exp, " +
+                                                               formatNumber(this.workDexExpGained, 3) + " dex exp, " +
+                                                               formatNumber(this.workAgiExpGained, 3) + " agi exp, " +
+                                                               formatNumber(this.workChaExpGained, 3) + " cha exp.");
+                }
             } else {
                 dialogBoxCreate("Crime failed! <br><br>" +
                         "You gained:<br>"+
