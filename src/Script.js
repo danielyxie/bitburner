@@ -59,7 +59,7 @@ function scriptEditorInit() {
     }
     var closeButton = createElement("a", {
         class:"a-link-button", display:"inline-block",
-        innerText:"Save & Close (Ctrl + b)",
+        innerText:"Save & Close (Ctrl/Cmd + b)",
         clickListener:()=>{
             saveAndCloseScriptEditor();
             return false;

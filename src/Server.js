@@ -68,29 +68,6 @@ function Server(params={ip:createRandomIp(), hostname:""}) {
     this.openPortCount        = 0;
 };
 
-/*
-//Set the hacking properties of a server
-Server.prototype.setHackingParameters = function(requiredHackingSkill, moneyAvailable, hackDifficulty, serverGrowth) {
-    this.requiredHackingSkill = requiredHackingSkill;
-    if (isNaN(moneyAvailable)) {
-        this.moneyAvailable = 1e6;
-    } else {
-        this.moneyAvailable = moneyAvailable * BitNodeMultipliers.ServerStartingMoney;
-    }
-    this.moneyMax =
-    this.hackDifficulty = hackDifficulty * BitNodeMultipliers.ServerStartingSecurity;
-    this.baseDifficulty = hackDifficulty * BitNodeMultipliers.ServerStartingSecurity;
-    this.minDifficulty = Math.max(1, Math.round(this.hackDifficulty / 3));
-    this.serverGrowth = serverGrowth;
-}
-
-//Set the port properties of a server
-//Right now its only the number of open ports needed to PortHack the server.
-Server.prototype.setPortProperties = function(numOpenPortsReq) {
-    this.numOpenPortsRequired = numOpenPortsReq;
-}
-*/
-
 Server.prototype.setMaxRam = function(ram) {
     this.maxRam = ram;
 }

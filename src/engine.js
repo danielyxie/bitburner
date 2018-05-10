@@ -899,9 +899,10 @@ let Engine = {
     Counters: {
         autoSaveCounter:    300,            //Autosave every minute
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
-        updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
+        updateDisplays: 3,
         updateDisplaysMed: 9,
         updateDisplaysLong: 15,
+        updateDisplaysSecond:5,
         createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
         checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations
         passiveFactionGrowth: 600,
@@ -939,6 +940,13 @@ let Engine = {
             Engine.Counters.updateSkillLevelsCounter = 10;
         }
 
+        if (Engine.Counters.updateDisplaysSecond <= 0) {
+            if (Engine.currentPage === Engine.Page.ActiveScripts) {
+                updateActiveScriptsItems();
+            }
+            Engine.Counters.updateDisplaysSecond = 5;
+        }
+
         if (Engine.Counters.updateDisplays <= 0) {
             Engine.displayCharacterOverviewInfo();
             if (Engine.currentPage == Engine.Page.CharacterInfo) {
@@ -957,12 +965,10 @@ let Engine = {
         }
 
         if (Engine.Counters.updateDisplaysMed <= 0) {
-            if (Engine.currentPage == Engine.Page.ActiveScripts) {
-                updateActiveScriptsItems();
-            } else if (Engine.currentPage === Engine.Page.Corporation) {
+            if (Engine.currentPage === Engine.Page.Corporation) {
                 Player.corporation.updateUIContent();
             }
-            Engine.Counters.updateDisplaysMed = 6;
+            Engine.Counters.updateDisplaysMed = 9;
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {

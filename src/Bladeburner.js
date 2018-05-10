@@ -1248,10 +1248,10 @@ Bladeburner.prototype.completeAction = function() {
             break;
         case ActionTypes["Training"]:
             this.stamina -= (0.5 * BaseStaminaLoss);
-            var strExpGain = 20 * Player.strength_exp_mult,
-                defExpGain = 20 * Player.defense_exp_mult,
-                dexExpGain = 20 * Player.dexterity_exp_mult,
-                agiExpGain = 20 * Player.agility_exp_mult,
+            var strExpGain = 30 * Player.strength_exp_mult,
+                defExpGain = 30 * Player.defense_exp_mult,
+                dexExpGain = 30 * Player.dexterity_exp_mult,
+                agiExpGain = 30 * Player.agility_exp_mult,
                 staminaGain = 0.04 * this.skillMultipliers.stamina;
             Player.gainStrengthExp(strExpGain);
             Player.gainDefenseExp(defExpGain);
