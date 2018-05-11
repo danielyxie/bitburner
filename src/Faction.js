@@ -1095,7 +1095,9 @@ function getNextNeurofluxLevel() {
             }
         }
         if (aug == null) {
-            console.log("ERROR, Could not find NeuroFlux Governor aug");
+            console.log("WARNING: Could not find NeuroFlux Governor aug. This is OK if " +
+                        "it happens during the loading/initialization of the game, but probably " +
+                        "indicates something seriously wrong at other times");
             return 1;
         }
     }

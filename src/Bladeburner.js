@@ -3175,7 +3175,7 @@ function initBladeburner() {
         name:SkillNames.Overclock,
         desc:"Each level of this skill decreases the time it takes " +
              "to attempt a contract or operation by 1% (Max Level: 99)",
-        baseCost:5, costInc:1, maxLvl:99,
+        baseCost:5, costInc:1, maxLvl:95,
         actionTime:1
     });
     Skills[SkillNames.EvasiveSystem] = new Skill({
