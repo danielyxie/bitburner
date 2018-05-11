@@ -1,3 +1,4 @@
+import {Engine}                                     from "./engine.js";
 import {workerScripts,
         addWorkerScript,
         killWorkerScript}                           from "./NetscriptWorker.js";
@@ -147,7 +148,9 @@ function deleteActiveScriptsItem(workerscript) {
     ActiveScriptsTasks.push(function(workerscript) {
         var server = getServer(workerscript.serverIp);
         if (server == null) {
-            console.log("ERROR: Invalid server IP for workerscript.");
+            throw new Error("ERROR: Invalid server IP for workerscript. This most likely occurred because " +
+                            "you tried to delete a large number of scripts and also purchased servers at the " +
+                            "same time. It's not a big deal, just save and refresh the game.");
             return;
         }
         let hostname = server.hostname;
@@ -182,7 +185,7 @@ function deleteActiveScriptsItem(workerscript) {
 function updateActiveScriptsItems() {
     //Run tasks that need to be done sequentially (adding items, creating/deleting server panels)
     //We'll limit this to 50 at a time in case someone decides to start a bunch of scripts all at once...
-    let numTasks = Math.min(50, ActiveScriptsTasks.length);
+    let numTasks = Math.min(100, ActiveScriptsTasks.length);
     for (let i = 0; i < numTasks; ++i) {
         let task = ActiveScriptsTasks.shift();
         try {
@@ -193,6 +196,7 @@ function updateActiveScriptsItems() {
         }
     }
 
+    if (Engine.currentPage !== Engine.Page.ActiveScripts) {return;}
     var total = 0;
     for (var i = 0; i < workerScripts.length; ++i) {
         try {

@@ -53,6 +53,7 @@ function prestigeWorkerScripts() {
         deleteActiveScriptsItem(workerScripts[i]);
         workerScripts[i].env.stopFlag = true;
     }
+    updateActiveScriptsItems(); //Force UI to update
     workerScripts.length = 0;
 }
 

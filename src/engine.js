@@ -498,30 +498,18 @@ let Engine = {
 
     displayCharacterOverviewInfo: function() {
         if (Player.hp == null) {Player.hp = Player.max_hp;}
+        var overviewText = "Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
+                           "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
+                           "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
+                           "Str:   " + (Player.strength).toLocaleString() + "<br>" +
+                           "Def:   " + (Player.defense).toLocaleString() + "<br>" +
+                           "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" +
+                           "Agi:   " + (Player.agility).toLocaleString() + "<br>" +
+                           "Cha:   " + (Player.charisma).toLocaleString();
         if (Player.intelligence >= 1) {
-            document.getElementById("character-overview-text").innerHTML =
-            ("Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
-             "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
-             "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
-             "Str:   " + (Player.strength).toLocaleString() + "<br>" +
-             "Def:   " + (Player.defense).toLocaleString() + "<br>" +
-             "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" +
-             "Agi:   " + (Player.agility).toLocaleString() + "<br>" +
-             "Cha:   " + (Player.charisma).toLocaleString() + "<br>" +
-             "Int:   " + (Player.intelligence).toLocaleString()
-            ).replace( / /g, "&nbsp;" );
-        } else {
-            document.getElementById("character-overview-text").innerHTML =
-            ("Hp:    " + Player.hp + " / " + Player.max_hp + "<br>" +
-             "Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + "<br>" +
-             "Hack:  " + (Player.hacking_skill).toLocaleString() + "<br>" +
-             "Str:   " + (Player.strength).toLocaleString() + "<br>" +
-             "Def:   " + (Player.defense).toLocaleString() + "<br>" +
-             "Dex:   " + (Player.dexterity).toLocaleString() + "<br>" +
-             "Agi:   " + (Player.agility).toLocaleString() + "<br>" +
-             "Cha:   " + (Player.charisma).toLocaleString()
-            ).replace( / /g, "&nbsp;" );
+            overviewText += "<br>Int:   " + (Player.intelligence).toLocaleString();
         }
+        document.getElementById("character-overview-text").innerHTML = overviewText.replace( / /g, "&nbsp;");
     },
 
     /* Display character info */
@@ -899,9 +887,10 @@ let Engine = {
     Counters: {
         autoSaveCounter:    300,            //Autosave every minute
         updateSkillLevelsCounter: 10,       //Only update skill levels every 2 seconds. Might improve performance
-        updateDisplays: 3,                  //Update displays such as Active Scripts display and character display
+        updateDisplays: 3,
         updateDisplaysMed: 9,
         updateDisplaysLong: 15,
+        updateActiveScriptsDisplay: 5,
         createProgramNotifications: 10,     //Checks whether any programs can be created and notifies
         checkFactionInvitations: 100,       //Check whether you qualify for any faction invitations
         passiveFactionGrowth: 600,
@@ -939,6 +928,16 @@ let Engine = {
             Engine.Counters.updateSkillLevelsCounter = 10;
         }
 
+        if (Engine.Counters.updateActiveScriptsDisplay <= 0) {
+            //Always update, but make the interval longer if the page isn't active
+            updateActiveScriptsItems();
+            if (Engine.currentPage === Engine.Page.ActiveScripts) {
+                Engine.Counters.updateActiveScriptsDisplay = 5;
+            } else {
+                Engine.Counters.updateActiveScriptsDisplay = 15;
+            }
+        }
+
         if (Engine.Counters.updateDisplays <= 0) {
             Engine.displayCharacterOverviewInfo();
             if (Engine.currentPage == Engine.Page.CharacterInfo) {
@@ -957,12 +956,10 @@ let Engine = {
         }
 
         if (Engine.Counters.updateDisplaysMed <= 0) {
-            if (Engine.currentPage == Engine.Page.ActiveScripts) {
-                updateActiveScriptsItems();
-            } else if (Engine.currentPage === Engine.Page.Corporation) {
+            if (Engine.currentPage === Engine.Page.Corporation) {
                 Player.corporation.updateUIContent();
             }
-            Engine.Counters.updateDisplaysMed = 6;
+            Engine.Counters.updateDisplaysMed = 9;
         }
 
         if (Engine.Counters.updateDisplaysLong <= 0) {

@@ -1248,10 +1248,10 @@ Bladeburner.prototype.completeAction = function() {
             break;
         case ActionTypes["Training"]:
             this.stamina -= (0.5 * BaseStaminaLoss);
-            var strExpGain = 20 * Player.strength_exp_mult,
-                defExpGain = 20 * Player.defense_exp_mult,
-                dexExpGain = 20 * Player.dexterity_exp_mult,
-                agiExpGain = 20 * Player.agility_exp_mult,
+            var strExpGain = 30 * Player.strength_exp_mult,
+                defExpGain = 30 * Player.defense_exp_mult,
+                dexExpGain = 30 * Player.dexterity_exp_mult,
+                agiExpGain = 30 * Player.agility_exp_mult,
                 staminaGain = 0.04 * this.skillMultipliers.stamina;
             Player.gainStrengthExp(strExpGain);
             Player.gainDefenseExp(defExpGain);
@@ -3175,7 +3175,7 @@ function initBladeburner() {
         name:SkillNames.Overclock,
         desc:"Each level of this skill decreases the time it takes " +
              "to attempt a contract or operation by 1% (Max Level: 99)",
-        baseCost:5, costInc:1, maxLvl:99,
+        baseCost:5, costInc:1, maxLvl:95,
         actionTime:1
     });
     Skills[SkillNames.EvasiveSystem] = new Skill({

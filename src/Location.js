@@ -565,13 +565,13 @@ function displayLocationContent() {
             break;
 
         case Locations.AevumCrushFitnessGym:
-            var costMult = 2, expMult = 1.5;
+            var costMult = 3, expMult = 2;
             displayGymLocationContent(costMult);
             setGymLocationButtons(costMult, expMult);
             break;
 
         case Locations.AevumSnapFitnessGym:
-            var costMult = 6, expMult = 4;
+            var costMult = 10, expMult = 5;
             displayGymLocationContent(costMult);
             setGymLocationButtons(costMult, expMult);
             break;
@@ -793,7 +793,7 @@ function displayLocationContent() {
             break;
 
         case Locations.Sector12PowerhouseGym:
-            var costMult = 10, expMult = 7.5;
+            var costMult = 20, expMult = 10;
             displayGymLocationContent(costMult);
             setGymLocationButtons(costMult, expMult);
             break;
@@ -1045,7 +1045,7 @@ function displayLocationContent() {
             break;
 
         case Locations.VolhavenMilleniumFitnessGym:
-            var costMult = 3, expMult = 2.5;
+            var costMult = 7, expMult = 4;
             displayGymLocationContent(costMult);
             setGymLocationButtons(costMult, expMult);
             break;

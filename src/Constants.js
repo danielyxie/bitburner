@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.36.0",
+    Version:                "0.36.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -1147,21 +1147,22 @@ let CONSTANTS = {
     "** Datamancer skill effect increased from 4% per level to 5%<br>" +
     "** Slightly decreased the base stamina cost of contracts/operations<br>" +
     "** Slightly increased the effects of the Tracer, Digital Observer, Short Circuit, Cloak, and Blade's Intuition skills<br>" +
+    "** Overclock skill capped at level 95, rather than 99<br>"  +
+    "** Training gives significantly more exp/s<br>" +
     "* Crime, Infiltration, and Hacking are now slightly more profitable in BN-6<br>" +
+    "* Gyms are now more expensive, but give slightly more exp<br>" +
     "* Added getScriptName() and getHacknetMultipliers() Netscript functions (added by Github user hydroflame)<br>" +
-    "* getScriptRam() Netscript function now has default value for the second argument, which is hostname/ip (implemented by Github user hydroflame)<br>" + 
+    "* getScriptRam() Netscript function now has default value for the second argument, which is hostname/ip (implemented by Github user hydroflame)<br>" +
     "* There is now a soft-cap on stock price, which means it's no longer possible for the price of a stock to reach insanely-high values<br>" +
-    "* The ctrl+b hotkey in the text editor is now also triggered by command+b or winkey+b<br>" +
+    "* The ctrl+b hotkey in the text editor should now also be triggered by command+b on OSX (I don't have OSX so I can't confirm if this works)<br>" +
     "* Many servers now have additional RAM<br>" +
     "* Added an option to disable hotkeys/keyboard shortcuts<br>" +
     "* Refactored 'Active Scripts' UI page to optimize its performance<br>" +
-    "* Added a new .fconf setting: ENABLE_TIMESTAMP<br>" +
+    "* Added a new .fconf Terminal setting: ENABLE_TIMESTAMP<br>" +
+    "* 'Netscript Execution Time', which can be found in the Options, now has a minimum value of 15ms rather than 25ms<br>" +
     "* Bug Fix: Fixed a typo in the Fulcrum Technologies company name (Technolgies -> Technologies)<br>" +
     "* Bug Fix: hacknetnodes keyword should no longer incur RAM cost if its in a comment<br>" +
-    "v0.36.0<br>" +
-    "* Added BN-6: Bladeburners<br>" +
-    "* Rebalanced many combat Augmentations so that they are slightly less powerful<br>" +
-    "* Bug Fix: When faction invites are suppressed, an invitation will no longer load the Faction page<br>"
+    "* Bug Fix: disableLog() now works for the commitCrime() Netscript function (fixed by Github user hydroflame)"
 
 }
 
