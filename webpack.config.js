@@ -15,11 +15,14 @@ module.exports = {
       }),
     ],
     target: "web",
-    entry: "./src/engine.js",
+    entry: {
+        engine: "./src/engine.js",
+        tests: "./tests/index.js",
+    },
     devtool: "nosources-source-map",
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "bundle.js",
+        filename: "[name].bundle.js",
         devtoolModuleFilenameTemplate: "[id]"
     },
     module: {
@@ -44,5 +47,8 @@ module.exports = {
         namedChunks: false,
         minimize: false,
         portableRecords: true
+    },
+    devServer: {
+        publicPath: "/dist",
     }
 };

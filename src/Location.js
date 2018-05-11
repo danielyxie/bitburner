@@ -52,7 +52,7 @@ var Locations = {
     AevumECorp:                 "ECorp",
     AevumBachmanAndAssociates:  "Bachman & Associates",
     AevumClarkeIncorporated:    "Clarke Incorporated",
-    AevumFulcrumTechnologies:   "Fulcrum Technolgies",
+    AevumFulcrumTechnologies:   "Fulcrum Technologies",
     AevumAeroCorp:              "AeroCorp",
     AevumGalacticCybersystems:  "Galactic Cybersystems",
     AevumWatchdogSecurity:      "Watchdog Security",
@@ -2013,7 +2013,10 @@ function purchaseTorRouter() {
     }
     Player.loseMoney(CONSTANTS.TorRouterCost);
 
-    var darkweb = new Server(createRandomIp(), "darkweb", "", false, false, false, 1);
+    var darkweb = new Server({
+        ip:createRandomIp(), hostname:"darkweb", organizationName:"",
+        isConnectedTo:false, adminRights:false, purchasedByPlayer:false, maxRam:1
+    });
     AddToAllServers(darkweb);
     SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
 

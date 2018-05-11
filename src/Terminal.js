@@ -22,7 +22,8 @@ import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker.js";
 import {Player}                             from "./Player.js";
 import {hackWorldDaemon}                    from "./RedPill.js";
 import {findRunningScript, RunningScript,
-        AllServersMap, Script}              from "./Script.js";
+        AllServersMap, Script,
+        isScriptFilename}                   from "./Script.js";
 import {AllServers, GetServerByHostname,
         getServer, Server}                  from "./Server.js";
 import {Settings}                           from "./Settings.js";
@@ -85,11 +86,15 @@ var KEY = {
     E:              69,
     F:              70,
     H:              72,
+    J:              74,
     K:              75,
     L:              76,
     M:              77,
     N:              78,
+    O:              79,
     P:              80,
+    R:              82,
+    S:              83,
     U:              85,
     W:              87,
 }
@@ -105,7 +110,12 @@ $(document).keydown(function(event) {
             event.preventDefault(); //Prevent newline from being entered in Script Editor
 			var command = $('input[class=terminal-input]').val();
 			if (command.length > 0) {
-                post("[" + Player.getCurrentServer().hostname + " ~]> " + command);
+                post(
+                    "[" +
+                    (FconfSettings.ENABLE_TIMESTAMPS ? Terminal.getTimestamp() + " " : "") + 
+                    Player.getCurrentServer().hostname +
+                    " ~]> " + command
+                );
 
                 Terminal.resetTerminalInput();      //Clear input first
 				Terminal.executeCommand(command);
@@ -258,9 +268,9 @@ $(document).keydown(function(event) {
 });
 
 //Keep terminal in focus
-let terminalCtrlPressed = false;
+let terminalCtrlPressed = false, shiftKeyPressed = false;
 $(document).ready(function() {
-	if (Engine.currentPage == Engine.Page.Terminal) {
+	if (Engine.currentPage === Engine.Page.Terminal) {
 		$('.terminal-input').focus();
 	}
 });
@@ -268,15 +278,16 @@ $(document).keydown(function(e) {
 	if (Engine.currentPage == Engine.Page.Terminal) {
 		if (e.which == 17) {
 			terminalCtrlPressed = true;
-		} else if (terminalCtrlPressed == true) {
+		} else if (e.shiftKey) {
+            shiftKeyPressed = true;
+        } else if (terminalCtrlPressed || shiftKeyPressed) {
 			//Don't focus
 		} else {
             var inputTextBox = document.getElementById("terminal-input-text-box");
-            if (inputTextBox != null) {
-                inputTextBox.focus();
-            }
+            if (inputTextBox != null) {inputTextBox.focus();}
 
 			terminalCtrlPressed = false;
+            shiftKeyPressed = false;
 		}
 	}
 })
@@ -285,6 +296,9 @@ $(document).keyup(function(e) {
 		if (e.which == 17) {
 			terminalCtrlPressed = false;
 		}
+        if (e.shiftKey) {
+            shiftKeyPressed = false;
+        }
 	}
 })
 
@@ -621,6 +635,11 @@ let Terminal = {
         } catch(e) {
             console.log("Exception in Terminal.moveTextCursor: " + e);
         }
+    },
+
+    getTimestamp: function() {
+        let d = new Date();
+        return (d.getMonth() + "/" + d.getDay() + " " + d.getHours() + ":" + d.getMinutes());
     },
 
     finishAction: function(cancelled = false) {
@@ -980,7 +999,7 @@ let Terminal = {
                     }
 
                     //Can only tail script files
-                    if (scriptName.endsWith(".script") == false) {
+                    if (isScriptFilename(scriptName) == false) {
                         post("Error: tail can only be called on .script files (filename must end with .script)"); return;
                     }
 
@@ -1055,7 +1074,7 @@ let Terminal = {
                         FileSaver.saveAs(content, filename);
                     });
                     return;
-                } else if (fn.endsWith(".script")) {
+                } else if (isScriptFilename(fn)) {
                     //Download a single script
                     for (var i = 0; i < s.scripts.length; ++i) {
                         if (s.scripts[i].filename === fn) {
@@ -1210,7 +1229,7 @@ let Terminal = {
                     var text = createFconf();
                     Engine.loadScriptEditorContent(filename, text);
                     return;
-                } else if (filename.endsWith(".script")) {
+                } else if (isScriptFilename(filename)) {
                     for (var i = 0; i < s.scripts.length; i++) {
     					if (filename == s.scripts[i].filename) {
     						Engine.loadScriptEditorContent(filename, s.scripts[i].code);
@@ -1257,7 +1276,7 @@ let Terminal = {
                            return;
                         }
                     }
-                } else if (delTarget.endsWith(".script")) {
+                } else if (isScriptFilename(delTarget)) {
                     for (var i = 0; i < s.scripts.length; ++i) {
                         if (s.scripts[i].filename == delTarget) {
                             //Check that the script isnt currently running
@@ -1303,12 +1322,11 @@ let Terminal = {
                     }
 
 					//Check if its a script or just a program/executable
-					if (executableName.indexOf(".script") == -1) {
-						//Not a script
-						Terminal.runProgram(executableName);
-					} else {
-						//Script
+					//if (isScriptFilename(executableName)) {
+                    if (executableName.includes(".script") || executableName.includes(".js") || executableName.includes(".ns")) {
 						Terminal.runScript(executableName);
+					} else {
+                        Terminal.runProgram(executableName);
 					}
 				}
 				break;
@@ -1361,7 +1379,7 @@ let Terminal = {
                     return;
                 }
                 var scriptname = args[0];
-                if (!scriptname.endsWith(".lit") && !scriptname.endsWith(".script") &&
+                if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptName) &&
                     !scriptname.endsWith(".txt")){
                     post("Error: scp only works for .script, .txt, and .lit files");
                     return;
@@ -1480,7 +1498,7 @@ let Terminal = {
                     }
 
                     //Can only tail script files
-                    if (scriptName.endsWith(".script") == false) {
+                    if (isScriptFilename(scriptName) == false) {
                         post("Error: tail can only be called on .script files (filename must end with .script)"); return;
                     }
 

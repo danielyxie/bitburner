@@ -210,7 +210,10 @@ function PlayerObject() {
 
 PlayerObject.prototype.init = function() {
     /* Initialize Player's home computer */
-    var t_homeComp = new Server(createRandomIp(), "home", "Home PC", true, true, true, 8);
+    var t_homeComp = new Server({
+        ip:createRandomIp(), hostname:"home", organizationName:"Home PC",
+        isConnectedTo:true, adminRights:true, purchasedByPlayer:true, maxRam:8
+    });
     this.homeComputer = t_homeComp.ip;
     this.currentServer = t_homeComp.ip;
     AddToAllServers(t_homeComp);
@@ -1280,7 +1283,7 @@ PlayerObject.prototype.finishCreateProgramWork = function(cancelled, sing=false)
 
         this.getHomeComputer().programs.push(programName);
     } else {
-        var perc = Math.floor(this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 100).toString();
+        var perc = (Math.floor(this.timeWorkedCreateProgram / this.timeNeededToCompleteWork * 10000)/100).toString();
         var incompleteName = programName + "-" + perc + "%-INC";
         this.getHomeComputer().programs.push(incompleteName);
     }
@@ -1413,8 +1416,8 @@ PlayerObject.prototype.takeClass = function(numCycles) {
                     "$" + formatNumber(this.workMoneyGained, 2) + " ($" + formatNumber(this.workMoneyLossRate * cyclesPerSec, 2) + " / sec) <br><br>" +
                     "You have gained: <br>" +
                     formatNumber(this.workHackExpGained, 4) + " (" + formatNumber(this.workHackExpGainRate * cyclesPerSec, 4) + " / sec) hacking exp <br>" +
-                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
                     formatNumber(this.workStrExpGained, 4) + " (" + formatNumber(this.workStrExpGainRate * cyclesPerSec, 4) + " / sec) strength exp <br>" +
+                    formatNumber(this.workDefExpGained, 4) + " (" + formatNumber(this.workDefExpGainRate * cyclesPerSec, 4) + " / sec) defense exp <br>" +
                     formatNumber(this.workDexExpGained, 4) + " (" + formatNumber(this.workDexExpGainRate * cyclesPerSec, 4) + " / sec) dexterity exp <br>" +
                     formatNumber(this.workAgiExpGained, 4) + " (" + formatNumber(this.workAgiExpGainRate * cyclesPerSec, 4) + " / sec) agility exp <br>" +
                     formatNumber(this.workChaExpGained, 4) + " (" + formatNumber(this.workChaExpGainRate * cyclesPerSec, 4) + " / sec) charisma exp <br>" +
@@ -1582,14 +1585,16 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             this.workAgiExpGained   *= 2;
             this.workChaExpGained   *= 2;
             if (this.committingCrimeThruSingFn) {
-                this.singFnCrimeWorkerScript.scriptRef.log("Crime successful! Gained " +
-                                                           numeral(this.workMoneyGained).format("$0.000a") + ", " +
-                                                           formatNumber(this.workHackExpGained, 3) + " hack exp, " +
-                                                           formatNumber(this.workStrExpGained, 3) + " str exp, " +
-                                                           formatNumber(this.workDefExpGained, 3) + " def exp, " +
-                                                           formatNumber(this.workDexExpGained, 3) + " dex exp, " +
-                                                           formatNumber(this.workAgiExpGained, 3) + " agi exp, " +
-                                                           formatNumber(this.workChaExpGained, 3) + " cha exp.");
+                if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
+                    this.singFnCrimeWorkerScript.scriptRef.log("Crime successful! Gained " +
+                                                               numeral(this.workMoneyGained).format("$0.000a") + ", " +
+                                                               formatNumber(this.workHackExpGained, 3) + " hack exp, " +
+                                                               formatNumber(this.workStrExpGained, 3) + " str exp, " +
+                                                               formatNumber(this.workDefExpGained, 3) + " def exp, " +
+                                                               formatNumber(this.workDexExpGained, 3) + " dex exp, " +
+                                                               formatNumber(this.workAgiExpGained, 3) + " agi exp, " +
+                                                               formatNumber(this.workChaExpGained, 3) + " cha exp.");
+                }
             } else {
                 dialogBoxCreate("Crime successful! <br><br>" +
                                 "You gained:<br>"+
@@ -1611,13 +1616,15 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
             this.workAgiExpGained   /= 2;
             this.workChaExpGained   /= 2;
             if (this.committingCrimeThruSingFn) {
-                this.singFnCrimeWorkerScript.scriptRef.log("Crime failed! Gained " +
-                                                           formatNumber(this.workHackExpGained, 3) + " hack exp, " +
-                                                           formatNumber(this.workStrExpGained, 3) + " str exp, " +
-                                                           formatNumber(this.workDefExpGained, 3) + " def exp, " +
-                                                           formatNumber(this.workDexExpGained, 3) + " dex exp, " +
-                                                           formatNumber(this.workAgiExpGained, 3) + " agi exp, " +
-                                                           formatNumber(this.workChaExpGained, 3) + " chaexp.");
+                if(this.singFnCrimeWorkerScript.disableLogs.ALL == null && this.singFnCrimeWorkerScript.disableLogs.commitCrime == null) {
+                    this.singFnCrimeWorkerScript.scriptRef.log("Crime failed! Gained " +
+                                                               formatNumber(this.workHackExpGained, 3) + " hack exp, " +
+                                                               formatNumber(this.workStrExpGained, 3) + " str exp, " +
+                                                               formatNumber(this.workDefExpGained, 3) + " def exp, " +
+                                                               formatNumber(this.workDexExpGained, 3) + " dex exp, " +
+                                                               formatNumber(this.workAgiExpGained, 3) + " agi exp, " +
+                                                               formatNumber(this.workChaExpGained, 3) + " cha exp.");
+                }
             } else {
                 dialogBoxCreate("Crime failed! <br><br>" +
                         "You gained:<br>"+

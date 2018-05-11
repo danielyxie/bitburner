@@ -40,6 +40,7 @@ let CONSTANTS = {
 
     /* Netscript Constants */
     //RAM Costs for different commands
+    ScriptBaseRamCost:              1.4,
     ScriptWhileRamCost:             0.2,
     ScriptForRamCost:               0.2,
     ScriptIfRamCost:                0.15,
@@ -690,6 +691,7 @@ let CONSTANTS = {
                            "hostname/ip, regardless of arguments. Returns true if one or more scripts were successfully killed, and false if there were none. <br><br>" +
                            "The first argument must be a string with the name of the script. The script name is case sensitive. The second argument is " +
                            "a string with the hostname or IP of the target server. Both arguments are required.<br><br>" +
+                           "<i><u>getScriptName()</u></i><br>Returns the filename of the current script (including the extension)<br><br>" +
                            "<i><u>getScriptRam(scriptname, hostname/ip)</u></i><br>Returns the amount of RAM required to run the specified script on the " +
                            "target server. The first argument must be a string with the name of the script. The script name is case sensitive. " +
                            "The second argument is a string with the hostname or IP of the server where that script is. Both arguments are required.<br><br>" +
@@ -1138,6 +1140,24 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
+    "v0.36.1<br>" +
+    "* Bladeburner Changes: <br>" +
+    "** Bug Fix: You can no longer get Bladeburner faction reputation through Infiltration<br>" +
+    "** Initial difficulty of Tracking contracts reduced<br>" +
+    "** Datamancer skill effect increased from 4% per level to 5%<br>" +
+    "** Slightly decreased the base stamina cost of contracts/operations<br>" +
+    "** Slightly increased the effects of the Tracer, Digital Observer, Short Circuit, Cloak, and Blade's Intuition skills<br>" +
+    "* Crime, Infiltration, and Hacking are now slightly more profitable in BN-6<br>" +
+    "* Added getScriptName() and getHacknetMultipliers() Netscript functions (added by Github user hydroflame)<br>" +
+    "* getScriptRam() Netscript function now has default value for the second argument, which is hostname/ip (implemented by Github user hydroflame)<br>" + 
+    "* There is now a soft-cap on stock price, which means it's no longer possible for the price of a stock to reach insanely-high values<br>" +
+    "* The ctrl+b hotkey in the text editor is now also triggered by command+b or winkey+b<br>" +
+    "* Many servers now have additional RAM<br>" +
+    "* Added an option to disable hotkeys/keyboard shortcuts<br>" +
+    "* Refactored 'Active Scripts' UI page to optimize its performance<br>" +
+    "* Added a new .fconf setting: ENABLE_TIMESTAMP<br>" +
+    "* Bug Fix: Fixed a typo in the Fulcrum Technologies company name (Technolgies -> Technologies)<br>" +
+    "* Bug Fix: hacknetnodes keyword should no longer incur RAM cost if its in a comment<br>" +
     "v0.36.0<br>" +
     "* Added BN-6: Bladeburners<br>" +
     "* Rebalanced many combat Augmentations so that they are slightly less powerful<br>" +

@@ -1,7 +1,8 @@
 import {parse, Node}                            from "../utils/acorn.js";
 
 var FconfSettings = {
-    ENABLE_BASH_HOTKEYS:     false
+    ENABLE_BASH_HOTKEYS:     false,
+    ENABLE_TIMESTAMPS:       false,
 }
 
 var FconfComments = {
@@ -12,6 +13,8 @@ var FconfComments = {
                          "shortcuts.\n\n" +
                          "To see a full list of the Terminal shortcuts that this enables, see:\n" +
                          "http://bitburner.readthedocs.io/en/latest/shortcuts.html",
+    ENABLE_TIMESTAMPS: "Terminal commands and log entries will be timestamped. The timestamp\n" +
+                       "will have the format: M/D h:m",
 }
 
 //Parse Fconf settings from the config text
@@ -70,6 +73,7 @@ function parseFconfSetting(setting, value) {
     //Needed to convert entered value to boolean/strings accordingly
     switch(setting) {
         case "ENABLE_BASH_HOTKEYS":
+        case "ENABLE_TIMESTAMPS":
             var value = value.toLowerCase();
             if (value === "1" || value === "true" || value === "y") {
                 value = true;
@@ -105,14 +109,19 @@ function createFconf() {
             } else {
                 value = String(FconfSettings[setting]);
             }
-            res += (setting + "=" + value + "\n");
+            res += (setting + "=" + value + "\n\n");
         }
     }
     return res;
 }
 
 function loadFconf(saveString) {
-    FconfSettings = JSON.parse(saveString);
+    let tempFconfSettings = JSON.parse(saveString);
+    for (var setting in tempFconfSettings) {
+        if (tempFconfSettings.hasOwnProperty(setting)) {
+            FconfSettings[setting] = tempFconfSettings[setting];
+        }
+    }
 }
 
 export {FconfSettings, createFconf, parseFconfSettings, loadFconf}

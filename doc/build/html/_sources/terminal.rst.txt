@@ -147,7 +147,7 @@ Terminal commands::
 
     $ download *
     $ download *.script
-    $download *.txt
+    $ download *.txt
 
 free
 ^^^^

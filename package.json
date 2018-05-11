@@ -32,6 +32,7 @@
     "supports-color": "^4.2.1",
     "tapable": "^0.2.7",
     "uglifyjs-webpack-plugin": "^0.4.6",
+    "uuid": "^3.2.1",
     "w3c-blob": "0.0.1",
     "watchpack": "^1.4.0",
     "webpack-sources": "^1.0.1",
@@ -42,6 +43,8 @@
     "beautify-lint": "^1.0.3",
     "benchmark": "^2.1.1",
     "bundle-loader": "~0.5.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
     "codacy-coverage": "^2.0.1",
     "codecov.io": "^0.1.2",
     "coffee-loader": "~0.7.1",
@@ -79,6 +82,7 @@
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12",
     "webpack-dev-middleware": "^1.9.0",
+    "webpack-dev-server": "^3.1.4",
     "worker-loader": "^0.8.0"
   },
   "engines": {
@@ -92,25 +96,7 @@
     "url": "git+https://github.com/danielyxie/bitburner.git"
   },
   "scripts": {
-    "appveyor:benchmark": "npm run benchmark",
-    "appveyor:test": "node node_modules\\mocha\\bin\\mocha --max-old-space-size=4096 --harmony test/*.test.js",
-    "beautify-lint": "beautify-lint \"lib/**/*.js\" \"hot/**/*.js\" \"bin/**/*.js\" \"benchmark/*.js\" \"test/*.js\"",
-    "benchmark": "mocha --max-old-space-size=4096 --harmony test/*.benchmark.js -R spec",
-    "build:examples": "cd examples && node buildAll.js",
-    "circleci:lint": "npm run lint-files && npm run nsp",
-    "circleci:test": "node node_modules/mocha/bin/mocha --max-old-space-size=4096 --harmony test/*.test.js",
-    "cover": "node --max-old-space-size=4096 --harmony ./node_modules/istanbul/lib/cli.js cover -x '**/*.runtime.js' node_modules/mocha/bin/_mocha -- test/*.test.js",
-    "cover:min": "node --max-old-space-size=4096 --harmony ./node_modules/.bin/istanbul cover -x '**/*.runtime.js' --report lcovonly node_modules/mocha/bin/_mocha -- test/*.test.js",
-    "fix": "npm run lint -- --fix",
-    "lint": "eslint lib bin hot buildin \"test/**/webpack.config.js\" \"test/binCases/**/test.js\" \"examples/**/webpack.config.js\"",
-    "lint-files": "npm run lint && npm run beautify-lint",
-    "nsp": "nsp check --output summary",
-    "pretest": "npm run lint-files",
-    "publish-patch": "npm run lint && npm run beautify-lint && mocha && npm version patch && git push && git push --tags && npm publish",
-    "test": "mocha test/*.test.js --max-old-space-size=4096 --harmony --check-leaks",
-    "travis:benchmark": "npm run benchmark",
-    "travis:lint": "npm run lint-files && npm run nsp",
-    "travis:test": "npm run cover:min"
+    "start:dev": "webpack-dev-server"
   },
   "version": "0.35.1"
 }

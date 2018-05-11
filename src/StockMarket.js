@@ -19,7 +19,8 @@ import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoTxtInpBoxGetInput, yesNoBoxClose,
         yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox.js";
 
-/* StockMarket.js */
+let StockPriceCap = 1e9; //Put a limit on how high a price can go
+
 function Stock(name, symbol, mv, b, otlkMag, initPrice=10000) {
     this.symbol     = symbol;
     this.name       = name;
@@ -579,6 +580,10 @@ function updateStockPrices() {
             } else {
                 chc = (chc - stock.otlkMag)/100;
                 if (isNaN(chc)) {chc = 0.5;}
+            }
+            if (stock.price >= StockPriceCap) {
+                chc = -1; //Limit on stock price
+                stock.b = false;
             }
 
             var c = Math.random();

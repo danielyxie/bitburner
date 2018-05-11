@@ -1,185 +1,205 @@
 import {workerScripts,
         addWorkerScript,
-        killWorkerScript}           from "./NetscriptWorker.js";
-import {Player}                     from "./Player.js";
-import {getServer}                  from "./Server.js";
-import {dialogBoxCreate}            from "../utils/DialogBox.js";
-import {printArray}                 from "../utils/HelperFunctions.js";
-import {logBoxCreate}               from "../utils/LogBox.js";
-import numeral                      from "../utils/numeral.min.js";
-import {formatNumber}               from "../utils/StringHelperFunctions.js";
+        killWorkerScript}                           from "./NetscriptWorker.js";
+import {Player}                                     from "./Player.js";
+import {getServer}                                  from "./Server.js";
+import {dialogBoxCreate}                            from "../utils/DialogBox.js";
+import {printArray, createElement,
+        createAccordionElement, removeElement,
+        removeChildrenFromElement, exceptionAlert}  from "../utils/HelperFunctions.js";
+import {logBoxCreate}                               from "../utils/LogBox.js";
+import numeral                                      from "../utils/numeral.min.js";
+import {formatNumber}                               from "../utils/StringHelperFunctions.js";
 
-
-/* Active Scripts UI*/
-function setActiveScriptsClickHandlers() {
-    //Server panel click handlers
-    var serverPanels = document.getElementsByClassName("active-scripts-server-header");
-    if (serverPanels == null) {
-        console.log("ERROR: Could not find Active Scripts server panels");
-        return;
-    }
-    for (i = 0; i < serverPanels.length; ++i) {
-        serverPanels[i].onclick = function() {
-            this.classList.toggle("active");
-
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
-        }
-    }
-
-    //Script Panel click handlers
-    var scriptPanels = document.getElementsByClassName("active-scripts-script-header");
-    if (scriptPanels == null) {
-        console.log("ERROR: Could not find Active Scripts panels for individual scripts");
-        return;
-    }
-    for (var i = 0; i < scriptPanels.length; ++i) {
-        scriptPanels[i].onclick = function() {
-            this.classList.toggle("active");
-
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
-        }
-    }
-}
-
-//Returns the ul element containins all script items for a specific server
-function getActiveScriptsServerList(server) {
-    if (server == null) {return null;}
-    var panelname = "active-scripts-server-panel-" + server.hostname;
-    var item = document.getElementById(panelname + "-script-list");
-    if (item == null) {
-        console.log("ERROR: Cannot find list for: " + server.hostname);
-    }
-    return item;
-}
+/* {
+ *     serverName: {
+ *         header: Server Header Element
+ *         panel: Server Panel List (ul) element
+ *         scripts: {
+ *             script id: Ref to Script information
+ *         }
+ *     }
+ *     ...
+ */
+let ActiveScriptsUI = {};
+let ActiveScriptsTasks = []; //Sequentially schedule the creation/deletion of UI elements
 
 function createActiveScriptsServerPanel(server) {
-    var panelname = "active-scripts-server-panel-" + server.hostname;
-    var activeScriptsList = document.getElementById("active-scripts-list");
+    ActiveScriptsTasks.push(function(server) {
+        let hostname = server.hostname;
 
-    //Div of entire Panel
-    var panelDiv = document.createElement("div");
-    panelDiv.setAttribute("id", panelname);
+        var activeScriptsList = document.getElementById("active-scripts-list");
 
-    //Panel Header
-    var panelHdr = document.createElement("button");
-    panelHdr.setAttribute("class", "active-scripts-server-header")
-    panelHdr.setAttribute("id", panelname + "-hdr");
-    panelHdr.innerHTML = server.hostname;
+        let res     = createAccordionElement({hdrText:hostname});
+        let li      = res[0];
+        var hdr     = res[1];
+        let panel   = res[2];
 
-    //Panel content
-    var panelContentDiv = document.createElement("div");
-    panelContentDiv.setAttribute("class", "active-scripts-server-panel");
-    panelContentDiv.setAttribute("id", panelname + "-content");
+        if (ActiveScriptsUI[hostname] != null) {
+            console.log("WARNING: Tried to create already-existing Active Scripts Server panel. This is most likely fine. It probably means many scripts just got started up on a new server. Aborting");
+            return;
+        }
 
-    //List of scripts
-    var panelScriptList = document.createElement("ul");
-    panelScriptList.setAttribute("id", panelname + "-script-list");
+        var panelScriptList = createElement("ul");
+        panel.appendChild(panelScriptList);
+        activeScriptsList.appendChild(li);
 
-    panelContentDiv.appendChild(panelScriptList);
-    panelDiv.appendChild(panelHdr);
-    panelDiv.appendChild(panelContentDiv);
-    activeScriptsList.appendChild(panelDiv);
+        ActiveScriptsUI[hostname] = {
+            header: hdr,
+            panel: panel,
+            panelList: panelScriptList,
+            scripts: {},            //Holds references to li elements for each active script
+            scriptHdrs: {},         //Holds references to header elements for each active script
+            scriptStats: {}         //Holds references to the p elements containing text for each active script
+        };
 
-    setActiveScriptsClickHandlers() //Reset click handlers
-
-    return panelDiv;
+        return li;
+    }.bind(null, server));
 }
 
 //Deletes the info for a particular server (Dropdown header + Panel with all info)
 //in the Active Scripts page if it exists
 function deleteActiveScriptsServerPanel(server) {
-    var panelname = "active-scripts-server-panel-" + server.hostname;
-    var panel = document.getElementById(panelname);
-    if (panel == null) {
-        console.log("No such panel exists: " + panelname);
-        return;
-    }
+    ActiveScriptsTasks.push(function(server) {
+        let hostname = server.hostname;
+        if (ActiveScriptsUI[hostname] == null) {
+            console.log("WARNING: Tried to delete non-existent Active Scripts Server panel. Aborting");
+            return;
+        }
 
-    //Remove the panel if it has no elements
-    var scriptList = document.getElementById(panelname + "-script-list");
-    if (scriptList.childNodes.length == 0) {
-        panel.parentNode.removeChild(panel);
-    }
+        //Make sure it's empty
+        if (Object.keys(ActiveScriptsUI[hostname].scripts).length > 0) {
+            console.log("WARNING: Tried to delete Active Scripts Server panel  that still has scripts. Aborting");
+            return;
+        }
+
+        removeElement(ActiveScriptsUI[hostname].panel);
+        removeElement(ActiveScriptsUI[hostname].header);
+        delete ActiveScriptsUI[hostname];
+    }.bind(null, server));
 }
 
 function addActiveScriptsItem(workerscript) {
-    //Get server panel
     var server = getServer(workerscript.serverIp);
     if (server == null) {
-        console.log("ERROR: Invalid server IP for workerscript.");
+        console.log("ERROR: Invalid server IP for workerscript in addActiveScriptsItem()");
         return;
     }
-    var panelname = "active-scripts-server-panel-" + server.hostname;
-
-    var panel = document.getElementById(panelname);
-    if (panel == null) {
-        panel = createActiveScriptsServerPanel(server);
+    let hostname = server.hostname;
+    if (ActiveScriptsUI[hostname] == null) {
+        createActiveScriptsServerPanel(server);
     }
 
-    //Create the element itself. Each element is an accordion collapsible
-    var itemNameArray = ["active", "scripts", server.hostname, workerscript.name];
-    for (var i = 0; i < workerscript.args.length; ++i) {
-        itemNameArray.push(String(workerscript.args[i]));
-    }
-    var itemName = itemNameArray.join("-");
-    var item = document.createElement("li");
-    item.setAttribute("id", itemName);
+    ActiveScriptsTasks.push(function(workerscript, hostname) {
+        //Create the unique identifier (key) for this script
+        var itemNameArray = ["active", "scripts", hostname, workerscript.name];
+        for (var i = 0; i < workerscript.args.length; ++i) {
+            itemNameArray.push(String(workerscript.args[i]));
+        }
+        var itemName = itemNameArray.join("-");
 
-    var btn = document.createElement("button");
-    btn.setAttribute("class", "active-scripts-script-header");
-    btn.innerHTML = workerscript.name;
+        let res     = createAccordionElement({hdrText:workerscript.name});
+        let li      = res[0];
+        let hdr     = res[1];
+        let panel   = res[2];
 
-    var itemContentDiv = document.createElement("div");
-    itemContentDiv.setAttribute("class", "active-scripts-script-panel");
-    itemContentDiv.setAttribute("id", itemName + "-content");
+        hdr.classList.remove("accordion-header");
+        hdr.classList.add("active-scripts-script-header");
+        panel.classList.remove("accordion-panel");
+        panel.classList.add("active-scripts-script-panel");
 
-    item.appendChild(btn);
-    item.appendChild(itemContentDiv);
+        //Handle the constant elements on the panel that don't change after creation
+        //Threads, args, kill/log button
+        panel.appendChild(createElement("p", {
+            innerHTML: "Threads: " + workerscript.scriptRef.threads + "<br>" +
+                       "Args: " + printArray(workerscript.args)
+        }));
+        var panelText = createElement("p", {
+            innerText:"Loading...", fontSize:"14px",
+        });
+        panel.appendChild(panelText);
+        panel.appendChild(createElement("br"));
+        panel.appendChild(createElement("span", {
+            innerText:"Log", class:"active-scripts-button", margin:"4px", padding:"4px",
+            clickListener:()=>{
+                logBoxCreate(workerscript.scriptRef);
+                return false;
+            }
+        }));
+        panel.appendChild(createElement("span", {
+            innerText:"Kill Script", class:"active-scripts-button", margin:"4px", padding:"4px",
+            clickListener:()=>{
+                killWorkerScript(workerscript.scriptRef, workerscript.scriptRef.scriptRef.server);
+                dialogBoxCreate("Killing script, may take a few minutes to complete...");
+                return false;
+            }
+        }));
 
-    createActiveScriptsText(workerscript, itemContentDiv);
-
-    //Append element to list
-    var list = getActiveScriptsServerList(server);
-    list.appendChild(item);
-
-    setActiveScriptsClickHandlers() //Reset click handlers
+        //Append element to list
+        ActiveScriptsUI[hostname]["panelList"].appendChild(li);
+        ActiveScriptsUI[hostname].scripts[itemName] = li;
+        ActiveScriptsUI[hostname].scriptHdrs[itemName] = hdr;
+        ActiveScriptsUI[hostname].scriptStats[itemName] = panelText;
+    }.bind(null, workerscript, hostname));
 }
 
 function deleteActiveScriptsItem(workerscript) {
-    var server = getServer(workerscript.serverIp);
-    if (server == null) {
-        console.log("ERROR: Invalid server IP for workerscript.");
-        return;
-    }
-    var itemNameArray = ["active", "scripts", server.hostname, workerscript.name];
-    for (var i = 0; i < workerscript.args.length; ++i) {
-        itemNameArray.push(String(workerscript.args[i]));
-    }
-    var itemName = itemNameArray.join("-");
-    var li = document.getElementById(itemName);
-    if (li == null) {
-        console.log("could not find Active scripts li element for: " + workerscript.name);
-        return;
-    }
-    li.parentNode.removeChild(li);
-    deleteActiveScriptsServerPanel(server);
+    ActiveScriptsTasks.push(function(workerscript) {
+        var server = getServer(workerscript.serverIp);
+        if (server == null) {
+            console.log("ERROR: Invalid server IP for workerscript.");
+            return;
+        }
+        let hostname = server.hostname;
+        if (ActiveScriptsUI[hostname] == null) {
+            console.log("ERROR: Trying to delete Active Script UI Element with a hostname that cant be found in ActiveScriptsUI: " + hostname);
+            return;
+        }
+
+        var itemNameArray = ["active", "scripts", server.hostname, workerscript.name];
+        for (var i = 0; i < workerscript.args.length; ++i) {
+            itemNameArray.push(String(workerscript.args[i]));
+        }
+        var itemName = itemNameArray.join("-");
+
+        let li = ActiveScriptsUI[hostname].scripts[itemName];
+        if (li == null) {
+            console.log("ERROR: Cannot find Active Script UI element for workerscript: ");
+            console.log(workerscript);
+            return;
+        }
+        removeElement(li);
+        delete ActiveScriptsUI[hostname].scripts[itemName];
+        delete ActiveScriptsUI[hostname].scriptHdrs[itemName];
+        delete ActiveScriptsUI[hostname].scriptStats[itemName];
+        if (Object.keys(ActiveScriptsUI[hostname].scripts).length === 0) {
+            deleteActiveScriptsServerPanel(server);
+        }
+    }.bind(null, workerscript));
 }
 
 //Update the ActiveScriptsItems array
 function updateActiveScriptsItems() {
+    //Run tasks that need to be done sequentially (adding items, creating/deleting server panels)
+    //We'll limit this to 50 at a time in case someone decides to start a bunch of scripts all at once...
+    let numTasks = Math.min(50, ActiveScriptsTasks.length);
+    for (let i = 0; i < numTasks; ++i) {
+        let task = ActiveScriptsTasks.shift();
+        try {
+            task();
+        } catch(e) {
+            exceptionAlert(e);
+            console.log(task);
+        }
+    }
+
     var total = 0;
     for (var i = 0; i < workerScripts.length; ++i) {
-        total += updateActiveScriptsItemContent(workerScripts[i]);
+        try {
+            total += updateActiveScriptsItemContent(workerScripts[i]);
+        } catch(e) {
+            exceptionAlert(e);
+        }
     }
     document.getElementById("active-scripts-total-prod").innerHTML =
         "Total online production of Active Scripts: " + numeral(total).format('$0.000a') + " / sec<br>" +
@@ -196,69 +216,50 @@ function updateActiveScriptsItemContent(workerscript) {
         console.log("ERROR: Invalid server IP for workerscript.");
         return;
     }
+    let hostname = server.hostname;
+    if (ActiveScriptsUI[hostname] == null) {
+        return; //Hasn't been created yet. We'll skip it
+    }
+
     var itemNameArray = ["active", "scripts", server.hostname, workerscript.name];
     for (var i = 0; i < workerscript.args.length; ++i) {
         itemNameArray.push(String(workerscript.args[i]));
     }
     var itemName = itemNameArray.join("-");
-    var itemContent = document.getElementById(itemName + "-content")
 
-    //Add the updated text back. Returns the total online production rate
-    return updateActiveScriptsText(workerscript, itemContent);
+    if (ActiveScriptsUI[hostname].scriptStats[itemName] == null) {
+        return; //Hasn't been fully added yet. We'll skip it
+    }
+    var item = ActiveScriptsUI[hostname].scriptStats[itemName];
+
+    //Update the text if necessary. This fn returns the online $/s production
+    return updateActiveScriptsText(workerscript, item, itemName);
 }
 
-function createActiveScriptsText(workerscript, item) {
-    var itemTextHeader = document.createElement("p");
-    var itemTextStats = document.createElement("p");
-    var itemId = item.id;
-    itemTextStats.setAttribute("id", itemId + "-stats");
-
-    //Server ip/hostname
-    var threads = "Threads: " + workerscript.scriptRef.threads;
-    var args = "Args: " + printArray(workerscript.args);
-
-    itemTextHeader.innerHTML = threads + "<br>" + args + "<br>";
-
-    item.appendChild(itemTextHeader);
-    item.appendChild(itemTextStats);
-
-    var onlineMps = updateActiveScriptsText(workerscript, item, itemTextStats);
-
-    var logButton = document.createElement("span");
-    logButton.innerHTML = "Log";
-    var killButton = document.createElement("span");
-    killButton.innerHTML = "Kill script";
-    logButton.setAttribute("class", "active-scripts-button");
-    killButton.setAttribute("class", "active-scripts-button");
-    logButton.addEventListener("click", function() {
-        logBoxCreate(workerscript.scriptRef);
-        return false;
-    });
-    killButton.addEventListener("click", function() {
-        killWorkerScript(workerscript.scriptRef, workerscript.scriptRef.scriptRef.server);
-        dialogBoxCreate("Killing script, may take a few minutes to complete...");
-        return false;
-    });
-    item.appendChild(logButton);
-    item.appendChild(killButton);
-
-    //Return total online production rate
-    return onlineMps;
-}
-
-function updateActiveScriptsText(workerscript, item, statsEl=null) {
-    var itemId = item.id
-    var itemTextStats = document.getElementById(itemId + "-stats");
-    if (itemTextStats == null || itemTextStats === undefined) {
-        itemTextStats = statsEl;
+function updateActiveScriptsText(workerscript, item, itemName) {
+    var server = getServer(workerscript.serverIp);
+    if (server == null) {
+        console.log("ERROR: Invalid server IP for workerscript.");
+        return;
+    }
+    let hostname = server.hostname;
+    if (ActiveScriptsUI[hostname] == null || ActiveScriptsUI[hostname].scriptHdrs[itemName] == null) {
+        console.log("ERROR: Trying to update Active Script UI Element with a hostname that cant be found in ActiveScriptsUI: " + hostname);
+        return;
     }
 
-    //Updates statistics only
+    var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
+
+    //Only update if the item is visible
+    if (ActiveScriptsUI[hostname].header.classList.contains("active") === false) {return onlineMps;}
+    if (ActiveScriptsUI[hostname].scriptHdrs[itemName].classList.contains("active") === false) {return onlineMps;}
+
+    removeChildrenFromElement(item);
+
     //Online
     var onlineTotalMoneyMade = "Total online production: $" + formatNumber(workerscript.scriptRef.onlineMoneyMade, 2);
     var onlineTotalExpEarned = (Array(26).join(" ") + formatNumber(workerscript.scriptRef.onlineExpGained, 2) + " hacking exp").replace( / /g, "&nbsp;");
 
-    var onlineMps = workerscript.scriptRef.onlineMoneyMade / workerscript.scriptRef.onlineRunningTime;
     var onlineMpsText = "Online production rate: $" + formatNumber(onlineMps, 2) + "/second";
     var onlineEps = workerscript.scriptRef.onlineExpGained / workerscript.scriptRef.onlineRunningTime;
     var onlineEpsText = (Array(25).join(" ") + formatNumber(onlineEps, 4) + " hacking exp/second").replace( / /g, "&nbsp;");
@@ -272,10 +273,10 @@ function updateActiveScriptsText(workerscript, item, statsEl=null) {
     var offlineEps = workerscript.scriptRef.offlineExpGained / workerscript.scriptRef.offlineRunningTime;
     var offlineEpsText = (Array(26).join(" ") + formatNumber(offlineEps, 4) +  " hacking exp/second").replace( / /g, "&nbsp;");
 
-    itemTextStats.innerHTML = onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
-                              onlineMpsText + "<br>" + onlineEpsText + "<br>" + offlineTotalMoneyMade + "<br>" + offlineTotalExpEarned + "<br>" +
-                              offlineMpsText + "<br>" + offlineEpsText + "<br>";
+    item.innerHTML = onlineTotalMoneyMade + "<br>" + onlineTotalExpEarned + "<br>" +
+                     onlineMpsText + "<br>" + onlineEpsText + "<br>" + offlineTotalMoneyMade + "<br>" + offlineTotalExpEarned + "<br>" +
+                     offlineMpsText + "<br>" + offlineEpsText + "<br>";
     return onlineMps;
 }
 
-export {setActiveScriptsClickHandlers, addActiveScriptsItem, deleteActiveScriptsItem, updateActiveScriptsItems};
+export {addActiveScriptsItem, deleteActiveScriptsItem, updateActiveScriptsItems};

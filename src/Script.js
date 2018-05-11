@@ -13,9 +13,12 @@ require("brace/keybinding/vim");
 require("brace/keybinding/emacs");
 require("brace/ext/language_tools");
 
+// Importing this doesn't work for some reason.
+const walk = require("acorn/dist/walk");
+
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
-import {parseFconfSettings}                     from "./Fconf.js";
+import {FconfSettings, parseFconfSettings}      from "./Fconf.js";
 import {iTutorialSteps, iTutorialNextStep,
         iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial.js";
 import {evaluateImport}                         from "./NetscriptEvaluator.js";
@@ -25,7 +28,7 @@ import {addWorkerScript, killWorkerScript,
 import {Player}                                 from "./Player.js";
 import {AllServers, processSingleServerGrowth}  from "./Server.js";
 import {Settings}                               from "./Settings.js";
-import {post}                                   from "./Terminal.js";
+import {post, Terminal}                         from "./Terminal.js";
 import {TextFile}                               from "./TextFile.js";
 
 import {parse, Node}                            from "../utils/acorn.js";
@@ -41,6 +44,10 @@ var keybindings = {
     vim: "ace/keyboard/vim",
     emacs: "ace/keyboard/emacs",
 };
+
+function isScriptFilename(f) {
+    return f.endsWith(".js") || f.endsWith(".script");
+}
 
 var scriptEditorRamCheck = null, scriptEditorRamText = null;
 function scriptEditorInit() {
@@ -209,7 +216,7 @@ function scriptEditorInit() {
 //Updates RAM usage in script
 function updateScriptEditorContent() {
     var filename = document.getElementById("script-editor-filename").value;
-    if (scriptEditorRamCheck == null || !scriptEditorRamCheck.checked || !filename.endsWith(".script")) {
+    if (scriptEditorRamCheck == null || !scriptEditorRamCheck.checked || !isScriptFilename(filename)) {
         scriptEditorRamText.innerText = "N/A";
         return;
     }
@@ -226,9 +233,10 @@ function updateScriptEditorContent() {
 
 //Define key commands in script editor (ctrl o to save + close, etc.)
 $(document).keydown(function(e) {
+    if (Settings.DisableHotkeys === true) {return;}
 	if (Engine.currentPage == Engine.Page.ScriptEditor) {
 		//Ctrl + b
-        if (e.keyCode == 66 && e.ctrlKey) {
+        if (e.keyCode == 66 && (e.ctrlKey || e.metaKey)) {
             e.preventDefault();
 			saveAndCloseScriptEditor();
         }
@@ -270,7 +278,7 @@ function saveAndCloseScriptEditor() {
             dialogBoxCreate("Invalid .fconf file");
             return;
         }
-    } else if (filename.endsWith(".script")) {
+    } else if (isScriptFilename(filename)) {
         //If the current script already exists on the server, overwrite it
         for (var i = 0; i < s.scripts.length; i++) {
             if (filename == s.scripts[i].filename) {
@@ -348,6 +356,219 @@ Script.prototype.updateRamUsage = function() {
     }
 }
 
+// These special strings are used to reference the presence of a given logical
+// construct within a user script.
+const specialReferenceIF = "__SPECIAL_referenceIf";
+const specialReferenceFOR = "__SPECIAL_referenceFor";
+const specialReferenceWHILE = "__SPECIAL_referenceWhile";
+
+// The global scope of a script is registered under this key during parsing.
+const memCheckGlobalKey = ".__GLOBAL__";
+
+// Calcluates the amount of RAM a script uses. Uses parsing and AST walking only,
+// rather than NetscriptEvaluator. This is useful because NetscriptJS code does
+// not work under NetscriptEvaluator.
+function parseOnlyRamCalculate(server, code, workerScript) {
+    try {
+        // Maps dependent identifiers to their dependencies.
+        //
+        // The initial identifier is __SPECIAL_INITIAL_MODULE__.__GLOBAL__.
+        // It depends on all the functions declared in the module, all the global scopes
+        // of its imports, and any identifiers referenced in this global scope. Each
+        // function depends on all the identifiers referenced internally.
+        // We walk the dependency graph to calculate RAM usage, given that some identifiers
+        // reference Netscript functions which have a RAM cost.
+        let dependencyMap = {};
+
+        // Scripts we've parsed.
+        const completedParses = new Set();
+
+        // Scripts we've discovered that need to be parsed.
+        const parseQueue = [];
+
+        // Parses a chunk of code with a given module name, and updates parseQueue and dependencyMap.
+        function parseCode(code, moduleName) {
+            const result = parseOnlyCalculateDeps(code, moduleName);
+            completedParses.add(moduleName);
+
+            // Add any additional modules to the parse queue;
+            for (let i = 0; i < result.additionalModules.length; ++i) {
+                if (!completedParses.has(result.additionalModules[i])) {
+                    parseQueue.push(result.additionalModules[i]);
+                }
+            }
+
+            // Splice all the references in.
+            dependencyMap = {...dependencyMap, ...result.dependencyMap};
+        }
+
+        const initialModule = "__SPECIAL_INITIAL_MODULE__";
+        parseCode(code, initialModule);
+
+        while (parseQueue.length > 0) {
+            // Get the code from the server.
+            const nextModule = parseQueue.shift();
+
+            const script = server.getScript(nextModule);
+            if (!script) return -1;  // No such script on the server.
+
+            // Not sure why we always take copies, but let's do that here too.
+            parseCode(script.code.repeat(1), nextModule);
+        }
+
+        // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
+        // are those that start with __SPECIAL_INITIAL_MODULE__.
+        let ram = CONSTANTS.ScriptBaseRamCost;
+        const unresolvedRefs = Object.keys(dependencyMap).filter(s => s.startsWith(initialModule));
+        const resolvedRefs = new Set();
+        while (unresolvedRefs.length > 0) {
+            const ref = unresolvedRefs.shift();
+            resolvedRefs.add(ref);
+
+            if (ref.endsWith(".*")) {
+                // A prefix reference. We need to find all matching identifiers.
+                const prefix = ref.slice(0, ref.length - 2);
+                for (let ident of Object.keys(dependencyMap).filter(k => k.startsWith(prefix))) {
+                    for (let dep of dependencyMap[ident] || []) {
+                        if (!resolvedRefs.has(dep)) unresolvedRefs.push(dep);
+                    }
+                }
+            } else {
+                // An exact reference. Add all dependencies of this ref.
+                for (let dep of dependencyMap[ref] || []) {
+                    if (!resolvedRefs.has(dep)) unresolvedRefs.push(dep);
+                }
+            }
+
+            // Check if this is one of the special keys, and add the appropriate ram cost if so.
+            if (ref == specialReferenceIF) ram += CONSTANTS.ScriptIfRamCost;
+            if (ref == specialReferenceFOR) ram += CONSTANTS.ScriptForRamCost;
+            if (ref == specialReferenceWHILE) ram += CONSTANTS.ScriptWhileRamCost;
+            if (ref == "hacknetnodes") ram += CONSTANTS.ScriptHacknetNodesRamCost;
+
+            // Check if this ident is a function in the workerscript env. If it is, then we need to
+            // get its RAM cost. We do this by calling it, which works because the running script
+            // is in checkingRam mode.
+            //
+            // TODO it would be simpler to just reference a dictionary.
+            try {
+                var func = workerScript.env.get(ref);
+                if (typeof func === "function") {
+                    try {
+                        var res = func.apply(null, []);
+                        if (typeof res === "number") {
+                            ram += res;
+                        }
+                    } catch(e) {
+                        console.log("ERROR applying function: " + e);
+                    }
+                }
+            } catch (error) { continue; }
+
+        }
+        return ram;
+
+    } catch (error) {
+        console.info("parse or eval error: ", error);
+        // This is not unexpected. The user may be editing a script, and it may be in
+        // a transitory invalid state.
+        return -1;
+    }
+}
+
+// Parses one script and calculates its ram usage, for the global scope and each function.
+// Returns a cost map and a dependencyMap for the module. Returns a reference map to be joined
+// onto the main reference map, and a list of modules that need to be parsed.
+function parseOnlyCalculateDeps(code, currentModule) {
+    const ast = parse(code, {sourceType:"module", ecmaVersion: 8});
+
+    // Everything from the global scope goes in ".". Everything else goes in ".function", where only
+    // the outermost layer of functions counts.
+    const globalKey = currentModule + memCheckGlobalKey;
+    const dependencyMap = {};
+    dependencyMap[globalKey] = new Set();
+
+    // If we reference this internal name, we're really referencing that external name.
+    // Filled when we import names from other modules.
+    let internalToExternal = {};
+
+    var additionalModules = [];
+
+    // References get added pessimistically. They are added for thisModule.name, name, and for
+    // any aliases.
+    function addRef(key, name) {
+        const s = dependencyMap[key] || (dependencyMap[key] = new Set());
+        if (name in internalToExternal) {
+            s.add(internalToExternal[name]);
+        }
+        s.add(currentModule + "." + name);
+        s.add(name);  // For builtins like hack.
+    }
+
+    // If we discover a dependency identifier, state.key is the dependent identifier.
+    // walkDeeper is for doing recursive walks of expressions in composites that we handle.
+    function commonVisitors() {
+        return {
+            Identifier: (node, st, walkDeeper) => {
+                addRef(st.key, node.name);
+            },
+            WhileStatement: (node, st, walkDeeper) => {
+                addRef(st.key, specialReferenceWHILE);
+                node.test && walkDeeper(node.test, st);
+                node.body && walkDeeper(node.body, st);
+            },
+            DoWhileStatement: (node, st, walkDeeper) => {
+                addRef(st.key, specialReferenceWHILE);
+                node.test && walkDeeper(node.test, st);
+                node.body && walkDeeper(node.body, st);
+            },
+            ForStatement: (node, st, walkDeeper) => {
+                addRef(st.key, specialReferenceFOR);
+                node.init && walkDeeper(node.init, st);
+                node.test && walkDeeper(node.test, st);
+                node.update && walkDeeper(node.update, st);
+                node.body && walkDeeper(node.body, st);
+            },
+            IfStatement: (node, st, walkDeeper) => {
+                addRef(st.key, specialReferenceIF);
+                node.test && walkDeeper(node.test, st);
+                node.consequent && walkDeeper(node.consequent, st);
+                node.alternate && walkDeeper(node.alternate, st);
+            },
+        }
+    }
+
+    walk.recursive(ast, {key: globalKey}, {
+        ImportDeclaration: (node, st, walkDeeper) => {
+            const importModuleName = node.source.value;
+            additionalModules.push(importModuleName);
+
+            // This module's global scope refers to that module's global scope, no matter how we
+            // import it.
+            dependencyMap[st.key].add(importModuleName + memCheckGlobalKey);
+
+            for (let i = 0; i < node.specifiers.length; ++i) {
+                const spec = node.specifiers[i];
+                if (spec.imported !== undefined && spec.local !== undefined) {
+                    // We depend on specific things.
+                    internalToExternal[spec.local.name] = importModuleName + "." + spec.imported.name;
+                } else {
+                    // We depend on everything.
+                    dependencyMap[st.key].add(importModuleName + ".*");
+                }
+            }
+        },
+        FunctionDeclaration: (node, st, walkDeeper) => {
+            // Don't use walkDeeper, because we are changing the visitor set.
+            const key = currentModule + "." + node.id.name;
+            walk.recursive(node, {key: key}, commonVisitors());
+        },
+        ...commonVisitors()
+    });
+
+    return {dependencyMap: dependencyMap, additionalModules: additionalModules};
+}
+
 function calculateRamUsage(codeCopy) {
     //Create a temporary/mock WorkerScript and an AST from the code
     var currServ = Player.getCurrentServer();
@@ -360,13 +581,21 @@ function calculateRamUsage(codeCopy) {
     workerScript.serverIp = currServ.ip;
 
     try {
+        return parseOnlyRamCalculate(currServ, codeCopy, workerScript);
+	} catch (e) {
+        console.log("Failed to parse ram using new method. Falling back.", e);
+	}
+
+    // Try the old way.
+
+    try {
         var ast = parse(codeCopy, {sourceType:"module"});
     } catch(e) {
         return -1;
     }
 
     //Search through AST, scanning for any 'Identifier' nodes for functions, or While/For/If nodes
-    var queue = [], ramUsage = 1.4;
+    var queue = [], ramUsage = CONSTANTS.ScriptBaseRamCost;
     var whileUsed = false, forUsed = false, ifUsed = false;
     queue.push(ast);
     while (queue.length != 0) {
@@ -630,7 +859,11 @@ RunningScript.prototype.log = function(txt) {
         //to improve performance
         this.logs.shift();
     }
-    this.logs.push(txt);
+    let logEntry = txt;
+    if (FconfSettings.ENABLE_TIMESTAMPS) {
+        logEntry = "[" + Terminal.getTimestamp() + "] " + logEntry;
+    }
+    this.logs.push(logEntry);
     this.logUpd = true;
 }
 
@@ -712,4 +945,4 @@ AllServersMap.fromJSON = function(value) {
 Reviver.constructors.AllServersMap = AllServersMap;
 
 export {updateScriptEditorContent, loadAllRunningScripts, findRunningScript,
-        RunningScript, Script, AllServersMap, scriptEditorInit};
+        RunningScript, Script, AllServersMap, scriptEditorInit, isScriptFilename};

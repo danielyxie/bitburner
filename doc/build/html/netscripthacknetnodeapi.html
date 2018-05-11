@@ -67,11 +67,35 @@ the first Hacknet Node you purchase will have the name &quot;hacknet-node-0&quot
 accessed using <em>hacknetnodes[0]</em>. The fourth Hacknet Node you purchase will have the name
 &quot;hacknet-node-3&quot; and can be accessed using <em>hacknetnodes[3]</em>.</div></blockquote>
 </div>
+<div class="section" id="purchasing-hacknet-nodes">
+<h2>Purchasing Hacknet Nodes<a class="headerlink" href="#purchasing-hacknet-nodes" title="Permalink to this headline">¶</a></h2>
+<p>The following is a list of supported functions for purchasing Hacknet Nodes.</p>
+<dl class="function">
+<dt id="getNextHacknetNodeCost">
+<code class="descname">getNextHacknetNodeCost</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getNextHacknetNodeCost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the cost of purchasing a new Hacknet Node</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="purchaseHacknetNode">
+<code class="descname">purchaseHacknetNode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#purchaseHacknetNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Purchases a new Hacknet Node. Returns a number with the index of the Hacknet Node. This index is equivalent to the number at the
+end of the Hacknet Node's name (e.g The Hacknet Node named 'hacknet-node-4' will have an index of 4). If the player cannot afford
+to purchase a new Hacknet Node then the function will return false.</p>
+</dd></dl>
+
+</div>
 <div class="section" id="hacknet-node-member-variables">
 <h2>Hacknet Node Member Variables<a class="headerlink" href="#hacknet-node-member-variables" title="Permalink to this headline">¶</a></h2>
 <p>The following is a list of member variables for a Hacknet Node object. These variables are read-only, which means you cannot assign
 a value to these.</p>
 <p>Note that these must be called on an element inside the <em>hacknetnodes</em> array, not the array itself.</p>
+<dl class="attribute">
+<dt id="hacknetnodes[i].name">
+<code class="descclassname">hacknetnodes[i].</code><code class="descname">name</code><a class="headerlink" href="#hacknetnodes[i].name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of the corresponding Hacknet Node</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="hacknetnodes[i].level">
 <code class="descclassname">hacknetnodes[i].</code><code class="descname">level</code><a class="headerlink" href="#hacknetnodes[i].level" title="Permalink to this definition">¶</a></dt>
@@ -178,6 +202,31 @@ number of cores adds one additional core.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="utils">
+<h2>Utils<a class="headerlink" href="#utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getHacknetMultipliers">
+<code class="descname">getHacknetMultipliers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getHacknetMultipliers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an object containing the Player's hacknet related multipliers. These multipliers are
+returned in integer forms, not percentages (e.g. 1.5 instead of 150%). The object has the following structure:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">production</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet production multiplier,</span>
+    <span class="n">purchaseCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet purchase cost multiplier,</span>
+    <span class="n">ramCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet ram cost multiplier,</span>
+    <span class="n">coreCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet core cost multiplier,</span>
+    <span class="n">levelCost</span><span class="p">:</span> <span class="n">Player</span><span class="s1">&#39;s hacknet level cost multiplier</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example of how this can be used:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mults</span> <span class="o">=</span> <span class="n">getHacknetMultipliers</span><span class="p">();</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mults</span><span class="o">.</span><span class="n">production</span><span class="p">);</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mults</span><span class="o">.</span><span class="n">purchaseCost</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="example-s">
 <h2>Example(s)<a class="headerlink" href="#example-s" title="Permalink to this headline">¶</a></h2>
 <p>The following is an example of one way a script can be used to automate the purchasing and upgrading of Hacknet Nodes.
@@ -234,8 +283,10 @@ Nodes to a level of at least 75, RAM to at least 8GB, and number of cores to at 
 <li class="toctree-l2"><a class="reference internal" href="netscriptadvancedfunctions.html"> Advanced Functions</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#"> Hacknet Node API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hacknetnodes">hacknetnodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#purchasing-hacknet-nodes">Purchasing Hacknet Nodes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hacknet-node-member-variables">Hacknet Node Member Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hacknet-node-methods">Hacknet Node Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils">Utils</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example-s">Example(s)</a></li>
 </ul>
 </li>
@@ -244,6 +295,7 @@ Nodes to a level of at least 75, RAM to at least 8GB, and number of cores to at 
 <li class="toctree-l2"><a class="reference internal" href="netscriptmisc.html"> Miscellaneous</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="terminal.html"> Terminal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shortcuts.html"> Keyboard Shortcuts</a></li>
 </ul>
 

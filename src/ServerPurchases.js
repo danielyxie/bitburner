@@ -32,7 +32,10 @@ function purchaseServer(ram, cost) {
     }
 
     //Create server
-    var newServ = new Server(createRandomIp(), hostname, "", false, true, true, ram);
+    var newServ = new Server({
+        ip:createRandomIp(), hostname:hostname, organizationName:"",
+        isConnectedTo:false, adminRights:true, purchasedByPlayer:true, maxRam:ram
+    });
     AddToAllServers(newServ);
 
     //Add to Player's purchasedServers array
