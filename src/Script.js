@@ -713,6 +713,11 @@ function loadAllRunningScripts() {
 			//Reset each server's RAM usage to 0
 			server.ramUsed = 0;
 
+            //Reset modules on all scripts
+            for (var i = 0; i < server.scripts.length; ++i) {
+                server.scripts[i].module = "";
+            }
+
 			for (var j = 0; j < server.runningScripts.length; ++j) {
 				count++;
                 server.runningScripts[j].scriptRef.module = "";

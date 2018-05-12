@@ -44,9 +44,10 @@ export async function executeJSScript(script, scripts = [], workerScript) {
         console.log("loadedModule:");
         console.log(loadedModule);
         let constructedModule = await ConstructModule(loadedModule, ns);
+        constructedModule = await constructedModule();
         console.log("constructedModule: ");
         console.log(constructedModule);
-        return await constructedModule.main();
+        return constructedModule.main();
     } finally {
         // Revoke the generated URLs
         if (urlStack != null) {
@@ -55,14 +56,24 @@ export async function executeJSScript(script, scripts = [], workerScript) {
     };
 }
 
-export async function ConstructModule(module, ns) {
-    for (var prop in ns) {
-        eval("var " + prop + " = ns[\"" + prop + "\"];");
+export function ConstructModule(module, ns) {
+    function mod() {
+        /*
+        for (var fn in ns) {
+            let fooName = fn.toString();
+            var evalStatement = "var " + fooName + " = ns[\"" + fooName + "\"];"
+            console.log(evalStatement);
+            eval(evalStatement);
+            console.log(ns[fooName]);
+            console.log("Setting " + fooName + " in ConstructModule()");
+            console.log(fooName);
+            console.log(" ");
+        }*/
+        var newModule = Object.create(module);
+        newModule.tprint = ns.tprint;
+        return newModule;
     }
-    async function mod() {
-        return module;
-    }
-    return mod();
+    return mod;
 }
 
 // Gets a stack of blob urls, the top/right-most element being
