@@ -326,6 +326,7 @@ function Script() {
     this.code       = "";
     this.ramUsage   = 0;
 	this.server 	= "";	//IP of server this script is on
+    this.module     = "";
 };
 
 //Get the script data from the Script Editor and save it to the object
@@ -714,6 +715,7 @@ function loadAllRunningScripts() {
 
 			for (var j = 0; j < server.runningScripts.length; ++j) {
 				count++;
+                server.runningScripts[j].scriptRef.module = "";
 				addWorkerScript(server.runningScripts[j], server);
 
 				//Offline production

@@ -112,7 +112,7 @@ function startJsScript(workerScript) {
     // to that script, which env.vars does at this point.
     return executeJSScript(workerScript.scriptRef.scriptRef,
                            workerScript.getServer().scripts,
-                           workerScript.env.vars).then(function (mainReturnValue) {
+                           workerScript).then(function (mainReturnValue) {
         if (mainReturnValue === undefined) return workerScript;
         return [mainReturnValue, workerScript];
     }).catch(e => {
@@ -223,6 +223,7 @@ function runScriptsLoop() {
                     return;
                 } else {
                     dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
+                    console.log(w);
                 }
 			});
 		}
