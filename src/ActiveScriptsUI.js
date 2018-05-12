@@ -182,10 +182,10 @@ function deleteActiveScriptsItem(workerscript) {
 }
 
 //Update the ActiveScriptsItems array
-function updateActiveScriptsItems() {
+function updateActiveScriptsItems(maxTasks=100) {
     //Run tasks that need to be done sequentially (adding items, creating/deleting server panels)
     //We'll limit this to 50 at a time in case someone decides to start a bunch of scripts all at once...
-    let numTasks = Math.min(100, ActiveScriptsTasks.length);
+    let numTasks = Math.min(maxTasks, ActiveScriptsTasks.length);
     for (let i = 0; i < numTasks; ++i) {
         let task = ActiveScriptsTasks.shift();
         try {
