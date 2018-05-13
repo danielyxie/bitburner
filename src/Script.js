@@ -345,6 +345,8 @@ Script.prototype.saveScript = function() {
 
 		//Calculate/update ram usage, execution time, etc.
 		this.updateRamUsage();
+
+        this.module = "";
 	}
 }
 
