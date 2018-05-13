@@ -41,39 +41,13 @@ export async function executeJSScript(script, scripts = [], workerScript) {
             throw makeRuntimeRejectMsg(script.filename +
                                        " did not have a main function, cannot run it.");
         }
-        console.log("loadedModule:");
-        console.log(loadedModule);
-        let constructedModule = await ConstructModule(loadedModule, ns);
-        constructedModule = await constructedModule();
-        console.log("constructedModule: ");
-        console.log(constructedModule);
-        return constructedModule.main();
+        return loadedModule.main(ns);
     } finally {
         // Revoke the generated URLs
         if (urlStack != null) {
             for (const url in urlStack) URL.revokeObjectURL(url);
         }
     };
-}
-
-export function ConstructModule(module, ns) {
-    function mod() {
-        /*
-        for (var fn in ns) {
-            let fooName = fn.toString();
-            var evalStatement = "var " + fooName + " = ns[\"" + fooName + "\"];"
-            console.log(evalStatement);
-            eval(evalStatement);
-            console.log(ns[fooName]);
-            console.log("Setting " + fooName + " in ConstructModule()");
-            console.log(fooName);
-            console.log(" ");
-        }*/
-        var newModule = Object.create(module);
-        newModule.tprint = ns.tprint;
-        return newModule;
-    }
-    return mod;
 }
 
 // Gets a stack of blob urls, the top/right-most element being
@@ -118,6 +92,7 @@ function _getScriptUrls(script, scripts, seen) {
                 urlStack.push(...urls);
                 return [prefix, urls[urls.length - 1], suffix].join('');
             });
+
 
         // If we successfully transformed the code, create a blob url for it and
         // push that URL onto the top of the stack.
