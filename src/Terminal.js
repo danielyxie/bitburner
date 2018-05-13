@@ -112,7 +112,7 @@ $(document).keydown(function(event) {
 			if (command.length > 0) {
                 post(
                     "[" +
-                    (FconfSettings.ENABLE_TIMESTAMPS ? Terminal.getTimestamp() + " " : "") + 
+                    (FconfSettings.ENABLE_TIMESTAMPS ? Terminal.getTimestamp() + " " : "") +
                     Player.getCurrentServer().hostname +
                     " ~]> " + command
                 );
@@ -1379,7 +1379,7 @@ let Terminal = {
                     return;
                 }
                 var scriptname = args[0];
-                if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptName) &&
+                if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) &&
                     !scriptname.endsWith(".txt")){
                     post("Error: scp only works for .script, .txt, and .lit files");
                     return;
