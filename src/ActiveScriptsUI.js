@@ -26,58 +26,54 @@ let ActiveScriptsUI = {};
 let ActiveScriptsTasks = []; //Sequentially schedule the creation/deletion of UI elements
 
 function createActiveScriptsServerPanel(server) {
-    ActiveScriptsTasks.push(function(server) {
-        let hostname = server.hostname;
+    let hostname = server.hostname;
 
-        var activeScriptsList = document.getElementById("active-scripts-list");
+    var activeScriptsList = document.getElementById("active-scripts-list");
 
-        let res     = createAccordionElement({hdrText:hostname});
-        let li      = res[0];
-        var hdr     = res[1];
-        let panel   = res[2];
+    let res     = createAccordionElement({hdrText:hostname});
+    let li      = res[0];
+    var hdr     = res[1];
+    let panel   = res[2];
 
-        if (ActiveScriptsUI[hostname] != null) {
-            console.log("WARNING: Tried to create already-existing Active Scripts Server panel. This is most likely fine. It probably means many scripts just got started up on a new server. Aborting");
-            return;
-        }
+    if (ActiveScriptsUI[hostname] != null) {
+        console.log("WARNING: Tried to create already-existing Active Scripts Server panel. This is most likely fine. It probably means many scripts just got started up on a new server. Aborting");
+        return;
+    }
 
-        var panelScriptList = createElement("ul");
-        panel.appendChild(panelScriptList);
-        activeScriptsList.appendChild(li);
+    var panelScriptList = createElement("ul");
+    panel.appendChild(panelScriptList);
+    activeScriptsList.appendChild(li);
 
-        ActiveScriptsUI[hostname] = {
-            header: hdr,
-            panel: panel,
-            panelList: panelScriptList,
-            scripts: {},            //Holds references to li elements for each active script
-            scriptHdrs: {},         //Holds references to header elements for each active script
-            scriptStats: {}         //Holds references to the p elements containing text for each active script
-        };
+    ActiveScriptsUI[hostname] = {
+        header: hdr,
+        panel: panel,
+        panelList: panelScriptList,
+        scripts: {},            //Holds references to li elements for each active script
+        scriptHdrs: {},         //Holds references to header elements for each active script
+        scriptStats: {}         //Holds references to the p elements containing text for each active script
+    };
 
-        return li;
-    }.bind(null, server));
+    return li;
 }
 
 //Deletes the info for a particular server (Dropdown header + Panel with all info)
 //in the Active Scripts page if it exists
 function deleteActiveScriptsServerPanel(server) {
-    ActiveScriptsTasks.push(function(server) {
-        let hostname = server.hostname;
-        if (ActiveScriptsUI[hostname] == null) {
-            console.log("WARNING: Tried to delete non-existent Active Scripts Server panel. Aborting");
-            return;
-        }
+    let hostname = server.hostname;
+    if (ActiveScriptsUI[hostname] == null) {
+        console.log("WARNING: Tried to delete non-existent Active Scripts Server panel. Aborting");
+        return;
+    }
 
-        //Make sure it's empty
-        if (Object.keys(ActiveScriptsUI[hostname].scripts).length > 0) {
-            console.log("WARNING: Tried to delete Active Scripts Server panel  that still has scripts. Aborting");
-            return;
-        }
+    //Make sure it's empty
+    if (Object.keys(ActiveScriptsUI[hostname].scripts).length > 0) {
+        console.log("WARNING: Tried to delete Active Scripts Server panel  that still has scripts. Aborting");
+        return;
+    }
 
-        removeElement(ActiveScriptsUI[hostname].panel);
-        removeElement(ActiveScriptsUI[hostname].header);
-        delete ActiveScriptsUI[hostname];
-    }.bind(null, server));
+    removeElement(ActiveScriptsUI[hostname].panel);
+    removeElement(ActiveScriptsUI[hostname].header);
+    delete ActiveScriptsUI[hostname];
 }
 
 function addActiveScriptsItem(workerscript) {
@@ -87,11 +83,12 @@ function addActiveScriptsItem(workerscript) {
         return;
     }
     let hostname = server.hostname;
-    if (ActiveScriptsUI[hostname] == null) {
-        createActiveScriptsServerPanel(server);
-    }
 
     ActiveScriptsTasks.push(function(workerscript, hostname) {
+        if (ActiveScriptsUI[hostname] == null) {
+            createActiveScriptsServerPanel(server);
+        }
+
         //Create the unique identifier (key) for this script
         var itemNameArray = ["active", "scripts", hostname, workerscript.name];
         for (var i = 0; i < workerscript.args.length; ++i) {
@@ -182,10 +179,10 @@ function deleteActiveScriptsItem(workerscript) {
 }
 
 //Update the ActiveScriptsItems array
-function updateActiveScriptsItems() {
+function updateActiveScriptsItems(maxTasks=100) {
     //Run tasks that need to be done sequentially (adding items, creating/deleting server panels)
     //We'll limit this to 50 at a time in case someone decides to start a bunch of scripts all at once...
-    let numTasks = Math.min(100, ActiveScriptsTasks.length);
+    let numTasks = Math.min(maxTasks, ActiveScriptsTasks.length);
     for (let i = 0; i < numTasks; ++i) {
         let task = ActiveScriptsTasks.shift();
         try {
