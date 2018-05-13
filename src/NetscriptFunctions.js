@@ -1432,7 +1432,7 @@ function NetscriptFunctions(workerScript) {
             }
             var stock = SymbolToStockMap[symbol];
             if (stock == null) {
-                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPrice()");
+                throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into getStockPosition()");
             }
             return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
         },
