@@ -40,6 +40,18 @@ WorkerScript.prototype.getServer = function() {
 	return AllServers[this.serverIp];
 }
 
+//Returns the Script object for the underlying script
+WorkerScript.prototype.getScript = function() {
+    let server = this.getServer();
+    for (var i = 0; i < server.scripts.length; ++i) {
+        if (server.scripts[i].filename === this.name) {
+            return server.scripts[i];
+        }
+    }
+    console.log("ERROR: Failed to find underlying Script object in WorkerScript.getScript(). This probably means somethings wrong");
+    return null;
+}
+
 //Array containing all scripts that are running across all servers, to easily run them all
 let workerScripts 			= [];
 
@@ -110,9 +122,8 @@ function startJsScript(workerScript) {
 
     // Note: the environment that we pass to the JS script only needs to contain the functions visible
     // to that script, which env.vars does at this point.
-    return executeJSScript(workerScript.scriptRef.scriptRef,
-                           workerScript.getServer().scripts,
-                           workerScript.env.vars).then(function (mainReturnValue) {
+    return executeJSScript(workerScript.getServer().scripts,
+                           workerScript).then(function (mainReturnValue) {
         if (mainReturnValue === undefined) return workerScript;
         return [mainReturnValue, workerScript];
     }).catch(e => {
@@ -156,13 +167,14 @@ function runScriptsLoop() {
             workerScripts.splice(i, 1);
         }
     }
+    updateActiveScriptsItems(); //Force Update
 
 	//Run any scripts that haven't been started
 	for (var i = 0; i < workerScripts.length; i++) {
 		//If it isn't running, start the script
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
             let p = null;  // p is the script's result promise.
-            if (workerScripts[i].name.endsWith(".js")) {
+            if (workerScripts[i].name.endsWith(".js") || workerScripts[i].name.endsWith(".ns")) {
                 p = startJsScript(workerScripts[i]);
             } else {
                 try {
@@ -223,6 +235,7 @@ function runScriptsLoop() {
                     return;
                 } else {
                     dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
+                    console.log(w);
                 }
 			});
 		}

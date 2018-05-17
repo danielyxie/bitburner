@@ -46,7 +46,7 @@ var keybindings = {
 };
 
 function isScriptFilename(f) {
-    return f.endsWith(".js") || f.endsWith(".script");
+    return f.endsWith(".js") || f.endsWith(".script") || f.endsWith(".ns");
 }
 
 var scriptEditorRamCheck = null, scriptEditorRamText = null;
@@ -326,6 +326,7 @@ function Script() {
     this.code       = "";
     this.ramUsage   = 0;
 	this.server 	= "";	//IP of server this script is on
+    this.module     = "";
 };
 
 //Get the script data from the Script Editor and save it to the object
@@ -344,6 +345,9 @@ Script.prototype.saveScript = function() {
 
 		//Calculate/update ram usage, execution time, etc.
 		this.updateRamUsage();
+        console.log(this.module);
+
+        this.module = "";
 	}
 }
 
@@ -712,8 +716,14 @@ function loadAllRunningScripts() {
 			//Reset each server's RAM usage to 0
 			server.ramUsed = 0;
 
+            //Reset modules on all scripts
+            for (var i = 0; i < server.scripts.length; ++i) {
+                server.scripts[i].module = "";
+            }
+
 			for (var j = 0; j < server.runningScripts.length; ++j) {
 				count++;
+                server.runningScripts[j].scriptRef.module = "";
 				addWorkerScript(server.runningScripts[j], server);
 
 				//Offline production
