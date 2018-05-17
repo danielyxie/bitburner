@@ -46,7 +46,7 @@ var keybindings = {
 };
 
 function isScriptFilename(f) {
-    return f.endsWith(".js") || f.endsWith(".script");
+    return f.endsWith(".js") || f.endsWith(".script") || f.endsWith(".ns");
 }
 
 var scriptEditorRamCheck = null, scriptEditorRamText = null;
@@ -345,6 +345,7 @@ Script.prototype.saveScript = function() {
 
 		//Calculate/update ram usage, execution time, etc.
 		this.updateRamUsage();
+        console.log(this.module);
 
         this.module = "";
 	}

@@ -14,9 +14,10 @@ export function makeScriptBlob(code) {
 // (i.e. hack, grow, etc.).
 // When the promise returned by this resolves, we'll have finished
 // running the main function of the script.
-export async function executeJSScript(script, scripts = [], workerScript) {
+export async function executeJSScript(scripts = [], workerScript) {
     let loadedModule;
     let urlStack = null;
+    let script = workerScript.getScript();
     if (script.module === "") {
         // The URL at the top is the one we want to import. It will
         // recursively import all the other modules in the urlStack.
