@@ -146,7 +146,7 @@ function deleteActiveScriptsItem(workerscript) {
         var server = getServer(workerscript.serverIp);
         if (server == null) {
             throw new Error("ERROR: Invalid server IP for workerscript. This most likely occurred because " +
-                            "you tried to delete a large number of scripts and also purchased servers at the " +
+                            "you tried to delete a large number of scripts and also deleted servers at the " +
                             "same time. It's not a big deal, just save and refresh the game.");
             return;
         }

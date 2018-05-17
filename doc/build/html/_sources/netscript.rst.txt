@@ -14,6 +14,7 @@ to reach out to the developer!
    :maxdepth: 5
    :caption: Sections:
 
+    NetscriptJS (Netscript 2.0) <netscriptjs>
     Data Types and Variables <netscriptdatatypes>
     Operators <netscriptoperators>
     Loops and Conditionals <netscriptloopsandconditionals>

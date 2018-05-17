@@ -266,7 +266,7 @@ nano
 
     $ nano [filename]
 
-Opens up the specified file in the Text Editor. Only scripts (.script) and
+Opens up the specified file in the Text Editor. Only scripts (.script, .ns, .js) and
 text files (.txt) can be edited. If the file does not already exist, then a new
 empty file will be created.
 
