@@ -482,7 +482,7 @@ GangMemberTask.fromJSON = function(value) {
 
 Reviver.constructors.GangMemberTask = GangMemberTask;
 
-
+//TODO Human trafficking and an equivalent hacking crime
 let GangMemberTasks = {
     "Unassigned" :              new GangMemberTask(
                                         "Unassigned",
@@ -620,19 +620,20 @@ let GangMemberTasks = {
                                         "and will defend your territory from being taken.",
                                         {hackWeight: 15, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight: 20,
                                          chaWeight: 5, difficulty: 3}),
-    "Protection Services":	new GangMemberTask(
+   /** "Protection Services":	new GangMemberTask(
 	    				"Strongarm Civilians",
 	    				"Assign this gang member to extort civilians for their money",
 	    				"Territory causes a SIGNIFICANT increase in money gained. Very little respect, high wanted level.\nHaving to few gang members greatly decreases effectiveness.",
 						var popEase = AllGangs[Player.gang.facName].territory - (3*Player.gang.members.length);
-						if(popEase < 1){
+						if(AllGangs[Player.gang.facName].territory - Player.gang.members.length <= 0){
 							popEase = 1;
 						}extortMult = 1 + Math.pow(popEase, 1.5);
 						if(extortMult > 40){
 							extortMult = 40;
 						}
-	    				{baseRespect: 0.0001, baseWanted:1,baseMoney:10*AllGangs[Player.gang.facName].territory;
+	    				{baseRespect: 0.0001, baseWanted:1,baseMoney:10*extortMult;
 						hackWeight: 5, strWeight: 20, defWeight: 20, dexWeight:15, agiWeight:10, chaWeight: 30, difficulty: 5 * extortMult},
+				*/
 }
 
 
