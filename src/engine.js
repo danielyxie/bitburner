@@ -1764,8 +1764,6 @@ window.onload = function() {
         var db = e.target.result;
         var objectStore = db.createObjectStore("savestring");
     }
-
-    console.log(window.location.href);
 };
 
 export {Engine};

@@ -141,10 +141,12 @@ function startJsScript(workerScript) {
 
 //Loop through workerScripts and run every script that is not currently running
 function runScriptsLoop() {
-    //Delete any scripts that finished or have been killed. Loop backwards bc removing
-    //items fucks up the indexing
+    var scriptDeleted = false;
+
+    //Delete any scripts that finished or have been killed. Loop backwards bc removing items screws up indexing
     for (var i = workerScripts.length - 1; i >= 0; i--) {
         if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == true) {
+            scriptDeleted = true;
             //Delete script from the runningScripts array on its host serverIp
             var ip = workerScripts[i].serverIp;
             var name = workerScripts[i].name;
@@ -167,7 +169,8 @@ function runScriptsLoop() {
             workerScripts.splice(i, 1);
         }
     }
-    updateActiveScriptsItems(); //Force Update
+    if (scriptDeleted) {updateActiveScriptsItems();} //Force Update
+
 
 	//Run any scripts that haven't been started
 	for (var i = 0; i < workerScripts.length; i++) {

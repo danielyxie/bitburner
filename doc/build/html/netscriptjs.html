@@ -86,6 +86,8 @@ the main function. This environment includes all of the pre-defined Netscript fu
 <p>Therefore, the signature of the <code class="code docutils literal"><span class="pre">main()</span></code> function must be:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="k">async</span> <span class="n">function</span> <span class="n">main</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">ns</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Starting script here&quot;</span><span class="p">);</span>
+    <span class="n">ns</span><span class="o">.</span><span class="n">hack</span><span class="p">(</span><span class="s2">&quot;foodnstuff&quot;</span><span class="p">);</span>  <span class="o">//</span><span class="n">Use</span> <span class="n">Netscript</span> <span class="n">hack</span> <span class="n">function</span>
+    <span class="n">ns</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">ns</span><span class="o">.</span><span class="n">args</span><span class="p">);</span>      <span class="o">//</span><span class="n">The</span> <span class="n">script</span> <span class="n">arguments</span> <span class="n">must</span> <span class="n">be</span> <span class="n">prefaced</span> <span class="k">with</span> <span class="n">ns</span> <span class="k">as</span> <span class="n">well</span>
 <span class="p">}</span>
 </pre></div>
 </div>

@@ -41,6 +41,8 @@ Therefore, the signature of the :code:`main()` function must be::
 
     export async function main(ns) {
         ns.print("Starting script here");
+        ns.hack("foodnstuff");  //Use Netscript hack function 
+        ns.print(ns.args);      //The script arguments must be prefaced with ns as well
     }
 
 Here is a summary of all rules you need to follow when writing Netscript JS code:

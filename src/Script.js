@@ -709,6 +709,8 @@ Reviver.constructors.Script = Script;
 function loadAllRunningScripts() {
 	var count = 0;
     var total = 0;
+    let skipScriptLoad = (window.location.href.toLowerCase().indexOf("?noscripts") !== -1);
+    if (skipScriptLoad) {console.log("Skipping the load of any scripts during startup");}
 	for (var property in AllServers) {
 		if (AllServers.hasOwnProperty(property)) {
 			var server = AllServers[property];
@@ -721,14 +723,19 @@ function loadAllRunningScripts() {
                 server.scripts[i].module = "";
             }
 
-			for (var j = 0; j < server.runningScripts.length; ++j) {
-				count++;
-                server.runningScripts[j].scriptRef.module = "";
-				addWorkerScript(server.runningScripts[j], server);
+            if (skipScriptLoad) {
+                //Start game with no scripts
+                server.runningScripts.length = 0;
+            } else {
+                for (var j = 0; j < server.runningScripts.length; ++j) {
+    				count++;
+                    server.runningScripts[j].scriptRef.module = "";
+    				addWorkerScript(server.runningScripts[j], server);
 
-				//Offline production
-				total += scriptCalculateOfflineProduction(server.runningScripts[j]);
-			}
+    				//Offline production
+    				total += scriptCalculateOfflineProduction(server.runningScripts[j]);
+    			}
+            }
 		}
 	}
     return total;
