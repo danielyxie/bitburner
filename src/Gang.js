@@ -593,6 +593,11 @@ let GangMemberTasks = {
                                         {baseWanted: -0.001,
                                          hackWeight: 20, strWeight: 20, defWeight: 20, dexWeight: 20, agiWeight:20,
                                          difficulty: 1}),
+    "Clone Trafficking":	new GangMemberTask(
+	    				"Traffic Clones",
+	    				"Assign this gang member to traffick clones for various black market purposes, such as organ farming",
+	    				"Greatly increases respect - Increases wanted level",
+	    				{baseRespect: 0.001, baseWanted:0.75, hackWeight: 12, dexWeight: 58, chaWeight: 30, difficulty: 37}),
     "Train Combat" :            new GangMemberTask(
                                         "Train Combat",
                                         "Assign this gang member to increase their combat stats (str, def, dex, agi)",
