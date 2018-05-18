@@ -41,8 +41,8 @@ Therefore, the signature of the :code:`main()` function must be::
 
     export async function main(ns) {
         ns.print("Starting script here");
-        ns.hack("foodnstuff");  //Use Netscript hack function 
-        ns.print(ns.args);      //The script arguments must be prefaced with ns as well
+        await ns.hack("foodnstuff"); //Use Netscript hack function
+        ns.print(ns.args);           //The script arguments must be prefaced with ns as well
     }
 
 Here is a summary of all rules you need to follow when writing Netscript JS code:
@@ -63,7 +63,7 @@ Here is a summary of all rules you need to follow when writing Netscript JS code
 
 * Any functions that you want to be visible from other scripts must be marked with :code:`export`.
 
-* **Do not write any infinite loops** without using a :code:`sleep` or one of the timed Netscript functions like :code:`hack`. Doing so will crash your game.
+* **Do not write any infinite loops without using a** :code:`sleep` **or one of the timed Netscript functions like** :code:`hack`. Doing so will crash your game.
 
 * Any global variable declared in a NetscriptJS script is shared between all instances of that
   script. For example, assume you write a script *foo.ns* and declared a global variable like so::
@@ -74,8 +74,8 @@ Here is a summary of all rules you need to follow when writing Netscript JS code
       export async function main(ns) {
           globalVariable = ns.args.length;
           while(true) {
-              tprint(globalVariable);
-              await sleep(3000);
+              ns.tprint(globalVariable);
+              await ns.sleep(3000);
           }
       }
 

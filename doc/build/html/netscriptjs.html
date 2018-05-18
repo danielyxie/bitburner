@@ -86,8 +86,8 @@ the main function. This environment includes all of the pre-defined Netscript fu
 <p>Therefore, the signature of the <code class="code docutils literal"><span class="pre">main()</span></code> function must be:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="k">async</span> <span class="n">function</span> <span class="n">main</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">ns</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Starting script here&quot;</span><span class="p">);</span>
-    <span class="n">ns</span><span class="o">.</span><span class="n">hack</span><span class="p">(</span><span class="s2">&quot;foodnstuff&quot;</span><span class="p">);</span>  <span class="o">//</span><span class="n">Use</span> <span class="n">Netscript</span> <span class="n">hack</span> <span class="n">function</span>
-    <span class="n">ns</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">ns</span><span class="o">.</span><span class="n">args</span><span class="p">);</span>      <span class="o">//</span><span class="n">The</span> <span class="n">script</span> <span class="n">arguments</span> <span class="n">must</span> <span class="n">be</span> <span class="n">prefaced</span> <span class="k">with</span> <span class="n">ns</span> <span class="k">as</span> <span class="n">well</span>
+    <span class="k">await</span> <span class="n">ns</span><span class="o">.</span><span class="n">hack</span><span class="p">(</span><span class="s2">&quot;foodnstuff&quot;</span><span class="p">);</span> <span class="o">//</span><span class="n">Use</span> <span class="n">Netscript</span> <span class="n">hack</span> <span class="n">function</span>
+    <span class="n">ns</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">ns</span><span class="o">.</span><span class="n">args</span><span class="p">);</span>           <span class="o">//</span><span class="n">The</span> <span class="n">script</span> <span class="n">arguments</span> <span class="n">must</span> <span class="n">be</span> <span class="n">prefaced</span> <span class="k">with</span> <span class="n">ns</span> <span class="k">as</span> <span class="n">well</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -112,7 +112,7 @@ the main function. This environment includes all of the pre-defined Netscript fu
 </li>
 <li><p class="first">Any functions that you want to be visible from other scripts must be marked with <code class="code docutils literal"><span class="pre">export</span></code>.</p>
 </li>
-<li><p class="first"><strong>Do not write any infinite loops</strong> without using a <code class="code docutils literal"><span class="pre">sleep</span></code> or one of the timed Netscript functions like <code class="code docutils literal"><span class="pre">hack</span></code>. Doing so will crash your game.</p>
+<li><p class="first"><strong>Do not write any infinite loops without using a</strong> <code class="code docutils literal"><span class="pre">sleep</span></code> <strong>or one of the timed Netscript functions like</strong> <code class="code docutils literal"><span class="pre">hack</span></code>. Doing so will crash your game.</p>
 </li>
 <li><p class="first">Any global variable declared in a NetscriptJS script is shared between all instances of that
 script. For example, assume you write a script <em>foo.ns</em> and declared a global variable like so:</p>
@@ -122,8 +122,8 @@ script. For example, assume you write a script <em>foo.ns</em> and declared a gl
 <span class="n">export</span> <span class="k">async</span> <span class="n">function</span> <span class="n">main</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">globalVariable</span> <span class="o">=</span> <span class="n">ns</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">length</span><span class="p">;</span>
     <span class="k">while</span><span class="p">(</span><span class="n">true</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">tprint</span><span class="p">(</span><span class="n">globalVariable</span><span class="p">);</span>
-        <span class="k">await</span> <span class="n">sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+        <span class="n">ns</span><span class="o">.</span><span class="n">tprint</span><span class="p">(</span><span class="n">globalVariable</span><span class="p">);</span>
+        <span class="k">await</span> <span class="n">ns</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
