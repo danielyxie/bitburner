@@ -1202,7 +1202,9 @@ Bladeburner.prototype.completeAction = function() {
                         return hackWorldDaemon(Player.bitNodeN);
                     }
 
-                    this.createActionAndSkillsContent();
+                    if (Engine.currentPage === Engine.Page.Bladeburner) {
+                        this.createActionAndSkillsContent();
+                    }
 
                     if (this.logging.blackops) {
                         this.log(action.name + " successful! Gained " + formatNumber(rankGain, 1) + " rank");
