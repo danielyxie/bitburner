@@ -46,7 +46,7 @@ var keybindings = {
 };
 
 function isScriptFilename(f) {
-    return f.endsWith(".js") || f.endsWith(".script");
+    return f.endsWith(".js") || f.endsWith(".script") || f.endsWith(".ns");
 }
 
 var scriptEditorRamCheck = null, scriptEditorRamText = null;
@@ -326,6 +326,7 @@ function Script() {
     this.code       = "";
     this.ramUsage   = 0;
 	this.server 	= "";	//IP of server this script is on
+    this.module     = "";
 };
 
 //Get the script data from the Script Editor and save it to the object
@@ -344,6 +345,9 @@ Script.prototype.saveScript = function() {
 
 		//Calculate/update ram usage, execution time, etc.
 		this.updateRamUsage();
+        console.log(this.module);
+
+        this.module = "";
 	}
 }
 
@@ -705,6 +709,8 @@ Reviver.constructors.Script = Script;
 function loadAllRunningScripts() {
 	var count = 0;
     var total = 0;
+    let skipScriptLoad = (window.location.href.toLowerCase().indexOf("?noscripts") !== -1);
+    if (skipScriptLoad) {console.log("Skipping the load of any scripts during startup");}
 	for (var property in AllServers) {
 		if (AllServers.hasOwnProperty(property)) {
 			var server = AllServers[property];
@@ -712,13 +718,24 @@ function loadAllRunningScripts() {
 			//Reset each server's RAM usage to 0
 			server.ramUsed = 0;
 
-			for (var j = 0; j < server.runningScripts.length; ++j) {
-				count++;
-				addWorkerScript(server.runningScripts[j], server);
+            //Reset modules on all scripts
+            for (var i = 0; i < server.scripts.length; ++i) {
+                server.scripts[i].module = "";
+            }
 
-				//Offline production
-				total += scriptCalculateOfflineProduction(server.runningScripts[j]);
-			}
+            if (skipScriptLoad) {
+                //Start game with no scripts
+                server.runningScripts.length = 0;
+            } else {
+                for (var j = 0; j < server.runningScripts.length; ++j) {
+    				count++;
+                    server.runningScripts[j].scriptRef.module = "";
+    				addWorkerScript(server.runningScripts[j], server);
+
+    				//Offline production
+    				total += scriptCalculateOfflineProduction(server.runningScripts[j]);
+    			}
+            }
 		}
 	}
     return total;

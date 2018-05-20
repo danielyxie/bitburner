@@ -506,8 +506,6 @@ Action.prototype.getSuccessChance = function(inst, params={}) {
 //Tests for success. Should be called when an action has completed
 //  @inst - Bladeburner Object
 Action.prototype.attempt = function(inst) {
-    console.log("Current City Pop: " + inst.getCurrentCity().pop);
-    console.log("Action.attempt success chance: " + this.getSuccessChance(inst));
     return (Math.random() < this.getSuccessChance(inst));
 }
 
@@ -1204,7 +1202,9 @@ Bladeburner.prototype.completeAction = function() {
                         return hackWorldDaemon(Player.bitNodeN);
                     }
 
-                    this.createActionAndSkillsContent();
+                    if (Engine.currentPage === Engine.Page.Bladeburner) {
+                        this.createActionAndSkillsContent();
+                    }
 
                     if (this.logging.blackops) {
                         this.log(action.name + " successful! Gained " + formatNumber(rankGain, 1) + " rank");
