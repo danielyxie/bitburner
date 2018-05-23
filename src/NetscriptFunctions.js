@@ -1670,6 +1670,18 @@ function NetscriptFunctions(workerScript) {
             };
             return cancelOrder(params, workerScript);
         },
+        getPurchasedServerLimit: function() {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.getPurchasedServerLimit) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.getPurchasedServerLimit = true;
+                    return CONSTANTS.ScriptGetPurchasedServerLimitRamCost;
+                }
+            }
+
+            return CONSTANTS.PurchasedServerLimit;
+        },
         purchaseServer : function(hostname, ram) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.purchaseServer) {
