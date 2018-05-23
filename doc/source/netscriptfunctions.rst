@@ -648,7 +648,7 @@ purchaseServer
 .. js:function:: purchaseServer(hostname, ram)
 
     :param string hostname: Hostname of the purchased server
-    :param number ram: Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.)
+    :param number ram: Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20)
 
     Purchased a server with the specified hostname and amount of RAM.
 

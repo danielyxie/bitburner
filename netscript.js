@@ -58,6 +58,36 @@ var DocCommentHighlightRules = acequire("./doc_comment_highlight_rules").DocComm
 var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
 var identifierRe = "[a-zA-Z\\$_\u00a1-\uffff][a-zA-Z\\d\\$_\u00a1-\uffff]*";
 
+let NetscriptFunctions =
+    "hack|sleep|grow|weaken|print|tprint|scan|nuke|brutessh|ftpcrack|"         + //Netscript functions
+    "clearLog|disableLog|enableLog|"                                           +
+    "relaysmtp|httpworm|sqlinject|run|exec|spawn|kill|killall|exit|"           +
+    "scp|ls|hasRootAccess|"                                                    +
+    "getIp|getHackingMultipliers|getBitNodeMultipliers|getStats|isBusy|"       +
+    "getHacknetMultipliers|"                                                   +
+    "getHostname|getHackingLevel|getServerMoneyAvailable|getServerMaxMoney|"   +
+    "getServerGrowth|getServerSecurityLevel|getServerBaseSecurityLevel|"       +
+    "getServerMinSecurityLevel|"                                               +
+    "getServerRequiredHackingLevel|getServerNumPortsRequired|getServerRam|"    +
+    "serverExists|fileExists|isRunning|getNextHacknetNodeCost|"                +
+    "purchaseHacknetNode|deleteServer|getPurchasedServers|"                    +
+    "purchaseServer|round|write|read|peek|clear|rm|getPortHandle|"             +
+    "scriptRunning|scriptKill|getScriptName|getScriptRam|"                     +
+    "getHackTime|getGrowTime|getWeakenTime|getScriptIncome|getScriptExpGain|"  +
+    "getTimeSinceLastAug|prompt|"                                              +
+    "universityCourse|getCharacterInformation|"                                +
+    "gymWorkout|travelToCity|purchaseTor|purchaseProgram|upgradeHomeRam|"      +
+    "getUpgradeHomeRamCost|workForCompany|applyToCompany|getCompanyRep|"       +
+    "getCompanyFavor|stopAction|getFactionFavor|"                              +
+    "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
+    "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
+    "getAugmentationsFromFaction|"                                             +
+    "getAugmentationCost|purchaseAugmentation|"                                +
+    "installAugmentations|hacknetnodes|upgradeLevel|upgradeRam|upgradeCore|"   +
+    "getLevelUpgradeCost|getRamUpgradeCost|getCoreUpgradeCost|"                +
+    "getStockPrice|getStockPosition|buyStock|sellStock|shortStock|sellShort|"  +
+    "placeOrder|cancelOrder";
+
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({
         "variable.language":
@@ -69,37 +99,11 @@ var NetscriptHighlightRules = function(options) {
             "SyntaxError|TypeError|URIError|"                                          +
             "decodeURI|decodeURIComponent|encodeURI|encodeURIComponent|eval|isFinite|" + // Non-constructor functions
             "isNaN|parseFloat|parseInt|"                                               +
-            "hack|sleep|grow|weaken|print|tprint|scan|nuke|brutessh|ftpcrack|"         + //Netscript functions
-            "clearLog|disableLog|enableLog|"                                           +
-            "relaysmtp|httpworm|sqlinject|run|exec|spawn|kill|killall|exit|"           +
-            "scp|ls|hasRootAccess|"                                                    +
-            "getIp|getHackingMultipliers|getBitNodeMultipliers|getStats|isBusy|"       +
-            "getHostname|getHackingLevel|getServerMoneyAvailable|getServerMaxMoney|"   +
-            "getServerGrowth|getServerSecurityLevel|getServerBaseSecurityLevel|"       +
-            "getServerMinSecurityLevel|"                                               +
-            "getServerRequiredHackingLevel|getServerNumPortsRequired|getServerRam|"    +
-            "serverExists|fileExists|isRunning|getNextHacknetNodeCost|"                +
-            "purchaseHacknetNode|deleteServer|getPurchasedServers|"                    +
-            "purchaseServer|round|write|read|peek|clear|"                              +
-            "scriptRunning|scriptKill|getScriptRam|"                                   +
-            "getHackTime|getGrowTime|getWeakenTime|getScriptIncome|getScriptExpGain|"  +
-            "getTimeSinceLastAug|"                                                     +
-            "universityCourse|"                                                        +
-            "gymWorkout|travelToCity|purchaseTor|purchaseProgram|upgradeHomeRam|"      +
-            "getUpgradeHomeRamCost|workForCompany|applyToCompany|getCompanyRep|"       +
-            "stopAction|"                                                              +
-            "checkFactionInvitations|joinFaction|workForFaction|getFactionRep|"        +
-            "createProgram|commitCrime|getCrimeChance|getOwnedAugmentations|"          +
-            "getAugmentationsFromFaction|"                                             +
-            "getAugmentationCost|purchaseAugmentation|"                                +
-            "installAugmentations|hacknetnodes|upgradeLevel|upgradeRam|upgradeCore|"   +
-            "getLevelUpgradeCost|getRamUpgradeCost|getCoreUpgradeCost|"                +
-            "getStockPrice|getStockPosition|buyStock|sellStock|shortStock|sellShort|"  +
-            "placeOrder|cancelOrder|"                                                  +
+            "ns|" + NetscriptFunctions +"|"                                            +
             "JSON|Math|"                                                               + // Other
             "this|arguments|prototype|window|document"                                 , // Pseudo
         "keyword":
-            "const|yield|import|get|set|async|await|" +
+            "const|yield|import|get|set|async|await|foop|" +
             "break|case|catch|continue|default|delete|do|else|finally|for|function|" +
             "if|in|of|instanceof|new|return|switch|throw|try|typeof|let|var|while|with|debugger|" +
             "__parent__|__count__|escape|unescape|with|__proto__|" +
@@ -239,6 +243,9 @@ var NetscriptHighlightRules = function(options) {
             }, {
                 token : "punctuation.operator",
                 regex : /[.](?![.])/
+            }, {
+                token : "support.function",
+                regex : "/|" + NetscriptFunctions + "|/"
             }, {
                 token : "support.function",
                 regex : /(s(?:h(?:ift|ow(?:Mod(?:elessDialog|alDialog)|Help))|croll(?:X|By(?:Pages|Lines)?|Y|To)?|t(?:op|rike)|i(?:n|zeToContent|debar|gnText)|ort|u(?:p|b(?:str(?:ing)?)?)|pli(?:ce|t)|e(?:nd|t(?:Re(?:sizable|questHeader)|M(?:i(?:nutes|lliseconds)|onth)|Seconds|Ho(?:tKeys|urs)|Year|Cursor|Time(?:out)?|Interval|ZOptions|Date|UTC(?:M(?:i(?:nutes|lliseconds)|onth)|Seconds|Hours|Date|FullYear)|FullYear|Active)|arch)|qrt|lice|avePreferences|mall)|h(?:ome|andleEvent)|navigate|c(?:har(?:CodeAt|At)|o(?:s|n(?:cat|textual|firm)|mpile)|eil|lear(?:Timeout|Interval)?|a(?:ptureEvents|ll)|reate(?:StyleSheet|Popup|EventObject))|t(?:o(?:GMTString|S(?:tring|ource)|U(?:TCString|pperCase)|Lo(?:caleString|werCase))|est|a(?:n|int(?:Enabled)?))|i(?:s(?:NaN|Finite)|ndexOf|talics)|d(?:isableExternalCapture|ump|etachEvent)|u(?:n(?:shift|taint|escape|watch)|pdateCommands)|j(?:oin|avaEnabled)|p(?:o(?:p|w)|ush|lugins.refresh|a(?:ddings|rse(?:Int|Float)?)|r(?:int|ompt|eference))|e(?:scape|nableExternalCapture|val|lementFromPoint|x(?:p|ec(?:Script|Command)?))|valueOf|UTC|queryCommand(?:State|Indeterm|Enabled|Value)|f(?:i(?:nd|le(?:ModifiedDate|Size|CreatedDate|UpdatedDate)|xed)|o(?:nt(?:size|color)|rward)|loor|romCharCode)|watch|l(?:ink|o(?:ad|g)|astIndexOf)|a(?:sin|nchor|cos|t(?:tachEvent|ob|an(?:2)?)|pply|lert|b(?:s|ort))|r(?:ou(?:nd|teEvents)|e(?:size(?:By|To)|calc|turnValue|place|verse|l(?:oad|ease(?:Capture|Events)))|andom)|g(?:o|et(?:ResponseHeader|M(?:i(?:nutes|lliseconds)|onth)|Se(?:conds|lection)|Hours|Year|Time(?:zoneOffset)?|Da(?:y|te)|UTC(?:M(?:i(?:nutes|lliseconds)|onth)|Seconds|Hours|Da(?:y|te)|FullYear)|FullYear|A(?:ttention|llResponseHeaders)))|m(?:in|ove(?:B(?:y|elow)|To(?:Absolute)?|Above)|ergeAttributes|a(?:tch|rgins|x))|b(?:toa|ig|o(?:ld|rderWidths)|link|ack))\b(?=\()/

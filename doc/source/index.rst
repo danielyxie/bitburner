@@ -22,6 +22,7 @@ secrets that you've been searching for.
     Netscript <netscript>
     Terminal <terminal>
     Keyboard Shortcuts <shortcuts>
+    Changelog <changelog>
 
 
 Indices and tables

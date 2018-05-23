@@ -18,6 +18,7 @@ import {commitShopliftCrime, commitRobStoreCrime, commitMugCrime,
         determineCrimeChanceHomicide, determineCrimeChanceGrandTheftAuto,
         determineCrimeChanceKidnap, determineCrimeChanceAssassination,
         determineCrimeChanceHeist}                  from "./Crimes.js";
+import {Bladeburner}                                from "./Bladeburner.js";
 import {Companies, Company, CompanyPosition,
         CompanyPositions, companyExists}            from "./Company.js";
 import {CONSTANTS}                                  from "./Constants.js";
@@ -66,13 +67,15 @@ import {yesNoBoxClose, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxCreate,
         yesNoBoxOpen}                               from "../utils/YesNoBox.js";
 
-var hasCorporationSF=false,     //Source-File 3
-    hasSingularitySF=false,     //Source-File 4
-    hasAISF=false,              //Source-File 5
-    hasBladeburnerSF=false,     //Source-File 6
-    hasWallStreetSF=false,      //Source-File 8
-    hasBn11SF=false;            //Source-File 11
+var hasCorporationSF            = false, //Source-File 3
+    hasSingularitySF            = false, //Source-File 4
+    hasAISF                     = false, //Source-File 5
+    hasBladeburnerSF            = false, //Source-File 6
+    hasBladeburner2079SF        = false, //Source-File 7
+    hasWallStreetSF             = false, //Source-File 8
+    hasBn11SF                   = false; //Source-File 11
 
+var singularitySFLvl=1, wallStreetSFLvl=1;
 
 var possibleLogs = {
     ALL: true,
@@ -124,31 +127,22 @@ var possibleLogs = {
     sellShort: true,
 }
 
-var singularitySFLvl=1, wallStreetSFLvl=1;
-
 //Used to check and set flags for every Source File, despite the name of the function
 function initSingularitySFFlags() {
     for (var i = 0; i < Player.sourceFiles.length; ++i) {
-        if (Player.sourceFiles[i].n === 3) {
-            hasCorporationSF = true;
-        }
+        if (Player.sourceFiles[i].n === 3) {hasCorporationSF        = true;}
         if (Player.sourceFiles[i].n === 4) {
             hasSingularitySF = true;
             singularitySFLvl = Player.sourceFiles[i].lvl;
         }
-        if (Player.sourceFiles[i].n === 5) {
-            hasAISF = true;
-        }
-        if (Player.sourceFiles[i].n === 6) {
-            hasBladeburnerSF = true;
-        }
+        if (Player.sourceFiles[i].n === 5) {hasAISF                 = true;}
+        if (Player.sourceFiles[i].n === 6) {hasBladeburnerSF        = true;}
+        if (Player.sourceFiles[i].n === 7) {hasBladeburner2079SF    = true;}
         if (Player.sourceFiles[i].n === 8) {
             hasWallStreetSF = true;
             wallStreetSFLvl = Player.sourceFiles[i].lvl;
         }
-        if (Player.sourceFiles[i].n === 11) {
-            hasBn11SF = true;
-        }
+        if (Player.sourceFiles[i].n === 11) {hasBn11SF              = true;}
     }
 }
 
@@ -234,7 +228,7 @@ function NetscriptFunctions(workerScript) {
                 var rand = Math.random();
                 var expGainedOnSuccess = scriptCalculateExpGain(server) * threads;
                 var expGainedOnFailure = (expGainedOnSuccess / 4);
-                if (rand < hackChance) {	//Success!
+                if (rand < hackChance) { //Success!
                     var moneyGained = scriptCalculatePercentMoneyHacked(server);
                     moneyGained = Math.floor(server.moneyAvailable * moneyGained) * threads;
 
@@ -1700,7 +1694,12 @@ function NetscriptFunctions(workerScript) {
 
             ram = Math.round(ram);
             if (isNaN(ram) || !powerOfTwo(ram)) {
-                workerScript.scriptRef.log("Error: Invalid ram argument passed to purchaseServer(). Must be numeric and a power of 2");
+                workerScript.scriptRef.log("Error: purchaseServer() failed due to invalid ram argument. Must be numeric and a power of 2");
+                return "";
+            }
+
+            if (ram > CONSTANTS.PurchasedServerMaxRam) {
+                workerScript.scriptRef.log("Error: purchasedServer() failed because specified RAM was too high. Maximum RAM on a purchased server is " + CONSTANTS.PurchasedServerMaxRam + "GB");
                 return "";
             }
 
@@ -1747,17 +1746,23 @@ function NetscriptFunctions(workerScript) {
                 return false;
             }
 
-            if (!server.purchasedByPlayer || server.hostname == "home") {
+            if (!server.purchasedByPlayer || server.hostname === "home") {
                 workerScript.scriptRef.log("Error: Server " + server.hostname + " is not a purchased server. " +
-                                           "Cannot be deleted. deleteServer failed");
+                                           "Cannot be deleted. deleteServer() failed");
                 return false;
             }
 
             var ip = server.ip;
 
+            //Can't delete server you're currently connected to
+            if (server.isConnectedTo) {
+                workerScript.scriptRef.log("Error: deleteServer() failed because you are currently connected to the server you are trying to delete");
+                return false;
+            }
+
             //A server cannot delete itself
-            if (ip == workerScript.serverIp) {
-                workerScript.scriptRef.log("Error: Cannot call deleteServer() on self. Function failed");
+            if (ip === workerScript.serverIp) {
+                workerScript.scriptRef.log("Error: Cannot call deleteServer() on self. deleteServer() failed");
                 return false;
             }
 
@@ -2382,8 +2387,8 @@ function NetscriptFunctions(workerScript) {
                         return false;
                     }
                     Player.location = Locations.AevumCrushFitnessGym;
-                    costMult = 2;
-                    expMult = 1.5;
+                    costMult = 3;
+                    expMult = 2;
                     break;
                 case Locations.AevumSnapFitnessGym.toLowerCase():
                     if (Player.city != Locations.Aevum) {
@@ -2391,8 +2396,8 @@ function NetscriptFunctions(workerScript) {
                         return false;
                     }
                     Player.location = Locations.AevumSnapFitnessGym;
-                    costMult = 6;
-                    expMult = 4;
+                    costMult = 10;
+                    expMult = 5;
                     break;
                 case Locations.Sector12IronGym.toLowerCase():
                     if (Player.city != Locations.Sector12) {
@@ -2409,8 +2414,8 @@ function NetscriptFunctions(workerScript) {
                         return false;
                     }
                     Player.location = Locations.Sector12PowerhouseGym;
-                    costMult = 10;
-                    expMult = 7.5;
+                    costMult = 20;
+                    expMult = 10;
                     break;
                 case Locations.VolhavenMilleniumFitnessGym:
                     if (Player.city != Locations.Volhaven) {
@@ -2418,8 +2423,8 @@ function NetscriptFunctions(workerScript) {
                         return false;
                     }
                     Player.location = Locations.VolhavenMilleniumFitnessGym;
-                    costMult = 3;
-                    expMult = 2.5;
+                    costMult = 7;
+                    expMult = 4;
                     break;
                 default:
                     workerScript.scriptRef.log("Invalid gym name: " + gymName + ". gymWorkout() failed");
@@ -3657,9 +3662,167 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("Installing Augmentations. This will cause this script to be killed");
             installAugmentations(cbScript);
             return true;
+        },
+
+        //Bladeburner API
+        bladeburner : {
+            isContractName : function(name) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            isOperationName : function(name) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            isBlackOpName : function(name) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            isGeneralActionName : function(name) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            isSkillName : function(name) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            startAction : function(type, name) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            stopAction : function() {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getActionTime : function(type="", name="") {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getActionEstimatedSuccessChance : function(type="", name="") {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getActionCountRemaining : function(type="", name="") {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getRank : function() {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getSkillPoints : function() {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getSkillLevel : function(skillName="") {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            upgradeSkill : function(skillName) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getTeamSize : function() {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            setTeamSize : function(type="", name="", size) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getCityEstimatedPopulation : function(cityName) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getCityEstimatedCommunities : function(cityName) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getCityChaos : function(cityName) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            switchCity : function(cityName) {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getStamina : function() {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            joinFaction : function() {
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            }
         }
-    }
-}
+    } //End return
+} //End NetscriptFunction()
 
 export {NetscriptFunctions, initSingularitySFFlags, hasSingularitySF, hasBn11SF,
         hasWallStreetSF, wallStreetSFLvl, hasCorporationSF, hasAISF, hasBladeburnerSF};

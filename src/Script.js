@@ -345,7 +345,6 @@ Script.prototype.saveScript = function() {
 
 		//Calculate/update ram usage, execution time, etc.
 		this.updateRamUsage();
-        console.log(this.module);
 
         this.module = "";
 	}
@@ -538,6 +537,10 @@ function parseOnlyCalculateDeps(code, currentModule) {
                 node.test && walkDeeper(node.test, st);
                 node.consequent && walkDeeper(node.consequent, st);
                 node.alternate && walkDeeper(node.alternate, st);
+            },
+            MemberExpression: (node, st, walkDeeper) => {
+                node.object && walkDeeper(node.object, st);
+                node.property && walkDeeper(node.property, st);
             },
         }
     }
