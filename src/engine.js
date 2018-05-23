@@ -1411,12 +1411,7 @@ let Engine = {
 
         Engine.Clickables.tutorialNetscriptButton = document.getElementById("tutorial-netscript-link");
         Engine.Clickables.tutorialNetscriptButton.addEventListener("click", function() {
-            if (Player.bitNodeN === 4 || hasSingularitySF) {
-                Engine.displayTutorialPage(CONSTANTS.TutorialNetscriptText + CONSTANTS.TutorialSingularityFunctionsText);
-            } else {
-                Engine.displayTutorialPage(CONSTANTS.TutorialNetscriptText);
-            }
-
+            Engine.displayTutorialPage(CONSTANTS.TutorialNetscriptText);
         });
 
         Engine.Clickables.tutorialTravelingButton = document.getElementById("tutorial-traveling-link");

@@ -47,9 +47,11 @@ var ActionCountGrowthPeriod     = 300; //Time (s) it takes for action count to g
 var RankToFactionRepFactor      = 2; //Delta Faction Rep = this * Delta Rank
 
 var ContractSuccessesPerLevel   = 15; //How many successes you need to level up a contract
-var OperationSuccessesPerLevel  = 10;  //How many successes you need to level up an op
+var OperationSuccessesPerLevel  = 10; //How many successes you need to level up an op
 
 var RanksPerSkillPoint          = 4;  //How many ranks needed to get 1 Skill Point
+
+var ContractBaseMoneyGain       = 5e3; //Base Money Gained per contract
 
 //DOM related variables
 var ActiveActionCssClass        = "bladeburner-active-action";
@@ -1066,7 +1068,7 @@ Bladeburner.prototype.startAction = function(actionId) {
             break;
         case ActionTypes["Recruitment"]:
             var effCharisma = Player.charisma * this.skillMultipliers.effCha;
-            var charismaFactor = Math.pow(effCharisma, 0.8) + effCharisma / 90;
+            var charismaFactor = Math.pow(effCharisma, 0.81) + effCharisma / 90;
             var time = Math.max(10, Math.round(BaseRecruitmentTimeNeeded - charismaFactor));
             this.actionTimeToComplete = time;
             break;
@@ -1120,6 +1122,13 @@ Bladeburner.prototype.completeAction = function() {
                     ++action.successes;
                     --action.count;
 
+                    //Earn money for contracts
+                    var moneyGain = 0;
+                    if (!isOperation) {
+                        moneyGain = ContractBaseMoneyGain * rewardMultiplier;
+                        Player.gainMoney(moneyGain);
+                    }
+
                     if (isOperation) {
                         action.maxLevel = Math.floor(action.successes / OperationSuccessesPerLevel) + 1;
                     } else {
@@ -1131,7 +1140,7 @@ Bladeburner.prototype.completeAction = function() {
                         if (isOperation && this.logging.ops) {
                             this.log(action.name + " successfully completed! Gained " + formatNumber(gain, 3) + " rank");
                         } else if (!isOperation && this.logging.contracts) {
-                            this.log(action.name + " contract successfully completed! Gained " + formatNumber(gain, 3) + " rank");
+                            this.log(action.name + " contract successfully completed! Gained " + formatNumber(gain, 3) + " rank and " + numeral(moneyGain).format("$0.000a"));
                         }
                     }
                     isOperation ? this.completeOperation(true) : this.completeContract(true);
@@ -1283,10 +1292,11 @@ Bladeburner.prototype.completeAction = function() {
             Player.gainHackingExp(hackingExpGain);
             Player.gainIntelligenceExp(BaseIntGain);
             Player.gainCharismaExp(charismaExpGain);
+            this.changeRank(0.1);
             console.log("DEBUG: Field Analysis effectiveness is " + (eff * this.skillMultipliers.successChanceEstimate));
             this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
             if (this.logging.general) {
-                this.log("Field analysis completed. Gained " + formatNumber(hackingExpGain, 1) + " hacking exp and " + formatNumber(charismaExpGain, 1) + " charisma exp");
+                this.log("Field analysis completed. Gained 0.1 rank, " + formatNumber(hackingExpGain, 1) + " hacking exp, and " + formatNumber(charismaExpGain, 1) + " charisma exp");
             }
             this.startAction(this.action); //Repeat action
             break;
@@ -1949,10 +1959,10 @@ Bladeburner.prototype.createContractsContent = function() {
     }
 
     DomElems.actionsAndSkillsDesc.innerHTML =
-        "Complete contracts in order to increase your Bitburner rank. " +
+        "Complete contracts in order to increase your Bitburner rank and earn money. " +
         "Failing a contract will cause you to lose HP, which can lead to hospitalization.<br><br>" +
         "You can unlock higher-level contracts by successfully completing them. " +
-        "Higher-level contracts are more difficult, but grant more rank and experience.";
+        "Higher-level contracts are more difficult, but grant more rank, experience, and money.";
 
     for (var contractName in this.contracts) {
         if (this.contracts.hasOwnProperty(contractName)) {
@@ -3131,6 +3141,7 @@ Bladeburner.prototype.executeStartConsoleCommand = function(args) {
             break;
     }
 }
+
 
 Bladeburner.prototype.toJSON = function() {
     return Generic_toJSON("Bladeburner", this);
