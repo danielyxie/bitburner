@@ -488,7 +488,7 @@ let CONSTANTS = {
     "* You now earn money from successfully completing Bladeburner contracts. The amount you earn is based " +
     "on the difficulty of the contract.<br>" +
     "* Completing Field Analysis in Bladeburner now grants 0.1 rank<br>" +
-    "* The maximum RAM you can get on a purchased server is now 1,048,576GB (2^20)<br>" +
+    "* The maximum RAM you can get on a purchased server is now 1,048,576 GB (2^20)<br>" +
     "* Bug Fix: Fixed Netscript syntax highlighting issues with the new NetscriptJS<br>" +
     "* Bug Fix: Netscript Functions now properly incur RAM costs in NetscriptJS<br>" +
     "* Bug Fix: deleteServer() now fails if its called on the server you are currently connected to<br>" +

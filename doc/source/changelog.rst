@@ -3,8 +3,8 @@
 Changelog
 =========
 
-v0.37.1
--------
+v0.37.1 - 5/22/2018
+-------------------
 * You now earn money from successfully completing Bladeburner contracts. The amount you earn is based
   on the difficulty of the contract.
 * Completing Field Analysis in Bladeburner now grants 0.1 rank
