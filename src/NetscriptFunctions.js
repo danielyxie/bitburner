@@ -66,6 +66,7 @@ import {formatNumber, isString, isHTML}             from "../utils/StringHelperF
 import {yesNoBoxClose, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxCreate,
         yesNoBoxOpen}                               from "../utils/YesNoBox.js";
+import {purchaseServerCost}                         from "./ServerPurchases.js";
 
 var hasCorporationSF            = false, //Source-File 3
     hasSingularitySF            = false, //Source-File 4
@@ -1670,6 +1671,22 @@ function NetscriptFunctions(workerScript) {
             };
             return cancelOrder(params, workerScript);
         },
+        getPurchaseServerCost: function(ram) {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.getPurchaseServerCost) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.getPurchaseServerCost = true;
+                    return CONSTANTS.ScriptGetPurchaseServerCostRamCost;
+                }
+            }
+            ram = Math.round(ram);
+            if (isNaN(ram) || !powerOfTwo(ram)) {
+                workerScript.scriptRef.log("Error: Invalid ram argument passed to getPurchaseServerCost(). Must be numeric and a power of 2");
+                return 0;
+            }
+            return purchaseServerCost(ram);
+        },
         purchaseServer : function(hostname, ram) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.purchaseServer) {
@@ -1703,7 +1720,7 @@ function NetscriptFunctions(workerScript) {
                 return "";
             }
 
-            var cost = ram * CONSTANTS.BaseCostFor1GBOfRamServer;
+            var cost = purchaseServerCost(ram);
             if (Player.money.lt(cost)) {
                 workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
                 return "";
