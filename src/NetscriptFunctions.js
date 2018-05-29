@@ -6,18 +6,7 @@ import {Augmentations, Augmentation,
         augmentationExists, installAugmentations,
         AugmentationNames}                          from "./Augmentations.js";
 import {BitNodeMultipliers}                         from "./BitNode.js";
-import {commitShopliftCrime, commitRobStoreCrime, commitMugCrime,
-        commitLarcenyCrime, commitDealDrugsCrime, commitBondForgeryCrime,
-        commitTraffickArmsCrime,
-        commitHomicideCrime, commitGrandTheftAutoCrime, commitKidnapCrime,
-        commitAssassinationCrime, commitHeistCrime, determineCrimeSuccess,
-        determineCrimeChanceShoplift, determineCrimeChanceRobStore,
-        determineCrimeChanceMug, determineCrimeChanceLarceny,
-        determineCrimeChanceDealDrugs, determineCrimeChanceBondForgery,
-        determineCrimeChanceTraffickArms,
-        determineCrimeChanceHomicide, determineCrimeChanceGrandTheftAuto,
-        determineCrimeChanceKidnap, determineCrimeChanceAssassination,
-        determineCrimeChanceHeist}                  from "./Crimes.js";
+import {determineCrimeSuccess, findCrime}           from "./Crimes.js";
 import {Bladeburner}                                from "./Bladeburner.js";
 import {Companies, Company, CompanyPosition,
         CompanyPositions, companyExists}            from "./Company.js";
@@ -3342,7 +3331,7 @@ function NetscriptFunctions(workerScript) {
             workerScript.scriptRef.log("Began creating program: " + name);
             return true;
         },
-        commitCrime : function(crime) {
+        commitCrime : function(crimeRoughName) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.commitCrime) {
                     return 0;
@@ -3394,49 +3383,16 @@ function NetscriptFunctions(workerScript) {
                     console.log("Invalid Player.city value");
             }
 
-            crime = crime.toLowerCase();
-            let enableCommitCrimeLog = workerScript.disableLogs.ALL == null && workerScript.disableLogs.commitCrime == null
-            if (crime.includes("shoplift")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to shoplift...");}
-                return commitShopliftCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("rob") && crime.includes("store")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to rob a store...");}
-                return commitRobStoreCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("mug")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to mug someone...");}
-                return commitMugCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("larceny")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to commit larceny...");}
-                return commitLarcenyCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("drugs")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to deal drugs...");}
-                return commitDealDrugsCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("bond") && crime.includes("forge")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to forge corporate bonds...");}
-                return commitBondForgeryCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("traffick") && crime.includes("arms")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to traffick illegal arms...");}
-                return commitTraffickArmsCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("homicide")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to commit homicide...");}
-                return commitHomicideCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("grand") && crime.includes("auto")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to commit grand theft auto...");}
-                return commitGrandTheftAutoCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("kidnap")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to kidnap and ransom a high-profile target...");}
-                return commitKidnapCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
-            } else if (crime.includes("assassinate")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to assassinate a high-profile target...");}
-                return commitAssassinationCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript})
-            } else if (crime.includes("heist")) {
-                if(enableCommitCrimeLog) {workerScript.scriptRef.log("Attempting to pull off a heist...");}
-                return commitHeistCrime(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
-            } else {
+            const crime = findCrime(crimeRoughName.toLowerCase());
+            if(crime == null) { // couldn't find crime
                 throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into commitCrime(): " + crime);
             }
+            if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.commitCrime == null) {
+                workerScript.scriptRef.log("Attempting to commit crime: "+crime.name+"...");
+            }
+            return crime.commit(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
         },
-        getCrimeChance : function(crime) {
+        getCrimeChance : function(crimeRoughName) {
             if (workerScript.checkingRam) {
                 if (workerScript.loadedFns.getCrimeChance) {
                     return 0;
@@ -3454,34 +3410,12 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            crime = crime.toLowerCase();
-            if (crime.includes("shoplift")) {
-                return determineCrimeChanceShoplift();
-            } else if (crime.includes("rob") && crime.includes("store")) {
-                return determineCrimeChanceRobStore();
-            } else if (crime.includes("mug")) {
-                return determineCrimeChanceMug();
-            } else if (crime.includes("larceny")) {
-                return determineCrimeChanceLarceny();
-            } else if (crime.includes("drugs")) {
-                return determineCrimeChanceDealDrugs();
-            } else if (crime.includes("bond") && crime.includes("forge")) {
-                return determineCrimeChanceBondForgery();
-            } else if (crime.includes("traffick") && crime.includes("arms")) {
-                return determineCrimeChanceTraffickArms();
-            } else if (crime.includes("homicide")) {
-                return determineCrimeChanceHomicide();
-            } else if (crime.includes("grand") && crime.includes("auto")) {
-                return determineCrimeChanceGrandTheftAuto();
-            } else if (crime.includes("kidnap")) {
-                return determineCrimeChanceKidnap();
-            } else if (crime.includes("assassinate")) {
-                return determineCrimeChanceAssassination();
-            } else if (crime.includes("heist")) {
-                return determineCrimeChanceHeist();
-            } else {
+            const crime = findCrime(crimeRoughName.toLowerCase());
+            if(crime == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid crime passed into getCrimeChance(): " + crime);
             }
+
+            return crime.successRate();
         },
         getOwnedAugmentations : function(purchased=false) {
             if (workerScript.checkingRam) {

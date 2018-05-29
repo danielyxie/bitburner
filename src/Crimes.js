@@ -2,146 +2,235 @@ import {CONSTANTS} from "./Constants.js";
 import {Player} from "./Player.js";
 import {dialogBoxCreate} from "../utils/DialogBox.js";
 
-/* Crimes.js */
-function commitShopliftCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeShoplift;
-    var time = 2000;
-    Player.startCrime(0, 0, 0, 2/div, 2/div, 0, 15000/div, time, singParams); //$7500/s, 1 exp/s
-    return time;
+
+function Crime(name, type, time, money, difficulty, karma, params) {
+  this.name = name;
+  this.type = type;
+  this.time = time;
+  this.money = money;
+  this.difficulty = difficulty;
+  this.karma = karma;
+
+  this.hacking_success_weight = params.hacking_success_weight ? params.hacking_success_weight : 0;
+  this.strength_success_weight = params.strength_success_weight ? params.strength_success_weight : 0;
+  this.defense_success_weight = params.defense_success_weight ? params.defense_success_weight : 0;
+  this.dexterity_success_weight = params.dexterity_success_weight ? params.dexterity_success_weight : 0;
+  this.agility_success_weight = params.agility_success_weight ? params.agility_success_weight : 0;
+  this.charisma_success_weight = params.charisma_success_weight ? params.charisma_success_weight : 0;
+
+  this.hacking_exp = params.hacking_exp ? params.hacking_exp : 0;
+  this.strength_exp = params.strength_exp ? params.strength_exp : 0;
+  this.defense_exp = params.defense_exp ? params.defense_exp : 0;
+  this.dexterity_exp = params.dexterity_exp ? params.dexterity_exp : 0;
+  this.agility_exp = params.agility_exp ? params.agility_exp : 0;
+  this.charisma_exp = params.charisma_exp ? params.charisma_exp : 0;
+  this.intelligence_exp = params.intelligence_exp ? params.intelligence_exp : 0;
+
+  this.kills = params.kills ? params.kills : 0;
 }
 
-function commitRobStoreCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeRobStore;
-    var time = 60000;
-    Player.startCrime(30/div, 0, 0, 45/div, 45/div, 0, 400000/div, time, singParams); //$6666,6/2, 0.5exp/s, 0.75exp/s
-    return time;
+Crime.prototype.commit = function(div=1, singParams=null) {
+  if (div <= 0) {div = 1;}
+  Player.crimeType = this.type;
+  Player.startCrime(
+    this.hacking_exp/div, 
+    this.strength_exp/div,
+    this.defense_exp/div,
+    this.dexterity_exp/div,
+    this.agility_exp/div,
+    this.charisma_exp/div,
+    this.money/div, this.time, singParams);
+  return this.time;
 }
 
-function commitMugCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeMug;
-    var time = 4000;
-    Player.startCrime(0, 3/div, 3/div, 3/div, 3/div, 0, 36000/div, time, singParams); //$9000/s, .66 exp/s
-    return time;
+Crime.prototype.successRate = function() {
+  var chance = (this.hacking_success_weight * Player.hacking_skill +
+                this.strength_success_weight * Player.strength +
+                this.defense_success_weight * Player.defense +
+                this.dexterity_success_weight * Player.dexterity +
+                this.agility_success_weight * Player.agility +
+                this.charisma_success_weight * Player.charisma +
+                CONSTANTS.IntelligenceCrimeWeight * Player.intelligence);
+  chance /= CONSTANTS.MaxSkillLevel;
+  chance /= this.difficulty;
+  chance *= Player.crime_success_mult;
+  return Math.min(chance, 1);
 }
 
-function commitLarcenyCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeLarceny;
-    var time = 90000;
-    Player.startCrime(45/div, 0, 0, 60/div, 60/div, 0, 800000/div, time, singParams) // $8888.88/s, .5 exp/s, .66 exp/s
-    return time;
-}
+const Crimes = {
+  Shoplift: new Crime("Shoplift", CONSTANTS.CrimeShoplift, 2000, 15000, 1/20, 0.1, {
+    dexterity_success_weight: 1,
+    agility_success_weight: 1,
 
-function commitDealDrugsCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeDrugs;
-    var time = 10000;
-    Player.startCrime(0, 0, 0, 5/div, 5/div, 10/div, 120000/div, time, singParams); //$12000/s, .5 exp/s, 1 exp/s
-    return time;
-}
+    dexterity_exp: 2,
+    agility_exp: 2,
+  }),
 
-function commitBondForgeryCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeBondForgery;
-    var time = 300000;
-    Player.startCrime(100/div, 0, 0, 150/div, 0, 15/div, 4500000/div, time, singParams); //$15000/s, 0.33 hack exp/s, .5 dex exp/s, .05 cha exp
-    return time;
-}
+  RobStore: new Crime("Rob Store", CONSTANTS.CrimeRobStore, 60000, 400000, 1/5, 0.5, {
+    hacking_exp: 30,
+    dexterity_exp: 45,
+    agility_exp: 45,
 
-function commitTraffickArmsCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeTraffickArms;
-    var time = 40000;
-    Player.startCrime(0, 20/div, 20/div, 20/div, 20/div, 40/div, 600000/div, time, singParams); //$15000/s, .5 combat exp/s, 1 cha exp/s
-    return time;
-}
+    hacking_success_weight: 0.5 ,
+    dexterity_success_weight: 2,
+    agility_success_weight: 1,
 
-function commitHomicideCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeHomicide;
-    var time = 3000;
-    Player.startCrime(0, 2/div, 2/div, 2/div, 2/div, 0, 45000/div, time, singParams); //$15000/s, 0.66 combat exp/s
-    return time;
-}
+    intelligence_exp: 0.25 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+  }),
 
-function commitGrandTheftAutoCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeGrandTheftAuto;
-    var time = 80000;
-    Player.startCrime(0, 20/div, 20/div, 20/div, 80/div, 40/div, 1600000/div, time, singParams); //$20000/s, .25 exp/s, 1 exp/s, .5 exp/s
-    return time;
-}
+  Mug: new Crime("Mug", CONSTANTS.CrimeMug, 4000, 36000, 1/5, 0.25, {
+    strength_exp: 3,
+    defence_exp: 3,
+    dexterity_exp: 3,
+    agility_exp: 3,
 
-function commitKidnapCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeKidnap;
-    var time = 120000;
-    Player.startCrime(0, 80/div, 80/div, 80/div, 80/div, 80/div, 3600000/div, time, singParams); //$30000/s. .66 exp/s
-    return time;
-}
+    strength_success_weight: 1.5,
+    defense_success_weight: 0.5,
+    dexterity_success_weight: 1.5,
+    agility_success_weight: 0.5,
+  }),
+  
+  Larceny: new Crime("Larceny", CONSTANTS.CrimeLarceny, 90000, 800000, 1/3, 1.5, {
+    hacking_exp: 45,
+    dexterity_exp: 60,
+    agility_exp: 60,
 
-function commitAssassinationCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeAssassination;
-    var time = 300000;
-    Player.startCrime(0, 300/div, 300/div, 300/div, 300/div, 0, 12000000/div, time, singParams); //$40000/s, 1 exp/s
-    return time;
-}
+    hacking_skill_success_weight: 0.5,
+    dexterity_success_weight: 1,
+    agility_success_weight: 1,
 
-function commitHeistCrime(div=1, singParams=null) {
-    if (div <= 0) {div = 1;}
-    Player.crimeType = CONSTANTS.CrimeHeist;
-    var time = 600000;
-    Player.startCrime(450/div, 450/div, 450/div, 450/div, 450/div, 450/div, 120000000/div, time, singParams); //$200000/s, .75exp/s
-    return time;
-}
+    intelligence_exp: 0.5 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+  }),
+  
+  DealDrugs: new Crime("Deal Drugs", CONSTANTS.CrimeDrugs, 10000, 120000, 1, 0.5, {
+    dexterity_exp: 5,
+    agility_exp: 5,
+    charisma_exp: 10,
 
-function determineCrimeSuccess(crime, moneyGained) {
+    charisma_success_weight: 3,
+    dexterity_success_weight: 2,
+    agility_success_weight: 1,
+  }),
+  
+  BondForgery: new Crime("Bond Forgery", CONSTANTS.CrimeBondForgery, 300000, 4500000, 1/2, 0.1, {
+    hacking_exp: 100,
+    dexterity_exp: 150,
+    charisma_exp: 15,
+
+    hacking_skill_success_weight: 0.1,
+    dexterity_success_weight: 2.5,
+
+    intelligence_exp: 2 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+  }),
+  
+  TraffickArms: new Crime("Traffick Arms", CONSTANTS.CrimeTraffickArms, 40000, 600000, 2, 1, {
+    strength_exp: 20,
+    defence_exp: 20,
+    dexterity_exp: 20,
+    agility_exp: 20,
+    charisma_exp: 40,
+
+    charisma_success_weight: 1,
+    strength_success_weight: 1,
+    defense_success_weight: 1,
+    dexterity_success_weight: 1,
+    agility_success_weight: 1,
+  }),
+  
+  Homicide: new Crime("Homicide", CONSTANTS.CrimeHomicide, 3000, 45000, 1, 3, {
+    strength_exp: 2,
+    defence_exp: 2,
+    dexterity_exp: 2,
+    agility_exp: 2,
+
+    strength_success_weight: 2,
+    defense_success_weight: 2,
+    dexterity_success_weight: 0.5,
+    agility_success_weight: 0.5,
+
+    kills: 1,
+  }),
+  
+  GrandTheftAuto: new Crime("Grand Theft Auto", CONSTANTS.CrimeGrandTheftAuto, 80000, 1600000, 8, 5, {
+    strength_exp: 20,
+    defence_exp: 20,
+    dexterity_exp: 20,
+    agility_exp: 80,
+    charisma_exp: 40,
+
+    hacking_skill_success_weight: 1,
+    strength_success_weight: 1,
+    dexterity_success_weight: 4,
+    agility_success_weight: 2,
+    charisma_success_weight: 2,
+
+    intelligence_exp: CONSTANTS.IntelligenceCrimeBaseExpGain,
+  }),
+  
+  Kidnap: new Crime("Kidnap", CONSTANTS.CrimeKidnap, 120000, 3600000, 5, 6, {
+    strength_exp: 80,
+    defence_exp: 80,
+    dexterity_exp: 80,
+    agility_exp: 80,
+    charisma_exp: 80,
+
+    charisma_success_weight: 1,
+    strength_success_weight: 1,
+    dexterity_success_weight: 1,
+    agility_success_weight: 1,
+
+    intelligence_exp: 2 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+  }),
+  
+  Assassination: new Crime("Assassination", CONSTANTS.CrimeAssassination, 300000, 12000000, 8, 10, {
+    strength_exp: 300,
+    defence_exp: 300,
+    dexterity_exp: 300,
+    agility_exp: 300,
+
+    strength_success_weight: 1,
+    dexterity_success_weight: 2,
+    agility_success_weight: 1,
+
+    intelligence_exp: 5 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+
+    kills: 1,
+  }),
+  
+  Heist: new Crime("Heist", CONSTANTS.CrimeHeist, 600000, 120000000, 18, 15, {
+    hacking_exp: 450,
+    strength_exp: 450,
+    defence_exp: 450,
+    dexterity_exp: 450,
+    agility_exp: 450,
+    charisma_exp: 450,
+
+    hacking_skill_success_weight: 1,
+    strength_success_weight: 1,
+    defense_success_weight: 1,
+    dexterity_success_weight: 1,
+    agility_success_weight: 1,
+    charisma_success_weight: 1,
+
+    intelligence_exp: 10 * CONSTANTS.IntelligenceCrimeBaseExpGain,
+  }),
+};
+
+function determineCrimeSuccess(type, moneyGained) {
     var chance = 0;
-    switch (crime) {
-        case CONSTANTS.CrimeShoplift:
-            chance = determineCrimeChanceShoplift();
-            break;
-        case CONSTANTS.CrimeRobStore:
-            chance = determineCrimeChanceRobStore();
-            break;
-        case CONSTANTS.CrimeMug:
-            chance = determineCrimeChanceMug();
-            break;
-        case CONSTANTS.CrimeLarceny:
-            chance = determineCrimeChanceLarceny();
-            break;
-        case CONSTANTS.CrimeDrugs:
-            chance = determineCrimeChanceDealDrugs();
-            break;
-        case CONSTANTS.CrimeBondForgery:
-            chance = determineCrimeChanceBondForgery();
-            break;
-        case CONSTANTS.CrimeTraffickArms:
-            chance = determineCrimeChanceTraffickArms();
-            break;
-        case CONSTANTS.CrimeHomicide:
-            chance = determineCrimeChanceHomicide();
-            break;
-        case CONSTANTS.CrimeGrandTheftAuto:
-            chance = determineCrimeChanceGrandTheftAuto();
-            break;
-        case CONSTANTS.CrimeKidnap:
-            chance = determineCrimeChanceKidnap();
-            break;
-        case CONSTANTS.CrimeAssassination:
-            chance = determineCrimeChanceAssassination();
-            break;
-        case CONSTANTS.CrimeHeist:
-            chance = determineCrimeChanceHeist();
-            break;
-        default:
-            console.log(crime);
-            dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
-            return;
+    var found = false;
+    for(const i in Crimes) {
+      const crime = Crimes[i];
+      if(crime.type == type) {
+        chance = crime.successRate();
+        found = true;
+        break;
+      }
+    }
+    if(!found) {
+      console.log(crime);
+      dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
+      return;
     }
 
     if (Math.random() <= chance) {
@@ -154,134 +243,33 @@ function determineCrimeSuccess(crime, moneyGained) {
     }
 }
 
-let intWgt = CONSTANTS.IntelligenceCrimeWeight;
-let maxLvl = CONSTANTS.MaxSkillLevel;
-
-function determineCrimeChanceShoplift() {
-    var chance = (Player.dexterity / maxLvl +
-                  Player.agility / maxLvl +
-                  intWgt * Player.intelligence / maxLvl) * 20;
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
+function findCrime(roughName) {
+  if (roughName.includes("shoplift")) {
+    return Crimes.Shoplift;
+  } else if (roughName.includes("rob") && roughName.includes("store")) {
+    return Crimes.RobStore;
+  } else if (roughName.includes("mug")) {
+    return Crimes.Mug;
+  } else if (roughName.includes("larceny")) {
+    return Crimes.Larceny;
+  } else if (roughName.includes("drugs")) {
+    return Crimes.DealDrugs;
+  } else if (roughName.includes("bond") && roughName.includes("forge")) {
+    return Crimes.BondForgery;
+  } else if (roughName.includes("traffick") && roughName.includes("arms")) {
+    return Crimes.TraffickArms;
+  } else if (roughName.includes("homicide")) {
+    return Crimes.Homicide;
+  } else if (roughName.includes("grand") && roughName.includes("auto")) {
+    return Crimes.GrandTheftAuto;
+  } else if (roughName.includes("kidnap")) {
+    return Crimes.Kidnap;
+  } else if (roughName.includes("assassinate")) {
+    return Crimes.Assassination;
+  } else if (roughName.includes("heist")) {
+    return Crimes.Heist;
+  }
+  return null;
 }
 
-function determineCrimeChanceRobStore() {
-    var chance = (0.5 * Player.hacking_skill / maxLvl +
-                  2 * Player.dexterity / maxLvl +
-                  1 * Player.agility / maxLvl +
-                  intWgt * Player.intelligence / maxLvl) * 5;
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
-}
-
-function determineCrimeChanceMug() {
-    var chance = (1.5 * Player.strength / maxLvl +
-                  0.5 * Player.defense / maxLvl +
-                  1.5 * Player.dexterity / maxLvl +
-                  0.5 * Player.agility / maxLvl +
-                  intWgt * Player.intelligence / maxLvl) * 5;
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
-}
-
-function determineCrimeChanceLarceny() {
-    var chance = (0.5 * Player.hacking_skill / maxLvl +
-                  Player.dexterity / maxLvl +
-                  Player.agility / maxLvl +
-                  intWgt * Player.intelligence / maxLvl) * 3;
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
-}
-
-function determineCrimeChanceDealDrugs() {
-    var chance = (3*Player.charisma / maxLvl +
-                  2*Player.dexterity / maxLvl +
-                  Player.agility / maxLvl +
-                  intWgt * Player.intelligence / maxLvl);
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
-}
-
-function determineCrimeChanceBondForgery() {
-    var chance = (0.1*Player.hacking_skill / maxLvl +
-                  2.5*Player.dexterity / maxLvl +
-                  2*intWgt*Player.intelligence / maxLvl);
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
-}
-
-function determineCrimeChanceTraffickArms() {
-    var chance = (Player.charisma / maxLvl +
-                  Player.strength / maxLvl +
-                  Player.defense / maxLvl +
-                  Player.dexterity / maxLvl +
-                  Player.agility / maxLvl +
-                  intWgt * Player.intelligence / maxLvl) / 2;
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
-}
-
-function determineCrimeChanceHomicide() {
-    var chance = (2   * Player.strength / maxLvl +
-                  2   * Player.defense / maxLvl +
-                  0.5 * Player.dexterity / maxLvl +
-                  0.5 * Player.agility / maxLvl +
-                  intWgt * Player.intelligence / maxLvl);
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
-}
-
-function determineCrimeChanceGrandTheftAuto() {
-    var chance = (Player.hacking_skill / maxLvl +
-                  Player.strength / maxLvl +
-                  4 * Player.dexterity / maxLvl +
-                  2 * Player.agility / maxLvl +
-                  2 * Player.charisma / maxLvl +
-                  intWgt * Player.intelligence / maxLvl) / 8;
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
-}
-
-function determineCrimeChanceKidnap() {
-    var chance =  (Player.charisma / maxLvl +
-                   Player.strength / maxLvl +
-                   Player.dexterity / maxLvl +
-                   Player.agility / maxLvl +
-                   intWgt * Player.intelligence / maxLvl) / 5;
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
-}
-
-function determineCrimeChanceAssassination() {
-    var chance = (Player.strength / maxLvl +
-                  2 * Player.dexterity / maxLvl +
-                  Player.agility / maxLvl +
-                  intWgt * Player.intelligence / maxLvl) / 8;
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
-}
-
-function determineCrimeChanceHeist() {
-    var chance = (Player.hacking_skill / maxLvl +
-                  Player.strength / maxLvl +
-                  Player.defense / maxLvl +
-                  Player.dexterity / maxLvl +
-                  Player.agility / maxLvl +
-                  Player.charisma / maxLvl +
-                  intWgt * Player.intelligence / maxLvl) / 18;
-    chance *= Player.crime_success_mult;
-    return Math.min(chance, 1);
-}
-
-export {commitShopliftCrime, commitRobStoreCrime, commitMugCrime,
-        commitLarcenyCrime, commitDealDrugsCrime, commitBondForgeryCrime,
-        commitTraffickArmsCrime,
-        commitHomicideCrime, commitGrandTheftAutoCrime, commitKidnapCrime,
-        commitAssassinationCrime, commitHeistCrime, determineCrimeSuccess,
-        determineCrimeChanceShoplift, determineCrimeChanceRobStore,
-        determineCrimeChanceMug, determineCrimeChanceLarceny,
-        determineCrimeChanceDealDrugs, determineCrimeChanceBondForgery,
-        determineCrimeChanceTraffickArms,
-        determineCrimeChanceHomicide, determineCrimeChanceGrandTheftAuto,
-        determineCrimeChanceKidnap, determineCrimeChanceAssassination,
-        determineCrimeChanceHeist};
+export {determineCrimeSuccess,findCrime,Crimes};
