@@ -24,7 +24,7 @@ import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 
-import Decimal                                  from '../utils/decimal.js';
+import Decimal                                  from "decimal.js";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
