@@ -1,6 +1,6 @@
 //Contains the "information" property for all the Factions, which is just a description
 //of each faction
-let FactionInfo = {
+const FactionInfo = {
     //Endgame
     IlluminatiInfo: "Humanity never changes. No matter how civilized society becomes, it will eventually fall back " +
                     "into chaos. And from this chaos, we are the Invisible hand that guides them to order. ",

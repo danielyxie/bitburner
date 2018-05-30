@@ -30,6 +30,13 @@ function Faction(name="") {
     this.isBanned           = false;    //Whether or not player is banned from joining this faction
     this.playerReputation 	= 0;  		//"Reputation" within faction
     this.alreadyInvited     = false;
+    this.enemies            = [];
+
+    //Types of work
+    this.offerHackingMission = false;
+    this.offerHackingWork    = false;
+    this.offerFieldWork      = false;
+    this.offerSecurityWork   = false;
 
     //Multipliers for unlocking and purchasing augmentations
     this.augmentationPriceMult = 1;
@@ -47,6 +54,17 @@ Faction.prototype.setAugmentationMultipliers = function(price, rep) {
 
 Faction.prototype.setInfo = function(inf) {
 	this.info = inf;
+}
+
+Faction.prototype.setEnemies = function(enemies){
+    this.enemies = enemies;
+}
+
+Faction.prototype.setAvailableWork = function(hackMission, hackWork, fieldWork, securityWork) {
+    this.offerHackingMission = hackMission;
+    this.offerHackingWork    = hackWork;
+    this.offerFieldWork      = fieldWork;
+    this.offerSecurityWork   = securityWork;
 }
 
 Faction.prototype.gainFavor = function() {
@@ -122,138 +140,176 @@ function initFactions() {
 	//Endgame
 	var Illuminati = new Faction("Illuminati");
     Illuminati.setInfo(FactionInfo.IlluminatiInfo);
+    Illuminati.setAvailableWork(true, true, true, false);
     resetFaction(Illuminati);
 
 	var Daedalus = new Faction("Daedalus");
     Daedalus.setInfo(FactionInfo.DaedalusInfo);
+    Daedalus.setAvailableWork(true, true, true, false);
     resetFaction(Daedalus);
 
 	var Covenant = new Faction("The Covenant");
     Covenant.setInfo(FactionInfo.CovenantInfo);
+    Covenant.setAvailableWork(true, true, true, false);
     resetFaction(Covenant);
 
 	//Megacorporations, each forms its own faction
 	var ECorp = new Faction("ECorp");
     ECorp.setInfo(FactionInfo.ECorpInfo);
+    ECorp.setAvailableWork(true, true, true, true);
     resetFaction(ECorp);
 
 	var MegaCorp = new Faction("MegaCorp");
+    MegaCorp.setAvailableWork(true, true, true, true);
     MegaCorp.setInfo(FactionInfo.MegaCorpInfo);
     resetFaction(MegaCorp);
 
 	var BachmanAndAssociates = new Faction("Bachman & Associates");
     BachmanAndAssociates.setInfo(FactionInfo.BachmanAndAssociatesInfo);
+    BachmanAndAssociates.setAvailableWork(true, true, true, true);
     resetFaction(BachmanAndAssociates);
 
 	var BladeIndustries = new Faction("Blade Industries");
     BladeIndustries.setInfo(FactionInfo.BladeIndustriesInfo);
+    BladeIndustries.setAvailableWork(true, true, true, true);
     resetFaction(BladeIndustries);
 
 	var NWO = new Faction("NWO");
     NWO.setInfo(FactionInfo.NWOInfo);
+    NWO.setAvailableWork(true, true, true, true);
     resetFaction(NWO);
 
 	var ClarkeIncorporated = new Faction("Clarke Incorporated");
     ClarkeIncorporated.setInfo(FactionInfo.ClarkeIncorporatedInfo);
+    ClarkeIncorporated.setAvailableWork(true, true, true, true);
     resetFaction(ClarkeIncorporated);
 
 	var OmniTekIncorporated = new Faction("OmniTek Incorporated");
     OmniTekIncorporated.setInfo(FactionInfo.OmniTekIncorporatedInfo);
+    OmniTekIncorporated.setAvailableWork(true, true, true, true);
     resetFaction(OmniTekIncorporated);
 
 	var FourSigma = new Faction("Four Sigma");
     FourSigma.setInfo(FactionInfo.FourSigmaInfo);
+    FourSigma.setAvailableWork(true, true, true, true);
     resetFaction(FourSigma);
 
 	var KuaiGongInternational = new Faction("KuaiGong International");
     KuaiGongInternational.setInfo(FactionInfo.KuaiGongInternationalInfo);
+    KuaiGongInternational.setAvailableWork(true, true, true, true);
     resetFaction(KuaiGongInternational);
 
     //Other corporations
     var FulcrumTechnologies = new Faction("Fulcrum Secret Technologies");
     FulcrumTechnologies.setInfo(FactionInfo.FulcrumSecretTechnologiesInfo);
+    FulcrumTechnologies.setAvailableWork(true, true, false, true);
     resetFaction(FulcrumTechnologies);
 
 	//Hacker groups
 	var BitRunners = new Faction("BitRunners");
     BitRunners.setInfo(FactionInfo.BitRunnersInfo);
+    BitRunners.setAvailableWork(true, true, false, false);
     resetFaction(BitRunners);
 
 	var BlackHand = new Faction("The Black Hand");
     BlackHand.setInfo(FactionInfo.BlackHandInfo);
+    BlackHand.setAvailableWork(true, true, true, false);
     resetFaction(BlackHand);
 
 	var NiteSec = new Faction("NiteSec");
     NiteSec.setInfo(FactionInfo.NiteSecInfo);
+    NiteSec.setAvailableWork(true, true, false, false);
     resetFaction(NiteSec);
 
 	//City factions, essentially governments
 	var Chongqing = new Faction("Chongqing");
     Chongqing.setInfo(FactionInfo.ChongqingInfo);
+    Chongqing.setAvailableWork(true, true, true, true);
+    Chongqing.setEnemies(["Sector-12", "Aevum", "Volhaven"]);
     resetFaction(Chongqing);
 
 	var Sector12 = new Faction("Sector-12");
     Sector12.setInfo(FactionInfo.Sector12Info);
+    Sector12.setAvailableWork(true, true, true, true);
+    Sector12.setEnemies(["Chongqing", "New Tokyo", "Ishima", "Volhaven"]);
     resetFaction(Sector12);
 
 	var NewTokyo = new Faction("New Tokyo");
     NewTokyo.setInfo(FactionInfo.NewTokyoInfo);
+    NewTokyo.setAvailableWork(true, true, true, true);
+    NewTokyo.setEnemies(["Sector-12", "Aevum", "Volhaven"]);
     resetFaction(NewTokyo);
 
 	var Aevum = new Faction("Aevum");
     Aevum.setInfo(FactionInfo.AevumInfo);
+    Aevum.setAvailableWork(true, true, true, true);
+    Aevum.setEnemies(["Chongqing", "New Tokyo", "Ishima", "Volhaven"]);
     resetFaction(Aevum);
 
     var Ishima = new Faction("Ishima");
     Ishima.setInfo(FactionInfo.Ishima);
+    Ishima.setAvailableWork(true, true, true, true);
+    Ishima.setEnemies(["Sector-12", "Aevum", "Volhaven"]);
     resetFaction(Ishima);
 
 	var Volhaven = new Faction("Volhaven");
     Volhaven.setInfo(FactionInfo.VolhavenInfo);
+    Volhaven.setAvailableWork(true, true, true, true);
+    Volhaven.setEnemies(["Chongqing", "Sector-12", "New Tokyo", "Aevum", "Ishima"]);
     resetFaction(Volhaven);
 
 	//Criminal Organizations/Gangs
 	var SpeakersForTheDead = new Faction("Speakers for the Dead");
     SpeakersForTheDead.setInfo(FactionInfo.SpeakersForTheDeadInfo);
+    SpeakersForTheDead.setAvailableWork(true, true, true, true);
     resetFaction(SpeakersForTheDead);
 
 	var DarkArmy = new Faction("The Dark Army");
     DarkArmy.setInfo(FactionInfo.DarkArmyInfo);
+    DarkArmy.setAvailableWork(true, true, true, false);
     resetFaction(DarkArmy);
 
 	var TheSyndicate = new Faction("The Syndicate");
     TheSyndicate.setInfo(FactionInfo.TheSyndicateInfo);
+    TheSyndicate.setAvailableWork(true, true, true, true);
     resetFaction(TheSyndicate);
 
     var Silhouette = new Faction("Silhouette");
     Silhouette.setInfo(FactionInfo.SilhouetteInfo);
+    Silhouette.setAvailableWork(true, true, true, false);
     resetFaction(Silhouette);
 
     var Tetrads = new Faction("Tetrads"); //Low-medium level asian crime gang
     Tetrads.setInfo(FactionInfo.TetradsInfo);
+    Tetrads.setAvailableWork(false, false, true, true);
     resetFaction(Tetrads);
 
     var SlumSnakes = new Faction("Slum Snakes"); //Low level crime gang
     SlumSnakes.setInfo(FactionInfo.SlumSnakesInfo);
+    SlumSnakes.setAvailableWork(false, false, true, true);
     resetFaction(SlumSnakes);
 
 	//Earlygame factions - factions the player will prestige with early on that don't
 	//belong in other categories
     var Netburners = new Faction("Netburners");
     Netburners.setInfo(FactionInfo.NetburnersInfo);
+    Netburners.setAvailableWork(true, true, false, false);
     resetFaction(Netburners);
 
 	var TianDiHui = new Faction("Tian Di Hui");	//Society of the Heaven and Earth
     TianDiHui.setInfo(FactionInfo.TianDiHuiInfo);
+    TianDiHui.setAvailableWork(true, true, false, true);
     resetFaction(TianDiHui);
 
 	var CyberSec = new Faction("CyberSec");
     CyberSec.setInfo(FactionInfo.CyberSecInfo);
+    CyberSec.setAvailableWork(true, true, false, false);
     resetFaction(CyberSec);
 
     //Special Factions
     var Bladeburners = new Faction("Bladeburners");
     Bladeburners.setInfo(FactionInfo.BladeburnersInfo);
+    Bladeburners.setAvailableWork(false, false, false, false);
     resetFaction(Bladeburners);
 }
 
@@ -289,34 +345,9 @@ function joinFaction(faction) {
     Player.factions.push(faction.name);
 
     //Determine what factions you are banned from now that you have joined this faction
-    if (faction.name == "Chongqing") {
-        Factions["Sector-12"].isBanned = true;
-        Factions["Aevum"].isBanned = true;
-        Factions["Volhaven"].isBanned = true;
-    } else if (faction.name == "Sector-12") {
-        Factions["Chongqing"].isBanned = true;
-        Factions["New Tokyo"].isBanned = true;
-        Factions["Ishima"].isBanned = true;
-        Factions["Volhaven"].isBanned = true;
-    } else if (faction.name == "New Tokyo") {
-        Factions["Sector-12"].isBanned = true;
-        Factions["Aevum"].isBanned = true;
-        Factions["Volhaven"].isBanned = true;
-    } else if (faction.name == "Aevum") {
-        Factions["Chongqing"].isBanned = true;
-        Factions["New Tokyo"].isBanned = true;
-        Factions["Ishima"].isBanned = true;
-        Factions["Volhaven"].isBanned = true;
-    } else if (faction.name == "Ishima") {
-        Factions["Sector-12"].isBanned = true;
-        Factions["Aevum"].isBanned = true;
-        Factions["Volhaven"].isBanned = true;
-    } else if (faction.name == "Volhaven") {
-        Factions["Chongqing"].isBanned = true;
-        Factions["Sector-12"].isBanned = true;
-        Factions["New Tokyo"].isBanned = true;
-        Factions["Aevum"].isBanned = true;
-        Factions["Ishima"].isBanned = true;
+    for(const i in faction.enemies) {
+        const enemy = faction.enemies[i];
+        Factions[enemy].isBanned = true;
     }
 }
 
@@ -583,213 +614,16 @@ function displayFactionContent(factionName) {
         return;
     }
 
-	if (faction.isMember) {
-        if (faction.favor >= (150 * BitNodeMultipliers.RepToDonateToFaction)) {
-            donateDiv.style.display = "inline";
-        } else {
-            donateDiv.style.display = "none";
-        }
-
-		switch(faction.name) {
-			case "Illuminati":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "Daedalus":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "The Covenant":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "ECorp":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "MegaCorp":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Bachman & Associates":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Blade Industries":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "NWO":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Clarke Incorporated":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "OmniTek Incorporated":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Four Sigma":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "KuaiGong International":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-            case "Fulcrum Secret Technologies":
-                hackMissionDiv.style.display = "inline";
-                hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "none";
-				securityWorkDiv.style.display = "inline";
-                break;
-			case "BitRunners":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "none";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "The Black Hand":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "NiteSec":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "none";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "Chongqing":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Sector-12":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "New Tokyo":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Aevum":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Ishima":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Volhaven":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Speakers for the Dead":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "The Dark Army":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "The Syndicate":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-            case "Silhouette":
-                hackMissionDiv.style.display = "inline";
-                hackDiv.style.display = "inline";
-                fieldWorkDiv.style.display = "inline";
-                securityWorkDiv.style.display = "none";
-                break;
-            case "Tetrads":
-                hackMissionDiv.style.display = "none";
-                hackDiv.style.display = "none";
-                fieldWorkDiv.style.display = "inline";
-                securityWorkDiv.style.display = "inline";
-                break;
-            case "Slum Snakes":
-                hackMissionDiv.style.display = "none";
-                hackDiv.style.display = "none";
-                fieldWorkDiv.style.display = "inline";
-                securityWorkDiv.style.display = "inline";
-                break;
-            case "Netburners":
-                hackMissionDiv.style.display = "inline";
-                hackDiv.style.display = "inline";
-                fieldWorkDiv.style.display = "none";
-                securityWorkDiv.style.display = "none";
-                break;
-			case "Tian Di Hui":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "none";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "CyberSec":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "none";
-				securityWorkDiv.style.display = "none";
-				break;
-            case "Bladeburners":
-                hackMissionDiv.style.display = "none";
-                hackDiv.style.display = "none";
-                fieldWorkDiv.style.display = "none";
-                securityWorkDiv.style.display = "none";
-                break;
-			default:
-				console.log("Faction does not exist");
-				break;
-		}
-	} else {
+	if (!faction.isMember) {
 		throw new Error("Not a member of this faction, cannot display faction information");
 	}
+
+    donateDiv.style.display = faction.favor >= (150 * BitNodeMultipliers.RepToDonateToFaction) ? "inline" : "none";
+
+    hackMissionDiv.style.display  = faction.offerHackingMission ? "inline": "none";
+    hackDiv.style.display         = faction.offerHackingWork ? "inline" : "none";
+    fieldWorkDiv.style.display    = faction.offerFieldWork ? "inline" : "none";
+    securityWorkDiv.style.display = faction.offerSecurityWork ? "inline" : "none";
 
     //Display all elements
     for (var i = 0; i < elements.length; ++i) {
