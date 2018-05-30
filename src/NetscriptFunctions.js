@@ -1118,7 +1118,13 @@ function NetscriptFunctions(workerScript) {
             if (!hasAISF) {
                 throw makeRuntimeRejectMsg(workerScript, "Cannot run getBitNodeMultipliers(). It requires Source-File 5 to run.");
             }
-            return BitNodeMultipliers;
+            let copy = {};
+            for (const mult in BitNodeMultipliers) {
+                if (BitNodeMultipliers.hasOwnProperty(mult)) {
+                    copy[mult] = BitNodeMultipliers[mult];
+                }
+            }
+            return copy;
         },
         getServerMoneyAvailable : function(ip){
             if (workerScript.checkingRam) {
