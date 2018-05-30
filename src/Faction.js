@@ -3,7 +3,7 @@ import {Augmentations, AugmentationNames,
 import {BitNodeMultipliers}                     from "./BitNode.js";
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
-import {FactionInfo}                            from "./FactionInfo.js";
+import {FactionInfos}                           from "./FactionInfo.js";
 import {Locations}                              from "./Location.js";
 import {HackingMission, setInMission}           from "./Missions.js";
 import {Player}                                 from "./Player.js";
@@ -23,48 +23,24 @@ import {yesNoBoxCreate, yesNoBoxGetYesButton,
 function Faction(name="") {
     this.name 				= name;
     this.augmentations 		= [];   //Name of augmentation only
-    this.info 		        = "";	//Introductory/informational text about the faction
 
     //Player-related properties for faction
     this.isMember 			= false; 	//Whether player is member
     this.isBanned           = false;    //Whether or not player is banned from joining this faction
     this.playerReputation 	= 0;  		//"Reputation" within faction
     this.alreadyInvited     = false;
-    this.enemies            = [];
-
-    //Types of work
-    this.offerHackingMission = false;
-    this.offerHackingWork    = false;
-    this.offerFieldWork      = false;
-    this.offerSecurityWork   = false;
-
-    //Multipliers for unlocking and purchasing augmentations
-    this.augmentationPriceMult = 1;
-    this.augmentationRepRequirementMult = 1;
 
     //Faction favor
     this.favor              = 0;
     this.rolloverRep        = 0;
 };
 
-Faction.prototype.setAugmentationMultipliers = function(price, rep) {
-    this.augmentationPriceMult = price;
-    this.augmentationRepRequirementMult = rep;
-}
-
-Faction.prototype.setInfo = function(inf) {
-	this.info = inf;
-}
-
-Faction.prototype.setEnemies = function(enemies){
-    this.enemies = enemies;
-}
-
-Faction.prototype.setAvailableWork = function(hackMission, hackWork, fieldWork, securityWork) {
-    this.offerHackingMission = hackMission;
-    this.offerHackingWork    = hackWork;
-    this.offerFieldWork      = fieldWork;
-    this.offerSecurityWork   = securityWork;
+Faction.prototype.getInfo = function() {
+    const info = FactionInfos[this.name];
+    if(info == null) {
+        throw new Error("Missing faction from FactionInfos: " + this.name+" this probably means the faction got corrupted somehow");
+    }
+    return info;
 }
 
 Faction.prototype.gainFavor = function() {
@@ -137,180 +113,9 @@ function factionExists(name) {
 //TODO Augmentation price and rep requirement mult are 1 for everything right now,
 //      This might change in the future for balance
 function initFactions() {
-	//Endgame
-	var Illuminati = new Faction("Illuminati");
-    Illuminati.setInfo(FactionInfo.IlluminatiInfo);
-    Illuminati.setAvailableWork(true, true, true, false);
-    resetFaction(Illuminati);
-
-	var Daedalus = new Faction("Daedalus");
-    Daedalus.setInfo(FactionInfo.DaedalusInfo);
-    Daedalus.setAvailableWork(true, true, true, false);
-    resetFaction(Daedalus);
-
-	var Covenant = new Faction("The Covenant");
-    Covenant.setInfo(FactionInfo.CovenantInfo);
-    Covenant.setAvailableWork(true, true, true, false);
-    resetFaction(Covenant);
-
-	//Megacorporations, each forms its own faction
-	var ECorp = new Faction("ECorp");
-    ECorp.setInfo(FactionInfo.ECorpInfo);
-    ECorp.setAvailableWork(true, true, true, true);
-    resetFaction(ECorp);
-
-	var MegaCorp = new Faction("MegaCorp");
-    MegaCorp.setAvailableWork(true, true, true, true);
-    MegaCorp.setInfo(FactionInfo.MegaCorpInfo);
-    resetFaction(MegaCorp);
-
-	var BachmanAndAssociates = new Faction("Bachman & Associates");
-    BachmanAndAssociates.setInfo(FactionInfo.BachmanAndAssociatesInfo);
-    BachmanAndAssociates.setAvailableWork(true, true, true, true);
-    resetFaction(BachmanAndAssociates);
-
-	var BladeIndustries = new Faction("Blade Industries");
-    BladeIndustries.setInfo(FactionInfo.BladeIndustriesInfo);
-    BladeIndustries.setAvailableWork(true, true, true, true);
-    resetFaction(BladeIndustries);
-
-	var NWO = new Faction("NWO");
-    NWO.setInfo(FactionInfo.NWOInfo);
-    NWO.setAvailableWork(true, true, true, true);
-    resetFaction(NWO);
-
-	var ClarkeIncorporated = new Faction("Clarke Incorporated");
-    ClarkeIncorporated.setInfo(FactionInfo.ClarkeIncorporatedInfo);
-    ClarkeIncorporated.setAvailableWork(true, true, true, true);
-    resetFaction(ClarkeIncorporated);
-
-	var OmniTekIncorporated = new Faction("OmniTek Incorporated");
-    OmniTekIncorporated.setInfo(FactionInfo.OmniTekIncorporatedInfo);
-    OmniTekIncorporated.setAvailableWork(true, true, true, true);
-    resetFaction(OmniTekIncorporated);
-
-	var FourSigma = new Faction("Four Sigma");
-    FourSigma.setInfo(FactionInfo.FourSigmaInfo);
-    FourSigma.setAvailableWork(true, true, true, true);
-    resetFaction(FourSigma);
-
-	var KuaiGongInternational = new Faction("KuaiGong International");
-    KuaiGongInternational.setInfo(FactionInfo.KuaiGongInternationalInfo);
-    KuaiGongInternational.setAvailableWork(true, true, true, true);
-    resetFaction(KuaiGongInternational);
-
-    //Other corporations
-    var FulcrumTechnologies = new Faction("Fulcrum Secret Technologies");
-    FulcrumTechnologies.setInfo(FactionInfo.FulcrumSecretTechnologiesInfo);
-    FulcrumTechnologies.setAvailableWork(true, true, false, true);
-    resetFaction(FulcrumTechnologies);
-
-	//Hacker groups
-	var BitRunners = new Faction("BitRunners");
-    BitRunners.setInfo(FactionInfo.BitRunnersInfo);
-    BitRunners.setAvailableWork(true, true, false, false);
-    resetFaction(BitRunners);
-
-	var BlackHand = new Faction("The Black Hand");
-    BlackHand.setInfo(FactionInfo.BlackHandInfo);
-    BlackHand.setAvailableWork(true, true, true, false);
-    resetFaction(BlackHand);
-
-	var NiteSec = new Faction("NiteSec");
-    NiteSec.setInfo(FactionInfo.NiteSecInfo);
-    NiteSec.setAvailableWork(true, true, false, false);
-    resetFaction(NiteSec);
-
-	//City factions, essentially governments
-	var Chongqing = new Faction("Chongqing");
-    Chongqing.setInfo(FactionInfo.ChongqingInfo);
-    Chongqing.setAvailableWork(true, true, true, true);
-    Chongqing.setEnemies(["Sector-12", "Aevum", "Volhaven"]);
-    resetFaction(Chongqing);
-
-	var Sector12 = new Faction("Sector-12");
-    Sector12.setInfo(FactionInfo.Sector12Info);
-    Sector12.setAvailableWork(true, true, true, true);
-    Sector12.setEnemies(["Chongqing", "New Tokyo", "Ishima", "Volhaven"]);
-    resetFaction(Sector12);
-
-	var NewTokyo = new Faction("New Tokyo");
-    NewTokyo.setInfo(FactionInfo.NewTokyoInfo);
-    NewTokyo.setAvailableWork(true, true, true, true);
-    NewTokyo.setEnemies(["Sector-12", "Aevum", "Volhaven"]);
-    resetFaction(NewTokyo);
-
-	var Aevum = new Faction("Aevum");
-    Aevum.setInfo(FactionInfo.AevumInfo);
-    Aevum.setAvailableWork(true, true, true, true);
-    Aevum.setEnemies(["Chongqing", "New Tokyo", "Ishima", "Volhaven"]);
-    resetFaction(Aevum);
-
-    var Ishima = new Faction("Ishima");
-    Ishima.setInfo(FactionInfo.Ishima);
-    Ishima.setAvailableWork(true, true, true, true);
-    Ishima.setEnemies(["Sector-12", "Aevum", "Volhaven"]);
-    resetFaction(Ishima);
-
-	var Volhaven = new Faction("Volhaven");
-    Volhaven.setInfo(FactionInfo.VolhavenInfo);
-    Volhaven.setAvailableWork(true, true, true, true);
-    Volhaven.setEnemies(["Chongqing", "Sector-12", "New Tokyo", "Aevum", "Ishima"]);
-    resetFaction(Volhaven);
-
-	//Criminal Organizations/Gangs
-	var SpeakersForTheDead = new Faction("Speakers for the Dead");
-    SpeakersForTheDead.setInfo(FactionInfo.SpeakersForTheDeadInfo);
-    SpeakersForTheDead.setAvailableWork(true, true, true, true);
-    resetFaction(SpeakersForTheDead);
-
-	var DarkArmy = new Faction("The Dark Army");
-    DarkArmy.setInfo(FactionInfo.DarkArmyInfo);
-    DarkArmy.setAvailableWork(true, true, true, false);
-    resetFaction(DarkArmy);
-
-	var TheSyndicate = new Faction("The Syndicate");
-    TheSyndicate.setInfo(FactionInfo.TheSyndicateInfo);
-    TheSyndicate.setAvailableWork(true, true, true, true);
-    resetFaction(TheSyndicate);
-
-    var Silhouette = new Faction("Silhouette");
-    Silhouette.setInfo(FactionInfo.SilhouetteInfo);
-    Silhouette.setAvailableWork(true, true, true, false);
-    resetFaction(Silhouette);
-
-    var Tetrads = new Faction("Tetrads"); //Low-medium level asian crime gang
-    Tetrads.setInfo(FactionInfo.TetradsInfo);
-    Tetrads.setAvailableWork(false, false, true, true);
-    resetFaction(Tetrads);
-
-    var SlumSnakes = new Faction("Slum Snakes"); //Low level crime gang
-    SlumSnakes.setInfo(FactionInfo.SlumSnakesInfo);
-    SlumSnakes.setAvailableWork(false, false, true, true);
-    resetFaction(SlumSnakes);
-
-	//Earlygame factions - factions the player will prestige with early on that don't
-	//belong in other categories
-    var Netburners = new Faction("Netburners");
-    Netburners.setInfo(FactionInfo.NetburnersInfo);
-    Netburners.setAvailableWork(true, true, false, false);
-    resetFaction(Netburners);
-
-	var TianDiHui = new Faction("Tian Di Hui");	//Society of the Heaven and Earth
-    TianDiHui.setInfo(FactionInfo.TianDiHuiInfo);
-    TianDiHui.setAvailableWork(true, true, false, true);
-    resetFaction(TianDiHui);
-
-	var CyberSec = new Faction("CyberSec");
-    CyberSec.setInfo(FactionInfo.CyberSecInfo);
-    CyberSec.setAvailableWork(true, true, false, false);
-    resetFaction(CyberSec);
-
-    //Special Factions
-    var Bladeburners = new Faction("Bladeburners");
-    Bladeburners.setInfo(FactionInfo.BladeburnersInfo);
-    Bladeburners.setAvailableWork(false, false, false, false);
-    resetFaction(Bladeburners);
+    for(const name in FactionInfos) {
+        resetFaction(new Faction(name));    
+    }
 }
 
 //Resets a faction during (re-)initialization. Saves the favor in the new
@@ -343,10 +148,11 @@ function inviteToFaction(faction) {
 function joinFaction(faction) {
 	faction.isMember = true;
     Player.factions.push(faction.name);
+    const factionInfo = faction.getInfo();
 
     //Determine what factions you are banned from now that you have joined this faction
-    for(const i in faction.enemies) {
-        const enemy = faction.enemies[i];
+    for(const i in factionInfo.enemies) {
+        const enemy = factionInfo.enemies[i];
         Factions[enemy].isBanned = true;
     }
 }
@@ -357,6 +163,8 @@ function displayFactionContent(factionName) {
     if (faction == null) {
         throw new Error("Invalid factionName passed into displayFactionContent: " + factionName);
     }
+    var factionInfo = faction.getInfo();
+
     removeChildrenFromElement(Engine.Display.factionContent);
     var elements = [];
 
@@ -365,7 +173,7 @@ function displayFactionContent(factionName) {
         innerText:factionName
     }));
     elements.push(createElement("pre", {
-        innerHTML:"<i>" + faction.info + "</i>"
+        innerHTML:"<i>" + factionInfo.infoText + "</i>"
     }));
     elements.push(createElement("p", {
         innerText:"---------------",
@@ -620,10 +428,10 @@ function displayFactionContent(factionName) {
 
     donateDiv.style.display = faction.favor >= (150 * BitNodeMultipliers.RepToDonateToFaction) ? "inline" : "none";
 
-    hackMissionDiv.style.display  = faction.offerHackingMission ? "inline": "none";
-    hackDiv.style.display         = faction.offerHackingWork ? "inline" : "none";
-    fieldWorkDiv.style.display    = faction.offerFieldWork ? "inline" : "none";
-    securityWorkDiv.style.display = faction.offerSecurityWork ? "inline" : "none";
+    hackMissionDiv.style.display  = factionInfo.offerHackingMission ? "inline": "none";
+    hackDiv.style.display         = factionInfo.offerHackingWork ? "inline" : "none";
+    fieldWorkDiv.style.display    = factionInfo.offerFieldWork ? "inline" : "none";
+    securityWorkDiv.style.display = factionInfo.offerSecurityWork ? "inline" : "none";
 
     //Display all elements
     for (var i = 0; i < elements.length; ++i) {
@@ -749,6 +557,8 @@ function displayFactionAugmentations(factionName) {
 //  @augs Array of Aug names
 //  @faction Faction for which to display Augmentations
 function createFactionAugmentationDisplayElements(augmentationsList, augs, faction) {
+    const factionInfo = faction.getInfo();
+
     for (var i = 0; i < augs.length; ++i) {
         (function () {
             var aug = Augmentations[augs[i]];
@@ -800,10 +610,10 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
                 aElem.setAttribute("class", "a-link-button");
-                pElem.innerHTML = "UNLOCKED - " + numeral(aug.baseCost * faction.augmentationPriceMult).format("$0.000a");
+                pElem.innerHTML = "UNLOCKED - " + numeral(aug.baseCost * factionInfo.augmentationPriceMult).format("$0.000a");
             } else {
                 aElem.setAttribute("class", "a-link-button-inactive");
-                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 1) + " faction reputation) - " + numeral(aug.baseCost * faction.augmentationPriceMult).format("$0.000a");
+                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 1) + " faction reputation) - " + numeral(aug.baseCost * factionInfo.augmentationPriceMult).format("$0.000a");
                 pElem.style.color = "red";
             }
             aDiv.appendChild(aElem);
@@ -816,6 +626,7 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
 }
 
 function purchaseAugmentationBoxCreate(aug, fac) {
+    const factionInfo = fac.info();
     var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
     yesBtn.innerHTML = "Purchase";
     noBtn.innerHTML = "Cancel";
@@ -829,7 +640,7 @@ function purchaseAugmentationBoxCreate(aug, fac) {
     yesNoBoxCreate("<h2>" + aug.name + "</h2><br>" +
                    aug.info + "<br><br>" +
                    "<br>Would you like to purchase the " + aug.name + " Augmentation for $" +
-                   formatNumber(aug.baseCost * fac.augmentationPriceMult, 2)  + "?");
+                   formatNumber(aug.baseCost * factionInfo.augmentationPriceMult, 2)  + "?");
 }
 
 //Returns a boolean indicating whether the player has the prerequisites for the
