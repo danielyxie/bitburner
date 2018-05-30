@@ -19,7 +19,7 @@ import {AllServers, Server, AddToAllServers}    from "./Server.js";
 import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps.js";
 import {SourceFiles, applySourceFile}           from "./SourceFile.js";
 
-import Decimal                                  from '../utils/decimal.js';
+import Decimal                                  from "decimal.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {clearEventListeners}                    from "../utils/HelperFunctions.js";
 import {createRandomIp}                         from "../utils/IPAddress.js";

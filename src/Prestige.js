@@ -27,7 +27,7 @@ import {initStockMarket, initSymbolToStockMap,
         stockMarketContentCreated,
         setStockMarketContentCreated}           from "./StockMarket.js";
 import {Terminal, postNetburnerText}            from "./Terminal.js";
-import Decimal                                  from '../utils/decimal.js';
+import Decimal                                  from "decimal.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {createPopup, createElement,
         removeElementById, exceptionAlert}      from "../utils/HelperFunctions.js";
