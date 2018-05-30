@@ -168,6 +168,27 @@ a:link, a:visited {
     pointer-events: none;
 }
 
+/* Make anchor tags ("a" elements) for activated actions */
+.a-link-button-bought {
+    text-decoration: none;
+    background-color: #00AA00;
+    color: #FFFFFF;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #00AA00;
+    cursor: default;
+}
+
+.a-link-button-bought:hover .tooltiptext,
+.a-link-button-bought:hover .tooltiptexthigh,
+.a-link-button-bought:hover .tooltiptextleft {
+    visibility: visible;
+}
+
+.a-link-button-bought:active {
+    pointer-events: none;
+}
+
 /* Notification icon (for create program right now only) */
 #create-program-tab {
     position:relative;
