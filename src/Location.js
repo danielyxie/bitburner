@@ -27,7 +27,7 @@ import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {clearEventListeners, createElement}     from "../utils/HelperFunctions.js";
 import {createRandomIp}                         from "../utils/IPAddress.js";
-import numeral                                  from "../utils/numeral.min.js";
+import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,

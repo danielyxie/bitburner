@@ -3,7 +3,7 @@ import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions.js";
 import {clearEventListeners, createElement,
         removeChildrenFromElement,
         exceptionAlert}                         from "../utils/HelperFunctions.js";
-import numeral                                  from "../utils/numeral.min.js";
+import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
         convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
 import {loxBoxCreate, logBoxUpdateText,
