@@ -182,8 +182,8 @@ function applySourceFile(srcFile) {
             Player.company_rep_mult   *= incMult;
             break;
         case 12: //The testing ground
-            const inc = Math.pow(1.01, srcFile.lvl);
-            const dec = Math.pow(0.99, srcFile.lvl);
+            var inc = Math.pow(1.01, srcFile.lvl);
+            var dec = Math.pow(0.99, srcFile.lvl);
 
             Player.hacking_chance_mult *= inc;
             Player.hacking_speed_mult  *= inc;

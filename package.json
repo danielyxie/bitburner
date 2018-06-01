@@ -84,9 +84,11 @@
     "url": "git+https://github.com/danielyxie/bitburner.git"
   },
   "scripts": {
+    "lint:js": "eslint *.js src utils tests",
     "start:dev": "webpack-dev-server",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
+    "lint:javascript": "eslint ./src/**/*.js ./tests/**/*.js ./utils/**/*.js",
     "lint:typescript": "tslint --project . --exclude **/*.d.ts --format stylish src/**/*.ts utils/**/*.ts",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development"

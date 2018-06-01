@@ -308,14 +308,14 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.CorporationValuation     = 0.01;
             break;
         case 12: //The Recursion
-            let sf12Lvl = 0;
-            for (let i = 0; i < Player.sourceFiles.length; i++) {
+            var sf12Lvl = 0;
+            for (var i = 0; i < Player.sourceFiles.length; i++) {
                 if (Player.sourceFiles[i].n === 12) {
                     sf12Lvl = Player.sourceFiles[i].lvl;
                 }
             }
-            const inc = Math.pow(1.01, sf12Lvl);
-            const dec = Math.pow(0.99, sf12Lvl);
+            var inc = Math.pow(1.01, sf12Lvl);
+            var dec = Math.pow(0.99, sf12Lvl);
             BitNodeMultipliers.HackingLevelMultiplier = dec;
 
             BitNodeMultipliers.ServerMaxMoney         = dec;
