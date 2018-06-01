@@ -218,7 +218,7 @@ PlayerObject.prototype.init = function() {
     this.currentServer = t_homeComp.ip;
     AddToAllServers(t_homeComp);
 
-    this.getHomeComputer().programs.push(Programs.NukeProgram);
+    this.getHomeComputer().programs.push(Programs.NukeProgram.name);
 }
 
 PlayerObject.prototype.prestigeAugmentation = function() {

@@ -20,7 +20,7 @@ import {cinematicTextFlag}                      from "./CinematicText.js";
 import {CompanyPositions, initCompanies}        from "./Company.js";
 import {Corporation}                            from "./CompanyManagement.js";
 import {CONSTANTS}                              from "./Constants.js";
-import {Programs, displayCreateProgramContent,
+import {displayCreateProgramContent,
         getNumAvailableCreateProgram,
         initCreateProgramButtons}               from "./CreateProgram.js";
 import {displayFactionContent, joinFaction,

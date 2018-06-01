@@ -87,71 +87,71 @@ function listAllDarkwebItems() {
 }
 
 function buyDarkwebItem(itemName) {
-    if (itemName.toLowerCase() == Programs.BruteSSHProgram.toLowerCase()) {
+    if (itemName.toLowerCase() == Programs.BruteSSHProgram.name.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.BruteSSHProgram);
         if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.BruteSSHProgram);
+            Player.getHomeComputer().programs.push(Programs.BruteSSHProgram.name);
             post("You have purchased the BruteSSH.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (itemName.toLowerCase() == Programs.FTPCrackProgram.toLowerCase()) {
+    } else if (itemName.toLowerCase() == Programs.FTPCrackProgram.name.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.FTPCrackProgram);
         if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.FTPCrackProgram);
+            Player.getHomeComputer().programs.push(Programs.FTPCrackProgram.name);
             post("You have purchased the FTPCrack.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (itemName.toLowerCase() == Programs.RelaySMTPProgram.toLowerCase()) {
+    } else if (itemName.toLowerCase() == Programs.RelaySMTPProgram.name.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.RelaySMTPProgram);
         if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.RelaySMTPProgram);
+            Player.getHomeComputer().programs.push(Programs.RelaySMTPProgram.name);
             post("You have purchased the relaySMTP.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (itemName.toLowerCase() == Programs.HTTPWormProgram.toLowerCase()) {
+    } else if (itemName.toLowerCase() == Programs.HTTPWormProgram.name.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.HTTPWormProgram);
         if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.HTTPWormProgram);
+            Player.getHomeComputer().programs.push(Programs.HTTPWormProgram.name);
             post("You have purchased the HTTPWorm.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (itemName.toLowerCase() == Programs.SQLInjectProgram.toLowerCase()) {
+    } else if (itemName.toLowerCase() == Programs.SQLInjectProgram.name.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.SQLInjectProgram);
         if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.SQLInjectProgram);
+            Player.getHomeComputer().programs.push(Programs.SQLInjectProgram.name);
             post("You have purchased the SQLInject.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (itemName.toLowerCase() == Programs.DeepscanV1.toLowerCase()) {
+    } else if (itemName.toLowerCase() == Programs.DeepscanV1.name.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV1Program);
         if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.DeepscanV1);
+            Player.getHomeComputer().programs.push(Programs.DeepscanV1.name);
             post("You have purchased the DeepscanV1.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
             post("Not enough money to purchase " + itemName);
         }
-    } else if (itemName.toLowerCase() == Programs.DeepscanV2.toLowerCase()) {
+    } else if (itemName.toLowerCase() == Programs.DeepscanV2.name.toLowerCase()) {
         var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV2Program);
         if (price > 0 && Player.money.gt(price)) {
             Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.DeepscanV2);
+            Player.getHomeComputer().programs.push(Programs.DeepscanV2.name);
             post("You have purchased the DeepscanV2.exe program. The new program " +
                  "can be found on your home computer.");
         } else {
