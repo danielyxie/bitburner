@@ -1689,7 +1689,7 @@ let Terminal = {
             }
         }
         
-        for (var i = 0; i < s.contracts.length; ++i) {
+        /*for (var i = 0; i < s.contracts.length; ++i) {
             if (filter) {
                 if (s.contracts[i].fn.includes(filter)) {
                     allFiles.push(s.contracts[i].fn);
@@ -1697,7 +1697,7 @@ let Terminal = {
             } else {
                 allFiles.push(s.contracts[i].fn);
             }
-        }
+        }*/
         
 
         //Sort the files alphabetically then print each

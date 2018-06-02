@@ -3821,7 +3821,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             }
-        },
+        }/*,
         spawnPuzzle : function() {
             Player.getHomeComputer().pushContract(new CodingContract(Math.floor(Math.random()*10000), ContractTypes.PlusOne));
         },
@@ -3878,7 +3878,7 @@ function NetscriptFunctions(workerScript) {
 
             contract.giveReward();
             return true;
-        }
+        }*/
     } //End return
 } //End NetscriptFunction()
 
