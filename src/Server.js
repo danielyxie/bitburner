@@ -41,6 +41,7 @@ function Server(params={ip:createRandomIp(), hostname:""}) {
     this.programs       = [];
     this.messages       = [];
     this.textFiles      = [];
+    this.contracts      = [];
     this.dir            = 0;    //new Directory(this, null, ""); TODO
 
     /* Hacking information (only valid for "foreign" aka non-purchased servers) */
@@ -91,6 +92,14 @@ Server.prototype.getScript = function(scriptName) {
         }
     }
     return null;
+}
+
+Server.prototype.pushContract = function(contract) {
+    this.contracts.push(contract);
+}
+
+Server.prototype.removeContract = function(contractName) {
+    this.contracts = this.contracts.filter(function(c){return c.fn == contractName});
 }
 
 //Strengthens a server's security level (difficulty) by the specified amount

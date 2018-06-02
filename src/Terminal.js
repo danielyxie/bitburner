@@ -1688,6 +1688,17 @@ let Terminal = {
                 allFiles.push(s.textFiles[i].fn);
             }
         }
+        
+        for (var i = 0; i < s.contracts.length; ++i) {
+            if (filter) {
+                if (s.contracts[i].fn.includes(filter)) {
+                    allFiles.push(s.contracts[i].fn);
+                }
+            } else {
+                allFiles.push(s.contracts[i].fn);
+            }
+        }
+        
 
         //Sort the files alphabetically then print each
         allFiles.sort();
