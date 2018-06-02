@@ -1,6 +1,9 @@
 import {Player} from "./Player.js";
+import {Reviver, Generic_toJSON,
+        Generic_fromJSON}                           from "../utils/JSONReviver.js";
 
-function ContractType(generate, validquestion, solver, reward) {
+function ContractType(name, generate, validquestion, solver, reward) {
+	this.name = name;
 	this.generate = generate;
 	this.solver = solver;
 	this.validquestion = validquestion;
@@ -12,11 +15,10 @@ function rewardMoney(money) {
 }
 
 const ContractTypes = {
-	PlusOneChallenge: ContractType(
-		generate=function(){return 1},
-		validquestion=function(data){return data === 1},
-		solver=function(input, answer){return 2},
-		reward=rewardMoney(1000)),
+	PlusOne: new ContractType("PlusOne", function(){return 1},
+		function(data){return data === 1},
+		function(input, answer){return 2},
+		rewardMoney(1000000000000)),
 };
 
 
@@ -36,5 +38,15 @@ CodingContract.prototype.isSolution = function(solution) {
 CodingContract.prototype.giveReward = function() {
 	ContractTypes[this.type].reward();
 }
+
+CodingContract.prototype.toJSON = function() {
+    return Generic_toJSON("CodingContract", this);
+}
+
+CodingContract.fromJSON = function(value) {
+    return Generic_fromJSON(CodingContract, value.data);
+}
+
+Reviver.constructors.CodingContract = CodingContract;
 
 export {CodingContract, ContractTypes};
