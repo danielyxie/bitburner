@@ -484,7 +484,6 @@ function parseOnlyRamCalculate(server, code, workerScript) {
 // onto the main reference map, and a list of modules that need to be parsed.
 function parseOnlyCalculateDeps(code, currentModule) {
     const ast = parse(code, {sourceType:"module", ecmaVersion: 8});
-    console.log(ast);
 
     // Everything from the global scope goes in ".". Everything else goes in ".function", where only
     // the outermost layer of functions counts.
