@@ -99,6 +99,7 @@ function PlayerObject() {
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
     this.purchasedServers       = []; //IP Addresses of purchased servers
     this.hacknetNodes           = [];
+    this.hacknetNodeWrappers    = [];
     this.totalHacknetNodeProduction = 0;
 
     //Factions
@@ -390,15 +391,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     if (this.bitNodeN === 3) {this.money = new Decimal(150e9);}
     this.corporation = 0;
 
-    //Reset Bladeburner
     this.bladeburner = 0;
-
-    //BitNode 8: Ghost of Wall Street
-    if (this.bitNodeN === 8) {this.money = new Decimal(100000000);}
-    if (this.bitNodeN === 8 || hasWallStreetSF) {
-        this.hasWseAccount = true;
-        this.hasTixApiAccess = true;
-    }
 
     this.playtimeSinceLastAug = 0;
     this.scriptProdSinceLastAug = 0;

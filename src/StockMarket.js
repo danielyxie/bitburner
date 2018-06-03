@@ -703,7 +703,7 @@ function displayStockMarketContent() {
     if (!Player.hasWseAccount && Player.money.gte(CONSTANTS.WSEAccountCost)) {
         wseAccountButton.setAttribute("class", "a-link-button");
     } else if (Player.hasWseAccount){
-        wseAccountButton.innerText = "WSE Account - acquired";
+        wseAccountButton.innerText = "WSE Account - Purchased";
         wseAccountButton.setAttribute("class", "a-link-button-bought");
     } else {
         wseAccountButton.setAttribute("class", "a-link-button-inactive");
@@ -724,7 +724,7 @@ function displayStockMarketContent() {
     if (!Player.hasTixApiAccess && Player.money.gte(CONSTANTS.TIXAPICost)) {
         tixApiAccessButton.setAttribute("class", "a-link-button");
     } else if(Player.hasTixApiAccess) {
-        tixApiAccessButton.innerText = "Trade Information eXchange (TIX) API Access - granted"
+        tixApiAccessButton.innerText = "Trade Information eXchange (TIX) API Access - Purchased"
         tixApiAccessButton.setAttribute("class", "a-link-button-bought");
     } else {
         tixApiAccessButton.setAttribute("class", "a-link-button-inactive");

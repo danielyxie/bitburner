@@ -56,6 +56,7 @@ function HacknetNode(name) {
     this.moneyGainRatePerSecond = 0;
 }
 
+
 HacknetNode.prototype.updateMoneyGainRate = function() {
     //How much extra $/s is gained per level
     var gainPerLevel = CONSTANTS.HacknetNodeMoneyGainPerLevel;
@@ -180,6 +181,36 @@ HacknetNode.fromJSON = function(value) {
 
 Reviver.constructors.HacknetNode = HacknetNode;
 
+var HacknetNodeWrapper = function(hacknetNodeObj) {
+    var _node                   = hacknetNodeObj;
+    return {
+        name                   : _node.name,
+        level                  : _node.level,
+        ram                    : _node.ram,
+        cores                  : _node.cores,
+        totalMoneyGenerated    : _node.totalMoneyGenerated,
+        onlineTimeSeconds      : _node.onlineTimeSeconds,
+        moneyGainRatePerSecond : _node.moneyGainRatePerSecond,
+        upgradeLevel : function(n) {
+            return _node.upgradeLevel(n);
+        },
+        upgradeRam : function() {
+            return _node.upgradeRam();
+        },
+        upgradeCore : function() {
+            return _node.upgradeCore();
+        },
+        getLevelUpgradeCost : function(n) {
+            return _node.getLevelUpgradeCost(n);
+        },
+        getRamUpgradeCost : function() {
+            return _node.getRamUpgradeCost();
+        },
+        getCoreUpgradeCost : function() {
+            return _node.getCoreUpgradeCost();
+        }
+    }
+}
 
 function purchaseHacknet() {
     /* INTERACTIVE TUTORIAL */
@@ -469,8 +500,31 @@ function updateHacknetNodeDomElement(nodeObj) {
     }
 }
 
+function createPlayerHacknetNodeWrappers() {
+    Player.hacknetNodeWrappers.length = Player.hacknetNodes.length;
+    for (var i = 0; i < Player.hacknetNodes.length; ++i) {
+        Player.hacknetNodeWrappers[i] = new HacknetNodeWrapper(Player.hacknetNodes[i]);
+    }
+}
+
+function updatePlayerHacknetNodeWrappers() {
+    if (Player.hacknetNodeWrappers.length !== Player.hacknetNodes.length) {
+        return createPlayerHacknetNodeWrappers();
+    }
+    for (var i = 0; i < Player.hacknetNodeWrappers.length; ++i) {
+        if (!(Player.hacknetNodeWrappers[i] instanceof HacknetNodeWrapper)) {return createPlayerHacknetNodeWrappers();}
+        Player.hacknetNodeWrappers[i].level                  = Player.hacknetNodes[i].level;
+        Player.hacknetNodeWrappers[i].ram                    = Player.hacknetNodes[i].ram;
+        Player.hacknetNodeWrappers[i].cores                  = Player.hacknetNodes[i].cores;
+        Player.hacknetNodeWrappers[i].totalMoneyGenerated    = Player.hacknetNodes[i].totalMoneyGenerated;
+        Player.hacknetNodeWrappers[i].onlineTimeSeconds      = Player.hacknetNodes[i].onlineTimeSeconds;
+        Player.hacknetNodeWrappers[i].moneyGainRatePerSecond = Player.hacknetNodes[i].moneyGainRatePerSecond;
+    }
+}
+
 function processAllHacknetNodeEarnings(numCycles) {
     var total = 0;
+    updatePlayerHacknetNodeWrappers();
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
         total += processSingleHacknetNodeEarnings(numCycles, Player.hacknetNodes[i]);
     }
@@ -503,4 +557,4 @@ function getHacknetNode(name) {
 export {hacknetNodesInit, HacknetNode, purchaseHacknet, updateTotalHacknetProduction,
         getCostOfNextHacknetNode, updateHacknetNodesMultiplierButtons, getMaxNumberLevelUpgrades,
         displayHacknetNodesContent, updateHacknetNodesContent, processAllHacknetNodeEarnings,
-        getHacknetNode};
+        getHacknetNode, createPlayerHacknetNodeWrappers};
