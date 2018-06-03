@@ -3,8 +3,18 @@
 Changelog
 =========
 
-v0.37.1
--------
+v0.37.2 - 6/2/2018
+------------------
+
+* After joining the Bladeburners division, there is now a button to go to the Bladeburner content
+  in the 'City' page
+* You now start with $250m in BitNode-8 (increased from $100m)
+* Bug Fix: You can now no longer directly edit Hacknet Node values through NetscriptJS (hopefully)
+* Bug Fix: Bladeburners is no longer accessible in BN-8
+* Bug Fix: getBitNodeMultipliers() Netscript function now returns a copy rather than the original object
+
+v0.37.1 - 5/22/2018
+-------------------
 * You now earn money from successfully completing Bladeburner contracts. The amount you earn is based
   on the difficulty of the contract.
 * Completing Field Analysis in Bladeburner now grants 0.1 rank

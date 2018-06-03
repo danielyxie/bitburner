@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.37.1",
+    Version:                "0.37.2",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -484,16 +484,13 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.37.1<br>" +
-    "* You now earn money from successfully completing Bladeburner contracts. The amount you earn is based " +
-    "on the difficulty of the contract.<br>" +
-    "* Completing Field Analysis in Bladeburner now grants 0.1 rank<br>" +
-    "* The maximum RAM you can get on a purchased server is now 1,048,576GB (2^20)<br>" +
-    "* Bug Fix: Fixed Netscript syntax highlighting issues with the new NetscriptJS<br>" +
-    "* Bug Fix: Netscript Functions now properly incur RAM costs in NetscriptJS<br>" +
-    "* Bug Fix: deleteServer() now fails if its called on the server you are currently connected to<br>" +
-    "* Removed in-game Netscript documentation, since it was outdated and difficult to maintain.<br>" +
-    "* Bug Fix: Updated the gymWorkout() Singularity function with the new exp/cost values for gyms<br>"
+    "v0.37.2<br>" +
+    "* After joining the Bladeburners division, there is now a button to go to the Bladeburner content " +
+    "in the 'City' page<br>" +
+    "* You now start with $250m in BitNode-8 (increased from $100m)<br>" +
+    "* Bug Fix: You can now no longer directly edit Hacknet Node values through NetscriptJS (hopefully)<br>" +
+    "* Bug Fix: Bladeburners is no longer accessible in BN-8<br>" +
+    "* Bug Fix: getBitNodeMultipliers() Netscript function now returns a copy rather than the original object<br>"
 }
 
 export {CONSTANTS};

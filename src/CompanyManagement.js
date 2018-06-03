@@ -5,7 +5,7 @@ import {showLiterature}                                 from "./Literature.js";
 import {Locations}                                      from "./Location.js";
 import {Player}                                         from "./Player.js";
 
-import Decimal                                          from '../utils/decimal.js';
+import Decimal                                          from "decimal.js";
 import {dialogBoxCreate}                                from "../utils/DialogBox.js";
 import {getRandomInt, removeElementById,
         createElement, createAccordionElement,

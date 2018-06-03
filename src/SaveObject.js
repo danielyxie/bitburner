@@ -8,7 +8,8 @@ import {loadFactions, Factions,
         processPassiveFactionRepGain}           from "./Faction.js";
 import {FconfSettings, loadFconf}               from "./Fconf.js";
 import {loadAllGangs, AllGangs}                 from "./Gang.js";
-import {processAllHacknetNodeEarnings}          from "./HacknetNode.js";
+import {processAllHacknetNodeEarnings,
+        createPlayerHacknetNodeWrappers}        from "./HacknetNode.js";
 import {loadMessages, initMessages, Messages}   from "./Message.js";
 import {Player, loadPlayer}                     from "./Player.js";
 import {loadAllRunningScripts}                  from "./Script.js";
@@ -24,7 +25,7 @@ import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 
-import Decimal                                  from '../utils/decimal.js';
+import Decimal                                  from "decimal.js";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -227,6 +228,8 @@ function loadGame(saveString) {
         }
     }
 
+    //Re-initialize Hacknet Node Wrappers
+    createPlayerHacknetNodeWrappers();
     return true;
 }
 
@@ -442,6 +445,9 @@ function loadImportedGame(saveObj, saveString) {
             console.log("ERROR: Failed to parse AllGangsSave: " + e);
         }
     }
+
+    //Re-initialize Hacknet Node Wrappers
+    createPlayerHacknetNodeWrappers();
 
     var popupId = "import-game-restart-game-notice";
     var txt = createElement("p", {
