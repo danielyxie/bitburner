@@ -15,7 +15,7 @@ import {getRandomInt, addOffset, clearObject,
         createProgressBarText}                      from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver.js";
-import numeral                                      from "../utils/numeral.min.js";
+import numeral                                      from "numeral/min/numeral.min";
 import {formatNumber}                               from "../utils/StringHelperFunctions.js";
 
 
