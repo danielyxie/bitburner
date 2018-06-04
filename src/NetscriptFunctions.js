@@ -151,7 +151,7 @@ function NetscriptFunctions(workerScript) {
         Math : Math,
         Date : Date,
         Number : Number,
-        hacknetnodes : Player.hacknetNodes,
+        hacknetnodes : Player.hacknetNodeWrappers,
         sprintf : sprintf,
         vsprintf: vsprintf,
         scan : function(ip=workerScript.serverIp, hostnames=true){
@@ -1118,7 +1118,8 @@ function NetscriptFunctions(workerScript) {
             if (!hasAISF) {
                 throw makeRuntimeRejectMsg(workerScript, "Cannot run getBitNodeMultipliers(). It requires Source-File 5 to run.");
             }
-            return BitNodeMultipliers;
+            let copy = Object.assign({}, BitNodeMultipliers);
+            return copy;
         },
         getServerMoneyAvailable : function(ip){
             if (workerScript.checkingRam) {

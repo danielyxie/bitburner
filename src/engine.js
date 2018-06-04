@@ -650,6 +650,7 @@ let Engine = {
         //Generic Locations (common to every city):
         //  World Stock Exchange
         //  Corporation (if applicable)
+        //  Bladeburner HQ (if applicable);
         var genericLocationsList = document.getElementById("generic-locations-list");
         genericLocationsList.style.display = "inline";
         removeChildrenFromElement(genericLocationsList);
@@ -671,6 +672,18 @@ let Engine = {
                 class:"a-link-button",
                 clickListener:()=>{
                     Engine.loadCorporationContent();
+                    return false;
+                }
+            }));
+            genericLocationsList.appendChild(li);
+        }
+
+        if (Player.bladeburner instanceof Bladeburner) {
+            var li = createElement("li");
+            li.appendChild(createElement("a", {
+                innerText:"Bladeburner Headquarters", class:"a-link-button",
+                clickListener:()=>{
+                    Engine.loadBladeburnerContent();
                     return false;
                 }
             }));

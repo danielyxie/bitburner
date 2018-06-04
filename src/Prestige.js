@@ -34,6 +34,8 @@ import {createPopup, createElement,
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
 
+let BitNode8StartingMoney = 250e6;
+
 //Prestige by purchasing augmentation
 function prestigeAugmentation() {
     initBitNodeMultipliers();
@@ -127,7 +129,7 @@ function prestigeAugmentation() {
     Player.bladeburner = null;
 
     //BitNode 8: Ghost of Wall Street
-    if (Player.bitNodeN === 8) {Player.money = new Decimal(100e6);}
+    if (Player.bitNodeN === 8) {Player.money = new Decimal(BitNode8StartingMoney);}
     if (Player.bitNodeN === 8 || hasWallStreetSF) {
         Player.hasWseAccount = true;
         Player.hasTixApiAccess = true;
@@ -303,6 +305,13 @@ function prestigeSourceFile() {
             exceptionAlert(e);
         })
 
+    }
+
+    //BitNode 8: Ghost of Wall Street
+    if (Player.bitNodeN === 8) {Player.money = new Decimal(BitNode8StartingMoney);}
+    if (Player.bitNodeN === 8 || hasWallStreetSF) {
+        Player.hasWseAccount = true;
+        Player.hasTixApiAccess = true;
     }
 
     //Gain int exp

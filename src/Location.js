@@ -726,6 +726,7 @@ function displayLocationContent() {
             securityJob.style.display = "block";
             agentJob.style.display = "block";
             if (Player.bitNodeN === 6 || hasBladeburnerSF === true) {
+                if (Player.bitNodeN === 8) {break;}
                 if (Player.bladeburner instanceof Bladeburner) {
                     //Note: Can't infiltrate NSA when part of bladeburner
                     nsaBladeburner.innerText = "Enter Bladeburner Headquarters";
