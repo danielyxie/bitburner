@@ -14,6 +14,8 @@ let CONSTANTS = {
     BaseCostFor1GBOfRamServer: 55000, //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
 
+    TravelCost: 200000,
+
     BaseCostForHacknetNode: 1000,
     BaseCostForHacknetNodeCore: 500000,
 
