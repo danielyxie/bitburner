@@ -2484,7 +2484,11 @@ function NetscriptFunctions(workerScript) {
                 case Locations.NewTokyo:
                 case Locations.Ishima:
                 case Locations.Volhaven:
-                    Player.loseMoney(200000);
+                    if(Player.money.lt(CONSTANTS.TravelCost)) {
+                        workerScript.scriptRef.log("ERROR: not enough money to travel with travelToCity().");
+                        throw makeRuntimeRejectMsg(workerScript, "ERROR: not enough money to travel with travelToCity().");
+                    }
+                    Player.loseMoney(CONSTANTS.TravelCost);
                     Player.city = cityname;
                     Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.travelToCity == null) {
