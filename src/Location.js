@@ -3,18 +3,7 @@ import {CompanyPositions, initCompanies,
         Companies, getJobRequirementText}       from "./Company.js";
 import {Corporation}                            from "./CompanyManagement.js";
 import {CONSTANTS}                              from "./Constants.js";
-import {commitShopliftCrime, commitRobStoreCrime, commitMugCrime,
-        commitLarcenyCrime, commitDealDrugsCrime, commitBondForgeryCrime,
-        commitTraffickArmsCrime,
-        commitHomicideCrime, commitGrandTheftAutoCrime, commitKidnapCrime,
-        commitAssassinationCrime, commitHeistCrime, determineCrimeSuccess,
-        determineCrimeChanceShoplift, determineCrimeChanceRobStore,
-        determineCrimeChanceMug, determineCrimeChanceLarceny,
-        determineCrimeChanceDealDrugs, determineCrimeChanceBondForgery,
-        determineCrimeChanceTraffickArms,
-        determineCrimeChanceHomicide, determineCrimeChanceGrandTheftAuto,
-        determineCrimeChanceKidnap, determineCrimeChanceAssassination,
-        determineCrimeChanceHeist}              from "./Crimes.js";
+import {Crimes}                                 from "./Crimes.js";
 import {Engine}                                 from "./engine.js";
 import {beginInfiltration}                      from "./Infiltration.js";
 import {hasBladeburnerSF}                       from "./NetscriptFunctions.js";
@@ -1058,18 +1047,18 @@ function displayLocationContent() {
         case Locations.NewTokyoSlums:
         case Locations.IshimaSlums:
         case Locations.VolhavenSlums:
-            var shopliftChance = determineCrimeChanceShoplift();
-            var robStoreChance = determineCrimeChanceRobStore();
-            var mugChance = determineCrimeChanceMug();
-            var larcenyChance = determineCrimeChanceLarceny();
-            var drugsChance = determineCrimeChanceDealDrugs();
-            var bondChance = determineCrimeChanceBondForgery();
-            var armsChance = determineCrimeChanceTraffickArms();
-            var homicideChance = determineCrimeChanceHomicide();
-            var gtaChance = determineCrimeChanceGrandTheftAuto();
-            var kidnapChance = determineCrimeChanceKidnap();
-            var assassinateChance = determineCrimeChanceAssassination();
-            var heistChance = determineCrimeChanceHeist();
+            var shopliftChance = Crimes.Shoplift.successRate();
+            var robStoreChance = Crimes.RobStore.successRate();
+            var mugChance = Crimes.Mug.successRate();
+            var larcenyChance = Crimes.Larceny.successRate();
+            var drugsChance = Crimes.DealDrugs.successRate();
+            var bondChance = Crimes.BondForgery.successRate();
+            var armsChance = Crimes.TraffickArms.successRate();
+            var homicideChance = Crimes.Homicide.successRate();
+            var gtaChance = Crimes.GrandTheftAuto.successRate();
+            var kidnapChance = Crimes.Kidnap.successRate();
+            var assassinateChance = Crimes.Assassination.successRate();
+            var heistChance = Crimes.Heist.successRate();
 
             slumsDescText.style.display = "block";
             slumsShoplift.style.display = "block";
@@ -1864,62 +1853,62 @@ function initLocationButtons() {
     });
 
     slumsShoplift.addEventListener("click", function() {
-        commitShopliftCrime();
+        Crimes.Shoplift.commit();
         return false;
     });
 
     slumsRobStore.addEventListener("click", function() {
-        commitRobStoreCrime();
+        Crimes.RobStore.commit();
         return false;
     });
 
     slumsMug.addEventListener("click", function() {
-        commitMugCrime();
+        Crimes.Mug.commit();
         return false;
     });
 
     slumsLarceny.addEventListener("click", function() {
-        commitLarcenyCrime();
+        Crimes.Larceny.commit();
         return false;
     });
 
     slumsDealDrugs.addEventListener("click", function() {
-        commitDealDrugsCrime();
+        Crimes.DealDrugs.commit();
         return false;
     });
 
     slumsBondForgery.addEventListener("click", function() {
-        commitBondForgeryCrime();
+        Crimes.BondForgery.commit();
         return false;
     });
 
     slumsTrafficArms.addEventListener("click", function() {
-        commitTraffickArmsCrime();
+        Crimes.TraffickArms.commit();
         return false;
     });
 
     slumsHomicide.addEventListener("click", function() {
-        commitHomicideCrime();
+        Crimes.Homicide.commit();
         return false;
     });
 
     slumsGta.addEventListener("click", function() {
-        commitGrandTheftAutoCrime();
+        Crimes.GrandTheftAuto.commit();
         return false;
     });
 
     slumsKidnap.addEventListener("click", function() {
-        commitKidnapCrime();
+        Crimes.Kidnap.commit();
         return false;
     });
 
     slumsAssassinate.addEventListener("click", function() {
-        commitAssassinationCrime();
+        Crimes.Assassination.commit();
         return false;
     });
 
     slumsHeist.addEventListener("click", function() {
-        commitHeistCrime();
+        Crimes.Heist.commit();
         return false;
     });
 

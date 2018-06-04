@@ -8,7 +8,7 @@ import {Company, Companies, getNextCompanyPosition,
 import {CONSTANTS}                              from "./Constants.js";
 import {Corporation}                            from "./CompanyManagement.js";
 import {Programs}                               from "./CreateProgram.js";
-import {determineCrimeSuccess}                  from "./Crimes.js";
+import {determineCrimeSuccess, Crimes}          from "./Crimes.js";
 import {Engine}                                 from "./engine.js";
 import {Factions, Faction,
         displayFactionContent}                  from "./Faction.js";
@@ -1518,56 +1518,21 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
         var statusText = ""; //TODO, unique message for each crime when you succeed
         if (determineCrimeSuccess(this.crimeType, this.workMoneyGained)) {
             //Handle Karma and crime statistics
-            switch(this.crimeType) {
-                case CONSTANTS.CrimeShoplift:
-                    this.karma -= 0.1;
+            let crime = null;
+            for(const i in Crimes) {
+                if(Crimes[i].type == this.crimeType) {
+                    crime = Crimes[i];
                     break;
-                case CONSTANTS.CrimeRobStore:
-                    this.karma -= 0.5;
-                    this.gainIntelligenceExp(0.25 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeMug:
-                    this.karma -= 0.25;
-                    break;
-                case CONSTANTS.CrimeLarceny:
-                    this.karma -= 1.5;
-                    this.gainIntelligenceExp(0.5 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeDrugs:
-                    this.karma -= 0.5;
-                    break;
-                case CONSTANTS.CrimeBondForgery:
-                    this.karma -= 0.1;
-                    this.gainIntelligenceExp(2 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeTraffickArms:
-                    this.karma -= 1;
-                    break;
-                case CONSTANTS.CrimeHomicide:
-                    ++this.numPeopleKilled;
-                    this.karma -= 3;
-                    break;
-                case CONSTANTS.CrimeGrandTheftAuto:
-                    this.karma -= 5;
-                    this.gainIntelligenceExp(CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeKidnap:
-                    this.karma -= 6;
-                    this.gainIntelligenceExp(2 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeAssassination:
-                    ++this.numPeopleKilled;
-                    this.karma -= 10;
-                    this.gainIntelligenceExp(5 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeHeist:
-                    this.karma -= 15;
-                    this.gainIntelligenceExp(10 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                default:
-                    console.log(this.crimeType);
-                    dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
-                    return;
+                }
+            }
+            if(crime == null) {
+                console.log(this.crimeType);
+                dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
+            }
+            this.karma -= crime.karma;
+            this.numPeopleKilled += crime.kills;
+            if(crime.intelligence_exp > 0) {
+                this.gainIntelligenceExp(crime.intelligence_exp);
             }
 
             //On a crime success, gain 2x exp
