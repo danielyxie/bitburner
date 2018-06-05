@@ -626,7 +626,7 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
 }
 
 function purchaseAugmentationBoxCreate(aug, fac) {
-    const factionInfo = fac.info();
+    const factionInfo = fac.getInfo();
     var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
     yesBtn.innerHTML = "Purchase";
     noBtn.innerHTML = "Cancel";
@@ -671,12 +671,13 @@ function hasAugmentationPrereqs(aug) {
 }
 
 function purchaseAugmentation(aug, fac, sing=false) {
+    const factionInfo = fac.getInfo();
     var hasPrereqs = hasAugmentationPrereqs(aug);
     if (!hasPrereqs) {
         var txt = "You must first purchase or install " + aug.prereqs.join(",") + " before you can " +
                   "purchase this one.";
         if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (Player.money.lt(aug.baseCost * fac.augmentationPriceMult)) {
+    } else if (Player.money.lt(aug.baseCost * factionInfo.augmentationPriceMult)) {
         let txt = "You don't have enough money to purchase " + aug.name;
         if (sing) {return txt;}
         dialogBoxCreate(txt);
@@ -684,7 +685,7 @@ function purchaseAugmentation(aug, fac, sing=false) {
         let txt = "You don't have enough faction reputation to purchase " + aug.name;
         if (sing) {return txt;}
         dialogBoxCreate(txt);
-    } else if (Player.money.gte(aug.baseCost * fac.augmentationPriceMult)) {
+    } else if (Player.money.gte(aug.baseCost * factionInfo.augmentationPriceMult)) {
         if (Player.firstAugPurchased === false) {
             Player.firstAugPurchased = true;
             document.getElementById("augmentations-tab").style.display = "list-item";
@@ -698,7 +699,7 @@ function purchaseAugmentation(aug, fac, sing=false) {
         }
         Player.queuedAugmentations.push(queuedAugmentation);
 
-        Player.loseMoney((aug.baseCost * fac.augmentationPriceMult));
+        Player.loseMoney((aug.baseCost * factionInfo.augmentationPriceMult));
 
         //If you just purchased Neuroflux Governor, recalculate the cost
         if (aug.name == AugmentationNames.NeuroFluxGovernor) {

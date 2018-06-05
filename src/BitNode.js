@@ -156,10 +156,9 @@ function initBitNodes() {
                                             "Level 1: 24%<br>" +
                                             "Level 2: 36%<br>" +
                                             "Level 3: 42%");
-
+    BitNodes["BitNode12"] = new BitNode(12, "The testing ground", "Ender improvement center", "Something about this bitnode being the testing ground for the enders security. This bitnode is infinitely repeatable but gets harder each time. This awards Source-File 12 which awards 1% to all stats each time this bitnode is destroyed.");
     //Books: Frontera, Shiner
-    BitNodes["BitNode12"] = new BitNode(12, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
-    BitNodes["BitNode13"] = new BitNode(13, "", "COMING SOON");
+    BitNodes["BitNode13"] = new BitNode(13, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
     BitNodes["BitNode14"] = new BitNode(14, "", "COMING SOON");
     BitNodes["BitNode15"] = new BitNode(15, "", "COMING SOON");
     BitNodes["BitNode16"] = new BitNode(16, "", "COMING SOON");
@@ -304,6 +303,51 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.InfiltrationRep          = 2.5;
             BitNodeMultipliers.CorporationValuation     = 0.01;
             break;
+        case 12: //The Testing Ground
+            let sf12Lvl = 0;
+            for(let i = 0; i < Player.sourceFiles.length; i++) {
+              if(Player.sourceFiles[i].n == 12) {
+                sf12Lvl = Player.sourceFiles[i].lvl;
+              }
+            }
+            const inc = Math.pow(1.01, sf12Lvl);
+            const dec = Math.pow(0.99, sf12Lvl);
+            BitNodeMultipliers.HackingLevelMultiplier = dec;
+
+            BitNodeMultipliers.ServerMaxMoney         = dec;
+            BitNodeMultipliers.ServerStartingMoney    = dec;
+            BitNodeMultipliers.ServerGrowthRate       = dec;
+            BitNodeMultipliers.ServerWeakenRate       = dec;
+
+            //this one is special because it can cause the min
+            //security to go over 100 and make it impossible to
+            //get money through hacking. This stat should not be 
+
+            //BitNodeMultipliers.ServerStartingSecurity = inc;
+
+            BitNodeMultipliers.ManualHackMoney  = dec;
+            BitNodeMultipliers.ScriptHackMoney  = dec;
+            BitNodeMultipliers.CompanyWorkMoney = dec;
+            BitNodeMultipliers.CrimeMoney       = dec;
+            BitNodeMultipliers.HacknetNodeMoney = dec;
+
+            BitNodeMultipliers.CompanyWorkExpGain = dec;
+            BitNodeMultipliers.ClassGymExpGain    = dec;
+            BitNodeMultipliers.FactionWorkExpGain = dec;
+            BitNodeMultipliers.HackExpGain        = dec;
+            BitNodeMultipliers.CrimeExpGain       = dec;
+
+            BitNodeMultipliers.FactionWorkRepGain    = dec;
+            BitNodeMultipliers.FactionPassiveRepGain = dec;
+            BitNodeMultipliers.RepToDonateToFaction  = inc;
+
+            BitNodeMultipliers.AugmentationRepCost   = inc;
+            BitNodeMultipliers.AugmentationMoneyCost = inc;
+
+            BitNodeMultipliers.InfiltrationMoney = dec;
+            BitNodeMultipliers.InfiltrationRep   = dec;
+
+            BitNodeMultipliers.CorporationValuation = dec;
         default:
             console.log("WARNING: Player.bitNodeN invalid");
             break;
