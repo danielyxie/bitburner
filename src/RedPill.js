@@ -113,7 +113,7 @@ function giveSourceFile(bitNodeNumber) {
     }
 
     if (alreadyOwned && ownedSourceFile) {
-        if (ownedSourceFile.lvl >= 3) {
+        if (ownedSourceFile.lvl >= 3 && ownedSourceFile.n !== 12) {
             dialogBoxCreate("The Source-File for the BitNode you just destroyed, " + sourceFile.name + ", " +
                             "is already at max level!");
         } else {
