@@ -208,7 +208,7 @@ function loadBitVerse(destroyedBitNodeNum, flume=false) {
             var elemId = "bitnode-" + i.toString();
             var elem = clearEventListeners(elemId);
             if (elem == null) {return;}
-            if (i === 1 || i === 2 || i === 3 || i === 4 || i === 5 || i === 6 || i === 8 || i === 11) {
+            if (i === 1 || i === 2 || i === 3 || i === 4 || i === 5 || i === 6 || i === 8 || i === 11 || i === 12) {
                 elem.addEventListener("click", function() {
                     var bitNodeKey = "BitNode" + i;
                     var bitNode = BitNodes[bitNodeKey];
