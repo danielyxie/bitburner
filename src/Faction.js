@@ -599,7 +599,7 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
             var pElem = createElement("p", {
                 display:"inline",
             })
-            var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
+            var req = aug.baseRepRequirement * factionInfo.augmentationRepRequirementMult;
             var hasPrereqs = hasAugmentationPrereqs(aug);
             if (!hasPrereqs) {
                 aElem.setAttribute("class", "a-link-button-inactive");
