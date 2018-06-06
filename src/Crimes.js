@@ -33,7 +33,7 @@ Crime.prototype.commit = function(div=1, singParams=null) {
   if (div <= 0) {div = 1;}
   Player.crimeType = this.type;
   Player.startCrime(
-    this.hacking_exp/div, 
+    this.hacking_exp/div,
     this.strength_exp/div,
     this.defense_exp/div,
     this.dexterity_exp/div,
@@ -58,7 +58,7 @@ Crime.prototype.successRate = function() {
 }
 
 const Crimes = {
-  Shoplift: new Crime("Shoplift", CONSTANTS.CrimeShoplift, 2000, 15000, 1/20, 0.1, {
+  Shoplift: new Crime("Shoplift", CONSTANTS.CrimeShoplift, 2e3, 15e3, 1/20, 0.1, {
     dexterity_success_weight: 1,
     agility_success_weight: 1,
 
@@ -66,7 +66,7 @@ const Crimes = {
     agility_exp: 2,
   }),
 
-  RobStore: new Crime("Rob Store", CONSTANTS.CrimeRobStore, 60000, 400000, 1/5, 0.5, {
+  RobStore: new Crime("Rob Store", CONSTANTS.CrimeRobStore, 60e3, 400e3, 1/5, 0.5, {
     hacking_exp: 30,
     dexterity_exp: 45,
     agility_exp: 45,
@@ -78,9 +78,9 @@ const Crimes = {
     intelligence_exp: 0.25 * CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
 
-  Mug: new Crime("Mug", CONSTANTS.CrimeMug, 4000, 36000, 1/5, 0.25, {
+  Mug: new Crime("Mug", CONSTANTS.CrimeMug, 4e3, 36e3, 1/5, 0.25, {
     strength_exp: 3,
-    defence_exp: 3,
+    defense_exp: 3,
     dexterity_exp: 3,
     agility_exp: 3,
 
@@ -89,8 +89,8 @@ const Crimes = {
     dexterity_success_weight: 1.5,
     agility_success_weight: 0.5,
   }),
-  
-  Larceny: new Crime("Larceny", CONSTANTS.CrimeLarceny, 90000, 800000, 1/3, 1.5, {
+
+  Larceny: new Crime("Larceny", CONSTANTS.CrimeLarceny, 90e3, 800e3, 1/3, 1.5, {
     hacking_exp: 45,
     dexterity_exp: 60,
     agility_exp: 60,
@@ -101,8 +101,8 @@ const Crimes = {
 
     intelligence_exp: 0.5 * CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
-  
-  DealDrugs: new Crime("Deal Drugs", CONSTANTS.CrimeDrugs, 10000, 120000, 1, 0.5, {
+
+  DealDrugs: new Crime("Deal Drugs", CONSTANTS.CrimeDrugs, 10e3, 120e3, 1, 0.5, {
     dexterity_exp: 5,
     agility_exp: 5,
     charisma_exp: 10,
@@ -111,21 +111,21 @@ const Crimes = {
     dexterity_success_weight: 2,
     agility_success_weight: 1,
   }),
-  
-  BondForgery: new Crime("Bond Forgery", CONSTANTS.CrimeBondForgery, 300000, 4500000, 1/2, 0.1, {
+
+  BondForgery: new Crime("Bond Forgery", CONSTANTS.CrimeBondForgery, 300e3, 4.5e6, 1/2, 0.1, {
     hacking_exp: 100,
     dexterity_exp: 150,
     charisma_exp: 15,
 
-    hacking_skill_success_weight: 0.1,
-    dexterity_success_weight: 2.5,
+    hacking_skill_success_weight: 0.05,
+    dexterity_success_weight: 1.25,
 
     intelligence_exp: 2 * CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
-  
-  TraffickArms: new Crime("Traffick Arms", CONSTANTS.CrimeTraffickArms, 40000, 600000, 2, 1, {
+
+  TraffickArms: new Crime("Traffick Arms", CONSTANTS.CrimeTraffickArms, 40e3, 600e3, 2, 1, {
     strength_exp: 20,
-    defence_exp: 20,
+    defense_exp: 20,
     dexterity_exp: 20,
     agility_exp: 20,
     charisma_exp: 40,
@@ -136,10 +136,10 @@ const Crimes = {
     dexterity_success_weight: 1,
     agility_success_weight: 1,
   }),
-  
-  Homicide: new Crime("Homicide", CONSTANTS.CrimeHomicide, 3000, 45000, 1, 3, {
+
+  Homicide: new Crime("Homicide", CONSTANTS.CrimeHomicide, 3e3, 45e3, 1, 3, {
     strength_exp: 2,
-    defence_exp: 2,
+    defense_exp: 2,
     dexterity_exp: 2,
     agility_exp: 2,
 
@@ -150,10 +150,10 @@ const Crimes = {
 
     kills: 1,
   }),
-  
-  GrandTheftAuto: new Crime("Grand Theft Auto", CONSTANTS.CrimeGrandTheftAuto, 80000, 1600000, 8, 5, {
+
+  GrandTheftAuto: new Crime("Grand Theft Auto", CONSTANTS.CrimeGrandTheftAuto, 80e3, 1.6e6, 8, 5, {
     strength_exp: 20,
-    defence_exp: 20,
+    defense_exp: 20,
     dexterity_exp: 20,
     agility_exp: 80,
     charisma_exp: 40,
@@ -166,10 +166,10 @@ const Crimes = {
 
     intelligence_exp: CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
-  
-  Kidnap: new Crime("Kidnap", CONSTANTS.CrimeKidnap, 120000, 3600000, 5, 6, {
+
+  Kidnap: new Crime("Kidnap", CONSTANTS.CrimeKidnap, 120e3, 3.6e6, 5, 6, {
     strength_exp: 80,
-    defence_exp: 80,
+    defense_exp: 80,
     dexterity_exp: 80,
     agility_exp: 80,
     charisma_exp: 80,
@@ -181,10 +181,10 @@ const Crimes = {
 
     intelligence_exp: 2 * CONSTANTS.IntelligenceCrimeBaseExpGain,
   }),
-  
-  Assassination: new Crime("Assassination", CONSTANTS.CrimeAssassination, 300000, 12000000, 8, 10, {
+
+  Assassination: new Crime("Assassination", CONSTANTS.CrimeAssassination, 300e3, 12e6, 8, 10, {
     strength_exp: 300,
-    defence_exp: 300,
+    defense_exp: 300,
     dexterity_exp: 300,
     agility_exp: 300,
 
@@ -196,11 +196,11 @@ const Crimes = {
 
     kills: 1,
   }),
-  
-  Heist: new Crime("Heist", CONSTANTS.CrimeHeist, 600000, 120000000, 18, 15, {
+
+  Heist: new Crime("Heist", CONSTANTS.CrimeHeist, 600e3, 120e6, 18, 15, {
     hacking_exp: 450,
     strength_exp: 450,
-    defence_exp: 450,
+    defense_exp: 450,
     dexterity_exp: 450,
     agility_exp: 450,
     charisma_exp: 450,

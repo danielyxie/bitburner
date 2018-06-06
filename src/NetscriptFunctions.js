@@ -16,8 +16,7 @@ import {parseDarkwebItemPrice, DarkWebItems}        from "./DarkWeb.js";
 import {Engine}                                     from "./engine.js";
 import {Factions, Faction, joinFaction,
         factionExists, purchaseAugmentation}        from "./Faction.js";
-import {getCostOfNextHacknetNode,
-        purchaseHacknet}                            from "./HacknetNode.js";
+import {getCostOfNextHacknetNode, purchaseHacknet}  from "./HacknetNode.js";
 import {Locations}                                  from "./Location.js";
 import {Message, Messages}                          from "./Message.js";
 import {inMission}                                  from "./Missions.js";
@@ -136,6 +135,27 @@ function initSingularitySFFlags() {
 }
 
 function NetscriptFunctions(workerScript) {
+    var updateDynamicRam = function(fnName, ramCost) {
+        if (workerScript.dynamicLoadedFns[fnName]) {return;}
+        workerScript.dynamicLoadedFns[fnName] = true;
+        workerScript.dynamicRamUsage += ramCost;
+        if (workerScript.dynamicRamUsage > 1.01 * workerScript.ramUsage) {
+            throw makeRuntimeRejectMsg(workerScript,
+                                       "Dynamic RAM usage calculated to be greater than initial RAM usage. " +
+                                       "This is probably because you somehow circumvented the static RAM "  +
+                                       "calculation.<br><br>Please don't do that :(");
+        }
+    };
+
+    var updateStaticRam = function(fnName, ramCost) {
+        if (workerScript.loadedFns[fnName]) {
+            return 0;
+        } else {
+            workerScript.loadedFns[fnName] = true;
+            return ramCost;
+        }
+    };
+
     return {
         Math : Math,
         Date : Date,
@@ -145,13 +165,9 @@ function NetscriptFunctions(workerScript) {
         vsprintf: vsprintf,
         scan : function(ip=workerScript.serverIp, hostnames=true){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.scan) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.scan = true;
-                    return CONSTANTS.ScriptScanRamCost;
-                }
+                return updateStaticRam("scan", CONSTANTS.ScriptScanRamCost);
             }
+            updateDynamicRam("scan", CONSTANTS.ScriptScanRamCost);
             var server = getServer(ip);
             if (server == null) {
                 throw makeRuntimeRejectMsg(workerScript, 'Invalid IP or hostname passed into scan() command');
@@ -176,13 +192,9 @@ function NetscriptFunctions(workerScript) {
         },
         hack : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.hack) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.hack = true;
-                    return CONSTANTS.ScriptHackRamCost;
-                }
+                return updateStaticRam("hack", CONSTANTS.ScriptHackRamCost);
             }
+            updateDynamicRam("hack", CONSTANTS.ScriptHackRamCost);
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "Hack() call has incorrect number of arguments. Takes 1 argument");
             }
@@ -266,13 +278,9 @@ function NetscriptFunctions(workerScript) {
         },
         grow : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.grow) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.grow = true;
-                    return CONSTANTS.ScriptGrowRamCost;
-                }
+                return updateStaticRam("grow", CONSTANTS.ScriptGrowRamCost);
             }
+            updateDynamicRam("grow", CONSTANTS.ScriptGrowRamCost);
             var threads = workerScript.scriptRef.threads;
             if (isNaN(threads) || threads < 1) {threads = 1;}
             if (ip === undefined) {
@@ -315,13 +323,9 @@ function NetscriptFunctions(workerScript) {
         },
         weaken : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.weaken) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.weaken = true;
-                    return CONSTANTS.ScriptWeakenRamCost;
-                }
+                return updateStaticRam("weaken", CONSTANTS.ScriptWeakenRamCost);
             }
+            updateDynamicRam("weaken", CONSTANTS.ScriptWeakenRamCost);
             var threads = workerScript.scriptRef.threads;
             if (isNaN(threads) || threads < 1) {threads = 1;}
             if (ip === undefined) {
@@ -406,13 +410,9 @@ function NetscriptFunctions(workerScript) {
         },
         nuke : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.nuke) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.nuke = true;
-                    return CONSTANTS.ScriptPortProgramRamCost;
-                }
+                return updateStaticRam("nuke", CONSTANTS.ScriptPortProgramRamCost);
             }
+            updateDynamicRam("nuke", CONSTANTS.ScriptPortProgramRamCost);
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
@@ -441,13 +441,9 @@ function NetscriptFunctions(workerScript) {
         },
         brutessh : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.brutessh) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.brutessh = true;
-                    return CONSTANTS.ScriptPortProgramRamCost;
-                }
+                return updateStaticRam("brutessh", CONSTANTS.ScriptPortProgramRamCost);
             }
+            updateDynamicRam("brutessh", CONSTANTS.ScriptPortProgramRamCost);
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
@@ -475,13 +471,9 @@ function NetscriptFunctions(workerScript) {
         },
         ftpcrack : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.ftpcrack) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.ftpcrack = true;
-                    return CONSTANTS.ScriptPortProgramRamCost;
-                }
+                return updateStaticRam("ftpcrack", CONSTANTS.ScriptPortProgramRamCost);
             }
+            updateDynamicRam("ftpcrack", CONSTANTS.ScriptPortProgramRamCost);
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
@@ -508,13 +500,9 @@ function NetscriptFunctions(workerScript) {
         },
         relaysmtp : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.relaysmtp) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.relaysmtp = true;
-                    return CONSTANTS.ScriptPortProgramRamCost;
-                }
+                return updateStaticRam("relaysmtp", CONSTANTS.ScriptPortProgramRamCost);
             }
+            updateDynamicRam("relaysmtp", CONSTANTS.ScriptPortProgramRamCost);
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
@@ -541,13 +529,9 @@ function NetscriptFunctions(workerScript) {
         },
         httpworm : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.httpworm) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.httpworm = true;
-                    return CONSTANTS.ScriptPortProgramRamCost;
-                }
+                return updateStaticRam("httpworm", CONSTANTS.ScriptPortProgramRamCost);
             }
+            updateDynamicRam("httpworm", CONSTANTS.ScriptPortProgramRamCost);
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
@@ -574,13 +558,9 @@ function NetscriptFunctions(workerScript) {
         },
         sqlinject : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.sqlinject) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.sqlinject = true;
-                    return CONSTANTS.ScriptPortProgramRamCost;
-                }
+                return updateStaticRam("sqlinject", CONSTANTS.ScriptPortProgramRamCost);
             }
+            updateDynamicRam("sqlinject", CONSTANTS.ScriptPortProgramRamCost);
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "Program call has incorrect number of arguments. Takes 1 argument");
             }
@@ -607,13 +587,9 @@ function NetscriptFunctions(workerScript) {
         },
         run : function(scriptname,threads = 1){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.run) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.run = true;
-                    return CONSTANTS.ScriptRunRamCost;
-                }
+                return updateStaticRam("run", CONSTANTS.ScriptRunRamCost);
             }
+            updateDynamicRam("run", CONSTANTS.ScriptRunRamCost);
             if (scriptname === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "run() call has incorrect number of arguments. Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
             }
@@ -633,13 +609,9 @@ function NetscriptFunctions(workerScript) {
         },
         exec : function(scriptname,ip,threads = 1) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.exec) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.exec = true;
-                    return CONSTANTS.ScriptExecRamCost;
-                }
+                return updateStaticRam("exec", CONSTANTS.ScriptExecRamCost);
             }
+            updateDynamicRam("exec", CONSTANTS.ScriptExecRamCost);
             if (scriptname === undefined || ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "exec() call has incorrect number of arguments. Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
             }
@@ -658,13 +630,9 @@ function NetscriptFunctions(workerScript) {
         },
         spawn : function(scriptname, threads) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.spawn) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.spawn = true;
-                    return CONSTANTS.ScriptSpawnRamCost;
-                }
+                return updateStaticRam("spawn", CONSTANTS.ScriptSpawnRamCost);
             }
+            updateDynamicRam("spawn", CONSTANTS.ScriptSpawnRamCost);
             if (scriptname == null || threads == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid scriptname or numThreads argument passed to spawn()");
             }
@@ -678,14 +646,9 @@ function NetscriptFunctions(workerScript) {
         },
         kill : function(filename,ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.kill) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.kill = true;
-                    return CONSTANTS.ScriptKillRamCost;
-                }
+                return updateStaticRam("kill", CONSTANTS.ScriptKillRamCost);
             }
-
+            updateDynamicRam("kill", CONSTANTS.ScriptKillRamCost);
             if (filename === undefined || ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "kill() call has incorrect number of arguments. Usage: kill(scriptname, server, [arg1], [arg2]...)");
             }
@@ -718,14 +681,9 @@ function NetscriptFunctions(workerScript) {
         },
         killall : function(ip=workerScript.serverIp){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.killall) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.killall = true;
-                    return CONSTANTS.ScriptKillRamCost;
-                }
+                return updateStaticRam("killall", CONSTANTS.ScriptKillRamCost);
             }
-
+            updateDynamicRam("killall", CONSTANTS.ScriptKillRamCost);
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "killall() call has incorrect number of arguments. Takes 1 argument");
             }
@@ -745,13 +703,9 @@ function NetscriptFunctions(workerScript) {
         },
         exit : function() {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.exit) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.exit = true;
-                    return CONSTANTS.ScriptKillRamCost;
-                }
+                return updateStaticRam("exit", CONSTANTS.ScriptKillRamCost);
             }
+            updateDynamicRam("exit", CONSTANTS.ScriptKillRamCost);
             var server = getServer(workerScript.serverIp);
             if (server == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in exit(). This is a bug please contact game dev");
@@ -764,13 +718,9 @@ function NetscriptFunctions(workerScript) {
         },
         scp : function(scriptname, ip1, ip2) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.scp) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.scp = true;
-                    return CONSTANTS.ScriptScpRamCost;
-                }
+                return updateStaticRam("scp", CONSTANTS.ScriptScpRamCost);
             }
+            updateDynamicRam("scp", CONSTANTS.ScriptScpRamCost);
             if (arguments.length !== 2 && arguments.length !== 3) {
                 throw makeRuntimeRejectMsg(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
             }
@@ -924,13 +874,9 @@ function NetscriptFunctions(workerScript) {
         },
         ls : function(ip, grep) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.ls) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.ls = true;
-                    return CONSTANTS.ScriptScanRamCost;
-                }
+                return updateStaticRam("ls", CONSTANTS.ScriptScanRamCost);
             }
+            updateDynamicRam("ls", CONSTANTS.ScriptScanRamCost);
             if (ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "ls() failed because of invalid arguments. Usage: ls(ip/hostname, [grep filter])");
             }
@@ -1000,13 +946,9 @@ function NetscriptFunctions(workerScript) {
         },
         hasRootAccess : function(ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.hasRootAccess) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.hasRootAccess = true;
-                    return CONSTANTS.ScriptHasRootAccessRamCost;
-                }
+                return updateStaticRam("hasRootAccess", CONSTANTS.ScriptHasRootAccessRamCost);
             }
+            updateDynamicRam("hasRootAccess", CONSTANTS.ScriptHasRootAccessRamCost);
             if (ip===undefined){
                 throw makeRuntimeRejectMsg(workerScript, "hasRootAccess() call has incorrect number of arguments. Takes 1 argument");
             }
@@ -1019,13 +961,9 @@ function NetscriptFunctions(workerScript) {
         },
         getIp : function() {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getIp) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getIp = true;
-                    return CONSTANTS.ScriptGetHostnameRamCost;
-                }
+                return updateStaticRam("getIp", CONSTANTS.ScriptGetHostnameRamCost);
             }
+            updateDynamicRam("getIp", CONSTANTS.ScriptGetHostnameRamCost);
             var scriptServer = getServer(workerScript.serverIp);
             if (scriptServer == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
@@ -1034,13 +972,9 @@ function NetscriptFunctions(workerScript) {
         },
         getHostname : function(){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getHostname) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getHostname = true;
-                    return CONSTANTS.ScriptGetHostnameRamCost;
-                }
+                return updateStaticRam("getHostname", CONSTANTS.ScriptGetHostnameRamCost);
             }
+            updateDynamicRam("getHostname", CONSTANTS.ScriptGetHostnameRamCost);
             var scriptServer = getServer(workerScript.serverIp);
             if (scriptServer == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
@@ -1049,13 +983,9 @@ function NetscriptFunctions(workerScript) {
         },
         getHackingLevel : function(){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getHackingLevel) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getHackingLevel = true;
-                    return CONSTANTS.ScriptGetHackingLevelRamCost;
-                }
+                return updateStaticRam("getHackingLevel", CONSTANTS.ScriptGetHackingLevelRamCost);
             }
+            updateDynamicRam("getHackingLevel", CONSTANTS.ScriptGetHackingLevelRamCost);
             Player.updateSkillLevels();
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.getHackingLevel == null) {
                 workerScript.scriptRef.log("getHackingLevel() returned " + Player.hacking_skill);
@@ -1064,13 +994,9 @@ function NetscriptFunctions(workerScript) {
         },
         getHackingMultipliers : function() {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getHackingMultipliers) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getHackingMultipliers = true;
-                    return CONSTANTS.ScriptGetMultipliersRamCost;
-                }
+                return updateStaticRam("getHackingMultipliers", CONSTANTS.ScriptGetMultipliersRamCost);
             }
+            updateDynamicRam("getHackingMultipliers", CONSTANTS.ScriptGetMultipliersRamCost);
             return {
                 chance: Player.hacking_chance_mult,
                 speed: Player.hacking_speed_mult,
@@ -1080,13 +1006,9 @@ function NetscriptFunctions(workerScript) {
         },
         getHacknetMultipliers : function() {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getHacknetMultipliers) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getHacknetMultipliers = true;
-                    return CONSTANTS.ScriptGetMultipliersRamCost;
-                }
+                return updateStaticRam("getHacknetMultipliers", CONSTANTS.ScriptGetMultipliersRamCost);
             }
+            updateDynamicRam("getHacknetMultipliers", CONSTANTS.ScriptGetMultipliersRamCost);
             return {
                 production: Player.hacknet_node_money_mult,
                 purchaseCost: Player.hacknet_node_purchase_cost_mult,
@@ -1097,13 +1019,9 @@ function NetscriptFunctions(workerScript) {
         },
         getBitNodeMultipliers: function() {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getBitNodeMultipliers) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getBitNodeMultipliers = true;
-                    return CONSTANTS.ScriptGetMultipliersRamCost;
-                }
+                return updateStaticRam("getBitNodeMultipliers", CONSTANTS.ScriptGetMultipliersRamCost);
             }
+            updateDynamicRam("getBitNodeMultipliers", CONSTANTS.ScriptGetMultipliersRamCost);
             if (!hasAISF) {
                 throw makeRuntimeRejectMsg(workerScript, "Cannot run getBitNodeMultipliers(). It requires Source-File 5 to run.");
             }
@@ -1112,13 +1030,9 @@ function NetscriptFunctions(workerScript) {
         },
         getServerMoneyAvailable : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getServerMoneyAvailable) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getServerMoneyAvailable = true;
-                    return CONSTANTS.ScriptGetServerRamCost;
-                }
+                return updateStaticRam("getServerMoneyAvailable", CONSTANTS.ScriptGetServerRamCost);
             }
+            updateDynamicRam("getServerMoneyAvailable", CONSTANTS.ScriptGetServerRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerMoneyAvailable() failed. Invalid IP or hostname passed in: " + ip);
@@ -1138,13 +1052,9 @@ function NetscriptFunctions(workerScript) {
         },
         getServerSecurityLevel : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getServerSecurityLevel) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getServerSecurityLevel = true;
-                    return CONSTANTS.ScriptGetServerRamCost;
-                }
+                return updateStaticRam("getServerSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             }
+            updateDynamicRam("getServerSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
@@ -1157,13 +1067,9 @@ function NetscriptFunctions(workerScript) {
         },
         getServerBaseSecurityLevel : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getServerBaseSecurityLevel) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getServerBaseSecurityLevel = true;
-                    return CONSTANTS.ScriptGetServerRamCost;
-                }
+                return updateStaticRam("getServerBaseSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             }
+            updateDynamicRam("getServerBaseSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerBaseSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
@@ -1176,13 +1082,9 @@ function NetscriptFunctions(workerScript) {
         },
         getServerMinSecurityLevel : function(ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getServerMinSecurityLevel) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getServerMinSecurityLevel = true;
-                    return CONSTANTS.ScriptGetServerRamCost;
-                }
+                return updateStaticRam("getServerMinSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             }
+            updateDynamicRam("getServerMinSecurityLevel", CONSTANTS.ScriptGetServerRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerMinSecurityLevel() failed. Invalid IP or hostname passed in: " + ip);
@@ -1195,13 +1097,9 @@ function NetscriptFunctions(workerScript) {
         },
         getServerRequiredHackingLevel : function(ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getServerRequiredHackingLevel) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getServerRequiredHackingLevel = true;
-                    return CONSTANTS.ScriptGetServerRamCost;
-                }
+                return updateStaticRam("getServerRequiredHackingLevel", CONSTANTS.ScriptGetServerRamCost);
             }
+            updateDynamicRam("getServerRequiredHackingLevel", CONSTANTS.ScriptGetServerRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerRequiredHackingLevel() failed. Invalid IP or hostname passed in: " + ip);
@@ -1214,13 +1112,9 @@ function NetscriptFunctions(workerScript) {
         },
         getServerMaxMoney : function(ip){
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getServerMaxMoney) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getServerMaxMoney = true;
-                    return CONSTANTS.ScriptGetServerRamCost;
-                }
+                return updateStaticRam("getServerMaxMoney", CONSTANTS.ScriptGetServerRamCost);
             }
+            updateDynamicRam("getServerMaxMoney", CONSTANTS.ScriptGetServerRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerMaxMoney() failed. Invalid IP or hostname passed in: " + ip);
@@ -1233,13 +1127,9 @@ function NetscriptFunctions(workerScript) {
         },
         getServerGrowth : function(ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getServerGrowth) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getServerGrowth = true;
-                    return CONSTANTS.ScriptGetServerRamCost;
-                }
+                return updateStaticRam("getServerGrowth", CONSTANTS.ScriptGetServerRamCost);
             }
+            updateDynamicRam("getServerGrowth", CONSTANTS.ScriptGetServerRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerGrowth() failed. Invalid IP or hostname passed in: " + ip);
@@ -1252,13 +1142,9 @@ function NetscriptFunctions(workerScript) {
         },
         getServerNumPortsRequired : function(ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getServerNumPortsRequired) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getServerNumPortsRequired = true;
-                    return CONSTANTS.ScriptGetServerRamCost;
-                }
+                return updateStaticRam("getServerNumPortsRequired", CONSTANTS.ScriptGetServerRamCost);
             }
+            updateDynamicRam("getServerNumPortsRequired", CONSTANTS.ScriptGetServerRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerNumPortsRequired() failed. Invalid IP or hostname passed in: " + ip);
@@ -1271,13 +1157,9 @@ function NetscriptFunctions(workerScript) {
         },
         getServerRam : function(ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getServerRam) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getServerRam = true;
-                    return CONSTANTS.ScriptGetServerRamCost;
-                }
+                return updateStaticRam("getServerRam", CONSTANTS.ScriptGetServerRamCost);
             }
+            updateDynamicRam("getServerRam", CONSTANTS.ScriptGetServerRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getServerRam() failed. Invalid IP or hostname passed in: " + ip);
@@ -1290,24 +1172,16 @@ function NetscriptFunctions(workerScript) {
         },
         serverExists : function(ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.serverExists) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.serverExists = true;
-                    return CONSTANTS.ScriptGetServerRamCost;
-                }
+                return updateStaticRam("serverExists", CONSTANTS.ScriptGetServerRamCost);
             }
+            updateDynamicRam("serverExists", CONSTANTS.ScriptGetServerRamCost);
             return (getServer(ip) !== null);
         },
         fileExists : function(filename,ip=workerScript.serverIp) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.fileExists) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.fileExists = true;
-                    return CONSTANTS.ScriptFileExistsRamCost;
-                }
+                return updateStaticRam("fileExists", CONSTANTS.ScriptFileExistsRamCost);
             }
+            updateDynamicRam("fileExists", CONSTANTS.ScriptFileExistsRamCost);
             if (filename === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "fileExists() call has incorrect number of arguments. Usage: fileExists(scriptname, [server])");
             }
@@ -1340,13 +1214,9 @@ function NetscriptFunctions(workerScript) {
         },
         isRunning : function(filename,ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.isRunning) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.isRunning = true;
-                    return CONSTANTS.ScriptIsRunningRamCost;
-                }
+                return updateStaticRam("isRunning", CONSTANTS.ScriptIsRunningRamCost);
             }
+            updateDynamicRam("isRunning", CONSTANTS.ScriptIsRunningRamCost);
             if (filename === undefined || ip === undefined) {
                 throw makeRuntimeRejectMsg(workerScript, "isRunning() call has incorrect number of arguments. Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
             }
@@ -1363,36 +1233,24 @@ function NetscriptFunctions(workerScript) {
         },
         getNextHacknetNodeCost : function() {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getNextHacknetNodeCost) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getNextHacknetNodeCost = true;
-                    return CONSTANTS.ScriptPurchaseHacknetRamCost;
-                }
+                return updateStaticRam("getNextHacknetNodeCost", CONSTANTS.ScriptPurchaseHacknetRamCost);
             }
+            updateDynamicRam("getNextHacknetNodeCost", CONSTANTS.ScriptPurchaseHacknetRamCost);
             return getCostOfNextHacknetNode();
         },
 
         purchaseHacknetNode : function() {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.purchaseHacknetNode) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.purchaseHacknetNode = true;
-                    return CONSTANTS.ScriptPurchaseHacknetRamCost;
-                }
+                return updateStaticRam("purchaseHacknetNode", CONSTANTS.ScriptPurchaseHacknetRamCost);
             }
+            updateDynamicRam("purchaseHacknetNode", CONSTANTS.ScriptPurchaseHacknetRamCost);
             return purchaseHacknet();
         },
         getStockPrice : function(symbol) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getStockPrice) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getStockPrice = true;
-                    return CONSTANTS.ScriptGetStockRamCost;
-                }
+                return updateStaticRam("getStockPrice", CONSTANTS.ScriptGetStockRamCost);
             }
+            updateDynamicRam("getStockPrice", CONSTANTS.ScriptGetStockRamCost);
             if (!Player.hasTixApiAccess) {
                 throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getStockPrice()");
             }
@@ -1404,13 +1262,9 @@ function NetscriptFunctions(workerScript) {
         },
         getStockPosition : function(symbol) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getStockPosition) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getStockPosition = true;
-                    return CONSTANTS.ScriptGetStockRamCost;
-                }
+                return updateStaticRam("getStockPosition", CONSTANTS.ScriptGetStockRamCost);
             }
+            updateDynamicRam("getStockPosition", CONSTANTS.ScriptGetStockRamCost);
             if (!Player.hasTixApiAccess) {
                 throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use getStockPosition()");
             }
@@ -1422,13 +1276,9 @@ function NetscriptFunctions(workerScript) {
         },
         buyStock : function(symbol, shares) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.buyStock) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.buyStock = true;
-                    return CONSTANTS.ScriptBuySellStockRamCost;
-                }
+                return updateStaticRam("buyStock", CONSTANTS.ScriptBuySellStockRamCost);
             }
+            updateDynamicRam("buyStock", CONSTANTS.ScriptBuySellStockRamCost);
             if (!Player.hasTixApiAccess) {
                 throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use buyStock()");
             }
@@ -1467,13 +1317,9 @@ function NetscriptFunctions(workerScript) {
         },
         sellStock : function(symbol, shares) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.sellStock) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.sellStock = true;
-                    return CONSTANTS.ScriptBuySellStockRamCost;
-                }
+                return updateStaticRam("sellStock", CONSTANTS.ScriptBuySellStockRamCost);
             }
+            updateDynamicRam("sellStock", CONSTANTS.ScriptBuySellStockRamCost);
             if (!Player.hasTixApiAccess) {
                 throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use sellStock()");
             }
@@ -1513,13 +1359,9 @@ function NetscriptFunctions(workerScript) {
         },
         shortStock(symbol, shares) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.shortStock) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.shortStock = true;
-                    return CONSTANTS.ScriptBuySellStockRamCost;
-                }
+                return updateStaticRam("shortStock", CONSTANTS.ScriptBuySellStockRamCost);
             }
+            updateDynamicRam("shortStock", CONSTANTS.ScriptBuySellStockRamCost);
             if (!Player.hasTixApiAccess) {
                 throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use shortStock()");
             }
@@ -1537,13 +1379,9 @@ function NetscriptFunctions(workerScript) {
         },
         sellShort(symbol, shares) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.sellShort) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.sellShort = true;
-                    return CONSTANTS.ScriptBuySellStockRamCost;
-                }
+                return updateStaticRam("sellShort", CONSTANTS.ScriptBuySellStockRamCost);
             }
+            updateDynamicRam("sellShort", CONSTANTS.ScriptBuySellStockRamCost);
             if (!Player.hasTixApiAccess) {
                 throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use sellShort()");
             }
@@ -1561,13 +1399,9 @@ function NetscriptFunctions(workerScript) {
         },
         placeOrder(symbol, shares, price, type, pos) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.placeOrder) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.placeOrder = true;
-                    return CONSTANTS.ScriptBuySellStockRamCost;
-                }
+                return updateStaticRam("placeOrder", CONSTANTS.ScriptBuySellStockRamCost);
             }
+            updateDynamicRam("placeOrder", CONSTANTS.ScriptBuySellStockRamCost);
             if (!Player.hasTixApiAccess) {
                 throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use placeOrder()");
             }
@@ -1607,13 +1441,9 @@ function NetscriptFunctions(workerScript) {
         },
         cancelOrder(symbol, shares, price, type, pos) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.cancelOrder) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.cancelOrder = true;
-                    return CONSTANTS.ScriptBuySellStockRamCost;
-                }
+                return updateStaticRam("cancelOrder", CONSTANTS.ScriptBuySellStockRamCost);
             }
+            updateDynamicRam("cancelOrder", CONSTANTS.ScriptBuySellStockRamCost);
             if (!Player.hasTixApiAccess) {
                 throw makeRuntimeRejectMsg(workerScript, "You don't have TIX API Access! Cannot use cancelOrder()");
             }
@@ -1662,13 +1492,9 @@ function NetscriptFunctions(workerScript) {
         },
         purchaseServer : function(hostname, ram) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.purchaseServer) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.purchaseServer = true;
-                    return CONSTANTS.ScriptPurchaseServerRamCost;
-                }
+                return updateStaticRam("purchaseServer", CONSTANTS.ScriptPurchaseServerRamCost);
             }
+            updateDynamicRam("purchaseServer", CONSTANTS.ScriptPurchaseServerRamCost);
             var hostnameStr = String(hostname);
             hostnameStr = hostnameStr.replace(/\s+/g, '');
             if (hostnameStr == "") {
@@ -1721,13 +1547,9 @@ function NetscriptFunctions(workerScript) {
         },
         deleteServer : function(hostname) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.deleteServer) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.deleteServer = true;
-                    return CONSTANTS.ScriptPurchaseServerRamCost;
-                }
+                return updateStaticRam("deleteServer", CONSTANTS.ScriptPurchaseServerRamCost);
             }
+            updateDynamicRam("deleteServer", CONSTANTS.ScriptPurchaseServerRamCost);
             var hostnameStr = String(hostname);
             hostnameStr = hostnameStr.replace(/\s\s+/g, '');
             var server = GetServerByHostname(hostnameStr);
@@ -1800,13 +1622,9 @@ function NetscriptFunctions(workerScript) {
         },
         getPurchasedServers : function(hostname=true) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getPurchasedServers) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getPurchasedServers = true;
-                    return CONSTANTS.ScriptPurchaseServerRamCost;
-                }
+                return updateStaticRam("getPurchasedServers", CONSTANTS.ScriptPurchaseServerRamCost);
             }
+            updateDynamicRam("getPurchasedServers", CONSTANTS.ScriptPurchaseServerRamCost);
             var res = [];
             Player.purchasedServers.forEach(function(ip) {
                 if (hostname) {
@@ -1823,13 +1641,9 @@ function NetscriptFunctions(workerScript) {
         },
         write : function(port, data="", mode="a") {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.write) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.write = true;
-                    return CONSTANTS.ScriptReadWriteRamCost;
-                }
+                return updateStaticRam("write", CONSTANTS.ScriptReadWriteRamCost);
             }
+            updateDynamicRam("write", CONSTANTS.ScriptReadWriteRamCost);
             if (!isNaN(port)) { //Write to port
                 //Port 1-10
                 port = Math.round(port);
@@ -1864,13 +1678,9 @@ function NetscriptFunctions(workerScript) {
         },
         read : function(port) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.read) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.read = true;
-                    return CONSTANTS.ScriptReadWriteRamCost;
-                }
+                return updateStaticRam("read", CONSTANTS.ScriptReadWriteRamCost);
             }
+            updateDynamicRam("read", CONSTANTS.ScriptReadWriteRamCost);
             if (!isNaN(port)) { //Read from port
                 //Port 1-10
                 port = Math.round(port);
@@ -1900,13 +1710,9 @@ function NetscriptFunctions(workerScript) {
         },
         peek : function(port) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.peek) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.peek = true;
-                    return CONSTANTS.ScriptReadWriteRamCost;
-                }
+                return updateStaticRam("peek", CONSTANTS.ScriptReadWriteRamCost);
             }
+            updateDynamicRam("peek", CONSTANTS.ScriptReadWriteRamCost);
             if (isNaN(port)) {
                 throw makeRuntimeRejectMsg(workerScript, "ERR: peek() called with invalid argument. Must be a port number between 1 and " + CONSTANTS.NumNetscriptPorts);
             }
@@ -1922,13 +1728,9 @@ function NetscriptFunctions(workerScript) {
         },
         clear : function(port) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.clear) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.clear = true;
-                    return CONSTANTS.ScriptReadWriteRamCost;
-                }
+                return updateStaticRam("clear", CONSTANTS.ScriptReadWriteRamCost);
             }
+            updateDynamicRam("clear", CONSTANTS.ScriptReadWriteRamCost);
             if (!isNaN(port)) { //Clear port
                 port = Math.round(port);
                 if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
@@ -1956,13 +1758,9 @@ function NetscriptFunctions(workerScript) {
         },
         getPortHandle : function(port) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getPortHandle) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getPortHandle = true;
-                    return CONSTANTS.ScriptReadWriteRamCost * 10;
-                }
+                return updateStaticRam("getPortHandle", CONSTANTS.ScriptReadWriteRamCost * 10);
             }
+            updateDynamicRam("getPortHandle", CONSTANTS.ScriptReadWriteRamCost * 10);
             if (isNaN(port)) {
                 throw makeRuntimeRejectMsg(workerScript, "ERR: Invalid argument passed into getPortHandle(). Must be an integer between 1 and " + CONSTANTS.NumNetscriptPorts);
             }
@@ -1978,13 +1776,9 @@ function NetscriptFunctions(workerScript) {
         },
         rm : function(fn) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.rm) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.rm = true;
-                    return CONSTANTS.ScriptReadWriteRamCost;
-                }
+                return updateStaticRam("rm", CONSTANTS.ScriptReadWriteRamCost);
             }
+            updateDynamicRam("rm", CONSTANTS.ScriptReadWriteRamCost);
             var s = getServer(workerScript.serverIp);
             if (s == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in clear(). This is a bug please contact game dev");
@@ -2031,13 +1825,9 @@ function NetscriptFunctions(workerScript) {
         },
         scriptRunning : function(scriptname, ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.scriptRunning) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.scriptRunning = true;
-                    return CONSTANTS.ScriptArbScriptRamCost;
-                }
+                return updateStaticRam("scriptRunning", CONSTANTS.ScriptArbScriptRamCost);
             }
+            updateDynamicRam("scriptRunning", CONSTANTS.ScriptArbScriptRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("scriptRunning() failed. Invalid IP or hostname passed in: " + ip);
@@ -2052,13 +1842,9 @@ function NetscriptFunctions(workerScript) {
         },
         scriptKill : function(scriptname, ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.scriptKill) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.scriptKill = true;
-                    return CONSTANTS.ScriptArbScriptRamCost;
-                }
+                return updateStaticRam("scriptKill", CONSTANTS.ScriptArbScriptRamCost);
             }
+            updateDynamicRam("scriptKill", CONSTANTS.ScriptArbScriptRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("scriptKill() failed. Invalid IP or hostname passed in: " + ip);
@@ -2079,13 +1865,9 @@ function NetscriptFunctions(workerScript) {
         },
         getScriptRam : function (scriptname, ip=workerScript.serverIp) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getScriptRam) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getScriptRam = true;
-                    return CONSTANTS.ScriptGetScriptRamCost;
-                }
+                return updateStaticRam("getScriptRam", CONSTANTS.ScriptGetScriptRamCost);
             }
+            updateDynamicRam("getScriptRam", CONSTANTS.ScriptGetScriptRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getScriptRam() failed. Invalid IP or hostname passed in: " + ip);
@@ -2100,13 +1882,9 @@ function NetscriptFunctions(workerScript) {
         },
         getHackTime : function(ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getHackTime) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getHackTime = true;
-                    return CONSTANTS.ScriptGetHackTimeRamCost;
-                }
+                return updateStaticRam("getHackTime", CONSTANTS.ScriptGetHackTimeRamCost);
             }
+            updateDynamicRam("getHackTime", CONSTANTS.ScriptGetHackTimeRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getHackTime() failed. Invalid IP or hostname passed in: " + ip);
@@ -2116,13 +1894,9 @@ function NetscriptFunctions(workerScript) {
         },
         getGrowTime : function(ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getGrowTime) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getGrowTime = true;
-                    return CONSTANTS.ScriptGetHackTimeRamCost;
-                }
+                return updateStaticRam("getGrowTime", CONSTANTS.ScriptGetHackTimeRamCost);
             }
+            updateDynamicRam("getGrowTime", CONSTANTS.ScriptGetHackTimeRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getGrowTime() failed. Invalid IP or hostname passed in: " + ip);
@@ -2132,13 +1906,9 @@ function NetscriptFunctions(workerScript) {
         },
         getWeakenTime : function(ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getWeakenTime) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getWeakenTime = true;
-                    return CONSTANTS.ScriptGetHackTimeRamCost;
-                }
+                return updateStaticRam("getWeakenTime", CONSTANTS.ScriptGetHackTimeRamCost);
             }
+            updateDynamicRam("getWeakenTime", CONSTANTS.ScriptGetHackTimeRamCost);
             var server = getServer(ip);
             if (server == null) {
                 workerScript.scriptRef.log("getWeakenTime() failed. Invalid IP or hostname passed in: " + ip);
@@ -2148,13 +1918,9 @@ function NetscriptFunctions(workerScript) {
         },
         getScriptIncome : function(scriptname, ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getScriptIncome) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getScriptIncome = true;
-                    return CONSTANTS.ScriptGetScriptRamCost;
-                }
+                return updateStaticRam("getScriptIncome", CONSTANTS.ScriptGetScriptRamCost);
             }
+            updateDynamicRam("getScriptIncome", CONSTANTS.ScriptGetScriptRamCost);
             if (arguments.length === 0) {
                 //Get total script income
                 var res = [];
@@ -2182,13 +1948,9 @@ function NetscriptFunctions(workerScript) {
         },
         getScriptExpGain : function(scriptname, ip) {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getScriptExpGain) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getScriptExpGain = true;
-                    return CONSTANTS.ScriptGetScriptRamCost;
-                }
+                return updateStaticRam("getScriptExpGain", CONSTANTS.ScriptGetScriptRamCost);
             }
+            updateDynamicRam("getScriptExpGain", CONSTANTS.ScriptGetScriptRamCost);
             if (arguments.length === 0) {
                 var total = 0;
                 for (var i = 0; i < workerScripts.length; ++i) {
@@ -2216,13 +1978,9 @@ function NetscriptFunctions(workerScript) {
         },
         getTimeSinceLastAug : function() {
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getTimeSinceLastAug) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getTimeSinceLastAug = true;
-                    return CONSTANTS.ScriptGetHackTimeRamCost;
-                }
+                return updateStaticRam("getTimeSinceLastAug", CONSTANTS.ScriptGetHackTimeRamCost);
             }
+            updateDynamicRam("getTimeSinceLastAug", CONSTANTS.ScriptGetHackTimeRamCost);
             return Player.playtimeSinceLastAug;
         },
         prompt : function(txt) {
@@ -2250,16 +2008,12 @@ function NetscriptFunctions(workerScript) {
 
         /* Singularity Functions */
         universityCourse : function(universityName, className) {
+            var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.universityCourse) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.universityCourse = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("universityCourse", ramCost);
             }
+            updateDynamicRam("universityCourse", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run universityCourse(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
@@ -2343,16 +2097,12 @@ function NetscriptFunctions(workerScript) {
         },
 
         gymWorkout : function(gymName, stat) {
+            var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.gymWorkout) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.gymWorkout = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("gymWorkout", ramCost);
             }
+            updateDynamicRam("gymWorkout", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run gymWorkout(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
@@ -2449,16 +2199,12 @@ function NetscriptFunctions(workerScript) {
         },
 
         travelToCity(cityname) {
+            var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.travelToCity) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.travelToCity = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 2;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("travelToCity", ramCost);
             }
+            updateDynamicRam("travelToCity", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run travelToCity(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
@@ -2491,16 +2237,12 @@ function NetscriptFunctions(workerScript) {
         },
 
         purchaseTor() {
+            var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.purchaseTor) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.purchaseTor = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("purchaseTor", ramCost);
             }
+            updateDynamicRam("purchaseTor", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run purchaseTor(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
@@ -2537,16 +2279,12 @@ function NetscriptFunctions(workerScript) {
             return true;
         },
         purchaseProgram(programName) {
+            var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.purchaseProgram) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.purchaseProgram = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("purchaseProgram", ramCost);
             }
+            updateDynamicRam("purchaseProgram", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run purchaseProgram(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
@@ -2658,16 +2396,12 @@ function NetscriptFunctions(workerScript) {
             return true;
         },
         getStats : function() {
+            var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getStats) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getStats = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("getStats", ramCost);
             }
+            updateDynamicRam("getStats", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run getStats(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
@@ -2686,17 +2420,12 @@ function NetscriptFunctions(workerScript) {
             }
         },
         getCharacterInformation : function() {
+            var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getCharacterInformation) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getCharacterInformation = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("getCharacterInformation", ramCost);
             }
-
+            updateDynamicRam("getCharacterInformation", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run getCharacterInformation(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
@@ -2727,16 +2456,12 @@ function NetscriptFunctions(workerScript) {
             };
         },
         isBusy : function() {
+            var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.isBusy) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.isBusy = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 4;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("isBusy", ramCost);
             }
+            updateDynamicRam("isBusy", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run isBusy(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
@@ -2746,16 +2471,12 @@ function NetscriptFunctions(workerScript) {
             return Player.isWorking;
         },
         stopAction : function() {
+            var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 2;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.stopAction) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.stopAction = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn1RamCost / 2;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("stopAction", ramCost);
             }
+            updateDynamicRam("stopAction", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 1)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run stopAction(). It is a Singularity Function and requires SourceFile-4 (level 1) to run.");
@@ -2772,16 +2493,12 @@ function NetscriptFunctions(workerScript) {
             return false;
         },
         upgradeHomeRam : function() {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.upgradeHomeRam) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.upgradeHomeRam = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("upgradeHomeRam", ramCost);
             }
+            updateDynamicRam("upgradeHomeRam", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run upgradeHomeRam(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
@@ -2816,16 +2533,12 @@ function NetscriptFunctions(workerScript) {
             return true;
         },
         getUpgradeHomeRamCost : function() {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 2;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getUpgradeHomeRamCost) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getUpgradeHomeRamCost = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 2;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("getUpgradeHomeRamCost", ramCost);
             }
+            updateDynamicRam("getUpgradeHomeRamCost", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run getUpgradeHomeRamCost(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
@@ -2844,16 +2557,12 @@ function NetscriptFunctions(workerScript) {
             return cost * mult;
         },
         workForCompany : function() {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.workForCompany) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.workForCompany = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("workForCompany", ramCost);
             }
+            updateDynamicRam("workForCompany", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run workForCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
@@ -2889,16 +2598,12 @@ function NetscriptFunctions(workerScript) {
             return true;
         },
         applyToCompany : function(companyName, field) {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.applyToCompany) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.applyToCompany = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("applyToCompany", ramCost);
             }
+            updateDynamicRam("applyToCompany", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run applyToCompany(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
@@ -2974,16 +2679,12 @@ function NetscriptFunctions(workerScript) {
             return res;
         },
         getCompanyRep : function(companyName) {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 2;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getCompanyRep) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getCompanyRep = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("getCompanyRep", ramCost);
             }
+            updateDynamicRam("getCompanyRep", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run getCompanyRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
@@ -2999,16 +2700,12 @@ function NetscriptFunctions(workerScript) {
             return company.playerReputation;
         },
         getCompanyFavor : function(companyName) {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getCompanyFavor) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getCompanyFavor = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("getCompanyFavor", ramCost);
             }
+            updateDynamicRam("getCompanyFavor", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run getCompanyFavor(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
@@ -3024,16 +2721,12 @@ function NetscriptFunctions(workerScript) {
             return company.favor;
         },
         checkFactionInvitations : function() {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.checkFactionInvitations) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.checkFactionInvitations = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("checkFactionInvitations", ramCost);
             }
+            updateDynamicRam("checkFactionInvitations", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run checkFactionInvitations(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
@@ -3044,16 +2737,12 @@ function NetscriptFunctions(workerScript) {
             return Player.factionInvitations.slice();
         },
         joinFaction : function(name) {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.joinFaction) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.joinFaction = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("joinFaction", ramCost);
             }
+            updateDynamicRam("joinFaction", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run joinFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
@@ -3087,16 +2776,12 @@ function NetscriptFunctions(workerScript) {
             return true;
         },
         workForFaction : function(name, type) {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.workForFaction) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.workForFaction = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("workForFaction", ramCost);
             }
+            updateDynamicRam("workForFaction", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run workForFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
@@ -3185,16 +2870,12 @@ function NetscriptFunctions(workerScript) {
             return true;
         },
         getFactionRep : function(name) {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getFactionRep) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getFactionRep = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("getFactionRep", ramCost);
             }
+            updateDynamicRam("getFactionRep", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run getFactionRep(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
@@ -3210,16 +2891,12 @@ function NetscriptFunctions(workerScript) {
             return Factions[name].playerReputation;
         },
         getFactionFavor : function(name) {
+            var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getFactionFavor) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getFactionFavor = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn2RamCost / 4;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("getFactionFavor", ramCost);
             }
+            updateDynamicRam("getFactionFavor", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 2)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run getFactionFavor(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
@@ -3235,16 +2912,12 @@ function NetscriptFunctions(workerScript) {
             return Factions[name].favor;
         },
         createProgram : function(name) {
+            var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.createProgram) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.createProgram = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("createProgram", ramCost);
             }
+            updateDynamicRam("createProgram", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run createProgram(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
@@ -3337,16 +3010,12 @@ function NetscriptFunctions(workerScript) {
             return true;
         },
         commitCrime : function(crimeRoughName) {
+            var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.commitCrime) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.commitCrime = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("commitCrime", ramCost);
             }
+            updateDynamicRam("commitCrime", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run commitCrime(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
@@ -3398,16 +3067,12 @@ function NetscriptFunctions(workerScript) {
             return crime.commit(CONSTANTS.CrimeSingFnDivider, {workerscript: workerScript});
         },
         getCrimeChance : function(crimeRoughName) {
+            var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getCrimeChance) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getCrimeChance = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("getCrimeChance", ramCost);
             }
+            updateDynamicRam("getCrimeChance", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run getCrimeChance(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
@@ -3423,16 +3088,12 @@ function NetscriptFunctions(workerScript) {
             return crime.successRate();
         },
         getOwnedAugmentations : function(purchased=false) {
+            var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getOwnedAugmentations) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getOwnedAugmentations = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("getOwnedAugmentations", ramCost);
             }
+            updateDynamicRam("getOwnedAugmentations", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run getOwnedAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
@@ -3451,16 +3112,12 @@ function NetscriptFunctions(workerScript) {
             return res;
         },
         getAugmentationsFromFaction : function(facname) {
+            var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getAugmentationsFromFaction) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getAugmentationsFromFaction = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("getAugmentationsFromFaction", ramCost);
             }
+            updateDynamicRam("getAugmentationsFromFaction", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run getAugmentationsFromFaction(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
@@ -3481,16 +3138,12 @@ function NetscriptFunctions(workerScript) {
             return res;
         },
         getAugmentationCost : function(name) {
+            var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.getAugmentationCost) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.getAugmentationCost = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("getAugmentationCost", ramCost);
             }
+            updateDynamicRam("getAugmentationCost", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run getAugmentationCost(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
@@ -3507,16 +3160,12 @@ function NetscriptFunctions(workerScript) {
             return [aug.baseRepRequirement, aug.baseCost];
         },
         purchaseAugmentation : function(faction, name) {
+            var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.purchaseAugmentation) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.purchaseAugmentation = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("purchaseAugmentation", ramCost);
             }
+            updateDynamicRam("purchaseAugmentation", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run purchaseAugmentation(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");
@@ -3576,16 +3225,12 @@ function NetscriptFunctions(workerScript) {
             }
         },
         installAugmentations : function(cbScript) {
+            var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
+            if (Player.bitNodeN !== 4) {ramCost *= 8;}
             if (workerScript.checkingRam) {
-                if (workerScript.loadedFns.installAugmentations) {
-                    return 0;
-                } else {
-                    workerScript.loadedFns.installAugmentations = true;
-                    var ramCost = CONSTANTS.ScriptSingularityFn3RamCost;
-                    if (Player.bitNodeN !== 4) {ramCost *= 8;}
-                    return ramCost;
-                }
+                return updateStaticRam("installAugmentations", ramCost);
             }
+            updateDynamicRam("installAugmentations", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run installAugmentations(). It is a Singularity Function and requires SourceFile-4 (level 3) to run.");

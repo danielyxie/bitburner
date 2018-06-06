@@ -1682,6 +1682,7 @@ Bladeburner.prototype.createContent = function() {
     document.getElementById("entire-game-container").appendChild(DomElems.bladeburnerDiv);
 
     this.postToConsole("Bladeburner Console BETA");
+    this.postToConsole("Type 'help' to see console commands");
     DomElems.consoleInput.focus();
 }
 

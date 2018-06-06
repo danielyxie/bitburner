@@ -486,13 +486,8 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.37.2<br>" +
-    "* After joining the Bladeburners division, there is now a button to go to the Bladeburner content " +
-    "in the 'City' page<br>" +
-    "* You now start with $250m in BitNode-8 (increased from $100m)<br>" +
-    "* Bug Fix: You can now no longer directly edit Hacknet Node values through NetscriptJS (hopefully)<br>" +
-    "* Bug Fix: Bladeburners is no longer accessible in BN-8<br>" +
-    "* Bug Fix: getBitNodeMultipliers() Netscript function now returns a copy rather than the original object<br>"
+    "v0.37.3<br>" +
+    "* Bug Fix: Fixed an exploit that allowed calling any Netscript function without incurring any RAM Cost in NetscriptJS<br>"
 }
 
 export {CONSTANTS};

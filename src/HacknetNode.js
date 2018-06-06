@@ -109,7 +109,9 @@ HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
 
 //Wrapper function for Netscript
 HacknetNode.prototype.upgradeLevel = function(levels=1) {
-    return this.purchaseLevelUpgrade(levels);
+    let res = this.purchaseLevelUpgrade(levels);
+    createPlayerHacknetNodeWrappers();
+    return res;
 }
 
 HacknetNode.prototype.calculateRamUpgradeCost = function() {
@@ -140,7 +142,9 @@ HacknetNode.prototype.purchaseRamUpgrade = function() {
 
 //Wrapper function for Netscript
 HacknetNode.prototype.upgradeRam = function() {
-    return this.purchaseRamUpgrade();
+    let res = this.purchaseRamUpgrade();
+    createPlayerHacknetNodeWrappers();
+    return res;
 }
 
 HacknetNode.prototype.calculateCoreUpgradeCost = function() {
@@ -151,7 +155,9 @@ HacknetNode.prototype.calculateCoreUpgradeCost = function() {
 
 //Wrapper function for Netscript
 HacknetNode.prototype.getCoreUpgradeCost = function() {
-    return this.calculateCoreUpgradeCost();
+    let res = this.calculateCoreUpgradeCost();
+    createPlayerHacknetNodeWrappers();
+    return res;
 }
 
 HacknetNode.prototype.purchaseCoreUpgrade = function() {
@@ -240,7 +246,10 @@ function purchaseHacknet() {
     Player.loseMoney(cost);
     Player.hacknetNodes.push(node);
 
-    displayHacknetNodesContent();
+    if (Engine.currentPage === Engine.Page.HacknetNodes) {
+        displayHacknetNodesContent();
+    }
+    createPlayerHacknetNodeWrappers();
     updateTotalHacknetProduction();
     return numOwned;
 }
