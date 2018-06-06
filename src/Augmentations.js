@@ -2594,8 +2594,9 @@ function displaySourceFiles(listElement, sourceFiles) {
             console.log("ERROR: Invalid source file number: " + sourceFiles[i].n);
             continue;
         }
+        const maxLevel = sourceFiles[i].n == 12 ? "∞" : "3";
         var accordion = createAccordionElement({
-            hdrText:sourceFileObject.name + "<br>" + "Level " + (sourceFiles[i].lvl) + " / 3",
+            hdrText:sourceFileObject.name + "<br>" + "Level " + (sourceFiles[i].lvl) + " / "+maxLevel,
             panelText:sourceFileObject.info
         });
 

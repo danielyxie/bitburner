@@ -15,7 +15,10 @@ body {
     background-color: var(--my-background-color);
 }
 
-p, pre, h2 {
+p,
+pre,
+h2,
+.text {
     color: var(--my-font-color);
 }
 
