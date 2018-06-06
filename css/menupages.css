@@ -299,6 +299,11 @@
     white-space: nowrap;
 }
 
+#hacknet-nodes-list {
+    list-style: none;
+    width: 82vw;
+}
+
 #hacknet-nodes-money {
     margin: 10px;
     float: left;
@@ -306,7 +311,7 @@
 
 #hacknet-nodes-money-multipliers-div {
     display: inline-block;
-    width: 80%;
+    width: 70vw;
 }
 
 #hacknet-nodes-multipliers {
@@ -320,7 +325,7 @@
 .hacknet-node {
     margin: 6px;
     padding: 6px;
-    width: 40%;
+    width: 34vw;
     border: 2px solid var(--my-highlight-color);
     -webkit-box-shadow:
       inset 0 0 8px  rgba(0,0,0,0.1),
@@ -351,6 +356,10 @@
     margin: 0 4px; /* Don't want the vertical margin/padding, just left & right */
     padding: 0 4px;
     width: 48px; /* Four times font-size */
+}
+
+.menu-page-text {
+    width: 70vw;
 }
 
 /* World */
