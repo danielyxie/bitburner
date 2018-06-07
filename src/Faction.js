@@ -185,14 +185,14 @@ function displayFactionContent(factionName) {
     favorGain = favorGain[0];
     elements.push(createElement("p", {
         innerText: "Reputation: " + formatNumber(faction.playerReputation, 4),
-        tooltip:"You will earn " + formatNumber(favorGain, 4) +
+        tooltip:"You will earn " + formatNumber(favorGain, 0) +
                 " faction favor upon resetting after installing an Augmentation"
     }))
     elements.push(createElement("p", {
         innerText:"---------------",
     }));
     elements.push(createElement("p", {
-        innerText:"Faction Favor: " + formatNumber(faction.favor, 4),
+        innerText:"Faction Favor: " + formatNumber(faction.favor, 0),
         tooltip:"Faction favor increases the rate at which " +
                 "you earn reputation for this faction by 1% per favor. Faction favor " +
                 "is gained whenever you reset after installing an Augmentation. The amount of " +
