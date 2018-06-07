@@ -2506,15 +2506,7 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            //Calculate how many times ram has been upgraded (doubled)
-            var currentRam = Player.getHomeComputer().maxRam;
-            var numUpgrades = Math.log2(currentRam);
-
-            //Calculate cost
-            //Have cost increase by some percentage each time RAM has been upgraded
-            var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome;
-            var mult = Math.pow(1.55, numUpgrades);
-            cost = cost * mult;
+            const cost = Player.getUpgradeHomeRamCost();
 
             if (Player.money.lt(cost)) {
                 workerScript.scriptRef.log("ERROR: upgradeHomeRam() failed because you don't have enough money");
@@ -2546,15 +2538,7 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            //Calculate how many times ram has been upgraded (doubled)
-            var currentRam = Player.getHomeComputer().maxRam;
-            var numUpgrades = Math.log2(currentRam);
-
-            //Calculate cost
-            //Have cost increase by some percentage each time RAM has been upgraded
-            var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome;
-            var mult = Math.pow(1.55, numUpgrades);
-            return cost * mult;
+            return Player.getUpgradeHomeRamCost();
         },
         workForCompany : function() {
             var ramCost = CONSTANTS.ScriptSingularityFn2RamCost;
