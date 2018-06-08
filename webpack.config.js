@@ -19,11 +19,10 @@ module.exports = {
         "dist/engine": "./src/engine.js",
         "tests/tests": "./tests/index.js",
     },
-    devtool: "nosources-source-map",
+    devtool: "source-map",
     output: {
         path: path.resolve(__dirname, "./"),
-        filename: "[name].bundle.js",
-        devtoolModuleFilenameTemplate: "[id]"
+        filename: "[name].bundle.js"
     },
     module: {
         rules: [

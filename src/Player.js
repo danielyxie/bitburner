@@ -401,6 +401,18 @@ PlayerObject.prototype.getHomeComputer = function() {
     return AllServers[this.homeComputer];
 }
 
+PlayerObject.prototype.getUpgradeHomeRamCost = function() {
+    //Calculate how many times ram has been upgraded (doubled)
+    const currentRam = Player.getHomeComputer().maxRam;
+    const numUpgrades = Math.log2(currentRam);
+
+    //Calculate cost
+    //Have cost increase by some percentage each time RAM has been upgraded
+    const mult = Math.pow(1.58, numUpgrades);
+    var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult;
+    return cost;
+}
+
 //Calculates skill level based on experience. The same formula will be used for every skill
 PlayerObject.prototype.calculateSkill = function(exp) {
     return Math.max(Math.floor(32 * Math.log(exp + 534.5) - 200), 1);

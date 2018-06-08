@@ -489,6 +489,8 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.37.3<br>" +
+    "* New BitNode: BN-7 Bladeburner 2079<br>" + 
+    "* New BitNode: BN-12 The Recursion<br>" +
     "* Bladeburner Changes:<br>"  +
     "*** Bladeburner progress is no longer reset when installing Augmentations<br>" +
     "*** The number of successess needed to increase a Contract/Operation's max level now scales with the current max level (gradually gets harder)<br>"  +
