@@ -2,6 +2,7 @@ import {deleteActiveScriptsItem}                from "./ActiveScriptsUI.js";
 import {Augmentations, augmentationExists,
         initAugmentations, AugmentationNames}   from "./Augmentations.js";
 import {initBitNodeMultipliers}                 from "./BitNode.js";
+import {Bladeburner}                            from "./Bladeburner.js";
 import {writeCinematicText}                     from "./CinematicText.js";
 import {Companies, Company, initCompanies}      from "./Company.js";
 import {Programs}                               from "./CreateProgram.js";
@@ -125,8 +126,10 @@ function prestigeAugmentation() {
         }
     }
 
-    //Reset Bladeburner
-    Player.bladeburner = null;
+    //Cancel Bladeburner action
+    if (Player.bladeburner instanceof Bladeburner) {
+        Player.bladeburner.resetAction();
+    }
 
     //BitNode 8: Ghost of Wall Street
     if (Player.bitNodeN === 8) {Player.money = new Decimal(BitNode8StartingMoney);}

@@ -113,6 +113,10 @@ var possibleLogs = {
     commitCrime: true,
     shortStock: true,
     sellShort: true,
+    startAction: true,
+    upgradeSkill: true,
+    setTeamSize: true,
+    joinBladeburnerFaction: true,
 }
 
 //Used to check and set flags for every Source File, despite the name of the function
@@ -722,7 +726,7 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("scp", CONSTANTS.ScriptScpRamCost);
             if (arguments.length !== 2 && arguments.length !== 3) {
-                throw makeRuntimeRejectMsg(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
             }
             if (scriptname && scriptname.constructor === Array) {
                 //Recursively call scp on all elements of array
@@ -736,18 +740,18 @@ function NetscriptFunctions(workerScript) {
             }
             if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) &&
                 !scriptname.endsWith("txt")) {
-                throw makeRuntimeRejectMsg(workerScript, "Error: scp() does not work with this file type. It only works for .script, .lit, and .txt files");
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() does not work with this file type. It only works for .script, .lit, and .txt files");
             }
 
             var destServer, currServ;
 
             if (arguments.length === 3) {   //scriptname, source, destination
                 if (scriptname === undefined || ip1 === undefined || ip2 === undefined) {
-                    throw makeRuntimeRejectMsg(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
                 }
                 destServer = getServer(ip2);
                 if (destServer == null) {
-                    throw makeRuntimeRejectMsg(workerScript, "Error: Invalid hostname/ip passed into scp() command: " + ip);
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid hostname/ip passed into scp() command: " + ip);
                 }
 
                 currServ = getServer(ip1);
@@ -756,11 +760,11 @@ function NetscriptFunctions(workerScript) {
                 }
             } else if (arguments.length === 2) {    //scriptname, destination
                 if (scriptname === undefined || ip1 === undefined) {
-                    throw makeRuntimeRejectMsg(workerScript, "Error: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: scp() call has incorrect number of arguments. Takes 2 or 3 arguments");
                 }
                 destServer = getServer(ip1);
                 if (destServer == null) {
-                    throw makeRuntimeRejectMsg(workerScript, "Error: Invalid hostname/ip passed into scp() command: " + ip);
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid hostname/ip passed into scp() command: " + ip);
                 }
 
                 currServ = getServer(workerScript.serverIp);
@@ -1287,7 +1291,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into buyStock()");
             }
             if (shares < 0 || isNaN(shares)) {
-                workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to buyStock()");
+                workerScript.scriptRef.log("ERROR: Invalid 'shares' argument passed to buyStock()");
                 return 0;
             }
             shares = Math.round(shares);
@@ -1328,7 +1332,7 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid stock symbol passed into sellStock()");
             }
             if (shares < 0 || isNaN(shares)) {
-                workerScript.scriptRef.log("Error: Invalid 'shares' argument passed to sellStock()");
+                workerScript.scriptRef.log("ERROR: Invalid 'shares' argument passed to sellStock()");
                 return 0;
             }
             shares = Math.round(shares);
@@ -1498,30 +1502,30 @@ function NetscriptFunctions(workerScript) {
             var hostnameStr = String(hostname);
             hostnameStr = hostnameStr.replace(/\s+/g, '');
             if (hostnameStr == "") {
-                workerScript.scriptRef.log("Error: Passed empty string for hostname argument of purchaseServer()");
+                workerScript.scriptRef.log("ERROR: Passed empty string for hostname argument of purchaseServer()");
                 return "";
             }
 
             if (Player.purchasedServers.length >= CONSTANTS.PurchasedServerLimit) {
-                workerScript.scriptRef.log("Error: You have reached the maximum limit of " + CONSTANTS.PurchasedServerLimit +
+                workerScript.scriptRef.log("ERROR: You have reached the maximum limit of " + CONSTANTS.PurchasedServerLimit +
                                            " servers. You cannot purchase any more.");
                 return "";
             }
 
             ram = Math.round(ram);
             if (isNaN(ram) || !powerOfTwo(ram)) {
-                workerScript.scriptRef.log("Error: purchaseServer() failed due to invalid ram argument. Must be numeric and a power of 2");
+                workerScript.scriptRef.log("ERROR: purchaseServer() failed due to invalid ram argument. Must be numeric and a power of 2");
                 return "";
             }
 
             if (ram > CONSTANTS.PurchasedServerMaxRam) {
-                workerScript.scriptRef.log("Error: purchasedServer() failed because specified RAM was too high. Maximum RAM on a purchased server is " + CONSTANTS.PurchasedServerMaxRam + "GB");
+                workerScript.scriptRef.log("ERROR: purchasedServer() failed because specified RAM was too high. Maximum RAM on a purchased server is " + CONSTANTS.PurchasedServerMaxRam + "GB");
                 return "";
             }
 
             var cost = ram * CONSTANTS.BaseCostFor1GBOfRamServer;
             if (Player.money.lt(cost)) {
-                workerScript.scriptRef.log("Error: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
+                workerScript.scriptRef.log("ERROR: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
                 return "";
             }
             var newServ = new Server({
@@ -1554,12 +1558,12 @@ function NetscriptFunctions(workerScript) {
             hostnameStr = hostnameStr.replace(/\s\s+/g, '');
             var server = GetServerByHostname(hostnameStr);
             if (server == null) {
-                workerScript.scriptRef.log("Error: Could not find server with hostname " + hostnameStr + ". deleteServer() failed");
+                workerScript.scriptRef.log("ERROR: Could not find server with hostname " + hostnameStr + ". deleteServer() failed");
                 return false;
             }
 
             if (!server.purchasedByPlayer || server.hostname === "home") {
-                workerScript.scriptRef.log("Error: Server " + server.hostname + " is not a purchased server. " +
+                workerScript.scriptRef.log("ERROR: Server " + server.hostname + " is not a purchased server. " +
                                            "Cannot be deleted. deleteServer() failed");
                 return false;
             }
@@ -1568,19 +1572,19 @@ function NetscriptFunctions(workerScript) {
 
             //Can't delete server you're currently connected to
             if (server.isConnectedTo) {
-                workerScript.scriptRef.log("Error: deleteServer() failed because you are currently connected to the server you are trying to delete");
+                workerScript.scriptRef.log("ERROR: deleteServer() failed because you are currently connected to the server you are trying to delete");
                 return false;
             }
 
             //A server cannot delete itself
             if (ip === workerScript.serverIp) {
-                workerScript.scriptRef.log("Error: Cannot call deleteServer() on self. deleteServer() failed");
+                workerScript.scriptRef.log("ERROR: Cannot call deleteServer() on self. deleteServer() failed");
                 return false;
             }
 
             //Delete all scripts running on server
             if (server.runningScripts.length > 0) {
-                workerScript.scriptRef.log("Error: Cannot delete server " + server.hostname + " because it still has scripts running.");
+                workerScript.scriptRef.log("ERROR: Cannot delete server " + server.hostname + " because it still has scripts running.");
                 return false;
             }
 
@@ -1595,7 +1599,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (!found) {
-                workerScript.scriptRef.log("Error: Could not identify server " + server.hostname +
+                workerScript.scriptRef.log("ERROR: Could not identify server " + server.hostname +
                                            "as a purchased server. This is likely a bug please contact game dev");
                 return false;
             }
@@ -1616,7 +1620,7 @@ function NetscriptFunctions(workerScript) {
                 }
             }
             //Wasn't found on home computer
-            workerScript.scriptRef.log("Error: Could not find server " + server.hostname +
+            workerScript.scriptRef.log("ERROR: Could not find server " + server.hostname +
                                        "as a purchased server. This is likely a bug please contact game dev");
             return false;
         },
@@ -1630,7 +1634,7 @@ function NetscriptFunctions(workerScript) {
                 if (hostname) {
                     var server = getServer(ip);
                     if (server == null) {
-                        throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find server in getPurchasedServers(). This is a bug please report to game dev");
+                        throw makeRuntimeRejectMsg(workerScript, "ERROR: Could not find server in getPurchasedServers(). This is a bug please report to game dev");
                     }
                     res.push(server.hostname);
                 } else {
@@ -1648,7 +1652,7 @@ function NetscriptFunctions(workerScript) {
                 //Port 1-10
                 port = Math.round(port);
                 if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to write to invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid.");
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Trying to write to invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid.");
                 }
                 var port = NetscriptPorts[port-1];
                 if (port == null || !(port instanceof NetscriptPort)) {
@@ -1685,11 +1689,11 @@ function NetscriptFunctions(workerScript) {
                 //Port 1-10
                 port = Math.round(port);
                 if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to read from invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid.");
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Trying to read from invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid.");
                 }
                 var port = NetscriptPorts[port-1];
                 if (port == null || !(port instanceof NetscriptPort)) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 return port.read();
             } else if (isString(port)) { //Read from text file
@@ -1714,15 +1718,15 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("peek", CONSTANTS.ScriptReadWriteRamCost);
             if (isNaN(port)) {
-                throw makeRuntimeRejectMsg(workerScript, "ERR: peek() called with invalid argument. Must be a port number between 1 and " + CONSTANTS.NumNetscriptPorts);
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: peek() called with invalid argument. Must be a port number between 1 and " + CONSTANTS.NumNetscriptPorts);
             }
             port = Math.round(port);
             if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-                throw makeRuntimeRejectMsg(workerScript, "ERR: peek() called with invalid argument. Must be a port number between 1 and " + CONSTANTS.NumNetscriptPorts);
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: peek() called with invalid argument. Must be a port number between 1 and " + CONSTANTS.NumNetscriptPorts);
             }
             var port = NetscriptPorts[port-1];
             if (port == null || !(port instanceof NetscriptPort)) {
-                throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
             }
             return port.peek();
         },
@@ -1734,11 +1738,11 @@ function NetscriptFunctions(workerScript) {
             if (!isNaN(port)) { //Clear port
                 port = Math.round(port);
                 if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERR: Trying to clear invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid");
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Trying to clear invalid port: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid");
                 }
                 var port = NetscriptPorts[port-1];
                 if (port == null || !(port instanceof NetscriptPort)) {
-                    throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
+                    throw makeRuntimeRejectMsg(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
                 }
                 return port.clear();
             } else if (isString(port)) { //Clear text file
@@ -1762,15 +1766,15 @@ function NetscriptFunctions(workerScript) {
             }
             updateDynamicRam("getPortHandle", CONSTANTS.ScriptReadWriteRamCost * 10);
             if (isNaN(port)) {
-                throw makeRuntimeRejectMsg(workerScript, "ERR: Invalid argument passed into getPortHandle(). Must be an integer between 1 and " + CONSTANTS.NumNetscriptPorts);
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Invalid argument passed into getPortHandle(). Must be an integer between 1 and " + CONSTANTS.NumNetscriptPorts);
             }
             port = Math.round(port);
             if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-                throw makeRuntimeRejectMsg(workerScript, "ERR: getPortHandle() called with invalid port number: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid");
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: getPortHandle() called with invalid port number: " + port + ". Only ports 1-" + CONSTANTS.NumNetscriptPorts + " are valid");
             }
             var port = NetscriptPorts[port-1];
             if (port == null || !(port instanceof NetscriptPort)) {
-                throw makeRuntimeRejectMsg(workerScript, "ERR: Could not find port: " + port + ". This is a bug contact the game developer");
+                throw makeRuntimeRejectMsg(workerScript, "ERROR: Could not find port: " + port + ". This is a bug contact the game developer");
             }
             return port;
         },
@@ -3251,157 +3255,293 @@ function NetscriptFunctions(workerScript) {
         //Bladeburner API
         bladeburner : {
             isContractName : function(name) {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("isContractName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                }
+                updateDynamicRam("isContractName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                    return Player.bladeburner.isContractNameNetscriptFn(name);
                 }
                 throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             isOperationName : function(name) {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("isOperationName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("isOperationName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Player.bladeburner.isOperationNameNetscriptFn(name);
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isOperationName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             isBlackOpName : function(name) {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("isBlackOpName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("isBlackOpName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Player.bladeburner.isBlackOpNameNetscriptFn(name);
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isBlackOpName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             isGeneralActionName : function(name) {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("isGeneralActionName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("isGeneralActionName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Player.bladeburner.isGeneralActionNameNetscriptFn(name);
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isGeneralActionName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             isSkillName : function(name) {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("isSkillName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("isSkillName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Player.bladeburner.isSkillNameNetscriptFn(name);
+                }
+                throw makeRuntimeRejectMsg(workerScript, "isSkillName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            startAction : function(type, name) {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+            startAction : function(type="", name="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("startAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("startAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.startActionNetscriptFn(type, name, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.startAction() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "startAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             stopAction : function() {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("stopAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 2);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("stopAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 2);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Player.bladeburner.resetAction();
+                }
+                throw makeRuntimeRejectMsg(workerScript, "stopAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getActionTime : function(type="", name="") {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getActionTime", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("getActionTime", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.getActionTimeNetscriptFn(type, name, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getActionTime() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getActionTime() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getActionEstimatedSuccessChance : function(type="", name="") {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getActionEstimatedSuccessChance", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("getActionEstimatedSuccessChance", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.getActionEstimatedSuccessChanceNetscriptFn(type, name, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getActionEstimatedSuccessChance() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getActionEstimatedSuccessChance() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getActionCountRemaining : function(type="", name="") {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getActionCountRemaining", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("getActionCountRemaining", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.getActionCountRemainingNetscriptFn(type, name, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getActionCountRemaining() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getActionCountRemaining() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getRank : function() {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getRank", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("getRank", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Player.bladeburner.rank;
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getRank() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getSkillPoints : function() {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getSkillPoints", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("getSkillPoints", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Player.bladeburner.skillPoints;
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getSkillPoints() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getSkillLevel : function(skillName="") {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getSkillLevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("getSkillLevel", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.getSkillLevelNetscriptFn(skillName, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getSkillLevel() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getSkillLevel() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             upgradeSkill : function(skillName) {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("upgradeSkill", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("upgradeSkill", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.upgradeSkillNetscriptFn(skillName, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.upgradeSkill() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "upgradeSkill() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            getTeamSize : function() {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+            getTeamSize : function(type="", name="") {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getTeamSize", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("getTeamSize", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.getTeamSizeNetscriptFn(type, name, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getTeamSize() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getTeamSize() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             setTeamSize : function(type="", name="", size) {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("setTeamSize", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("setTeamSize", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.setTeamSizeNetscriptFn(type, name, size, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.setTeamSize() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "setTeamSize() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getCityEstimatedPopulation : function(cityName) {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getCityEstimatedPopulation", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("getCityEstimatedPopulation", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.getCityEstimatedPopulationNetscriptFn(cityName, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getCityEstimatedPopulation() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getCityEstimatedPopulation() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getCityEstimatedCommunities : function(cityName) {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getCityEstimatedCommunities", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("getCityEstimatedCommunities", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.getCityEstimatedCommunitiesNetscriptFn(cityName, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getCityEstimatedCommunities() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getCityEstimatedCommunities() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getCityChaos : function(cityName) {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getCityChaos", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("getCityChaos", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.getCityChaosNetscriptFn(cityName, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.getCityChaos() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getCityChaos() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             switchCity : function(cityName) {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("switchCity", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("switchCity", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    try {
+                        return Player.bladeburner.switchCityNetscriptFn(cityName, workerScript);
+                    } catch(e) {
+                        throw makeRuntimeRejectMsg(workerScript, "Bladeburner.switchCity() failed with exception: " + e);
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "switchCity() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getStamina : function() {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getStamina", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("getStamina", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return [Player.bladeburner.stamina, Player.bladeburner.maxStamina];
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getStamina() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            joinFaction : function() {
-                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-
+            joinBladeburnerFaction : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("joinBladeburnerFaction", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                updateDynamicRam("joinBladeburnerFaction", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Player.bladeburner.joinBladeburnerFactionNetscriptFn(workerScript);
+                }
+                throw makeRuntimeRejectMsg(workerScript, "joinBladeburnerFaction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             }
         }

@@ -209,7 +209,7 @@ function applySourceFile(srcFile) {
 
             Player.crime_money_mult    *= inc;
             Player.crime_success_mult  *= inc;
-            
+
             Player.hacknet_node_money_mult            *= inc;
             Player.hacknet_node_purchase_cost_mult    *= dec;
             Player.hacknet_node_ram_cost_mult         *= dec;

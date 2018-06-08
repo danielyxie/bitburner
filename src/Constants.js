@@ -81,6 +81,8 @@ let CONSTANTS = {
     ScriptSingularityFn2RamCost:    2,
     ScriptSingularityFn3RamCost:    3,
 
+    ScriptBladeburnerApiBaseRamCost:    4,
+
     MultithreadingRAMCost:          1,
 
     NumNetscriptPorts:              20,
@@ -487,6 +489,14 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.37.3<br>" +
+    "* Bladeburner Changes:<br>"  +
+    "*** Bladeburner progress is no longer reset when installing Augmentations<br>" +
+    "*** The number of successess needed to increase a Contract/Operation's max level now scales with the current max level (gradually gets harder)<br>"  +
+    "*** All Bladeburner Augmentations are now slightly more expensive and require more reputation<br>" +
+    "*** Black Operations now give higher rank rewards<br>" +
+    "*** Doubled the base amount of money gained from Contracts<br>" +
+    "* Hacking is not slightly less profitable in BitNode-3<br>"  +
+    "* Updated Hacknet Nodes UI - Implemented by Github user kopelli<br>" +
     "* Bug Fix: Fixed an exploit that allowed calling any Netscript function without incurring any RAM Cost in NetscriptJS<br>"
 }
 

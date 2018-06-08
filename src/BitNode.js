@@ -156,7 +156,11 @@ function initBitNodes() {
                                             "Level 1: 24%<br>" +
                                             "Level 2: 36%<br>" +
                                             "Level 3: 42%");
-    BitNodes["BitNode12"] = new BitNode(12, "The testing ground", "Ender improvement center", "Something about this bitnode being the testing ground for the enders security. This bitnode is infinitely repeatable but gets harder each time. This awards Source-File 12 which awards 1% to all stats each time this bitnode is destroyed.");
+    BitNodes["BitNode12"] = new BitNode(12, "The Recursion", "Repeat.",
+                                            "To iterate is human, to recurse divine.<br><br>" +
+                                            "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give your Souce-File 12, or " +
+                                            "if you already have this Source-File it will upgrade its level. There is no maximum level for Source-File 12. Each level " +
+                                            "of Source-File 12 will increase all of your multipliers by 1%.");
     //Books: Frontera, Shiner
     BitNodes["BitNode13"] = new BitNode(13, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
     BitNodes["BitNode14"] = new BitNode(14, "", "COMING SOON");
@@ -231,10 +235,10 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.RepToDonateToFaction     = 0.5;
             BitNodeMultipliers.AugmentationRepCost      = 3;
             BitNodeMultipliers.AugmentationMoneyCost    = 3;
-            BitNodeMultipliers.ServerMaxMoney           = 0.25;
-            BitNodeMultipliers.ServerStartingMoney      = 0.25;
-            BitNodeMultipliers.ServerGrowthRate         = 0.20;
-            BitNodeMultipliers.ScriptHackMoney          = 0.25;
+            BitNodeMultipliers.ServerMaxMoney           = 0.2;
+            BitNodeMultipliers.ServerStartingMoney      = 0.2;
+            BitNodeMultipliers.ServerGrowthRate         = 0.2;
+            BitNodeMultipliers.ScriptHackMoney          = 0.2;
             BitNodeMultipliers.CompanyWorkMoney         = 0.25;
             BitNodeMultipliers.CrimeMoney               = 0.25;
             BitNodeMultipliers.HacknetNodeMoney         = 0.25;
@@ -303,12 +307,12 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.InfiltrationRep          = 2.5;
             BitNodeMultipliers.CorporationValuation     = 0.01;
             break;
-        case 12: //The Testing Ground
+        case 12: //The Recursion
             let sf12Lvl = 0;
-            for(let i = 0; i < Player.sourceFiles.length; i++) {
-              if(Player.sourceFiles[i].n == 12) {
-                sf12Lvl = Player.sourceFiles[i].lvl;
-              }
+            for (let i = 0; i < Player.sourceFiles.length; i++) {
+                if (Player.sourceFiles[i].n === 12) {
+                    sf12Lvl = Player.sourceFiles[i].lvl;
+                }
             }
             const inc = Math.pow(1.01, sf12Lvl);
             const dec = Math.pow(0.99, sf12Lvl);
@@ -319,11 +323,8 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.ServerGrowthRate       = dec;
             BitNodeMultipliers.ServerWeakenRate       = dec;
 
-            //this one is special because it can cause the min
-            //security to go over 100 and make it impossible to
-            //get money through hacking. This stat should not be 
-
-            //BitNodeMultipliers.ServerStartingSecurity = inc;
+            //Does not scale, otherwise security might start at 300+
+            BitNodeMultipliers.ServerStartingSecurity = 1.5;
 
             BitNodeMultipliers.ManualHackMoney  = dec;
             BitNodeMultipliers.ScriptHackMoney  = dec;
@@ -354,4 +355,8 @@ function initBitNodeMultipliers() {
     }
 }
 
-export {initBitNodes, BitNode, BitNodes, BitNodeMultipliers, initBitNodeMultipliers};
+export {initBitNodes,
+        BitNode,
+        BitNodes,
+        BitNodeMultipliers,
+        initBitNodeMultipliers};

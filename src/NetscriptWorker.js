@@ -56,6 +56,14 @@ WorkerScript.prototype.getScript = function() {
     return null;
 }
 
+WorkerScript.prototype.shouldLog = function(fn) {
+    return (this.disableLogs.ALL == null && this.disableLogs[fn] == null);
+}
+
+WorkerScript.prototype.log = function(txt) {
+    this.scriptRef.log(txt);
+}
+
 //Array containing all scripts that are running across all servers, to easily run them all
 let workerScripts 			= [];
 

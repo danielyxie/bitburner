@@ -299,8 +299,6 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     this.hacknetNodes.length = 0;
     this.totalHacknetNodeProduction = 0;
-
-    this.bladeburner = 0;
 }
 
 PlayerObject.prototype.prestigeSourceFile = function() {
@@ -390,8 +388,6 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     //BitNode 3: Corporatocracy
     if (this.bitNodeN === 3) {this.money = new Decimal(150e9);}
     this.corporation = 0;
-
-    this.bladeburner = 0;
 
     this.playtimeSinceLastAug = 0;
     this.scriptProdSinceLastAug = 0;
