@@ -1761,16 +1761,8 @@ function initLocationButtons() {
     });
 
     purchaseHomeRam.addEventListener("click", function() {
-        //Calculate how many times ram has been upgraded (doubled)
-        var currentRam = Player.getHomeComputer().maxRam;
-        var newRam = currentRam * 2;
-        var numUpgrades = Math.log2(currentRam);
-
-        //Calculate cost
-        //Have cost increase by some percentage each time RAM has been upgraded
-        var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome;
-        var mult = Math.pow(1.58, numUpgrades);
-        cost = cost * mult;
+        const cost = Player.getUpgradeHomeRamCost();
+        const ram = Player.getHomeComputer().maxRam;
 
         var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
         yesBtn.innerHTML = "Purchase"; noBtn.innerHTML = "Cancel";
@@ -1782,8 +1774,8 @@ function initLocationButtons() {
             yesNoBoxClose();
         });
         yesNoBoxCreate("Would you like to purchase additional RAM for your home computer? <br><br>" +
-                       "This will upgrade your RAM from " + currentRam + "GB to " + newRam + "GB. <br><br>" +
-                       "This will cost $" + formatNumber(cost, 2));
+                       "This will upgrade your RAM from " + ram + "GB to " + ram*2 + "GB. <br><br>" +
+                       "This will cost " + numeral(cost).format('$0.000a'));
     });
 
     purchaseHomeCores.addEventListener("click", function() {
