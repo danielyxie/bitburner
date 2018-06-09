@@ -535,11 +535,11 @@ Action.prototype.getActionTime = function(inst) {
 }
 
 Action.prototype.getSuccessesNeededForNextLevel = function(baseSuccessesPerLevel) {
-    return (0.5) * (this.maxLevel) * (2 * baseSuccessesPerLevel + (this.maxLevel-1));
+    return Math.ceil((0.5) * (this.maxLevel) * (2 * baseSuccessesPerLevel + (this.maxLevel-1)));
 }
 
 Action.prototype.setMaxLevel = function(baseSuccessesPerLevel) {
-    if (this.successes > this.getSuccessesNeededForNextLevel(baseSuccessesPerLevel)) {
+    if (this.successes >= this.getSuccessesNeededForNextLevel(baseSuccessesPerLevel)) {
         ++this.maxLevel;
     }
 }
@@ -1139,9 +1139,9 @@ Bladeburner.prototype.completeAction = function() {
                     }
 
                     if (isOperation) {
-                        this.setMaxLevel(OperationSuccessesPerLevel);
+                        action.setMaxLevel(OperationSuccessesPerLevel);
                     } else {
-                        this.setMaxLevel(ContractSuccessesPerLevel);
+                        action.setMaxLevel(ContractSuccessesPerLevel);
                     }
                     if (action.rankGain) {
                         var gain = addOffset(action.rankGain * rewardMultiplier, 10);
