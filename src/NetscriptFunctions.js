@@ -308,8 +308,10 @@ function NetscriptFunctions(workerScript) {
             }
             return netscriptDelay(growTime, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
+                const moneyBefore = server.moneyAvailable;
                 server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
                 var growthPercentage = processSingleServerGrowth(server, 450 * threads);
+                const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
                 var expGain = scriptCalculateExpGain(server) * threads;
                 if (growthPercentage == 1) {
@@ -317,7 +319,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.grow == null) {
                     workerScript.scriptRef.log("Available money on " + server.hostname + " grown by " +
-                                                formatNumber(growthPercentage*100 - 100, 6) + "%. Gained " +
+                                                formatNumber((moneyAfter/moneyBefore)*100 - 100, 6) + "%. Gained " +
                                                 formatNumber(expGain, 4) + " hacking exp (t=" + threads +")");
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
