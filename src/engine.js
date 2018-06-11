@@ -12,7 +12,8 @@ import {loxBoxCreate, logBoxUpdateText,
 import {updateActiveScriptsItems}               from "./ActiveScriptsUI.js";
 import {Augmentations, installAugmentations,
         initAugmentations, AugmentationNames,
-        displayAugmentationsContent}            from "./Augmentations.js";
+        displayAugmentationsContent,
+        PlayerOwnedAugmentation}                from "./Augmentations.js";
 import {BitNodes, initBitNodes,
         initBitNodeMultipliers}                 from "./BitNode.js";
 import {Bladeburner}                            from "./Bladeburner.js";
@@ -145,6 +146,7 @@ let Engine = {
         factionsMainMenuButton:         null,
         augmentationsMainMenuButton:    null,
         tutorialMainMenuButton:         null,
+        devMainMenuButton:              null,
         saveMainMenuButton:             null,
         deleteMainMenuButton:           null,
 
@@ -158,6 +160,11 @@ let Engine = {
         tutorialFactionsButton:         null,
         tutorialAugmentationsButton:    null,
         tutorialBackButton:             null,
+
+        //Dev menu
+        devMenuGiveMoney:   null,
+        devMenuAugDropdown: null,
+        devMenuAddAug:      null,
     },
 
     //Display objects
@@ -183,6 +190,7 @@ let Engine = {
         factionAugmentationsContent:    null,
         augmentationsContent:           null,
         tutorialContent:                null,
+        devMenuContent:                 null,
         infiltrationContent:            null,
         stockMarketContent:             null,
         locationContent:                null,
@@ -208,6 +216,7 @@ let Engine = {
         Faction:            "Faction",
         Augmentations:      "Augmentations",
         Tutorial:           "Tutorial",
+        DevMenu:            "Dev Menu",
         Location:           "Location",
         workInProgress:     "WorkInProgress",
         RedPill:            "RedPill",
@@ -317,6 +326,14 @@ let Engine = {
         Engine.displayTutorialContent();
         Engine.currentPage = Engine.Page.Tutorial;
         document.getElementById("tutorial-menu-link").classList.add("active");
+    },
+
+    loadDevMenuContent: function() {
+        Engine.hideAllContent();
+        Engine.Display.devMenuContent.style.display = "block";
+        Engine.displayDevMenuContent();
+        Engine.currentPage = Engine.Page.DevMenu;
+        document.getElementById("dev-menu-link").classList.add("active");
     },
 
     loadLocationContent: function() {
@@ -455,6 +472,7 @@ let Engine = {
         Engine.Display.factionAugmentationsContent.style.display = "none";
         Engine.Display.augmentationsContent.style.display = "none";
         Engine.Display.tutorialContent.style.display = "none";
+        Engine.Display.devMenuContent.style.display = "none";
         Engine.Display.locationContent.style.display = "none";
         Engine.Display.workInProgressContent.style.display = "none";
         Engine.Display.redPillContent.style.display = "none";
@@ -494,6 +512,7 @@ let Engine = {
         document.getElementById("city-menu-link").classList.remove("active");
         document.getElementById("tutorial-menu-link").classList.remove("active");
         document.getElementById("options-menu-link").classList.remove("active");
+        document.getElementById("dev-menu-link").classList.remove("active");
     },
 
     displayCharacterOverviewInfo: function() {
@@ -782,6 +801,12 @@ let Engine = {
 
         Engine.Clickables.tutorialBackButton.style.display = "none";
         document.getElementById("tutorial-text").style.display = "none";
+    },
+
+    displayDevMenuContent: function() {
+        Engine.Clickables.devMenuGiveMoney.style.display = "block";
+        Engine.Clickables.devMenuAugDropdown.style.display = "block";
+        Engine.Clickables.devMenuAddAug.style.display = "block";
     },
 
     //Displays the text when a section of the Tutorial is opened
@@ -1182,6 +1207,7 @@ let Engine = {
         var job                 = document.getElementById("job-tab");
         var tutorial            = document.getElementById("tutorial-tab");
         var options             = document.getElementById("options-tab");
+        var dev                 = document.getElementById("dev-tab");
 
         //Load game from save or create new game
         if (loadGame(saveString)) {
@@ -1258,7 +1284,7 @@ let Engine = {
                             formatNumber(offlineProductionFromHacknetNodes, 2));
             //Close main menu accordions for loaded game
             var visibleMenuTabs = [terminal, createScript, activeScripts, stats,
-                                   hacknetnodes, city, tutorial, options];
+                                   hacknetnodes, city, tutorial, options, dev];
             if (Player.firstFacInvRecvd) {visibleMenuTabs.push(factions);}
             else {factions.style.display = "none";}
             if (Player.firstAugPurchased) {visibleMenuTabs.push(augmentations);}
@@ -1312,7 +1338,7 @@ let Engine = {
             Engine.openMainMenuHeader(
                 [terminal, createScript, activeScripts, stats,
                  hacknetnodes, city,
-                 tutorial, options]
+                 tutorial, options, dev]
             );
 
             //Start interactive tutorial
@@ -1364,6 +1390,9 @@ let Engine = {
 
         Engine.Display.tutorialContent = document.getElementById("tutorial-container");
         Engine.Display.tutorialContent.style.display = "none";
+
+        Engine.Display.devMenuContent = document.getElementById("dev-menu-container");
+        Engine.Display.devMenuContent.style.display = "none";
 
         Engine.Display.infiltrationContent = document.getElementById("infiltration-container");
         Engine.Display.infiltrationContent.style.display = "none";
@@ -1450,6 +1479,22 @@ let Engine = {
         Engine.Clickables.tutorialBackButton = document.getElementById("tutorial-back-button");
         Engine.Clickables.tutorialBackButton.addEventListener("click", function() {
             Engine.displayTutorialContent();
+        });
+
+        Engine.Clickables.devMenuGiveMoney = document.getElementById("dev-need-money");
+        Engine.Clickables.devMenuGiveMoney.addEventListener("click", function() {
+            Player.gainMoney(1e15);
+        });
+
+        Engine.Clickables.devMenuAugDropdown = document.getElementById("dev-menu-aug-dropdown");
+        const augDD = Engine.Clickables.devMenuAugDropdown;
+        for(const i in AugmentationNames) {
+            augDD.options[augDD.options.length] = new Option(AugmentationNames[i], AugmentationNames[i]);
+        }
+
+        Engine.Clickables.devMenuAddAug = document.getElementById("dev-add-aug");
+        Engine.Clickables.devMenuAddAug.addEventListener("click", function() {
+            Player.queueAugmentation(augDD.options[augDD.selectedIndex].value);
         });
 
         //If DarkWeb already purchased, disable the button
@@ -1548,16 +1593,18 @@ let Engine = {
             var tutorialLink    = document.getElementById("tutorial-menu-link");
             var options         = document.getElementById("options-tab");
             var optionsLink     = document.getElementById("options-menu-link");
+            var dev             = document.getElementById("dev-tab");
+            var devLink         = document.getElementById("dev-menu-link");
             this.classList.toggle("opened");
             if (tutorial.style.maxHeight) {
                 Engine.toggleMainMenuHeader(false,
-                    [tutorial, options],
-                    [tutorialLink, optionsLink]
+                    [tutorial, options, dev],
+                    [tutorialLink, optionsLink, devLink]
                 );
             } else {
                 Engine.toggleMainMenuHeader(true,
-                    [tutorial, options],
-                    [tutorialLink, optionsLink]
+                    [tutorial, options, dev],
+                    [tutorialLink, optionsLink, devLink]
                 );
             }
         }
@@ -1633,6 +1680,12 @@ let Engine = {
         Engine.Clickables.tutorialMainMenuButton = clearEventListeners("tutorial-menu-link");
         Engine.Clickables.tutorialMainMenuButton.addEventListener("click", function() {
             Engine.loadTutorialContent();
+            return false;
+        });
+
+        Engine.Clickables.devMainMenuButton = clearEventListeners("dev-menu-link");
+        Engine.Clickables.devMainMenuButton.addEventListener("click", function() {
+            Engine.loadDevMenuContent();
             return false;
         });
 

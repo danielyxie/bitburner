@@ -2315,6 +2315,24 @@ PlayerObject.prototype.setBitNodeNumber = function(n) {
     this.bitNodeN = n;
 }
 
+PlayerObject.prototype.queueAugmentation = function(name) {
+    for(const i in this.queuedAugmentations) {
+        if(this.queuedAugmentations[i].name == name) {
+            console.log('tried to queue '+name+' twice, this may be a bug');
+            return;
+        }
+    }
+
+    for(const i in this.augmentations) {
+        if(this.augmentations[i].name == name) {
+            console.log('tried to queue '+name+' but we already have that aug');
+            return;
+        }
+    }
+    
+    this.queuedAugmentations.push(new PlayerOwnedAugmentation(name));
+}
+
 /* Functions for saving and loading the Player data */
 function loadPlayer(saveString) {
     Player  = JSON.parse(saveString, Reviver);
