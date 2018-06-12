@@ -501,6 +501,18 @@
     width: 50%;
 }
 
+.dev-text-input {
+    color: var(--my-font-color);
+    border: 1px solid white;
+    background-color:black;
+}
+
+.dev-dropdown-input {
+    color: var(--my-font-color);
+    border: 1px solid white;
+    background-color:black;
+}
+
 /* Location */
 #location-container {
 	position: fixed;
