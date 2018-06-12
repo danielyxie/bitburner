@@ -480,18 +480,29 @@
 
     <!-- dev menu -->
     <div id="dev-menu-container" class="generic-menupage-container">
-        <p>If you see this menu you can pretty much break the game. It's recommended that you use this menu only to setup a save file appropriate to test a new feature or bug fix.</p>
+        <p id='dev-menu-text'>If you see this menu you can pretty much break the game. It's recommended that you use this menu only to setup a save file appropriate to test a new feature or bug fix.</p>
         <a id="dev-need-money" class="a-link-button"> Add $1000t </a>
 
         <!-- gets populated with the list of all augments -->
-        <select id="dev-menu-aug-dropdown" display="none"></select><br>
-        <a id="dev-add-aug" class="a-link-button"> Add Augmentation </a><br>
+        <select id="dev-menu-aug-dropdown"></select>
+        <a id="dev-add-aug" class="a-link-button"> Add Augmentation </a>
+
+        <a id="dev-bit-flume" class="a-link-button"> Trigger BitFlume</a>
+
+        <select id="dev-menu-faction-dropdown"></select>
+        <a id="dev-add-faction" class="a-link-button"> Receive invite </a>
+
+        <a id="dev-open-all" class="a-link-button"> NUKE + ports all servers </a>
+        <a id="dev-min-security" class="a-link-button"> minimize all servers security </a>
+        <a id="dev-max-money" class="a-link-button"> maximize all servers money </a>
+
+        <select id="dev-menu-connect-dropdown"></select>
+        <a id="dev-connect" class="a-link-button"> Connect </a>
+
+        <select id="dev-menu-add-program-dropdown"></select>
+        <a id="dev-add-program" class="a-link-button"> Add Program </a>
 
         <!-- modify stats (hacking, int, etc) -->
-        <!-- join faction -->
-        <!-- nuke everything -->
-        <!-- connect to specific server everything -->
-        <!-- teleport to bitnode -->
     </div>
 
     <!-- Location (visiting a location in World) -->

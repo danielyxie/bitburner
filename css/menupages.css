@@ -486,6 +486,21 @@
     width: 50%;
 }
 
+/* Dev menu */
+#dev-menu-container {
+    position: fixed;
+    padding-top: 10px;
+}
+
+#dev-menu-text {
+    width: 70%;
+    margin: 10px;
+}
+
+#dev-menu-container a {
+    width: 50%;
+}
+
 /* Location */
 #location-container {
 	position: fixed;

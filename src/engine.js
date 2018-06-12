@@ -45,7 +45,7 @@ import {updateOnlineScriptTimes,
 import {Player}                                 from "./Player.js";
 import {prestigeAugmentation,
         prestigeSourceFile}                     from "./Prestige.js";
-import {redPillFlag}                            from "./RedPill.js";
+import {redPillFlag, hackWorldDaemon}           from "./RedPill.js";
 import {saveObject, loadGame}                   from "./SaveObject.js";
 import {loadAllRunningScripts, scriptEditorInit,
         updateScriptEditorContent}              from "./Script.js";
@@ -165,6 +165,16 @@ let Engine = {
         devMenuGiveMoney:   null,
         devMenuAugDropdown: null,
         devMenuAddAug:      null,
+        devMenuTriggerBitFlume: null,
+        devMenuFactionDropdown: null,
+        devMenuAddFaction: null,
+        devMenuOpen: null,
+        devMenuMinSecurity: null,
+        devMenuMaxMoney: null,
+        devMenuConnectDropdown: null,
+        devMenuConnect: null,
+        devMenuProgramsDropdown: null,
+        devMenuAddProgram: null,
     },
 
     //Display objects
@@ -807,6 +817,16 @@ let Engine = {
         Engine.Clickables.devMenuGiveMoney.style.display = "block";
         Engine.Clickables.devMenuAugDropdown.style.display = "block";
         Engine.Clickables.devMenuAddAug.style.display = "block";
+        Engine.Clickables.devMenuTriggerBitFlume.style.display = "block";
+        Engine.Clickables.devMenuFactionDropdown.style.display = "block";
+        Engine.Clickables.devMenuAddFaction.style.display = "block";
+        Engine.Clickables.devMenuOpen.style.display = "block";
+        Engine.Clickables.devMenuMinSecurity.style.display = "block";
+        Engine.Clickables.devMenuMaxMoney.style.display = "block";
+        Engine.Clickables.devMenuConnectDropdown = "block";
+        Engine.Clickables.devMenuConnect = "block";
+        Engine.Clickables.devMenuProgramsDropdown = "block";
+        Engine.Clickables.devMenuAddProgram = "block";
     },
 
     //Displays the text when a section of the Tutorial is opened
@@ -1481,6 +1501,7 @@ let Engine = {
             Engine.displayTutorialContent();
         });
 
+        // dev menu buttons
         Engine.Clickables.devMenuGiveMoney = document.getElementById("dev-need-money");
         Engine.Clickables.devMenuGiveMoney.addEventListener("click", function() {
             Player.gainMoney(1e15);
@@ -1495,6 +1516,76 @@ let Engine = {
         Engine.Clickables.devMenuAddAug = document.getElementById("dev-add-aug");
         Engine.Clickables.devMenuAddAug.addEventListener("click", function() {
             Player.queueAugmentation(augDD.options[augDD.selectedIndex].value);
+        });
+
+        Engine.Clickables.devMenuTriggerBitFlume = document.getElementById("dev-bit-flume");
+        Engine.Clickables.devMenuTriggerBitFlume.addEventListener("click", function() {
+            hackWorldDaemon(Player.bitNodeN, true);
+        });
+
+        Engine.Clickables.devMenuFactionDropdown = document.getElementById("dev-menu-faction-dropdown");
+        const facDD = Engine.Clickables.devMenuFactionDropdown;
+        for(const i in Factions) {
+            facDD.options[facDD.options.length] = new Option(Factions[i].name, Factions[i].name);
+        }
+
+        Engine.Clickables.devMenuAddFaction = document.getElementById("dev-add-faction");
+        Engine.Clickables.devMenuAddFaction.addEventListener("click", function() {
+            const factionName = facDD.options[facDD.selectedIndex].value;
+            Player.receiveInvite(factionName);
+        });
+
+        Engine.Clickables.devMenuOpen = document.getElementById("dev-open-all");
+        Engine.Clickables.devMenuOpen.addEventListener("click", function() {
+            for(const i in AllServers) {
+                AllServers[i].hasAdminRights = true;
+                AllServers[i].sshPortOpen    = true;
+                AllServers[i].ftpPortOpen    = true;
+                AllServers[i].smtpPortOpen   = true;
+                AllServers[i].httpPortOpen   = true;
+                AllServers[i].sqlPortOpen    = true;
+                AllServers[i].openPortCount  = 5;
+            }
+        });
+
+        Engine.Clickables.devMenuMinSecurity = document.getElementById("dev-min-security");
+        Engine.Clickables.devMenuMinSecurity.addEventListener("click", function() {
+            for(const i in AllServers) {
+                AllServers[i].hackDifficulty = AllServers[i].minDifficulty;
+            }
+        });
+
+        Engine.Clickables.devMenuMaxMoney = document.getElementById("dev-max-money");
+        Engine.Clickables.devMenuMaxMoney.addEventListener("click", function() {
+            for(const i in AllServers) {
+                AllServers[i].moneyAvailable = AllServers[i].moneyMax;
+            }
+        });
+
+        Engine.Clickables.devMenuConnectDropdown = document.getElementById("dev-menu-connect-dropdown");
+        const connectDD = Engine.Clickables.devMenuConnectDropdown;
+        for(const i in AllServers) {
+            connectDD.options[connectDD.options.length] = new Option(AllServers[i].hostname, AllServers[i].hostname);
+        }
+
+        Engine.Clickables.devMenuConnect = document.getElementById("dev-connect");
+        Engine.Clickables.devMenuConnect.addEventListener("click", function() {
+            const host = connectDD.options[connectDD.selectedIndex].value;
+            Terminal.connectToServer(host);
+        });
+
+        Engine.Clickables.devMenuProgramsDropdown = document.getElementById("dev-menu-add-program-dropdown");
+        const programsDD = Engine.Clickables.devMenuProgramsDropdown;
+        for(const i in Programs) {
+            programsDD.options[programsDD.options.length] = new Option(Programs[i], Programs[i]);
+        }
+
+        Engine.Clickables.devMenuAddProgram = document.getElementById("dev-add-program");
+        Engine.Clickables.devMenuAddProgram.addEventListener("click", function() {
+            const program = programsDD.options[programsDD.selectedIndex].value;;
+            if(!Player.hasProgram(program)) {
+                Player.getHomeComputer().programs.push(program);
+            }
         });
 
         //If DarkWeb already purchased, disable the button

@@ -413,6 +413,14 @@ PlayerObject.prototype.getUpgradeHomeRamCost = function() {
     return cost;
 }
 
+PlayerObject.prototype.receiveInvite = function(factionName) {
+    if(this.factionInvitations.includes(factionName) || this.factions.includes(factionName)) {
+        return;
+    }
+    this.firstFacInvRecvd = true;
+    this.factionInvitations.push(factionName);
+}
+
 //Calculates skill level based on experience. The same formula will be used for every skill
 PlayerObject.prototype.calculateSkill = function(exp) {
     return Math.max(Math.floor(32 * Math.log(exp + 534.5) - 200), 1);
