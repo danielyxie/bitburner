@@ -51,7 +51,8 @@ import {loadAllRunningScripts, scriptEditorInit,
         updateScriptEditorContent}              from "./Script.js";
 import {AllServers, Server, initForeignServers} from "./Server.js";
 import {Settings, setSettingsLabels}            from "./Settings.js";
-import {initSourceFiles, SourceFiles}           from "./SourceFile.js";
+import {initSourceFiles, SourceFiles,
+        PlayerOwnedSourceFile}                  from "./SourceFile.js";
 import {SpecialServerIps, initSpecialServerIps} from "./SpecialServerIps.js";
 import {StockMarket, StockSymbols,
         SymbolToStockMap, initStockSymbols,
@@ -163,6 +164,7 @@ let Engine = {
 
         //Dev menu
         devMenuGiveMoney:   null,
+        devMenuGiveRam:     null,
         devMenuAugDropdown: null,
         devMenuAddAug:      null,
         devMenuTriggerBitFlume: null,
@@ -189,7 +191,11 @@ let Engine = {
         devMenuAddCharisma: null,
         devMenuIntelligenceExp: null,
         devMenuAddIntelligence: null,
-        devMenuUnlockIntelligence: null,
+        devMenuEnableIntelligence: null,
+        devMenuDisableIntelligence: null,
+        devMenuSFN: null,
+        devMenuSFLvl: null,
+        devMenuAddSF: null,
     },
 
     //Display objects
@@ -830,6 +836,7 @@ let Engine = {
 
     displayDevMenuContent: function() {
         Engine.Clickables.devMenuGiveMoney.style.display = "block";
+        Engine.Clickables.devMenuGiveRam.style.display = "block";
         Engine.Clickables.devMenuAugDropdown.style.display = "block";
         Engine.Clickables.devMenuAddAug.style.display = "block";
         Engine.Clickables.devMenuTriggerBitFlume.style.display = "block";
@@ -857,7 +864,11 @@ let Engine = {
         Engine.Clickables.devMenuAddCharisma.style.display = "block";
         Engine.Clickables.devMenuIntelligenceExp.style.display = "block";
         Engine.Clickables.devMenuAddIntelligence.style.display = "block";
-        Engine.Clickables.devMenuUnlockIntelligence.style.display = "block";
+        Engine.Clickables.devMenuEnableIntelligence.style.display = "block";
+        Engine.Clickables.devMenuDisableIntelligence.style.display = "block";
+        Engine.Clickables.devMenuSFN.style.display = "block";
+        Engine.Clickables.devMenuSFLvl.style.display = "block";
+        Engine.Clickables.devMenuAddSF.style.display = "block";
     },
 
     //Displays the text when a section of the Tutorial is opened
@@ -1538,6 +1549,11 @@ let Engine = {
             Player.gainMoney(1e15);
         });
 
+        Engine.Clickables.devMenuGiveRam = document.getElementById("dev-need-ram");
+        Engine.Clickables.devMenuGiveRam.addEventListener("click", function() {
+            Player.getHomeComputer().maxRam *= 2;
+        });
+
         Engine.Clickables.devMenuAugDropdown = document.getElementById("dev-menu-aug-dropdown");
         const augDD = Engine.Clickables.devMenuAugDropdown;
         for(const i in AugmentationNames) {
@@ -1675,9 +1691,40 @@ let Engine = {
             Player.updateSkillLevels();
         });
 
-        Engine.Clickables.devMenuUnlockIntelligence = document.getElementById("dev-unlock-intelligence");
-        Engine.Clickables.devMenuUnlockIntelligence.addEventListener("click", function() {
+        Engine.Clickables.devMenuEnableIntelligence = document.getElementById("dev-enable-intelligence");
+        Engine.Clickables.devMenuEnableIntelligence.addEventListener("click", function() {
             Player.intelligence = 1;
+        });
+
+        Engine.Clickables.devMenuDisableIntelligence = document.getElementById("dev-disable-intelligence");
+        Engine.Clickables.devMenuDisableIntelligence.addEventListener("click", function() {
+            Player.intelligence = 0;
+        });
+
+        Engine.Clickables.devMenuSFN = document.getElementById("dev-sf-n");
+        Engine.Clickables.devMenuSFLvl = document.getElementById("dev-sf-lvl");
+        Engine.Clickables.devMenuAddSF = document.getElementById("dev-add-source-file");
+        Engine.Clickables.devMenuAddSF.addEventListener("click", function() {
+            const sfN = parseInt(Engine.Clickables.devMenuSFN.value);
+            const sfLvl = parseInt(Engine.Clickables.devMenuSFLvl.value);
+            let sfIndex = -1;
+            for(const i in Player.sourceFiles) {
+                if(Player.sourceFiles[i].n === sfN) {
+                    sfIndex = i;
+                    break;
+                }
+            }
+
+            if(sfIndex === -1) { // add fresh source file
+                Player.sourceFiles.push(new PlayerOwnedSourceFile(sfN, sfLvl));
+            } else if(sfLvl === 0) { // remove a source file.
+                if(sfIndex === -1) { // doesn't have it anyway.
+                    return;
+                }
+                Player.sourceFiles.splice(sfIndex, 1);
+            } else { // set source file level
+                Player.sourceFiles[sfIndex].lvl=sfLvl;
+            }
         });
 
         //If DarkWeb already purchased, disable the button

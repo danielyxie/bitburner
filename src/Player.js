@@ -2356,6 +2356,7 @@ PlayerObject.prototype.queueAugmentation = function(name) {
         }
     }
     
+    this.firstAugPurchased = true;
     this.queuedAugmentations.push(new PlayerOwnedAugmentation(name));
 }
 
