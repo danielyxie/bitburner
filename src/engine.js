@@ -175,6 +175,21 @@ let Engine = {
         devMenuConnect: null,
         devMenuProgramsDropdown: null,
         devMenuAddProgram: null,
+        devMenuHackingExp: null,
+        devMenuAddHacking: null,
+        devMenuStrengthExp: null,
+        devMenuAddStrength: null,
+        devMenuDefenseExp: null,
+        devMenuAddDefense: null,
+        devMenuDexterityExp: null,
+        devMenuAddDexterity: null,
+        devMenuAgilityExp: null,
+        devMenuAddAgility: null,
+        devMenuCharismaExp: null,
+        devMenuAddCharisma: null,
+        devMenuIntelligenceExp: null,
+        devMenuAddIntelligence: null,
+        devMenuUnlockIntelligence: null,
     },
 
     //Display objects
@@ -823,10 +838,26 @@ let Engine = {
         Engine.Clickables.devMenuOpen.style.display = "block";
         Engine.Clickables.devMenuMinSecurity.style.display = "block";
         Engine.Clickables.devMenuMaxMoney.style.display = "block";
-        Engine.Clickables.devMenuConnectDropdown = "block";
-        Engine.Clickables.devMenuConnect = "block";
-        Engine.Clickables.devMenuProgramsDropdown = "block";
-        Engine.Clickables.devMenuAddProgram = "block";
+        Engine.Clickables.devMenuConnectDropdown.style.display = "block";
+        Engine.Clickables.devMenuConnect.style.display = "block";
+        Engine.Clickables.devMenuProgramsDropdown.style.display = "block";
+        Engine.Clickables.devMenuAddProgram.style.display = "block";
+
+        Engine.Clickables.devMenuHackingExp.style.display = "block";
+        Engine.Clickables.devMenuAddHacking.style.display = "block";
+        Engine.Clickables.devMenuStrengthExp.style.display = "block";
+        Engine.Clickables.devMenuAddStrength.style.display = "block";
+        Engine.Clickables.devMenuDefenseExp.style.display = "block";
+        Engine.Clickables.devMenuAddDefense.style.display = "block";
+        Engine.Clickables.devMenuDexterityExp.style.display = "block";
+        Engine.Clickables.devMenuAddDexterity.style.display = "block";
+        Engine.Clickables.devMenuAgilityExp.style.display = "block";
+        Engine.Clickables.devMenuAddAgility.style.display = "block";
+        Engine.Clickables.devMenuCharismaExp.style.display = "block";
+        Engine.Clickables.devMenuAddCharisma.style.display = "block";
+        Engine.Clickables.devMenuIntelligenceExp.style.display = "block";
+        Engine.Clickables.devMenuAddIntelligence.style.display = "block";
+        Engine.Clickables.devMenuUnlockIntelligence.style.display = "block";
     },
 
     //Displays the text when a section of the Tutorial is opened
@@ -1586,6 +1617,67 @@ let Engine = {
             if(!Player.hasProgram(program)) {
                 Player.getHomeComputer().programs.push(program);
             }
+        });
+
+        Engine.Clickables.devMenuHackingExp = document.getElementById("dev-hacking-exp");
+        Engine.Clickables.devMenuAddHacking = document.getElementById("dev-add-hacking");
+        Engine.Clickables.devMenuAddHacking.addEventListener("click", function() {
+            const exp = parseInt(Engine.Clickables.devMenuHackingExp.value);
+            Player.gainHackingExp(exp);
+            Player.updateSkillLevels();
+        });
+
+        Engine.Clickables.devMenuStrengthExp = document.getElementById("dev-strength-exp");
+        Engine.Clickables.devMenuAddStrength = document.getElementById("dev-add-strength");
+        Engine.Clickables.devMenuAddStrength.addEventListener("click", function() {
+            const exp = parseInt(Engine.Clickables.devMenuStrengthExp.value);
+            Player.gainStrengthExp(exp);
+            Player.updateSkillLevels();
+        });
+
+        Engine.Clickables.devMenuDefenseExp = document.getElementById("dev-defense-exp");
+        Engine.Clickables.devMenuAddDefense = document.getElementById("dev-add-defense");
+        Engine.Clickables.devMenuAddDefense.addEventListener("click", function() {
+            const exp = parseInt(Engine.Clickables.devMenuDefenseExp.value);
+            Player.gainDefenseExp(exp);
+            Player.updateSkillLevels();
+        });
+
+        Engine.Clickables.devMenuDexterityExp = document.getElementById("dev-dexterity-exp");
+        Engine.Clickables.devMenuAddDexterity = document.getElementById("dev-add-dexterity");
+        Engine.Clickables.devMenuAddDexterity.addEventListener("click", function() {
+            const exp = parseInt(Engine.Clickables.devMenuDexterityExp.value);
+            Player.gainDexterityExp(exp);
+            Player.updateSkillLevels();
+        });
+
+        Engine.Clickables.devMenuAgilityExp = document.getElementById("dev-agility-exp");
+        Engine.Clickables.devMenuAddAgility = document.getElementById("dev-add-agility");
+        Engine.Clickables.devMenuAddAgility.addEventListener("click", function() {
+            const exp = parseInt(Engine.Clickables.devMenuAgilityExp.value);
+            Player.gainAgilityExp(exp);
+            Player.updateSkillLevels();
+        });
+
+        Engine.Clickables.devMenuCharismaExp = document.getElementById("dev-charisma-exp");
+        Engine.Clickables.devMenuAddCharisma = document.getElementById("dev-add-charisma");
+        Engine.Clickables.devMenuAddCharisma.addEventListener("click", function() {
+            const exp = parseInt(Engine.Clickables.devMenuCharismaExp.value);
+            Player.gainCharismaExp(exp);
+            Player.updateSkillLevels();
+        });
+
+        Engine.Clickables.devMenuIntelligenceExp = document.getElementById("dev-intelligence-exp");
+        Engine.Clickables.devMenuAddIntelligence = document.getElementById("dev-add-intelligence");
+        Engine.Clickables.devMenuAddIntelligence.addEventListener("click", function() {
+            const exp = parseInt(Engine.Clickables.devMenuIntelligenceExp.value);
+            Player.gainIntelligenceExp(exp);
+            Player.updateSkillLevels();
+        });
+
+        Engine.Clickables.devMenuUnlockIntelligence = document.getElementById("dev-unlock-intelligence");
+        Engine.Clickables.devMenuUnlockIntelligence.addEventListener("click", function() {
+            Player.intelligence = 1;
         });
 
         //If DarkWeb already purchased, disable the button

@@ -587,6 +587,9 @@ PlayerObject.prototype.gainHackingExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainHackingExp()"); return;
     }
     this.hacking_exp += exp;
+    if(this.hacking_exp < 0) {
+        this.hacking_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainStrengthExp = function(exp) {
@@ -594,6 +597,9 @@ PlayerObject.prototype.gainStrengthExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainStrengthExp()"); return;
     }
     this.strength_exp += exp;
+    if(this.strength_exp < 0) {
+        this.strength_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainDefenseExp = function(exp) {
@@ -601,6 +607,9 @@ PlayerObject.prototype.gainDefenseExp = function(exp) {
         console.log("ERR: NaN passed into player.gainDefenseExp()"); return;
     }
     this.defense_exp += exp;
+    if(this.defense_exp < 0) {
+        this.defense_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainDexterityExp = function(exp) {
@@ -608,6 +617,9 @@ PlayerObject.prototype.gainDexterityExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainDexterityExp()"); return;
     }
     this.dexterity_exp += exp;
+    if(this.dexterity_exp < 0) {
+        this.dexterity_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainAgilityExp = function(exp) {
@@ -615,6 +627,9 @@ PlayerObject.prototype.gainAgilityExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainAgilityExp()"); return;
     }
     this.agility_exp += exp;
+    if(this.agility_exp < 0) {
+        this.agility_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainCharismaExp = function(exp) {
@@ -622,6 +637,9 @@ PlayerObject.prototype.gainCharismaExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainCharismaExp()"); return;
     }
     this.charisma_exp += exp;
+    if(this.charisma_exp < 0) {
+        this.charisma_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainIntelligenceExp = function(exp) {
