@@ -24,6 +24,7 @@ import {CONSTANTS}                              from "./Constants.js";
 import {Programs, displayCreateProgramContent,
         getNumAvailableCreateProgram,
         initCreateProgramButtons}               from "./CreateProgram.js";
+import {DevModeEnabled}                         from "./devmode.js"
 import {displayFactionContent, joinFaction,
         processPassiveFactionRepGain, Factions,
         inviteToFaction, initFactions}          from "./Faction.js";
@@ -1823,19 +1824,17 @@ let Engine = {
             var tutorialLink    = document.getElementById("tutorial-menu-link");
             var options         = document.getElementById("options-tab");
             var optionsLink     = document.getElementById("options-menu-link");
-            var dev             = document.getElementById("dev-tab");
-            var devLink         = document.getElementById("dev-menu-link");
             this.classList.toggle("opened");
+            const elems = [tutorial, options];
+            const links = [tutorialLink, optionsLink];
+            if(DevModeEnabled) {
+                elems.push(document.getElementById("dev-tab"));
+                links.push(document.getElementById("dev-menu-link"));
+            }
             if (tutorial.style.maxHeight) {
-                Engine.toggleMainMenuHeader(false,
-                    [tutorial, options, dev],
-                    [tutorialLink, optionsLink, devLink]
-                );
+                Engine.toggleMainMenuHeader(false, elems, links);
             } else {
-                Engine.toggleMainMenuHeader(true,
-                    [tutorial, options, dev],
-                    [tutorialLink, optionsLink, devLink]
-                );
+                Engine.toggleMainMenuHeader(true, elems, links);
             }
         }
 
