@@ -24,7 +24,6 @@ import {CONSTANTS}                              from "./Constants.js";
 import {Programs, displayCreateProgramContent,
         getNumAvailableCreateProgram,
         initCreateProgramButtons}               from "./CreateProgram.js";
-import {DevModeEnabled}                         from "./devmode.js"
 import {displayFactionContent, joinFaction,
         processPassiveFactionRepGain, Factions,
         inviteToFaction, initFactions}          from "./Faction.js";

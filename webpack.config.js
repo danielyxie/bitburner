@@ -5,7 +5,7 @@ module.exports = (env, argv) => ({
     //mode: "development",
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': argv.mode === 'development' ? JSON.stringify('development') : JSON.stringify('production')
+            'process.env.NODE_ENV': argv.mode === 'development' ? "\"development\"" : "\"production\""
         }),
         // http://stackoverflow.com/questions/29080148/expose-jquery-to-real-window-object-with-webpack
         new webpack.ProvidePlugin({
