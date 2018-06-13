@@ -11,6 +11,7 @@ import {Player}                                 from "./Player.js";
 import {Server, AllServers, AddToAllServers}    from "./Server.js";
 import {purchaseServer,
         purchaseRamForHomeComputer}             from "./ServerPurchases.js";
+import {Settings}                               from "./Settings.js";
 import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
@@ -2146,6 +2147,10 @@ function setJobRequirementTooltip(loc, entryPosType, btn) {
 }
 
 function travelBoxCreate(destCityName, cost) {
+    if(Settings.SuppressTravelConfirmation) {
+        travelToCity(destCityName, cost);
+        return;
+    }
     var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
     yesBtn.innerHTML = "Yes";
     noBtn.innerHTML = "No";

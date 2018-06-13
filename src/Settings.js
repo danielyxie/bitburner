@@ -7,6 +7,7 @@ let Settings = {
     MaxPortCapacity:                50,
     SuppressMessages:               false,
     SuppressFactionInvites:         false,
+    SuppressTravelConfirmation:     false,
     AutosaveInterval:               60,
     DisableHotkeys:                 false,
     ThemeHighlightColor:            "#ffffff",
@@ -26,6 +27,7 @@ function initSettings()  {
     Settings.MaxPortCapacity = 50;
     Settings.SuppressMessages = false;
     Settings.SuppressFactionInvites = false;
+    Settings.SuppressTravelConfirmation = false,
     Settings.AutosaveInterval = 60;
     Settings.DisableHotkeys = false;
 }
@@ -36,6 +38,7 @@ function setSettingsLabels() {
     var nsPortLimit = document.getElementById("settingsNSPortRangeValLabel");
     var suppressMsgs = document.getElementById("settingsSuppressMessages");
     var suppressFactionInv = document.getElementById("settingsSuppressFactionInvites")
+    var suppressTravelConfirmation = document.getElementById("settingsSuppressTravelConfirmation");
     var autosaveInterval = document.getElementById("settingsAutosaveIntervalValLabel");
     var disableHotkeys = document.getElementById("settingsDisableHotkeys");
 
@@ -45,6 +48,7 @@ function setSettingsLabels() {
     nsPortLimit.innerHTML = Settings.MaxPortCapacity;
     suppressMsgs.checked = Settings.SuppressMessages;
     suppressFactionInv.checked = Settings.SuppressFactionInvites;
+    suppressTravelConfirmation.checked = Settings.suppressTravelConfirmation;
     autosaveInterval.innerHTML = Settings.AutosaveInterval;
     disableHotkeys.checked = Settings.DisableHotkeys;
 
@@ -89,6 +93,10 @@ function setSettingsLabels() {
 
     suppressFactionInv.onclick = function() {
         Settings.SuppressFactionInvites = this.checked;
+    };
+
+    suppressTravelConfirmation.onclick = function() {
+        Settings.SuppressTravelConfirmation = this.checked;
     };
 
     disableHotkeys.onclick = function() {
