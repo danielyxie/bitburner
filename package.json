@@ -81,7 +81,11 @@
     "url": "git+https://github.com/danielyxie/bitburner.git"
   },
   "scripts": {
-    "start:dev": "webpack-dev-server"
+    "start:dev": "webpack-dev-server",
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development",
+    "watch" : "webpack --watch --mode production",
+    "watch:dev": "webpack --watch --mode development"
   },
   "version": "0.35.1"
 }
