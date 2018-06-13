@@ -54,7 +54,7 @@ function initBitNodes() {
                                           "The starting and maximum amount of money on servers is reduced by 75%<br>" +
                                           "Server growth rate is reduced by 80%<br>" +
                                           "You will start out with $150b so that you can start your corporation<br>" +
-                                          "You now only need 75 reputation with a faction in order to donate to it, rather than 150<br><br>" +
+                                          "You now only need 75 favour with a faction in order to donate to it, rather than 150<br><br>" +
                                           "Destroying this BitNode will give you Source-File 3, or if you already have this Source-File it will " +
                                           "upgrade its level up to a maximum of 3. This Source-File lets you create corporations on other BitNodes (although " +
                                           "some BitNodes will disable this mechanic). This Source-File also increases your charisma and company salary multipliers by:<br>" +
