@@ -326,9 +326,9 @@ function displayLocationContent() {
         repGain = repGain[0];
         jobReputation.innerHTML = "Company reputation: " + formatNumber(company.playerReputation, 4) +
                                   "<span class='tooltiptext'>You will earn " +
-                                  formatNumber(repGain, 4) +
+                                  formatNumber(repGain, 0) +
                                   " faction favor upon resetting after installing an Augmentation</span>";
-        companyFavor.innerHTML = "Company Favor: " + formatNumber(company.favor, 4) +
+        companyFavor.innerHTML = "Company Favor: " + formatNumber(company.favor, 0) +
                                  "<span class='tooltiptext'>Company favor increases the rate at which " +
                                  "you earn reputation for this company by 1% per favor. Company favor " +
                                  "is gained whenever you reset after installing an Augmentation. The amount of " +
