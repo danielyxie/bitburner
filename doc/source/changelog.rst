@@ -3,6 +3,22 @@
 Changelog
 =========
 
+v0.38.0 - 6/12/2018
+-------------------
+* New BitNode: BN-12 The Recursion - Implemented by Github user hydroflame
+* Bladeburner Changes:
+    * Bladeburner progress is no longer reset when installing Augmentations
+    * The number of successess needed to increase a Contract/Operation's max level now scales with the current max level (gradually gets harder)
+    * All Bladeburner Augmentations are now slightly more expensive and require more reputation
+    * Black Operations now give higher rank rewards
+    * Doubled the base amount of money gained from Contracts
+    * Increased the amount of experience gained from Contracts/Actions
+    * Added a new Augmentation: The Blade's Simulacrum
+    * Bladeburner faction reputation gain is now properly affected by favor
+* Hacking is now slightly less profitable in BitNode-3
+* Updated Hacknet Nodes UI - Implemented by Github user kopelli
+* Bug Fix: Fixed an exploit that allowed calling any Netscript function without incurring any RAM Cost in NetscriptJS
+
 v0.37.2 - 6/2/2018
 ------------------
 
