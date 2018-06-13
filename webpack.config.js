@@ -1,18 +1,21 @@
 var path = require('path');
 var webpack = require('webpack');
 
-module.exports = {
-    mode: "development",
+module.exports = (env, argv) => ({
+    //mode: "development",
     plugins: [
-      // http://stackoverflow.com/questions/29080148/expose-jquery-to-real-window-object-with-webpack
-      new webpack.ProvidePlugin({
-        // Automtically detect jQuery and $ as free var in modules
-        // and inject the jquery library
-        // This is required by many jquery plugins
-        jquery: "jquery",
-        jQuery: "jquery",
-        $: "jquery"
-      }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': argv.mode === 'development' ? JSON.stringify('development') : JSON.stringify('production')
+        }),
+        // http://stackoverflow.com/questions/29080148/expose-jquery-to-real-window-object-with-webpack
+        new webpack.ProvidePlugin({
+            // Automtically detect jQuery and $ as free var in modules
+            // and inject the jquery library
+            // This is required by many jquery plugins
+            jquery: "jquery",
+            jQuery: "jquery",
+            $: "jquery"
+        })
     ],
     target: "web",
     entry: {
@@ -25,12 +28,7 @@ module.exports = {
         filename: "[name].bundle.js"
     },
     module: {
-        rules: [
-/*            {
-                test: /\.css$/,
-                use: "style!css"
-            }*/
-        ]
+        rules: []
     },
     optimization: {
         removeAvailableModules: true,
@@ -50,4 +48,4 @@ module.exports = {
     devServer: {
         publicPath: "/dist",
     }
-};
+});
