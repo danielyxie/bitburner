@@ -2002,11 +2002,13 @@ function purchaseTorRouter() {
     AddToAllServers(darkweb);
     SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
 
-    document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
+    const purchaseTor = document.getElementById("location-purchase-tor");
+    purchaseTor.setAttribute("class", "a-link-button-bought");
+    purchaseTor.innerHTML = "TOR Router - purchased";
 
     Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
     darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);
-    dialogBoxCreate("You have purchased a Tor router!<br>You now have access to the dark web from your home computer<br>Use the scan/netstat commands to search for the dark web connection.");
+    dialogBoxCreate("You have purchased a Tor router!<br>You now have access to the dark web from your home computer<br>Use the scan/scan-analyze commands to search for the dark web connection.");
 }
 
 function displayUniversityLocationContent(costMult) {
