@@ -231,7 +231,8 @@ let MaterialSizes = {
     Chemicals:  0.05,
     Drugs:      0.02,
     Robots:     0.5,
-    "AICores": 0.1
+    AICores:    0.1,
+    RealEstate: 0,
 }
 
 function Product(params={}) {
