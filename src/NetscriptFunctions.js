@@ -14,6 +14,7 @@ import {CONSTANTS}                                  from "./Constants.js";
 import {Programs}                                   from "./CreateProgram.js";
 import {parseDarkwebItemPrice, DarkWebItems}        from "./DarkWeb.js";
 import {Engine}                                     from "./engine.js";
+import {AllGangs}                                   from "./Gang.js";
 import {Factions, Faction, joinFaction,
         factionExists, purchaseAugmentation}        from "./Faction.js";
 import {getCostOfNextHacknetNode, purchaseHacknet}  from "./HacknetNode.js";
@@ -2777,6 +2778,12 @@ function NetscriptFunctions(workerScript) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run workForFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
+            }
+
+            // if the player is in a gang and the target faction is any of the gang faction, fail
+            if(Player.gang != null && AllGangs[name] !== undefined) {
+                workerScript.scriptRef.log("ERROR: Faction specified in workForFaction() does not offer work at the moment.");
+                return;
             }
 
             if (inMission) {
