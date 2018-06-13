@@ -16,14 +16,13 @@ module.exports = {
     ],
     target: "web",
     entry: {
-        engine: "./src/engine.js",
-        tests: "./tests/index.js",
+        "dist/engine": "./src/engine.js",
+        "tests/tests": "./tests/index.js",
     },
-    devtool: "nosources-source-map",
+    devtool: "source-map",
     output: {
-        path: path.resolve(__dirname, "dist"),
-        filename: "[name].bundle.js",
-        devtoolModuleFilenameTemplate: "[id]"
+        path: path.resolve(__dirname, "./"),
+        filename: "[name].bundle.js"
     },
     module: {
         rules: [

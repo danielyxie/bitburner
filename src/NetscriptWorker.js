@@ -31,8 +31,12 @@ function WorkerScript(runningScriptObj) {
     this.delay          = null;
     this.fnWorker       = null; //Workerscript for a function call
     this.checkingRam    = false;
-    this.loadedFns      = {}; //Stores names of fns that are "loaded" by this script, thus using RAM
+    this.loadedFns      = {}; //Stores names of fns that are "loaded" by this script, thus using RAM. Used for static RAM evaluation
     this.disableLogs    = {}; //Stores names of fns that should have logs disabled
+
+    //Properties used for dynamic RAM evaluation
+    this.dynamicRamUsage = 1.4;
+    this.dynamicLoadedFns = {};
 }
 
 //Returns the server on which the workerScript is running
@@ -50,6 +54,14 @@ WorkerScript.prototype.getScript = function() {
     }
     console.log("ERROR: Failed to find underlying Script object in WorkerScript.getScript(). This probably means somethings wrong");
     return null;
+}
+
+WorkerScript.prototype.shouldLog = function(fn) {
+    return (this.disableLogs.ALL == null && this.disableLogs[fn] == null);
+}
+
+WorkerScript.prototype.log = function(txt) {
+    this.scriptRef.log(txt);
 }
 
 //Array containing all scripts that are running across all servers, to easily run them all

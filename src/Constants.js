@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.37.2",
+    Version:                "0.38.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -13,6 +13,8 @@ let CONSTANTS = {
     BaseCostFor1GBOfRamHome: 32000,
     BaseCostFor1GBOfRamServer: 55000, //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
+
+    TravelCost: 200000,
 
     BaseCostForHacknetNode: 1000,
     BaseCostForHacknetNodeCore: 500000,
@@ -78,6 +80,8 @@ let CONSTANTS = {
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
     ScriptSingularityFn3RamCost:    3,
+
+    ScriptBladeburnerApiBaseRamCost:    4,
 
     MultithreadingRAMCost:          1,
 
@@ -484,13 +488,20 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.37.2<br>" +
-    "* After joining the Bladeburners division, there is now a button to go to the Bladeburner content " +
-    "in the 'City' page<br>" +
-    "* You now start with $250m in BitNode-8 (increased from $100m)<br>" +
-    "* Bug Fix: You can now no longer directly edit Hacknet Node values through NetscriptJS (hopefully)<br>" +
-    "* Bug Fix: Bladeburners is no longer accessible in BN-8<br>" +
-    "* Bug Fix: getBitNodeMultipliers() Netscript function now returns a copy rather than the original object<br>"
+    "v0.38.0<br>" +
+    "* New BitNode: BN-12 The Recursion - Implemented by Github user hydroflame<br>" +
+    "* Bladeburner Changes:<br>"  +
+    "*** Bladeburner progress is no longer reset when installing Augmentations<br>" +
+    "*** The number of successess needed to increase a Contract/Operation's max level now scales with the current max level (gradually gets harder)<br>"  +
+    "*** All Bladeburner Augmentations are now slightly more expensive and require more reputation<br>" +
+    "*** Black Operations now give higher rank rewards<br>" +
+    "*** Doubled the base amount of money gained from Contracts<br>" +
+    "*** Increased the amount of experience gained from Contracts/Actions<br>" +
+    "*** Added a new Augmentation: The Blade's Simulacrum<br>"  +
+    "*** Bladeburner faction reputation gain is now properly affected by favor<br>"  +
+    "* Hacking is now slightly less profitable in BitNode-3<br>"  +
+    "* Updated Hacknet Nodes UI - Implemented by Github user kopelli<br>" +
+    "* Bug Fix: Fixed an exploit that allowed calling any Netscript function without incurring any RAM Cost in NetscriptJS<br>"
 }
 
 export {CONSTANTS};

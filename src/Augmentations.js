@@ -184,6 +184,7 @@ let AugmentationNames = {
     BladeArmorUnibeam:                  "BLADE-51b Tesla Armor: Unibeam Upgrade",
     BladeArmorOmnibeam:                 "BLADE-51b Tesla Armor: Omnibeam Upgrade",
     BladeArmorIPU:                      "BLADE-51b Tesla Armor: IPU Upgrade",
+    BladesSimulacrum:                   "The Blade's Simulacrum",
 
     //Wasteland Augs
     //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System
@@ -1552,7 +1553,7 @@ function initAugmentations() {
     var BladeburnersFactionName = "Bladeburners";
     if (factionExists(BladeburnersFactionName)) {
         var EsperEyewear = new Augmentation({
-            name:AugmentationNames.EsperEyewear, repCost:400, moneyCost:30e6,
+            name:AugmentationNames.EsperEyewear, repCost:500, moneyCost:33e6,
             info:"Ballistic-grade protective and retractable eyewear that was designed specially " +
                  "for Bladeburner units. This " +
                  "is implanted by installing a mechanical frame in the skull's orbit. " +
@@ -1569,7 +1570,7 @@ function initAugmentations() {
         resetAugmentation(EsperEyewear);
 
         var EMS4Recombination = new Augmentation({
-            name:AugmentationNames.EMS4Recombination, repCost: 800, moneyCost:50e6,
+            name:AugmentationNames.EMS4Recombination, repCost: 1e3, moneyCost:55e6,
             info:"A DNA recombination of the EMS-4 Gene. This genetic engineering " +
                  "technique was originally used on Bladeburners during the Synthoid uprising " +
                  "to induce wakefulness and concentration, suppress fear, reduce empathy, and " +
@@ -1583,7 +1584,7 @@ function initAugmentations() {
         resetAugmentation(EMS4Recombination);
 
         var OrionShoulder = new Augmentation({
-            name:AugmentationNames.OrionShoulder, repCost:2e3, moneyCost:100e6,
+            name:AugmentationNames.OrionShoulder, repCost:2.5e3, moneyCost:110e6,
             info:"A bionic shoulder augmentation for the right shoulder. Using cybernetics, " +
                  "the ORION-MKIV shoulder enhances the strength and dexterity " +
                  "of the user's right arm. It also provides protection due to its " +
@@ -1597,7 +1598,7 @@ function initAugmentations() {
         resetAugmentation(OrionShoulder);
 
         var HyperionV1 = new Augmentation({
-            name:AugmentationNames.HyperionV1, repCost: 4e3, moneyCost:500e6,
+            name:AugmentationNames.HyperionV1, repCost: 5e3, moneyCost:550e6,
             info:"A pair of mini plasma cannons embedded into the hands. The Hyperion is capable " +
                  "of rapidly firing bolts of high-density plasma. The weapon is meant to " +
                  "be used against augmented enemies as the ionized " +
@@ -1611,7 +1612,7 @@ function initAugmentations() {
         resetAugmentation(HyperionV1);
 
         var HyperionV2 = new Augmentation({
-            name:AugmentationNames.HyperionV2, repCost:8e3, moneyCost:1e9,
+            name:AugmentationNames.HyperionV2, repCost:10e3, moneyCost:1.1e9,
             info:"A pair of mini plasma cannons embedded into the hands. This augmentation " +
                  "is more advanced and powerful than the original V1 model. This V2 model is " +
                  "more power-efficiency, more accurate, and can fire plasma bolts at a much " +
@@ -1624,7 +1625,7 @@ function initAugmentations() {
         resetAugmentation(HyperionV2);
 
         var GolemSerum = new Augmentation({
-            name:AugmentationNames.GolemSerum, repCost:10e3, moneyCost:2e9,
+            name:AugmentationNames.GolemSerum, repCost:12.5e3, moneyCost:2.2e9,
             info:"A serum that permanently enhances many aspects of a human's capabilities, " +
                  "including strength, speed, immune system performance, and mitochondrial efficiency. The " +
                  "serum was originally developed by the Chinese military in an attempt to " +
@@ -1637,7 +1638,7 @@ function initAugmentations() {
         resetAugmentation(GolemSerum);
 
         var VangelisVirus = new Augmentation({
-            name:AugmentationNames.VangelisVirus, repCost:6e3, moneyCost:500e6,
+            name:AugmentationNames.VangelisVirus, repCost:7.5e3, moneyCost:550e6,
             info:"A synthetic symbiotic virus that is injected into the human brain tissue. The Vangelis virus " +
                  "heightens the senses and focus of its host, and also enhances its intuition.<br><br>" +
                  "This augmentation:<br>" +
@@ -1649,7 +1650,7 @@ function initAugmentations() {
         resetAugmentation(VangelisVirus);
 
         var VangelisVirus3 = new Augmentation({
-            name:AugmentationNames.VangelisVirus3, repCost:12e3, moneyCost:2e9,
+            name:AugmentationNames.VangelisVirus3, repCost:15e3, moneyCost:2.2e9,
             info:"An improved version of Vangelis, a synthetic symbiotic virus that is " +
                  "injected into the human brain tissue. On top of the benefits of the original " +
                  "virus, this also grants an accelerated healing factor and enhanced " +
@@ -1664,7 +1665,7 @@ function initAugmentations() {
         resetAugmentation(VangelisVirus3);
 
         var INTERLINKED = new Augmentation({
-            name:AugmentationNames.INTERLINKED, repCost:8e3, moneyCost:1e9,
+            name:AugmentationNames.INTERLINKED, repCost:10e3, moneyCost:1.1e9,
             info:"The DNA is genetically modified to enhance the human's body " +
                  "extracellular matrix (ECM). This improves the ECM's ability to " +
                  "structurally support the body and grants heightened strength and " +
@@ -1677,7 +1678,7 @@ function initAugmentations() {
         resetAugmentation(INTERLINKED);
 
         var BladeRunner = new Augmentation({
-            name:AugmentationNames.BladeRunner, repCost:8e3, moneyCost:1.5e9,
+            name:AugmentationNames.BladeRunner, repCost:8e3, moneyCost:1.65e9,
             info:"A cybernetic foot augmentation that was specially created for Bladeburners " +
                  "during the Synthoid Uprising. The organic musculature of the human foot " +
                  "is enhanced with flexible carbon nanotube matrices that are controlled by " +
@@ -1691,7 +1692,7 @@ function initAugmentations() {
         resetAugmentation(BladeRunner);
 
         var BladeArmor = new Augmentation({
-            name:AugmentationNames.BladeArmor, repCost:4e3, moneyCost:250e6,
+            name:AugmentationNames.BladeArmor, repCost:5e3, moneyCost:275e6,
             info:"A powered exoskeleton suit (exosuit) designed as armor for Bladeburner units. This " +
                  "exoskeleton is incredibly adaptable and can protect the wearer from blunt, piercing, " +
                  "concussive, thermal, chemical, and electric trauma. It also enhances the user's " +
@@ -1705,7 +1706,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmor);
 
         var BladeArmorPowerCells = new Augmentation({
-            name:AugmentationNames.BladeArmorPowerCells, repCost:6e3, moneyCost:500e6,
+            name:AugmentationNames.BladeArmorPowerCells, repCost:7.5e3, moneyCost:550e6,
             info:"Upgrades the BLADE-51b Tesla Armor with Ion Power Cells, which are capable of " +
                  "more efficiently storing and using power.<br><br>" +
                  "This augmentation:<br>" +
@@ -1718,7 +1719,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmorPowerCells);
 
         var BladeArmorEnergyShielding = new Augmentation({
-            name:AugmentationNames.BladeArmorEnergyShielding, repCost:7e3, moneyCost:1e9,
+            name:AugmentationNames.BladeArmorEnergyShielding, repCost:8.5e3, moneyCost:1.1e9,
             info:"Upgrades the BLADE-51b Tesla Armor with a plasma energy propulsion system " +
                  "that is capable of projecting an energy shielding force field.<br><br>" +
                  "This augmentation:<br>" +
@@ -1730,7 +1731,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmorEnergyShielding);
 
         var BladeArmorUnibeam = new Augmentation({
-            name:AugmentationNames.BladeArmorUnibeam, repCost:10e3, moneyCost:3e9,
+            name:AugmentationNames.BladeArmorUnibeam, repCost:12.5e3, moneyCost:3.3e9,
             info:"Upgrades the BLADE-51b Tesla Armor with a concentrated deuterium-fluoride laser " +
                  "weapon. It's precision an accuracy makes it useful for quickly neutralizing " +
                  "threats while keeping casualties to a minimum.<br><br>" +
@@ -1742,7 +1743,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmorUnibeam);
 
         var BladeArmorOmnibeam = new Augmentation({
-            name:AugmentationNames.BladeArmorOmnibeam, repCost:20e3, moneyCost:5e9,
+            name:AugmentationNames.BladeArmorOmnibeam, repCost:25e3, moneyCost:5.5e9,
             info:"Upgrades the BLADE-51b Tesla Armor Unibeam augmentation to use " +
                  "multiple-fiber system. The upgraded weapon uses multiple fiber laser " +
                  "modules that combine together to form a single, more powerful beam of up to " +
@@ -1755,7 +1756,7 @@ function initAugmentations() {
         resetAugmentation(BladeArmorOmnibeam);
 
         var BladeArmorIPU = new Augmentation({
-            name:AugmentationNames.BladeArmorIPU, repCost: 5e3, moneyCost:200e6,
+            name:AugmentationNames.BladeArmorIPU, repCost: 6e3, moneyCost:220e6,
             info:"Upgrades the BLADE-51b Tesla Armor with an AI Information Processing " +
                  "Unit that was specially designed to analyze Synthoid related data and " +
                  "information.<br><br>" +
@@ -1766,6 +1767,19 @@ function initAugmentations() {
         });
         BladeArmorIPU.addToFactions([BladeburnersFactionName]);
         resetAugmentation(BladeArmorIPU);
+
+        var BladesSimulacrum = new Augmentation({
+            name:AugmentationNames.BladesSimulacrum, repCost:6e3, moneyCost:75e9,
+            info:"A highly-advanced matter phase-shifter module that is embedded "  +
+                 "in the brainstem and cerebellum. This augmentation allows " +
+                 "the user to project and control a holographic simulacrum within an " +
+                 "extremely large radius. These specially-modified holograms were specially " +
+                 "weaponized by Bladeburner units to be used against Synthoids.<br><br>"  +
+                 "This augmentation allows you to perform Bladeburner actions and other " +
+                 "actions (such as working, commiting crimes, etc.) at the same time."
+        });
+        BladesSimulacrum.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(BladesSimulacrum);
     }
 
     //Update costs based on how many have been purchased
@@ -1777,8 +1791,6 @@ function initAugmentations() {
     }
 
     Player.reapplyAllAugmentations();
-
-
 }
 
 //Resets an Augmentation during (re-initizliation)
@@ -2350,6 +2362,8 @@ function applyAugmentation(aug, reapply=false) {
             Player.bladeburner_analysis_mult        *= 1.15;
             Player.bladeburner_success_chance_mult  *= 1.02;
             break;
+        case AugmentationNames.BladesSimulacrum: //No multiplier effect
+            break;
         default:
             throw new Error("ERROR: No such augmentation!");
             return;
@@ -2594,8 +2608,9 @@ function displaySourceFiles(listElement, sourceFiles) {
             console.log("ERROR: Invalid source file number: " + sourceFiles[i].n);
             continue;
         }
+        const maxLevel = sourceFiles[i].n == 12 ? "∞" : "3";
         var accordion = createAccordionElement({
-            hdrText:sourceFileObject.name + "<br>" + "Level " + (sourceFiles[i].lvl) + " / 3",
+            hdrText:sourceFileObject.name + "<br>" + "Level " + (sourceFiles[i].lvl) + " / "+maxLevel,
             panelText:sourceFileObject.info
         });
 

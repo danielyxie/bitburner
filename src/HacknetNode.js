@@ -5,42 +5,48 @@ import {iTutorialSteps, iTutorialNextStep,
         iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial.js";
 import {Player}                                 from "./Player.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {clearEventListeners, createElement,
+        getElementById}                         from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 
+/**
+ * Overwrites the inner text of the specified HTML element if it is different from what currently exists.
+ * @param {string} elementId The HTML ID to find the first instance of.
+ * @param {string} text The inner text that should be set.
+ */
+function updateText(elementId, text) {
+    var el = getElementById(elementId);
+    if (el.innerText != text) {
+        el.innerText = text;
+    }
+};
+
 /* HacknetNode.js */
 function hacknetNodesInit() {
-    var mult1x = document.getElementById("hacknet-nodes-1x-multiplier");
-    mult1x.addEventListener("click", function() {
-        hacknetNodePurchaseMultiplier = 1;
-        updateHacknetNodesMultiplierButtons();
-        updateHacknetNodesContent();
-        return false;
-    });
-    var mult5x = document.getElementById("hacknet-nodes-5x-multiplier");
-    mult5x.addEventListener("click", function() {
-        hacknetNodePurchaseMultiplier = 5;
-        updateHacknetNodesMultiplierButtons();
-        updateHacknetNodesContent();
-        return false;
-    });
-    var mult10x = document.getElementById("hacknet-nodes-10x-multiplier");
-    mult10x.addEventListener("click", function() {
-        hacknetNodePurchaseMultiplier = 10;
-        updateHacknetNodesMultiplierButtons();
-        updateHacknetNodesContent();
-        return false;
-    });
-    var multMax = document.getElementById("hacknet-nodes-max-multiplier");
-    multMax.addEventListener("click", function() {
-        hacknetNodePurchaseMultiplier = 0;
-        updateHacknetNodesMultiplierButtons();
-        updateHacknetNodesContent();
-        return false;
-    });
+    var performMapping = function(x) {
+        getElementById("hacknet-nodes-" + x.id + "-multiplier")
+            .addEventListener("click", function() {
+                hacknetNodePurchaseMultiplier = x.multiplier;
+                updateHacknetNodesMultiplierButtons();
+                updateHacknetNodesContent();
+                return false;
+            });
+    };
+
+    var mappings = [
+        { id: "1x", multiplier: 1 },
+        { id: "5x", multiplier: 5 },
+        { id: "10x", multiplier: 10 },
+        { id: "max", multiplier: 0 }
+    ];
+    for (var elem of mappings) {
+        // Encapsulate in a function so that the appropriate scope is kept in the click handler.
+        performMapping(elem);
+    }
 }
+
 document.addEventListener("DOMContentLoaded", hacknetNodesInit, false);
 
 function HacknetNode(name) {
@@ -76,7 +82,10 @@ HacknetNode.prototype.updateMoneyGainRate = function() {
 
 HacknetNode.prototype.calculateLevelUpgradeCost = function(levels=1) {
     levels = Math.round(levels);
-    if (isNaN(levels) || levels < 1) {return 0;}
+    if (isNaN(levels) || levels < 1) {
+        return 0;
+    }
+
     var mult = CONSTANTS.HacknetNodeUpgradeLevelMult;
     var totalMultiplier = 0; //Summed
     var currLevel = this.level;
@@ -84,6 +93,7 @@ HacknetNode.prototype.calculateLevelUpgradeCost = function(levels=1) {
         totalMultiplier += Math.pow(mult, currLevel);
         ++currLevel;
     }
+
     return CONSTANTS.BaseCostForHacknetNode / 2 * totalMultiplier * Player.hacknet_node_level_cost_mult;
 }
 
@@ -95,12 +105,19 @@ HacknetNode.prototype.getLevelUpgradeCost = function(levels=1) {
 HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
     levels = Math.round(levels);
     var cost = this.calculateLevelUpgradeCost(levels);
-    if (isNaN(cost) || levels < 0) {return false;}
+    if (isNaN(cost) || levels < 0) {
+        return false;
+    }
+
     if (this.level + levels > CONSTANTS.HacknetNodeMaxLevel) {
         var diff = Math.max(0, CONSTANTS.HacknetNodeMaxLevel - this.level);
         return this.purchaseLevelUpgrade(diff);
     }
-    if (Player.money.lt(cost)) {return false;}
+
+    if (Player.money.lt(cost)) {
+        return false;
+    }
+
     Player.loseMoney(cost);
     this.level += levels;
     this.updateMoneyGainRate();
@@ -109,7 +126,9 @@ HacknetNode.prototype.purchaseLevelUpgrade = function(levels=1) {
 
 //Wrapper function for Netscript
 HacknetNode.prototype.upgradeLevel = function(levels=1) {
-    return this.purchaseLevelUpgrade(levels);
+    let res = this.purchaseLevelUpgrade(levels);
+    createPlayerHacknetNodeWrappers();
+    return res;
 }
 
 HacknetNode.prototype.calculateRamUpgradeCost = function() {
@@ -129,9 +148,18 @@ HacknetNode.prototype.getRamUpgradeCost = function() {
 
 HacknetNode.prototype.purchaseRamUpgrade = function() {
     var cost = this.calculateRamUpgradeCost();
-    if (isNaN(cost)) {return false;}
-    if (Player.money.lt(cost)) {return false;}
-    if (this.ram >= CONSTANTS.HacknetNodeMaxRam) {return false;}
+    if (isNaN(cost)) {
+        return false;
+    }
+
+    if (Player.money.lt(cost)) {
+        return false;
+    }
+
+    if (this.ram >= CONSTANTS.HacknetNodeMaxRam) {
+        return false;
+    }
+
     Player.loseMoney(cost);
     this.ram *= 2; //Ram is always doubled
     this.updateMoneyGainRate();
@@ -140,25 +168,38 @@ HacknetNode.prototype.purchaseRamUpgrade = function() {
 
 //Wrapper function for Netscript
 HacknetNode.prototype.upgradeRam = function() {
-    return this.purchaseRamUpgrade();
+    let res = this.purchaseRamUpgrade();
+    createPlayerHacknetNodeWrappers();
+    return res;
 }
 
 HacknetNode.prototype.calculateCoreUpgradeCost = function() {
     var coreBaseCost = CONSTANTS.BaseCostForHacknetNodeCore;
     var mult = CONSTANTS.HacknetNodeUpgradeCoreMult;
-    return coreBaseCost * Math.pow(mult, this.cores-1) * Player.hacknet_node_core_cost_mult;
+    return coreBaseCost * Math.pow(mult, this.cores - 1) * Player.hacknet_node_core_cost_mult;
 }
 
 //Wrapper function for Netscript
 HacknetNode.prototype.getCoreUpgradeCost = function() {
-    return this.calculateCoreUpgradeCost();
+    let res = this.calculateCoreUpgradeCost();
+    createPlayerHacknetNodeWrappers();
+    return res;
 }
 
 HacknetNode.prototype.purchaseCoreUpgrade = function() {
     var cost = this.calculateCoreUpgradeCost();
-    if (isNaN(cost)) {return false;}
-    if (Player.money.lt(cost)) {return false;}
-    if (this.cores >= CONSTANTS.HacknetNodeMaxCores) {return false;}
+    if (isNaN(cost)) {
+        return false;
+    }
+
+    if (Player.money.lt(cost)) {
+        return false;
+    }
+
+    if (this.cores >= CONSTANTS.HacknetNodeMaxCores) {
+        return false;
+    }
+
     Player.loseMoney(cost);
     ++this.cores;
     this.updateMoneyGainRate();
@@ -225,7 +266,10 @@ function purchaseHacknet() {
     /* END INTERACTIVE TUTORIAL */
 
     var cost = getCostOfNextHacknetNode();
-    if (isNaN(cost)) {throw new Error("Cost is NaN"); return;}
+    if (isNaN(cost)) {
+        throw new Error("Cost is NaN");
+    }
+
     if (Player.money.lt(cost)) {
         //dialogBoxCreate("You cannot afford to purchase a Hacknet Node!");
         return false;
@@ -240,7 +284,10 @@ function purchaseHacknet() {
     Player.loseMoney(cost);
     Player.hacknetNodes.push(node);
 
-    displayHacknetNodesContent();
+    if (Engine.currentPage === Engine.Page.HacknetNodes) {
+        displayHacknetNodesContent();
+    }
+    createPlayerHacknetNodeWrappers();
     updateTotalHacknetProduction();
     return numOwned;
 }
@@ -290,9 +337,12 @@ function updateHacknetNodesMultiplierButtons() {
 //Calculate the maximum number of times the Player can afford to upgrade
 //a Hacknet Node's level"
 function getMaxNumberLevelUpgrades(nodeObj) {
-    if (Player.money.lt(nodeObj.calculateLevelUpgradeCost(1))) {return 0;}
+    if (Player.money.lt(nodeObj.calculateLevelUpgradeCost(1))) {
+        return 0;
+    }
+
     var min = 1;
-    var max = CONSTANTS.HacknetNodeMaxLevel-1;
+    var max = CONSTANTS.HacknetNodeMaxLevel - 1;
     var levelsToMax = CONSTANTS.HacknetNodeMaxLevel - nodeObj.level;
     if (Player.money.gt(nodeObj.calculateLevelUpgradeCost(levelsToMax))) {
         return levelsToMax;
@@ -302,7 +352,7 @@ function getMaxNumberLevelUpgrades(nodeObj) {
         var curr = (min + max) / 2 | 0;
         if (curr != CONSTANTS.HacknetNodeMaxLevel &&
             Player.money.gt(nodeObj.calculateLevelUpgradeCost(curr)) &&
-            Player.money.lt(nodeObj.calculateLevelUpgradeCost(curr+1))) {
+            Player.money.lt(nodeObj.calculateLevelUpgradeCost(curr + 1))) {
             return Math.min(levelsToMax, curr);
         } else if (Player.money.lt(nodeObj.calculateLevelUpgradeCost(curr))) {
             max = curr - 1;
@@ -329,7 +379,7 @@ function displayHacknetNodesContent() {
 
     //Remove all old hacknet Node DOM elements
     var hacknetNodesList = document.getElementById("hacknet-nodes-list");
-        while (hacknetNodesList.firstChild) {
+    while (hacknetNodesList.firstChild) {
         hacknetNodesList.removeChild(hacknetNodesList.firstChild);
     }
 
@@ -337,6 +387,7 @@ function displayHacknetNodesContent() {
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
         createHacknetNodeDomElement(Player.hacknetNodes[i]);
     }
+
     updateHacknetNodesContent();
 }
 
@@ -344,8 +395,11 @@ function displayHacknetNodesContent() {
 function updateHacknetNodesContent() {
     //Set purchase button to inactive if not enough money, and update its price display
     var cost = getCostOfNextHacknetNode();
-    var purchaseButton = document.getElementById("hacknet-nodes-purchase-button");
-    purchaseButton.innerHTML = "Purchase Hacknet Node - $" + formatNumber(cost, 2);
+    var purchaseButton = getElementById("hacknet-nodes-purchase-button");
+    var formattedCost = formatNumber(cost, 2);
+
+    updateText("hacknet-nodes-purchase-button", "Purchase Hacknet Node - $" + formattedCost);
+
     if (Player.money.lt(cost)) {
         purchaseButton.setAttribute("class", "a-link-button-inactive");
     } else {
@@ -353,9 +407,8 @@ function updateHacknetNodesContent() {
     }
 
     //Update player's money
-    var moneyElem = document.getElementById("hacknet-nodes-money");
-    moneyElem.innerHTML = "Money: $" + formatNumber(Player.money.toNumber(), 2) + "<br>" +
-                          "Total production from all Hacknet Nodes: $" + formatNumber(Player.totalHacknetNodeProduction, 2) + " / second";
+    updateText("hacknet-nodes-player-money", "$" + formatNumber(Player.money.toNumber(), 2));
+    updateText("hacknet-nodes-total-production", "$" + formatNumber(Player.totalHacknetNodeProduction, 2) + " / second");
 
     //Update information in each owned hacknet node
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
@@ -367,61 +420,75 @@ function updateHacknetNodesContent() {
 function createHacknetNodeDomElement(nodeObj) {
     var nodeName = nodeObj.name;
 
-    var listItem = document.createElement("li");
-    listItem.setAttribute("class", "hacknet-node");
+    var nodeLevelContainer = createElement("div", {
+        class: "hacknet-node-level-container row",
+        innerHTML: "<p>Level:</p><span class=\"text upgradable-info\" id=\"hacknet-node-level-" + nodeName + "\"></span>"
+    });
 
-    var span = document.createElement("span");
-    span.style.display = "inline";
+    var nodeRamContainer = createElement("div", {
+        class: "hacknet-node-ram-container row",
+        innerHTML: "<p>RAM:</p><span class=\"text upgradable-info\" id=\"hacknet-node-ram-" + nodeName + "\"></span>"
+    });
 
-    var buttonDiv = document.createElement("div");
-    buttonDiv.setAttribute("class", "hacknet-node-button-div");
+    var nodeCoresContainer = createElement("div", {
+        class: "hacknet-node-cores-container row",
+        innerHTML: "<p>Cores:</p><span class=\"text upgradable-info\" id=\"hacknet-node-cores-" + nodeName + "\"><span>"
+    })
+    var containingDiv = createElement("div", {
+        class: "hacknet-node-container",
+        innerHTML: "<div class=\"hacknet-node-name-container row\">" +
+            "<p>Node name:</p>" +
+            "<span class=\"text\" id=\"hacknet-node-name-" + nodeName + "\"></span>" +
+            "</div>" + 
+            "<div class=\"hacknet-node-production-container row\">" +
+            "<p>Production:</p>" +
+            "<span class=\"text\" id=\"hacknet-node-total-production-" + nodeName + "\"></span>" +
+            "<span class=\"text\" id=\"hacknet-node-production-rate-" + nodeName + "\"></span>" +
+            "</div>"
+    });
+    containingDiv.appendChild(nodeLevelContainer);
+    containingDiv.appendChild(nodeRamContainer);
+    containingDiv.appendChild(nodeCoresContainer);
 
-    //Text
-    var txt = document.createElement("p");
-    //txt.setAttribute("id", "hacknet-node-text-" + nodeName);
-    txt.id = "hacknet-node-text-" + nodeName;
+    var listItem = createElement("li", {
+        class: "hacknet-node"
+    });
+    listItem.appendChild(containingDiv);
 
     //Upgrade buttons
-    var upgradeLevelButton = document.createElement("a");
-    var upgradeRamButton = document.createElement("a");
-    var upgradeCoreButton = document.createElement("a");
-
-    //upgradeLevelButton.setAttribute("id", "hacknet-node-upgrade-level-" + nodeName);
-    upgradeLevelButton.id = "hacknet-node-upgrade-level-" + nodeName;
-    upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
-    upgradeLevelButton.addEventListener("click", function() {
-        var numUpgrades = hacknetNodePurchaseMultiplier;
-        if (hacknetNodePurchaseMultiplier == 0) {
-            numUpgrades = getMaxNumberLevelUpgrades(nodeObj);
+    nodeLevelContainer.appendChild(createElement("a", {
+        id: "hacknet-node-upgrade-level-" + nodeName,
+        class: "a-link-button-inactive",
+        clickListener: function() {
+            var numUpgrades = hacknetNodePurchaseMultiplier;
+            if (hacknetNodePurchaseMultiplier == 0) {
+                numUpgrades = getMaxNumberLevelUpgrades(nodeObj);
+            }
+            nodeObj.purchaseLevelUpgrade(numUpgrades);
+            updateHacknetNodesContent();
+            return false;
         }
-        nodeObj.purchaseLevelUpgrade(numUpgrades);
-        updateHacknetNodesContent();
-        return false;
-    });
-    //upgradeRamButton.setAttribute("id", "hacknet-node-upgrade-ram-" + nodeName);
-    upgradeRamButton.id = "hacknet-node-upgrade-ram-" + nodeName;
-    upgradeRamButton.setAttribute("class", "a-link-button-inactive");
-    upgradeRamButton.addEventListener("click", function() {
-        nodeObj.purchaseRamUpgrade();
-        updateHacknetNodesContent();
-        return false;
-    });
-    //upgradeCoreButton.setAttribute("id", "hacknet-node-upgrade-core-" + nodeName);
-    upgradeCoreButton.id = "hacknet-node-upgrade-core-" + nodeName;
-    upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
-    upgradeCoreButton.addEventListener("click", function() {
-        nodeObj.purchaseCoreUpgrade();
-        updateHacknetNodesContent();
-        return false;
-    });
+    }));
 
-    //Put all the components together in the li element
-    span.appendChild(txt);
-    buttonDiv.appendChild(upgradeLevelButton);
-    buttonDiv.appendChild(upgradeRamButton);
-    buttonDiv.appendChild(upgradeCoreButton);
-    span.appendChild(buttonDiv);
-    listItem.appendChild(span);
+    nodeRamContainer.appendChild(createElement("a", {
+        id: "hacknet-node-upgrade-ram-" + nodeName,
+        class: "a-link-button-inactive",
+        clickListener: function() {
+            nodeObj.purchaseRamUpgrade();
+            updateHacknetNodesContent();
+            return false;
+        }
+    }));
+
+    nodeCoresContainer.appendChild(createElement("a", {
+        id: "hacknet-node-upgrade-core-" + nodeName,
+        class: "a-link-button-inactive",
+        clickListener: function() {
+            nodeObj.purchaseCoreUpgrade();
+            updateHacknetNodesContent();
+            return false;
+        }
+    }));
 
     document.getElementById("hacknet-nodes-list").appendChild(listItem);
 
@@ -432,20 +499,19 @@ function createHacknetNodeDomElement(nodeObj) {
 //Updates information on a single hacknet node DOM element
 function updateHacknetNodeDomElement(nodeObj) {
     var nodeName = nodeObj.name;
-    var txt = document.getElementById("hacknet-node-text-" + nodeName);
-    if (txt == null) {throw new Error("Cannot find text element");}
-    txt.innerHTML = "Node name:  " + nodeName + "<br>" +
-                    "Production: $" + formatNumber(nodeObj.totalMoneyGenerated, 2) +
-                                 " ($" + formatNumber(nodeObj.moneyGainRatePerSecond, 2) + " / second) <br>" +
-                    "Level:      " + nodeObj.level + "<br>" +
-                    "RAM:        " + nodeObj.ram + "GB<br>" +
-                    "Cores:      " + nodeObj.cores;
+
+    updateText("hacknet-node-name-" + nodeName, nodeName);
+    updateText("hacknet-node-total-production-" + nodeName, "$" + formatNumber(nodeObj.totalMoneyGenerated, 2));
+    updateText("hacknet-node-production-rate-" + nodeName, "($" + formatNumber(nodeObj.moneyGainRatePerSecond, 2) + " / second)");
+    updateText("hacknet-node-level-" + nodeName, nodeObj.level);
+    updateText("hacknet-node-ram-" + nodeName, nodeObj.ram + "GB");
+    updateText("hacknet-node-cores-" + nodeName, nodeObj.cores);
 
     //Upgrade level
-    var upgradeLevelButton = document.getElementById("hacknet-node-upgrade-level-" + nodeName);
-    if (upgradeLevelButton == null) {throw new Error("Cannot find upgrade level button element");}
+    var upgradeLevelButton = getElementById("hacknet-node-upgrade-level-" + nodeName);
+
     if (nodeObj.level >= CONSTANTS.HacknetNodeMaxLevel) {
-        upgradeLevelButton.innerHTML = "MAX LEVEL";
+        updateText("hacknet-node-upgrade-level-" + nodeName, "MAX LEVEL");
         upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
     } else {
         var multiplier = 0;
@@ -458,8 +524,7 @@ function updateHacknetNodeDomElement(nodeObj) {
         }
 
         var upgradeLevelCost = nodeObj.calculateLevelUpgradeCost(multiplier);
-        upgradeLevelButton.innerHTML = "Upgrade Hacknet Node Level x" + multiplier +
-                                       " - $" + formatNumber(upgradeLevelCost, 2);
+        updateText("hacknet-node-upgrade-level-" + nodeName, "Upgrade x" + multiplier + " - $" + formatNumber(upgradeLevelCost, 2))
         if (Player.money.lt(upgradeLevelCost)) {
             upgradeLevelButton.setAttribute("class", "a-link-button-inactive");
         } else {
@@ -468,14 +533,14 @@ function updateHacknetNodeDomElement(nodeObj) {
     }
 
     //Upgrade RAM
-    var upgradeRamButton = document.getElementById("hacknet-node-upgrade-ram-" + nodeName);
-    if (upgradeRamButton == null) {throw new Error("Cannot find upgrade ram button element");}
+    var upgradeRamButton = getElementById("hacknet-node-upgrade-ram-" + nodeName);
+
     if (nodeObj.ram >= CONSTANTS.HacknetNodeMaxRam) {
-        upgradeRamButton.innerHTML = "MAX RAM";
+        updateText("hacknet-node-upgrade-ram-" + nodeName, "MAX RAM");
         upgradeRamButton.setAttribute("class", "a-link-button-inactive");
     } else {
         var upgradeRamCost = nodeObj.calculateRamUpgradeCost();
-        upgradeRamButton.innerHTML = "Upgrade Hacknet Node RAM - $" + formatNumber(upgradeRamCost, 2);
+        updateText("hacknet-node-upgrade-ram-" + nodeName, "Upgrade - $" + formatNumber(upgradeRamCost, 2));
         if (Player.money.lt(upgradeRamCost)) {
             upgradeRamButton.setAttribute("class", "a-link-button-inactive");
         } else {
@@ -484,14 +549,14 @@ function updateHacknetNodeDomElement(nodeObj) {
     }
 
     //Upgrade Cores
-    var upgradeCoreButton = document.getElementById("hacknet-node-upgrade-core-" + nodeName);
-    if (upgradeCoreButton == null) {throw new Error("Cannot find upgrade cores button element");}
+    var upgradeCoreButton = getElementById("hacknet-node-upgrade-core-" + nodeName);
+
     if (nodeObj.cores >= CONSTANTS.HacknetNodeMaxCores) {
-        upgradeCoreButton.innerHTML = "MAX CORES";
+        updateText("hacknet-node-upgrade-core-" + nodeName, "MAX CORES");
         upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
     } else {
         var upgradeCoreCost = nodeObj.calculateCoreUpgradeCost();
-        upgradeCoreButton.innerHTML = "Purchase additional CPU Core - $" + formatNumber(upgradeCoreCost, 2);
+        updateText("hacknet-node-upgrade-core-" + nodeName, "Upgrade - $" + formatNumber(upgradeCoreCost, 2));
         if (Player.money.lt(upgradeCoreCost)) {
             upgradeCoreButton.setAttribute("class", "a-link-button-inactive");
         } else {
@@ -511,8 +576,12 @@ function updatePlayerHacknetNodeWrappers() {
     if (Player.hacknetNodeWrappers.length !== Player.hacknetNodes.length) {
         return createPlayerHacknetNodeWrappers();
     }
+
     for (var i = 0; i < Player.hacknetNodeWrappers.length; ++i) {
-        if (!(Player.hacknetNodeWrappers[i] instanceof HacknetNodeWrapper)) {return createPlayerHacknetNodeWrappers();}
+        if (!(Player.hacknetNodeWrappers[i] instanceof HacknetNodeWrapper)) {
+            return createPlayerHacknetNodeWrappers();
+        }
+
         Player.hacknetNodeWrappers[i].level                  = Player.hacknetNodes[i].level;
         Player.hacknetNodeWrappers[i].ram                    = Player.hacknetNodes[i].ram;
         Player.hacknetNodeWrappers[i].cores                  = Player.hacknetNodes[i].cores;
@@ -528,6 +597,7 @@ function processAllHacknetNodeEarnings(numCycles) {
     for (var i = 0; i < Player.hacknetNodes.length; ++i) {
         total += processSingleHacknetNodeEarnings(numCycles, Player.hacknetNodes[i]);
     }
+
     return total;
 }
 
@@ -535,9 +605,10 @@ function processSingleHacknetNodeEarnings(numCycles, nodeObj) {
     var cyclesPerSecond = 1000 / Engine._idleSpeed;
     var earningPerCycle = nodeObj.moneyGainRatePerSecond / cyclesPerSecond;
     if (isNaN(earningPerCycle)) {
-        console.log("ERROR: Hacknet Node Calculated earnings is NaN");
+        console.error("Hacknet Node '" + nodeObj.name + "' Calculated earnings is NaN");
         earningPerCycle = 0;
     }
+
     var totalEarnings = numCycles * earningPerCycle;
     nodeObj.totalMoneyGenerated += totalEarnings;
     nodeObj.onlineTimeSeconds += (numCycles * (Engine._idleSpeed / 1000));
@@ -551,10 +622,21 @@ function getHacknetNode(name) {
             return Player.hacknetNodes[i];
         }
     }
+
     return null;
 }
 
-export {hacknetNodesInit, HacknetNode, purchaseHacknet, updateTotalHacknetProduction,
-        getCostOfNextHacknetNode, updateHacknetNodesMultiplierButtons, getMaxNumberLevelUpgrades,
-        displayHacknetNodesContent, updateHacknetNodesContent, processAllHacknetNodeEarnings,
-        getHacknetNode, createPlayerHacknetNodeWrappers};
+export {
+    HacknetNode,
+    createPlayerHacknetNodeWrappers,
+    displayHacknetNodesContent,
+    getCostOfNextHacknetNode,
+    getHacknetNode,
+    getMaxNumberLevelUpgrades,
+    hacknetNodesInit,
+    processAllHacknetNodeEarnings,
+    purchaseHacknet,
+    updateHacknetNodesContent,
+    updateHacknetNodesMultiplierButtons,
+    updateTotalHacknetProduction
+};

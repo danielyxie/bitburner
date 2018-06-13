@@ -3,18 +3,7 @@ import {CompanyPositions, initCompanies,
         Companies, getJobRequirementText}       from "./Company.js";
 import {Corporation}                            from "./CompanyManagement.js";
 import {CONSTANTS}                              from "./Constants.js";
-import {commitShopliftCrime, commitRobStoreCrime, commitMugCrime,
-        commitLarcenyCrime, commitDealDrugsCrime, commitBondForgeryCrime,
-        commitTraffickArmsCrime,
-        commitHomicideCrime, commitGrandTheftAutoCrime, commitKidnapCrime,
-        commitAssassinationCrime, commitHeistCrime, determineCrimeSuccess,
-        determineCrimeChanceShoplift, determineCrimeChanceRobStore,
-        determineCrimeChanceMug, determineCrimeChanceLarceny,
-        determineCrimeChanceDealDrugs, determineCrimeChanceBondForgery,
-        determineCrimeChanceTraffickArms,
-        determineCrimeChanceHomicide, determineCrimeChanceGrandTheftAuto,
-        determineCrimeChanceKidnap, determineCrimeChanceAssassination,
-        determineCrimeChanceHeist}              from "./Crimes.js";
+import {Crimes}                                 from "./Crimes.js";
 import {Engine}                                 from "./engine.js";
 import {beginInfiltration}                      from "./Infiltration.js";
 import {hasBladeburnerSF}                       from "./NetscriptFunctions.js";
@@ -27,7 +16,7 @@ import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {clearEventListeners, createElement}     from "../utils/HelperFunctions.js";
 import {createRandomIp}                         from "../utils/IPAddress.js";
-import numeral                                  from "../utils/numeral.min.js";
+import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
@@ -1058,18 +1047,18 @@ function displayLocationContent() {
         case Locations.NewTokyoSlums:
         case Locations.IshimaSlums:
         case Locations.VolhavenSlums:
-            var shopliftChance = determineCrimeChanceShoplift();
-            var robStoreChance = determineCrimeChanceRobStore();
-            var mugChance = determineCrimeChanceMug();
-            var larcenyChance = determineCrimeChanceLarceny();
-            var drugsChance = determineCrimeChanceDealDrugs();
-            var bondChance = determineCrimeChanceBondForgery();
-            var armsChance = determineCrimeChanceTraffickArms();
-            var homicideChance = determineCrimeChanceHomicide();
-            var gtaChance = determineCrimeChanceGrandTheftAuto();
-            var kidnapChance = determineCrimeChanceKidnap();
-            var assassinateChance = determineCrimeChanceAssassination();
-            var heistChance = determineCrimeChanceHeist();
+            var shopliftChance = Crimes.Shoplift.successRate();
+            var robStoreChance = Crimes.RobStore.successRate();
+            var mugChance = Crimes.Mug.successRate();
+            var larcenyChance = Crimes.Larceny.successRate();
+            var drugsChance = Crimes.DealDrugs.successRate();
+            var bondChance = Crimes.BondForgery.successRate();
+            var armsChance = Crimes.TraffickArms.successRate();
+            var homicideChance = Crimes.Homicide.successRate();
+            var gtaChance = Crimes.GrandTheftAuto.successRate();
+            var kidnapChance = Crimes.Kidnap.successRate();
+            var assassinateChance = Crimes.Assassination.successRate();
+            var heistChance = Crimes.Heist.successRate();
 
             slumsDescText.style.display = "block";
             slumsShoplift.style.display = "block";
@@ -1772,16 +1761,8 @@ function initLocationButtons() {
     });
 
     purchaseHomeRam.addEventListener("click", function() {
-        //Calculate how many times ram has been upgraded (doubled)
-        var currentRam = Player.getHomeComputer().maxRam;
-        var newRam = currentRam * 2;
-        var numUpgrades = Math.log2(currentRam);
-
-        //Calculate cost
-        //Have cost increase by some percentage each time RAM has been upgraded
-        var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome;
-        var mult = Math.pow(1.58, numUpgrades);
-        cost = cost * mult;
+        const cost = Player.getUpgradeHomeRamCost();
+        const ram = Player.getHomeComputer().maxRam;
 
         var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
         yesBtn.innerHTML = "Purchase"; noBtn.innerHTML = "Cancel";
@@ -1793,8 +1774,8 @@ function initLocationButtons() {
             yesNoBoxClose();
         });
         yesNoBoxCreate("Would you like to purchase additional RAM for your home computer? <br><br>" +
-                       "This will upgrade your RAM from " + currentRam + "GB to " + newRam + "GB. <br><br>" +
-                       "This will cost $" + formatNumber(cost, 2));
+                       "This will upgrade your RAM from " + ram + "GB to " + ram*2 + "GB. <br><br>" +
+                       "This will cost " + numeral(cost).format('$0.000a'));
     });
 
     purchaseHomeCores.addEventListener("click", function() {
@@ -1834,92 +1815,92 @@ function initLocationButtons() {
     });
 
     travelToAevum.addEventListener("click", function() {
-        travelBoxCreate(Locations.Aevum, 200000);
+        travelBoxCreate(Locations.Aevum, CONSTANTS.TravelCost);
         return false;
     });
 
     travelToChongqing.addEventListener("click", function() {
-        travelBoxCreate(Locations.Chongqing, 200000);
+        travelBoxCreate(Locations.Chongqing, CONSTANTS.TravelCost);
         return false;
     });
 
     travelToSector12.addEventListener("click", function() {
-        travelBoxCreate(Locations.Sector12, 200000);
+        travelBoxCreate(Locations.Sector12, CONSTANTS.TravelCost);
         return false;
     });
 
     travelToNewTokyo.addEventListener("click", function() {
-        travelBoxCreate(Locations.NewTokyo, 200000);
+        travelBoxCreate(Locations.NewTokyo, CONSTANTS.TravelCost);
         return false;
     });
 
     travelToIshima.addEventListener("click", function() {
-        travelBoxCreate(Locations.Ishima, 200000);
+        travelBoxCreate(Locations.Ishima, CONSTANTS.TravelCost);
         return false;
     });
 
     travelToVolhaven.addEventListener("click", function() {
-        travelBoxCreate(Locations.Volhaven, 200000);
+        travelBoxCreate(Locations.Volhaven, CONSTANTS.TravelCost);
         return false;
     });
 
     slumsShoplift.addEventListener("click", function() {
-        commitShopliftCrime();
+        Crimes.Shoplift.commit();
         return false;
     });
 
     slumsRobStore.addEventListener("click", function() {
-        commitRobStoreCrime();
+        Crimes.RobStore.commit();
         return false;
     });
 
     slumsMug.addEventListener("click", function() {
-        commitMugCrime();
+        Crimes.Mug.commit();
         return false;
     });
 
     slumsLarceny.addEventListener("click", function() {
-        commitLarcenyCrime();
+        Crimes.Larceny.commit();
         return false;
     });
 
     slumsDealDrugs.addEventListener("click", function() {
-        commitDealDrugsCrime();
+        Crimes.DealDrugs.commit();
         return false;
     });
 
     slumsBondForgery.addEventListener("click", function() {
-        commitBondForgeryCrime();
+        Crimes.BondForgery.commit();
         return false;
     });
 
     slumsTrafficArms.addEventListener("click", function() {
-        commitTraffickArmsCrime();
+        Crimes.TraffickArms.commit();
         return false;
     });
 
     slumsHomicide.addEventListener("click", function() {
-        commitHomicideCrime();
+        Crimes.Homicide.commit();
         return false;
     });
 
     slumsGta.addEventListener("click", function() {
-        commitGrandTheftAutoCrime();
+        Crimes.GrandTheftAuto.commit();
         return false;
     });
 
     slumsKidnap.addEventListener("click", function() {
-        commitKidnapCrime();
+        Crimes.Kidnap.commit();
         return false;
     });
 
     slumsAssassinate.addEventListener("click", function() {
-        commitAssassinationCrime();
+        Crimes.Assassination.commit();
         return false;
     });
 
     slumsHeist.addEventListener("click", function() {
-        commitHeistCrime();
+        Crimes.Heist.commit();
         return false;
     });
 
