@@ -197,6 +197,16 @@ a:link, a:visited {
     pointer-events: none;
 }
 
+.dropdown {
+    color:white;
+    background-color:black;
+}
+
+.text-input {
+    color:white;
+    background-color:black;
+}
+
 /* Notification icon (for create program right now only) */
 #create-program-tab {
     position:relative;

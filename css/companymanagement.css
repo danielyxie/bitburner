@@ -22,12 +22,6 @@
     background-color: #777;
 }
 
-/* Select industry type when creating a new division */
-.cmpy-mgmt-industry-select {
-    color:white;
-    background-color:black;
-}
-
 /* Switch between Cities */
 .cmpy-mgmt-city-tab {
     display:inline-block;
