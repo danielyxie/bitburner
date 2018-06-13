@@ -951,6 +951,23 @@ function NetscriptFunctions(workerScript) {
             allFiles.sort();
             return allFiles;
         },
+        ps : function(ip=workerScript.serverIp) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("ps", CONSTANTS.ScriptScanRamCost);
+            }
+            updateDynamicRam("ps", CONSTANTS.ScriptScanRamCost);
+            var server = getServer(ip);
+            if (server == null){
+                workerScript.scriptRef.log("ps() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "ps() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            const processes = [];
+            for(const i in server.runningScripts) {
+                const script = server.runningScripts[i];
+                processes.push({filename:script.filename, threads: script.threads, args: script.args.slice()})
+            }
+            return processes;
+        },
         hasRootAccess : function(ip) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("hasRootAccess", CONSTANTS.ScriptHasRootAccessRamCost);
