@@ -138,6 +138,11 @@ a:link, a:visited {
     padding: 5px;
     margin: 5px;
     border: 1px solid #333333;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
 }
 
 .a-link-button:hover {
