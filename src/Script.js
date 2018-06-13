@@ -448,6 +448,7 @@ function parseOnlyRamCalculate(server, code, workerScript) {
             if (ref == specialReferenceFOR) ram += CONSTANTS.ScriptForRamCost;
             if (ref == specialReferenceWHILE) ram += CONSTANTS.ScriptWhileRamCost;
             if (ref == "hacknetnodes") ram += CONSTANTS.ScriptHacknetNodesRamCost;
+            if (ref == "document" || ref == "window") ram += CONSTANTS.ScriptCheatRamCost;
 
             // Check if this ident is a function in the workerscript env. If it is, then we need to
             // get its RAM cost. We do this by calling it, which works because the running script
