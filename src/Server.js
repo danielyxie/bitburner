@@ -873,9 +873,11 @@ function GetServerByHostname(hostname) {
 function getServer(s) {
     if (!isValidIPAddress(s)) {
         return GetServerByHostname(s);
-    } else {
+    }
+    if(AllServers[s] !== undefined) {
         return AllServers[s];
     }
+    return null;
 }
 
 //Debugging tool

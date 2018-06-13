@@ -1199,7 +1199,7 @@ function NetscriptFunctions(workerScript) {
                 return updateStaticRam("serverExists", CONSTANTS.ScriptGetServerRamCost);
             }
             updateDynamicRam("serverExists", CONSTANTS.ScriptGetServerRamCost);
-            return (getServer(ip) != null);
+            return (getServer(ip) !== null);
         },
         fileExists : function(filename,ip=workerScript.serverIp) {
             if (workerScript.checkingRam) {
