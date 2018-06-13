@@ -2335,10 +2335,10 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
     //If Market Research upgrades are unlocked, add competition and demand info
     var cmpAndDmdText = "";
     if (company.unlockUpgrades[2] === 1) {
-        cmpAndDmdText += "<br>Competition: " + formatNumber(mat.cmp, 3);
+        cmpAndDmdText += "<br>Demand: " + formatNumber(mat.dmd, 3);
     }
     if (company.unlockUpgrades[3] === 1) {
-        cmpAndDmdText += "<br>Demand: " + formatNumber(mat.dmd, 3);
+        cmpAndDmdText += "<br>Competition: " + formatNumber(mat.cmp, 3);
     }
     var innerTxt = "<p class='tooltip'>" + mat.name + ": " + formatNumber(mat.qty, 3) +
                    "(" + formatNumber(totalGain, 3) +  "/s)" +
