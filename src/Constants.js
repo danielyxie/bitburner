@@ -43,6 +43,7 @@ let CONSTANTS = {
     /* Netscript Constants */
     //RAM Costs for different commands
     ScriptBaseRamCost:              1.4,
+    ScriptCheatRamCost:            1e21, // if someone tries to cheat by using window or document we just spike the ram cost.
     ScriptWhileRamCost:             0.2,
     ScriptForRamCost:               0.2,
     ScriptIfRamCost:                0.15,

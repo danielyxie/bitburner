@@ -833,7 +833,9 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
                 return Promise.resolve(false);
             } else {
                 //Able to run script
-                workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads and args: " + printArray(args) + ". May take a few seconds to start up...");
+                if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.exec == null && workerScript.disableLogs.run == null && workerScript.disableLogs.spawn == null) {
+                    workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads and args: " + printArray(args) + ". May take a few seconds to start up...");
+                }
                 var runningScriptObj = new RunningScript(script, args);
                 runningScriptObj.threads = threads;
                 server.runningScripts.push(runningScriptObj);    //Push onto runningScripts

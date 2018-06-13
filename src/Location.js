@@ -11,6 +11,7 @@ import {Player}                                 from "./Player.js";
 import {Server, AllServers, AddToAllServers}    from "./Server.js";
 import {purchaseServer,
         purchaseRamForHomeComputer}             from "./ServerPurchases.js";
+import {Settings}                               from "./Settings.js";
 import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
@@ -326,9 +327,9 @@ function displayLocationContent() {
         repGain = repGain[0];
         jobReputation.innerHTML = "Company reputation: " + formatNumber(company.playerReputation, 4) +
                                   "<span class='tooltiptext'>You will earn " +
-                                  formatNumber(repGain, 4) +
+                                  formatNumber(repGain, 0) +
                                   " faction favor upon resetting after installing an Augmentation</span>";
-        companyFavor.innerHTML = "Company Favor: " + formatNumber(company.favor, 4) +
+        companyFavor.innerHTML = "Company Favor: " + formatNumber(company.favor, 0) +
                                  "<span class='tooltiptext'>Company favor increases the rate at which " +
                                  "you earn reputation for this company by 1% per favor. Company favor " +
                                  "is gained whenever you reset after installing an Augmentation. The amount of " +
@@ -2002,11 +2003,13 @@ function purchaseTorRouter() {
     AddToAllServers(darkweb);
     SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
 
-    document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
+    const purchaseTor = document.getElementById("location-purchase-tor");
+    purchaseTor.setAttribute("class", "a-link-button-bought");
+    purchaseTor.innerHTML = "TOR Router - purchased";
 
     Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
     darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);
-    dialogBoxCreate("You have purchased a Tor router!<br>You now have access to the dark web from your home computer<br>Use the scan/netstat commands to search for the dark web connection.");
+    dialogBoxCreate("You have purchased a Tor router!<br>You now have access to the dark web from your home computer<br>Use the scan/scan-analyze commands to search for the dark web connection.");
 }
 
 function displayUniversityLocationContent(costMult) {
@@ -2144,6 +2147,10 @@ function setJobRequirementTooltip(loc, entryPosType, btn) {
 }
 
 function travelBoxCreate(destCityName, cost) {
+    if(Settings.SuppressTravelConfirmation) {
+        travelToCity(destCityName, cost);
+        return;
+    }
     var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
     yesBtn.innerHTML = "Yes";
     noBtn.innerHTML = "No";
