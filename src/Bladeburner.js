@@ -1,10 +1,11 @@
+import {Augmentations, AugmentationNames}           from "./Augmentations.js";
 import {CONSTANTS}                                  from "./Constants.js";
 import {Engine}                                     from "./engine.js";
 import {Faction, Factions, factionExists,
         joinFaction, displayFactionContent}         from "./Faction.js";
 import {Locations}                                  from "./Location.js";
 import {Player}                                     from "./Player.js";
-import {hackWorldDaemon}                            from "./RedPill.js";
+import {hackWorldDaemon, redPillFlag}               from "./RedPill.js";
 import {KEY}                                        from "./Terminal.js";
 
 import {dialogBoxCreate}                            from "../utils/DialogBox.js";
@@ -29,10 +30,16 @@ var MaxStaminaToGainFactor      = 70000; //Max Stamina is divided by this to get
 
 var DifficultyToTimeFactor      = 10;  //Action Difficulty divided by this to get base action time
 
-//The difficulty multiplier affects stamina loss and hp loss of an action. Its formula is:
+//The difficulty multiplier affects stamina loss and hp loss of an action. Also affects
+//experience gain. Its formula is:
 //difficulty ^ exponentialFactor + difficulty / linearFactor
 var DiffMultExponentialFactor   = 0.28;
-var DiffMultLinearFactor        = 670;
+var DiffMultLinearFactor        = 650;
+
+var EffAgiLinearFactor          = 90e3;
+var EffDexLinearFactor          = 90e3;
+var EffAgiExponentialFactor     = 0.031;
+var EffDexExponentialFactor     = 0.03;
 
 var BaseRecruitmentTimeNeeded   = 300; //Base time needed (s) to complete a Recruitment action
 
@@ -519,7 +526,10 @@ Action.prototype.getActionTime = function(inst) {
 
     var effAgility      = Player.agility * inst.skillMultipliers.effAgi;
     var effDexterity    = Player.dexterity * inst.skillMultipliers.effDex;
-    var statFac = 0.5 * (Math.pow(effAgility, 0.03) + Math.pow(effDexterity, 0.03)); //Always > 1
+    var statFac = 0.5 * (Math.pow(effAgility, EffAgiExponentialFactor) +
+                         Math.pow(effDexterity, EffDexExponentialFactor) +
+                         (effAgility / EffAgiLinearFactor) +
+                         (effDexterity / EffDexLinearFactor)); //Always > 1
 
     baseTime = Math.max(1, baseTime * skillFac / statFac);
 
@@ -695,6 +705,14 @@ function Bladeburner(params={}) {
     if (params.new) {this.create();}
 }
 
+Bladeburner.prototype.prestige = function() {
+    this.resetAction();
+    var bladeburnerFac = Factions["Bladeburners"];
+    if (this.rank >= RankNeededForFaction) {
+        joinFaction(bladeburnerFac);
+    }
+}
+
 Bladeburner.prototype.create = function() {
     this.contracts["Tracking"] = new Contract({
         name:"Tracking",
@@ -815,8 +833,13 @@ Bladeburner.prototype.storeCycles = function(numCycles=1) {
 }
 
 Bladeburner.prototype.process = function() {
+    //Extreme condition...if Operation Daedalus is complete trigger the BitNode
+    if (redPillFlag === false && this.blackops.hasOwnProperty("Operation Daedalus")) {
+        return hackWorldDaemon(Player.bitNodeN);
+    }
+
     //If the Player starts doing some other actions, set action to idle and alert
-    if (Player.isWorking) {
+    if (Augmentations[AugmentationNames.BladesSimulacrum].owned === false && Player.isWorking) {
         if (this.action.type !== ActionTypes["Idle"]) {
             dialogBoxCreate("Your Bladeburner action was cancelled because you started " +
                             "doing something else");
@@ -920,7 +943,8 @@ Bladeburner.prototype.changeRank = function(change) {
             throw new Error("Could not properly get Bladeburner Faction object in Bladeburner UI Overview Faction button");
         }
         if (bladeburnerFac.isMember) {
-            bladeburnerFac.playerReputation += (RankToFactionRepFactor * change * Player.faction_rep_mult);
+            var favorBonus = 1 + (bladeburnerFac.favor / 100);
+            bladeburnerFac.playerReputation += (RankToFactionRepFactor * change * Player.faction_rep_mult * favorBonus);
         }
     }
 
@@ -1464,7 +1488,7 @@ Bladeburner.prototype.gainActionStats = function(action, success) {
 
     //Gain multiplier based on difficulty. If this changes then the
     //same variable calculated in completeAction() needs to change too
-    var difficultyMult = Math.pow(difficulty, 0.21);
+    var difficultyMult = Math.pow(difficulty, DiffMultExponentialFactor) + difficulty / DiffMultLinearFactor;
 
     var time = this.actionTimeToComplete;
     var successMult = success ? 1 : 0.5;
@@ -1640,6 +1664,7 @@ Bladeburner.prototype.initializeDomElementRefs = function() {
         operations:         {},
         blackops:           {},
         skills:             {},
+        skillPointsDisplay: null,
     };
 }
 
@@ -1856,7 +1881,7 @@ Bladeburner.prototype.createOverviewContent = function() {
     }));
 
     //Faction button
-    var bladeburnersFactionName = "Bladeburners";
+    const bladeburnersFactionName = "Bladeburners";
     if (factionExists(bladeburnersFactionName)) {
         var bladeburnerFac = Factions[bladeburnersFactionName];
         if (!(bladeburnerFac instanceof Faction)) {
@@ -2132,9 +2157,10 @@ Bladeburner.prototype.createSkillsContent = function() {
     }
 
     //Skill Points
-    DomElems.actionAndSkillsDiv.appendChild(createElement("p", {
+    DomElems.skillPointsDisplay = createElement("p", {
         innerHTML:"<br><strong>Skill Points: " + formatNumber(this.skillPoints, 0) + "</strong>"
-    }));
+    });
+    DomElems.actionAndSkillsDiv.appendChild(DomElems.skillPointsDisplay);
 
     //UI Element for each skill
     for (var skillName in Skills) {
@@ -2246,6 +2272,8 @@ Bladeburner.prototype.updateActionAndSkillsContent = function() {
             }
             break;
         case "skills":
+            DomElems.skillPointsDisplay.innerHTML = "<br><strong>Skill Points: " + formatNumber(this.skillPoints, 0) + "</strong>";
+
             var skillElems = Object.keys(DomElems.skills);
             for (var i = 0; i < skillElems.length; ++i) {
                 var skillElem = DomElems.skills[skillElems[i]];
@@ -3537,7 +3565,7 @@ Bladeburner.prototype.switchCityNetscriptFn = function(cityName, workerScript) {
 }
 
 Bladeburner.prototype.joinBladeburnerFactionNetscriptFn = function(workerScript) {
-    var bladeburnerFac = Factions[bladeburnersFactionName];
+    var bladeburnerFac = Factions["Bladeburners"];
     if (bladeburnerFac.isMember) {
         return true;
     } else if (this.rank >= RankNeededForFaction) {

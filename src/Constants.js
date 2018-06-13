@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.37.2",
+    Version:                "0.38.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -488,16 +488,18 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.37.3<br>" +
-    "* New BitNode: BN-7 Bladeburner 2079<br>" + 
-    "* New BitNode: BN-12 The Recursion<br>" +
+    "v0.38.0<br>" +
+    "* New BitNode: BN-12 The Recursion - Implemented by Github user hydroflame<br>" +
     "* Bladeburner Changes:<br>"  +
     "*** Bladeburner progress is no longer reset when installing Augmentations<br>" +
     "*** The number of successess needed to increase a Contract/Operation's max level now scales with the current max level (gradually gets harder)<br>"  +
     "*** All Bladeburner Augmentations are now slightly more expensive and require more reputation<br>" +
     "*** Black Operations now give higher rank rewards<br>" +
     "*** Doubled the base amount of money gained from Contracts<br>" +
-    "* Hacking is not slightly less profitable in BitNode-3<br>"  +
+    "*** Increased the amount of experience gained from Contracts/Actions<br>" +
+    "*** Added a new Augmentation: The Blade's Simulacrum<br>"  +
+    "*** Bladeburner faction reputation gain is now properly affected by favor<br>"  +
+    "* Hacking is now slightly less profitable in BitNode-3<br>"  +
     "* Updated Hacknet Nodes UI - Implemented by Github user kopelli<br>" +
     "* Bug Fix: Fixed an exploit that allowed calling any Netscript function without incurring any RAM Cost in NetscriptJS<br>"
 }

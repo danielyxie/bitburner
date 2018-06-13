@@ -128,7 +128,7 @@ function prestigeAugmentation() {
 
     //Cancel Bladeburner action
     if (Player.bladeburner instanceof Bladeburner) {
-        Player.bladeburner.resetAction();
+        Player.bladeburner.prestige();
     }
 
     //BitNode 8: Ghost of Wall Street

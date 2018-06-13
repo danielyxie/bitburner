@@ -184,6 +184,7 @@ let AugmentationNames = {
     BladeArmorUnibeam:                  "BLADE-51b Tesla Armor: Unibeam Upgrade",
     BladeArmorOmnibeam:                 "BLADE-51b Tesla Armor: Omnibeam Upgrade",
     BladeArmorIPU:                      "BLADE-51b Tesla Armor: IPU Upgrade",
+    BladesSimulacrum:                   "The Blade's Simulacrum",
 
     //Wasteland Augs
     //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System
@@ -1766,6 +1767,19 @@ function initAugmentations() {
         });
         BladeArmorIPU.addToFactions([BladeburnersFactionName]);
         resetAugmentation(BladeArmorIPU);
+
+        var BladesSimulacrum = new Augmentation({
+            name:AugmentationNames.BladesSimulacrum, repCost:6e3, moneyCost:75e9,
+            info:"A highly-advanced matter phase-shifter module that is embedded "  +
+                 "in the brainstem and cerebellum. This augmentation allows " +
+                 "the user to project and control a holographic simulacrum within an " +
+                 "extremely large radius. These specially-modified holograms were specially " +
+                 "weaponized by Bladeburner units to be used against Synthoids.<br><br>"  +
+                 "This augmentation allows you to perform Bladeburner actions and other " +
+                 "actions (such as working, commiting crimes, etc.) at the same time."
+        });
+        BladesSimulacrum.addToFactions([BladeburnersFactionName]);
+        resetAugmentation(BladesSimulacrum);
     }
 
     //Update costs based on how many have been purchased
@@ -1777,8 +1791,6 @@ function initAugmentations() {
     }
 
     Player.reapplyAllAugmentations();
-
-
 }
 
 //Resets an Augmentation during (re-initizliation)
@@ -2349,6 +2361,8 @@ function applyAugmentation(aug, reapply=false) {
         case AugmentationNames.BladeArmorIPU:
             Player.bladeburner_analysis_mult        *= 1.15;
             Player.bladeburner_success_chance_mult  *= 1.02;
+            break;
+        case AugmentationNames.BladesSimulacrum: //No multiplier effect
             break;
         default:
             throw new Error("ERROR: No such augmentation!");
