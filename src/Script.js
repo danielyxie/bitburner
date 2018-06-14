@@ -1,4 +1,5 @@
 var ace = require('brace');
+var beautify = require('js-beautify').js_beautify;
 require('brace/mode/javascript');
 require('../netscript');
 require('brace/theme/chaos');
@@ -57,6 +58,15 @@ function scriptEditorInit() {
         console.log("Error finding 'script-editor-buttons-wrapper'");
         return;
     }
+    var beautifyButton = createElement("a", {
+        class:"a-link-button", display:"inline-block",
+        innerText:"beautify",
+        clickListener:()=>{
+            beautifyScript();
+            return false;
+        }
+    });
+
     var closeButton = createElement("a", {
         class:"a-link-button", display:"inline-block",
         innerText:"Save & Close (Ctrl/Cmd + b)",
@@ -90,6 +100,7 @@ function scriptEditorInit() {
         target:"_blank"
     });
 
+    wrapper.appendChild(beautifyButton);
     wrapper.appendChild(closeButton);
     wrapper.appendChild(scriptEditorRamText);
     wrapper.appendChild(scriptEditorRamCheck);
@@ -242,6 +253,13 @@ $(document).keydown(function(e) {
         }
 	}
 });
+
+function beautifyScript() {
+    var editor = ace.edit('javascript-editor');
+    var code = editor.getValue();
+    code = beautify(code, { indent_size: 4 })
+    editor.setValue(code);
+}
 
 function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
