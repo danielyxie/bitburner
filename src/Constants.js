@@ -43,7 +43,7 @@ let CONSTANTS = {
     /* Netscript Constants */
     //RAM Costs for different commands
     ScriptBaseRamCost:              1.4,
-    ScriptCheatRamCost:            1e21, // if someone tries to cheat by using window or document we just spike the ram cost.
+    ScriptDomRamCost:               100,
     ScriptWhileRamCost:             0.2,
     ScriptForRamCost:               0.2,
     ScriptIfRamCost:                0.15,
@@ -489,20 +489,17 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.38.0<br>" +
-    "* New BitNode: BN-12 The Recursion - Implemented by Github user hydroflame<br>" +
-    "* Bladeburner Changes:<br>"  +
-    "*** Bladeburner progress is no longer reset when installing Augmentations<br>" +
-    "*** The number of successess needed to increase a Contract/Operation's max level now scales with the current max level (gradually gets harder)<br>"  +
-    "*** All Bladeburner Augmentations are now slightly more expensive and require more reputation<br>" +
-    "*** Black Operations now give higher rank rewards<br>" +
-    "*** Doubled the base amount of money gained from Contracts<br>" +
-    "*** Increased the amount of experience gained from Contracts/Actions<br>" +
-    "*** Added a new Augmentation: The Blade's Simulacrum<br>"  +
-    "*** Bladeburner faction reputation gain is now properly affected by favor<br>"  +
-    "* Hacking is now slightly less profitable in BitNode-3<br>"  +
-    "* Updated Hacknet Nodes UI - Implemented by Github user kopelli<br>" +
-    "* Bug Fix: Fixed an exploit that allowed calling any Netscript function without incurring any RAM Cost in NetscriptJS<br>"
+    "v0.38.1<br>"  +
+    "* Bug Fix: Using 'Object.prototype' functions like toLocaleString() or toString() should no longer cause errors in NetscriptJS<br>" + 
+    "* Implemented by Github user hydroflame:<br>"  +
+    "*** Accessing the 'window' and 'document' objects in Netscript JS now requires a large amount of RAM (100 GB)<br>" +
+    "*** Added game option to suppress travel confirmation<br>"  +
+    "*** Text on buttons can no longer be highlighted<br>" +
+    "*** Bug Fix: Fixed an issue that caused NaN values when exporting Real Estate in Corporations<br>" +
+    "*** Bug Fix: Competition and Demand displays in Corporation are now correct (were reversed before)<br>" +
+    "*** Added ps() Netscript function<br>"  +
+    "*** Bug fix: grow() should no longer return/log a negative value when it runs on a server that's already at max money<br>"
+
 }
 
 export {CONSTANTS};

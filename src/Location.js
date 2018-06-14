@@ -279,7 +279,10 @@ function displayLocationContent() {
     purchase256gb.innerHTML = "Purchase 256GB Server - $" + formatNumber(256*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
     purchase512gb.innerHTML = "Purchase 512GB Server - $" + formatNumber(512*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
     purchase1tb.innerHTML = "Purchase 1TB Server - $" + formatNumber(1024*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
-    purchaseTor.innerHTML = "Purchase TOR Router - $" + formatNumber(CONSTANTS.TorRouterCost, 2);
+    if (!SpecialServerIps.hasOwnProperty("Darkweb Server")) {
+        purchaseTor.innerHTML = "Purchase TOR Router - $" + formatNumber(CONSTANTS.TorRouterCost, 2);
+    }
+
 
     travelAgencyText.style.display = "none";
     travelToAevum.style.display = "none";
@@ -2005,7 +2008,7 @@ function purchaseTorRouter() {
 
     const purchaseTor = document.getElementById("location-purchase-tor");
     purchaseTor.setAttribute("class", "a-link-button-bought");
-    purchaseTor.innerHTML = "TOR Router - purchased";
+    purchaseTor.innerHTML = "TOR Router - Purchased";
 
     Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
     darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);

@@ -81,6 +81,8 @@ var possibleLogs = {
     relaysmtp: true,
     httpworm: true,
     sqlinject: true,
+    run:true,
+    exec:true,
     spawn: true,
     kill: true,
     killall: true,
@@ -325,7 +327,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
-                return Promise.resolve(growthPercentage);
+                return Promise.resolve(moneyAfter/moneyBefore);
             });
         },
         weaken : function(ip){
@@ -2292,7 +2294,9 @@ function NetscriptFunctions(workerScript) {
             AddToAllServers(darkweb);
             SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
 
-            document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
+            const purchaseTor = document.getElementById("location-purchase-tor");
+            purchaseTor.setAttribute("class", "a-link-button-bought");
+            purchaseTor.innerHTML = "TOR Router - Purchased";
 
             Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
             darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);
@@ -2798,7 +2802,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             // if the player is in a gang and the target faction is any of the gang faction, fail
-            if(Player.gang != null && AllGangs[name] !== undefined) {
+            if(Player.inGang() && AllGangs[name] !== undefined) {
                 workerScript.scriptRef.log("ERROR: Faction specified in workForFaction() does not offer work at the moment.");
                 return;
             }

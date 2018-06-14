@@ -2696,11 +2696,12 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
     //Completed products
     var cmpAndDmdText = "";
     if (company.unlockUpgrades[2] === 1) {
-        cmpAndDmdText += "<br>Competition: " + formatNumber(product.cmp, 3);
-    }
-    if (company.unlockUpgrades[3] === 1) {
         cmpAndDmdText += "<br>Demand: " + formatNumber(product.dmd, 3);
     }
+    if (company.unlockUpgrades[3] === 1) {
+        cmpAndDmdText += "<br>Competition: " + formatNumber(product.cmp, 3);
+    }
+
     var totalGain = product.data[city][1] - product.data[city][2]; //Production - sale
     div.appendChild(createElement("p", {
         innerHTML: "<p class='tooltip'>" + product.name + ": " + formatNumber(product.data[city][0], 3) + //Quantity
