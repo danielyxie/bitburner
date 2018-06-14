@@ -29,7 +29,7 @@ import {Player}                                 from "./Player.js";
 import {AllServers, processSingleServerGrowth}  from "./Server.js";
 import {Settings}                               from "./Settings.js";
 import {post, Terminal}                         from "./Terminal.js";
-import {TextFile}                               from "./TextFile.js";
+import {TextFile}                               from "./TextFile";
 
 import {parse, Node}                            from "../utils/acorn.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";

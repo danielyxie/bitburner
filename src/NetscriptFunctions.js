@@ -36,7 +36,7 @@ import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         Stock, shortStock, sellShort, OrderTypes,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket.js";
 import {post}                                       from "./Terminal.js";
-import {TextFile, getTextFile, createTextFile}      from "./TextFile.js";
+import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {WorkerScript, workerScripts,
         killWorkerScript, NetscriptPorts}           from "./NetscriptWorker.js";
