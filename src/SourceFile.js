@@ -1,9 +1,10 @@
 import {Player} from "./Player.js";
 import {BitNode, BitNodes} from "./BitNode.js";
+import {StatModifier} from "./StatModifier.js";
 
 /* SourceFile.js */
 //Each SourceFile corresponds to a BitNode with the same number
-function SourceFile(number, info="") {
+function SourceFile(number, modifierFunc, info="") {
     var bitnodeKey = "BitNode" + number;
     var bitnode = BitNodes[bitnodeKey];
     if (bitnode == null) {
@@ -15,29 +16,30 @@ function SourceFile(number, info="") {
     this.lvl = 1;
     this.info = info;
     this.owned = false;
+    this.modifierFunc = modifierFunc;
 }
 
 let SourceFiles = {};
 function initSourceFiles() {
     SourceFiles = {};
-    SourceFiles["SourceFile1"] = new SourceFile(1, "This Source-File lets the player start with 32GB of RAM on his/her " +
+    SourceFiles["SourceFile1"] = new SourceFile(1, sf1Modifier, "This Source-File lets the player start with 32GB of RAM on his/her " +
                                       "home computer. It also increases all of the player's multipliers by:<br><br>" +
                                       "Level 1: 16%<br>" +
                                       "Level 2: 24%<br>" +
                                       "Level 3: 28%");
-    SourceFiles["SourceFile2"] = new SourceFile(2, "This Source-File increases the player's crime success rate, crime money, and charisma " +
+    SourceFiles["SourceFile2"] = new SourceFile(2, sf2Modifier, "This Source-File increases the player's crime success rate, crime money, and charisma " +
                                       "multipliers by:<br><br>" +
                                       "Level 1: 20%<br>" +
                                       "Level 2: 30%<br>" +
                                       "Level 3: 35%");
-    SourceFiles["SourceFile3"] = new SourceFile(3,"This Source-File lets you create corporations on other BitNodes (although " +
+    SourceFiles["SourceFile3"] = new SourceFile(3, sf3Modifier, "This Source-File lets you create corporations on other BitNodes (although " +
                                                   "some BitNodes will disable this mechanic). This Source-File also increases your charisma and company salary multipliers by:<br>" +
                                                   "Level 1: 8%<br>" +
                                                   "Level 2: 12%<br>" +
                                                   "Level 3: 14%");
-    SourceFiles["SourceFile4"] = new SourceFile(4, "This Source-File lets you access and use the Singularity Functions in every BitNode. Every " +
+    SourceFiles["SourceFile4"] = new SourceFile(4, noModifier, "This Source-File lets you access and use the Singularity Functions in every BitNode. Every " +
                                         "level of this Source-File opens up more of the Singularity Functions you can use.");
-    SourceFiles["SourceFile5"] = new SourceFile(5, "This Source-File grants a special new stat called Intelligence. Intelligence " +
+    SourceFiles["SourceFile5"] = new SourceFile(5, sf5Modifier, "This Source-File grants a special new stat called Intelligence. Intelligence " +
                                                    "is unique because it is permanent and persistent (it never gets reset back to 1). However, " +
                                                    "gaining Intelligence experience is much slower than other stats, and it is also hidden (you won't " +
                                                    "know when you gain experience and how much). Higher Intelligence levels will boost your production " +
@@ -46,13 +48,13 @@ function initSourceFiles() {
                                                    "Level 1: 4%<br>" +
                                                    "Level 2: 6%<br>" +
                                                    "Level 3: 7%");
-    SourceFiles["SourceFile6"] = new SourceFile(6, "This Source-File allows you to access the NSA's Bladeburner Division in other " +
+    SourceFiles["SourceFile6"] = new SourceFile(6, sf6Modifier, "This Source-File allows you to access the NSA's Bladeburner Division in other " +
                                                    "BitNodes. In addition, this Source-File will raise the experience gain rate of all your combat stats by:<br><br>" +
                                                    "Level 1: 8%<br>" +
                                                    "Level 2: 12%<br>" +
                                                    "Level 3: 14%");
     SourceFiles["SourceFile7"] = new SourceFile(7);
-    SourceFiles["SourceFile8"] = new SourceFile(8, "This Source-File grants the following benefits:<br><br>" +
+    SourceFiles["SourceFile8"] = new SourceFile(8, sf8Modifier, "This Source-File grants the following benefits:<br><br>" +
                                                    "Level 1: Permanent access to WSE and TIX API<br>" +
                                                    "Level 2: Ability to short stocks in other BitNodes<br>" +
                                                    "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
@@ -60,13 +62,161 @@ function initSourceFiles() {
                                                    "<br>Level 1: 8%<br>Level 2: 12%<br>Level 3: 14%");
     SourceFiles["SourceFile9"] = new SourceFile(9);
     SourceFiles["SourceFile10"] = new SourceFile(10);
-    SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so that company favor increases BOTH the player's salary and reputation gain rate " +
+    SourceFiles["SourceFile11"] = new SourceFile(11, sf11Modifier, "This Source-File makes it so that company favor increases BOTH the player's salary and reputation gain rate " +
                                                      "at that company by 1% per favor (rather than just the reputation gain). This Source-File also " +
                                                      " increases the player's company salary and reputation gain multipliers by:<br><br>" +
                                                      "Level 1: 24%<br>" +
                                                      "Level 2: 36%<br>" +
                                                      "Level 3: 42%<br>");
-    SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File increases all your multipliers by 1% per level");
+    SourceFiles["SourceFile12"] = new SourceFile(12, sf12Modifier, "This Source-File increases all your multipliers by 1% per level");
+}
+
+function dimishingReturnBoost(lvl, base) {
+    var mult = 0;
+    for (var i = 0; i < lvl; ++i) {
+        mult += (base / (Math.pow(2, i)));
+    }
+    return mult;
+}
+
+function noModifier(lvl) {
+    return new StatModifier();
+}
+
+function sf1Modifier(lvl) {
+    const mult = dimishingReturnBoost(lvl, 16);
+    const incMult = 1 + (mult / 100);
+    const decMult = 1 - (mult / 100);
+    return new StatModifier({
+        hacking_chance_mult: incMult,
+        hacking_speed_mult: incMult,
+        hacking_money_mult: incMult,
+        hacking_grow_mult: incMult,
+        hacking_mult: incMult,
+        strength_mult: incMult,
+        defense_mult: incMult,
+        dexterity_mult: incMult,
+        agility_mult: incMult,
+        charisma_mult: incMult,
+        hacking_exp_mult: incMult,
+        strength_exp_mult: incMult,
+        defense_exp_mult: incMult,
+        dexterity_exp_mult: incMult,
+        agility_exp_mult: incMult,
+        charisma_exp_mult: incMult,
+        company_rep_mult: incMult,
+        faction_rep_mult: incMult,
+        crime_money_mult: incMult,
+        crime_success_mult: incMult,
+        hacknet_node_money_mult: incMult,
+        hacknet_node_purchase_cost_mult: decMult,
+        hacknet_node_ram_cost_mult: decMult,
+        hacknet_node_core_cost_mult: decMult,
+        hacknet_node_level_cost_mult: decMult,
+        work_money_mult: incMult
+    });
+}
+
+function sf2Modifier(lvl) {
+    const mult = dimishingReturnBoost(lvl, 20);
+    const incMult = 1 + (mult / 100);
+    return new StatModifier({
+        crime_money_mult: incMult,
+        crime_success_mult: incMult,
+        charisma_mult: incMult
+    });
+}
+
+function sf3Modifier(lvl) {
+    const mult = dimishingReturnBoost(lvl, 8);
+    const incMult = 1 + (mult / 100);
+    return new StatModifier({
+        charisma_mult: incMult,
+        work_money_mult: incMult
+    });
+}
+
+function sf5Modifier(lvl) {
+    const mult = dimishingReturnBoost(lvl, 4);
+    const incMult = 1 + (mult / 100);
+    return new StatModifier({
+        hacking_chance_mult: incMult,
+        hacking_speed_mult: incMult,
+        hacking_money_mult: incMult,
+        hacking_grow_mult: incMult,
+        hacking_mult: incMult,
+        hacking_exp_mult: incMult
+    });
+}
+
+function sf6Modifier(lvl) {
+    const mult = dimishingReturnBoost(lvl, 8);
+    const incMult = 1 + (mult / 100);
+    return new StatModifier({
+        strength_exp_mult: incMult,
+        defense_exp_mult: incMult,
+        dexterity_exp_mult: incMult,
+        agility_exp_mult: incMult
+    });
+}
+
+function sf8Modifier(lvl) {
+    const mult = dimishingReturnBoost(lvl, 8);
+    const incMult = 1 + (mult / 100);
+    return new StatModifier({
+        hacking_grow_mult: incMult,
+        hasWseAccount: true,
+        hasTixApiAccess: true
+    });
+}
+
+function sf11Modifier(lvl) {
+    const mult = dimishingReturnBoost(lvl, 24);
+    const incMult = 1 + (mult / 100);
+    return new StatModifier({
+        work_money_mult: incMult,
+        company_rep_mult: incMult
+    });
+}
+
+function sf12Modifier(lvl) {
+    const inc = Math.pow(1.01, lvl);
+    const dec = Math.pow(0.99, lvl);
+
+    return new StatModifier({
+        hacking_chance_mult: inc,
+        hacking_speed_mult: inc,
+        hacking_money_mult: inc,
+        hacking_grow_mult: inc,
+        hacking_mult: inc,
+
+        strength_mult: inc,
+        defense_mult: inc,
+        dexterity_mult: inc,
+        agility_mult: inc,
+        charisma_mult: inc,
+
+        hacking_exp_mult: inc,
+        strength_exp_mult: inc,
+        defense_exp_mult: inc,
+        dexterity_exp_mult: inc,
+        agility_exp_mult: inc,
+        charisma_exp_mult: inc,
+
+        company_rep_mult: inc,
+        faction_rep_mult: inc,
+
+        crime_money_mult: inc,
+        crime_success_mult: inc,
+
+        hacknet_node_money_mult: inc,
+        hacknet_node_purchase_cost_mult: dec,
+        hacknet_node_ram_cost_mult: dec,
+        hacknet_node_core_cost_mult: dec,
+        hacknet_node_level_cost_mult: dec,
+
+        work_money_mult: inc
+    });
 }
 
 function PlayerOwnedSourceFile(number, level) {

@@ -559,6 +559,13 @@ PlayerObject.prototype.hasProgram = function(programName) {
     return false;
 }
 
+PlayerObject.prototype.pushProgram = function(programName) {
+    if(this.hasProgram(programName)) { // The player already has that program
+        return;
+    }
+    this.getHomeComputer().programs.push(programName);
+}
+
 PlayerObject.prototype.setMoney = function(money) {
     if (isNaN(money)) {
         console.log("ERR: NaN passed into Player.setMoney()"); return;
@@ -2022,8 +2029,58 @@ PlayerObject.prototype.reapplyAllSourceFiles = function() {
             console.log("ERROR: Invalid source file number: " + this.sourceFiles[i].n);
             continue;
         }
-        applySourceFile(this.sourceFiles[i]);
+        const modifier = sourceFileObject.modifierFunc(this.sourceFiles[i].lvl);
+        this.applyStatModifier(modifier);
+        sourceFileObject.owned = true;
     }
+}
+
+PlayerObject.prototype.applyStatModifier = function(m) {
+    this.hacking_chance_mult *= m.hacking_chance_mult;
+    this.hacking_speed_mult *= m.hacking_speed_mult;
+    this.hacking_money_mult *= m.hacking_money_mult;
+    this.hacking_grow_mult *= m.hacking_grow_mult;
+    this.hacking_mult *= m.hacking_mult;
+
+    this.strength_mult *= m.strength_mult;
+    this.defense_mult *= m.defense_mult;
+    this.dexterity_mult *= m.dexterity_mult;
+    this.agility_mult *= m.agility_mult;
+    this.charisma_mult *= m.charisma_mult;
+
+    this.hacking_exp_mult *= m.hacking_exp_mult;
+    this.strength_exp_mult *= m.strength_exp_mult;
+    this.defense_exp_mult *= m.defense_exp_mult;
+    this.dexterity_exp_mult *= m.dexterity_exp_mult;
+    this.agility_exp_mult *= m.agility_exp_mult;
+    this.charisma_exp_mult *= m.charisma_exp_mult;
+    
+    this.company_rep_mult *= m.company_rep_mult;
+    this.faction_rep_mult *= m.faction_rep_mult;
+    this.work_money_mult *= m.work_money_mult;
+
+    if(this.money.lt(m.money)) {
+        this.setMoney(m.money);
+    }
+    
+    this.crime_money_mult *= m.crime_money_mult
+    this.crime_success_mult *= m.crime_success_mult
+
+    this.hasWseAccount = this.hasWseAccount || m.hasWseAccount;
+    this.hasTixApiAccess = this.hasTixApiAccess || m.hasTixApiAccess;
+
+    this.hacknet_node_money_mult *= m.hacknet_node_money_mult; 
+    this.hacknet_node_purchase_cost_mult *= m.hacknet_node_purchase_cost_mult; 
+    this.hacknet_node_ram_cost_mult *= m.hacknet_node_ram_cost_mult; 
+    this.hacknet_node_core_cost_mult *= m.hacknet_node_core_cost_mult; 
+    this.hacknet_node_level_cost_mult *= m.hacknet_node_level_cost_mult; 
+
+    // disable access for now
+    //this.bladeburner_access = this.bladeburner_access || m.bladeburner_access;
+    this.bladeburner_max_stamina_mult *= m.bladeburner_max_stamina_mult
+    this.bladeburner_stamina_gain_mult *= m.bladeburner_stamina_gain_mult
+    this.bladeburner_analysis_mult *= m.bladeburner_analysis_mult
+    this.bladeburner_success_chance_mult *= m.bladeburner_success_chance_mult
 }
 
 /*************** Check for Faction Invitations *************/
