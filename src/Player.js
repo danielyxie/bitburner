@@ -2075,12 +2075,16 @@ PlayerObject.prototype.applyStatModifier = function(m) {
     this.hacknet_node_core_cost_mult *= m.hacknet_node_core_cost_mult; 
     this.hacknet_node_level_cost_mult *= m.hacknet_node_level_cost_mult; 
 
-    // disable access for now
+    // don't worry about access for now
     //this.bladeburner_access = this.bladeburner_access || m.bladeburner_access;
     this.bladeburner_max_stamina_mult *= m.bladeburner_max_stamina_mult
     this.bladeburner_stamina_gain_mult *= m.bladeburner_stamina_gain_mult
     this.bladeburner_analysis_mult *= m.bladeburner_analysis_mult
     this.bladeburner_success_chance_mult *= m.bladeburner_success_chance_mult
+
+    for(const i in m.programs) {
+        this.pushProgram(m.programs[i]);
+    }
 }
 
 /*************** Check for Faction Invitations *************/
