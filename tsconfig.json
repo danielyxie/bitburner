@@ -2,7 +2,8 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es6",
-        "sourceMap": true
+        "sourceMap": true,
+        "strict": true
     },
     "exclude": [
         "node_modules"
