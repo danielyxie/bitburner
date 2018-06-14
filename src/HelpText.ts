@@ -1,5 +1,4 @@
-/* HelpText.js */
-let TerminalHelpText =
+export const TerminalHelpText =
                 "Type 'help name' to learn more about the command 'name'<br><br>" +
                 'alias [-g] [name="value"]      Create or display Terminal aliases<br>' +
                 "analyze                        Get information about the current machine <br>" +
@@ -34,7 +33,7 @@ let TerminalHelpText =
                 "top                            Displays all running scripts and their RAM usage<br>" +
                 'unalias "[alias name]"         Deletes the specified alias<br>';
 
-let HelpTexts = {
+export const HelpTexts = {
     alias:          'alias [-g] [name="value"] <br>' +
                     "Create or display aliases. An alias enables a replacement of a word with another string. " +
                     "It can be used to abbreviate a commonly used command, or commonly used parts of a command. The NAME " +
@@ -213,5 +212,3 @@ let HelpTexts = {
                     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
 
 }
-
-export {TerminalHelpText, HelpTexts};

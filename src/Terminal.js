@@ -9,7 +9,7 @@ import {executeDarkwebTerminalCommand,
 import {Engine}                             from "./engine.js";
 import {FconfSettings, parseFconfSettings,
         createFconf}                        from "./Fconf.js";
-import {TerminalHelpText, HelpTexts}        from "./HelpText.js";
+import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         iTutorialIsRunning,
         currITutorialStep}                  from "./InteractiveTutorial.js";
