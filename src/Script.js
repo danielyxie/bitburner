@@ -448,6 +448,7 @@ function parseOnlyRamCalculate(server, code, workerScript) {
             if (ref == specialReferenceFOR) ram += CONSTANTS.ScriptForRamCost;
             if (ref == specialReferenceWHILE) ram += CONSTANTS.ScriptWhileRamCost;
             if (ref == "hacknetnodes") ram += CONSTANTS.ScriptHacknetNodesRamCost;
+            if (ref == "document" || ref == "window") ram += CONSTANTS.ScriptDomRamCost;
 
             // Check if this ident is a function in the workerscript env. If it is, then we need to
             // get its RAM cost. We do this by calling it, which works because the running script
@@ -508,11 +509,15 @@ function parseOnlyCalculateDeps(code, currentModule) {
         s.add(name);  // For builtins like hack.
     }
 
+    //A list of identifiers that resolve to "native Javascript code"
+    const objectPrototypeProperties = Object.getOwnPropertyNames(Object.prototype);
+
     // If we discover a dependency identifier, state.key is the dependent identifier.
     // walkDeeper is for doing recursive walks of expressions in composites that we handle.
     function commonVisitors() {
         return {
             Identifier: (node, st, walkDeeper) => {
+                if (objectPrototypeProperties.includes(node.name)) {return;}
                 addRef(st.key, node.name);
             },
             WhileStatement: (node, st, walkDeeper) => {

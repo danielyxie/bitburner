@@ -14,6 +14,7 @@ import {CONSTANTS}                                  from "./Constants.js";
 import {Programs}                                   from "./CreateProgram.js";
 import {parseDarkwebItemPrice, DarkWebItems}        from "./DarkWeb.js";
 import {Engine}                                     from "./engine.js";
+import {AllGangs}                                   from "./Gang.js";
 import {Factions, Faction, joinFaction,
         factionExists, purchaseAugmentation}        from "./Faction.js";
 import {getCostOfNextHacknetNode, purchaseHacknet}  from "./HacknetNode.js";
@@ -80,6 +81,8 @@ var possibleLogs = {
     relaysmtp: true,
     httpworm: true,
     sqlinject: true,
+    run:true,
+    exec:true,
     spawn: true,
     kill: true,
     killall: true,
@@ -308,8 +311,10 @@ function NetscriptFunctions(workerScript) {
             }
             return netscriptDelay(growTime, workerScript).then(function() {
                 if (workerScript.env.stopFlag) {return Promise.reject(workerScript);}
+                const moneyBefore = server.moneyAvailable;
                 server.moneyAvailable += (1 * threads); //It can be grown even if it has no money
                 var growthPercentage = processSingleServerGrowth(server, 450 * threads);
+                const moneyAfter = server.moneyAvailable;
                 workerScript.scriptRef.recordGrow(server.ip, threads);
                 var expGain = scriptCalculateExpGain(server) * threads;
                 if (growthPercentage == 1) {
@@ -317,12 +322,12 @@ function NetscriptFunctions(workerScript) {
                 }
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.grow == null) {
                     workerScript.scriptRef.log("Available money on " + server.hostname + " grown by " +
-                                                formatNumber(growthPercentage*100 - 100, 6) + "%. Gained " +
+                                                formatNumber((moneyAfter/moneyBefore)*100 - 100, 6) + "%. Gained " +
                                                 formatNumber(expGain, 4) + " hacking exp (t=" + threads +")");
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
-                return Promise.resolve(growthPercentage);
+                return Promise.resolve(moneyAfter/moneyBefore);
             });
         },
         weaken : function(ip){
@@ -947,6 +952,23 @@ function NetscriptFunctions(workerScript) {
             //Sort the files alphabetically then print each
             allFiles.sort();
             return allFiles;
+        },
+        ps : function(ip=workerScript.serverIp) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("ps", CONSTANTS.ScriptScanRamCost);
+            }
+            updateDynamicRam("ps", CONSTANTS.ScriptScanRamCost);
+            var server = getServer(ip);
+            if (server == null){
+                workerScript.scriptRef.log("ps() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "ps() failed. Invalid IP or hostname passed in: " + ip);
+            }
+            const processes = [];
+            for(const i in server.runningScripts) {
+                const script = server.runningScripts[i];
+                processes.push({filename:script.filename, threads: script.threads, args: script.args.slice()})
+            }
+            return processes;
         },
         hasRootAccess : function(ip) {
             if (workerScript.checkingRam) {
@@ -2272,7 +2294,9 @@ function NetscriptFunctions(workerScript) {
             AddToAllServers(darkweb);
             SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
 
-            document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
+            const purchaseTor = document.getElementById("location-purchase-tor");
+            purchaseTor.setAttribute("class", "a-link-button-bought");
+            purchaseTor.innerHTML = "TOR Router - Purchased";
 
             Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
             darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);
@@ -2775,6 +2799,12 @@ function NetscriptFunctions(workerScript) {
                     throw makeRuntimeRejectMsg(workerScript, "Cannot run workForFaction(). It is a Singularity Function and requires SourceFile-4 (level 2) to run.");
                     return false;
                 }
+            }
+
+            // if the player is in a gang and the target faction is any of the gang faction, fail
+            if(Player.inGang() && AllGangs[name] !== undefined) {
+                workerScript.scriptRef.log("ERROR: Faction specified in workForFaction() does not offer work at the moment.");
+                return;
             }
 
             if (inMission) {
