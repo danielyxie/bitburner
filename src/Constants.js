@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.38.0",
+    Version:                "0.38.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -490,7 +490,7 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.38.1<br>"  +
-    "* Bug Fix: Using 'Object.prototype' functions like toLocaleString() or toString() should no longer cause errors in NetscriptJS<br>" + 
+    "* Bug Fix: Using 'Object.prototype' functions like toLocaleString() or toString() should no longer cause errors in NetscriptJS<br>" +
     "* Implemented by Github user hydroflame:<br>"  +
     "*** Accessing the 'window' and 'document' objects in Netscript JS now requires a large amount of RAM (100 GB)<br>" +
     "*** Added game option to suppress travel confirmation<br>"  +
@@ -498,7 +498,9 @@ let CONSTANTS = {
     "*** Bug Fix: Fixed an issue that caused NaN values when exporting Real Estate in Corporations<br>" +
     "*** Bug Fix: Competition and Demand displays in Corporation are now correct (were reversed before)<br>" +
     "*** Added ps() Netscript function<br>"  +
-    "*** Bug fix: grow() should no longer return/log a negative value when it runs on a server that's already at max money<br>"
+    "*** Bug Fix: grow() should no longer return/log a negative value when it runs on a server that's already at max money<br>" +
+    "*** Bug Fix: serverExists() Netscript function should now properly return false for non-existent hostname/ips<br>" +
+    "*** Bug Fix: Sever's security level should now properly increase when its money is grown to max value"
 
 }
 
