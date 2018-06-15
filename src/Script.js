@@ -425,7 +425,7 @@ function parseOnlyRamCalculate(server, code, workerScript) {
         const unresolvedRefs = Object.keys(dependencyMap).filter(s => s.startsWith(initialModule));
         const resolvedRefs = new Set();
         while (unresolvedRefs.length > 0) {
-            let ref = unresolvedRefs.shift();
+            const ref = unresolvedRefs.shift();
             resolvedRefs.add(ref);
 
             if (ref.endsWith(".*")) {

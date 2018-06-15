@@ -409,7 +409,7 @@ ps
 
         export async function main(ns) {
             const ps = ns.ps("home");
-            for (const i in ps) {
+            for (let i = 0; i < ps.length; ++i) {
                 ns.tprint(ps[i].filename + ' ' + ps[i].threads);
                 ns.tprint(ps[i].args);
             }
