@@ -24,6 +24,7 @@ import {inMission}                                  from "./Missions.js";
 import {Player}                                     from "./Player.js";
 import {Script, findRunningScript, RunningScript,
         isScriptFilename}                           from "./Script.js";
+import {CodingContract, ContractTypes}              from "./CodingContracts.js";
 import {Server, getServer, AddToAllServers,
         AllServers, processSingleServerGrowth,
         GetServerByHostname}                        from "./Server.js";
@@ -3570,6 +3571,85 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "joinBladeburnerFaction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             }
+        },
+        spawnPuzzle : function() { // this function should be removed once testing is over
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.getContractData) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.getContractData = true;
+                    return 0;
+                }
+            }
+            Player.getHomeComputer().pushContract(new CodingContract(Math.floor(Math.random()*10000), ContractTypes.PlusOne.name));
+        },
+        getContractData : function (contractName, ip=workerScript.serverIp) {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.getContractData) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.getContractData = true;
+                    return CONSTANTS.ScriptGetContractDataRamCost;
+                }
+            }
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getContractData() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getContractData() failed. Invalid IP or hostname passed in: " + ip);
+            }
+
+            if(contractName === undefined || contractName == "") {
+                workerScript.scriptRef.log("getContractData() failed because no contract name was provided");
+                throw makeRuntimeRejectMsg(workerScript, "getContractData() failed because no contract name was provided");
+            }
+            
+            const contract = server.contracts.find(function(c){return c.fn === contractName})
+            if(contract === undefined) {
+                workerScript.scriptRef.log("getContractData() failed because contract "+contractName+" was not found on host "+ip);
+                throw makeRuntimeRejectMsg(workerScript, "getContractData() failed because contract "+contractName+" was not found on host "+ip);
+            }
+            
+            return {
+                "type": contract.type,
+                "data": contract.data,
+            };
+        },
+        attemptContract : function(contractName, solution, ip=workerScript.serverIp) {
+            if (workerScript.checkingRam) {
+                if (workerScript.loadedFns.attemptContract) {
+                    return 0;
+                } else {
+                    workerScript.loadedFns.attemptContract = true;
+                    return CONSTANTS.ScriptAttemptContractRamCost;
+                }
+            }
+            var server = getServer(ip);
+            if (server == null) {
+                workerScript.scriptRef.log("getContractData() failed. Invalid IP or hostname passed in: " + ip);
+                throw makeRuntimeRejectMsg(workerScript, "getContractData() failed. Invalid IP or hostname passed in: " + ip);
+            }
+
+            if(contractName === undefined || solution === undefined || contractName == "") {
+                workerScript.scriptRef.log("attemptContract() failed because no contract name or no solution was provided");
+                throw makeRuntimeRejectMsg(workerScript, "attemptContract() failed because no contract name or no solution was provided");
+            }
+
+            // find contract
+            const contract = server.contracts.find(function(c){return c.fn == contractName})
+            if(contract === undefined) {
+                workerScript.scriptRef.log("attemptContract() failed because contract "+contractName+" was not found on host "+ip);
+                throw makeRuntimeRejectMsg(workerScript, "attemptContract() failed because contract "+contractName+" was not found on host "+ip);
+            }
+
+            const isSolution = contract.isSolution(contract.data, solution);
+            if(!isSolution) {
+                workerScript.scriptRef.log("attemptContract() failed because the solution was invalid.");
+                return false;
+            }
+
+            contract.giveReward();
+            server.removeContract(contract.fn);
+            return true;
         }
     } //End return
 } //End NetscriptFunction()

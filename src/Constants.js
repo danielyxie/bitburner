@@ -77,6 +77,8 @@ let CONSTANTS = {
     ScriptArbScriptRamCost:         1.0, //Functions that apply to all scripts regardless of args
     ScriptGetScriptRamCost:         0.1,
     ScriptGetHackTimeRamCost:       0.05,
+    ScriptGetContractDataRamCost:   1, // TODO: tune this number
+    ScriptAttemptContractRamCost:   1, // TODO: tune this number
 
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,

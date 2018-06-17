@@ -1305,6 +1305,13 @@ let Terminal = {
                             return;
                         }
                     }
+                } else if (delTarget.endsWith(".cct")) {
+                    for (var i = 0; i < s.contracts.length; ++i) {
+                        if (s.contracts[i].fn === delTarget) {
+                            s.contracts.splice(i, 1);
+                            return;
+                        }
+                    }
                 }
                 post("Error: No such file exists");
 				break;
@@ -1688,6 +1695,17 @@ let Terminal = {
                 allFiles.push(s.textFiles[i].fn);
             }
         }
+        
+        for (var i = 0; i < s.contracts.length; ++i) {
+            if (filter) {
+                if (s.contracts[i].fn.includes(filter)) {
+                    allFiles.push(s.contracts[i].fn);
+                }
+            } else {
+                allFiles.push(s.contracts[i].fn);
+            }
+        }
+        
 
         //Sort the files alphabetically then print each
         allFiles.sort();
