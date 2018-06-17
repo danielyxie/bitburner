@@ -646,7 +646,22 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid scriptname or numThreads argument passed to spawn()");
             }
             setTimeout(()=>{
-                NetscriptFunctions(workerScript).run.apply(this, arguments);
+                if (scriptname === undefined) {
+                    throw makeRuntimeRejectMsg(workerScript, "spawn() call has incorrect number of arguments. Usage: spawn(scriptname, numThreads, [arg1], [arg2]...)");
+                }
+                if (isNaN(threads) || threads < 1) {
+                    throw makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
+                }
+                var argsForNewScript = [];
+                for (var i = 2; i < arguments.length; ++i) {
+                    argsForNewScript.push(arguments[i]);
+                }
+                var scriptServer = getServer(workerScript.serverIp);
+                if (scriptServer == null) {
+                    throw makeRuntimeRejectMsg(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
+                }
+
+                return runScriptFromScript(scriptServer, scriptname, argsForNewScript, workerScript, threads);
             }, 20000);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.spawn == null) {
                 workerScript.scriptRef.log("spawn() will execute " + scriptname + " in 20 seconds");
@@ -711,10 +726,7 @@ function NetscriptFunctions(workerScript) {
             return scriptsRunning;
         },
         exit : function() {
-            if (workerScript.checkingRam) {
-                return updateStaticRam("exit", CONSTANTS.ScriptKillRamCost);
-            }
-            updateDynamicRam("exit", CONSTANTS.ScriptKillRamCost);
+            if (workerScript.checkingRam) {return 0;}
             var server = getServer(workerScript.serverIp);
             if (server == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in exit(). This is a bug please contact game dev");
