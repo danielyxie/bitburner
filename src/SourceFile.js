@@ -88,6 +88,7 @@ function sf1Modifier(lvl) {
     const incMult = 1 + (mult / 100);
     const decMult = 1 - (mult / 100);
     return new StatModifier({
+        homeRam: 32,
         hacking_chance_mult: incMult,
         hacking_speed_mult: incMult,
         hacking_money_mult: incMult,

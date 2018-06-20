@@ -167,17 +167,6 @@ function prestigeSourceFile() {
     //Re-create foreign servers
     initForeignServers();
 
-    var srcFile1Owned = false;
-    for (var i = 0; i < Player.sourceFiles.length; ++i) {
-        if (Player.sourceFiles[i].n == 1) {
-            srcFile1Owned = true;
-        }
-    }
-    if (srcFile1Owned) {
-        homeComp.setMaxRam(32);
-    } else {
-        homeComp.setMaxRam(8);
-    }
     homeComp.cpuCores = 1;
 
     //Darkweb is purchase-able

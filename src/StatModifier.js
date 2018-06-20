@@ -46,6 +46,8 @@ function StatModifier(params) {
 
     this.programs = [];
 
+    this.homeRam = 8;
+
     Object.assign(this, params);
 }
 

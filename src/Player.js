@@ -2081,6 +2081,8 @@ PlayerObject.prototype.applyStatModifier = function(m) {
     for(const i in m.programs) {
         this.pushProgram(m.programs[i]);
     }
+
+    this.getHomeComputer().setMaxRam(Math.max(this.getHomeComputer().maxRam, m.homeRam));
 }
 
 /*************** Check for Faction Invitations *************/
