@@ -5,7 +5,8 @@ import {substituteAliases, printAliases,
 import {CONSTANTS}                          from "./Constants.js";
 import {Programs}                           from "./CreateProgram.js";
 import {executeDarkwebTerminalCommand,
-        checkIfConnectedToDarkweb}          from "./DarkWeb.js";
+        checkIfConnectedToDarkweb,
+        DarkWebItems}                       from "./DarkWeb.js";
 import {Engine}                             from "./engine.js";
 import {FconfSettings, parseFconfSettings,
         createFconf}                        from "./Fconf.js";
@@ -409,9 +410,12 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     }
 
     if (input.startsWith ("buy ")) {
-        return [Programs.BruteSSHProgram, Programs.FTPCrackProgram, Programs.RelaySMTPProgram,
-                Programs.HTTPWormProgram, Programs.SQLInjectProgram, Programs.DeepscanV1,
-                Programs.DeepscanV2].concat(Object.keys(GlobalAliases));
+        let options = [];
+        for(const i in DarkWebItems) {
+            const item = DarkWebItems[i]
+            options.push(item.program);
+        }
+        return options.concat(Object.keys(GlobalAliases));
     }
 
     if (input.startsWith("scp ") && index == 1) {
