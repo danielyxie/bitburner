@@ -12,7 +12,7 @@ import {Companies, Company, CompanyPosition,
         CompanyPositions, companyExists}            from "./Company.js";
 import {CONSTANTS}                                  from "./Constants.js";
 import {Programs}                                   from "./CreateProgram.js";
-import {parseDarkwebItemPrice, DarkWebItems}        from "./DarkWeb.js";
+import {DarkWebItems}                               from "./DarkWeb.js";
 import {Engine}                                     from "./engine.js";
 import {AllGangs}                                   from "./Gang.js";
 import {Factions, Faction, joinFaction,
@@ -2333,105 +2333,40 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (SpecialServerIps["Darkweb Server"] == null) {
-                workerScript.scriptRef.log("ERROR: You do not have  TOR router. purchaseProgram() failed.");
+                workerScript.scriptRef.log("ERROR: You do not have the TOR router. purchaseProgram() failed.");
                 return false;
             }
 
-            switch(programName.toLowerCase()) {
-                case Programs.BruteSSHProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.BruteSSHProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.BruteSSHProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the BruteSSH.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.FTPCrackProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.FTPCrackProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.FTPCrackProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the FTPCrack.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.RelaySMTPProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.RelaySMTPProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.RelaySMTPProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the relaySMTP.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.HTTPWormProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.HTTPWormProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.HTTPWormProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the HTTPWorm.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.SQLInjectProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.SQLInjectProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.SQLInjectProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the SQLInject.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.DeepscanV1.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV1Program);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.DeepscanV1);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the DeepscanV1.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.DeepscanV2.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV2Program);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.DeepscanV2);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the DeepscanV2.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                default:
-                    workerScript.scriptRef.log("ERROR: Invalid program passed into purchaseProgram().");
-                    return false;
+            programName = programName.toLowerCase();
+
+            let item = null;
+            for(const key in DarkWebItems) {
+                const i = DarkWebItems[key];
+                if(i.program.toLowerCase() == programName) {
+                    item = i;
+                }
+            }
+
+            if(item == null) {
+                workerScript.scriptRef.log("ERROR: Invalid program name passed into purchaseProgram().");
+                return false;
+            }
+
+            if(Player.money.lt(item.price)) {
+                workerScript.scriptRef.log("Not enough money to purchase " + item.program);
+                return false;
+            }
+
+
+            if(Player.hasProgram(item.program)) {
+                workerScript.scriptRef.log('You already have the '+item.program+' program');
+                return true;
+            }
+
+            Player.loseMoney(item.price);
+            Player.getHomeComputer().programs.push(item.program);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
+                workerScript.scriptRef.log("You have purchased the "+item.program+" program. The new program can be found on your home computer.");
             }
             return true;
         },
