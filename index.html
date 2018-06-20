@@ -3,6 +3,17 @@
 <head>
     <meta charset="utf-8">
     <title>Bitburner</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="dist/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="dist/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="dist/favicon-16x16.png">
+    <link rel="manifest" href="dist/site.webmanifest">
+    <link rel="mask-icon" href="dist/safari-pinned-tab.svg" color="#000000">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Bitburner">
+    <meta name="application-name" content="Bitburner">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-config" content="dist/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
     <link rel="stylesheet" type="text/css" href="css/terminal.css" />
 	<link rel="stylesheet" type="text/css" href="css/menupages.css" />
@@ -99,7 +110,7 @@
 
         <div id="script-editor-filename-wrapper">
             <p id="script-editor-filename-tag"> <strong style="background-color:#555;">Script name: </strong></p>
-            <input id="script-editor-filename" type="text" maxlength="30" tabindex="1"> </input>
+            <input id="script-editor-filename" type="text" maxlength="30" tabindex="1" />
         </div>
 
         <div id="javascript-editor"></div>
@@ -149,9 +160,7 @@
 
             <fieldset>
             <label for="script-editor-option-maxerr" class="tooltip">Max Error Count</label>
-            <input type="range" max="1000" min="50" value="200"
-                step="1" name="script-editor-option-maxerr" id="script-editor-option-maxerr"
-            </input>
+            <input type="range" max="1000" min="50" value="200" step="1" name="script-editor-option-maxerr" id="script-editor-option-maxerr" />
             <em id="script-editor-option-maxerror-value-label" style="font-style: normal;"></em>
             </fieldset>
         </div> <!-- End script editor options panel -->
@@ -162,8 +171,7 @@
         <table id="terminal">
            <tr id="terminal-input">
                 <td id="terminal-input-td" tabindex="2">$
-                    <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"
-                           onfocus="this.value = this.value;"/>
+                    <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1" onfocus="this.value = this.value;"/>
                 </td>
            </tr>
         </table>
@@ -711,7 +719,7 @@
     <div id="yes-no-text-input-box-container" class="popup-box-container">
         <div id="yes-no-text-input-box-content" class="popup-box-content">
             <p id="yes-no-text-input-box-text"> </p>
-            <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30"> </input>
+            <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30" />
             <span id="yes-no-text-input-box-yes" class="popup-box-button"> Yes </span>
             <span id="yes-no-text-input-box-no" class="popup-box-button"> No </span>
         </div>
@@ -801,9 +809,7 @@
                         </span>
                     </label>
 
-                    <input type ="range" max="250" min="15"
-                        step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="100">
-                    </input>
+                    <input type ="range" max="250" min="15" step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="100" />
                     <em id="settingsNSExecTimeRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -817,9 +823,7 @@
                         </span>
                     </label>
 
-                    <input type="range" max="100" min="20"
-                        step="1" name="settingsNSLogRangeVal" id="settingsNSLogRangeVal" value="50">
-                    </input>
+                    <input type="range" max="100" min="20" step="1" name="settingsNSLogRangeVal" id="settingsNSLogRangeVal" value="50" />
                     <em id="settingsNSLogRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -833,9 +837,7 @@
                         </span>
                     </label>
 
-                    <input type="range" max="100" min="20"
-                        step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50">
-                    </input>
+                    <input type="range" max="100" min="20" step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50" />
                     <em id="settingsNSPortRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -847,9 +849,7 @@
                         </span>
                     </label>
 
-                    <input type="range" max="600" min="0"
-                        step="1" name="settingsAutosaveIntervalVal" id="settingsAutosaveIntervalVal" value="60">
-                    </input>
+                    <input type="range" max="600" min="0" step="1" name="settingsAutosaveIntervalVal" id="settingsAutosaveIntervalVal" value="60" />
                     <em id="settingsAutosaveIntervalValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -910,7 +910,7 @@
             <div id="game-options-right-panel">
                 <a class="a-link-button" style="display:block;" href="https://bitburner.wikia.com/wiki/Changelog" target="_blank"> Changelog </a>
                 <a class="a-link-button" style="display:block;" href="https://bitburner.wikia.com" target="_blank">Wiki</a>
-                <a class="a-link-button" style="display:block;", href="https://www.reddit.com/r/bitburner" target="_blank">Subreddit</a>
+                <a class="a-link-button" style="display:block;" href="https://www.reddit.com/r/bitburner" target="_blank">Subreddit</a>
                 <a id="save-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Save Game </a>
                 <a id="delete-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Delete Game </a>
                 <a id="export-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Export Game </a>
@@ -939,6 +939,6 @@
         <div class="loaderspinner"></div>
         <div class="loaderlabel">Loading Bitburner...</div>
     </div>
-</body>
     <script src="dist/engine.bundle.js"></script>
+</body>
 </html>
