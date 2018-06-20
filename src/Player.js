@@ -8,7 +8,7 @@ import {Company, Companies, getNextCompanyPosition,
 import {CONSTANTS}                              from "./Constants.js";
 import {Corporation}                            from "./CompanyManagement.js";
 import {Programs}                               from "./CreateProgram.js";
-import {determineCrimeSuccess}                  from "./Crimes.js";
+import {determineCrimeSuccess, Crimes}          from "./Crimes.js";
 import {Engine}                                 from "./engine.js";
 import {Factions, Faction,
         displayFactionContent}                  from "./Faction.js";
@@ -25,7 +25,7 @@ import {clearEventListeners}                    from "../utils/HelperFunctions.j
 import {createRandomIp}                         from "../utils/IPAddress.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import numeral                                  from "../utils/numeral.min.js";
+import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
         convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
 
@@ -99,6 +99,7 @@ function PlayerObject() {
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
     this.purchasedServers       = []; //IP Addresses of purchased servers
     this.hacknetNodes           = [];
+    this.hacknetNodeWrappers    = [];
     this.totalHacknetNodeProduction = 0;
 
     //Factions
@@ -298,8 +299,6 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     this.hacknetNodes.length = 0;
     this.totalHacknetNodeProduction = 0;
-
-    this.bladeburner = 0;
 }
 
 PlayerObject.prototype.prestigeSourceFile = function() {
@@ -390,16 +389,6 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     if (this.bitNodeN === 3) {this.money = new Decimal(150e9);}
     this.corporation = 0;
 
-    //Reset Bladeburner
-    this.bladeburner = 0;
-
-    //BitNode 8: Ghost of Wall Street
-    if (this.bitNodeN === 8) {this.money = new Decimal(100000000);}
-    if (this.bitNodeN === 8 || hasWallStreetSF) {
-        this.hasWseAccount = true;
-        this.hasTixApiAccess = true;
-    }
-
     this.playtimeSinceLastAug = 0;
     this.scriptProdSinceLastAug = 0;
 }
@@ -410,6 +399,26 @@ PlayerObject.prototype.getCurrentServer = function() {
 
 PlayerObject.prototype.getHomeComputer = function() {
     return AllServers[this.homeComputer];
+}
+
+PlayerObject.prototype.getUpgradeHomeRamCost = function() {
+    //Calculate how many times ram has been upgraded (doubled)
+    const currentRam = Player.getHomeComputer().maxRam;
+    const numUpgrades = Math.log2(currentRam);
+
+    //Calculate cost
+    //Have cost increase by some percentage each time RAM has been upgraded
+    const mult = Math.pow(1.58, numUpgrades);
+    var cost = currentRam * CONSTANTS.BaseCostFor1GBOfRamHome * mult;
+    return cost;
+}
+
+PlayerObject.prototype.receiveInvite = function(factionName) {
+    if(this.factionInvitations.includes(factionName) || this.factions.includes(factionName)) {
+        return;
+    }
+    this.firstFacInvRecvd = true;
+    this.factionInvitations.push(factionName);
 }
 
 //Calculates skill level based on experience. The same formula will be used for every skill
@@ -578,6 +587,9 @@ PlayerObject.prototype.gainHackingExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainHackingExp()"); return;
     }
     this.hacking_exp += exp;
+    if(this.hacking_exp < 0) {
+        this.hacking_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainStrengthExp = function(exp) {
@@ -585,6 +597,9 @@ PlayerObject.prototype.gainStrengthExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainStrengthExp()"); return;
     }
     this.strength_exp += exp;
+    if(this.strength_exp < 0) {
+        this.strength_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainDefenseExp = function(exp) {
@@ -592,6 +607,9 @@ PlayerObject.prototype.gainDefenseExp = function(exp) {
         console.log("ERR: NaN passed into player.gainDefenseExp()"); return;
     }
     this.defense_exp += exp;
+    if(this.defense_exp < 0) {
+        this.defense_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainDexterityExp = function(exp) {
@@ -599,6 +617,9 @@ PlayerObject.prototype.gainDexterityExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainDexterityExp()"); return;
     }
     this.dexterity_exp += exp;
+    if(this.dexterity_exp < 0) {
+        this.dexterity_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainAgilityExp = function(exp) {
@@ -606,6 +627,9 @@ PlayerObject.prototype.gainAgilityExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainAgilityExp()"); return;
     }
     this.agility_exp += exp;
+    if(this.agility_exp < 0) {
+        this.agility_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainCharismaExp = function(exp) {
@@ -613,6 +637,9 @@ PlayerObject.prototype.gainCharismaExp = function(exp) {
         console.log("ERR: NaN passed into Player.gainCharismaExp()"); return;
     }
     this.charisma_exp += exp;
+    if(this.charisma_exp < 0) {
+        this.charisma_exp = 0;
+    }
 }
 
 PlayerObject.prototype.gainIntelligenceExp = function(exp) {
@@ -1525,56 +1552,21 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
         var statusText = ""; //TODO, unique message for each crime when you succeed
         if (determineCrimeSuccess(this.crimeType, this.workMoneyGained)) {
             //Handle Karma and crime statistics
-            switch(this.crimeType) {
-                case CONSTANTS.CrimeShoplift:
-                    this.karma -= 0.1;
+            let crime = null;
+            for(const i in Crimes) {
+                if(Crimes[i].type == this.crimeType) {
+                    crime = Crimes[i];
                     break;
-                case CONSTANTS.CrimeRobStore:
-                    this.karma -= 0.5;
-                    this.gainIntelligenceExp(0.25 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeMug:
-                    this.karma -= 0.25;
-                    break;
-                case CONSTANTS.CrimeLarceny:
-                    this.karma -= 1.5;
-                    this.gainIntelligenceExp(0.5 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeDrugs:
-                    this.karma -= 0.5;
-                    break;
-                case CONSTANTS.CrimeBondForgery:
-                    this.karma -= 0.1;
-                    this.gainIntelligenceExp(2 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeTraffickArms:
-                    this.karma -= 1;
-                    break;
-                case CONSTANTS.CrimeHomicide:
-                    ++this.numPeopleKilled;
-                    this.karma -= 3;
-                    break;
-                case CONSTANTS.CrimeGrandTheftAuto:
-                    this.karma -= 5;
-                    this.gainIntelligenceExp(CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeKidnap:
-                    this.karma -= 6;
-                    this.gainIntelligenceExp(2 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeAssassination:
-                    ++this.numPeopleKilled;
-                    this.karma -= 10;
-                    this.gainIntelligenceExp(5 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                case CONSTANTS.CrimeHeist:
-                    this.karma -= 15;
-                    this.gainIntelligenceExp(10 * CONSTANTS.IntelligenceCrimeBaseExpGain);
-                    break;
-                default:
-                    console.log(this.crimeType);
-                    dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
-                    return;
+                }
+            }
+            if(crime == null) {
+                console.log(this.crimeType);
+                dialogBoxCreate("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
+            }
+            this.karma -= crime.karma;
+            this.numPeopleKilled += crime.kills;
+            if(crime.intelligence_exp > 0) {
+                this.gainIntelligenceExp(crime.intelligence_exp);
             }
 
             //On a crime success, gain 2x exp
@@ -2347,6 +2339,25 @@ PlayerObject.prototype.startGang = function(factionName, hacking) {
 /************* BitNodes **************/
 PlayerObject.prototype.setBitNodeNumber = function(n) {
     this.bitNodeN = n;
+}
+
+PlayerObject.prototype.queueAugmentation = function(name) {
+    for(const i in this.queuedAugmentations) {
+        if(this.queuedAugmentations[i].name == name) {
+            console.log('tried to queue '+name+' twice, this may be a bug');
+            return;
+        }
+    }
+
+    for(const i in this.augmentations) {
+        if(this.augmentations[i].name == name) {
+            console.log('tried to queue '+name+' but we already have that aug');
+            return;
+        }
+    }
+    
+    this.firstAugPurchased = true;
+    this.queuedAugmentations.push(new PlayerOwnedAugmentation(name));
 }
 
 /* Functions for saving and loading the Player data */

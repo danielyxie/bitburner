@@ -1,3 +1,5 @@
+.. _netscriptjs:
+
 NetscriptJS (Netscript 2.0)
 ===========================
 Netscript 2.0, or Netscript JS, is the new and improved version of Netscript that

@@ -3,7 +3,7 @@ import {Augmentations, AugmentationNames,
 import {BitNodeMultipliers}                     from "./BitNode.js";
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
-import {FactionInfo}                            from "./FactionInfo.js";
+import {FactionInfos}                           from "./FactionInfo.js";
 import {Locations}                              from "./Location.js";
 import {HackingMission, setInMission}           from "./Missions.js";
 import {Player}                                 from "./Player.js";
@@ -15,7 +15,7 @@ import {clearEventListeners, createElement,
         removeChildrenFromElement}              from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import numeral                                  from "../utils/numeral.min.js";
+import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
@@ -23,7 +23,6 @@ import {yesNoBoxCreate, yesNoBoxGetYesButton,
 function Faction(name="") {
     this.name 				= name;
     this.augmentations 		= [];   //Name of augmentation only
-    this.info 		        = "";	//Introductory/informational text about the faction
 
     //Player-related properties for faction
     this.isMember 			= false; 	//Whether player is member
@@ -31,22 +30,17 @@ function Faction(name="") {
     this.playerReputation 	= 0;  		//"Reputation" within faction
     this.alreadyInvited     = false;
 
-    //Multipliers for unlocking and purchasing augmentations
-    this.augmentationPriceMult = 1;
-    this.augmentationRepRequirementMult = 1;
-
     //Faction favor
     this.favor              = 0;
     this.rolloverRep        = 0;
 };
 
-Faction.prototype.setAugmentationMultipliers = function(price, rep) {
-    this.augmentationPriceMult = price;
-    this.augmentationRepRequirementMult = rep;
-}
-
-Faction.prototype.setInfo = function(inf) {
-	this.info = inf;
+Faction.prototype.getInfo = function() {
+    const info = FactionInfos[this.name];
+    if(info == null) {
+        throw new Error("Missing faction from FactionInfos: " + this.name+" this probably means the faction got corrupted somehow");
+    }
+    return info;
 }
 
 Faction.prototype.gainFavor = function() {
@@ -119,142 +113,9 @@ function factionExists(name) {
 //TODO Augmentation price and rep requirement mult are 1 for everything right now,
 //      This might change in the future for balance
 function initFactions() {
-	//Endgame
-	var Illuminati = new Faction("Illuminati");
-    Illuminati.setInfo(FactionInfo.IlluminatiInfo);
-    resetFaction(Illuminati);
-
-	var Daedalus = new Faction("Daedalus");
-    Daedalus.setInfo(FactionInfo.DaedalusInfo);
-    resetFaction(Daedalus);
-
-	var Covenant = new Faction("The Covenant");
-    Covenant.setInfo(FactionInfo.CovenantInfo);
-    resetFaction(Covenant);
-
-	//Megacorporations, each forms its own faction
-	var ECorp = new Faction("ECorp");
-    ECorp.setInfo(FactionInfo.ECorpInfo);
-    resetFaction(ECorp);
-
-	var MegaCorp = new Faction("MegaCorp");
-    MegaCorp.setInfo(FactionInfo.MegaCorpInfo);
-    resetFaction(MegaCorp);
-
-	var BachmanAndAssociates = new Faction("Bachman & Associates");
-    BachmanAndAssociates.setInfo(FactionInfo.BachmanAndAssociatesInfo);
-    resetFaction(BachmanAndAssociates);
-
-	var BladeIndustries = new Faction("Blade Industries");
-    BladeIndustries.setInfo(FactionInfo.BladeIndustriesInfo);
-    resetFaction(BladeIndustries);
-
-	var NWO = new Faction("NWO");
-    NWO.setInfo(FactionInfo.NWOInfo);
-    resetFaction(NWO);
-
-	var ClarkeIncorporated = new Faction("Clarke Incorporated");
-    ClarkeIncorporated.setInfo(FactionInfo.ClarkeIncorporatedInfo);
-    resetFaction(ClarkeIncorporated);
-
-	var OmniTekIncorporated = new Faction("OmniTek Incorporated");
-    OmniTekIncorporated.setInfo(FactionInfo.OmniTekIncorporatedInfo);
-    resetFaction(OmniTekIncorporated);
-
-	var FourSigma = new Faction("Four Sigma");
-    FourSigma.setInfo(FactionInfo.FourSigmaInfo);
-    resetFaction(FourSigma);
-
-	var KuaiGongInternational = new Faction("KuaiGong International");
-    KuaiGongInternational.setInfo(FactionInfo.KuaiGongInternationalInfo);
-    resetFaction(KuaiGongInternational);
-
-    //Other corporations
-    var FulcrumTechnologies = new Faction("Fulcrum Secret Technologies");
-    FulcrumTechnologies.setInfo(FactionInfo.FulcrumSecretTechnologiesInfo);
-    resetFaction(FulcrumTechnologies);
-
-	//Hacker groups
-	var BitRunners = new Faction("BitRunners");
-    BitRunners.setInfo(FactionInfo.BitRunnersInfo);
-    resetFaction(BitRunners);
-
-	var BlackHand = new Faction("The Black Hand");
-    BlackHand.setInfo(FactionInfo.BlackHandInfo);
-    resetFaction(BlackHand);
-
-	var NiteSec = new Faction("NiteSec");
-    NiteSec.setInfo(FactionInfo.NiteSecInfo);
-    resetFaction(NiteSec);
-
-	//City factions, essentially governments
-	var Chongqing = new Faction("Chongqing");
-    Chongqing.setInfo(FactionInfo.ChongqingInfo);
-    resetFaction(Chongqing);
-
-	var Sector12 = new Faction("Sector-12");
-    Sector12.setInfo(FactionInfo.Sector12Info);
-    resetFaction(Sector12);
-
-	var NewTokyo = new Faction("New Tokyo");
-    NewTokyo.setInfo(FactionInfo.NewTokyoInfo);
-    resetFaction(NewTokyo);
-
-	var Aevum = new Faction("Aevum");
-    Aevum.setInfo(FactionInfo.AevumInfo);
-    resetFaction(Aevum);
-
-    var Ishima = new Faction("Ishima");
-    Ishima.setInfo(FactionInfo.Ishima);
-    resetFaction(Ishima);
-
-	var Volhaven = new Faction("Volhaven");
-    Volhaven.setInfo(FactionInfo.VolhavenInfo);
-    resetFaction(Volhaven);
-
-	//Criminal Organizations/Gangs
-	var SpeakersForTheDead = new Faction("Speakers for the Dead");
-    SpeakersForTheDead.setInfo(FactionInfo.SpeakersForTheDeadInfo);
-    resetFaction(SpeakersForTheDead);
-
-	var DarkArmy = new Faction("The Dark Army");
-    DarkArmy.setInfo(FactionInfo.DarkArmyInfo);
-    resetFaction(DarkArmy);
-
-	var TheSyndicate = new Faction("The Syndicate");
-    TheSyndicate.setInfo(FactionInfo.TheSyndicateInfo);
-    resetFaction(TheSyndicate);
-
-    var Silhouette = new Faction("Silhouette");
-    Silhouette.setInfo(FactionInfo.SilhouetteInfo);
-    resetFaction(Silhouette);
-
-    var Tetrads = new Faction("Tetrads"); //Low-medium level asian crime gang
-    Tetrads.setInfo(FactionInfo.TetradsInfo);
-    resetFaction(Tetrads);
-
-    var SlumSnakes = new Faction("Slum Snakes"); //Low level crime gang
-    SlumSnakes.setInfo(FactionInfo.SlumSnakesInfo);
-    resetFaction(SlumSnakes);
-
-	//Earlygame factions - factions the player will prestige with early on that don't
-	//belong in other categories
-    var Netburners = new Faction("Netburners");
-    Netburners.setInfo(FactionInfo.NetburnersInfo);
-    resetFaction(Netburners);
-
-	var TianDiHui = new Faction("Tian Di Hui");	//Society of the Heaven and Earth
-    TianDiHui.setInfo(FactionInfo.TianDiHuiInfo);
-    resetFaction(TianDiHui);
-
-	var CyberSec = new Faction("CyberSec");
-    CyberSec.setInfo(FactionInfo.CyberSecInfo);
-    resetFaction(CyberSec);
-
-    //Special Factions
-    var Bladeburners = new Faction("Bladeburners");
-    Bladeburners.setInfo(FactionInfo.BladeburnersInfo);
-    resetFaction(Bladeburners);
+    for(const name in FactionInfos) {
+        resetFaction(new Faction(name));    
+    }
 }
 
 //Resets a faction during (re-)initialization. Saves the favor in the new
@@ -287,36 +148,12 @@ function inviteToFaction(faction) {
 function joinFaction(faction) {
 	faction.isMember = true;
     Player.factions.push(faction.name);
+    const factionInfo = faction.getInfo();
 
     //Determine what factions you are banned from now that you have joined this faction
-    if (faction.name == "Chongqing") {
-        Factions["Sector-12"].isBanned = true;
-        Factions["Aevum"].isBanned = true;
-        Factions["Volhaven"].isBanned = true;
-    } else if (faction.name == "Sector-12") {
-        Factions["Chongqing"].isBanned = true;
-        Factions["New Tokyo"].isBanned = true;
-        Factions["Ishima"].isBanned = true;
-        Factions["Volhaven"].isBanned = true;
-    } else if (faction.name == "New Tokyo") {
-        Factions["Sector-12"].isBanned = true;
-        Factions["Aevum"].isBanned = true;
-        Factions["Volhaven"].isBanned = true;
-    } else if (faction.name == "Aevum") {
-        Factions["Chongqing"].isBanned = true;
-        Factions["New Tokyo"].isBanned = true;
-        Factions["Ishima"].isBanned = true;
-        Factions["Volhaven"].isBanned = true;
-    } else if (faction.name == "Ishima") {
-        Factions["Sector-12"].isBanned = true;
-        Factions["Aevum"].isBanned = true;
-        Factions["Volhaven"].isBanned = true;
-    } else if (faction.name == "Volhaven") {
-        Factions["Chongqing"].isBanned = true;
-        Factions["Sector-12"].isBanned = true;
-        Factions["New Tokyo"].isBanned = true;
-        Factions["Aevum"].isBanned = true;
-        Factions["Ishima"].isBanned = true;
+    for(const i in factionInfo.enemies) {
+        const enemy = factionInfo.enemies[i];
+        Factions[enemy].isBanned = true;
     }
 }
 
@@ -326,6 +163,8 @@ function displayFactionContent(factionName) {
     if (faction == null) {
         throw new Error("Invalid factionName passed into displayFactionContent: " + factionName);
     }
+    var factionInfo = faction.getInfo();
+
     removeChildrenFromElement(Engine.Display.factionContent);
     var elements = [];
 
@@ -334,7 +173,7 @@ function displayFactionContent(factionName) {
         innerText:factionName
     }));
     elements.push(createElement("pre", {
-        innerHTML:"<i>" + faction.info + "</i>"
+        innerHTML:"<i>" + factionInfo.infoText + "</i>"
     }));
     elements.push(createElement("p", {
         innerText:"---------------",
@@ -346,14 +185,14 @@ function displayFactionContent(factionName) {
     favorGain = favorGain[0];
     elements.push(createElement("p", {
         innerText: "Reputation: " + formatNumber(faction.playerReputation, 4),
-        tooltip:"You will earn " + formatNumber(favorGain, 4) +
+        tooltip:"You will earn " + formatNumber(favorGain, 0) +
                 " faction favor upon resetting after installing an Augmentation"
     }))
     elements.push(createElement("p", {
         innerText:"---------------",
     }));
     elements.push(createElement("p", {
-        innerText:"Faction Favor: " + formatNumber(faction.favor, 4),
+        innerText:"Faction Favor: " + formatNumber(faction.favor, 0),
         tooltip:"Faction favor increases the rate at which " +
                 "you earn reputation for this faction by 1% per favor. Faction favor " +
                 "is gained whenever you reset after installing an Augmentation. The amount of " +
@@ -583,213 +422,16 @@ function displayFactionContent(factionName) {
         return;
     }
 
-	if (faction.isMember) {
-        if (faction.favor >= (150 * BitNodeMultipliers.RepToDonateToFaction)) {
-            donateDiv.style.display = "inline";
-        } else {
-            donateDiv.style.display = "none";
-        }
-
-		switch(faction.name) {
-			case "Illuminati":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "Daedalus":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "The Covenant":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "ECorp":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "MegaCorp":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Bachman & Associates":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Blade Industries":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "NWO":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Clarke Incorporated":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "OmniTek Incorporated":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Four Sigma":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "KuaiGong International":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-            case "Fulcrum Secret Technologies":
-                hackMissionDiv.style.display = "inline";
-                hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "none";
-				securityWorkDiv.style.display = "inline";
-                break;
-			case "BitRunners":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "none";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "The Black Hand":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "NiteSec":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "none";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "Chongqing":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Sector-12":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "New Tokyo":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Aevum":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Ishima":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Volhaven":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "Speakers for the Dead":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "The Dark Army":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "none";
-				break;
-			case "The Syndicate":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "inline";
-				securityWorkDiv.style.display = "inline";
-				break;
-            case "Silhouette":
-                hackMissionDiv.style.display = "inline";
-                hackDiv.style.display = "inline";
-                fieldWorkDiv.style.display = "inline";
-                securityWorkDiv.style.display = "none";
-                break;
-            case "Tetrads":
-                hackMissionDiv.style.display = "none";
-                hackDiv.style.display = "none";
-                fieldWorkDiv.style.display = "inline";
-                securityWorkDiv.style.display = "inline";
-                break;
-            case "Slum Snakes":
-                hackMissionDiv.style.display = "none";
-                hackDiv.style.display = "none";
-                fieldWorkDiv.style.display = "inline";
-                securityWorkDiv.style.display = "inline";
-                break;
-            case "Netburners":
-                hackMissionDiv.style.display = "inline";
-                hackDiv.style.display = "inline";
-                fieldWorkDiv.style.display = "none";
-                securityWorkDiv.style.display = "none";
-                break;
-			case "Tian Di Hui":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "none";
-				securityWorkDiv.style.display = "inline";
-				break;
-			case "CyberSec":
-                hackMissionDiv.style.display = "inline";
-				hackDiv.style.display = "inline";
-				fieldWorkDiv.style.display = "none";
-				securityWorkDiv.style.display = "none";
-				break;
-            case "Bladeburners":
-                hackMissionDiv.style.display = "none";
-                hackDiv.style.display = "none";
-                fieldWorkDiv.style.display = "none";
-                securityWorkDiv.style.display = "none";
-                break;
-			default:
-				console.log("Faction does not exist");
-				break;
-		}
-	} else {
+	if (!faction.isMember) {
 		throw new Error("Not a member of this faction, cannot display faction information");
 	}
+
+    donateDiv.style.display = faction.favor >= (150 * BitNodeMultipliers.RepToDonateToFaction) ? "inline" : "none";
+
+    hackMissionDiv.style.display  = factionInfo.offerHackingMission ? "inline": "none";
+    hackDiv.style.display         = factionInfo.offerHackingWork ? "inline" : "none";
+    fieldWorkDiv.style.display    = factionInfo.offerFieldWork ? "inline" : "none";
+    securityWorkDiv.style.display = factionInfo.offerSecurityWork ? "inline" : "none";
 
     //Display all elements
     for (var i = 0; i < elements.length; ++i) {
@@ -915,6 +557,8 @@ function displayFactionAugmentations(factionName) {
 //  @augs Array of Aug names
 //  @faction Faction for which to display Augmentations
 function createFactionAugmentationDisplayElements(augmentationsList, augs, faction) {
+    const factionInfo = faction.getInfo();
+
     for (var i = 0; i < augs.length; ++i) {
         (function () {
             var aug = Augmentations[augs[i]];
@@ -955,7 +599,7 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
             var pElem = createElement("p", {
                 display:"inline",
             })
-            var req = aug.baseRepRequirement * faction.augmentationRepRequirementMult;
+            var req = aug.baseRepRequirement * factionInfo.augmentationRepRequirementMult;
             var hasPrereqs = hasAugmentationPrereqs(aug);
             if (!hasPrereqs) {
                 aElem.setAttribute("class", "a-link-button-inactive");
@@ -966,10 +610,10 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
                 pElem.innerHTML = "ALREADY OWNED";
             } else if (faction.playerReputation >= req) {
                 aElem.setAttribute("class", "a-link-button");
-                pElem.innerHTML = "UNLOCKED - " + numeral(aug.baseCost * faction.augmentationPriceMult).format("$0.000a");
+                pElem.innerHTML = "UNLOCKED - " + numeral(aug.baseCost * factionInfo.augmentationPriceMult).format("$0.000a");
             } else {
                 aElem.setAttribute("class", "a-link-button-inactive");
-                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 1) + " faction reputation) - " + numeral(aug.baseCost * faction.augmentationPriceMult).format("$0.000a");
+                pElem.innerHTML = "LOCKED (Requires " + formatNumber(req, 1) + " faction reputation) - " + numeral(aug.baseCost * factionInfo.augmentationPriceMult).format("$0.000a");
                 pElem.style.color = "red";
             }
             aDiv.appendChild(aElem);
@@ -982,6 +626,7 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
 }
 
 function purchaseAugmentationBoxCreate(aug, fac) {
+    const factionInfo = fac.getInfo();
     var yesBtn = yesNoBoxGetYesButton(), noBtn = yesNoBoxGetNoButton();
     yesBtn.innerHTML = "Purchase";
     noBtn.innerHTML = "Cancel";
@@ -995,7 +640,7 @@ function purchaseAugmentationBoxCreate(aug, fac) {
     yesNoBoxCreate("<h2>" + aug.name + "</h2><br>" +
                    aug.info + "<br><br>" +
                    "<br>Would you like to purchase the " + aug.name + " Augmentation for $" +
-                   formatNumber(aug.baseCost * fac.augmentationPriceMult, 2)  + "?");
+                   formatNumber(aug.baseCost * factionInfo.augmentationPriceMult, 2)  + "?");
 }
 
 //Returns a boolean indicating whether the player has the prerequisites for the
@@ -1026,12 +671,13 @@ function hasAugmentationPrereqs(aug) {
 }
 
 function purchaseAugmentation(aug, fac, sing=false) {
+    const factionInfo = fac.getInfo();
     var hasPrereqs = hasAugmentationPrereqs(aug);
     if (!hasPrereqs) {
         var txt = "You must first purchase or install " + aug.prereqs.join(",") + " before you can " +
                   "purchase this one.";
         if (sing) {return txt;} else {dialogBoxCreate(txt);}
-    } else if (Player.money.lt(aug.baseCost * fac.augmentationPriceMult)) {
+    } else if (Player.money.lt(aug.baseCost * factionInfo.augmentationPriceMult)) {
         let txt = "You don't have enough money to purchase " + aug.name;
         if (sing) {return txt;}
         dialogBoxCreate(txt);
@@ -1039,7 +685,7 @@ function purchaseAugmentation(aug, fac, sing=false) {
         let txt = "You don't have enough faction reputation to purchase " + aug.name;
         if (sing) {return txt;}
         dialogBoxCreate(txt);
-    } else if (Player.money.gte(aug.baseCost * fac.augmentationPriceMult)) {
+    } else if (Player.money.gte(aug.baseCost * factionInfo.augmentationPriceMult)) {
         if (Player.firstAugPurchased === false) {
             Player.firstAugPurchased = true;
             document.getElementById("augmentations-tab").style.display = "list-item";
@@ -1053,7 +699,7 @@ function purchaseAugmentation(aug, fac, sing=false) {
         }
         Player.queuedAugmentations.push(queuedAugmentation);
 
-        Player.loseMoney((aug.baseCost * fac.augmentationPriceMult));
+        Player.loseMoney((aug.baseCost * factionInfo.augmentationPriceMult));
 
         //If you just purchased Neuroflux Governor, recalculate the cost
         if (aug.name == AugmentationNames.NeuroFluxGovernor) {

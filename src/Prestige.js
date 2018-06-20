@@ -2,6 +2,7 @@ import {deleteActiveScriptsItem}                from "./ActiveScriptsUI.js";
 import {Augmentations, augmentationExists,
         initAugmentations, AugmentationNames}   from "./Augmentations.js";
 import {initBitNodeMultipliers}                 from "./BitNode.js";
+import {Bladeburner}                            from "./Bladeburner.js";
 import {writeCinematicText}                     from "./CinematicText.js";
 import {Companies, Company, initCompanies}      from "./Company.js";
 import {Programs}                               from "./CreateProgram.js";
@@ -33,6 +34,8 @@ import {createPopup, createElement,
         removeElementById, exceptionAlert}      from "../utils/HelperFunctions.js";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
+
+let BitNode8StartingMoney = 250e6;
 
 //Prestige by purchasing augmentation
 function prestigeAugmentation() {
@@ -123,11 +126,13 @@ function prestigeAugmentation() {
         }
     }
 
-    //Reset Bladeburner
-    Player.bladeburner = null;
+    //Cancel Bladeburner action
+    if (Player.bladeburner instanceof Bladeburner) {
+        Player.bladeburner.prestige();
+    }
 
     //BitNode 8: Ghost of Wall Street
-    if (Player.bitNodeN === 8) {Player.money = new Decimal(100e6);}
+    if (Player.bitNodeN === 8) {Player.money = new Decimal(BitNode8StartingMoney);}
     if (Player.bitNodeN === 8 || hasWallStreetSF) {
         Player.hasWseAccount = true;
         Player.hasTixApiAccess = true;
@@ -303,6 +308,13 @@ function prestigeSourceFile() {
             exceptionAlert(e);
         })
 
+    }
+
+    //BitNode 8: Ghost of Wall Street
+    if (Player.bitNodeN === 8) {Player.money = new Decimal(BitNode8StartingMoney);}
+    if (Player.bitNodeN === 8 || hasWallStreetSF) {
+        Player.hasWseAccount = true;
+        Player.hasTixApiAccess = true;
     }
 
     //Gain int exp

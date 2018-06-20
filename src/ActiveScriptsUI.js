@@ -9,7 +9,7 @@ import {printArray, createElement,
         createAccordionElement, removeElement,
         removeChildrenFromElement, exceptionAlert}  from "../utils/HelperFunctions.js";
 import {logBoxCreate}                               from "../utils/LogBox.js";
-import numeral                                      from "../utils/numeral.min.js";
+import numeral                                      from "numeral/min/numeral.min";
 import {formatNumber}                               from "../utils/StringHelperFunctions.js";
 
 /* {

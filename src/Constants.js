@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.37.1",
+    Version:                "0.38.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -13,6 +13,8 @@ let CONSTANTS = {
     BaseCostFor1GBOfRamHome: 32000,
     BaseCostFor1GBOfRamServer: 55000, //1 GB of RAM
     BaseCostFor1GBOfRamHacknetNode: 30000,
+
+    TravelCost: 200000,
 
     BaseCostForHacknetNode: 1000,
     BaseCostForHacknetNodeCore: 500000,
@@ -41,6 +43,7 @@ let CONSTANTS = {
     /* Netscript Constants */
     //RAM Costs for different commands
     ScriptBaseRamCost:              1.4,
+    ScriptDomRamCost:               100,
     ScriptWhileRamCost:             0.2,
     ScriptForRamCost:               0.2,
     ScriptIfRamCost:                0.15,
@@ -78,6 +81,8 @@ let CONSTANTS = {
     ScriptSingularityFn1RamCost:    1,
     ScriptSingularityFn2RamCost:    2,
     ScriptSingularityFn3RamCost:    3,
+
+    ScriptBladeburnerApiBaseRamCost:    4,
 
     MultithreadingRAMCost:          1,
 
@@ -484,16 +489,19 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.37.1<br>" +
-    "* You now earn money from successfully completing Bladeburner contracts. The amount you earn is based " +
-    "on the difficulty of the contract.<br>" +
-    "* Completing Field Analysis in Bladeburner now grants 0.1 rank<br>" +
-    "* The maximum RAM you can get on a purchased server is now 1,048,576GB (2^20)<br>" +
-    "* Bug Fix: Fixed Netscript syntax highlighting issues with the new NetscriptJS<br>" +
-    "* Bug Fix: Netscript Functions now properly incur RAM costs in NetscriptJS<br>" +
-    "* Bug Fix: deleteServer() now fails if its called on the server you are currently connected to<br>" +
-    "* Removed in-game Netscript documentation, since it was outdated and difficult to maintain.<br>" +
-    "* Bug Fix: Updated the gymWorkout() Singularity function with the new exp/cost values for gyms<br>"
+    "v0.38.1<br>"  +
+    "* Bug Fix: Using 'Object.prototype' functions like toLocaleString() or toString() should no longer cause errors in NetscriptJS<br>" +
+    "* Implemented by Github user hydroflame:<br>"  +
+    "*** Accessing the 'window' and 'document' objects in Netscript JS now requires a large amount of RAM (100 GB)<br>" +
+    "*** Added game option to suppress travel confirmation<br>"  +
+    "*** Text on buttons can no longer be highlighted<br>" +
+    "*** Bug Fix: Fixed an issue that caused NaN values when exporting Real Estate in Corporations<br>" +
+    "*** Bug Fix: Competition and Demand displays in Corporation are now correct (were reversed before)<br>" +
+    "*** Added ps() Netscript function<br>"  +
+    "*** Bug Fix: grow() should no longer return/log a negative value when it runs on a server that's already at max money<br>" +
+    "*** Bug Fix: serverExists() Netscript function should now properly return false for non-existent hostname/ips<br>" +
+    "*** Bug Fix: Sever's security level should now properly increase when its money is grown to max value"
+
 }
 
 export {CONSTANTS};

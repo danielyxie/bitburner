@@ -15,7 +15,10 @@ body {
     background-color: var(--my-background-color);
 }
 
-p, pre, h2 {
+p,
+pre,
+h2,
+.text {
     color: var(--my-font-color);
 }
 
@@ -135,6 +138,11 @@ a:link, a:visited {
     padding: 5px;
     margin: 5px;
     border: 1px solid #333333;
+
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
 }
 
 .a-link-button:hover {
@@ -187,6 +195,16 @@ a:link, a:visited {
 
 .a-link-button-bought:active {
     pointer-events: none;
+}
+
+.dropdown {
+    color:white;
+    background-color:black;
+}
+
+.text-input {
+    color:white;
+    background-color:black;
 }
 
 /* Notification icon (for create program right now only) */

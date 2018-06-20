@@ -74,6 +74,21 @@ function removeChildrenFromElement(el) {
     }
 }
 
+/**
+ * Returns a reference to the first object with the specified value of the ID or NAME attribute, throwing an error if it is unable to find it.
+ * @param {string} elementId The HTML ID to retrieve the element by.
+ * @returns {HTMLElement} The single element.
+ * @throws {Error} When the 'idString' cannot be found.
+ */
+function getElementById(elementId) {
+    var el = document.getElementById(elementId);
+    if (el == null) {
+        throw new Error("Unable to find element with id '" + elementId + "'");
+    }
+
+    return el;
+}
+
 function createElement(type, params={}) {
     var el = document.createElement(type);
     if (params.id)          {el.id = params.id;}
@@ -260,4 +275,4 @@ export {sizeOfObject, clearObject, addOffset, clearEventListeners, getRandomInt,
         removeElementById, removeElement, createElement, createAccordionElement,
         appendLineBreaks,
         removeChildrenFromElement, createPopup, clearSelector, exceptionAlert,
-        createProgressBarText};
+        createProgressBarText, getElementById};

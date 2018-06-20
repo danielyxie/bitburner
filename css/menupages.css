@@ -288,30 +288,44 @@
 }
 
 #hacknet-nodes-text,
-#hacknet-nodes-money,
 #hacknet-nodes-container li {
-    width: 70%;
     margin: 10px;
     padding: 10px;
 }
 
-#hacknet-nodes-purchase-button {
-    display: inline-block;
+#hacknet-nodes-container li {
+    float: left;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#hacknet-nodes-list {
+    list-style: none;
+    width: 82vw;
+}
+
+#hacknet-nodes-money {
+    margin: 10px;
+    float: left;
 }
 
 #hacknet-nodes-money-multipliers-div {
     display: inline-block;
-    width: 70%;
+    width: 70vw;
 }
 
 #hacknet-nodes-multipliers {
     float: right;
 }
 
+#hacknet-nodes-purchase-button {
+    display: inline-block;
+}
+
 .hacknet-node {
     margin: 6px;
     padding: 6px;
-    width: 85%;
+    width: 34vw;
     border: 2px solid var(--my-highlight-color);
     -webkit-box-shadow:
       inset 0 0 8px  rgba(0,0,0,0.1),
@@ -324,12 +338,28 @@
             0 0 16px rgba(0,0,0,0.1);
 }
 
-.hacknet-node-button-div a {
-    display: block;
+.hacknet-node-container {
+    display: inline-table;
 }
 
-.hacknet-node-button-div:not(:last-child) {
-    border-bottom: none;
+.hacknet-node-container .row {
+    display: table-row;
+    height: 30px;
+}
+
+.hacknet-node-container .row p {
+    display: table-cell;
+}
+
+.hacknet-node-container .upgradable-info {
+    display: inline-block;
+    margin: 0 4px; /* Don't want the vertical margin/padding, just left & right */
+    padding: 0 4px;
+    width: 48px; /* Four times font-size */
+}
+
+.menu-page-text {
+    width: 70vw;
 }
 
 /* World */
@@ -453,6 +483,21 @@
 }
 
 #tutorial-container a {
+    width: 50%;
+}
+
+/* Dev menu */
+#dev-menu-container {
+    position: fixed;
+    padding-top: 10px;
+}
+
+#dev-menu-text {
+    width: 70%;
+    margin: 10px;
+}
+
+#dev-menu-container a {
     width: 50%;
 }
 

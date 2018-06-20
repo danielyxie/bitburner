@@ -13,7 +13,7 @@ import {getRandomInt, removeElementById,
         clearSelector}                                  from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver.js";
-import numeral                                          from "../utils/numeral.min.js";
+import numeral                                          from "numeral/min/numeral.min";
 import {formatNumber, isString, generateRandomString}   from "../utils/StringHelperFunctions.js";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
@@ -231,7 +231,8 @@ let MaterialSizes = {
     Chemicals:  0.05,
     Drugs:      0.02,
     Robots:     0.5,
-    "AICores": 0.1
+    AICores:    0.1,
+    RealEstate: 0,
 }
 
 function Product(params={}) {
@@ -2334,10 +2335,10 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
     //If Market Research upgrades are unlocked, add competition and demand info
     var cmpAndDmdText = "";
     if (company.unlockUpgrades[2] === 1) {
-        cmpAndDmdText += "<br>Competition: " + formatNumber(mat.cmp, 3);
+        cmpAndDmdText += "<br>Demand: " + formatNumber(mat.dmd, 3);
     }
     if (company.unlockUpgrades[3] === 1) {
-        cmpAndDmdText += "<br>Demand: " + formatNumber(mat.dmd, 3);
+        cmpAndDmdText += "<br>Competition: " + formatNumber(mat.cmp, 3);
     }
     var innerTxt = "<p class='tooltip'>" + mat.name + ": " + formatNumber(mat.qty, 3) +
                    "(" + formatNumber(totalGain, 3) +  "/s)" +
@@ -2430,8 +2431,9 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
             });
 
             //Select industry and city to export to
-            var citySelector = createElement("select");
+            var citySelector = createElement("select", {class: "dropdown"});
             var industrySelector = createElement("select", {
+                class: "dropdown",
                 changeListener:()=>{
                     var industryName = industrySelector.options[industrySelector.selectedIndex].value;
                     for (var foo = 0; foo < company.divisions.length; ++foo) {
@@ -2474,6 +2476,7 @@ Warehouse.prototype.createMaterialUI = function(mat, matName, parentRefs) {
 
             //Select amount to export
             var exportAmount = createElement("input", {
+                class: "text-input",
                 placeholder:"Export amount / s"
             });
 
@@ -2695,11 +2698,12 @@ Warehouse.prototype.createProductUI = function(product, parentRefs) {
     //Completed products
     var cmpAndDmdText = "";
     if (company.unlockUpgrades[2] === 1) {
-        cmpAndDmdText += "<br>Competition: " + formatNumber(product.cmp, 3);
-    }
-    if (company.unlockUpgrades[3] === 1) {
         cmpAndDmdText += "<br>Demand: " + formatNumber(product.dmd, 3);
     }
+    if (company.unlockUpgrades[3] === 1) {
+        cmpAndDmdText += "<br>Competition: " + formatNumber(product.cmp, 3);
+    }
+
     var totalGain = product.data[city][1] - product.data[city][2]; //Production - sale
     div.appendChild(createElement("p", {
         innerHTML: "<p class='tooltip'>" + product.name + ": " + formatNumber(product.data[city][0], 3) + //Quantity
@@ -3421,15 +3425,14 @@ Corporation.prototype.updateUIHeaderTabs = function() {
                 innerHTML: "Create a new division to expand into a new industry:",
             });
             var selector = createElement("select", {
-                class:"cmpy-mgmt-industry-select"
+                class:"dropdown"
             });
             var industryDescription = createElement("p", {});
             var yesBtn;
             var nameInput = createElement("input", {
                 type:"text",
                 id:"cmpy-mgmt-expand-industry-name-input",
-                color:"white",
-                backgroundColor:"black",
+                class: "text-input",
                 display:"block",
                 maxLength: 30,
                 pattern:"[a-zA-Z0-9-_]",
@@ -4067,7 +4070,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 innerText: "Would you like to expand into a new city by opening an office? " +
                            "This would cost " + numeral(OfficeInitialCost).format('$0.000a'),
             });
-            var citySelector = createElement("select", {margin:"5px"});
+            var citySelector = createElement("select", {class: "dropdown", margin:"5px"});
             for (var cityName in division.offices) {
                 if (division.offices.hasOwnProperty(cityName)) {
                     if (!(division.offices[cityName] instanceof OfficeSpace)) {

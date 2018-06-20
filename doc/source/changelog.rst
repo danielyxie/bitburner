@@ -3,8 +3,49 @@
 Changelog
 =========
 
-v0.37.1
--------
+v0.38.1 - 6/15/2018
+-------------------
+* Bug Fix: Using 'Object.prototype' functions like toLocaleString() or toString() should no longer cause errors in NetscriptJS
+* Implemented by Github user hydroflame:
+    * Accessing the 'window' and 'document' objects in Netscript JS now requires a large amount of RAM (100 GB)
+    * Added game option to suppress travel confirmation
+    * Text on buttons can no longer be highlighted
+    * Bug Fix: Fixed an issue that caused NaN values when exporting Real Estate in Corporations
+    * Bug Fix: Competition and Demand displays in Corporation are now correct (were reversed before)
+    * Added ps() Netscript function
+    * Bug Fix: grow() should no longer return/log a negative value when it runs on a server that's already at max money
+    * Bug Fix: serverExists() Netscript function should now properly return false for non-existent hostname/ips
+    * Bug Fix: Sever's security level should now properly increase when its money is grown to max value
+
+
+v0.38.0 - 6/12/2018
+-------------------
+* New BitNode: BN-12 The Recursion - Implemented by Github user hydroflame
+* Bladeburner Changes:
+    * Bladeburner progress is no longer reset when installing Augmentations
+    * The number of successess needed to increase a Contract/Operation's max level now scales with the current max level (gradually gets harder)
+    * All Bladeburner Augmentations are now slightly more expensive and require more reputation
+    * Black Operations now give higher rank rewards
+    * Doubled the base amount of money gained from Contracts
+    * Increased the amount of experience gained from Contracts/Actions
+    * Added a new Augmentation: The Blade's Simulacrum
+    * Bladeburner faction reputation gain is now properly affected by favor
+* Hacking is now slightly less profitable in BitNode-3
+* Updated Hacknet Nodes UI - Implemented by Github user kopelli
+* Bug Fix: Fixed an exploit that allowed calling any Netscript function without incurring any RAM Cost in NetscriptJS
+
+v0.37.2 - 6/2/2018
+------------------
+
+* After joining the Bladeburners division, there is now a button to go to the Bladeburner content
+  in the 'City' page
+* You now start with $250m in BitNode-8 (increased from $100m)
+* Bug Fix: You can now no longer directly edit Hacknet Node values through NetscriptJS (hopefully)
+* Bug Fix: Bladeburners is no longer accessible in BN-8
+* Bug Fix: getBitNodeMultipliers() Netscript function now returns a copy rather than the original object
+
+v0.37.1 - 5/22/2018
+-------------------
 * You now earn money from successfully completing Bladeburner contracts. The amount you earn is based
   on the difficulty of the contract.
 * Completing Field Analysis in Bladeburner now grants 0.1 rank

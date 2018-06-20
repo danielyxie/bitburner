@@ -11,7 +11,7 @@ import {clearEventListeners, getRandomInt,
         clearEventListenersEl}                  from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import numeral                                  from "../utils/numeral.min.js";
+import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
@@ -703,7 +703,7 @@ function displayStockMarketContent() {
     if (!Player.hasWseAccount && Player.money.gte(CONSTANTS.WSEAccountCost)) {
         wseAccountButton.setAttribute("class", "a-link-button");
     } else if (Player.hasWseAccount){
-        wseAccountButton.innerText = "WSE Account - acquired";
+        wseAccountButton.innerText = "WSE Account - Purchased";
         wseAccountButton.setAttribute("class", "a-link-button-bought");
     } else {
         wseAccountButton.setAttribute("class", "a-link-button-inactive");
@@ -724,7 +724,7 @@ function displayStockMarketContent() {
     if (!Player.hasTixApiAccess && Player.money.gte(CONSTANTS.TIXAPICost)) {
         tixApiAccessButton.setAttribute("class", "a-link-button");
     } else if(Player.hasTixApiAccess) {
-        tixApiAccessButton.innerText = "Trade Information eXchange (TIX) API Access - granted"
+        tixApiAccessButton.innerText = "Trade Information eXchange (TIX) API Access - Purchased"
         tixApiAccessButton.setAttribute("class", "a-link-button-bought");
     } else {
         tixApiAccessButton.setAttribute("class", "a-link-button-inactive");
