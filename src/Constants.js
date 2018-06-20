@@ -70,6 +70,7 @@ let CONSTANTS = {
     ScriptHNUpgCoreRamCost:         0.8,
     ScriptGetStockRamCost:          2.0,
     ScriptBuySellStockRamCost:      2.5,
+    ScriptGetPurchaseServerRamCost: 0.25,
     ScriptPurchaseServerRamCost:    2.25,
     ScriptGetPurchasedServerLimit:  0.05,
     ScriptGetPurchasedServerMaxRam: 0.05,

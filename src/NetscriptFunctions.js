@@ -178,7 +178,25 @@ function NetscriptFunctions(workerScript) {
             throw makeRuntimeRejectMsg(workerScript, "Index specified for Hacknet Node is out-of-bounds: " + i);
         }
         return Player.hacknetNodes[i];
-    }
+    };
+
+    /**
+     * @param {number} ram The amount of server RAM to calculate cost of.
+     * @exception {Error} If the value passed in is not numeric, out of range, or too large of a value.
+     * @returns {number} The cost of 
+     */
+    const getPurchaseServerRamCostGuard = (ram) => {
+        const guardedRam = Math.round(ram);
+        if (isNaN(guardedRam) || !powerOfTwo(guardedRam)) {
+            throw Error("failed due to invalid ram argument. Must be numeric and a power of 2");
+        }
+
+        if (guardedRam > CONSTANTS.PurchasedServerMaxRam) {
+            throw Error("failed because specified RAM was too high. Maximum RAM on a purchased server is " + CONSTANTS.PurchasedServerMaxRam + "GB");
+        }
+
+        return guardedRam * CONSTANTS.BaseCostFor1GBOfRamServer;
+    };
 
     return {
         hacknet : {
@@ -1597,6 +1615,22 @@ function NetscriptFunctions(workerScript) {
 
             return CONSTANTS.PurchasedServerMaxRam;
         },
+        getPurchasedServerCost: function(ram) {
+            if (workerScript.checkingRam) {
+                return updateStaticRam("getPurchasedServerCost", CONSTANTS.ScriptGetPurchaseServerRamCost);
+            }
+            updateDynamicRam("getPurchasedServerCost", CONSTANTS.ScriptGetPurchaseServerRamCost);
+
+            let cost = 0;
+            try {
+                cost = getPurchaseServerRamCostGuard(ram);
+            } catch (e) {
+                workerScript.scriptRef.log("ERROR: 'getPurchasedServerCost()' " + e.message);
+                return "";
+            }
+
+            return cost;
+        },
         purchaseServer : function(hostname, ram) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("purchaseServer", CONSTANTS.ScriptPurchaseServerRamCost);
@@ -1615,18 +1649,14 @@ function NetscriptFunctions(workerScript) {
                 return "";
             }
 
-            ram = Math.round(ram);
-            if (isNaN(ram) || !isPowerOfTwo(ram)) {
-                workerScript.scriptRef.log("ERROR: purchaseServer() failed due to invalid ram argument. Must be numeric and a power of 2");
+            let cost = 0;
+            try {
+                cost = getPurchaseServerRamCostGuard(ram);
+            } catch (e) {
+                workerScript.scriptRef.log("ERROR: 'purchaseServer()' " + e.message);
                 return "";
             }
 
-            if (ram > CONSTANTS.PurchasedServerMaxRam) {
-                workerScript.scriptRef.log("ERROR: purchasedServer() failed because specified RAM was too high. Maximum RAM on a purchased server is " + CONSTANTS.PurchasedServerMaxRam + "GB");
-                return "";
-            }
-
-            var cost = ram * CONSTANTS.BaseCostFor1GBOfRamServer;
             if (Player.money.lt(cost)) {
                 workerScript.scriptRef.log("ERROR: Not enough money to purchase server. Need $" + formatNumber(cost, 2));
                 return "";
