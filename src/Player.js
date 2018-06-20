@@ -1,6 +1,7 @@
 import {Augmentations, applyAugmentation,
         AugmentationNames,
-        PlayerOwnedAugmentation}                from "./Augmentations.js";
+        PlayerOwnedAugmentation,
+        AugmentationStatModifier}               from "./Augmentations.js";
 import {BitNodes, BitNode, BitNodeMultipliers}  from "./BitNode.js";
 import {Company, Companies, getNextCompanyPosition,
         getJobRequirementText, CompanyPosition,
@@ -2007,13 +2008,8 @@ PlayerObject.prototype.reapplyAllAugmentations = function(resetMultipliers=true)
             continue;
         }
         aug.owned = true;
-        if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-            for (let j = 0; j < aug.level; ++j) {
-                applyAugmentation(this.augmentations[i], true);
-            }
-            continue;
-        }
-        applyAugmentation(this.augmentations[i], true);
+        const modifier = AugmentationStatModifier(this.augmentations[i]);
+        this.applyStatModifier(modifier);
     }
 }
 
@@ -2060,7 +2056,7 @@ PlayerObject.prototype.applyStatModifier = function(m) {
     this.work_money_mult *= m.work_money_mult;
 
     if(this.money.lt(m.money)) {
-        this.setMoney(m.money);
+        this.setMoney(new Decimal(m.money));
     }
     
     this.crime_money_mult *= m.crime_money_mult

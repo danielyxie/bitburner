@@ -57,17 +57,6 @@ function prestigeAugmentation() {
     AddToAllServers(homeComp);
     prestigeHomeComputer(homeComp);
 
-    if (augmentationExists(AugmentationNames.Neurolink) &&
-        Augmentations[AugmentationNames.Neurolink].owned) {
-        homeComp.programs.push(Programs.FTPCrackProgram);
-        homeComp.programs.push(Programs.RelaySMTPProgram);
-    }
-    if (augmentationExists(AugmentationNames.CashRoot) &&
-        Augmentations[AugmentationNames.CashRoot].owned) {
-        Player.setMoney(new Decimal(1000000));
-        homeComp.programs.push(Programs.BruteSSHProgram);
-    }
-
     //Re-create foreign servers
     initForeignServers();
 
@@ -311,8 +300,8 @@ function prestigeSourceFile() {
     }
 
     //BitNode 8: Ghost of Wall Street
-    if (Player.bitNodeN === 8) {Player.money = new Decimal(BitNode8StartingMoney);}
-    if (Player.bitNodeN === 8 || hasWallStreetSF) {
+    if (Player.bitNodeN === 8) {
+        Player.money = new Decimal(BitNode8StartingMoney);
         Player.hasWseAccount = true;
         Player.hasTixApiAccess = true;
     }
