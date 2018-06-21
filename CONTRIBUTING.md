@@ -1,6 +1,6 @@
-#Contributing to BitBurner
+# Contributing to BitBurner
 
-##In General
+## In General
 The game is made better because the community as a whole speaks up about
 ways to improve the game. Here's some of the ways you can make your voice
 heard:
@@ -18,7 +18,7 @@ heard:
    browser's Javascript interaction. So please do not be afraid to open a
    [new issue](https://github.com/danielyxie/bitburner/issues/new).
 
-##As a Developer
+## As a Developer
 To contribute to BitBurner code, you will need to have
 [NodeJS](https://nodejs.org) installed. When installing NodeJS, a utility
 called `npm` is installed as well.
@@ -33,7 +33,7 @@ rules:
  - When submitting the pull request, make sure that the base fork is
    _danielyxie/bitburner_ and the base is _dev_.
 
-##As a Documentor
+## As a Documentor
 To contribute to BitBurner documentation, you will need to have Python
 installed, along with [Sphinx](http://www.sphinx-doc.org).
 
