@@ -280,10 +280,12 @@ function displayLocationContent() {
     purchase512gb.innerHTML = "Purchase 512GB Server - $" + formatNumber(512*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
     purchase1tb.innerHTML = "Purchase 1TB Server - $" + formatNumber(1024*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
     if (!SpecialServerIps.hasOwnProperty("Darkweb Server")) {
-        purchaseTor.setAttribute("class", "a-link-button");
+        purchaseTor.classList.add("a-link-button");
+        purchaseTor.classList.remove("a-link-button-bought");
         purchaseTor.innerHTML = "Purchase TOR Router - $" + formatNumber(CONSTANTS.TorRouterCost, 2);
     } else {
-        purchaseTor.setAttribute("class", "a-link-button-bought");
+        purchaseTor.classList.remove("a-link-button");
+        purchaseTor.classList.add("a-link-button-bought");
         purchaseTor.innerHTML = "TOR Router - Purchased";
     }
 
