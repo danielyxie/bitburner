@@ -21,12 +21,8 @@ the wiki content will be moved into the Read The Docs documentation.
 
 # Contribution
 There are many ways to contribute to the game. It can be as simple as fixing
-a typo
-
-If you would like to make any small change or addition to the game, you may
-go ahead and do so by submitting a pull request. For guidance on doing so,
-please refer to the [CONTRIBUTING](CONTRIBUTING.md) document in this
-repository.
+a typo, correcting a bug, or improving the UI. For guidance on doing so,
+please refer to the [CONTRIBUTING](CONTRIBUTING.md) document.
 
 You will retain all ownership of the Copyright of any contributions you make,
 and will have the same rights to use or license your contributions. By
