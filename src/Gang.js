@@ -336,17 +336,17 @@ function GangMember(name) {
 }
 
 //Same formula for Player
-GangMember.prototype.calculateSkill = function(exp) {
-    return Math.max(Math.floor(32 * Math.log(exp + 534.5) - 200), 1);
+GangMember.prototype.calculateSkill = function(exp, mult=1) {
+    return Math.max(Math.floor(mult*(32 * Math.log(exp + 534.5) - 200)), 1);
 }
 
 GangMember.prototype.updateSkillLevels = function() {
-    this.hack   = Math.floor(this.calculateSkill(this.hack_exp) * this.hack_mult);
-    this.str    = Math.floor(this.calculateSkill(this.str_exp) * this.str_mult);
-    this.def    = Math.floor(this.calculateSkill(this.def_exp) * this.def_mult);
-    this.dex    = Math.floor(this.calculateSkill(this.dex_exp) * this.dex_mult);
-    this.agi    = Math.floor(this.calculateSkill(this.agi_exp) * this.agi_mult);
-    this.cha    = Math.floor(this.calculateSkill(this.cha_exp) * this.cha_mult);
+    this.hack   = this.calculateSkill(this.hack_exp, this.hack_mult);
+    this.str    = this.calculateSkill(this.str_exp, this.str_mult);
+    this.def    = this.calculateSkill(this.def_exp, this.def_mult);
+    this.dex    = this.calculateSkill(this.dex_exp, this.dex_mult);
+    this.agi    = this.calculateSkill(this.agi_exp, this.agi_mult);
+    this.cha    = this.calculateSkill(this.cha_exp, this.cha_mult);
 }
 
 GangMember.prototype.calculatePower = function() {
