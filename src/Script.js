@@ -1,4 +1,5 @@
 var ace = require('brace');
+var beautify = require('js-beautify').js_beautify;
 require('brace/mode/javascript');
 require('../netscript');
 require('brace/theme/chaos');
@@ -57,6 +58,15 @@ function scriptEditorInit() {
         console.log("Error finding 'script-editor-buttons-wrapper'");
         return;
     }
+    var beautifyButton = createElement("a", {
+        class:"a-link-button", display:"inline-block",
+        innerText:"beautify",
+        clickListener:()=>{
+            beautifyScript();
+            return false;
+        }
+    });
+
     var closeButton = createElement("a", {
         class:"a-link-button", display:"inline-block",
         innerText:"Save & Close (Ctrl/Cmd + b)",
@@ -90,6 +100,7 @@ function scriptEditorInit() {
         target:"_blank"
     });
 
+    wrapper.appendChild(beautifyButton);
     wrapper.appendChild(closeButton);
     wrapper.appendChild(scriptEditorRamText);
     wrapper.appendChild(scriptEditorRamCheck);
@@ -242,6 +253,13 @@ $(document).keydown(function(e) {
         }
 	}
 });
+
+function beautifyScript() {
+    var editor = ace.edit('javascript-editor');
+    var code = editor.getValue();
+    code = beautify(code, { indent_size: 4 })
+    editor.setValue(code);
+}
 
 function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
@@ -448,7 +466,7 @@ function parseOnlyRamCalculate(server, code, workerScript) {
             if (ref == specialReferenceFOR) ram += CONSTANTS.ScriptForRamCost;
             if (ref == specialReferenceWHILE) ram += CONSTANTS.ScriptWhileRamCost;
             if (ref == "hacknetnodes") ram += CONSTANTS.ScriptHacknetNodesRamCost;
-            if (ref == "document" || ref == "window") ram += CONSTANTS.ScriptCheatRamCost;
+            if (ref == "document" || ref == "window") ram += CONSTANTS.ScriptDomRamCost;
 
             // Check if this ident is a function in the workerscript env. If it is, then we need to
             // get its RAM cost. We do this by calling it, which works because the running script
@@ -509,11 +527,15 @@ function parseOnlyCalculateDeps(code, currentModule) {
         s.add(name);  // For builtins like hack.
     }
 
+    //A list of identifiers that resolve to "native Javascript code"
+    const objectPrototypeProperties = Object.getOwnPropertyNames(Object.prototype);
+
     // If we discover a dependency identifier, state.key is the dependent identifier.
     // walkDeeper is for doing recursive walks of expressions in composites that we handle.
     function commonVisitors() {
         return {
             Identifier: (node, st, walkDeeper) => {
+                if (objectPrototypeProperties.includes(node.name)) {return;}
                 addRef(st.key, node.name);
             },
             WhileStatement: (node, st, walkDeeper) => {

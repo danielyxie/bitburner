@@ -12,7 +12,7 @@ import {Companies, Company, CompanyPosition,
         CompanyPositions, companyExists}            from "./Company.js";
 import {CONSTANTS}                                  from "./Constants.js";
 import {Programs}                                   from "./CreateProgram.js";
-import {parseDarkwebItemPrice, DarkWebItems}        from "./DarkWeb.js";
+import {DarkWebItems}                               from "./DarkWeb.js";
 import {Engine}                                     from "./engine.js";
 import {AllGangs}                                   from "./Gang.js";
 import {Factions, Faction, joinFaction,
@@ -81,6 +81,8 @@ var possibleLogs = {
     relaysmtp: true,
     httpworm: true,
     sqlinject: true,
+    run:true,
+    exec:true,
     spawn: true,
     kill: true,
     killall: true,
@@ -325,7 +327,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 workerScript.scriptRef.onlineExpGained += expGain;
                 Player.gainHackingExp(expGain);
-                return Promise.resolve(growthPercentage);
+                return Promise.resolve(moneyAfter/moneyBefore);
             });
         },
         weaken : function(ip){
@@ -644,7 +646,22 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "Invalid scriptname or numThreads argument passed to spawn()");
             }
             setTimeout(()=>{
-                NetscriptFunctions(workerScript).run.apply(this, arguments);
+                if (scriptname === undefined) {
+                    throw makeRuntimeRejectMsg(workerScript, "spawn() call has incorrect number of arguments. Usage: spawn(scriptname, numThreads, [arg1], [arg2]...)");
+                }
+                if (isNaN(threads) || threads < 1) {
+                    throw makeRuntimeRejectMsg(workerScript, "Invalid argument for thread count passed into run(). Must be numeric and greater than 0");
+                }
+                var argsForNewScript = [];
+                for (var i = 2; i < arguments.length; ++i) {
+                    argsForNewScript.push(arguments[i]);
+                }
+                var scriptServer = getServer(workerScript.serverIp);
+                if (scriptServer == null) {
+                    throw makeRuntimeRejectMsg(workerScript, "Could not find server. This is a bug in the game. Report to game dev");
+                }
+
+                return runScriptFromScript(scriptServer, scriptname, argsForNewScript, workerScript, threads);
             }, 20000);
             if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.spawn == null) {
                 workerScript.scriptRef.log("spawn() will execute " + scriptname + " in 20 seconds");
@@ -709,10 +726,7 @@ function NetscriptFunctions(workerScript) {
             return scriptsRunning;
         },
         exit : function() {
-            if (workerScript.checkingRam) {
-                return updateStaticRam("exit", CONSTANTS.ScriptKillRamCost);
-            }
-            updateDynamicRam("exit", CONSTANTS.ScriptKillRamCost);
+            if (workerScript.checkingRam) {return 0;}
             var server = getServer(workerScript.serverIp);
             if (server == null) {
                 throw makeRuntimeRejectMsg(workerScript, "Error getting Server for this script in exit(). This is a bug please contact game dev");
@@ -2292,7 +2306,9 @@ function NetscriptFunctions(workerScript) {
             AddToAllServers(darkweb);
             SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
 
-            document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
+            const purchaseTor = document.getElementById("location-purchase-tor");
+            purchaseTor.setAttribute("class", "a-link-button-bought");
+            purchaseTor.innerHTML = "TOR Router - Purchased";
 
             Player.getHomeComputer().serversOnNetwork.push(darkweb.ip);
             darkweb.serversOnNetwork.push(Player.getHomeComputer().ip);
@@ -2317,105 +2333,40 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (SpecialServerIps["Darkweb Server"] == null) {
-                workerScript.scriptRef.log("ERROR: You do not have  TOR router. purchaseProgram() failed.");
+                workerScript.scriptRef.log("ERROR: You do not have the TOR router. purchaseProgram() failed.");
                 return false;
             }
 
-            switch(programName.toLowerCase()) {
-                case Programs.BruteSSHProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.BruteSSHProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.BruteSSHProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the BruteSSH.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.FTPCrackProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.FTPCrackProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.FTPCrackProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the FTPCrack.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.RelaySMTPProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.RelaySMTPProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.RelaySMTPProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the relaySMTP.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.HTTPWormProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.HTTPWormProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.HTTPWormProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the HTTPWorm.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.SQLInjectProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.SQLInjectProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.SQLInjectProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the SQLInject.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.DeepscanV1.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV1Program);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.DeepscanV1);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the DeepscanV1.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.DeepscanV2.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV2Program);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.DeepscanV2);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the DeepscanV2.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                default:
-                    workerScript.scriptRef.log("ERROR: Invalid program passed into purchaseProgram().");
-                    return false;
+            programName = programName.toLowerCase();
+
+            let item = null;
+            for(const key in DarkWebItems) {
+                const i = DarkWebItems[key];
+                if(i.program.toLowerCase() == programName) {
+                    item = i;
+                }
+            }
+
+            if(item == null) {
+                workerScript.scriptRef.log("ERROR: Invalid program name passed into purchaseProgram().");
+                return false;
+            }
+
+            if(Player.money.lt(item.price)) {
+                workerScript.scriptRef.log("Not enough money to purchase " + item.program);
+                return false;
+            }
+
+
+            if(Player.hasProgram(item.program)) {
+                workerScript.scriptRef.log('You already have the '+item.program+' program');
+                return true;
+            }
+
+            Player.loseMoney(item.price);
+            Player.getHomeComputer().programs.push(item.program);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
+                workerScript.scriptRef.log("You have purchased the "+item.program+" program. The new program can be found on your home computer.");
             }
             return true;
         },
@@ -2798,7 +2749,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             // if the player is in a gang and the target faction is any of the gang faction, fail
-            if(Player.gang != null && AllGangs[name] !== undefined) {
+            if(Player.inGang() && AllGangs[name] !== undefined) {
                 workerScript.scriptRef.log("ERROR: Faction specified in workForFaction() does not offer work at the moment.");
                 return;
             }

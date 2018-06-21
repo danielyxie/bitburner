@@ -768,19 +768,31 @@ function initForeignServers() {
     }
 }
 
+function numCycleForGrowth(server, growth) {
+    let ajdGrowthRate = 1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty;
+    if(ajdGrowthRate > CONSTANTS.ServerMaxGrowthRate) {
+        ajdGrowthRate = CONSTANTS.ServerMaxGrowthRate;
+    }
+
+    const serverGrowthPercentage = server.serverGrowth / 100;
+
+    const cycles = Math.log(growth)/(Math.log(ajdGrowthRate)*Player.hacking_grow_mult*serverGrowthPercentage);
+    return cycles;
+}
+
 //Applied server growth for a single server. Returns the percentage growth
 function processSingleServerGrowth(server, numCycles) {
     //Server growth processed once every 450 game cycles
-    var numServerGrowthCycles = Math.max(Math.floor(numCycles / 450), 0);
+    const numServerGrowthCycles = Math.max(Math.floor(numCycles / 450), 0);
 
     //Get adjusted growth rate, which accounts for server security
-    var growthRate = CONSTANTS.ServerBaseGrowthRate;
+    const growthRate = CONSTANTS.ServerBaseGrowthRate;
     var adjGrowthRate = 1 + (growthRate - 1) / server.hackDifficulty;
     if (adjGrowthRate > CONSTANTS.ServerMaxGrowthRate) {adjGrowthRate = CONSTANTS.ServerMaxGrowthRate;}
 
     //Calculate adjusted server growth rate based on parameters
-    var serverGrowthPercentage = server.serverGrowth / 100;
-    var numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage * BitNodeMultipliers.ServerGrowthRate;
+    const serverGrowthPercentage = server.serverGrowth / 100;
+    const numServerGrowthCyclesAdjusted = numServerGrowthCycles * serverGrowthPercentage * BitNodeMultipliers.ServerGrowthRate;
 
     //Apply serverGrowth for the calculated number of growth cycles
     var serverGrowth = Math.pow(adjGrowthRate, numServerGrowthCyclesAdjusted * Player.hacking_grow_mult);
@@ -789,19 +801,26 @@ function processSingleServerGrowth(server, numCycles) {
         serverGrowth = 1;
     }
 
-    var oldMoneyAvailable = server.moneyAvailable;
+    const oldMoneyAvailable = server.moneyAvailable;
     server.moneyAvailable *= serverGrowth;
+
+    // in case of data corruption
     if (server.moneyMax && isNaN(server.moneyAvailable)) {
         server.moneyAvailable = server.moneyMax;
     }
+
+    // cap at max
     if (server.moneyMax && server.moneyAvailable > server.moneyMax) {
         server.moneyAvailable = server.moneyMax;
-        return server.moneyAvailable / oldMoneyAvailable;
     }
-
-    //Growing increases server security twice as much as hacking
-    server.fortify(2 * CONSTANTS.ServerFortifyAmount * numServerGrowthCycles);
-    return serverGrowth;
+    
+    // if there was any growth at all, increase security
+    if(oldMoneyAvailable !== server.moneyAvailable) {
+        //Growing increases server security twice as much as hacking
+        const usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable);
+        server.fortify(2 * CONSTANTS.ServerFortifyAmount * Math.ceil(usedCycles));
+    }
+    return server.moneyAvailable / oldMoneyAvailable;
 }
 
 function prestigeHomeComputer(homeComp) {
@@ -873,9 +892,11 @@ function GetServerByHostname(hostname) {
 function getServer(s) {
     if (!isValidIPAddress(s)) {
         return GetServerByHostname(s);
-    } else {
+    }
+    if(AllServers[s] !== undefined) {
         return AllServers[s];
     }
+    return null;
 }
 
 //Debugging tool

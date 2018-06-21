@@ -1729,7 +1729,9 @@ let Engine = {
 
         //If DarkWeb already purchased, disable the button
         if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
-            document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
+            const purchaseTor = document.getElementById("location-purchase-tor");
+            purchaseTor.setAttribute("class", "a-link-button-bought");
+            purchaseTor.innerHTML = "TOR Router - Purchased";
         }
     },
 

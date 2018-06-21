@@ -672,6 +672,46 @@ is sorted in alphabetic order</p>
 </dd></dl>
 
 </div>
+<div class="section" id="ps">
+<h2>ps<a class="headerlink" href="#ps" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt>
+<code class="descname">ps</code><span class="sig-paren">(</span><em>hostname/ip=current ip</em><span class="sig-paren">)</span></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ip</strong> (<em>string</em>) -- Hostname or IP address of the target server.
+If not specified, it will be the current server's IP by default</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns an array with general information about all scripts running on the specified
+target server. The information for each server is given in an object with
+the following structure:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">filename</span><span class="p">:</span>   <span class="n">Script</span> <span class="n">name</span><span class="p">,</span>
+    <span class="n">threads</span><span class="p">:</span>    <span class="n">Number</span> <span class="n">of</span> <span class="n">threads</span> <span class="n">script</span> <span class="ow">is</span> <span class="n">running</span> <span class="k">with</span><span class="p">,</span>
+    <span class="n">args</span><span class="p">:</span>       <span class="n">Script</span><span class="s1">&#39;s arguments</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example usage (using <a class="reference internal" href="netscriptjs.html"><span class="doc">NetscriptJS (Netscript 2.0)</span></a>):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="k">async</span> <span class="n">function</span> <span class="n">main</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">const</span> <span class="n">ps</span> <span class="o">=</span> <span class="n">ns</span><span class="o">.</span><span class="n">ps</span><span class="p">(</span><span class="s2">&quot;home&quot;</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">let</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ps</span><span class="o">.</span><span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ns</span><span class="o">.</span><span class="n">tprint</span><span class="p">(</span><span class="n">ps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">ps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">threads</span><span class="p">);</span>
+        <span class="n">ns</span><span class="o">.</span><span class="n">tprint</span><span class="p">(</span><span class="n">ps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="hasrootaccess">
 <h2>hasRootAccess<a class="headerlink" href="#hasrootaccess" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -1648,6 +1688,7 @@ you create in functions such as <a class="reference external" href="https://deve
 <li class="toctree-l3"><a class="reference internal" href="#exit">exit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scp">scp</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ls">ls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ps">ps</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hasrootaccess">hasRootAccess</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gethostname">getHostname</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gethackinglevel">getHackingLevel</a></li>
@@ -1702,6 +1743,7 @@ you create in functions such as <a class="reference external" href="https://deve
 </li>
 <li class="toctree-l1"><a class="reference internal" href="terminal.html"> Terminal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shortcuts.html"> Keyboard Shortcuts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html"> Changelog</a></li>
 </ul>
 
           <div role="search">

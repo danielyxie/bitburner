@@ -19,7 +19,6 @@ function checkIfConnectedToDarkweb() {
                  "to purchase an item");
         }
     }
-
 }
 
 //Handler for dark web commands. The terminal's executeCommand() function will pass
@@ -49,150 +48,68 @@ function executeDarkwebTerminalCommand(commandArray) {
 }
 
 function listAllDarkwebItems() {
-    for (var item in DarkWebItems) {
-		if (DarkWebItems.hasOwnProperty(item)) {
-            var item = DarkWebItems[item];
-            //Convert string using toLocaleString
-            var split = item.split(" - ");
-            if (split.length == 3 && split[1].charAt(0) == '$') {
-                split[1] = split[1].slice(1);
-                split[1] = split[1].replace(/,/g, '');
-                var price = parseFloat(split[1]);
-                if (isNaN(price)) {
-                    post(item);
-                    return;
-                }
-                price = formatNumber(price, 0);
-                split[1] = "$" + price.toString();
-                post(split.join(" - "));
-            } else {
-                post(item);
-            }
-		}
-	}
-
-    var priceString = split[1];
-    //Check for errors
-    if (priceString.length == 0 || priceString.charAt(0) != '$') {
-        return -1;
+    for(const key in DarkWebItems) {
+        const item = DarkWebItems[key];
+        post(item.toString());
     }
-    //Remove dollar sign and commas
-    priceString = priceString.slice(1);
-    priceString = priceString.replace(/,/g, '');
-
-    //Convert string to numeric
-    var price = parseFloat(priceString);
-    if (isNaN(price)) {return -1;}
-    else {return price;}
 }
 
 function buyDarkwebItem(itemName) {
-    if (itemName.toLowerCase() == Programs.BruteSSHProgram.toLowerCase()) {
-        var price = parseDarkwebItemPrice(DarkWebItems.BruteSSHProgram);
-        if (price > 0 && Player.money.gt(price)) {
-            Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.BruteSSHProgram);
-            post("You have purchased the BruteSSH.exe program. The new program " +
-                 "can be found on your home computer.");
-        } else {
-            post("Not enough money to purchase " + itemName);
+    itemName = itemName.toLowerCase();
+
+    // find the program that matches, if any
+    let item = null;
+    for(const key in DarkWebItems) {
+        const i = DarkWebItems[key];
+        if(i.program.toLowerCase() == itemName) {
+            item = i;
         }
-    } else if (itemName.toLowerCase() == Programs.FTPCrackProgram.toLowerCase()) {
-        var price = parseDarkwebItemPrice(DarkWebItems.FTPCrackProgram);
-        if (price > 0 && Player.money.gt(price)) {
-            Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.FTPCrackProgram);
-            post("You have purchased the FTPCrack.exe program. The new program " +
-                 "can be found on your home computer.");
-        } else {
-            post("Not enough money to purchase " + itemName);
-        }
-    } else if (itemName.toLowerCase() == Programs.RelaySMTPProgram.toLowerCase()) {
-        var price = parseDarkwebItemPrice(DarkWebItems.RelaySMTPProgram);
-        if (price > 0 && Player.money.gt(price)) {
-            Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.RelaySMTPProgram);
-            post("You have purchased the relaySMTP.exe program. The new program " +
-                 "can be found on your home computer.");
-        } else {
-            post("Not enough money to purchase " + itemName);
-        }
-    } else if (itemName.toLowerCase() == Programs.HTTPWormProgram.toLowerCase()) {
-        var price = parseDarkwebItemPrice(DarkWebItems.HTTPWormProgram);
-        if (price > 0 && Player.money.gt(price)) {
-            Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.HTTPWormProgram);
-            post("You have purchased the HTTPWorm.exe program. The new program " +
-                 "can be found on your home computer.");
-        } else {
-            post("Not enough money to purchase " + itemName);
-        }
-    } else if (itemName.toLowerCase() == Programs.SQLInjectProgram.toLowerCase()) {
-        var price = parseDarkwebItemPrice(DarkWebItems.SQLInjectProgram);
-        if (price > 0 && Player.money.gt(price)) {
-            Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.SQLInjectProgram);
-            post("You have purchased the SQLInject.exe program. The new program " +
-                 "can be found on your home computer.");
-        } else {
-            post("Not enough money to purchase " + itemName);
-        }
-    } else if (itemName.toLowerCase() == Programs.DeepscanV1.toLowerCase()) {
-        var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV1Program);
-        if (price > 0 && Player.money.gt(price)) {
-            Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.DeepscanV1);
-            post("You have purchased the DeepscanV1.exe program. The new program " +
-                 "can be found on your home computer.");
-        } else {
-            post("Not enough money to purchase " + itemName);
-        }
-    } else if (itemName.toLowerCase() == Programs.DeepscanV2.toLowerCase()) {
-        var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV2Program);
-        if (price > 0 && Player.money.gt(price)) {
-            Player.loseMoney(price);
-            Player.getHomeComputer().programs.push(Programs.DeepscanV2);
-            post("You have purchased the DeepscanV2.exe program. The new program " +
-                 "can be found on your home computer.");
-        } else {
-            post("Not enough money to purchase " + itemName);
-        }
-    } else {
-        post("Unrecognized item");
     }
-}
 
-function parseDarkwebItemPrice(itemDesc) {
-    var split = itemDesc.split(" - ");
-    if (split.length == 3) {
-        var priceString = split[1];
-        //Check for errors
-        if (priceString.length == 0 || priceString.charAt(0) != '$') {
-            return -1;
-        }
-        //Remove dollar sign and commas
-        priceString = priceString.slice(1);
-        priceString = priceString.replace(/,/g, '');
-
-        //Convert string to numeric
-        var price = parseFloat(priceString);
-        if (isNaN(price)) {return -1;}
-        else {return price;}
-    } else {
-        return -1;
+    // return if invalid
+    if(item === null) {
+        post("Unrecognized item: "+itemName);
+        return;
     }
+
+    // return if the player already has it.
+    if(Player.hasProgram(item.program)) {
+        post('You already have the '+item.program+' program');
+        return;
+    }
+
+    // return if the player doesn't have enough money
+    if(Player.money.lt(item.price)) {
+        post("Not enough money to purchase " + item.program);
+        return;
+    }
+
+    // buy and push
+    Player.loseMoney(item.price);
+    Player.getHomeComputer().programs.push(item.program);
+    post('You have purchased the '+item.program+' program. The new program can be found on your home computer.');
 }
 
-let DarkWebItems = {
-    BruteSSHProgram:    "BruteSSH.exe - $500,000 - Opens up SSH Ports",
-    FTPCrackProgram:    "FTPCrack.exe - $1,500,000 - Opens up FTP Ports",
-    RelaySMTPProgram:   "relaySMTP.exe - $5,000,000 - Opens up SMTP Ports",
-    HTTPWormProgram:    "HTTPWorm.exe - $30,000,000 - Opens up HTTP Ports",
-    SQLInjectProgram:   "SQLInject.exe - $250,000,000 - Opens up SQL Ports",
-    DeepScanV1Program:  "DeepscanV1.exe - $500,000 - Enables 'scan-analyze' with a depth up to 5",
-    DeepScanV2Program:  "DeepscanV2.exe - $25,000,000 - Enables 'scan-analyze' with a depth up to 10",
+function DarkWebItem(program, price, description) {
+    this.program = program;
+    this.price = price;
+    this.description = description;
 }
 
-export {checkIfConnectedToDarkweb, executeDarkwebTerminalCommand,
-        listAllDarkwebItems, buyDarkwebItem, parseDarkwebItemPrice,
-        DarkWebItems};
+// formats the item for the terminal (eg. "BruteSSH.exe - $500,000 - Opens up SSH Ports")
+DarkWebItem.prototype.toString = function() {
+    return [this.program, "$"+formatNumber(this.price), this.description].join(' - ');
+}
+
+const DarkWebItems = {
+    BruteSSHProgram:  new DarkWebItem(Programs.BruteSSHProgram, 500000, "Opens up SSH Ports"),
+    FTPCrackProgram:  new DarkWebItem(Programs.FTPCrackProgram, 1500000, "Opens up FTP Ports"),
+    RelaySMTPProgram: new DarkWebItem(Programs.RelaySMTPProgram, 5000000, "Opens up SMTP Ports"),
+    HTTPWormProgram:  new DarkWebItem(Programs.HTTPWormProgram, 30000000, "Opens up HTTP Ports"),
+    SQLInjectProgram: new DarkWebItem(Programs.SQLInjectProgram, 250000000, "Opens up SQL Ports"),
+    DeepscanV1:       new DarkWebItem(Programs.DeepscanV1, 500000, "Enables 'scan-analyze' with a depth up to 5"),
+    DeepscanV2:       new DarkWebItem(Programs.DeepscanV2, 25000000, "Enables 'scan-analyze' with a depth up to 10"),
+};
+
+
+export {checkIfConnectedToDarkweb, executeDarkwebTerminalCommand, DarkWebItems};

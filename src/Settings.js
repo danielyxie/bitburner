@@ -48,7 +48,7 @@ function setSettingsLabels() {
     nsPortLimit.innerHTML = Settings.MaxPortCapacity;
     suppressMsgs.checked = Settings.SuppressMessages;
     suppressFactionInv.checked = Settings.SuppressFactionInvites;
-    suppressTravelConfirmation.checked = Settings.suppressTravelConfirmation;
+    suppressTravelConfirmation.checked = Settings.SuppressTravelConfirmation;
     autosaveInterval.innerHTML = Settings.AutosaveInterval;
     disableHotkeys.checked = Settings.DisableHotkeys;
 
