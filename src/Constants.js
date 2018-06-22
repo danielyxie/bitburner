@@ -42,11 +42,11 @@ let CONSTANTS = {
 
     /* Netscript Constants */
     //RAM Costs for different commands
-    ScriptBaseRamCost:              1.4,
+    ScriptBaseRamCost:              1.6,
     ScriptDomRamCost:               100,
-    ScriptWhileRamCost:             0.2,
-    ScriptForRamCost:               0.2,
-    ScriptIfRamCost:                0.15,
+    ScriptWhileRamCost:             0,
+    ScriptForRamCost:               0,
+    ScriptIfRamCost:                0,
     ScriptHackRamCost:              0.1,
     ScriptGrowRamCost:              0.15,
     ScriptWeakenRamCost:            0.15,
@@ -490,17 +490,15 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.38.1<br>"  +
-    "* Bug Fix: Using 'Object.prototype' functions like toLocaleString() or toString() should no longer cause errors in NetscriptJS<br>" +
-    "* Implemented by Github user hydroflame:<br>"  +
-    "*** Accessing the 'window' and 'document' objects in Netscript JS now requires a large amount of RAM (100 GB)<br>" +
-    "*** Added game option to suppress travel confirmation<br>"  +
-    "*** Text on buttons can no longer be highlighted<br>" +
-    "*** Bug Fix: Fixed an issue that caused NaN values when exporting Real Estate in Corporations<br>" +
-    "*** Bug Fix: Competition and Demand displays in Corporation are now correct (were reversed before)<br>" +
-    "*** Added ps() Netscript function<br>"  +
-    "*** Bug Fix: grow() should no longer return/log a negative value when it runs on a server that's already at max money<br>" +
-    "*** Bug Fix: serverExists() Netscript function should now properly return false for non-existent hostname/ips<br>" +
-    "*** Bug Fix: Sever's security level should now properly increase when its money is grown to max value"
+    "* Added 'var' declarations in Netscript 1.0 (only works with 'var', not 'let' or 'const')<br>"  +
+    "* Script base RAM cost is now 1.6 GB (increased from 1.4 GB)<br>" +
+    "* While/for loops and if statements no longer cost RAM in scripts<br>"  +
+    "* Made short-circuit evaluation logic more consistent in Netscript 1.0 (see https://github.com/danielyxie/bitburner/issues/308)<br>" +
+    "* Changelog button in the Options menu now links to the new Changelog URL (by Github user thePalindrome)<br>" +
+    "* Skill level calculation is now 'smoother' (by Github user hydroflame)<br>" +
+    "* Added a button to 'beautify' scripts in the text editor (by Github user hydroflame)<br>" +
+    "* Added favicon (by Github user kopelli)"
+
 
 }
 

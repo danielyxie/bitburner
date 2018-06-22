@@ -60,7 +60,7 @@ function scriptEditorInit() {
     }
     var beautifyButton = createElement("a", {
         class:"a-link-button", display:"inline-block",
-        innerText:"beautify",
+        innerText:"Beautify",
         clickListener:()=>{
             beautifyScript();
             return false;
