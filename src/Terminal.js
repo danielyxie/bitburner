@@ -9,7 +9,7 @@ import {executeDarkwebTerminalCommand,
 import {Engine}                             from "./engine.js";
 import {FconfSettings, parseFconfSettings,
         createFconf}                        from "./Fconf.js";
-import {TerminalHelpText, HelpTexts}        from "./HelpText.js";
+import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         iTutorialIsRunning,
         currITutorialStep}                  from "./InteractiveTutorial.js";
@@ -29,8 +29,7 @@ import {AllServers, GetServerByHostname,
 import {Settings}                           from "./Settings.js";
 import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps.js";
-import {TextFile, getTextFile,
-        createTextFile}                     from "./TextFile.js";
+import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
         formatNumber, isString}             from "../utils/StringHelperFunctions.js";
