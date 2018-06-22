@@ -38,7 +38,7 @@ import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import {compareArrays, createElement}           from "../utils/HelperFunctions.js";
 import {formatNumber, numOccurrences,
-        numNetscriptOperators}                  from "../utils/StringHelperFunctions.js";
+        numNetscriptOperators}                  from "../utils/StringHelperFunctions";
 
 var keybindings = {
     ace: null,

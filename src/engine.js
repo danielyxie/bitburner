@@ -5,7 +5,8 @@ import {clearEventListeners, createElement,
         exceptionAlert}                         from "../utils/HelperFunctions.js";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
-        convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
+        convertTimeMsToTimeElapsedString,
+        replaceAt}                              from "../utils/StringHelperFunctions";
 import {loxBoxCreate, logBoxUpdateText,
         logBoxOpened}                           from "../utils/LogBox.js";
 
@@ -1170,7 +1171,7 @@ let Engine = {
 
         //Update progress bar
         while (Engine._actionProgressBarCount * 2 <= percent) {
-            Engine._actionProgressStr = Engine._actionProgressStr.replaceAt(Engine._actionProgressBarCount, "|");
+            Engine._actionProgressStr = replaceAt(Engine._actionProgressStr, Engine._actionProgressBarCount, "|");
             Engine._actionProgressBarCount += 1;
         }
 

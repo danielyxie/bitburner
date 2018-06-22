@@ -12,7 +12,7 @@ import {clearEventListeners, getRandomInt,
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import numeral                                  from "numeral/min/numeral.min";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,

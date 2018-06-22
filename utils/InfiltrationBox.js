@@ -4,7 +4,7 @@ import {Factions, Faction}                  from "../src/Faction.js";
 import {Player}                             from "../src/Player.js";
 import {dialogBoxCreate}                    from "./DialogBox.js";
 import {clearEventListeners}                from "./HelperFunctions.js";
-import {formatNumber}                       from "./StringHelperFunctions.js";
+import {formatNumber}                       from "./StringHelperFunctions";
 
 /* InfiltrationBox.js */
 function infiltrationBoxClose() {

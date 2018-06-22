@@ -14,7 +14,7 @@ import {getRandomInt, removeElementById,
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver.js";
 import numeral                                          from "numeral/min/numeral.min";
-import {formatNumber, isString, generateRandomString}   from "../utils/StringHelperFunctions.js";
+import {formatNumber, isString, generateRandomString}   from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,

@@ -11,7 +11,7 @@ import {getRandomInt, createElement,
         createAccordionElement, createPopup,
         removeElementById, removeElement}       from "../utils/HelperFunctions.js";
 import  numeral                                 from "numeral/min/numeral.min";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,

@@ -17,7 +17,7 @@ import {getRandomInt, addOffset, clearObject,
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver.js";
 import numeral                                      from "numeral/min/numeral.min";
-import {formatNumber}                               from "../utils/StringHelperFunctions.js";
+import {formatNumber}                               from "../utils/StringHelperFunctions";
 
 
 var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];

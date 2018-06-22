@@ -51,7 +51,7 @@ import Decimal                                      from "decimal.js";
 import {dialogBoxCreate}                            from "../utils/DialogBox.js";
 import {printArray, powerOfTwo}                     from "../utils/HelperFunctions.js";
 import {createRandomIp}                             from "../utils/IPAddress.js";
-import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions.js";
+import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions";
 import {yesNoBoxClose, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxCreate,
         yesNoBoxOpen}                               from "../utils/YesNoBox.js";

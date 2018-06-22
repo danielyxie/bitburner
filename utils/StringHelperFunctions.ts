@@ -4,12 +4,14 @@ import {dialogBoxCreate} from "./DialogBox.js";
 
 //Searches for every occurence of searchStr within str and returns an array of the indices of
 //all these occurences
-function getIndicesOf(searchStr, str, caseSensitive) {
-    var searchStrLen = searchStr.length;
+function getIndicesOf(searchStr: string, str: string, caseSensitive: boolean): number[] {
+    let searchStrLen: number = searchStr.length;
     if (searchStrLen == 0) {
         return [];
     }
-    var startIndex = 0, index, indices = [];
+    let startIndex: number = 0;
+    let index: number = 0;
+    let indices: number[] = [];
     if (!caseSensitive) {
         str = str.toLowerCase();
         searchStr = searchStr.toLowerCase();
@@ -22,30 +24,30 @@ function getIndicesOf(searchStr, str, caseSensitive) {
 }
 
 //Replaces the character at an index with a new character
-String.prototype.replaceAt=function(index, character) {
-    return this.substr(0, index) + character + this.substr(index+character.length);
+function replaceAt(base: string, index: number, character: string): string {
+    return base.substr(0, index) + character + base.substr(index+character.length);
 }
 
 //Converts a date representing time in milliseconds to a string with the format
 //      H hours M minutes and S seconds
 // e.g. 10000 -> "0 hours 0 minutes and 10 seconds"
 //      120000 -> "0 0 hours 2 minutes and 0 seconds"
-function convertTimeMsToTimeElapsedString(time) {
+function convertTimeMsToTimeElapsedString(time: number): string {
     //Convert ms to seconds, since we only have second-level precision
     time = Math.floor(time / 1000);
 
-    var days = Math.floor(time / 86400);
+    let days = Math.floor(time / 86400);
     time %= 86400;
 
-    var hours = Math.floor(time / 3600);
+    let hours = Math.floor(time / 3600);
     time %= 3600;
 
-    var minutes = Math.floor(time / 60);
+    let minutes = Math.floor(time / 60);
     time %= 60;
 
-    var seconds = time;
+    let seconds: number = time;
 
-    var res = "";
+    let res = "";
     if (days) {res += days + " days ";}
     if (hours) {res += hours + " hours ";}
     if (minutes) {res += minutes + " minutes ";}
@@ -54,29 +56,32 @@ function convertTimeMsToTimeElapsedString(time) {
 }
 
 //Finds the longest common starting substring in a set of strings
-function longestCommonStart(strings) {
-    if (!containsAllStrings(strings)) {return;}
-    if (strings.length == 0) {return;}
+function longestCommonStart(strings: string[]): string {
+    if (!containsAllStrings(strings)) {return "";}
+    if (strings.length == 0) {return "";}
 
-    var A = strings.concat().sort(),
-    a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
+    let A: string[] = strings.concat().sort();
+    let a1: string = A[0];
+    let a2: string = A[A.length-1];
+    let L: number = a1.length;
+    let i: number = 0;
     while(i<L && a1.charAt(i).toLowerCase() === a2.charAt(i).toLowerCase()) i++;
     return a1.substring(0, i);
 }
 
 
 //Returns whether a variable is a string
-function isString(str) {
+function isString(str: any): boolean {
     return (typeof str === 'string' || str instanceof String);
 }
 
 //Returns whether an array contains entirely of string objects
-function containsAllStrings(arr) {
+function containsAllStrings(arr: string[]): boolean {
     return arr.every(isString);
 }
 
 //Formats a number with commas and a specific number of decimal digits
-function formatNumber(num, numFractionDigits) {
+function formatNumber(num: number, numFractionDigits: number): string {
     return num.toLocaleString(undefined, {
         minimumFractionDigits: numFractionDigits,
         maximumFractionDigits: numFractionDigits
@@ -84,15 +89,17 @@ function formatNumber(num, numFractionDigits) {
 }
 
 //Count the number of times a substring occurs in a string
-function numOccurrences(string, subString) {
-    string += "";
+function numOccurrences(text: string, subString: string): number {
+    text += "";
     subString += "";
-    if (subString.length <= 0) return (string.length + 1);
+    if (subString.length <= 0) return (text.length + 1);
 
-    var n = 0, pos = 0, step = subString.length;
+    let n: number = 0;
+    let pos: number = 0;
+    let step: number = subString.length;
 
     while (true) {
-        pos = string.indexOf(subString, pos);
+        pos = text.indexOf(subString, pos);
         if (pos >= 0) {
             ++n;
             pos += step;
@@ -102,30 +109,29 @@ function numOccurrences(string, subString) {
 }
 
 //Counters the number of Netscript operators in a string
-function numNetscriptOperators(string) {
-    var total = 0;
-    total += numOccurrences(string, "+");
-    total += numOccurrences(string, "-");
-    total += numOccurrences(string, "*");
-    total += numOccurrences(string, "/");
-    total += numOccurrences(string, "%");
-    total += numOccurrences(string, "&&");
-    total += numOccurrences(string, "||");
-    total += numOccurrences(string, "<");
-    total += numOccurrences(string, ">");
-    total += numOccurrences(string, "<=");
-    total += numOccurrences(string, ">=");
-    total += numOccurrences(string, "==");
-    total += numOccurrences(string, "!=");
+function numNetscriptOperators(text: string): number {
+    const total: number = numOccurrences(text, "+") +
+        numOccurrences(text, "-") +
+        numOccurrences(text, "*") +
+        numOccurrences(text, "/") +
+        numOccurrences(text, "%") +
+        numOccurrences(text, "&&") +
+        numOccurrences(text, "||") +
+        numOccurrences(text, "<") +
+        numOccurrences(text, ">") +
+        numOccurrences(text, "<=") +
+        numOccurrences(text, ">=") +
+        numOccurrences(text, "==") +
+        numOccurrences(text, "!=");
     if (isNaN(total)) {
-        dialogBoxCreate("ERROR in counting number of operators in script. This is a bug, please report to game developer");
-        total = 0;
+        dialogBoxCreate("ERROR in counting number of operators in script. This is a bug, please report to game developer", false);
+        return 0;
     }
     return total;
 }
 
 //Checks if a string contains HTML elements
-function isHTML(str) {
+function isHTML(str: string): boolean {
     var a = document.createElement('div');
     a.innerHTML = str;
     for (var c = a.childNodes, i = c.length; i--; ) {
@@ -135,7 +141,7 @@ function isHTML(str) {
 }
 
 //Generates a random alphanumeric string with N characters
-function generateRandomString(n) {
+function generateRandomString(n: number): string {
     var str = "",
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -147,4 +153,4 @@ function generateRandomString(n) {
 
 export {getIndicesOf, convertTimeMsToTimeElapsedString, longestCommonStart,
         isString, containsAllStrings, formatNumber,
-        numOccurrences, numNetscriptOperators, isHTML, generateRandomString};
+        numOccurrences, numNetscriptOperators, isHTML, generateRandomString, replaceAt};
