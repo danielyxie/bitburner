@@ -109,6 +109,7 @@ const DarkWebItems = {
     SQLInjectProgram: new DarkWebItem(Programs.SQLInjectProgram, 250000000, "Opens up SQL Ports"),
     DeepscanV1:       new DarkWebItem(Programs.DeepscanV1, 500000, "Enables 'scan-analyze' with a depth up to 5"),
     DeepscanV2:       new DarkWebItem(Programs.DeepscanV2, 25000000, "Enables 'scan-analyze' with a depth up to 10"),
+    AutolinkProgram:  new DarkWebItem(Programs.AutoLink, 1000000, "Enables direct connect via 'scan-analyze'"),
 };
 
 

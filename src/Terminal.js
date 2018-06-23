@@ -5,11 +5,12 @@ import {substituteAliases, printAliases,
 import {CONSTANTS}                          from "./Constants.js";
 import {Programs}                           from "./CreateProgram.js";
 import {executeDarkwebTerminalCommand,
-        checkIfConnectedToDarkweb}          from "./DarkWeb.js";
+        checkIfConnectedToDarkweb,
+        DarkWebItems}                       from "./DarkWeb.js";
 import {Engine}                             from "./engine.js";
 import {FconfSettings, parseFconfSettings,
         createFconf}                        from "./Fconf.js";
-import {TerminalHelpText, HelpTexts}        from "./HelpText.js";
+import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         iTutorialIsRunning,
         currITutorialStep}                  from "./InteractiveTutorial.js";
@@ -29,8 +30,7 @@ import {AllServers, GetServerByHostname,
 import {Settings}                           from "./Settings.js";
 import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps.js";
-import {TextFile, getTextFile,
-        createTextFile}                     from "./TextFile.js";
+import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
         formatNumber, isString}             from "../utils/StringHelperFunctions.js";
@@ -409,9 +409,12 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     }
 
     if (input.startsWith ("buy ")) {
-        return [Programs.BruteSSHProgram.name, Programs.FTPCrackProgram.name, Programs.RelaySMTPProgram.name,
-                Programs.HTTPWormProgram.name, Programs.SQLInjectProgram.name, Programs.DeepscanV1.name,
-                Programs.DeepscanV2.name].concat(Object.keys(GlobalAliases));
+        let options = [];
+        for(const i in DarkWebItems) {
+            const item = DarkWebItems[i]
+            options.push(item.program);
+        }
+        return options.concat(Object.keys(GlobalAliases));
     }
 
     if (input.startsWith("scp ") && index == 1) {

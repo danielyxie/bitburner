@@ -224,6 +224,9 @@ function evaluate(exp, workerScript) {
             case "AssignmentExpression":
                 return evalAssignment(exp, workerScript);
                 break;
+            case "VariableDeclaration":
+                return evalVariableDeclaration(exp, workerScript);
+                break;
             case "UpdateExpression":
                 if (exp.argument.type==="Identifier"){
                     if (exp.argument.name in env.vars){
@@ -333,11 +336,11 @@ function evaluate(exp, workerScript) {
 function evalBinary(exp, workerScript){
     return evaluate(exp.left, workerScript).then(function(expLeft) {
         //Short circuiting
-        if (expLeft == true && exp.operator === "||") {
-            return Promise.resolve(true);
+        if (expLeft && exp.operator === "||") {
+            return Promise.resolve(expLeft);
         }
-        if (expLeft == false && exp.operator === "&&") {
-            return Promise.resolve(false);
+        if (!expLeft && exp.operator === "&&") {
+            return Promise.resolve(expLeft);
         }
         return evaluate(exp.right, workerScript).then(function(expRight) {
             switch (exp.operator){
@@ -509,6 +512,41 @@ function evalAssignment(exp, workerScript) {
             }
         }
     });
+}
+
+function evalVariableDeclaration(exp, workerScript) {
+    var env = workerScript.env;
+    if (env.stopFlag) {return Promise.reject(workerScript);}
+
+    if (!(exp.declarations instanceof Array)) {
+        return Promise.reject(makeRuntimeRejectMsg(workerScript, "Variable declarations parsed incorrectly. This may be a syntax error"));
+    }
+
+    if (exp.kind !== "var") {
+        return Promise.reject(makeRuntimeRejectMsg(workerScript, "Only 'var' declarations are currently allowed (let, const, etc. are not allowed)"));
+    }
+
+    return Promise.all(exp.declarations.map((decl)=>{
+        evalVariableDeclarator(decl, workerScript);
+    })).then(function(res) {
+        return Promise.resolve(res);
+    });
+}
+
+//A Variable Declaration contains an array of Variable Declarators
+function evalVariableDeclarator(exp, workerScript) {
+    var env = workerScript.env;
+    if (exp.type !== "VariableDeclarator") {
+        return Promise.reject(makeRuntimeRejectMsg(workerScript, "Invalid AST Node passed into evalVariableDeclarator: " + exp.type));
+    }
+    if (exp.init == null) {
+        env.set(exp.id.name, null);
+        return Promise.resolve(null);
+    } else {
+        return evaluate(exp.init, workerScript).then(function(initValue) {
+            env.set(exp.id.name, initValue);
+        });
+    }
 }
 
 function evaluateIf(exp, workerScript, i) {

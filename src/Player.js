@@ -201,6 +201,7 @@ function PlayerObject() {
 	this.lastUpdate = 0;
     this.totalPlaytime = 0;
     this.playtimeSinceLastAug = 0;
+    this.playtimeSinceLastBitnode = 0;
 
     //Production since last Augmentation installation
     this.scriptProdSinceLastAug = 0;
@@ -390,6 +391,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.corporation = 0;
 
     this.playtimeSinceLastAug = 0;
+    this.playtimeSinceLastBitnode = 0;
     this.scriptProdSinceLastAug = 0;
 }
 
@@ -422,17 +424,17 @@ PlayerObject.prototype.receiveInvite = function(factionName) {
 }
 
 //Calculates skill level based on experience. The same formula will be used for every skill
-PlayerObject.prototype.calculateSkill = function(exp) {
-    return Math.max(Math.floor(32 * Math.log(exp + 534.5) - 200), 1);
+PlayerObject.prototype.calculateSkill = function(exp, mult=1) {
+    return Math.max(Math.floor(mult*(32 * Math.log(exp + 534.5) - 200)), 1);
 }
 
 PlayerObject.prototype.updateSkillLevels = function() {
-	this.hacking_skill = Math.max(1, Math.floor(this.calculateSkill(this.hacking_exp) * this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier));
-	this.strength      = Math.floor(this.calculateSkill(this.strength_exp) * this.strength_mult);
-    this.defense       = Math.floor(this.calculateSkill(this.defense_exp) * this.defense_mult);
-    this.dexterity     = Math.floor(this.calculateSkill(this.dexterity_exp) * this.dexterity_mult);
-    this.agility       = Math.floor(this.calculateSkill(this.agility_exp) * this.agility_mult);
-    this.charisma      = Math.floor(this.calculateSkill(this.charisma_exp) * this.charisma_mult);
+	this.hacking_skill = Math.max(1, Math.floor(this.calculateSkill(this.hacking_exp, this.hacking_mult) * BitNodeMultipliers.HackingLevelMultiplier));
+	this.strength      = this.calculateSkill(this.strength_exp, this.strength_mult);
+    this.defense       = this.calculateSkill(this.defense_exp, this.defense_mult);
+    this.dexterity     = this.calculateSkill(this.dexterity_exp, this.dexterity_mult);
+    this.agility       = this.calculateSkill(this.agility_exp, this.agility_mult);
+    this.charisma      = this.calculateSkill(this.charisma_exp, this.charisma_mult);
 
     if (this.intelligence > 0) {
         this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp));
