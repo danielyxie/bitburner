@@ -576,6 +576,11 @@ let Engine = {
             intText = 'Intelligence:  ' + (Player.intelligence).toLocaleString() + "<br><br><br>";
         }
 
+        let bitNodeTimeText = "";
+        if(Player.sourceFiles.length > 0) {
+            bitNodeTimeText = 'Time played since last Bitnode destroyed: ' + convertTimeMsToTimeElapsedString(Player.playtimeSinceLastBitnode) + '<br>';
+        }
+
         Engine.Display.characterInfo.appendChild(createElement("pre", {
             innerHTML:
             '<b>General</b><br><br>' +
@@ -629,6 +634,7 @@ let Engine = {
             'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
             'Augmentations installed: ' + Player.augmentations.length + '<br>' +
             'Time played since last Augmentation: ' + convertTimeMsToTimeElapsedString(Player.playtimeSinceLastAug) + '<br>' +
+            bitNodeTimeText +
             'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime),
         }));
 
@@ -914,8 +920,10 @@ let Engine = {
         var time = numCycles * Engine._idleSpeed;
         if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
         if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
+        if (Player.playtimeSinceLastBitnode == null) {Player.playtimeSinceLastBitnode = 0;}
         Player.totalPlaytime += time;
         Player.playtimeSinceLastAug += time;
+        Player.playtimeSinceLastBitnode += time;
 
         //Start Manual hack
         if (Player.startAction == true) {
@@ -1335,8 +1343,10 @@ let Engine = {
             var time = numCyclesOffline * Engine._idleSpeed;
             if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
             if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
+            if (Player.playtimeSinceLastBitnode == null) {Player.playtimeSinceLastBitnode = 0;}
             Player.totalPlaytime += time;
             Player.playtimeSinceLastAug += time;
+            Player.playtimeSinceLastBitnode += time;
 
             Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop

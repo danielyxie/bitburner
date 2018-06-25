@@ -5,11 +5,12 @@ import {substituteAliases, printAliases,
 import {CONSTANTS}                          from "./Constants.js";
 import {Programs}                           from "./CreateProgram.js";
 import {executeDarkwebTerminalCommand,
-        checkIfConnectedToDarkweb}          from "./DarkWeb.js";
+        checkIfConnectedToDarkweb,
+        DarkWebItems}                       from "./DarkWeb.js";
 import {Engine}                             from "./engine.js";
 import {FconfSettings, parseFconfSettings,
         createFconf}                        from "./Fconf.js";
-import {TerminalHelpText, HelpTexts}        from "./HelpText.js";
+import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         iTutorialIsRunning,
         currITutorialStep}                  from "./InteractiveTutorial.js";
@@ -19,6 +20,7 @@ import {scriptCalculateHackingTime,
         scriptCalculateGrowTime,
         scriptCalculateWeakenTime}          from "./NetscriptEvaluator.js";
 import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker.js";
+import numeral                              from "numeral/min/numeral.min";
 import {Player}                             from "./Player.js";
 import {hackWorldDaemon}                    from "./RedPill.js";
 import {findRunningScript, RunningScript,
@@ -29,8 +31,7 @@ import {AllServers, GetServerByHostname,
 import {Settings}                           from "./Settings.js";
 import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps.js";
-import {TextFile, getTextFile,
-        createTextFile}                     from "./TextFile.js";
+import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
         formatNumber, isString}             from "../utils/StringHelperFunctions.js";
@@ -409,9 +410,12 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     }
 
     if (input.startsWith ("buy ")) {
-        return [Programs.BruteSSHProgram, Programs.FTPCrackProgram, Programs.RelaySMTPProgram,
-                Programs.HTTPWormProgram, Programs.SQLInjectProgram, Programs.DeepscanV1,
-                Programs.DeepscanV2].concat(Object.keys(GlobalAliases));
+        let options = [];
+        for(const i in DarkWebItems) {
+            const item = DarkWebItems[i]
+            options.push(item.program);
+        }
+        return options.concat(Object.keys(GlobalAliases));
     }
 
     if (input.startsWith("scp ") && index == 1) {
@@ -1913,7 +1917,8 @@ let Terminal = {
                 break;
             case Programs.Flight:
                 post("Augmentations: " + Player.augmentations.length + " / 30");
-                post("Money: $" + formatNumber(Player.money.toNumber(), 2) + " / $" + formatNumber(100000000000, 2));
+
+                post("Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + " / " + numeral(1e11).format('($0.000a)'));
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
                 post("Hacking skill: " + Player.hacking_skill + " / 2500");

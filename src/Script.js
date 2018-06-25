@@ -1,4 +1,5 @@
 var ace = require('brace');
+var beautify = require('js-beautify').js_beautify;
 require('brace/mode/javascript');
 require('../netscript');
 require('brace/theme/chaos');
@@ -29,7 +30,7 @@ import {Player}                                 from "./Player.js";
 import {AllServers, processSingleServerGrowth}  from "./Server.js";
 import {Settings}                               from "./Settings.js";
 import {post, Terminal}                         from "./Terminal.js";
-import {TextFile}                               from "./TextFile.js";
+import {TextFile}                               from "./TextFile";
 
 import {parse, Node}                            from "../utils/acorn.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
@@ -57,6 +58,15 @@ function scriptEditorInit() {
         console.log("Error finding 'script-editor-buttons-wrapper'");
         return;
     }
+    var beautifyButton = createElement("a", {
+        class:"a-link-button", display:"inline-block",
+        innerText:"Beautify",
+        clickListener:()=>{
+            beautifyScript();
+            return false;
+        }
+    });
+
     var closeButton = createElement("a", {
         class:"a-link-button", display:"inline-block",
         innerText:"Save & Close (Ctrl/Cmd + b)",
@@ -90,6 +100,7 @@ function scriptEditorInit() {
         target:"_blank"
     });
 
+    wrapper.appendChild(beautifyButton);
     wrapper.appendChild(closeButton);
     wrapper.appendChild(scriptEditorRamText);
     wrapper.appendChild(scriptEditorRamCheck);
@@ -242,6 +253,13 @@ $(document).keydown(function(e) {
         }
 	}
 });
+
+function beautifyScript() {
+    var editor = ace.edit('javascript-editor');
+    var code = editor.getValue();
+    code = beautify(code, { indent_size: 4 })
+    editor.setValue(code);
+}
 
 function saveAndCloseScriptEditor() {
     var filename = document.getElementById("script-editor-filename").value;
@@ -456,19 +474,32 @@ function parseOnlyRamCalculate(server, code, workerScript) {
             //
             // TODO it would be simpler to just reference a dictionary.
             try {
-                var func = workerScript.env.get(ref);
-                if (typeof func === "function") {
-                    try {
-                        var res = func.apply(null, []);
-                        if (typeof res === "number") {
-                            ram += res;
+                function applyFuncRam(func) {
+                    if (typeof func === "function") {
+                        try {
+                            let res = func.apply(null, []);
+                            if (typeof res === "number") {
+                                return res;
+                            }
+                            return 0;
+                        } catch(e) {
+                            console.log("ERROR applying function: " + e);
+                            return 0;
                         }
-                    } catch(e) {
-                        console.log("ERROR applying function: " + e);
+                    } else {
+                        return 0;
                     }
                 }
-            } catch (error) { continue; }
 
+                //Special logic for Bladeburner
+                var func;
+                if (ref in workerScript.env.vars.bladeburner) {
+                    func = workerScript.env.vars.bladeburner[ref];
+                } else {
+                    func = workerScript.env.get(ref);
+                }
+                ram += applyFuncRam(func);
+            } catch (error) {continue;}
         }
         return ram;
 

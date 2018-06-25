@@ -1,4 +1,5 @@
 import {Augmentations, AugmentationNames}           from "./Augmentations.js";
+import {BitNodeMultipliers}                         from "./BitNode.js";
 import {CONSTANTS}                                  from "./Constants.js";
 import {Engine}                                     from "./engine.js";
 import {Faction, Factions, factionExists,
@@ -348,6 +349,10 @@ function Skill(params={name:"foo", desc:"foo"}) {
     //Equipment
     if (params.weaponAbility)       {this.weaponAbility     = params.weaponAbility;}
     if (params.gunAbility)          {this.gunAbility        = params.gunAbility;}
+}
+
+Skill.prototype.calculateCost = function(currentLevel) {
+    return (this.baseCost + (currentLevel * this.costInc)) * BitNodeMultipliers.BladeburnerSkillCost;
 }
 var Skills = {};
 var SkillNames = {
@@ -1168,7 +1173,7 @@ Bladeburner.prototype.completeAction = function() {
                         action.setMaxLevel(ContractSuccessesPerLevel);
                     }
                     if (action.rankGain) {
-                        var gain = addOffset(action.rankGain * rewardMultiplier, 10);
+                        var gain = addOffset(action.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank, 10);
                         this.changeRank(gain);
                         if (isOperation && this.logging.ops) {
                             this.log(action.name + " successfully completed! Gained " + formatNumber(gain, 3) + " rank");
@@ -1233,7 +1238,7 @@ Bladeburner.prototype.completeAction = function() {
                     this.blackops[action.name] = true;
                     var rankGain = 0;
                     if (action.rankGain) {
-                        rankGain = addOffset(action.rankGain, 10);
+                        rankGain = addOffset(action.rankGain * BitNodeMultipliers.BladeburnerRank, 10);
                         this.changeRank(rankGain);
                     }
                     teamLossMax = Math.ceil(teamCount/2);
@@ -2671,7 +2676,7 @@ Bladeburner.prototype.updateSkillsUIElement = function(el, skill) {
     if (this.skills[skillName] && !isNaN(this.skills[skillName])) {
         currentLevel = this.skills[skillName];
     }
-    var pointCost = skill.baseCost + (currentLevel * skill.costInc);
+    var pointCost = skill.calculateCost(currentLevel);
 
     el.appendChild(createElement("h2", { //Header
         innerText:skill.name + " (Lvl " + currentLevel + ")", display:"inline-block"
@@ -3110,7 +3115,7 @@ Bladeburner.prototype.executeSkillConsoleCommand = function(args) {
                 if (this.skills[skillName] && !isNaN(this.skills[skillName])) {
                     currentLevel = this.skills[skillName];
                 }
-                var pointCost = skill.baseCost + (currentLevel * skill.costInc);
+                var pointCost = skill.calculateCost(currentLevel);
                 if (this.skillPoints >= pointCost) {
                     this.skillPoints -= pointCost;
                     this.upgradeSkill(skill);
@@ -3203,6 +3208,7 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
     switch (convertedType) {
         case "contract":
         case "contracts":
+        case "contr":
             action.type = ActionTypes["Contract"];
             if (this.contracts.hasOwnProperty(name)) {
                 action.name = name;
@@ -3263,24 +3269,24 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
     }
 }
 
-Bladeburner.prototype.isContractNameNetscriptFn = function(name) {
-    return this.contracts.hasOwnProperty(name);
+Bladeburner.prototype.getContractNamesNetscriptFn = function() {
+    return Object.keys(this.contracts);
 }
 
-Bladeburner.prototype.isOperationNameNetscriptFn = function(name) {
-    return this.operations.hasOwnProperty(name);
+Bladeburner.prototype.getOperationNamesNetscriptFn = function() {
+    return Object.keys(this.operations);
 }
 
-Bladeburner.prototype.isBlackOpNameNetscriptFn = function(name) {
-    return BlackOperations.hasOwnProperty(name);
+Bladeburner.prototype.getBlackOpNamesNetscriptFn = function() {
+    return Object.keys(BlackOperations);
 }
 
-Bladeburner.prototype.isGeneralActionNameNetscriptFn = function(name) {
-    return GeneralActions.hasOwnProperty(name);
+Bladeburner.prototype.getGeneralActionNamesNetscriptFn = function() {
+    return Object.keys(GeneralActions);
 }
 
-Bladeburner.prototype.isSkillNameNetscriptFn = function(name) {
-    return Skills.hasOwnProperty(name);
+Bladeburner.prototype.getSkillNamesNetscriptFn = function() {
+    return Object.keys(Skills);
 }
 
 Bladeburner.prototype.startActionNetscriptFn = function(type, name, workerScript) {
@@ -3362,7 +3368,7 @@ Bladeburner.prototype.getActionEstimatedSuccessChanceNetscriptFn = function(type
         case ActionTypes["Operation"]:
         case ActionTypes["BlackOp"]:
         case ActionTypes["BlackOperation"]:
-            return actionObj.getSuccessChance(this);
+            return actionObj.getSuccessChance(this, {est:true});
         case ActionTypes["Training"]:
         case ActionTypes["Field Analysis"]:
         case ActionTypes["FieldAnalysis"]:
@@ -3422,7 +3428,11 @@ Bladeburner.prototype.getSkillLevelNetscriptFn = function(skillName, workerScrip
         return -1;
     }
 
-    return Skills[skillName];
+    if (this.skills[skillName] == null) {
+        return 0;
+    } else {
+        return this.skills[skillName];
+    }
 }
 
 Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript) {
@@ -3438,7 +3448,7 @@ Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript
     if (this.skills[skillName] && !isNaN(this.skills[skillName])) {
         currentLevel = this.skills[skillName];
     }
-    var cost = skill.baseCost + (currentLevel * skill.costInc);
+    var cost = skill.calculateCost(currentLevel);
 
     if (this.skillPoints < cost) {
         if (workerScript.shouldLog("upgradeSkill")) {
@@ -3500,8 +3510,8 @@ Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, worker
         return -1;
     }
 
-    if (actionId.type !== ActionTypes["Operation"] ||
-        actionId.type !== ActionTypes["BlackOp"]   ||
+    if (actionId.type !== ActionTypes["Operation"] &&
+        actionId.type !== ActionTypes["BlackOp"]   &&
         actionId.type !== ActionTypes["BlackOperation"]) {
         workerScript.log("ERROR: Bladeburner.setTeamSize() failed. This function " +
                          "only works for Operations and BlackOps");

@@ -942,7 +942,11 @@ prompt
 Defining your own Functions
 ---------------------------
 
-You can define your own functions in Netscript using the following syntax::
+Note that the following information is only applicable for Netscript 1.0.
+:doc:`netscriptjs` allows you to define your functions using native Javascript
+techniques.
+
+You can define your own functions in Netscript 1.0 using the following syntax::
 
     function name(args...) {
         function code here...

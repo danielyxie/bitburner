@@ -3,6 +3,17 @@
 <head>
     <meta charset="utf-8">
     <title>Bitburner</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="dist/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="dist/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="dist/favicon-16x16.png">
+    <link rel="manifest" href="dist/site.webmanifest">
+    <link rel="mask-icon" href="dist/safari-pinned-tab.svg" color="#000000">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Bitburner">
+    <meta name="application-name" content="Bitburner">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-config" content="dist/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
     <link rel="stylesheet" type="text/css" href="css/terminal.css" />
 	<link rel="stylesheet" type="text/css" href="css/menupages.css" />
@@ -99,7 +110,7 @@
 
         <div id="script-editor-filename-wrapper">
             <p id="script-editor-filename-tag"> <strong style="background-color:#555;">Script name: </strong></p>
-            <input id="script-editor-filename" type="text" maxlength="30" tabindex="1"> </input>
+            <input id="script-editor-filename" type="text" maxlength="30" tabindex="1" />
         </div>
 
         <div id="javascript-editor"></div>
@@ -149,9 +160,7 @@
 
             <fieldset>
             <label for="script-editor-option-maxerr" class="tooltip">Max Error Count</label>
-            <input type="range" max="1000" min="50" value="200"
-                step="1" name="script-editor-option-maxerr" id="script-editor-option-maxerr"
-            </input>
+            <input type="range" max="1000" min="50" value="200" step="1" name="script-editor-option-maxerr" id="script-editor-option-maxerr" />
             <em id="script-editor-option-maxerror-value-label" style="font-style: normal;"></em>
             </fieldset>
         </div> <!-- End script editor options panel -->
@@ -162,8 +171,7 @@
         <table id="terminal">
            <tr id="terminal-input">
                 <td id="terminal-input-td" tabindex="2">$
-                    <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1"
-                           onfocus="this.value = this.value;"/>
+                    <input type="text" id="terminal-input-text-box" class="terminal-input" tabindex="1" onfocus="this.value = this.value;"/>
                 </td>
            </tr>
         </table>
@@ -488,20 +496,20 @@
 
         <p id='dev-menu-text'>Augmentation related: </p>
         <!-- gets populated with the list of all augments -->
-        <select id="dev-menu-aug-dropdown" class="dev-dropdown-input"></select>
+        <select id="dev-menu-aug-dropdown" class="dropdown"></select>
         <a id="dev-add-aug" class="a-link-button tooltip">Queue Augmentation<span class="tooltiptext">May require save + reload</span></a>
 
-        <input id="dev-sf-n" type="number" class="dev-text-input" placeholder="SourceFile-N"><input id="dev-sf-lvl" type="number" class="dev-text-input" placeholder="SourceFile-Lvl"><a id="dev-add-source-file" class="a-link-button tooltip"> Add/Remove source file <span class="tooltiptext">If Lvl == 0 the sf will be removed, calling it with another level will replace your current source file. You CAN set a source file higher than it's maximum level.</span></a>
+        <input id="dev-sf-n" type="number" class="text-input" placeholder="SourceFile-N"><input id="dev-sf-lvl" type="number" class="text-input" placeholder="SourceFile-Lvl"><a id="dev-add-source-file" class="a-link-button tooltip"> Add/Remove source file <span class="tooltiptext">If Lvl == 0 the sf will be removed, calling it with another level will replace your current source file. You CAN set a source file higher than it's maximum level.</span></a>
 
         <p id='dev-menu-text'>Faction related: </p>
-        <select id="dev-menu-faction-dropdown" class="dev-dropdown-input"></select>
+        <select id="dev-menu-faction-dropdown" class="dropdown"></select>
         <a id="dev-add-faction" class="a-link-button tooltip">Receive invite<span class="tooltiptext">May require save + reload</span></a>
 
         <p id='dev-menu-text'>Program related: </p>
-        <select id="dev-menu-connect-dropdown" class="dev-dropdown-input"></select>
+        <select id="dev-menu-connect-dropdown" class="dropdown"></select>
         <a id="dev-connect" class="a-link-button tooltip">Connect<span class="tooltiptext">Connect to the target server.</span></a>
 
-        <select id="dev-menu-add-program-dropdown" class="dev-dropdown-input"></select>
+        <select id="dev-menu-add-program-dropdown" class="dropdown"></select>
         <a id="dev-add-program" class="a-link-button tooltip">Add Program<span class="tooltiptext">Add this program to the player home server, won't add the same program twice.</span></a>
 
         <a id="dev-bit-flume" class="a-link-button tooltip">Trigger BitFlume<span class="tooltiptext">Quick escape to change BN, does not give SFs</span></a>
@@ -512,19 +520,19 @@
         <a id="dev-max-money" class="a-link-button tooltip">maximize all servers money<span class="tooltiptext">Set all servers available money to maximum for that server</span></a>
 
         <p id='dev-menu-text'>Exp/stats related: </p>
-        <input id="dev-hacking-exp" type="number" class="dev-text-input" placeholder="+exp/-exp (int)">
+        <input id="dev-hacking-exp" type="number" class="text-input" placeholder="+exp/-exp (int)">
         <a id="dev-add-hacking" class="a-link-button tooltip">add hacking exp<span class="tooltiptext">Add that many hacking experience point, use negative numbers to remove, don't worry about going under 0 exp</span></a>
-        <input id="dev-strength-exp" type="number" class="dev-text-input" placeholder="+exp/-exp (int)">
+        <input id="dev-strength-exp" type="number" class="text-input" placeholder="+exp/-exp (int)">
         <a id="dev-add-strength" class="a-link-button tooltip">add strength exp<span class="tooltiptext">Add that many strength experience point, use negative numbers to remove, don't worry about going under 0 exp</span></a>
-        <input id="dev-defense-exp" type="number" class="dev-text-input" placeholder="+exp/-exp (int)">
+        <input id="dev-defense-exp" type="number" class="text-input" placeholder="+exp/-exp (int)">
         <a id="dev-add-defense" class="a-link-button tooltip">add defense exp<span class="tooltiptext">Add that many defense experience point, use negative numbers to remove, don't worry about going under 0 exp</span></a>
-        <input id="dev-dexterity-exp" type="number" class="dev-text-input" placeholder="+exp/-exp (int)">
+        <input id="dev-dexterity-exp" type="number" class="text-input" placeholder="+exp/-exp (int)">
         <a id="dev-add-dexterity" class="a-link-button tooltip">add dexterity exp<span class="tooltiptext">Add that many dexterity experience point, use negative numbers to remove, don't worry about going under 0 exp</span></a>
-        <input id="dev-agility-exp" type="number" class="dev-text-input" placeholder="+exp/-exp (int)">
+        <input id="dev-agility-exp" type="number" class="text-input" placeholder="+exp/-exp (int)">
         <a id="dev-add-agility" class="a-link-button tooltip">add agility exp<span class="tooltiptext">Add that many agility experience point, use negative numbers to remove, don't worry about going under 0 exp</span></a>
-        <input id="dev-charisma-exp" type="number" class="dev-text-input" placeholder="+exp/-exp (int)">
+        <input id="dev-charisma-exp" type="number" class="text-input" placeholder="+exp/-exp (int)">
         <a id="dev-add-charisma" class="a-link-button tooltip">add charisma exp<span class="tooltiptext">Add that many charisma experience point, use negative numbers to remove, don't worry about going under 0 exp</span></a>
-        <input id="dev-intelligence-exp" type="number" class="dev-text-input" placeholder="+exp/-exp (int)">
+        <input id="dev-intelligence-exp" type="number" class="text-input" placeholder="+exp/-exp (int)">
         <a id="dev-add-intelligence" class="a-link-button tooltip">add intelligence exp<span class="tooltiptext">Add that many intelligence experience point, use negative numbers to remove, don't worry about going under 0 exp</span></a>
         <a id="dev-enable-intelligence" class="a-link-button tooltip"> enable intelligence<span class="tooltiptext">Enables the intelligence stat</span></a>
         <a id="dev-disable-intelligence" class="a-link-button tooltip"> disable intelligence<span class="tooltiptext">Disables the intelligence stat</span></a>
@@ -711,7 +719,7 @@
     <div id="yes-no-text-input-box-container" class="popup-box-container">
         <div id="yes-no-text-input-box-content" class="popup-box-content">
             <p id="yes-no-text-input-box-text"> </p>
-            <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30"> </input>
+            <input type="text" id="yes-no-text-input-box-input" pattern="[a-zA-Z0-9-_]" maxlength="30" />
             <span id="yes-no-text-input-box-yes" class="popup-box-button"> Yes </span>
             <span id="yes-no-text-input-box-no" class="popup-box-button"> No </span>
         </div>
@@ -801,9 +809,7 @@
                         </span>
                     </label>
 
-                    <input type ="range" max="250" min="15"
-                        step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="100">
-                    </input>
+                    <input type ="range" max="250" min="15" step="1" name="settingsNSExecTimeRangeVal" id="settingsNSExecTimeRangeVal" value="100" />
                     <em id="settingsNSExecTimeRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -817,9 +823,7 @@
                         </span>
                     </label>
 
-                    <input type="range" max="100" min="20"
-                        step="1" name="settingsNSLogRangeVal" id="settingsNSLogRangeVal" value="50">
-                    </input>
+                    <input type="range" max="100" min="20" step="1" name="settingsNSLogRangeVal" id="settingsNSLogRangeVal" value="50" />
                     <em id="settingsNSLogRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -833,9 +837,7 @@
                         </span>
                     </label>
 
-                    <input type="range" max="100" min="20"
-                        step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50">
-                    </input>
+                    <input type="range" max="100" min="20" step="1" name="settingsNSPortRangeVal" id="settingsNSPortRangeVal" value="50" />
                     <em id="settingsNSPortRangeValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -847,9 +849,7 @@
                         </span>
                     </label>
 
-                    <input type="range" max="600" min="0"
-                        step="1" name="settingsAutosaveIntervalVal" id="settingsAutosaveIntervalVal" value="60">
-                    </input>
+                    <input type="range" max="600" min="0" step="1" name="settingsAutosaveIntervalVal" id="settingsAutosaveIntervalVal" value="60" />
                     <em id="settingsAutosaveIntervalValLabel" style="font-style: normal;"></em>
                 </fieldset>
 
@@ -910,7 +910,7 @@
             <div id="game-options-right-panel">
                 <a class="a-link-button" style="display:block;" href="https://bitburner.readthedocs.io/en/latest/changelog.html" target="_blank"> Changelog </a>
                 <a class="a-link-button" style="display:block;" href="https://bitburner.wikia.com" target="_blank">Wiki</a>
-                <a class="a-link-button" style="display:block;", href="https://www.reddit.com/r/bitburner" target="_blank">Subreddit</a>
+                <a class="a-link-button" style="display:block;" href="https://www.reddit.com/r/bitburner" target="_blank">Subreddit</a>
                 <a id="save-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Save Game </a>
                 <a id="delete-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Delete Game </a>
                 <a id="export-game-link" class="a-link-button" style="display:inline-block;width:46%;"> Export Game </a>
@@ -939,6 +939,6 @@
         <div class="loaderspinner"></div>
         <div class="loaderlabel">Loading Bitburner...</div>
     </div>
-</body>
     <script src="dist/engine.bundle.js"></script>
+</body>
 </html>

@@ -24,4 +24,5 @@ to reach out to the developer!
     Hacknet Node API <netscripthacknetnodeapi>
     Trade Information eXchange (TIX) API <netscriptixapi>
     Singularity Functions <netscriptsingularityfunctions>
+    Bladeburner API <netscriptbladeburnerapi>
     Miscellaneous <netscriptmisc>

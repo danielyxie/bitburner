@@ -201,6 +201,7 @@ function PlayerObject() {
 	this.lastUpdate = 0;
     this.totalPlaytime = 0;
     this.playtimeSinceLastAug = 0;
+    this.playtimeSinceLastBitnode = 0;
 
     //Production since last Augmentation installation
     this.scriptProdSinceLastAug = 0;
@@ -390,6 +391,7 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.corporation = 0;
 
     this.playtimeSinceLastAug = 0;
+    this.playtimeSinceLastBitnode = 0;
     this.scriptProdSinceLastAug = 0;
 }
 

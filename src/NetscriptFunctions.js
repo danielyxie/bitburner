@@ -12,7 +12,7 @@ import {Companies, Company, CompanyPosition,
         CompanyPositions, companyExists}            from "./Company.js";
 import {CONSTANTS}                                  from "./Constants.js";
 import {Programs}                                   from "./CreateProgram.js";
-import {parseDarkwebItemPrice, DarkWebItems}        from "./DarkWeb.js";
+import {DarkWebItems}                               from "./DarkWeb.js";
 import {Engine}                                     from "./engine.js";
 import {AllGangs}                                   from "./Gang.js";
 import {Factions, Faction, joinFaction,
@@ -36,7 +36,7 @@ import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         Stock, shortStock, sellShort, OrderTypes,
         PositionTypes, placeOrder, cancelOrder}     from "./StockMarket.js";
 import {post}                                       from "./Terminal.js";
-import {TextFile, getTextFile, createTextFile}      from "./TextFile.js";
+import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {WorkerScript, workerScripts,
         killWorkerScript, NetscriptPorts}           from "./NetscriptWorker.js";
@@ -148,8 +148,8 @@ function NetscriptFunctions(workerScript) {
         workerScript.dynamicRamUsage += ramCost;
         if (workerScript.dynamicRamUsage > 1.01 * workerScript.ramUsage) {
             throw makeRuntimeRejectMsg(workerScript,
-                                       "Dynamic RAM usage calculated to be greater than initial RAM usage. " +
-                                       "This is probably because you somehow circumvented the static RAM "  +
+                                       "Dynamic RAM usage calculated to be greater than initial RAM usage on fn: " + fnName +
+                                       ". This is probably because you somehow circumvented the static RAM "  +
                                        "calculation.<br><br>Please don't do that :(");
         }
     };
@@ -2333,105 +2333,40 @@ function NetscriptFunctions(workerScript) {
             }
 
             if (SpecialServerIps["Darkweb Server"] == null) {
-                workerScript.scriptRef.log("ERROR: You do not have  TOR router. purchaseProgram() failed.");
+                workerScript.scriptRef.log("ERROR: You do not have the TOR router. purchaseProgram() failed.");
                 return false;
             }
 
-            switch(programName.toLowerCase()) {
-                case Programs.BruteSSHProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.BruteSSHProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.BruteSSHProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the BruteSSH.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.FTPCrackProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.FTPCrackProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.FTPCrackProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the FTPCrack.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.RelaySMTPProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.RelaySMTPProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.RelaySMTPProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the relaySMTP.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.HTTPWormProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.HTTPWormProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.HTTPWormProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the HTTPWorm.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.SQLInjectProgram.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.SQLInjectProgram);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.SQLInjectProgram);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the SQLInject.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.DeepscanV1.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV1Program);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.DeepscanV1);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the DeepscanV1.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                case Programs.DeepscanV2.toLowerCase():
-                    var price = parseDarkwebItemPrice(DarkWebItems.DeepScanV2Program);
-                    if (price > 0 && Player.money.gt(price)) {
-                        Player.loseMoney(price);
-                        Player.getHomeComputer().programs.push(Programs.DeepscanV2);
-                        if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
-                            workerScript.scriptRef.log("You have purchased the DeepscanV2.exe program. The new program can be found on your home computer.");
-                        }
-                    } else {
-                        workerScript.scriptRef.log("Not enough money to purchase " + programName);
-                        return false;
-                    }
-                    return true;
-                default:
-                    workerScript.scriptRef.log("ERROR: Invalid program passed into purchaseProgram().");
-                    return false;
+            programName = programName.toLowerCase();
+
+            let item = null;
+            for(const key in DarkWebItems) {
+                const i = DarkWebItems[key];
+                if(i.program.toLowerCase() == programName) {
+                    item = i;
+                }
+            }
+
+            if(item == null) {
+                workerScript.scriptRef.log("ERROR: Invalid program name passed into purchaseProgram().");
+                return false;
+            }
+
+            if(Player.money.lt(item.price)) {
+                workerScript.scriptRef.log("Not enough money to purchase " + item.program);
+                return false;
+            }
+
+
+            if(Player.hasProgram(item.program)) {
+                workerScript.scriptRef.log('You already have the '+item.program+' program');
+                return true;
+            }
+
+            Player.loseMoney(item.price);
+            Player.getHomeComputer().programs.push(item.program);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.purchaseProgram == null) {
+                workerScript.scriptRef.log("You have purchased the "+item.program+" program. The new program can be found on your home computer.");
             }
             return true;
         },
@@ -3280,59 +3215,59 @@ function NetscriptFunctions(workerScript) {
 
         //Bladeburner API
         bladeburner : {
-            isContractName : function(name) {
+            getContractNames : function() {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("isContractName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                    return updateStaticRam("getContractNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
-                updateDynamicRam("isContractName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                updateDynamicRam("getContractNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.isContractNameNetscriptFn(name);
+                    return Player.bladeburner.getContractNamesNetscriptFn();
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isContractName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw makeRuntimeRejectMsg(workerScript, "getContractNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            isOperationName : function(name) {
+            getOperationNames : function() {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("isOperationName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                    return updateStaticRam("getOperationNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
-                updateDynamicRam("isOperationName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                updateDynamicRam("getOperationNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.isOperationNameNetscriptFn(name);
+                    return Player.bladeburner.getOperationNamesNetscriptFn();
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isOperationName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw makeRuntimeRejectMsg(workerScript, "getOperationNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            isBlackOpName : function(name) {
+            getBlackOpNames : function() {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("isBlackOpName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                    return updateStaticRam("getBlackOpNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
-                updateDynamicRam("isBlackOpName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                updateDynamicRam("getBlackOpNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.isBlackOpNameNetscriptFn(name);
+                    return Player.bladeburner.getBlackOpNamesNetscriptFn();
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isBlackOpName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw makeRuntimeRejectMsg(workerScript, "getBlackOpNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            isGeneralActionName : function(name) {
+            getGeneralActionNames : function() {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("isGeneralActionName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                    return updateStaticRam("getGeneralActionNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
-                updateDynamicRam("isGeneralActionName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                updateDynamicRam("getGeneralActionNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.isGeneralActionNameNetscriptFn(name);
+                    return Player.bladeburner.getGeneralActionNamesNetscriptFn();
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isGeneralActionName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw makeRuntimeRejectMsg(workerScript, "getGeneralActionNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            isSkillName : function(name) {
+            getSkillNames : function() {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("isSkillName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                    return updateStaticRam("getSkillNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
-                updateDynamicRam("isSkillName", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
+                updateDynamicRam("getSkillNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.isSkillNameNetscriptFn(name);
+                    return Player.bladeburner.getSkillNamesNetscriptFn();
                 }
-                throw makeRuntimeRejectMsg(workerScript, "isSkillName() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw makeRuntimeRejectMsg(workerScript, "getSkillNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             startAction : function(type="", name="") {
@@ -3350,15 +3285,15 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "startAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            stopAction : function() {
+            stopBladeburnerAction : function() {
                 if (workerScript.checkingRam) {
-                    return updateStaticRam("stopAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 2);
+                    return updateStaticRam("stopBladeburnerAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 2);
                 }
-                updateDynamicRam("stopAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 2);
+                updateDynamicRam("stopBladeburnerAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 2);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
                     return Player.bladeburner.resetAction();
                 }
-                throw makeRuntimeRejectMsg(workerScript, "stopAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                throw makeRuntimeRejectMsg(workerScript, "stopBladeburnerAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getActionTime : function(type="", name="") {
@@ -3569,7 +3504,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 throw makeRuntimeRejectMsg(workerScript, "joinBladeburnerFaction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
-            }
+            },
         }
     } //End return
 } //End NetscriptFunction()

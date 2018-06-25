@@ -86,7 +86,16 @@ let NetscriptFunctions =
     "installAugmentations|hacknetnodes|upgradeLevel|upgradeRam|upgradeCore|"   +
     "getLevelUpgradeCost|getRamUpgradeCost|getCoreUpgradeCost|"                +
     "getStockPrice|getStockPosition|buyStock|sellStock|shortStock|sellShort|"  +
-    "placeOrder|cancelOrder";
+    "placeOrder|cancelOrder|"                                                  +
+
+    //Bladeburner functions
+    "bladeburner|getContractNames|getOperationNames|getBlackOpNames|"          +
+    "getGeneralActionNames|getSkillNames|startAction|stopBladeburnerAction|"   +
+    "getActionTime|getActionEstimatedSuccessChance|getActionCountRemaining|"   +
+    "getRank|getSkillPoints|getSkillLevel|upgradeSkill|getTeamSize|"           +
+    "setTeamSize|getCityEstimatedPopulation|getCityEstimatedCommunities|"      +
+    "getCityChaos|switchCity|getStamina|joinBladeburnerFaction"
+    ;
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({
