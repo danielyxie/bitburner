@@ -3208,6 +3208,7 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
     switch (convertedType) {
         case "contract":
         case "contracts":
+        case "contr":
             action.type = ActionTypes["Contract"];
             if (this.contracts.hasOwnProperty(name)) {
                 action.name = name;
@@ -3268,23 +3269,23 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
     }
 }
 
-Bladeburner.prototype.getContractNamesNetscriptFn = function(name) {
+Bladeburner.prototype.getContractNamesNetscriptFn = function() {
     return Object.keys(this.contracts);
 }
 
-Bladeburner.prototype.getOperationNamesNetscriptFn = function(name) {
+Bladeburner.prototype.getOperationNamesNetscriptFn = function() {
     return Object.keys(this.operations);
 }
 
-Bladeburner.prototype.getBlackOpNamesNetscriptFn = function(name) {
+Bladeburner.prototype.getBlackOpNamesNetscriptFn = function() {
     return Object.keys(BlackOperations);
 }
 
-Bladeburner.prototype.getGeneralActionNamesNetscriptFn = function(name) {
+Bladeburner.prototype.getGeneralActionNamesNetscriptFn = function() {
     return Object.keys(GeneralActions);
 }
 
-Bladeburner.prototype.getSkillNamesNetscriptFn = function(name) {
+Bladeburner.prototype.getSkillNamesNetscriptFn = function() {
     return Object.keys(Skills);
 }
 
@@ -3509,8 +3510,8 @@ Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, worker
         return -1;
     }
 
-    if (actionId.type !== ActionTypes["Operation"] ||
-        actionId.type !== ActionTypes["BlackOp"]   ||
+    if (actionId.type !== ActionTypes["Operation"] &&
+        actionId.type !== ActionTypes["BlackOp"]   &&
         actionId.type !== ActionTypes["BlackOperation"]) {
         workerScript.log("ERROR: Bladeburner.setTeamSize() failed. This function " +
                          "only works for Operations and BlackOps");

@@ -3215,57 +3215,57 @@ function NetscriptFunctions(workerScript) {
 
         //Bladeburner API
         bladeburner : {
-            getContractNames : function(name) {
+            getContractNames : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getContractNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getContractNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.getContractNamesNetscriptFn(name);
+                    return Player.bladeburner.getContractNamesNetscriptFn();
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getContractNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            getOperationNames : function(name) {
+            getOperationNames : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getOperationNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getOperationNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.getOperationNamesNetscriptFn(name);
+                    return Player.bladeburner.getOperationNamesNetscriptFn();
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getOperationNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            getBlackOpNames : function(name) {
+            getBlackOpNames : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getBlackOpNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getBlackOpNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.getBlackOpNamesNetscriptFn(name);
+                    return Player.bladeburner.getBlackOpNamesNetscriptFn();
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getBlackOpNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            getGeneralActionNames : function(name) {
+            getGeneralActionNames : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getGeneralActionNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getGeneralActionNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.getGeneralActionNamesNetscriptFn(name);
+                    return Player.bladeburner.getGeneralActionNamesNetscriptFn();
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getGeneralActionNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            getSkillNames : function(name) {
+            getSkillNames : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getSkillNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getSkillNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.getSkillNamesNetscriptFn(name);
+                    return Player.bladeburner.getSkillNamesNetscriptFn();
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getSkillNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
