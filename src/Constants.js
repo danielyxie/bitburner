@@ -106,8 +106,8 @@ let CONSTANTS = {
     TorRouterCost: 200000,
 
     //Infiltration constants
-    InfiltrationBribeBaseAmount: 100000,    //Amount per clearance level
-    InfiltrationMoneyValue:   2500,         //Convert "secret" value to money
+    InfiltrationBribeBaseAmount: 100e3,    //Amount per clearance level
+    InfiltrationMoneyValue:   3e3,         //Convert "secret" value to money
     InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
 
     //Stock market constants
@@ -489,7 +489,11 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.38.1<br>"  +
+    "v0.39.0<br>"  +
+    "* Added BitNode-7: Bladeburner 2079<br>" +
+    "* Infiltration base difficulty decreased by 10% for most locations<br>" +
+    "* Experience gains from Infiltration slightly increased<br>" +
+    "* Money gained from Infiltration increased by 20%<br>"  +
     "* Added 'var' declarations in Netscript 1.0 (only works with 'var', not 'let' or 'const')<br>"  +
     "* Script base RAM cost is now 1.6 GB (increased from 1.4 GB)<br>" +
     "* While/for loops and if statements no longer cost RAM in scripts<br>"  +
