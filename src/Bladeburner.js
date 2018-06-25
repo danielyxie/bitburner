@@ -3285,7 +3285,6 @@ Bladeburner.prototype.getGeneralActionNamesNetscriptFn = function(name) {
 }
 
 Bladeburner.prototype.getSkillNamesNetscriptFn = function(name) {
-    return Skills.hasOwnProperty(name);
     return Object.keys(Skills);
 }
 
@@ -3428,7 +3427,11 @@ Bladeburner.prototype.getSkillLevelNetscriptFn = function(skillName, workerScrip
         return -1;
     }
 
-    return Skills[skillName];
+    if (this.skills[skillName] == null) {
+        return 0;
+    } else {
+        return this.skills[skillName];
+    }
 }
 
 Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript) {
