@@ -194,7 +194,7 @@ function runScriptsLoop() {
             } else {
                 try {
                     var ast = parse(workerScripts[i].code, {sourceType:"module"});
-                    console.log(ast);
+                    //console.log(ast);
                 } catch (e) {
                     console.log("Error parsing script: " + workerScripts[i].name);
                     dialogBoxCreate("Syntax ERROR in " + workerScripts[i].name + ":<br>" +  e);
