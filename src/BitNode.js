@@ -115,7 +115,29 @@ function initBitNodes() {
                                           "Level 1: 8%<br>" +
                                           "Level 2: 12%<br>" +
                                           "Level 3: 14%");
-    BitNodes["BitNode7"] = new BitNode(7, "Hacktocracy", "COMING SOON"); //Healthy Hacknet balancing mechanic
+    BitNodes["BitNode7"] = new BitNode(7, "Bladeburners 2079", "More human than humans",
+                                          "In the middle of the 21st century, you were doing cutting-edge work at OmniTek Incorporated as part of the AI design team " +
+                                          "for advanced synthetic androids, or Synthoids for short. You helped achieve a major technological " +
+                                          "breakthrough in the sixth generation of the company's Synthoid design, called MK-VI, by developing a hyperintelligent AI. " +
+                                          "Many argue that this was the first sentient AI ever created. This resulted in Synthoid models that were stronger, faster, " +
+                                          "and more intelligent than the humans that had created them.<br><br>" +
+                                          "In this BitNode you will be able to access the Bladeburner API, which allows you to access Bladeburner " +
+                                          "functionality through Netscript. Furthermore: <br><br>" +
+                                          "The rank you gain from Bladeburner contracts/operations is reduced by 50%<br>" +
+                                          "Bladeburner skills cost twice as many skill points<br>" +
+                                          "Augmentations are 3x more expensive<br>" +
+                                          "Hacking and Hacknet Nodes will be significantly less profitable<br>" +
+                                          "Your hacking level is reduced by 50%<br>" +
+                                          "Hacking experience gain from scripts is reduced by 75%<br>" +
+                                          "Corporations have 80% lower valuations and are therefore less profitable<br>" +
+                                          "Working for companies is 50% less profitable<br>" +
+                                          "Crimes and Infiltration are 50% less profitable<br><br>" +
+                                          "Destroying this BitNode will give you Source-File 6, or if you already have this Source-File it will upgrade " +
+                                          "its level up to a maximum of 3. This Source-File allows you to access the Bladeburner Netscript API in other " +
+                                          "BitNodes. In addition, this Source-File will increase all of your Bladeburner multipliers by:<br><br>" +
+                                          "Level 1: 8%<br>" +
+                                          "Level 2: 12%<br>" +
+                                          "Level 3: 14%");
     BitNodes["BitNode8"] = new BitNode(8, "Ghost of Wall Street", "Money never sleeps",
                                           "You are trying to make a name for yourself as an up-and-coming hedge fund manager on Wall Street.<br><br>" +
                                           "In this BitNode:<br><br>" +
@@ -208,6 +230,9 @@ let BitNodeMultipliers = {
     InfiltrationRep:        1,
 
     CorporationValuation:   1,
+
+    BladeburnerRank:        1,
+    BladeburnerSkillCost:   1,
 }
 
 function initBitNodeMultipliers() {
@@ -271,6 +296,23 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.CorporationValuation     = 0.5;
             break;
         case 6: //Bladeburner
+            BitNodeMultipliers.HackingLevelMultiplier   = 0.5;
+            BitNodeMultipliers.ServerMaxMoney           = 0.5;
+            BitNodeMultipliers.ServerStartingMoney      = 0.5;
+            BitNodeMultipliers.ServerStartingSecurity   = 1.5;
+            BitNodeMultipliers.ScriptHackMoney          = 0.5;
+            BitNodeMultipliers.CompanyWorkMoney         = 0.5;
+            BitNodeMultipliers.CrimeMoney               = 0.5;
+            BitNodeMultipliers.InfiltrationMoney        = 0.5;
+            BitNodeMultipliers.CorporationValuation     = 0.2;
+            BitNodeMultipliers.HacknetNodeMoney         = 0.2;
+            BitNodeMultipliers.FactionPassiveRepGain    = 0;
+            BitNodeMultipliers.HackExpGain              = 0.25;
+            break;
+        case 7: //Bladeburner 2079
+            BitNodeMultipliers.BladeburnerRank          = 0.5;
+            BitNodeMultipliers.BladeburnerSkillCost     = 2;
+            BitNodeMultipliers.AugmentationMoneyCost    = 3;
             BitNodeMultipliers.HackingLevelMultiplier   = 0.5;
             BitNodeMultipliers.ServerMaxMoney           = 0.5;
             BitNodeMultipliers.ServerStartingMoney      = 0.5;

@@ -474,19 +474,32 @@ function parseOnlyRamCalculate(server, code, workerScript) {
             //
             // TODO it would be simpler to just reference a dictionary.
             try {
-                var func = workerScript.env.get(ref);
-                if (typeof func === "function") {
-                    try {
-                        var res = func.apply(null, []);
-                        if (typeof res === "number") {
-                            ram += res;
+                function applyFuncRam(func) {
+                    if (typeof func === "function") {
+                        try {
+                            let res = func.apply(null, []);
+                            if (typeof res === "number") {
+                                return res;
+                            }
+                            return 0;
+                        } catch(e) {
+                            console.log("ERROR applying function: " + e);
+                            return 0;
                         }
-                    } catch(e) {
-                        console.log("ERROR applying function: " + e);
+                    } else {
+                        return 0;
                     }
                 }
-            } catch (error) { continue; }
 
+                //Special logic for Bladeburner
+                var func;
+                if (ref in workerScript.env.vars.bladeburner) {
+                    func = workerScript.env.vars.bladeburner[ref];
+                } else {
+                    func = workerScript.env.get(ref);
+                }
+                ram += applyFuncRam(func);
+            } catch (error) {continue;}
         }
         return ram;
 

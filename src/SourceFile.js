@@ -164,6 +164,17 @@ function applySourceFile(srcFile) {
             Player.dexterity_exp_mult       *= incMult;
             Player.agility_exp_mult         *= incMult;
             break;
+        case 7: //Bladeburner 2079
+            var mult = 0;
+            for (var i = 0; i < srcFile.lvl; ++i) {
+                mult += (8 / (Math.pow(2, i)));
+            }
+            var incMult = 1 + (mult / 100);
+            Player.bladeburner_max_stamina_mult     *= incMult;
+            Player.bladeburner_stamina_gain_mult    *= incMult;
+            Player.bladeburner_analysis_mult        *= incMult;
+            Player.bladeburner_success_chance_mult  *= incMult;
+            break;
         case 8: //Ghost of Wall Street
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
