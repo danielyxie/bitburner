@@ -20,6 +20,7 @@ import {scriptCalculateHackingTime,
         scriptCalculateGrowTime,
         scriptCalculateWeakenTime}          from "./NetscriptEvaluator.js";
 import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker.js";
+import numeral                              from "numeral/min/numeral.min";
 import {Player}                             from "./Player.js";
 import {hackWorldDaemon}                    from "./RedPill.js";
 import {findRunningScript, RunningScript,
@@ -1916,7 +1917,8 @@ let Terminal = {
                 break;
             case Programs.Flight:
                 post("Augmentations: " + Player.augmentations.length + " / 30");
-                post("Money: $" + formatNumber(Player.money.toNumber(), 2) + " / $" + formatNumber(100000000000, 2));
+
+                post("Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + " / " + numeral(1e11).format('($0.000a)'));
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
                 post("Hacking skill: " + Player.hacking_skill + " / 2500");
