@@ -1054,7 +1054,7 @@ let Terminal = {
                     if (fn === "*" || fn === "*.script") {
                         for (var i = 0; i < s.scripts.length; ++i) {
                             var file = new Blob([s.scripts[i].code], {type:"text/plain"});
-                            zip.file(s.scripts[i].filename + "", file);
+                            zip.file(s.scripts[i].filename + ".js", file);
                         }
                     }
                     if (fn === "*" || fn === "*.txt") {
@@ -1327,7 +1327,7 @@ let Terminal = {
 
 					//Check if its a script or just a program/executable
 					//if (isScriptFilename(executableName)) {
-                    if (executableName.includes(".script") || executableName.includes("") || executableName.includes(".ns")) {
+                    if (executableName.includes(".script") || executableName.includes(".js") || executableName.includes(".ns")) {
 						Terminal.runScript(executableName);
 					} else {
                         Terminal.runProgram(executableName);
