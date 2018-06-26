@@ -1736,13 +1736,6 @@ let Engine = {
                 Player.sourceFiles[sfIndex].lvl=sfLvl;
             }
         });
-
-        //If DarkWeb already purchased, disable the button
-        if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
-            const purchaseTor = document.getElementById("location-purchase-tor");
-            purchaseTor.setAttribute("class", "a-link-button-bought");
-            purchaseTor.innerHTML = "TOR Router - Purchased";
-        }
     },
 
     /* Initialization */

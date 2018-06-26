@@ -191,9 +191,6 @@ function prestigeSourceFile() {
     }
     homeComp.cpuCores = 1;
 
-    //Darkweb is purchase-able
-    document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button");
-
     //Reset favor for Companies
     for (var member in Companies) {
         if (Companies.hasOwnProperty(member)) {
