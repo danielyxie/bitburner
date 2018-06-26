@@ -2882,7 +2882,7 @@ function NetscriptFunctions(workerScript) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("createProgram", ramCost);
             }
-            if (Player.bitNodeN != 4) {
+            
             updateDynamicRam("createProgram", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
