@@ -1,5 +1,5 @@
-import {registerEnv, unregisterEnv, makeEnvHeader} from "./NetscriptJSPreamble.js";
-import {makeRuntimeRejectMsg} from "./NetscriptEvaluator.js";
+import {registerEnv, unregisterEnv, makeEnvHeader} from "./NetscriptJSPreamble";
+import {makeRuntimeRejectMsg} from "./NetscriptEvaluator";
 
 // Makes a blob that contains the code of a given script.
 export function makeScriptBlob(code) {
@@ -71,7 +71,7 @@ function _getScriptUrls(script, scripts, seen) {
         // Replace every import statement with an import to a blob url containing
         // the corresponding script. E.g.
         //
-        // import {foo} from "bar.js";
+        // import {foo} from "bar";
         //
         // becomes
         //

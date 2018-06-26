@@ -1,45 +1,45 @@
 import {substituteAliases, printAliases,
         parseAliasDeclaration,
         removeAlias, GlobalAliases,
-        Aliases}                            from "./Alias.js";
-import {CONSTANTS}                          from "./Constants.js";
-import {Programs}                           from "./CreateProgram.js";
+        Aliases}                            from "./Alias";
+import {CONSTANTS}                          from "./Constants";
+import {Programs}                           from "./CreateProgram";
 import {executeDarkwebTerminalCommand,
         checkIfConnectedToDarkweb,
-        DarkWebItems}                       from "./DarkWeb.js";
-import {Engine}                             from "./engine.js";
+        DarkWebItems}                       from "./DarkWeb";
+import {Engine}                             from "./engine";
 import {FconfSettings, parseFconfSettings,
-        createFconf}                        from "./Fconf.js";
+        createFconf}                        from "./Fconf";
 import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         iTutorialIsRunning,
-        currITutorialStep}                  from "./InteractiveTutorial.js";
-import {showLiterature}                     from "./Literature.js";
-import {showMessage, Message}               from "./Message.js";
+        currITutorialStep}                  from "./InteractiveTutorial";
+import {showLiterature}                     from "./Literature";
+import {showMessage, Message}               from "./Message";
 import {scriptCalculateHackingTime,
         scriptCalculateGrowTime,
-        scriptCalculateWeakenTime}          from "./NetscriptEvaluator.js";
-import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker.js";
+        scriptCalculateWeakenTime}          from "./NetscriptEvaluator";
+import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker";
 import numeral                              from "numeral/min/numeral.min";
-import {Player}                             from "./Player.js";
-import {hackWorldDaemon}                    from "./RedPill.js";
+import {Player}                             from "./Player";
+import {hackWorldDaemon}                    from "./RedPill";
 import {findRunningScript, RunningScript,
         AllServersMap, Script,
-        isScriptFilename}                   from "./Script.js";
+        isScriptFilename}                   from "./Script";
 import {AllServers, GetServerByHostname,
-        getServer, Server}                  from "./Server.js";
-import {Settings}                           from "./Settings.js";
+        getServer, Server}                  from "./Server";
+import {Settings}                           from "./Settings";
 import {SpecialServerIps,
-        SpecialServerNames}                 from "./SpecialServerIps.js";
+        SpecialServerNames}                 from "./SpecialServerIps";
 import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
         formatNumber, isString}             from "../utils/StringHelperFunctions";
-import {addOffset, printArray}              from "../utils/HelperFunctions.js";
-import {logBoxCreate}                       from "../utils/LogBox.js";
+import {addOffset, printArray}              from "../utils/HelperFunctions";
+import {logBoxCreate}                       from "../utils/LogBox";
 import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox.js";
+        yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox";
 
 import * as JSZip from 'jszip';
 import * as FileSaver from 'file-saver';
@@ -1054,7 +1054,7 @@ let Terminal = {
                     if (fn === "*" || fn === "*.script") {
                         for (var i = 0; i < s.scripts.length; ++i) {
                             var file = new Blob([s.scripts[i].code], {type:"text/plain"});
-                            zip.file(s.scripts[i].filename + ".js", file);
+                            zip.file(s.scripts[i].filename + "", file);
                         }
                     }
                     if (fn === "*" || fn === "*.txt") {
@@ -1327,7 +1327,7 @@ let Terminal = {
 
 					//Check if its a script or just a program/executable
 					//if (isScriptFilename(executableName)) {
-                    if (executableName.includes(".script") || executableName.includes(".js") || executableName.includes(".ns")) {
+                    if (executableName.includes(".script") || executableName.includes("") || executableName.includes(".ns")) {
 						Terminal.runScript(executableName);
 					} else {
                         Terminal.runProgram(executableName);

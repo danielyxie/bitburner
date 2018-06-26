@@ -1,14 +1,14 @@
-import {Engine}                                     from "./engine.js";
+import {Engine}                                     from "./engine";
 import {workerScripts,
         addWorkerScript,
-        killWorkerScript}                           from "./NetscriptWorker.js";
-import {Player}                                     from "./Player.js";
-import {getServer}                                  from "./Server.js";
-import {dialogBoxCreate}                            from "../utils/DialogBox.js";
+        killWorkerScript}                           from "./NetscriptWorker";
+import {Player}                                     from "./Player";
+import {getServer}                                  from "./Server";
+import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {printArray, createElement,
         createAccordionElement, removeElement,
-        removeChildrenFromElement, exceptionAlert}  from "../utils/HelperFunctions.js";
-import {logBoxCreate}                               from "../utils/LogBox.js";
+        removeChildrenFromElement, exceptionAlert}  from "../utils/HelperFunctions";
+import {logBoxCreate}                               from "../utils/LogBox";
 import numeral                                      from "numeral/min/numeral.min";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
 

@@ -1,4 +1,4 @@
-import {dialogBoxCreate} from "../utils/DialogBox.js";
+import {dialogBoxCreate} from "../utils/DialogBox";
 
 /* Literature.js
  *  Lore / world building literature that can be found on servers

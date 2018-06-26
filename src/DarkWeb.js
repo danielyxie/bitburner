@@ -1,9 +1,9 @@
-import {Programs}                               from "./CreateProgram.js";
-import {Player}                                 from "./Player.js";
-import {SpecialServerIps}                       from "./SpecialServerIps.js";
-import {post}                                   from "./Terminal.js";
+import {Programs}                               from "./CreateProgram";
+import {Player}                                 from "./Player";
+import {SpecialServerIps}                       from "./SpecialServerIps";
+import {post}                                   from "./Terminal";
 
-import {isValidIPAddress}                       from "../utils/IPAddress.js";
+import {isValidIPAddress}                       from "../utils/IPAddress";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 
 

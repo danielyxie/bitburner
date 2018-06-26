@@ -1,6 +1,6 @@
-import {HacknetNode}                    from "./HacknetNode.js";
-import {NetscriptFunctions}             from "./NetscriptFunctions.js";
-import {NetscriptPort}                  from "./NetscriptPort.js";
+import {HacknetNode}                    from "./HacknetNode";
+import {NetscriptFunctions}             from "./NetscriptFunctions";
+import {NetscriptPort}                  from "./NetscriptPort";
 
 /* Environment
  * 	NetScript program environment

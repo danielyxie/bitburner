@@ -1,39 +1,39 @@
-import {deleteActiveScriptsItem}                from "./ActiveScriptsUI.js";
+import {deleteActiveScriptsItem}                from "./ActiveScriptsUI";
 import {Augmentations, augmentationExists,
-        initAugmentations, AugmentationNames}   from "./Augmentations.js";
-import {initBitNodeMultipliers}                 from "./BitNode.js";
-import {Bladeburner}                            from "./Bladeburner.js";
-import {writeCinematicText}                     from "./CinematicText.js";
-import {Companies, Company, initCompanies}      from "./Company.js";
-import {Programs}                               from "./CreateProgram.js";
-import {Engine}                                 from "./engine.js";
+        initAugmentations, AugmentationNames}   from "./Augmentations";
+import {initBitNodeMultipliers}                 from "./BitNode";
+import {Bladeburner}                            from "./Bladeburner";
+import {writeCinematicText}                     from "./CinematicText";
+import {Companies, Company, initCompanies}      from "./Company";
+import {Programs}                               from "./CreateProgram";
+import {Engine}                                 from "./engine";
 import {Factions, Faction, initFactions,
-        joinFaction}                            from "./Faction.js";
-import {deleteGangDisplayContent}               from "./Gang.js";
-import {Locations}                              from "./Location.js";
-import {initMessages, Messages, Message}        from "./Message.js";
-import {initSingularitySFFlags, hasWallStreetSF}from "./NetscriptFunctions.js";
+        joinFaction}                            from "./Faction";
+import {deleteGangDisplayContent}               from "./Gang";
+import {Locations}                              from "./Location";
+import {initMessages, Messages, Message}        from "./Message";
+import {initSingularitySFFlags, hasWallStreetSF}from "./NetscriptFunctions";
 import {WorkerScript, workerScripts,
-        prestigeWorkerScripts}                  from "./NetscriptWorker.js";
-import {Player}                                 from "./Player.js";
+        prestigeWorkerScripts}                  from "./NetscriptWorker";
+import {Player}                                 from "./Player";
 
 import {AllServers, AddToAllServers,
         initForeignServers, Server,
         prestigeAllServers,
-        prestigeHomeComputer}                   from "./Server.js";
+        prestigeHomeComputer}                   from "./Server";
 import {SpecialServerIps, SpecialServerIpsMap,
         prestigeSpecialServerIps,
-        SpecialServerNames}                     from "./SpecialServerIps.js";
+        SpecialServerNames}                     from "./SpecialServerIps";
 import {initStockMarket, initSymbolToStockMap,
         stockMarketContentCreated,
-        setStockMarketContentCreated}           from "./StockMarket.js";
-import {Terminal, postNetburnerText}            from "./Terminal.js";
+        setStockMarketContentCreated}           from "./StockMarket";
+import {Terminal, postNetburnerText}            from "./Terminal";
 import Decimal                                  from "decimal.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {createPopup, createElement,
-        removeElementById, exceptionAlert}      from "../utils/HelperFunctions.js";
+        removeElementById, exceptionAlert}      from "../utils/HelperFunctions";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
+        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";
 
 let BitNode8StartingMoney = 250e6;
 

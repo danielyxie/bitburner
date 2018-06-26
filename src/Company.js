@@ -1,9 +1,9 @@
-import {CONSTANTS}                      from "./Constants.js";
-import {Locations}                      from "./Location.js";
-import {Player}                         from "./Player.js";
+import {CONSTANTS}                      from "./Constants";
+import {Locations}                      from "./Location";
+import {Player}                         from "./Player";
 
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}               from "../utils/JSONReviver.js";
+        Generic_fromJSON}               from "../utils/JSONReviver";
 
 //Netburner Company class
 //    Note: Company Positions can be loaded every time with init() but Company class needs

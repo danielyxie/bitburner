@@ -1,13 +1,13 @@
-import {BitNodeMultipliers}                         from "./BitNode.js";
-import {CONSTANTS}                                  from "./Constants.js";
-import {Programs}                                   from "./CreateProgram.js";
-import {Player}                                     from "./Player.js";
-import {RunningScript, Script}                      from "./Script.js";
-import {SpecialServerNames, SpecialServerIps}       from "./SpecialServerIps.js";
-import {getRandomInt}                               from "../utils/HelperFunctions.js";
-import {createRandomIp, isValidIPAddress, ipExists} from "../utils/IPAddress.js";
+import {BitNodeMultipliers}                         from "./BitNode";
+import {CONSTANTS}                                  from "./Constants";
+import {Programs}                                   from "./CreateProgram";
+import {Player}                                     from "./Player";
+import {RunningScript, Script}                      from "./Script";
+import {SpecialServerNames, SpecialServerIps}       from "./SpecialServerIps";
+import {getRandomInt}                               from "../utils/HelperFunctions";
+import {createRandomIp, isValidIPAddress, ipExists} from "../utils/IPAddress";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                           from "../utils/JSONReviver.js";
+        Generic_fromJSON}                           from "../utils/JSONReviver";
 
 function Server(params={ip:createRandomIp(), hostname:""}) {
     /* Properties */

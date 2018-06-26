@@ -1,21 +1,21 @@
-import {BitNodeMultipliers}                             from "./BitNode.js";
-import {CONSTANTS}                                      from "./Constants.js";
-import {Engine}                                         from "./engine.js";
+import {BitNodeMultipliers}                             from "./BitNode";
+import {CONSTANTS}                                      from "./Constants";
+import {Engine}                                         from "./engine";
 import {Factions, getNextNeurofluxLevel,
-        factionExists}                                  from "./Faction.js";
-import {hasBladeburnerSF}                               from "./NetscriptFunctions.js";
-import {addWorkerScript}                                from "./NetscriptWorker.js";
-import {Player}                                         from "./Player.js";
-import {prestigeAugmentation}                           from "./Prestige.js";
-import {saveObject}                                     from "./SaveObject.js";
-import {Script, RunningScript}                          from "./Script.js";
-import {Server}                                         from "./Server.js";
-import {SourceFiles}                                    from "./SourceFile.js";
-import {dialogBoxCreate}                                from "../utils/DialogBox.js";
+        factionExists}                                  from "./Faction";
+import {hasBladeburnerSF}                               from "./NetscriptFunctions";
+import {addWorkerScript}                                from "./NetscriptWorker";
+import {Player}                                         from "./Player";
+import {prestigeAugmentation}                           from "./Prestige";
+import {saveObject}                                     from "./SaveObject";
+import {Script, RunningScript}                          from "./Script";
+import {Server}                                         from "./Server";
+import {SourceFiles}                                    from "./SourceFile";
+import {dialogBoxCreate}                                from "../utils/DialogBox";
 import {createElement, createAccordionElement,
-        removeChildrenFromElement, clearObject}         from "../utils/HelperFunctions.js";
+        removeChildrenFromElement, clearObject}         from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                               from "../utils/JSONReviver.js";
+        Generic_fromJSON}                               from "../utils/JSONReviver";
 import {isString}                                       from "../utils/StringHelperFunctions";
 
 //Augmentations
