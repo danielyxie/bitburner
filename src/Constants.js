@@ -489,19 +489,8 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.39.0<br>"  +
-    "* Added BitNode-7: Bladeburner 2079<br>" +
-    "* Infiltration base difficulty decreased by 10% for most locations<br>" +
-    "* Experience gains from Infiltration slightly increased<br>" +
-    "* Money gained from Infiltration increased by 20%<br>"  +
-    "* Added 'var' declarations in Netscript 1.0 (only works with 'var', not 'let' or 'const')<br>"  +
-    "* Script base RAM cost is now 1.6 GB (increased from 1.4 GB)<br>" +
-    "* While/for loops and if statements no longer cost RAM in scripts<br>"  +
-    "* Made short-circuit evaluation logic more consistent in Netscript 1.0 (see https://github.com/danielyxie/bitburner/issues/308)<br>" +
-    "* Changelog button in the Options menu now links to the new Changelog URL (by Github user thePalindrome)<br>" +
-    "* Skill level calculation is now 'smoother' (by Github user hydroflame)<br>" +
-    "* Added a button to 'beautify' scripts in the text editor (by Github user hydroflame)<br>" +
-    "* Added favicon (by Github user kopelli)"
+    "v0.39.1<br>"  +
+    "* The setting to suppress the confirmation box when purchasing Augmentations was moved into the main Options menu (by Github user hydroflame)<br>"
 
 
 }

@@ -24,7 +24,8 @@ import {Corporation}                            from "./CompanyManagement.js";
 import {CONSTANTS}                              from "./Constants.js";
 import {displayCreateProgramContent,
         getNumAvailableCreateProgram,
-        initCreateProgramButtons}               from "./CreateProgram.js";
+        initCreateProgramButtons,
+        Programs}                               from "./CreateProgram.js";
 import {displayFactionContent, joinFaction,
         processPassiveFactionRepGain, Factions,
         inviteToFaction, initFactions}          from "./Faction.js";
