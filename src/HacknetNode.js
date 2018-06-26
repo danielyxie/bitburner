@@ -1,14 +1,14 @@
-import {BitNodeMultipliers}                     from "./BitNode.js";
-import {CONSTANTS}                              from "./Constants.js";
-import {Engine}                                 from "./engine.js";
+import {BitNodeMultipliers}                     from "./BitNode";
+import {CONSTANTS}                              from "./Constants";
+import {Engine}                                 from "./engine";
 import {iTutorialSteps, iTutorialNextStep,
-        iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial.js";
-import {Player}                                 from "./Player.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+        iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial";
+import {Player}                                 from "./Player";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners, createElement,
-        getElementById}                         from "../utils/HelperFunctions.js";
+        getElementById}                         from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+        Generic_fromJSON}                       from "../utils/JSONReviver";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 
 /**

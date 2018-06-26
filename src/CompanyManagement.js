@@ -1,25 +1,25 @@
-import {BitNodeMultipliers}                             from "./BitNode.js";
-import {Engine}                                         from "./engine.js";
-import {Factions}                                       from "./Faction.js";
-import {showLiterature}                                 from "./Literature.js";
-import {Locations}                                      from "./Location.js";
-import {Player}                                         from "./Player.js";
+import {BitNodeMultipliers}                             from "./BitNode";
+import {Engine}                                         from "./engine";
+import {Factions}                                       from "./Faction";
+import {showLiterature}                                 from "./Literature";
+import {Locations}                                      from "./Location";
+import {Player}                                         from "./Player";
 
 import Decimal                                          from "decimal.js";
-import {dialogBoxCreate}                                from "../utils/DialogBox.js";
+import {dialogBoxCreate}                                from "../utils/DialogBox";
 import {getRandomInt, removeElementById,
         createElement, createAccordionElement,
         removeChildrenFromElement, createPopup,
-        clearSelector}                                  from "../utils/HelperFunctions.js";
+        clearSelector}                                  from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                               from "../utils/JSONReviver.js";
+        Generic_fromJSON}                               from "../utils/JSONReviver";
 import numeral                                          from "numeral/min/numeral.min";
 import {formatNumber, isString, generateRandomString}   from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,
         yesNoTxtInpBoxGetInput, yesNoBoxClose,
-        yesNoTxtInpBoxClose, yesNoBoxOpen}              from "../utils/YesNoBox.js";
+        yesNoTxtInpBoxClose, yesNoBoxOpen}              from "../utils/YesNoBox";
 
 /* State */
 var companyStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];

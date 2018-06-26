@@ -1,60 +1,60 @@
 var sprintf = require('sprintf-js').sprintf,
     vsprintf = require('sprintf-js').vsprintf
 
-import {updateActiveScriptsItems}                   from "./ActiveScriptsUI.js";
+import {updateActiveScriptsItems}                   from "./ActiveScriptsUI";
 import {Augmentations, Augmentation,
         augmentationExists, installAugmentations,
-        AugmentationNames}                          from "./Augmentations.js";
-import {BitNodeMultipliers}                         from "./BitNode.js";
-import {determineCrimeSuccess, findCrime}           from "./Crimes.js";
-import {Bladeburner}                                from "./Bladeburner.js";
+        AugmentationNames}                          from "./Augmentations";
+import {BitNodeMultipliers}                         from "./BitNode";
+import {determineCrimeSuccess, findCrime}           from "./Crimes";
+import {Bladeburner}                                from "./Bladeburner";
 import {Companies, Company, CompanyPosition,
-        CompanyPositions, companyExists}            from "./Company.js";
-import {CONSTANTS}                                  from "./Constants.js";
-import {Programs}                                   from "./CreateProgram.js";
-import {DarkWebItems}                               from "./DarkWeb.js";
-import {Engine}                                     from "./engine.js";
-import {AllGangs}                                   from "./Gang.js";
+        CompanyPositions, companyExists}            from "./Company";
+import {CONSTANTS}                                  from "./Constants";
+import {Programs}                                   from "./CreateProgram";
+import {DarkWebItems}                               from "./DarkWeb";
+import {Engine}                                     from "./engine";
+import {AllGangs}                                   from "./Gang";
 import {Factions, Faction, joinFaction,
-        factionExists, purchaseAugmentation}        from "./Faction.js";
-import {getCostOfNextHacknetNode, purchaseHacknet}  from "./HacknetNode.js";
-import {Locations}                                  from "./Location.js";
-import {Message, Messages}                          from "./Message.js";
-import {inMission}                                  from "./Missions.js";
-import {Player}                                     from "./Player.js";
+        factionExists, purchaseAugmentation}        from "./Faction";
+import {getCostOfNextHacknetNode, purchaseHacknet}  from "./HacknetNode";
+import {Locations}                                  from "./Location";
+import {Message, Messages}                          from "./Message";
+import {inMission}                                  from "./Missions";
+import {Player}                                     from "./Player";
 import {Script, findRunningScript, RunningScript,
-        isScriptFilename}                           from "./Script.js";
+        isScriptFilename}                           from "./Script";
 import {Server, getServer, AddToAllServers,
         AllServers, processSingleServerGrowth,
-        GetServerByHostname}                        from "./Server.js";
-import {Settings}                                   from "./Settings.js";
-import {SpecialServerIps}                           from "./SpecialServerIps.js";
+        GetServerByHostname}                        from "./Server";
+import {Settings}                                   from "./Settings";
+import {SpecialServerIps}                           from "./SpecialServerIps";
 import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         initStockMarket, initSymbolToStockMap, stockMarketCycle, buyStock,
         sellStock, updateStockPrices, displayStockMarketContent,
         updateStockTicker, updateStockPlayerPosition,
         Stock, shortStock, sellShort, OrderTypes,
-        PositionTypes, placeOrder, cancelOrder}     from "./StockMarket.js";
-import {post}                                       from "./Terminal.js";
+        PositionTypes, placeOrder, cancelOrder}     from "./StockMarket";
+import {post}                                       from "./Terminal";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {WorkerScript, workerScripts,
-        killWorkerScript, NetscriptPorts}           from "./NetscriptWorker.js";
+        killWorkerScript, NetscriptPorts}           from "./NetscriptWorker";
 import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
         scriptCalculateHackingChance, scriptCalculateHackingTime,
         scriptCalculateExpGain, scriptCalculatePercentMoneyHacked,
-        scriptCalculateGrowTime, scriptCalculateWeakenTime} from "./NetscriptEvaluator.js";
-import {Environment}                                from "./NetscriptEnvironment.js";
-import {NetscriptPort}                              from "./NetscriptPort.js";
+        scriptCalculateGrowTime, scriptCalculateWeakenTime} from "./NetscriptEvaluator";
+import {Environment}                                from "./NetscriptEnvironment";
+import {NetscriptPort}                              from "./NetscriptPort";
 
 import Decimal                                      from "decimal.js";
-import {dialogBoxCreate}                            from "../utils/DialogBox.js";
-import {printArray, powerOfTwo}                     from "../utils/HelperFunctions.js";
-import {createRandomIp}                             from "../utils/IPAddress.js";
+import {dialogBoxCreate}                            from "../utils/DialogBox";
+import {printArray, powerOfTwo}                     from "../utils/HelperFunctions";
+import {createRandomIp}                             from "../utils/IPAddress";
 import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions";
 import {yesNoBoxClose, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxCreate,
-        yesNoBoxOpen}                               from "../utils/YesNoBox.js";
+        yesNoBoxOpen}                               from "../utils/YesNoBox";
 
 var hasCorporationSF            = false, //Source-File 3
     hasSingularitySF            = false, //Source-File 4

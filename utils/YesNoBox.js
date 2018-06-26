@@ -1,4 +1,4 @@
-import {clearEventListeners}                from "./HelperFunctions.js";
+import {clearEventListeners}                from "./HelperFunctions";
 /* Generic Yes-No Pop-up box
  * Can be used to create pop-up boxes that require a yes/no response from player
  */

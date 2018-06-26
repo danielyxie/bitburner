@@ -1,4 +1,4 @@
-import {Settings} from          "./Settings.js";
+import {Settings} from          "./Settings";
 
 function NetscriptPort() {
     this.data = [];

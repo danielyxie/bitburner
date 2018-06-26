@@ -1,4 +1,4 @@
-import {post}                   from "./Terminal.js";
+import {post}                   from "./Terminal";
 
 let Aliases = {};
 let GlobalAliases = {};

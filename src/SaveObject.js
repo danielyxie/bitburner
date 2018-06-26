@@ -1,28 +1,28 @@
 import {loadAliases, loadGlobalAliases,
-        Aliases, GlobalAliases}                 from "./Alias.js";
+        Aliases, GlobalAliases}                 from "./Alias";
 import {loadCompanies, Companies,
-        CompanyPositions}                       from "./Company.js";
-import {CONSTANTS}                              from "./Constants.js";
-import {Engine}                                 from "./engine.js";
+        CompanyPositions}                       from "./Company";
+import {CONSTANTS}                              from "./Constants";
+import {Engine}                                 from "./engine";
 import {loadFactions, Factions,
-        processPassiveFactionRepGain}           from "./Faction.js";
-import {FconfSettings, loadFconf}               from "./Fconf.js";
-import {loadAllGangs, AllGangs}                 from "./Gang.js";
+        processPassiveFactionRepGain}           from "./Faction";
+import {FconfSettings, loadFconf}               from "./Fconf";
+import {loadAllGangs, AllGangs}                 from "./Gang";
 import {processAllHacknetNodeEarnings,
-        createPlayerHacknetNodeWrappers}        from "./HacknetNode.js";
-import {loadMessages, initMessages, Messages}   from "./Message.js";
-import {Player, loadPlayer}                     from "./Player.js";
-import {loadAllRunningScripts}                  from "./Script.js";
-import {AllServers, loadAllServers}             from "./Server.js";
-import {loadSettings, initSettings, Settings}   from "./Settings.js";
-import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps.js";
-import {loadStockMarket, StockMarket}           from "./StockMarket.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {gameOptionsBoxClose}                    from "../utils/GameOptions.js";
+        createPlayerHacknetNodeWrappers}        from "./HacknetNode";
+import {loadMessages, initMessages, Messages}   from "./Message";
+import {Player, loadPlayer}                     from "./Player";
+import {loadAllRunningScripts}                  from "./Script";
+import {AllServers, loadAllServers}             from "./Server";
+import {loadSettings, initSettings, Settings}   from "./Settings";
+import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps";
+import {loadStockMarket, StockMarket}           from "./StockMarket";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
+import {gameOptionsBoxClose}                    from "../utils/GameOptions";
 import {clearEventListeners, createElement,
-        createPopup, removeElementById}         from "../utils/HelperFunctions.js";
+        createPopup, removeElementById}         from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+        Generic_fromJSON}                       from "../utils/JSONReviver";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 
 import Decimal                                  from "decimal.js";

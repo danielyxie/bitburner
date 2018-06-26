@@ -1,14 +1,14 @@
 import {Augmentations, Augmentation,
-        AugmentationNames}                      from "./Augmentations.js";
-import {Programs}                               from "./CreateProgram.js";
-import {inMission}                              from "./Missions.js";
-import {Player}                                 from "./Player.js";
-import {redPillFlag}                            from "./RedPill.js";
-import {GetServerByHostname}                    from "./Server.js";
-import {Settings}                               from "./Settings.js";
-import {dialogBoxCreate, dialogBoxOpened}       from "../utils/DialogBox.js";
+        AugmentationNames}                      from "./Augmentations";
+import {Programs}                               from "./CreateProgram";
+import {inMission}                              from "./Missions";
+import {Player}                                 from "./Player";
+import {redPillFlag}                            from "./RedPill";
+import {GetServerByHostname}                    from "./Server";
+import {Settings}                               from "./Settings";
+import {dialogBoxCreate, dialogBoxOpened}       from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+        Generic_fromJSON}                       from "../utils/JSONReviver";
 
 /* Message.js */
 function Message(filename="", msg="") {
