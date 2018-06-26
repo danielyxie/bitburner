@@ -1,16 +1,27 @@
 //Contains the "information" property for all the Factions, which is just a description
 //of each faction
-function FactionInfo(infoText, enemies, offerHackingMission, offerHackingWork, offerFieldWork, offerSecurityWork) {
-  this.infoText = infoText;
-  this.enemies = enemies;
-  this.offerHackingMission = offerHackingMission;
-  this.offerHackingWork = offerHackingWork;
-  this.offerFieldWork = offerFieldWork;
-  this.offerSecurityWork = offerSecurityWork;
+class FactionInfo {
+  infoText: string;
+  enemies: string[];
+  offerHackingMission: boolean;
+  offerHackingWork: boolean;
+  offerFieldWork: boolean;
+  offerSecurityWork: boolean;
+  augmentationPriceMult: number;
+  augmentationRepRequirementMult: number;
 
-  // these are always all 1 for now.
-  this.augmentationPriceMult = 1;
-  this.augmentationRepRequirementMult = 1;
+  constructor(infoText: string, enemies: string[], offerHackingMission: boolean, offerHackingWork: boolean, offerFieldWork: boolean, offerSecurityWork: boolean) {
+    this.infoText = infoText;
+    this.enemies = enemies;
+    this.offerHackingMission = offerHackingMission;
+    this.offerHackingWork = offerHackingWork;
+    this.offerFieldWork = offerFieldWork;
+    this.offerSecurityWork = offerSecurityWork;
+
+    // these are always all 1 for now.
+    this.augmentationPriceMult = 1;
+    this.augmentationRepRequirementMult = 1;  
+  }
 }
 
 const FactionInfos = {
