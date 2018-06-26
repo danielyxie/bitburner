@@ -88,7 +88,7 @@ function checkForMessagesToSend() {
         }
     } else if (jumper0 && !jumper0.recvd && Player.hacking_skill >= 25) {
         sendMessage(jumper0);
-        Player.getHomeComputer().programs.push(Programs.Flight);
+        Player.getHomeComputer().programs.push(Programs.Flight.name);
     } else if (jumper1 && !jumper1.recvd && Player.hacking_skill >= 40) {
         sendMessage(jumper1);
     } else if (cybersecTest && !cybersecTest.recvd && Player.hacking_skill >= 50) {

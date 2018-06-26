@@ -59,13 +59,13 @@ function prestigeAugmentation() {
 
     if (augmentationExists(AugmentationNames.Neurolink) &&
         Augmentations[AugmentationNames.Neurolink].owned) {
-        homeComp.programs.push(Programs.FTPCrackProgram);
-        homeComp.programs.push(Programs.RelaySMTPProgram);
+        homeComp.programs.push(Programs.FTPCrackProgram.name);
+        homeComp.programs.push(Programs.RelaySMTPProgram.name);
     }
     if (augmentationExists(AugmentationNames.CashRoot) &&
         Augmentations[AugmentationNames.CashRoot].owned) {
         Player.setMoney(new Decimal(1000000));
-        homeComp.programs.push(Programs.BruteSSHProgram);
+        homeComp.programs.push(Programs.BruteSSHProgram.name);
     }
 
     //Re-create foreign servers

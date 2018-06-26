@@ -430,7 +430,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.NukeProgram)) {
+            if (!Player.hasProgram(Programs.NukeProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the NUKE.exe virus!");
             }
             if (server.openPortCount < server.numOpenPortsRequired) {
@@ -461,7 +461,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.BruteSSHProgram)) {
+            if (!Player.hasProgram(Programs.BruteSSHProgram.name)) {
                 workerScript.scriptRef.log("You do not have the BruteSSH.exe program!");
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the BruteSSH.exe program!");
             }
@@ -491,7 +491,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.FTPCrackProgram)) {
+            if (!Player.hasProgram(Programs.FTPCrackProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the FTPCrack.exe program!");
             }
             if (!server.ftpPortOpen) {
@@ -520,7 +520,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.RelaySMTPProgram)) {
+            if (!Player.hasProgram(Programs.RelaySMTPProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the relaySMTP.exe program!");
             }
             if (!server.smtpPortOpen) {
@@ -549,7 +549,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.HTTPWormProgram)) {
+            if (!Player.hasProgram(Programs.HTTPWormProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the HTTPWorm.exe program!");
             }
             if (!server.httpPortOpen) {
@@ -578,7 +578,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.SQLInjectProgram)) {
+            if (!Player.hasProgram(Programs.SQLInjectProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the SQLInject.exe program!");
             }
             if (!server.sqlPortOpen) {
@@ -2882,6 +2882,7 @@ function NetscriptFunctions(workerScript) {
             if (workerScript.checkingRam) {
                 return updateStaticRam("createProgram", ramCost);
             }
+            if (Player.bitNodeN != 4) {
             updateDynamicRam("createProgram", ramCost);
             if (Player.bitNodeN != 4) {
                 if (!(hasSingularitySF && singularitySFLvl >= 3)) {
@@ -2900,78 +2901,34 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            switch(name.toLowerCase()) {
-                case Programs.NukeProgram.toLowerCase():
-                    Player.startCreateProgramWork(Programs.NukeProgram, CONSTANTS.MillisecondsPerFiveMinutes, 1);
-                    break;
-                case Programs.BruteSSHProgram.toLowerCase():
-                    if (Player.hacking_skill < 50) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create BruteSSH (level 50 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerFiveMinutes * 2, 50);
-                    break;
-                case Programs.FTPCrackProgram.toLowerCase():
-                    if (Player.hacking_skill < 100) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create FTPCrack (level 100 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHalfHour, 100);
-                    break;
-                case Programs.RelaySMTPProgram.toLowerCase():
-                    if (Player.hacking_skill < 250) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create relaySMTP (level 250 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.RelaySMTPProgram, CONSTANTS.MillisecondsPer2Hours, 250);
-                    break;
-                case Programs.HTTPWormProgram.toLowerCase():
-                    if (Player.hacking_skill < 500) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create HTTPWorm (level 500 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer4Hours, 500);
-                    break;
-                case Programs.SQLInjectProgram.toLowerCase():
-                    if (Player.hacking_skill < 750) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create SQLInject (level 750 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer8Hours, 750);
-                    break;
-                case Programs.DeepscanV1.toLowerCase():
-                    if (Player.hacking_skill < 75) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create DeepscanV1 (level 75 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.DeepscanV1, CONSTANTS.MillisecondsPerQuarterHour, 75);
-                    break;
-                case Programs.DeepscanV2.toLowerCase():
-                    if (Player.hacking_skill < 400) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create DeepscanV2 (level 400 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.DeepscanV2, CONSTANTS.MillisecondsPer2Hours, 400);
-                    break;
-                case Programs.ServerProfiler.toLowerCase():
-                    if (Player.hacking_skill < 75) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create ServerProfiler (level 75 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.ServerProfiler, CONSTANTS.MillisecondsPerHalfHour, 75);
-                    break;
-                case Programs.AutoLink.toLowerCase():
-                    if (Player.hacking_skill < 25) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create AutoLink (level 25 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.AutoLink, CONSTANTS.MillisecondsPerQuarterHour, 25);
-                    break;
-                default:
-                    workerScript.scriptRef.log("ERROR: createProgram() failed because the specified program does not exist: " + name);
-                    return false;
+            name = name.toLowerCase();
+
+            let p = null;
+            for (const key in Programs) {
+                if(Programs[key].name.toLowerCase() == name) {
+                    p = Programs[key];
+                }
             }
-            workerScript.scriptRef.log("Began creating program: " + name);
+
+            if(p == null) {
+                workerScript.scriptRef.log("ERROR: createProgram() failed because the specified program does not exist: " + name);
+                return false;
+            }
+
+            if(Player.hasProgram(p.name)) {
+                workerScript.scriptRef.log('ERROR: createProgram() failed because you already have the ' + p.name + ' program');
+                return false;
+            }
+
+            if(!p.create.req()) {
+                workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create " + p.name + " (level " + p.create.level + " req)");
+                return false
+            }
+
+            Player.startCreateProgramWork(p.name, p.create.time, p.create.level);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.createProgram == null) {
+                workerScript.scriptRef.log("Began creating program: " + name);
+            }
             return true;
         },
         commitCrime : function(crimeRoughName) {

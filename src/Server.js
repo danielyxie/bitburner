@@ -829,7 +829,7 @@ function prestigeHomeComputer(homeComp) {
     homeComp.serversOnNetwork = [];
     homeComp.isConnectedTo = true;
     homeComp.ramUsed = 0;
-    homeComp.programs.push(Programs.NukeProgram);
+    homeComp.programs.push(Programs.NukeProgram.name);
 
     //Update RAM usage on all scripts
     homeComp.scripts.forEach(function(script) {
