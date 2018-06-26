@@ -1,6 +1,6 @@
-import {CONSTANTS} from "./Constants.js";
-import {Player} from "./Player.js";
-import {dialogBoxCreate} from "../utils/DialogBox.js";
+import {CONSTANTS} from "./Constants";
+import {Player} from "./Player";
+import {dialogBoxCreate} from "../utils/DialogBox";
 
 
 function Crime(name, type, time, money, difficulty, karma, params) {

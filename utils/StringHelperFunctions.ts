@@ -1,4 +1,4 @@
-import { dialogBoxCreate } from "./DialogBox.js";
+import { dialogBoxCreate } from "./DialogBox";
 
 // Netburner String helper functions
 

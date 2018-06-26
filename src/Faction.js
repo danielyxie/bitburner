@@ -1,24 +1,24 @@
 import {Augmentations, AugmentationNames,
-        PlayerOwnedAugmentation}                from "./Augmentations.js";
-import {BitNodeMultipliers}                     from "./BitNode.js";
-import {CONSTANTS}                              from "./Constants.js";
-import {Engine}                                 from "./engine.js";
-import {FactionInfos}                           from "./FactionInfo.js";
-import {Locations}                              from "./Location.js";
-import {HackingMission, setInMission}           from "./Missions.js";
-import {Player}                                 from "./Player.js";
-import {Settings}                               from "./Settings.js";
+        PlayerOwnedAugmentation}                from "./Augmentations";
+import {BitNodeMultipliers}                     from "./BitNode";
+import {CONSTANTS}                              from "./Constants";
+import {Engine}                                 from "./engine";
+import {FactionInfos}                           from "./FactionInfo";
+import {Locations}                              from "./Location";
+import {HackingMission, setInMission}           from "./Missions";
+import {Player}                                 from "./Player";
+import {Settings}                               from "./Settings";
 
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
+import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox";
 import {clearEventListeners, createElement,
-        removeChildrenFromElement}              from "../utils/HelperFunctions.js";
+        removeChildrenFromElement}              from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+        Generic_fromJSON}                       from "../utils/JSONReviver";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
+        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";
 
 function Faction(name="") {
     this.name 				= name;

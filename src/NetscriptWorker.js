@@ -1,20 +1,20 @@
 import {addActiveScriptsItem,
         deleteActiveScriptsItem,
-        updateActiveScriptsItems}           from "./ActiveScriptsUI.js";
-import {CONSTANTS}                          from "./Constants.js";
-import {Engine}                             from "./engine.js";
-import {Environment}                        from "./NetscriptEnvironment.js";
+        updateActiveScriptsItems}           from "./ActiveScriptsUI";
+import {CONSTANTS}                          from "./Constants";
+import {Engine}                             from "./engine";
+import {Environment}                        from "./NetscriptEnvironment";
 import {evaluate, isScriptErrorMessage,
         makeRuntimeRejectMsg,
-        killNetscriptDelay}                 from "./NetscriptEvaluator.js";
-import {executeJSScript}                    from "./NetscriptJSEvaluator.js";
-import {NetscriptPort}                      from "./NetscriptPort.js";
-import {AllServers}                         from "./Server.js";
-import {Settings}                           from "./Settings.js";
+        killNetscriptDelay}                 from "./NetscriptEvaluator";
+import {executeJSScript}                    from "./NetscriptJSEvaluator";
+import {NetscriptPort}                      from "./NetscriptPort";
+import {AllServers}                         from "./Server";
+import {Settings}                           from "./Settings";
 
-import {parse}                              from "../utils/acorn.js";
-import {dialogBoxCreate}                    from "../utils/DialogBox.js";
-import {compareArrays, printArray}          from "../utils/HelperFunctions.js";
+import {parse}                              from "../utils/acorn";
+import {dialogBoxCreate}                    from "../utils/DialogBox";
+import {compareArrays, printArray}          from "../utils/HelperFunctions";
 
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;

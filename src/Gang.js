@@ -1,22 +1,22 @@
-import {CONSTANTS}                              from "./Constants.js";
-import {Engine}                                 from "./engine.js";
+import {CONSTANTS}                              from "./Constants";
+import {Engine}                                 from "./engine";
 import {Faction, Factions,
-        displayFactionContent}                  from "./Faction.js";
-import {Player}                                 from "./Player.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+        displayFactionContent}                  from "./Faction";
+import {Player}                                 from "./Player";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+        Generic_fromJSON}                       from "../utils/JSONReviver";
 import {getRandomInt, createElement,
         removeChildrenFromElement,
         createAccordionElement, createPopup,
-        removeElementById, removeElement}       from "../utils/HelperFunctions.js";
+        removeElementById, removeElement}       from "../utils/HelperFunctions";
 import  numeral                                 from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,
         yesNoTxtInpBoxGetInput, yesNoBoxClose,
-        yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox.js";
+        yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox";
 
 /* Gang.js */
 //Switch between territory and management screen with 1 and 2

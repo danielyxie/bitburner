@@ -1,6 +1,6 @@
 //General helper functions
 import {isString}           from "./StringHelperFunctions";
-import {dialogBoxCreate}    from "./DialogBox.js";
+import {dialogBoxCreate}    from "./DialogBox";
 
 //Returns the size (number of keys) of an object
 function sizeOfObject(obj) {

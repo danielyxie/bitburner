@@ -1,7 +1,7 @@
-import {Engine}                         from "./engine.js";
-import {Player}                         from "./Player.js";
-import {dialogBoxCreate}                from "../utils/DialogBox.js";
-import {clearEventListeners}            from "../utils/HelperFunctions.js";
+import {Engine}                         from "./engine";
+import {Player}                         from "./Player";
+import {dialogBoxCreate}                from "../utils/DialogBox";
+import {clearEventListeners}            from "../utils/HelperFunctions";
 
 /* InteractiveTutorial.js */
 let iTutorialSteps = {

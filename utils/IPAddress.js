@@ -1,4 +1,4 @@
-import {AllServers}                     from "../src/Server.js";
+import {AllServers}                     from "../src/Server";
 /* Functions to deal with manipulating IP addresses*/
 
 //Generate a random IP address
