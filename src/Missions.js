@@ -4,8 +4,7 @@ import {displayFactionContent}                      from "./Faction.js";
 import {Player}                                     from "./Player.js";
 import {dialogBoxCreate}                            from "../utils/DialogBox.js";
 import {addOffset, getRandomInt,
-        clearEventListenersEl,
-        clearEventListeners}                        from "../utils/HelperFunctions.js";
+        clearEventListeners}                        from "../utils/HelperFunctions";
 import {formatNumber, isString}                     from "../utils/StringHelperFunctions";
 import jsplumb                                      from 'jsplumb'
 

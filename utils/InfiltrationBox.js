@@ -3,7 +3,7 @@ import {CONSTANTS}                          from "../src/Constants.js";
 import {Factions, Faction}                  from "../src/Faction.js";
 import {Player}                             from "../src/Player.js";
 import {dialogBoxCreate}                    from "./DialogBox.js";
-import {clearEventListeners}                from "./HelperFunctions.js";
+import {clearEventListeners}                from "./HelperFunctions";
 import {formatNumber}                       from "./StringHelperFunctions";
 
 /* InfiltrationBox.js */

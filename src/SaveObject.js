@@ -20,7 +20,7 @@ import {loadStockMarket, StockMarket}           from "./StockMarket.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {gameOptionsBoxClose}                    from "../utils/GameOptions.js";
 import {clearEventListeners, createElement,
-        createPopup, removeElementById}         from "../utils/HelperFunctions.js";
+        createPopup, removeElementById}         from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions";

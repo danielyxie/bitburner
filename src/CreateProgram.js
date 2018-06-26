@@ -1,6 +1,6 @@
 import {CONSTANTS}          from "./Constants.js";
 import {Player}             from "./Player.js";
-import {createElement}      from "../utils/HelperFunctions.js";
+import {createElement}      from "../utils/HelperFunctions";
 
 // a function that returns a requirement for a program that requires only that
 // the player has at least the given skill level.

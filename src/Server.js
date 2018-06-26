@@ -4,7 +4,7 @@ import {Programs}                                   from "./CreateProgram.js";
 import {Player}                                     from "./Player.js";
 import {RunningScript, Script}                      from "./Script.js";
 import {SpecialServerNames, SpecialServerIps}       from "./SpecialServerIps.js";
-import {getRandomInt}                               from "../utils/HelperFunctions.js";
+import {getRandomInt}                               from "../utils/HelperFunctions";
 import {createRandomIp, isValidIPAddress, ipExists} from "../utils/IPAddress.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver.js";

@@ -7,8 +7,7 @@ import {Player}                                 from "./Player.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {clearEventListeners, getRandomInt,
-        removeElementById,
-        clearEventListenersEl}                  from "../utils/HelperFunctions.js";
+        removeElementById}                      from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import numeral                                  from "numeral/min/numeral.min";

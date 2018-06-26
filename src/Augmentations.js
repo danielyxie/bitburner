@@ -13,7 +13,7 @@ import {Server}                                         from "./Server.js";
 import {SourceFiles}                                    from "./SourceFile.js";
 import {dialogBoxCreate}                                from "../utils/DialogBox.js";
 import {createElement, createAccordionElement,
-        removeChildrenFromElement, clearObject}         from "../utils/HelperFunctions.js";
+        removeChildrenFromElement, clearObject}         from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver.js";
 import {isString}                                       from "../utils/StringHelperFunctions";

@@ -8,7 +8,7 @@ import {Terminal}                               from "./Terminal.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {clearEventListeners,
-        removeChildrenFromElement}              from "../utils/HelperFunctions.js";
+        removeChildrenFromElement}              from "../utils/HelperFunctions";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
 

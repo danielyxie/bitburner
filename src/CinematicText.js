@@ -1,7 +1,7 @@
 import {Engine}                             from "./engine.js";
 
 import {removeChildrenFromElement,
-        createElement, exceptionAlert}      from "../utils/HelperFunctions.js";
+        createElement, exceptionAlert}      from "../utils/HelperFunctions";
 import {isString}                           from "../utils/StringHelperFunctions";
 
 var cinematicTextFlag = false;

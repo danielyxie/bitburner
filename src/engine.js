@@ -2,7 +2,7 @@ import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions.js";
 import {clearEventListeners, createElement,
         removeChildrenFromElement,
-        exceptionAlert}                         from "../utils/HelperFunctions.js";
+        exceptionAlert}                         from "../utils/HelperFunctions";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
         convertTimeMsToTimeElapsedString,

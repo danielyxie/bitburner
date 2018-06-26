@@ -10,7 +10,7 @@ import {dialogBoxCreate}                                from "../utils/DialogBox
 import {getRandomInt, removeElementById,
         createElement, createAccordionElement,
         removeChildrenFromElement, createPopup,
-        clearSelector}                                  from "../utils/HelperFunctions.js";
+        clearSelector}                                  from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver.js";
 import numeral                                          from "numeral/min/numeral.min";
