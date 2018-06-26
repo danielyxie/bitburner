@@ -93,18 +93,23 @@ Server.prototype.getScript = function(scriptName) {
     return null;
 }
 
-//Strengthens a server's security level (difficulty) by the specified amount
-Server.prototype.fortify = function(amt) {
-    this.hackDifficulty += amt;
+Server.prototype.capDifficulty = function() {
+    if (this.hackDifficulty < this.minDifficulty) {this.hackDifficulty = this.minDifficulty;}
+    if (this.hackDifficulty < 1) {this.hackDifficulty = 1;}
     //Place some arbitrarily limit that realistically should never happen unless someone is
     //screwing around with the game
     if (this.hackDifficulty > 1000000) {this.hackDifficulty = 1000000;}
 }
 
+//Strengthens a server's security level (difficulty) by the specified amount
+Server.prototype.fortify = function(amt) {
+    this.hackDifficulty += amt;
+    this.capDifficulty();
+}
+
 Server.prototype.weaken = function(amt) {
     this.hackDifficulty -= (amt * BitNodeMultipliers.ServerWeakenRate);
-    if (this.hackDifficulty < this.minDifficulty) {this.hackDifficulty = this.minDifficulty;}
-    if (this.hackDifficulty < 1) {this.hackDifficulty = 1;}
+    this.capDifficulty();
 }
 
 //Functions for loading and saving a Server
@@ -817,7 +822,8 @@ function processSingleServerGrowth(server, numCycles) {
     // if there was any growth at all, increase security
     if(oldMoneyAvailable !== server.moneyAvailable) {
         //Growing increases server security twice as much as hacking
-        const usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable);
+        let usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable);
+        usedCycles = Math.max(0, usedCycles);
         server.fortify(2 * CONSTANTS.ServerFortifyAmount * Math.ceil(usedCycles));
     }
     return server.moneyAvailable / oldMoneyAvailable;
