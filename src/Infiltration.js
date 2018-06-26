@@ -3,7 +3,7 @@ import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {Player}                                 from "./Player.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {clearEventListeners, getRandomInt}      from "../utils/HelperFunctions.js";
+import {clearEventListeners, getRandomInt}      from "../utils/HelperFunctions";
 import {infiltrationBoxCreate}                  from "../utils/InfiltrationBox.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 

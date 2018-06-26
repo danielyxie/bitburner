@@ -49,7 +49,7 @@ import {NetscriptPort}                              from "./NetscriptPort.js";
 
 import Decimal                                      from "decimal.js";
 import {dialogBoxCreate}                            from "../utils/DialogBox.js";
-import {printArray, powerOfTwo}                     from "../utils/HelperFunctions.js";
+import {printArray, powerOfTwo}                     from "../utils/HelperFunctions";
 import {createRandomIp}                             from "../utils/IPAddress.js";
 import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions";
 import {yesNoBoxClose, yesNoBoxGetYesButton,

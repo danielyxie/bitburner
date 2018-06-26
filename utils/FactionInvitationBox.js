@@ -1,7 +1,7 @@
 import {Faction, joinFaction}       from "../src/Faction.js";
 import {Engine}                     from "../src/engine.js";
 import {Player}                     from "../src/Player.js";
-import {clearEventListeners}        from "./HelperFunctions.js";
+import {clearEventListeners}        from "./HelperFunctions";
 
 /* Faction Invitation Pop-up box */
 function factionInvitationBoxClose() {

@@ -12,7 +12,7 @@ import {Settings}                               from "./Settings.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox.js";
 import {clearEventListeners, createElement,
-        removeChildrenFromElement}              from "../utils/HelperFunctions.js";
+        removeChildrenFromElement}              from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import numeral                                  from "numeral/min/numeral.min";

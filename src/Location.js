@@ -15,7 +15,7 @@ import {Settings}                               from "./Settings.js";
 import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps.js";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {clearEventListeners, createElement}     from "../utils/HelperFunctions.js";
+import {clearEventListeners, createElement}     from "../utils/HelperFunctions";
 import {createRandomIp}                         from "../utils/IPAddress.js";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";

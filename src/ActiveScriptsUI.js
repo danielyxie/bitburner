@@ -7,7 +7,7 @@ import {getServer}                                  from "./Server.js";
 import {dialogBoxCreate}                            from "../utils/DialogBox.js";
 import {printArray, createElement,
         createAccordionElement, removeElement,
-        removeChildrenFromElement, exceptionAlert}  from "../utils/HelperFunctions.js";
+        removeChildrenFromElement, exceptionAlert}  from "../utils/HelperFunctions";
 import {logBoxCreate}                               from "../utils/LogBox.js";
 import numeral                                      from "numeral/min/numeral.min";
 import {formatNumber}                               from "../utils/StringHelperFunctions";

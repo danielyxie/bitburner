@@ -36,7 +36,7 @@ import {parse, Node}                            from "../utils/acorn.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import {compareArrays, createElement}           from "../utils/HelperFunctions.js";
+import {compareArrays, createElement}           from "../utils/HelperFunctions";
 import {formatNumber, numOccurrences,
         numNetscriptOperators}                  from "../utils/StringHelperFunctions";
 

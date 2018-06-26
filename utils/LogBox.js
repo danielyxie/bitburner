@@ -1,5 +1,5 @@
 import {killWorkerScript}                   from "../src/NetscriptWorker.js";
-import {printArray, clearEventListeners}    from "./HelperFunctions.js";
+import {printArray, clearEventListeners}    from "./HelperFunctions";
 
 $(document).keydown(function(event) {
     if (logBoxOpened && event.keyCode == 27) {

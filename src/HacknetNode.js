@@ -6,7 +6,7 @@ import {iTutorialSteps, iTutorialNextStep,
 import {Player}                                 from "./Player.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {clearEventListeners, createElement,
-        getElementById}                         from "../utils/HelperFunctions.js";
+        getElementById}                         from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import {formatNumber}                           from "../utils/StringHelperFunctions";

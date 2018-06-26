@@ -9,7 +9,7 @@ import {Reviver, Generic_toJSON,
 import {getRandomInt, createElement,
         removeChildrenFromElement,
         createAccordionElement, createPopup,
-        removeElementById, removeElement}       from "../utils/HelperFunctions.js";
+        removeElementById, removeElement}       from "../utils/HelperFunctions";
 import  numeral                                 from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,

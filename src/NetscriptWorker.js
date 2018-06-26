@@ -14,7 +14,7 @@ import {Settings}                           from "./Settings.js";
 
 import {parse}                              from "../utils/acorn.js";
 import {dialogBoxCreate}                    from "../utils/DialogBox.js";
-import {compareArrays, printArray}          from "../utils/HelperFunctions.js";
+import {compareArrays, printArray}          from "../utils/HelperFunctions";
 
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;

@@ -21,7 +21,7 @@ import {SourceFiles, applySourceFile}           from "./SourceFile.js";
 
 import Decimal                                  from "decimal.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {clearEventListeners}                    from "../utils/HelperFunctions.js";
+import {clearEventListeners}                    from "../utils/HelperFunctions";
 import {createRandomIp}                         from "../utils/IPAddress.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";

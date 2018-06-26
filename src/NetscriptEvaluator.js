@@ -9,7 +9,7 @@ import {Script, findRunningScript,
         RunningScript}                      from "./Script.js";
 
 import {parse, Node}                        from "../utils/acorn.js";
-import {printArray}                         from "../utils/HelperFunctions.js";
+import {printArray}                         from "../utils/HelperFunctions";
 import {isValidIPAddress}                   from "../utils/IPAddress.js";
 import {isString}                           from "../utils/StringHelperFunctions";
 

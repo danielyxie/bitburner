@@ -1,18 +1,9 @@
 //General helper functions
 import {isString}           from "./StringHelperFunctions";
-import {dialogBoxCreate}    from "./DialogBox.js";
+import {dialogBoxCreate}    from "./DialogBox";
 
-//Returns the size (number of keys) of an object
-function sizeOfObject(obj) {
-	var size = 0, key;
-	for (key in obj) {
-		if (obj.hasOwnProperty(key)) size++;
-	}
-	return size;
-}
-
-function clearObject(obj) {
-    for (var key in obj) {
+function clearObject(obj: any) {
+    for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
             delete obj[key];
         }
@@ -22,54 +13,61 @@ function clearObject(obj) {
 //Adds a random offset to a number within a certain percentage
 //e.g. addOffset(100, 5) will return anything from 95 to 105.
 //The percentage argument must be between 0 and 100;
-function addOffset(n, percentage) {
+function addOffset(n: number, percentage: number): number {
     if (percentage < 0 || percentage > 100) {return n;}
 
-    var offset = n * (percentage / 100);
+    const offset = n * (percentage / 100);
 
     return n + ((Math.random() * (2 * offset)) - offset);
 }
 
 //Given an element by its Id(usually an 'a' element), removes all event listeners
 //from that element by cloning and replacing. Then returns the new cloned element
-function clearEventListeners(elemId) {
-    var elem = document.getElementById(elemId);
-    if (elem == null) {console.log("ERR: Could not find element for: " + elemId); return null;}
-    var newElem = elem.cloneNode(true);
-    elem.parentNode.replaceChild(newElem, elem);
-    return newElem;
+function clearEventListeners(elemId: string): HTMLElement | null {
+    const elem: HTMLElement | null = document.getElementById(elemId);
+    if(elem === null) return null;
+    return clearEventListenersEl(elem as HTMLElement);
 }
 
 //Same as clearEventListeners except it takes a DOM element object rather than an ID
-function clearEventListenersEl(el) {
+function clearEventListenersEl(el: HTMLElement): HTMLElement | null {
     if (el == null) {console.log("ERR: element passed into clearEventListenersEl is null"); return null;}
-    var newElem = el.cloneNode(true);
-    el.parentNode.replaceChild(newElem, el);
-    return newElem;
+    const newElem: Node = el.cloneNode(true);
+    if(el.parentNode === null) return null;
+    (el.parentNode as Element).replaceChild(newElem, el);
+    return newElem as HTMLElement;
 }
 
 //Given its id, this function removes an element AND its children
-function removeElementById(id) {
-    var elem = document.getElementById(id);
+function removeElementById(id: string) {
+    const elem: HTMLElement | null = document.getElementById(id);
+    if(elem === null) return;
+    removeElement(elem as HTMLElement);
+}
+
+// Same as removeElementById except if takes a DOM element object rather than an ID
+function removeElement(elem: Element) {
     if (elem == null) {return;}
     while(elem.firstChild) {elem.removeChild(elem.firstChild);}
-    elem.parentNode.removeChild(elem);
+    if(elem.parentNode === null) return;
+    (elem.parentNode as HTMLElement).removeChild(elem);
 }
 
-function removeElement(elem) {
-    if (elem == null || !(elem instanceof Element)) {return;}
-    while(elem.firstChild) {elem.removeChild(elem.firstChild);}
-    elem.parentNode.removeChild(elem);
-}
-
-function removeChildrenFromElement(el) {
-    if (isString(el)) {
-        el = document.getElementById(el);
+function removeChildrenFromElement(el: string | Element) {
+    let elem: Element
+    if(isString(el)){
+        const foundElem: Element | null = document.getElementById(el as string);
+        if(foundElem === null) {
+            return;
+        }
+        elem = foundElem as Element;
+    } else {
+        elem = el as Element;
     }
-    if (el == null) {return;}
-    if (el instanceof Element) {
-        while(el.firstChild) {
-            el.removeChild(el.firstChild);
+    if (elem == null) {return;}
+    if (elem instanceof Element) {
+        while(elem.firstChild) {
+            elem.removeChild(elem.firstChild);
         }
     }
 }
@@ -80,8 +78,8 @@ function removeChildrenFromElement(el) {
  * @returns {HTMLElement} The single element.
  * @throws {Error} When the 'idString' cannot be found.
  */
-function getElementById(elementId) {
-    var el = document.getElementById(elementId);
+function getElementById(elementId: string): HTMLElement {
+    const el: HTMLElement | null = document.getElementById(elementId);
     if (el == null) {
         throw new Error("Unable to find element with id '" + elementId + "'");
     }
@@ -89,8 +87,48 @@ function getElementById(elementId) {
     return el;
 }
 
-function createElement(type, params={}) {
-    var el = document.createElement(type);
+interface createElementParams {
+    id?: any;
+    class?: any;
+    name?: any;
+    innerHTML?: any;
+    innerText?: any;
+    value?: any;
+    text?: any;
+    display?: any;
+    visibility?: any;
+    margin?: any;
+    marginLeft?: any;
+    marginTop?: any;
+    padding?: any;
+    color?: any;
+    border?: any;
+    float?: any;
+    fontSize?: any;
+    whiteSpace?: any;
+    width?: any;
+    backgroundColor?: any;
+    position?: any;
+    type?: any;
+    checked?: any;
+    for?: any;
+    pattern?: any;
+    maxLength?: any;
+    placeholder?: any;
+    tooltip?: any;
+    tooltipleft?: any;
+    href?: any;
+    target?: any;
+    tabIndex?: any;
+    clickListener?: any;
+    inputListener?: any;
+    changeListener?: any;
+    onkeyup?: any;
+    onfocus?: any;
+}
+
+function createElement(type: string, params: createElementParams): any {
+    var el: any = document.createElement(type);
     if (params.id)          {el.id = params.id;}
     if (params.class)       {el.className = params.class;}
     if (params.name)        {el.name = params.name;}
@@ -154,8 +192,8 @@ function createElement(type, params={}) {
     return el;
 }
 
-function createPopup(id, elems) {
-    var container = createElement("div", {
+function createPopup(id: string, elems: any[]) {
+    const container = createElement("div", {
             class:"popup-box-container",
             id:id,
             display:"block"
@@ -165,19 +203,23 @@ function createPopup(id, elems) {
             id:id + "-content",
         });
 
-    for (var i = 0; i < elems.length; ++i) {
+    for (let i = 0; i < elems.length; ++i) {
         content.appendChild(elems[i]);
     }
     container.appendChild(content);
-    document.getElementById("entire-game-container").appendChild(container);
+    const game = document.getElementById("entire-game-container");
+    if(game === null) {
+        throw new Error('unable to find entire-game-container, massive problem');
+    }
+    (game as Element).appendChild(container);
     return container;
 }
 
 //Creates both the header and panel element of an accordion and sets the click handler
-function createAccordionElement(params) {
-    var li = document.createElement("li"),
-        hdr = document.createElement("button"),
-        panel = document.createElement("div");
+function createAccordionElement(params: any) {
+    const li: HTMLElement = document.createElement("li");
+    const hdr: HTMLElement = document.createElement("button");
+    const panel: HTMLElement = document.createElement("div");
     hdr.classList.add("accordion-header");
     panel.classList.add("accordion-panel");
 
@@ -192,7 +234,7 @@ function createAccordionElement(params) {
     //Click handler
     hdr.onclick = function() {
         this.classList.toggle("active");
-        var tmpPanel = this.nextElementSibling;
+        const tmpPanel = <HTMLElement>this.nextElementSibling;
         if (tmpPanel.style.display === "block") {
             tmpPanel.style.display = "none";
         } else {
@@ -203,26 +245,26 @@ function createAccordionElement(params) {
 }
 
 //Appends n line breaks (as children) to the Element el
-function appendLineBreaks(el, n) {
-    for (var i = 0; i < n; ++i) {
-        el.appendChild(createElement("br"));
+function appendLineBreaks(el: Element, n: number) {
+    for (let i = 0; i < n; ++i) {
+        el.appendChild(createElement("br", {}));
     }
 }
 
-function clearSelector(selector) {
-    for (var i = selector.options.length - 1; i >= 0; --i) {
+function clearSelector(selector: any) {
+    for (let i = selector.options.length - 1; i >= 0; --i) {
         selector.remove(i);
     }
 }
 
-function getRandomInt(min, max) {
+function getRandomInt(min: number, max: number): number {
     if (min > max) {return getRandomInt(max, min);}
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 //Returns true if all elements are equal, and false otherwise
 //Assumes both arguments are arrays and that there are no nested arrays
-function compareArrays(a1, a2) {
+function compareArrays(a1: any[], a2: any[]): boolean {
     if (a1.length != a2.length) {
         return false;
     }
@@ -233,24 +275,29 @@ function compareArrays(a1, a2) {
     return true;
 }
 
-function printArray(a) {
+function printArray(a: any[]): string {
     return "[" + a.join(", ") + "]";
 }
 
 //Returns bool indicating whether or not its a power of 2
-function powerOfTwo(n) {
+function powerOfTwo(n: number): boolean {
     if (isNaN(n)) {return false;}
-    return n && (n & (n-1)) === 0;
+    return n !== 0 && ((n & (n-1)) === 0);
 }
 
-function exceptionAlert(e) {
+function exceptionAlert(e: any) {
     dialogBoxCreate("Caught an exception: " + e + "<br><br>" +
                     "Filename: " + e.fileName + "<br><br>" +
                     "Line Number: " + e.lineNumber + "<br><br>" +
                     "This is a bug, please report to game developer with this " +
                     "message as well as details about how to reproduce the bug.<br><br>" +
                     "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
-                    "safe doesn't get corrupted");
+                    "safe doesn't get corrupted", false);
+}
+
+interface progressBarParams {
+    totalTicks: number;
+    progress: number;
 }
 
 /*Creates a graphical "progress bar"
@@ -259,19 +306,19 @@ function exceptionAlert(e) {
  *      @totalTicks - Total number of ticks in progress bar. Preferably a factor of 100
  *      @progress - Current progress, taken as a decimal (i.e. 0.6 to represent 60%)
  */
-function createProgressBarText(params={}) {
+function createProgressBarText(params: progressBarParams) {
     //Default values
-    var totalTicks = (params.totalTicks == null ? 20 : params.totalTicks);
-    var progress = (params.progress == null ? 0 : params.progress);
+    const totalTicks: number = (params.totalTicks == null ? 20 : params.totalTicks);
+    const progress: number = (params.progress == null ? 0 : params.progress);
 
-    var percentPerTick = 1 / totalTicks;
-    var numTicks = Math.floor(progress / percentPerTick);
-    var numDashes = totalTicks - numTicks;
+    const percentPerTick: number = 1 / totalTicks;
+    const numTicks: number = Math.floor(progress / percentPerTick);
+    const numDashes: number = totalTicks - numTicks;
     return "[" + Array(numTicks+1).join("|") + Array(numDashes+1).join("-") + "]";
 }
 
-export {sizeOfObject, clearObject, addOffset, clearEventListeners, getRandomInt,
-        compareArrays, printArray, powerOfTwo, clearEventListenersEl,
+export {clearObject, addOffset, clearEventListeners, getRandomInt,
+        compareArrays, printArray, powerOfTwo,
         removeElementById, removeElement, createElement, createAccordionElement,
         appendLineBreaks,
         removeChildrenFromElement, createPopup, clearSelector, exceptionAlert,

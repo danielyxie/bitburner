@@ -31,7 +31,7 @@ import {Terminal, postNetburnerText}            from "./Terminal.js";
 import Decimal                                  from "decimal.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {createPopup, createElement,
-        removeElementById, exceptionAlert}      from "../utils/HelperFunctions.js";
+        removeElementById, exceptionAlert}      from "../utils/HelperFunctions";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
 
