@@ -189,7 +189,7 @@ function runScriptsLoop() {
 		//If it isn't running, start the script
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
             let p = null;  // p is the script's result promise.
-            if (workerScripts[i].name.endsWith("") || workerScripts[i].name.endsWith(".ns")) {
+            if (workerScripts[i].name.endsWith(".js") || workerScripts[i].name.endsWith(".ns")) {
                 p = startJsScript(workerScripts[i]);
             } else {
                 try {

@@ -71,7 +71,7 @@ function _getScriptUrls(script, scripts, seen) {
         // Replace every import statement with an import to a blob url containing
         // the corresponding script. E.g.
         //
-        // import {foo} from "bar";
+        // import {foo} from "bar.js";
         //
         // becomes
         //

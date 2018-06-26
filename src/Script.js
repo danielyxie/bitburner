@@ -47,7 +47,7 @@ var keybindings = {
 };
 
 function isScriptFilename(f) {
-    return f.endsWith("") || f.endsWith(".script") || f.endsWith(".ns");
+    return f.endsWith(".js") || f.endsWith(".script") || f.endsWith(".ns");
 }
 
 var scriptEditorRamCheck = null, scriptEditorRamText = null;
@@ -714,7 +714,7 @@ function calculateRamUsage(codeCopy) {
 }
 
 Script.prototype.download = function() {
-    var filename = this.filename + "";
+    var filename = this.filename + ".js";
     var file = new Blob([this.code], {type: 'text/plain'});
     if (window.navigator.msSaveOrOpenBlob) {// IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);
