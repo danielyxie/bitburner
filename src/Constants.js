@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.38.0",
+    Version:                "0.39.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -42,11 +42,11 @@ let CONSTANTS = {
 
     /* Netscript Constants */
     //RAM Costs for different commands
-    ScriptBaseRamCost:              1.4,
-    ScriptCheatRamCost:            1e21, // if someone tries to cheat by using window or document we just spike the ram cost.
-    ScriptWhileRamCost:             0.2,
-    ScriptForRamCost:               0.2,
-    ScriptIfRamCost:                0.15,
+    ScriptBaseRamCost:              1.6,
+    ScriptDomRamCost:               100,
+    ScriptWhileRamCost:             0,
+    ScriptForRamCost:               0,
+    ScriptIfRamCost:                0,
     ScriptHackRamCost:              0.1,
     ScriptGrowRamCost:              0.15,
     ScriptWeakenRamCost:            0.15,
@@ -106,8 +106,8 @@ let CONSTANTS = {
     TorRouterCost: 200000,
 
     //Infiltration constants
-    InfiltrationBribeBaseAmount: 100000,    //Amount per clearance level
-    InfiltrationMoneyValue:   2500,         //Convert "secret" value to money
+    InfiltrationBribeBaseAmount: 100e3,    //Amount per clearance level
+    InfiltrationMoneyValue:   3e3,         //Convert "secret" value to money
     InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
 
     //Stock market constants
@@ -489,20 +489,21 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.38.0<br>" +
-    "* New BitNode: BN-12 The Recursion - Implemented by Github user hydroflame<br>" +
-    "* Bladeburner Changes:<br>"  +
-    "*** Bladeburner progress is no longer reset when installing Augmentations<br>" +
-    "*** The number of successess needed to increase a Contract/Operation's max level now scales with the current max level (gradually gets harder)<br>"  +
-    "*** All Bladeburner Augmentations are now slightly more expensive and require more reputation<br>" +
-    "*** Black Operations now give higher rank rewards<br>" +
-    "*** Doubled the base amount of money gained from Contracts<br>" +
-    "*** Increased the amount of experience gained from Contracts/Actions<br>" +
-    "*** Added a new Augmentation: The Blade's Simulacrum<br>"  +
-    "*** Bladeburner faction reputation gain is now properly affected by favor<br>"  +
-    "* Hacking is now slightly less profitable in BitNode-3<br>"  +
-    "* Updated Hacknet Nodes UI - Implemented by Github user kopelli<br>" +
-    "* Bug Fix: Fixed an exploit that allowed calling any Netscript function without incurring any RAM Cost in NetscriptJS<br>"
+    "v0.39.0<br>"  +
+    "* Added BitNode-7: Bladeburner 2079<br>" +
+    "* Infiltration base difficulty decreased by 10% for most locations<br>" +
+    "* Experience gains from Infiltration slightly increased<br>" +
+    "* Money gained from Infiltration increased by 20%<br>"  +
+    "* Added 'var' declarations in Netscript 1.0 (only works with 'var', not 'let' or 'const')<br>"  +
+    "* Script base RAM cost is now 1.6 GB (increased from 1.4 GB)<br>" +
+    "* While/for loops and if statements no longer cost RAM in scripts<br>"  +
+    "* Made short-circuit evaluation logic more consistent in Netscript 1.0 (see https://github.com/danielyxie/bitburner/issues/308)<br>" +
+    "* Changelog button in the Options menu now links to the new Changelog URL (by Github user thePalindrome)<br>" +
+    "* Skill level calculation is now 'smoother' (by Github user hydroflame)<br>" +
+    "* Added a button to 'beautify' scripts in the text editor (by Github user hydroflame)<br>" +
+    "* Added favicon (by Github user kopelli)"
+
+
 }
 
 export {CONSTANTS};

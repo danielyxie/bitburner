@@ -1,40 +1,43 @@
-/* HelpText.js */
-let TerminalHelpText =
-                "Type 'help name' to learn more about the command 'name'<br><br>" +
-                'alias [-g] [name="value"]      Create or display Terminal aliases<br>' +
-                "analyze                        Get information about the current machine <br>" +
-                "buy [-l/program]               Purchase a program through the Dark Web<br>" +
-                "cat [file]                     Display a .msg, .lit, or .txt file<br>" +
-                "check [script] [args...]       Print a script's logs to Terminal<br>" +
-                "clear                          Clear all text on the terminal <br>" +
-                "cls                            See 'clear' command <br>" +
-                "connect [ip/hostname]          Connects to a remote server<br>" +
-                "download [script/text file]    Downloads scripts or text files to your computer<br>" +
-                "free                           Check the machine's memory (RAM) usage<br>" +
-                "hack                           Hack the current machine<br>" +
-                "help [command]                 Display this help text, or the help text for a command<br>" +
-                "home                           Connect to home computer<br>" +
-                "hostname                       Displays the hostname of the machine<br>" +
-                "ifconfig                       Displays the IP address of the machine<br>" +
-                "kill [script] [args...]        Stops the specified script on the current server <br>" +
-                "killall                        Stops all running scripts on the current machine<br>" +
-                "ls [| grep pattern]            Displays all files on the machine<br>" +
-                "lscpu                          Displays the number of CPU cores on the machine<br>" +
-                "mem [script] [-t] [n]          Displays the amount of RAM required to run the script<br>" +
-                "nano [file]                    Text editor - Open up and edit a script or text file<br>" +
-                "ps                             Display all scripts that are currently running<br>" +
-                "rm [file]                      Delete a file from the server<br>" +
-                "run [name] [-t] [n] [args...]  Execute a program or script<br>" +
-                "scan                           Prints all immediately-available network connections<br>" +
-                "scan-analyze [d] [-a]          Prints info for all servers up to <i>d</i> nodes away<br>" +
-                "scp [file] [server]            Copies a file to a destination server<br>" +
-                "sudov                          Shows whether you have root access on this computer<br>" +
-                "tail [script] [args...]        Displays dynamic logs for the specified script<br>" +
-                "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" +
-                "top                            Displays all running scripts and their RAM usage<br>" +
-                'unalias "[alias name]"         Deletes the specified alias<br>';
+/* tslint:disable:max-line-length completed-docs variable-name*/
+export const TerminalHelpText: string =
+    "Type 'help name' to learn more about the command 'name'<br><br>" +
+    'alias [-g] [name="value"]      Create or display Terminal aliases<br>' +
+    "analyze                        Get information about the current machine <br>" +
+    "buy [-l/program]               Purchase a program through the Dark Web<br>" +
+    "cat [file]                     Display a .msg, .lit, or .txt file<br>" +
+    "check [script] [args...]       Print a script's logs to Terminal<br>" +
+    "clear                          Clear all text on the terminal <br>" +
+    "cls                            See 'clear' command <br>" +
+    "connect [ip/hostname]          Connects to a remote server<br>" +
+    "download [script/text file]    Downloads scripts or text files to your computer<br>" +
+    "free                           Check the machine's memory (RAM) usage<br>" +
+    "hack                           Hack the current machine<br>" +
+    "help [command]                 Display this help text, or the help text for a command<br>" +
+    "home                           Connect to home computer<br>" +
+    "hostname                       Displays the hostname of the machine<br>" +
+    "ifconfig                       Displays the IP address of the machine<br>" +
+    "kill [script] [args...]        Stops the specified script on the current server <br>" +
+    "killall                        Stops all running scripts on the current machine<br>" +
+    "ls [| grep pattern]            Displays all files on the machine<br>" +
+    "lscpu                          Displays the number of CPU cores on the machine<br>" +
+    "mem [script] [-t] [n]          Displays the amount of RAM required to run the script<br>" +
+    "nano [file]                    Text editor - Open up and edit a script or text file<br>" +
+    "ps                             Display all scripts that are currently running<br>" +
+    "rm [file]                      Delete a file from the server<br>" +
+    "run [name] [-t] [n] [args...]  Execute a program or script<br>" +
+    "scan                           Prints all immediately-available network connections<br>" +
+    "scan-analyze [d] [-a]          Prints info for all servers up to <i>d</i> nodes away<br>" +
+    "scp [file] [server]            Copies a file to a destination server<br>" +
+    "sudov                          Shows whether you have root access on this computer<br>" +
+    "tail [script] [args...]        Displays dynamic logs for the specified script<br>" +
+    "theme [preset] | bg txt hlgt   Change the color scheme of the UI<br>" +
+    "top                            Displays all running scripts and their RAM usage<br>" +
+    'unalias "[alias name]"         Deletes the specified alias<br>';
 
-let HelpTexts = {
+interface IMap<T> {
+    [key: string]: T;
+}
+export const HelpTexts: IMap<string> = {
     alias:          'alias [-g] [name="value"] <br>' +
                     "Create or display aliases. An alias enables a replacement of a word with another string. " +
                     "It can be used to abbreviate a commonly used command, or commonly used parts of a command. The NAME " +
@@ -212,6 +215,4 @@ let HelpTexts = {
                     'unalias "r"<br><br>' +
                     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
 
-}
-
-export {TerminalHelpText, HelpTexts};
+};

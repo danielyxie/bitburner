@@ -2,7 +2,6 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = (env, argv) => ({
-    //mode: "development",
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': argv.mode === 'development' ? "\"development\"" : "\"production\""
@@ -28,7 +27,13 @@ module.exports = (env, argv) => ({
         filename: "[name].bundle.js"
     },
     module: {
-        rules: []
+        rules: [
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/
+            }
+        ]
     },
     optimization: {
         removeAvailableModules: true,
@@ -47,5 +52,12 @@ module.exports = (env, argv) => ({
     },
     devServer: {
         publicPath: "/dist",
+    },
+    resolve: {
+        extensions: [
+            ".tsx",
+            ".ts",
+            ".js"
+        ]
     }
 });

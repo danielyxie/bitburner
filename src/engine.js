@@ -5,7 +5,8 @@ import {clearEventListeners, createElement,
         exceptionAlert}                         from "../utils/HelperFunctions.js";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
-        convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
+        convertTimeMsToTimeElapsedString,
+        replaceAt}                              from "../utils/StringHelperFunctions";
 import {loxBoxCreate, logBoxUpdateText,
         logBoxOpened}                           from "../utils/LogBox.js";
 
@@ -21,7 +22,7 @@ import {cinematicTextFlag}                      from "./CinematicText.js";
 import {CompanyPositions, initCompanies}        from "./Company.js";
 import {Corporation}                            from "./CompanyManagement.js";
 import {CONSTANTS}                              from "./Constants.js";
-import {Programs, displayCreateProgramContent,
+import {displayCreateProgramContent,
         getNumAvailableCreateProgram,
         initCreateProgramButtons}               from "./CreateProgram.js";
 import {displayFactionContent, joinFaction,
@@ -576,6 +577,11 @@ let Engine = {
             intText = 'Intelligence:  ' + (Player.intelligence).toLocaleString() + "<br><br><br>";
         }
 
+        let bitNodeTimeText = "";
+        if(Player.sourceFiles.length > 0) {
+            bitNodeTimeText = 'Time played since last Bitnode destroyed: ' + convertTimeMsToTimeElapsedString(Player.playtimeSinceLastBitnode) + '<br>';
+        }
+
         Engine.Display.characterInfo.appendChild(createElement("pre", {
             innerHTML:
             '<b>General</b><br><br>' +
@@ -629,6 +635,7 @@ let Engine = {
             'Hacknet Nodes owned: ' + Player.hacknetNodes.length + '<br>' +
             'Augmentations installed: ' + Player.augmentations.length + '<br>' +
             'Time played since last Augmentation: ' + convertTimeMsToTimeElapsedString(Player.playtimeSinceLastAug) + '<br>' +
+            bitNodeTimeText +
             'Time played: ' + convertTimeMsToTimeElapsedString(Player.totalPlaytime),
         }));
 
@@ -914,8 +921,10 @@ let Engine = {
         var time = numCycles * Engine._idleSpeed;
         if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
         if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
+        if (Player.playtimeSinceLastBitnode == null) {Player.playtimeSinceLastBitnode = 0;}
         Player.totalPlaytime += time;
         Player.playtimeSinceLastAug += time;
+        Player.playtimeSinceLastBitnode += time;
 
         //Start Manual hack
         if (Player.startAction == true) {
@@ -1162,7 +1171,7 @@ let Engine = {
 
         //Update progress bar
         while (Engine._actionProgressBarCount * 2 <= percent) {
-            Engine._actionProgressStr = Engine._actionProgressStr.replaceAt(Engine._actionProgressBarCount, "|");
+            Engine._actionProgressStr = replaceAt(Engine._actionProgressStr, Engine._actionProgressBarCount, "|");
             Engine._actionProgressBarCount += 1;
         }
 
@@ -1335,8 +1344,10 @@ let Engine = {
             var time = numCyclesOffline * Engine._idleSpeed;
             if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
             if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
+            if (Player.playtimeSinceLastBitnode == null) {Player.playtimeSinceLastBitnode = 0;}
             Player.totalPlaytime += time;
             Player.playtimeSinceLastAug += time;
+            Player.playtimeSinceLastBitnode += time;
 
             Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
@@ -1726,11 +1737,6 @@ let Engine = {
                 Player.sourceFiles[sfIndex].lvl=sfLvl;
             }
         });
-
-        //If DarkWeb already purchased, disable the button
-        if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
-            document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button-inactive");
-        }
     },
 
     /* Initialization */

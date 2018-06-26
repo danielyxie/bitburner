@@ -5,11 +5,12 @@ import {substituteAliases, printAliases,
 import {CONSTANTS}                          from "./Constants.js";
 import {Programs}                           from "./CreateProgram.js";
 import {executeDarkwebTerminalCommand,
-        checkIfConnectedToDarkweb}          from "./DarkWeb.js";
+        checkIfConnectedToDarkweb,
+        DarkWebItems}                       from "./DarkWeb.js";
 import {Engine}                             from "./engine.js";
 import {FconfSettings, parseFconfSettings,
         createFconf}                        from "./Fconf.js";
-import {TerminalHelpText, HelpTexts}        from "./HelpText.js";
+import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         iTutorialIsRunning,
         currITutorialStep}                  from "./InteractiveTutorial.js";
@@ -19,6 +20,7 @@ import {scriptCalculateHackingTime,
         scriptCalculateGrowTime,
         scriptCalculateWeakenTime}          from "./NetscriptEvaluator.js";
 import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker.js";
+import numeral                              from "numeral/min/numeral.min";
 import {Player}                             from "./Player.js";
 import {hackWorldDaemon}                    from "./RedPill.js";
 import {findRunningScript, RunningScript,
@@ -29,11 +31,10 @@ import {AllServers, GetServerByHostname,
 import {Settings}                           from "./Settings.js";
 import {SpecialServerIps,
         SpecialServerNames}                 from "./SpecialServerIps.js";
-import {TextFile, getTextFile,
-        createTextFile}                     from "./TextFile.js";
+import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
-        formatNumber, isString}             from "../utils/StringHelperFunctions.js";
+        formatNumber, isString}             from "../utils/StringHelperFunctions";
 import {addOffset, printArray}              from "../utils/HelperFunctions.js";
 import {logBoxCreate}                       from "../utils/LogBox.js";
 import {yesNoBoxCreate,
@@ -409,9 +410,12 @@ function determineAllPossibilitiesForTabCompletion(input, index=0) {
     }
 
     if (input.startsWith ("buy ")) {
-        return [Programs.BruteSSHProgram, Programs.FTPCrackProgram, Programs.RelaySMTPProgram,
-                Programs.HTTPWormProgram, Programs.SQLInjectProgram, Programs.DeepscanV1,
-                Programs.DeepscanV2].concat(Object.keys(GlobalAliases));
+        let options = [];
+        for(const i in DarkWebItems) {
+            const item = DarkWebItems[i]
+            options.push(item.program);
+        }
+        return options.concat(Object.keys(GlobalAliases));
     }
 
     if (input.startsWith("scp ") && index == 1) {
@@ -1352,11 +1356,11 @@ let Terminal = {
                         post("Incorrect usage of scan-analyze command. depth argument must be positive numeric");
                         return;
                     }
-                    if (depth > 3 && !Player.hasProgram(Programs.DeepscanV1) &&
-                        !Player.hasProgram(Programs.DeepscanV2)) {
+                    if (depth > 3 && !Player.hasProgram(Programs.DeepscanV1.name) &&
+                        !Player.hasProgram(Programs.DeepscanV2.name)) {
                         post("You cannot scan-analyze with that high of a depth. Maximum depth is 3");
                         return;
-                    } else if (depth > 5 && !Player.hasProgram(Programs.DeepscanV2)) {
+                    } else if (depth > 5 && !Player.hasProgram(Programs.DeepscanV2.name)) {
                         post("You cannot scan-analyze with that high of a depth. Maximum depth is 5");
                         return;
                     } else if (depth > 10) {
@@ -1757,7 +1761,7 @@ let Terminal = {
             }
             if (d == 0) {continue;} //Don't print current server
             var titleDashes = Array((d-1) * 4 + 1).join("-");
-            if (Player.hasProgram(Programs.AutoLink)) {
+            if (Player.hasProgram(Programs.AutoLink.name)) {
                 post("<strong>" +  titleDashes + "> <a class='scan-analyze-link'>"  + s.hostname + "</a></strong>", false);
             } else {
                 post("<strong>" + titleDashes + ">" + s.hostname + "</strong>");
@@ -1822,7 +1826,7 @@ let Terminal = {
             programName = splitArgs[0];
         }
 		switch (programName) {
-			case Programs.NukeProgram:
+			case Programs.NukeProgram.name:
 				if (s.hasAdminRights) {
 					post("You already have root access to this computer. There is no reason to run NUKE.exe");
 				} else {
@@ -1835,7 +1839,7 @@ let Terminal = {
 					}
 				}
 				break;
-            case Programs.BruteSSHProgram:
+            case Programs.BruteSSHProgram.name:
                 if (s.sshPortOpen) {
                     post("SSH Port (22) is already open!");
                 } else {
@@ -1844,7 +1848,7 @@ let Terminal = {
                     ++s.openPortCount;
                 }
                 break;
-            case Programs.FTPCrackProgram:
+            case Programs.FTPCrackProgram.name:
                 if (s.ftpPortOpen) {
                     post("FTP Port (21) is already open!");
                 } else {
@@ -1853,7 +1857,7 @@ let Terminal = {
                     ++s.openPortCount;
                 }
                 break;
-            case Programs.RelaySMTPProgram:
+            case Programs.RelaySMTPProgram.name:
                 if (s.smtpPortOpen) {
                     post("SMTP Port (25) is already open!");
                 } else {
@@ -1862,7 +1866,7 @@ let Terminal = {
                     ++s.openPortCount;
                 }
                 break;
-            case Programs.HTTPWormProgram:
+            case Programs.HTTPWormProgram.name:
                 if (s.httpPortOpen) {
                     post("HTTP Port (80) is already open!");
                 } else {
@@ -1871,7 +1875,7 @@ let Terminal = {
                     ++s.openPortCount;
                 }
                 break;
-            case Programs.SQLInjectProgram:
+            case Programs.SQLInjectProgram.name:
                 if (s.sqlPortOpen) {
                     post("SQL Port (1433) is already open!");
                 } else {
@@ -1880,7 +1884,7 @@ let Terminal = {
                     ++s.openPortCount;
                 }
                 break;
-            case Programs.ServerProfiler:
+            case Programs.ServerProfiler.name:
                 if (splitArgs.length != 2) {
                     post("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
                     return;
@@ -1898,22 +1902,23 @@ let Terminal = {
                 post("Netscript grow() execution time: " + formatNumber(scriptCalculateGrowTime(serv)/1000, 1) + "s");
                 post("Netscript weaken() execution time: " + formatNumber(scriptCalculateWeakenTime(serv)/1000, 1) + "s");
                 break;
-            case Programs.AutoLink:
+            case Programs.AutoLink.name:
                 post("This executable cannot be run.");
                 post("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
                 post("When using scan-analyze, click on a server's hostname to connect to it.");
                 break;
-            case Programs.DeepscanV1:
+            case Programs.DeepscanV1.name:
                 post("This executable cannot be run.");
                 post("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
                 break;
-            case Programs.DeepscanV2:
+            case Programs.DeepscanV2.name:
                 post("This executable cannot be run.");
                 post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
                 break;
-            case Programs.Flight:
+            case Programs.Flight.name:
                 post("Augmentations: " + Player.augmentations.length + " / 30");
-                post("Money: $" + formatNumber(Player.money.toNumber(), 2) + " / $" + formatNumber(100000000000, 2));
+
+                post("Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + " / " + numeral(1e11).format('($0.000a)'));
                 post("One path below must be fulfilled...");
                 post("----------HACKING PATH----------");
                 post("Hacking skill: " + Player.hacking_skill + " / 2500");
@@ -1923,7 +1928,7 @@ let Terminal = {
                 post("Dexterity: " + Player.dexterity + " / 1500");
                 post("Agility: " + Player.agility + " / 1500");
                 break;
-            case Programs.BitFlume:
+            case Programs.BitFlume.name:
                 var yesBtn = yesNoBoxGetYesButton(),
                     noBtn = yesNoBoxGetNoButton();
                 yesBtn.innerHTML = "Travel to BitNode Nexus";

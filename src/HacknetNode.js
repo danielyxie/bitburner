@@ -9,7 +9,7 @@ import {clearEventListeners, createElement,
         getElementById}                         from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
 
 /**
  * Overwrites the inner text of the specified HTML element if it is different from what currently exists.

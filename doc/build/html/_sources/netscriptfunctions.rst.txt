@@ -387,6 +387,34 @@ ls
     Returns an array with the filenames of all files on the specified server (as strings). The returned array
     is sorted in alphabetic order
 
+ps
+^^
+
+.. js:function:: ps(hostname/ip=current ip)
+
+    :param string ip: Hostname or IP address of the target server.
+                      If not specified, it will be the current server's IP by default
+
+    Returns an array with general information about all scripts running on the specified
+    target server. The information for each server is given in an object with
+    the following structure::
+
+        {
+            filename:   Script name,
+            threads:    Number of threads script is running with,
+            args:       Script's arguments
+        }
+
+    Example usage (using :doc:`netscriptjs`)::
+
+        export async function main(ns) {
+            const ps = ns.ps("home");
+            for (let i = 0; i < ps.length; ++i) {
+                ns.tprint(ps[i].filename + ' ' + ps[i].threads);
+                ns.tprint(ps[i].args);
+            }
+        }
+
 hasRootAccess
 ^^^^^^^^^^^^^
 
@@ -914,7 +942,11 @@ prompt
 Defining your own Functions
 ---------------------------
 
-You can define your own functions in Netscript using the following syntax::
+Note that the following information is only applicable for Netscript 1.0.
+:doc:`netscriptjs` allows you to define your functions using native Javascript
+techniques.
+
+You can define your own functions in Netscript 1.0 using the following syntax::
 
     function name(args...) {
         function code here...

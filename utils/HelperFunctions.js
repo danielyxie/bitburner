@@ -1,5 +1,5 @@
 //General helper functions
-import {isString}           from "./StringHelperFunctions.js";
+import {isString}           from "./StringHelperFunctions";
 import {dialogBoxCreate}    from "./DialogBox.js";
 
 //Returns the size (number of keys) of an object

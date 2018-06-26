@@ -6,7 +6,7 @@ import {dialogBoxCreate}                            from "../utils/DialogBox.js"
 import {addOffset, getRandomInt,
         clearEventListenersEl,
         clearEventListeners}                        from "../utils/HelperFunctions.js";
-import {formatNumber, isString}                     from "../utils/StringHelperFunctions.js";
+import {formatNumber, isString}                     from "../utils/StringHelperFunctions";
 import jsplumb                                      from 'jsplumb'
 
 let inMission = false; //Flag to denote whether a mission is running

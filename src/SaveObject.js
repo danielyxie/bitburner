@@ -23,7 +23,7 @@ import {clearEventListeners, createElement,
         createPopup, removeElementById}         from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
 
 import Decimal                                  from "decimal.js";
 
@@ -503,8 +503,10 @@ function loadImportedGame(saveObj, saveString) {
     var time = numCyclesOffline * Engine._idleSpeed;
     if (Player.totalPlaytime == null) {Player.totalPlaytime = 0;}
     if (Player.playtimeSinceLastAug == null) {Player.playtimeSinceLastAug = 0;}
+    if (Player.playtimeSinceLastBitnode == null) {Player.playtimeSinceLastBitnode = 0;}
     Player.totalPlaytime += time;
     Player.playtimeSinceLastAug += time;
+    Player.playtimeSinceLastBitnode += time;
 
     //Re-apply augmentations
     Player.reapplyAllAugmentations();

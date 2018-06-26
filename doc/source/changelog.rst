@@ -3,6 +3,36 @@
 Changelog
 =========
 
+v0.39.0 - 6/25/2018
+-------------------
+
+* Added BitNode-7: Bladeburner 2079
+* Infiltration base difficulty decreased by 10% for most locations
+* Experience gains from Infiltration slightly increased
+* Money gained from Infiltration increased by 20%
+* Added 'var' declarations in Netscript 1.0 (only works with 'var', not 'let' or 'const')
+* Script base RAM cost is now 1.6 GB (increased from 1.4 GB)
+* While/for loops and if statements no longer cost RAM in scripts
+* Made short-circuit evaluation logic more consistent in Netscript 1.0 (see https://github.com/danielyxie/bitburner/issues/308)
+* Changelog button in the Options menu now links to the new Changelog URL (by Github user thePalindrome)
+* Skill level calculation is now 'smoother' (by Github user hydroflame)
+* Added a button to 'beautify' scripts in the text editor (by Github user hydroflame)
+* Added favicon (by Github user kopelli)
+
+v0.38.1 - 6/15/2018
+-------------------
+* Bug Fix: Using 'Object.prototype' functions like toLocaleString() or toString() should no longer cause errors in NetscriptJS
+* Implemented by Github user hydroflame:
+    * Accessing the 'window' and 'document' objects in Netscript JS now requires a large amount of RAM (100 GB)
+    * Added game option to suppress travel confirmation
+    * Text on buttons can no longer be highlighted
+    * Bug Fix: Fixed an issue that caused NaN values when exporting Real Estate in Corporations
+    * Bug Fix: Competition and Demand displays in Corporation are now correct (were reversed before)
+    * Added ps() Netscript function
+    * Bug Fix: grow() should no longer return/log a negative value when it runs on a server that's already at max money
+    * Bug Fix: serverExists() Netscript function should now properly return false for non-existent hostname/ips
+    * Bug Fix: Sever's security level should now properly increase when its money is grown to max value
+
 v0.38.0 - 6/12/2018
 -------------------
 * New BitNode: BN-12 The Recursion - Implemented by Github user hydroflame
