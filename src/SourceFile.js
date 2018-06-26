@@ -51,7 +51,11 @@ function initSourceFiles() {
                                                    "Level 1: 8%<br>" +
                                                    "Level 2: 12%<br>" +
                                                    "Level 3: 14%");
-    SourceFiles["SourceFile7"] = new SourceFile(7);
+    SourceFiles["SourceFile7"] = new SourceFile(7, "This Source-File allows you to access the Bladeburner Netscript API in other " +
+                                                   "BitNodes. In addition, this Source-File will increase all of your Bladeburner multipliers by:<br><br>" +
+                                                   "Level 1: 8%<br>" +
+                                                   "Level 2: 12%<br>" +
+                                                   "Level 3: 14%";
     SourceFiles["SourceFile8"] = new SourceFile(8, "This Source-File grants the following benefits:<br><br>" +
                                                    "Level 1: Permanent access to WSE and TIX API<br>" +
                                                    "Level 2: Ability to short stocks in other BitNodes<br>" +
