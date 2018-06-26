@@ -10,7 +10,7 @@ import {printArray, createElement,
         removeChildrenFromElement, exceptionAlert}  from "../utils/HelperFunctions.js";
 import {logBoxCreate}                               from "../utils/LogBox.js";
 import numeral                                      from "numeral/min/numeral.min";
-import {formatNumber}                               from "../utils/StringHelperFunctions.js";
+import {formatNumber}                               from "../utils/StringHelperFunctions";
 
 /* {
  *     serverName: {

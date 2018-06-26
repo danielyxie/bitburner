@@ -27,7 +27,7 @@ import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
-        convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
+        convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions";
 
 function PlayerObject() {
     //Skills and stats

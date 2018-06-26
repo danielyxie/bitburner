@@ -23,7 +23,7 @@ import {clearEventListeners, createElement,
         createPopup, removeElementById}         from "../utils/HelperFunctions.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
 
 import Decimal                                  from "decimal.js";
 

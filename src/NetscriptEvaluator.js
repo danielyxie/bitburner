@@ -11,7 +11,7 @@ import {Script, findRunningScript,
 import {parse, Node}                        from "../utils/acorn.js";
 import {printArray}                         from "../utils/HelperFunctions.js";
 import {isValidIPAddress}                   from "../utils/IPAddress.js";
-import {isString}                           from "../utils/StringHelperFunctions.js";
+import {isString}                           from "../utils/StringHelperFunctions";
 
 var Promise = require("bluebird");
 

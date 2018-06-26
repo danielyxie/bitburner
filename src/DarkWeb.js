@@ -4,7 +4,7 @@ import {SpecialServerIps}                       from "./SpecialServerIps.js";
 import {post}                                   from "./Terminal.js";
 
 import {isValidIPAddress}                       from "../utils/IPAddress.js";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
 
 
 /* DarkWeb.js */

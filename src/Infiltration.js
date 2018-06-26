@@ -5,7 +5,7 @@ import {Player}                                 from "./Player.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {clearEventListeners, getRandomInt}      from "../utils/HelperFunctions.js";
 import {infiltrationBoxCreate}                  from "../utils/InfiltrationBox.js";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
 
 /* Infiltration.js
  *

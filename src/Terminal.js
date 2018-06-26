@@ -34,7 +34,7 @@ import {SpecialServerIps,
 import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
-        formatNumber, isString}             from "../utils/StringHelperFunctions.js";
+        formatNumber, isString}             from "../utils/StringHelperFunctions";
 import {addOffset, printArray}              from "../utils/HelperFunctions.js";
 import {logBoxCreate}                       from "../utils/LogBox.js";
 import {yesNoBoxCreate,
