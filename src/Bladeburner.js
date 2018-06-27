@@ -60,7 +60,7 @@ var OperationSuccessesPerLevel  = 2.5; //How many successes you need to level up
 
 var RanksPerSkillPoint          = 4;  //How many ranks needed to get 1 Skill Point
 
-var ContractBaseMoneyGain       = 10e3; //Base Money Gained per contract
+var ContractBaseMoneyGain       = 40e3; //Base Money Gained per contract
 
 //DOM related variables
 var ActiveActionCssClass        = "bladeburner-active-action";
