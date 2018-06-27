@@ -1,4 +1,4 @@
-import {parse, Node}                            from "../utils/acorn.js";
+import {parse, Node}                            from "../utils/acorn";
 
 var FconfSettings = {
     ENABLE_BASH_HOTKEYS:     false,

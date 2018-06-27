@@ -50,6 +50,45 @@
             
   <div class="section" id="changelog">
 <span id="id1"></span><h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v0-39-0-6-25-2018">
+<h2>v0.39.0 - 6/25/2018<a class="headerlink" href="#v0-39-0-6-25-2018" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Added BitNode-7: Bladeburner 2079</li>
+<li>Infiltration base difficulty decreased by 10% for most locations</li>
+<li>Experience gains from Infiltration slightly increased</li>
+<li>Money gained from Infiltration increased by 20%</li>
+<li>Added 'var' declarations in Netscript 1.0 (only works with 'var', not 'let' or 'const')</li>
+<li>Script base RAM cost is now 1.6 GB (increased from 1.4 GB)</li>
+<li>While/for loops and if statements no longer cost RAM in scripts</li>
+<li>Made short-circuit evaluation logic more consistent in Netscript 1.0 (see <a class="reference external" href="https://github.com/danielyxie/bitburner/issues/308">https://github.com/danielyxie/bitburner/issues/308</a>)</li>
+<li>Changelog button in the Options menu now links to the new Changelog URL (by Github user thePalindrome)</li>
+<li>Skill level calculation is now 'smoother' (by Github user hydroflame)</li>
+<li>Added a button to 'beautify' scripts in the text editor (by Github user hydroflame)</li>
+<li>Added favicon (by Github user kopelli)</li>
+</ul>
+</div>
+<div class="section" id="v0-38-1-6-15-2018">
+<h2>v0.38.1 - 6/15/2018<a class="headerlink" href="#v0-38-1-6-15-2018" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Bug Fix: Using 'Object.prototype' functions like toLocaleString() or toString() should no longer cause errors in NetscriptJS</li>
+<li><dl class="first docutils">
+<dt>Implemented by Github user hydroflame:</dt>
+<dd><ul class="first last">
+<li>Accessing the 'window' and 'document' objects in Netscript JS now requires a large amount of RAM (100 GB)</li>
+<li>Added game option to suppress travel confirmation</li>
+<li>Text on buttons can no longer be highlighted</li>
+<li>Bug Fix: Fixed an issue that caused NaN values when exporting Real Estate in Corporations</li>
+<li>Bug Fix: Competition and Demand displays in Corporation are now correct (were reversed before)</li>
+<li>Added ps() Netscript function</li>
+<li>Bug Fix: grow() should no longer return/log a negative value when it runs on a server that's already at max money</li>
+<li>Bug Fix: serverExists() Netscript function should now properly return false for non-existent hostname/ips</li>
+<li>Bug Fix: Sever's security level should now properly increase when its money is grown to max value</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
 <div class="section" id="v0-38-0-6-12-2018">
 <h2>v0.38.0 - 6/12/2018<a class="headerlink" href="#v0-38-0-6-12-2018" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -1006,6 +1045,8 @@ on the difficulty of the contract.</li>
 <li class="toctree-l1"><a class="reference internal" href="terminal.html"> Terminal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shortcuts.html"> Keyboard Shortcuts</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v0-39-0-6-25-2018">v0.39.0 - 6/25/2018</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-38-1-6-15-2018">v0.38.1 - 6/15/2018</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v0-38-0-6-12-2018">v0.38.0 - 6/12/2018</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v0-37-2-6-2-2018">v0.37.2 - 6/2/2018</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v0-37-1-5-22-2018">v0.37.1 - 5/22/2018</a></li>

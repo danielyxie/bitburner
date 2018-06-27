@@ -17,28 +17,28 @@ require("brace/ext/language_tools");
 // Importing this doesn't work for some reason.
 const walk = require("acorn/dist/walk");
 
-import {CONSTANTS}                              from "./Constants.js";
-import {Engine}                                 from "./engine.js";
-import {FconfSettings, parseFconfSettings}      from "./Fconf.js";
+import {CONSTANTS}                              from "./Constants";
+import {Engine}                                 from "./engine";
+import {FconfSettings, parseFconfSettings}      from "./Fconf";
 import {iTutorialSteps, iTutorialNextStep,
-        iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial.js";
-import {evaluateImport}                         from "./NetscriptEvaluator.js";
-import {NetscriptFunctions}                     from "./NetscriptFunctions.js";
+        iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial";
+import {evaluateImport}                         from "./NetscriptEvaluator";
+import {NetscriptFunctions}                     from "./NetscriptFunctions";
 import {addWorkerScript, killWorkerScript,
-        WorkerScript}                           from "./NetscriptWorker.js";
-import {Player}                                 from "./Player.js";
-import {AllServers, processSingleServerGrowth}  from "./Server.js";
-import {Settings}                               from "./Settings.js";
-import {post, Terminal}                         from "./Terminal.js";
+        WorkerScript}                           from "./NetscriptWorker";
+import {Player}                                 from "./Player";
+import {AllServers, processSingleServerGrowth}  from "./Server";
+import {Settings}                               from "./Settings";
+import {post, Terminal}                         from "./Terminal";
 import {TextFile}                               from "./TextFile";
 
-import {parse, Node}                            from "../utils/acorn.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {parse, Node}                            from "../utils/acorn";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver.js";
-import {compareArrays, createElement}           from "../utils/HelperFunctions.js";
+        Generic_fromJSON}                       from "../utils/JSONReviver";
+import {compareArrays, createElement}           from "../utils/HelperFunctions";
 import {formatNumber, numOccurrences,
-        numNetscriptOperators}                  from "../utils/StringHelperFunctions.js";
+        numNetscriptOperators}                  from "../utils/StringHelperFunctions";
 
 var keybindings = {
     ace: null,

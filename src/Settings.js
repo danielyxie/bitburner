@@ -1,20 +1,21 @@
-import {Engine} from "./engine.js";
+import {Engine} from "./engine";
 
 /* Settings.js */
 let Settings = {
-    CodeInstructionRunTime:         50,
-    MaxLogCapacity:                 50,
-    MaxPortCapacity:                50,
-    SuppressMessages:               false,
-    SuppressFactionInvites:         false,
-    SuppressTravelConfirmation:     false,
-    AutosaveInterval:               60,
-    DisableHotkeys:                 false,
-    ThemeHighlightColor:            "#ffffff",
-    ThemeFontColor:                 "#66ff33",
-    ThemeBackgroundColor:           "#000000",
-    EditorTheme:                    "Monokai",
-    EditorKeybinding:               "ace",
+    CodeInstructionRunTime:              50,
+    MaxLogCapacity:                      50,
+    MaxPortCapacity:                     50,
+    SuppressMessages:                    false,
+    SuppressFactionInvites:              false,
+    SuppressTravelConfirmation:          false,
+    SuppressBuyAugmentationConfirmation: false,
+    AutosaveInterval:                    60,
+    DisableHotkeys:                      false,
+    ThemeHighlightColor:                 "#ffffff",
+    ThemeFontColor:                      "#66ff33",
+    ThemeBackgroundColor:                "#000000",
+    EditorTheme:                         "Monokai",
+    EditorKeybinding:                    "ace",
 }
 
 function loadSettings(saveString) {
@@ -28,6 +29,7 @@ function initSettings()  {
     Settings.SuppressMessages = false;
     Settings.SuppressFactionInvites = false;
     Settings.SuppressTravelConfirmation = false;
+    Settings.SuppressBuyAugmentationConfirmation = false;
     Settings.AutosaveInterval = 60;
     Settings.DisableHotkeys = false;
 }
@@ -39,6 +41,7 @@ function setSettingsLabels() {
     var suppressMsgs = document.getElementById("settingsSuppressMessages");
     var suppressFactionInv = document.getElementById("settingsSuppressFactionInvites")
     var suppressTravelConfirmation = document.getElementById("settingsSuppressTravelConfirmation");
+    var suppressBuyAugmentationConfirmation = document.getElementById("settingsSuppressBuyAugmentationConfirmation");
     var autosaveInterval = document.getElementById("settingsAutosaveIntervalValLabel");
     var disableHotkeys = document.getElementById("settingsDisableHotkeys");
 
@@ -49,6 +52,7 @@ function setSettingsLabels() {
     suppressMsgs.checked = Settings.SuppressMessages;
     suppressFactionInv.checked = Settings.SuppressFactionInvites;
     suppressTravelConfirmation.checked = Settings.SuppressTravelConfirmation;
+    suppressBuyAugmentationConfirmation.checked = Settings.SuppressBuyAugmentationConfirmation;
     autosaveInterval.innerHTML = Settings.AutosaveInterval;
     disableHotkeys.checked = Settings.DisableHotkeys;
 
@@ -97,6 +101,11 @@ function setSettingsLabels() {
 
     suppressTravelConfirmation.onclick = function() {
         Settings.SuppressTravelConfirmation = this.checked;
+    };
+
+    suppressBuyAugmentationConfirmation.onclick = function() {
+        Settings.SuppressBuyAugmentationConfirmation = this.checked;
+        console.log('sup buy: '+Settings.SuppressBuyAugmentationConfirmation);
     };
 
     disableHotkeys.onclick = function() {

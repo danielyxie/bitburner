@@ -1,5 +1,5 @@
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+        Generic_fromJSON}                       from "../utils/JSONReviver";
 
 /* Holds IP of Special Servers */
 let SpecialServerNames = {

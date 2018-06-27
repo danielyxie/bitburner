@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.38.1",
+    Version:                "0.39.0",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -106,8 +106,8 @@ let CONSTANTS = {
     TorRouterCost: 200000,
 
     //Infiltration constants
-    InfiltrationBribeBaseAmount: 100000,    //Amount per clearance level
-    InfiltrationMoneyValue:   2500,         //Convert "secret" value to money
+    InfiltrationBribeBaseAmount: 100e3,    //Amount per clearance level
+    InfiltrationMoneyValue:   3e3,         //Convert "secret" value to money
     InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
 
     //Stock market constants
@@ -489,15 +489,8 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.38.1<br>"  +
-    "* Added 'var' declarations in Netscript 1.0 (only works with 'var', not 'let' or 'const')<br>"  +
-    "* Script base RAM cost is now 1.6 GB (increased from 1.4 GB)<br>" +
-    "* While/for loops and if statements no longer cost RAM in scripts<br>"  +
-    "* Made short-circuit evaluation logic more consistent in Netscript 1.0 (see https://github.com/danielyxie/bitburner/issues/308)<br>" +
-    "* Changelog button in the Options menu now links to the new Changelog URL (by Github user thePalindrome)<br>" +
-    "* Skill level calculation is now 'smoother' (by Github user hydroflame)<br>" +
-    "* Added a button to 'beautify' scripts in the text editor (by Github user hydroflame)<br>" +
-    "* Added favicon (by Github user kopelli)"
+    "v0.39.1<br>"  +
+    "* The setting to suppress the confirmation box when purchasing Augmentations was moved into the main Options menu (by Github user hydroflame)<br>"
 
 
 }

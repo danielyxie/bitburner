@@ -1,60 +1,60 @@
 var sprintf = require('sprintf-js').sprintf,
     vsprintf = require('sprintf-js').vsprintf
 
-import {updateActiveScriptsItems}                   from "./ActiveScriptsUI.js";
+import {updateActiveScriptsItems}                   from "./ActiveScriptsUI";
 import {Augmentations, Augmentation,
         augmentationExists, installAugmentations,
-        AugmentationNames}                          from "./Augmentations.js";
-import {BitNodeMultipliers}                         from "./BitNode.js";
-import {determineCrimeSuccess, findCrime}           from "./Crimes.js";
-import {Bladeburner}                                from "./Bladeburner.js";
+        AugmentationNames}                          from "./Augmentations";
+import {BitNodeMultipliers}                         from "./BitNode";
+import {determineCrimeSuccess, findCrime}           from "./Crimes";
+import {Bladeburner}                                from "./Bladeburner";
 import {Companies, Company, CompanyPosition,
-        CompanyPositions, companyExists}            from "./Company.js";
-import {CONSTANTS}                                  from "./Constants.js";
-import {Programs}                                   from "./CreateProgram.js";
-import {DarkWebItems}                               from "./DarkWeb.js";
-import {Engine}                                     from "./engine.js";
-import {AllGangs}                                   from "./Gang.js";
+        CompanyPositions, companyExists}            from "./Company";
+import {CONSTANTS}                                  from "./Constants";
+import {Programs}                                   from "./CreateProgram";
+import {DarkWebItems}                               from "./DarkWeb";
+import {Engine}                                     from "./engine";
+import {AllGangs}                                   from "./Gang";
 import {Factions, Faction, joinFaction,
-        factionExists, purchaseAugmentation}        from "./Faction.js";
-import {getCostOfNextHacknetNode, purchaseHacknet}  from "./HacknetNode.js";
-import {Locations}                                  from "./Location.js";
-import {Message, Messages}                          from "./Message.js";
-import {inMission}                                  from "./Missions.js";
-import {Player}                                     from "./Player.js";
+        factionExists, purchaseAugmentation}        from "./Faction";
+import {getCostOfNextHacknetNode, purchaseHacknet}  from "./HacknetNode";
+import {Locations}                                  from "./Location";
+import {Message, Messages}                          from "./Message";
+import {inMission}                                  from "./Missions";
+import {Player}                                     from "./Player";
 import {Script, findRunningScript, RunningScript,
-        isScriptFilename}                           from "./Script.js";
+        isScriptFilename}                           from "./Script";
 import {Server, getServer, AddToAllServers,
         AllServers, processSingleServerGrowth,
-        GetServerByHostname}                        from "./Server.js";
-import {Settings}                                   from "./Settings.js";
-import {SpecialServerIps}                           from "./SpecialServerIps.js";
+        GetServerByHostname}                        from "./Server";
+import {Settings}                                   from "./Settings";
+import {SpecialServerIps}                           from "./SpecialServerIps";
 import {StockMarket, StockSymbols, SymbolToStockMap, initStockSymbols,
         initStockMarket, initSymbolToStockMap, stockMarketCycle, buyStock,
         sellStock, updateStockPrices, displayStockMarketContent,
         updateStockTicker, updateStockPlayerPosition,
         Stock, shortStock, sellShort, OrderTypes,
-        PositionTypes, placeOrder, cancelOrder}     from "./StockMarket.js";
-import {post}                                       from "./Terminal.js";
+        PositionTypes, placeOrder, cancelOrder}     from "./StockMarket";
+import {post}                                       from "./Terminal";
 import {TextFile, getTextFile, createTextFile}      from "./TextFile";
 
 import {WorkerScript, workerScripts,
-        killWorkerScript, NetscriptPorts}           from "./NetscriptWorker.js";
+        killWorkerScript, NetscriptPorts}           from "./NetscriptWorker";
 import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
         scriptCalculateHackingChance, scriptCalculateHackingTime,
         scriptCalculateExpGain, scriptCalculatePercentMoneyHacked,
-        scriptCalculateGrowTime, scriptCalculateWeakenTime} from "./NetscriptEvaluator.js";
-import {Environment}                                from "./NetscriptEnvironment.js";
-import {NetscriptPort}                              from "./NetscriptPort.js";
+        scriptCalculateGrowTime, scriptCalculateWeakenTime} from "./NetscriptEvaluator";
+import {Environment}                                from "./NetscriptEnvironment";
+import {NetscriptPort}                              from "./NetscriptPort";
 
 import Decimal                                      from "decimal.js";
-import {dialogBoxCreate}                            from "../utils/DialogBox.js";
-import {printArray, powerOfTwo}                     from "../utils/HelperFunctions.js";
-import {createRandomIp}                             from "../utils/IPAddress.js";
-import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions.js";
+import {dialogBoxCreate}                            from "../utils/DialogBox";
+import {printArray, powerOfTwo}                     from "../utils/HelperFunctions";
+import {createRandomIp}                             from "../utils/IPAddress";
+import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions";
 import {yesNoBoxClose, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxCreate,
-        yesNoBoxOpen}                               from "../utils/YesNoBox.js";
+        yesNoBoxOpen}                               from "../utils/YesNoBox";
 
 var hasCorporationSF            = false, //Source-File 3
     hasSingularitySF            = false, //Source-File 4
@@ -430,7 +430,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call nuke(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.NukeProgram)) {
+            if (!Player.hasProgram(Programs.NukeProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the NUKE.exe virus!");
             }
             if (server.openPortCount < server.numOpenPortsRequired) {
@@ -461,7 +461,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call brutessh(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.BruteSSHProgram)) {
+            if (!Player.hasProgram(Programs.BruteSSHProgram.name)) {
                 workerScript.scriptRef.log("You do not have the BruteSSH.exe program!");
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the BruteSSH.exe program!");
             }
@@ -491,7 +491,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call ftpcrack(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.FTPCrackProgram)) {
+            if (!Player.hasProgram(Programs.FTPCrackProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the FTPCrack.exe program!");
             }
             if (!server.ftpPortOpen) {
@@ -520,7 +520,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call relaysmtp(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.RelaySMTPProgram)) {
+            if (!Player.hasProgram(Programs.RelaySMTPProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the relaySMTP.exe program!");
             }
             if (!server.smtpPortOpen) {
@@ -549,7 +549,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call httpworm(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.HTTPWormProgram)) {
+            if (!Player.hasProgram(Programs.HTTPWormProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the HTTPWorm.exe program!");
             }
             if (!server.httpPortOpen) {
@@ -578,7 +578,7 @@ function NetscriptFunctions(workerScript) {
                 workerScript.scriptRef.log("Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
                 throw makeRuntimeRejectMsg(workerScript, "Cannot call sqlinject(). Invalid IP or hostname passed in: " + ip);
             }
-            if (!Player.hasProgram(Programs.SQLInjectProgram)) {
+            if (!Player.hasProgram(Programs.SQLInjectProgram.name)) {
                 throw makeRuntimeRejectMsg(workerScript, "You do not have the SQLInject.exe program!");
             }
             if (!server.sqlPortOpen) {
@@ -2900,78 +2900,34 @@ function NetscriptFunctions(workerScript) {
                 }
             }
 
-            switch(name.toLowerCase()) {
-                case Programs.NukeProgram.toLowerCase():
-                    Player.startCreateProgramWork(Programs.NukeProgram, CONSTANTS.MillisecondsPerFiveMinutes, 1);
-                    break;
-                case Programs.BruteSSHProgram.toLowerCase():
-                    if (Player.hacking_skill < 50) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create BruteSSH (level 50 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.BruteSSHProgram, CONSTANTS.MillisecondsPerFiveMinutes * 2, 50);
-                    break;
-                case Programs.FTPCrackProgram.toLowerCase():
-                    if (Player.hacking_skill < 100) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create FTPCrack (level 100 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.FTPCrackProgram, CONSTANTS.MillisecondsPerHalfHour, 100);
-                    break;
-                case Programs.RelaySMTPProgram.toLowerCase():
-                    if (Player.hacking_skill < 250) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create relaySMTP (level 250 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.RelaySMTPProgram, CONSTANTS.MillisecondsPer2Hours, 250);
-                    break;
-                case Programs.HTTPWormProgram.toLowerCase():
-                    if (Player.hacking_skill < 500) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create HTTPWorm (level 500 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.HTTPWormProgram, CONSTANTS.MillisecondsPer4Hours, 500);
-                    break;
-                case Programs.SQLInjectProgram.toLowerCase():
-                    if (Player.hacking_skill < 750) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create SQLInject (level 750 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.SQLInjectProgram, CONSTANTS.MillisecondsPer8Hours, 750);
-                    break;
-                case Programs.DeepscanV1.toLowerCase():
-                    if (Player.hacking_skill < 75) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create DeepscanV1 (level 75 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.DeepscanV1, CONSTANTS.MillisecondsPerQuarterHour, 75);
-                    break;
-                case Programs.DeepscanV2.toLowerCase():
-                    if (Player.hacking_skill < 400) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create DeepscanV2 (level 400 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.DeepscanV2, CONSTANTS.MillisecondsPer2Hours, 400);
-                    break;
-                case Programs.ServerProfiler.toLowerCase():
-                    if (Player.hacking_skill < 75) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create ServerProfiler (level 75 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.ServerProfiler, CONSTANTS.MillisecondsPerHalfHour, 75);
-                    break;
-                case Programs.AutoLink.toLowerCase():
-                    if (Player.hacking_skill < 25) {
-                        workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create AutoLink (level 25 req)");
-                        return false;
-                    }
-                    Player.startCreateProgramWork(Programs.AutoLink, CONSTANTS.MillisecondsPerQuarterHour, 25);
-                    break;
-                default:
-                    workerScript.scriptRef.log("ERROR: createProgram() failed because the specified program does not exist: " + name);
-                    return false;
+            name = name.toLowerCase();
+
+            let p = null;
+            for (const key in Programs) {
+                if(Programs[key].name.toLowerCase() == name) {
+                    p = Programs[key];
+                }
             }
-            workerScript.scriptRef.log("Began creating program: " + name);
+
+            if (p == null) {
+                workerScript.scriptRef.log("ERROR: createProgram() failed because the specified program does not exist: " + name);
+                return false;
+            }
+
+            if (Player.hasProgram(p.name)) {
+                workerScript.scriptRef.log('ERROR: createProgram() failed because you already have the ' + p.name + ' program');
+                return false;
+            }
+
+            if (!p.create.req()) {
+                workerScript.scriptRef.log("ERROR: createProgram() failed because hacking level is too low to create " + p.name + " (level " + p.create.level + " req)");
+                return false
+            }
+
+            Player.startCreateProgramWork(p.name, p.create.time, p.create.level);
+            if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.createProgram == null) {
+                workerScript.scriptRef.log("Began creating program: " + name);
+            }
             return true;
         },
         commitCrime : function(crimeRoughName) {
@@ -3215,57 +3171,57 @@ function NetscriptFunctions(workerScript) {
 
         //Bladeburner API
         bladeburner : {
-            getContractNames : function(name) {
+            getContractNames : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getContractNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getContractNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.getContractNamesNetscriptFn(name);
+                    return Player.bladeburner.getContractNamesNetscriptFn();
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getContractNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            getOperationNames : function(name) {
+            getOperationNames : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getOperationNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getOperationNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.getOperationNamesNetscriptFn(name);
+                    return Player.bladeburner.getOperationNamesNetscriptFn();
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getOperationNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            getBlackOpNames : function(name) {
+            getBlackOpNames : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getBlackOpNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getBlackOpNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.getBlackOpNamesNetscriptFn(name);
+                    return Player.bladeburner.getBlackOpNamesNetscriptFn();
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getBlackOpNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            getGeneralActionNames : function(name) {
+            getGeneralActionNames : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getGeneralActionNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getGeneralActionNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.getGeneralActionNamesNetscriptFn(name);
+                    return Player.bladeburner.getGeneralActionNamesNetscriptFn();
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getGeneralActionNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
-            getSkillNames : function(name) {
+            getSkillNames : function() {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getSkillNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 }
                 updateDynamicRam("getSkillNames", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 10);
                 if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return Player.bladeburner.getSkillNamesNetscriptFn(name);
+                    return Player.bladeburner.getSkillNamesNetscriptFn();
                 }
                 throw makeRuntimeRejectMsg(workerScript, "getSkillNames() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");

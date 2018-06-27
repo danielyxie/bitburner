@@ -1,13 +1,13 @@
-import {BitNodeMultipliers}                         from "./BitNode.js";
-import {CONSTANTS}                                  from "./Constants.js";
-import {Programs}                                   from "./CreateProgram.js";
-import {Player}                                     from "./Player.js";
-import {RunningScript, Script}                      from "./Script.js";
-import {SpecialServerNames, SpecialServerIps}       from "./SpecialServerIps.js";
-import {getRandomInt}                               from "../utils/HelperFunctions.js";
-import {createRandomIp, isValidIPAddress, ipExists} from "../utils/IPAddress.js";
+import {BitNodeMultipliers}                         from "./BitNode";
+import {CONSTANTS}                                  from "./Constants";
+import {Programs}                                   from "./CreateProgram";
+import {Player}                                     from "./Player";
+import {RunningScript, Script}                      from "./Script";
+import {SpecialServerNames, SpecialServerIps}       from "./SpecialServerIps";
+import {getRandomInt}                               from "../utils/HelperFunctions";
+import {createRandomIp, isValidIPAddress, ipExists} from "../utils/IPAddress";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                           from "../utils/JSONReviver.js";
+        Generic_fromJSON}                           from "../utils/JSONReviver";
 
 function Server(params={ip:createRandomIp(), hostname:""}) {
     /* Properties */
@@ -93,18 +93,23 @@ Server.prototype.getScript = function(scriptName) {
     return null;
 }
 
-//Strengthens a server's security level (difficulty) by the specified amount
-Server.prototype.fortify = function(amt) {
-    this.hackDifficulty += amt;
+Server.prototype.capDifficulty = function() {
+    if (this.hackDifficulty < this.minDifficulty) {this.hackDifficulty = this.minDifficulty;}
+    if (this.hackDifficulty < 1) {this.hackDifficulty = 1;}
     //Place some arbitrarily limit that realistically should never happen unless someone is
     //screwing around with the game
     if (this.hackDifficulty > 1000000) {this.hackDifficulty = 1000000;}
 }
 
+//Strengthens a server's security level (difficulty) by the specified amount
+Server.prototype.fortify = function(amt) {
+    this.hackDifficulty += amt;
+    this.capDifficulty();
+}
+
 Server.prototype.weaken = function(amt) {
     this.hackDifficulty -= (amt * BitNodeMultipliers.ServerWeakenRate);
-    if (this.hackDifficulty < this.minDifficulty) {this.hackDifficulty = this.minDifficulty;}
-    if (this.hackDifficulty < 1) {this.hackDifficulty = 1;}
+    this.capDifficulty();
 }
 
 //Functions for loading and saving a Server
@@ -817,7 +822,8 @@ function processSingleServerGrowth(server, numCycles) {
     // if there was any growth at all, increase security
     if(oldMoneyAvailable !== server.moneyAvailable) {
         //Growing increases server security twice as much as hacking
-        const usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable);
+        let usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable);
+        usedCycles = Math.max(0, usedCycles);
         server.fortify(2 * CONSTANTS.ServerFortifyAmount * Math.ceil(usedCycles));
     }
     return server.moneyAvailable / oldMoneyAvailable;
@@ -829,7 +835,7 @@ function prestigeHomeComputer(homeComp) {
     homeComp.serversOnNetwork = [];
     homeComp.isConnectedTo = true;
     homeComp.ramUsed = 0;
-    homeComp.programs.push(Programs.NukeProgram);
+    homeComp.programs.push(Programs.NukeProgram.name);
 
     //Update RAM usage on all scripts
     homeComp.scripts.forEach(function(script) {

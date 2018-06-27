@@ -1,12 +1,12 @@
-import {CONSTANTS}                                  from "./Constants.js";
-import {Engine}                                     from "./engine.js";
-import {displayFactionContent}                      from "./Faction.js";
-import {Player}                                     from "./Player.js";
-import {dialogBoxCreate}                            from "../utils/DialogBox.js";
+import {CONSTANTS}                                  from "./Constants";
+import {Engine}                                     from "./engine";
+import {displayFactionContent}                      from "./Faction";
+import {Player}                                     from "./Player";
+import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {addOffset, getRandomInt,
         clearEventListenersEl,
-        clearEventListeners}                        from "../utils/HelperFunctions.js";
-import {formatNumber, isString}                     from "../utils/StringHelperFunctions.js";
+        clearEventListeners}                        from "../utils/HelperFunctions";
+import {formatNumber, isString}                     from "../utils/StringHelperFunctions";
 import jsplumb                                      from 'jsplumb'
 
 let inMission = false; //Flag to denote whether a mission is running

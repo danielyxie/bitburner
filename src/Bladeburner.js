@@ -1,24 +1,24 @@
-import {Augmentations, AugmentationNames}           from "./Augmentations.js";
-import {BitNodeMultipliers}                         from "./BitNode.js";
-import {CONSTANTS}                                  from "./Constants.js";
-import {Engine}                                     from "./engine.js";
+import {Augmentations, AugmentationNames}           from "./Augmentations";
+import {BitNodeMultipliers}                         from "./BitNode";
+import {CONSTANTS}                                  from "./Constants";
+import {Engine}                                     from "./engine";
 import {Faction, Factions, factionExists,
-        joinFaction, displayFactionContent}         from "./Faction.js";
-import {Locations}                                  from "./Location.js";
-import {Player}                                     from "./Player.js";
-import {hackWorldDaemon, redPillFlag}               from "./RedPill.js";
-import {KEY}                                        from "./Terminal.js";
+        joinFaction, displayFactionContent}         from "./Faction";
+import {Locations}                                  from "./Location";
+import {Player}                                     from "./Player";
+import {hackWorldDaemon, redPillFlag}               from "./RedPill";
+import {KEY}                                        from "./Terminal";
 
-import {dialogBoxCreate}                            from "../utils/DialogBox.js";
+import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {getRandomInt, addOffset, clearObject,
         createElement, removeChildrenFromElement,
         exceptionAlert, createPopup, appendLineBreaks,
         removeElementById, removeElement,
-        createProgressBarText}                      from "../utils/HelperFunctions.js";
+        createProgressBarText}                      from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                           from "../utils/JSONReviver.js";
+        Generic_fromJSON}                           from "../utils/JSONReviver";
 import numeral                                      from "numeral/min/numeral.min";
-import {formatNumber}                               from "../utils/StringHelperFunctions.js";
+import {formatNumber}                               from "../utils/StringHelperFunctions";
 
 
 var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
@@ -3208,6 +3208,7 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
     switch (convertedType) {
         case "contract":
         case "contracts":
+        case "contr":
             action.type = ActionTypes["Contract"];
             if (this.contracts.hasOwnProperty(name)) {
                 action.name = name;
@@ -3268,24 +3269,23 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
     }
 }
 
-Bladeburner.prototype.getContractNamesNetscriptFn = function(name) {
+Bladeburner.prototype.getContractNamesNetscriptFn = function() {
     return Object.keys(this.contracts);
 }
 
-Bladeburner.prototype.getOperationNamesNetscriptFn = function(name) {
+Bladeburner.prototype.getOperationNamesNetscriptFn = function() {
     return Object.keys(this.operations);
 }
 
-Bladeburner.prototype.getBlackOpNamesNetscriptFn = function(name) {
+Bladeburner.prototype.getBlackOpNamesNetscriptFn = function() {
     return Object.keys(BlackOperations);
 }
 
-Bladeburner.prototype.getGeneralActionNamesNetscriptFn = function(name) {
+Bladeburner.prototype.getGeneralActionNamesNetscriptFn = function() {
     return Object.keys(GeneralActions);
 }
 
-Bladeburner.prototype.getSkillNamesNetscriptFn = function(name) {
-    return Skills.hasOwnProperty(name);
+Bladeburner.prototype.getSkillNamesNetscriptFn = function() {
     return Object.keys(Skills);
 }
 
@@ -3428,7 +3428,11 @@ Bladeburner.prototype.getSkillLevelNetscriptFn = function(skillName, workerScrip
         return -1;
     }
 
-    return Skills[skillName];
+    if (this.skills[skillName] == null) {
+        return 0;
+    } else {
+        return this.skills[skillName];
+    }
 }
 
 Bladeburner.prototype.upgradeSkillNetscriptFn = function(skillName, workerScript) {
@@ -3506,8 +3510,8 @@ Bladeburner.prototype.setTeamSizeNetscriptFn = function(type, name, size, worker
         return -1;
     }
 
-    if (actionId.type !== ActionTypes["Operation"] ||
-        actionId.type !== ActionTypes["BlackOp"]   ||
+    if (actionId.type !== ActionTypes["Operation"] &&
+        actionId.type !== ActionTypes["BlackOp"]   &&
         actionId.type !== ActionTypes["BlackOperation"]) {
         workerScript.log("ERROR: Bladeburner.setTeamSize() failed. This function " +
                          "only works for Operations and BlackOps");

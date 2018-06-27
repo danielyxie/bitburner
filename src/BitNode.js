@@ -1,4 +1,4 @@
-import {Player}                             from "./Player.js";
+import {Player}                             from "./Player";
 
 function BitNode(n, name, desc="", info="") {
     this.number = n;
@@ -132,7 +132,7 @@ function initBitNodes() {
                                           "Corporations have 80% lower valuations and are therefore less profitable<br>" +
                                           "Working for companies is 50% less profitable<br>" +
                                           "Crimes and Infiltration are 50% less profitable<br><br>" +
-                                          "Destroying this BitNode will give you Source-File 6, or if you already have this Source-File it will upgrade " +
+                                          "Destroying this BitNode will give you Source-File 7, or if you already have this Source-File it will upgrade " +
                                           "its level up to a maximum of 3. This Source-File allows you to access the Bladeburner Netscript API in other " +
                                           "BitNodes. In addition, this Source-File will increase all of your Bladeburner multipliers by:<br><br>" +
                                           "Level 1: 8%<br>" +
