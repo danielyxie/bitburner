@@ -490,6 +490,14 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.39.1<br>"  +
+    "* Bladeburner Rank gain in BN-7 is now reduced by 40% instead of 50%<br>" +
+    "* Quadrupled the amount of money gained from Bladeburner contracts<br>" +
+    "* Doubled the effects of Source-File 5. Now gives 8%, 12%, and 14% increase to all hacking multipliers " +
+    "at levels 1, 2, and 3, respectively (increased from 4%/6%, 7%)<br>" +
+    "* Increased the effect of Source-File 8. It now gives a 12%, 18% and 21% to your hacking growth multiplier " +
+    "at levels 1, 2, and 3, respectively (increased from 8%, 12%, 14%)<br>" +
+    "* The effect of Source-File 12 is now additive with itself, rather than multiplicative. This means " +
+    "that level N of Source-File 12 now increases all multipliers by N%<br>" +
     "* The setting to suppress the confirmation box when purchasing Augmentations was moved into the main Options menu (by Github user hydroflame)<br>"
 
 
