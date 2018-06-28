@@ -1,3 +1,4 @@
+import { EqualityFunc } from "../src/types";
 import { dialogBoxCreate } from "./DialogBox";
 
 // Netburner String helper functions
@@ -13,11 +14,11 @@ e.g.    10000 -> "0 hours 0 minutes and 10 seconds"
         120000 -> "0 0 hours 2 minutes and 0 seconds"
 */
 function convertTimeMsToTimeElapsedString(time: number): string {
-    const millisecondsPerSecond = 1000;
-    const secondPerMinute = 60;
-    const minutesPerHours = 60;
+    const millisecondsPerSecond: number = 1000;
+    const secondPerMinute: number = 60;
+    const minutesPerHours: number = 60;
     const secondPerHours: number = secondPerMinute * minutesPerHours;
-    const hoursPerDays = 24;
+    const hoursPerDays: number = 24;
     const secondPerDay: number = secondPerHours * hoursPerDays;
 
     // Convert ms to seconds, since we only have second-level precision
@@ -34,10 +35,10 @@ function convertTimeMsToTimeElapsedString(time: number): string {
 
     const seconds: number = secTruncMinutes;
 
-    let res = "";
-    if (days) {res += `${days} days `; }
-    if (hours) {res += `${hours} hours `; }
-    if (minutes) {res += `${minutes} minutes `; }
+    let res: string = "";
+    if (days > 0) {res += `${days} days `; }
+    if (hours > 0) {res += `${hours} hours `; }
+    if (minutes > 0) {res += `${minutes} minutes `; }
     res += `${seconds} seconds `;
 
     return res;
@@ -46,14 +47,18 @@ function convertTimeMsToTimeElapsedString(time: number): string {
 // Finds the longest common starting substring in a set of strings
 function longestCommonStart(strings: string[]): string {
     if (!containsAllStrings(strings)) {return ""; }
-    if (strings.length == 0) {return ""; }
+    if (strings.length === 0) {return ""; }
 
-    const A: string[] = strings.concat().sort();
+    const A: string[] = strings.concat()
+        .sort();
     const a1: string = A[0];
     const a2: string = A[A.length - 1];
     const L: number = a1.length;
-    let i = 0;
-    while (i < L && a1.charAt(i).toLowerCase() === a2.charAt(i).toLowerCase()) { i++; }
+    let i: number = 0;
+    const areEqualCaseInsensitive: EqualityFunc<string> = (a: string, b: string) => a.toUpperCase() === b.toUpperCase();
+    while (i < L && areEqualCaseInsensitive(a1, a2)) {
+        i++;
+    }
 
     return a1.substring(0, i);
 }
@@ -78,16 +83,16 @@ function formatNumber(num: number, numFractionDigits: number): string {
 
 // Count the number of times a substring occurs in a string
 function numOccurrences(text: string, subString: string): number {
-    text += "";
-    subString += "";
-    if (subString.length <= 0) { return (text.length + 1); }
+    const input: string = `${text}`;
+    const search: string = `${subString}`;
+    if (search.length <= 0) { return (input.length + 1); }
 
-    let n = 0;
-    let pos = 0;
-    const step: number = subString.length;
+    let n: number = 0;
+    let pos: number = 0;
+    const step: number = search.length;
 
     while (true) {
-        pos = text.indexOf(subString, pos);
+        pos = input.indexOf(search, pos);
         if (pos >= 0) {
             ++n;
             pos += step;
@@ -113,7 +118,8 @@ function numNetscriptOperators(text: string): number {
         numOccurrences(text, "==") +
         numOccurrences(text, "!=");
     if (isNaN(total)) {
-        const message = "ERROR in counting number of operators in script. This is a bug, please report to game developer";
+        // tslint:disable-next-line:max-line-length
+        const message: string = "ERROR in counting number of operators in script. This is a bug, please report to game developer";
         dialogBoxCreate(message, false);
 
         return 0;
@@ -124,11 +130,13 @@ function numNetscriptOperators(text: string): number {
 
 // Checks if a string contains HTML elements
 function isHTML(str: string): boolean {
-    const a = document.createElement("div");
-    a.innerHTML = str;
-    const c = a.childNodes;
-    for (let i = c.length; i--;) {
-        if (c[i].nodeType == 1) { return true; }
+    const element: HTMLDivElement = document.createElement("div");
+    element.innerHTML = str;
+    const c: NodeListOf<Node & ChildNode> = element.childNodes;
+    for (let i: number = c.length; i >= 0; i--) {
+        if (c[i].nodeType === 1) {
+            return true;
+        }
     }
 
     return false;
@@ -136,10 +144,10 @@ function isHTML(str: string): boolean {
 
 // Generates a random alphanumeric string with N characters
 function generateRandomString(n: number): string {
-    let str = "";
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let str: string = "";
+    const chars: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for (let i = 0; i < n; i++) {
+    for (let i: number = 0; i < n; i++) {
         str += chars.charAt(Math.floor(Math.random() * chars.length));
     }
 
