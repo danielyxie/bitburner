@@ -1,12 +1,47 @@
-// Contains the "information" property for all the Factions, which is just a description of each faction
+import { IMap } from "./types";
+
+/**
+ * Contains the "information" property for all the Factions, which is just a description of each faction
+ */
 class FactionInfo {
+  /**
+   * The multiplier to apply to augmentation base purchase price.
+   */
   augmentationPriceMult: number;
+
+  /**
+   * The multiplier to apply to augmentation reputation base requirement.
+   */
   augmentationRepRequirementMult: number;
+
+  /**
+   * The names of all other factions considered to be enemies to this faction.
+   */
   enemies: string[];
+
+  /**
+   * The descriptive text to show on the faction's page.
+   */
   infoText: string;
+
+  /**
+   * A flag indicating if the faction supports field work to earn reputation.
+   */
   offerFieldWork: boolean;
+
+  /**
+   * A flag indicating if the faction supports hacking missions to earn reputation.
+   */
   offerHackingMission: boolean;
+
+  /**
+   * A flag indicating if the faction supports hacking work to earn reputation.
+   */
   offerHackingWork: boolean;
+
+  /**
+   * A flag indicating if the faction supports security work to earn reputation.
+   */
   offerSecurityWork: boolean;
 
   constructor(infoText: string, enemies: string[], offerHackingMission: boolean, offerHackingWork: boolean,
@@ -24,7 +59,11 @@ class FactionInfo {
   }
 }
 
-const FactionInfos = {
+/**
+ * A map of all factions and associated info to them.
+ */
+// tslint:disable-next-line:variable-name
+export const FactionInfos: IMap<FactionInfo> = {
     // Endgame
     Illuminati: new FactionInfo("Humanity never changes. No matter how civilized society becomes, it will eventually" +
       "fall back into chaos. And from this chaos, we are the Invisible hand that guides them to order. ",
@@ -189,5 +228,3 @@ const FactionInfos = {
                                     "Bladeburner contracts/operations will increase your reputation.",
                                   [], false, false, false, false),
 };
-
-export {FactionInfos};

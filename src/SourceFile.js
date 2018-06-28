@@ -43,21 +43,25 @@ function initSourceFiles() {
                                                    "know when you gain experience and how much). Higher Intelligence levels will boost your production " +
                                                    "for many actions in the game. In addition, this Source-File will unlock the getBitNodeMultipliers() " +
                                                    "Netscript function, and will raise all of your hacking-related multipliers by:<br><br> " +
-                                                   "Level 1: 4%<br>" +
-                                                   "Level 2: 6%<br>" +
-                                                   "Level 3: 7%");
+                                                   "Level 1: 8%<br>" +
+                                                   "Level 2: 12%<br>" +
+                                                   "Level 3: 14%");
     SourceFiles["SourceFile6"] = new SourceFile(6, "This Source-File allows you to access the NSA's Bladeburner Division in other " +
                                                    "BitNodes. In addition, this Source-File will raise the experience gain rate of all your combat stats by:<br><br>" +
                                                    "Level 1: 8%<br>" +
                                                    "Level 2: 12%<br>" +
                                                    "Level 3: 14%");
-    SourceFiles["SourceFile7"] = new SourceFile(7);
+    SourceFiles["SourceFile7"] = new SourceFile(7, "This Source-File allows you to access the Bladeburner Netscript API in other " +
+                                                   "BitNodes. In addition, this Source-File will increase all of your Bladeburner multipliers by:<br><br>" +
+                                                   "Level 1: 8%<br>" +
+                                                   "Level 2: 12%<br>" +
+                                                   "Level 3: 14%");
     SourceFiles["SourceFile8"] = new SourceFile(8, "This Source-File grants the following benefits:<br><br>" +
                                                    "Level 1: Permanent access to WSE and TIX API<br>" +
                                                    "Level 2: Ability to short stocks in other BitNodes<br>" +
                                                    "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
                                                    "This Source-File also increases your hacking growth multipliers by: " +
-                                                   "<br>Level 1: 8%<br>Level 2: 12%<br>Level 3: 14%");
+                                                   "<br>Level 1: 12%<br>Level 2: 18%<br>Level 3: 21%");
     SourceFiles["SourceFile9"] = new SourceFile(9);
     SourceFiles["SourceFile10"] = new SourceFile(10);
     SourceFiles["SourceFile11"] = new SourceFile(11, "This Source-File makes it so that company favor increases BOTH the player's salary and reputation gain rate " +
@@ -66,7 +70,8 @@ function initSourceFiles() {
                                                      "Level 1: 24%<br>" +
                                                      "Level 2: 36%<br>" +
                                                      "Level 3: 42%<br>");
-    SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File increases all your multipliers by 1% per level");
+    SourceFiles["SourceFile12"] = new SourceFile(12, "This Source-File increases all your multipliers by 1% per level. This effect is additive with itself, " +
+                                                     "NOT multiplicative. In other words, level N of this Source-File will increase all of your multipliers by N%");
 }
 
 function PlayerOwnedSourceFile(number, level) {
@@ -143,7 +148,7 @@ function applySourceFile(srcFile) {
         case 5: //Artificial Intelligence
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (4 / (Math.pow(2, i)));
+                mult += (8 / (Math.pow(2, i)));
             }
             var incMult = 1 + (mult / 100);
             Player.hacking_chance_mult  *= incMult;
@@ -178,7 +183,7 @@ function applySourceFile(srcFile) {
         case 8: //Ghost of Wall Street
             var mult = 0;
             for (var i = 0; i < srcFile.lvl; ++i) {
-                mult += (8 / (Math.pow(2, i)));
+                mult += (12 / (Math.pow(2, i)));
             }
             var incMult = 1 + (mult / 100);
             Player.hacking_grow_mult    *= incMult;
@@ -193,8 +198,8 @@ function applySourceFile(srcFile) {
             Player.company_rep_mult   *= incMult;
             break;
         case 12: //The testing ground
-            var inc = Math.pow(1.01, srcFile.lvl);
-            var dec = Math.pow(0.99, srcFile.lvl);
+            var inc = 1 + (srcFile.level/100);
+            var dec = 1 - (srcFile.level/100);
 
             Player.hacking_chance_mult *= inc;
             Player.hacking_speed_mult  *= inc;
