@@ -6,6 +6,9 @@ import {dialogBoxCreate}                    from "./DialogBox";
 import {clearEventListeners}                from "./HelperFunctions";
 import {formatNumber}                       from "./StringHelperFunctions";
 
+//Keep track of last faction
+var lastFac = "";
+
 /* InfiltrationBox.js */
 function infiltrationBoxClose() {
     var box = document.getElementById("infiltration-box-container");
@@ -60,10 +63,20 @@ function infiltrationBoxCreate(inst) {
                         "that faction.");
     var selector = document.getElementById("infiltration-faction-select");
     selector.innerHTML = "";
-    for (var i = 0; i < Player.factions.length; ++i) {
+    for (let i = 0; i < Player.factions.length; ++i) {
         if (Player.factions[i] === "Bladeburners") {continue;}
         selector.innerHTML += "<option value='" + Player.factions[i] +
                                "'>" + Player.factions[i] + "</option>";
+    }
+
+    //Set initial value, if applicable
+    if (lastFac !== "") {
+        for (let i = 0; i < selector.options.length; ++i) {
+            if (selector.options[i].value === lastFac) {
+                selector.selectedIndex = i;
+                break;
+            }
+        }
     }
 
     var sellButton = clearEventListeners("infiltration-box-sell");
@@ -88,6 +101,7 @@ function infiltrationBoxCreate(inst) {
     setTimeout(function() {
     factionButton.addEventListener("click", function() {
         var facName = selector.options[selector.selectedIndex].value;
+        lastFac = facName;
         var faction = Factions[facName];
         if (faction == null) {
             dialogBoxCreate("Error finding faction. This is a bug please report to developer");
