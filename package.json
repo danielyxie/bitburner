@@ -87,10 +87,12 @@
     "url": "git+https://github.com/danielyxie/bitburner.git"
   },
   "scripts": {
-    "lint:style": "stylelint ./css/*",
     "start:dev": "webpack-dev-server",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
+    "lint": "npm run lint:typescript & npm run lint:javascript & npm run lint:style",
+    "lint:javascript": "eslint *.js ./src/**/*.js ./tests/**/*.js ./utils/**/*.js",
+    "lint:style": "stylelint ./css/*",
     "lint:typescript": "tslint --project . --exclude **/*.d.ts --format stylish src/**/*.ts utils/**/*.ts",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development"

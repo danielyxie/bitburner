@@ -28,8 +28,8 @@ function initSettings()  {
     Settings.MaxPortCapacity = 50;
     Settings.SuppressMessages = false;
     Settings.SuppressFactionInvites = false;
-    Settings.SuppressTravelConfirmation = false,
-    Settings.SuppressBuyAugmentationConfirmation = false,
+    Settings.SuppressTravelConfirmation = false;
+    Settings.SuppressBuyAugmentationConfirmation = false;
     Settings.AutosaveInterval = 60;
     Settings.DisableHotkeys = false;
 }

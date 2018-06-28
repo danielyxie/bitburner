@@ -198,8 +198,8 @@ function applySourceFile(srcFile) {
             Player.company_rep_mult   *= incMult;
             break;
         case 12: //The testing ground
-            const inc = 1 + (srcFile.level/100);
-            const dec = 1 - (srcFile.level/100);
+            var inc = 1 + (srcFile.level/100);
+            var dec = 1 - (srcFile.level/100);
 
             Player.hacking_chance_mult *= inc;
             Player.hacking_speed_mult  *= inc;
