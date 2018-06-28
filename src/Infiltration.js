@@ -106,7 +106,7 @@ function endInfiltration(inst, success) {
     clearEventListeners("infiltration-bribe");
     clearEventListeners("infiltration-escape");
 
-    Engine.loadWorldContent();
+    Engine.loadLocationContent();
 }
 
 function nextInfiltrationLevel(inst) {
