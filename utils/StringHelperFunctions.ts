@@ -49,14 +49,13 @@ function longestCommonStart(strings: string[]): string {
     if (!containsAllStrings(strings)) {return ""; }
     if (strings.length === 0) {return ""; }
 
-    const A: string[] = strings.concat()
-        .sort();
+    const A: string[] = strings.concat().sort();
     const a1: string = A[0];
     const a2: string = A[A.length - 1];
     const L: number = a1.length;
     let i: number = 0;
     const areEqualCaseInsensitive: EqualityFunc<string> = (a: string, b: string) => a.toUpperCase() === b.toUpperCase();
-    while (i < L && areEqualCaseInsensitive(a1, a2)) {
+    while (i < L && areEqualCaseInsensitive(a1.charAt(i), a2.charAt(i))) {
         i++;
     }
 
@@ -133,7 +132,7 @@ function isHTML(str: string): boolean {
     const element: HTMLDivElement = document.createElement("div");
     element.innerHTML = str;
     const c: NodeListOf<Node & ChildNode> = element.childNodes;
-    for (let i: number = c.length; i >= 0; i--) {
+    for (let i: number = c.length-1; i >= 0; i--) {
         if (c[i].nodeType === 1) {
             return true;
         }

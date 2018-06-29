@@ -877,6 +877,7 @@ function NetscriptFunctions(workerScript) {
                     var oldScript = destServer.scripts[i];
                     oldScript.code = sourceScript.code;
                     oldScript.ramUsage = sourceScript.ramUsage;
+                    oldScript.module = "";
                     return true;
                 }
             }

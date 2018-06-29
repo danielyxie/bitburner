@@ -304,7 +304,7 @@ $(document).keyup(function(e) {
 })
 
 //Implements a tab completion feature for terminal
-//  command - Command (first arg only)
+//  command - Terminal command except for the last incomplete argument
 //  arg - Incomplete argument string that the function will try to complete, or will display
 //        a series of possible options for
 //  allPossibilities - Array of strings containing all possibilities that the
@@ -1466,6 +1466,7 @@ let Terminal = {
                         var oldScript = destServer.scripts[i];
                         oldScript.code = sourceScript.code;
                         oldScript.ramUsage = sourceScript.ramUsage;
+                        oldScript.module = "";
                         post(scriptname + " overwriten on " + destServer.hostname);
                         return;
                     }

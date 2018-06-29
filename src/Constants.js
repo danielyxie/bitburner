@@ -498,7 +498,12 @@ let CONSTANTS = {
     "at levels 1, 2, and 3, respectively (increased from 8%, 12%, 14%)<br>" +
     "* The effect of Source-File 12 is now additive with itself, rather than multiplicative. This means " +
     "that level N of Source-File 12 now increases all multipliers by N%<br>" +
-    "* The setting to suppress the confirmation box when purchasing Augmentations was moved into the main Options menu (by Github user hydroflame)<br>"
+    "* The setting to suppress the confirmation box when purchasing Augmentations was moved into the main Options menu (by Github user hydroflame)<br>" +
+    "* Bug Fix: Crime Success rates were being calculated incorrectly (by Github user hydroflame)<br>" +
+    "* When an Infiltration is finished, you will now return back to the company's page, rather than the city<br>" +
+    "* Infiltration faction reputation selector now remembers your last choice<br>" +
+    "* Bug Fix: Copying a NetscriptJS script to another server using scp now properly takes into account " +
+    "the script's changes.<br>"
 
 
 }
