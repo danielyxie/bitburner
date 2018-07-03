@@ -2264,7 +2264,6 @@ function NetscriptFunctions(workerScript) {
                     }
                     Player.loseMoney(CONSTANTS.TravelCost);
                     Player.city = cityname;
-                    Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.travelToCity == null) {
                         workerScript.scriptRef.log("Traveled to " + cityname);
                     }
@@ -3462,6 +3461,27 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "joinBladeburnerFaction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
+            joinBladeburnerDivision : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("joinBladeburnerDivision", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                }
+                updateDynamicRam("joinBladeburnerDivision", CONSTANTS.ScriptBladeburnerApiBaseRamCost);
+                if ((Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    if (Player.bladeburner instanceof Bladeburner) {
+                        return true; //Already member
+                    } else if (Player.strength >= 100 && Player.defense >= 100 &&
+                               Player.dexterity >= 100 && Player.agility >= 100) {
+                        Player.bladeburner = new Bladeburner({new:true});
+                        workerScript.log("You have been accepted into the Bladeburner division");
+                        return true;
+                    } else {
+                        workerScript.log("You do not meet the requirements for joining the Bladeburner division");
+                        return false;
+                    }
+                }
+                throw makeRuntimeRejectMsg(workerScript, "joinBladeburnerDivision() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            }
         }
     } //End return
 } //End NetscriptFunction()

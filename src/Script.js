@@ -36,7 +36,8 @@ import {parse, Node}                            from "../utils/acorn";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
-import {compareArrays, createElement}           from "../utils/HelperFunctions";
+import {compareArrays, createElement,
+        roundToTwo}                             from "../utils/HelperFunctions";
 import {formatNumber, numOccurrences,
         numNetscriptOperators}                  from "../utils/StringHelperFunctions";
 
@@ -373,7 +374,7 @@ Script.prototype.updateRamUsage = function() {
     var codeCopy = this.code.repeat(1);
     var res = calculateRamUsage(codeCopy);
     if (res !== -1) {
-        this.ramUsage = res;
+        this.ramUsage = roundToTwo(res);
     }
 }
 
@@ -420,7 +421,9 @@ function parseOnlyRamCalculate(server, code, workerScript) {
             }
 
             // Splice all the references in.
-            dependencyMap = {...dependencyMap, ...result.dependencyMap};
+            //Spread syntax not supported in edge, use Object.assign instead
+            //dependencyMap = {...dependencyMap, ...result.dependencyMap};
+            dependencyMap = Object.assign(dependencyMap, result.dependencyMap);
         }
 
         const initialModule = "__SPECIAL_INITIAL_MODULE__";
@@ -581,6 +584,8 @@ function parseOnlyCalculateDeps(code, currentModule) {
         }
     }
 
+    //Spread syntax not supported in Edge yet, use Object.assign
+    /*
     walk.recursive(ast, {key: globalKey}, {
         ImportDeclaration: (node, st, walkDeeper) => {
             const importModuleName = node.source.value;
@@ -608,6 +613,33 @@ function parseOnlyCalculateDeps(code, currentModule) {
         },
         ...commonVisitors()
     });
+    */
+    walk.recursive(ast, {key: globalKey}, Object.assign({
+        ImportDeclaration: (node, st, walkDeeper) => {
+            const importModuleName = node.source.value;
+            additionalModules.push(importModuleName);
+
+            // This module's global scope refers to that module's global scope, no matter how we
+            // import it.
+            dependencyMap[st.key].add(importModuleName + memCheckGlobalKey);
+
+            for (let i = 0; i < node.specifiers.length; ++i) {
+                const spec = node.specifiers[i];
+                if (spec.imported !== undefined && spec.local !== undefined) {
+                    // We depend on specific things.
+                    internalToExternal[spec.local.name] = importModuleName + "." + spec.imported.name;
+                } else {
+                    // We depend on everything.
+                    dependencyMap[st.key].add(importModuleName + ".*");
+                }
+            }
+        },
+        FunctionDeclaration: (node, st, walkDeeper) => {
+            // Don't use walkDeeper, because we are changing the visitor set.
+            const key = currentModule + "." + node.id.name;
+            walk.recursive(node, {key: key}, commonVisitors());
+        },
+    }, commonVisitors()));
 
     return {dependencyMap: dependencyMap, additionalModules: additionalModules};
 }

@@ -1044,7 +1044,7 @@ let Engine = {
             if (Engine.currentPage === Engine.Page.ActiveScripts) {
                 Engine.Counters.updateActiveScriptsDisplay = 5;
             } else {
-                Engine.Counters.updateActiveScriptsDisplay = 15;
+                Engine.Counters.updateActiveScriptsDisplay = 10;
             }
         }
 

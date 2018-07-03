@@ -292,8 +292,7 @@ function addWorkerScript(runningScriptObj, server) {
     } else {
         runningScriptObj.threads = 1;
     }
-    var ramUsage = runningScriptObj.scriptRef.ramUsage * threads
-                   * Math.pow(CONSTANTS.MultithreadingRAMCost, threads-1);
+    var ramUsage = runningScriptObj.scriptRef.ramUsage * threads;
     var ramAvailable = server.maxRam - server.ramUsed;
     if (ramUsage > ramAvailable) {
         dialogBoxCreate("Not enough RAM to run script " + runningScriptObj.filename + " with args " +

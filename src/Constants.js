@@ -84,8 +84,6 @@ let CONSTANTS = {
 
     ScriptBladeburnerApiBaseRamCost:    4,
 
-    MultithreadingRAMCost:          1,
-
     NumNetscriptPorts:              20,
 
     //Server constants
@@ -492,6 +490,7 @@ let CONSTANTS = {
     "v0.39.1<br>"  +
     "* Bladeburner Rank gain in BN-7 is now reduced by 40% instead of 50%<br>" +
     "* Quadrupled the amount of money gained from Bladeburner contracts<br>" +
+    "* Added joinBladeburnerDivision() Netscript function to Bladeburner API<br>" +
     "* Doubled the effects of Source-File 5. Now gives 8%, 12%, and 14% increase to all hacking multipliers " +
     "at levels 1, 2, and 3, respectively (increased from 4%/6%, 7%)<br>" +
     "* Increased the effect of Source-File 8. It now gives a 12%, 18% and 21% to your hacking growth multiplier " +
@@ -503,7 +502,9 @@ let CONSTANTS = {
     "* When an Infiltration is finished, you will now return back to the company's page, rather than the city<br>" +
     "* Infiltration faction reputation selector now remembers your last choice<br>" +
     "* Bug Fix: Copying a NetscriptJS script to another server using scp now properly takes into account " +
-    "the script's changes.<br>"
+    "the script's changes.<br>" +
+    "* Bug Fix: Fixed an issue where game would not load in Edge due to incompatible features<br>" + 
+    "* travelToCity() Singularity function no longer grants Intelligence exp"
 
 
 }

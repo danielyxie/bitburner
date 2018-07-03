@@ -314,9 +314,9 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
     if (!(allPossibilities.constructor === Array)) {return;}
     if (!containsAllStrings(allPossibilities)) {return;}
 
-    if (!command.startsWith("./")) {
-        command = command.toLowerCase();
-    }
+    //if (!command.startsWith("./")) {
+        //command = command.toLowerCase();
+    //}
 
     //Remove all options in allPossibilities that do not match the current string
     //that we are attempting to autocomplete
@@ -1215,7 +1215,7 @@ let Terminal = {
                 for (var i = 0; i < currServ.scripts.length; ++i) {
                     if (scriptName == currServ.scripts[i].filename) {
                         var scriptBaseRamUsage = currServ.scripts[i].ramUsage;
-                        var ramUsage = scriptBaseRamUsage * numThreads * Math.pow(CONSTANTS.MultithreadingRAMCost, numThreads-1);
+                        var ramUsage = scriptBaseRamUsage * numThreads;
 
                         post("This script requires " + formatNumber(ramUsage, 2) + "GB of RAM to run for " + numThreads + " thread(s)");
                         return;
@@ -2021,7 +2021,7 @@ let Terminal = {
 			if (server.scripts[i].filename == scriptName) {
 				//Check for admin rights and that there is enough RAM availble to run
                 var script = server.scripts[i];
-				var ramUsage = script.ramUsage * numThreads * Math.pow(CONSTANTS.MultithreadingRAMCost, numThreads-1);
+				var ramUsage = script.ramUsage * numThreads;
 				var ramAvailable = server.maxRam - server.ramUsed;
 
 				if (server.hasAdminRights == false) {

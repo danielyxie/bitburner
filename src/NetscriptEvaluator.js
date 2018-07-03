@@ -860,7 +860,7 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
             var script = server.scripts[i];
             var ramUsage = script.ramUsage;
             threads = Math.round(Number(threads)); //Convert to number and round
-            ramUsage = ramUsage * threads * Math.pow(CONSTANTS.MultithreadingRAMCost, threads-1);
+            ramUsage = ramUsage * threads;
             var ramAvailable = server.maxRam - server.ramUsed;
 
             if (server.hasAdminRights == false) {
