@@ -7,7 +7,8 @@ import {getServer}                                  from "./Server";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {printArray, createElement,
         createAccordionElement, removeElement,
-        removeChildrenFromElement, exceptionAlert}  from "../utils/HelperFunctions";
+        removeChildrenFromElement}                  from "../utils/HelperFunctions";
+import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {logBoxCreate}                               from "../utils/LogBox";
 import numeral                                      from "numeral/min/numeral.min";
 import {formatNumber}                               from "../utils/StringHelperFunctions";

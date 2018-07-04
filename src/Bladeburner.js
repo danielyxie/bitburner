@@ -13,11 +13,12 @@ import {createProgressBarText}                      from "../utils/helpers/creat
 import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {getRandomInt, addOffset, clearObject,
         createElement, removeChildrenFromElement,
-        exceptionAlert, createPopup, appendLineBreaks,
+        createPopup, appendLineBreaks,
         removeElementById, removeElement}           from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";
 import numeral                                      from "numeral/min/numeral.min";
+import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
 
 

@@ -1,8 +1,8 @@
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions";
 import {clearEventListeners, createElement,
-        removeChildrenFromElement,
-        exceptionAlert}                         from "../utils/HelperFunctions";
+        removeChildrenFromElement}              from "../utils/HelperFunctions";
+import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
         convertTimeMsToTimeElapsedString,

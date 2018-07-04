@@ -1,6 +1,5 @@
 //General helper functions
 import {isString}           from "./helpers/isString";
-import {dialogBoxCreate}    from "./DialogBox";
 
 //Returns the size (number of keys) of an object
 function sizeOfObject(obj) {
@@ -248,16 +247,6 @@ function roundToTwo(n) {
     return +(Math.round(n + "e+2")  + "e-2");
 }
 
-function exceptionAlert(e) {
-    dialogBoxCreate("Caught an exception: " + e + "<br><br>" +
-                    "Filename: " + e.fileName + "<br><br>" +
-                    "Line Number: " + e.lineNumber + "<br><br>" +
-                    "This is a bug, please report to game developer with this " +
-                    "message as well as details about how to reproduce the bug.<br><br>" +
-                    "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
-                    "safe doesn't get corrupted");
-}
-
 export {sizeOfObject,
         clearObject,
         addOffset,
@@ -276,5 +265,4 @@ export {sizeOfObject,
         removeChildrenFromElement,
         createPopup,
         clearSelector,
-        exceptionAlert,
         getElementById};
