@@ -1,5 +1,4 @@
 import { EqualityFunc } from "../src/types";
-import { dialogBoxCreate } from "./DialogBox";
 import { isString } from "./helpers/isString";
 
 // Netburner String helper functions
@@ -77,53 +76,6 @@ function formatNumber(num: number, numFractionDigits: number): string {
     });
 }
 
-// Count the number of times a substring occurs in a string
-function numOccurrences(text: string, subString: string): number {
-    const input: string = `${text}`;
-    const search: string = `${subString}`;
-    if (search.length <= 0) { return (input.length + 1); }
-
-    let n: number = 0;
-    let pos: number = 0;
-    const step: number = search.length;
-
-    while (true) {
-        pos = input.indexOf(search, pos);
-        if (pos >= 0) {
-            ++n;
-            pos += step;
-        } else { break; }
-    }
-
-    return n;
-}
-
-// Counters the number of Netscript operators in a string
-function numNetscriptOperators(text: string): number {
-    const total: number = numOccurrences(text, "+") +
-        numOccurrences(text, "-") +
-        numOccurrences(text, "*") +
-        numOccurrences(text, "/") +
-        numOccurrences(text, "%") +
-        numOccurrences(text, "&&") +
-        numOccurrences(text, "||") +
-        numOccurrences(text, "<") +
-        numOccurrences(text, ">") +
-        numOccurrences(text, "<=") +
-        numOccurrences(text, ">=") +
-        numOccurrences(text, "==") +
-        numOccurrences(text, "!=");
-    if (isNaN(total)) {
-        // tslint:disable-next-line:max-line-length
-        const message: string = "ERROR in counting number of operators in script. This is a bug, please report to game developer";
-        dialogBoxCreate(message, false);
-
-        return 0;
-    }
-
-    return total;
-}
-
 // Checks if a string contains HTML elements
 function isHTML(str: string): boolean {
     const element: HTMLDivElement = document.createElement("div");
@@ -152,4 +104,4 @@ function generateRandomString(n: number): string {
 
 export {convertTimeMsToTimeElapsedString, longestCommonStart,
         containsAllStrings, formatNumber,
-        numNetscriptOperators, isHTML, generateRandomString, replaceAt};
+        isHTML, generateRandomString, replaceAt};
