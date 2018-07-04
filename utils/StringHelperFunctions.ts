@@ -152,4 +152,4 @@ function generateRandomString(n: number): string {
 
 export {convertTimeMsToTimeElapsedString, longestCommonStart,
         containsAllStrings, formatNumber,
-        numOccurrences, numNetscriptOperators, isHTML, generateRandomString, replaceAt};
+        numNetscriptOperators, isHTML, generateRandomString, replaceAt};
