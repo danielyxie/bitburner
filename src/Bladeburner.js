@@ -9,12 +9,12 @@ import {Player}                                     from "./Player";
 import {hackWorldDaemon, redPillFlag}               from "./RedPill";
 import {KEY}                                        from "./Terminal";
 
+import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {getRandomInt, addOffset, clearObject,
         createElement, removeChildrenFromElement,
         exceptionAlert, createPopup, appendLineBreaks,
-        removeElementById, removeElement,
-        createProgressBarText}                      from "../utils/HelperFunctions";
+        removeElementById, removeElement}           from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";
 import numeral                                      from "numeral/min/numeral.min";

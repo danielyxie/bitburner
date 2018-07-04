@@ -258,23 +258,6 @@ function exceptionAlert(e) {
                     "safe doesn't get corrupted");
 }
 
-/*Creates a graphical "progress bar"
- *  e.g.: [||||---------------]
- *  params:
- *      @totalTicks - Total number of ticks in progress bar. Preferably a factor of 100
- *      @progress - Current progress, taken as a decimal (i.e. 0.6 to represent 60%)
- */
-function createProgressBarText(params={}) {
-    //Default values
-    var totalTicks = (params.totalTicks == null ? 20 : params.totalTicks);
-    var progress = (params.progress == null ? 0 : params.progress);
-
-    var percentPerTick = 1 / totalTicks;
-    var numTicks = Math.floor(progress / percentPerTick);
-    var numDashes = totalTicks - numTicks;
-    return "[" + Array(numTicks+1).join("|") + Array(numDashes+1).join("-") + "]";
-}
-
 export {sizeOfObject,
         clearObject,
         addOffset,
@@ -294,5 +277,4 @@ export {sizeOfObject,
         createPopup,
         clearSelector,
         exceptionAlert,
-        createProgressBarText,
         getElementById};
