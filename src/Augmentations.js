@@ -16,7 +16,7 @@ import {createElement, createAccordionElement,
         removeChildrenFromElement, clearObject}         from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver";
-import {isString}                                       from "../utils/StringHelperFunctions";
+import {isString}                                       from "../utils/helpers/isString";
 
 //Augmentations
 function Augmentation(params) {

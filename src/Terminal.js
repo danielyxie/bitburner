@@ -34,7 +34,8 @@ import {SpecialServerIps,
 import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
-        formatNumber, isString}             from "../utils/StringHelperFunctions";
+        formatNumber}                       from "../utils/StringHelperFunctions";
+import {isString}                           from "../utils/helpers/isString";
 import {addOffset, printArray}              from "../utils/HelperFunctions";
 import {logBoxCreate}                       from "../utils/LogBox";
 import {yesNoBoxCreate,

@@ -50,7 +50,8 @@ import Decimal                                      from "decimal.js";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {printArray, powerOfTwo}                     from "../utils/HelperFunctions";
 import {createRandomIp}                             from "../utils/IPAddress";
-import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions";
+import {formatNumber, isHTML}                       from "../utils/StringHelperFunctions";
+import {isString}                                   from "../utils/helpers/isString";
 import {yesNoBoxClose, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxCreate,
         yesNoBoxOpen}                               from "../utils/YesNoBox";

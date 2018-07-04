@@ -1,5 +1,6 @@
 import { EqualityFunc } from "../src/types";
 import { dialogBoxCreate } from "./DialogBox";
+import { isString } from "./helpers/isString";
 
 // Netburner String helper functions
 
@@ -61,11 +62,6 @@ function longestCommonStart(strings: string[]): string {
     }
 
     return a1.substring(0, i);
-}
-
-// Returns whether a variable is a string
-function isString(str: any): boolean {
-    return (typeof str === "string" || str instanceof String);
 }
 
 // Returns whether an array contains entirely of string objects
@@ -155,5 +151,5 @@ function generateRandomString(n: number): string {
 }
 
 export {convertTimeMsToTimeElapsedString, longestCommonStart,
-        isString, containsAllStrings, formatNumber,
+        containsAllStrings, formatNumber,
         numOccurrences, numNetscriptOperators, isHTML, generateRandomString, replaceAt};

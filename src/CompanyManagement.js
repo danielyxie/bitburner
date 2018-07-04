@@ -14,7 +14,8 @@ import {getRandomInt, removeElementById,
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver";
 import numeral                                          from "numeral/min/numeral.min";
-import {formatNumber, isString, generateRandomString}   from "../utils/StringHelperFunctions";
+import {formatNumber, generateRandomString}             from "../utils/StringHelperFunctions";
+import {isString}                                       from "../utils/helpers/isString";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,

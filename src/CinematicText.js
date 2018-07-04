@@ -2,7 +2,7 @@ import {Engine}                             from "./engine";
 
 import {removeChildrenFromElement,
         createElement, exceptionAlert}      from "../utils/HelperFunctions";
-import {isString}                           from "../utils/StringHelperFunctions";
+import {isString}                           from "../utils/helpers/isString";
 
 var cinematicTextFlag = false;
 

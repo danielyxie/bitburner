@@ -1,5 +1,5 @@
 //General helper functions
-import {isString}           from "./StringHelperFunctions";
+import {isString}           from "./helpers/isString";
 import {dialogBoxCreate}    from "./DialogBox";
 
 //Returns the size (number of keys) of an object
