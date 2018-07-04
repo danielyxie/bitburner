@@ -105,7 +105,7 @@ let CONSTANTS = {
 
     //Infiltration constants
     InfiltrationBribeBaseAmount: 100e3,    //Amount per clearance level
-    InfiltrationMoneyValue:   3e3,         //Convert "secret" value to money
+    InfiltrationMoneyValue:   5e3,         //Convert "secret" value to money
     InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
 
     //Stock market constants
@@ -501,9 +501,10 @@ let CONSTANTS = {
     "* Bug Fix: Crime Success rates were being calculated incorrectly (by Github user hydroflame)<br>" +
     "* When an Infiltration is finished, you will now return back to the company's page, rather than the city<br>" +
     "* Infiltration faction reputation selector now remembers your last choice<br>" +
+    "* Significantly increased the amount of money gained from Infiltration<br>" + 
     "* Bug Fix: Copying a NetscriptJS script to another server using scp now properly takes into account " +
     "the script's changes.<br>" +
-    "* Bug Fix: Fixed an issue where game would not load in Edge due to incompatible features<br>" + 
+    "* Bug Fix: Fixed an issue where game would not load in Edge due to incompatible features<br>" +
     "* travelToCity() Singularity function no longer grants Intelligence exp"
 
 

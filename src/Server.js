@@ -818,7 +818,7 @@ function processSingleServerGrowth(server, numCycles) {
     if (server.moneyMax && server.moneyAvailable > server.moneyMax) {
         server.moneyAvailable = server.moneyMax;
     }
-    
+
     // if there was any growth at all, increase security
     if(oldMoneyAvailable !== server.moneyAvailable) {
         //Growing increases server security twice as much as hacking

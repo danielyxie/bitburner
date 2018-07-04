@@ -14,7 +14,8 @@ import {Settings}                           from "./Settings";
 
 import {parse}                              from "../utils/acorn";
 import {dialogBoxCreate}                    from "../utils/DialogBox";
-import {compareArrays, printArray}          from "../utils/HelperFunctions";
+import {compareArrays, printArray,
+        roundToTwo}                         from "../utils/HelperFunctions";
 
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
@@ -292,7 +293,7 @@ function addWorkerScript(runningScriptObj, server) {
     } else {
         runningScriptObj.threads = 1;
     }
-    var ramUsage = runningScriptObj.scriptRef.ramUsage * threads;
+    var ramUsage = roundToTwo(runningScriptObj.scriptRef.ramUsage * threads);
     var ramAvailable = server.maxRam - server.ramUsed;
     if (ramUsage > ramAvailable) {
         dialogBoxCreate("Not enough RAM to run script " + runningScriptObj.filename + " with args " +
@@ -301,7 +302,7 @@ function addWorkerScript(runningScriptObj, server) {
                         "your changes to the script.)");
         return;
     }
-	server.ramUsed += ramUsage;
+	server.ramUsed = roundToTwo(server.ramUsed + ramUsage);
 
 	//Create the WorkerScript
 	var s = new WorkerScript(runningScriptObj);
