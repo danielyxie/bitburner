@@ -392,6 +392,7 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.InfiltrationRep   = dec;
 
             BitNodeMultipliers.CorporationValuation = dec;
+            break;
         default:
             console.log("WARNING: Player.bitNodeN invalid");
             break;

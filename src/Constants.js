@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.39.0",
+    Version:                "0.39.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -501,7 +501,7 @@ let CONSTANTS = {
     "* Bug Fix: Crime Success rates were being calculated incorrectly (by Github user hydroflame)<br>" +
     "* When an Infiltration is finished, you will now return back to the company's page, rather than the city<br>" +
     "* Infiltration faction reputation selector now remembers your last choice<br>" +
-    "* Significantly increased the amount of money gained from Infiltration<br>" + 
+    "* Significantly increased the amount of money gained from Infiltration<br>" +
     "* Bug Fix: Copying a NetscriptJS script to another server using scp now properly takes into account " +
     "the script's changes.<br>" +
     "* Bug Fix: Fixed an issue where game would not load in Edge due to incompatible features<br>" +
