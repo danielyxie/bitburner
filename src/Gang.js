@@ -6,10 +6,10 @@ import {Player}                                 from "./Player";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
-import {createElement,
-        removeChildrenFromElement,
+import {removeChildrenFromElement,
         createAccordionElement, createPopup,
         removeElementById, removeElement}       from "../utils/HelperFunctions";
+import {createElement}                          from "../utils/uiHelpers/createElement";
 import  numeral                                 from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {getRandomInt}                           from "../utils/helpers/getRandomInt";

@@ -12,10 +12,11 @@ import {Script, RunningScript}                          from "./Script";
 import {Server}                                         from "./Server";
 import {SourceFiles}                                    from "./SourceFile";
 import {dialogBoxCreate}                                from "../utils/DialogBox";
-import {createElement, createAccordionElement,
+import {createAccordionElement,
         removeChildrenFromElement, clearObject}         from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver";
+import {createElement}                                  from "../utils/uiHelpers/createElement";
 import {isString}                                       from "../utils/helpers/isString";
 
 //Augmentations

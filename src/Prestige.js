@@ -30,8 +30,8 @@ import {initStockMarket, initSymbolToStockMap,
 import {Terminal, postNetburnerText}            from "./Terminal";
 import Decimal                                  from "decimal.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {createPopup, createElement,
-        removeElementById}                      from "../utils/HelperFunctions";
+import {createPopup, removeElementById}         from "../utils/HelperFunctions";
+import {createElement}                          from "../utils/uiHelpers/createElement";
 import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";

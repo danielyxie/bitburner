@@ -12,12 +12,13 @@ import {KEY}                                        from "./Terminal";
 import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {addOffset, clearObject,
-        createElement, removeChildrenFromElement,
+        removeChildrenFromElement,
         createPopup, appendLineBreaks,
         removeElementById, removeElement}           from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";
 import numeral                                      from "numeral/min/numeral.min";
+import {createElement}                              from "../utils/uiHelpers/createElement";
 import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
 import {getRandomInt}                               from "../utils/helpers/getRandomInt";

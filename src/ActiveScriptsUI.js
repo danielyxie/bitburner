@@ -5,9 +5,10 @@ import {workerScripts,
 import {Player}                                     from "./Player";
 import {getServer}                                  from "./Server";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {printArray, createElement,
+import {printArray,
         createAccordionElement, removeElement,
         removeChildrenFromElement}                  from "../utils/HelperFunctions";
+import {createElement}                              from "../utils/uiHelpers/createElement";
 import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {logBoxCreate}                               from "../utils/LogBox";
 import numeral                                      from "numeral/min/numeral.min";

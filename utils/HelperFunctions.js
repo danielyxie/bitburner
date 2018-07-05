@@ -1,5 +1,6 @@
 //General helper functions
 import {isString}           from "./helpers/isString";
+import { createElement } from "./uiHelpers/createElement";
 
 //Returns the size (number of keys) of an object
 function sizeOfObject(obj) {
@@ -85,71 +86,6 @@ function getElementById(elementId) {
         throw new Error("Unable to find element with id '" + elementId + "'");
     }
 
-    return el;
-}
-
-function createElement(type, params={}) {
-    var el = document.createElement(type);
-    if (params.id)          {el.id = params.id;}
-    if (params.class)       {el.className = params.class;}
-    if (params.name)        {el.name = params.name;}
-    if (params.innerHTML)   {el.innerHTML = params.innerHTML;}
-    if (params.innerText)   {el.innerText = params.innerText;}
-    if (params.value)       {el.value = params.value;}
-    if (params.text)        {el.text = params.text;}
-    if (params.display)     {el.style.display = params.display;}
-    if (params.visibility)  {el.style.visibility = params.visibility;}
-    if (params.margin)      {el.style.margin = params.margin;}
-    if (params.marginLeft)  {el.style.marginLeft = params.marginLeft;}
-    if (params.marginTop)   {el.style.marginTop = params.marginTop;}
-    if (params.padding)     {el.style.padding = params.padding;}
-    if (params.color)       {el.style.color = params.color;}
-    if (params.border)      {el.style.border = params.border;}
-    if (params.float)       {el.style.cssFloat = params.float;}
-    if (params.fontSize)    {el.style.fontSize = params.fontSize;}
-    if (params.whiteSpace)  {el.style.whiteSpace = params.whiteSpace;}
-    if (params.width)       {el.style.width = params.width;}
-    if (params.backgroundColor) {
-        el.style.backgroundColor = params.backgroundColor
-    }
-    if (params.position)    {el.style.position = params.position;}
-    if (params.type)        {el.type = params.type;}
-    if (params.checked)     {el.checked = params.checked;}
-    if (params.for)         {el.htmlFor = params.for;}
-    if (params.pattern)     {el.pattern = params.pattern;}
-    if (params.maxLength)   {el.maxLength = params.maxLength;}
-    if (params.placeholder) {el.placeholder = params.placeholder;}
-    if (params.tooltip && params.tooltip !== "")     {
-        el.className += " tooltip";
-        el.appendChild(createElement("span", {
-            class:"tooltiptext",
-            innerHTML:params.tooltip
-        }));
-    } else if (params.tooltipleft) {
-        el.className += " tooltip";
-        el.appendChild(createElement("span", {
-            class:"tooltiptextleft",
-            innerHTML:params.tooltipleft
-        }));
-    }
-    if (params.href)        {el.href = params.href;}
-    if (params.target)      {el.target = params.target;}
-    if (params.tabIndex)    {el.tabIndex = params.tabIndex;}
-    if (params.clickListener) {
-        el.addEventListener("click", params.clickListener);
-    }
-    if (params.inputListener) {
-        el.addEventListener("input", params.inputListener);
-    }
-    if (params.changeListener) {
-        el.addEventListener("change", params.changeListener);
-    }
-    if (params.onkeyup) {
-        el.addEventListener("keyup", params.onkeyup);
-    }
-    if (params.onfocus) {
-        el.addEventListener("focus", params.onfocus);
-    }
     return el;
 }
 
@@ -247,7 +183,6 @@ export {sizeOfObject,
         clearEventListenersEl,
         removeElementById,
         removeElement,
-        createElement,
         createAccordionElement,
         appendLineBreaks,
         removeChildrenFromElement,

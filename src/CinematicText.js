@@ -1,9 +1,9 @@
-import {Engine}                             from "./engine";
+import {Engine}                    from "./engine";
 
-import {removeChildrenFromElement,
-        createElement}                      from "../utils/HelperFunctions";
-import {exceptionAlert}                     from "../utils/helpers/exceptionAlert";
-import {isString}                           from "../utils/helpers/isString";
+import {removeChildrenFromElement} from "../utils/HelperFunctions";
+import {createElement}             from "../utils/uiHelpers/createElement";
+import {exceptionAlert}            from "../utils/helpers/exceptionAlert";
+import {isString}                  from "../utils/helpers/isString";
 
 var cinematicTextFlag = false;
 

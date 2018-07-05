@@ -5,10 +5,11 @@ import {iTutorialSteps, iTutorialNextStep,
         iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial";
 import {Player}                                 from "./Player";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {clearEventListeners, createElement,
+import {clearEventListeners,
         getElementById}                         from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
+import {createElement}                          from "../utils/uiHelpers/createElement";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 
 /**

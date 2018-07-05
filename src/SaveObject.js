@@ -19,10 +19,11 @@ import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps";
 import {loadStockMarket, StockMarket}           from "./StockMarket";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {gameOptionsBoxClose}                    from "../utils/GameOptions";
-import {clearEventListeners, createElement,
+import {clearEventListeners,
         createPopup, removeElementById}         from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
+import {createElement}                          from "../utils/uiHelpers/createElement";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 
 import Decimal                                  from "decimal.js";
