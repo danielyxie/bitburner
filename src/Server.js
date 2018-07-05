@@ -5,9 +5,10 @@ import {Player}                                     from "./Player";
 import {RunningScript, Script}                      from "./Script";
 import {SpecialServerNames, SpecialServerIps}       from "./SpecialServerIps";
 import {getRandomInt}                               from "../utils/helpers/getRandomInt";
-import {createRandomIp, isValidIPAddress, ipExists} from "../utils/IPAddress";
+import {createRandomIp, ipExists}                   from "../utils/IPAddress";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";
+import {isValidIPAddress}                           from "../utils/helpers/isValidIPAddress";
 
 function Server(params={ip:createRandomIp(), hostname:""}) {
     /* Properties */

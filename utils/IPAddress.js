@@ -30,12 +30,4 @@ function ipExists(ip) {
     return false;
 }
 
-function isValidIPAddress(ipaddress) {
-	if (/^(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-6]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress))
-	{
-		return true;
-	}
-	return false;
-}
-
-export {createRandomIp, ipExists, isValidIPAddress};
+export {createRandomIp, ipExists};

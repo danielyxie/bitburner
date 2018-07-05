@@ -3,7 +3,7 @@ import {Player}                                 from "./Player";
 import {SpecialServerIps}                       from "./SpecialServerIps";
 import {post}                                   from "./Terminal";
 
-import {isValidIPAddress}                       from "../utils/IPAddress";
+import {isValidIPAddress}                       from "../utils/helpers/isValidIPAddress";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 
 
