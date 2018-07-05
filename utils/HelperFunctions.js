@@ -74,21 +74,6 @@ function removeChildrenFromElement(el) {
     }
 }
 
-/**
- * Returns a reference to the first object with the specified value of the ID or NAME attribute, throwing an error if it is unable to find it.
- * @param {string} elementId The HTML ID to retrieve the element by.
- * @returns {HTMLElement} The single element.
- * @throws {Error} When the 'idString' cannot be found.
- */
-function getElementById(elementId) {
-    var el = document.getElementById(elementId);
-    if (el == null) {
-        throw new Error("Unable to find element with id '" + elementId + "'");
-    }
-
-    return el;
-}
-
 //Creates both the header and panel element of an accordion and sets the click handler
 function createAccordionElement(params) {
     var li = document.createElement("li"),
@@ -167,5 +152,4 @@ export {sizeOfObject,
         createAccordionElement,
         appendLineBreaks,
         removeChildrenFromElement,
-        clearSelector,
-        getElementById};
+        clearSelector};

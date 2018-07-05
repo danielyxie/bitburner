@@ -1,4 +1,5 @@
 import { createElement } from "./createElement";
+import { getElementById } from "./getElementById";
 
 /**
  * Creates the necessary DOM elements to present an in-game popup to the player.
@@ -20,13 +21,8 @@ export function createPopup(id: string, elems: HTMLElement[]) {
         content.appendChild(elem);
     }
     container.appendChild(content);
-    const gameContainer: HTMLElement | null = document.getElementById("entire-game-container");
-
-    if (gameContainer === null) {
-        throw new Error("Unable to find the game container. Something is *seriously* wrong...");
-    }
-
-    gameContainer.appendChild(container);
+    getElementById("entire-game-container")
+        .appendChild(container);
 
     return container;
 }
