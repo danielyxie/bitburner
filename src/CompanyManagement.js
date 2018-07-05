@@ -9,12 +9,13 @@ import Decimal                                          from "decimal.js";
 import {dialogBoxCreate}                                from "../utils/DialogBox";
 import {removeElementById,
         createAccordionElement,
-        removeChildrenFromElement, createPopup,
+        removeChildrenFromElement,
         clearSelector}                                  from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver";
 import numeral                                          from "numeral/min/numeral.min";
 import {createElement}                                  from "../utils/uiHelpers/createElement";
+import {createPopup}                                    from "../utils/uiHelpers/createPopup";
 import {formatNumber, generateRandomString}             from "../utils/StringHelperFunctions";
 import {getRandomInt}                                   from "../utils/helpers/getRandomInt";
 import {isString}                                       from "../utils/helpers/isString";

@@ -89,25 +89,6 @@ function getElementById(elementId) {
     return el;
 }
 
-function createPopup(id, elems) {
-    var container = createElement("div", {
-            class:"popup-box-container",
-            id:id,
-            display:"block"
-        }),
-        content = createElement("div", {
-            class:"popup-box-content",
-            id:id + "-content",
-        });
-
-    for (var i = 0; i < elems.length; ++i) {
-        content.appendChild(elems[i]);
-    }
-    container.appendChild(content);
-    document.getElementById("entire-game-container").appendChild(container);
-    return container;
-}
-
 //Creates both the header and panel element of an accordion and sets the click handler
 function createAccordionElement(params) {
     var li = document.createElement("li"),
@@ -186,6 +167,5 @@ export {sizeOfObject,
         createAccordionElement,
         appendLineBreaks,
         removeChildrenFromElement,
-        createPopup,
         clearSelector,
         getElementById};

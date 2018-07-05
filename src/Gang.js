@@ -7,9 +7,10 @@ import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {removeChildrenFromElement,
-        createAccordionElement, createPopup,
+        createAccordionElement,
         removeElementById, removeElement}       from "../utils/HelperFunctions";
 import {createElement}                          from "../utils/uiHelpers/createElement";
+import {createPopup}                            from "../utils/uiHelpers/createPopup";
 import  numeral                                 from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {getRandomInt}                           from "../utils/helpers/getRandomInt";
