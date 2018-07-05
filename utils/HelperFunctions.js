@@ -214,11 +214,6 @@ function clearSelector(selector) {
     }
 }
 
-function getRandomInt(min, max) {
-    if (min > max) {return getRandomInt(max, min);}
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 //Returns true if all elements are equal, and false otherwise
 //Assumes both arguments are arrays and that there are no nested arrays
 function compareArrays(a1, a2) {
@@ -246,7 +241,6 @@ export {sizeOfObject,
         clearObject,
         addOffset,
         clearEventListeners,
-        getRandomInt,
         compareArrays,
         printArray,
         powerOfTwo,

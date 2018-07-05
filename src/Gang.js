@@ -6,12 +6,13 @@ import {Player}                                 from "./Player";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
-import {getRandomInt, createElement,
+import {createElement,
         removeChildrenFromElement,
         createAccordionElement, createPopup,
         removeElementById, removeElement}       from "../utils/HelperFunctions";
 import  numeral                                 from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
+import {getRandomInt}                           from "../utils/helpers/getRandomInt";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,

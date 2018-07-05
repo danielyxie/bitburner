@@ -4,7 +4,7 @@ import {Programs}                                   from "./CreateProgram";
 import {Player}                                     from "./Player";
 import {RunningScript, Script}                      from "./Script";
 import {SpecialServerNames, SpecialServerIps}       from "./SpecialServerIps";
-import {getRandomInt}                               from "../utils/HelperFunctions";
+import {getRandomInt}                               from "../utils/helpers/getRandomInt";
 import {createRandomIp, isValidIPAddress, ipExists} from "../utils/IPAddress";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";

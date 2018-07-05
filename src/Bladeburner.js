@@ -11,7 +11,7 @@ import {KEY}                                        from "./Terminal";
 
 import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {getRandomInt, addOffset, clearObject,
+import {addOffset, clearObject,
         createElement, removeChildrenFromElement,
         createPopup, appendLineBreaks,
         removeElementById, removeElement}           from "../utils/HelperFunctions";
@@ -20,6 +20,7 @@ import {Reviver, Generic_toJSON,
 import numeral                                      from "numeral/min/numeral.min";
 import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
+import {getRandomInt}                               from "../utils/helpers/getRandomInt";
 
 
 var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
