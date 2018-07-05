@@ -16,7 +16,7 @@ import {Settings}                           from "./Settings";
 
 import {parse}                              from "../utils/acorn";
 import {dialogBoxCreate}                    from "../utils/DialogBox";
-import {compareArrays}                      from "../utils/HelperFunctions";
+import {compareArrays}                      from "../utils/helpers/compareArrays";
 import {arrayToString}                      from "../utils/helpers/arrayToString";
 import {roundToTwo}                         from "../utils/helpers/roundToTwo";
 import {isString}                           from "../utils/StringHelperFunctions";

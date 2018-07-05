@@ -90,23 +90,9 @@ function clearSelector(selector) {
     }
 }
 
-//Returns true if all elements are equal, and false otherwise
-//Assumes both arguments are arrays and that there are no nested arrays
-function compareArrays(a1, a2) {
-    if (a1.length != a2.length) {
-        return false;
-    }
-
-    for (var i = 0; i < a1.length; ++i) {
-        if (a1[i] != a2[i]) {return false;}
-    }
-    return true;
-}
-
 export {sizeOfObject,
         clearObject,
         clearEventListeners,
-        compareArrays,
         clearEventListenersEl,
         removeElement,
         createAccordionElement,
