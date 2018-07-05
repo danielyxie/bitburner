@@ -14,7 +14,7 @@ import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {addOffset, clearObject,
         removeChildrenFromElement,
         appendLineBreaks,
-        removeElementById, removeElement}           from "../utils/HelperFunctions";
+        removeElement}                              from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";
 import numeral                                      from "numeral/min/numeral.min";
@@ -23,6 +23,7 @@ import {createPopup}                                from "../utils/uiHelpers/cre
 import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
 import {getRandomInt}                               from "../utils/helpers/getRandomInt";
+import {removeElementById}                          from "../utils/uiHelpers/removeElementById";
 
 
 var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];

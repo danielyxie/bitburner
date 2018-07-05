@@ -7,9 +7,7 @@ import {Player}                                         from "./Player";
 
 import Decimal                                          from "decimal.js";
 import {dialogBoxCreate}                                from "../utils/DialogBox";
-import {removeElementById,
-        createAccordionElement,
-        removeChildrenFromElement,
+import {removeChildrenFromElement,
         clearSelector}                                  from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver";
@@ -19,6 +17,7 @@ import {createPopup}                                    from "../utils/uiHelpers
 import {formatNumber, generateRandomString}             from "../utils/StringHelperFunctions";
 import {getRandomInt}                                   from "../utils/helpers/getRandomInt";
 import {isString}                                       from "../utils/helpers/isString";
+import {removeElementById}                              from "../utils/uiHelpers/removeElementById";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,

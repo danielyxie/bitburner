@@ -48,14 +48,6 @@ function clearEventListenersEl(el) {
     return newElem;
 }
 
-//Given its id, this function removes an element AND its children
-function removeElementById(id) {
-    var elem = document.getElementById(id);
-    if (elem == null) {return;}
-    while(elem.firstChild) {elem.removeChild(elem.firstChild);}
-    elem.parentNode.removeChild(elem);
-}
-
 function removeElement(elem) {
     if (elem == null || !(elem instanceof Element)) {return;}
     while(elem.firstChild) {elem.removeChild(elem.firstChild);}
@@ -147,7 +139,6 @@ export {sizeOfObject,
         printArray,
         powerOfTwo,
         clearEventListenersEl,
-        removeElementById,
         removeElement,
         createAccordionElement,
         appendLineBreaks,
