@@ -1,15 +1,5 @@
 //General helper functions
 import {isString}           from "./helpers/isString";
-import { createElement } from "./uiHelpers/createElement";
-
-//Returns the size (number of keys) of an object
-function sizeOfObject(obj) {
-	var size = 0, key;
-	for (key in obj) {
-		if (obj.hasOwnProperty(key)) size++;
-	}
-	return size;
-}
 
 function clearObject(obj) {
     for (var key in obj) {
@@ -90,8 +80,7 @@ function clearSelector(selector) {
     }
 }
 
-export {sizeOfObject,
-        clearObject,
+export {clearObject,
         clearEventListeners,
         clearEventListenersEl,
         removeElement,
