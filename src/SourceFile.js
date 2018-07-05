@@ -197,9 +197,9 @@ function applySourceFile(srcFile) {
             Player.work_money_mult    *= incMult;
             Player.company_rep_mult   *= incMult;
             break;
-        case 12: //The testing ground
-            var inc = 1 + (srcFile.level/100);
-            var dec = 1 - (srcFile.level/100);
+        case 12: //The Recursion
+            var inc = 1 + (srcFile.lvl/100);
+            var dec = 1 - (srcFile.lvl/100);
 
             Player.hacking_chance_mult *= inc;
             Player.hacking_speed_mult  *= inc;
