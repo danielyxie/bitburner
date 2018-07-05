@@ -48,7 +48,7 @@ import {NetscriptPort}                              from "./NetscriptPort";
 
 import Decimal                                      from "decimal.js";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {powerOfTwo}                                 from "../utils/HelperFunctions";
+import {isPowerOfTwo}                               from "../utils/helpers/isPowerOfTwo";
 import {arrayToString}                              from "../utils/helpers/arrayToString";
 import {createRandomIp}                             from "../utils/IPAddress";
 import {formatNumber, isHTML}                       from "../utils/StringHelperFunctions";
@@ -1548,7 +1548,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             ram = Math.round(ram);
-            if (isNaN(ram) || !powerOfTwo(ram)) {
+            if (isNaN(ram) || !isPowerOfTwo(ram)) {
                 workerScript.scriptRef.log("ERROR: purchaseServer() failed due to invalid ram argument. Must be numeric and a power of 2");
                 return "";
             }
