@@ -1,23 +1,24 @@
-import {BitNodeMultipliers}                             from "./BitNode";
-import {CONSTANTS}                                      from "./Constants";
-import {Engine}                                         from "./engine";
+import {BitNodeMultipliers}                from "./BitNode";
+import {CONSTANTS}                         from "./Constants";
+import {Engine}                            from "./engine";
 import {Factions, getNextNeurofluxLevel,
-        factionExists}                                  from "./Faction";
-import {hasBladeburnerSF}                               from "./NetscriptFunctions";
-import {addWorkerScript}                                from "./NetscriptWorker";
-import {Player}                                         from "./Player";
-import {prestigeAugmentation}                           from "./Prestige";
-import {saveObject}                                     from "./SaveObject";
-import {Script, RunningScript}                          from "./Script";
-import {Server}                                         from "./Server";
-import {SourceFiles}                                    from "./SourceFile";
-import {dialogBoxCreate}                                from "../utils/DialogBox";
+        factionExists}                     from "./Faction";
+import {hasBladeburnerSF}                  from "./NetscriptFunctions";
+import {addWorkerScript}                   from "./NetscriptWorker";
+import {Player}                            from "./Player";
+import {prestigeAugmentation}              from "./Prestige";
+import {saveObject}                        from "./SaveObject";
+import {Script, RunningScript}             from "./Script";
+import {Server}                            from "./Server";
+import {SourceFiles}                       from "./SourceFile";
+import {dialogBoxCreate}                   from "../utils/DialogBox";
 import {createAccordionElement,
-        removeChildrenFromElement, clearObject}         from "../utils/HelperFunctions";
+        removeChildrenFromElement}         from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                               from "../utils/JSONReviver";
-import {createElement}                                  from "../utils/uiHelpers/createElement";
-import {isString}                                       from "../utils/helpers/isString";
+        Generic_fromJSON}                  from "../utils/JSONReviver";
+import {clearObject}                       from "../utils/helpers/clearObject";
+import {createElement}                     from "../utils/uiHelpers/createElement";
+import {isString}                          from "../utils/helpers/isString";
 
 //Augmentations
 function Augmentation(params) {

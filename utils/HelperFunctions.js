@@ -1,14 +1,6 @@
 //General helper functions
 import {isString}           from "./helpers/isString";
 
-function clearObject(obj) {
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            delete obj[key];
-        }
-    }
-}
-
 //Given an element by its Id(usually an 'a' element), removes all event listeners
 //from that element by cloning and replacing. Then returns the new cloned element
 function clearEventListeners(elemId) {
@@ -80,8 +72,7 @@ function clearSelector(selector) {
     }
 }
 
-export {clearObject,
-        clearEventListeners,
+export {clearEventListeners,
         clearEventListenersEl,
         removeElement,
         createAccordionElement,
