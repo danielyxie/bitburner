@@ -84,13 +84,6 @@ function createAccordionElement(params) {
     return [li, hdr, panel];
 }
 
-//Appends n line breaks (as children) to the Element el
-function appendLineBreaks(el, n) {
-    for (var i = 0; i < n; ++i) {
-        el.appendChild(createElement("br"));
-    }
-}
-
 function clearSelector(selector) {
     for (var i = selector.options.length - 1; i >= 0; --i) {
         selector.remove(i);
@@ -117,6 +110,5 @@ export {sizeOfObject,
         clearEventListenersEl,
         removeElement,
         createAccordionElement,
-        appendLineBreaks,
         removeChildrenFromElement,
         clearSelector};
