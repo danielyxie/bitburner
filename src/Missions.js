@@ -3,9 +3,8 @@ import {Engine}                                     from "./engine";
 import {displayFactionContent}                      from "./Faction";
 import {Player}                                     from "./Player";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {addOffset,
-        clearEventListenersEl,
-        clearEventListeners}                        from "../utils/HelperFunctions";
+import {clearEventListeners}                        from "../utils/HelperFunctions";
+import {addOffset}                                  from "../utils/helpers/addOffset";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
 import {getRandomInt}                               from "../utils/helpers/getRandomInt";
 import {isString}                                   from "../utils/helpers/isString";

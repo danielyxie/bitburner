@@ -11,13 +11,14 @@ import {KEY}                                        from "./Terminal";
 
 import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {addOffset, clearObject,
+import {clearObject,
         removeChildrenFromElement,
         appendLineBreaks,
         removeElement}                              from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";
 import numeral                                      from "numeral/min/numeral.min";
+import {addOffset}                                  from "../utils/helpers/addOffset";
 import {createElement}                              from "../utils/uiHelpers/createElement";
 import {createPopup}                                from "../utils/uiHelpers/createPopup";
 import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";

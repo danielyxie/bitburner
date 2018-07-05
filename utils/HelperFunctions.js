@@ -19,17 +19,6 @@ function clearObject(obj) {
     }
 }
 
-//Adds a random offset to a number within a certain percentage
-//e.g. addOffset(100, 5) will return anything from 95 to 105.
-//The percentage argument must be between 0 and 100;
-function addOffset(n, percentage) {
-    if (percentage < 0 || percentage > 100) {return n;}
-
-    var offset = n * (percentage / 100);
-
-    return n + ((Math.random() * (2 * offset)) - offset);
-}
-
 //Given an element by its Id(usually an 'a' element), removes all event listeners
 //from that element by cloning and replacing. Then returns the new cloned element
 function clearEventListeners(elemId) {
@@ -133,7 +122,6 @@ function powerOfTwo(n) {
 
 export {sizeOfObject,
         clearObject,
-        addOffset,
         clearEventListeners,
         compareArrays,
         printArray,
