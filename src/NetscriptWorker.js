@@ -16,8 +16,8 @@ import {Settings}                           from "./Settings";
 
 import {parse}                              from "../utils/acorn";
 import {dialogBoxCreate}                    from "../utils/DialogBox";
-import {compareArrays, printArray,
-        roundToTwo}                         from "../utils/HelperFunctions";
+import {compareArrays, printArray}          from "../utils/HelperFunctions";
+import {roundToTwo}                         from "../utils/helpers/roundToTwo";
 import {isString}                           from "../utils/StringHelperFunctions";
 
 function WorkerScript(runningScriptObj) {

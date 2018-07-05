@@ -36,9 +36,9 @@ import {parse, Node}                            from "../utils/acorn";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
-import {compareArrays, createElement,
-        roundToTwo}                             from "../utils/HelperFunctions";
+import {compareArrays, createElement}           from "../utils/HelperFunctions";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
+import {roundToTwo}                             from "../utils/helpers/roundToTwo";
 
 var keybindings = {
     ace: null,

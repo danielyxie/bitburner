@@ -242,11 +242,6 @@ function powerOfTwo(n) {
     return n && (n & (n-1)) === 0;
 }
 
-//Rounds a number to two decimal places
-function roundToTwo(n) {
-    return +(Math.round(n + "e+2")  + "e-2");
-}
-
 export {sizeOfObject,
         clearObject,
         addOffset,
@@ -255,7 +250,6 @@ export {sizeOfObject,
         compareArrays,
         printArray,
         powerOfTwo,
-        roundToTwo,
         clearEventListenersEl,
         removeElementById,
         removeElement,
