@@ -48,7 +48,8 @@ import {NetscriptPort}                              from "./NetscriptPort";
 
 import Decimal                                      from "decimal.js";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {printArray, powerOfTwo}                     from "../utils/HelperFunctions";
+import {powerOfTwo}                                 from "../utils/HelperFunctions";
+import {arrayToString}                              from "../utils/helpers/arrayToString";
 import {createRandomIp}                             from "../utils/IPAddress";
 import {formatNumber, isHTML}                       from "../utils/StringHelperFunctions";
 import {isString}                                   from "../utils/helpers/isString";
@@ -686,18 +687,18 @@ function NetscriptFunctions(workerScript) {
             }
             var runningScriptObj = findRunningScript(filename, argsForKillTarget, server);
             if (runningScriptObj == null) {
-                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget));
+                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + arrayToString(argsForKillTarget));
                 return false;
             }
             var res = killWorkerScript(runningScriptObj, server.ip);
             if (res) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.kill == null) {
-                    workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
+                    workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + arrayToString(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
                 }
                 return true;
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.kill == null) {
-                    workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget));
+                    workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + arrayToString(argsForKillTarget));
                 }
                 return false;
             }
@@ -1978,7 +1979,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 var runningScriptObj = findRunningScript(scriptname, argsForScript, server);
                 if (runningScriptObj == null) {
-                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + printArray(argsForScript));
+                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + arrayToString(argsForScript));
                     return -1;
                 }
                 return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
@@ -2008,7 +2009,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 var runningScriptObj = findRunningScript(scriptname, argsForScript, server);
                 if (runningScriptObj == null) {
-                    workerScript.scriptRef.log("getScriptExpGain() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + printArray(argsForScript));
+                    workerScript.scriptRef.log("getScriptExpGain() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + arrayToString(argsForScript));
                     return -1;
                 }
                 return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;

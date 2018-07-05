@@ -5,9 +5,9 @@ import {workerScripts,
 import {Player}                                     from "./Player";
 import {getServer}                                  from "./Server";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {printArray,
-        createAccordionElement, removeElement,
+import {createAccordionElement, removeElement,
         removeChildrenFromElement}                  from "../utils/HelperFunctions";
+import {arrayToString}                              from "../utils/helpers/arrayToString";
 import {createElement}                              from "../utils/uiHelpers/createElement";
 import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {logBoxCreate}                               from "../utils/LogBox";
@@ -112,7 +112,7 @@ function addActiveScriptsItem(workerscript) {
         //Threads, args, kill/log button
         panel.appendChild(createElement("p", {
             innerHTML: "Threads: " + workerscript.scriptRef.threads + "<br>" +
-                       "Args: " + printArray(workerscript.args)
+                       "Args: " + arrayToString(workerscript.args)
         }));
         var panelText = createElement("p", {
             innerText:"Loading...", fontSize:"14px",

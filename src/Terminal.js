@@ -37,7 +37,7 @@ import {containsAllStrings, longestCommonStart,
         formatNumber}                       from "../utils/StringHelperFunctions";
 import {addOffset}                          from "../utils/helpers/addOffset";
 import {isString}                           from "../utils/helpers/isString";
-import {printArray}                         from "../utils/HelperFunctions";
+import {arrayToString}                      from "../utils/helpers/arrayToString";
 import {logBoxCreate}                       from "../utils/LogBox";
 import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
@@ -2035,7 +2035,7 @@ let Terminal = {
 					return;
 				} else {
 					//Able to run script
-					post("Running script with " + numThreads +  " thread(s) and args: " + printArray(args) + ".");
+					post("Running script with " + numThreads +  " thread(s) and args: " + arrayToString(args) + ".");
                     post("May take a few seconds to start up the process...");
                     var runningScriptObj = new RunningScript(script, args);
                     runningScriptObj.threads = numThreads;

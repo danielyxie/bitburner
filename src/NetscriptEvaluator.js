@@ -9,7 +9,7 @@ import {Script, findRunningScript,
         RunningScript}                      from "./Script";
 
 import {parse, Node}                        from "../utils/acorn";
-import {printArray}                         from "../utils/HelperFunctions";
+import {arrayToString}                      from "../utils/helpers/arrayToString";
 import {isValidIPAddress}                   from "../utils/helpers/isValidIPAddress";
 import {isString}                           from "../utils/helpers/isString";
 
@@ -872,7 +872,7 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
             } else {
                 //Able to run script
                 if(workerScript.disableLogs.ALL == null && workerScript.disableLogs.exec == null && workerScript.disableLogs.run == null && workerScript.disableLogs.spawn == null) {
-                    workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads and args: " + printArray(args) + ". May take a few seconds to start up...");
+                    workerScript.scriptRef.log("Running script: " + scriptname + " on " + server.hostname + " with " + threads + " threads and args: " + arrayToString(args) + ". May take a few seconds to start up...");
                 }
                 var runningScriptObj = new RunningScript(script, args);
                 runningScriptObj.threads = threads;

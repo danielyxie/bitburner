@@ -110,10 +110,6 @@ function compareArrays(a1, a2) {
     return true;
 }
 
-function printArray(a) {
-    return "[" + a.join(", ") + "]";
-}
-
 //Returns bool indicating whether or not its a power of 2
 function powerOfTwo(n) {
     if (isNaN(n)) {return false;}
@@ -124,7 +120,6 @@ export {sizeOfObject,
         clearObject,
         clearEventListeners,
         compareArrays,
-        printArray,
         powerOfTwo,
         clearEventListenersEl,
         removeElement,
