@@ -164,8 +164,17 @@ function runScriptsLoop() {
             var ip = workerScripts[i].serverIp;
             var name = workerScripts[i].name;
 
-            //Free RAM
-            AllServers[ip].ramUsed -= workerScripts[i].ramUsage;
+            //recalculate ram used
+            AllServers[ip].ramUsed = 0;
+            for(let j = 0; j < workerScripts.length; j++) {
+                if(workerScripts[j].serverIp !== ip) {
+                    continue
+                }
+                if(j === i) { // not this one
+                    continue
+                }
+                AllServers[ip].ramUsed += workerScripts[j].ramUsage;
+            }
 
             //Delete script from Active Scripts
             deleteActiveScriptsItem(workerScripts[i]);
