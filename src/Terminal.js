@@ -1,45 +1,45 @@
 import {substituteAliases, printAliases,
         parseAliasDeclaration,
         removeAlias, GlobalAliases,
-        Aliases}                            from "./Alias.js";
-import {CONSTANTS}                          from "./Constants.js";
-import {Programs}                           from "./CreateProgram.js";
+        Aliases}                            from "./Alias";
+import {CONSTANTS}                          from "./Constants";
+import {Programs}                           from "./CreateProgram";
 import {executeDarkwebTerminalCommand,
         checkIfConnectedToDarkweb,
-        DarkWebItems}                       from "./DarkWeb.js";
-import {Engine}                             from "./engine.js";
+        DarkWebItems}                       from "./DarkWeb";
+import {Engine}                             from "./engine";
 import {FconfSettings, parseFconfSettings,
-        createFconf}                        from "./Fconf.js";
+        createFconf}                        from "./Fconf";
 import {TerminalHelpText, HelpTexts}        from "./HelpText";
 import {iTutorialNextStep, iTutorialSteps,
         iTutorialIsRunning,
-        currITutorialStep}                  from "./InteractiveTutorial.js";
-import {showLiterature}                     from "./Literature.js";
-import {showMessage, Message}               from "./Message.js";
+        currITutorialStep}                  from "./InteractiveTutorial";
+import {showLiterature}                     from "./Literature";
+import {showMessage, Message}               from "./Message";
 import {scriptCalculateHackingTime,
         scriptCalculateGrowTime,
-        scriptCalculateWeakenTime}          from "./NetscriptEvaluator.js";
-import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker.js";
+        scriptCalculateWeakenTime}          from "./NetscriptEvaluator";
+import {killWorkerScript, addWorkerScript}  from "./NetscriptWorker";
 import numeral                              from "numeral/min/numeral.min";
-import {Player}                             from "./Player.js";
-import {hackWorldDaemon}                    from "./RedPill.js";
+import {Player}                             from "./Player";
+import {hackWorldDaemon}                    from "./RedPill";
 import {findRunningScript, RunningScript,
         AllServersMap, Script,
-        isScriptFilename}                   from "./Script.js";
+        isScriptFilename}                   from "./Script";
 import {AllServers, GetServerByHostname,
-        getServer, Server}                  from "./Server.js";
-import {Settings}                           from "./Settings.js";
+        getServer, Server}                  from "./Server";
+import {Settings}                           from "./Settings";
 import {SpecialServerIps,
-        SpecialServerNames}                 from "./SpecialServerIps.js";
+        SpecialServerNames}                 from "./SpecialServerIps";
 import {TextFile, getTextFile}              from "./TextFile";
 
 import {containsAllStrings, longestCommonStart,
-        formatNumber, isString}             from "../utils/StringHelperFunctions.js";
-import {addOffset, printArray}              from "../utils/HelperFunctions.js";
-import {logBoxCreate}                       from "../utils/LogBox.js";
+        formatNumber, isString}             from "../utils/StringHelperFunctions";
+import {addOffset, printArray}              from "../utils/HelperFunctions";
+import {logBoxCreate}                       from "../utils/LogBox";
 import {yesNoBoxCreate,
         yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox.js";
+        yesNoBoxGetNoButton, yesNoBoxClose} from "../utils/YesNoBox";
 
 import * as JSZip from 'jszip';
 import * as FileSaver from 'file-saver';
@@ -304,7 +304,7 @@ $(document).keyup(function(e) {
 })
 
 //Implements a tab completion feature for terminal
-//  command - Command (first arg only)
+//  command - Terminal command except for the last incomplete argument
 //  arg - Incomplete argument string that the function will try to complete, or will display
 //        a series of possible options for
 //  allPossibilities - Array of strings containing all possibilities that the
@@ -314,9 +314,9 @@ function tabCompletion(command, arg, allPossibilities, index=0) {
     if (!(allPossibilities.constructor === Array)) {return;}
     if (!containsAllStrings(allPossibilities)) {return;}
 
-    if (!command.startsWith("./")) {
-        command = command.toLowerCase();
-    }
+    //if (!command.startsWith("./")) {
+        //command = command.toLowerCase();
+    //}
 
     //Remove all options in allPossibilities that do not match the current string
     //that we are attempting to autocomplete
@@ -1215,7 +1215,7 @@ let Terminal = {
                 for (var i = 0; i < currServ.scripts.length; ++i) {
                     if (scriptName == currServ.scripts[i].filename) {
                         var scriptBaseRamUsage = currServ.scripts[i].ramUsage;
-                        var ramUsage = scriptBaseRamUsage * numThreads * Math.pow(CONSTANTS.MultithreadingRAMCost, numThreads-1);
+                        var ramUsage = scriptBaseRamUsage * numThreads;
 
                         post("This script requires " + formatNumber(ramUsage, 2) + "GB of RAM to run for " + numThreads + " thread(s)");
                         return;
@@ -1356,11 +1356,11 @@ let Terminal = {
                         post("Incorrect usage of scan-analyze command. depth argument must be positive numeric");
                         return;
                     }
-                    if (depth > 3 && !Player.hasProgram(Programs.DeepscanV1) &&
-                        !Player.hasProgram(Programs.DeepscanV2)) {
+                    if (depth > 3 && !Player.hasProgram(Programs.DeepscanV1.name) &&
+                        !Player.hasProgram(Programs.DeepscanV2.name)) {
                         post("You cannot scan-analyze with that high of a depth. Maximum depth is 3");
                         return;
-                    } else if (depth > 5 && !Player.hasProgram(Programs.DeepscanV2)) {
+                    } else if (depth > 5 && !Player.hasProgram(Programs.DeepscanV2.name)) {
                         post("You cannot scan-analyze with that high of a depth. Maximum depth is 5");
                         return;
                     } else if (depth > 10) {
@@ -1466,6 +1466,7 @@ let Terminal = {
                         var oldScript = destServer.scripts[i];
                         oldScript.code = sourceScript.code;
                         oldScript.ramUsage = sourceScript.ramUsage;
+                        oldScript.module = "";
                         post(scriptname + " overwriten on " + destServer.hostname);
                         return;
                     }
@@ -1761,7 +1762,7 @@ let Terminal = {
             }
             if (d == 0) {continue;} //Don't print current server
             var titleDashes = Array((d-1) * 4 + 1).join("-");
-            if (Player.hasProgram(Programs.AutoLink)) {
+            if (Player.hasProgram(Programs.AutoLink.name)) {
                 post("<strong>" +  titleDashes + "> <a class='scan-analyze-link'>"  + s.hostname + "</a></strong>", false);
             } else {
                 post("<strong>" + titleDashes + ">" + s.hostname + "</strong>");
@@ -1826,7 +1827,7 @@ let Terminal = {
             programName = splitArgs[0];
         }
 		switch (programName) {
-			case Programs.NukeProgram:
+			case Programs.NukeProgram.name:
 				if (s.hasAdminRights) {
 					post("You already have root access to this computer. There is no reason to run NUKE.exe");
 				} else {
@@ -1839,7 +1840,7 @@ let Terminal = {
 					}
 				}
 				break;
-            case Programs.BruteSSHProgram:
+            case Programs.BruteSSHProgram.name:
                 if (s.sshPortOpen) {
                     post("SSH Port (22) is already open!");
                 } else {
@@ -1848,7 +1849,7 @@ let Terminal = {
                     ++s.openPortCount;
                 }
                 break;
-            case Programs.FTPCrackProgram:
+            case Programs.FTPCrackProgram.name:
                 if (s.ftpPortOpen) {
                     post("FTP Port (21) is already open!");
                 } else {
@@ -1857,7 +1858,7 @@ let Terminal = {
                     ++s.openPortCount;
                 }
                 break;
-            case Programs.RelaySMTPProgram:
+            case Programs.RelaySMTPProgram.name:
                 if (s.smtpPortOpen) {
                     post("SMTP Port (25) is already open!");
                 } else {
@@ -1866,7 +1867,7 @@ let Terminal = {
                     ++s.openPortCount;
                 }
                 break;
-            case Programs.HTTPWormProgram:
+            case Programs.HTTPWormProgram.name:
                 if (s.httpPortOpen) {
                     post("HTTP Port (80) is already open!");
                 } else {
@@ -1875,7 +1876,7 @@ let Terminal = {
                     ++s.openPortCount;
                 }
                 break;
-            case Programs.SQLInjectProgram:
+            case Programs.SQLInjectProgram.name:
                 if (s.sqlPortOpen) {
                     post("SQL Port (1433) is already open!");
                 } else {
@@ -1884,7 +1885,7 @@ let Terminal = {
                     ++s.openPortCount;
                 }
                 break;
-            case Programs.ServerProfiler:
+            case Programs.ServerProfiler.name:
                 if (splitArgs.length != 2) {
                     post("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
                     return;
@@ -1902,20 +1903,20 @@ let Terminal = {
                 post("Netscript grow() execution time: " + formatNumber(scriptCalculateGrowTime(serv)/1000, 1) + "s");
                 post("Netscript weaken() execution time: " + formatNumber(scriptCalculateWeakenTime(serv)/1000, 1) + "s");
                 break;
-            case Programs.AutoLink:
+            case Programs.AutoLink.name:
                 post("This executable cannot be run.");
                 post("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
                 post("When using scan-analyze, click on a server's hostname to connect to it.");
                 break;
-            case Programs.DeepscanV1:
+            case Programs.DeepscanV1.name:
                 post("This executable cannot be run.");
                 post("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
                 break;
-            case Programs.DeepscanV2:
+            case Programs.DeepscanV2.name:
                 post("This executable cannot be run.");
                 post("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
                 break;
-            case Programs.Flight:
+            case Programs.Flight.name:
                 post("Augmentations: " + Player.augmentations.length + " / 30");
 
                 post("Money: " + numeral(Player.money.toNumber()).format('($0.000a)') + " / " + numeral(1e11).format('($0.000a)'));
@@ -1928,7 +1929,7 @@ let Terminal = {
                 post("Dexterity: " + Player.dexterity + " / 1500");
                 post("Agility: " + Player.agility + " / 1500");
                 break;
-            case Programs.BitFlume:
+            case Programs.BitFlume.name:
                 var yesBtn = yesNoBoxGetYesButton(),
                     noBtn = yesNoBoxGetNoButton();
                 yesBtn.innerHTML = "Travel to BitNode Nexus";
@@ -2020,7 +2021,7 @@ let Terminal = {
 			if (server.scripts[i].filename == scriptName) {
 				//Check for admin rights and that there is enough RAM availble to run
                 var script = server.scripts[i];
-				var ramUsage = script.ramUsage * numThreads * Math.pow(CONSTANTS.MultithreadingRAMCost, numThreads-1);
+				var ramUsage = script.ramUsage * numThreads;
 				var ramAvailable = server.maxRam - server.ramUsed;
 
 				if (server.hasAdminRights == false) {

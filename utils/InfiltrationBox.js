@@ -1,10 +1,13 @@
-import {BitNodeMultipliers}                 from "../src/BitNode.js";
-import {CONSTANTS}                          from "../src/Constants.js";
-import {Factions, Faction}                  from "../src/Faction.js";
-import {Player}                             from "../src/Player.js";
-import {dialogBoxCreate}                    from "./DialogBox.js";
-import {clearEventListeners}                from "./HelperFunctions.js";
-import {formatNumber}                       from "./StringHelperFunctions.js";
+import {BitNodeMultipliers}                 from "../src/BitNode";
+import {CONSTANTS}                          from "../src/Constants";
+import {Factions, Faction}                  from "../src/Faction";
+import {Player}                             from "../src/Player";
+import {dialogBoxCreate}                    from "./DialogBox";
+import {clearEventListeners}                from "./HelperFunctions";
+import {formatNumber}                       from "./StringHelperFunctions";
+
+//Keep track of last faction
+var lastFac = "";
 
 /* InfiltrationBox.js */
 function infiltrationBoxClose() {
@@ -60,10 +63,20 @@ function infiltrationBoxCreate(inst) {
                         "that faction.");
     var selector = document.getElementById("infiltration-faction-select");
     selector.innerHTML = "";
-    for (var i = 0; i < Player.factions.length; ++i) {
+    for (let i = 0; i < Player.factions.length; ++i) {
         if (Player.factions[i] === "Bladeburners") {continue;}
         selector.innerHTML += "<option value='" + Player.factions[i] +
                                "'>" + Player.factions[i] + "</option>";
+    }
+
+    //Set initial value, if applicable
+    if (lastFac !== "") {
+        for (let i = 0; i < selector.options.length; ++i) {
+            if (selector.options[i].value === lastFac) {
+                selector.selectedIndex = i;
+                break;
+            }
+        }
     }
 
     var sellButton = clearEventListeners("infiltration-box-sell");
@@ -88,6 +101,7 @@ function infiltrationBoxCreate(inst) {
     setTimeout(function() {
     factionButton.addEventListener("click", function() {
         var facName = selector.options[selector.selectedIndex].value;
+        lastFac = facName;
         var faction = Factions[facName];
         if (faction == null) {
             dialogBoxCreate("Error finding faction. This is a bug please report to developer");

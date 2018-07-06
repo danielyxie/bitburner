@@ -285,6 +285,18 @@ joinBladeburnerFaction
 
     Returns false otherwise.
 
+joinBladeburnerDivision
+-----------------------
+
+.. js:function:: joinBladeburnerDivision()
+
+    Attempts to join the Bladeburner division.
+
+    Returns true if you successfully join the Bladeburner division, or if you
+    are already a member.
+
+    Returns false otherwise
+
 Examples
 --------
 
@@ -327,10 +339,12 @@ identifier by attaching the Bladeburner API functions to an object::
 
         this.fieldAnalysis = {
             inProgress:         params.startFieldAnalysis ? true : false,
-            cyclesRemaining:    FIELD_ANALYSIS_DURATION,
-            cyclesSince:         FIELD_ANALYSIS_INTERVAL
+            cyclesRemaining:    params.startFieldAnalysis ? FIELD_ANALYSIS_DURATION : 0,
+            cyclesSince:        params.startFieldAnalysis ? FIELD_ANALYSIS_INTERVAL : 0,
         }
     }
+
+
 
     BladeburnerHandler.prototype.getStaminaPercentage = function() {
         var res = this.getStamina();
@@ -360,7 +374,7 @@ identifier by attaching the Bladeburner API functions to an object::
                 this.startAction("general", "Field Analysis");
                 this.ns.print("handler is doing field analyis for " +
                               (this.fieldAnalysis.cyclesRemaining+1) + " more mins");
-                return;
+                return 31; //Field Analysis Time + 1
             }
         } else {
             ++(this.fieldAnalysis.cyclesSince);
@@ -377,10 +391,12 @@ identifier by attaching the Bladeburner API functions to an object::
         if (staminaPerc < 55) {
             this.ns.print("handler is starting training due to low stamina percentage");
             this.startAction("general", "Training");
+            return 31; //Training time + 1
         } else {
             var action = this.chooseAction();
             this.ns.print("handler chose " + action.name + " " + action.type + " through chooseAction()");
             this.startAction(action.type, action.name);
+            return (this.getActionTime(action.type, action.name) + 1);
         }
     }
 
@@ -423,12 +439,10 @@ identifier by attaching the Bladeburner API functions to an object::
 
 
     BladeburnerHandler.prototype.process = async function() {
-        this.handle();
-        await this.ns.sleep(60000);
-        }
+        await this.ns.sleep(this.handle() * 1000);
+    }
 
-        export async function main(ns) {
-        ns.disableLog("sleep");
+    export async function main(ns) {
         //Check if Bladeburner is available. This'll throw a runtime error if it's not
         ns.bladeburner.getContractNames();
 

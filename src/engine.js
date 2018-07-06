@@ -1,65 +1,67 @@
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
+import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions";
 import {clearEventListeners, createElement,
         removeChildrenFromElement,
-        exceptionAlert}                         from "../utils/HelperFunctions.js";
+        exceptionAlert}                         from "../utils/HelperFunctions";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
-        convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
+        convertTimeMsToTimeElapsedString,
+        replaceAt}                              from "../utils/StringHelperFunctions";
 import {loxBoxCreate, logBoxUpdateText,
-        logBoxOpened}                           from "../utils/LogBox.js";
+        logBoxOpened}                           from "../utils/LogBox";
 
-import {updateActiveScriptsItems}               from "./ActiveScriptsUI.js";
+import {updateActiveScriptsItems}               from "./ActiveScriptsUI";
 import {Augmentations, installAugmentations,
         initAugmentations, AugmentationNames,
         displayAugmentationsContent,
-        PlayerOwnedAugmentation}                from "./Augmentations.js";
+        PlayerOwnedAugmentation}                from "./Augmentations";
 import {BitNodes, initBitNodes,
-        initBitNodeMultipliers}                 from "./BitNode.js";
-import {Bladeburner}                            from "./Bladeburner.js";
-import {cinematicTextFlag}                      from "./CinematicText.js";
-import {CompanyPositions, initCompanies}        from "./Company.js";
-import {Corporation}                            from "./CompanyManagement.js";
-import {CONSTANTS}                              from "./Constants.js";
-import {Programs, displayCreateProgramContent,
+        initBitNodeMultipliers}                 from "./BitNode";
+import {Bladeburner}                            from "./Bladeburner";
+import {cinematicTextFlag}                      from "./CinematicText";
+import {CompanyPositions, initCompanies}        from "./Company";
+import {Corporation}                            from "./CompanyManagement";
+import {CONSTANTS}                              from "./Constants";
+import {displayCreateProgramContent,
         getNumAvailableCreateProgram,
-        initCreateProgramButtons}               from "./CreateProgram.js";
+        initCreateProgramButtons,
+        Programs}                               from "./CreateProgram";
 import {displayFactionContent, joinFaction,
         processPassiveFactionRepGain, Factions,
-        inviteToFaction, initFactions}          from "./Faction.js";
-import {FconfSettings}                          from "./Fconf.js";
+        inviteToFaction, initFactions}          from "./Faction";
+import {FconfSettings}                          from "./Fconf";
 import {Locations, displayLocationContent,
-        initLocationButtons}                    from "./Location.js";
+        initLocationButtons}                    from "./Location";
 import {displayGangContent, updateGangContent,
-        Gang}                                   from "./Gang.js";
+        Gang}                                   from "./Gang";
 import {displayHacknetNodesContent, processAllHacknetNodeEarnings,
-        updateHacknetNodesContent}              from "./HacknetNode.js";
-import {iTutorialStart}                         from "./InteractiveTutorial.js";
-import {initLiterature}                         from "./Literature.js";
-import {checkForMessagesToSend, initMessages}   from "./Message.js";
-import {inMission, currMission}                 from "./Missions.js";
+        updateHacknetNodesContent}              from "./HacknetNode";
+import {iTutorialStart}                         from "./InteractiveTutorial";
+import {initLiterature}                         from "./Literature";
+import {checkForMessagesToSend, initMessages}   from "./Message";
+import {inMission, currMission}                 from "./Missions";
 import {initSingularitySFFlags,
-        hasSingularitySF, hasCorporationSF}     from "./NetscriptFunctions.js";
+        hasSingularitySF, hasCorporationSF}     from "./NetscriptFunctions";
 import {updateOnlineScriptTimes,
-        runScriptsLoop}                         from "./NetscriptWorker.js";
-import {Player}                                 from "./Player.js";
+        runScriptsLoop}                         from "./NetscriptWorker";
+import {Player}                                 from "./Player";
 import {prestigeAugmentation,
-        prestigeSourceFile}                     from "./Prestige.js";
-import {redPillFlag, hackWorldDaemon}           from "./RedPill.js";
-import {saveObject, loadGame}                   from "./SaveObject.js";
+        prestigeSourceFile}                     from "./Prestige";
+import {redPillFlag, hackWorldDaemon}           from "./RedPill";
+import {saveObject, loadGame}                   from "./SaveObject";
 import {loadAllRunningScripts, scriptEditorInit,
-        updateScriptEditorContent}              from "./Script.js";
-import {AllServers, Server, initForeignServers} from "./Server.js";
-import {Settings, setSettingsLabels}            from "./Settings.js";
+        updateScriptEditorContent}              from "./Script";
+import {AllServers, Server, initForeignServers} from "./Server";
+import {Settings, setSettingsLabels}            from "./Settings";
 import {initSourceFiles, SourceFiles,
-        PlayerOwnedSourceFile}                  from "./SourceFile.js";
-import {SpecialServerIps, initSpecialServerIps} from "./SpecialServerIps.js";
+        PlayerOwnedSourceFile}                  from "./SourceFile";
+import {SpecialServerIps, initSpecialServerIps} from "./SpecialServerIps";
 import {StockMarket, StockSymbols,
         SymbolToStockMap, initStockSymbols,
         initSymbolToStockMap, stockMarketCycle,
         updateStockPrices,
-        displayStockMarketContent}              from "./StockMarket.js";
-import {Terminal, postNetburnerText, post, KEY} from "./Terminal.js";
+        displayStockMarketContent}              from "./StockMarket";
+import {Terminal, postNetburnerText, post, KEY} from "./Terminal";
 
 /* Shortcuts to navigate through the game
  *  Alt-t - Terminal
@@ -1042,7 +1044,7 @@ let Engine = {
             if (Engine.currentPage === Engine.Page.ActiveScripts) {
                 Engine.Counters.updateActiveScriptsDisplay = 5;
             } else {
-                Engine.Counters.updateActiveScriptsDisplay = 15;
+                Engine.Counters.updateActiveScriptsDisplay = 10;
             }
         }
 
@@ -1170,7 +1172,7 @@ let Engine = {
 
         //Update progress bar
         while (Engine._actionProgressBarCount * 2 <= percent) {
-            Engine._actionProgressStr = Engine._actionProgressStr.replaceAt(Engine._actionProgressBarCount, "|");
+            Engine._actionProgressStr = replaceAt(Engine._actionProgressStr, Engine._actionProgressBarCount, "|");
             Engine._actionProgressBarCount += 1;
         }
 
@@ -1736,13 +1738,6 @@ let Engine = {
                 Player.sourceFiles[sfIndex].lvl=sfLvl;
             }
         });
-
-        //If DarkWeb already purchased, disable the button
-        if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
-            const purchaseTor = document.getElementById("location-purchase-tor");
-            purchaseTor.setAttribute("class", "a-link-button-bought");
-            purchaseTor.innerHTML = "TOR Router - Purchased";
-        }
     },
 
     /* Initialization */

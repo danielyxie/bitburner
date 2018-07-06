@@ -1,17 +1,17 @@
-import {BitNodeMultipliers}                 from "./BitNode.js";
-import {CONSTANTS}                          from "./Constants.js";
-import {Player}                             from "./Player.js";
-import {Environment}                        from "./NetscriptEnvironment.js";
-import {WorkerScript, addWorkerScript}      from "./NetscriptWorker.js";
-import {Server, getServer}                  from "./Server.js";
-import {Settings}                           from "./Settings.js";
+import {BitNodeMultipliers}                 from "./BitNode";
+import {CONSTANTS}                          from "./Constants";
+import {Player}                             from "./Player";
+import {Environment}                        from "./NetscriptEnvironment";
+import {WorkerScript, addWorkerScript}      from "./NetscriptWorker";
+import {Server, getServer}                  from "./Server";
+import {Settings}                           from "./Settings";
 import {Script, findRunningScript,
-        RunningScript}                      from "./Script.js";
+        RunningScript}                      from "./Script";
 
-import {parse, Node}                        from "../utils/acorn.js";
-import {printArray}                         from "../utils/HelperFunctions.js";
-import {isValidIPAddress}                   from "../utils/IPAddress.js";
-import {isString}                           from "../utils/StringHelperFunctions.js";
+import {parse, Node}                        from "../utils/acorn";
+import {printArray}                         from "../utils/HelperFunctions";
+import {isValidIPAddress}                   from "../utils/IPAddress";
+import {isString}                           from "../utils/StringHelperFunctions";
 
 var Promise = require("bluebird");
 
@@ -860,7 +860,7 @@ function runScriptFromScript(server, scriptname, args, workerScript, threads=1) 
             var script = server.scripts[i];
             var ramUsage = script.ramUsage;
             threads = Math.round(Number(threads)); //Convert to number and round
-            ramUsage = ramUsage * threads * Math.pow(CONSTANTS.MultithreadingRAMCost, threads-1);
+            ramUsage = ramUsage * threads;
             var ramAvailable = server.maxRam - server.ramUsed;
 
             if (server.hasAdminRights == false) {

@@ -1,6 +1,6 @@
 //General helper functions
-import {isString}           from "./StringHelperFunctions.js";
-import {dialogBoxCreate}    from "./DialogBox.js";
+import {isString}           from "./StringHelperFunctions";
+import {dialogBoxCreate}    from "./DialogBox";
 
 //Returns the size (number of keys) of an object
 function sizeOfObject(obj) {
@@ -243,6 +243,11 @@ function powerOfTwo(n) {
     return n && (n & (n-1)) === 0;
 }
 
+//Rounds a number to two decimal places
+function roundToTwo(n) {
+    return +(Math.round(n + "e+2")  + "e-2");
+}
+
 function exceptionAlert(e) {
     dialogBoxCreate("Caught an exception: " + e + "<br><br>" +
                     "Filename: " + e.fileName + "<br><br>" +
@@ -270,9 +275,24 @@ function createProgressBarText(params={}) {
     return "[" + Array(numTicks+1).join("|") + Array(numDashes+1).join("-") + "]";
 }
 
-export {sizeOfObject, clearObject, addOffset, clearEventListeners, getRandomInt,
-        compareArrays, printArray, powerOfTwo, clearEventListenersEl,
-        removeElementById, removeElement, createElement, createAccordionElement,
+export {sizeOfObject,
+        clearObject,
+        addOffset,
+        clearEventListeners,
+        getRandomInt,
+        compareArrays,
+        printArray,
+        powerOfTwo,
+        roundToTwo,
+        clearEventListenersEl,
+        removeElementById,
+        removeElement,
+        createElement,
+        createAccordionElement,
         appendLineBreaks,
-        removeChildrenFromElement, createPopup, clearSelector, exceptionAlert,
-        createProgressBarText, getElementById};
+        removeChildrenFromElement,
+        createPopup,
+        clearSelector,
+        exceptionAlert,
+        createProgressBarText,
+        getElementById};

@@ -1,24 +1,24 @@
-import {Augmentations, AugmentationNames}           from "./Augmentations.js";
-import {BitNodeMultipliers}                         from "./BitNode.js";
-import {CONSTANTS}                                  from "./Constants.js";
-import {Engine}                                     from "./engine.js";
+import {Augmentations, AugmentationNames}           from "./Augmentations";
+import {BitNodeMultipliers}                         from "./BitNode";
+import {CONSTANTS}                                  from "./Constants";
+import {Engine}                                     from "./engine";
 import {Faction, Factions, factionExists,
-        joinFaction, displayFactionContent}         from "./Faction.js";
-import {Locations}                                  from "./Location.js";
-import {Player}                                     from "./Player.js";
-import {hackWorldDaemon, redPillFlag}               from "./RedPill.js";
-import {KEY}                                        from "./Terminal.js";
+        joinFaction, displayFactionContent}         from "./Faction";
+import {Locations}                                  from "./Location";
+import {Player}                                     from "./Player";
+import {hackWorldDaemon, redPillFlag}               from "./RedPill";
+import {KEY}                                        from "./Terminal";
 
-import {dialogBoxCreate}                            from "../utils/DialogBox.js";
+import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {getRandomInt, addOffset, clearObject,
         createElement, removeChildrenFromElement,
         exceptionAlert, createPopup, appendLineBreaks,
         removeElementById, removeElement,
-        createProgressBarText}                      from "../utils/HelperFunctions.js";
+        createProgressBarText}                      from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                           from "../utils/JSONReviver.js";
+        Generic_fromJSON}                           from "../utils/JSONReviver";
 import numeral                                      from "numeral/min/numeral.min";
-import {formatNumber}                               from "../utils/StringHelperFunctions.js";
+import {formatNumber}                               from "../utils/StringHelperFunctions";
 
 
 var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
@@ -60,7 +60,7 @@ var OperationSuccessesPerLevel  = 2.5; //How many successes you need to level up
 
 var RanksPerSkillPoint          = 4;  //How many ranks needed to get 1 Skill Point
 
-var ContractBaseMoneyGain       = 10e3; //Base Money Gained per contract
+var ContractBaseMoneyGain       = 40e3; //Base Money Gained per contract
 
 //DOM related variables
 var ActiveActionCssClass        = "bladeburner-active-action";

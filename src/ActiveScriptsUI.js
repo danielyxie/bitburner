@@ -1,16 +1,16 @@
-import {Engine}                                     from "./engine.js";
+import {Engine}                                     from "./engine";
 import {workerScripts,
         addWorkerScript,
-        killWorkerScript}                           from "./NetscriptWorker.js";
-import {Player}                                     from "./Player.js";
-import {getServer}                                  from "./Server.js";
-import {dialogBoxCreate}                            from "../utils/DialogBox.js";
+        killWorkerScript}                           from "./NetscriptWorker";
+import {Player}                                     from "./Player";
+import {getServer}                                  from "./Server";
+import {dialogBoxCreate}                            from "../utils/DialogBox";
 import {printArray, createElement,
         createAccordionElement, removeElement,
-        removeChildrenFromElement, exceptionAlert}  from "../utils/HelperFunctions.js";
-import {logBoxCreate}                               from "../utils/LogBox.js";
+        removeChildrenFromElement, exceptionAlert}  from "../utils/HelperFunctions";
+import {logBoxCreate}                               from "../utils/LogBox";
 import numeral                                      from "numeral/min/numeral.min";
-import {formatNumber}                               from "../utils/StringHelperFunctions.js";
+import {formatNumber}                               from "../utils/StringHelperFunctions";
 
 /* {
  *     serverName: {
@@ -179,9 +179,9 @@ function deleteActiveScriptsItem(workerscript) {
 }
 
 //Update the ActiveScriptsItems array
-function updateActiveScriptsItems(maxTasks=100) {
+function updateActiveScriptsItems(maxTasks=150) {
     //Run tasks that need to be done sequentially (adding items, creating/deleting server panels)
-    //We'll limit this to 50 at a time in case someone decides to start a bunch of scripts all at once...
+    //We'll limit this to 150 at a time in case someone decides to start a bunch of scripts all at once...
     let numTasks = Math.min(maxTasks, ActiveScriptsTasks.length);
     for (let i = 0; i < numTasks; ++i) {
         let task = ActiveScriptsTasks.shift();

@@ -1,39 +1,39 @@
-import {deleteActiveScriptsItem}                from "./ActiveScriptsUI.js";
+import {deleteActiveScriptsItem}                from "./ActiveScriptsUI";
 import {Augmentations, augmentationExists,
-        initAugmentations, AugmentationNames}   from "./Augmentations.js";
-import {initBitNodeMultipliers}                 from "./BitNode.js";
-import {Bladeburner}                            from "./Bladeburner.js";
-import {writeCinematicText}                     from "./CinematicText.js";
-import {Companies, Company, initCompanies}      from "./Company.js";
-import {Programs}                               from "./CreateProgram.js";
-import {Engine}                                 from "./engine.js";
+        initAugmentations, AugmentationNames}   from "./Augmentations";
+import {initBitNodeMultipliers}                 from "./BitNode";
+import {Bladeburner}                            from "./Bladeburner";
+import {writeCinematicText}                     from "./CinematicText";
+import {Companies, Company, initCompanies}      from "./Company";
+import {Programs}                               from "./CreateProgram";
+import {Engine}                                 from "./engine";
 import {Factions, Faction, initFactions,
-        joinFaction}                            from "./Faction.js";
-import {deleteGangDisplayContent}               from "./Gang.js";
-import {Locations}                              from "./Location.js";
-import {initMessages, Messages, Message}        from "./Message.js";
-import {initSingularitySFFlags, hasWallStreetSF}from "./NetscriptFunctions.js";
+        joinFaction}                            from "./Faction";
+import {deleteGangDisplayContent}               from "./Gang";
+import {Locations}                              from "./Location";
+import {initMessages, Messages, Message}        from "./Message";
+import {initSingularitySFFlags, hasWallStreetSF}from "./NetscriptFunctions";
 import {WorkerScript, workerScripts,
-        prestigeWorkerScripts}                  from "./NetscriptWorker.js";
-import {Player}                                 from "./Player.js";
+        prestigeWorkerScripts}                  from "./NetscriptWorker";
+import {Player}                                 from "./Player";
 
 import {AllServers, AddToAllServers,
         initForeignServers, Server,
         prestigeAllServers,
-        prestigeHomeComputer}                   from "./Server.js";
+        prestigeHomeComputer}                   from "./Server";
 import {SpecialServerIps, SpecialServerIpsMap,
         prestigeSpecialServerIps,
-        SpecialServerNames}                     from "./SpecialServerIps.js";
+        SpecialServerNames}                     from "./SpecialServerIps";
 import {initStockMarket, initSymbolToStockMap,
         stockMarketContentCreated,
-        setStockMarketContentCreated}           from "./StockMarket.js";
-import {Terminal, postNetburnerText}            from "./Terminal.js";
+        setStockMarketContentCreated}           from "./StockMarket";
+import {Terminal, postNetburnerText}            from "./Terminal";
 import Decimal                                  from "decimal.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {createPopup, createElement,
-        removeElementById, exceptionAlert}      from "../utils/HelperFunctions.js";
+        removeElementById, exceptionAlert}      from "../utils/HelperFunctions";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
+        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";
 
 let BitNode8StartingMoney = 250e6;
 
@@ -59,13 +59,13 @@ function prestigeAugmentation() {
 
     if (augmentationExists(AugmentationNames.Neurolink) &&
         Augmentations[AugmentationNames.Neurolink].owned) {
-        homeComp.programs.push(Programs.FTPCrackProgram);
-        homeComp.programs.push(Programs.RelaySMTPProgram);
+        homeComp.programs.push(Programs.FTPCrackProgram.name);
+        homeComp.programs.push(Programs.RelaySMTPProgram.name);
     }
     if (augmentationExists(AugmentationNames.CashRoot) &&
         Augmentations[AugmentationNames.CashRoot].owned) {
         Player.setMoney(new Decimal(1000000));
-        homeComp.programs.push(Programs.BruteSSHProgram);
+        homeComp.programs.push(Programs.BruteSSHProgram.name);
     }
 
     //Re-create foreign servers
@@ -190,9 +190,6 @@ function prestigeSourceFile() {
         homeComp.setMaxRam(8);
     }
     homeComp.cpuCores = 1;
-
-    //Darkweb is purchase-able
-    document.getElementById("location-purchase-tor").setAttribute("class", "a-link-button");
 
     //Reset favor for Companies
     for (var member in Companies) {

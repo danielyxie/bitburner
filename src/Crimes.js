@@ -1,6 +1,6 @@
-import {CONSTANTS} from "./Constants.js";
-import {Player} from "./Player.js";
-import {dialogBoxCreate} from "../utils/DialogBox.js";
+import {CONSTANTS} from "./Constants";
+import {Player} from "./Player";
+import {dialogBoxCreate} from "../utils/DialogBox";
 
 
 function Crime(name, type, time, money, difficulty, karma, params) {
@@ -95,7 +95,7 @@ const Crimes = {
     dexterity_exp: 60,
     agility_exp: 60,
 
-    hacking_skill_success_weight: 0.5,
+    hacking_success_weight: 0.5,
     dexterity_success_weight: 1,
     agility_success_weight: 1,
 
@@ -117,7 +117,7 @@ const Crimes = {
     dexterity_exp: 150,
     charisma_exp: 15,
 
-    hacking_skill_success_weight: 0.05,
+    hacking_success_weight: 0.05,
     dexterity_success_weight: 1.25,
 
     intelligence_exp: 2 * CONSTANTS.IntelligenceCrimeBaseExpGain,
@@ -158,7 +158,7 @@ const Crimes = {
     agility_exp: 80,
     charisma_exp: 40,
 
-    hacking_skill_success_weight: 1,
+    hacking_success_weight: 1,
     strength_success_weight: 1,
     dexterity_success_weight: 4,
     agility_success_weight: 2,
@@ -205,7 +205,7 @@ const Crimes = {
     agility_exp: 450,
     charisma_exp: 450,
 
-    hacking_skill_success_weight: 1,
+    hacking_success_weight: 1,
     strength_success_weight: 1,
     defense_success_weight: 1,
     dexterity_success_weight: 1,

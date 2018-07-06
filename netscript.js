@@ -94,8 +94,7 @@ let NetscriptFunctions =
     "getActionTime|getActionEstimatedSuccessChance|getActionCountRemaining|"   +
     "getRank|getSkillPoints|getSkillLevel|upgradeSkill|getTeamSize|"           +
     "setTeamSize|getCityEstimatedPopulation|getCityEstimatedCommunities|"      +
-    "getCityChaos|switchCity|getStamina|joinBladeburnerFaction"
-    ;
+    "getCityChaos|switchCity|getStamina|joinBladeburnerFaction";
 
 var NetscriptHighlightRules = function(options) {
     var keywordMapper = this.createKeywordMapper({

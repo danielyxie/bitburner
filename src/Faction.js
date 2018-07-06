@@ -1,24 +1,24 @@
 import {Augmentations, AugmentationNames,
-        PlayerOwnedAugmentation}                from "./Augmentations.js";
-import {BitNodeMultipliers}                     from "./BitNode.js";
-import {CONSTANTS}                              from "./Constants.js";
-import {Engine}                                 from "./engine.js";
-import {FactionInfos}                           from "./FactionInfo.js";
-import {Locations}                              from "./Location.js";
-import {HackingMission, setInMission}           from "./Missions.js";
-import {Player}                                 from "./Player.js";
-import {Settings}                               from "./Settings.js";
+        PlayerOwnedAugmentation}                from "./Augmentations";
+import {BitNodeMultipliers}                     from "./BitNode";
+import {CONSTANTS}                              from "./Constants";
+import {Engine}                                 from "./engine";
+import {FactionInfos}                           from "./FactionInfo";
+import {Locations}                              from "./Location";
+import {HackingMission, setInMission}           from "./Missions";
+import {Player}                                 from "./Player";
+import {Settings}                               from "./Settings";
 
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
+import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox";
 import {clearEventListeners, createElement,
-        removeChildrenFromElement}              from "../utils/HelperFunctions.js";
+        removeChildrenFromElement}              from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+        Generic_fromJSON}                       from "../utils/JSONReviver";
 import numeral                                  from "numeral/min/numeral.min";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
+        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";
 
 function Faction(name="") {
     this.name 				= name;
@@ -439,7 +439,6 @@ function displayFactionContent(factionName) {
     }
 }
 
-var confirmingPurchases = true;
 var sortOption = null;
 function displayFactionAugmentations(factionName) {
     var faction = Factions[factionName];
@@ -468,19 +467,6 @@ function displayFactionAugmentations(factionName) {
                   "Augmentations are powerful upgrades that will enhance your abilities."
     }));
 
-    //Confirming not confirming button
-    elements.push(createElement("label", {
-        for:"faction-augmentations-confirming-checkbox",innerText:"Confirm Purchases",
-        color:"white", margin:"4px", padding:"4px",
-    }));
-    var confirmingPurchasesCheckbox = createElement("input", {
-        type:"checkbox", id:"faction-augmentations-confirming-checkbox", checked:confirmingPurchases,
-        margin:"4px", padding:"4px",
-        clickListener:()=>{
-            confirmingPurchases = confirmingPurchasesCheckbox.checked;
-        }
-    });
-    elements.push(confirmingPurchasesCheckbox);
     elements.push(createElement("br"));
     elements.push(createElement("br"));
 
@@ -585,7 +571,8 @@ function createFactionAugmentationDisplayElements(augmentationsList, augs, facti
             var aElem = createElement("a", {
                 innerText:aug.name, display:"inline",
                 clickListener:()=>{
-                    if (confirmingPurchases) {
+                    console.log('sup buy in fac: '+Settings.SuppressBuyAugmentationConfirmation);
+                    if (!Settings.SuppressBuyAugmentationConfirmation) {
                         purchaseAugmentationBoxCreate(aug, faction);
                     } else {
                         purchaseAugmentation(aug, faction);
@@ -723,10 +710,12 @@ function purchaseAugmentation(aug, fac, sing=false) {
         if (sing) {
             return "You purchased " + aug.name;
         } else {
-            dialogBoxCreate("You purchased "  + aug.name + ". It's enhancements will not take " +
-                            "effect until they are installed. To install your augmentations, go to the " +
-                            "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
-                            "augmentations will now be more expensive.");
+            if(!Settings.SuppressBuyAugmentationConfirmation){
+                dialogBoxCreate("You purchased "  + aug.name + ". It's enhancements will not take " +
+                                "effect until they are installed. To install your augmentations, go to the " +
+                                "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
+                                "augmentations will now be more expensive.");
+            }
         }
 
         displayFactionAugmentations(fac.name);

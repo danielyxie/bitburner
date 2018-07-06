@@ -484,6 +484,18 @@ you are already a member.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="joinbladeburnerdivision">
+<h2>joinBladeburnerDivision<a class="headerlink" href="#joinbladeburnerdivision" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="joinBladeburnerDivision">
+<code class="descname">joinBladeburnerDivision</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#joinBladeburnerDivision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempts to join the Bladeburner division.</p>
+<p>Returns true if you successfully join the Bladeburner division, or if you
+are already a member.</p>
+<p>Returns false otherwise</p>
+</dd></dl>
+
+</div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <p><strong>Basic example usage</strong>:</p>
@@ -524,10 +536,12 @@ function BladeburnerHandler(ns, params) {
 
     this.fieldAnalysis = {
         inProgress:         params.startFieldAnalysis ? true : false,
-        cyclesRemaining:    FIELD_ANALYSIS_DURATION,
-        cyclesSince:         FIELD_ANALYSIS_INTERVAL
+        cyclesRemaining:    params.startFieldAnalysis ? FIELD_ANALYSIS_DURATION : 0,
+        cyclesSince:        params.startFieldAnalysis ? FIELD_ANALYSIS_INTERVAL : 0,
     }
 }
+
+
 
 BladeburnerHandler.prototype.getStaminaPercentage = function() {
     var res = this.getStamina();
@@ -557,7 +571,7 @@ BladeburnerHandler.prototype.handle = function() {
             this.startAction(&quot;general&quot;, &quot;Field Analysis&quot;);
             this.ns.print(&quot;handler is doing field analyis for &quot; +
                           (this.fieldAnalysis.cyclesRemaining+1) + &quot; more mins&quot;);
-            return;
+            return 31; //Field Analysis Time + 1
         }
     } else {
         ++(this.fieldAnalysis.cyclesSince);
@@ -574,10 +588,12 @@ BladeburnerHandler.prototype.handle = function() {
     if (staminaPerc &lt; 55) {
         this.ns.print(&quot;handler is starting training due to low stamina percentage&quot;);
         this.startAction(&quot;general&quot;, &quot;Training&quot;);
+        return 31; //Training time + 1
     } else {
         var action = this.chooseAction();
         this.ns.print(&quot;handler chose &quot; + action.name + &quot; &quot; + action.type + &quot; through chooseAction()&quot;);
         this.startAction(action.type, action.name);
+        return (this.getActionTime(action.type, action.name) + 1);
     }
 }
 
@@ -620,12 +636,10 @@ BladeburnerHandler.prototype.chooseAction = function() {
 
 
 BladeburnerHandler.prototype.process = async function() {
-    this.handle();
-    await this.ns.sleep(60000);
-    }
+    await this.ns.sleep(this.handle() * 1000);
+}
 
-    export async function main(ns) {
-    ns.disableLog(&quot;sleep&quot;);
+export async function main(ns) {
     //Check if Bladeburner is available. This&#39;ll throw a runtime error if it&#39;s not
     ns.bladeburner.getContractNames();
 
@@ -690,6 +704,7 @@ BladeburnerHandler.prototype.process = async function() {
 <li class="toctree-l3"><a class="reference internal" href="#switchcity">switchCity</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getstamina">getStamina</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#joinbladeburnerfaction">joinBladeburnerFaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#joinbladeburnerdivision">joinBladeburnerDivision</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>

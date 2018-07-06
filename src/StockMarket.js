@@ -1,23 +1,23 @@
-import {CONSTANTS}                              from "./Constants.js";
-import {Engine}                                 from "./engine.js";
-import {Locations}                              from "./Location.js";
-import {hasWallStreetSF, wallStreetSFLvl}       from "./NetscriptFunctions.js";
-import {WorkerScript}                           from "./NetscriptWorker.js";
-import {Player}                                 from "./Player.js";
+import {CONSTANTS}                              from "./Constants";
+import {Engine}                                 from "./engine";
+import {Locations}                              from "./Location";
+import {hasWallStreetSF, wallStreetSFLvl}       from "./NetscriptFunctions";
+import {WorkerScript}                           from "./NetscriptWorker";
+import {Player}                                 from "./Player";
 
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners, getRandomInt,
         removeElementById,
-        clearEventListenersEl}                  from "../utils/HelperFunctions.js";
+        clearEventListenersEl}                  from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+        Generic_fromJSON}                       from "../utils/JSONReviver";
 import numeral                                  from "numeral/min/numeral.min";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,
         yesNoTxtInpBoxGetInput, yesNoBoxClose,
-        yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox.js";
+        yesNoTxtInpBoxClose, yesNoBoxOpen}      from "../utils/YesNoBox";
 
 let StockPriceCap = 1e9; //Put a limit on how high a price can go
 

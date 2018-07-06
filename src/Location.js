@@ -1,29 +1,29 @@
-import {Bladeburner}                            from "./Bladeburner.js";
+import {Bladeburner}                            from "./Bladeburner";
 import {CompanyPositions, initCompanies,
-        Companies, getJobRequirementText}       from "./Company.js";
-import {Corporation}                            from "./CompanyManagement.js";
-import {CONSTANTS}                              from "./Constants.js";
-import {Crimes}                                 from "./Crimes.js";
-import {Engine}                                 from "./engine.js";
-import {beginInfiltration}                      from "./Infiltration.js";
-import {hasBladeburnerSF}                       from "./NetscriptFunctions.js";
-import {Player}                                 from "./Player.js";
-import {Server, AllServers, AddToAllServers}    from "./Server.js";
+        Companies, getJobRequirementText}       from "./Company";
+import {Corporation}                            from "./CompanyManagement";
+import {CONSTANTS}                              from "./Constants";
+import {Crimes}                                 from "./Crimes";
+import {Engine}                                 from "./engine";
+import {beginInfiltration}                      from "./Infiltration";
+import {hasBladeburnerSF}                       from "./NetscriptFunctions";
+import {Player}                                 from "./Player";
+import {Server, AllServers, AddToAllServers}    from "./Server";
 import {purchaseServer,
-        purchaseRamForHomeComputer}             from "./ServerPurchases.js";
-import {Settings}                               from "./Settings.js";
-import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps.js";
+        purchaseRamForHomeComputer}             from "./ServerPurchases";
+import {Settings}                               from "./Settings";
+import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps";
 
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {clearEventListeners, createElement}     from "../utils/HelperFunctions.js";
-import {createRandomIp}                         from "../utils/IPAddress.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
+import {clearEventListeners, createElement}     from "../utils/HelperFunctions";
+import {createRandomIp}                         from "../utils/IPAddress";
 import numeral                                  from "numeral/min/numeral.min";
-import {formatNumber}                           from "../utils/StringHelperFunctions.js";
+import {formatNumber}                           from "../utils/StringHelperFunctions";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,
         yesNoTxtInpBoxGetInput, yesNoBoxClose,
-        yesNoTxtInpBoxClose}                    from "../utils/YesNoBox.js";
+        yesNoTxtInpBoxClose}                    from "../utils/YesNoBox";
 
 /* Display Location Content when visiting somewhere in the World*/
 var Locations = {
@@ -280,7 +280,13 @@ function displayLocationContent() {
     purchase512gb.innerHTML = "Purchase 512GB Server - $" + formatNumber(512*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
     purchase1tb.innerHTML = "Purchase 1TB Server - $" + formatNumber(1024*CONSTANTS.BaseCostFor1GBOfRamServer, 2);
     if (!SpecialServerIps.hasOwnProperty("Darkweb Server")) {
+        purchaseTor.classList.add("a-link-button");
+        purchaseTor.classList.remove("a-link-button-bought");
         purchaseTor.innerHTML = "Purchase TOR Router - $" + formatNumber(CONSTANTS.TorRouterCost, 2);
+    } else {
+        purchaseTor.classList.remove("a-link-button");
+        purchaseTor.classList.add("a-link-button-bought");
+        purchaseTor.innerHTML = "TOR Router - Purchased";
     }
 
 

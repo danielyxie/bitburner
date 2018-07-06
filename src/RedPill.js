@@ -1,16 +1,16 @@
-import {BitNode, BitNodes}                      from "./BitNode.js";
-import {Engine}                                 from "./engine.js";
-import {Player}                                 from "./Player.js";
-import {prestigeSourceFile}                     from "./Prestige.js";
+import {BitNode, BitNodes}                      from "./BitNode";
+import {Engine}                                 from "./engine";
+import {Player}                                 from "./Player";
+import {prestigeSourceFile}                     from "./Prestige";
 import {SourceFiles, SourceFile,
-        PlayerOwnedSourceFile}                  from "./SourceFile.js";
-import {Terminal}                               from "./Terminal.js";
+        PlayerOwnedSourceFile}                  from "./SourceFile";
+import {Terminal}                               from "./Terminal";
 
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {clearEventListeners,
-        removeChildrenFromElement}              from "../utils/HelperFunctions.js";
+        removeChildrenFromElement}              from "../utils/HelperFunctions";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
-        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox.js";
+        yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";
 
 /* RedPill.js
  *  Implements what happens when you have Red Pill augmentation and then hack the world daemon */

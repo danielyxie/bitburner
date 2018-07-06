@@ -1,5 +1,5 @@
 let CONSTANTS = {
-    Version:                "0.39.0",
+    Version:                "0.39.1",
 
 	//Max level for any skill, assuming no multipliers. Determined by max numerical value in javascript for experience
     //and the skill level formula in Player.js. Note that all this means it that when experience hits MAX_INT, then
@@ -84,8 +84,6 @@ let CONSTANTS = {
 
     ScriptBladeburnerApiBaseRamCost:    4,
 
-    MultithreadingRAMCost:          1,
-
     NumNetscriptPorts:              20,
 
     //Server constants
@@ -107,7 +105,7 @@ let CONSTANTS = {
 
     //Infiltration constants
     InfiltrationBribeBaseAmount: 100e3,    //Amount per clearance level
-    InfiltrationMoneyValue:   3e3,         //Convert "secret" value to money
+    InfiltrationMoneyValue:   5e3,         //Convert "secret" value to money
     InfiltrationRepValue: 1.4,             //Convert "secret" value to faction reputation
 
     //Stock market constants
@@ -489,19 +487,25 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.39.0<br>"  +
-    "* Added BitNode-7: Bladeburner 2079<br>" +
-    "* Infiltration base difficulty decreased by 10% for most locations<br>" +
-    "* Experience gains from Infiltration slightly increased<br>" +
-    "* Money gained from Infiltration increased by 20%<br>"  +
-    "* Added 'var' declarations in Netscript 1.0 (only works with 'var', not 'let' or 'const')<br>"  +
-    "* Script base RAM cost is now 1.6 GB (increased from 1.4 GB)<br>" +
-    "* While/for loops and if statements no longer cost RAM in scripts<br>"  +
-    "* Made short-circuit evaluation logic more consistent in Netscript 1.0 (see https://github.com/danielyxie/bitburner/issues/308)<br>" +
-    "* Changelog button in the Options menu now links to the new Changelog URL (by Github user thePalindrome)<br>" +
-    "* Skill level calculation is now 'smoother' (by Github user hydroflame)<br>" +
-    "* Added a button to 'beautify' scripts in the text editor (by Github user hydroflame)<br>" +
-    "* Added favicon (by Github user kopelli)"
+    "v0.39.1<br>"  +
+    "* Bladeburner Rank gain in BN-7 is now reduced by 40% instead of 50%<br>" +
+    "* Quadrupled the amount of money gained from Bladeburner contracts<br>" +
+    "* Added joinBladeburnerDivision() Netscript function to Bladeburner API<br>" +
+    "* Doubled the effects of Source-File 5. Now gives 8%, 12%, and 14% increase to all hacking multipliers " +
+    "at levels 1, 2, and 3, respectively (increased from 4%/6%, 7%)<br>" +
+    "* Increased the effect of Source-File 8. It now gives a 12%, 18% and 21% to your hacking growth multiplier " +
+    "at levels 1, 2, and 3, respectively (increased from 8%, 12%, 14%)<br>" +
+    "* The effect of Source-File 12 is now additive with itself, rather than multiplicative. This means " +
+    "that level N of Source-File 12 now increases all multipliers by N%<br>" +
+    "* The setting to suppress the confirmation box when purchasing Augmentations was moved into the main Options menu (by Github user hydroflame)<br>" +
+    "* Bug Fix: Crime Success rates were being calculated incorrectly (by Github user hydroflame)<br>" +
+    "* When an Infiltration is finished, you will now return back to the company's page, rather than the city<br>" +
+    "* Infiltration faction reputation selector now remembers your last choice<br>" +
+    "* Significantly increased the amount of money gained from Infiltration<br>" +
+    "* Bug Fix: Copying a NetscriptJS script to another server using scp now properly takes into account " +
+    "the script's changes.<br>" +
+    "* Bug Fix: Fixed an issue where game would not load in Edge due to incompatible features<br>" +
+    "* travelToCity() Singularity function no longer grants Intelligence exp"
 
 
 }

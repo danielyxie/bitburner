@@ -1,4 +1,4 @@
-import {Player}                             from "./Player.js";
+import {Player}                             from "./Player";
 
 function BitNode(n, name, desc="", info="") {
     this.number = n;
@@ -92,9 +92,9 @@ function initBitNodes() {
                                           "in the game. <br><br>" +
                                           "In addition, this Source-File will unlock the getBitNodeMultipliers() Netscript function, " +
                                           "and will also raise all of your hacking-related multipliers by:<br><br>" +
-                                          "Level 1: 4%<br>" +
-                                          "Level 2: 6%<br>" +
-                                          "Level 3: 7%");
+                                          "Level 1: 8%<br>" +
+                                          "Level 2: 12%<br>" +
+                                          "Level 3: 14%");
     BitNodes["BitNode6"] = new BitNode(6, "Bladeburners", "Like Tears in Rain",
                                           "In the middle of the 21st century, OmniTek Incorporated began designing and manufacturing advanced synthetic " +
                                           "androids, or Synthoids for short. They achieved a major technological breakthrough in the sixth generation " +
@@ -123,7 +123,7 @@ function initBitNodes() {
                                           "and more intelligent than the humans that had created them.<br><br>" +
                                           "In this BitNode you will be able to access the Bladeburner API, which allows you to access Bladeburner " +
                                           "functionality through Netscript. Furthermore: <br><br>" +
-                                          "The rank you gain from Bladeburner contracts/operations is reduced by 50%<br>" +
+                                          "The rank you gain from Bladeburner contracts/operations is reduced by 40%<br>" +
                                           "Bladeburner skills cost twice as many skill points<br>" +
                                           "Augmentations are 3x more expensive<br>" +
                                           "Hacking and Hacknet Nodes will be significantly less profitable<br>" +
@@ -152,7 +152,7 @@ function initBitNodes() {
                                           "Level 2: Ability to short stocks in other BitNodes<br>" +
                                           "Level 3: Ability to use limit/stop orders in other BitNodes<br><br>" +
                                           "This Source-File also increases your hacking growth multipliers by: " +
-                                          "<br>Level 1: 8%<br>Level 2: 12%<br>Level 3: 14%");
+                                          "<br>Level 1: 12%<br>Level 2: 18%<br>Level 3: 21%");
     BitNodes["BitNode9"] = new BitNode(9, "Do Androids Dream?", "COMING SOON");
     BitNodes["BitNode10"] = new BitNode(10, "MegaCorp", "COMING SOON");                //Not sure yet
     BitNodes["BitNode11"] = new BitNode(11, "The Big Crash", "Okay. Sell it all.",
@@ -182,7 +182,8 @@ function initBitNodes() {
                                             "To iterate is human, to recurse divine.<br><br>" +
                                             "Every time this BitNode is destroyed, it becomes slightly harder. Destroying this BitNode will give your Souce-File 12, or " +
                                             "if you already have this Source-File it will upgrade its level. There is no maximum level for Source-File 12. Each level " +
-                                            "of Source-File 12 will increase all of your multipliers by 1%.");
+                                            "of Source-File 12 will increase all of your multipliers by 1%. This effect is additive with itself, NOT multiplicative. In other words, " +
+                                            "level N of this Source-File will increase all of your multipliers by N%");
     //Books: Frontera, Shiner
     BitNodes["BitNode13"] = new BitNode(13, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
     BitNodes["BitNode14"] = new BitNode(14, "", "COMING SOON");
@@ -310,7 +311,7 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.HackExpGain              = 0.25;
             break;
         case 7: //Bladeburner 2079
-            BitNodeMultipliers.BladeburnerRank          = 0.5;
+            BitNodeMultipliers.BladeburnerRank          = 0.6;
             BitNodeMultipliers.BladeburnerSkillCost     = 2;
             BitNodeMultipliers.AugmentationMoneyCost    = 3;
             BitNodeMultipliers.HackingLevelMultiplier   = 0.5;
@@ -350,14 +351,14 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.CorporationValuation     = 0.01;
             break;
         case 12: //The Recursion
-            let sf12Lvl = 0;
-            for (let i = 0; i < Player.sourceFiles.length; i++) {
+            var sf12Lvl = 0;
+            for (var i = 0; i < Player.sourceFiles.length; i++) {
                 if (Player.sourceFiles[i].n === 12) {
                     sf12Lvl = Player.sourceFiles[i].lvl;
                 }
             }
-            const inc = Math.pow(1.01, sf12Lvl);
-            const dec = Math.pow(0.99, sf12Lvl);
+            var inc = Math.pow(1.01, sf12Lvl);
+            var dec = Math.pow(0.99, sf12Lvl);
             BitNodeMultipliers.HackingLevelMultiplier = dec;
 
             BitNodeMultipliers.ServerMaxMoney         = dec;
@@ -391,6 +392,7 @@ function initBitNodeMultipliers() {
             BitNodeMultipliers.InfiltrationRep   = dec;
 
             BitNodeMultipliers.CorporationValuation = dec;
+            break;
         default:
             console.log("WARNING: Player.bitNodeN invalid");
             break;

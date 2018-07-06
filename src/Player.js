@@ -1,33 +1,33 @@
 import {Augmentations, applyAugmentation,
         AugmentationNames,
-        PlayerOwnedAugmentation}                from "./Augmentations.js";
-import {BitNodes, BitNode, BitNodeMultipliers}  from "./BitNode.js";
+        PlayerOwnedAugmentation}                from "./Augmentations";
+import {BitNodes, BitNode, BitNodeMultipliers}  from "./BitNode";
 import {Company, Companies, getNextCompanyPosition,
         getJobRequirementText, CompanyPosition,
-        CompanyPositions}                       from "./Company.js";
-import {CONSTANTS}                              from "./Constants.js";
-import {Corporation}                            from "./CompanyManagement.js";
-import {Programs}                               from "./CreateProgram.js";
-import {determineCrimeSuccess, Crimes}          from "./Crimes.js";
-import {Engine}                                 from "./engine.js";
+        CompanyPositions}                       from "./Company";
+import {CONSTANTS}                              from "./Constants";
+import {Corporation}                            from "./CompanyManagement";
+import {Programs}                               from "./CreateProgram";
+import {determineCrimeSuccess, Crimes}          from "./Crimes";
+import {Engine}                                 from "./engine";
 import {Factions, Faction,
-        displayFactionContent}                  from "./Faction.js";
-import {Gang, resetGangs}                       from "./Gang.js";
-import {Locations}                              from "./Location.js";
-import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions.js";
-import {AllServers, Server, AddToAllServers}    from "./Server.js";
-import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps.js";
-import {SourceFiles, applySourceFile}           from "./SourceFile.js";
+        displayFactionContent}                  from "./Faction";
+import {Gang, resetGangs}                       from "./Gang";
+import {Locations}                              from "./Location";
+import {hasBn11SF, hasWallStreetSF,hasAISF}     from "./NetscriptFunctions";
+import {AllServers, Server, AddToAllServers}    from "./Server";
+import {SpecialServerIps, SpecialServerNames}   from "./SpecialServerIps";
+import {SourceFiles, applySourceFile}           from "./SourceFile";
 
 import Decimal                                  from "decimal.js";
-import {dialogBoxCreate}                        from "../utils/DialogBox.js";
-import {clearEventListeners}                    from "../utils/HelperFunctions.js";
-import {createRandomIp}                         from "../utils/IPAddress.js";
+import {dialogBoxCreate}                        from "../utils/DialogBox";
+import {clearEventListeners}                    from "../utils/HelperFunctions";
+import {createRandomIp}                         from "../utils/IPAddress";
 import {Reviver, Generic_toJSON,
-        Generic_fromJSON}                       from "../utils/JSONReviver.js";
+        Generic_fromJSON}                       from "../utils/JSONReviver";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
-        convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
+        convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions";
 
 function PlayerObject() {
     //Skills and stats
@@ -220,7 +220,7 @@ PlayerObject.prototype.init = function() {
     this.currentServer = t_homeComp.ip;
     AddToAllServers(t_homeComp);
 
-    this.getHomeComputer().programs.push(Programs.NukeProgram);
+    this.getHomeComputer().programs.push(Programs.NukeProgram.name);
 }
 
 PlayerObject.prototype.prestigeAugmentation = function() {
