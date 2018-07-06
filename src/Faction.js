@@ -306,13 +306,16 @@ function displayFactionContent(factionName) {
     var donateDivWrapper = createElement("div", {class:"faction-work-div-wrapper"});
     donateDiv.appendChild(donateDivWrapper);
     var donateRepGain = createElement("p", {
-        innerText:"This donation will result in 0 reputation gain"
+        innerText:"This donation will result in 0.000 reputation gain"
     });
     var donateAmountInput = createElement("input", {
         placeholder:"Donation amount",
         inputListener:()=>{
-            var amt = parseFloat(donateAmountInput.value);
-            if (isNaN(amt) || amt < 0) {
+            let amt = 0;
+            if(donateAmountInput.value !== "") {
+                amt = parseFloat(donateAmountInput.value);
+            }
+            if (isNaN(amt)) {
                 donateRepGain.innerText = "Invalid donate amount entered!";
             } else {
                 var repGain = amt / 1e6 * Player.faction_rep_mult;
