@@ -3,10 +3,12 @@ import {addActiveScriptsItem,
         updateActiveScriptsItems}           from "./ActiveScriptsUI";
 import {CONSTANTS}                          from "./Constants";
 import {Engine}                             from "./engine";
+import {Interpreter}                        from "./JSInterpreter";
 import {Environment}                        from "./NetscriptEnvironment";
 import {evaluate, isScriptErrorMessage,
         makeRuntimeRejectMsg,
         killNetscriptDelay}                 from "./NetscriptEvaluator";
+import {NetscriptFunctions}                 from "./NetscriptFunctions";
 import {executeJSScript}                    from "./NetscriptJSEvaluator";
 import {NetscriptPort}                      from "./NetscriptPort";
 import {AllServers}                         from "./Server";
@@ -16,6 +18,7 @@ import {parse}                              from "../utils/acorn";
 import {dialogBoxCreate}                    from "../utils/DialogBox";
 import {compareArrays, printArray,
         roundToTwo}                         from "../utils/HelperFunctions";
+import {isString}                           from "../utils/StringHelperFunctions";
 
 function WorkerScript(runningScriptObj) {
 	this.name 			= runningScriptObj.filename;
@@ -85,7 +88,7 @@ function prestigeWorkerScripts() {
 // JS script promises need a little massaging to have the same guarantees as netscript
 // promises. This does said massaging and kicks the script off. It returns a promise
 // that resolves or rejects when the corresponding worker script is done.
-function startJsScript(workerScript) {
+function startNetscript2Script(workerScript) {
     workerScript.running = true;
 
     // The name of the currently running netscript function, to prevent concurrent
@@ -152,6 +155,73 @@ function startJsScript(workerScript) {
     });
 }
 
+function startNetscript1Script(workerScript) {
+    var code = workerScript.code;
+    workerScript.running = true;
+
+    var interpreterInitialization = function(int, scope) {
+        //Add the Netscript environment
+        var ns = NetscriptFunctions(workerScript);
+        for (var name in ns) {
+            let entry = ns[name];
+            if (typeof entry === "function") {
+                //Async functions need to be wrapped. See JS-Interpreter documentation
+                if (name === "hack"     || name === "grow"  || name === "weaken" || name === "sleep" ||
+                    name === "prompt"   || name === "run"   || name === "exec") {
+                    let tempWrapper = function() {
+                        let fnArgs = [];
+                        for (let i = 0; i < arguments.length-1; ++i) {
+                            fnArgs.push(arguments[i]);
+                        }
+                        let cb = arguments[arguments.length-1];
+                        let fnPromise = entry.apply(null, fnArgs);
+                        fnPromise.then(function(res) {
+                            cb(res);
+                        });
+                    }
+                    int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
+                } else {
+                    int.setProperty(scope, name, int.createNativeFunction(entry));
+                }
+            } else {
+                //Math, Date, Number, hacknetnodes, bladeburner
+                int.setProperty(scope, name, int.nativeToPseudo(entry));
+            }
+        }
+
+        //Add the arguments
+        int.setProperty(scope, "args", int.nativeToPseudo(workerScript.args));
+    }
+    var interpreter = new Interpreter(code, interpreterInitialization);
+
+    return new Promise(function(resolve, reject) {
+        function runInterpreter() {
+            try {
+                if (workerScript.env.stopFlag) {return reject(workerScript);}
+
+                if (interpreter.step()) {
+                    window.setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
+                } else {
+                    resolve(workerScript);
+                }
+            } catch(e) {
+                if (isString(e)) {
+                    workerScript.errorMessage = e;
+                    return reject(workerScript);
+                } else if (e instanceof WorkerScript) {
+                    return reject(e);
+                } else {
+                    return reject(workerScript);
+                }
+            }
+        }
+
+        runInterpreter();
+    });
+
+
+}
+
 //Loop through workerScripts and run every script that is not currently running
 function runScriptsLoop() {
     var scriptDeleted = false;
@@ -200,8 +270,10 @@ function runScriptsLoop() {
 		if (workerScripts[i].running == false && workerScripts[i].env.stopFlag == false) {
             let p = null;  // p is the script's result promise.
             if (workerScripts[i].name.endsWith(".js") || workerScripts[i].name.endsWith(".ns")) {
-                p = startJsScript(workerScripts[i]);
+                p = startNetscript2Script(workerScripts[i]);
             } else {
+                p = startNetscript1Script(workerScripts[i]);
+                /*
                 try {
                     var ast = parse(workerScripts[i].code, {sourceType:"module"});
                     //console.log(ast);
@@ -213,6 +285,7 @@ function runScriptsLoop() {
                 }
                 workerScripts[i].running = true;
                 p = evaluate(ast, workerScripts[i]);
+                */
             }
 
 			//Once the code finishes (either resolved or rejected, doesnt matter), set its

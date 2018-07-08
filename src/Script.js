@@ -507,7 +507,7 @@ function parseOnlyRamCalculate(server, code, workerScript) {
         return ram;
 
     } catch (error) {
-        console.info("parse or eval error: ", error);
+        //console.info("parse or eval error: ", error);
         // This is not unexpected. The user may be editing a script, and it may be in
         // a transitory invalid state.
         return -1;

@@ -44,7 +44,6 @@ import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
         scriptCalculateHackingChance, scriptCalculateHackingTime,
         scriptCalculateExpGain, scriptCalculatePercentMoneyHacked,
         scriptCalculateGrowTime, scriptCalculateWeakenTime} from "./NetscriptEvaluator";
-import {Environment}                                from "./NetscriptEnvironment";
 import {NetscriptPort}                              from "./NetscriptPort";
 
 import Decimal                                      from "decimal.js";
@@ -164,10 +163,9 @@ function NetscriptFunctions(workerScript) {
     };
 
     return {
-        Math : Math,
-        Date : Date,
-        Number : Number,
-        hacknetnodes : Player.hacknetNodeWrappers,
+        hacknetnodes : function() {
+            return Player.hacknetNodeWrappers;
+        },
         sprintf : sprintf,
         vsprintf: vsprintf,
         scan : function(ip=workerScript.serverIp, hostnames=true){

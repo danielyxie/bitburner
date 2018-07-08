@@ -487,27 +487,10 @@ let CONSTANTS = {
                                "World Stock Exchange account and TIX API Access<br>",
 
     LatestUpdate:
-    "v0.39.1<br>"  +
-    "* Bladeburner Rank gain in BN-7 is now reduced by 40% instead of 50%<br>" +
-    "* Quadrupled the amount of money gained from Bladeburner contracts<br>" +
-    "* Added joinBladeburnerDivision() Netscript function to Bladeburner API<br>" +
-    "* Doubled the effects of Source-File 5. Now gives 8%, 12%, and 14% increase to all hacking multipliers " +
-    "at levels 1, 2, and 3, respectively (increased from 4%/6%, 7%)<br>" +
-    "* Increased the effect of Source-File 8. It now gives a 12%, 18% and 21% to your hacking growth multiplier " +
-    "at levels 1, 2, and 3, respectively (increased from 8%, 12%, 14%)<br>" +
-    "* The effect of Source-File 12 is now additive with itself, rather than multiplicative. This means " +
-    "that level N of Source-File 12 now increases all multipliers by N%<br>" +
-    "* The setting to suppress the confirmation box when purchasing Augmentations was moved into the main Options menu (by Github user hydroflame)<br>" +
-    "* Bug Fix: Crime Success rates were being calculated incorrectly (by Github user hydroflame)<br>" +
-    "* When an Infiltration is finished, you will now return back to the company's page, rather than the city<br>" +
-    "* Infiltration faction reputation selector now remembers your last choice<br>" +
-    "* Significantly increased the amount of money gained from Infiltration<br>" +
-    "* Bug Fix: Copying a NetscriptJS script to another server using scp now properly takes into account " +
-    "the script's changes.<br>" +
-    "* Bug Fix: Fixed an issue where game would not load in Edge due to incompatible features<br>" +
-    "* travelToCity() Singularity function no longer grants Intelligence exp"
-
-
+    "v0.40.0<br>"  +
+    "* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)<br>" +
+    "* HP is now reset (restored) when Augmenting<br>" + 
+    "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>"
 }
 
 export {CONSTANTS};
