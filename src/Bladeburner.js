@@ -11,8 +11,7 @@ import {KEY}                                        from "./Terminal";
 
 import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {removeChildrenFromElement,
-        removeElement}                              from "../utils/HelperFunctions";
+import {removeChildrenFromElement}                  from "../utils/HelperFunctions";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";
 import numeral                                      from "numeral/min/numeral.min";
@@ -24,6 +23,7 @@ import {createPopup}                                from "../utils/uiHelpers/cre
 import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
 import {getRandomInt}                               from "../utils/helpers/getRandomInt";
+import {removeElement}                              from "../utils/uiHelpers/removeElement";
 import {removeElementById}                          from "../utils/uiHelpers/removeElementById";
 
 

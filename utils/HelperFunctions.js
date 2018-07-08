@@ -1,12 +1,6 @@
 //General helper functions
 import {isString}           from "./helpers/isString";
 
-function removeElement(elem) {
-    if (elem == null || !(elem instanceof Element)) {return;}
-    while(elem.firstChild) {elem.removeChild(elem.firstChild);}
-    elem.parentNode.removeChild(elem);
-}
-
 function removeChildrenFromElement(el) {
     if (isString(el)) {
         el = document.getElementById(el);
@@ -54,7 +48,6 @@ function clearSelector(selector) {
     }
 }
 
-export {removeElement,
-        createAccordionElement,
+export {createAccordionElement,
         removeChildrenFromElement,
         clearSelector};

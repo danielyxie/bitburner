@@ -1,18 +1,19 @@
-import {Engine}                                     from "./engine";
+import {Engine}                    from "./engine";
 import {workerScripts,
         addWorkerScript,
-        killWorkerScript}                           from "./NetscriptWorker";
-import {Player}                                     from "./Player";
-import {getServer}                                  from "./Server";
-import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {createAccordionElement, removeElement,
-        removeChildrenFromElement}                  from "../utils/HelperFunctions";
-import {arrayToString}                              from "../utils/helpers/arrayToString";
-import {createElement}                              from "../utils/uiHelpers/createElement";
-import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
-import {logBoxCreate}                               from "../utils/LogBox";
-import numeral                                      from "numeral/min/numeral.min";
-import {formatNumber}                               from "../utils/StringHelperFunctions";
+        killWorkerScript}          from "./NetscriptWorker";
+import {Player}                    from "./Player";
+import {getServer}                 from "./Server";
+import {dialogBoxCreate}           from "../utils/DialogBox";
+import {createAccordionElement,
+        removeChildrenFromElement} from "../utils/HelperFunctions";
+import {arrayToString}             from "../utils/helpers/arrayToString";
+import {createElement}             from "../utils/uiHelpers/createElement";
+import {exceptionAlert}            from "../utils/helpers/exceptionAlert";
+import {logBoxCreate}              from "../utils/LogBox";
+import numeral                     from "numeral/min/numeral.min";
+import {formatNumber}              from "../utils/StringHelperFunctions";
+import {removeElement}             from "../utils/uiHelpers/removeElement";
 
 /* {
  *     serverName: {
