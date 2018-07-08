@@ -81,7 +81,8 @@ function infiltrationBoxCreate(inst) {
 
     var sellButton = clearEventListeners("infiltration-box-sell");
     setTimeout(function() {
-    sellButton.addEventListener("click", function() {
+    sellButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         Player.gainMoney(moneyValue);
         dialogBoxCreate("You sold the classified information you stole from " + inst.companyName +
                         " for $" + moneyValue + " on the black market!<br><br>" +
@@ -99,7 +100,8 @@ function infiltrationBoxCreate(inst) {
 
     var factionButton = clearEventListeners("infiltration-box-faction");
     setTimeout(function() {
-    factionButton.addEventListener("click", function() {
+    factionButton.addEventListener("click", function(e) {
+        if (!e.isTrusted) {return false;}
         var facName = selector.options[selector.selectedIndex].value;
         lastFac = facName;
         var faction = Factions[facName];

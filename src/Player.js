@@ -300,6 +300,10 @@ PlayerObject.prototype.prestigeAugmentation = function() {
 
     this.hacknetNodes.length = 0;
     this.totalHacknetNodeProduction = 0;
+
+    //Re-calculate skills and reset HP
+    this.updateSkillLevels();
+    this.hp = this.max_hp;
 }
 
 PlayerObject.prototype.prestigeSourceFile = function() {
@@ -393,6 +397,9 @@ PlayerObject.prototype.prestigeSourceFile = function() {
     this.playtimeSinceLastAug = 0;
     this.playtimeSinceLastBitnode = 0;
     this.scriptProdSinceLastAug = 0;
+
+    this.updateSkillLevels();
+    this.hp = this.max_hp;
 }
 
 PlayerObject.prototype.getCurrentServer = function() {
@@ -2357,7 +2364,7 @@ PlayerObject.prototype.queueAugmentation = function(name) {
             return;
         }
     }
-    
+
     this.firstAugPurchased = true;
     this.queuedAugmentations.push(new PlayerOwnedAugmentation(name));
 }
