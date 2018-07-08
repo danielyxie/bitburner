@@ -1,3 +1,6 @@
+/**
+ * Represents the possible configuration values that can be provided when creating the progress bar text.
+ */
 interface IProgressBarConfiguration {
     /**
      * Current progress, taken as a decimal (i.e. '0.6' to represent '60%')
@@ -10,6 +13,9 @@ interface IProgressBarConfiguration {
     totalTicks?: number;
 }
 
+/**
+ * Represents concrete configuration values when creating the progress bar text.
+ */
 interface IProgressBarConfigurationMaterialized extends IProgressBarConfiguration {
     progress: number;
     totalTicks: number;

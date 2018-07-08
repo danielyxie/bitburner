@@ -7,7 +7,11 @@ export function isPowerOfTwo(n: number) {
         return false;
     }
 
+    if (n === 0) {
+        return false;
+    }
+
     // Disabiling the bitwise rule because it's honestly the most effecient way to check for this.
     // tslint:disable-next-line:no-bitwise
-    return n && (n & (n - 1)) === 0;
+    return (n & (n - 1)) === 0;
 }

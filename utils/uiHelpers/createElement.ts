@@ -1,9 +1,15 @@
+/**
+ * Options specific to creating an anchor ("<a>") element.
+ */
 interface ICreateElementAnchorOptions {
     href?: string;
     target?: string;
     text?: string;
 }
 
+/**
+ * Options specific to creating an input ("<input>") element.
+ */
 interface ICreateElementInputOptions {
     checked?: boolean;
     maxLength?: number;
@@ -14,10 +20,16 @@ interface ICreateElementInputOptions {
     value?: string;
 }
 
+/**
+ * Options specific to creating a label ("<label>") element.
+ */
 interface ICreateElementLabelOptions {
     for?: string;
 }
 
+/**
+ * Options for setting up event listeners on the element.
+ */
 interface ICreateElementListenerOptions {
     changeListener?(this: HTMLElement, ev: Event): any;
     clickListener?(this: HTMLElement, ev: MouseEvent): any;
@@ -26,6 +38,10 @@ interface ICreateElementListenerOptions {
     onkeyup?(this: HTMLElement, ev: KeyboardEvent): any;
 }
 
+/**
+ * Options for setting up the inline-styling of element.
+ * NOTE: Relying on CSS styling should be preferred over forcing the higher specificity via inline styles.
+ */
 interface ICreateElementStyleOptions {
     backgroundColor?: string;
     border?: string;
@@ -43,11 +59,17 @@ interface ICreateElementStyleOptions {
     width?: string;
 }
 
+/**
+ * Options for adding an in-game tooltip to the element.
+ */
 interface ICreateElementTooltipOptions {
     tooltip?: string;
     tooltipleft?: string;
 }
 
+/**
+ * All possible configuration options when creating an element.
+ */
 interface ICreateElementOptions extends
     ICreateElementStyleOptions,
     ICreateElementListenerOptions,
@@ -71,118 +93,120 @@ interface ICreateElementOptions extends
 }
 
 function setElementAnchor(el: HTMLAnchorElement, params: ICreateElementAnchorOptions) {
-    if (params.text) {
+    if (params.text !== undefined) {
         el.text = params.text;
     }
-    if (params.href) {
+    if (params.href !== undefined) {
         el.href = params.href;
     }
-    if (params.target) {
+    if (params.target !== undefined) {
         el.target = params.target;
     }
 }
 
 function setElementInput(el: HTMLInputElement, params: ICreateElementInputOptions) {
-    if (params.name) {
+    if (params.name !== undefined) {
         el.name = params.name;
     }
-    if (params.value) {
+    if (params.value !== undefined) {
         el.value = params.value;
     }
-    if (params.type) {
+    if (params.type !== undefined) {
         el.type = params.type;
     }
-    if (params.checked) {
+    if (params.checked !== undefined) {
         el.checked = params.checked;
     }
-    if (params.pattern) {
+    if (params.pattern !== undefined) {
         el.pattern = params.pattern;
     }
-    if (params.maxLength) {
+    if (params.maxLength !== undefined) {
         el.maxLength = params.maxLength;
     }
-    if (params.placeholder) {
+    if (params.placeholder !== undefined) {
         el.placeholder = params.placeholder;
     }
 }
 
 function setElementLabel(el: HTMLLabelElement, params: ICreateElementLabelOptions) {
-    if (params.for) {
+    if (params.for !== undefined) {
         el.htmlFor = params.for;
     }
 }
 
 function setElementListeners(el: HTMLElement, params: ICreateElementListenerOptions) {
-    if (params.clickListener) {
+    // tslint:disable:no-unbound-method
+    if (params.clickListener !== undefined) {
         el.addEventListener("click", params.clickListener);
     }
-    if (params.inputListener) {
+    if (params.inputListener !== undefined) {
         el.addEventListener("input", params.inputListener);
     }
-    if (params.changeListener) {
+    if (params.changeListener !== undefined) {
         el.addEventListener("change", params.changeListener);
     }
-    if (params.onkeyup) {
+    if (params.onkeyup !== undefined) {
         el.addEventListener("keyup", params.onkeyup);
     }
-    if (params.onfocus) {
+    if (params.onfocus !== undefined) {
         el.addEventListener("focus", params.onfocus);
     }
+    // tslint:enable:no-unbound-method
 }
 
 function setElementStyle(el: HTMLElement, params: ICreateElementStyleOptions) {
-    if (params.display) {
+    if (params.display !== undefined) {
         el.style.display = params.display;
     }
-    if (params.visibility) {
+    if (params.visibility !== undefined) {
         el.style.visibility = params.visibility;
     }
-    if (params.margin) {
+    if (params.margin !== undefined) {
         el.style.margin = params.margin;
     }
-    if (params.marginLeft) {
+    if (params.marginLeft !== undefined) {
         el.style.marginLeft = params.marginLeft;
     }
-    if (params.marginTop) {
+    if (params.marginTop !== undefined) {
         el.style.marginTop = params.marginTop;
     }
-    if (params.padding) {
+    if (params.padding !== undefined) {
         el.style.padding = params.padding;
     }
-    if (params.color) {
+    if (params.color !== undefined) {
         el.style.color = params.color;
     }
-    if (params.border) {
+    if (params.border !== undefined) {
         el.style.border = params.border;
     }
-    if (params.float) {
+    if (params.float !== undefined) {
         el.style.cssFloat = params.float;
     }
-    if (params.fontSize) {
+    if (params.fontSize !== undefined) {
         el.style.fontSize = params.fontSize;
     }
-    if (params.whiteSpace) {
+    if (params.whiteSpace !== undefined) {
         el.style.whiteSpace = params.whiteSpace;
     }
-    if (params.width) {
+    if (params.width !== undefined) {
         el.style.width = params.width;
     }
-    if (params.backgroundColor) {
+    if (params.backgroundColor !== undefined) {
         el.style.backgroundColor = params.backgroundColor;
     }
-    if (params.position) {
+    if (params.position !== undefined) {
         el.style.position = params.position;
     }
 }
 
 function setElementTooltip(el: HTMLElement, params: ICreateElementTooltipOptions) {
-    if (params.tooltip && params.tooltip !== "")     {
+    if (params.tooltip !== undefined && params.tooltip !== "")     {
         el.className += " tooltip";
         el.appendChild(createElement("span", {
             class: "tooltiptext",
             innerHTML: params.tooltip,
         }));
-    } else if (params.tooltipleft) {
+    } else if (params.tooltipleft !== undefined) {
         el.className += " tooltip";
         el.appendChild(createElement("span", {
             class: "tooltiptextleft",
@@ -191,22 +215,27 @@ function setElementTooltip(el: HTMLElement, params: ICreateElementTooltipOptions
     }
 }
 
+/**
+ * An all-in-one-call way of creating an element to be added to the DOM at some point.
+ * @param tagName The HTML tag/element name
+ * @param params Additional parameters to set on the element
+ */
 export function createElement(tagName: string, params: ICreateElementOptions = {}) {
     const el: HTMLElement = document.createElement(tagName);
 
-    if (params.id) {
+    if (params.id !== undefined) {
         el.id = params.id;
     }
-    if (params.class) {
+    if (params.class !== undefined) {
         el.className = params.class;
     }
-    if (params.innerHTML) {
+    if (params.innerHTML !== undefined) {
         el.innerHTML = params.innerHTML;
     }
-    if (params.innerText) {
+    if (params.innerText !== undefined) {
         el.innerText = params.innerText;
     }
-    if (params.tabIndex) {
+    if (params.tabIndex !== undefined) {
         el.tabIndex = params.tabIndex;
     }
 

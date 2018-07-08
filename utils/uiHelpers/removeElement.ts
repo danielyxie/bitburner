@@ -16,11 +16,11 @@ export function removeElement(elem: Element | null) {
         return;
     }
 
-    while (elem.firstChild) {
+    while (elem.firstChild !== null) {
         elem.removeChild(elem.firstChild);
     }
 
-    if (elem.parentNode) {
+    if (elem.parentNode !== null) {
         elem.parentNode.removeChild(elem);
     }
 }
