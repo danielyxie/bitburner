@@ -5,7 +5,7 @@ import {iTutorialSteps, iTutorialNextStep,
         iTutorialIsRunning, currITutorialStep}  from "./InteractiveTutorial";
 import {Player}                                 from "./Player";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {clearEventListeners}                    from "../utils/HelperFunctions";
+import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {createElement}                          from "../utils/uiHelpers/createElement";

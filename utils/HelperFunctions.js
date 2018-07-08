@@ -1,16 +1,6 @@
 //General helper functions
 import {isString}           from "./helpers/isString";
 
-//Given an element by its Id(usually an 'a' element), removes all event listeners
-//from that element by cloning and replacing. Then returns the new cloned element
-function clearEventListeners(elemId) {
-    var elem = document.getElementById(elemId);
-    if (elem == null) {console.log("ERR: Could not find element for: " + elemId); return null;}
-    var newElem = elem.cloneNode(true);
-    elem.parentNode.replaceChild(newElem, elem);
-    return newElem;
-}
-
 //Same as clearEventListeners except it takes a DOM element object rather than an ID
 function clearEventListenersEl(el) {
     if (el == null) {console.log("ERR: element passed into clearEventListenersEl is null"); return null;}
@@ -72,8 +62,7 @@ function clearSelector(selector) {
     }
 }
 
-export {clearEventListeners,
-        clearEventListenersEl,
+export {clearEventListenersEl,
         removeElement,
         createAccordionElement,
         removeChildrenFromElement,

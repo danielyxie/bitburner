@@ -15,7 +15,7 @@ import {Settings}                               from "./Settings";
 import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {clearEventListeners}                    from "../utils/HelperFunctions";
+import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {createRandomIp}                         from "../utils/IPAddress";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";

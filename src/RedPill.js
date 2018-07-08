@@ -6,9 +6,9 @@ import {SourceFiles, SourceFile,
         PlayerOwnedSourceFile}                  from "./SourceFile";
 import {Terminal}                               from "./Terminal";
 
+import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {clearEventListeners,
-        removeChildrenFromElement}              from "../utils/HelperFunctions";
+import {removeChildrenFromElement}              from "../utils/HelperFunctions";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";
 

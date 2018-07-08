@@ -1,5 +1,5 @@
 import {killWorkerScript}    from "../src/NetscriptWorker";
-import {clearEventListeners} from "./HelperFunctions";
+import {clearEventListeners} from "./uiHelpers/clearEventListeners";
 import {arrayToString}       from "./helpers/arrayToString";
 
 $(document).keydown(function(event) {

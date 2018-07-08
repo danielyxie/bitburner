@@ -1,7 +1,7 @@
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions";
-import {clearEventListeners,
-        removeChildrenFromElement}              from "../utils/HelperFunctions";
+import {removeChildrenFromElement}              from "../utils/HelperFunctions";
+import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
 import numeral                                  from "numeral/min/numeral.min";

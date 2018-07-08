@@ -19,7 +19,7 @@ import {loadSpecialServerIps, SpecialServerIps} from "./SpecialServerIps";
 import {loadStockMarket, StockMarket}           from "./StockMarket";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {gameOptionsBoxClose}                    from "../utils/GameOptions";
-import {clearEventListeners}                    from "../utils/HelperFunctions";
+import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import {createElement}                          from "../utils/uiHelpers/createElement";

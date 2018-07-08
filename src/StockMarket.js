@@ -6,8 +6,7 @@ import {WorkerScript}                           from "./NetscriptWorker";
 import {Player}                                 from "./Player";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {clearEventListeners,
-        clearEventListenersEl}                  from "../utils/HelperFunctions";
+import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import numeral                                  from "numeral/min/numeral.min";
