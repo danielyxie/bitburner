@@ -1,14 +1,6 @@
 //General helper functions
 import {isString}           from "./helpers/isString";
 
-//Same as clearEventListeners except it takes a DOM element object rather than an ID
-function clearEventListenersEl(el) {
-    if (el == null) {console.log("ERR: element passed into clearEventListenersEl is null"); return null;}
-    var newElem = el.cloneNode(true);
-    el.parentNode.replaceChild(newElem, el);
-    return newElem;
-}
-
 function removeElement(elem) {
     if (elem == null || !(elem instanceof Element)) {return;}
     while(elem.firstChild) {elem.removeChild(elem.firstChild);}
@@ -62,8 +54,7 @@ function clearSelector(selector) {
     }
 }
 
-export {clearEventListenersEl,
-        removeElement,
+export {removeElement,
         createAccordionElement,
         removeChildrenFromElement,
         clearSelector};
