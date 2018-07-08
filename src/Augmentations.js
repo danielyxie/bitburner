@@ -12,7 +12,7 @@ import {Script, RunningScript}             from "./Script";
 import {Server}                            from "./Server";
 import {SourceFiles}                       from "./SourceFile";
 import {dialogBoxCreate}                   from "../utils/DialogBox";
-import {createAccordionElement}            from "../utils/HelperFunctions";
+import {createAccordionElement}            from "../utils/uiHelpers/createAccordionElement";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                  from "../utils/JSONReviver";
 import {clearObject}                       from "../utils/helpers/clearObject";

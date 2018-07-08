@@ -5,7 +5,7 @@ import {workerScripts,
 import {Player}                    from "./Player";
 import {getServer}                 from "./Server";
 import {dialogBoxCreate}           from "../utils/DialogBox";
-import {createAccordionElement}    from "../utils/HelperFunctions";
+import {createAccordionElement}    from "../utils/uiHelpers/createAccordionElement";
 import {arrayToString}             from "../utils/helpers/arrayToString";
 import {createElement}             from "../utils/uiHelpers/createElement";
 import {exceptionAlert}            from "../utils/helpers/exceptionAlert";

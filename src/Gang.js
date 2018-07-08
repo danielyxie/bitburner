@@ -6,7 +6,7 @@ import {Player}                                 from "./Player";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
-import {createAccordionElement}                 from "../utils/HelperFunctions";
+import {createAccordionElement}                 from "../utils/uiHelpers/createAccordionElement";
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {createPopup}                            from "../utils/uiHelpers/createPopup";
 import  numeral                                 from "numeral/min/numeral.min";
