@@ -11,7 +11,7 @@ import {Settings}                               from "./Settings";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {factionInvitationBoxCreate}             from "../utils/FactionInvitationBox";
-import {removeChildrenFromElement}              from "../utils/HelperFunctions";
+import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";

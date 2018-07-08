@@ -1,18 +1,3 @@
-//General helper functions
-import {isString}           from "./helpers/isString";
-
-function removeChildrenFromElement(el) {
-    if (isString(el)) {
-        el = document.getElementById(el);
-    }
-    if (el == null) {return;}
-    if (el instanceof Element) {
-        while(el.firstChild) {
-            el.removeChild(el.firstChild);
-        }
-    }
-}
-
 //Creates both the header and panel element of an accordion and sets the click handler
 function createAccordionElement(params) {
     var li = document.createElement("li"),
@@ -49,5 +34,4 @@ function clearSelector(selector) {
 }
 
 export {createAccordionElement,
-        removeChildrenFromElement,
         clearSelector};

@@ -11,7 +11,7 @@ import {KEY}                                        from "./Terminal";
 
 import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {removeChildrenFromElement}                  from "../utils/HelperFunctions";
+import {removeChildrenFromElement}                  from "../utils/uiHelpers/removeChildrenFromElement";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";
 import numeral                                      from "numeral/min/numeral.min";

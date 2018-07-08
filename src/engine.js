@@ -1,6 +1,6 @@
 import {dialogBoxCreate}                        from "../utils/DialogBox";
 import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions";
-import {removeChildrenFromElement}              from "../utils/HelperFunctions";
+import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";

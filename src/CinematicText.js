@@ -1,6 +1,6 @@
 import {Engine}                    from "./engine";
 
-import {removeChildrenFromElement} from "../utils/HelperFunctions";
+import {removeChildrenFromElement} from "../utils/uiHelpers/removeChildrenFromElement";
 import {createElement}             from "../utils/uiHelpers/createElement";
 import {exceptionAlert}            from "../utils/helpers/exceptionAlert";
 import {isString}                  from "../utils/helpers/isString";

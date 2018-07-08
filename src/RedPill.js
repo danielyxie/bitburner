@@ -8,7 +8,7 @@ import {Terminal}                               from "./Terminal";
 
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {removeChildrenFromElement}              from "../utils/HelperFunctions";
+import {removeChildrenFromElement}              from "../utils/uiHelpers/removeChildrenFromElement";
 import {yesNoBoxCreate, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxClose}     from "../utils/YesNoBox";
 

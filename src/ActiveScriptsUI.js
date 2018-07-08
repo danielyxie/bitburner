@@ -5,14 +5,14 @@ import {workerScripts,
 import {Player}                    from "./Player";
 import {getServer}                 from "./Server";
 import {dialogBoxCreate}           from "../utils/DialogBox";
-import {createAccordionElement,
-        removeChildrenFromElement} from "../utils/HelperFunctions";
+import {createAccordionElement}    from "../utils/HelperFunctions";
 import {arrayToString}             from "../utils/helpers/arrayToString";
 import {createElement}             from "../utils/uiHelpers/createElement";
 import {exceptionAlert}            from "../utils/helpers/exceptionAlert";
 import {logBoxCreate}              from "../utils/LogBox";
 import numeral                     from "numeral/min/numeral.min";
 import {formatNumber}              from "../utils/StringHelperFunctions";
+import {removeChildrenFromElement} from "../utils/uiHelpers/removeChildrenFromElement";
 import {removeElement}             from "../utils/uiHelpers/removeElement";
 
 /* {
