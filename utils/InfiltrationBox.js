@@ -3,7 +3,7 @@ import {CONSTANTS}                          from "../src/Constants";
 import {Factions, Faction}                  from "../src/Faction";
 import {Player}                             from "../src/Player";
 import {dialogBoxCreate}                    from "./DialogBox";
-import {clearEventListeners}                from "./HelperFunctions";
+import {clearEventListeners}                from "./uiHelpers/clearEventListeners";
 import {formatNumber}                       from "./StringHelperFunctions";
 
 //Keep track of last faction

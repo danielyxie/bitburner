@@ -48,9 +48,11 @@ import {NetscriptPort}                              from "./NetscriptPort";
 
 import Decimal                                      from "decimal.js";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {printArray, powerOfTwo}                     from "../utils/HelperFunctions";
+import {isPowerOfTwo}                               from "../utils/helpers/isPowerOfTwo";
+import {arrayToString}                              from "../utils/helpers/arrayToString";
 import {createRandomIp}                             from "../utils/IPAddress";
-import {formatNumber, isString, isHTML}             from "../utils/StringHelperFunctions";
+import {formatNumber, isHTML}                       from "../utils/StringHelperFunctions";
+import {isString}                                   from "../utils/helpers/isString";
 import {yesNoBoxClose, yesNoBoxGetYesButton,
         yesNoBoxGetNoButton, yesNoBoxCreate,
         yesNoBoxOpen}                               from "../utils/YesNoBox";
@@ -685,18 +687,18 @@ function NetscriptFunctions(workerScript) {
             }
             var runningScriptObj = findRunningScript(filename, argsForKillTarget, server);
             if (runningScriptObj == null) {
-                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget));
+                workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + arrayToString(argsForKillTarget));
                 return false;
             }
             var res = killWorkerScript(runningScriptObj, server.ip);
             if (res) {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.kill == null) {
-                    workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
+                    workerScript.scriptRef.log("Killing " + filename + " on " + server.hostname + " with args: " + arrayToString(argsForKillTarget) +  ". May take up to a few minutes for the scripts to die...");
                 }
                 return true;
             } else {
                 if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.kill == null) {
-                    workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + printArray(argsForKillTarget));
+                    workerScript.scriptRef.log("kill() failed. No such script "+ filename + " on " + server.hostname + " with args: " + arrayToString(argsForKillTarget));
                 }
                 return false;
             }
@@ -1546,7 +1548,7 @@ function NetscriptFunctions(workerScript) {
             }
 
             ram = Math.round(ram);
-            if (isNaN(ram) || !powerOfTwo(ram)) {
+            if (isNaN(ram) || !isPowerOfTwo(ram)) {
                 workerScript.scriptRef.log("ERROR: purchaseServer() failed due to invalid ram argument. Must be numeric and a power of 2");
                 return "";
             }
@@ -1977,7 +1979,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 var runningScriptObj = findRunningScript(scriptname, argsForScript, server);
                 if (runningScriptObj == null) {
-                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + printArray(argsForScript));
+                    workerScript.scriptRef.log("getScriptIncome() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + arrayToString(argsForScript));
                     return -1;
                 }
                 return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
@@ -2007,7 +2009,7 @@ function NetscriptFunctions(workerScript) {
                 }
                 var runningScriptObj = findRunningScript(scriptname, argsForScript, server);
                 if (runningScriptObj == null) {
-                    workerScript.scriptRef.log("getScriptExpGain() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + printArray(argsForScript));
+                    workerScript.scriptRef.log("getScriptExpGain() failed. No such script "+ scriptname + " on " + server.hostname + " with args: " + arrayToString(argsForScript));
                     return -1;
                 }
                 return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;

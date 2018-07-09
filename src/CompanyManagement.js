@@ -7,14 +7,17 @@ import {Player}                                         from "./Player";
 
 import Decimal                                          from "decimal.js";
 import {dialogBoxCreate}                                from "../utils/DialogBox";
-import {getRandomInt, removeElementById,
-        createElement, createAccordionElement,
-        removeChildrenFromElement, createPopup,
-        clearSelector}                                  from "../utils/HelperFunctions";
+import {clearSelector}                                  from "../utils/uiHelpers/clearSelector";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver";
 import numeral                                          from "numeral/min/numeral.min";
-import {formatNumber, isString, generateRandomString}   from "../utils/StringHelperFunctions";
+import {createElement}                                  from "../utils/uiHelpers/createElement";
+import {createPopup}                                    from "../utils/uiHelpers/createPopup";
+import {formatNumber, generateRandomString}             from "../utils/StringHelperFunctions";
+import {getRandomInt}                                   from "../utils/helpers/getRandomInt";
+import {isString}                                       from "../utils/helpers/isString";
+import {removeChildrenFromElement}                      from "../utils/uiHelpers/removeChildrenFromElement";
+import {removeElementById}                              from "../utils/uiHelpers/removeElementById";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,
@@ -4921,3 +4924,4 @@ Corporation.fromJSON = function(value) {
 Reviver.constructors.Corporation = Corporation;
 
 export {Corporation};
+

@@ -1,5 +1,5 @@
 import { EqualityFunc } from "../src/types";
-import { dialogBoxCreate } from "./DialogBox";
+import { isString } from "./helpers/isString";
 
 // Netburner String helper functions
 
@@ -49,7 +49,8 @@ function longestCommonStart(strings: string[]): string {
     if (!containsAllStrings(strings)) {return ""; }
     if (strings.length === 0) {return ""; }
 
-    const A: string[] = strings.concat().sort();
+    const A: string[] = strings.concat()
+        .sort();
     const a1: string = A[0];
     const a2: string = A[A.length - 1];
     const L: number = a1.length;
@@ -60,11 +61,6 @@ function longestCommonStart(strings: string[]): string {
     }
 
     return a1.substring(0, i);
-}
-
-// Returns whether a variable is a string
-function isString(str: any): boolean {
-    return (typeof str === "string" || str instanceof String);
 }
 
 // Returns whether an array contains entirely of string objects
@@ -80,59 +76,12 @@ function formatNumber(num: number, numFractionDigits: number): string {
     });
 }
 
-// Count the number of times a substring occurs in a string
-function numOccurrences(text: string, subString: string): number {
-    const input: string = `${text}`;
-    const search: string = `${subString}`;
-    if (search.length <= 0) { return (input.length + 1); }
-
-    let n: number = 0;
-    let pos: number = 0;
-    const step: number = search.length;
-
-    while (true) {
-        pos = input.indexOf(search, pos);
-        if (pos >= 0) {
-            ++n;
-            pos += step;
-        } else { break; }
-    }
-
-    return n;
-}
-
-// Counters the number of Netscript operators in a string
-function numNetscriptOperators(text: string): number {
-    const total: number = numOccurrences(text, "+") +
-        numOccurrences(text, "-") +
-        numOccurrences(text, "*") +
-        numOccurrences(text, "/") +
-        numOccurrences(text, "%") +
-        numOccurrences(text, "&&") +
-        numOccurrences(text, "||") +
-        numOccurrences(text, "<") +
-        numOccurrences(text, ">") +
-        numOccurrences(text, "<=") +
-        numOccurrences(text, ">=") +
-        numOccurrences(text, "==") +
-        numOccurrences(text, "!=");
-    if (isNaN(total)) {
-        // tslint:disable-next-line:max-line-length
-        const message: string = "ERROR in counting number of operators in script. This is a bug, please report to game developer";
-        dialogBoxCreate(message, false);
-
-        return 0;
-    }
-
-    return total;
-}
-
 // Checks if a string contains HTML elements
 function isHTML(str: string): boolean {
     const element: HTMLDivElement = document.createElement("div");
     element.innerHTML = str;
     const c: NodeListOf<Node & ChildNode> = element.childNodes;
-    for (let i: number = c.length-1; i >= 0; i--) {
+    for (let i: number = c.length - 1; i >= 0; i--) {
         if (c[i].nodeType === 1) {
             return true;
         }
@@ -154,5 +103,5 @@ function generateRandomString(n: number): string {
 }
 
 export {convertTimeMsToTimeElapsedString, longestCommonStart,
-        isString, containsAllStrings, formatNumber,
-        numOccurrences, numNetscriptOperators, isHTML, generateRandomString, replaceAt};
+        containsAllStrings, formatNumber,
+        isHTML, generateRandomString, replaceAt};

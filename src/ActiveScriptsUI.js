@@ -1,16 +1,19 @@
-import {Engine}                                     from "./engine";
+import {Engine}                    from "./engine";
 import {workerScripts,
         addWorkerScript,
-        killWorkerScript}                           from "./NetscriptWorker";
-import {Player}                                     from "./Player";
-import {getServer}                                  from "./Server";
-import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {printArray, createElement,
-        createAccordionElement, removeElement,
-        removeChildrenFromElement, exceptionAlert}  from "../utils/HelperFunctions";
-import {logBoxCreate}                               from "../utils/LogBox";
-import numeral                                      from "numeral/min/numeral.min";
-import {formatNumber}                               from "../utils/StringHelperFunctions";
+        killWorkerScript}          from "./NetscriptWorker";
+import {Player}                    from "./Player";
+import {getServer}                 from "./Server";
+import {dialogBoxCreate}           from "../utils/DialogBox";
+import {createAccordionElement}    from "../utils/uiHelpers/createAccordionElement";
+import {arrayToString}             from "../utils/helpers/arrayToString";
+import {createElement}             from "../utils/uiHelpers/createElement";
+import {exceptionAlert}            from "../utils/helpers/exceptionAlert";
+import {logBoxCreate}              from "../utils/LogBox";
+import numeral                     from "numeral/min/numeral.min";
+import {formatNumber}              from "../utils/StringHelperFunctions";
+import {removeChildrenFromElement} from "../utils/uiHelpers/removeChildrenFromElement";
+import {removeElement}             from "../utils/uiHelpers/removeElement";
 
 /* {
  *     serverName: {
@@ -110,7 +113,7 @@ function addActiveScriptsItem(workerscript) {
         //Threads, args, kill/log button
         panel.appendChild(createElement("p", {
             innerHTML: "Threads: " + workerscript.scriptRef.threads + "<br>" +
-                       "Args: " + printArray(workerscript.args)
+                       "Args: " + arrayToString(workerscript.args)
         }));
         var panelText = createElement("p", {
             innerText:"Loading...", fontSize:"14px",

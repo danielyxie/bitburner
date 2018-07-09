@@ -16,8 +16,9 @@ import {Settings}                           from "./Settings";
 
 import {parse}                              from "../utils/acorn";
 import {dialogBoxCreate}                    from "../utils/DialogBox";
-import {compareArrays, printArray,
-        roundToTwo}                         from "../utils/HelperFunctions";
+import {compareArrays}                      from "../utils/helpers/compareArrays";
+import {arrayToString}                      from "../utils/helpers/arrayToString";
+import {roundToTwo}                         from "../utils/helpers/roundToTwo";
 import {isString}                           from "../utils/StringHelperFunctions";
 
 function WorkerScript(runningScriptObj) {
@@ -319,7 +320,7 @@ function runScriptsLoop() {
 
                         dialogBoxCreate("Script runtime error: <br>Server Ip: " + serverIp +
                                         "<br>Script name: " + scriptName +
-                                        "<br>Args:" + printArray(w.args) + "<br>" + errorMsg);
+                                        "<br>Args:" + arrayToString(w.args) + "<br>" + errorMsg);
                         w.scriptRef.log("Script crashed with runtime error");
                     } else {
                         w.scriptRef.log("Script killed");
@@ -379,7 +380,7 @@ function addWorkerScript(runningScriptObj, server) {
     var ramAvailable = server.maxRam - server.ramUsed;
     if (ramUsage > ramAvailable) {
         dialogBoxCreate("Not enough RAM to run script " + runningScriptObj.filename + " with args " +
-                        printArray(runningScriptObj.args) + ". This likely occurred because you re-loaded " +
+                        arrayToString(runningScriptObj.args) + ". This likely occurred because you re-loaded " +
                         "the game and the script's RAM usage increased (either because of an update to the game or " +
                         "your changes to the script.)");
         return;

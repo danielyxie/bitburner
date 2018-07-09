@@ -6,13 +6,13 @@ import {WorkerScript}                           from "./NetscriptWorker";
 import {Player}                                 from "./Player";
 
 import {dialogBoxCreate}                        from "../utils/DialogBox";
-import {clearEventListeners, getRandomInt,
-        removeElementById,
-        clearEventListenersEl}                  from "../utils/HelperFunctions";
+import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber}                           from "../utils/StringHelperFunctions";
+import {getRandomInt}                           from "../utils/helpers/getRandomInt";
+import {removeElementById}                      from "../utils/uiHelpers/removeElementById";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,
         yesNoTxtInpBoxGetYesButton, yesNoTxtInpBoxGetNoButton,

@@ -9,16 +9,22 @@ import {Player}                                     from "./Player";
 import {hackWorldDaemon, redPillFlag}               from "./RedPill";
 import {KEY}                                        from "./Terminal";
 
+import {createProgressBarText}                      from "../utils/helpers/createProgressBarText";
 import {dialogBoxCreate}                            from "../utils/DialogBox";
-import {getRandomInt, addOffset, clearObject,
-        createElement, removeChildrenFromElement,
-        exceptionAlert, createPopup, appendLineBreaks,
-        removeElementById, removeElement,
-        createProgressBarText}                      from "../utils/HelperFunctions";
+import {removeChildrenFromElement}                  from "../utils/uiHelpers/removeChildrenFromElement";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                           from "../utils/JSONReviver";
 import numeral                                      from "numeral/min/numeral.min";
+import {addOffset}                                  from "../utils/helpers/addOffset";
+import {appendLineBreaks}                           from "../utils/uiHelpers/appendLineBreaks";
+import {clearObject}                                from "../utils/helpers/clearObject";
+import {createElement}                              from "../utils/uiHelpers/createElement";
+import {createPopup}                                from "../utils/uiHelpers/createPopup";
+import {exceptionAlert}                             from "../utils/helpers/exceptionAlert";
 import {formatNumber}                               from "../utils/StringHelperFunctions";
+import {getRandomInt}                               from "../utils/helpers/getRandomInt";
+import {removeElement}                              from "../utils/uiHelpers/removeElement";
+import {removeElementById}                          from "../utils/uiHelpers/removeElementById";
 
 
 var CityNames = ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"];
