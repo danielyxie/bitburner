@@ -47,7 +47,7 @@ module.exports = (env, argv) => ({
         concatenateModules: false,
         namedModules: false,
         namedChunks: false,
-        minimize: false,
+        minimize: argv.mode !== 'development',
         portableRecords: true
     },
     devServer: {
