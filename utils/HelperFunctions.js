@@ -27,11 +27,4 @@ function createAccordionElement(params) {
     return [li, hdr, panel];
 }
 
-function clearSelector(selector) {
-    for (var i = selector.options.length - 1; i >= 0; --i) {
-        selector.remove(i);
-    }
-}
-
-export {createAccordionElement,
-        clearSelector};
+export {createAccordionElement};

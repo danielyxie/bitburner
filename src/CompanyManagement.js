@@ -7,7 +7,7 @@ import {Player}                                         from "./Player";
 
 import Decimal                                          from "decimal.js";
 import {dialogBoxCreate}                                from "../utils/DialogBox";
-import {clearSelector}                                  from "../utils/HelperFunctions";
+import {clearSelector}                                  from "../utils/uiHelpers/clearSelector";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                               from "../utils/JSONReviver";
 import numeral                                          from "numeral/min/numeral.min";
@@ -4924,3 +4924,4 @@ Corporation.fromJSON = function(value) {
 Reviver.constructors.Corporation = Corporation;
 
 export {Corporation};
+
