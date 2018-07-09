@@ -17,7 +17,7 @@
 
 /* Script Editor */
 #script-editor-container {
-    background-color:transparent;
+    background-color: transparent;
 }
 #javascript-editor {
     margin: 10px;
@@ -37,14 +37,14 @@
 
 .ace_line,
 .ace_line * {
-    background-color:transparent;
-    margin:0px;
-    padding:0px;
+    background-color: transparent;
+    margin: 0px;
+    padding: 0px;
 }
 
 .ace_text-input {
-    font-size:16px;
-    background-color:transparent;
+    font-size: 16px;
+    background-color: transparent;
 }
 
 /* This temp element is used for auto adjusting filename field */
@@ -65,9 +65,9 @@
 }
 
 #script-editor-wrapper {
-    height:100%;
+    height: 100%;
     width: 70%;
-    background:transparent;
+    background: transparent;
 }
 
 #script-editor-filename-wrapper {
@@ -83,7 +83,7 @@
     display: inline-block;
     padding-top: 10px;
     padding-bottom: 0px;
-    float:center;
+    float: center;
     background-color: #555;
     color: #fff;
 }
@@ -96,7 +96,7 @@
 	color: #fff;
     margin: 4px;
 
-    padding:  2px;
+    padding: 2px;
 
     border: 2px solid var(--my-highlight-color);
     -webkit-box-shadow:
@@ -116,23 +116,23 @@
 }
 
 #script-editor-options-panel {
-    position:absolute;
+    position: absolute;
     right: 9%;
-    bottom:15%;
-    border:2px solid #fff;
-    width:19%;
-    background-color:#444;
-    padding:2px;
-    overflow:auto;
+    bottom: 15%;
+    border: 2px solid #fff;
+    width: 19%;
+    background-color: #444;
+    padding: 2px;
+    overflow: auto;
     z-index: 1;
     color: #fff;
 }
 
 #script-editor-options-panel fieldset {
-    margin-top:8px;
-    margin-bottom:8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     padding: 2px;
-    font-size:12px;
+    font-size: 12px;
 }
 
 /* Active scripts */
@@ -271,7 +271,7 @@
     box-shadow: 1px 1px 3px #000;
     margin: 4px;
     padding: 4px;
-    background-color:#000;
+    background-color: #000;
 }
 
 .active-scripts-button:hover,
@@ -403,11 +403,11 @@
 }
 
 .faction-work-div-wrapper {
-    overflow:hidden;
+    overflow: hidden;
     border: 2px solid #333;
     padding: 6px;
     margin: 6px;
-    width:70%;
+    width: 70%;
 }
 
 #faction-donate-amount-txt,
@@ -416,11 +416,11 @@
     margin: 6px;
     display: inline-block;
     color: var(--my-font-color);
-    background-color:#000;
+    background-color: #000;
 }
 
 #faction-donate-amount-txt {
-    width:50%;
+    width: 50%;
 }
 
 #faction-container p,
@@ -509,7 +509,7 @@
 }
 
 #location-container a {
-    display:inline-block;
+    display: inline-block;
     width: 30%;
 }
 
@@ -538,7 +538,7 @@
 }
 #infiltration-left-panel,
 #infiltration-right-panel {
-    display:inline-block;
+    display: inline-block;
     border: 1px solid #fff;
     width: 35%;
     height: 75%;
@@ -548,7 +548,7 @@
 }
 
 #infiltration-faction-select {
-    color:#fff;
+    color: #fff;
 }
 
 #infiltration-left-panel p,
@@ -557,7 +557,7 @@
 }
 
 #infiltration-buttons .a-link-button {
-    display:inline;
+    display: inline;
     width: 25%;
 }
 
@@ -587,12 +587,12 @@
 }
 
 .stock-market-position-text {
-    color:#fff;
-    display:inline-block;
+    color: #fff;
+    display: inline-block;
 }
 
 .stock-market-order-list {
-    overflow-y:auto;
+    overflow-y: auto;
     max-height: 100px;
 }
 
@@ -615,6 +615,6 @@
 }
 
 .gang-member-info-div {
-    float:left;
+    float: left;
     background-color: #555;
 }

@@ -1,6 +1,6 @@
 /* interactivetutorial.css */
 #interactive-tutorial-wrapper {
-    position:relative;
+    position: relative;
 }
 
 #interactive-tutorial-container {
@@ -40,7 +40,7 @@
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
-    background-color:#000;
+    background-color: #000;
 }
 
 #interactive-tutorial-exit {

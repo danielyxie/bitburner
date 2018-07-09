@@ -44,12 +44,12 @@
 }
 
 .bitnode {
-    color:#00f;
+    color: #00f;
 }
 .bitnode-destroyed {
-    color:#f00;
+    color: #f00;
 }
 .bitnode:hover,
 .bitnode-destroyed:hover {
-    color:#fff;
+    color: #fff;
 }

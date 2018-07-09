@@ -42,7 +42,7 @@ span {
 }
 
 #entire-game-container {
-    background-color:transparent;
+    background-color: transparent;
 }
 
 /* Disable border highlight on elements */
@@ -51,7 +51,7 @@ textarea:focus,
 button:focus,
 td:focus,
 tr:focus {
-    outline:none;
+    outline: none;
 }
 
 /* Main navigation menu */
@@ -94,7 +94,7 @@ tr:focus {
 }
 
 .mainmenu>li a.active:hover {
-    background-color:#aaa;
+    background-color: #aaa;
 }
 
 /* Plus and minus signs */
@@ -111,7 +111,7 @@ tr:focus {
 }
 
 .mainmenu-accordion-header.opened {
-    background-color:#222;
+    background-color: #222;
 }
 
 /* Slide down transition */
@@ -123,12 +123,12 @@ tr:focus {
 
 /* Borders */
 .mainmenu-accordion-header {
-    border:2px solid #fff;
+    border: 2px solid #fff;
 }
 
 /* Make html links ("a" elements) nice looking buttons with this class */
 a:link, a:visited {
-    color:#fff;
+    color: #fff;
 }
 
 .a-link-button {
@@ -198,18 +198,18 @@ a:link, a:visited {
 }
 
 .dropdown {
-    color:#fff;
-    background-color:#000;
+    color: #fff;
+    background-color: #000;
 }
 
 .text-input {
-    color:#fff;
-    background-color:#000;
+    color: #fff;
+    background-color: #000;
 }
 
 /* Notification icon (for create program right now only) */
 #create-program-tab {
-    position:relative;
+    position: relative;
 }
 #create-program-notification {
     font-size: 10px;
@@ -263,7 +263,7 @@ a:link, a:visited {
     text-align: center;
     padding: 4px;
     left: 101%;
-    bottom:-25%;
+    bottom: -25%;
 
     position: absolute;
     z-index: 99;
@@ -280,7 +280,7 @@ a:link, a:visited {
     text-align: center;
     padding: 4px;
     left: 40%;
-    bottom:-10%;
+    bottom: -10%;
 
     position: absolute;
     z-index: 99;
@@ -294,13 +294,13 @@ a:link, a:visited {
 
 /* help tip. Question mark that opens popup with info/details */
 .help-tip {
-    content:'?';
-    padding:1px;
-    margin-left:3px;
-    color:#fff;
-    border:1px solid #fff;
-    border-radius:5px;
-    display:inline-block;
+    content: '?';
+    padding: 1px;
+    margin-left: 3px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    display: inline-block;
 }
 
 .help-tip:hover {
@@ -357,48 +357,48 @@ a:link, a:visited {
 }
 
 @-keyframes blink{
-  0% { opacity:1; }
-  50% { opacity:0; }
-  100% { opacity:1; }
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 }
 @-webkit-keyframes blink{
-  0% { opacity:1; }
-  50% { opacity:0; }
-  100% { opacity:1; }
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 }
 @-moz-keyframes blink{
-  0% { opacity:1; }
-  50% { opacity:0; }
-  100% { opacity:1; }
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 }
 @-ms-keyframes blink{
-  0% { opacity:1; }
-  50% { opacity:0; }
-  100% { opacity:1; }
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 }
 @-o-keyframes blink{
-  0% { opacity:1; }
-  50% { opacity:0; }
-  100% { opacity:1; }
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 /* Status text */
 @-webkit-keyframes status-text{
     from{
-        opacity:1;
-        top:0px;
+        opacity: 1;
+        top: 0px;
     }
     to{
-        opacity:0;
-        top:0px;
+        opacity: 0;
+        top: 0px;
     }
 }
 
 .status-text{
-    display:inline;
-    position:fixed;
-    top:0px;
-    -webkit-animation:status-text 3s 1;
+    display: inline;
+    position: fixed;
+    top: 0px;
+    -webkit-animation: status-text 3s 1;
     background-color: transparent;
     height: 15%;
 }
@@ -457,7 +457,7 @@ a:link, a:visited {
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
     height: 22px;
-    background-color:#000;
+    background-color: #000;
 }
 
 #character-overview-save-button:hover,
@@ -475,12 +475,12 @@ a:link, a:visited {
 
 /* Scan analyze links from AutoLink */
 .scan-analyze-link {
-    cursor:pointer;
-    color:#fff;
-    text-decoration:underline;
+    cursor: pointer;
+    color: #fff;
+    text-decoration: underline;
 }
 .scan-analyze-link:hover {
-    text-decoration:none;
+    text-decoration: none;
 }
 
 /* Accordion menus (Header with collapsible panel) */
@@ -529,8 +529,8 @@ a:link, a:visited {
     margin-left: 5%;
     display: none;
     background-color: #555;
-    overflow-y:auto;
-    overflow-x:none;
+    overflow-y: auto;
+    overflow-x: none;
 }
 
 .accordion-panel div,

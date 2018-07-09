@@ -16,7 +16,7 @@
 	overflow: auto;
 	overflow-y: scroll;
     background-color: var(--my-background-color);
-    table-layout:fixed;
+    table-layout: fixed;
 }
 
 #terminal-input {
@@ -39,7 +39,7 @@
 .terminal-line {
     width: 70%;
     word-wrap: break-word;
-    hyphens:auto;
+    hyphens: auto;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
 }
