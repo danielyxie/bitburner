@@ -43,7 +43,7 @@ module.exports = (env, argv) => ({
         occurrenceOrder: true,
         sideEffects: true,
         providedExports: true,
-        usedExports: false,
+        usedExports: true,
         concatenateModules: false,
         namedModules: false,
         namedChunks: false,
