@@ -8,9 +8,9 @@
 /* Header tabs */
 .cmpy-mgmt-header-tab {
     display: inline-block;
-    color: white;
+    color: #ffffff;
     background-color:#555;
-    border:1px solid white;
+    border:1px solid #ffffff;
     padding: 4px;
 }
 
@@ -25,9 +25,9 @@
 /* Switch between Cities */
 .cmpy-mgmt-city-tab {
     display:inline-block;
-    color: white;
+    color: #ffffff;
     background-color: #555;
-    border: 1px solid white;
+    border: 1px solid #ffffff;
     padding: 4px;
 }
 
@@ -55,27 +55,27 @@
 }
 
 .cmpy-mgmt-industry-overview-panel {
-    border: 1px solid white;
+    border: 1px solid #ffffff;
     color: var(--my-font-color);
     display:inline-block;
     width: 100%;
 }
 
 .cmpy-mgmt-employee-panel {
-    border: 1px solid white;
+    border: 1px solid #ffffff;
     display:block;
     width:100%;
 }
 
 .cmpy-mgmt-warehouse-panel {
-    border: 1px solid white;
+    border: 1px solid #ffffff;
     display:inline-block;
     width:100%;
 }
 
 /* Hiring new employees*/
 .cmpy-mgmt-find-employee-option {
-    border:1px solid white;
+    border:1px solid #ffffff;
     margin: 6px;
 }
 
@@ -86,17 +86,17 @@
 /* Warehouse */
 .cmpy-mgmt-warehouse-material-div {
     padding:2px;
-    border:1px solid white;
+    border:1px solid #ffffff;
 }
 
 .cmpy-mgmt-warehouse-product-div {
     padding:2px;
-    border:1px solid white;
+    border:1px solid #ffffff;
 }
 
 /* Exporting materials/products */
 .cmpy-mgmt-existing-export {
-    border:1px solid white;
+    border:1px solid #ffffff;
     border-radius:25px;
     margin:4px;
     padding:4px;
@@ -109,14 +109,14 @@
 
 /* Upgrades */
 .cmpy-mgmt-upgrade-container {
-    border:1px solid white;
+    border:1px solid #ffffff;
     width: 60%;
     margin:4px;
 }
 
 .cmpy-mgmt-upgrade-div {
     display:inline-block;
-    border:1px solid white;
+    border:1px solid #ffffff;
     margin:2px;
     padding:6px;
     border-radius:25px;

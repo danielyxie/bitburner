@@ -25,7 +25,7 @@
 
 .hack-mission-node {
     z-index:5;
-    background-color:gray;
+    background-color:#808080;
     align-self: center;
     justify-self: center;
     display:inline-block;
@@ -33,7 +33,7 @@
 
 .hack-mission-node p {
     margin-top:8px;
-    color:white;
+    color:#ffffff;
     font-size:12px;
     text-align:center;
     -webkit-user-select: none;
@@ -43,18 +43,18 @@
 }
 
 .hack-mission-player-node {
-    color:white;
-    background-color:blue;
+    color:#ffffff;
+    background-color:#00f;
 }
 
 .hack-mission-player-node-active {
-    border: 2px solid white;
+    border: 2px solid #ffffff;
     background-color: #6666ff;
 }
 
 .hack-mission-enemy-node {
-    color:white;
-    background-color:red;
+    color:#ffffff;
+    background-color:#f00;
 }
 
 .hack-mission-cpu-node {
@@ -82,7 +82,7 @@
     -webkit-transform: skew(-20deg);
 	-moz-transform: skew(-20deg);
 	-o-transform: skew(-20deg);
-    color:white;
+    color:#ffffff;
     font-size:12px;
     margin-top: 8px;
     text-align:center;
@@ -104,7 +104,7 @@
     -webkit-transform: skew(20deg);
 	-moz-transform: skew(20deg);
 	-o-transform: skew(20deg);
-    color:white;
+    color:#ffffff;
     font-size:12px;
     margin-top: 8px;
     text-align:center;
@@ -128,5 +128,5 @@
 }
 
 .hack-mission-action-buttons-container {
-    border: 2px solid white;
+    border: 2px solid #ffffff;
 }

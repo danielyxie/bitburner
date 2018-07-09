@@ -85,7 +85,7 @@
     padding-bottom: 0px;
     float:center;
     background-color: #555;
-    color: white;
+    color: #ffffff;
 }
 
 #script-editor-filename {
@@ -93,7 +93,7 @@
     display: inline-block;
 	float: center;
 	resize: none;
-	color: white;
+	color: #ffffff;
     margin: 4px;
 
     padding:  2px;
@@ -119,13 +119,13 @@
     position:absolute;
     right: 9%;
     bottom:15%;
-    border:2px solid white;
+    border:2px solid #ffffff;
     width:19%;
     background-color:#444;
     padding:2px;
     overflow:auto;
     z-index: 1;
-    color: white;
+    color: #ffffff;
 }
 
 #script-editor-options-panel fieldset {
@@ -155,7 +155,7 @@
 .active-scripts-server-header {
     background-color: #444;
     font-size: 20px;
-    color: white;
+    color: #ffffff;
     margin: 6px 6px 0px 6px;
     padding: 6px;
     cursor: pointer;
@@ -177,7 +177,7 @@
 .active-scripts-server-header:after {
     content: '\02795'; /* "plus" sign (+) */
     font-size: 13px;
-    color: white;
+    color: #ffffff;
     float: right;
     margin-left: 5px;
 }
@@ -185,7 +185,7 @@
 .active-scripts-server-header.active:after {
     content: "\2796"; /* "minus" sign (-) */
     font-size: 13px;
-    color: white;
+    color: #ffffff;
     float: right;
     margin-left: 5px;
 }
@@ -255,7 +255,7 @@
 .active-scripts-script-panel li {
     background-color: #555;
     width: auto;
-    color: white;
+    color: #ffffff;
     margin-left: 5%;
 }
 
@@ -271,12 +271,12 @@
     box-shadow: 1px 1px 3px #000;
     margin: 4px;
     padding: 4px;
-    background-color:black;
+    background-color:#000;
 }
 
 .active-scripts-button:hover,
 .active-scripts-button:focus {
-    color: white;
+    color: #ffffff;
     text-decoration: none;
     cursor: pointer;
 }
@@ -416,7 +416,7 @@
     margin: 6px;
     display: inline-block;
     color: var(--my-font-color);
-    background-color:black;
+    background-color:#000;
 }
 
 #faction-donate-amount-txt {
@@ -539,7 +539,7 @@
 #infiltration-left-panel,
 #infiltration-right-panel {
     display:inline-block;
-    border: 1px solid white;
+    border: 1px solid #ffffff;
     width: 35%;
     height: 75%;
     top: 10px;
@@ -548,7 +548,7 @@
 }
 
 #infiltration-faction-select {
-    color:white;
+    color:#ffffff;
 }
 
 #infiltration-left-panel p,
@@ -581,13 +581,13 @@
     display: inline-block;
     padding: 4px;
     margin: 2px;
-    background-color: black;
-    border: 1px solid white;
+    background-color: #000;
+    border: 1px solid #ffffff;
     color: var(--my-font-color);
 }
 
 .stock-market-position-text {
-    color:white;
+    color:#ffffff;
     display:inline-block;
 }
 
@@ -597,8 +597,8 @@
 }
 
 .stock-market-order-cancel-btn {
-    background-color: black;
-    border: 1px solid white;
+    background-color: #000;
+    border: 1px solid #ffffff;
     color: var(--my-font-color);
     margin: 2px;
     padding: 0px;

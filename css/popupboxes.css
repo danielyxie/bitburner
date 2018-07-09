@@ -28,8 +28,8 @@
     font-weight: bold;
     padding: 2px;
     margin: 6px;
-    border: 1px solid white;
-    background-color:black;
+    border: 1px solid #ffffff;
+    background-color:#000;
 }
 
 .popup-box-button:hover,
@@ -46,8 +46,8 @@
 
 #yes-no-text-input-box-input {
     color: var(--my-font-color);
-    border: 1px solid white;
-    background-color:black;
+    border: 1px solid #ffffff;
+    background-color:#000;
 }
 
 .dialog-box-container,
@@ -103,7 +103,7 @@
 
 .dialog-box-close-button:hover,
 .dialog-box-close-button:focus,{
-    color: white;
+    color: #ffffff;
     text-decoration: none;
     cursor: pointer;
 }
@@ -126,12 +126,12 @@
 }
 
 #infiltration-faction-select {
-    background-color:black;
+    background-color:#000;
 }
 
 /* Generic Yes No Box */
 #yes-no-text-input-box-input {
-    color: white;
+    color: #ffffff;
 }
 
 /* Game Options */
@@ -163,7 +163,7 @@
     font-weight: bold;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
-    border-radius: 12px white;
+    border-radius: 12px #ffffff;
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
@@ -171,7 +171,7 @@
 
 #game-options-close-button:hover,
 #game-options-close-button:focus {
-    color: white;
+    color: #ffffff;
     text-decoration: none;
     cursor: pointer;
 }

@@ -7,7 +7,7 @@
 }
 
 .bladeburner-action {
-    border:1px solid white;
+    border:1px solid #ffffff;
     margin:7px;
     padding:7px;
     white-space: pre-wrap;
@@ -19,13 +19,13 @@
 
 /* Whatever action is currently active */
 .bladeburner-active-action {
-    border:4px solid white;
+    border:4px solid #ffffff;
 }
 
 /* Action & Skills panel navigation button */
 .bladeburner-nav-button {
-    border:1px solid white;
-    color:white;
+    border:1px solid #ffffff;
+    color:#ffffff;
     padding:2px;
     margin:2px;
 }
@@ -35,7 +35,7 @@
 }
 
 .bladeburner-nav-button-inactive {
-    border:1px solid white;
+    border:1px solid #ffffff;
     padding:2px;
     margin:2px;
     text-decoration: none;
@@ -48,7 +48,7 @@
 .bladeburner-console-div {
     display:inline-block;
     width:40%;
-    border:1px solid white;
+    border:1px solid #ffffff;
     overflow:auto;
     height:100%;
     position:absolute;
