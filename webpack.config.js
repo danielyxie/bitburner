@@ -42,7 +42,7 @@ module.exports = (env, argv) => ({
         flagIncludedChunks: true,
         occurrenceOrder: true,
         sideEffects: true,
-        providedExports: false,
+        providedExports: true,
         usedExports: false,
         concatenateModules: false,
         namedModules: false,
