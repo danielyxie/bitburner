@@ -134,7 +134,7 @@ a:link, a:visited {
 .a-link-button {
     text-decoration: none;
     background-color: #555;
-    color: #FFFFFF;
+    color: #ffffff;
     padding: 5px;
     margin: 5px;
     border: 1px solid #333333;
@@ -159,7 +159,7 @@ a:link, a:visited {
 .a-link-button-inactive {
     text-decoration: none;
     background-color: #333;
-    color: #FFFFFF;
+    color: #ffffff;
     padding: 5px;
     margin: 5px;
     border: 1px solid #333333;
@@ -179,11 +179,11 @@ a:link, a:visited {
 /* Make anchor tags ("a" elements) for activated actions */
 .a-link-button-bought {
     text-decoration: none;
-    background-color: #00AA00;
-    color: #FFFFFF;
+    background-color: #00aa00;
+    color: #ffffff;
     padding: 5px;
     margin: 5px;
-    border: 1px solid #00AA00;
+    border: 1px solid #00aa00;
     cursor: default;
 }
 
@@ -315,27 +315,27 @@ a:link, a:visited {
 
 /* Flashing button (Red) */
 @-webkit-keyframes glowing {
-    0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
-    50% { background-color: #FF0000; -webkit-box-shadow: 0 0 40px #FF0000; }
-    100% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+    0% { background-color: #b20000; -webkit-box-shadow: 0 0 3px #b20000; }
+    50% { background-color: #ff0000; -webkit-box-shadow: 0 0 40px #ff0000; }
+    100% { background-color: #b20000; -webkit-box-shadow: 0 0 3px #b20000; }
 }
 
 @-moz-keyframes glowing {
-    0% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
-    50% { background-color: #FF0000; -moz-box-shadow: 0 0 40px #FF0000; }
-    100% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+    0% { background-color: #b20000; -moz-box-shadow: 0 0 3px #b20000; }
+    50% { background-color: #ff0000; -moz-box-shadow: 0 0 40px #ff0000; }
+    100% { background-color: #b20000; -moz-box-shadow: 0 0 3px #b20000; }
 }
 
 @-o-keyframes glowing {
-    0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
-    50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
-    100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+    0% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
+    50% { background-color: #ff0000; box-shadow: 0 0 40px #ff0000; }
+    100% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
 }
 
 @keyframes glowing {
-    0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
-    50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
-    100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+    0% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
+    50% { background-color: #ff0000; box-shadow: 0 0 40px #ff0000; }
+    100% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
 }
 
 .flashing-button {
@@ -409,7 +409,7 @@ a:link, a:visited {
 
 #status-text {
     font-size: 20px;
-    color: #FFFFFF;
+    color: #ffffff;
     right: 0;
     bottom: 0;
     padding: 4px;
@@ -476,7 +476,7 @@ a:link, a:visited {
 /* Scan analyze links from AutoLink */
 .scan-analyze-link {
     cursor:pointer;
-    color:#FFFFFF;
+    color:#ffffff;
     text-decoration:underline;
 }
 .scan-analyze-link:hover {
