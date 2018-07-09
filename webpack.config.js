@@ -48,7 +48,16 @@ module.exports = (env, argv) => ({
         namedModules: false,
         namedChunks: false,
         minimize: argv.mode !== 'development',
-        portableRecords: true
+        portableRecords: true,
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'dist/vendor',
+                    chunks: 'all'
+                }
+            }
+        }
     },
     devServer: {
         publicPath: "/dist",
