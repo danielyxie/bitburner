@@ -43,7 +43,7 @@ module.exports = {
 //        "block-opening-brace-newline-before": "never-single-line",
 //        "block-opening-brace-space-before": "always",
         "color-hex-case": "lower",
-//        "color-hex-length": "short",
+        "color-hex-length": "short",
         "color-named": "never",
         //"color-no-hex": true,
         "color-no-invalid-hex": true,

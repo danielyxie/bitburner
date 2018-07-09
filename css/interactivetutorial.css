@@ -10,11 +10,11 @@
     top: 0;
     height: 400px; /* Full height */
     padding: 10px;
-    border: 5px solid #ffffff;
+    border: 5px solid #fff;
     width: 20%;
     overflow: auto; /* Enable scroll if needed */
     background-color: #444; /* Fallback color */
-    color: #ffffff;
+    color: #fff;
 }
 
 #interactive-tutorial-container > strong {
@@ -24,7 +24,7 @@
 #interactive-tutorial-text {
     padding: 4px;
     margin: 4px;
-    color: #ffffff;
+    color: #fff;
     background-color: #444;
 }
 
@@ -62,7 +62,7 @@
 #interactive-tutorial-next:focus,
 #interactive-tutorial-back:hover,
 #interactive-tutorial-back:focus {
-    color: #ffffff;
+    color: #fff;
     text-decoration: none;
     cursor: pointer;
 }

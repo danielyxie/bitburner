@@ -1,7 +1,7 @@
 :root{
-    --my-font-color: #66ff33;
-    --my-background-color: #000000;
-    --my-highlight-color: #ffffff;
+    --my-font-color: #6f3;
+    --my-background-color: #000;
+    --my-highlight-color: #fff;
 }
 
 * {
@@ -65,7 +65,7 @@ tr:focus {
     overflow: auto;
 
     border: 0;
-	border-bottom: 1px solid #000000;
+	border-bottom: 1px solid #000;
 	border-radius: 0;
 	background-color: #333;
 }
@@ -84,13 +84,13 @@ tr:focus {
 .mainmenu>li a:hover:not(.active),
 .mainmenu>li a:focus {
     background-color: #777;
-    color: #ffffff;
+    color: #fff;
 }
 
 /* Panel headers can become active, and they are "lighter" than the rest */
 .mainmenu>li a.active {
     background-color: #777;
-    color: #ffffff;
+    color: #fff;
 }
 
 .mainmenu>li a.active:hover {
@@ -101,7 +101,7 @@ tr:focus {
 .mainmenu-accordion-header:after {
     content: '\02795';
     font-size: 13px;
-    color: #ffffff;
+    color: #fff;
     float: right;
     margin-left: 5px;
 }
@@ -123,21 +123,21 @@ tr:focus {
 
 /* Borders */
 .mainmenu-accordion-header {
-    border:2px solid #ffffff;
+    border:2px solid #fff;
 }
 
 /* Make html links ("a" elements) nice looking buttons with this class */
 a:link, a:visited {
-    color:#ffffff;
+    color:#fff;
 }
 
 .a-link-button {
     text-decoration: none;
     background-color: #555;
-    color: #ffffff;
+    color: #fff;
     padding: 5px;
     margin: 5px;
-    border: 1px solid #333333;
+    border: 1px solid #333;
 
     -moz-user-select: none;
     -ms-user-select: none;
@@ -159,10 +159,10 @@ a:link, a:visited {
 .a-link-button-inactive {
     text-decoration: none;
     background-color: #333;
-    color: #ffffff;
+    color: #fff;
     padding: 5px;
     margin: 5px;
-    border: 1px solid #333333;
+    border: 1px solid #333;
     cursor: default;
 }
 
@@ -179,11 +179,11 @@ a:link, a:visited {
 /* Make anchor tags ("a" elements) for activated actions */
 .a-link-button-bought {
     text-decoration: none;
-    background-color: #00aa00;
-    color: #ffffff;
+    background-color: #0a0;
+    color: #fff;
     padding: 5px;
     margin: 5px;
-    border: 1px solid #00aa00;
+    border: 1px solid #0a0;
     cursor: default;
 }
 
@@ -198,12 +198,12 @@ a:link, a:visited {
 }
 
 .dropdown {
-    color:#ffffff;
+    color:#fff;
     background-color:#000;
 }
 
 .text-input {
-    color:#ffffff;
+    color:#fff;
     background-color:#000;
 }
 
@@ -221,7 +221,7 @@ a:link, a:visited {
 
 .notification-on {
     background-color: #fa3e3e;
-    color: #ffffff;
+    color: #fff;
     border-radius: 2px;
     padding: 1px 3px;
 }
@@ -244,7 +244,7 @@ a:link, a:visited {
     width: 300px;
     background-color: var(--my-background-color);
     border: 2px solid var(--my-highlight-color);;
-    color: #ffffff;
+    color: #fff;
     text-align: center;
     padding: 4px;
     left: 101%;
@@ -259,7 +259,7 @@ a:link, a:visited {
     width: 300px;
     background-color: var(--my-background-color);
     border: 2px solid var(--my-highlight-color);;
-    color: #ffffff;
+    color: #fff;
     text-align: center;
     padding: 4px;
     left: 101%;
@@ -276,7 +276,7 @@ a:link, a:visited {
     width: 300px;
     background-color: var(--my-background-color);
     border: 2px solid var(--my-highlight-color);;
-    color: #ffffff;
+    color: #fff;
     text-align: center;
     padding: 4px;
     left: 40%;
@@ -298,7 +298,7 @@ a:link, a:visited {
     padding:1px;
     margin-left:3px;
     color:#fff;
-    border:1px solid #ffffff;
+    border:1px solid #fff;
     border-radius:5px;
     display:inline-block;
 }
@@ -316,25 +316,25 @@ a:link, a:visited {
 /* Flashing button (Red) */
 @-webkit-keyframes glowing {
     0% { background-color: #b20000; -webkit-box-shadow: 0 0 3px #b20000; }
-    50% { background-color: #ff0000; -webkit-box-shadow: 0 0 40px #ff0000; }
+    50% { background-color: #f00; -webkit-box-shadow: 0 0 40px #f00; }
     100% { background-color: #b20000; -webkit-box-shadow: 0 0 3px #b20000; }
 }
 
 @-moz-keyframes glowing {
     0% { background-color: #b20000; -moz-box-shadow: 0 0 3px #b20000; }
-    50% { background-color: #ff0000; -moz-box-shadow: 0 0 40px #ff0000; }
+    50% { background-color: #f00; -moz-box-shadow: 0 0 40px #f00; }
     100% { background-color: #b20000; -moz-box-shadow: 0 0 3px #b20000; }
 }
 
 @-o-keyframes glowing {
     0% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
-    50% { background-color: #ff0000; box-shadow: 0 0 40px #ff0000; }
+    50% { background-color: #f00; box-shadow: 0 0 40px #f00; }
     100% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
 }
 
 @keyframes glowing {
     0% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
-    50% { background-color: #ff0000; box-shadow: 0 0 40px #ff0000; }
+    50% { background-color: #f00; box-shadow: 0 0 40px #f00; }
     100% { background-color: #b20000; box-shadow: 0 0 3px #b20000; }
 }
 
@@ -409,7 +409,7 @@ a:link, a:visited {
 
 #status-text {
     font-size: 20px;
-    color: #ffffff;
+    color: #fff;
     right: 0;
     bottom: 0;
     padding: 4px;
@@ -441,7 +441,7 @@ a:link, a:visited {
 #character-overview-text {
     padding: 4px;
     margin: 8px;
-    color: #ffffff;
+    color: #fff;
     background-color: #444;
 }
 
@@ -464,7 +464,7 @@ a:link, a:visited {
 #character-overview-save-button:focus,
 #character-overview-options-button:hover,
 #character-overview-options-button:focus {
-    color: #ffffff;
+    color: #fff;
     text-decoration: none;
     cursor: pointer;
 }
@@ -476,7 +476,7 @@ a:link, a:visited {
 /* Scan analyze links from AutoLink */
 .scan-analyze-link {
     cursor:pointer;
-    color:#ffffff;
+    color:#fff;
     text-decoration:underline;
 }
 .scan-analyze-link:hover {
@@ -487,7 +487,7 @@ a:link, a:visited {
 .accordion-header {
     background-color: #444;
     font-size: 20px;
-    color: #ffffff;
+    color: #fff;
     margin: 6px 6px 0px 6px;
     padding: 6px;
     cursor: pointer;
@@ -509,7 +509,7 @@ a:link, a:visited {
 .accordion-header:after {
     content: '\02795'; /* "plus" sign (+) */
     font-size: 13px;
-    color: #ffffff;
+    color: #fff;
     float: right;
     margin-left: 5px;
 }
@@ -517,7 +517,7 @@ a:link, a:visited {
 .accordion-header.active:after {
     content: "\2796"; /* "minus" sign (-) */
     font-size: 13px;
-    color: #ffffff;
+    color: #fff;
     float: right;
     margin-left: 5px;
 }

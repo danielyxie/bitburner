@@ -105,7 +105,7 @@
   animation: LOADERSPINNER 5s linear infinite;
 }
 .loaderoverlay .loaderlabel {
-  color: #66ff33;
+  color: #6f3;
   text-transform: uppercase;
   font-family: sans-serif;
   font-size: 22px;
@@ -140,9 +140,9 @@ button[type="button"] {
 .loaderoverlay .loaderspinner,
 .loaderoverlay .loaderspinner:before,
 .loaderoverlay .loaderspinner:after {
-  border-top-color: #66ff33!important;
-  border-bottom-color:#66ff33 !important;
+  border-top-color: #6f3!important;
+  border-bottom-color:#6f3 !important;
 }
 .loaderoverlay .loaderlabel {
-  color: #66ff33;
+  color: #6f3;
 }
