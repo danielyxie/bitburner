@@ -38,8 +38,8 @@
 .ace_line,
 .ace_line * {
     background-color: transparent;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 
 .ace_text-input {
@@ -60,8 +60,8 @@
 
 #script-editor-buttons-wrapper {
     width: 100%;
-    padding-right: 0xp;
-    margin-right: 0px;
+    padding-right: 0;
+    margin-right: 0;
 }
 
 #script-editor-wrapper {
@@ -73,7 +73,7 @@
 #script-editor-filename-wrapper {
     background-color: #555;
     margin-left: 6px;
-    margin-right: 0px;
+    margin-right: 0;
     padding-left: 6px;
     width: 100%;
     border: 2px solid var(--my-highlight-color);
@@ -82,7 +82,7 @@
 #script-editor-filename-tag {
     display: inline-block;
     padding-top: 10px;
-    padding-bottom: 0px;
+    padding-bottom: 0;
     float: center;
     background-color: #555;
     color: #fff;
@@ -156,7 +156,7 @@
     background-color: #444;
     font-size: 20px;
     color: #fff;
-    margin: 6px 6px 0px 6px;
+    margin: 6px 6px 0 6px;
     padding: 6px;
     cursor: pointer;
     width: 60%;
@@ -191,8 +191,8 @@
 }
 
 .active-scripts-server-panel {
-    margin: 0px 6px 6px 6px;
-    padding: 0px 6px 6px 6px;
+    margin: 0 6px 6px 6px;
+    padding: 0 6px 6px 6px;
     width: 55%;
     margin-left: 5%;
     display: none;
@@ -601,7 +601,7 @@
     border: 1px solid #fff;
     color: var(--my-font-color);
     margin: 2px;
-    padding: 0px;
+    padding: 0;
 }
 
 /* Gang */

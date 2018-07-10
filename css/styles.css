@@ -229,8 +229,8 @@ a:link, a:visited {
 .notification-off {
     background-color: #333;
     color: #333;
-    border-radius: 0px;
-    padding: 0px;
+    border-radius: 0;
+    padding: 0;
 }
 
 /* Tool tips (when hovering over an element */
@@ -386,18 +386,18 @@ a:link, a:visited {
 @-webkit-keyframes status-text{
     from{
         opacity: 1;
-        top: 0px;
+        top: 0;
     }
     to{
         opacity: 0;
-        top: 0px;
+        top: 0;
     }
 }
 
 .status-text{
     display: inline;
     position: fixed;
-    top: 0px;
+    top: 0;
     -webkit-animation: status-text 3s 1;
     background-color: transparent;
     height: 15%;
@@ -488,7 +488,7 @@ a:link, a:visited {
     background-color: #444;
     font-size: 20px;
     color: #fff;
-    margin: 6px 6px 0px 6px;
+    margin: 6px 6px 0 6px;
     padding: 6px;
     cursor: pointer;
     width: 80%;
@@ -523,8 +523,8 @@ a:link, a:visited {
 }
 
 .accordion-panel {
-    margin: 0px 6px 6px 6px;
-    padding: 0px 6px 6px 6px;
+    margin: 0 6px 6px 6px;
+    padding: 0 6px 6px 6px;
     width: 75%;
     margin-left: 5%;
     display: none;

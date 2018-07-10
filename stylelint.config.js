@@ -102,7 +102,7 @@ module.exports = {
         "function-whitespace-after": "always",
 //        "indentation": 4,
         "keyframe-declaration-no-important": true,
-//        "length-zero-no-unit": true,
+        "length-zero-no-unit": true,
 //        "max-empty-lines": 1,
         "max-line-length": 160,
         "max-nesting-depth": 99,
