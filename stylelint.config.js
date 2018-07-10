@@ -103,7 +103,7 @@ module.exports = {
         "indentation": 4,
         "keyframe-declaration-no-important": true,
         "length-zero-no-unit": true,
-//        "max-empty-lines": 1,
+        "max-empty-lines": 1,
         "max-line-length": 160,
         "max-nesting-depth": 99,
         "media-feature-colon-space-after": "always",

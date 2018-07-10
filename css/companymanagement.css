@@ -4,7 +4,6 @@
     font-size: 13px;
 }
 
-
 /* Header tabs */
 .cmpy-mgmt-header-tab {
     display: inline-block;
@@ -105,7 +104,6 @@
 .cmpy-mgmt-existing-export:hover {
     background-color: #333;
 }
-
 
 /* Upgrades */
 .cmpy-mgmt-upgrade-container {
