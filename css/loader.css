@@ -1,148 +1,148 @@
 @-webkit-keyframes LOADERSPINNER {
-  0%   { -webkit-transform: translate(-50%, -50%) rotate(0deg); }
-  100% { -webkit-transform: translate(-50%, -50%) rotate(360deg); }
+    0%   { -webkit-transform: translate(-50%, -50%) rotate(0deg); }
+    100% { -webkit-transform: translate(-50%, -50%) rotate(360deg); }
 }
 @-moz-keyframes LOADERSPINNER {
-  0%   { -moz-transform: translate(-50%, -50%) rotate(0deg); }
-  100% { -moz-transform: translate(-50%, -50%) rotate(360deg); }
+    0%   { -moz-transform: translate(-50%, -50%) rotate(0deg); }
+    100% { -moz-transform: translate(-50%, -50%) rotate(360deg); }
 }
 @-ms-keyframes LOADERSPINNER {
-  0%   { -ms-transform: translate(-50%, -50%) rotate(0deg); }
-  100% { -ms-transform: translate(-50%, -50%) rotate(360deg); }
+    0%   { -ms-transform: translate(-50%, -50%) rotate(0deg); }
+    100% { -ms-transform: translate(-50%, -50%) rotate(360deg); }
 }
 @-o-keyframes LOADERSPINNER {
-  0%   { -o-transform: translate(-50%, -50%) rotate(0deg); }
-  100% { -o-transform: translate(-50%, -50%) rotate(360deg); }
+    0%   { -o-transform: translate(-50%, -50%) rotate(0deg); }
+    100% { -o-transform: translate(-50%, -50%) rotate(360deg); }
 }
 @keyframes LOADERSPINNER {
-  0%   { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+    0%   { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @-webkit-keyframes LOADERLABEL {
-  0%   { opacity: 1.0; -webkit-transform: translate(-50%, -50%) scale(1.0); }
-  5%   { opacity: 0.5; -webkit-transform: translate(-50%, -50%) scale(0.5); }
-  95%  { opacity: 0.5; -webkit-transform: translate(-50%, -50%) scale(0.5); }
-  100% { opacity: 1.0; -webkit-transform: translate(-50%, -50%) scale(1.0); }
+    0%   { opacity: 1.0; -webkit-transform: translate(-50%, -50%) scale(1.0); }
+    5%   { opacity: 0.5; -webkit-transform: translate(-50%, -50%) scale(0.5); }
+    95%  { opacity: 0.5; -webkit-transform: translate(-50%, -50%) scale(0.5); }
+    100% { opacity: 1.0; -webkit-transform: translate(-50%, -50%) scale(1.0); }
 }
 @-moz-keyframes LOADERLABEL {
-  0%   { opacity: 1.0; -moz-transform: translate(-50%, -50%) scale(1.0); }
-  5%   { opacity: 0.5; -moz-transform: translate(-50%, -50%) scale(0.5); }
-  95%  { opacity: 0.5; -moz-transform: translate(-50%, -50%) scale(0.5); }
-  100% { opacity: 1.0; -moz-transform: translate(-50%, -50%) scale(1.0); }
+    0%   { opacity: 1.0; -moz-transform: translate(-50%, -50%) scale(1.0); }
+    5%   { opacity: 0.5; -moz-transform: translate(-50%, -50%) scale(0.5); }
+    95%  { opacity: 0.5; -moz-transform: translate(-50%, -50%) scale(0.5); }
+    100% { opacity: 1.0; -moz-transform: translate(-50%, -50%) scale(1.0); }
 }
 @-ms-keyframes LOADERLABEL {
-  0%   { opacity: 1.0; -ms-transform: translate(-50%, -50%) scale(1.0); }
-  5%   { opacity: 0.5; -ms-transform: translate(-50%, -50%) scale(0.5); }
-  95%  { opacity: 0.5; -ms-transform: translate(-50%, -50%) scale(0.5); }
-  100% { opacity: 1.0; -ms-transform: translate(-50%, -50%) scale(1.0); }
+    0%   { opacity: 1.0; -ms-transform: translate(-50%, -50%) scale(1.0); }
+    5%   { opacity: 0.5; -ms-transform: translate(-50%, -50%) scale(0.5); }
+    95%  { opacity: 0.5; -ms-transform: translate(-50%, -50%) scale(0.5); }
+    100% { opacity: 1.0; -ms-transform: translate(-50%, -50%) scale(1.0); }
 }
 @-o-keyframes LOADERLABEL {
-  0%   { opacity: 1.0; -o-transform: translate(-50%, -50%) scale(1.0); }
-  5%   { opacity: 0.5; -o-transform: translate(-50%, -50%) scale(0.5); }
-  95%  { opacity: 0.5; -o-transform: translate(-50%, -50%) scale(0.5); }
-  100% { opacity: 1.0; -o-transform: translate(-50%, -50%) scale(1.0); }
+    0%   { opacity: 1.0; -o-transform: translate(-50%, -50%) scale(1.0); }
+    5%   { opacity: 0.5; -o-transform: translate(-50%, -50%) scale(0.5); }
+    95%  { opacity: 0.5; -o-transform: translate(-50%, -50%) scale(0.5); }
+    100% { opacity: 1.0; -o-transform: translate(-50%, -50%) scale(1.0); }
 }
 @keyframes LOADERLABEL {
-  0%   { opacity: 1.0; transform: translate(-50%, -50%) scale(1.0); }
-  5%   { opacity: 0.5; transform: translate(-50%, -50%) scale(0.5); }
-  95%  { opacity: 0.5; transform: translate(-50%, -50%) scale(0.5); }
-  100% { opacity: 1.0; transform: translate(-50%, -50%) scale(1.0); }
+    0%   { opacity: 1.0; transform: translate(-50%, -50%) scale(1.0); }
+    5%   { opacity: 0.5; transform: translate(-50%, -50%) scale(0.5); }
+    95%  { opacity: 0.5; transform: translate(-50%, -50%) scale(0.5); }
+    100% { opacity: 1.0; transform: translate(-50%, -50%) scale(1.0); }
 }
 
 *, *:before, *:after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  vertical-align: top;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    vertical-align: top;
 }
 .loaderoverlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 1.0);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 1.0);
 }
 .loaderoverlay .loaderspinner,
 .loaderoverlay .loaderspinner:before,
 .loaderoverlay .loaderspinner:after {
-  border: 20px solid rgba(0, 0, 0, 0);
-  border-top: 20px solid #ccc;
-  border-bottom: 20px solid #ccc;
-  border-radius: 1000px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
+    border: 20px solid rgba(0, 0, 0, 0);
+    border-top: 20px solid #ccc;
+    border-bottom: 20px solid #ccc;
+    border-radius: 1000px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 .loaderoverlay .loaderspinner:before,
 .loaderoverlay .loaderspinner:after {
-  content: "";
+    content: "";
 }
 .loaderoverlay .loaderspinner {
-  width: 200px;
-  height: 200px;
-  -webkit-animation: LOADERSPINNER 5s linear infinite;
-  -moz-animation: LOADERSPINNER 5s linear infinite;
-  -ms-animation: LOADERSPINNER 5s linear infinite;
-  -o-animation: LOADERSPINNER 5s linear infinite;
-  animation: LOADERSPINNER 5s linear infinite;
+    width: 200px;
+    height: 200px;
+    -webkit-animation: LOADERSPINNER 5s linear infinite;
+    -moz-animation: LOADERSPINNER 5s linear infinite;
+    -ms-animation: LOADERSPINNER 5s linear infinite;
+    -o-animation: LOADERSPINNER 5s linear infinite;
+    animation: LOADERSPINNER 5s linear infinite;
 }
 .loaderoverlay .loaderspinner:before {
-  width: 160px;
-  height: 160px;
-  -webkit-animation: LOADERSPINNER 10s linear infinite;
-  -moz-animation: LOADERSPINNER 10s linear infinite;
-  -ms-animation: LOADERSPINNER 10s linear infinite;
-  -o-animation: LOADERSPINNER 10s linear infinite;
-  animation: LOADERSPINNER 10s linear infinite;
+    width: 160px;
+    height: 160px;
+    -webkit-animation: LOADERSPINNER 10s linear infinite;
+    -moz-animation: LOADERSPINNER 10s linear infinite;
+    -ms-animation: LOADERSPINNER 10s linear infinite;
+    -o-animation: LOADERSPINNER 10s linear infinite;
+    animation: LOADERSPINNER 10s linear infinite;
 }
 .loaderoverlay .loaderspinner:after {
-  width: 120px;
-  height: 120px;
-  -webkit-animation: LOADERSPINNER 5s linear infinite;
-  -moz-animation: LOADERSPINNER 5s linear infinite;
-  -ms-animation: LOADERSPINNER 5s linear infinite;
-  -o-animation: LOADERSPINNER 5s linear infinite;
-  animation: LOADERSPINNER 5s linear infinite;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: LOADERSPINNER 5s linear infinite;
+    -moz-animation: LOADERSPINNER 5s linear infinite;
+    -ms-animation: LOADERSPINNER 5s linear infinite;
+    -o-animation: LOADERSPINNER 5s linear infinite;
+    animation: LOADERSPINNER 5s linear infinite;
 }
 .loaderoverlay .loaderlabel {
-  color: #6f3;
-  text-transform: uppercase;
-  font-family: sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-animation: LOADERLABEL 5s linear infinite;
-  -moz-animation: LOADERLABEL 5s linear infinite;
-  -ms-animation: LOADERLABEL 5s linear infinite;
-  -o-animation: LOADERLABEL 5s linear infinite;
-  animation: LOADERLABEL 5s linear infinite;
+    color: #6f3;
+    text-transform: uppercase;
+    font-family: sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-animation: LOADERLABEL 5s linear infinite;
+    -moz-animation: LOADERLABEL 5s linear infinite;
+    -ms-animation: LOADERLABEL 5s linear infinite;
+    -o-animation: LOADERLABEL 5s linear infinite;
+    animation: LOADERLABEL 5s linear infinite;
 }
 button[type="button"] {
-  padding: 0.5rem 1rem;
-  position: absolute;
-  z-index: 1;
-  bottom: 10px;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  -o-transform: translateX(-50%);
-  transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    position: absolute;
+    z-index: 1;
+    bottom: 10px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 
 /* Customize */
 .loaderoverlay {
-  background: #000;
+    background: #000;
 }
 .loaderoverlay .loaderspinner,
 .loaderoverlay .loaderspinner:before,
 .loaderoverlay .loaderspinner:after {
-  border-top-color: #6f3 !important;
-  border-bottom-color: #6f3 !important;
+    border-top-color: #6f3 !important;
+    border-bottom-color: #6f3 !important;
 }
 .loaderoverlay .loaderlabel {
-  color: #6f3;
+    color: #6f3;
 }

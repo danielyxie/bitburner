@@ -65,9 +65,9 @@ tr:focus {
     overflow: auto;
 
     border: 0;
-	border-bottom: 1px solid #000;
-	border-radius: 0;
-	background-color: #333;
+    border-bottom: 1px solid #000;
+    border-radius: 0;
+    background-color: #333;
 }
 
 /* Default buttons */
@@ -151,8 +151,8 @@ a:link, a:visited {
 
 .a-link-button:active {
     -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-	-moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 /* Make anchor tags ("a" elements) inactive (not clickable) */
@@ -309,8 +309,8 @@ a:link, a:visited {
 
 .help-tip:active {
     -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-	-moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 /* Flashing button (Red) */
@@ -348,38 +348,38 @@ a:link, a:visited {
 /* Blinking Cursor */
 /* ----- blinking cursor animation ----- */
 .typed-cursor{
-  opacity: 1;
-  -webkit-animation: blink 0.95s infinite;
-  -moz-animation: blink 0.95s infinite;
-  -ms-animation: blink 0.95s infinite;
-  -o-animation: blink 0.95s infinite;
-  animation: blink 0.95s infinite;
+    opacity: 1;
+    -webkit-animation: blink 0.95s infinite;
+    -moz-animation: blink 0.95s infinite;
+    -ms-animation: blink 0.95s infinite;
+    -o-animation: blink 0.95s infinite;
+    animation: blink 0.95s infinite;
 }
 
 @-keyframes blink{
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 @-webkit-keyframes blink{
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 @-moz-keyframes blink{
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 @-ms-keyframes blink{
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 @-o-keyframes blink{
-  0% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 1; }
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 /* Status text */

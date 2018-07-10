@@ -100,7 +100,7 @@ module.exports = {
 //            "var"
 //        ],
         "function-whitespace-after": "always",
-//        "indentation": 4,
+        "indentation": 4,
         "keyframe-declaration-no-important": true,
         "length-zero-no-unit": true,
 //        "max-empty-lines": 1,

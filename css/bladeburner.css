@@ -72,12 +72,12 @@
 
 .bladeburner-console-input {
     display: inline-block;
-	padding: 0 !important;
-	margin: 0 !important;
-	border: 0;
-	background-color: var(--my-background-color);
-	font-size: 13px;
-	outline: none;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0;
+    background-color: var(--my-background-color);
+    font-size: 13px;
+    outline: none;
     color: var(--my-font-color);
     flex: 1 1 auto;
 }
