@@ -127,7 +127,7 @@ module.exports = {
         "no-eol-whitespace": true,
         "no-extra-semicolons": true,
         "no-invalid-double-slash-comments": true,
-//        "no-missing-end-of-source-newline": true,
+        "no-missing-end-of-source-newline": true,
         "no-unknown-animations": true,
         "number-leading-zero": "always",
         "number-max-precision": [3, { ignoreUnits: [ "%" ] }],
