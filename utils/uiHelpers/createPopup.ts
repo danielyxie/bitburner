@@ -10,7 +10,7 @@ export function createPopup(id: string, elems: HTMLElement[]) {
     const container: HTMLDivElement = createElement("div", {
             class: "popup-box-container",
             display: "block",
-            id,
+            id: id,
         }) as HTMLDivElement;
     const content: HTMLElement = createElement("div", {
             class: "popup-box-content",

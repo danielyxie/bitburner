@@ -33,10 +33,12 @@ export function createAccordionElement(params: IAccordionConfigurationParameters
             pnl.display = pnl.display === "block" ? "none" : "block";
         },
         id: params.id !== undefined ? `${params.id}-hdr` : undefined,
+        class:"accordion-header",
         innerHTML: params.hdrText,
     }) as HTMLButtonElement;
     const panel: HTMLDivElement = createElement("div", {
         id: params.id !== undefined ? `${params.id}-panel` : undefined,
+        class:"accordion-panel",
         innerHTML: params.panelText,
     }) as HTMLDivElement;
 

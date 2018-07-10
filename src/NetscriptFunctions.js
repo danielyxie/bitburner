@@ -151,7 +151,9 @@ function NetscriptFunctions(workerScript) {
             throw makeRuntimeRejectMsg(workerScript,
                                        "Dynamic RAM usage calculated to be greater than initial RAM usage on fn: " + fnName +
                                        ". This is probably because you somehow circumvented the static RAM "  +
-                                       "calculation.<br><br>Please don't do that :(");
+                                       "calculation.<br><br>Please don't do that :(<br><br>" +
+                                       "Dynamic RAM Usage: " + workerScript.dynamicRamUsage + "<br>" +
+                                       "Static RAM Usage: " + workerScript.ramUsage);
         }
     };
 

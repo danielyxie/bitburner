@@ -40,7 +40,7 @@ function WorkerScript(runningScriptObj) {
     this.disableLogs    = {}; //Stores names of fns that should have logs disabled
 
     //Properties used for dynamic RAM evaluation
-    this.dynamicRamUsage = 1.4;
+    this.dynamicRamUsage = CONSTANTS.ScriptBaseRamCost;
     this.dynamicLoadedFns = {};
 }
 

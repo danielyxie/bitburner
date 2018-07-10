@@ -34,7 +34,7 @@ export function createProgressBarText(params: IProgressBarConfiguration) {
     };
 
     // tslint:disable-next-line:prefer-object-spread
-    const derivedParams: IProgressBarConfigurationMaterialized = Object.assign({}, params, defaultParams);
+    const derivedParams: IProgressBarConfigurationMaterialized = Object.assign({}, defaultParams, params);
 
     const bars: number = Math.floor(derivedParams.progress / (1 / derivedParams.totalTicks));
     const dashes: number = derivedParams.totalTicks - bars;
