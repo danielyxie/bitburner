@@ -81,7 +81,7 @@ module.exports = {
         "function-calc-no-unspaced-operator": true,
         "function-comma-newline-after": "always-multi-line",
         "function-comma-newline-before": "never-multi-line",
-//        "function-comma-space-after": "always-single-line",
+        "function-comma-space-after": "always-single-line",
         "function-comma-space-before": "never",
         "function-linear-gradient-no-nonstandard-direction": true,
         "function-max-empty-lines": 1,
