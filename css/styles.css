@@ -71,7 +71,7 @@ tr:focus {
 }
 
 /* Default buttons */
-.mainmenu>li a {
+.mainmenu > li a {
     display: block;
     color: #e6e6e6;
     background-color: #555;
@@ -80,20 +80,20 @@ tr:focus {
 }
 
 /* Hovering makes them lighter */
-.mainmenu>li a:hover,
-.mainmenu>li a:hover:not(.active),
-.mainmenu>li a:focus {
+.mainmenu > li a:hover,
+.mainmenu > li a:hover:not(.active),
+.mainmenu > li a:focus {
     background-color: #777;
     color: #fff;
 }
 
 /* Panel headers can become active, and they are "lighter" than the rest */
-.mainmenu>li a.active {
+.mainmenu > li a.active {
     background-color: #777;
     color: #fff;
 }
 
-.mainmenu>li a.active:hover {
+.mainmenu > li a.active:hover {
     background-color: #aaa;
 }
 
