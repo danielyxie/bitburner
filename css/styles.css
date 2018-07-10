@@ -243,7 +243,7 @@ a:link, a:visited {
     visibility: hidden;
     width: 300px;
     background-color: var(--my-background-color);
-    border: 2px solid var(--my-highlight-color);;
+    border: 2px solid var(--my-highlight-color);
     color: #fff;
     text-align: center;
     padding: 4px;
@@ -258,7 +258,7 @@ a:link, a:visited {
     visibility: hidden;
     width: 300px;
     background-color: var(--my-background-color);
-    border: 2px solid var(--my-highlight-color);;
+    border: 2px solid var(--my-highlight-color);
     color: #fff;
     text-align: center;
     padding: 4px;
@@ -275,7 +275,7 @@ a:link, a:visited {
     visibility: hidden;
     width: 300px;
     background-color: var(--my-background-color);
-    border: 2px solid var(--my-highlight-color);;
+    border: 2px solid var(--my-highlight-color);
     color: #fff;
     text-align: center;
     padding: 4px;

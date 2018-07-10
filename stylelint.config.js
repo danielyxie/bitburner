@@ -125,7 +125,7 @@ module.exports = {
 //        "no-duplicate-selectors": true,
         "no-empty-source": true,
         "no-eol-whitespace": true,
-//        "no-extra-semicolons": true,
+        "no-extra-semicolons": true,
         "no-invalid-double-slash-comments": true,
 //        "no-missing-end-of-source-newline": true,
         "no-unknown-animations": true,
