@@ -229,8 +229,8 @@ module.exports = {
         "scss/selector-no-redundant-nesting-selector": true,*/
         "selector-attribute-brackets-space-inside": "never",
         "selector-attribute-operator-blacklist": [],
-//        "selector-attribute-operator-space-after": "always",
-//        "selector-attribute-operator-space-before": "always",
+        "selector-attribute-operator-space-after": "never",
+        "selector-attribute-operator-space-before": "never",
         "selector-attribute-operator-whitelist": [
             "="
         ],
