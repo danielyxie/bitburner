@@ -49,7 +49,7 @@ module.exports = {
         "color-no-invalid-hex": true,
 //        "comment-empty-line-before": "always",
         "comment-no-empty": true,
-//        "comment-whitespace-inside": "always",
+        "comment-whitespace-inside": "always",
         "comment-word-blacklist": [],
         "custom-media-pattern": ".+",
         "custom-property-empty-line-before": "never",

@@ -429,7 +429,6 @@ a:link, a:visited {
     right: 0;
     top: 0;
     height: 205px; /* Full height */
-    /*margin: 50% auto;*/
     padding: 5px;
     border: 2px solid var(--my-highlight-color);
     width: 19%;

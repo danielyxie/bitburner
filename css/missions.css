@@ -7,9 +7,7 @@
 
 .hack-mission-grid {
     display: grid;
-    /*grid-template-columns: 11% 11% 11% 11% 11% 11% 11% 11%;*/
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    /*grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10%;*/
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-gap: 2.5%;
     height: 90%;
