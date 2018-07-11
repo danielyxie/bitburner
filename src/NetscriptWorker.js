@@ -163,7 +163,7 @@ function startNetscript1Script(workerScript) {
     var interpreterInitialization = function(int, scope) {
         //Add the Netscript environment
         var ns = NetscriptFunctions(workerScript);
-        for (var name in ns) {
+        for (let name in ns) {
             let entry = ns[name];
             if (typeof entry === "function") {
                 //Async functions need to be wrapped. See JS-Interpreter documentation
@@ -182,10 +182,23 @@ function startNetscript1Script(workerScript) {
                     }
                     int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
                 } else {
-                    int.setProperty(scope, name, int.createNativeFunction(entry));
+                    let tempWrapper = function() {
+                        let res = entry.apply(null, arguments);
+
+                        if (res == null) {
+                            return res;
+                        } else if (res.constructor === Array || (res === Object(res))) {
+                            //Objects and Arrays must be converted to the interpreter's format
+                            console.log("Function returning object detected: " + name);
+                            return int.nativeToPseudo(res);
+                        } else {
+                            return res;
+                        }
+                    }
+                    int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
                 }
             } else {
-                //Math, Date, Number, hacknetnodes, bladeburner
+                //bladeburner, or anything else
                 int.setProperty(scope, name, int.nativeToPseudo(entry));
             }
         }
@@ -193,7 +206,16 @@ function startNetscript1Script(workerScript) {
         //Add the arguments
         int.setProperty(scope, "args", int.nativeToPseudo(workerScript.args));
     }
-    var interpreter = new Interpreter(code, interpreterInitialization);
+
+    var interpreter;
+    try {
+        interpreter = new Interpreter(code, interpreterInitialization);
+    } catch(e) {
+        dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" +  e);
+        workerScript.env.stopFlag = true;
+        workerScript.running = false;
+        return;
+    }
 
     return new Promise(function(resolve, reject) {
         function runInterpreter() {
@@ -217,7 +239,18 @@ function startNetscript1Script(workerScript) {
             }
         }
 
-        runInterpreter();
+        try {
+            runInterpreter();
+        } catch(e) {
+            if (isString(e)) {
+                workerScript.errorMessage = e;
+                return reject(workerScript);
+            } else if (e instanceof WorkerScript) {
+                return reject(e);
+            } else {
+                return reject(workerScript);
+            }
+        }
     });
 
 
@@ -274,6 +307,7 @@ function runScriptsLoop() {
                 p = startNetscript2Script(workerScripts[i]);
             } else {
                 p = startNetscript1Script(workerScripts[i]);
+                if (!(p instanceof Promise)) {continue;}
                 /*
                 try {
                     var ast = parse(workerScripts[i].code, {sourceType:"module"});

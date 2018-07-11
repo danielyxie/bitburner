@@ -3254,6 +3254,17 @@ function NetscriptFunctions(workerScript) {
                 throw makeRuntimeRejectMsg(workerScript, "stopBladeburnerAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
+            getCurrentAction : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getCurrentAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 4);
+                }
+                updateDynamicRam("getCurrentAction", CONSTANTS.ScriptBladeburnerApiBaseRamCost / 2);
+                if (Player.bladeburner instanceof Bladeburner && (Player.bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return Player.bladeburner.resetAction();
+                }
+                throw makeRuntimeRejectMsg(workerScript, "getCurrentAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
             getActionTime : function(type="", name="") {
                 if (workerScript.checkingRam) {
                     return updateStaticRam("getActionTime", CONSTANTS.ScriptBladeburnerApiBaseRamCost);

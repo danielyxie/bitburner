@@ -15454,7 +15454,7 @@ function initCreateProgramButtons() {
 
 /* Settings.js */
 let Settings = {
-    CodeInstructionRunTime:              50,
+    CodeInstructionRunTime:              25,
     MaxLogCapacity:                      50,
     MaxPortCapacity:                     50,
     SuppressMessages:                    false,
@@ -15603,7 +15603,6 @@ function setSettingsLabels() {
 /* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Constants */ 2);
 /* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./engine */ 6);
 /* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./JSInterpreter */ 91);
-/* harmony import */ var _JSInterpreter__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_JSInterpreter__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _NetscriptEnvironment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NetscriptEnvironment */ 81);
 /* harmony import */ var _NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NetscriptEvaluator */ 7);
 /* harmony import */ var _NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NetscriptFunctions */ 34);
@@ -15783,7 +15782,7 @@ function startNetscript1Script(workerScript) {
     var interpreterInitialization = function(int, scope) {
         //Add the Netscript environment
         var ns = Object(_NetscriptFunctions__WEBPACK_IMPORTED_MODULE_6__[/* NetscriptFunctions */ "a"])(workerScript);
-        for (var name in ns) {
+        for (let name in ns) {
             let entry = ns[name];
             if (typeof entry === "function") {
                 //Async functions need to be wrapped. See JS-Interpreter documentation
@@ -15802,10 +15801,23 @@ function startNetscript1Script(workerScript) {
                     }
                     int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
                 } else {
-                    int.setProperty(scope, name, int.createNativeFunction(entry));
+                    let tempWrapper = function() {
+                        let res = entry.apply(null, arguments);
+
+                        if (res == null) {
+                            return res;
+                        } else if (res.constructor === Array || (res === Object(res))) {
+                            //Objects and Arrays must be converted to the interpreter's format
+                            console.log("Function returning object detected: " + name);
+                            return int.nativeToPseudo(res);
+                        } else {
+                            return res;
+                        }
+                    }
+                    int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
                 }
             } else {
-                //Math, Date, Number, hacknetnodes, bladeburner
+                //bladeburner, or anything else
                 int.setProperty(scope, name, int.nativeToPseudo(entry));
             }
         }
@@ -15813,7 +15825,16 @@ function startNetscript1Script(workerScript) {
         //Add the arguments
         int.setProperty(scope, "args", int.nativeToPseudo(workerScript.args));
     }
-    var interpreter = new _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__["Interpreter"](code, interpreterInitialization);
+
+    var interpreter;
+    try {
+        interpreter = new _JSInterpreter__WEBPACK_IMPORTED_MODULE_3__[/* Interpreter */ "a"](code, interpreterInitialization);
+    } catch(e) {
+        Object(_utils_DialogBox__WEBPACK_IMPORTED_MODULE_12__["dialogBoxCreate"])("Syntax ERROR in " + workerScript.name + ":<br>" +  e);
+        workerScript.env.stopFlag = true;
+        workerScript.running = false;
+        return;
+    }
 
     return new Promise(function(resolve, reject) {
         function runInterpreter() {
@@ -15837,7 +15858,18 @@ function startNetscript1Script(workerScript) {
             }
         }
 
-        runInterpreter();
+        try {
+            runInterpreter();
+        } catch(e) {
+            if (Object(_utils_StringHelperFunctions__WEBPACK_IMPORTED_MODULE_16__["isString"])(e)) {
+                workerScript.errorMessage = e;
+                return reject(workerScript);
+            } else if (e instanceof WorkerScript) {
+                return reject(e);
+            } else {
+                return reject(workerScript);
+            }
+        }
     });
 
 
@@ -15894,6 +15926,7 @@ function runScriptsLoop() {
                 p = startNetscript2Script(workerScripts[i]);
             } else {
                 p = startNetscript1Script(workerScripts[i]);
+                if (!(p instanceof Promise)) {continue;}
                 /*
                 try {
                     var ast = parse(workerScripts[i].code, {sourceType:"module"});
@@ -29264,6 +29297,17 @@ function NetscriptFunctions(workerScript) {
                     return _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner.resetAction();
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_25__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "stopBladeburnerAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
+                                                         "at the Bladeburner division or because you do not have Source-File 7");
+            },
+            getCurrentAction : function() {
+                if (workerScript.checkingRam) {
+                    return updateStaticRam("getCurrentAction", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptBladeburnerApiBaseRamCost / 4);
+                }
+                updateDynamicRam("getCurrentAction", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptBladeburnerApiBaseRamCost / 2);
+                if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
+                    return _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner.resetAction();
+                }
+                throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_25__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCurrentAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
             },
             getActionTime : function(type="", name="") {
@@ -46295,146 +46339,3606 @@ exports.FactionInfos = {
 /*!******************************!*\
   !*** ./src/JSInterpreter.js ***!
   \******************************/
-/*! no static exports found */
+/*! exports provided: Interpreter */
 /*! exports used: Interpreter */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// Acorn: Copyright 2012 Marijn Haverbeke, MIT License
-const acorn = __webpack_require__(/*! acorn */ 130);
-var mod$$inline_58=function(a){function b(a){n=a||{};for(var b in Ua)Object.prototype.hasOwnProperty.call(n,b)||(n[b]=Ua[b]);wa=n.sourceFile||null}function c(a,b){var c=Ab(k,a);b+=" ("+c.line+":"+c.column+")";var d=new SyntaxError(b);d.pos=a;d.loc=c;d.raisedAt=f;throw d;}function d(a){function b(a){if(1==a.length)return c+="return str === "+JSON.stringify(a[0])+";";c+="switch(str){";for(var va=0;va<a.length;++va)c+="case "+JSON.stringify(a[va])+":";c+="return true}return false;"}a=a.split(" ");var c=
-"",d=[],e=0;a:for(;e<a.length;++e){for(var g=0;g<d.length;++g)if(d[g][0].length==a[e].length){d[g].push(a[e]);continue a}d.push([a[e]])}if(3<d.length){d.sort(function(a,b){return b.length-a.length});c+="switch(str.length){";for(e=0;e<d.length;++e)a=d[e],c+="case "+a[0].length+":",b(a);c+="}"}else b(a);return new Function("str",c)}function e(){this.line=G;this.column=f-D}function g(a,b){X=f;n.locations&&(ia=new e);p=a;l();H=b;R=a.beforeExpr}function h(){for(var a=f,b=n.onComment&&n.locations&&new e,
-c=k.charCodeAt(f+=2);f<S&&10!==c&&13!==c&&8232!==c&&8233!==c;)++f,c=k.charCodeAt(f);if(n.onComment)n.onComment(!1,k.slice(a+2,f),a,f,b,n.locations&&new e)}function l(){for(;f<S;){var a=k.charCodeAt(f);if(32===a)++f;else if(13===a)++f,a=k.charCodeAt(f),10===a&&++f,n.locations&&(++G,D=f);else if(10===a||8232===a||8233===a)++f,n.locations&&(++G,D=f);else if(8<a&&14>a)++f;else if(47===a)if(a=k.charCodeAt(f+1),42===a){var a=n.onComment&&n.locations&&new e,b=f,d=k.indexOf("*/",f+=2);-1===d&&c(f-2,"Unterminated comment");
-f=d+2;if(n.locations){Y.lastIndex=b;for(var g=void 0;(g=Y.exec(k))&&g.index<f;)++G,D=g.index+g[0].length}if(n.onComment)n.onComment(!0,k.slice(b+2,d),b,f,a,n.locations&&new e)}else if(47===a)h();else break;else if(160===a)++f;else if(5760<=a&&Bb.test(String.fromCharCode(a)))++f;else break}}function m(a){switch(a){case 46:return a=k.charCodeAt(f+1),48<=a&&57>=a?a=P(!0):(++f,a=g(xa)),a;case 40:return++f,g(I);case 41:return++f,g(E);case 59:return++f,g(J);case 44:return++f,g(L);case 91:return++f,g(ja);
-case 93:return++f,g(ka);case 123:return++f,g(Z);case 125:return++f,g(T);case 58:return++f,g(aa);case 63:return++f,g(ya);case 48:if(a=k.charCodeAt(f+1),120===a||88===a)return f+=2,a=B(16),null==a&&c(x+2,"Expected hexadecimal number"),la(k.charCodeAt(f))&&c(f,"Identifier directly after number"),a=g(ba,a);case 49:case 50:case 51:case 52:case 53:case 54:case 55:case 56:case 57:return P(!1);case 34:case 39:a:{f++;for(var b="";;){f>=S&&c(x,"Unterminated string constant");var d=k.charCodeAt(f);if(d===a){++f;
-a=g(da,b);break a}if(92===d){var d=k.charCodeAt(++f),e=/^[0-7]+/.exec(k.slice(f,f+3));for(e&&(e=e[0]);e&&255<parseInt(e,8);)e=e.slice(0,-1);"0"===e&&(e=null);++f;if(e)C&&c(f-2,"Octal literal in strict mode"),b+=String.fromCharCode(parseInt(e,8)),f+=e.length-1;else switch(d){case 110:b+="\n";break;case 114:b+="\r";break;case 120:b+=String.fromCharCode(ma(2));break;case 117:b+=String.fromCharCode(ma(4));break;case 85:b+=String.fromCharCode(ma(8));break;case 116:b+="\t";break;case 98:b+="\b";break;case 118:b+=
-"\x0B";break;case 102:b+="\f";break;case 48:b+="\x00";break;case 13:10===k.charCodeAt(f)&&++f;case 10:n.locations&&(D=f,++G);break;default:b+=String.fromCharCode(d)}}else 13!==d&&10!==d&&8232!==d&&8233!==d||c(x,"Unterminated string constant"),b+=String.fromCharCode(d),++f}}return a;case 47:return a=k.charCodeAt(f+1),R?(++f,a=K()):a=61===a?t(U,2):t(za,1),a;case 37:case 42:return a=k.charCodeAt(f+1),a=61===a?t(U,2):t(Cb,1),a;case 124:case 38:return b=k.charCodeAt(f+1),a=b===a?t(124===a?Va:Wa,2):61===
-b?t(U,2):t(124===a?Db:Eb,1),a;case 94:return a=k.charCodeAt(f+1),a=61===a?t(U,2):t(Fb,1),a;case 43:case 45:return b=k.charCodeAt(f+1),b===a?45==b&&62==k.charCodeAt(f+2)&&na.test(k.slice(M,f))?(f+=3,h(),l(),a=z()):a=t(Gb,2):a=61===b?t(U,2):t(Hb,1),a;case 60:case 62:return b=k.charCodeAt(f+1),d=1,b===a?(d=62===a&&62===k.charCodeAt(f+2)?3:2,a=61===k.charCodeAt(f+d)?t(U,d+1):t(Ib,d)):33==b&&60==a&&45==k.charCodeAt(f+2)&&45==k.charCodeAt(f+3)?(f+=4,h(),l(),a=z()):(61===b&&(d=61===k.charCodeAt(f+2)?3:2),
-a=t(Jb,d)),a;case 61:case 33:return b=k.charCodeAt(f+1),a=61===b?t(Kb,61===k.charCodeAt(f+2)?3:2):t(61===a?Aa:Xa,1),a;case 126:return t(Xa,1)}return!1}function z(a){a?f=x+1:x=f;n.locations&&(oa=new e);if(a)return K();if(f>=S)return g(pa);var b=k.charCodeAt(f);if(la(b)||92===b)return Ya();a=m(b);if(!1===a){b=String.fromCharCode(b);if("\\"===b||Za.test(b))return Ya();c(f,"Unexpected character '"+b+"'")}return a}function t(a,b){var c=k.slice(f,f+b);f+=b;g(a,c)}function K(){for(var a,b,d=f;;){f>=S&&c(d,
-"Unterminated regular expression");var e=k.charAt(f);na.test(e)&&c(d,"Unterminated regular expression");if(a)a=!1;else{if("["===e)b=!0;else if("]"===e&&b)b=!1;else if("/"===e&&!b)break;a="\\"===e}++f}a=k.slice(d,f);++f;(b=$a())&&!/^[gmsiy]*$/.test(b)&&c(d,"Invalid regexp flag");return g(Ba,new RegExp(a,b))}function B(a,b){for(var c=f,d=0,e=0,g=null==b?Infinity:b;e<g;++e){var h=k.charCodeAt(f),h=97<=h?h-97+10:65<=h?h-65+10:48<=h&&57>=h?h-48:Infinity;if(h>=a)break;++f;d=d*a+h}return f===c||null!=b&&
-f-c!==b?null:d}function P(a){var b=f,d=!1,e=48===k.charCodeAt(f);a||null!==B(10)||c(b,"Invalid number");46===k.charCodeAt(f)&&(++f,B(10),d=!0);a=k.charCodeAt(f);if(69===a||101===a)a=k.charCodeAt(++f),43!==a&&45!==a||++f,null===B(10)&&c(b,"Invalid number"),d=!0;la(k.charCodeAt(f))&&c(f,"Identifier directly after number");a=k.slice(b,f);var h;d?h=parseFloat(a):e&&1!==a.length?/[89]/.test(a)||C?c(b,"Invalid number"):h=parseInt(a,8):h=parseInt(a,10);return g(ba,h)}function ma(a){a=B(16,a);null===a&&c(x,
-"Bad character escape sequence");return a}function $a(){ca=!1;for(var a,b=!0,d=f;;){var e=k.charCodeAt(f);if(ab(e))ca&&(a+=k.charAt(f)),++f;else if(92===e){ca||(a=k.slice(d,f));ca=!0;117!=k.charCodeAt(++f)&&c(f,"Expecting Unicode escape sequence \\uXXXX");++f;var e=ma(4),g=String.fromCharCode(e);g||c(f-1,"Invalid Unicode escape");(b?la(e):ab(e))||c(f-4,"Invalid Unicode escape");a+=g}else break;b=!1}return ca?a:k.slice(d,f)}function Ya(){var a=$a(),b=V;ca||(Lb(a)?b=Ca[a]:(n.forbidReserved&&(3===n.ecmaVersion?
-Mb:Nb)(a)||C&&bb(a))&&c(x,"The keyword '"+a+"' is reserved"));return g(b,a)}function r(){Da=x;M=X;Ea=ia;z()}function Fa(a){C=a;f=M;if(n.locations)for(;f<D;)D=k.lastIndexOf("\n",D-2)+1,--G;l();z()}function cb(){this.type=null;this.start=x;this.end=null}function db(){this.start=oa;this.end=null;null!==wa&&(this.source=wa)}function y(){var a=new cb;n.locations&&(a.loc=new db);n.directSourceFile&&(a.sourceFile=n.directSourceFile);n.ranges&&(a.range=[x,0]);return a}function Q(a){var b=new cb;b.start=a.start;
-n.locations&&(b.loc=new db,b.loc.start=a.loc.start);n.ranges&&(b.range=[a.range[0],0]);return b}function q(a,b){a.type=b;a.end=M;n.locations&&(a.loc.end=Ea);n.ranges&&(a.range[1]=M);return a}function Ga(a){return 5<=n.ecmaVersion&&"ExpressionStatement"===a.type&&"Literal"===a.expression.type&&"use strict"===a.expression.value}function u(a){if(p===a)return r(),!0}function qa(){return!n.strictSemicolons&&(p===pa||p===T||na.test(k.slice(M,x)))}function W(){u(J)||qa()||N()}function v(a){p===a?r():N()}
-function N(){c(x,"Unexpected token")}function ra(a){"Identifier"!==a.type&&"MemberExpression"!==a.type&&c(a.start,"Assigning to rvalue");C&&"Identifier"===a.type&&sa(a.name)&&c(a.start,"Assigning to "+a.name+" in strict mode")}function F(){(p===za||p===U&&"/="==H)&&z(!0);var a=p,b=y();switch(a){case Ha:case eb:r();var d=a===Ha;u(J)||qa()?b.label=null:p!==V?N():(b.label=O(),W());for(var e=0;e<w.length;++e){var g=w[e];if(null==b.label||g.name===b.label.name){if(null!=g.kind&&(d||"loop"===g.kind))break;
-if(b.label&&d)break}}e===w.length&&c(b.start,"Unsyntactic "+a.keyword);return q(b,d?"BreakStatement":"ContinueStatement");case fb:return r(),W(),q(b,"DebuggerStatement");case gb:return r(),w.push(Ia),b.body=F(),w.pop(),v(Ja),b.test=ea(),W(),q(b,"DoWhileStatement");case hb:r();w.push(Ia);v(I);if(p===J)return Ka(b,null);if(p===La)return a=y(),r(),ib(a,!0),q(a,"VariableDeclaration"),1===a.declarations.length&&u(ta)?jb(b,a):Ka(b,a);a=A(!1,!0);return u(ta)?(ra(a),jb(b,a)):Ka(b,a);case Ma:return r(),Na(b,
-!0);case kb:return r(),b.test=ea(),b.consequent=F(),b.alternate=u(lb)?F():null,q(b,"IfStatement");case mb:return fa||c(x,"'return' outside of function"),r(),u(J)||qa()?b.argument=null:(b.argument=A(),W()),q(b,"ReturnStatement");case Oa:r();b.discriminant=ea();b.cases=[];v(Z);for(w.push(Ob);p!=T;)p===Pa||p===nb?(a=p===Pa,e&&q(e,"SwitchCase"),b.cases.push(e=y()),e.consequent=[],r(),a?e.test=A():(d&&c(Da,"Multiple default clauses"),d=!0,e.test=null),v(aa)):(e||N(),e.consequent.push(F()));e&&q(e,"SwitchCase");
-r();w.pop();return q(b,"SwitchStatement");case ob:return r(),na.test(k.slice(M,x))&&c(M,"Illegal newline after throw"),b.argument=A(),W(),q(b,"ThrowStatement");case pb:return r(),b.block=ga(),b.handler=null,p===qb&&(a=y(),r(),v(I),a.param=O(),C&&sa(a.param.name)&&c(a.param.start,"Binding "+a.param.name+" in strict mode"),v(E),a.guard=null,a.body=ga(),b.handler=q(a,"CatchClause")),b.guardedHandlers=rb,b.finalizer=u(sb)?ga():null,b.handler||b.finalizer||c(b.start,"Missing catch or finally clause"),
-q(b,"TryStatement");case La:return r(),ib(b),W(),q(b,"VariableDeclaration");case Ja:return r(),b.test=ea(),w.push(Ia),b.body=F(),w.pop(),q(b,"WhileStatement");case tb:return C&&c(x,"'with' in strict mode"),r(),b.object=ea(),b.body=F(),q(b,"WithStatement");case Z:return ga();case J:return r(),q(b,"EmptyStatement");default:d=H;g=A();if(a===V&&"Identifier"===g.type&&u(aa)){for(e=0;e<w.length;++e)w[e].name===d&&c(g.start,"Label '"+d+"' is already declared");a=p.isLoop?"loop":p===Oa?"switch":null;w.push({name:d,
-kind:a});b.body=F();w.pop();b.label=g;return q(b,"LabeledStatement")}b.expression=g;W();return q(b,"ExpressionStatement")}}function ea(){v(I);var a=A();v(E);return a}function ga(a){var b=y(),c=!0,d=!1,e;b.body=[];for(v(Z);!u(T);){var g=F();b.body.push(g);c&&a&&Ga(g)&&(e=d,Fa(d=!0));c=!1}d&&!e&&Fa(!1);return q(b,"BlockStatement")}function Ka(a,b){a.init=b;v(J);a.test=p===J?null:A();v(J);a.update=p===E?null:A();v(E);a.body=F();w.pop();return q(a,"ForStatement")}function jb(a,b){a.left=b;a.right=A();
-v(E);a.body=F();w.pop();return q(a,"ForInStatement")}function ib(a,b){a.declarations=[];for(a.kind="var";;){var d=y();d.id=O();C&&sa(d.id.name)&&c(d.id.start,"Binding "+d.id.name+" in strict mode");d.init=u(Aa)?A(!0,b):null;a.declarations.push(q(d,"VariableDeclarator"));if(!u(L))break}return a}function A(a,b){var c=Qa(b);if(!a&&p===L){var d=Q(c);for(d.expressions=[c];u(L);)d.expressions.push(Qa(b));return q(d,"SequenceExpression")}return c}function Qa(a){var b;b=a;var c;c=b;c=Ra(Sa(),-1,c);if(u(ya)){var d=
-Q(c);d.test=c;d.consequent=A(!0);v(aa);d.alternate=A(!0,b);b=q(d,"ConditionalExpression")}else b=c;return p.isAssign?(c=Q(b),c.operator=H,c.left=b,r(),c.right=Qa(a),ra(b),q(c,"AssignmentExpression")):b}function Ra(a,b,c){var d=p.binop;if(null!=d&&(!c||p!==ta)&&d>b){var e=Q(a);e.left=a;e.operator=H;a=p;r();e.right=Ra(Sa(),d,c);d=q(e,a===Va||a===Wa?"LogicalExpression":"BinaryExpression");return Ra(d,b,c)}return a}function Sa(){if(p.prefix){var a=y(),b=p.isUpdate;a.operator=H;R=a.prefix=!0;r();a.argument=
-Sa();b?ra(a.argument):C&&"delete"===a.operator&&"Identifier"===a.argument.type&&c(a.start,"Deleting local variable in strict mode");return q(a,b?"UpdateExpression":"UnaryExpression")}for(b=ha(ua());p.postfix&&!qa();)a=Q(b),a.operator=H,a.prefix=!1,a.argument=b,ra(b),r(),b=q(a,"UpdateExpression");return b}function ha(a,b){if(u(xa)){var c=Q(a);c.object=a;c.property=O(!0);c.computed=!1;return ha(q(c,"MemberExpression"),b)}return u(ja)?(c=Q(a),c.object=a,c.property=A(),c.computed=!0,v(ka),ha(q(c,"MemberExpression"),
-b)):!b&&u(I)?(c=Q(a),c.callee=a,c.arguments=Ta(E,!1),ha(q(c,"CallExpression"),b)):a}function ua(){switch(p){case ub:var a=y();r();return q(a,"ThisExpression");case V:return O();case ba:case da:case Ba:return a=y(),a.value=H,a.raw=k.slice(x,X),r(),q(a,"Literal");case vb:case wb:case xb:return a=y(),a.value=p.atomValue,a.raw=p.keyword,r(),q(a,"Literal");case I:var a=oa,b=x;r();var d=A();d.start=b;d.end=X;n.locations&&(d.loc.start=a,d.loc.end=ia);n.ranges&&(d.range=[b,X]);v(E);return d;case ja:return a=
-y(),r(),a.elements=Ta(ka,!0,!0),q(a,"ArrayExpression");case Z:a=y();b=!0;d=!1;a.properties=[];for(r();!u(T);){if(b)b=!1;else if(v(L),n.allowTrailingCommas&&u(T))break;var e={key:p===ba||p===da?ua():O(!0)},g=!1,h;u(aa)?(e.value=A(!0),h=e.kind="init"):5<=n.ecmaVersion&&"Identifier"===e.key.type&&("get"===e.key.name||"set"===e.key.name)?(g=d=!0,h=e.kind=e.key.name,e.key=p===ba||p===da?ua():O(!0),p!==I&&N(),e.value=Na(y(),!1)):N();if("Identifier"===e.key.type&&(C||d))for(var f=0;f<a.properties.length;++f){var l=
-a.properties[f];if(l.key.name===e.key.name){var m=h==l.kind||g&&"init"===l.kind||"init"===h&&("get"===l.kind||"set"===l.kind);m&&!C&&"init"===h&&"init"===l.kind&&(m=!1);m&&c(e.key.start,"Redefinition of property")}}a.properties.push(e)}return a=q(a,"ObjectExpression");case Ma:return a=y(),r(),Na(a,!1);case yb:return a=y(),r(),a.callee=ha(ua(),!0),u(I)?a.arguments=Ta(E,!1):a.arguments=rb,a=q(a,"NewExpression");default:N()}}function Na(a,b){p===V?a.id=O():b?N():a.id=null;a.params=[];var d=!0;for(v(I);!u(E);)d?
-d=!1:v(L),a.params.push(O());var d=fa,e=w;fa=!0;w=[];a.body=ga(!0);fa=d;w=e;if(C||a.body.body.length&&Ga(a.body.body[0]))for(d=a.id?-1:0;d<a.params.length;++d)if(e=0>d?a.id:a.params[d],(bb(e.name)||sa(e.name))&&c(e.start,"Defining '"+e.name+"' in strict mode"),0<=d)for(var g=0;g<d;++g)e.name===a.params[g].name&&c(e.start,"Argument name clash in strict mode");return q(a,b?"FunctionDeclaration":"FunctionExpression")}function Ta(a,b,c){for(var d=[],e=!0;!u(a);){if(e)e=!1;else if(v(L),b&&n.allowTrailingCommas&&
-u(a))break;c&&p===L?d.push(null):d.push(A(!0))}return d}function O(a){var b=y();b.name=p===V?H:a&&!n.forbidReserved&&p.keyword||N();R=!1;r();return q(b,"Identifier")}a.version="0.4.1";var n,k,S,wa;a.parse=function(a,c){k=String(a);S=k.length;b(c);G=1;f=D=0;R=!0;l();var d,g=n.program;Da=M=f;n.locations&&(Ea=new e);fa=C=null;w=[];z();d=g||y();var h=!0;g||(d.body=[]);for(;p!==pa;)g=F(),d.body.push(g),h&&Ga(g)&&Fa(!0),h=!1;return d=q(d,"Program")};var Ua=a.defaultOptions={ecmaVersion:5,strictSemicolons:!1,
-allowTrailingCommas:!0,forbidReserved:!1,locations:!1,onComment:null,ranges:!1,program:null,sourceFile:null,directSourceFile:null},Ab=a.getLineInfo=function(a,b){for(var c=1,d=0;;){Y.lastIndex=d;var e=Y.exec(a);if(e&&e.index<b)++c,d=e.index+e[0].length;else break}return{line:c,column:b-d}};a.tokenize=function(a,c){function d(a){z(a);e.start=x;e.end=X;e.startLoc=oa;e.endLoc=ia;e.type=p;e.value=H;return e}k=String(a);S=k.length;b(c);G=1;f=D=0;R=!0;l();var e={};d.jumpTo=function(a,b){f=a;if(n.locations){G=
-1;D=Y.lastIndex=0;for(var c;(c=Y.exec(k))&&c.index<a;)++G,D=c.index+c[0].length}R=b;l()};return d};var f,x,X,oa,ia,p,H,R,G,D,Da,M,Ea,fa,w,C,rb=[],ba={type:"num"},Ba={type:"regexp"},da={type:"string"},V={type:"name"},pa={type:"eof"},Ha={keyword:"break"},Pa={keyword:"case",beforeExpr:!0},qb={keyword:"catch"},eb={keyword:"continue"},fb={keyword:"debugger"},nb={keyword:"default"},gb={keyword:"do",isLoop:!0},lb={keyword:"else",beforeExpr:!0},sb={keyword:"finally"},hb={keyword:"for",isLoop:!0},Ma={keyword:"function"},
-kb={keyword:"if"},mb={keyword:"return",beforeExpr:!0},Oa={keyword:"switch"},ob={keyword:"throw",beforeExpr:!0},pb={keyword:"try"},La={keyword:"var"},Ja={keyword:"while",isLoop:!0},tb={keyword:"with"},yb={keyword:"new",beforeExpr:!0},ub={keyword:"this"},vb={keyword:"null",atomValue:null},wb={keyword:"true",atomValue:!0},xb={keyword:"false",atomValue:!1},ta={keyword:"in",binop:7,beforeExpr:!0},Ca={"break":Ha,"case":Pa,"catch":qb,"continue":eb,"debugger":fb,"default":nb,"do":gb,"else":lb,"finally":sb,
-"for":hb,"function":Ma,"if":kb,"return":mb,"switch":Oa,"throw":ob,"try":pb,"var":La,"while":Ja,"with":tb,"null":vb,"true":wb,"false":xb,"new":yb,"in":ta,"instanceof":{keyword:"instanceof",binop:7,beforeExpr:!0},"this":ub,"typeof":{keyword:"typeof",prefix:!0,beforeExpr:!0},"void":{keyword:"void",prefix:!0,beforeExpr:!0},"delete":{keyword:"delete",prefix:!0,beforeExpr:!0}},ja={type:"[",beforeExpr:!0},ka={type:"]"},Z={type:"{",beforeExpr:!0},T={type:"}"},I={type:"(",beforeExpr:!0},E={type:")"},L={type:",",
-beforeExpr:!0},J={type:";",beforeExpr:!0},aa={type:":",beforeExpr:!0},xa={type:"."},ya={type:"?",beforeExpr:!0},za={binop:10,beforeExpr:!0},Aa={isAssign:!0,beforeExpr:!0},U={isAssign:!0,beforeExpr:!0},Gb={postfix:!0,prefix:!0,isUpdate:!0},Xa={prefix:!0,beforeExpr:!0},Va={binop:1,beforeExpr:!0},Wa={binop:2,beforeExpr:!0},Db={binop:3,beforeExpr:!0},Fb={binop:4,beforeExpr:!0},Eb={binop:5,beforeExpr:!0},Kb={binop:6,beforeExpr:!0},Jb={binop:7,beforeExpr:!0},Ib={binop:8,beforeExpr:!0},Hb={binop:9,prefix:!0,
-beforeExpr:!0},Cb={binop:10,beforeExpr:!0};a.tokTypes={bracketL:ja,bracketR:ka,braceL:Z,braceR:T,parenL:I,parenR:E,comma:L,semi:J,colon:aa,dot:xa,question:ya,slash:za,eq:Aa,name:V,eof:pa,num:ba,regexp:Ba,string:da};for(var zb in Ca)a.tokTypes["_"+zb]=Ca[zb];var Mb=d("abstract boolean byte char class double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized throws transient volatile"),Nb=d("class enum extends super const export import"),
-bb=d("implements interface let package private protected public static yield"),sa=d("eval arguments"),Lb=d("break case catch continue debugger default do else finally for function if return switch throw try var while with null true false instanceof typeof void delete new in this"),Bb=/[\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff]/,Za=RegExp("[\u00aa\u00b5\u00ba\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc]"),
-Pb=RegExp("[\u00aa\u00b5\u00ba\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u08a0\u08a2-\u08ac\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097f\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c33\u0c35-\u0c39\u0c3d\u0c58\u0c59\u0c60\u0c61\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d60\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f4\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f0\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191c\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19c1-\u19c7\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2119-\u211d\u2124\u2126\u2128\u212a-\u212d\u212f-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u2e2f\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309d-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312d\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fcc\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua697\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua78e\ua790-\ua793\ua7a0-\ua7aa\ua7f8-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa80-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uabc0-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc\u0300-\u036f\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u0620-\u0649\u0672-\u06d3\u06e7-\u06e8\u06fb-\u06fc\u0730-\u074a\u0800-\u0814\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0840-\u0857\u08e4-\u08fe\u0900-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962-\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09d7\u09df-\u09e0\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2-\u0ae3\u0ae6-\u0aef\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b5f-\u0b60\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c01-\u0c03\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62-\u0c63\u0c66-\u0c6f\u0c82\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2-\u0ce3\u0ce6-\u0cef\u0d02\u0d03\u0d46-\u0d48\u0d57\u0d62-\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0df2\u0df3\u0e34-\u0e3a\u0e40-\u0e45\u0e50-\u0e59\u0eb4-\u0eb9\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f41-\u0f47\u0f71-\u0f84\u0f86-\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u1000-\u1029\u1040-\u1049\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u170e-\u1710\u1720-\u1730\u1740-\u1750\u1772\u1773\u1780-\u17b2\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u1920-\u192b\u1930-\u193b\u1951-\u196d\u19b0-\u19c0\u19c8-\u19c9\u19d0-\u19d9\u1a00-\u1a15\u1a20-\u1a53\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1b46-\u1b4b\u1b50-\u1b59\u1b6b-\u1b73\u1bb0-\u1bb9\u1be6-\u1bf3\u1c00-\u1c22\u1c40-\u1c49\u1c5b-\u1c7d\u1cd0-\u1cd2\u1d00-\u1dbe\u1e01-\u1f15\u200c\u200d\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2d81-\u2d96\u2de0-\u2dff\u3021-\u3028\u3099\u309a\ua640-\ua66d\ua674-\ua67d\ua69f\ua6f0-\ua6f1\ua7f8-\ua800\ua806\ua80b\ua823-\ua827\ua880-\ua881\ua8b4-\ua8c4\ua8d0-\ua8d9\ua8f3-\ua8f7\ua900-\ua909\ua926-\ua92d\ua930-\ua945\ua980-\ua983\ua9b3-\ua9c0\uaa00-\uaa27\uaa40-\uaa41\uaa4c-\uaa4d\uaa50-\uaa59\uaa7b\uaae0-\uaae9\uaaf2-\uaaf3\uabc0-\uabe1\uabec\uabed\uabf0-\uabf9\ufb20-\ufb28\ufe00-\ufe0f\ufe20-\ufe26\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f]"),
-na=/[\n\r\u2028\u2029]/,Y=/\r\n|[\n\r\u2028\u2029]/g,la=a.isIdentifierStart=function(a){return 65>a?36===a:91>a?!0:97>a?95===a:123>a?!0:170<=a&&Za.test(String.fromCharCode(a))},ab=a.isIdentifierChar=function(a){return 48>a?36===a:58>a?!0:65>a?!1:91>a?!0:97>a?95===a:123>a?!0:170<=a&&Pb.test(String.fromCharCode(a))},ca,Ia={kind:"loop"},Ob={kind:"switch"}};
- true?mod$$inline_58(exports):undefined;
-// JS-Interpreter: Copyright 2013 Google Inc, Apache 2.0
-function m(a,b){"string"===typeof a&&(a=acorn.parse(a,ja));this.ga=a;this.gb=b;this.xa=!1;this.ca=[];this.Ca=0;this.lb=Object.create(null);var c=/^step([A-Z]\w*)$/,d,e;for(e in this)"function"===typeof this[e]&&(d=e.match(c))&&(this.lb[d[1]]=this[e].bind(this));this.global=ka(this,this.ga,null);this.ga=acorn.parse(this.ca.join("\n"),ja);this.ca=void 0;ra(this,this.ga,void 0,void 0);c=new r(this.ga,this.global);c.done=!1;this.j=[c];this.jb();this.value=void 0;this.ga=a;c=new r(this.ga,this.global);
-c.done=!1;this.j.length=0;this.j[0]=c;this.Pa=c.node.constructor;this.stateStack=this.j}var ja={Ba:5},t={configurable:!0,enumerable:!0,writable:!1},v={configurable:!0,enumerable:!1,writable:!0},B={configurable:!0,enumerable:!1,writable:!1},ya={configurable:!1,enumerable:!0,writable:!0},za={},Aa={},Ba={},Ca=[];
-m.prototype.qb=function(a){var b=this.j[0];if(!b||"Program"!==b.node.type)throw Error("Expecting original AST to start with a Program node.");"string"===typeof a&&(a=acorn.parse(a,ja));if(!a||"Program"!==a.type)throw Error("Expecting new AST to start with a Program node.");Qa(this,a,b.scope);for(var c=0,d;d=a.body[c];c++)b.node.body.push(d);b.done=!1};
-m.prototype.step=function(){var a=this.j,b=a[a.length-1];if(!b)return!1;var c=b.node,d=c.type;if("Program"===d&&b.done)return!1;if(this.xa)return!0;try{var e=this.lb[d](a,b,c)}catch(f){if(f!==za)throw f;}e&&a.push(e);return c.end?!0:this.step()};m.prototype.jb=function(){for(;!this.xa&&this.step(););return this.xa};
-function pb(a,b){a.setProperty(b,"NaN",NaN,t);a.setProperty(b,"Infinity",Infinity,t);a.setProperty(b,"undefined",void 0,t);a.setProperty(b,"window",b,t);a.setProperty(b,"this",b,t);a.setProperty(b,"self",b);a.F=new qb(null);a.I=new qb(a.F);rb(a,b);sb(a,b);b.na=a.F;a.setProperty(b,"constructor",a.m,v);tb(a,b);ub(a,b);vb(a,b);wb(a,b);xb(a,b);yb(a,b);gc(a,b);hc(a,b);ic(a,b);var c=a.b(function(){throw EvalError("Can't happen");},!1);c.eval=!0;a.setProperty(b,"eval",c);a.setProperty(b,"parseInt",a.b(parseInt,
-!1));a.setProperty(b,"parseFloat",a.b(parseFloat,!1));a.setProperty(b,"isNaN",a.b(isNaN,!1));a.setProperty(b,"isFinite",a.b(isFinite,!1));c=[[escape,"escape"],[unescape,"unescape"],[decodeURI,"decodeURI"],[decodeURIComponent,"decodeURIComponent"],[encodeURI,"encodeURI"],[encodeURIComponent,"encodeURIComponent"]];for(var d=0;d<c.length;d++)a.setProperty(b,c[d][1],a.b(function(b){return function(c){try{return b(c)}catch(l){E(a,a.nb,l.message)}}}(c[d][0]),!1),v);a.OBJECT=a.m;a.OBJECT_PROTO=a.F;a.FUNCTION=
-a.C;a.FUNCTION_PROTO=a.I;a.ARRAY=a.l;a.ARRAY_PROTO=a.W;a.REGEXP=a.w;a.REGEXP_PROTO=a.za;a.DATE=a.S;a.DATE_PROTO=a.Va;a.UNDEFINED=void 0;a.NULL=null;a.NAN=NaN;a.TRUE=!0;a.FALSE=!1;a.STRING_EMPTY="";a.NUMBER_ZERO=0;a.NUMBER_ONE=1;a.gb&&a.gb(a,b)}
-function rb(a,b){function c(b){if(!(b&&b.o||jc(a).G))if(void 0===b||null===b)b=a.global;else{var c=a.g(M(a,b));c.data=b;b=c}return b}var d=/^[A-Za-z_$][\w$]*$/;var e=function(b){var c=R(a)?this:a.g(a.I),e=arguments.length?String(arguments[arguments.length-1]):"",f=Array.prototype.slice.call(arguments,0,-1).join(",").trim();if(f){f=f.split(/\s*,\s*/);for(var G=0;G<f.length;G++){var y=f[G];d.test(y)||E(a,a.ea,"Invalid function argument: "+y)}f=f.join(", ")}c.ba=a.global;try{var ta=acorn.parse("(function("+
-f+") {"+e+"})",ja)}catch(da){E(a,a.ea,"Invalid code: "+da.message)}1!==ta.body.length&&E(a,a.ea,"Invalid code in function body.");c.node=ta.body[0].expression;a.setProperty(c,"length",c.node.length,t);return c};e.id=a.Ca++;a.C=a.g(a.I);a.setProperty(b,"Function",a.C);a.setProperty(a.C,"prototype",a.I);a.C.wa=e;a.setProperty(a.I,"constructor",a.C,v);a.I.wa=function(){};a.I.wa.id=a.Ca++;a.setProperty(a.I,"length",0,t);e=function(b,d){var e=a.j[a.j.length-1];e.Y=this;e.J=c(b);e.B=[];if(null!==d&&void 0!==
-d)if(d.o){var f=[],l;for(l in d.a)f[l]=a.v(d,l);f.length=kc(a.v(d,"length"))||0;e.B=f}else E(a,a.h,"CreateListFromArrayLike called on non-object");e.Na=!1};S(a,a.C,"apply",e);e=function(b){var d=a.j[a.j.length-1];d.Y=this;d.J=c(b);d.B=[];for(var e=1;e<arguments.length;e++)d.B.push(arguments[e]);d.Na=!1};S(a,a.C,"call",e);a.ca.push("Object.defineProperty(Function.prototype, 'bind',","{configurable: true, writable: true, value:","function(oThis) {","if (typeof this !== 'function') {","throw TypeError('What is trying to be bound is not callable');",
-"}","var aArgs   = Array.prototype.slice.call(arguments, 1),","fToBind = this,","fNOP    = function() {},","fBound  = function() {","return fToBind.apply(this instanceof fNOP","? this",": oThis,","aArgs.concat(Array.prototype.slice.call(arguments)));","};","if (this.prototype) {","fNOP.prototype = this.prototype;","}","fBound.prototype = new fNOP();","return fBound;","}","});","");e=function(){return this.toString()};S(a,a.C,"toString",e);a.setProperty(a.C,"toString",a.b(e,!1),v);e=function(){return this.valueOf()};
-S(a,a.C,"valueOf",e);a.setProperty(a.C,"valueOf",a.b(e,!1),v)}
-function sb(a,b){function c(b){void 0!==b&&null!==b||E(a,a.h,"Cannot convert '"+b+"' to object")}var d=function(b){if(void 0===b||null===b)return R(a)?this:a.g(a.F);if(!b.o){var c=a.g(M(a,b));c.data=b;return c}return b};a.m=a.b(d,!0);a.setProperty(a.m,"prototype",a.F);a.setProperty(a.F,"constructor",a.m,v);a.setProperty(b,"Object",a.m);d=function(b){c(b);return lc(a,Object.getOwnPropertyNames(b.o?b.a:b))};a.setProperty(a.m,"getOwnPropertyNames",a.b(d,!1),v);d=function(b){c(b);b.o&&(b=b.a);return lc(a,
-Object.keys(b))};a.setProperty(a.m,"keys",a.b(d,!1),v);d=function(b){if(null===b)return a.g(null);void 0!==b&&b.o||E(a,a.h,"Object prototype may only be an Object or null");return a.g(b)};a.setProperty(a.m,"create",a.b(d,!1),v);a.ca.push("(function() {","var create_ = Object.create;","Object.create = function(proto, props) {","var obj = create_(proto);","props && Object.defineProperties(obj, props);","return obj;","};","})();","");d=function(b,c,d){c=String(c);b&&b.o||E(a,a.h,"Object.defineProperty called on non-object");
-d&&d.o||E(a,a.h,"Property description must be an object");!b.a[c]&&b.preventExtensions&&E(a,a.h,"Can't define property '"+c+"', object is not extensible");a.setProperty(b,c,Ba,d.a);return b};a.setProperty(a.m,"defineProperty",a.b(d,!1),v);a.ca.push("(function() {","var defineProperty_ = Object.defineProperty;","Object.defineProperty = function(obj, prop, d1) {","var d2 = {};","if ('configurable' in d1) d2.configurable = d1.configurable;","if ('enumerable' in d1) d2.enumerable = d1.enumerable;","if ('writable' in d1) d2.writable = d1.writable;",
-"if ('value' in d1) d2.value = d1.value;","if ('get' in d1) d2.get = d1.get;","if ('set' in d1) d2.set = d1.set;","return defineProperty_(obj, prop, d2);","};","})();","Object.defineProperty(Object, 'defineProperties',","{configurable: true, writable: true, value:","function(obj, props) {","var keys = Object.keys(props);","for (var i = 0; i < keys.length; i++) {","Object.defineProperty(obj, keys[i], props[keys[i]]);","}","return obj;","}","});","");d=function(b,c){b&&b.o||E(a,a.h,"Object.getOwnPropertyDescriptor called on non-object");
-c=String(c);if(c in b.a){var d=Object.getOwnPropertyDescriptor(b.a,c),e=b.O[c],f=b.R[c];if(e||f)d.get=e,d.set=f,delete d.value,delete d.writable;e=d.value;f="value"in d;delete d.value;d=a.ka(d);f&&a.setProperty(d,"value",e);return d}};a.setProperty(a.m,"getOwnPropertyDescriptor",a.b(d,!1),v);d=function(b){c(b);return M(a,b)};a.setProperty(a.m,"getPrototypeOf",a.b(d,!1),v);d=function(a){return!!a&&!a.preventExtensions};a.setProperty(a.m,"isExtensible",a.b(d,!1),v);d=function(a){a&&a.o&&(a.preventExtensions=
-!0);return a};a.setProperty(a.m,"preventExtensions",a.b(d,!1),v);S(a,a.m,"toString",qb.prototype.toString);S(a,a.m,"toLocaleString",qb.prototype.toString);S(a,a.m,"valueOf",qb.prototype.valueOf);d=function(a){c(this);return this.o?String(a)in this.a:this.hasOwnProperty(a)};S(a,a.m,"hasOwnProperty",d);d=function(a){c(this);return this.o?Object.prototype.propertyIsEnumerable.call(this.a,a):this.propertyIsEnumerable(a)};S(a,a.m,"propertyIsEnumerable",d);d=function(b){for(;;){b=M(a,b);if(!b)return!1;
-if(b===this)return!0}};S(a,a.m,"isPrototypeOf",d)}
-function tb(a,b){var c=function(b){var c=R(a)?this:a.g(a.W),d=arguments[0];if(1===arguments.length&&"number"===typeof d)isNaN(kc(d))&&E(a,a.Wa,"Invalid array length"),c.a.length=d;else{for(d=0;d<arguments.length;d++)c.a[d]=arguments[d];c.a.length=d}return c};a.l=a.b(c,!0);a.W=a.l.a.prototype;a.setProperty(b,"Array",a.l);c=function(a){return a&&"Array"===a.K};a.setProperty(a.l,"isArray",a.b(c,!1),v);S(a,a.l,"pop",function(){return Array.prototype.pop.call(this.a)});c=function(a){return Array.prototype.push.apply(this.a,
-arguments)};S(a,a.l,"push",c);S(a,a.l,"shift",function(){return Array.prototype.shift.call(this.a)});c=function(a){return Array.prototype.unshift.apply(this.a,arguments)};S(a,a.l,"unshift",c);S(a,a.l,"reverse",function(){Array.prototype.reverse.call(this.a);return this});c=function(b,c){var d=Array.prototype.splice.apply(this.a,arguments);return lc(a,d)};S(a,a.l,"splice",c);c=function(b,c){return lc(a,Array.prototype.slice.call(this.a,b,c))};S(a,a.l,"slice",c);c=function(a){return Array.prototype.join.call(this.a,
-a)};S(a,a.l,"join",c);c=function(b){for(var c=[],d=0,l=a.v(this,"length"),w=0;w<l;w++){if(Cc(a,this,w)){var T=a.v(this,w);c[d]=T}d++}for(w=0;w<arguments.length;w++)if(l=arguments[w],Y(a,l,a.l)){T=a.v(l,"length");for(var G=0;G<T;G++)Cc(a,l,G)&&(c[d]=a.v(l,G)),d++}else c[d]=l;return lc(a,c)};S(a,a.l,"concat",c);c=function(a,b){return Array.prototype.indexOf.apply(this.a,arguments)};S(a,a.l,"indexOf",c);c=function(a,b){return Array.prototype.lastIndexOf.apply(this.a,arguments)};S(a,a.l,"lastIndexOf",
-c);S(a,a.l,"sort",function(){Array.prototype.sort.call(this.a);return this});a.ca.push("Object.defineProperty(Array.prototype, 'every',","{configurable: true, writable: true, value:","function(callbackfn, thisArg) {","if (!this || typeof callbackfn !== 'function') throw TypeError();","var T, k;","var O = Object(this);","var len = O.length >>> 0;","if (arguments.length > 1) T = thisArg;","k = 0;","while (k < len) {","if (k in O && !callbackfn.call(T, O[k], k, O)) return false;","k++;","}","return true;",
-"}","});","Object.defineProperty(Array.prototype, 'filter',","{configurable: true, writable: true, value:","function(fun/*, thisArg*/) {","if (this === void 0 || this === null || typeof fun !== 'function') throw TypeError();","var t = Object(this);","var len = t.length >>> 0;","var res = [];","var thisArg = arguments.length >= 2 ? arguments[1] : void 0;","for (var i = 0; i < len; i++) {","if (i in t) {","var val = t[i];","if (fun.call(thisArg, val, i, t)) res.push(val);","}","}","return res;","}",
-"});","Object.defineProperty(Array.prototype, 'forEach',","{configurable: true, writable: true, value:","function(callback, thisArg) {","if (!this || typeof callback !== 'function') throw TypeError();","var T, k;","var O = Object(this);","var len = O.length >>> 0;","if (arguments.length > 1) T = thisArg;","k = 0;","while (k < len) {","if (k in O) callback.call(T, O[k], k, O);","k++;","}","}","});","Object.defineProperty(Array.prototype, 'map',","{configurable: true, writable: true, value:","function(callback, thisArg) {",
-"if (!this || typeof callback !== 'function') new TypeError;","var T, A, k;","var O = Object(this);","var len = O.length >>> 0;","if (arguments.length > 1) T = thisArg;","A = new Array(len);","k = 0;","while (k < len) {","if (k in O) A[k] = callback.call(T, O[k], k, O);","k++;","}","return A;","}","});","Object.defineProperty(Array.prototype, 'reduce',","{configurable: true, writable: true, value:","function(callback /*, initialValue*/) {","if (!this || typeof callback !== 'function') throw TypeError();",
-"var t = Object(this), len = t.length >>> 0, k = 0, value;","if (arguments.length === 2) {","value = arguments[1];","} else {","while (k < len && !(k in t)) k++;","if (k >= len) {","throw TypeError('Reduce of empty array with no initial value');","}","value = t[k++];","}","for (; k < len; k++) {","if (k in t) value = callback(value, t[k], k, t);","}","return value;","}","});","Object.defineProperty(Array.prototype, 'reduceRight',","{configurable: true, writable: true, value:","function(callback /*, initialValue*/) {",
-"if (null === this || 'undefined' === typeof this || 'function' !== typeof callback) throw TypeError();","var t = Object(this), len = t.length >>> 0, k = len - 1, value;","if (arguments.length >= 2) {","value = arguments[1];","} else {","while (k >= 0 && !(k in t)) k--;","if (k < 0) {","throw TypeError('Reduce of empty array with no initial value');","}","value = t[k--];","}","for (; k >= 0; k--) {","if (k in t) value = callback(value, t[k], k, t);","}","return value;","}","});","Object.defineProperty(Array.prototype, 'some',",
-"{configurable: true, writable: true, value:","function(fun/*, thisArg*/) {","if (!this || typeof fun !== 'function') throw TypeError();","var t = Object(this);","var len = t.length >>> 0;","var thisArg = arguments.length >= 2 ? arguments[1] : void 0;","for (var i = 0; i < len; i++) {","if (i in t && fun.call(thisArg, t[i], i, t)) {","return true;","}","}","return false;","}","});","(function() {","var sort_ = Array.prototype.sort;","Array.prototype.sort = function(opt_comp) {","if (typeof opt_comp !== 'function') {",
-"return sort_.call(this);","}","for (var i = 0; i < this.length; i++) {","var changes = 0;","for (var j = 0; j < this.length - i - 1; j++) {","if (opt_comp(this[j], this[j + 1]) > 0) {","var swap = this[j];","this[j] = this[j + 1];","this[j + 1] = swap;","changes++;","}","}","if (!changes) break;","}","return this;","};","})();","Object.defineProperty(Array.prototype, 'toLocaleString',","{configurable: true, writable: true, value:","function() {","var out = [];","for (var i = 0; i < this.length; i++) {",
-"out[i] = (this[i] === null || this[i] === undefined) ? '' : this[i].toLocaleString();","}","return out.join(',');","}","});","")}
-function ub(a,b){var c=function(b){b=String(b);return R(a)?(this.data=b,this):b};a.A=a.b(c,!0);a.setProperty(b,"String",a.A);a.setProperty(a.A,"fromCharCode",a.b(String.fromCharCode,!1),v);c="charAt charCodeAt concat indexOf lastIndexOf slice substr substring toLocaleLowerCase toLocaleUpperCase toLowerCase toUpperCase trim".split(" ");for(var d=0;d<c.length;d++)S(a,a.A,c[d],String.prototype[c[d]]);c=function(b,c,d){c=c?a.M(c):void 0;d=d?a.M(d):void 0;return String(this).localeCompare(b,c,d)};S(a,
-a.A,"localeCompare",c);c=function(b,c){Y(a,b,a.w)&&(b=b.data);return lc(a,String(this).split(b,c))};S(a,a.A,"split",c);c=function(b){Y(a,b,a.w)&&(b=b.data);return(b=String(this).match(b))&&lc(a,b)};S(a,a.A,"match",c);c=function(b){Y(a,b,a.w)&&(b=b.data);return String(this).search(b)};S(a,a.A,"search",c);c=function(b,c){Y(a,b,a.w)&&(b=b.data);return String(this).replace(b,c)};S(a,a.A,"replace",c);a.ca.push("(function() {","var replace_ = String.prototype.replace;","String.prototype.replace = function(substr, newSubstr) {",
-"if (typeof newSubstr !== 'function') {","return replace_.call(this, substr, newSubstr);","}","var str = this;","if (substr instanceof RegExp) {","var subs = [];","var m = substr.exec(str);","while (m) {","m.push(m.index, str);","var inject = newSubstr.apply(null, m);","subs.push([m.index, m[0].length, inject]);","m = substr.global ? substr.exec(str) : null;","}","for (var i = subs.length - 1; i >= 0; i--) {","str = str.substring(0, subs[i][0]) + subs[i][2] + str.substring(subs[i][0] + subs[i][1]);",
-"}","} else {","var i = str.indexOf(substr);","if (i !== -1) {","var inject = newSubstr(str.substr(i, substr.length), i, str);","str = str.substring(0, i) + inject + str.substring(i + substr.length);","}","}","return str;","};","})();","")}function vb(a,b){a.Ua=a.b(function(b){b=!!b;return R(a)?(this.data=b,this):b},!0);a.setProperty(b,"Boolean",a.Ua)}
-function wb(a,b){var c=function(b){b=Number(b);return R(a)?(this.data=b,this):b};a.T=a.b(c,!0);a.setProperty(b,"Number",a.T);c=["MAX_VALUE","MIN_VALUE","NaN","NEGATIVE_INFINITY","POSITIVE_INFINITY"];for(var d=0;d<c.length;d++)a.setProperty(a.T,c[d],Number[c[d]],B);c=function(b){try{return Number(this).toExponential(b)}catch(f){E(a,a.H,f.message)}};S(a,a.T,"toExponential",c);c=function(b){try{return Number(this).toFixed(b)}catch(f){E(a,a.H,f.message)}};S(a,a.T,"toFixed",c);c=function(b){try{return Number(this).toPrecision(b)}catch(f){E(a,
-a.H,f.message)}};S(a,a.T,"toPrecision",c);c=function(b){try{return Number(this).toString(b)}catch(f){E(a,a.H,f.message)}};S(a,a.T,"toString",c);c=function(b,c){b=b?a.M(b):void 0;c=c?a.M(c):void 0;return Number(this).toLocaleString(b,c)};S(a,a.T,"toLocaleString",c)}
-function xb(a,b){var c=function(b,c){if(!R(a))return Date();var d=[null].concat(Array.from(arguments));this.data=new (Function.prototype.bind.apply(Date,d));return this};a.S=a.b(c,!0);a.Va=a.S.a.prototype;a.setProperty(b,"Date",a.S);a.setProperty(a.S,"now",a.b(Date.now,!1),v);a.setProperty(a.S,"parse",a.b(Date.parse,!1),v);a.setProperty(a.S,"UTC",a.b(Date.UTC,!1),v);for(var d="getDate getDay getFullYear getHours getMilliseconds getMinutes getMonth getSeconds getTime getTimezoneOffset getUTCDate getUTCDay getUTCFullYear getUTCHours getUTCMilliseconds getUTCMinutes getUTCMonth getUTCSeconds getYear setDate setFullYear setHours setMilliseconds setMinutes setMonth setSeconds setTime setUTCDate setUTCFullYear setUTCHours setUTCMilliseconds setUTCMinutes setUTCMonth setUTCSeconds setYear toDateString toISOString toJSON toGMTString toLocaleDateString toLocaleString toLocaleTimeString toTimeString toUTCString".split(" "),
-e=0;e<d.length;e++)c=function(b){return function(c){for(var d=[],e=0;e<arguments.length;e++)d[e]=a.M(arguments[e]);return this.data[b].apply(this.data,d)}}(d[e]),S(a,a.S,d[e],c)}
-function yb(a,b){var c=function(b,c){var d=R(a)?this:a.g(a.za);b=b?b.toString():"";c=c?c.toString():"";Dc(a,d,new RegExp(b,c));return d};a.w=a.b(c,!0);a.za=a.w.a.prototype;a.setProperty(b,"RegExp",a.w);a.setProperty(a.w.a.prototype,"global",void 0,B);a.setProperty(a.w.a.prototype,"ignoreCase",void 0,B);a.setProperty(a.w.a.prototype,"multiline",void 0,B);a.setProperty(a.w.a.prototype,"source","(?:)",B);c=function(a){return this.data.test(a)};S(a,a.w,"test",c);c=function(b){b=b.toString();this.data.lastIndex=
-Number(a.v(this,"lastIndex"));b=this.data.exec(b);a.setProperty(this,"lastIndex",this.data.lastIndex);if(b){for(var c=a.g(a.W),d=0;d<b.length;d++)a.setProperty(c,d,b[d]);a.setProperty(c,"index",b.index);a.setProperty(c,"input",b.input);return c}return null};S(a,a.w,"exec",c)}
-function gc(a,b){function c(c){var d=a.b(function(b){var c=R(a)?this:a.oa(d);b&&a.setProperty(c,"message",String(b),v);return c},!0);a.setProperty(d,"prototype",a.oa(a.H));a.setProperty(d.a.prototype,"name",c,v);a.setProperty(b,c,d);return d}a.H=a.b(function(b){var c=R(a)?this:a.oa(a.H);b&&a.setProperty(c,"message",String(b),v);return c},!0);a.setProperty(b,"Error",a.H);a.setProperty(a.H.a.prototype,"message","",v);a.setProperty(a.H.a.prototype,"name","Error",v);c("EvalError");a.Wa=c("RangeError");
-a.Xa=c("ReferenceError");a.ea=c("SyntaxError");a.h=c("TypeError");a.nb=c("URIError")}function hc(a,b){var c=a.g(a.F);a.setProperty(b,"Math",c);for(var d="E LN2 LN10 LOG2E LOG10E PI SQRT1_2 SQRT2".split(" "),e=0;e<d.length;e++)a.setProperty(c,d[e],Math[d[e]],B);d="abs acos asin atan atan2 ceil cos exp floor log max min pow random round sin sqrt tan".split(" ");for(e=0;e<d.length;e++)a.setProperty(c,d[e],a.b(Math[d[e]],!1),v)}
-function ic(a,b){function c(b){try{var c=JSON.parse(b.toString())}catch(l){E(a,a.ea,l.message)}return a.ka(c)}var d=a.g(a.F);a.setProperty(b,"JSON",d);a.setProperty(d,"parse",a.b(c,!1));c=function(b){b=a.M(b);try{var c=JSON.stringify(b)}catch(l){E(a,a.h,l.message)}return c};a.setProperty(d,"stringify",a.b(c,!1))}function Y(a,b,c){if(null===b||void 0===b||!c)return!1;c=c.a.prototype;if(b===c)return!0;for(b=M(a,b);b;){if(b===c)return!0;b=b.na}return!1}
-function kc(a){var b=a>>>0;return b===Number(a)?b:NaN}function Ec(a){var b=a>>>0;return String(b)===String(a)&&4294967295!==b?b:NaN}function qb(a){this.O=Object.create(null);this.R=Object.create(null);this.a=Object.create(null);this.na=a}h=qb.prototype;h.na=null;h.o=!0;h.K="Object";h.data=null;
-h.toString=function(){if("Array"===this.K){var a=Ca;a.push(this);try{for(var b=[],c=0;c<this.a.length;c++){var d=this.a[c];b[c]=d&&d.o&&-1!==a.indexOf(d)?"...":d}}finally{a.pop()}return b.join(",")}if("Error"===this.K){a=Ca;if(-1!==a.indexOf(this))return"[object Error]";d=this;do if("name"in d.a){b=d.a.name;break}while(d=d.na);d=this;do if("message"in d.a){c=d.a.message;break}while(d=d.na);a.push(this);try{b=b&&b.toString(),c=c&&c.toString()}finally{a.pop()}return c?b+": "+c:String(b)}return null!==
-this.data?String(this.data):"[object "+this.K+"]"};h.valueOf=function(){return void 0===this.data||null===this.data||this.data instanceof RegExp?this:this.data instanceof Date?this.data.valueOf():this.data};h=m.prototype;h.oa=function(a){return this.g(a&&a.a.prototype)};
-h.g=function(a){if("object"!==typeof a)throw Error("Non object prototype");a=new qb(a);Y(this,a,this.C)&&(this.setProperty(a,"prototype",this.g(this.F||null)),a.K="Function");Y(this,a,this.l)&&(this.setProperty(a,"length",0,{configurable:!1,enumerable:!1,writable:!0}),a.K="Array");Y(this,a,this.H)&&(a.K="Error");return a};
-function Dc(a,b,c){b.data=c;a.setProperty(b,"lastIndex",c.lastIndex,v);a.setProperty(b,"source",c.source,B);a.setProperty(b,"global",c.global,B);a.setProperty(b,"ignoreCase",c.ignoreCase,B);a.setProperty(b,"multiline",c.multiline,B)}function Fc(a,b,c){var d=a.g(a.I);d.ba=c;d.node=b;a.setProperty(d,"length",d.node.params.length,t);return d}
-h.b=function(a,b){var c=this.g(this.I);c.wa=a;a.id=this.Ca++;this.setProperty(c,"length",a.length,t);b?this.setProperty(c.a.prototype,"constructor",c,v):!1===b&&(c.Db=!0,this.setProperty(c,"prototype",void 0));return c};h.tb=function(a){var b=this.g(this.I);b.Za=a;a.id=this.Ca++;this.setProperty(b,"length",a.length,t);return b};
-h.ka=function(a){if("object"!==typeof a&&"function"!==typeof a||null===a)return a;if(a instanceof RegExp){var b=this.g(this.za);Dc(this,b,a);return b}if(a instanceof Date)return b=this.g(this.Va),b.data=a,b;if(a instanceof Function){var c=this;return this.b(function(){return c.ka(a.apply(c,Array.prototype.slice.call(arguments).map(function(a){return c.M(a)})))},void 0)}if(Array.isArray(a)){b=this.g(this.W);for(var d=0;d<a.length;d++)d in a&&this.setProperty(b,d,this.ka(a[d]))}else for(d in b=this.g(this.F),
-a)this.setProperty(b,d,this.ka(a[d]));return b};h.M=function(a,b){if("object"!==typeof a&&"function"!==typeof a||null===a)return a;if(Y(this,a,this.w)||Y(this,a,this.S))return a.data;var c=b||{Ra:[],Ea:[]},d=c.Ra.indexOf(a);if(-1!==d)return c.Ea[d];c.Ra.push(a);if(Y(this,a,this.l)){var e=[];c.Ea.push(e);var f=this.v(a,"length");for(d=0;d<f;d++)Cc(this,a,d)&&(e[d]=this.M(this.v(a,d),c))}else for(f in e={},c.Ea.push(e),a.a)d=a.a[f],e[f]=this.M(d,c);c.Ra.pop();c.Ea.pop();return e};
-function lc(a,b){for(var c=a.g(a.W),d=Object.getOwnPropertyNames(b),e=0;e<d.length;e++)a.setProperty(c,d[e],b[d[e]]);return c}function M(a,b){switch(typeof b){case "number":return a.T.a.prototype;case "boolean":return a.Ua.a.prototype;case "string":return a.A.a.prototype}return b?b.na:null}
-h.v=function(a,b){b=String(b);void 0!==a&&null!==a||E(this,this.h,"Cannot read property '"+b+"' of "+a);if("length"===b){if(Y(this,a,this.A))return String(a).length}else if(64>b.charCodeAt(0)&&Y(this,a,this.A)){var c=Ec(b);if(!isNaN(c)&&c<String(a).length)return String(a)[c]}do if(a.a&&b in a.a)return(c=a.O[b])?(c.L=!0,c):a.a[b];while(a=M(this,a))};
-function Cc(a,b,c){if(!b.o)throw TypeError("Primitive data type has no properties");c=String(c);if("length"===c&&Y(a,b,a.A))return!0;if(Y(a,b,a.A)){var d=Ec(c);if(!isNaN(d)&&d<String(b).length)return!0}do if(b.a&&c in b.a)return!0;while(b=M(a,b));return!1}
-h.setProperty=function(a,b,c,d){b=String(b);void 0!==a&&null!==a||E(this,this.h,"Cannot set property '"+b+"' of "+a);d&&("get"in d||"set"in d)&&("value"in d||"writable"in d)&&E(this,this.h,"Invalid property descriptor. Cannot both specify accessors and a value or writable attribute");var e=!this.j||jc(this).G;if(a.o){if(Y(this,a,this.A)){var f=Ec(b);if("length"===b||!isNaN(f)&&f<String(a).length){e&&E(this,this.h,"Cannot assign to read only property '"+b+"' of String '"+a.data+"'");return}}if("Array"===
-a.K)if(f=a.a.length,"length"===b){if(d){if(!("value"in d))return;c=d.value}c=kc(c);isNaN(c)&&E(this,this.Wa,"Invalid array length");if(c<f)for(l in a.a){var l=Ec(l);!isNaN(l)&&c<=l&&delete a.a[l]}}else isNaN(l=Ec(b))||(a.a.length=Math.max(f,l+1));if(!a.preventExtensions||b in a.a)if(d){"get"in d&&(d.get?a.O[b]=d.get:delete a.O[b]);"set"in d&&(d.set?a.R[b]=d.set:delete a.R[b]);e={};"configurable"in d&&(e.configurable=d.configurable);"enumerable"in d&&(e.enumerable=d.enumerable);"writable"in d&&(e.writable=
-d.writable,delete a.O[b],delete a.R[b]);"value"in d?(e.value=d.value,delete a.O[b],delete a.R[b]):c!==Ba&&(e.value=c,delete a.O[b],delete a.R[b]);try{Object.defineProperty(a.a,b,e)}catch(w){E(this,this.h,"Cannot redefine property: "+b)}}else{if(c===Ba)throw ReferenceError("Value not specified.");for(d=a;!(b in d.a);)if(d=M(this,d),!d){d=a;break}if(d.R&&d.R[b])return d.R[b];if(d.O&&d.O[b])e&&E(this,this.h,"Cannot set property '"+b+"' of object '"+a+"' which only has a getter");else try{a.a[b]=c}catch(w){e&&
-E(this,this.h,"Cannot assign to read only property '"+b+"' of object '"+a+"'")}}else e&&E(this,this.h,"Can't add property '"+b+"', object is not extensible")}else e&&E(this,this.h,"Can't create property '"+b+"' on '"+a+"'")};function S(a,b,c,d){a.setProperty(b.a.prototype,c,a.b(d,!1),v)}function jc(a){a=a.j[a.j.length-1].scope;if(!a)throw Error("No scope found.");return a}
-function ka(a,b,c){var d=a.g(null);(d.ba=c)||pb(a,d);Qa(a,b,d);d.G=!1;c&&c.G?d.G=!0:(a=b.body&&b.body[0])&&a.sa&&"Literal"===a.sa.type&&"use strict"===a.sa.value&&(d.G=!0);return d}function Gc(a,b,c){if(!b)throw Error("parentScope required");a=c||a.g(null);a.ba=b;a.G=b.G;return a}
-function Hc(a,b){for(var c=jc(a);c&&c!==a.global;){if(b in c.a)return c.a[b];c=c.ba}if(c===a.global&&Cc(a,c,b))return a.v(c,b);c=a.j[a.j.length-1].node;"UnaryExpression"===c.type&&"typeof"===c.operator||E(a,a.Xa,b+" is not defined")}function Ic(a,b,c){for(var d=jc(a),e=d.G;d&&d!==a.global;){if(b in d.a){d.a[b]=c;return}d=d.ba}if(d===a.global&&(!e||Cc(a,d,b)))return a.setProperty(d,b,c);E(a,a.Xa,b+" is not defined")}
-function Qa(a,b,c){if("VariableDeclaration"===b.type)for(var d=0;d<b.declarations.length;d++)a.setProperty(c,b.declarations[d].id.name,void 0,ya);else{if("FunctionDeclaration"===b.type){a.setProperty(c,b.id.name,Fc(a,b,c),ya);return}if("FunctionExpression"===b.type||"ExpressionStatement"===b.type)return}var e=b.constructor,f;for(f in b){var l=b[f];if(l&&"object"===typeof l)if(Array.isArray(l))for(d=0;d<l.length;d++)l[d]&&l[d].constructor===e&&Qa(a,l[d],c);else l.constructor===e&&Qa(a,l,c)}}
-function ra(a,b,c,d){c?b.start=c:delete b.start;d?b.end=d:delete b.end;for(var e in b)if(b.hasOwnProperty(e)){var f=b[e];f&&"object"===typeof f&&ra(a,f,c,d)}}function R(a){return a.j[a.j.length-1].isConstructor}function Jc(a,b){return b[0]===Aa?Hc(a,b[1]):a.v(b[0],b[1])}function Kc(a,b,c){return b[0]===Aa?Ic(a,b[1],c):a.setProperty(b[0],b[1],c)}function E(a,b,c){void 0!==c&&(b=a.oa(b),a.setProperty(b,"message",c,v));Lc(a,4,b,void 0);throw za;}
-function Lc(a,b,c,d){if(0===b)throw TypeError("Should not unwind for NORMAL completions");for(var e=a.j;0<e.length;e.pop()){var f=e[e.length-1];switch(f.node.type){case "TryStatement":f.U={type:b,value:c,label:d};return;case "CallExpression":case "NewExpression":if(3===b){f.value=c;return}if(4!==b)throw Error("Unsynatctic break/continue not rejected by Acorn");}if(1===b){if(d?f.labels&&-1!==f.labels.indexOf(d):f.P||f.Fb){e.pop();return}}else if(2===b&&(d?f.labels&&-1!==f.labels.indexOf(d):f.P))return}Y(a,
-c,a.H)?(b={EvalError:EvalError,RangeError:RangeError,ReferenceError:ReferenceError,SyntaxError:SyntaxError,TypeError:TypeError,URIError:URIError},d=a.v(c,"name").toString(),a=a.v(c,"message").valueOf(),b=b[d]||Error,a=b(a)):a=String(c);throw a;}function Mc(a,b,c){c=Array.isArray(c)?c[0]:c;var d=new a.Pa;d.type="CallExpression";a=new r(d,a.j[a.j.length-1].scope);a.ia=!0;a.J=c;a.Y=b;a.Ma=!0;a.B=[];return a}
-function Nc(a,b,c,d){c=Array.isArray(c)?c[0]:a.global;var e=new a.Pa;e.type="CallExpression";a=new r(e,a.j[a.j.length-1].scope);a.ia=!0;a.J=c;a.Y=b;a.Ma=!0;a.B=[d];return a}function r(a,b){this.node=a;this.scope=b}m.prototype.stepArrayExpression=function(a,b,c){c=c.elements;var d=b.s||0;b.Aa?(this.setProperty(b.Aa,d,b.value),d++):(b.Aa=this.g(this.W),b.Aa.a.length=c.length);for(;d<c.length;){if(c[d])return b.s=d,new r(c[d],b.scope);d++}a.pop();a[a.length-1].value=b.Aa};
-m.prototype.stepAssignmentExpression=function(a,b,c){if(!b.X)return b.X=!0,b=new r(c.left,b.scope),b.ha=!0,b;if(!b.ra){b.ta||(b.ta=b.value);b.pa&&(b.Z=b.value);if(!b.pa&&"="!==c.operator&&(a=Jc(this,b.ta),(b.Z=a)&&"object"===typeof a&&a.L))return a.L=!1,b.pa=!0,Mc(this,a,b.ta);b.ra=!0;return new r(c.right,b.scope)}if(b.ja)a.pop(),a[a.length-1].value=b.Sa;else{var d=b.Z,e=b.value;switch(c.operator){case "=":d=e;break;case "+=":d+=e;break;case "-=":d-=e;break;case "*=":d*=e;break;case "/=":d/=e;break;
-case "%=":d%=e;break;case "<<=":d<<=e;break;case ">>=":d>>=e;break;case ">>>=":d>>>=e;break;case "&=":d&=e;break;case "^=":d^=e;break;case "|=":d|=e;break;default:throw SyntaxError("Unknown assignment expression: "+c.operator);}if(c=Kc(this,b.ta,d))return b.ja=!0,b.Sa=d,Nc(this,c,b.ta,d);a.pop();a[a.length-1].value=d}};
-m.prototype.stepBinaryExpression=function(a,b,c){if(!b.X)return b.X=!0,new r(c.left,b.scope);if(!b.ra)return b.ra=!0,b.Z=b.value,new r(c.right,b.scope);a.pop();var d=b.Z;b=b.value;switch(c.operator){case "==":c=d==b;break;case "!=":c=d!=b;break;case "===":c=d===b;break;case "!==":c=d!==b;break;case ">":c=d>b;break;case ">=":c=d>=b;break;case "<":c=d<b;break;case "<=":c=d<=b;break;case "+":c=d+b;break;case "-":c=d-b;break;case "*":c=d*b;break;case "/":c=d/b;break;case "%":c=d%b;break;case "&":c=d&
-b;break;case "|":c=d|b;break;case "^":c=d^b;break;case "<<":c=d<<b;break;case ">>":c=d>>b;break;case ">>>":c=d>>>b;break;case "in":b&&b.o||E(this,this.h,"'in' expects an object, not '"+b+"'");c=Cc(this,b,d);break;case "instanceof":Y(this,b,this.C)||E(this,this.h,"Right-hand side of instanceof is not an object");c=d.o?Y(this,d,b):!1;break;default:throw SyntaxError("Unknown binary operator: "+c.operator);}a[a.length-1].value=c};
-m.prototype.stepBlockStatement=function(a,b,c){var d=b.s||0;if(c=c.body[d])return b.s=d+1,new r(c,b.scope);a.pop()};m.prototype.stepBreakStatement=function(a,b,c){Lc(this,1,void 0,c.label&&c.label.name)};
-m.prototype.stepCallExpression=function(a,b,c){if(!b.ia){b.ia=1;var d=new r(c.callee,b.scope);d.ha=!0;return d}if(1===b.ia){b.ia=2;d=b.value;if(Array.isArray(d)){if(b.Y=Jc(this,d),d[0]===Aa?b.ub="eval"===d[1]:b.J=d[0],(d=b.Y)&&"object"===typeof d&&d.L)return d.L=!1,b.ia=1,Mc(this,d,b.value)}else b.Y=d;b.B=[];b.s=0}d=b.Y;if(!b.Ma){0!==b.s&&b.B.push(b.value);if(c.arguments[b.s])return new r(c.arguments[b.s++],b.scope);if("NewExpression"===c.type){d.Db&&E(this,this.h,d+" is not a constructor");var e=
-d.a.prototype;if("object"!==typeof e||null===e)e=this.F;b.J=this.g(e);b.isConstructor=!0}else void 0===b.J&&(b.J=b.scope.G?void 0:this.global);b.Ma=!0}if(b.Na)a.pop(),a[a.length-1].value=b.isConstructor&&"object"!==typeof b.value?b.J:b.value;else{b.Na=!0;d&&d.o||E(this,this.h,d+" is not a function");if(a=d.node){c=ka(this,a.body,d.ba);for(var f=0;f<a.params.length;f++)this.setProperty(c,a.params[f].name,b.B.length>f?b.B[f]:void 0);e=this.g(this.W);for(f=0;f<b.B.length;f++)this.setProperty(e,f,b.B[f]);
-this.setProperty(c,"arguments",e);(f=a.id&&a.id.name)&&this.setProperty(c,f,d);this.setProperty(c,"this",b.J,t);b.value=void 0;return new r(a.body,c)}if(d.eval)if(d=b.B[0],"string"!==typeof d)b.value=d;else{try{f=acorn.parse(d.toString(),ja)}catch(w){E(this,this.ea,"Invalid code: "+w.message)}d=new this.Pa;d.type="EvalProgram_";d.body=f.body;ra(this,d,c.start,c.end);c=b.ub?b.scope:this.global;c.G?c=ka(this,f,c):Qa(this,f,c);this.value=void 0;return new r(d,c)}else if(d.wa)b.value=d.wa.apply(b.J,b.B);
-else if(d.Za){var l=this;f=b.B.concat(function(a){b.value=a;l.xa=!1});this.xa=!0;d.Za.apply(b.J,f)}else E(this,this.h,d.K+" is not a function")}};m.prototype.stepCatchClause=function(a,b,c){if(b.N)a.pop();else return b.N=!0,a=Gc(this,b.scope),this.setProperty(a,c.param.name,b.Mb),new r(c.body,a)};
-m.prototype.stepConditionalExpression=function(a,b,c){var d=b.aa||0;if(0===d)return b.aa=1,new r(c.test,b.scope);if(1===d){b.aa=2;if((d=!!b.value)&&c.consequent)return new r(c.consequent,b.scope);if(!d&&c.alternate)return new r(c.alternate,b.scope);this.value=void 0}a.pop();"ConditionalExpression"===c.type&&(a[a.length-1].value=b.value)};m.prototype.stepContinueStatement=function(a,b,c){Lc(this,2,void 0,c.label&&c.label.name)};m.prototype.stepDebuggerStatement=function(a){a.pop()};
-m.prototype.stepDoWhileStatement=function(a,b,c){"DoWhileStatement"===c.type&&void 0===b.V&&(b.value=!0,b.V=!0);if(!b.V)return b.V=!0,new r(c.test,b.scope);if(!b.value)a.pop();else if(c.body)return b.V=!1,b.P=!0,new r(c.body,b.scope)};m.prototype.stepEmptyStatement=function(a){a.pop()};m.prototype.stepEvalProgram_=function(a,b,c){var d=b.s||0;if(c=c.body[d])return b.s=d+1,new r(c,b.scope);a.pop();a[a.length-1].value=this.value};
-m.prototype.stepExpressionStatement=function(a,b,c){if(!b.N)return b.N=!0,new r(c.expression,b.scope);a.pop();this.value=b.value};
-m.prototype.stepForInStatement=function(a,b,c){if(!b.zb&&(b.zb=!0,c.left.declarations&&c.left.declarations[0].init))return b.scope.G&&E(this,this.ea,"for-in loop variable declaration may not have an initializer."),new r(c.left,b.scope);if(!b.qa)return b.qa=!0,b.da||(b.da=b.value),new r(c.right,b.scope);b.P||(b.P=!0,b.i=b.value,b.Ta=Object.create(null));if(void 0===b.Da)a:for(;;){if(b.i&&b.i.o)for(b.ma||(b.ma=Object.getOwnPropertyNames(b.i.a));;){var d=b.ma.shift();if(void 0===d)break;if(Object.prototype.hasOwnProperty.call(b.i.a,
-d)&&!b.Ta[d]&&(b.Ta[d]=!0,Object.prototype.propertyIsEnumerable.call(b.i.a,d))){b.Da=d;break a}}else if(null!==b.i&&void 0!==b.i)for(b.ma||(b.ma=Object.getOwnPropertyNames(b.i));;){d=b.ma.shift();if(void 0===d)break;b.Ta[d]=!0;if(Object.prototype.propertyIsEnumerable.call(b.i,d)){b.Da=d;break a}}b.i=M(this,b.i);b.ma=null;if(null===b.i){a.pop();return}}if(!b.cb)if(b.cb=!0,a=c.left,"VariableDeclaration"===a.type)b.da=[Aa,a.declarations[0].id.name];else return b.da=null,b=new r(a,b.scope),b.ha=!0,b;
-b.da||(b.da=b.value);if(!b.ja&&(b.ja=!0,a=b.Da,d=Kc(this,b.da,a)))return Nc(this,d,b.da,a);b.Da=void 0;b.cb=!1;b.ja=!1;if(c.body)return new r(c.body,b.scope)};m.prototype.stepForStatement=function(a,b,c){var d=b.aa||0;if(0===d){if(b.aa=1,c.init)return new r(c.init,b.scope)}else if(1===d){if(b.aa=2,c.test)return new r(c.test,b.scope)}else if(2===d)if(b.aa=3,c.test&&!b.value)a.pop();else return b.P=!0,new r(c.body,b.scope);else if(3===d&&(b.aa=1,c.update))return new r(c.update,b.scope)};
-m.prototype.stepFunctionDeclaration=function(a){a.pop()};m.prototype.stepFunctionExpression=function(a,b,c){a.pop();a[a.length-1].value=Fc(this,c,b.scope)};m.prototype.stepIdentifier=function(a,b,c){a.pop();if(b.ha)a[a.length-1].value=[Aa,c.name];else{var d=Hc(this,c.name);if(d&&"object"===typeof d&&d.L){d.L=!1;for(a=b.scope;!Cc(this,a,c.name);)a=a.ba;return Mc(this,d,this.global)}a[a.length-1].value=d}};m.prototype.stepIfStatement=m.prototype.stepConditionalExpression;
-m.prototype.stepLabeledStatement=function(a,b,c){a.pop();a=b.labels||[];a.push(c.label.name);b=new r(c.body,b.scope);b.labels=a;return b};m.prototype.stepLiteral=function(a,b,c){a.pop();b=c.value;b instanceof RegExp&&(c=this.g(this.za),Dc(this,c,b),b=c);a[a.length-1].value=b};
-m.prototype.stepLogicalExpression=function(a,b,c){if("&&"!==c.operator&&"||"!==c.operator)throw SyntaxError("Unknown logical operator: "+c.operator);if(!b.X)return b.X=!0,new r(c.left,b.scope);if(b.ra)a.pop(),a[a.length-1].value=b.value;else if("&&"===c.operator&&!b.value||"||"===c.operator&&b.value)a.pop(),a[a.length-1].value=b.value;else return b.ra=!0,new r(c.right,b.scope)};
-m.prototype.stepMemberExpression=function(a,b,c){if(!b.qa)return b.qa=!0,new r(c.object,b.scope);if(c.computed)if(b.Ab)c=b.value;else return b.i=b.value,b.Ab=!0,new r(c.property,b.scope);else b.i=b.value,c=c.property.name;a.pop();if(b.ha)a[a.length-1].value=[b.i,c];else{if((c=this.v(b.i,c))&&"object"===typeof c&&c.L)return c.L=!1,Mc(this,c,b.i);a[a.length-1].value=c}};m.prototype.stepNewExpression=m.prototype.stepCallExpression;
-m.prototype.stepObjectExpression=function(a,b,c){var d=b.s||0,e=c.properties[d];if(b.i){var f=e.key;if("Identifier"===f.type)var l=f.name;else if("Literal"===f.type)l=f.value;else throw SyntaxError("Unknown object structure: "+f.type);b.ya[l]||(b.ya[l]={});b.ya[l][e.kind]=b.value;b.s=++d;e=c.properties[d]}else b.i=this.g(this.F),b.ya=Object.create(null);if(e)return new r(e.value,b.scope);for(f in b.ya)c=b.ya[f],"get"in c||"set"in c?this.setProperty(b.i,f,null,{configurable:!0,enumerable:!0,get:c.get,
-set:c.set}):this.setProperty(b.i,f,c.init);a.pop();a[a.length-1].value=b.i};m.prototype.stepProgram=function(a,b,c){if(a=c.body.shift())return b.done=!1,new r(a,b.scope);b.done=!0};m.prototype.stepReturnStatement=function(a,b,c){if(c.argument&&!b.N)return b.N=!0,new r(c.argument,b.scope);Lc(this,3,b.value,void 0)};m.prototype.stepSequenceExpression=function(a,b,c){var d=b.s||0;if(c=c.expressions[d])return b.s=d+1,new r(c,b.scope);a.pop();a[a.length-1].value=b.value};
-m.prototype.stepSwitchStatement=function(a,b,c){if(!b.V)return b.V=1,new r(c.discriminant,b.scope);1===b.V&&(b.V=2,b.Lb=b.value,b.La=-1);for(;;){var d=b.Oa||0,e=c.cases[d];if(b.va||!e||e.test)if(e||b.va||-1===b.La)if(e){if(!b.va&&!b.mb&&e.test)return b.mb=!0,new r(e.test,b.scope);if(b.va||b.value===b.Lb){b.va=!0;var f=b.s||0;if(e.consequent[f])return b.Fb=!0,b.s=f+1,new r(e.consequent[f],b.scope)}b.mb=!1;b.s=0;b.Oa=d+1}else{a.pop();break}else b.va=!0,b.Oa=b.La;else b.La=d,b.Oa=d+1}};
-m.prototype.stepThisExpression=function(a){a.pop();a[a.length-1].value=Hc(this,"this")};m.prototype.stepThrowStatement=function(a,b,c){if(b.N)E(this,b.value);else return b.N=!0,new r(c.argument,b.scope)};
-m.prototype.stepTryStatement=function(a,b,c){if(!b.vb)return b.vb=!0,new r(c.block,b.scope);if(b.U&&4===b.U.type&&!b.yb&&c.handler)return b.yb=!0,a=new r(c.handler,b.scope),a.Mb=b.U.value,b.U=void 0,a;if(!b.xb&&c.finalizer)return b.xb=!0,new r(c.finalizer,b.scope);a.pop();b.U&&Lc(this,b.U.type,b.U.value,b.U.label)};
-m.prototype.stepUnaryExpression=function(a,b,c){if(!b.N)return b.N=!0,a=new r(c.argument,b.scope),a.ha="delete"===c.operator,a;a.pop();var d=b.value;if("-"===c.operator)d=-d;else if("+"===c.operator)d=+d;else if("!"===c.operator)d=!d;else if("~"===c.operator)d=~d;else if("delete"===c.operator){c=!0;if(Array.isArray(d)){var e=d[0];e===Aa&&(e=b.scope);d=String(d[1]);try{delete e.a[d]}catch(f){b.scope.G?E(this,this.h,"Cannot delete property '"+d+"' of '"+e+"'"):c=!1}}d=c}else if("typeof"===c.operator)d=
-d&&"Function"===d.K?"function":typeof d;else if("void"===c.operator)d=void 0;else throw SyntaxError("Unknown unary operator: "+c.operator);a[a.length-1].value=d};
-m.prototype.stepUpdateExpression=function(a,b,c){if(!b.X)return b.X=!0,a=new r(c.argument,b.scope),a.ha=!0,a;b.ua||(b.ua=b.value);b.pa&&(b.Z=b.value);if(!b.pa){var d=Jc(this,b.ua);if((b.Z=d)&&"object"===typeof d&&d.L)return d.L=!1,b.pa=!0,Mc(this,d,b.ua)}if(b.ja)a.pop(),a[a.length-1].value=b.Sa;else{d=Number(b.Z);if("++"===c.operator)var e=d+1;else if("--"===c.operator)e=d-1;else throw SyntaxError("Unknown update expression: "+c.operator);c=c.prefix?e:d;if(d=Kc(this,b.ua,e))return b.ja=!0,b.Sa=c,
-Nc(this,d,b.ua,e);a.pop();a[a.length-1].value=c}};m.prototype.stepVariableDeclaration=function(a,b,c){c=c.declarations;var d=b.s||0,e=c[d];b.hb&&e&&(Ic(this,e.id.name,b.value),b.hb=!1,e=c[++d]);for(;e;){if(e.init)return b.s=d,b.hb=!0,new r(e.init,b.scope);e=c[++d]}a.pop()};m.prototype.stepWithStatement=function(a,b,c){if(b.qa)if(b.wb)a.pop();else return b.wb=!0,a=Gc(this,b.scope,b.value),new r(c.body,a);else return b.qa=!0,new r(c.object,b.scope)};m.prototype.stepWhileStatement=m.prototype.stepDoWhileStatement;
-this.Interpreter=m;m.prototype.step=m.prototype.step;m.prototype.run=m.prototype.jb;m.prototype.appendCode=m.prototype.qb;m.prototype.createObject=m.prototype.oa;m.prototype.createObjectProto=m.prototype.g;m.prototype.createAsyncFunction=m.prototype.tb;m.prototype.createNativeFunction=m.prototype.b;m.prototype.getProperty=m.prototype.v;m.prototype.setProperty=m.prototype.setProperty;m.prototype.nativeToPseudo=m.prototype.ka;m.prototype.pseudoToNative=m.prototype.M;m.prototype.createPrimitive=function(a){return a};
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Interpreter; });
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/acorn */ 43);
+/* harmony import */ var _utils_acorn__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils_acorn__WEBPACK_IMPORTED_MODULE_0__);
+
+/**
+ * @license
+ * JavaScript Interpreter
+ *
+ * Copyright 2013 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * @fileoverview Interpreting JavaScript in JavaScript.
+ * @author fraser@google.com (Neil Fraser)
+ */
+'use strict';
+
+/**
+ * Create a new interpreter.
+ * @param {string|!Object} code Raw JavaScript text or AST.
+ * @param {Function=} opt_initFunc Optional initialization function.  Used to
+ *     define APIs.  When called it is passed the interpreter object and the
+ *     global scope object.
+ * @constructor
+ */
+var Interpreter = function(code, opt_initFunc) {
+  if (typeof code === 'string') {
+    code = _utils_acorn__WEBPACK_IMPORTED_MODULE_0__["parse"](code, Interpreter.PARSE_OPTIONS);
+  }
+  this.ast = code;
+  this.initFunc_ = opt_initFunc;
+  this.paused_ = false;
+  this.polyfills_ = [];
+  // Unique identifier for native functions.  Used in serialization.
+  this.functionCounter_ = 0;
+  // Map node types to our step function names; a property lookup is faster
+  // than string concatenation with "step" prefix.
+  this.stepFunctions_ = Object.create(null);
+  var stepMatch = /^step([A-Z]\w*)$/;
+  var m;
+  for (var methodName in this) {
+    if ((typeof this[methodName] === 'function') &&
+        (m = methodName.match(stepMatch))) {
+      this.stepFunctions_[m[1]] = this[methodName].bind(this);
+    }
+  }
+  // Create and initialize the global scope.
+  this.global = this.createScope(this.ast, null);
+  // Run the polyfills.
+  this.ast = _utils_acorn__WEBPACK_IMPORTED_MODULE_0__["parse"](this.polyfills_.join('\n'), Interpreter.PARSE_OPTIONS);
+  this.polyfills_ = undefined;  // Allow polyfill strings to garbage collect.
+  this.stripLocations_(this.ast, undefined, undefined);
+  var state = new Interpreter.State(this.ast, this.global);
+  state.done = false;
+  this.stateStack = [state];
+  this.run();
+  this.value = undefined;
+  // Point at the main program.
+  this.ast = code;
+  var state = new Interpreter.State(this.ast, this.global);
+  state.done = false;
+  this.stateStack.length = 0;
+  this.stateStack[0] = state;
+  // Get a handle on Acorn's node_t object.  It's tricky to access.
+  this.nodeConstructor = state.node.constructor;
+  // Preserve publicly properties from being pruned/renamed by JS compilers.
+  // Add others as needed.
+  this['stateStack'] = this.stateStack;
+};
+
+/**
+ * @const {!Object} Configuration used for all Acorn parsing.
+ */
+Interpreter.PARSE_OPTIONS = {
+  ecmaVersion: 5
+};
+
+/**
+ * Property descriptor of readonly properties.
+ */
+Interpreter.READONLY_DESCRIPTOR = {
+  configurable: true,
+  enumerable: true,
+  writable: false
+};
+
+/**
+ * Property descriptor of non-enumerable properties.
+ */
+Interpreter.NONENUMERABLE_DESCRIPTOR = {
+  configurable: true,
+  enumerable: false,
+  writable: true
+};
+
+/**
+ * Property descriptor of readonly, non-enumerable properties.
+ */
+Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR = {
+  configurable: true,
+  enumerable: false,
+  writable: false
+};
+
+/**
+ * Property descriptor of variables.
+ */
+Interpreter.VARIABLE_DESCRIPTOR = {
+  configurable: false,
+  enumerable: true,
+  writable: true
+};
+
+/**
+ * Unique symbol for indicating that a step has encountered an error, has
+ * added it to the stack, and will be thrown within the user's program.
+ * When STEP_ERROR is thrown in the JS-Interpreter, the error can be ignored.
+ */
+Interpreter.STEP_ERROR = {};
+
+/**
+ * Unique symbol for indicating that a reference is a variable on the scope,
+ * not an object property.
+ */
+Interpreter.SCOPE_REFERENCE = {};
+
+/**
+ * Unique symbol for indicating, when used as the value of the value
+ * parameter in calls to setProperty and friends, that the value
+ * should be taken from the property descriptor instead.
+ */
+Interpreter.VALUE_IN_DESCRIPTOR = {};
+
+/**
+ * For cycle detection in array to string and error conversion;
+ * see spec bug github.com/tc39/ecma262/issues/289
+ * Since this is for atomic actions only, it can be a class property.
+ */
+Interpreter.toStringCycles_ = [];
+
+/**
+ * Add more code to the interpreter.
+ * @param {string|!Object} code Raw JavaScript text or AST.
+ */
+Interpreter.prototype.appendCode = function(code) {
+  var state = this.stateStack[0];
+  if (!state || state.node['type'] !== 'Program') {
+    throw Error('Expecting original AST to start with a Program node.');
+  }
+  if (typeof code === 'string') {
+    code = _utils_acorn__WEBPACK_IMPORTED_MODULE_0__["parse"](code, Interpreter.PARSE_OPTIONS);
+  }
+  if (!code || code['type'] !== 'Program') {
+    throw Error('Expecting new AST to start with a Program node.');
+  }
+  this.populateScope_(code, state.scope);
+  // Append the new program to the old one.
+  for (var i = 0, node; (node = code['body'][i]); i++) {
+    state.node['body'].push(node);
+  }
+  state.done = false;
+};
+
+/**
+ * Execute one step of the interpreter.
+ * @return {boolean} True if a step was executed, false if no more instructions.
+ */
+Interpreter.prototype.step = function() {
+  var stack = this.stateStack;
+  var state = stack[stack.length - 1];
+  if (!state) {
+    return false;
+  }
+  var node = state.node, type = node['type'];
+  if (type === 'Program' && state.done) {
+    return false;
+  } else if (this.paused_) {
+    return true;
+  }
+  try {
+    var nextState = this.stepFunctions_[type](stack, state, node);
+  } catch (e) {
+    // Eat any step errors.  They have been thrown on the stack.
+    if (e !== Interpreter.STEP_ERROR) {
+      // Uh oh.  This is a real error in the JS-Interpreter.  Rethrow.
+      throw e;
+    }
+  }
+  if (nextState) {
+    stack.push(nextState);
+  }
+  if (!node['end']) {
+    // This is polyfill code.  Keep executing until we arrive at user code.
+    return this.step();
+  }
+  return true;
+};
+
+/**
+ * Execute the interpreter to program completion.  Vulnerable to infinite loops.
+ * @return {boolean} True if a execution is asynchronously blocked,
+ *     false if no more instructions.
+ */
+Interpreter.prototype.run = function() {
+  while (!this.paused_ && this.step()) {}
+  return this.paused_;
+};
+
+/**
+ * Initialize the global scope with buitin properties and functions.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initGlobalScope = function(scope) {
+  // Initialize uneditable global properties.
+  this.setProperty(scope, 'NaN', NaN,
+                   Interpreter.READONLY_DESCRIPTOR);
+  this.setProperty(scope, 'Infinity', Infinity,
+                   Interpreter.READONLY_DESCRIPTOR);
+  this.setProperty(scope, 'undefined', undefined,
+                   Interpreter.READONLY_DESCRIPTOR);
+  this.setProperty(scope, 'window', scope,
+                   Interpreter.READONLY_DESCRIPTOR);
+  this.setProperty(scope, 'this', scope,
+                   Interpreter.READONLY_DESCRIPTOR);
+  this.setProperty(scope, 'self', scope); // Editable.
+
+  // Create the objects which will become Object.prototype and
+  // Function.prototype, which are needed to bootstrap everything else.
+  this.OBJECT_PROTO = new Interpreter.Object(null);
+  this.FUNCTION_PROTO = new Interpreter.Object(this.OBJECT_PROTO);
+  // Initialize global objects.
+  this.initFunction(scope);
+  this.initObject(scope);
+  // Unable to set scope's parent prior (OBJECT did not exist).
+  // Note that in a browser this would be 'Window', whereas in Node.js it would
+  // be 'Object'.  This interpreter is closer to Node in that it has no DOM.
+  scope.proto = this.OBJECT_PROTO;
+  this.setProperty(scope, 'constructor', this.OBJECT,
+                   Interpreter.NONENUMERABLE_DESCRIPTOR);
+  this.initArray(scope);
+  this.initString(scope);
+  this.initBoolean(scope);
+  this.initNumber(scope);
+  this.initDate(scope);
+  this.initRegExp(scope);
+  this.initError(scope);
+  this.initMath(scope);
+  this.initJSON(scope);
+
+  // Initialize global functions.
+  var thisInterpreter = this;
+  var func = this.createNativeFunction(
+      function(x) {throw EvalError("Can't happen");}, false);
+  func.eval = true;
+  this.setProperty(scope, 'eval', func);
+
+  this.setProperty(scope, 'parseInt',
+      this.createNativeFunction(parseInt, false));
+  this.setProperty(scope, 'parseFloat',
+      this.createNativeFunction(parseFloat, false));
+
+  this.setProperty(scope, 'isNaN',
+      this.createNativeFunction(isNaN, false));
+
+  this.setProperty(scope, 'isFinite',
+      this.createNativeFunction(isFinite, false));
+
+  var strFunctions = [
+    [escape, 'escape'], [unescape, 'unescape'],
+    [decodeURI, 'decodeURI'], [decodeURIComponent, 'decodeURIComponent'],
+    [encodeURI, 'encodeURI'], [encodeURIComponent, 'encodeURIComponent']
+  ];
+  for (var i = 0; i < strFunctions.length; i++) {
+    var wrapper = (function(nativeFunc) {
+      return function(str) {
+        try {
+          return nativeFunc(str);
+        } catch (e) {
+          // decodeURI('%xy') will throw an error.  Catch and rethrow.
+          thisInterpreter.throwException(thisInterpreter.URI_ERROR, e.message);
+        }
+      };
+    })(strFunctions[i][0]);
+    this.setProperty(scope, strFunctions[i][1],
+        this.createNativeFunction(wrapper, false),
+        Interpreter.NONENUMERABLE_DESCRIPTOR);
+  }
+  // Preserve publicly properties from being pruned/renamed by JS compilers.
+  // Add others as needed.
+  this['OBJECT'] = this.OBJECT; this['OBJECT_PROTO'] = this.OBJECT_PROTO;
+  this['FUNCTION'] = this.FUNCTION; this['FUNCTION_PROTO'] = this.FUNCTION_PROTO;
+  this['ARRAY'] = this.ARRAY; this['ARRAY_PROTO'] = this.ARRAY_PROTO;
+  this['REGEXP'] = this.REGEXP; this['REGEXP_PROTO'] = this.REGEXP_PROTO;
+  this['DATE'] = this.DATE; this['DATE_PROTO'] = this.DATE_PROTO;
+  // The following properties are obsolete.  Do not use.
+  this['UNDEFINED'] = undefined; this['NULL'] = null; this['NAN'] = NaN;
+  this['TRUE'] = true; this['FALSE'] = false; this['STRING_EMPTY'] = '';
+  this['NUMBER_ZERO'] = 0; this['NUMBER_ONE'] = 1;
+
+  // Run any user-provided initialization.
+  if (this.initFunc_) {
+    this.initFunc_(this, scope);
+  }
+};
+
+/**
+ * Initialize the Function class.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initFunction = function(scope) {
+  var thisInterpreter = this;
+  var wrapper;
+  var identifierRegexp = /^[A-Za-z_$][\w$]*$/;
+  // Function constructor.
+  wrapper = function(var_args) {
+    if (thisInterpreter.calledWithNew()) {
+      // Called as new Function().
+      var newFunc = this;
+    } else {
+      // Called as Function().
+      var newFunc =
+          thisInterpreter.createObjectProto(thisInterpreter.FUNCTION_PROTO);
+    }
+    if (arguments.length) {
+      var code = String(arguments[arguments.length - 1]);
+    } else {
+      var code = '';
+    }
+    var argsStr = Array.prototype.slice.call(arguments, 0, -1).join(',').trim();
+    if (argsStr) {
+      var args = argsStr.split(/\s*,\s*/);
+      for (var i = 0; i < args.length; i++) {
+        var name = args[i];
+        if (!identifierRegexp.test(name)) {
+          thisInterpreter.throwException(thisInterpreter.SYNTAX_ERROR,
+              'Invalid function argument: ' + name);
+        }
+      }
+      argsStr = args.join(', ');
+    }
+    // Interestingly, the scope for constructed functions is the global scope,
+    // even if they were constructed in some other scope.
+    newFunc.parentScope = thisInterpreter.global;
+    // Acorn needs to parse code in the context of a function or else 'return'
+    // statements will be syntax errors.
+    try {
+      var ast = _utils_acorn__WEBPACK_IMPORTED_MODULE_0__["parse"]('(function(' + argsStr + ') {' + code + '})',
+          Interpreter.PARSE_OPTIONS);
+    } catch (e) {
+      // Acorn threw a SyntaxError.  Rethrow as a trappable error.
+      thisInterpreter.throwException(thisInterpreter.SYNTAX_ERROR,
+          'Invalid code: ' + e.message);
+    }
+    if (ast['body'].length !== 1) {
+      // Function('a', 'return a + 6;}; {alert(1);');
+      thisInterpreter.throwException(thisInterpreter.SYNTAX_ERROR,
+          'Invalid code in function body.');
+    }
+    newFunc.node = ast['body'][0]['expression'];
+    thisInterpreter.setProperty(newFunc, 'length', newFunc.node['length'],
+        Interpreter.READONLY_DESCRIPTOR);
+    return newFunc;
+  };
+  wrapper.id = this.functionCounter_++;
+  this.FUNCTION = this.createObjectProto(this.FUNCTION_PROTO);
+
+  this.setProperty(scope, 'Function', this.FUNCTION);
+  // Manually setup type and prototype because createObj doesn't recognize
+  // this object as a function (this.FUNCTION did not exist).
+  this.setProperty(this.FUNCTION, 'prototype', this.FUNCTION_PROTO);
+  this.FUNCTION.nativeFunc = wrapper;
+
+  // Configure Function.prototype.
+  this.setProperty(this.FUNCTION_PROTO, 'constructor', this.FUNCTION,
+                   Interpreter.NONENUMERABLE_DESCRIPTOR);
+  this.FUNCTION_PROTO.nativeFunc = function() {};
+  this.FUNCTION_PROTO.nativeFunc.id = this.functionCounter_++;
+  this.setProperty(this.FUNCTION_PROTO, 'length', 0,
+      Interpreter.READONLY_DESCRIPTOR);
+
+  var boxThis = function(value) {
+    // In non-strict mode 'this' must be an object.
+    if ((!value || !value.isObject) && !thisInterpreter.getScope().strict) {
+      if (value === undefined || value === null) {
+        // 'Undefined' and 'null' are changed to global object.
+        value = thisInterpreter.global;
+      } else {
+        // Primitives must be boxed in non-strict mode.
+        var box = thisInterpreter.createObjectProto(
+            thisInterpreter.getPrototype(value));
+        box.data = value;
+        value = box;
+      }
+    }
+    return value;
+  };
+
+  wrapper = function(thisArg, args) {
+    var state =
+        thisInterpreter.stateStack[thisInterpreter.stateStack.length - 1];
+    // Rewrite the current 'CallExpression' to apply a different function.
+    state.func_ = this;
+    // Assign the 'this' object.
+    state.funcThis_ = boxThis(thisArg);
+    // Bind any provided arguments.
+    state.arguments_ = [];
+    if (args !== null && args !== undefined) {
+      if (args.isObject) {
+        state.arguments_ = thisInterpreter.arrayPseudoToNative(args);
+      } else {
+        thisInterpreter.throwException(thisInterpreter.TYPE_ERROR,
+            'CreateListFromArrayLike called on non-object');
+      }
+    }
+    state.doneExec_ = false;
+  };
+  this.setNativeFunctionPrototype(this.FUNCTION, 'apply', wrapper);
+
+  wrapper = function(thisArg /*, var_args */) {
+    var state =
+        thisInterpreter.stateStack[thisInterpreter.stateStack.length - 1];
+    // Rewrite the current 'CallExpression' to call a different function.
+    state.func_ = this;
+    // Assign the 'this' object.
+    state.funcThis_ = boxThis(thisArg);
+    // Bind any provided arguments.
+    state.arguments_ = [];
+    for (var i = 1; i < arguments.length; i++) {
+      state.arguments_.push(arguments[i]);
+    }
+    state.doneExec_ = false;
+  };
+  this.setNativeFunctionPrototype(this.FUNCTION, 'call', wrapper);
+
+  this.polyfills_.push(
+// Polyfill copied from:
+// developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Function/bind
+"Object.defineProperty(Function.prototype, 'bind',",
+    "{configurable: true, writable: true, value:",
+  "function(oThis) {",
+    "if (typeof this !== 'function') {",
+      "throw TypeError('What is trying to be bound is not callable');",
+    "}",
+    "var aArgs   = Array.prototype.slice.call(arguments, 1),",
+        "fToBind = this,",
+        "fNOP    = function() {},",
+        "fBound  = function() {",
+          "return fToBind.apply(this instanceof fNOP",
+                 "? this",
+                 ": oThis,",
+                 "aArgs.concat(Array.prototype.slice.call(arguments)));",
+        "};",
+    "if (this.prototype) {",
+      "fNOP.prototype = this.prototype;",
+    "}",
+    "fBound.prototype = new fNOP();",
+    "return fBound;",
+  "}",
+"});",
+"");
+
+  // Function has no parent to inherit from, so it needs its own mandatory
+  // toString and valueOf functions.
+  wrapper = function() {
+    return this.toString();
+  };
+  this.setNativeFunctionPrototype(this.FUNCTION, 'toString', wrapper);
+  this.setProperty(this.FUNCTION, 'toString',
+      this.createNativeFunction(wrapper, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+  wrapper = function() {
+    return this.valueOf();
+  };
+  this.setNativeFunctionPrototype(this.FUNCTION, 'valueOf', wrapper);
+  this.setProperty(this.FUNCTION, 'valueOf',
+      this.createNativeFunction(wrapper, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+};
+
+/**
+ * Initialize the Object class.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initObject = function(scope) {
+  var thisInterpreter = this;
+  var wrapper;
+  // Object constructor.
+  wrapper = function(value) {
+    if (value === undefined || value === null) {
+      // Create a new object.
+      if (thisInterpreter.calledWithNew()) {
+        // Called as new Object().
+        return this;
+      } else {
+        // Called as Object().
+        return thisInterpreter.createObjectProto(thisInterpreter.OBJECT_PROTO);
+      }
+    }
+    if (!value.isObject) {
+      // Wrap the value as an object.
+      var box = thisInterpreter.createObjectProto(
+          thisInterpreter.getPrototype(value));
+      box.data = value;
+      return box;
+    }
+    // Return the provided object.
+    return value;
+  };
+  this.OBJECT = this.createNativeFunction(wrapper, true);
+  // Throw away the created prototype and use the root prototype.
+  this.setProperty(this.OBJECT, 'prototype', this.OBJECT_PROTO);
+  this.setProperty(this.OBJECT_PROTO, 'constructor', this.OBJECT,
+                   Interpreter.NONENUMERABLE_DESCRIPTOR);
+  this.setProperty(scope, 'Object', this.OBJECT);
+
+  /**
+   * Checks if the provided value is null or undefined.
+   * If so, then throw an error in the call stack.
+   * @param {Interpreter.Value} value Value to check.
+   */
+  var throwIfNullUndefined = function(value) {
+    if (value === undefined || value === null) {
+      thisInterpreter.throwException(thisInterpreter.TYPE_ERROR,
+          "Cannot convert '" + value + "' to object");
+    }
+  };
+
+  // Static methods on Object.
+  wrapper = function(obj) {
+    throwIfNullUndefined(obj);
+    var props = obj.isObject ? obj.properties : obj;
+    return thisInterpreter.arrayNativeToPseudo(
+        Object.getOwnPropertyNames(props));
+  };
+  this.setProperty(this.OBJECT, 'getOwnPropertyNames',
+      this.createNativeFunction(wrapper, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  wrapper = function(obj) {
+    throwIfNullUndefined(obj);
+    if (obj.isObject) {
+      obj = obj.properties;
+    }
+    return thisInterpreter.arrayNativeToPseudo(Object.keys(obj));
+  };
+  this.setProperty(this.OBJECT, 'keys',
+      this.createNativeFunction(wrapper, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  wrapper = function(proto) {
+    // Support for the second argument is the responsibility of a polyfill.
+    if (proto === null) {
+      return thisInterpreter.createObjectProto(null);
+    }
+    if (proto === undefined || !proto.isObject) {
+      thisInterpreter.throwException(thisInterpreter.TYPE_ERROR,
+          'Object prototype may only be an Object or null');
+    }
+    return thisInterpreter.createObjectProto(proto);
+  };
+  this.setProperty(this.OBJECT, 'create',
+      this.createNativeFunction(wrapper, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  // Add a polyfill to handle create's second argument.
+  this.polyfills_.push(
+"(function() {",
+  "var create_ = Object.create;",
+  "Object.create = function(proto, props) {",
+    "var obj = create_(proto);",
+    "props && Object.defineProperties(obj, props);",
+    "return obj;",
+  "};",
+"})();",
+"");
+
+  wrapper = function(obj, prop, descriptor) {
+    prop = String(prop);
+    if (!obj || !obj.isObject) {
+      thisInterpreter.throwException(thisInterpreter.TYPE_ERROR,
+          'Object.defineProperty called on non-object');
+    }
+    if (!descriptor || !descriptor.isObject) {
+      thisInterpreter.throwException(thisInterpreter.TYPE_ERROR,
+          'Property description must be an object');
+    }
+    if (!obj.properties[prop] && obj.preventExtensions) {
+      thisInterpreter.throwException(thisInterpreter.TYPE_ERROR,
+          "Can't define property '" + prop + "', object is not extensible");
+    }
+    // The polyfill guarantees no inheritance and no getter functions.
+    // Therefore the descriptor properties map is the native object needed.
+    thisInterpreter.setProperty(obj, prop, Interpreter.VALUE_IN_DESCRIPTOR,
+                                descriptor.properties);
+    return obj;
+  };
+  this.setProperty(this.OBJECT, 'defineProperty',
+      this.createNativeFunction(wrapper, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  this.polyfills_.push(
+// Flatten the descriptor to remove any inheritance or getter functions.
+"(function() {",
+  "var defineProperty_ = Object.defineProperty;",
+  "Object.defineProperty = function(obj, prop, d1) {",
+    "var d2 = {};",
+    "if ('configurable' in d1) d2.configurable = d1.configurable;",
+    "if ('enumerable' in d1) d2.enumerable = d1.enumerable;",
+    "if ('writable' in d1) d2.writable = d1.writable;",
+    "if ('value' in d1) d2.value = d1.value;",
+    "if ('get' in d1) d2.get = d1.get;",
+    "if ('set' in d1) d2.set = d1.set;",
+    "return defineProperty_(obj, prop, d2);",
+  "};",
+"})();",
+
+"Object.defineProperty(Object, 'defineProperties',",
+    "{configurable: true, writable: true, value:",
+  "function(obj, props) {",
+    "var keys = Object.keys(props);",
+    "for (var i = 0; i < keys.length; i++) {",
+      "Object.defineProperty(obj, keys[i], props[keys[i]]);",
+    "}",
+    "return obj;",
+  "}",
+"});",
+"");
+
+  wrapper = function(obj, prop) {
+    if (!obj || !obj.isObject) {
+      thisInterpreter.throwException(thisInterpreter.TYPE_ERROR,
+          'Object.getOwnPropertyDescriptor called on non-object');
+    }
+    prop = String(prop);
+    if (!(prop in obj.properties)) {
+      return undefined;
+    }
+    var descriptor = Object.getOwnPropertyDescriptor(obj.properties, prop);
+    var getter = obj.getter[prop];
+    var setter = obj.setter[prop];
+
+    if (getter || setter) {
+      descriptor.get = getter;
+      descriptor.set = setter;
+      delete descriptor.value;
+      delete descriptor.writable;
+    }
+    // Preserve value, but remove it for the nativeToPseudo call.
+    var value = descriptor.value;
+    var hasValue = 'value' in descriptor;
+    delete descriptor.value;
+    var pseudoDescriptor = thisInterpreter.nativeToPseudo(descriptor);
+    if (hasValue) {
+      thisInterpreter.setProperty(pseudoDescriptor, 'value', value);
+    }
+    return pseudoDescriptor;
+  };
+  this.setProperty(this.OBJECT, 'getOwnPropertyDescriptor',
+      this.createNativeFunction(wrapper, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  wrapper = function(obj) {
+    throwIfNullUndefined(obj);
+    return thisInterpreter.getPrototype(obj);
+  };
+  this.setProperty(this.OBJECT, 'getPrototypeOf',
+      this.createNativeFunction(wrapper, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  wrapper = function(obj) {
+    return Boolean(obj) && !obj.preventExtensions;
+  };
+  this.setProperty(this.OBJECT, 'isExtensible',
+      this.createNativeFunction(wrapper, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  wrapper = function(obj) {
+    if (obj && obj.isObject) {
+      obj.preventExtensions = true;
+    }
+    return obj;
+  };
+  this.setProperty(this.OBJECT, 'preventExtensions',
+      this.createNativeFunction(wrapper, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  // Instance methods on Object.
+  this.setNativeFunctionPrototype(this.OBJECT, 'toString',
+      Interpreter.Object.prototype.toString);
+  this.setNativeFunctionPrototype(this.OBJECT, 'toLocaleString',
+      Interpreter.Object.prototype.toString);
+  this.setNativeFunctionPrototype(this.OBJECT, 'valueOf',
+      Interpreter.Object.prototype.valueOf);
+
+  wrapper = function(prop) {
+    throwIfNullUndefined(this);
+    if (!this.isObject) {
+      return this.hasOwnProperty(prop);
+    }
+    return String(prop) in this.properties;
+  };
+  this.setNativeFunctionPrototype(this.OBJECT, 'hasOwnProperty', wrapper);
+
+  wrapper = function(prop) {
+    throwIfNullUndefined(this);
+    if (!this.isObject) {
+      return this.propertyIsEnumerable(prop);
+    }
+    return Object.prototype.propertyIsEnumerable.call(this.properties, prop);
+  };
+  this.setNativeFunctionPrototype(this.OBJECT, 'propertyIsEnumerable', wrapper);
+
+  wrapper = function(obj) {
+    while (true) {
+      // Note, circular loops shouldn't be possible.
+      obj = thisInterpreter.getPrototype(obj);
+      if (!obj) {
+        // No parent; reached the top.
+        return false;
+      }
+      if (obj === this) {
+        return true;
+      }
+    }
+  };
+  this.setNativeFunctionPrototype(this.OBJECT, 'isPrototypeOf',  wrapper);
+};
+
+/**
+ * Initialize the Array class.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initArray = function(scope) {
+  var thisInterpreter = this;
+  var wrapper;
+  // Array constructor.
+  wrapper = function(var_args) {
+    if (thisInterpreter.calledWithNew()) {
+      // Called as new Array().
+      var newArray = this;
+    } else {
+      // Called as Array().
+      var newArray =
+          thisInterpreter.createObjectProto(thisInterpreter.ARRAY_PROTO);
+    }
+    var first = arguments[0];
+    if (arguments.length === 1 && typeof first === 'number') {
+      if (isNaN(Interpreter.legalArrayLength(first))) {
+        thisInterpreter.throwException(thisInterpreter.RANGE_ERROR,
+                                       'Invalid array length');
+      }
+      newArray.properties.length = first;
+    } else {
+      for (var i = 0; i < arguments.length; i++) {
+        newArray.properties[i] = arguments[i];
+      }
+      newArray.properties.length = i;
+    }
+    return newArray;
+  };
+  this.ARRAY = this.createNativeFunction(wrapper, true);
+  this.ARRAY_PROTO = this.ARRAY.properties['prototype'];
+  this.setProperty(scope, 'Array', this.ARRAY);
+
+  // Static methods on Array.
+  wrapper = function(obj) {
+    return obj && obj.class === 'Array';
+  };
+  this.setProperty(this.ARRAY, 'isArray',
+                   this.createNativeFunction(wrapper, false),
+                   Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  // Instance methods on Array.
+  wrapper = function() {
+    return Array.prototype.pop.call(this.properties);
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'pop', wrapper);
+
+  wrapper = function(var_args) {
+    return Array.prototype.push.apply(this.properties, arguments);
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'push', wrapper);
+
+  wrapper = function() {
+    return Array.prototype.shift.call(this.properties);
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'shift', wrapper);
+
+  wrapper = function(var_args) {
+    return Array.prototype.unshift.apply(this.properties, arguments);
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'unshift', wrapper);
+
+  wrapper = function() {
+    Array.prototype.reverse.call(this.properties);
+    return this;
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'reverse', wrapper);
+
+  wrapper = function(index, howmany /*, var_args*/) {
+    var list = Array.prototype.splice.apply(this.properties, arguments);
+    return thisInterpreter.arrayNativeToPseudo(list);
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'splice', wrapper);
+
+  wrapper = function(opt_begin, opt_end) {
+    var list = Array.prototype.slice.call(this.properties, opt_begin, opt_end);
+    return thisInterpreter.arrayNativeToPseudo(list);
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'slice', wrapper);
+
+  wrapper = function(opt_separator) {
+    return Array.prototype.join.call(this.properties, opt_separator);
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'join', wrapper);
+
+  wrapper = function(var_args) {
+    var list = [];
+    var length = 0;
+    // Start by copying the current array.
+    var iLength = thisInterpreter.getProperty(this, 'length');
+    for (var i = 0; i < iLength; i++) {
+      if (thisInterpreter.hasProperty(this, i)) {
+        var element = thisInterpreter.getProperty(this, i);
+        list[length] = element;
+      }
+      length++;
+    }
+    // Loop through all arguments and copy them in.
+    for (var i = 0; i < arguments.length; i++) {
+      var value = arguments[i];
+      if (thisInterpreter.isa(value, thisInterpreter.ARRAY)) {
+        var jLength = thisInterpreter.getProperty(value, 'length');
+        for (var j = 0; j < jLength; j++) {
+          if (thisInterpreter.hasProperty(value, j)) {
+            list[length] = thisInterpreter.getProperty(value, j);
+          }
+          length++;
+        }
+      } else {
+        list[length] = value;
+      }
+    }
+    return thisInterpreter.arrayNativeToPseudo(list);
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'concat', wrapper);
+
+  wrapper = function(searchElement, opt_fromIndex) {
+    return Array.prototype.indexOf.apply(this.properties, arguments);
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'indexOf', wrapper);
+
+  wrapper = function(searchElement, opt_fromIndex) {
+    return Array.prototype.lastIndexOf.apply(this.properties, arguments);
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'lastIndexOf', wrapper);
+
+  wrapper = function() {
+    Array.prototype.sort.call(this.properties);
+    return this;
+  };
+  this.setNativeFunctionPrototype(this.ARRAY, 'sort', wrapper);
+
+  this.polyfills_.push(
+// Polyfill copied from:
+// developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/every
+"Object.defineProperty(Array.prototype, 'every',",
+    "{configurable: true, writable: true, value:",
+  "function(callbackfn, thisArg) {",
+    "if (!this || typeof callbackfn !== 'function') throw TypeError();",
+    "var T, k;",
+    "var O = Object(this);",
+    "var len = O.length >>> 0;",
+    "if (arguments.length > 1) T = thisArg;",
+    "k = 0;",
+    "while (k < len) {",
+      "if (k in O && !callbackfn.call(T, O[k], k, O)) return false;",
+      "k++;",
+    "}",
+    "return true;",
+  "}",
+"});",
+
+// Polyfill copied from:
+// developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+"Object.defineProperty(Array.prototype, 'filter',",
+    "{configurable: true, writable: true, value:",
+  "function(fun/*, thisArg*/) {",
+    "if (this === void 0 || this === null || typeof fun !== 'function') throw TypeError();",
+    "var t = Object(this);",
+    "var len = t.length >>> 0;",
+    "var res = [];",
+    "var thisArg = arguments.length >= 2 ? arguments[1] : void 0;",
+    "for (var i = 0; i < len; i++) {",
+      "if (i in t) {",
+        "var val = t[i];",
+        "if (fun.call(thisArg, val, i, t)) res.push(val);",
+      "}",
+    "}",
+    "return res;",
+  "}",
+"});",
+
+// Polyfill copied from:
+// developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+"Object.defineProperty(Array.prototype, 'forEach',",
+    "{configurable: true, writable: true, value:",
+  "function(callback, thisArg) {",
+    "if (!this || typeof callback !== 'function') throw TypeError();",
+    "var T, k;",
+    "var O = Object(this);",
+    "var len = O.length >>> 0;",
+    "if (arguments.length > 1) T = thisArg;",
+    "k = 0;",
+    "while (k < len) {",
+      "if (k in O) callback.call(T, O[k], k, O);",
+      "k++;",
+    "}",
+  "}",
+"});",
+
+// Polyfill copied from:
+// developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+"Object.defineProperty(Array.prototype, 'map',",
+    "{configurable: true, writable: true, value:",
+  "function(callback, thisArg) {",
+    "if (!this || typeof callback !== 'function') new TypeError;",
+    "var T, A, k;",
+    "var O = Object(this);",
+    "var len = O.length >>> 0;",
+    "if (arguments.length > 1) T = thisArg;",
+    "A = new Array(len);",
+    "k = 0;",
+    "while (k < len) {",
+      "if (k in O) A[k] = callback.call(T, O[k], k, O);",
+      "k++;",
+    "}",
+    "return A;",
+  "}",
+"});",
+
+// Polyfill copied from:
+// developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+"Object.defineProperty(Array.prototype, 'reduce',",
+    "{configurable: true, writable: true, value:",
+  "function(callback /*, initialValue*/) {",
+    "if (!this || typeof callback !== 'function') throw TypeError();",
+    "var t = Object(this), len = t.length >>> 0, k = 0, value;",
+    "if (arguments.length === 2) {",
+      "value = arguments[1];",
+    "} else {",
+      "while (k < len && !(k in t)) k++;",
+      "if (k >= len) {",
+        "throw TypeError('Reduce of empty array with no initial value');",
+      "}",
+      "value = t[k++];",
+    "}",
+    "for (; k < len; k++) {",
+      "if (k in t) value = callback(value, t[k], k, t);",
+    "}",
+    "return value;",
+  "}",
+"});",
+
+// Polyfill copied from:
+// developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight
+"Object.defineProperty(Array.prototype, 'reduceRight',",
+    "{configurable: true, writable: true, value:",
+  "function(callback /*, initialValue*/) {",
+    "if (null === this || 'undefined' === typeof this || 'function' !== typeof callback) throw TypeError();",
+    "var t = Object(this), len = t.length >>> 0, k = len - 1, value;",
+    "if (arguments.length >= 2) {",
+      "value = arguments[1];",
+    "} else {",
+      "while (k >= 0 && !(k in t)) k--;",
+      "if (k < 0) {",
+        "throw TypeError('Reduce of empty array with no initial value');",
+      "}",
+      "value = t[k--];",
+    "}",
+    "for (; k >= 0; k--) {",
+      "if (k in t) value = callback(value, t[k], k, t);",
+    "}",
+    "return value;",
+  "}",
+"});",
+
+// Polyfill copied from:
+// developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+"Object.defineProperty(Array.prototype, 'some',",
+    "{configurable: true, writable: true, value:",
+  "function(fun/*, thisArg*/) {",
+    "if (!this || typeof fun !== 'function') throw TypeError();",
+    "var t = Object(this);",
+    "var len = t.length >>> 0;",
+    "var thisArg = arguments.length >= 2 ? arguments[1] : void 0;",
+    "for (var i = 0; i < len; i++) {",
+      "if (i in t && fun.call(thisArg, t[i], i, t)) {",
+        "return true;",
+      "}",
+    "}",
+    "return false;",
+  "}",
+"});",
+
+
+"(function() {",
+  "var sort_ = Array.prototype.sort;",
+  "Array.prototype.sort = function(opt_comp) {",
+    // Fast native sort.
+    "if (typeof opt_comp !== 'function') {",
+      "return sort_.call(this);",
+    "}",
+    // Slow bubble sort.
+    "for (var i = 0; i < this.length; i++) {",
+      "var changes = 0;",
+      "for (var j = 0; j < this.length - i - 1; j++) {",
+        "if (opt_comp(this[j], this[j + 1]) > 0) {",
+          "var swap = this[j];",
+          "this[j] = this[j + 1];",
+          "this[j + 1] = swap;",
+          "changes++;",
+        "}",
+      "}",
+      "if (!changes) break;",
+    "}",
+    "return this;",
+  "};",
+"})();",
+
+"Object.defineProperty(Array.prototype, 'toLocaleString',",
+    "{configurable: true, writable: true, value:",
+  "function() {",
+    "var out = [];",
+    "for (var i = 0; i < this.length; i++) {",
+      "out[i] = (this[i] === null || this[i] === undefined) ? '' : this[i].toLocaleString();",
+    "}",
+    "return out.join(',');",
+  "}",
+"});",
+"");
+};
+
+/**
+ * Initialize the String class.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initString = function(scope) {
+  var thisInterpreter = this;
+  var wrapper;
+  // String constructor.
+  wrapper = function(value) {
+    value = String(value);
+    if (thisInterpreter.calledWithNew()) {
+      // Called as new String().
+      this.data = value;
+      return this;
+    } else {
+      // Called as String().
+      return value;
+    }
+  };
+  this.STRING = this.createNativeFunction(wrapper, true);
+  this.setProperty(scope, 'String', this.STRING);
+
+  // Static methods on String.
+  this.setProperty(this.STRING, 'fromCharCode',
+      this.createNativeFunction(String.fromCharCode, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  // Instance methods on String.
+  // Methods with exclusively primitive arguments.
+  var functions = ['charAt', 'charCodeAt', 'concat', 'indexOf', 'lastIndexOf',
+      'slice', 'substr', 'substring', 'toLocaleLowerCase', 'toLocaleUpperCase',
+      'toLowerCase', 'toUpperCase', 'trim'];
+  for (var i = 0; i < functions.length; i++) {
+    this.setNativeFunctionPrototype(this.STRING, functions[i],
+                                    String.prototype[functions[i]]);
+  }
+
+  wrapper = function(compareString, locales, options) {
+    locales = locales ? thisInterpreter.pseudoToNative(locales) : undefined;
+    options = options ? thisInterpreter.pseudoToNative(options) : undefined;
+    return String(this).localeCompare(compareString, locales, options);
+  };
+  this.setNativeFunctionPrototype(this.STRING, 'localeCompare', wrapper);
+
+  wrapper = function(separator, limit) {
+    if (thisInterpreter.isa(separator, thisInterpreter.REGEXP)) {
+      separator = separator.data;
+    }
+    var jsList = String(this).split(separator, limit);
+    return thisInterpreter.arrayNativeToPseudo(jsList);
+  };
+  this.setNativeFunctionPrototype(this.STRING, 'split', wrapper);
+
+  wrapper = function(regexp) {
+    if (thisInterpreter.isa(regexp, thisInterpreter.REGEXP)) {
+      regexp = regexp.data;
+    }
+    var m = String(this).match(regexp);
+    return m && thisInterpreter.arrayNativeToPseudo(m);
+  };
+  this.setNativeFunctionPrototype(this.STRING, 'match', wrapper);
+
+  wrapper = function(regexp) {
+    if (thisInterpreter.isa(regexp, thisInterpreter.REGEXP)) {
+      regexp = regexp.data;
+    }
+    return String(this).search(regexp);
+  };
+  this.setNativeFunctionPrototype(this.STRING, 'search', wrapper);
+
+  wrapper = function(substr, newSubstr) {
+    // Support for function replacements is the responsibility of a polyfill.
+    if (thisInterpreter.isa(substr, thisInterpreter.REGEXP)) {
+      substr = substr.data;
+    }
+    return String(this).replace(substr, newSubstr);
+  };
+  this.setNativeFunctionPrototype(this.STRING, 'replace', wrapper);
+  // Add a polyfill to handle replace's second argument being a function.
+  this.polyfills_.push(
+"(function() {",
+  "var replace_ = String.prototype.replace;",
+  "String.prototype.replace = function(substr, newSubstr) {",
+    "if (typeof newSubstr !== 'function') {",
+      // string.replace(string|regexp, string)
+      "return replace_.call(this, substr, newSubstr);",
+    "}",
+    "var str = this;",
+    "if (substr instanceof RegExp) {",  // string.replace(regexp, function)
+      "var subs = [];",
+      "var m = substr.exec(str);",
+      "while (m) {",
+        "m.push(m.index, str);",
+        "var inject = newSubstr.apply(null, m);",
+        "subs.push([m.index, m[0].length, inject]);",
+        "m = substr.global ? substr.exec(str) : null;",
+      "}",
+      "for (var i = subs.length - 1; i >= 0; i--) {",
+        "str = str.substring(0, subs[i][0]) + subs[i][2] + " +
+            "str.substring(subs[i][0] + subs[i][1]);",
+      "}",
+    "} else {",                         // string.replace(string, function)
+      "var i = str.indexOf(substr);",
+      "if (i !== -1) {",
+        "var inject = newSubstr(str.substr(i, substr.length), i, str);",
+        "str = str.substring(0, i) + inject + " +
+            "str.substring(i + substr.length);",
+      "}",
+    "}",
+    "return str;",
+  "};",
+"})();",
+"");
+};
+
+/**
+ * Initialize the Boolean class.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initBoolean = function(scope) {
+  var thisInterpreter = this;
+  var wrapper;
+  // Boolean constructor.
+  wrapper = function(value) {
+    value = Boolean(value);
+    if (thisInterpreter.calledWithNew()) {
+      // Called as new Boolean().
+      this.data = value;
+      return this;
+    } else {
+      // Called as Boolean().
+      return value;
+    }
+  };
+  this.BOOLEAN = this.createNativeFunction(wrapper, true);
+  this.setProperty(scope, 'Boolean', this.BOOLEAN);
+};
+
+/**
+ * Initialize the Number class.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initNumber = function(scope) {
+  var thisInterpreter = this;
+  var wrapper;
+  // Number constructor.
+  wrapper = function(value) {
+    value = Number(value);
+    if (thisInterpreter.calledWithNew()) {
+      // Called as new Number().
+      this.data = value;
+      return this;
+    } else {
+      // Called as Number().
+      return value;
+    }
+  };
+  this.NUMBER = this.createNativeFunction(wrapper, true);
+  this.setProperty(scope, 'Number', this.NUMBER);
+
+  var numConsts = ['MAX_VALUE', 'MIN_VALUE', 'NaN', 'NEGATIVE_INFINITY',
+                   'POSITIVE_INFINITY'];
+  for (var i = 0; i < numConsts.length; i++) {
+    this.setProperty(this.NUMBER, numConsts[i], Number[numConsts[i]],
+        Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR);
+  }
+
+  // Instance methods on Number.
+  wrapper = function(fractionDigits) {
+    try {
+      return Number(this).toExponential(fractionDigits);
+    } catch (e) {
+      // Throws if fractionDigits isn't within 0-20.
+      thisInterpreter.throwException(thisInterpreter.ERROR, e.message);
+    }
+  };
+  this.setNativeFunctionPrototype(this.NUMBER, 'toExponential', wrapper);
+
+  wrapper = function(digits) {
+    try {
+      return Number(this).toFixed(digits);
+    } catch (e) {
+      // Throws if digits isn't within 0-20.
+      thisInterpreter.throwException(thisInterpreter.ERROR, e.message);
+    }
+  };
+  this.setNativeFunctionPrototype(this.NUMBER, 'toFixed', wrapper);
+
+  wrapper = function(precision) {
+    try {
+      return Number(this).toPrecision(precision);
+    } catch (e) {
+      // Throws if precision isn't within range (depends on implementation).
+      thisInterpreter.throwException(thisInterpreter.ERROR, e.message);
+    }
+  };
+  this.setNativeFunctionPrototype(this.NUMBER, 'toPrecision', wrapper);
+
+  wrapper = function(radix) {
+    try {
+      return Number(this).toString(radix);
+    } catch (e) {
+      // Throws if radix isn't within 2-36.
+      thisInterpreter.throwException(thisInterpreter.ERROR, e.message);
+    }
+  };
+  this.setNativeFunctionPrototype(this.NUMBER, 'toString', wrapper);
+
+  wrapper = function(locales, options) {
+    locales = locales ? thisInterpreter.pseudoToNative(locales) : undefined;
+    options = options ? thisInterpreter.pseudoToNative(options) : undefined;
+    return Number(this).toLocaleString(locales, options);
+  };
+  this.setNativeFunctionPrototype(this.NUMBER, 'toLocaleString', wrapper);
+};
+
+/**
+ * Initialize the Date class.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initDate = function(scope) {
+  var thisInterpreter = this;
+  var wrapper;
+  // Date constructor.
+  wrapper = function(value, var_args) {
+    if (!thisInterpreter.calledWithNew()) {
+      // Called as Date().
+      // Calling Date() as a function returns a string, no arguments are heeded.
+      return Date();
+    }
+    // Called as new Date().
+    var args = [null].concat(Array.from(arguments));
+    this.data = new (Function.prototype.bind.apply(Date, args));
+    return this;
+  };
+  this.DATE = this.createNativeFunction(wrapper, true);
+  this.DATE_PROTO = this.DATE.properties['prototype'];
+  this.setProperty(scope, 'Date', this.DATE);
+
+  // Static methods on Date.
+  this.setProperty(this.DATE, 'now', this.createNativeFunction(Date.now, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  this.setProperty(this.DATE, 'parse',
+      this.createNativeFunction(Date.parse, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  this.setProperty(this.DATE, 'UTC', this.createNativeFunction(Date.UTC, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  // Instance methods on Date.
+  var functions = ['getDate', 'getDay', 'getFullYear', 'getHours',
+      'getMilliseconds', 'getMinutes', 'getMonth', 'getSeconds', 'getTime',
+      'getTimezoneOffset', 'getUTCDate', 'getUTCDay', 'getUTCFullYear',
+      'getUTCHours', 'getUTCMilliseconds', 'getUTCMinutes', 'getUTCMonth',
+      'getUTCSeconds', 'getYear',
+      'setDate', 'setFullYear', 'setHours', 'setMilliseconds',
+      'setMinutes', 'setMonth', 'setSeconds', 'setTime', 'setUTCDate',
+      'setUTCFullYear', 'setUTCHours', 'setUTCMilliseconds', 'setUTCMinutes',
+      'setUTCMonth', 'setUTCSeconds', 'setYear',
+      'toDateString', 'toISOString', 'toJSON', 'toGMTString',
+      'toLocaleDateString', 'toLocaleString', 'toLocaleTimeString',
+      'toTimeString', 'toUTCString'];
+  for (var i = 0; i < functions.length; i++) {
+    wrapper = (function(nativeFunc) {
+      return function(var_args) {
+        var args = [];
+        for (var i = 0; i < arguments.length; i++) {
+          args[i] = thisInterpreter.pseudoToNative(arguments[i]);
+        }
+        return this.data[nativeFunc].apply(this.data, args);
+      };
+    })(functions[i]);
+    this.setNativeFunctionPrototype(this.DATE, functions[i], wrapper);
+  }
+};
+
+/**
+ * Initialize Regular Expression object.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initRegExp = function(scope) {
+  var thisInterpreter = this;
+  var wrapper;
+  // RegExp constructor.
+  wrapper = function(pattern, flags) {
+    if (thisInterpreter.calledWithNew()) {
+      // Called as new RegExp().
+      var rgx = this;
+    } else {
+      // Called as RegExp().
+      var rgx = thisInterpreter.createObjectProto(thisInterpreter.REGEXP_PROTO);
+    }
+    pattern = pattern ? pattern.toString() : '';
+    flags = flags ? flags.toString() : '';
+    thisInterpreter.populateRegExp(rgx, new RegExp(pattern, flags));
+    return rgx;
+  };
+  this.REGEXP = this.createNativeFunction(wrapper, true);
+  this.REGEXP_PROTO = this.REGEXP.properties['prototype'];
+  this.setProperty(scope, 'RegExp', this.REGEXP);
+
+  this.setProperty(this.REGEXP.properties['prototype'], 'global', undefined,
+      Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR);
+  this.setProperty(this.REGEXP.properties['prototype'], 'ignoreCase', undefined,
+      Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR);
+  this.setProperty(this.REGEXP.properties['prototype'], 'multiline', undefined,
+      Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR);
+  this.setProperty(this.REGEXP.properties['prototype'], 'source', '(?:)',
+      Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR);
+
+  wrapper = function(str) {
+    return this.data.test(str);
+  };
+  this.setNativeFunctionPrototype(this.REGEXP, 'test', wrapper);
+
+  wrapper = function(str) {
+    str = str.toString();
+    // Get lastIndex from wrapped regex, since this is settable.
+    this.data.lastIndex =
+        Number(thisInterpreter.getProperty(this, 'lastIndex'));
+    var match = this.data.exec(str);
+    thisInterpreter.setProperty(this, 'lastIndex', this.data.lastIndex);
+
+    if (match) {
+      var result =
+          thisInterpreter.createObjectProto(thisInterpreter.ARRAY_PROTO);
+      for (var i = 0; i < match.length; i++) {
+        thisInterpreter.setProperty(result, i, match[i]);
+      }
+      // match has additional properties.
+      thisInterpreter.setProperty(result, 'index', match.index);
+      thisInterpreter.setProperty(result, 'input', match.input);
+      return result;
+    }
+    return null;
+  };
+  this.setNativeFunctionPrototype(this.REGEXP, 'exec', wrapper);
+};
+
+/**
+ * Initialize the Error class.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initError = function(scope) {
+  var thisInterpreter = this;
+  // Error constructor.
+  this.ERROR = this.createNativeFunction(function(opt_message) {
+    if (thisInterpreter.calledWithNew()) {
+      // Called as new Error().
+      var newError = this;
+    } else {
+      // Called as Error().
+      var newError = thisInterpreter.createObject(thisInterpreter.ERROR);
+    }
+    if (opt_message) {
+      thisInterpreter.setProperty(newError, 'message', String(opt_message),
+          Interpreter.NONENUMERABLE_DESCRIPTOR);
+    }
+    return newError;
+  }, true);
+  this.setProperty(scope, 'Error', this.ERROR);
+  this.setProperty(this.ERROR.properties['prototype'], 'message', '',
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+  this.setProperty(this.ERROR.properties['prototype'], 'name', 'Error',
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+
+  var createErrorSubclass = function(name) {
+    var constructor = thisInterpreter.createNativeFunction(
+        function(opt_message) {
+          if (thisInterpreter.calledWithNew()) {
+            // Called as new XyzError().
+            var newError = this;
+          } else {
+            // Called as XyzError().
+            var newError = thisInterpreter.createObject(constructor);
+          }
+          if (opt_message) {
+            thisInterpreter.setProperty(newError, 'message',
+                String(opt_message), Interpreter.NONENUMERABLE_DESCRIPTOR);
+          }
+          return newError;
+        }, true);
+    thisInterpreter.setProperty(constructor, 'prototype',
+        thisInterpreter.createObject(thisInterpreter.ERROR));
+    thisInterpreter.setProperty(constructor.properties['prototype'], 'name',
+        name, Interpreter.NONENUMERABLE_DESCRIPTOR);
+    thisInterpreter.setProperty(scope, name, constructor);
+
+    return constructor;
+  };
+
+  this.EVAL_ERROR = createErrorSubclass('EvalError');
+  this.RANGE_ERROR = createErrorSubclass('RangeError');
+  this.REFERENCE_ERROR = createErrorSubclass('ReferenceError');
+  this.SYNTAX_ERROR = createErrorSubclass('SyntaxError');
+  this.TYPE_ERROR = createErrorSubclass('TypeError');
+  this.URI_ERROR = createErrorSubclass('URIError');
+};
+
+/**
+ * Initialize Math object.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initMath = function(scope) {
+  var thisInterpreter = this;
+  var myMath = this.createObjectProto(this.OBJECT_PROTO);
+  this.setProperty(scope, 'Math', myMath);
+  var mathConsts = ['E', 'LN2', 'LN10', 'LOG2E', 'LOG10E', 'PI',
+                    'SQRT1_2', 'SQRT2'];
+  for (var i = 0; i < mathConsts.length; i++) {
+    this.setProperty(myMath, mathConsts[i], Math[mathConsts[i]],
+        Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR);
+  }
+  var numFunctions = ['abs', 'acos', 'asin', 'atan', 'atan2', 'ceil', 'cos',
+                      'exp', 'floor', 'log', 'max', 'min', 'pow', 'random',
+                      'round', 'sin', 'sqrt', 'tan'];
+  for (var i = 0; i < numFunctions.length; i++) {
+    this.setProperty(myMath, numFunctions[i],
+        this.createNativeFunction(Math[numFunctions[i]], false),
+        Interpreter.NONENUMERABLE_DESCRIPTOR);
+  }
+};
+
+/**
+ * Initialize JSON object.
+ * @param {!Interpreter.Object} scope Global scope.
+ */
+Interpreter.prototype.initJSON = function(scope) {
+  var thisInterpreter = this;
+  var myJSON = thisInterpreter.createObjectProto(this.OBJECT_PROTO);
+  this.setProperty(scope, 'JSON', myJSON);
+
+  var wrapper = function(text) {
+    try {
+      var nativeObj = JSON.parse(text.toString());
+    } catch (e) {
+      thisInterpreter.throwException(thisInterpreter.SYNTAX_ERROR, e.message);
+    }
+    return thisInterpreter.nativeToPseudo(nativeObj);
+  };
+  this.setProperty(myJSON, 'parse', this.createNativeFunction(wrapper, false));
+
+  wrapper = function(value) {
+    var nativeObj = thisInterpreter.pseudoToNative(value);
+    try {
+      var str = JSON.stringify(nativeObj);
+    } catch (e) {
+      thisInterpreter.throwException(thisInterpreter.TYPE_ERROR, e.message);
+    }
+    return str;
+  };
+  this.setProperty(myJSON, 'stringify',
+      this.createNativeFunction(wrapper, false));
+};
+
+/**
+ * Is an object of a certain class?
+ * @param {Interpreter.Value} child Object to check.
+ * @param {Interpreter.Object} constructor Constructor of object.
+ * @return {boolean} True if object is the class or inherits from it.
+ *     False otherwise.
+ */
+Interpreter.prototype.isa = function(child, constructor) {
+  if (child === null || child === undefined || !constructor) {
+    return false;
+  }
+  var proto = constructor.properties['prototype'];
+  if (child === proto) {
+    return true;
+  }
+  // The first step up the prototype chain is harder since the child might be
+  // a primitive value.  Subsequent steps can just follow the .proto property.
+  child = this.getPrototype(child);
+  while (child) {
+    if (child === proto) {
+      return true;
+    }
+    child = child.proto;
+  }
+  return false;
+};
+
+/**
+ * Is a value a legal integer for an array length?
+ * @param {Interpreter.Value} x Value to check.
+ * @return {number} Zero, or a positive integer if the value can be
+ *     converted to such.  NaN otherwise.
+ */
+Interpreter.legalArrayLength = function(x) {
+  var n = x >>> 0;
+  // Array length must be between 0 and 2^32-1 (inclusive).
+  return (n === Number(x)) ? n : NaN;
+};
+
+/**
+ * Is a value a legal integer for an array index?
+ * @param {Interpreter.Value} x Value to check.
+ * @return {number} Zero, or a positive integer if the value can be
+ *     converted to such.  NaN otherwise.
+ */
+Interpreter.legalArrayIndex = function(x) {
+  var n = x >>> 0;
+  // Array index cannot be 2^32-1, otherwise length would be 2^32.
+  // 0xffffffff is 2^32-1.
+  return (String(n) === String(x) && n !== 0xffffffff) ? n : NaN;
+};
+
+/**
+ * Typedef for JS values.
+ * @typedef {!Interpreter.Object|boolean|number|string|undefined|null}
+ */
+Interpreter.Value;
+
+/**
+ * Class for an object.
+ * @param {Interpreter.Object} proto Prototype object or null.
+ * @constructor
+ */
+Interpreter.Object = function(proto) {
+  this.getter = Object.create(null);
+  this.setter = Object.create(null);
+  this.properties = Object.create(null);
+  this.proto = proto;
+};
+
+/** @type {Interpreter.Object} */
+Interpreter.Object.prototype.proto = null;
+
+/** @type {boolean} */
+Interpreter.Object.prototype.isObject = true;
+
+/** @type {string} */
+Interpreter.Object.prototype.class = 'Object';
+
+/** @type {Date|RegExp|boolean|number|string|undefined|null} */
+Interpreter.Object.prototype.data = null;
+
+/**
+ * Convert this object into a string.
+ * @return {string} String value.
+ * @override
+ */
+Interpreter.Object.prototype.toString = function() {
+  if (this.class === 'Array') {
+    // Array
+    var cycles = Interpreter.toStringCycles_;
+    cycles.push(this);
+    try {
+      var strs = [];
+      for (var i = 0; i < this.properties.length; i++) {
+        var value = this.properties[i];
+        strs[i] = (value && value.isObject && cycles.indexOf(value) !== -1) ?
+            '...' : value;
+      }
+    } finally {
+      cycles.pop();
+    }
+    return strs.join(',');
+  }
+  if (this.class === 'Error') {
+    var cycles = Interpreter.toStringCycles_;
+    if (cycles.indexOf(this) !== -1) {
+      return '[object Error]';
+    }
+    var name, message;
+    // Bug: Does not support getters and setters for name or message.
+    var obj = this;
+    do {
+      if ('name' in obj.properties) {
+        name = obj.properties['name'];
+        break;
+      }
+    } while ((obj = obj.proto));
+    var obj = this;
+    do {
+      if ('message' in obj.properties) {
+        message = obj.properties['message'];
+        break;
+      }
+    } while ((obj = obj.proto));
+    cycles.push(this);
+    try {
+      name = name && name.toString();
+      message = message && message.toString();
+    } finally {
+      cycles.pop();
+    }
+    return message ? name + ': ' + message : String(name);
+  }
+
+  // RegExp, Date, and boxed primitives.
+  if (this.data !== null) {
+    return String(this.data);
+  }
+
+  return '[object ' + this.class + ']';
+};
+
+/**
+ * Return the object's value.
+ * @return {Interpreter.Value} Value.
+ * @override
+ */
+Interpreter.Object.prototype.valueOf = function() {
+  if (this.data === undefined || this.data === null ||
+      this.data instanceof RegExp) {
+    return this; // An Object.
+  }
+  if (this.data instanceof Date) {
+    return this.data.valueOf();  // Milliseconds.
+  }
+  return /** @type {(boolean|number|string)} */ (this.data);  // Boxed primitive.
+};
+
+/**
+ * Create a new data object based on a constructor's prototype.
+ * @param {Interpreter.Object} constructor Parent constructor function,
+ *     or null if scope object.
+ * @return {!Interpreter.Object} New data object.
+ */
+Interpreter.prototype.createObject = function(constructor) {
+  return this.createObjectProto(constructor &&
+                                constructor.properties['prototype']);
+};
+
+/**
+ * Create a new data object based on a prototype.
+ * @param {Interpreter.Object} proto Prototype object.
+ * @return {!Interpreter.Object} New data object.
+ */
+Interpreter.prototype.createObjectProto = function(proto) {
+  if (typeof proto !== 'object') {
+    throw Error('Non object prototype');
+  }
+  var obj = new Interpreter.Object(proto);
+  // Functions have prototype objects.
+  if (this.isa(obj, this.FUNCTION)) {
+    this.setProperty(obj, 'prototype',
+                     this.createObjectProto(this.OBJECT_PROTO || null));
+    obj.class = 'Function';
+  }
+  // Arrays have length.
+  if (this.isa(obj, this.ARRAY)) {
+    this.setProperty(obj, 'length', 0,
+        {configurable: false, enumerable: false, writable: true});
+    obj.class = 'Array';
+  }
+  if (this.isa(obj, this.ERROR)) {
+    obj.class = 'Error';
+  }
+  return obj;
+};
+
+/**
+ * Initialize a pseudo regular expression object based on a native regular
+ * expression object.
+ * @param {!Interpreter.Object} pseudoRegexp The existing object to set.
+ * @param {!RegExp} nativeRegexp The native regular expression.
+ */
+Interpreter.prototype.populateRegExp = function(pseudoRegexp, nativeRegexp) {
+  pseudoRegexp.data = nativeRegexp;
+  // lastIndex is settable, all others are read-only attributes
+  this.setProperty(pseudoRegexp, 'lastIndex', nativeRegexp.lastIndex,
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+  this.setProperty(pseudoRegexp, 'source', nativeRegexp.source,
+      Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR);
+  this.setProperty(pseudoRegexp, 'global', nativeRegexp.global,
+      Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR);
+  this.setProperty(pseudoRegexp, 'ignoreCase', nativeRegexp.ignoreCase,
+      Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR);
+  this.setProperty(pseudoRegexp, 'multiline', nativeRegexp.multiline,
+      Interpreter.READONLY_NONENUMERABLE_DESCRIPTOR);
+};
+
+/**
+ * Create a new function.
+ * @param {!Object} node AST node defining the function.
+ * @param {!Object} scope Parent scope.
+ * @return {!Interpreter.Object} New function.
+ */
+Interpreter.prototype.createFunction = function(node, scope) {
+  var func = this.createObjectProto(this.FUNCTION_PROTO);
+  func.parentScope = scope;
+  func.node = node;
+  this.setProperty(func, 'length', func.node['params'].length,
+      Interpreter.READONLY_DESCRIPTOR);
+  return func;
+};
+
+/**
+ * Create a new native function.
+ * @param {!Function} nativeFunc JavaScript function.
+ * @param {boolean=} opt_constructor If true, the function's
+ * prototype will have its constructor property set to the function.
+ * If false, the function cannot be called as a constructor (e.g. escape).
+ * Defaults to undefined.
+ * @return {!Interpreter.Object} New function.
+ */
+Interpreter.prototype.createNativeFunction =
+    function(nativeFunc, opt_constructor) {
+  var func = this.createObjectProto(this.FUNCTION_PROTO);
+  func.nativeFunc = nativeFunc;
+  nativeFunc.id = this.functionCounter_++;
+  this.setProperty(func, 'length', nativeFunc.length,
+      Interpreter.READONLY_DESCRIPTOR);
+  if (opt_constructor) {
+    this.setProperty(func.properties['prototype'], 'constructor', func,
+                     Interpreter.NONENUMERABLE_DESCRIPTOR);
+  } else if (opt_constructor === false) {
+    func.illegalConstructor = true;
+    this.setProperty(func, 'prototype', undefined);
+  }
+  return func;
+};
+
+/**
+ * Create a new native asynchronous function.
+ * @param {!Function} asyncFunc JavaScript function.
+ * @return {!Interpreter.Object} New function.
+ */
+Interpreter.prototype.createAsyncFunction = function(asyncFunc) {
+  var func = this.createObjectProto(this.FUNCTION_PROTO);
+  func.asyncFunc = asyncFunc;
+  asyncFunc.id = this.functionCounter_++;
+  this.setProperty(func, 'length', asyncFunc.length,
+      Interpreter.READONLY_DESCRIPTOR);
+  return func;
+};
+
+/**
+ * Converts from a native JS object or value to a JS interpreter object.
+ * Can handle JSON-style values, does NOT handle cycles.
+ * @param {*} nativeObj The native JS object to be converted.
+ * @return {Interpreter.Value} The equivalent JS interpreter object.
+ */
+Interpreter.prototype.nativeToPseudo = function(nativeObj) {
+  if ((typeof nativeObj !== 'object' && typeof nativeObj !== 'function') ||
+      nativeObj === null) {
+    return nativeObj;
+  }
+
+  if (nativeObj instanceof RegExp) {
+    var pseudoRegexp = this.createObjectProto(this.REGEXP_PROTO);
+    this.populateRegExp(pseudoRegexp, nativeObj);
+    return pseudoRegexp;
+  }
+
+  if (nativeObj instanceof Date) {
+    var pseudoDate = this.createObjectProto(this.DATE_PROTO);
+    pseudoDate.data = nativeObj;
+    return pseudoDate;
+  }
+
+  if (nativeObj instanceof Function) {
+    var interpreter = this;
+    var wrapper = function() {
+      return interpreter.nativeToPseudo(
+        nativeObj.apply(interpreter,
+          Array.prototype.slice.call(arguments)
+          .map(function(i) {
+            return interpreter.pseudoToNative(i);
+          })
+        )
+      );
+    };
+    return this.createNativeFunction(wrapper, undefined);
+  }
+
+  var pseudoObj;
+  if (Array.isArray(nativeObj)) {  // Array.
+    pseudoObj = this.createObjectProto(this.ARRAY_PROTO);
+    for (var i = 0; i < nativeObj.length; i++) {
+      if (i in nativeObj) {
+        this.setProperty(pseudoObj, i, this.nativeToPseudo(nativeObj[i]));
+      }
+    }
+  } else {  // Object.
+    pseudoObj = this.createObjectProto(this.OBJECT_PROTO);
+    for (var key in nativeObj) {
+      this.setProperty(pseudoObj, key, this.nativeToPseudo(nativeObj[key]));
+    }
+  }
+  return pseudoObj;
+};
+
+/**
+ * Converts from a JS interpreter object to native JS object.
+ * Can handle JSON-style values, plus cycles.
+ * @param {Interpreter.Value} pseudoObj The JS interpreter object to be
+ * converted.
+ * @param {Object=} opt_cycles Cycle detection (used in recursive calls).
+ * @return {*} The equivalent native JS object or value.
+ */
+Interpreter.prototype.pseudoToNative = function(pseudoObj, opt_cycles) {
+  if ((typeof pseudoObj !== 'object' && typeof pseudoObj !== 'function') ||
+      pseudoObj === null) {
+    return pseudoObj;
+  }
+
+  if (this.isa(pseudoObj, this.REGEXP)) {  // Regular expression.
+    return pseudoObj.data;
+  }
+
+  if (this.isa(pseudoObj, this.DATE)) {  // Date.
+    return pseudoObj.data;
+  }
+
+  var cycles = opt_cycles || {
+    pseudo: [],
+    native: []
+  };
+  var i = cycles.pseudo.indexOf(pseudoObj);
+  if (i !== -1) {
+    return cycles.native[i];
+  }
+  cycles.pseudo.push(pseudoObj);
+  var nativeObj;
+  if (this.isa(pseudoObj, this.ARRAY)) {  // Array.
+    nativeObj = [];
+    cycles.native.push(nativeObj);
+    var length = this.getProperty(pseudoObj, 'length');
+    for (var i = 0; i < length; i++) {
+      if (this.hasProperty(pseudoObj, i)) {
+        nativeObj[i] =
+            this.pseudoToNative(this.getProperty(pseudoObj, i), cycles);
+      }
+    }
+  } else {  // Object.
+    nativeObj = {};
+    cycles.native.push(nativeObj);
+    var val;
+    for (var key in pseudoObj.properties) {
+      val = pseudoObj.properties[key];
+      nativeObj[key] = this.pseudoToNative(val, cycles);
+    }
+  }
+  cycles.pseudo.pop();
+  cycles.native.pop();
+  return nativeObj;
+};
+
+/**
+ * Converts from a native JS array to a JS interpreter array.
+ * Does handle non-numeric properties (like str.match's index prop).
+ * Does NOT recurse into the array's contents.
+ * @param {!Array} nativeArray The JS array to be converted.
+ * @return {!Interpreter.Object} The equivalent JS interpreter array.
+ */
+Interpreter.prototype.arrayNativeToPseudo = function(nativeArray) {
+  var pseudoArray = this.createObjectProto(this.ARRAY_PROTO);
+  var props = Object.getOwnPropertyNames(nativeArray);
+  for (var i = 0; i < props.length; i++) {
+    this.setProperty(pseudoArray, props[i], nativeArray[props[i]]);
+  }
+  return pseudoArray;
+};
+
+/**
+ * Converts from a JS interpreter array to native JS array.
+ * Does handle non-numeric properties (like str.match's index prop).
+ * Does NOT recurse into the array's contents.
+ * @param {!Interpreter.Object} pseudoArray The JS interpreter array,
+ *     or JS interpreter object pretending to be an array.
+ * @return {!Array} The equivalent native JS array.
+ */
+Interpreter.prototype.arrayPseudoToNative = function(pseudoArray) {
+  var nativeArray = [];
+  for (var key in pseudoArray.properties) {
+    nativeArray[key] = this.getProperty(pseudoArray, key);
+  }
+  // pseudoArray might be an object pretending to be an array.  In this case
+  // it's possible that length is non-existent, invalid, or smaller than the
+  // largest defined numeric property.  Set length explicitly here.
+  nativeArray.length = Interpreter.legalArrayLength(
+      this.getProperty(pseudoArray, 'length')) || 0;
+  return nativeArray;
+};
+
+/**
+ * Look up the prototype for this value.
+ * @param {Interpreter.Value} value Data object.
+ * @return {Interpreter.Object} Prototype object, null if none.
+ */
+Interpreter.prototype.getPrototype = function(value) {
+  switch (typeof value) {
+    case 'number':
+      return this.NUMBER.properties['prototype'];
+    case 'boolean':
+      return this.BOOLEAN.properties['prototype'];
+    case 'string':
+      return this.STRING.properties['prototype'];
+  }
+  if (value) {
+    return value.proto;
+  }
+  return null;
+};
+
+/**
+ * Fetch a property value from a data object.
+ * @param {Interpreter.Value} obj Data object.
+ * @param {Interpreter.Value} name Name of property.
+ * @return {Interpreter.Value} Property value (may be undefined).
+ */
+Interpreter.prototype.getProperty = function(obj, name) {
+  name = String(name);
+  if (obj === undefined || obj === null) {
+    this.throwException(this.TYPE_ERROR,
+                        "Cannot read property '" + name + "' of " + obj);
+  }
+  if (name === 'length') {
+    // Special cases for magic length property.
+    if (this.isa(obj, this.STRING)) {
+      return String(obj).length;
+    }
+  } else if (name.charCodeAt(0) < 0x40) {
+    // Might have numbers in there?
+    // Special cases for string array indexing
+    if (this.isa(obj, this.STRING)) {
+      var n = Interpreter.legalArrayIndex(name);
+      if (!isNaN(n) && n < String(obj).length) {
+        return String(obj)[n];
+      }
+    }
+  }
+  do {
+    if (obj.properties && name in obj.properties) {
+      var getter = obj.getter[name];
+      if (getter) {
+        // Flag this function as being a getter and thus needing immediate
+        // execution (rather than being the value of the property).
+        getter.isGetter = true;
+        return getter;
+      }
+      return obj.properties[name];
+    }
+  } while ((obj = this.getPrototype(obj)));
+  return undefined;
+};
+
+/**
+ * Does the named property exist on a data object.
+ * @param {Interpreter.Value} obj Data object.
+ * @param {Interpreter.Value} name Name of property.
+ * @return {boolean} True if property exists.
+ */
+Interpreter.prototype.hasProperty = function(obj, name) {
+  if (!obj.isObject) {
+    throw TypeError('Primitive data type has no properties');
+  }
+  name = String(name);
+  if (name === 'length' && this.isa(obj, this.STRING)) {
+    return true;
+  }
+  if (this.isa(obj, this.STRING)) {
+    var n = Interpreter.legalArrayIndex(name);
+    if (!isNaN(n) && n < String(obj).length) {
+      return true;
+    }
+  }
+  do {
+    if (obj.properties && name in obj.properties) {
+      return true;
+    }
+  } while ((obj = this.getPrototype(obj)));
+  return false;
+};
+
+/**
+ * Set a property value on a data object.
+ * @param {!Interpreter.Object} obj Data object.
+ * @param {Interpreter.Value} name Name of property.
+ * @param {Interpreter.Value} value New property value.
+ *     Use Interpreter.VALUE_IN_DESCRIPTOR if value is handled by
+ *     descriptor instead.
+ * @param {Object=} opt_descriptor Optional descriptor object.
+ * @return {!Interpreter.Object|undefined} Returns a setter function if one
+ *     needs to be called, otherwise undefined.
+ */
+Interpreter.prototype.setProperty = function(obj, name, value, opt_descriptor) {
+  name = String(name);
+  if (obj === undefined || obj === null) {
+    this.throwException(this.TYPE_ERROR,
+                        "Cannot set property '" + name + "' of " + obj);
+  }
+  if (opt_descriptor && ('get' in opt_descriptor || 'set' in opt_descriptor) &&
+      ('value' in opt_descriptor || 'writable' in opt_descriptor)) {
+    this.throwException(this.TYPE_ERROR, 'Invalid property descriptor. ' +
+        'Cannot both specify accessors and a value or writable attribute');
+  }
+  var strict = !this.stateStack || this.getScope().strict;
+  if (!obj.isObject) {
+    if (strict) {
+      this.throwException(this.TYPE_ERROR, "Can't create property '" + name +
+                          "' on '" + obj + "'");
+    }
+    return;
+  }
+  if (this.isa(obj, this.STRING)) {
+    var n = Interpreter.legalArrayIndex(name);
+    if (name === 'length' || (!isNaN(n) && n < String(obj).length)) {
+      // Can't set length or letters on String objects.
+      if (strict) {
+        this.throwException(this.TYPE_ERROR, "Cannot assign to read only " +
+            "property '" + name + "' of String '" + obj.data + "'");
+      }
+      return;
+    }
+  }
+  if (obj.class === 'Array') {
+    // Arrays have a magic length variable that is bound to the elements.
+    var length = obj.properties.length;
+    var i;
+    if (name === 'length') {
+      // Delete elements if length is smaller.
+      if (opt_descriptor) {
+        if (!('value' in opt_descriptor)) {
+          return;
+        }
+        value = opt_descriptor.value;
+      }
+      value = Interpreter.legalArrayLength(value);
+      if (isNaN(value)) {
+        this.throwException(this.RANGE_ERROR, 'Invalid array length');
+      }
+      if (value < length) {
+        for (i in obj.properties) {
+          i = Interpreter.legalArrayIndex(i);
+          if (!isNaN(i) && value <= i) {
+            delete obj.properties[i];
+          }
+        }
+      }
+    } else if (!isNaN(i = Interpreter.legalArrayIndex(name))) {
+      // Increase length if this index is larger.
+      obj.properties.length = Math.max(length, i + 1);
+    }
+  }
+  if (obj.preventExtensions && !(name in obj.properties)) {
+    if (strict) {
+      this.throwException(this.TYPE_ERROR, "Can't add property '" + name +
+                          "', object is not extensible");
+    }
+    return;
+  }
+  if (opt_descriptor) {
+    // Define the property.
+    if ('get' in opt_descriptor) {
+      if (opt_descriptor.get) {
+        obj.getter[name] = opt_descriptor.get;
+      } else {
+        delete obj.getter[name];
+      }
+    }
+    if ('set' in opt_descriptor) {
+      if (opt_descriptor.set) {
+        obj.setter[name] = opt_descriptor.set;
+      } else {
+        delete obj.setter[name];
+      }
+    }
+    var descriptor = {};
+    if ('configurable' in opt_descriptor) {
+      descriptor.configurable = opt_descriptor.configurable;
+    }
+    if ('enumerable' in opt_descriptor) {
+      descriptor.enumerable = opt_descriptor.enumerable;
+    }
+    if ('writable' in opt_descriptor) {
+      descriptor.writable = opt_descriptor.writable;
+      delete obj.getter[name];
+      delete obj.setter[name];
+    }
+    if ('value' in opt_descriptor) {
+      descriptor.value = opt_descriptor.value;
+      delete obj.getter[name];
+      delete obj.setter[name];
+    } else if (value !== Interpreter.VALUE_IN_DESCRIPTOR) {
+      descriptor.value = value;
+      delete obj.getter[name];
+      delete obj.setter[name];
+    }
+    try {
+      Object.defineProperty(obj.properties, name, descriptor);
+    } catch (e) {
+      this.throwException(this.TYPE_ERROR, 'Cannot redefine property: ' + name);
+    }
+  } else {
+    // Set the property.
+    if (value === Interpreter.VALUE_IN_DESCRIPTOR) {
+      throw ReferenceError('Value not specified.');
+    }
+    // Determine the parent (possibly self) where the property is defined.
+    var defObj = obj;
+    while (!(name in defObj.properties)) {
+      defObj = this.getPrototype(defObj);
+      if (!defObj) {
+        // This is a new property.
+        defObj = obj;
+        break;
+      }
+    }
+    if (defObj.setter && defObj.setter[name]) {
+      return defObj.setter[name];
+    }
+    if (defObj.getter && defObj.getter[name]) {
+      if (strict) {
+        this.throwException(this.TYPE_ERROR, "Cannot set property '" + name +
+            "' of object '" + obj + "' which only has a getter");
+      }
+    } else {
+      // No setter, simple assignment.
+      try {
+        obj.properties[name] = value;
+      } catch (e) {
+        if (strict) {
+          this.throwException(this.TYPE_ERROR, "Cannot assign to read only " +
+              "property '" + name + "' of object '" + obj + "'");
+        }
+      }
+    }
+  }
+};
+
+/**
+ * Convenience method for adding a native function as a non-enumerable property
+ * onto an object's prototype.
+ * @param {!Interpreter.Object} obj Data object.
+ * @param {Interpreter.Value} name Name of property.
+ * @param {!Function} wrapper Function object.
+ */
+Interpreter.prototype.setNativeFunctionPrototype =
+    function(obj, name, wrapper) {
+  this.setProperty(obj.properties['prototype'], name,
+      this.createNativeFunction(wrapper, false),
+      Interpreter.NONENUMERABLE_DESCRIPTOR);
+};
+
+/**
+ * Returns the current scope from the stateStack.
+ * @return {!Interpreter.Object} Current scope dictionary.
+ */
+Interpreter.prototype.getScope = function() {
+  var scope = this.stateStack[this.stateStack.length - 1].scope;
+  if (!scope) {
+    throw Error('No scope found.');
+  }
+  return scope;
+};
+
+/**
+ * Create a new scope dictionary.
+ * @param {!Object} node AST node defining the scope container
+ *     (e.g. a function).
+ * @param {Interpreter.Object} parentScope Scope to link to.
+ * @return {!Interpreter.Object} New scope.
+ */
+Interpreter.prototype.createScope = function(node, parentScope) {
+  var scope = this.createObjectProto(null);
+  scope.parentScope = parentScope;
+  if (!parentScope) {
+    this.initGlobalScope(scope);
+  }
+  this.populateScope_(node, scope);
+
+  // Determine if this scope starts with 'use strict'.
+  scope.strict = false;
+  if (parentScope && parentScope.strict) {
+    scope.strict = true;
+  } else {
+    var firstNode = node['body'] && node['body'][0];
+    if (firstNode && firstNode.expression &&
+        firstNode.expression['type'] === 'Literal' &&
+        firstNode.expression.value === 'use strict') {
+      scope.strict = true;
+    }
+  }
+  return scope;
+};
+
+/**
+ * Create a new special scope dictionary. Similar to createScope(), but
+ * doesn't assume that the scope is for a function body.
+ * This is used for 'catch' clauses and 'with' statements.
+ * @param {!Interpreter.Object} parentScope Scope to link to.
+ * @param {Interpreter.Object=} opt_scope Optional object to transform into
+ *     scope.
+ * @return {!Interpreter.Object} New scope.
+ */
+Interpreter.prototype.createSpecialScope = function(parentScope, opt_scope) {
+  if (!parentScope) {
+    throw Error('parentScope required');
+  }
+  var scope = opt_scope || this.createObjectProto(null);
+  scope.parentScope = parentScope;
+  scope.strict = parentScope.strict;
+  return scope;
+};
+
+/**
+ * Retrieves a value from the scope chain.
+ * @param {string} name Name of variable.
+ * @return {Interpreter.Value} Any value.
+ *   May be flagged as being a getter and thus needing immediate execution
+ *   (rather than being the value of the property).
+ */
+Interpreter.prototype.getValueFromScope = function(name) {
+  var scope = this.getScope();
+  while (scope && scope !== this.global) {
+    if (name in scope.properties) {
+      return scope.properties[name];
+    }
+    scope = scope.parentScope;
+  }
+  // The root scope is also an object which has inherited properties and
+  // could also have getters.
+  if (scope === this.global && this.hasProperty(scope, name)) {
+    return this.getProperty(scope, name);
+  }
+  // Typeof operator is unique: it can safely look at non-defined variables.
+  var prevNode = this.stateStack[this.stateStack.length - 1].node;
+  if (prevNode['type'] === 'UnaryExpression' &&
+      prevNode['operator'] === 'typeof') {
+    return undefined;
+  }
+  this.throwException(this.REFERENCE_ERROR, name + ' is not defined');
+};
+
+/**
+ * Sets a value to the current scope.
+ * @param {string} name Name of variable.
+ * @param {Interpreter.Value} value Value.
+ * @return {!Interpreter.Object|undefined} Returns a setter function if one
+ *     needs to be called, otherwise undefined.
+ */
+Interpreter.prototype.setValueToScope = function(name, value) {
+  var scope = this.getScope();
+  var strict = scope.strict;
+  while (scope && scope !== this.global) {
+    if (name in scope.properties) {
+      scope.properties[name] = value;
+      return undefined;
+    }
+    scope = scope.parentScope;
+  }
+  // The root scope is also an object which has readonly properties and
+  // could also have setters.
+  if (scope === this.global && (!strict || this.hasProperty(scope, name))) {
+    return this.setProperty(scope, name, value);
+  }
+  this.throwException(this.REFERENCE_ERROR, name + ' is not defined');
+};
+
+/**
+ * Create a new scope for the given node.
+ * @param {!Object} node AST node (program or function).
+ * @param {!Interpreter.Object} scope Scope dictionary to populate.
+ * @private
+ */
+Interpreter.prototype.populateScope_ = function(node, scope) {
+  if (node['type'] === 'VariableDeclaration') {
+    for (var i = 0; i < node['declarations'].length; i++) {
+      this.setProperty(scope, node['declarations'][i]['id']['name'],
+          undefined, Interpreter.VARIABLE_DESCRIPTOR);
+    }
+  } else if (node['type'] === 'FunctionDeclaration') {
+    this.setProperty(scope, node['id']['name'],
+        this.createFunction(node, scope), Interpreter.VARIABLE_DESCRIPTOR);
+    return;  // Do not recurse into function.
+  } else if (node['type'] === 'FunctionExpression') {
+    return;  // Do not recurse into function.
+  } else if (node['type'] === 'ExpressionStatement') {
+    return;  // Expressions can't contain variable/function declarations.
+  }
+  var nodeClass = node['constructor'];
+  for (var name in node) {
+    var prop = node[name];
+    if (prop && typeof prop === 'object') {
+      if (Array.isArray(prop)) {
+        for (var i = 0; i < prop.length; i++) {
+          if (prop[i] && prop[i].constructor === nodeClass) {
+            this.populateScope_(prop[i], scope);
+          }
+        }
+      } else {
+        if (prop.constructor === nodeClass) {
+          this.populateScope_(prop, scope);
+        }
+      }
+    }
+  }
+};
+
+/**
+ * Remove start and end values from AST, or set start and end values to a
+ * constant value.  Used to remove highlighting from polyfills and to set
+ * highlighting in an eval to cover the entire eval expression.
+ * @param {!Object} node AST node.
+ * @param {number=} start Starting character of all nodes, or undefined.
+ * @param {number=} end Ending character of all nodes, or undefined.
+ * @private
+ */
+Interpreter.prototype.stripLocations_ = function(node, start, end) {
+  if (start) {
+    node['start'] = start;
+  } else {
+    delete node['start'];
+  }
+  if (end) {
+    node['end'] = end;
+  } else {
+    delete node['end'];
+  }
+  for (var name in node) {
+    if (node.hasOwnProperty(name)) {
+      var prop = node[name];
+      if (prop && typeof prop === 'object') {
+        this.stripLocations_(prop, start, end);
+      }
+    }
+  }
+};
+
+/**
+ * Is the current state directly being called with as a construction with 'new'.
+ * @return {boolean} True if 'new foo()', false if 'foo()'.
+ */
+Interpreter.prototype.calledWithNew = function() {
+  return this.stateStack[this.stateStack.length - 1].isConstructor;
+};
+
+/**
+ * Gets a value from the scope chain or from an object property.
+ * @param {!Array} ref Name of variable or object/propname tuple.
+ * @return {Interpreter.Value} Any value.
+ *   May be flagged as being a getter and thus needing immediate execution
+ *   (rather than being the value of the property).
+ */
+Interpreter.prototype.getValue = function(ref) {
+  if (ref[0] === Interpreter.SCOPE_REFERENCE) {
+    // A null/varname variable lookup.
+    return this.getValueFromScope(ref[1]);
+  } else {
+    // An obj/prop components tuple (foo.bar).
+    return this.getProperty(ref[0], ref[1]);
+  }
+};
+
+/**
+ * Sets a value to the scope chain or to an object property.
+ * @param {!Array} ref Name of variable or object/propname tuple.
+ * @param {Interpreter.Value} value Value.
+ * @return {!Interpreter.Object|undefined} Returns a setter function if one
+ *     needs to be called, otherwise undefined.
+ */
+Interpreter.prototype.setValue = function(ref, value) {
+  if (ref[0] === Interpreter.SCOPE_REFERENCE) {
+    // A null/varname variable lookup.
+    return this.setValueToScope(ref[1], value);
+  } else {
+    // An obj/prop components tuple (foo.bar).
+    return this.setProperty(ref[0], ref[1], value);
+  }
+};
+
+/**
+  * Completion Value Types.
+  * @enum {number}
+  */
+ Interpreter.Completion = {
+   NORMAL: 0,
+   BREAK: 1,
+   CONTINUE: 2,
+   RETURN: 3,
+   THROW: 4
+ };
+
+/**
+ * Throw an exception in the interpreter that can be handled by an
+ * interpreter try/catch statement.  If unhandled, a real exception will
+ * be thrown.  Can be called with either an error class and a message, or
+ * with an actual object to be thrown.
+ * @param {!Interpreter.Object} errorClass Type of error (if message is
+ *   provided) or the value to throw (if no message).
+ * @param {string=} opt_message Message being thrown.
+ */
+Interpreter.prototype.throwException = function(errorClass, opt_message) {
+  if (opt_message === undefined) {
+    var error = errorClass;  // This is a value to throw, not an error class.
+  } else {
+    var error = this.createObject(errorClass);
+    this.setProperty(error, 'message', opt_message,
+        Interpreter.NONENUMERABLE_DESCRIPTOR);
+  }
+  this.unwind(Interpreter.Completion.THROW, error, undefined);
+  // Abort anything related to the current step.
+  throw Interpreter.STEP_ERROR;
+};
+
+/**
+ * Unwind the stack to the innermost relevant enclosing TryStatement,
+ * For/ForIn/WhileStatement or Call/NewExpression.  If this results in
+ * the stack being completely unwound the thread will be terminated
+ * and the appropriate error being thrown.
+ * @param {Interpreter.Completion} type Completion type.
+ * @param {Interpreter.Value=} value Value computed, returned or thrown.
+ * @param {string=} label Target label for break or return.
+ */
+Interpreter.prototype.unwind = function(type, value, label) {
+  if (type === Interpreter.Completion.NORMAL) {
+    throw TypeError('Should not unwind for NORMAL completions');
+  }
+
+  for (var stack = this.stateStack; stack.length > 0; stack.pop()) {
+    var state = stack[stack.length - 1];
+    switch (state.node['type']) {
+      case 'TryStatement':
+        state.cv = {type: type, value: value, label: label};
+        return;
+      case 'CallExpression':
+      case 'NewExpression':
+        if (type === Interpreter.Completion.RETURN) {
+          state.value = value;
+          return;
+        } else if (type !== Interpreter.Completion.THROW) {
+          throw Error('Unsynatctic break/continue not rejected by Acorn');
+        }
+    }
+    if (type === Interpreter.Completion.BREAK) {
+      if (label ? (state.labels && state.labels.indexOf(label) !== -1) :
+          (state.isLoop || state.isSwitch)) {
+        stack.pop();
+        return;
+      }
+    } else if (type === Interpreter.Completion.CONTINUE) {
+      if (label ? (state.labels && state.labels.indexOf(label) !== -1) :
+          state.isLoop) {
+        return;
+      }
+    }
+  }
+
+  // Unhandled completion.  Throw a real error.
+  var realError;
+  if (this.isa(value, this.ERROR)) {
+    var errorTable = {
+      'EvalError': EvalError,
+      'RangeError': RangeError,
+      'ReferenceError': ReferenceError,
+      'SyntaxError': SyntaxError,
+      'TypeError': TypeError,
+      'URIError': URIError
+    };
+    var name = this.getProperty(value, 'name').toString();
+    var message = this.getProperty(value, 'message').valueOf();
+    var type = errorTable[name] || Error;
+    realError = type(message);
+  } else {
+    realError = String(value);
+  }
+  throw realError;
+};
+
+/**
+ * Create a call to a getter function.
+ * @param {!Interpreter.Object} func Function to execute.
+ * @param {!Interpreter.Object|!Array} left
+ *     Name of variable or object/propname tuple.
+ * @private
+ */
+Interpreter.prototype.createGetter_ = function(func, left) {
+  // Normally 'this' will be specified as the object component (o.x).
+  // Sometimes 'this' is explicitly provided (o).
+  var funcThis = Array.isArray(left) ? left[0] : left;
+  var node = new this.nodeConstructor();
+  node['type'] = 'CallExpression';
+  var state = new Interpreter.State(node,
+      this.stateStack[this.stateStack.length - 1].scope);
+  state.doneCallee_ = true;
+  state.funcThis_ = funcThis;
+  state.func_ = func;
+  state.doneArgs_ = true;
+  state.arguments_ = [];
+  return state;
+};
+
+/**
+ * Create a call to a setter function.
+ * @param {!Interpreter.Object} func Function to execute.
+ * @param {!Interpreter.Object|!Array} left
+ *     Name of variable or object/propname tuple.
+ * @param {Interpreter.Value} value Value to set.
+ * @private
+ */
+Interpreter.prototype.createSetter_ = function(func, left, value) {
+  // Normally 'this' will be specified as the object component (o.x).
+  // Sometimes 'this' is implicitly the global object (x).
+  var funcThis = Array.isArray(left) ? left[0] : this.global;
+  var node = new this.nodeConstructor();
+  node['type'] = 'CallExpression';
+  var state = new Interpreter.State(node,
+      this.stateStack[this.stateStack.length - 1].scope);
+  state.doneCallee_ = true;
+  state.funcThis_ = funcThis;
+  state.func_ = func;
+  state.doneArgs_ = true;
+  state.arguments_ = [value];
+  return state;
+};
+
+/**
+ * Class for a state.
+ * @param {!Object} node AST node for the state.
+ * @param {!Interpreter.Object} scope Scope object for the state.
+ * @constructor
+ */
+Interpreter.State = function(node, scope) {
+  this.node = node;
+  this.scope = scope;
+};
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Functions to handle each node type.
+///////////////////////////////////////////////////////////////////////////////
+
+Interpreter.prototype['stepArrayExpression'] = function(stack, state, node) {
+  var elements = node['elements'];
+  var n = state.n_ || 0;
+  if (!state.array_) {
+    state.array_ = this.createObjectProto(this.ARRAY_PROTO);
+    state.array_.properties.length = elements.length;
+  } else {
+    this.setProperty(state.array_, n, state.value);
+    n++;
+  }
+  while (n < elements.length) {
+    // Skip missing elements - they're not defined, not undefined.
+    if (elements[n]) {
+      state.n_ = n;
+      return new Interpreter.State(elements[n], state.scope);
+    }
+    n++;
+  }
+  stack.pop();
+  stack[stack.length - 1].value = state.array_;
+};
+
+Interpreter.prototype['stepAssignmentExpression'] =
+    function(stack, state, node) {
+  if (!state.doneLeft_) {
+    state.doneLeft_ = true;
+    var nextState = new Interpreter.State(node['left'], state.scope);
+    nextState.components = true;
+    return nextState;
+  }
+  if (!state.doneRight_) {
+    if (!state.leftReference_) {
+      state.leftReference_ = state.value;
+    }
+    if (state.doneGetter_) {
+      state.leftValue_ = state.value;
+    }
+    if (!state.doneGetter_ && node['operator'] !== '=') {
+      var leftValue = this.getValue(state.leftReference_);
+      state.leftValue_ = leftValue;
+      if (leftValue && typeof leftValue === 'object' && leftValue.isGetter) {
+        // Clear the getter flag and call the getter function.
+        leftValue.isGetter = false;
+        state.doneGetter_ = true;
+        var func = /** @type {!Interpreter.Object} */ (leftValue);
+        return this.createGetter_(func, state.leftReference_);
+      }
+    }
+    state.doneRight_ = true;
+    return new Interpreter.State(node['right'], state.scope);
+  }
+  if (state.doneSetter_) {
+    // Return if setter function.
+    // Setter method on property has completed.
+    // Ignore its return value, and use the original set value instead.
+    stack.pop();
+    stack[stack.length - 1].value = state.setterValue_;
+    return;
+  }
+  var value = state.leftValue_;
+  var rightValue = state.value;
+  switch (node['operator']) {
+    case '=':    value =    rightValue; break;
+    case '+=':   value +=   rightValue; break;
+    case '-=':   value -=   rightValue; break;
+    case '*=':   value *=   rightValue; break;
+    case '/=':   value /=   rightValue; break;
+    case '%=':   value %=   rightValue; break;
+    case '<<=':  value <<=  rightValue; break;
+    case '>>=':  value >>=  rightValue; break;
+    case '>>>=': value >>>= rightValue; break;
+    case '&=':   value &=   rightValue; break;
+    case '^=':   value ^=   rightValue; break;
+    case '|=':   value |=   rightValue; break;
+    default:
+      throw SyntaxError('Unknown assignment expression: ' + node['operator']);
+  }
+  var setter = this.setValue(state.leftReference_, value);
+  if (setter) {
+    state.doneSetter_ = true;
+    state.setterValue_ = value;
+    return this.createSetter_(setter, state.leftReference_, value);
+  }
+  // Return if no setter function.
+  stack.pop();
+  stack[stack.length - 1].value = value;
+};
+
+Interpreter.prototype['stepBinaryExpression'] = function(stack, state, node) {
+  if (!state.doneLeft_) {
+    state.doneLeft_ = true;
+    return new Interpreter.State(node['left'], state.scope);
+  }
+  if (!state.doneRight_) {
+    state.doneRight_ = true;
+    state.leftValue_ = state.value;
+    return new Interpreter.State(node['right'], state.scope);
+  }
+  stack.pop();
+  var leftValue = state.leftValue_;
+  var rightValue = state.value;
+  var value;
+  switch (node['operator']) {
+    case '==':  value = leftValue ==  rightValue; break;
+    case '!=':  value = leftValue !=  rightValue; break;
+    case '===': value = leftValue === rightValue; break;
+    case '!==': value = leftValue !== rightValue; break;
+    case '>':   value = leftValue >   rightValue; break;
+    case '>=':  value = leftValue >=  rightValue; break;
+    case '<':   value = leftValue <   rightValue; break;
+    case '<=':  value = leftValue <=  rightValue; break;
+    case '+':   value = leftValue +   rightValue; break;
+    case '-':   value = leftValue -   rightValue; break;
+    case '*':   value = leftValue *   rightValue; break;
+    case '/':   value = leftValue /   rightValue; break;
+    case '%':   value = leftValue %   rightValue; break;
+    case '&':   value = leftValue &   rightValue; break;
+    case '|':   value = leftValue |   rightValue; break;
+    case '^':   value = leftValue ^   rightValue; break;
+    case '<<':  value = leftValue <<  rightValue; break;
+    case '>>':  value = leftValue >>  rightValue; break;
+    case '>>>': value = leftValue >>> rightValue; break;
+    case 'in':
+      if (!rightValue || !rightValue.isObject) {
+        this.throwException(this.TYPE_ERROR,
+            "'in' expects an object, not '" + rightValue + "'");
+      }
+      value = this.hasProperty(rightValue, leftValue);
+      break;
+    case 'instanceof':
+      if (!this.isa(rightValue, this.FUNCTION)) {
+        this.throwException(this.TYPE_ERROR,
+            'Right-hand side of instanceof is not an object');
+      }
+      value = leftValue.isObject ? this.isa(leftValue, rightValue) : false;
+      break;
+    default:
+      throw SyntaxError('Unknown binary operator: ' + node['operator']);
+  }
+  stack[stack.length - 1].value = value;
+};
+
+Interpreter.prototype['stepBlockStatement'] = function(stack, state, node) {
+  var n = state.n_ || 0;
+  var expression = node['body'][n];
+  if (expression) {
+    state.n_ = n + 1;
+    return new Interpreter.State(expression, state.scope);
+  }
+  stack.pop();
+};
+
+Interpreter.prototype['stepBreakStatement'] = function(stack, state, node) {
+  var label = node['label'] && node['label']['name'];
+  this.unwind(Interpreter.Completion.BREAK, undefined, label);
+};
+
+Interpreter.prototype['stepCallExpression'] = function(stack, state, node) {
+  if (!state.doneCallee_) {
+    state.doneCallee_ = 1;
+    // Components needed to determine value of 'this'.
+    var nextState = new Interpreter.State(node['callee'], state.scope);
+    nextState.components = true;
+    return nextState;
+  }
+  if (state.doneCallee_ === 1) {
+    // Determine value of the function.
+    state.doneCallee_ = 2;
+    var func = state.value;
+    if (Array.isArray(func)) {
+      state.func_ = this.getValue(func);
+      if (func[0] === Interpreter.SCOPE_REFERENCE) {
+        // (Globally or locally) named function.  Is it named 'eval'?
+        state.directEval_ = (func[1] === 'eval');
+      } else {
+        // Method function, 'this' is object (ignored if invoked as 'new').
+        state.funcThis_ = func[0];
+      }
+      func = state.func_;
+      if (func && typeof func === 'object' && func.isGetter) {
+        // Clear the getter flag and call the getter function.
+        func.isGetter = false;
+        state.doneCallee_ = 1;
+        return this.createGetter_(/** @type {!Interpreter.Object} */ (func),
+                         state.value);
+      }
+    } else {
+      // Already evaluated function: (function(){...})();
+      state.func_ = func;
+    }
+    state.arguments_ = [];
+    state.n_ = 0;
+  }
+  var func = state.func_;
+  if (!state.doneArgs_) {
+    if (state.n_ !== 0) {
+      state.arguments_.push(state.value);
+    }
+    if (node['arguments'][state.n_]) {
+      return new Interpreter.State(node['arguments'][state.n_++], state.scope);
+    }
+    // Determine value of 'this' in function.
+    if (node['type'] === 'NewExpression') {
+      if (func.illegalConstructor) {
+        // Illegal: new escape();
+        this.throwException(this.TYPE_ERROR, func + ' is not a constructor');
+      }
+      // Constructor, 'this' is new object.
+      var proto = func.properties['prototype'];
+      if (typeof proto !== 'object' || proto === null) {
+        // Non-object prototypes default to Object.prototype.
+        proto = this.OBJECT_PROTO;
+      }
+      state.funcThis_ = this.createObjectProto(proto);
+      state.isConstructor = true;
+    } else if (state.funcThis_ === undefined) {
+      // Global function, 'this' is global object (or 'undefined' if strict).
+      state.funcThis_ = state.scope.strict ? undefined : this.global;
+    }
+    state.doneArgs_ = true;
+  }
+  if (!state.doneExec_) {
+    state.doneExec_ = true;
+    if (!func || !func.isObject) {
+      this.throwException(this.TYPE_ERROR, func + ' is not a function');
+    }
+    var funcNode = func.node;
+    if (funcNode) {
+      var scope = this.createScope(funcNode['body'], func.parentScope);
+      // Add all arguments.
+      for (var i = 0; i < funcNode['params'].length; i++) {
+        var paramName = funcNode['params'][i]['name'];
+        var paramValue = state.arguments_.length > i ? state.arguments_[i] :
+            undefined;
+        this.setProperty(scope, paramName, paramValue);
+      }
+      // Build arguments variable.
+      var argsList = this.createObjectProto(this.ARRAY_PROTO);
+      for (var i = 0; i < state.arguments_.length; i++) {
+        this.setProperty(argsList, i, state.arguments_[i]);
+      }
+      this.setProperty(scope, 'arguments', argsList);
+      // Add the function's name (var x = function foo(){};)
+      var name = funcNode['id'] && funcNode['id']['name'];
+      if (name) {
+        this.setProperty(scope, name, func);
+      }
+      this.setProperty(scope, 'this', state.funcThis_,
+                       Interpreter.READONLY_DESCRIPTOR);
+      state.value = undefined;  // Default value if no explicit return.
+      return new Interpreter.State(funcNode['body'], scope);
+    } else if (func.eval) {
+      var code = state.arguments_[0];
+      if (typeof code !== 'string') {
+        // JS does not parse String objects:
+        // eval(new String('1 + 1')) -> '1 + 1'
+        state.value = code;
+      } else {
+        try {
+          var ast = _utils_acorn__WEBPACK_IMPORTED_MODULE_0__["parse"](code.toString(), Interpreter.PARSE_OPTIONS);
+        } catch (e) {
+          // Acorn threw a SyntaxError.  Rethrow as a trappable error.
+          this.throwException(this.SYNTAX_ERROR, 'Invalid code: ' + e.message);
+        }
+        var evalNode = new this.nodeConstructor();
+        evalNode['type'] = 'EvalProgram_';
+        evalNode['body'] = ast['body'];
+        this.stripLocations_(evalNode, node['start'], node['end']);
+        // Create new scope and update it with definitions in eval().
+        var scope = state.directEval_ ? state.scope : this.global;
+        if (scope.strict) {
+          // Strict mode get its own scope in eval.
+          scope = this.createScope(ast, scope);
+        } else {
+          // Non-strict mode pollutes the current scope.
+          this.populateScope_(ast, scope);
+        }
+        this.value = undefined;  // Default value if no code.
+        return new Interpreter.State(evalNode, scope);
+      }
+    } else if (func.nativeFunc) {
+      state.value = func.nativeFunc.apply(state.funcThis_, state.arguments_);
+    } else if (func.asyncFunc) {
+      var thisInterpreter = this;
+      var callback = function(value) {
+        state.value = value;
+        thisInterpreter.paused_ = false;
+      };
+      var argsWithCallback = state.arguments_.concat(callback);
+      this.paused_ = true;
+      func.asyncFunc.apply(state.funcThis_, argsWithCallback);
+      return;
+    } else {
+      /* A child of a function is a function but is not callable.  For example:
+      var F = function() {};
+      F.prototype = escape;
+      var f = new F();
+      f();
+      */
+      this.throwException(this.TYPE_ERROR, func.class + ' is not a function');
+    }
+  } else {
+    // Execution complete.  Put the return value on the stack.
+    stack.pop();
+    if (state.isConstructor && typeof state.value !== 'object') {
+      stack[stack.length - 1].value = state.funcThis_;
+    } else {
+      stack[stack.length - 1].value = state.value;
+    }
+  }
+};
+
+Interpreter.prototype['stepCatchClause'] = function(stack, state, node) {
+  if (!state.done_) {
+    state.done_ = true;
+    // Create an empty scope.
+    var scope = this.createSpecialScope(state.scope);
+    // Add the argument.
+    this.setProperty(scope, node['param']['name'], state.throwValue);
+    // Execute catch clause.
+    return new Interpreter.State(node['body'], scope);
+  } else {
+    stack.pop();
+  }
+};
+
+Interpreter.prototype['stepConditionalExpression'] =
+    function(stack, state, node) {
+  var mode = state.mode_ || 0;
+  if (mode === 0) {
+    state.mode_ = 1;
+    return new Interpreter.State(node['test'], state.scope);
+  }
+  if (mode === 1) {
+    state.mode_ = 2;
+    var value = Boolean(state.value);
+    if (value && node['consequent']) {
+      // Execute 'if' block.
+      return new Interpreter.State(node['consequent'], state.scope);
+    } else if (!value && node['alternate']) {
+      // Execute 'else' block.
+      return new Interpreter.State(node['alternate'], state.scope);
+    }
+    // eval('1;if(false){2}') -> undefined
+    this.value = undefined;
+  }
+  stack.pop();
+  if (node['type'] === 'ConditionalExpression') {
+    stack[stack.length - 1].value = state.value;
+  }
+};
+
+Interpreter.prototype['stepContinueStatement'] = function(stack, state, node) {
+  var label = node['label'] && node['label']['name'];
+  this.unwind(Interpreter.Completion.CONTINUE, undefined, label);
+};
+
+Interpreter.prototype['stepDebuggerStatement'] = function(stack, state, node) {
+  // Do nothing.  May be overridden by developers.
+  stack.pop();
+};
+
+Interpreter.prototype['stepDoWhileStatement'] = function(stack, state, node) {
+  if (node['type'] === 'DoWhileStatement' && state.test_ === undefined) {
+    // First iteration of do/while executes without checking test.
+    state.value = true;
+    state.test_ = true;
+  }
+  if (!state.test_) {
+    state.test_ = true;
+    return new Interpreter.State(node['test'], state.scope);
+  }
+  if (!state.value) {  // Done, exit loop.
+    stack.pop();
+  } else if (node['body']) {  // Execute the body.
+    state.test_ = false;
+    state.isLoop = true;
+    return new Interpreter.State(node['body'], state.scope);
+  }
+};
+
+Interpreter.prototype['stepEmptyStatement'] = function(stack, state, node) {
+  stack.pop();
+};
+
+Interpreter.prototype['stepEvalProgram_'] = function(stack, state, node) {
+  var n = state.n_ || 0;
+  var expression = node['body'][n];
+  if (expression) {
+    state.n_ = n + 1;
+    return new Interpreter.State(expression, state.scope);
+  }
+  stack.pop();
+  stack[stack.length - 1].value = this.value;
+};
+
+Interpreter.prototype['stepExpressionStatement'] = function(stack, state, node) {
+  if (!state.done_) {
+    state.done_ = true;
+    return new Interpreter.State(node['expression'], state.scope);
+  }
+  stack.pop();
+  // Save this value to interpreter.value for use as a return value if
+  // this code is inside an eval function.
+  this.value = state.value;
+};
+
+Interpreter.prototype['stepForInStatement'] = function(stack, state, node) {
+  // First, initialize a variable if exists.  Only do so once, ever.
+  if (!state.doneInit_) {
+    state.doneInit_ = true;
+    if (node['left']['declarations'] &&
+        node['left']['declarations'][0]['init']) {
+      if (state.scope.strict) {
+        this.throwException(this.SYNTAX_ERROR,
+            'for-in loop variable declaration may not have an initializer.');
+      }
+      // Variable initialization: for (var x = 4 in y)
+      return new Interpreter.State(node['left'], state.scope);
+    }
+  }
+  // Second, look up the object.  Only do so once, ever.
+  if (!state.doneObject_) {
+    state.doneObject_ = true;
+    if (!state.variable_) {
+      state.variable_ = state.value;
+    }
+    return new Interpreter.State(node['right'], state.scope);
+  }
+  if (!state.isLoop) {
+    // First iteration.
+    state.isLoop = true;
+    state.object_ = state.value;
+    state.visited_ = Object.create(null);
+  }
+  // Third, find the property name for this iteration.
+  if (state.name_ === undefined) {
+    gotPropName: while (true) {
+      if (state.object_ && state.object_.isObject) {
+        if (!state.props_) {
+          state.props_ = Object.getOwnPropertyNames(state.object_.properties);
+        }
+        while (true) {
+          var prop = state.props_.shift();
+          if (prop === undefined) {
+            break;  // Reached end of this object's properties.
+          }
+          if (!Object.prototype.hasOwnProperty.call(state.object_.properties,
+                prop)) {
+            continue;  // Property has been deleted in the loop.
+          }
+          if (state.visited_[prop]) {
+            continue;  // Already seen this property on a child.
+          }
+          state.visited_[prop] = true;
+          if (!Object.prototype.propertyIsEnumerable.call(
+                state.object_.properties, prop)) {
+            continue;  // Skip non-enumerable property.
+          }
+          state.name_ = prop;
+          break gotPropName;
+        }
+      } else if (state.object_ !== null && state.object_ !== undefined) {
+        // Primitive value (other than null or undefined).
+        if (!state.props_) {
+          state.props_ = Object.getOwnPropertyNames(state.object_);
+        }
+        while (true) {
+          var prop = state.props_.shift();
+          if (prop === undefined) {
+            break;  // Reached end of this value's properties.
+          }
+          state.visited_[prop] = true;
+          if (!Object.prototype.propertyIsEnumerable.call(
+                state.object_, prop)) {
+            continue;  // Skip non-enumerable property.
+          }
+          state.name_ = prop;
+          break gotPropName;
+        }
+      }
+      state.object_ = this.getPrototype(state.object_);
+      state.props_ = null;
+      if (state.object_ === null) {
+        // Done, exit loop.
+        stack.pop();
+        return;
+      }
+    }
+  }
+  // Fourth, find the variable
+  if (!state.doneVariable_) {
+    state.doneVariable_ = true;
+    var left = node['left'];
+    if (left['type'] === 'VariableDeclaration') {
+      // Inline variable declaration: for (var x in y)
+      state.variable_ =
+          [Interpreter.SCOPE_REFERENCE, left['declarations'][0]['id']['name']];
+    } else {
+      // Arbitrary left side: for (foo().bar in y)
+      state.variable_ = null;
+      var nextState = new Interpreter.State(left, state.scope);
+      nextState.components = true;
+      return nextState;
+    }
+  }
+  if (!state.variable_) {
+    state.variable_ = state.value;
+  }
+  // Fifth, set the variable.
+  if (!state.doneSetter_) {
+    state.doneSetter_ = true;
+    var value = state.name_;
+    var setter = this.setValue(state.variable_, value);
+    if (setter) {
+      return this.createSetter_(setter, state.variable_, value);
+    }
+  }
+  // Next step will be step three.
+  state.name_ = undefined;
+  // Reevaluate the variable since it could be a setter on the global object.
+  state.doneVariable_ = false;
+  state.doneSetter_ = false;
+  // Sixth and finally, execute the body if there was one.  this.
+  if (node['body']) {
+    return new Interpreter.State(node['body'], state.scope);
+  }
+};
+
+Interpreter.prototype['stepForStatement'] = function(stack, state, node) {
+  var mode = state.mode_ || 0;
+  if (mode === 0) {
+    state.mode_ = 1;
+    if (node['init']) {
+      return new Interpreter.State(node['init'], state.scope);
+    }
+  } else if (mode === 1) {
+    state.mode_ = 2;
+    if (node['test']) {
+      return new Interpreter.State(node['test'], state.scope);
+    }
+  } else if (mode === 2) {
+    state.mode_ = 3;
+    if (node['test'] && !state.value) {
+      // Done, exit loop.
+      stack.pop();
+    } else {  // Execute the body.
+      state.isLoop = true;
+      return new Interpreter.State(node['body'], state.scope);
+    }
+  } else if (mode === 3) {
+    state.mode_ = 1;
+    if (node['update']) {
+      return new Interpreter.State(node['update'], state.scope);
+    }
+  }
+};
+
+Interpreter.prototype['stepFunctionDeclaration'] =
+    function(stack, state, node) {
+  // This was found and handled when the scope was populated.
+  stack.pop();
+};
+
+Interpreter.prototype['stepFunctionExpression'] = function(stack, state, node) {
+  stack.pop();
+  stack[stack.length - 1].value = this.createFunction(node, state.scope);
+};
+
+Interpreter.prototype['stepIdentifier'] = function(stack, state, node) {
+  stack.pop();
+  if (state.components) {
+    stack[stack.length - 1].value = [Interpreter.SCOPE_REFERENCE, node['name']];
+    return;
+  }
+  var value = this.getValueFromScope(node['name']);
+  // An identifier could be a getter if it's a property on the global object.
+  if (value && typeof value === 'object' && value.isGetter) {
+    // Clear the getter flag and call the getter function.
+    value.isGetter = false;
+    var scope = state.scope;
+    while (!this.hasProperty(scope, node['name'])) {
+      scope = scope.parentScope;
+    }
+    var func = /** @type {!Interpreter.Object} */ (value);
+    return this.createGetter_(func, this.global);
+  }
+  stack[stack.length - 1].value = value;
+};
+
+Interpreter.prototype['stepIfStatement'] =
+    Interpreter.prototype['stepConditionalExpression'];
+
+Interpreter.prototype['stepLabeledStatement'] = function(stack, state, node) {
+  // No need to hit this node again on the way back up the stack.
+  stack.pop();
+  // Note that a statement might have multiple labels.
+  var labels = state.labels || [];
+  labels.push(node['label']['name']);
+  var nextState = new Interpreter.State(node['body'], state.scope);
+  nextState.labels = labels;
+  return nextState;
+};
+
+Interpreter.prototype['stepLiteral'] = function(stack, state, node) {
+  stack.pop();
+  var value = node['value'];
+  if (value instanceof RegExp) {
+    var pseudoRegexp = this.createObjectProto(this.REGEXP_PROTO);
+    this.populateRegExp(pseudoRegexp, value);
+    value = pseudoRegexp;
+  }
+  stack[stack.length - 1].value = value;
+};
+
+Interpreter.prototype['stepLogicalExpression'] = function(stack, state, node) {
+  if (node['operator'] !== '&&' && node['operator'] !== '||') {
+    throw SyntaxError('Unknown logical operator: ' + node['operator']);
+  }
+  if (!state.doneLeft_) {
+    state.doneLeft_ = true;
+    return new Interpreter.State(node['left'], state.scope);
+  }
+  if (!state.doneRight_) {
+    if ((node['operator'] === '&&' && !state.value) ||
+        (node['operator'] === '||' && state.value)) {
+      // Shortcut evaluation.
+      stack.pop();
+      stack[stack.length - 1].value = state.value;
+    } else {
+      state.doneRight_ = true;
+      return new Interpreter.State(node['right'], state.scope);
+    }
+  } else {
+    stack.pop();
+    stack[stack.length - 1].value = state.value;
+  }
+};
+
+Interpreter.prototype['stepMemberExpression'] = function(stack, state, node) {
+  if (!state.doneObject_) {
+    state.doneObject_ = true;
+    return new Interpreter.State(node['object'], state.scope);
+  }
+  var propName;
+  if (!node['computed']) {
+    state.object_ = state.value;
+    // obj.foo -- Just access 'foo' directly.
+    propName = node['property']['name'];
+  } else if (!state.doneProperty_) {
+    state.object_ = state.value;
+    // obj[foo] -- Compute value of 'foo'.
+    state.doneProperty_ = true;
+    return new Interpreter.State(node['property'], state.scope);
+  } else {
+    propName = state.value;
+  }
+  stack.pop();
+  if (state.components) {
+    stack[stack.length - 1].value = [state.object_, propName];
+  } else {
+    var value = this.getProperty(state.object_, propName);
+    if (value && typeof value === 'object' && value.isGetter) {
+      // Clear the getter flag and call the getter function.
+      value.isGetter = false;
+      var func = /** @type {!Interpreter.Object} */ (value);
+      return this.createGetter_(func, state.object_);
+    }
+    stack[stack.length - 1].value = value;
+  }
+};
+
+Interpreter.prototype['stepNewExpression'] =
+    Interpreter.prototype['stepCallExpression'];
+
+Interpreter.prototype['stepObjectExpression'] = function(stack, state, node) {
+  var n = state.n_ || 0;
+  var property = node['properties'][n];
+  if (!state.object_) {
+    // First execution.
+    state.object_ = this.createObjectProto(this.OBJECT_PROTO);
+    state.properties_ = Object.create(null);
+  } else {
+    // Determine property name.
+    var key = property['key'];
+    if (key['type'] === 'Identifier') {
+      var propName = key['name'];
+    } else if (key['type'] === 'Literal') {
+      var propName = key['value'];
+    } else {
+      throw SyntaxError('Unknown object structure: ' + key['type']);
+    }
+    // Set the property computed in the previous execution.
+    if (!state.properties_[propName]) {
+      // Create temp object to collect value, getter, and/or setter.
+      state.properties_[propName] = {};
+    }
+    state.properties_[propName][property['kind']] = state.value;
+    state.n_ = ++n;
+    property = node['properties'][n];
+  }
+  if (property) {
+    return new Interpreter.State(property['value'], state.scope);
+  }
+  for (var key in state.properties_) {
+    var kinds = state.properties_[key];
+    if ('get' in kinds || 'set' in kinds) {
+      // Set a property with a getter or setter.
+      var descriptor = {
+        configurable: true,
+        enumerable: true,
+        get: kinds['get'],
+        set: kinds['set']
+      };
+      this.setProperty(state.object_, key, null, descriptor);
+    } else {
+      // Set a normal property with a value.
+      this.setProperty(state.object_, key, kinds['init']);
+    }
+  }
+  stack.pop();
+  stack[stack.length - 1].value = state.object_;
+};
+
+Interpreter.prototype['stepProgram'] = function(stack, state, node) {
+  var expression = node['body'].shift();
+  if (expression) {
+    state.done = false;
+    return new Interpreter.State(expression, state.scope);
+  }
+  state.done = true;
+  // Don't pop the stateStack.
+  // Leave the root scope on the tree in case the program is appended to.
+};
+
+Interpreter.prototype['stepReturnStatement'] = function(stack, state, node) {
+  if (node['argument'] && !state.done_) {
+    state.done_ = true;
+    return new Interpreter.State(node['argument'], state.scope);
+  }
+  this.unwind(Interpreter.Completion.RETURN, state.value, undefined);
+};
+
+Interpreter.prototype['stepSequenceExpression'] = function(stack, state, node) {
+  var n = state.n_ || 0;
+  var expression = node['expressions'][n];
+  if (expression) {
+    state.n_ = n + 1;
+    return new Interpreter.State(expression, state.scope);
+  }
+  stack.pop();
+  stack[stack.length - 1].value = state.value;
+};
+
+Interpreter.prototype['stepSwitchStatement'] = function(stack, state, node) {
+  if (!state.test_) {
+    state.test_ = 1;
+    return new Interpreter.State(node['discriminant'], state.scope);
+  }
+  if (state.test_ === 1) {
+    state.test_ = 2;
+    // Preserve switch value between case tests.
+    state.switchValue_ = state.value;
+    state.defaultCase_ = -1;
+  }
+
+  while (true) {
+    var index = state.index_ || 0;
+    var switchCase = node['cases'][index];
+    if (!state.matched_ && switchCase && !switchCase['test']) {
+      // Test on the default case is null.
+      // Bypass (but store) the default case, and get back to it later.
+      state.defaultCase_ = index;
+      state.index_ = index + 1;
+      continue;
+    }
+    if (!switchCase && !state.matched_ && state.defaultCase_ !== -1) {
+      // Ran through all cases, no match.  Jump to the default.
+      state.matched_ = true;
+      state.index_ = state.defaultCase_;
+      continue;
+    }
+    if (switchCase) {
+      if (!state.matched_ && !state.tested_ && switchCase['test']) {
+        state.tested_ = true;
+        return new Interpreter.State(switchCase['test'], state.scope);
+      }
+      if (state.matched_ || state.value === state.switchValue_) {
+        state.matched_ = true;
+        var n = state.n_ || 0;
+        if (switchCase['consequent'][n]) {
+          state.isSwitch = true;
+          state.n_ = n + 1;
+          return new Interpreter.State(switchCase['consequent'][n],
+                                       state.scope);
+        }
+      }
+      // Move on to next case.
+      state.tested_ = false;
+      state.n_ = 0;
+      state.index_ = index + 1;
+    } else {
+      stack.pop();
+      return;
+    }
+  }
+};
+
+Interpreter.prototype['stepThisExpression'] = function(stack, state, node) {
+  stack.pop();
+  stack[stack.length - 1].value = this.getValueFromScope('this');
+};
+
+Interpreter.prototype['stepThrowStatement'] = function(stack, state, node) {
+  if (!state.done_) {
+    state.done_ = true;
+    return new Interpreter.State(node['argument'], state.scope);
+  } else {
+    this.throwException(state.value);
+  }
+};
+
+Interpreter.prototype['stepTryStatement'] = function(stack, state, node) {
+  if (!state.doneBlock_) {
+    state.doneBlock_ = true;
+    return new Interpreter.State(node['block'], state.scope);
+  }
+  if (state.cv && state.cv.type === Interpreter.Completion.THROW &&
+      !state.doneHandler_ && node['handler']) {
+    state.doneHandler_ = true;
+    var nextState = new Interpreter.State(node['handler'], state.scope);
+    nextState.throwValue = state.cv.value;
+    state.cv = undefined;  // This error has been handled, don't rethrow.
+    return nextState;
+  }
+  if (!state.doneFinalizer_ && node['finalizer']) {
+    state.doneFinalizer_ = true;
+    return new Interpreter.State(node['finalizer'], state.scope);
+  }
+  stack.pop();
+  if (state.cv) {
+    // There was no catch handler, or the catch/finally threw an error.
+    // Throw the error up to a higher try.
+    this.unwind(state.cv.type, state.cv.value, state.cv.label);
+  }
+};
+
+Interpreter.prototype['stepUnaryExpression'] = function(stack, state, node) {
+  if (!state.done_) {
+    state.done_ = true;
+    var nextState = new Interpreter.State(node['argument'], state.scope);
+    nextState.components = node['operator'] === 'delete';
+    return nextState;
+  }
+  stack.pop();
+  var value = state.value;
+  if (node['operator'] === '-') {
+    value = -value;
+  } else if (node['operator'] === '+') {
+    value = +value;
+  } else if (node['operator'] === '!') {
+    value = !value;
+  } else if (node['operator'] === '~') {
+    value = ~value;
+  } else if (node['operator'] === 'delete') {
+    var result = true;
+    // If value is not an array, then it is a primitive, or some other value.
+    // If so, skip the delete and return true.
+    if (Array.isArray(value)) {
+      var obj = value[0];
+      if (obj === Interpreter.SCOPE_REFERENCE) {
+        // 'delete foo;' is the same as 'delete window.foo'.
+        obj = state.scope;
+      }
+      var name = String(value[1]);
+      try {
+        delete obj.properties[name];
+      } catch (e) {
+        if (state.scope.strict) {
+          this.throwException(this.TYPE_ERROR, "Cannot delete property '" +
+                              name + "' of '" + obj + "'");
+        } else {
+          result = false;
+        }
+      }
+    }
+    value = result;
+  } else if (node['operator'] === 'typeof') {
+    value = (value && value.class === 'Function') ? 'function' : typeof value;
+  } else if (node['operator'] === 'void') {
+    value = undefined;
+  } else {
+    throw SyntaxError('Unknown unary operator: ' + node['operator']);
+  }
+  stack[stack.length - 1].value = value;
+};
+
+Interpreter.prototype['stepUpdateExpression'] = function(stack, state, node) {
+  if (!state.doneLeft_) {
+    state.doneLeft_ = true;
+    var nextState = new Interpreter.State(node['argument'], state.scope);
+    nextState.components = true;
+    return nextState;
+  }
+  if (!state.leftSide_) {
+    state.leftSide_ = state.value;
+  }
+  if (state.doneGetter_) {
+    state.leftValue_ = state.value;
+  }
+  if (!state.doneGetter_) {
+    var leftValue = this.getValue(state.leftSide_);
+    state.leftValue_ = leftValue;
+    if (leftValue && typeof leftValue === 'object' && leftValue.isGetter) {
+      // Clear the getter flag and call the getter function.
+      leftValue.isGetter = false;
+      state.doneGetter_ = true;
+      var func = /** @type {!Interpreter.Object} */ (leftValue);
+      return this.createGetter_(func, state.leftSide_);
+    }
+  }
+  if (state.doneSetter_) {
+    // Return if setter function.
+    // Setter method on property has completed.
+    // Ignore its return value, and use the original set value instead.
+    stack.pop();
+    stack[stack.length - 1].value = state.setterValue_;
+    return;
+  }
+  var leftValue = Number(state.leftValue_);
+  var changeValue;
+  if (node['operator'] === '++') {
+    changeValue = leftValue + 1;
+  } else if (node['operator'] === '--') {
+    changeValue = leftValue - 1;
+  } else {
+    throw SyntaxError('Unknown update expression: ' + node['operator']);
+  }
+  var returnValue = node['prefix'] ? changeValue : leftValue;
+  var setter = this.setValue(state.leftSide_, changeValue);
+  if (setter) {
+    state.doneSetter_ = true;
+    state.setterValue_ = returnValue;
+    return this.createSetter_(setter, state.leftSide_, changeValue);
+  }
+  // Return if no setter function.
+  stack.pop();
+  stack[stack.length - 1].value = returnValue;
+};
+
+Interpreter.prototype['stepVariableDeclaration'] = function(stack, state, node) {
+  var declarations = node['declarations'];
+  var n = state.n_ || 0;
+  var declarationNode = declarations[n];
+  if (state.init_ && declarationNode) {
+    // This setValue call never needs to deal with calling a setter function.
+    // Note that this is setting the init value, not defining the variable.
+    // Variable definition is done when scope is populated.
+    this.setValueToScope(declarationNode['id']['name'], state.value);
+    state.init_ = false;
+    declarationNode = declarations[++n];
+  }
+  while (declarationNode) {
+    // Skip any declarations that are not initialized.  They have already
+    // been defined as undefined in populateScope_.
+    if (declarationNode['init']) {
+      state.n_ = n;
+      state.init_ = true;
+      return new Interpreter.State(declarationNode['init'], state.scope);
+    }
+    declarationNode = declarations[++n];
+  }
+  stack.pop();
+};
+
+Interpreter.prototype['stepWithStatement'] = function(stack, state, node) {
+  if (!state.doneObject_) {
+    state.doneObject_ = true;
+    return new Interpreter.State(node['object'], state.scope);
+  } else if (!state.doneBody_) {
+    state.doneBody_ = true;
+    var scope = this.createSpecialScope(state.scope, state.value);
+    return new Interpreter.State(node['body'], scope);
+  } else {
+    stack.pop();
+  }
+};
+
+Interpreter.prototype['stepWhileStatement'] =
+    Interpreter.prototype['stepDoWhileStatement'];
+
+// Preserve top-level API functions from being pruned/renamed by JS compilers.
+// Add others as needed.
+// The global object ('window' in a browser, 'global' in node.js) is 'this'.
+//this['Interpreter'] = Interpreter;
+Interpreter.prototype['step'] = Interpreter.prototype.step;
+Interpreter.prototype['run'] = Interpreter.prototype.run;
+Interpreter.prototype['appendCode'] = Interpreter.prototype.appendCode;
+Interpreter.prototype['createObject'] = Interpreter.prototype.createObject;
+Interpreter.prototype['createObjectProto'] =
+    Interpreter.prototype.createObjectProto;
+Interpreter.prototype['createAsyncFunction'] =
+    Interpreter.prototype.createAsyncFunction;
+Interpreter.prototype['createNativeFunction'] =
+    Interpreter.prototype.createNativeFunction;
+Interpreter.prototype['getProperty'] = Interpreter.prototype.getProperty;
+Interpreter.prototype['setProperty'] = Interpreter.prototype.setProperty;
+Interpreter.prototype['nativeToPseudo'] = Interpreter.prototype.nativeToPseudo;
+Interpreter.prototype['pseudoToNative'] = Interpreter.prototype.pseudoToNative;
+// Obsolete.  Do not use.
+Interpreter.prototype['createPrimitive'] = function(x) {return x;};
+
+
 
 
 /***/ }),
