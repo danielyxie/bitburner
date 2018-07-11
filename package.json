@@ -51,6 +51,7 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "lodash": "^4.17.10",
+    "mini-css-extract-plugin": "^0.4.1",
     "mkdirp": "^0.5.1",
     "mocha": "^3.2.0",
     "mocha-lcov-reporter": "^1.0.0",
