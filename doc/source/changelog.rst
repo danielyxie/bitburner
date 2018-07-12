@@ -526,7 +526,7 @@ v0.26.1
 v0.26.0
 -------
 * Game now has a real ending, although it's not very interesting/satisfying right now. It sets up the framework for the secondary prestige system in the future
-* Forgot to mention that since last update, comments now work in Netscript. Use // for single line comments or /* and */ for multiline comments just like in Javascript
+* Forgot to mention that since last update, comments now work in Netscript. Use // for single line comments or /* and \*/ for multiline comments just like in Javascript
 * Added ports to Netscript. These ports are essentially serialized queues. You can use the write() Netscript function to write a value to a queue, and then you can use the read() Netscript function to read the value from the queue. Once you read a value from the queue it will be removed. There are only 10 queues (1-10), and each has a maximum capacity of 50 entries. If you try to write to a queue that is full, the the first value is removed. See wiki/Netscript documentation for more details
 * You can now use the 'help' Terminal command for specific commands
 * You can now use './' to run a script/program (./NUKE.exe). However, tab completion currently doesn't work for it (I'm working on it)
