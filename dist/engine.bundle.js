@@ -23599,6 +23599,10 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
     }
 }
 
+Bladeburner.prototype.getTypeAndNameFromActionId = function(actionId) {
+
+}
+
 Bladeburner.prototype.getContractNamesNetscriptFn = function() {
     return Object.keys(this.contracts);
 }

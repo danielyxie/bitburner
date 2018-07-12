@@ -488,8 +488,10 @@ let CONSTANTS = {
 
     LatestUpdate:
     "v0.40.0<br>"  +
+    "* Added getCurrentAction() to Bladeburner API<br>" +
+    "* getSkillLevel() in Bladeburner API now returns an error if no argument is passed in (as opposed to an object with all skill levels). This may break scripts<br>" +
     "* Minimum Netscript execution time reduced from 15ms to 10ms (configurable in Options)<br>" +
-    "* HP is now reset (restored) when Augmenting<br>" + 
+    "* HP is now reset (restored) when Augmenting<br>" +
     "* Bug Fix: Infiltration buttons can no longer be clicked through NetscriptJS<br>"
 }
 
