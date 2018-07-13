@@ -150,6 +150,9 @@ let Engine = {
         factionsMainMenuButton:         null,
         augmentationsMainMenuButton:    null,
         tutorialMainMenuButton:         null,
+        bladeburnerMenuButton:          null,
+        corporationMenuButton:          null,
+        gangMenuButton:                 null,
         devMainMenuButton:              null,
         saveMainMenuButton:             null,
         deleteMainMenuButton:           null,
@@ -547,6 +550,9 @@ let Engine = {
         document.getElementById("tutorial-menu-link").classList.remove("active");
         document.getElementById("options-menu-link").classList.remove("active");
         document.getElementById("dev-menu-link").classList.remove("active");
+        document.getElementById("bladeburner-menu-link").classList.remove("active");
+        document.getElementById("corporation-menu-link").classList.remove("active");
+        document.getElementById("gang-menu-link").classList.remove("active");
     },
 
     displayCharacterOverviewInfo: function() {
@@ -1278,6 +1284,9 @@ let Engine = {
         var city                = document.getElementById("city-tab");
         var travel              = document.getElementById("travel-tab");
         var job                 = document.getElementById("job-tab");
+        var bladeburner         = document.getElementById("bladeburner-tab");
+        var corp                = document.getElementById("corporation-tab");
+        var gang                = document.getElementById("gang-tab");
         var tutorial            = document.getElementById("tutorial-tab");
         var options             = document.getElementById("options-tab");
         var dev                 = document.getElementById("dev-tab");
@@ -1370,6 +1379,12 @@ let Engine = {
             else {travel.style.display = "none";}
             if (Player.firstProgramAvailable) {visibleMenuTabs.push(createProgram);}
             else {createProgram.style.display = "none";}
+            if(Player.bladeburner instanceof Bladeburner) {visibleMenuTabs.push(bladeburner);}
+            else {bladeburner.style.display = "none";}
+            if(Player.corporation instanceof Corporation) {visibleMenuTabs.push(corp);}
+            else {corp.style.display = "none";}
+            if(Player.inGang()) {visibleMenuTabs.push(gang);}
+            else {gang.style.display = "none";}
 
             Engine.closeMainMenuHeader(visibleMenuTabs);
         } else {
@@ -1409,6 +1424,9 @@ let Engine = {
             job.style.display = "none";
             travel.style.display = "none";
             createProgram.style.display = "none";
+            bladeburner.style.display = "none";
+            corp.style.display = "none";
+            gang.style.display = "none";
 
             Engine.openMainMenuHeader(
                 [terminal, createScript, activeScripts, stats,
@@ -1812,16 +1830,22 @@ let Engine = {
             var travelLink      = document.getElementById("travel-menu-link");
             var job             = document.getElementById("job-tab");
             var jobLink         = document.getElementById("job-menu-link");
+            var bladeburner     = document.getElementById("bladeburner-tab");
+            var bladeburnerLink = document.getElementById("bladeburner-menu-link");
+            var corporation            = document.getElementById("corporation-tab");
+            var corporationLink        = document.getElementById("corporation-menu-link");
+            var gang            = document.getElementById("gang-tab");
+            var gangLink        = document.getElementById("gang-menu-link");
             this.classList.toggle("opened");
             if (city.style.maxHeight) {
                 Engine.toggleMainMenuHeader(false,
-                    [city, travel, job],
-                    [cityLink, travelLink, jobLink]
+                    [city, travel, job, bladeburner, corporation, gang],
+                    [cityLink, travelLink, jobLink, bladeburnerLink, corporationLink, gangLink]
                 );
             } else {
                 Engine.toggleMainMenuHeader(true,
-                    [city, travel, job],
-                    [cityLink, travelLink, jobLink]
+                    [city, travel, job, bladeburner, corporation, gang],
+                    [cityLink, travelLink, jobLink, bladeburnerLink, corporationLink, gangLink]
                 );
             }
         }
@@ -1918,6 +1942,23 @@ let Engine = {
             Engine.loadTutorialContent();
             return false;
         });
+
+        Engine.Clickables.bladeburnerMenuButton = clearEventListeners("bladeburner-menu-link");
+        Engine.Clickables.bladeburnerMenuButton.addEventListener("click", function() {
+            Engine.loadBladeburnerContent();
+            return false;
+        });
+        Engine.Clickables.corporationMenuButton = clearEventListeners("corporation-menu-link");
+        Engine.Clickables.corporationMenuButton.addEventListener("click", function() {
+            Engine.loadCorporationContent();
+            return false;
+        });
+        Engine.Clickables.gangMenuButton = clearEventListeners("gang-menu-link");
+        Engine.Clickables.gangMenuButton.addEventListener("click", function() {
+            Engine.loadGangContent();
+            return false;
+        });
+
 
         Engine.Clickables.devMainMenuButton = clearEventListeners("dev-menu-link");
         Engine.Clickables.devMainMenuButton.addEventListener("click", function() {
