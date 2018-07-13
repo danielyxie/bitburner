@@ -39,12 +39,13 @@ module.exports = (env, argv) => ({
                 exclude: /node_modules/
             },
             {
-                test: /\.css$/,
+                test: /\.s?css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    "css-loader"
+                    "css-loader",
+                    "sass-loader"
                 ]
-            }
+            },
         ]
     },
     optimization: {
