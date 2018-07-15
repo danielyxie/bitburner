@@ -99,7 +99,6 @@ function PlayerObject() {
     this.currentServer          = ""; //IP address of Server currently being accessed through terminal
     this.purchasedServers       = []; //IP Addresses of purchased servers
     this.hacknetNodes           = [];
-    this.hacknetNodeWrappers    = [];
     this.totalHacknetNodeProduction = 0;
 
     //Factions

@@ -64,8 +64,7 @@ let CONSTANTS = {
     ScriptGetServerRamCost:         0.1,
     ScriptFileExistsRamCost:        0.1,
     ScriptIsRunningRamCost:         0.1,
-    ScriptPurchaseHacknetRamCost:   1.5,
-    ScriptHacknetNodesRamCost:      4.0, //Base cost for accessing hacknet nodes array
+    ScriptHacknetNodesRamCost:      4.0, //Base cost for accessing Hacknet Node API
     ScriptHNUpgLevelRamCost:        0.4,
     ScriptHNUpgRamRamCost:          0.6,
     ScriptHNUpgCoreRamCost:         0.8,

@@ -8,8 +8,7 @@ import {loadFactions, Factions,
         processPassiveFactionRepGain}           from "./Faction";
 import {FconfSettings, loadFconf}               from "./Fconf";
 import {loadAllGangs, AllGangs}                 from "./Gang";
-import {processAllHacknetNodeEarnings,
-        createPlayerHacknetNodeWrappers}        from "./HacknetNode";
+import {processAllHacknetNodeEarnings}          from "./HacknetNode";
 import {loadMessages, initMessages, Messages}   from "./Message";
 import {Player, loadPlayer}                     from "./Player";
 import {loadAllRunningScripts}                  from "./Script";
@@ -230,8 +229,6 @@ function loadGame(saveString) {
         }
     }
 
-    //Re-initialize Hacknet Node Wrappers
-    createPlayerHacknetNodeWrappers();
     return true;
 }
 
@@ -447,9 +444,6 @@ function loadImportedGame(saveObj, saveString) {
             console.log("ERROR: Failed to parse AllGangsSave: " + e);
         }
     }
-
-    //Re-initialize Hacknet Node Wrappers
-    createPlayerHacknetNodeWrappers();
 
     var popupId = "import-game-restart-game-notice";
     var txt = createElement("p", {
