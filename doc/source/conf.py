@@ -55,8 +55,9 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Bitburner'
-copyright = '2017, Bitburner'
 author = 'Bitburner'
+copyright = '2018, {0}'.format(author)
+documentation_title = '{0} Documentation'.format(project)
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -123,7 +124,7 @@ html_static_path = ['ystatic']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Bitburnerdoc'
+htmlhelp_basename = '{0}doc'.format(project)
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -150,8 +151,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'Bitburner.tex', 'Bitburner Documentation',
-     'Bitburner', 'manual'),
+    (master_doc, '{0}.tex'.format(project), documentation_title,
+     author, 'manual'),
 ]
 
 
@@ -160,7 +161,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'bitburner', 'Bitburner Documentation',
+    (master_doc, project.lower(), documentation_title,
      [author], 1)
 ]
 
@@ -171,8 +172,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Bitburner', 'Bitburner Documentation',
-     author, 'Bitburner', 'One line description of project.',
+    (master_doc, project, documentation_title,
+     author, project, 'One line description of project.',
      'Miscellaneous'),
 ]
 

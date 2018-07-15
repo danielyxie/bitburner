@@ -9,19 +9,15 @@ v0.39.1 - 7/4/2018
 * Bladeburner Rank gain in BN-7 is now reduced by 40% instead of 50%
 * Quadrupled the amount of money gained from Bladeburner contracts
 * Added joinBladeburnerDivision() Netscript function to Bladeburner API
-* Doubled the effects of Source-File 5. Now gives 8%, 12%, and 14% increase to all hacking multipliers " +
-at levels 1, 2, and 3, respectively (increased from 4%/6%, 7%)
-* Increased the effect of Source-File 8. It now gives a 12%, 18% and 21% to your hacking growth multiplier " +
-at levels 1, 2, and 3, respectively (increased from 8%, 12%, 14%)
-* The effect of Source-File 12 is now additive with itself, rather than multiplicative. This means " +
-that level N of Source-File 12 now increases all multipliers by N%
+* Doubled the effects of Source-File 5. Now gives 8%, 12%, and 14% increase to all hacking multipliers at levels 1, 2, and 3, respectively (increased from 4%/6%, 7%)
+* Increased the effect of Source-File 8. It now gives a 12%, 18% and 21% to your hacking growth multiplier at levels 1, 2, and 3, respectively (increased from 8%, 12%, 14%)
+* The effect of Source-File 12 is now additive with itself, rather than multiplicative. This means that level N of Source-File 12 now increases all multipliers by N%
 * The setting to suppress the confirmation box when purchasing Augmentations was moved into the main Options menu (by Github user hydroflame)
 * Bug Fix: Crime Success rates were being calculated incorrectly (by Github user hydroflame)
 * When an Infiltration is finished, you will now return back to the company's page, rather than the city
 * Infiltration faction reputation selector now remembers your last choice
 * Significantly increased the amount of money gained from Infiltration
-* Bug Fix: Copying a NetscriptJS script to another server using scp now properly takes into account " +
-the script's changes.
+* Bug Fix: Copying a NetscriptJS script to another server using scp now properly takes into account the script's changes.
 * Bug Fix: Fixed an issue where game would not load in Edge due to incompatible features
 * travelToCity() Singularity function no longer grants Intelligence exp"
 
@@ -530,7 +526,7 @@ v0.26.1
 v0.26.0
 -------
 * Game now has a real ending, although it's not very interesting/satisfying right now. It sets up the framework for the secondary prestige system in the future
-* Forgot to mention that since last update, comments now work in Netscript. Use // for single line comments or /* and */ for multiline comments just like in Javascript
+* Forgot to mention that since last update, comments now work in Netscript. Use // for single line comments or /* and \*/ for multiline comments just like in Javascript
 * Added ports to Netscript. These ports are essentially serialized queues. You can use the write() Netscript function to write a value to a queue, and then you can use the read() Netscript function to read the value from the queue. Once you read a value from the queue it will be removed. There are only 10 queues (1-10), and each has a maximum capacity of 50 entries. If you try to write to a queue that is full, the the first value is removed. See wiki/Netscript documentation for more details
 * You can now use the 'help' Terminal command for specific commands
 * You can now use './' to run a script/program (./NUKE.exe). However, tab completion currently doesn't work for it (I'm working on it)
