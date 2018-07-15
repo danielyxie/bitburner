@@ -23583,14 +23583,17 @@ Bladeburner.prototype.getActionIdFromTypeAndName = function(type="", name="") {
         switch (convertedName) {
             case "training":
                 action.type = ActionTypes["Training"];
+                action.name = "Training";
                 break;
             case "recruitment":
             case "recruit":
                 action.type = ActionTypes["Recruitment"];
+                action.name = "Recruitment";
                 break;
             case "field analysis":
             case "fieldanalysis":
                 action.type = ActionTypes["Field Analysis"];
+                action.name = "Field Analysis";
                 break;
             default:
                 return null;
