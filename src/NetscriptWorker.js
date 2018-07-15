@@ -228,20 +228,20 @@ function startNetscript1Script(workerScript) {
                     resolve(workerScript);
                 }
             } catch(e) {
-                if (isString(e)) {
-                    workerScript.errorMessage = e;
-                    return reject(workerScript);
-                } else if (e instanceof WorkerScript) {
-                    return reject(e);
-                } else {
-                    return reject(workerScript);
+                e = e.toString();
+                if (!isScriptErrorMessage(e)) {
+                    e = makeRuntimeRejectMsg(workerScript, e);
                 }
+                workerScript.errorMessage = e;
+                return reject(workerScript);
             }
         }
 
         try {
             runInterpreter();
         } catch(e) {
+            console.log("Caught in original");
+            console.log(e);
             if (isString(e)) {
                 workerScript.errorMessage = e;
                 return reject(workerScript);

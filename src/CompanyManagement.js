@@ -873,7 +873,7 @@ Industry.prototype.getProductDescriptionText = function() {
         case Industries.Software:
             return "develop computer software";
             break;
-        case Industries.HealthCare:
+        case Industries.Healthcare:
             return "build and manage hospitals";
             break;
         case Industries.RealEstate:
@@ -4233,7 +4233,7 @@ Corporation.prototype.displayDivisionContent = function(division, city) {
                 createProductButtonText = "Develop Software";
                 createProductPopupText = "Develop a new piece of software!";
                 break;
-            case Industries.HealthCare:
+            case Industries.Healthcare:
                 createProductButtonText = "Build Hospital";
                 createProductPopupText = "Build and manage a new hospital!";
                 break;
@@ -4924,4 +4924,3 @@ Corporation.fromJSON = function(value) {
 Reviver.constructors.Corporation = Corporation;
 
 export {Corporation};
-
