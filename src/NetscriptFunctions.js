@@ -239,8 +239,9 @@ function NetscriptFunctions(workerScript) {
                 var expGainedOnSuccess = scriptCalculateExpGain(server) * threads;
                 var expGainedOnFailure = (expGainedOnSuccess / 4);
                 if (rand < hackChance) { //Success!
-                    var moneyGained = scriptCalculatePercentMoneyHacked(server);
-                    moneyGained = Math.floor(server.moneyAvailable * moneyGained) * threads;
+                    const percentHacked = scriptCalculatePercentMoneyHacked(server);
+                    const maxThreadNeeded = Math.ceil(1/percentHacked*(server.moneyAvailable/server.moneyMax))
+                    let moneyGained = Math.floor(server.moneyAvailable * percentHacked) * threads;
 
                     //Over-the-top safety checks
                     if (moneyGained <= 0) {
@@ -260,7 +261,7 @@ function NetscriptFunctions(workerScript) {
                     if (workerScript.disableLogs.ALL == null && workerScript.disableLogs.hack == null) {
                         workerScript.scriptRef.log("Script SUCCESSFULLY hacked " + server.hostname + " for $" + formatNumber(moneyGained, 2) + " and " + formatNumber(expGainedOnSuccess, 4) +  " exp (t=" + threads + ")");
                     }
-                    server.fortify(CONSTANTS.ServerFortifyAmount * threads);
+                    server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
                     return Promise.resolve(moneyGained);
                 } else {
                     //Player only gains 25% exp for failure?
