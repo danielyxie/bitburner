@@ -4,13 +4,12 @@
     font-size: 13px;
 }
 
-
 /* Header tabs */
 .cmpy-mgmt-header-tab {
     display: inline-block;
-    color: white;
-    background-color:#555;
-    border:1px solid white;
+    color: #fff;
+    background-color: #555;
+    border: 1px solid #fff;
     padding: 4px;
 }
 
@@ -24,10 +23,10 @@
 
 /* Switch between Cities */
 .cmpy-mgmt-city-tab {
-    display:inline-block;
-    color: white;
+    display: inline-block;
+    color: #fff;
     background-color: #555;
-    border: 1px solid white;
+    border: 1px solid #fff;
     padding: 4px;
 }
 
@@ -46,7 +45,7 @@
 
 .cmpy-mgmt-industry-left-panel,
 .cmpy-mgmt-industry-right-panel {
-    display:inline-block;
+    display: inline-block;
     width: 45%;
     height: 100%;
     top: 10px;
@@ -55,75 +54,74 @@
 }
 
 .cmpy-mgmt-industry-overview-panel {
-    border: 1px solid white;
+    border: 1px solid #fff;
     color: var(--my-font-color);
-    display:inline-block;
+    display: inline-block;
     width: 100%;
 }
 
 .cmpy-mgmt-employee-panel {
-    border: 1px solid white;
-    display:block;
-    width:100%;
+    border: 1px solid #fff;
+    display: block;
+    width: 100%;
 }
 
 .cmpy-mgmt-warehouse-panel {
-    border: 1px solid white;
-    display:inline-block;
-    width:100%;
+    border: 1px solid #fff;
+    display: inline-block;
+    width: 100%;
 }
 
-/* Hiring new employees*/
+/* Hiring new employees */
 .cmpy-mgmt-find-employee-option {
-    border:1px solid white;
+    border: 1px solid #fff;
     margin: 6px;
 }
 
 .cmpy-mgmt-find-employee-option:hover {
-    background-color:#3d4044;
+    background-color: #3d4044;
 }
 
 /* Warehouse */
 .cmpy-mgmt-warehouse-material-div {
-    padding:2px;
-    border:1px solid white;
+    padding: 2px;
+    border: 1px solid #fff;
 }
 
 .cmpy-mgmt-warehouse-product-div {
-    padding:2px;
-    border:1px solid white;
+    padding: 2px;
+    border: 1px solid #fff;
 }
 
 /* Exporting materials/products */
 .cmpy-mgmt-existing-export {
-    border:1px solid white;
-    border-radius:25px;
-    margin:4px;
-    padding:4px;
+    border: 1px solid #fff;
+    border-radius: 25px;
+    margin: 4px;
+    padding: 4px;
 }
 
 .cmpy-mgmt-existing-export:hover {
-    background-color:#333333;
+    background-color: #333;
 }
-
 
 /* Upgrades */
 .cmpy-mgmt-upgrade-container {
-    border:1px solid white;
+    border: 1px solid #fff;
     width: 60%;
-    margin:4px;
+    margin: 4px;
 }
 
 .cmpy-mgmt-upgrade-div {
-    display:inline-block;
-    border:1px solid white;
-    margin:2px;
-    padding:6px;
-    border-radius:25px;
-    font-size:"12px";
-    color:var(--my-font-color);
+    display: inline-block;
+    border: 1px solid #fff;
+    margin: 2px;
+    padding: 6px;
+    border-radius: 25px;
+    font-size: "12px";
+    color: var(--my-font-color);
 }
 
 .cmpy-mgmt-upgrade-div:hover {
-    background-color:#333333;
+    background-color: #333;
 }
