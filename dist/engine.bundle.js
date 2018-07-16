@@ -29371,7 +29371,12 @@ function NetscriptFunctions(workerScript) {
                 }
                 updateDynamicRam("getCurrentAction", _Constants__WEBPACK_IMPORTED_MODULE_6__[/* CONSTANTS */ "a"].ScriptBladeburnerApiBaseRamCost / 4);
                 if (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner instanceof _Bladeburner__WEBPACK_IMPORTED_MODULE_4__[/* Bladeburner */ "a"] && (_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bitNodeN === 7 || hasBladeburner2079SF)) {
-                    return _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner.getTypeAndNameFromActionId(_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner.action);
+                    let res = _Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner.getTypeAndNameFromActionId(_Player__WEBPACK_IMPORTED_MODULE_16__[/* Player */ "a"].bladeburner.action);
+                    if (res.type === "Idle" && res.name === "Idle") {
+                        return null;
+                    } else {
+                        return res;
+                    }
                 }
                 throw Object(_NetscriptEvaluator__WEBPACK_IMPORTED_MODULE_25__[/* makeRuntimeRejectMsg */ "d"])(workerScript, "getCurrentAction() failed because you do not currently have access to the Bladeburner API. This is either because you are not currently employed " +
                                                          "at the Bladeburner division or because you do not have Source-File 7");
