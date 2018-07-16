@@ -90,6 +90,9 @@
 }
 
 #script-editor-filename {
+    $boxShadowArgs: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+    @include boxShadow($boxShadowArgs);
+
     background-color: #555;
     display: inline-block;
     float: center;
@@ -100,15 +103,6 @@
     padding: 2px;
 
     border: 2px solid var(--my-highlight-color);
-    -webkit-box-shadow:
-        inset 0 0 8px rgba(0, 0, 0, 0.1),
-        0 0 16px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow:
-        inset 0 0 8px rgba(0, 0, 0, 0.1),
-        0 0 16px rgba(0, 0, 0, 0.1);
-    box-shadow:
-        inset 0 0 8px rgba(0, 0, 0, 0.1),
-        0 0 16px rgba(0, 0, 0, 0.1);
 }
 
 #script-editor-status {
@@ -262,13 +256,11 @@
 
 .active-scripts-button {
     @include borderRadius(12px);
+    @include boxShadow(1px 1px 3px #000);
 
     color: #aaa;
     font-size: 16px;
     font-weight: bold;
-    -moz-box-shadow: 1px 1px 3px #000;
-    -webkit-box-shadow: 1px 1px 3px #000;
-    box-shadow: 1px 1px 3px #000;
     margin: 4px;
     padding: 4px;
     background-color: #000;
@@ -323,19 +315,13 @@
 }
 
 .hacknet-node {
+    $boxShadowArgs: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+    @include boxShadow($boxShadowArgs);
+
     margin: 6px;
     padding: 6px;
     width: 34vw;
     border: 2px solid var(--my-highlight-color);
-    -webkit-box-shadow:
-        inset 0 0 8px  rgba(0, 0, 0, 0.1),
-        0 0 16px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow:
-        inset 0 0 8px  rgba(0, 0, 0, 0.1),
-        0 0 16px rgba(0, 0, 0, 0.1);
-    box-shadow:
-        inset 0 0 8px  rgba(0, 0, 0, 0.1),
-        0 0 16px rgba(0, 0, 0, 0.1);
 }
 
 .hacknet-node-container {

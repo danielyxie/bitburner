@@ -18,6 +18,8 @@
 
 #work-in-progress-cancel-button {
     @include borderRadius(12px);
+    @include boxShadow(1px 1px 3px #000);
+
     color: #aaa;
     float: left;
     font-size: 20px;
@@ -25,9 +27,6 @@
     margin: 10px;
     padding: 5px;
     border: 3px solid #fff;
-    -moz-box-shadow: 1px 1px 3px #000;
-    -webkit-box-shadow: 1px 1px 3px #000;
-    box-shadow: 1px 1px 3px #000;
 }
 
 #work-in-progress-cancel-button:hover,

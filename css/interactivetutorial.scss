@@ -34,13 +34,11 @@
 #interactive-tutorial-next,
 #interactive-tutorial-back {
     @include borderRadius(12px);
+    @include boxShadow(1px 1px 3px #000);
 
     color: #aaa;
     font-size: 20px;
     font-weight: bold;
-    -moz-box-shadow: 1px 1px 3px #000;
-    -webkit-box-shadow: 1px 1px 3px #000;
-    box-shadow: 1px 1px 3px #000;
     background-color: #000;
 }
 

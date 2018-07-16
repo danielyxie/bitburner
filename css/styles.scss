@@ -151,9 +151,7 @@ a:link, a:visited {
 }
 
 .a-link-button:active {
-    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    @include boxShadow(inset 0 1px 4px rgba(0, 0, 0, 0.6));
 }
 
 /* Make anchor tags ("a" elements) inactive (not clickable) */
@@ -309,9 +307,7 @@ a:link, a:visited {
 }
 
 .help-tip:active {
-    -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    @include boxShadow(inset 0 1px 4px rgba(0, 0, 0, 0.6));
 }
 
 /* Flashing button (Red) */
@@ -448,13 +444,11 @@ a:link, a:visited {
 #character-overview-save-button,
 #character-overview-options-button {
     @include borderRadius(12px);
+    @include boxShadow(1px 1px 3px #000);
 
     color: #aaa;
     font-size: 14px;
     font-weight: bold;
-    -moz-box-shadow: 1px 1px 3px #000;
-    -webkit-box-shadow: 1px 1px 3px #000;
-    box-shadow: 1px 1px 3px #000;
     height: 22px;
     background-color: #000;
 }

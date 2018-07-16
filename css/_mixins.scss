@@ -3,3 +3,9 @@
     -moz-border-radius: $property;
     border-radius: $property;
 }
+
+@mixin boxShadow($value) {
+    -webkit-box-shadow: $value;
+    -moz-box-shadow: $value;
+    box-shadow: $value;
+}
