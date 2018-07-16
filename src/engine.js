@@ -4,6 +4,7 @@ import {removeChildrenFromElement}              from "../utils/uiHelpers/removeC
 import {clearEventListeners}                    from "../utils/uiHelpers/clearEventListeners";
 import {createElement}                          from "../utils/uiHelpers/createElement";
 import {exceptionAlert}                         from "../utils/helpers/exceptionAlert";
+import {removeLoadingScreen}                    from "../utils/uiHelpers/removeLoadingScreen";
 import numeral                                  from "numeral/min/numeral.min";
 import {formatNumber,
         convertTimeMsToTimeElapsedString,
@@ -1214,16 +1215,6 @@ let Engine = {
         }, 3000);
     },
 
-    removeLoadingScreen: function() {
-        var loader = document.getElementById("loader");
-        if (!loader) {return;}
-        while(loader.firstChild) {
-            loader.removeChild(loader.firstChild);
-        }
-        loader.parentNode.removeChild(loader);
-        document.getElementById("entire-game-container").style.visibility = "visible";
-    },
-
     //Used when initializing a game
     //elems should be an array of all DOM elements under the header
     closeMainMenuHeader: function(elems) {
@@ -1362,7 +1353,7 @@ let Engine = {
 
             Player.lastUpdate = Engine._lastUpdate;
             Engine.start();                 //Run main game loop and Scripts loop
-            Engine.removeLoadingScreen();
+            removeLoadingScreen();
             dialogBoxCreate("While you were offline, your scripts generated $" +
                             formatNumber(offlineProductionFromScripts, 2) + " and your Hacknet Nodes generated $" +
                             formatNumber(offlineProductionFromHacknetNodes, 2));
@@ -1436,7 +1427,7 @@ let Engine = {
 
             //Start interactive tutorial
             iTutorialStart();
-            Engine.removeLoadingScreen();
+            removeLoadingScreen();
         }
         //Initialize labels on game settings
         setSettingsLabels();
