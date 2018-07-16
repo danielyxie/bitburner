@@ -1,4 +1,6 @@
 @import "mixins";
+@import "theme";
+
 /* CSS for different main menu pages, such as character info, script editor, etc (but excluding
     terminal which has its own page) */
 
@@ -33,7 +35,7 @@
 
     border: 2px solid var(--my-highlight-color);
     z-index: 1;
-    font-family: 'Lucida Console', 'Lucida Sans Unicode', 'Fira Mono', 'Consolas', 'Courier New', Courier, monospace, 'Times New Roman';
+    font-family: $fontFamily;
 }
 
 .ace_line,
