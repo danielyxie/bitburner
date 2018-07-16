@@ -233,6 +233,7 @@ function applySourceFile(srcFile) {
             Player.hacknet_node_level_cost_mult       *= dec;
 
             Player.work_money_mult    *= inc;
+            break;
         default:
             console.log("ERROR: Invalid source file number: " + srcFile.n);
             break;

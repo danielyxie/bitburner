@@ -191,6 +191,8 @@ $(document).keydown(function(event) {
         }
 
         if (event.keyCode === KEY.TAB) {
+            event.preventDefault();
+            
             //Autocomplete
             if (terminalInput == null) {return;}
             var input = terminalInput.value;
@@ -220,6 +222,7 @@ $(document).keydown(function(event) {
             }
 
             tabCompletion(command, arg, allPos);
+            terminalInput.focus();
         }
 
         //Extra Bash Emulation Hotkeys, must be enabled through .fconf
