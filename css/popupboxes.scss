@@ -1,3 +1,4 @@
+@import "mixins";
 /* Pop-up boxes */
 .popup-box-container {
     display: none; /* Hidden by default */
@@ -74,13 +75,11 @@
 }
 
 .dialog-box-close-button {
+    @include borderRadius(12px);
     float: right;
     color: #aaa;
     font-size: 20px;
     font-weight: bold;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px;
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
@@ -155,15 +154,13 @@
 }
 
 #game-options-close-button {
+    @include borderRadius(12px);
     color: #aaa;
     float: right;
     margin: 4px;
     padding: 4px;
     font-size: 20px;
     font-weight: bold;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px #fff;
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;

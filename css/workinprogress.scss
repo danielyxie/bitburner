@@ -1,3 +1,4 @@
+@import "mixins";
 /* Both Work in progress and BitNode stuff */
 .generic-fullscreen-container {
     color: var(--my-font-color);
@@ -16,15 +17,13 @@
 }
 
 #work-in-progress-cancel-button {
+    @include borderRadius(12px);
     color: #aaa;
     float: left;
     font-size: 20px;
     font-weight: bold;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
     margin: 10px;
     padding: 5px;
-    border-radius: 12px;
     border: 3px solid #fff;
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;

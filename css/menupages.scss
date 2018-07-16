@@ -1,3 +1,4 @@
+@import "mixins";
 /* CSS for different main menu pages, such as character info, script editor, etc (but excluding
     terminal which has its own page) */
 
@@ -260,12 +261,11 @@
 }
 
 .active-scripts-button {
+    @include borderRadius(12px);
+
     color: #aaa;
     font-size: 16px;
     font-weight: bold;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px;
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;

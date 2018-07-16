@@ -1,3 +1,5 @@
+@import "mixins";
+
 /* interactivetutorial.css */
 #interactive-tutorial-wrapper {
     position: relative;
@@ -31,12 +33,11 @@
 #interactive-tutorial-exit,
 #interactive-tutorial-next,
 #interactive-tutorial-back {
+    @include borderRadius(12px);
+
     color: #aaa;
     font-size: 20px;
     font-weight: bold;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    border-radius: 12px;
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
